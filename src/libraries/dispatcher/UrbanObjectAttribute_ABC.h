@@ -10,7 +10,10 @@
 #ifndef __UrbanObjectAttribute_ABC_h_
 #define __UrbanObjectAttribute_ABC_h_
 
-#include "game_asn/Simulation.h"
+namespace MsgsSimToClient
+{
+    class MsgUrbanAttributes;
+}
 
 namespace dispatcher
 {
@@ -27,15 +30,15 @@ class UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    UrbanObjectAttribute_ABC( const Model& model, const ASN1T_UrbanAttributes& asnMsg );
+    UrbanObjectAttribute_ABC( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message );
     virtual ~UrbanObjectAttribute_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_UrbanAttributes& asnMsg ) = 0;
-    virtual void Send     ( ASN1T_UrbanAttributes& asnMsg ) const = 0;
-    virtual void AsnDelete( ASN1T_UrbanAttributes& asnMsg ) const = 0;
+    virtual void Update   ( const MsgsSimToClient::MsgUrbanAttributes& message ) = 0;
+    virtual void Send     (       MsgsSimToClient::MsgUrbanAttributes& message ) const = 0;
+    virtual void AsnDelete(       MsgsSimToClient::MsgUrbanAttributes& message ) const = 0;
     //@}
 
 protected:

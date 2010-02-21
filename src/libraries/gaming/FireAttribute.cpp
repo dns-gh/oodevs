@@ -44,10 +44,10 @@ FireAttribute::~FireAttribute()
 template< typename T >
 void FireAttribute::UpdateData( const T& message )
 {
-    if ( message.m.firePresent )    
+    if ( message.has_fire()  )    
     {
-        fireClass_  = & resolver_.Get( message.fire.class_id );
-        heat_       = message.fire.heat;
+        fireClass_  = & resolver_.Get( message.fire().class_id() );
+        heat_       = message.fire().heat();
         controller_.Update( *(FireAttribute_ABC*)this );        
     }
 }
@@ -56,27 +56,27 @@ void FireAttribute::UpdateData( const T& message )
 // Name: FireAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void FireAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void FireAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void FireAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

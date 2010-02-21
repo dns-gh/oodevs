@@ -10,7 +10,10 @@
 #ifndef __MissionParameter_ABC_h_
 #define __MissionParameter_ABC_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -45,8 +48,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( ASN1T_MissionParameter& parameter ) const = 0;
-    virtual void Clean( ASN1T_MissionParameter& parameter ) const = 0;
+    virtual void Serialize( MsgMissionParameter& parameter ) const = 0;
+    virtual void Clean( MsgMissionParameter& parameter ) const = 0;
     //@}
 
 private:

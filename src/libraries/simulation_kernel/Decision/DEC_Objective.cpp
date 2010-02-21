@@ -11,18 +11,19 @@
 #include "DEC_Objective.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Objective constructor
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-DEC_Objective::DEC_Objective( const ASN1T_MissionObjective& asn )
+DEC_Objective::DEC_Objective( const Common::MsgMissionObjective& asn )
     : localisation_()
     , bFlag_       ( false )
 {
-    NET_ASN_Tools::ReadTick( asn.horaire, nSchedule_);
-    if( !NET_ASN_Tools::ReadLocation( asn.localisation, localisation_ ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
+    NET_ASN_Tools::ReadTick( asn.horaire(), nSchedule_);
+    if( !NET_ASN_Tools::ReadLocation( asn.localisation(), localisation_ ) )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,10 +34,6 @@ DEC_Objective::~DEC_Objective()
 {
     // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Objective::operator=
@@ -52,9 +49,9 @@ void DEC_Objective::operator=( const DEC_Objective& rhs )
 // Name: DEC_Objective::Serialize
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-void DEC_Objective::Serialize( ASN1T_MissionObjective& asn ) const
+void DEC_Objective::Serialize( Common::MsgMissionObjective& asn ) const
 {
-    NET_ASN_Tools::WriteTick    ( nSchedule_, asn.horaire );
-    NET_ASN_Tools::WriteLocation( localisation_, asn.localisation );
+    NET_ASN_Tools::WriteTick    ( nSchedule_, *asn.mutable_horaire() );
+    NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_localisation() );
 }
 

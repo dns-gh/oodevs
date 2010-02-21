@@ -12,9 +12,14 @@
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
+namespace MsgsSimToClient
+{
+    class MsgDecisionalState;
+}
 // -----------------------------------------------------------------------------
 // Name: DecisionalStates constructor
 // Created: AGE 2007-05-31
@@ -42,7 +47,7 @@ DecisionalStates::~DecisionalStates()
 // Name: DecisionalStates::DoUpdate
 // Created: AGE 2007-05-31
 // -----------------------------------------------------------------------------
-void DecisionalStates::DoUpdate( const ASN1T_MsgDecisionalState& message )
+void DecisionalStates::DoUpdate( const MsgsSimToClient::MsgDecisionalState& message )
 {
     static const std::string contact( "Contact" ); 
     static const std::string sauvegarde( "eEtatDec_Sauvegarde" );
@@ -53,17 +58,17 @@ void DecisionalStates::DoUpdate( const ASN1T_MsgDecisionalState& message )
     static const std::string none      ( "eEtatDestruction_None" );
 
     // $$$$ AGE 2007-05-31: 
-    if( message.key == contact )
-        drawSauvegarde_ = message.value == sauvegarde;
-    else if( message.key == echelon )
+    if( message.key() == contact )
+        drawSauvegarde_ = message.value() == sauvegarde;
+    else if( message.key() == echelon )
     {
-        draw1stEchelon_ = message.value == first;
-        drawEclairage_  = message.value == eclairage;
+        draw1stEchelon_ = message.value() == first;
+        drawEclairage_  = message.value() == eclairage;
     }
-    else if( message.key == etat )
-        drawEtatOps_    = message.value != none;
+    else if( message.key() == etat )
+        drawEtatOps_    = message.value() != none;
     else
-        values_[ message.key ] = message.value;
+        values_[ QString( message.key().c_str() ) ] = QString( message.value().c_str() );
 }
 
 // -----------------------------------------------------------------------------

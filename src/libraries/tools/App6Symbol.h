@@ -19,7 +19,7 @@ namespace tools
         void Align( std::string& symbol );
         std::string FilterSymbol( const std::string& source, const std::string& filter );
         std::string MergeSymbol( const std::string& lhs, const std::string& rhs );
-        void FilterPerceptionLevel( std::string& symbol, unsigned int level ); // $$$$ SBO 2007-08-24: ASN1T_EnumUnitIdentificationLevel
+        void FilterPerceptionLevel( std::string& symbol, unsigned int level ); // $$$$ SBO 2007-08-24: EnumUnitIdentificationLevel
         //@}
 
         //! @name Field access

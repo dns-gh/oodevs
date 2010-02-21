@@ -37,12 +37,12 @@ public:
     static void Terminate();
 
     static const MIL_NbcAgentType* Find( const std::string& strName );
-    static const MIL_NbcAgentType* Find( uint nID );
+    static const MIL_NbcAgentType* Find( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-    uint                   GetID                   () const;
+    unsigned int                   GetID                   () const;
     const std::string&     GetName                 () const;
     
     bool                   IsLiquidContaminating   () const;
@@ -52,7 +52,7 @@ public:
     bool                   IsGasContaminating      () const;
     bool                   IsGasPoisonous          () const;
     const PHY_HumanWound&  GetGasRandomWound       () const; 
-    uint                   GetGasLifeTime          () const;
+    unsigned int                   GetGasLifeTime          () const;
     MT_Float               GetGasPropagationAngle  () const;
     bool                   CanBeVaporized          () const;
     //@}
@@ -95,7 +95,7 @@ private:
 
 private:
     const std::string           strName_;
-          uint                  nID_;
+          unsigned int                  nID_;
         
           T_HumanPoisonousVector liquidPoisonous_;
           bool                   bLiquidPoisonous_;
@@ -105,7 +105,7 @@ private:
           T_HumanPoisonousVector gasPoisonous_;
           bool                   bGasPoisonous_;
           bool                   bGasContaminating_;
-          uint                   nGasLifeTime_;
+          unsigned int                   nGasLifeTime_;
           MT_Float               rGasPropagationAngle_;
 
 private:

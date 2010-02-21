@@ -11,6 +11,9 @@
 #define __HlaPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
+#include "protocol/protocol.h"
+
+using namespace MsgsSimToClient;
 
 namespace xml
 {
@@ -49,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive                  ( const MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}

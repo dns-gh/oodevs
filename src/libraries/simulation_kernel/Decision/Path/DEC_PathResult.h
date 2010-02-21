@@ -13,9 +13,13 @@
 #define __DEC_PathResult_h_
 
 #include "MIL.h"
-
 #include "Decision/Path/DEC_Path_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
+
+namespace Common
+{
+    class MsgPath;
+}
 
 class DEC_PathPoint;
 
@@ -34,8 +38,11 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
              DEC_PathResult();
     virtual ~DEC_PathResult();
+    //@}
    
     //! @name Accessors 
     //@{
@@ -53,26 +60,28 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( ASN1T_Path& asn ) const;
+    void Serialize( Common::MsgPath& asn ) const;
     //@}
 
 private:
-    //! @name Points insertion Tools
+    //! @name Helpers
     //@{
     virtual void NotifySectionEnded();
-    virtual void AddResultPoint    ( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
-    //@}
-
-    //! @name Tools
-    //@{
+    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
     MT_Vector2D InternalGetFuturePosition( const CIT_PathPointList& itCurrentPos, MT_Float rDist, bool bBoundOnPath ) const;
     //@}
 
 protected:
+    //! @name Member data
+    //@{
     T_PathPointList resultList_; //$$$
+    //@}
 
 private:      
+    //! @name Member data
+    //@{
     bool bSectionJustEnded_;
+    //@}
 };
 
 #include "DEC_PathResult.inl"

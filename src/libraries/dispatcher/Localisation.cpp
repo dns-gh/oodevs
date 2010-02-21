@@ -8,32 +8,32 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "Localisation.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
-
 
 // -----------------------------------------------------------------------------
 // Name: Localisation constructor
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------
 Localisation::Localisation()
-    : nType_ ( EnumLocationType::ellipse )
+: nType_ ( Common::MsgLocation::ellipse )
     , points_()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Localisation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Localisation::Localisation( const ASN1T_Location& asn )
-    : nType_ ( asn.type )
+Localisation::Localisation( const Common::MsgLocation& asn )
+    : nType_ ( asn.type() )
     , points_( )
 {
-    points_.reserve( asn.coordinates.n );
-    std::copy( asn.coordinates.elem, asn.coordinates.elem + asn.coordinates.n, std::back_inserter( points_ ) );
+    points_.reserve( asn.coordinates().elem_size() );
+    std::copy( asn.coordinates().elem().begin(), asn.coordinates().elem().end(), std::back_inserter( points_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,31 +42,28 @@ Localisation::Localisation( const ASN1T_Location& asn )
 // -----------------------------------------------------------------------------
 Localisation::~Localisation()
 {
-
+    // NOTHING
 }
-
-// =============================================================================
-// MAIN
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: Localisation::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::Update( const ASN1T_Location& asn )
+void Localisation::Update( const Common::MsgLocation& asn )
 {
-    nType_ = asn.type;
+    nType_ = asn.type();
     points_.resize( 0 );
-    std::copy( asn.coordinates.elem, asn.coordinates.elem + asn.coordinates.n, std::back_inserter( points_ ) );
+    points_.reserve( asn.coordinates().elem_size() );
+    std::copy( asn.coordinates().elem().begin(), asn.coordinates().elem().end(), std::back_inserter( points_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Localisation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Localisation::Send( ASN1T_Location& asn ) const
+void Localisation::Send( Common::MsgLocation& asn ) const
 {
-    asn.type              = nType_;
-    asn.coordinates.n    = points_.size();
-    asn.coordinates.elem = points_.size() ? const_cast< ASN1T_CoordLatLong* >( & points_.front() ) : 0;
+    asn.set_type( nType_ );
+    for( T_PositionVector::const_iterator it = points_.begin(); it != points_.end(); ++it )
+        *asn.mutable_coordinates()->add_elem() = *it;
 }

@@ -12,14 +12,15 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_AgentServer.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
-#include "MIL_AgentServer.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationConcentrationPerception )
 
@@ -62,12 +63,12 @@ DEC_Knowledge_PopulationConcentrationPerception::~DEC_Knowledge_PopulationConcen
 // Name: DEC_Knowledge_PopulationConcentrationPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
          >> pPopulationConcentrationPerceived_;
 
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 
@@ -79,7 +80,7 @@ void DEC_Knowledge_PopulationConcentrationPerception::load( MIL_CheckPointInArch
 // Name: DEC_Knowledge_PopulationConcentrationPerception::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationConcentrationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_PopulationConcentrationPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned current  = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID();
@@ -186,12 +187,12 @@ void DEC_Knowledge_PopulationConcentrationPerception::UpdateOnNetwork() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_PopulationConcentrationPerception::SendStateToNewClient() const
 {
-    NET_ASN_MsgPopulationConcentrationDetection asn;
-    asn().oid               = pPopulationKnowledge_->GetAgentPerceiving().GetID();
-    asn().population_oid    = pPopulationKnowledge_->GetPopulationPerceived().GetID();
-    asn().concentration_oid = pPopulationConcentrationPerceived_->GetID();
-    asn().visibility        = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
-    asn.Send();
+    client::PopulationConcentrationDetection asn;
+    asn().set_oid( pPopulationKnowledge_->GetAgentPerceiving().GetID() );
+    asn().set_population_oid( pPopulationKnowledge_->GetPopulationPerceived().GetID() );
+    asn().set_concentration_oid( pPopulationConcentrationPerceived_->GetID() );
+    asn().set_visibility( Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

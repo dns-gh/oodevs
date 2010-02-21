@@ -27,23 +27,23 @@ const QString Object::typeName_ = "object";
 // Name: Object::Object
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-Object::Object( const ASN1T_MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
-    : EntityImplementation< Object_ABC >( controller, message.oid, message.name )
+Object::Object( const MsgsSimToClient::MsgObjectCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
+    : EntityImplementation< Object_ABC >( controller, message.oid(), QString( message.name().c_str() ) )
     , converter_        ( converter )
-    , type_             ( typeResolver.Get( message.type ) )
-    , nTypeLocalisation_( message.location.type )
+    , type_             ( typeResolver.Get( message.type() ) )
+    , nTypeLocalisation_( message.location().type() )
     , construction_     ( 0 )
     , valorization_     ( 0 )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid() );
     RegisterSelf( *this );
-    if( message.attributes.m.obstaclePresent )
+    if( message.attributes().has_obstacle()  )
     {
-        if( message.attributes.obstacle.type == EnumDemolitionTargetType::reserved )
+        if( message.attributes().obstacle().type() == ObstacleType_DemolitionTargetType_reserved )
         {
             obstacleType_ = eDemolitionTargetType_Reserved;
-            reservedObstacleActivated_ = message.attributes.obstacle.activated ? true : false;
+            reservedObstacleActivated_ = message.attributes().obstacle().activated() ? true : false;
         }
         else
             obstacleType_ = eDemolitionTargetType_Preliminary;
@@ -81,7 +81,7 @@ QString Object::GetTypeName() const
 // Name: Object::DoUpdate
 // Created: SBO 2005-09-02
 // -----------------------------------------------------------------------------
-void Object::DoUpdate( const ASN1T_MsgObjectUpdate& /*message*/ )
+void Object::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& /*message*/ )
 {
     Touch();
 }

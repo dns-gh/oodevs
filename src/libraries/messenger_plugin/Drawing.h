@@ -10,8 +10,12 @@
 #ifndef __Drawing_h_
 #define __Drawing_h_
 
-#include "game_asn/Messenger.h"
+
 #include <geometry/Types.h>
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsClientToMessenger;
 
 namespace xml
 {
@@ -46,7 +50,7 @@ class Drawing
 public:
     //! @name Constructors/Destructor
     //@{
-             Drawing( unsigned int id, const ASN1T_MsgShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
+             Drawing( unsigned int id, const MsgShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
              Drawing( unsigned int id, const Drawing& rhs );
     virtual ~Drawing();
@@ -55,7 +59,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    void Update( const ASN1T_MsgShapeUpdateRequest& asn );
+    void Update( const MsgShapeUpdateRequest& asn );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -74,12 +78,12 @@ private:
     //! @name Helpers
     //@{
     void ReadPoint( xml::xistream& xis );
-    void SerializePoint( const ASN1T_CoordLatLong& point, xml::xostream& xos ) const;
+    void SerializePoint( const MsgCoordLatLong& point, xml::xostream& xos ) const;
     //@}
 
     //! @name Helpers
     //@{
-    typedef std::vector< ASN1T_CoordLatLong > T_Points;
+    typedef std::vector< MsgCoordLatLong > T_Points;
     //@}
 
 public:

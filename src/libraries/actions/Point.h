@@ -12,6 +12,13 @@
 
 #include "Location.h"
 
+namespace Common
+{
+    class MsgCoordLatLong;
+    class MsgMissionParameter;
+    class MsgPoint;
+}
+
 namespace actions {
     namespace parameters {
 
@@ -28,16 +35,16 @@ public:
     //! @name Constructors/Destructor
     //@{
              Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Point& asn );
+             Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgPoint& message );
              Point( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Point();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1T_CoordLatLong& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
+    void CommitTo( Common::MsgCoordLatLong& message ) const;
     //@}
 
 private:

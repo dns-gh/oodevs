@@ -38,11 +38,11 @@ DebugPoints::~DebugPoints()
 // Name: DebugPoints::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void DebugPoints::DoUpdate( const ASN1T_MsgDebugPoints& message )
+void DebugPoints::DoUpdate( const MsgsSimToClient::MsgDebugPoints& message )
 {
-    points_.resize( message.coordinates.n );
-    for( unsigned i = 0; i < message.coordinates.n; ++i )
-        points_[ i ] = converter_.ConvertToXY( message.coordinates.elem[i] );
+    points_.resize( message.coordinates().elem_size() );
+    for( int i = 0; i < message.coordinates().elem_size(); ++i )
+        points_[ i ] = converter_.ConvertToXY( message.coordinates().elem(i) );
 }
 
 // -----------------------------------------------------------------------------

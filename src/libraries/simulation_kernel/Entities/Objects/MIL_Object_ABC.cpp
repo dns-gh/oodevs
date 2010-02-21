@@ -10,17 +10,16 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectInteraction.h"
 #include "MIL_AgentServer.h"
-#include "Entities/Populations/MIL_PopulationElement_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
-#include "simulation_terrain/TER_World.h"
-#include "MIL_ObjectType_ABC.h"
 #include "MIL_ObjectFactory.h"
-
+#include "MIL_ObjectType_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Populations/MIL_PopulationElement_ABC.h"
+#include "simulation_terrain/TER_World.h"
+#include "protocol/protocol.h"
 
 using namespace hla;
 
@@ -105,7 +104,7 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
 // Name: MIL_Object_ABC::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< TER_Object_ABC >( *this );
     std::string type;
@@ -121,7 +120,7 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_Object_ABC::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_Object_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< TER_Object_ABC >( *this );
     file << pType_->GetName();

@@ -256,7 +256,7 @@ void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PH
 // Name: PHY_WeaponType::DirectFire
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, uint nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
+void PHY_WeaponType::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoReserved, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pDirectFireData_ );
     pDirectFireData_->Fire( firer, target, nNbrAmmoReserved, fireResult );
@@ -458,7 +458,7 @@ const PHY_DotationCategory& PHY_WeaponType::GetDotationCategory() const
 // Name: PHY_WeaponType::GetNbrAmmoPerLoader
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-uint PHY_WeaponType::GetNbrAmmoPerLoader() const
+unsigned int PHY_WeaponType::GetNbrAmmoPerLoader() const
 {
     return nNbrAmmoPerLoader_;
 }
@@ -467,7 +467,7 @@ uint PHY_WeaponType::GetNbrAmmoPerLoader() const
 // Name: PHY_WeaponType::GetNbrAmmoPerBurst
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-uint PHY_WeaponType::GetNbrAmmoPerBurst() const
+unsigned int PHY_WeaponType::GetNbrAmmoPerBurst() const
 {
     return nNbrAmmoPerBurst_;
 }

@@ -10,7 +10,10 @@
 #ifndef __ReportFactory_h_
 #define __ReportFactory_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace xml
 {
@@ -47,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    std::string CreateMessage( const ASN1T_MsgReport& asn ) const;
+    std::string CreateMessage( const MsgReport& message ) const;
     //@}
 
 private:
@@ -61,7 +64,7 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    std::string RenderParameter( const ASN1T_MissionParameter& value ) const;
+    std::string RenderParameter( const MsgMissionParameter& value ) const;
     //@}
 
     //! @name Types

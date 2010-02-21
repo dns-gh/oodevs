@@ -11,7 +11,9 @@
 #define __Client_h_
 
 #include "ClientPublisher_ABC.h"
-#include "game_asn/Simulation.h"
+
+
+////using namespace Common;
 
 namespace tools
 {
@@ -38,13 +40,13 @@ public:
 
     //! @name Messages
     //@{
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg );
-    virtual void Send( const ASN1T_MsgsSimToClient& msg );
-    virtual void Send( const ASN1T_MsgsReplayToClient& msg );
-    virtual void Send( const ASN1T_MsgsAarToClient& msg );
-    virtual void Send( const ASN1T_MsgsMessengerToClient& msg );
-    virtual void Send( const ASN1T_MsgsDispatcherToClient& msg );
-    virtual void Send( const ASN1T_MsgsPluginToClient& msg );
+    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg );
+    virtual void Send( const MsgsSimToClient::MsgSimToClient& msg );
+    virtual void Send( const MsgsReplayToClient::MsgReplayToClient& msg );
+    virtual void Send( const MsgsAarToClient::MsgAarToClient& msg );
+    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& msg );
+    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg );
+    virtual void Send( const MsgsPluginToClient::MsgPluginToClient& msg );
     //@}
 
     //! @name Accessors

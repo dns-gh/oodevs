@@ -43,9 +43,9 @@ void Mission_Pawn_MILICE_Provoquer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_MILICE_Provoquer& asnMission = *new ASN1T_Mission_Pion_MILICE_Provoquer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_milice_provoquer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_provoquer = &asnMission;
+    Mission_Pion_MILICE_Provoquer& asnMission = *new Mission_Pion_MILICE_Provoquer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_milice_provoquer = &asnMission;
 
 
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.unite_a_provoquer );
@@ -59,8 +59,8 @@ void Mission_Pawn_MILICE_Provoquer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_MILICE_Provoquer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_milice_provoquer );
-    ASN1T_Mission_Pion_MILICE_Provoquer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_provoquer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_milice_provoquer ());
+    Mission_Pion_MILICE_Provoquer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_milice_provoquer;
 
 
     delete &asnMission;

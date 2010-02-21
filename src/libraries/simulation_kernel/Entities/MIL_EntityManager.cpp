@@ -60,7 +60,7 @@
 #include "MIL_Formation.h"
 #include "MIL_Singletons.h"
 #include "Network/NET_AsnException.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
@@ -84,7 +84,11 @@
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
+#include "protocol/ClientSenders.h"
 
+using namespace Common;
+using namespace MsgsSimToClient;
+using namespace MsgsClientToSim;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_EntityManager )
 
@@ -344,7 +348,7 @@ void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 // Name: MIL_EntityManager::CreateObject
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ObstacleType_DemolitionTargetType obstacleType )
 {
     assert( pObjectManager_ );
     return pObjectManager_->CreateObject( army, type, pLocalisation, obstacleType );
@@ -614,261 +618,254 @@ void MIL_EntityManager::SendStateToNewClient() const
 // Name: MIL_EntityManager::OnReceiveMsgUnitOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitOrder( const ASN1T_MsgUnitOrder& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgUnitOrder( const Common::MsgUnitOrder& message, unsigned int nCtx )
 {
-    NET_ASN_MsgUnitOrderAck ack;
-    ack().oid        = asnMsg.oid;
-    ack().error_code = EnumOrderErrorCode::no_error;
-
+    client::UnitOrderAck ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::OrderAck_ErrorCode_no_error );
     try
     {
-        MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid );
+        MIL_AgentPion* pPion = FindAgentPion( message.oid() );
         if( !pPion )
-            throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
-        pPion->OnReceiveMsgOrder( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
+        pPion->OnReceiveMsgOrder( message );
     }
-    catch( NET_AsnException< ASN1T_EnumOrderErrorCode >& e )
-    {
-        ack().error_code = e.GetErrorID();
+    catch( NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >& e )
+    { 
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgAutomatOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomatOrder( const ASN1T_MsgAutomatOrder& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomatOrder( const Common::MsgAutomatOrder& message, unsigned int nCtx )
 {
-    NET_ASN_MsgAutomatOrderAck ack;
-    ack().oid        = asnMsg.oid;
-    ack().error_code = EnumOrderErrorCode::no_error;
-
+    client::AutomatOrderAck ack;
+    ack().set_oid       ( message.oid() );
+    ack().set_error_code( MsgsSimToClient::OrderAck_ErrorCode_no_error );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
+        MIL_Automate* pAutomate = FindAutomate( message.oid() );
         if( !pAutomate )
-            throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
-        pAutomate->OnReceiveMsgOrder( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
+        pAutomate->OnReceiveMsgOrder( message );
     }
-    catch( NET_AsnException< ASN1T_EnumOrderErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
-    NET_ASN_MsgUnitMagicActionAck ack;
-    ack().oid        = asnMsg.oid;
-    ack().error_code = EnumUnitErrorCode::no_error;
-
+    client::UnitMagicActionAck ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::UnitActionAck_ErrorCode_no_error );
     try
     {
-        if( MIL_Automate*  pAutomate = FindAutomate ( asnMsg.oid ) )
-            pAutomate->OnReceiveMsgUnitMagicAction( asnMsg, *armyFactory_ );
-        else if( MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid ) )
-            pPion->OnReceiveMsgUnitMagicAction( asnMsg, *armyFactory_ );
+        if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
+            pAutomate->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
+        else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
+            pPion->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
         else
-            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_unit );
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
     }
-    catch( NET_AsnException< ASN1T_EnumUnitErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
-}   
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgPopulationOrder
 // Created: NLD 2005-09-29
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgPopulationOrder( const ASN1T_MsgPopulationOrder& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgPopulationOrder( const Common::MsgPopulationOrder& message, unsigned int nCtx )
 {
-    NET_ASN_MsgPopulationOrderAck ack;
-    ack().oid        = asnMsg.oid;
-    ack().error_code = EnumOrderErrorCode::no_error;
-
+    client::PopulationOrderAck ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::OrderAck_ErrorCode_no_error );
     try
     {
-        MIL_Population* pPopulation = populationFactory_->Find( asnMsg.oid );
+        MIL_Population* pPopulation = populationFactory_->Find( message.oid() );
         if( !pPopulation )
-            throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
-        pPopulation->OnReceiveMsgOrder( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
+        pPopulation->OnReceiveMsgOrder( message );
     }
-    catch( NET_AsnException< ASN1T_EnumOrderErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgFragOrder
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& message, unsigned int nCtx )
 {
-    NET_ASN_MsgFragOrderAck ack;
-    ack().oid        = asnMsg.oid;
-    ack().error_code = EnumOrderErrorCode::no_error;
+    client::FragOrderAck ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::OrderAck_ErrorCode_no_error );
 
     try
     {
-        if( MIL_Automate* pAutomate = FindAutomate  ( asnMsg.oid ) )
-            pAutomate->OnReceiveMsgFragOrder( asnMsg );
-        else if( MIL_Population* pPopulation = populationFactory_->Find( asnMsg.oid ) )
-            pPopulation->OnReceiveMsgFragOrder( asnMsg );
-        else if( MIL_AgentPion* pPion = FindAgentPion ( asnMsg.oid ) )
-            pPion->OnReceiveMsgFragOrder( asnMsg );
+        if( MIL_Automate* pAutomate = FindAutomate  ( message.oid() ) )
+            pAutomate->OnReceiveMsgFragOrder( message );
+        else if( MIL_Population* pPopulation = populationFactory_->Find( message.oid() ) )
+            pPopulation->OnReceiveMsgFragOrder( message );
+        else if( MIL_AgentPion* pPion = FindAgentPion ( message.oid() ) )
+            pPion->OnReceiveMsgFragOrder( message );
         else
-            throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_unit );
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_unit );
     }
-    catch( NET_AsnException< ASN1T_EnumOrderErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgSetAutomateMode
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgSetAutomateMode( const ASN1T_MsgSetAutomatMode& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgSetAutomateMode( const MsgsClientToSim::MsgSetAutomatMode& message, unsigned int nCtx )
 {
-    NET_ASN_MsgSetAutomatModeAck ack;
-    ack().oid        = asnMsg.oid;
-    ack().error_code = EnumSetAutomatModeErrorCode::no_error;
-
+    client::SetAutomatModeAck ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode_no_error );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
+        MIL_Automate* pAutomate = FindAutomate( message.oid() );
         if( !pAutomate )
-            throw NET_AsnException< ASN1T_EnumSetAutomatModeErrorCode >( EnumSetAutomatModeErrorCode::error_invalid_unit );
-        pAutomate->OnReceiveMsgSetAutomateMode( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode >( MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode_error_invalid_unit );
+        pAutomate->OnReceiveMsgSetAutomateMode( message );
     }
-    catch( NET_AsnException< ASN1T_EnumSetAutomatModeErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgUnitCreationRequest
 // Created: AGE 2007-06-18
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitCreationRequest( const ASN1T_MsgUnitCreationRequest& msg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUnitCreationRequest& message, unsigned int nCtx )
 {
-    NET_ASN_MsgUnitCreationRequestAck ack;
-    ack() = EnumUnitErrorCode::no_error;
+    client::UnitCreationRequestAck ack;
+    ack().set_error( MsgsSimToClient::UnitActionAck_ErrorCode_no_error );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( msg.oid_automate );
+        MIL_Automate* pAutomate = FindAutomate( message.oid_automate() );
         if( !pAutomate )
-            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_unit );
-        pAutomate->OnReceiveMsgUnitCreationRequest( msg );
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
+        pAutomate->OnReceiveMsgUnitCreationRequest( message );
     }
-    catch( NET_AsnException< ASN1T_EnumUnitErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >& e )
     {
-        ack() = e.GetErrorID();
+        ack().set_error( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgObjectMagicAction
 // Created: NLD 2004-09-06
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::MsgObjectMagicAction& message, unsigned int nCtx )
 {
     assert( pObjectManager_ );
-    pObjectManager_->OnReceiveMsgObjectMagicAction( asnMsg, nCtx, *armyFactory_ );
+    pObjectManager_->OnReceiveMsgObjectMagicAction( message, nCtx, *armyFactory_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgPopulationMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopulationMagicAction& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::MsgPopulationMagicAction& message, unsigned int nCtx )
 {
-    NET_ASN_MsgPopulationMagicActionAck ack;
-    ack().oid        = asnMsg.oid;
-    ack().error_code = EnumPopulationErrorCode::no_error;
-
+    client::PopulationMagicActionAck ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_no_error );
     try
     {
-        MIL_Population* pPopulation = populationFactory_->Find( asnMsg.oid );
+        MIL_Population* pPopulation = populationFactory_->Find( message.oid() );
         if( !pPopulation )
-            throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_unit );
-        pPopulation->OnReceiveMsgPopulationMagicAction( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_unit );
+        pPopulation->OnReceiveMsgPopulationMagicAction( message );
     }
-    catch( NET_AsnException< ASN1T_EnumPopulationErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const MsgChangeDiplomacy& message, unsigned int nCtx )
 {
-    NET_ASN_MsgChangeDiplomacyAck ack;
-    ack().oid_camp1   = asnMsg.oid_camp1;
-    ack().oid_camp2   = asnMsg.oid_camp2;
-    ack().error_code  = EnumChangeDiplomacyErrorCode::no_error;
-
+    client::ChangeDiplomacyAck ack;
+    ack().set_oid_camp1( message.oid_camp1() );
+    ack().set_oid_camp2( message.oid_camp2() );
+    ack().set_error_code( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy );
     try
     {
-        MIL_Army_ABC* pArmy1 = armyFactory_->Find( asnMsg.oid_camp1 );
+        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.oid_camp1() );
         if( !pArmy1 )
-            throw NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >( EnumChangeDiplomacyErrorCode::error_invalid_camp );
-        pArmy1->OnReceiveMsgChangeDiplomacy( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
+        pArmy1->OnReceiveMsgChangeDiplomacy( message );
     }
-    catch( NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const Common::MsgAutomatChangeKnowledgeGroup& message, unsigned int nCtx )
 {
-    NET_ASN_MsgAutomatChangeKnowledgeGroupAck ack;
-    ack() = EnumChangeHierarchyErrorCode::no_error;
+    client::AutomatChangeKnowledgeGroupAck ack;
+    ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );  
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
+        MIL_Automate* pAutomate = FindAutomate( message.oid() );
         if( !pAutomate )
-            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
-        pAutomate->OnReceiveMsgChangeKnowledgeGroup( asnMsg, *armyFactory_ );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
+        pAutomate->OnReceiveMsgChangeKnowledgeGroup( message, *armyFactory_ );
     }
-    catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >& e )
     {
-        ack() = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
-    if( ack() == EnumChangeHierarchyErrorCode::no_error )
+    if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy ) 
     {
-        NET_ASN_MsgAutomatChangeKnowledgeGroup msg;
-        msg().oid                     = asnMsg.oid;
-        msg().oid_camp                = asnMsg.oid_camp;
-        msg().oid_groupe_connaissance = asnMsg.oid_groupe_connaissance;
-        msg.Send();
+        client::AutomatChangeKnowledgeGroup resendMessage;
+        resendMessage().set_oid( message.oid() );
+        resendMessage().set_oid_camp( message.oid_camp() );
+        resendMessage().set_oid_groupe_connaissance( message.oid_groupe_connaissance() );
+        resendMessage.Send( NET_Publisher_ABC::Publisher() );
     }
 }
 
@@ -876,36 +873,32 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_Ms
 // Name: MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_MsgAutomatChangeLogisticLinks& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const Common::MsgAutomatChangeLogisticLinks& message, unsigned int nCtx )
 {
-    NET_ASN_MsgAutomatChangeLogisticLinksAck ack;
-    ack() = EnumChangeHierarchyErrorCode::no_error;
+    client::AutomatChangeLogisticLinksAck ack;
+    ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
+        MIL_Automate* pAutomate = FindAutomate( message.oid() );
         if( !pAutomate )
-            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
-        pAutomate->OnReceiveMsgChangeLogisticLinks( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
+        pAutomate->OnReceiveMsgChangeLogisticLinks( message );
     }
-    catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >& e )
     {
-        ack() = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
-    if( ack() == EnumChangeHierarchyErrorCode::no_error )
+    if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy )
     {
-        NET_ASN_MsgAutomatChangeLogisticLinks msg;
-        msg().oid                         = asnMsg.oid;
-        msg().m.oid_tc2Present            = asnMsg.m.oid_tc2Present;
-        msg().m.oid_maintenancePresent    = asnMsg.m.oid_maintenancePresent;
-        msg().m.oid_santePresent          = asnMsg.m.oid_santePresent;
-        msg().m.oid_ravitaillementPresent = asnMsg.m.oid_ravitaillementPresent;
-        msg().oid_tc2                     = asnMsg.oid_tc2;
-        msg().oid_maintenance             = asnMsg.oid_maintenance;
-        msg().oid_sante                   = asnMsg.oid_sante;
-        msg().oid_ravitaillement          = asnMsg.oid_ravitaillement;
-        msg.Send();
+        client::AutomatChangeLogisticLinks resendMessage;
+        resendMessage().set_oid                ( message.oid() );
+        resendMessage().set_oid_tc2            ( message.oid_tc2() );
+        resendMessage().set_oid_maintenance    ( message.oid_maintenance() );
+        resendMessage().set_oid_sante          ( message.oid_sante() );
+        resendMessage().set_oid_ravitaillement ( message.oid_ravitaillement() );
+        resendMessage.Send( NET_Publisher_ABC::Publisher() );
     }
 }
 
@@ -913,33 +906,32 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeLogisticLinks( const ASN1T_Msg
 // Name: MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior
 // Created: NLD 2007-04-11
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const ASN1T_MsgAutomatChangeSuperior& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const Common::MsgAutomatChangeSuperior& message, unsigned int nCtx )
 {
-    NET_ASN_MsgAutomatChangeSuperiorAck ack;
-    ack() = EnumChangeHierarchyErrorCode::no_error;
+    client::AutomatChangeSuperiorAck ack;
+    ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
     try
     {
-        MIL_Automate* pAutomate = FindAutomate( asnMsg.oid );
+        MIL_Automate* pAutomate = FindAutomate( message.oid() );
         if( !pAutomate )
-            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
-        pAutomate->OnReceiveMsgChangeSuperior( asnMsg, *formationFactory_ ); 
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
+        pAutomate->OnReceiveMsgChangeSuperior( message, *formationFactory_ ); 
     }
-    catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >& e )
     {
-        ack() = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 
-    if( ack() == EnumChangeHierarchyErrorCode::no_error )
+    if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy )
     {
-        NET_ASN_MsgAutomatChangeSuperior msg;
-        msg().oid            = asnMsg.oid;
-        msg().oid_superior.t = asnMsg.oid_superior.t;
-        if( asnMsg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
-            msg().oid_superior.u.formation = asnMsg.oid_superior.u.formation;
-        else if( asnMsg.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
-            msg().oid_superior.u.automate = asnMsg.oid_superior.u.automate;
-        msg.Send();
+        client::AutomatChangeSuperior resendMessage;
+        resendMessage().set_oid( message.oid() );
+        if( message.oid_superior().has_formation() )
+            resendMessage().mutable_oid_superior()->mutable_formation()->set_oid( message.oid_superior().formation().oid() );
+        else if( message.oid_superior().has_automate() )
+            resendMessage().mutable_oid_superior()->mutable_automate()->set_oid( message.oid_superior().automate().oid() );
+        resendMessage.Send( NET_Publisher_ABC::Publisher() );
     }
 }
 
@@ -947,29 +939,28 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const ASN1T_MsgAutom
 // Name: MIL_EntityManager::OnReceiveMsgUnitChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChangeSuperior& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const Common::MsgUnitChangeSuperior& message, unsigned int nCtx )
 {
-    NET_ASN_MsgUnitChangeSuperiorAck ack;
-    ack() = EnumChangeHierarchyErrorCode::no_error;
+    client::UnitChangeSuperiorAck ack;
+    ack().set_error_code( MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy );
     try
     {
-        MIL_AgentPion* pPion = FindAgentPion( asnMsg.oid );
+        MIL_AgentPion* pPion = FindAgentPion( message.oid() );
         if( !pPion )
-            throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_pion );
-        pPion->OnReceiveMsgChangeSuperior( *this, asnMsg );
+            throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_pion );
+        pPion->OnReceiveMsgChangeSuperior( *this, message );
     }
-    catch( NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >& e )
     {
-        ack() = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
-
-    if( ack() == EnumChangeHierarchyErrorCode::no_error )
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    if( ack().error_code() == MsgsSimToClient::HierarchyModificationAck_ErrorCode_no_error_hierarchy )
     {
-        NET_ASN_MsgUnitChangeSuperior msg;
-        msg().oid          = asnMsg.oid;
-        msg().oid_automate = asnMsg.oid_automate;
-        msg.Send();
+        client::UnitChangeSuperior resendMessage;
+        resendMessage().set_oid ( message.oid() );
+        resendMessage().set_oid_automate( message.oid_automate() );
+        resendMessage.Send( NET_Publisher_ABC::Publisher() );
     }
 }
 
@@ -977,140 +968,44 @@ void MIL_EntityManager::OnReceiveMsgUnitChangeSuperior( const ASN1T_MsgUnitChang
 // Name: MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas& asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& message, unsigned int nCtx )
 {
-    NET_ASN_MsgLogSupplyChangeQuotasAck ack;
-    ack() = MsgLogSupplyChangeQuotasAck::no_error;
-
+    client::LogSupplyChangeQuotasAck ack;
+    ack().set_ack( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_no_error_quotas );
     try
     {
-        MIL_Automate* pReceiver = FindAutomate( asnMsg.oid_receveur );
+        MIL_Automate* pReceiver = FindAutomate( message.oid_receveur() );
         if( !pReceiver )
-            throw NET_AsnException< ASN1T_MsgLogSupplyChangeQuotasAck >( MsgLogSupplyChangeQuotasAck::error_invalid_receveur );
-        pReceiver->OnReceiveMsgLogSupplyChangeQuotas( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_receveur_quotas );
+        pReceiver->OnReceiveMsgLogSupplyChangeQuotas( message );
     }
-    catch( NET_AsnException< ASN1T_MsgLogSupplyChangeQuotasAck >& e )
+    catch( NET_AsnException< MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >& e )
     {
-        ack() = e.GetErrorID();
+        ack().set_ack( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyPushFlow&  asnMsg, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::MsgLogSupplyPushFlow& message, unsigned int nCtx )
 {
-    NET_ASN_MsgLogSupplyPushFlowAck ack;
-    ack() = MsgLogSupplyPushFlowAck::no_error;
-
+    client::LogSupplyPushFlowAck ack;
+    ack().set_ack( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_no_error_pushflow );
     try
     {
-        MIL_Automate* pReceiver = FindAutomate( asnMsg.oid_receveur );
+        MIL_Automate* pReceiver = FindAutomate( message.oid_receveur() );
         if( !pReceiver )
-            throw NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >( MsgLogSupplyPushFlowAck::error_invalid_receveur );
-        pReceiver->OnReceiveMsgLogSupplyPushFlow( asnMsg );
+            throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
+        pReceiver->OnReceiveMsgLogSupplyPushFlow( message );
     }
-    catch( NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >& e )
+    catch( NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >& e )
     {
-        ack() = e.GetErrorID();
+        ack().set_ack( e.GetErrorID() );
     }
-    ack.Send( nCtx );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable
-// Created: SLG 2009-12-17
-// LTO
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg, unsigned int /*nCtx*/ )
-{
-    try
-    {
-        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( asnMsg.oid );
-        pReceiver->OnReceiveMsgKnowledgeGroupEnable( asnMsg );
-    }
-    catch( NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >& /*e*/ )
-    {
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior
-// Created: FHD 2009-12-15: 
-// LTO
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, uint nCtx )
-{
-    NET_ASN_MsgKnowledgeGroupChangeSuperiorAck ack;
-    ack().oid        = msg.oid;
-    ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
-    try
-    {
-        MIL_KnowledgeGroup* pMovedKnowledgeGroup = FindKnowledgeGroup( msg.oid );
-        if( !pMovedKnowledgeGroup )
-            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_knowledgegroup );
-        MIL_KnowledgeGroup* pNewParentKnowledgeGroup = FindKnowledgeGroup( msg.oid_knowledgegroup_parent );
-        if( !pNewParentKnowledgeGroup && msg.oid_knowledgegroup_parent != 0 )
-            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_superior );
-        pMovedKnowledgeGroup->OnReceiveMsgKnowledgeGroupChangeSuperior( msg, *armyFactory_ );
-    }
-    catch( NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >& e )
-    {
-        ack().error_code = e.GetErrorID();
-    }
-    ack.Send( nCtx );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupDelete
-// Created: FHD 2009-12-15: 
-// LTO
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg, uint nCtx )
-{
-    NET_ASN_MsgKnowledgeGroupDeleteAck ack;
-    ack().oid        = msg.oid;
-    ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
-
-    try
-    {
-        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( msg.oid );
-        if( !pReceiver )
-            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_knowledgegroup );
-        pReceiver->OnReceiveMsgKnowledgeGroupDelete( msg );
-    }
-    catch( NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >& e )
-    {
-        ack().error_code = e.GetErrorID();
-    }
-    ack.Send( nCtx );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType
-// Created: FHD 2009-12-15: 
-// LTO
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg, uint nCtx )
-{
-    NET_ASN_MsgKnowledgeGroupSetTypeAck ack;
-    ack().oid        = msg.oid;
-    ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
-
-    try
-    {
-        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( msg.oid );
-        if( !pReceiver )
-            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_type );
-        pReceiver->OnReceiveMsgKnowledgeGroupSetType( msg );
-    }
-    catch( NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >& e )
-    {
-        ack().error_code = e.GetErrorID();
-    }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -1118,26 +1013,56 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowle
 // Created: FHD 2009-12-15: 
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& msg, uint nCtx )
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message, unsigned int nCtx )
 {
-    NET_ASN_MsgKnowledgeGroupCreationAck ack;
-    ack().oid        = msg.oid;
-    ack().error_code = EnumKnowledgeGroupErrorCode::no_error;
+    client::KnowledgeGroupCreationAck ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
 
     try
     {
-        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( msg.oid );
+        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.oid() );
         if( !pReceiver )
-            throw NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >( EnumKnowledgeGroupErrorCode::error_invalid_type );
-        pReceiver->OnReceiveMsgKnowledgeGroupCreation( msg );
+            throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_type );
+        pReceiver->OnReceiveMsgKnowledgeGroupCreation( message );
     }
-    catch( NET_AsnException< ASN1T_EnumKnowledgeGroupErrorCode >& e )
+    catch( NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >& e )
     {
-        ack().error_code = e.GetErrorID();
+        ack().set_error_code( e.GetErrorID() );
     }
-    ack.Send( nCtx );
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupUpdate
+// Created: FDS 2010-01-13
+// LTO
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, unsigned int nCtx )
+{
+    client::KnowledgeGroupUpdateAck  ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
+
+    try
+    {
+        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.oid() );
+        if( !pReceiver )
+            throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_type );
+
+        MIL_KnowledgeGroup* pParent = FindKnowledgeGroup( message.oid_parent() );
+        if( !pParent && message.oid_parent() != 0 )
+            throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
+       
+        pReceiver->OnReceiveMsgKnowledgeGroupUpdate( message, *armyFactory_  );
+    }
+    catch( NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ChannelPopulations
@@ -1266,7 +1191,6 @@ MIL_AgentPion* MIL_EntityManager::FindAgentPion( unsigned int nID ) const
 }
 
 
-// -----------------------------------------------------------------------------
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::GetArmies
 // Created: NLD 2004-09-01 //@TODO MGD just use on time in object to destroy knowledge, find a way to remove this function

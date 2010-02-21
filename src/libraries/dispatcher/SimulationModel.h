@@ -10,7 +10,24 @@
 #ifndef __SimulationModel_h_
 #define __SimulationModel_h_
 
-#include "game_asn/Simulation.h"
+
+
+namespace Common
+{
+    enum EnumSimulationState;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgControlStopAck;
+    class MsgControlPauseAck;
+    class MsgControlResumeAck;
+    class MsgControlChangeTimeFactorAck;
+
+    class MsgControlInformation;
+    class MsgControlBeginTick;
+    class MsgControlEndTick;
+}
 
 namespace dispatcher
 {
@@ -33,16 +50,16 @@ public:
 
     //! @name Operations
     //@{
-    void Update       ( const ASN1T_MsgControlInformation&         msg );
-    void Update       ( const ASN1T_MsgControlBeginTick&           msg );
-    void Update       ( const ASN1T_MsgControlEndTick&             msg );
-    void Update_Stop  ( const ASN1T_MsgControlStopAck&             msg ); //$$$
-    void Update_Pause ( const ASN1T_MsgControlPauseAck&            msg ); //$$$
-    void Update_Resume( const ASN1T_MsgControlResumeAck&           msg ); //$$$
-    void Update       ( const ASN1T_MsgControlChangeTimeFactorAck& msg );
-//    void Update        ( const ASN1T_MsgControlCheckPointSetFrequencyAck& msg );
+    void Update       ( const MsgsSimToClient::MsgControlInformation&         msg );
+    void Update       ( const MsgsSimToClient::MsgControlBeginTick&           msg );
+    void Update       ( const MsgsSimToClient::MsgControlEndTick&             msg );
+    void Update_Stop  ( const MsgsSimToClient::MsgControlStopAck&             msg ); //$$$
+    void Update_Pause ( const MsgsSimToClient::MsgControlPauseAck&            msg ); //$$$
+    void Update_Resume( const MsgsSimToClient::MsgControlResumeAck&           msg ); //$$$
+    void Update       ( const MsgsSimToClient::MsgControlChangeTimeFactorAck& msg );
+//    void Update        ( const MsgControlCheckPointSetFrequencyAck& msg );
     void Send          ( ClientPublisher_ABC& publisher ) const;
-    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned factor ) const;
     void Reset         ();
 
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
@@ -55,7 +72,7 @@ private:
    unsigned int      nTickDuration_;
    unsigned int      nTimeFactor_;
    unsigned int      nCheckpointFrequency_;
-   ASN1T_EnumSimulationState nSimState_;
+   Common::EnumSimulationState nSimState_;
 
    //$$$ BULLSHIT
    bool         bSendVisionCones_;

@@ -55,7 +55,7 @@ void InteractIfEquippedCapacity::CanInteractWith( const Object& object, const MI
 // Name: template< typename Archive > void InteractIfEquippedCapacity::serialize
 // Created: LDC 2009-03-03
 // -----------------------------------------------------------------------------
-template< typename Archive > void InteractIfEquippedCapacity::serialize( Archive& file, const uint )
+template< typename Archive > void InteractIfEquippedCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );

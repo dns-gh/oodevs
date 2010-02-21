@@ -10,12 +10,15 @@
 #ifndef __Automat_h_
 #define __Automat_h_
 
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Extension_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -37,7 +40,7 @@ class Automat : public kernel::EntityImplementation< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const ASN1T_MsgAutomatCreation& message, kernel::Controller& controller, 
+             Automat( const MsgsSimToClient::MsgAutomatCreation& message, kernel::Controller& controller, 
                       const tools::Resolver_ABC< kernel::AutomatType >& resolver );
     virtual ~Automat();
     //@}

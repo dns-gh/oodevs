@@ -43,9 +43,9 @@ void Mission_Pawn_INF_Interdire::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_Interdire& asnMission = *new ASN1T_Mission_Pion_INF_Interdire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_interdire;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_interdire = &asnMission;
+    Mission_Pion_INF_Interdire& asnMission = *new Mission_Pion_INF_Interdire();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_interdire = &asnMission;
 
     const Position& pointAInterdire_ = pTarget_->GetTestParam_Point();
 
@@ -62,8 +62,8 @@ void Mission_Pawn_INF_Interdire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_Interdire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_interdire );
-    ASN1T_Mission_Pion_INF_Interdire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_interdire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_interdire ());
+    Mission_Pion_INF_Interdire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_interdire;
 
     ASN_Tools::Delete( asnMission.point_a_interdire );
 

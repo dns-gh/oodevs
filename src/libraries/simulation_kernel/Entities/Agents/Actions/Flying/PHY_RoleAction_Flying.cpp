@@ -70,7 +70,7 @@ PHY_RoleAction_Flying::~PHY_RoleAction_Flying()
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void PHY_RoleAction_Flying::serialize( Archive& file, const uint )
+void PHY_RoleAction_Flying::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleAction_InterfaceFlying >( *this )
          & entity_;

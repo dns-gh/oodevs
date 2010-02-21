@@ -10,11 +10,23 @@
 #ifndef __Side_h_
 #define __Side_h_
 
-#include "game_asn/Simulation.h"
 #include "Sendable.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "tools/Resolver.h"
+
+
+namespace Common
+{
+    class MsgChangeDiplomacy;
+    enum EnumDiplomacy;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgTeamCreation;
+    class MsgChangeDiplomacyAck;
+}
 
 namespace kernel
 {
@@ -40,15 +52,15 @@ class Side : public Sendable< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Side( const Model_ABC& model, const ASN1T_MsgTeamCreation& msg );
+             Side( const Model_ABC& model, const MsgsSimToClient::MsgTeamCreation& msg );
     virtual ~Side();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const ASN1T_MsgChangeDiplomacy&    asnMsg );
-    void Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg );
+    void Update( const Common::MsgChangeDiplomacy&    asnMsg );
+    void Update( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg );
     virtual void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     virtual void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     virtual void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -75,7 +87,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Team_ABC*, ASN1T_EnumDiplomacy > T_Diplomacies;
+    typedef std::map< const kernel::Team_ABC*, Common::EnumDiplomacy > T_Diplomacies;
     //@}
 
 private:
@@ -83,7 +95,7 @@ private:
     //@{
     const Model_ABC&        model_;
     const std::string   name_;
-    ASN1T_EnumDiplomacy nType_;
+    Common::EnumDiplomacy nType_;
     kernel::Karma karma_;
     T_Diplomacies       diplomacies_;
     tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;

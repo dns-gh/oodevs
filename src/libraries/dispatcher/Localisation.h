@@ -10,7 +10,12 @@
 #ifndef __Localisation_h_
 #define __Localisation_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    class MsgLocation;
+    class MsgCoordLatLong;
+    enum MsgLocation_Geometry;
+}
 
 namespace dispatcher
 {
@@ -29,25 +34,25 @@ public:
     //! @name Constructors/Destructor
     //@{
              Localisation(); 
-    explicit Localisation( const ASN1T_Location& asn ); 
+    explicit Localisation( const Common::MsgLocation& asn ); 
     virtual ~Localisation();
     //@}
 
     //! @name Main
     //@{
-    void Update( const ASN1T_Location& asn );
-    void Send  ( ASN1T_Location& asn ) const;
+    void Update( const Common::MsgLocation& asn );
+    void Send  ( Common::MsgLocation& asn ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector< ASN1T_CoordLatLong > T_PositionVector;
+    typedef std::vector< Common::MsgCoordLatLong > T_PositionVector;
     //@}
 
 private:
-    ASN1T_EnumLocationType nType_;
-    T_PositionVector       points_;
+    Common::MsgLocation_Geometry    nType_;
+    T_PositionVector                points_;
 };
 
 }

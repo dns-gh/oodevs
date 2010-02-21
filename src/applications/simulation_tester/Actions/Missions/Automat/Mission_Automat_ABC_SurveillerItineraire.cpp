@@ -43,9 +43,9 @@ void Mission_Automat_ABC_SurveillerItineraire::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_SurveillerItineraire& asnMission = *new ASN1T_Mission_Automate_ABC_SurveillerItineraire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_surveiller_itineraire;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_surveiller_itineraire = &asnMission;
+    Mission_Automate_ABC_SurveillerItineraire& asnMission = *new Mission_Automate_ABC_SurveillerItineraire();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_surveiller_itineraire = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Automat_ABC_SurveillerItineraire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_SurveillerItineraire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_surveiller_itineraire );
-    ASN1T_Mission_Automate_ABC_SurveillerItineraire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_surveiller_itineraire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_surveiller_itineraire ());
+    Mission_Automate_ABC_SurveillerItineraire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_surveiller_itineraire;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

@@ -34,7 +34,7 @@ public:
     typedef typename T_CoeffVector::const_iterator   CIT_CoeffVector;
 
 public:
-    MT_Polynome( uint nOrder = 0 )
+    MT_Polynome( unsigned int nOrder = 0 )
         : vCoeff_( nOrder, coeffType() )
     {
     }
@@ -54,17 +54,17 @@ public:
         vCoeff_ = rhs.vCoeff_;
     }
 
-    uint        GetOrder () const
+    unsigned int        GetOrder () const
     {
         return vCoeff_.size() ? vCoeff_.size() - 1 : 0;
     }
 
-    coeffType   GetCoeff ( uint nOrder ) const
+    coeffType   GetCoeff ( unsigned int nOrder ) const
     {
         return nOrder > vCoeff_.size() ? coeffType() : vCoeff_[ nOrder ];
     }
 
-    void        SetCoeff ( uint nOrder, const coeffType& value )
+    void        SetCoeff ( unsigned int nOrder, const coeffType& value )
     {
         if ( nOrder >= vCoeff_.size() )
             vCoeff_.resize( nOrder + 1 );

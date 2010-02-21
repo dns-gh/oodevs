@@ -1,0 +1,94 @@
+
+option optimize_for = SPEED;
+
+message toto {
+	required int32 id = 1;
+	optional string name = 2;
+}
+
+message MsgPion {
+  required string name = 1;
+  required int32 id = 2;
+  optional string email = 3;  
+  extensions 5;
+}
+
+message Test {
+  required string name = 1;
+}
+
+message Facette {
+    required int32 id = 1;
+    required string name = 2;
+}
+message ObjectInstance {
+    required int32 id = 1;
+    required string desc = 2;
+    required string longdesc = 3;
+    repeated Facette facette = 4;
+}
+
+message Point {
+    optional double x = 1;
+    optional double y = 2;
+
+//    optional Coordinates.Cartesian point = 1;
+//    optional Coordinates.WGS86 wgs = 2;
+//    optional Coordinates.UTM utm = 3;
+}
+
+message Polygon {
+    repeated Point points = 1;
+}
+
+message Location {
+    optional Point point = 1;
+    optional Polygon polygon = 2;
+}
+
+message LocationList {
+    repeated Location locations = 1;
+}
+
+message EmptyMessage {
+}
+
+// Message test
+message SimpleTest
+{
+    required string name = 2;
+}
+
+message CompositeStringTest
+{
+    repeated SimpleTest test = 1;
+}
+
+message CompositeIntegerTest
+{
+    repeated int32 test = 1;
+}
+
+message ZeroField
+{
+    optional int32 value = 1 [default = 0];
+}
+
+message Composite
+{
+    required int32 context = 1;
+    optional SimpleTest simple = 2;
+    optional ZeroField zero = 3;
+}
+
+message Extendable
+{
+    extensions 1 to max;
+}
+
+extend Extendable
+{
+    optional SimpleTest simple = 1;
+    optional ZeroField zero = 2;
+}
+

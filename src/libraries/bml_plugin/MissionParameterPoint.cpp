@@ -39,23 +39,21 @@ MissionParameterPoint::~MissionParameterPoint()
 // Name: MissionParameterPoint::Serialize
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterPoint::Serialize( ASN1T_MissionParameter& parameter ) const
+void MissionParameterPoint::Serialize( MsgMissionParameter& parameter ) const
 {
-    parameter.null_value = 0;
-    parameter.value.t = T_MissionParameter_value_point;
-    parameter.value.u.point = new ASN1T_Point();
-    parameter.value.u.point->type = EnumLocationType::point;
-    parameter.value.u.point->coordinates.n = 1;
-    parameter.value.u.point->coordinates.elem = new ASN1T_CoordLatLong[1];
-    point_->Serialize( parameter.value.u.point->coordinates.elem[0] );
+    parameter.set_null_value( 0 );
+
+    parameter.mutable_value()->mutable_point()->mutable_location()->set_type( MsgLocation_Geometry_point );
+    parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->add_elem();
+    point_->Serialize( *parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem(0) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPoint::Clean
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterPoint::Clean( ASN1T_MissionParameter& parameter ) const
+void MissionParameterPoint::Clean( MsgMissionParameter& parameter ) const
 {
-    delete[] parameter.value.u.point->coordinates.elem;
-    delete parameter.value.u.point;
+    delete[] parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem();
+    delete parameter.mutable_value()->mutable_point()->mutable_location();
 }

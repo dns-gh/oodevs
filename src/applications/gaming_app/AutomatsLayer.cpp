@@ -11,11 +11,12 @@
 #include "AutomatsLayer.h"
 #include "gaming/MissionParameters.h"
 #include "gaming/ConvexHulls.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_gui/ValuedDragObject.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/publisher_ABC.h"
 
 using namespace kernel;
 
@@ -102,9 +103,9 @@ bool AutomatsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 void AutomatsLayer::RequestCreation( const geometry::Point2f& point, const kernel::AgentType& type )
 {
-    simulation::UnitCreationRequest asn;
-    asn().oid_automate = selected_->GetId();
-    converter_.ConvertToGeo( point, asn().position );
-    asn().type_pion = type.GetId();
-    asn.Send( publisher_ );
+    simulation::UnitCreationRequest message;
+    message().set_oid_automate( selected_->GetId() );
+    converter_.ConvertToGeo< Common::MsgCoordLatLong >( point, *message().mutable_position() );
+    message().set_type_pion( type.GetId() );
+    message.Send( publisher_ );
 }

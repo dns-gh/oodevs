@@ -55,7 +55,7 @@ ActivableCapacity::~ActivableCapacity()
 // Name: template< typename Archive > void ActivableCapacity::serialize
 // Created: JCR 2008-07-04
 // -----------------------------------------------------------------------------
-template< typename Archive > void ActivableCapacity::serialize( Archive& file, const uint )
+template< typename Archive > void ActivableCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }

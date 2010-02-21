@@ -95,14 +95,14 @@ actions::Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, cons
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgUnitOrder& message ) const
 {
-    const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( model_.agents_.GetAgent( message.oid ), mission, controllers_.controller_, false ) );
+    const MissionType& mission = missions_.Get( message.mission() );
+    std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( model_.agents_.GetAgent( message.oid() ), mission, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
-    AddParameters( *action, mission, message.parametres );
+    AddParameters( *action, mission, message.parametres() );
     return action.release();
 }
 
@@ -110,14 +110,14 @@ actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgUnitOrder& mess
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder& message ) const
 {
-    const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( model_.agents_.GetAutomat( message.oid ), mission, controllers_.controller_, false ) );
+    const MissionType& mission = missions_.Get( message.mission() );
+    std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( model_.agents_.GetAutomat( message.oid() ), mission, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
-    AddParameters( *action, mission, message.parametres );
+    AddParameters( *action, mission, message.parametres() );
     return action.release();
 }
 
@@ -125,14 +125,14 @@ actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgAutomatOrder& m
 // Name: ActionFactory::CreateAction
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPopulationOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgPopulationOrder& message ) const
 {
-    const MissionType& mission = missions_.Get( message.mission );
-    std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( model_.agents_.GetPopulation( message.oid ), mission, controllers_.controller_, false ) );
+    const MissionType& mission = missions_.Get( message.mission() );
+    std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( model_.agents_.GetPopulation( message.oid() ), mission, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
-    AddParameters( *action, mission, message.parametres );
+    AddParameters( *action, mission, message.parametres() );
     return action.release();
 }
 
@@ -141,18 +141,18 @@ actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgPopulationOrder
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgFragOrder& message ) const
+actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const
 {
-    const FragOrderType& order = fragOrders_.Get( message.frag_order );
+    const FragOrderType& order = fragOrders_.Get( message.frag_order() );
     std::auto_ptr< actions::Action_ABC > action;
-    if( const Agent_ABC* agent = model_.agents_.FindAgent( message.oid ) )
+    if( const Agent_ABC* agent = model_.agents_.FindAgent( message.oid() ) )
         action.reset( new actions::FragOrder( *agent, order, controllers_.controller_, false ) );
-    else if( const Automat_ABC* automat = model_.agents_.FindAutomat( message.oid ) )
+    else if( const Automat_ABC* automat = model_.agents_.FindAutomat( message.oid() ) )
         action.reset( new actions::FragOrder( *automat, order, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
-    AddParameters( *action, order, message.parametres );
+    AddParameters( *action, order, message.parametres() );
     return action.release();
 }
 
@@ -160,15 +160,15 @@ actions::Action_ABC* ActionFactory::CreateAction( const ASN1T_MsgFragOrder& mess
 // Name: ActionFactory::AddParameters
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
-void ActionFactory::AddParameters( actions::Action_ABC& action, const OrderType& order, const ASN1T_MissionParameters& asn ) const
+void ActionFactory::AddParameters( actions::Action_ABC& action, const OrderType& order, const Common::MsgMissionParameters& message ) const
 {
     tools::Iterator< const OrderParameter& > it = order.CreateIterator();
-    unsigned int i = 0;
+    int i = 0;
     while( it.HasMoreElements() )
     {
-        if( i >= asn.n )
+        if( i >= message.elem_size() )
             throw std::runtime_error( __FUNCTION__ " Mission parameter count does not match mission definition" );
-        if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), asn.elem[i++], action.GetEntity() ) )
+        if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), action.GetEntity() ) )
             action.AddParameter( *newParam );
     }
 }

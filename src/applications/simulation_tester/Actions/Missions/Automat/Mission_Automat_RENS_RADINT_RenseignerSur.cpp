@@ -43,9 +43,9 @@ void Mission_Automat_RENS_RADINT_RenseignerSur::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_RENS_RADINT_RenseignerSur& asnMission = *new ASN1T_Mission_Automate_RENS_RADINT_RenseignerSur();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_rens_radint_renseignersur;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_radint_renseignersur = &asnMission;
+    Mission_Automate_RENS_RADINT_RenseignerSur& asnMission = *new Mission_Automate_RENS_RADINT_RenseignerSur();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_rens_radint_renseignersur = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_RENS_RADINT_RenseignerSur::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_RENS_RADINT_RenseignerSur::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_rens_radint_renseignersur );
-    ASN1T_Mission_Automate_RENS_RADINT_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_radint_renseignersur;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_rens_radint_renseignersur ());
+    Mission_Automate_RENS_RADINT_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_rens_radint_renseignersur;
 
     ASN_Tools::Delete( asnMission.zone );
 

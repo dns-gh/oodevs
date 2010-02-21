@@ -20,6 +20,11 @@
 
 using namespace plugins::bml;
 
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
+
 // -----------------------------------------------------------------------------
 // Name: Who constructor
 // Created: SBO 2008-05-22
@@ -62,11 +67,11 @@ Who::Who( const dispatcher::Agent& entity, int detectionLevel )
 namespace
 {
     // $$$$ SBO 2008-07-24: hack to force update of real entities
-    int ComputeLevel( const ASN1T_MsgUnitAttributes& attributes )
+    int ComputeLevel( const MsgUnitAttributes& attributes )
     {
-        return attributes.m.etat_operationnelPresent
-            || attributes.m.dotation_eff_materielPresent
-            || attributes.m.dotation_eff_personnelPresent
+        return attributes.has_etat_operationnel() 
+            || attributes.has_dotation_eff_materiel() 
+            || attributes.has_dotation_eff_personnel() 
             ? EnumUnitVisibility::identified : -1;
     }
 }
@@ -75,7 +80,7 @@ namespace
 // Name: Who constructor
 // Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-Who::Who( const dispatcher::Agent& entity, const ASN1T_MsgUnitAttributes& attributes )
+Who::Who( const dispatcher::Agent& entity, const MsgUnitAttributes& attributes )
     : agent_( &entity )
     , automat_( 0 )
     , attributes_( &attributes )
@@ -163,13 +168,13 @@ void Who::SendEquipmentStatus( xml::xostream& xos ) const
     if( !agent_ )
         return;
     xos << xml::start( "jc3iedm:ObjectItemCapabilityInObjectItemList" );
-    if( attributes_->m.dotation_eff_materielPresent )
+    if( attributes_->has_dotation_eff_materiel() )
     {
         AvailabilityComputer computer;
         agent_->equipments_.Apply( boost::bind( &AvailabilityComputer::AddEquipment, boost::ref( computer ), _1 ) );
         SerializeAvailability( "SPLC2", xos, computer.Percentage() );
     }
-    if( attributes_->m.dotation_eff_personnelPresent )
+    if( attributes_->has_dotation_eff_personnel() )
     {
         AvailabilityComputer computer;
         agent_->troops_.Apply( boost::bind( &AvailabilityComputer::AddHuman, boost::ref( computer ), _1 ) );
@@ -209,7 +214,7 @@ namespace
             return "UNK";
     }
 
-    std::string OperationalState( const ASN1T_EnumOperationalStatus& status )
+    std::string OperationalState( const EnumOperationalStatus& status )
     {
         switch( status )
         {

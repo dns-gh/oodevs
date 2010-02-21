@@ -10,12 +10,12 @@
 #ifndef __SupplyStates_h_
 #define __SupplyStates_h_
 
-#include "game_asn/Simulation.h"
-#include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver.h"
 #include "Availability.h"
 #include "Dotation.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -26,6 +26,10 @@ namespace kernel
     class PropertiesDictionary;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgLogSupplyState;
+}
 // =============================================================================
 /** @class  SupplyStates
     @brief  SupplyStates
@@ -33,7 +37,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class SupplyStates : public kernel::Extension_ABC
-                   , public kernel::Updatable_ABC< ASN1T_MsgLogSupplyState >
+    , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
                    , public tools::Resolver< Dotation >
 {
 public:
@@ -46,7 +50,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoUpdate( const ASN1T_MsgLogSupplyState& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message );
     //@}
 
 private:

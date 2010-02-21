@@ -38,7 +38,7 @@ public:
     /** @name */
     //-------------------------------------------------------------------------
     //@{
-    bool32      IsStarted() const;
+    bool        IsStarted() const;
     void        Start();
     double      Stop ();             // Stop the timer and return the time elapsed since the Start() method was called, in milliseconds
     double      GetLastTime();       // return last mesured time

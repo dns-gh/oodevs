@@ -38,8 +38,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -53,7 +53,7 @@ public:
 
     //! @name Queries
     //@{
-    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( uint nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObjectFromID( unsigned int nID ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetKnowledgeObject      ( const MIL_Object_ABC& objectKnown ) const;
     void                  GetKnowledgesObject     ( T_KnowledgeObjectVector& outContainer ) const;
     bool                  HasKnowledgeObject      ( const MIL_Object_ABC& objectKnown ) const;
@@ -92,7 +92,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectIDMap;
+    typedef std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Object > > T_KnowledgeObjectIDMap;
     typedef T_KnowledgeObjectIDMap::iterator                            IT_KnowledgeObjectIDMap;
     typedef T_KnowledgeObjectIDMap::const_iterator                      CIT_KnowledgeObjectIDMap;
     //@}

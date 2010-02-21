@@ -10,9 +10,12 @@
 #ifndef __Fire_ABC_h_
 #define __Fire_ABC_h_
 
-#include "game_asn/Simulation.h"
+
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -25,8 +28,8 @@ namespace kernel
 */
 // Created: AGE 2006-03-10
 // =============================================================================
-class Fire_ABC : public kernel::Updatable_ABC< ASN1T_MsgStopUnitFire >
-               , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
+class Fire_ABC : public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
+               , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopPopulationFire >
                , public kernel::Drawable_ABC
 {
 
@@ -39,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgStopUnitFire& message );
-    virtual void DoUpdate( const ASN1T_MsgStopPopulationFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const = 0;
     //@}
 

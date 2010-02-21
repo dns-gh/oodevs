@@ -10,10 +10,15 @@
 #ifndef __HumanFactors_h_
 #define __HumanFactors_h_
 
-#include "game_asn/Simulation.h"
+
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Types.h"
+
+namespace MsgsSimToClient
+{
+	class MsgUnitAttributes;
+}
 
 namespace kernel
 {
@@ -29,7 +34,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class HumanFactors : public kernel::HumanFactors_ABC
-                   , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                   , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
 
 public:
@@ -61,7 +66,7 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dictionary ) const;
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     //@}
 
 private:

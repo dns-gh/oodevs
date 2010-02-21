@@ -24,7 +24,7 @@ class MIL_AtlasNatureParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_AtlasNatureParameter( const ASN1T_AtlasNature& );
+    explicit MIL_AtlasNatureParameter( const Common::MsgAtlasNature& );
     explicit MIL_AtlasNatureParameter( int nature );
     virtual ~MIL_AtlasNatureParameter();
     //@}
@@ -36,7 +36,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToNatureAtlas( ASN1T_AtlasNature& asn ) const;
+    virtual bool ToNatureAtlas( Common::MsgAtlasNature& asn ) const;
     virtual bool ToNatureAtlas( int& atlas ) const;
     //@}
 

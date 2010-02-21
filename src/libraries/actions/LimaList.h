@@ -10,8 +10,12 @@
 #ifndef __ActionParameterLimaList_h_
 #define __ActionParameterLimaList_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
+
+namespace Common
+{
+    class MsgLimasOrder;
+}
 
 namespace kernel
 {
@@ -34,15 +38,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LimaList( const kernel::OrderParameter& parameter );
-             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& limas );
+             LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLimasOrder& limas );
              LimaList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~LimaList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
+    virtual void Clean( Common::MsgMissionParameter& asn ) const;
     virtual bool IsSet() const;
     //@}
 

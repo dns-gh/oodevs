@@ -14,7 +14,7 @@
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
 template<class Archive>
-void TER_Object_ABC::load( Archive& file, const uint )
+void TER_Object_ABC::load( Archive& file, const unsigned int )
 {
     file >> location_;
     InsertInWorld();
@@ -25,7 +25,7 @@ void TER_Object_ABC::load( Archive& file, const uint )
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
 template<class Archive>
-void TER_Object_ABC::save( Archive& file, const uint ) const
+void TER_Object_ABC::save( Archive& file, const unsigned int ) const
 {
     file << location_;
 }

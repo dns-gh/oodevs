@@ -11,6 +11,7 @@
 #define __MIL_DateTimeParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -25,7 +26,7 @@ class MIL_DateTimeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_DateTimeParameter( const ASN1T_DateTime & asn );
+    explicit MIL_DateTimeParameter( const Common::MsgDateTime& asn );
     virtual ~MIL_DateTimeParameter();
     //@}
 
@@ -36,7 +37,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToGDH( ASN1T_DateTime& ) const;
+    virtual bool ToGDH( Common::MsgDateTime& ) const;
     virtual bool ToGDH( float& value ) const;
     //@}
 

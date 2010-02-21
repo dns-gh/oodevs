@@ -75,13 +75,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const uint nVersion )
+        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const uint )
+        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const unsigned int )
         {
             const DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::size_type size = map.size();
             file << size;
@@ -93,7 +93,7 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const uint )
+        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap& map, const unsigned int )
         {
             DEC_BlackBoard_CanContainKnowledgeAgent::T_KnowledgeAgentMap::size_type nNbr;
             file >> nNbr;
@@ -115,7 +115,7 @@ namespace boost
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::load
 // Created: JVT 2005-04-06
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
          >> nLastCacheUpdateTick_;
@@ -135,7 +135,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::save
 // Created: JVT 2005-04-06
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << pKnowledgeGroup_
          << nLastCacheUpdateTick_;
@@ -255,7 +255,7 @@ bool DEC_BlackBoard_CanContainKnowledgeAgent::HasKnowledgeAgent( const MIL_Agent
 // Name: DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( uint nID ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_BlackBoard_CanContainKnowledgeAgent::GetKnowledgeAgentFromID( unsigned int nID ) const
 {
     CIT_KnowledgeAgentIDMap itKnowledge = unitKnowledgeFromIDMap_.find( nID );
     return itKnowledge == unitKnowledgeFromIDMap_.end() ? boost::shared_ptr< DEC_Knowledge_Agent >() : itKnowledge->second;

@@ -27,15 +27,15 @@ using namespace kernel;
 // Name: LogMedicalConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const ASN1T_MsgLogMedicalHandlingCreation& message )
+LogMedicalConsign::LogMedicalConsign( Controller& controller, const tools::Resolver_ABC< Agent_ABC >& resolver, const MsgsSimToClient::MsgLogMedicalHandlingCreation& message )
     : controller_      ( controller )
     , resolver_        ( resolver )
-    , nID_             ( message.oid_consigne )
-    , pion_            ( resolver_.Get( message.oid_pion ) )
+    , nID_             ( message.oid_consigne() )
+    , pion_            ( resolver_.Get( message.oid_pion() ) )
     , pPionLogHandling_( 0 )
-    , wound_           ( E_HumanWound( message.blessure ) )
-    , bMentalDeceased_ ( message.blesse_mental != 0 )
-    , bContaminated_   ( message.contamine_nbc != 0 )
+    , wound_           ( E_HumanWound( message.blessure() ) )
+    , bMentalDeceased_ ( message.blesse_mental() != 0 )
+    , bContaminated_   ( message.contamine_nbc() != 0 )
     , diagnosed_       ( false )
     , nState_          ( eLogMedicalHandlingStatus_Termine )
 {
@@ -61,27 +61,27 @@ LogMedicalConsign::~LogMedicalConsign()
 // Name: LogMedicalConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMedicalConsign::Update( const ASN1T_MsgLogMedicalHandlingUpdate& message )
+void LogMedicalConsign::Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message )
 {
-    if( message.m.oid_pion_log_traitantPresent )
+    if( message.has_oid_pion_log_traitant()  )
     {
         if( pPionLogHandling_ )
             pPionLogHandling_->Get< LogMedicalConsigns >().TerminateConsign( *this );
-        pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant );
+        pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant() );
         if( pPionLogHandling_ )
             pPionLogHandling_->Get< LogMedicalConsigns >().HandleConsign( *this );
     }
 
-    if( message.m.blesse_mentalPresent )
-        bMentalDeceased_ = message.blesse_mental != 0;
-    if( message.m.contamine_nbcPresent )
-        bContaminated_   = message.contamine_nbc != 0;
-    if( message.m.blessurePresent )
-        wound_ = E_HumanWound( message.blessure );
-    if( message.m.etatPresent )
-        nState_ = E_LogMedicalHandlingStatus( message.etat );
-    if( message.m.diagnostique_effectuePresent )
-        diagnosed_ = message.diagnostique_effectue != 0;
+    if( message.has_blesse_mental()  )
+        bMentalDeceased_ = message.blesse_mental() != 0;
+    if( message.has_contamine_nbc()  )
+        bContaminated_   = message.contamine_nbc() != 0;
+    if( message.has_blessure()  )
+        wound_ = E_HumanWound( message.blessure() );
+    if( message.has_etat()  )
+        nState_ = E_LogMedicalHandlingStatus( message.etat() );
+    if( message.has_diagnostique_effectue()  )
+        diagnosed_ = message.diagnostique_effectue() != 0;
 
     controller_.Update( *this );
 }

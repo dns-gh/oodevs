@@ -36,7 +36,7 @@ SaverPlugin::~SaverPlugin()
 // Name: SaverPlugin::Receive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void SaverPlugin::Receive( const ASN1T_MsgsSimToClient& message )
+void SaverPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
 {
     saver_->Receive( message );
 }

@@ -62,7 +62,7 @@ DEC_Knowledge_RapForLocal::~DEC_Knowledge_RapForLocal()
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const uint )
+void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_Knowledge_RapFor_ABC >( *this )
             & const_cast< MIL_AgentPion*& >( pPion_ );

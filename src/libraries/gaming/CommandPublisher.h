@@ -10,7 +10,6 @@
 #ifndef __CommandPublisher_h_
 #define __CommandPublisher_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
 namespace kernel

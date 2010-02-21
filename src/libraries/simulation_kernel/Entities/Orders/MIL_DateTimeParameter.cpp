@@ -16,7 +16,7 @@
 // Name: MIL_DateTimeParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_DateTimeParameter::MIL_DateTimeParameter( const ASN1T_DateTime & asn )
+MIL_DateTimeParameter::MIL_DateTimeParameter( const Common::MsgDateTime& asn )
 {
     NET_ASN_Tools::ReadGDH( asn, dateTime_ );
 }
@@ -43,7 +43,7 @@ bool MIL_DateTimeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_DateTimeParameter::ToGDH
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_DateTimeParameter::ToGDH( ASN1T_DateTime& asn ) const
+bool MIL_DateTimeParameter::ToGDH( Common::MsgDateTime& asn ) const
 {
     NET_ASN_Tools::WriteGDH( dateTime_, asn );
     return true;

@@ -17,8 +17,10 @@
 #include "ScoreDefinitions.h"
 #include "Services.h"
 #include "clients_kernel/Controllers.h"
-#include "game_asn/ReplaySenders.h"
+#include "protocol/ReplaySenders.h"
+#include "protocol/AarSenders.h"
 
+using namespace Common;
 // -----------------------------------------------------------------------------
 // Name: ScoreModel constructor
 // Created: SBO 2009-03-12
@@ -75,9 +77,9 @@ namespace
 // Name: ScoreModel::Update
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-void ScoreModel::Update( const ASN1T_MsgIndicator& message )
+void ScoreModel::Update( const MsgsAarToClient::MsgIndicator& message )
 {
-    Score* score = Find( ExtractRoot( message.name ) );
+    Score* score = Find( ExtractRoot( QString( message.name().c_str() ) ) );
     if( !score )
     {
         if( hasReplay_ )
@@ -93,7 +95,7 @@ void ScoreModel::Update( const ASN1T_MsgIndicator& message )
 // Name: ScoreModel::Update
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-void ScoreModel::Update( const ASN1T_MsgPlotResult& message )
+void ScoreModel::Update( const MsgsAarToClient::MsgPlotResult& message )
 {
     requests_->Update( message );
 }

@@ -39,9 +39,9 @@ namespace
 BOOST_AUTO_TEST_CASE( InstantiateUrbanKnowledge )
 {
     std::auto_ptr< Model_ABC > model( new MockModel() ); 
-    ASN1T_MsgUrbanKnowledgeCreation asnMsg;
-    asnMsg.oid = 1000;
-    asnMsg.team = 1;
-    asnMsg.real_urban = 10;
+    MsgsSimToClient::MsgUrbanKnowledgeCreation message;
+    message.set_oid( 1000 );
+    message.set_team( 1 );
+    message.set_real_urban( 10 );
     //UrbanKnowledge( *model, asnMsg );
 }

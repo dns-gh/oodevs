@@ -43,9 +43,9 @@ void Mission_Automat_GEN_RetablirItineraires::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_GEN_RetablirItineraires& asnMission = *new ASN1T_Mission_Automate_GEN_RetablirItineraires();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_retablir_itineraires;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_retablir_itineraires = &asnMission;
+    Mission_Automate_GEN_RetablirItineraires& asnMission = *new Mission_Automate_GEN_RetablirItineraires();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_gen_retablir_itineraires = &asnMission;
 
     const T_PathVector& itineraires_ = pTarget_->GetTestParam_PathList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_GEN_RetablirItineraires::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_GEN_RetablirItineraires::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_retablir_itineraires );
-    ASN1T_Mission_Automate_GEN_RetablirItineraires& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_retablir_itineraires;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_gen_retablir_itineraires ());
+    Mission_Automate_GEN_RetablirItineraires& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_gen_retablir_itineraires;
 
     ASN_Tools::Delete( asnMission.itineraires );
 

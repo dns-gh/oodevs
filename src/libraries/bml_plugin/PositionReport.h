@@ -10,7 +10,10 @@
 #ifndef __PositionReport_h_
 #define __PositionReport_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace xml
 {
@@ -41,7 +44,7 @@ class PositionReport
 public:
     //! @name Constructors/Destructor
     //@{
-             PositionReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitAttributes& attributes );
+             PositionReport( const dispatcher::Agent& entity, const MsgUnitAttributes& attributes );
     virtual ~PositionReport();
     //@}
 
@@ -67,7 +70,7 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Agent& entity_;
-    const ASN1T_MsgUnitAttributes& attributes_;
+    const MsgUnitAttributes& attributes_;
     //@}
 };
 

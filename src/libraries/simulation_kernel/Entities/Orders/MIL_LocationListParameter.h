@@ -11,7 +11,8 @@
 #define __MIL_LocationListParameter_h_
 
 #include "MIL_BaseParameter.h"
-#include "simulation_terrain/TER_Localisation.h"
+
+class TER_Localisation;
 
 // =============================================================================
 /** @class  MIL_LocationListParameter
@@ -25,7 +26,7 @@ class MIL_LocationListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LocationListParameter( const ASN1T_LocationList& );
+    explicit MIL_LocationListParameter( const Common::MsgLocationList& );
     explicit MIL_LocationListParameter( const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );
     virtual ~MIL_LocationListParameter();
     //@}
@@ -37,7 +38,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToLocationList( ASN1T_LocationList& ) const;
+    virtual bool ToLocationList( Common::MsgLocationList& ) const;
     virtual bool ToLocationList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
     //@}
 

@@ -23,6 +23,7 @@
 #include "ExtensionFactory.h"
 #include "dispatcher/Model.h"
 #include "dispatcher/Config.h"
+#include "protocol/simulationsenders.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -88,37 +89,36 @@ void DatabasePublisher::Initialize( const std::string& name, const dispatcher::C
 // Name: DatabasePublisher::IsRelevant
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-bool DatabasePublisher::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
+bool DatabasePublisher::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper ) const
 {
-    switch ( asn.msg.t )
-    {
-    case T_MsgsSimToClient_msg_msg_control_begin_tick:
-    case T_MsgsSimToClient_msg_msg_control_end_tick:        
-    case T_MsgsSimToClient_msg_msg_object_update:
-    case T_MsgsSimToClient_msg_msg_object_destruction:
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_update:
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
-    case T_MsgsSimToClient_msg_msg_object_knowledge_update:
-    case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:
-    case T_MsgsSimToClient_msg_msg_unit_destruction:
-    case T_MsgsSimToClient_msg_msg_report:
-    case T_MsgsSimToClient_msg_msg_folk_graph_update:
+    if( wrapper.message().has_control_begin_tick() ||
+        wrapper.message().has_control_end_tick() ||        
+        wrapper.message().has_object_update() ||
+        wrapper.message().has_object_destruction() ||
+        wrapper.message().has_unit_knowledge_update() ||
+        wrapper.message().has_unit_knowledge_destruction() ||
+        wrapper.message().has_object_knowledge_update() ||
+        wrapper.message().has_object_knowledge_destruction() ||
+        wrapper.message().has_unit_destruction() ||
+        wrapper.message().has_report() ||
+        wrapper.message().has_folk_graph_update() )
         return modelLoaded_;
-    case T_MsgsSimToClient_msg_msg_control_send_current_state_begin:
-    case T_MsgsSimToClient_msg_msg_control_send_current_state_end:
-    case T_MsgsSimToClient_msg_msg_object_creation:
-    case T_MsgsSimToClient_msg_msg_formation_creation:
-    case T_MsgsSimToClient_msg_msg_automat_creation:
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:
-    case T_MsgsSimToClient_msg_msg_object_knowledge_creation:  
-    case T_MsgsSimToClient_msg_msg_unit_creation:    
-    case T_MsgsSimToClient_msg_msg_folk_creation:    
+    if( wrapper.message().has_control_send_current_state_begin() ||
+        wrapper.message().has_control_send_current_state_end() ||
+        wrapper.message().has_object_creation() ||
+        wrapper.message().has_formation_creation() ||
+        wrapper.message().has_automat_creation() ||
+        wrapper.message().has_unit_knowledge_creation() ||
+        wrapper.message().has_object_knowledge_creation() ||
+        wrapper.message().has_unit_creation() ||    
+        wrapper.message().has_folk_creation() )
         return true;
-    case T_MsgsSimToClient_msg_msg_automat_attributes:
-        return asn.msg.u.msg_automat_attributes->m.etat_automatePresent == 1;        
-    case T_MsgsSimToClient_msg_msg_unit_attributes:
-        const ASN1T_MsgUnitAttributes* attributes = asn.msg.u.msg_unit_attributes;
-        if( attributes->m.positionPresent || attributes->m.vitessePresent || attributes->m.etat_operationnelPresent )
+    if( wrapper.message().has_automat_attributes() )
+        return wrapper.message().automat_attributes().has_etat_automate();        
+    if (wrapper.message().has_unit_attributes() )
+    {
+        const MsgsSimToClient::MsgUnitAttributes& attributes = wrapper.message().unit_attributes();
+        if( attributes.has_position() || attributes.has_vitesse() || attributes.has_etat_operationnel() )
             return true;
     }
     return false;
@@ -128,17 +128,14 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsSimToClient& asn ) const
 // Name: DatabasePublisher::IsRelevant
 // Created: RDS 2008-04-11
 // -----------------------------------------------------------------------------
-bool DatabasePublisher::IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) const
+bool DatabasePublisher::IsRelevant( const MsgsMessengerToClient::MsgMessengerToClient& wrapper ) const
 {
-    switch ( asn.t )
-    {
-    case T_MsgsMessengerToClient_msg_lima_destruction:   
-    case T_MsgsMessengerToClient_msg_limit_destruction:
+    if (wrapper.message().has_lima_destruction() ||   
+        wrapper.message().has_limit_destruction() )
         return modelLoaded_;
-    case T_MsgsMessengerToClient_msg_lima_creation:   
-    case T_MsgsMessengerToClient_msg_limit_creation:
-        break;
-    }
+    if (wrapper.message().has_lima_creation() ||   
+        wrapper.message().has_limit_creation())
+        return true;
     return true;
 }
 
@@ -147,26 +144,26 @@ bool DatabasePublisher::IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) con
 // Name: DatabasePublisher::Receive
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-void DatabasePublisher::Receive( const ASN1T_MsgsSimToClient& asn )
+void DatabasePublisher::Receive( const MsgsSimToClient::MsgSimToClient& message )
 {
-    if( !IsRelevant( asn ) )
+    if( !IsRelevant( message ) )
         return;
 
-    UpdateOnTick( asn );
-    UpdateDatabase( asn );
-    UpdateFolkDatabase( asn );
+    UpdateOnTick( message );
+    UpdateDatabase( message );
+    UpdateFolkDatabase( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::Receive
 // Created: RDS 2008-04-11
 // -----------------------------------------------------------------------------
-void DatabasePublisher::Receive( const ASN1T_MsgsMessengerToClient& asn )
+void DatabasePublisher::Receive( const MsgsMessengerToClient::MsgMessengerToClient& message )
 {
-    if( !IsRelevant( asn ) )
+    if( !IsRelevant( message ) )
         return;
 
-    UpdateDatabase( asn );
+    UpdateDatabase( message );
 }
 
 
@@ -174,25 +171,28 @@ void DatabasePublisher::Receive( const ASN1T_MsgsMessengerToClient& asn )
 // Name: DatabasePublisher::UpdateOnTick
 // Created: JCR 2008-01-11
 // -----------------------------------------------------------------------------
-void DatabasePublisher::UpdateOnTick( const ASN1T_MsgsSimToClient& asn )
+void DatabasePublisher::UpdateOnTick( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    switch ( asn.msg.t )
+    if( wrapper.message().has_control_send_current_state_begin())
+        modelLoaded_ = false; 
+    if( wrapper.message().has_control_send_current_state_end() )   
     {
-    case T_MsgsSimToClient_msg_msg_control_send_current_state_begin: modelLoaded_ = false; break;
-    case T_MsgsSimToClient_msg_msg_control_send_current_state_end:   
         databaseUpdater_->Flush();
-        modelLoaded_ = true;  break;
-    case T_MsgsSimToClient_msg_msg_control_begin_tick:         
-        MT_LOG_INFO_MSG( "tick " << asn.msg.u.msg_control_begin_tick->current_tick );        
+        modelLoaded_ = true;  
+    }
+    if( wrapper.message().has_control_begin_tick() )
+    {
+        MT_LOG_INFO_MSG( "tick " << wrapper.message().control_begin_tick().current_tick() );        
         {
             UpdateListeners();
         }
 //        databaseUpdater_->Lock();
-        break;
-    case T_MsgsSimToClient_msg_msg_control_end_tick:
+    }
+    if( wrapper.message().has_control_end_tick() )
+    {
         // folkUpdater_->Drop();
         databaseUpdater_->Flush();
-        break;
+        
     }
 }
     
@@ -200,48 +200,61 @@ void DatabasePublisher::UpdateOnTick( const ASN1T_MsgsSimToClient& asn )
 // Name: DatabasePublisher::UpdateDatabase
 // Created: JCR 2008-01-11
 // -----------------------------------------------------------------------------
-void DatabasePublisher::UpdateDatabase( const ASN1T_MsgsSimToClient& asn )
+void DatabasePublisher::UpdateDatabase( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    switch ( asn.msg.t )
-    {
-    case T_MsgsSimToClient_msg_msg_formation_creation:          databaseUpdater_->Update( *asn.msg.u.msg_formation_creation ); break;
-    case T_MsgsSimToClient_msg_msg_automat_creation:            databaseUpdater_->Update( *asn.msg.u.msg_automat_creation ); break;
-    case T_MsgsSimToClient_msg_msg_automat_attributes:          databaseUpdater_->Update( *asn.msg.u.msg_automat_attributes ); break;
+    if( wrapper.message().has_formation_creation() )
+        databaseUpdater_->Update( wrapper.message().formation_creation() ); 
+    if( wrapper.message().has_automat_creation() )
+        databaseUpdater_->Update( wrapper.message().automat_creation() ); 
+    if( wrapper.message().has_automat_attributes() )
+        databaseUpdater_->Update( wrapper.message().automat_attributes() ); 
 
-    case T_MsgsSimToClient_msg_msg_unit_creation:               databaseUpdater_->Update( *asn.msg.u.msg_unit_creation ); break;
-    case T_MsgsSimToClient_msg_msg_unit_attributes:             databaseUpdater_->Update( *asn.msg.u.msg_unit_attributes ); break;
-    case T_MsgsSimToClient_msg_msg_unit_destruction:            databaseUpdater_->DestroyUnit( asn.msg.u.msg_unit_destruction ); break;
+    if( wrapper.message().has_unit_creation() )
+        databaseUpdater_->Update( wrapper.message().unit_creation() ); 
+    if( wrapper.message().has_unit_attributes() )
+        databaseUpdater_->Update( wrapper.message().unit_attributes() ); 
+    if( wrapper.message().has_unit_destruction() )
+        databaseUpdater_->DestroyUnit( wrapper.message().unit_destruction() ); 
 
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:     databaseUpdater_->Update( *asn.msg.u.msg_unit_knowledge_creation ); break;
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_update:       databaseUpdater_->Update( *asn.msg.u.msg_unit_knowledge_update ); break;
-    case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:  databaseUpdater_->DestroyUnitKnowledge( *asn.msg.u.msg_unit_knowledge_destruction );  break;
+    if( wrapper.message().has_unit_knowledge_creation() )
+        databaseUpdater_->Update( wrapper.message().unit_knowledge_creation() ); 
+    if( wrapper.message().has_unit_knowledge_update() )
+        databaseUpdater_->Update( wrapper.message().unit_knowledge_update() ); 
+    if( wrapper.message().has_unit_knowledge_destruction() )
+        databaseUpdater_->DestroyUnitKnowledge( wrapper.message().unit_knowledge_destruction() );  
 
-    case T_MsgsSimToClient_msg_msg_object_knowledge_creation:     databaseUpdater_->Update( *asn.msg.u.msg_object_knowledge_creation ); break;
-    case T_MsgsSimToClient_msg_msg_object_knowledge_update:       databaseUpdater_->Update( *asn.msg.u.msg_object_knowledge_update ); break;
-	case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:  databaseUpdater_->DestroyObjectKnowledge( *asn.msg.u.msg_object_knowledge_destruction );  break;
+    if( wrapper.message().has_object_knowledge_creation() )
+        databaseUpdater_->Update( wrapper.message().object_knowledge_creation() ); 
+    if( wrapper.message().has_object_knowledge_update() )
+        databaseUpdater_->Update( wrapper.message().object_knowledge_update() ); 
+    if( wrapper.message().has_object_knowledge_destruction() )
+        databaseUpdater_->DestroyObjectKnowledge( wrapper.message().object_knowledge_destruction() );  
 
-	case T_MsgsSimToClient_msg_msg_object_creation:             databaseUpdater_->Update( *asn.msg.u.msg_object_creation ); break;
-    // case T_MsgsSimToClient_msg_msg_object_update:               databaseUpdater_->Update( *asn.msg.u.msg_object_update ); break;
-    case T_MsgsSimToClient_msg_msg_object_destruction:          databaseUpdater_->DestroyObject( asn.msg.u.msg_object_destruction ); break;
-    case T_MsgsSimToClient_msg_msg_report:                      databaseUpdater_->Update( *asn.msg.u.msg_report ); break;
-    }
+    if( wrapper.message().has_object_creation() )
+        databaseUpdater_->Update( wrapper.message().object_creation() ); 
+//    if( wrapper.message().has_object_update() )
+//               databaseUpdater_->Update( *wrapper.message().object_update ); 
+    if( wrapper.message().has_object_destruction() )
+        databaseUpdater_->DestroyObject( wrapper.message().object_destruction() ); 
+    if( wrapper.message().has_report() )
+        databaseUpdater_->Update( wrapper.message().report() ); 
 }
     
 // -----------------------------------------------------------------------------
 // Name: DatabasePublisher::UpdateDatabase
 // Created: RDS 2008-04-11
 // -----------------------------------------------------------------------------
-void DatabasePublisher::UpdateDatabase( const ASN1T_MsgsMessengerToClient& asn )
+void DatabasePublisher::UpdateDatabase( const MsgsMessengerToClient::MsgMessengerToClient& wrapper )
 {
-    switch ( asn.t )
-    {
-    case T_MsgsMessengerToClient_msg_lima_creation:               databaseUpdater_->Update( *asn.u.msg_lima_creation ); break;
-//  case T_MsgsMessengerToClient_msg_lima_update:                 databaseUpdater_->Update( *asn.msg.u.msg_lima_update ); break;
-//  case T_MsgsMessengerToClient_msg_lima_destruction:            databaseUpdater_->Update( asn.msg.u.msg_lima_destruction ); break;
+    if (wrapper.message().has_lima_creation() )
+        databaseUpdater_->Update( wrapper.message().lima_creation() ); 
+//  wrapper.message().has_lima_update() ||                 databaseUpdater_->Update( *wrapper.message().lima_update ); break;
+//  wrapper.message().has_lima_destruction() ||            databaseUpdater_->Update( wrapper.message().lima_destruction ); break;
 
-    case T_MsgsMessengerToClient_msg_limit_creation:              databaseUpdater_->Update( *asn.u.msg_limit_creation ); break;
-//  case T_MsgsMessengerToClient_msg_limit_destruction:           databaseUpdater_->Update( asn.msg.u.msg_lima_destruction ); break;
-    }
+    if (wrapper.message().has_limit_creation() )
+        databaseUpdater_->Update( wrapper.message().limit_creation() );
+//  case T_MsgsMessengerToClient_limit_destruction:           databaseUpdater_->Update( wrapper.message().lima_destruction ); break;
+
 }
 
 
@@ -249,13 +262,12 @@ void DatabasePublisher::UpdateDatabase( const ASN1T_MsgsMessengerToClient& asn )
 // Name: DatabasePublisher::UpdateFolkDatabase
 // Created: JCR 2008-01-11
 // -----------------------------------------------------------------------------
-void DatabasePublisher::UpdateFolkDatabase( const ASN1T_MsgsSimToClient& asn )
+void DatabasePublisher::UpdateFolkDatabase( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    switch ( asn.msg.t )
-    {
-    case T_MsgsSimToClient_msg_msg_folk_creation:               folkUpdater_->Update( *asn.msg.u.msg_folk_creation ); break;
-    case T_MsgsSimToClient_msg_msg_folk_graph_update:           folkUpdater_->Update( *asn.msg.u.msg_folk_graph_update ); break;
-    }
+    if( wrapper.message().has_folk_creation() )
+        folkUpdater_->Update( wrapper.message().folk_creation() ); 
+    if( wrapper.message().has_folk_graph_update() )
+        folkUpdater_->Update( wrapper.message().folk_graph_update() ); 
 }
 
 // -----------------------------------------------------------------------------

@@ -13,6 +13,8 @@
 #include "Extractors.h"
 #include "FilterHelper.h"
 
+using namespace MsgsSimToClient;
+
 namespace extractors
 {
 
@@ -41,11 +43,11 @@ public:
 
     //! @name Operations
     //@{
-    bool HasValue( const ASN1T_MsgsSimToClient& message ) const
+    bool HasValue( const MsgSimToClient& wrapper ) const
     { 
-        return message.msg.t == T_MsgsSimToClient_msg_msg_stop_unit_fire;
+        return wrapper.message().has_stop_unit_fire();
     }
-    float Extract( const ASN1T_MsgsSimToClient& message ) const;
+    float Extract( const MsgSimToClient& wrapper ) const;
     //@}
 
 private:

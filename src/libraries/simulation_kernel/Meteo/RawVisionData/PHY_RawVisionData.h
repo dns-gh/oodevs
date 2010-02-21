@@ -50,7 +50,7 @@ public:
         eNbrVisionObjects = 4
     };
 
-    typedef uint8 envBits;  // champ de bit
+    typedef unsigned char envBits;  // champ de bit
 
     // cellule de la matrice de vision
     struct sCell
@@ -58,8 +58,8 @@ public:
     private:
         friend class PHY_RawVisionData;
 
-        int16           h     : 16;  // hauteur du sol
-        uint8           dh    : 8;   // hauteur de la planimétrie
+        unsigned short  h     : 16;  // hauteur du sol
+        unsigned char   dh    : 8;   // hauteur de la planimétrie
         envBits         e     : 8;   // champ de bit représentant l'environnement visuel statique
         PHY_Meteo*      pMeteo;      // météo locale
         PHY_AmmoEffect* pEffects;    // effets météo provoqués par des munitions ( fumigènes, obus eclairants )
@@ -68,8 +68,8 @@ public:
 
     public:
         sCell() : h(0), dh(0), e(0), pMeteo(0), pEffects(0) {}
-        int16                       GetAltitude     () const { return h; }
-        uint8                       GetEnvHeight    () const { return dh; }
+        short                       GetAltitude     () const { return h; }
+        unsigned char               GetEnvHeight    () const { return dh; }
         envBits                     GetEnv          () const { return e; }
         const PHY_Precipitation&    GetPrecipitation() const;
         const PHY_Lighting&         GetLighting     () const;
@@ -106,10 +106,10 @@ public:
     MT_Float GetMaxAltitude() const;
     void     CalcMinMaxAltitude();
 
-    static uint           ConvertEnvironementToObjectIdx( E_VisionObject obj );
-    static E_VisionObject ConvertObjectIdxToEnvironnement( uint );
+    static unsigned int           ConvertEnvironementToObjectIdx( E_VisionObject obj );
+    static E_VisionObject ConvertObjectIdxToEnvironnement( unsigned int );
 
-    template< typename T > void GetVisionObjectsInSurface( const T& localisation, uint& rEmptySurface, uint& rForestSurface, uint& rUrbanSurface ) const;
+    template< typename T > void GetVisionObjectsInSurface( const T& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
     void RegisterMeteoPatch   ( const MT_Vector2D&, const MT_Vector2D&, PHY_Meteo* );
 
@@ -128,17 +128,17 @@ private:
     friend class PHY_RawVisionDataIterator;
 
     // Convertisseurs de coordonnées SIM en coordonnées du tableau
-    uint            GetCol( double ) const;
-    uint            GetRow( double ) const;
-    const sCell&    operator () ( uint col, uint row ) const;
+    unsigned int            GetCol( double ) const;
+    unsigned int            GetRow( double ) const;
+    const sCell&    operator () ( unsigned int col, unsigned int row ) const;
           sCell&    operator () ( double, double );
 
 
 
     MT_Float rCellSize_; // taille (en metre) du côté de la cellule
     
-    uint     nNbrCol_;
-    uint     nNbrRow_;
+    unsigned int     nNbrCol_;
+    unsigned int     nNbrRow_;
 
     sCell**  ppCells_;
 

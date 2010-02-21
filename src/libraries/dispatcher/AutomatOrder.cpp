@@ -12,14 +12,16 @@
 #include "ClientPublisher_ABC.h"
 #include "Automat.h"
 
+#include "protocol/clientsenders.h"
+
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AutomatOrder::AutomatOrder( Model_ABC& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn )
-    : Order_ABC ( model, asn.mission, asn.parametres )
+AutomatOrder::AutomatOrder( Model_ABC& model, Automat& automat, const Common::MsgAutomatOrder& asn )
+    : Order_ABC ( model, asn.mission(), asn.parametres() )
     , automat_  ( automat )
 {
     // NOTHING
@@ -41,11 +43,11 @@ AutomatOrder::~AutomatOrder()
 void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 {
     client::AutomatOrder asn;
-    asn().oid       = automat_.GetId();
-    asn().mission   = missionID_;   
-    Order_ABC::Send( asn().parametres );
+    asn().set_oid(automat_.GetId());
+    asn().set_mission( missionID_ );   
+    Order_ABC::Send( *asn().mutable_parametres() );
     asn.Send( publisher );
-    AsnDelete( asn().parametres );    
+    Delete( *asn().mutable_parametres() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -56,8 +58,8 @@ void AutomatOrder::Send( ClientPublisher_ABC& publisher )
 void AutomatOrder::SendNoMission( const Automat& automat, ClientPublisher_ABC& publisher )
 {
     client::AutomatOrder asn;
-    asn().oid          = automat.GetId();
-    asn().mission      = 0;
-    asn().parametres.n = 0;
+    asn().set_oid          ( automat.GetId() );
+    asn().set_mission      ( 0 );
+    asn().mutable_parametres(); // $$$$ FHD 2009-10-28: should be removed if field is optional inprotocol
     asn.Send( publisher );
 }

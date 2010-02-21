@@ -28,11 +28,11 @@ public:
     virtual ~PHY_ObjectExplosionFireResult();
 
     void    Hit();
-    uint    GetHits() const;
+    unsigned int    GetHits() const;
 
 private:
     const MIL_Object_ABC& object_;
-    uint  hits_;
+    unsigned int  hits_;
 };
 
 #endif // __PHY_ObjectExplosionFireResult_h_

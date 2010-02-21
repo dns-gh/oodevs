@@ -10,8 +10,6 @@
 #ifndef __UrbanKnowledgeFactory_h_
 #define __UrbanKnowledgeFactory_h_
 
-#include "game_asn/Simulation.h"
-
 namespace kernel
 {
     class Controllers;
@@ -19,8 +17,12 @@ namespace kernel
     class UrbanKnowledge_ABC;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgUrbanKnowledgeCreation;
+}
+
 class Model;
-class StaticModel;
 
 // =============================================================================
 /** @class  UrbanKnowledgeFactory
@@ -34,13 +36,13 @@ class UrbanKnowledgeFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanKnowledgeFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel );
+             UrbanKnowledgeFactory( kernel::Controllers& controllers, Model& model );
     virtual ~UrbanKnowledgeFactory();
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::UrbanKnowledge_ABC* Create( const kernel::Team_ABC& owner, const ASN1T_MsgUrbanKnowledgeCreation& message );
+    virtual kernel::UrbanKnowledge_ABC* Create( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
     //@}
 
 private:
@@ -55,7 +57,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
-    const StaticModel& static_;
     //@}
 };
 

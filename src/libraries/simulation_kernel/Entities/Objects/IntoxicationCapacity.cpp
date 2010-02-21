@@ -67,7 +67,7 @@ IntoxicationCapacity::~IntoxicationCapacity()
 // Created: JCR 2008-08-28
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void IntoxicationCapacity::serialize( Archive& file, const uint )
+void IntoxicationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )

@@ -43,9 +43,9 @@ void Mission_Pawn_Test_MoveTo::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_MoveTo& asnMission = *new ASN1T_Mission_Pion_Test_MoveTo();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_move_to;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_move_to = &asnMission;
+    Mission_Pion_Test_MoveTo& asnMission = *new Mission_Pion_Test_MoveTo();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_move_to = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
     const Position& visionPoint_ = pTarget_->GetTestParam_Point();
@@ -68,8 +68,8 @@ void Mission_Pawn_Test_MoveTo::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_MoveTo::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_move_to );
-    ASN1T_Mission_Pion_Test_MoveTo& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_move_to;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_move_to ());
+    Mission_Pion_Test_MoveTo& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_move_to;
 
     ASN_Tools::Delete( asnMission.itineraire );
     ASN_Tools::Delete( asnMission.vision_point );

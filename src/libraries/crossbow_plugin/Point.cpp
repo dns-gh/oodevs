@@ -9,6 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "Point.h"
+#include "protocol/simulationsenders.h"
 
 using namespace plugins;
 
@@ -27,9 +28,9 @@ crossbow::Point::Point()
 // Name: Point constructor
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Point::Point( const ASN1T_CoordLatLong& coord )
-    : x_( coord.longitude )
-    , y_( coord.latitude )
+crossbow::Point::Point( const Common::MsgCoordLatLong& coord )
+    : x_( coord.longitude() )
+    , y_( coord.latitude() )
 {
     // NOTHING
 }
@@ -102,21 +103,19 @@ std::ostream& crossbow::Point::SerializeCoordinates( std::ostream& geometry, cha
 // Name: Point::Serialize
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( ASN1T_CoordLatLong& asn ) const
+void crossbow::Point::Serialize( Common::MsgCoordLatLong& message ) const
 {
-    asn.latitude = y_;
-    asn.longitude = x_;
+    message.set_latitude( y_ );
+    message.set_longitude( x_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Point::Serialize
 // Created: SBO 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( ASN1T_Location& asn ) const
+void crossbow::Point::Serialize( Common::MsgLocation& message ) const
 {
-    asn.type = EnumLocationType::point;
-    asn.coordinates.n = 1;
-    asn.coordinates.elem = new ASN1T_CoordLatLong[1];
-    asn.coordinates.elem[0].latitude = y_;
-    asn.coordinates.elem[0].longitude = x_;
+    message.set_type( Common::MsgLocation_Geometry_point );
+    message.mutable_coordinates()->mutable_elem( 0 )->set_latitude( y_ );
+    message.mutable_coordinates()->mutable_elem( 0 )->set_longitude( x_ );
 }

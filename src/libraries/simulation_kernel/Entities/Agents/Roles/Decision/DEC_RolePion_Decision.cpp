@@ -24,7 +24,6 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
-#include "Network/NET_ASN_Messages.h"
 
 #include "Decision/Functions/DEC_AgentFunctions.h"
 #include "Decision/Functions/DEC_KnowledgeAgentFunctions.h"
@@ -157,7 +156,7 @@ DEC_RolePion_Decision::~DEC_RolePion_Decision()
 // Name: DEC_RolePion_Decision::load
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Decision< MIL_AgentPion > >( *this )
          >> pEntity_ 
@@ -168,12 +167,12 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
          >> nIndirectFireAvailability_;
     assert( pEntity_ );
 
-    uint nRoePopulationID;
+    unsigned int nRoePopulationID;
     file >> nRoePopulationID;
     pRoePopulation_ = PHY_RoePopulation::Find( nRoePopulationID );
     assert( pRoePopulation_ );
        
-    uint nPionTypeID;
+    unsigned int nPionTypeID;
     file >> nPionTypeID;
           
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nPionTypeID );
@@ -203,7 +202,7 @@ void DEC_RolePion_Decision::load( MIL_CheckPointInArchive& file, const uint )
 // Name: DEC_RolePion_Decision::save
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_RolePion_Decision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned roe  = pRoePopulation_->GetID(),
              type = pEntity_->GetType().GetID();
@@ -707,7 +706,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSurete",
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPosition, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSureteAvecPopulation",
-        boost::function< boost::shared_ptr< MT_Vector2D >( uint, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( unsigned int, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSureteAvecObjectif",
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithObjective, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPointProcheLocalisationDansFuseau",
@@ -818,9 +817,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_StartPreterRemorqueurs",
         boost::function< PHY_Action_ABC*( DEC_RolePion_Decision*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionLendHaulerComposantes, DEC_RolePion_Decision*, unsigned int >, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_RecupererVSRAM",
-        boost::function< void( const DEC_Decision_ABC*, const uint ) >( boost::bind( &DEC_LogisticFunctions::UndoLendCollectionComposantes, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< void( const DEC_Decision_ABC*, const unsigned int ) >( boost::bind( &DEC_LogisticFunctions::UndoLendCollectionComposantes, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_RecupererRemorqueurs",
-        boost::function< void( const DEC_Decision_ABC*, const uint ) >( boost::bind( &DEC_LogisticFunctions::UndoLendHaulerComposantes, boost::ref( GetPion() ), _1, _2 ) ) );
+        boost::function< void( const DEC_Decision_ABC*, const unsigned int ) >( boost::bind( &DEC_LogisticFunctions::UndoLendHaulerComposantes, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Pion_TC2",
         boost::bind( &DEC_LogisticFunctions::PionGetTC2, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_DemandeDeRavitaillement" , &DEC_LogisticFunctions::PionRequestSupply                                  );
@@ -964,30 +963,23 @@ void DEC_RolePion_Decision::NotifyRoePopulationChanged( const PHY_RoePopulation&
 // Name: DEC_RolePion_Decision::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
 {
     assert( pRoePopulation_ );
 
-    msg().m.rapport_de_forcePresent              = 1;    
-    msg().m.combat_de_rencontrePresent           = 1;
-    msg().m.etat_operationnelPresent             = 1;
-    msg().m.disponibilite_au_tir_indirectPresent = 1;
-    msg().m.roePresent                           = 1;
-    msg().m.roe_populationPresent                = 1;
-
-    msg().rapport_de_force              = (ASN1T_EnumForceRatioStatus)nForceRatioState_;
-    msg().combat_de_rencontre           = (ASN1T_EnumMeetingEngagementStatus)nCloseCombatState_;
-    msg().etat_operationnel             = (ASN1T_EnumOperationalStatus)nOperationalState_;
-    msg().disponibilite_au_tir_indirect = (ASN1T_EnumFireAvailability)nIndirectFireAvailability_;
-    msg().roe                           = (ASN1T_EnumRoe)nRulesOfEngagementState_;
-    msg().roe_population                = pRoePopulation_->GetAsnID();
+    msg().set_rapport_de_force              ( MsgsSimToClient::ForceRatio_Value( nForceRatioState_ ) );
+    msg().set_combat_de_rencontre           ( Common::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
+    msg().set_etat_operationnel             ( Common::EnumOperationalStatus( nOperationalState_ ) );
+    msg().set_disponibilite_au_tir_indirect ( MsgsSimToClient::MsgUnitAttributes_FireAvailability( nIndirectFireAvailability_ ) );
+    msg().set_roe                           ( MsgsSimToClient::RulesOfEngagement_Value( nRulesOfEngagementState_ ) );
+    msg().set_roe_population                ( pRoePopulation_->GetAsnID() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void DEC_RolePion_Decision::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bStateHasChanged_ )
         SendFullState( msg );

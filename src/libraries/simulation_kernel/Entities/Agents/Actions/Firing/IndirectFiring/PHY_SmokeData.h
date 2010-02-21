@@ -29,7 +29,7 @@ class PHY_SmokeData : public FireData_ABC
 {
 
 public:
-     PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, uint nNbrAmmo );
+     PHY_SmokeData( MIL_Agent_ABC& firer, const PHY_IndirectFireDotationClass& indirectWeaponCategory, unsigned int nNbrAmmo );
     virtual ~PHY_SmokeData();
 
     //! @name Operations
@@ -43,7 +43,7 @@ private:
     //@{
     MIL_Agent_ABC&                    firer_;
     const PHY_IndirectFireDotationClass& indirectWeaponCategory_;
-    const uint                              nNbrAmmo_;
+    const unsigned int                              nNbrAmmo_;
           PHY_Weapon*                       pWeapon_;
     //@}
 };

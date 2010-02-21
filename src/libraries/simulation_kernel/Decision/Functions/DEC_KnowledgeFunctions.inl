@@ -47,7 +47,7 @@ template< typename T >
 void DEC_KnowledgeFunctions::ShareKnowledgesWith( const T& caller, DEC_Decision_ABC* receiver, float minutes )
 {
     assert( receiver );
-    const uint sharingTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + uint( MIL_Tools::ConvertMinutesToSim( minutes ) );
+    const unsigned int sharingTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + unsigned int( MIL_Tools::ConvertMinutesToSim( minutes ) );
     receiver->GetAutomate().GetKnowledgeGroup().GetKnowledge().GetKsSharing().ShareFromSource( caller.GetKnowledgeGroup(), sharingTimeStep );
 }
 
@@ -144,8 +144,8 @@ std::vector< unsigned int > DEC_KnowledgeFunctions::GetPopulations( const T& cal
 template< typename T, typename B >
 float DEC_KnowledgeFunctions::ComputeEnemiesRatio( const T& caller, const B& boundaries, bool unloaded )
 {
-    uint nNbrTotalLivingEnemies    = 0;
-    uint nNbrSelectedLivingEnemies = 0;
+    unsigned int nNbrTotalLivingEnemies    = 0;
+    unsigned int nNbrSelectedLivingEnemies = 0;
 
     const T_KnowledgeAgentVector& enemies = caller.GetKnowledgeGroup().GetKnowledge().GetEnemies();
     for( CIT_KnowledgeAgentVector itKnowledgeAgent = enemies.begin(); itKnowledgeAgent != enemies.end(); ++itKnowledgeAgent )

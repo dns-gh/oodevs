@@ -10,7 +10,12 @@
 #ifndef __AgentFactory_ABC_h_
 #define __AgentFactory_ABC_h_
 
-#include "game_asn/Simulation.h"
+namespace MsgsSimToClient
+{
+	class MsgAutomatCreation;
+	class MsgUnitCreation;
+	class MsgPopulationCreation;
+}
 
 namespace kernel
 {
@@ -37,9 +42,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Automat_ABC*    Create( const ASN1T_MsgAutomatCreation& asnMsg ) = 0;
-    virtual kernel::Agent_ABC*      Create( const ASN1T_MsgUnitCreation& asnMsg ) = 0;
-    virtual kernel::Population_ABC* Create( const ASN1T_MsgPopulationCreation& asnMsg ) = 0;
+	virtual kernel::Automat_ABC*    Create( const MsgsSimToClient::MsgAutomatCreation& message ) = 0;
+    virtual kernel::Agent_ABC*      Create( const MsgsSimToClient::MsgUnitCreation& message ) = 0;
+    virtual kernel::Population_ABC* Create( const MsgsSimToClient::MsgPopulationCreation& message ) = 0;
     //@}
 
 private:

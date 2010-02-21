@@ -17,7 +17,6 @@
 
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Network/NET_ASN_Tools.h"
-#include "game_asn/ASN_Delete.h"
 
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;

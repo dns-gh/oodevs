@@ -10,13 +10,69 @@
 #ifndef __ClientPublisher_ABC_h_
 #define __ClientPublisher_ABC_h_
 
-#include "game_asn/ClientSenders.h"
-#include "game_asn/AuthenticationSenders.h"
-#include "game_asn/ReplaySenders.h"
-#include "game_asn/AarSenders.h"
-#include "game_asn/MessengerSenders.h"
-#include "game_asn/DispatcherSenders.h"
-#include "game_asn/Plugin.h"
+
+
+////using namespace Common;
+namespace MsgsAarToClient
+{
+    class MsgAarToClient;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+
+namespace MsgsAuthenticationToClient
+{
+    class MsgAuthenticationToClient;
+}
+
+namespace MsgsReplayToClient
+{
+    class MsgReplayToClient;
+}
+
+namespace MsgsMessengerToClient
+{
+    class MsgMessengerToClient;
+}
+
+namespace MsgsDispatcherToClient
+{
+    class MsgDispatcherToClient;
+}
+
+namespace MsgsReplayToClient
+{
+    class MsgReplayToClient;
+}
+
+namespace MsgsPluginToClient
+{
+    class MsgPluginToClient;
+}
+
+namespace MsgsClientToAar
+{
+    class MsgClientToAar;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgClientToSim;
+}
+
+namespace MsgsClientToReplay
+{
+    class MsgClientToReplay;
+}
+
+namespace MsgsClientToAuthentication
+{
+    class MsgClientToAuthentication;
+}
+
 
 namespace dispatcher
 {
@@ -39,13 +95,21 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsSimToClient&            msg ) = 0;
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& msg ) = 0;
-    virtual void Send( const ASN1T_MsgsReplayToClient&         msg ) = 0;
-    virtual void Send( const ASN1T_MsgsAarToClient&            msg ) = 0;
-    virtual void Send( const ASN1T_MsgsMessengerToClient&      msg ) = 0;
-    virtual void Send( const ASN1T_MsgsDispatcherToClient&     msg ) = 0;
-    virtual void Send( const ASN1T_MsgsPluginToClient&     msg ) = 0;
+    virtual void Send( const MsgsSimToClient::MsgSimToClient&            msg ) = 0;
+    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& msg ) = 0;
+    virtual void Send( const MsgsReplayToClient::MsgReplayToClient&         msg ) = 0;
+    virtual void Send( const MsgsAarToClient::MsgAarToClient&            msg ) = 0;
+    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient&      msg ) = 0;
+    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient&     msg ) = 0;
+    virtual void Send( const MsgsPluginToClient::MsgPluginToClient&         msg ) = 0;
+    
+    
+    
+//    virtual void Send( const MsgClientToAar&         msg ) = 0;
+//    virtual void Send( const MsgClientToSim&         msg ) = 0;
+//    virtual void Send( const MsgClientToReplay&      msg ) = 0;
+//    virtual void Send( const MsgClientToAuthentication& msg) = 0;
+
     //@}
 
     //! @name Accessors

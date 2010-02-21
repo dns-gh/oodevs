@@ -9,12 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectAttributeInteractionHeight.h"
-
-#include "Entities/Objects/InteractionHeightAttribute.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
+#include "Entities/Objects/InteractionHeightAttribute.h"
+#include "protocol/protocol.h"
 #include <boost/serialization/void_cast.hpp>
-
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeInteractionHeight )
 
@@ -23,7 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeInteractionHeight )
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeInteractionHeight::DEC_Knowledge_ObjectAttributeInteractionHeight()
-: height_( 0 )
+    : height_( 0 )
 {
     // NOTHING
 }
@@ -33,7 +32,7 @@ DEC_Knowledge_ObjectAttributeInteractionHeight::DEC_Knowledge_ObjectAttributeInt
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeInteractionHeight::DEC_Knowledge_ObjectAttributeInteractionHeight( const InteractionHeightAttribute& attribute )
-: height_( attribute.Get() )
+    : height_( attribute.Get() )
 {
     // NOTHING
 }
@@ -87,18 +86,17 @@ void DEC_Knowledge_ObjectAttributeInteractionHeight::UpdateOnCollision( const DE
 // Name: DEC_Knowledge_ObjectAttributeInteractionHeight::Send
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeInteractionHeight::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeInteractionHeight::Send( Common::MsgObjectAttributes& asn ) const
 {
-    asn.m.interaction_heightPresent = 1;
-    asn.interaction_height.height = height_;
+    asn.mutable_interaction_height()->set_height( height_ );
 }
     
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void DEC_Knowledge_ObjectAttributeInteractionHeight::serialize
+// Name: DEC_Knowledge_ObjectAttributeInteractionHeight::serialize
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeInteractionHeight::serialize( Archive& archive, const uint )
+void DEC_Knowledge_ObjectAttributeInteractionHeight::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this )
             & height_;

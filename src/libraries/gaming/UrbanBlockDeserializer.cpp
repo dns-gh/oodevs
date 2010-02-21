@@ -8,10 +8,12 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
+#include "protocol/Simulation.h"
 #include "UrbanBlockDeserializer.h"
 #include <urban/Block.h>
 #include <urban/ColorRGBA.h>
 #include <urban/TerrainObject_ABC.h>
+#include <urban/ColorRGBA.h>
 
 using namespace urban;
 
@@ -19,8 +21,8 @@ using namespace urban;
 // Name: UrbanBlockDeserializer constructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-UrbanBlockDeserializer::UrbanBlockDeserializer( const ASN1T_MsgUrbanCreation& asn )
-    : message_                  ( asn )
+UrbanBlockDeserializer::UrbanBlockDeserializer( const MsgsSimToClient::MsgUrbanCreation& message )
+    : message_                  ( message )
 {
     //NOTHING
 }
@@ -40,8 +42,7 @@ UrbanBlockDeserializer::~UrbanBlockDeserializer()
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetArchitectureHeight() const
 {
-  //  if ( message_.attributes.architecture.m.heightPresent )
-        return message_.attributes.architecture.height;
+    return message_.attributes().architecture().height();
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +51,7 @@ float UrbanBlockDeserializer::GetArchitectureHeight() const
 // -----------------------------------------------------------------------------
 unsigned int UrbanBlockDeserializer::GetArchitectureFloorNumber() const
 {
-   // if ( message_.attributes.architecture.m.floorNumberPresent )
-        return message_.attributes.architecture.floorNumber;
+    return message_.attributes().architecture().floor_number();
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +60,7 @@ unsigned int UrbanBlockDeserializer::GetArchitectureFloorNumber() const
 // -----------------------------------------------------------------------------
 unsigned int UrbanBlockDeserializer::GetArchitectureBasementLevelNumber() const
 {
-    return message_.attributes.architecture.basementLevelNumber;
+    return message_.attributes().architecture().basement_level_number();
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ unsigned int UrbanBlockDeserializer::GetArchitectureBasementLevelNumber() const
 // -----------------------------------------------------------------------------
 std::string UrbanBlockDeserializer::GetArchitectureRoofShape() const
 {
-    return message_.attributes.architecture.roofShape;
+    return message_.attributes().architecture().roof_shape();
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ std::string UrbanBlockDeserializer::GetArchitectureRoofShape() const
 // -----------------------------------------------------------------------------
 std::string UrbanBlockDeserializer::GetArchitectureMaterial() const
 {
-    return message_.attributes.architecture.material;
+    return message_.attributes().architecture().material();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ std::string UrbanBlockDeserializer::GetArchitectureMaterial() const
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetArchitectureInnerCluttering() const
 {
-    return message_.attributes.architecture.innerCluttering;
+    return message_.attributes().architecture().inner_cluttering();
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +96,7 @@ float UrbanBlockDeserializer::GetArchitectureInnerCluttering() const
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetArchitectureFacadeOpacity() const
 {
-    return message_.attributes.architecture.facadeOpacity;
+    return message_.attributes().architecture().facade_opacity();
 }
 
 // -----------------------------------------------------------------------------
@@ -105,8 +105,7 @@ float UrbanBlockDeserializer::GetArchitectureFacadeOpacity() const
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetSoilOccupation() const
 {
-    //if ( message_.attributes.soil.m.occupationPresent )
-        return message_.attributes.soil.occupation;
+    return message_.attributes().soil().occupation();
 }
 
 // -----------------------------------------------------------------------------
@@ -115,8 +114,7 @@ float UrbanBlockDeserializer::GetSoilOccupation() const
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetSoilTrafficability() const
 {
-    //if ( message_.attributes.soil.m.trafficabilityPresent )
-        return message_.attributes.soil.trafficability;
+    return message_.attributes().soil().trafficability();
 }
 
 // -----------------------------------------------------------------------------
@@ -125,8 +123,7 @@ float UrbanBlockDeserializer::GetSoilTrafficability() const
 // -----------------------------------------------------------------------------
 bool UrbanBlockDeserializer::GetSoilMultiplicity() const
 {
-    //if ( message_.attributes.soil.m.multiplePresent )
-        return message_.attributes.soil.multiple;
+    return message_.attributes().soil().multiple();
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +132,7 @@ bool UrbanBlockDeserializer::GetSoilMultiplicity() const
 // -----------------------------------------------------------------------------
 std::string UrbanBlockDeserializer::GetSoilCompoundClearing() const
 {
-    return message_.attributes.soil.compoundClearing;
+    return message_.attributes().soil().compound_clearing();
 }
 
 // -----------------------------------------------------------------------------
@@ -144,7 +141,7 @@ std::string UrbanBlockDeserializer::GetSoilCompoundClearing() const
 // -----------------------------------------------------------------------------
 std::string UrbanBlockDeserializer::GetVegetationType() const
 {
-    return message_.attributes.vegetation.type;
+    return message_.attributes().vegetation().type();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,7 +150,7 @@ std::string UrbanBlockDeserializer::GetVegetationType() const
 // -----------------------------------------------------------------------------
 unsigned int UrbanBlockDeserializer::GetVegetationHeight() const
 {
-    return message_.attributes.vegetation.height;
+    return message_.attributes().vegetation().height();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +159,7 @@ unsigned int UrbanBlockDeserializer::GetVegetationHeight() const
 // -----------------------------------------------------------------------------
 float UrbanBlockDeserializer::GetVegetationDensity() const
 {
-        return message_.attributes.vegetation.density;
+    return message_.attributes().vegetation().density();
 }
 
 // -----------------------------------------------------------------------------
@@ -171,11 +168,11 @@ float UrbanBlockDeserializer::GetVegetationDensity() const
 // -----------------------------------------------------------------------------
 std::auto_ptr< ColorRGBA > UrbanBlockDeserializer::GetColor() const
 {
-    std::auto_ptr< ColorRGBA > color ( new ColorRGBA(   message_.attributes.color.red,
-                                        message_.attributes.color.green,
-                                        message_.attributes.color.blue,
-                                        message_.attributes.color.alpha ) );
-     return color;
+    std::auto_ptr< ColorRGBA > color = new ColorRGBA( message_.attributes().color().red(), 
+                                                      message_.attributes().color().green(), 
+                                                      message_.attributes().color().blue(), 
+                                                      message_.attributes().color().alpha() );    
+    return color;
 }
 
 // -----------------------------------------------------------------------------
@@ -184,7 +181,7 @@ std::auto_ptr< ColorRGBA > UrbanBlockDeserializer::GetColor() const
 // -----------------------------------------------------------------------------
 bool UrbanBlockDeserializer::HasColor() const
 {
-    return ( bool ) message_.attributes.m.colorPresent;
+    return ( bool ) message_.attributes().has_color();
 }
 
 // -----------------------------------------------------------------------------
@@ -193,9 +190,7 @@ bool UrbanBlockDeserializer::HasColor() const
 // -----------------------------------------------------------------------------
 bool UrbanBlockDeserializer::HasArchitecture() const
 {
-    if ( message_.attributes.m.architecturePresent )
-        return true;
-    return false;
+    return  message_.attributes().has_architecture();
 }
 
 // -----------------------------------------------------------------------------
@@ -204,9 +199,7 @@ bool UrbanBlockDeserializer::HasArchitecture() const
 // -----------------------------------------------------------------------------
 bool UrbanBlockDeserializer::HasSoil() const
 {
-    if ( message_.attributes.m.soilPresent )
-        return true;
-    return false;
+    return message_.attributes().has_soil();
 }
 
 // -----------------------------------------------------------------------------
@@ -215,8 +208,5 @@ bool UrbanBlockDeserializer::HasSoil() const
 // -----------------------------------------------------------------------------
 bool UrbanBlockDeserializer::HasVegetation() const
 {
-    if ( message_.attributes.m.vegetationPresent )
-        return true;
-    return false;
+    return message_.attributes().has_vegetation();
 }
-

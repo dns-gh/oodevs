@@ -57,7 +57,7 @@ DisExtension::~DisExtension()
 // Name: DisExtension::DoUpdate
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisExtension::DoUpdate( const ASN1T_MsgUnitAttributes& )
+void DisExtension::DoUpdate( const MsgUnitAttributes& )
 {
     if( tic::TicExtension_ABC* extension = holder_.Retrieve< tic::TicExtension_ABC >() )
         extension->Accept( *this );

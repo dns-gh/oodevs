@@ -28,14 +28,14 @@ class MissionParameter_ObjectiveList : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_ObjectiveList( const ASN1T_MissionParameter& asn );
+             MissionParameter_ObjectiveList( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_ObjectiveList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( ASN1T_MissionParameter& asn ) const;
-    virtual void AsnDelete( ASN1T_MissionParameter& asn ) const;
+    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
+    virtual void Delete( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

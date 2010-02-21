@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_DepolluerZone::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_DepolluerZone& asnMission = *new ASN1T_Mission_Pion_GEN_DepolluerZone();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_depolluer_zone;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_depolluer_zone = &asnMission;
+    Mission_Pion_GEN_DepolluerZone& asnMission = *new Mission_Pion_GEN_DepolluerZone();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_depolluer_zone = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Location();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_GEN_DepolluerZone::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_DepolluerZone::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_depolluer_zone );
-    ASN1T_Mission_Pion_GEN_DepolluerZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_depolluer_zone;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_depolluer_zone ());
+    Mission_Pion_GEN_DepolluerZone& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_depolluer_zone;
 
     ASN_Tools::Delete( asnMission.zone );
 

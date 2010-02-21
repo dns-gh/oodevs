@@ -12,7 +12,9 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -36,7 +38,7 @@ namespace script
 // Created: SBO 2008-08-13
 // =============================================================================
 class AutomatNotifier : public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
+                      , public kernel::Updatable_ABC< MsgAutomatOrder >
 {
 
 public:
@@ -55,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
+    virtual void DoUpdate( const MsgAutomatOrder& message );
     //@}
 
 private:

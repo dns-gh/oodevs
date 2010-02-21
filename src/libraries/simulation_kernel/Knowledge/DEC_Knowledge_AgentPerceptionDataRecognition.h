@@ -29,15 +29,18 @@ class DEC_Knowledge_AgentPerceptionDataRecognition : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      DEC_Knowledge_AgentPerceptionDataRecognition();
     virtual ~DEC_Knowledge_AgentPerceptionDataRecognition();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -47,7 +50,7 @@ public:
 
     //! @name Accessors
     //@{
-          uint                         GetTimeLastUpdate       () const;
+          unsigned int                         GetTimeLastUpdate       () const;
           MT_Float                     GetOperationalState     () const;
           MT_Float                     GetMajorOperationalState() const;
     const T_KnowledgeComposanteVector& GetComposantes          () const;
@@ -57,13 +60,16 @@ public:
     //@}
 
 private:
-          uint                         nTimeLastUpdate_;
-          MT_Float                     rOperationalState_;
-          MT_Float                     rMajorOperationalState_;
-          T_KnowledgeComposanteVector  composantes_;
-    const MIL_Army*                    pArmy_ ;
-          bool                         bIsPC_;
-    const MIL_AgentType_ABC*           pAgentType_; // For 'natures'
+    //! @name Member data
+    //@{
+    unsigned int nTimeLastUpdate_;
+    MT_Float rOperationalState_;
+    MT_Float rMajorOperationalState_;
+    T_KnowledgeComposanteVector composantes_;
+    const MIL_Army* pArmy_ ;
+    bool bIsPC_;
+    const MIL_AgentType_ABC* pAgentType_; // For 'natures'
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentPerceptionDataRecognition )

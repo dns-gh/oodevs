@@ -21,6 +21,10 @@
 #include "MockArmy.h"
 #include "MockKnowledgeGroupFactory.h"
 
+#include "protocol/SimulationSenders.h"
+#include "protocol/ClientSenders.h"
+
+
 using namespace mockpp;
 
 
@@ -60,11 +64,11 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     xis3 >> xml::start( "root" );
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
     
-    ASN1T_MsgKnowledgeGroupChangeSuperior msg;
-    msg.oid = group2.GetID();
+    MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
+    msg.set_oid( group2.GetID() );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 1 ) );
-    msg.oid_camp = army.GetID();
-    msg.oid_knowledgegroup_parent = group1.GetID();
+    msg.set_oid_camp( army.GetID() );
+    msg.set_oid_parent( group1.GetID() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -76,7 +80,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
 
     // moves group2 under group1
-    group2.OnReceiveMsgKnowledgeGroupChangeSuperior( msg, armies );
+    group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
 
     // verify
     BOOST_CHECK_EQUAL( &group1, group2.GetParent() );
@@ -112,11 +116,11 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
     xis3 >> xml::start( "root" );
     MIL_KnowledgeGroup group2( xis3, army, &group1, mockKnowledgeGroupFactory );
     
-    ASN1T_MsgKnowledgeGroupChangeSuperior msg;
-    msg.oid = group2.GetID();
+    MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
+    msg.set_oid( group2.GetID() );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 10 ) );
-    msg.oid_camp = army.GetID();
-    msg.oid_knowledgegroup_parent = 0;
+    msg.set_oid_camp( army.GetID() );
+    msg.set_oid_parent( 0 );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -129,7 +133,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
     mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
 
     // moves group2 under group1
-    group2.OnReceiveMsgKnowledgeGroupChangeSuperior( msg, armies );
+    group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
 
     // verify
     BOOST_CHECK( !group2.GetParent() );
@@ -165,11 +169,11 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     xis3 >> xml::start( "root" );
     MIL_KnowledgeGroup group2( xis3, army, 0, mockKnowledgeGroupFactory );
     
-    ASN1T_MsgKnowledgeGroupChangeSuperior msg;
-    msg.oid = group2.GetID();
+    MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
+    msg.set_oid( group2.GetID() );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 20 ) );
-    msg.oid_camp = army.GetID();
-    msg.oid_knowledgegroup_parent = group1.GetID();
+    msg.set_oid_camp( army.GetID() );
+    msg.set_oid_parent( group1.GetID() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -182,7 +186,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
 
     MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
     // moves group2 under group1
-    group2.OnReceiveMsgKnowledgeGroupChangeSuperior( msg, armies );
+    group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
 
     // verify
     BOOST_CHECK_EQUAL( &group1, group2.GetParent() );
@@ -217,10 +221,10 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     MIL_KnowledgeGroup groupArmy( kgType, 30, army );
 
     // prepare message    
-    ASN1T_MsgKnowledgeGroupSetType msg;
-    msg.oid = groupArmy.GetID();
+    MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
+    msg.set_oid( groupArmy.GetID() );
     const MIL_KnowledgeGroupType &kgType_new = *MIL_KnowledgeGroupType::FindType("TOTO");
-    msg.type = kgType_new.GetName().c_str();
+    msg.set_type( kgType_new.GetName().c_str() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue< uint >( 1 ) );
@@ -231,51 +235,11 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
 
     // change knowledge group type
-    groupArmy.OnReceiveMsgKnowledgeGroupSetType( msg );
+    groupArmy.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
 
     // verify
     BOOST_CHECK_EQUAL( "TOTO", groupArmy.GetType().GetName().c_str() );
     mockPublisher.verify();
     MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );   
    
-}
-
-// -----------------------------------------------------------------------------
-// Name: BOOST_AUTO_TEST_CASE
-// Created: FHD 2010-01-19: 
-// -----------------------------------------------------------------------------
-BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupDelete )
-{
-    MockArmy army;
-    MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
-    const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
-  
-    // register army sub knowledge group
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
-    MIL_KnowledgeGroup groupArmy( kgType, 1, army );
-
-    // register sub knowledge group
-    xml::xistringstream xis3( "<root id='3' type='TOTO'/>" );
-    xis3 >> xml::start( "root" );
-    {
-        MIL_KnowledgeGroup *group2 = new MIL_KnowledgeGroup( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
-        
-        // define message of deletion of knowledge group
-        ASN1T_MsgKnowledgeGroupDelete msg;
-        msg.oid = group2->GetID();
-
-        // initialize publisher
-        MockNET_Publisher_ABC mockPublisher;
-        mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgKnowledgeGroupDelete
-
-        // delete group2 
-        group2->OnReceiveMsgKnowledgeGroupDelete( msg );
-
-        // Check result
-        MIL_KnowledgeGroup *ptr_null = 0;
-        MIL_KnowledgeGroup *pFoundKG( groupArmy.FindKnowledgeGroup( msg.oid ) );
-        BOOST_CHECK_EQUAL( ptr_null, pFoundKG );    
-        mockPublisher.verify();
-    }
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
 }

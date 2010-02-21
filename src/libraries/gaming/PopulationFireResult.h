@@ -10,8 +10,10 @@
 #ifndef __PopulationFireResult_h_
 #define __PopulationFireResult_h_
 
-#include "game_asn/Simulation.h"
 #include "tools/Resolver_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -30,7 +32,7 @@ class PopulationFireResult
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFireResult( const ASN1T_PopulationFireDamages& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const QDateTime& time );
+    PopulationFireResult( const MsgsSimToClient::MsgPopulationFireDamages& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const QDateTime& time );
     virtual ~PopulationFireResult();
     //@}
 

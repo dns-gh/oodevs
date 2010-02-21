@@ -10,7 +10,10 @@
 #ifndef __Point_h_
 #define __Point_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace xml
 {
@@ -44,7 +47,7 @@ public:
     //! @name Operations
     //@{
     void Serialize( xml::xostream& xos, const std::string& fieldname ) const;
-    void Serialize( ASN1T_CoordLatLong& asn ) const;
+    void Serialize( MsgCoordLatLong& asn ) const;
     unsigned short ComputeBearing( const Point& rhs ) const;
     //@}
 

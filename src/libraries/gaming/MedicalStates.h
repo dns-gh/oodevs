@@ -10,12 +10,15 @@
 #ifndef __MedicalStates_h_
 #define __MedicalStates_h_
 
-#include "game_asn/Simulation.h"
-#include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
+
 #include "Availability.h"
-#include "tools/Resolver_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Types.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -26,6 +29,11 @@ namespace kernel
     class PropertiesDictionary;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgLogMedicalState;
+}
+
 // =============================================================================
 /** @class  MedicalStates
     @brief  MedicalStates
@@ -33,7 +41,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class MedicalStates : public kernel::Extension_ABC
-                    , public kernel::Updatable_ABC< ASN1T_MsgLogMedicalState >
+                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMedicalState >
 {
 public:
     //! @name Constructors/Destructor
@@ -45,7 +53,7 @@ public:
     //! @name Operations
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void DoUpdate( const ASN1T_MsgLogMedicalState& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogMedicalState& message );
     //@}
 
 private:

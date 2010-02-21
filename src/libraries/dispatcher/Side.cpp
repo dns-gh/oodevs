@@ -18,6 +18,7 @@
 #include "Object.h"
 #include "Population.h"
 #include <boost/bind.hpp>
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -25,18 +26,18 @@ using namespace dispatcher;
 // Name: Side constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Side::Side( const Model_ABC& model, const ASN1T_MsgTeamCreation& msg )
-    : Sendable< kernel::Team_ABC >( msg.oid, msg.nom )
+Side::Side( const Model_ABC& model, const MsgsSimToClient::MsgTeamCreation& msg )
+    : Sendable< kernel::Team_ABC >( msg.oid(), QString( msg.nom().c_str() ) )
     , model_( model )
-    , name_( msg.nom )
-    , nType_( msg.type )
+    , name_( msg.nom() )
+    , nType_( msg.type() )
 {
     switch( nType_ )
     {
-        case EnumDiplomacy::inconnu : karma_ = kernel::Karma::unknown_; break;
-        case EnumDiplomacy::ami :     karma_ = kernel::Karma::friend_; break;
-        case EnumDiplomacy::ennemi :  karma_ = kernel::Karma::enemy_; break;
-        case EnumDiplomacy::neutre :  karma_ = kernel::Karma::neutral_; break;
+        case Common::EnumDiplomacy::unknown_diplo: karma_ = kernel::Karma::unknown_; break;
+        case Common::EnumDiplomacy::friend_diplo : karma_ = kernel::Karma::friend_; break;
+        case Common::EnumDiplomacy::enemy_diplo  : karma_ = kernel::Karma::enemy_; break;
+        case Common::EnumDiplomacy::neutral_diplo: karma_ = kernel::Karma::neutral_; break;
     }
 }
 
@@ -53,20 +54,20 @@ Side::~Side()
 // Name: Side::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Side::Update( const ASN1T_MsgChangeDiplomacy& asnMsg )
+void Side::Update( const Common::MsgChangeDiplomacy& asnMsg )
 {
-    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2 );
-    diplomacies_[ &side ] = asnMsg.diplomatie;
+    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2() );
+    diplomacies_[ &side ] = asnMsg.diplomatie();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Side::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Side::Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg )
+void Side::Update( const MsgsSimToClient::MsgChangeDiplomacyAck& asnMsg )
 {
-    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2 );   
-    diplomacies_[ &side ] = asnMsg.diplomatie;
+    const kernel::Team_ABC& side = model_.Sides().Get( asnMsg.oid_camp2() );   
+    diplomacies_[ &side ] = asnMsg.diplomatie();
 }
 
 // -----------------------------------------------------------------------------
@@ -76,9 +77,9 @@ void Side::Update( const ASN1T_MsgChangeDiplomacyAck& asnMsg )
 void Side::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::TeamCreation asn;
-    asn().oid  = GetId();
-    asn().nom  = name_.c_str();
-    asn().type = nType_;
+    asn().set_oid( GetId() );
+    asn().set_nom( name_.c_str() );
+    asn().set_type( nType_ );
     asn.Send( publisher );
 }
 
@@ -91,9 +92,9 @@ void Side::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     for( T_Diplomacies::const_iterator it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
         client::ChangeDiplomacy asn;
-        asn().oid_camp1  = GetId();
-        asn().oid_camp2  = it->first->GetId();
-        asn().diplomatie = it->second;
+        asn().set_oid_camp1( GetId() );
+        asn().set_oid_camp2( it->first->GetId() );
+        asn().set_diplomatie( it->second );
         asn.Send( publisher );
     }
 }

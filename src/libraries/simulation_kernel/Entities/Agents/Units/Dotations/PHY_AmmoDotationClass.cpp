@@ -11,11 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoDotationClass.h"
+#include "protocol/protocol.h"
 
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , EnumAmmunitionFamily::obus        );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, EnumAmmunitionFamily::missile_air );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol, EnumAmmunitionFamily::missile_sol );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille , EnumAmmunitionFamily::mitraille   );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , Common::EnumAmmunitionFamily::obus        );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, Common::EnumAmmunitionFamily::missile_air );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol, Common::EnumAmmunitionFamily::missile_sol );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille , Common::EnumAmmunitionFamily::mitraille   );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 
@@ -46,7 +47,7 @@ void PHY_AmmoDotationClass::Terminate()
 // Name: PHY_AmmoDotationClass constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, E_Type nType, ASN1T_EnumAmmunitionFamily nAsnID )
+PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, E_Type nType, Common::EnumAmmunitionFamily nAsnID )
     : strName_( strName )
     , nType_  ( nType   )
     , nAsnID_ ( nAsnID  )
@@ -93,7 +94,7 @@ const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( const std::string& str
 // Name: PHY_AmmoDotationClass::Find
 // Created: NLD 2005-07-29
 // -----------------------------------------------------------------------------
-const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( ASN1T_EnumAmmunitionFamily nAsnID )
+const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( Common::EnumAmmunitionFamily nAsnID )
 {
     for( CIT_TypeMap it = types_.begin(); it != types_.end(); ++it )
     {
@@ -116,7 +117,7 @@ int PHY_AmmoDotationClass::GetID() const
 // Name: PHY_AmmoDotationClass::GetAsnID
 // Created: NLD 2005-07-29
 // -----------------------------------------------------------------------------
-ASN1T_EnumAmmunitionFamily PHY_AmmoDotationClass::GetAsnID() const
+Common::EnumAmmunitionFamily PHY_AmmoDotationClass::GetAsnID() const
 {
     return nAsnID_;
 }

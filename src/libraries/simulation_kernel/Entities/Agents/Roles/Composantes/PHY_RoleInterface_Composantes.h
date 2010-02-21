@@ -46,6 +46,19 @@ class PHY_RoleInterface_Composantes : public tools::Role_ABC
 {
 
 public:
+    //! @name Types
+    //@{
+    struct T_ComposanteUse
+    {
+        unsigned int nNbrAvailable_;
+        unsigned int nNbrUsed_;
+        unsigned int nNbrTotal_; // nNbrTotal_ >= nNbrAvailable_ >= nNbrUsed_
+        unsigned int nNbrLent_;
+    };
+
+    typedef std::map< const PHY_ComposanteTypePion*, T_ComposanteUse > T_ComposanteUseMap;
+    typedef T_ComposanteUseMap::const_iterator                         CIT_ComposanteUseMap;
+
     typedef PHY_RoleInterface_Composantes RoleInterface;
 
     typedef std::set< PHY_MaintenanceComposanteState* >     T_MaintenanceComposanteStateSet;
@@ -73,9 +86,16 @@ public:
     virtual void Clean () = 0;
     //@}
 
+    //! @name Humans management
+    //@{
+//    virtual void WoundHumans  ( const PHY_HumanRank& rank, unsigned int nNbr ) = 0;
+//    virtual void HealHumans   ( const PHY_HumanRank& rank, unsigned int nNbr ) = 0;    
+//    virtual void HealAllHumans() = 0 ;
+    //@}
+
     //! @name Composantes management
     //@{
-    virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, uint nNbrAvailable ) = 0;
+    virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, unsigned int nNbrAvailable ) = 0;
     virtual void RepairAllComposantes         () = 0;
     virtual void DestroyRandomComposante      () = 0;
     virtual void DestroyAllComposantes        () = 0;
@@ -94,7 +114,7 @@ public:
 
     //! @name Logistic - maintenance
     //@{
-    virtual void                            PreprocessRandomBreakdowns           ( uint nEndDayTimeStep ) const = 0;
+    virtual void                            PreprocessRandomBreakdowns           ( unsigned int /*nEndDayTimeStep*/ ) const = 0;
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante ) = 0;
     virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState ) = 0;
@@ -112,7 +132,7 @@ public:
     //! @name Fire
     //@{
     virtual bool IsNeutralized              () const = 0;
-    virtual void GetComposantesAbleToBeFired( PHY_Composante_ABC::T_ComposanteVector& targets, uint nNbrFirers, bool bFireOnlyOnMajorComposantes = false ) const = 0;//TODO MGD Remove and use ComposantesAbleToBeFired
+    virtual void GetComposantesAbleToBeFired( PHY_Composante_ABC::T_ComposanteVector& targets, unsigned int nNbrFirers, bool bFireOnlyOnMajorComposantes = false ) const = 0;//TODO MGD Remove and use ComposantesAbleToBeFired
     virtual void GetComposantesAbleToBeFired( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const = 0;
     virtual void Neutralize                 () = 0;
     virtual void ApplyPopulationFire        ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result ) = 0;
@@ -147,6 +167,15 @@ public:
     virtual       bool           HasChanged              () const = 0;//@TODO MGD CLEAN ALL hasChanged on interface and move private
     virtual       bool           IsUsable                () const = 0;                    
     virtual const MIL_Agent_ABC& GetPion                 () const = 0;    
+    //@}
+
+    //! @name Network
+    //@{
+//    virtual void SendChangedState( client::UnitAttributes& asn ) const = 0;
+//    virtual void SendFullState   ( client::UnitAttributes& asn ) const = 0;
+
+    virtual void SendLogisticChangedState() const = 0;
+    virtual void SendLogisticFullState   () const = 0;
     //@}
 
     //! @name HLA

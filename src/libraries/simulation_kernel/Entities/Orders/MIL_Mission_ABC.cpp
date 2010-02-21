@@ -15,13 +15,14 @@
 #include "MIL_NullParameter.h"
 #include "MIL_PolygonListParameter.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 namespace
 {
-    void FillParameters( int firstIndex, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters_, const ASN1T_MissionParameters& parameters, const DEC_KnowledgeResolver_ABC& resolver )
+    void FillParameters( int firstIndex, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters_, const Common::MsgMissionParameters& parameters, const DEC_KnowledgeResolver_ABC& resolver )
     {
-        for( unsigned int i = firstIndex; i < parameters.n; ++i )
-            parameters_.push_back( MIL_MissionParameterFactory::Create( *(parameters.elem + i ), resolver ) );
+        for( int i = firstIndex; i < parameters.elem_size(); ++i )
+            parameters_.push_back( MIL_MissionParameterFactory::Create( parameters.elem( i ), resolver ) );
     }
 }
 
@@ -41,7 +42,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const Common::MsgMissionParameters& parameters )
     : type_             ( type )
     , context_          ()
     , knowledgeResolver_( knowledgeResolver )
@@ -53,7 +54,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters, const MT_Vector2D& refPosition )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const Common::MsgMissionParameters& parameters, const MT_Vector2D& refPosition )
     : type_             ( type )
     , context_          ( parameters, refPosition )
     , knowledgeResolver_( knowledgeResolver )
@@ -107,7 +108,7 @@ const std::string& MIL_Mission_ABC::GetName() const
 // Name: MIL_Mission_ABC::Serialize
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_Mission_ABC::Serialize( ASN1T_MissionParameters& asn ) const
+void MIL_Mission_ABC::Serialize( Common::MsgMissionParameters& asn ) const
 {
     if( type_.Copy( parameters_, asn, knowledgeResolver_, context_ ) )
         context_.Serialize( asn );
@@ -119,7 +120,7 @@ void MIL_Mission_ABC::Serialize( ASN1T_MissionParameters& asn ) const
 // Name: MIL_Mission_ABC::CleanAfterSerialization
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_Mission_ABC::CleanAfterSerialization( ASN1T_MissionParameters& asn ) const
+void MIL_Mission_ABC::CleanAfterSerialization( Common::MsgMissionParameters& asn ) const
 {
     context_.CleanAfterSerialization( asn );
     type_.CleanAfterSerialization( asn, context_ );
@@ -271,7 +272,7 @@ const T_LimaVector& MIL_Mission_ABC::GetLimas() const
 // Name: MIL_Mission_ABC::FindLima
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_LimaOrder* MIL_Mission_ABC::FindLima( uint nID )
+MIL_LimaOrder* MIL_Mission_ABC::FindLima( unsigned int nID )
 {
     return context_.FindLima( nID );
 }

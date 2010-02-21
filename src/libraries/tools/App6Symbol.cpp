@@ -142,7 +142,7 @@ void SetCommandPost( std::string& symbol, bool commandPost )
 /*
 namespace
 {
-    char ToChar( const ASN1T_EnumNatureLevel& level )
+    char ToChar( const EnumNatureLevel& level )
     {
         switch( level )
         {

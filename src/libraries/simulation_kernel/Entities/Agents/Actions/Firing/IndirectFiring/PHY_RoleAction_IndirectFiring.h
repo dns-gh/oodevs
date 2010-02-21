@@ -41,7 +41,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
@@ -56,7 +56,7 @@ public:
     void FireSuspended();
 
     const PHY_DotationCategory* GetMunitionForIndirectFire( const PHY_IndirectFireDotationClass& indirectWeaponCategory, const MT_Vector2D& vTargetPosition );
-          int                   ThrowSmoke                ( const MT_Vector2D& vTargetPosition, uint nNbrAmmo );
+          int                   ThrowSmoke                ( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo );
     //@}
 
     //! @name Return codes

@@ -11,9 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoePopulation.h"
+#include "protocol/protocol.h"
+
+using namespace MsgsSimToClient;
 
 PHY_RoePopulation::T_RoePopulationMap PHY_RoePopulation::roePopulations_;
-const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, EnumPopulationRoe::none );
+const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, MsgUnitAttributes_PopulationRoe_none);
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoePopulation::Initialize
@@ -22,10 +25,10 @@ const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoeP
 void PHY_RoePopulation::Initialize()
 {
     roePopulations_[ none_.GetName()  ] = &none_;
-    roePopulations_[ "emploi force interdit"       ] = new PHY_RoePopulation( "Emploi force interdit"      , eEmploiForceInterdit      , EnumPopulationRoe::emploi_force_interdit );
-    roePopulations_[ "maintien a distance par moyens non letaux"      ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux"     , eMaintienADistanceParMoyensNonLetaux     , EnumPopulationRoe::maintien_a_distance_par_moyens_non_letaux ); 
-    roePopulations_[ "dispersion par moyens de defense actifs"     ] = new PHY_RoePopulation( "Dispersion par moyens de défense actifs"    , eDispersionParMoyensDeDefenseActifs    , EnumPopulationRoe::dispersion_par_moyens_de_defense_actifs );
-    roePopulations_[ "armes letales autorisees" ] = new PHY_RoePopulation( "Armes létales autorisées", eArmesLetalesAutorisees, EnumPopulationRoe::armes_letales_autorisees );
+    roePopulations_[ "emploi force interdit"                       ] = new PHY_RoePopulation( "Emploi force interdit"                     , eEmploiForceInterdit                  , MsgUnitAttributes_PopulationRoe_emploi_force_interdit                     );
+    roePopulations_[ "maintien a distance par moyens non letaux"   ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux" , eMaintienADistanceParMoyensNonLetaux  , MsgUnitAttributes_PopulationRoe_maintien_a_distance_par_moyens_non_letaux ); 
+    roePopulations_[ "dispersion par moyens de defense actifs"     ] = new PHY_RoePopulation( "Dispersion par moyens de défense actifs"   , eDispersionParMoyensDeDefenseActifs   , MsgUnitAttributes_PopulationRoe_dispersion_par_moyens_de_defense_actifs   );
+    roePopulations_[ "armes letales autorisees"                    ] = new PHY_RoePopulation( "Armes létales autorisées"                  , eArmesLetalesAutorisees               , MsgUnitAttributes_PopulationRoe_armes_letales_autorisees                  );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +47,7 @@ void PHY_RoePopulation::Terminate()
 // Name: PHY_RoePopulation constructor
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-PHY_RoePopulation::PHY_RoePopulation( const std::string& strName, E_Type nType, ASN1T_EnumPopulationRoe nAsnID )
+PHY_RoePopulation::PHY_RoePopulation( const std::string& strName, E_Type nType, MsgsSimToClient::MsgUnitAttributes_PopulationRoe nAsnID )
     : strName_ ( strName )
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )
@@ -84,7 +87,7 @@ const PHY_RoePopulation* PHY_RoePopulation::Find( const std::string& strName )
 // Name: PHY_RoePopulation::Find
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
-const PHY_RoePopulation* PHY_RoePopulation::Find( uint nID )
+const PHY_RoePopulation* PHY_RoePopulation::Find( unsigned int nID )
 {
     for( CIT_RoePopulationMap it = roePopulations_.begin(); it != roePopulations_.end(); ++it )
     {
@@ -107,7 +110,7 @@ const std::string& PHY_RoePopulation::GetName() const
 // Name: PHY_RoePopulation::GetID
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-uint PHY_RoePopulation::GetID() const
+unsigned int PHY_RoePopulation::GetID() const
 {
     return nType_;
 }
@@ -116,7 +119,7 @@ uint PHY_RoePopulation::GetID() const
 // Name: PHY_RoePopulation::GetAsnID
 // Created: NLD 2005-11-15
 // -----------------------------------------------------------------------------
-ASN1T_EnumPopulationRoe PHY_RoePopulation::GetAsnID() const
+MsgUnitAttributes_PopulationRoe PHY_RoePopulation::GetAsnID() const
 {
     return nAsnID_;
 }

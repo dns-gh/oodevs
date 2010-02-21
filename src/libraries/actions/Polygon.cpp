@@ -9,7 +9,8 @@
 
 #include "actions_pch.h"
 #include "Polygon.h"
-#include "game_asn/Simulation.h"
+#include "ParameterVisitor_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 using namespace actions;
@@ -29,8 +30,8 @@ Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC
 // Name: Polygon constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_Polygon& asn )
-    : Location( parameter, converter, asn )
+Polygon::Polygon( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgLocation& message )
+    : Location( parameter, converter, message )
 {
     // NOTHING
 }
@@ -58,22 +59,44 @@ Polygon::~Polygon()
 // Name: Polygon::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Polygon::CommitTo( ASN1T_MissionParameter& asn ) const
+void Polygon::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_polygon;
-    asn.value.u.polygon = new ASN1T_Polygon();
+    message.set_null_value( !IsSet() );
+    message.mutable_value()->mutable_polygon();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Location::CommitTo( *asn.value.u.polygon );
+        CommitTo( *message.mutable_value()->mutable_polygon()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Polygon::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Polygon::Clean( ASN1T_MissionParameter& asn ) const
+void Polygon::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.polygon )
-        Location::Clean( *asn.value.u.polygon );
-    delete asn.value.u.polygon;
+    if( message.value().has_polygon() )
+        message.mutable_value()->clear_polygon();
+}
+
+namespace
+{
+    struct AsnSerializer : public ParameterVisitor_ABC
+    {
+        explicit AsnSerializer( Common::MsgLocation& message ) : message_( &message ) {}
+        virtual void Visit( const Location& param )
+        {
+            param.CommitTo( *message_ );
+        }
+        Common::MsgLocation* message_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: Path::CommitTo
+// Created: SBO 2007-05-22
+// -----------------------------------------------------------------------------
+void Polygon::CommitTo( Common::MsgLocation& message ) const
+{
+    message.set_type( Common::MsgLocation::polygon );
+    AsnSerializer serializer( message );
+    Accept( serializer );
 }

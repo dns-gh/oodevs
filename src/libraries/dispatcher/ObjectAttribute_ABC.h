@@ -10,7 +10,10 @@
 #ifndef __ObjectAttribute_ABC_h_
 #define __ObjectAttribute_ABC_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    class MsgObjectAttributes;
+}
 
 namespace dispatcher
 {
@@ -27,15 +30,15 @@ class ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ObjectAttribute_ABC( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
+    ObjectAttribute_ABC( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~ObjectAttribute_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_ObjectAttributes& asnMsg ) = 0;
-    virtual void Send     ( ASN1T_ObjectAttributes& asnMsg ) const = 0;
-    virtual void AsnDelete( ASN1T_ObjectAttributes& asnMsg ) const = 0;
+    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg ) = 0;
+    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const = 0;
+    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const = 0;
     //@}
 
 protected:

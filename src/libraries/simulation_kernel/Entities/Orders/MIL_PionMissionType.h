@@ -29,7 +29,7 @@ public:
     //! @name Factory
     //@{
     static void                        Initialize   ( xml::xistream& xis );
-    static const MIL_MissionType_ABC*  Find         ( uint nID );
+    static const MIL_MissionType_ABC*  Find         ( unsigned int nID );
     static const MIL_MissionType_ABC*  Find         ( const std::string& strName );
     static const MIL_MissionType_ABC*  FindFromDiaID( const std::string& strName );
     static const T_MissionNameMap& MissionNames();
@@ -44,7 +44,7 @@ private:
     friend class MIL_MissionType_ABC;
     //! @name Constructors/Destructor
     //@{
-             MIL_PionMissionType( uint nID, xml::xistream& xis );
+             MIL_PionMissionType( unsigned int nID, xml::xistream& xis );
     virtual ~MIL_PionMissionType();
     //@}
 

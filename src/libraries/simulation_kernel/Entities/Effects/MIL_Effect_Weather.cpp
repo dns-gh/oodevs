@@ -15,8 +15,9 @@
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Network/NET_ASN_Messages.h"
-#include "game_asn/ASN_Delete.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/clientsenders.h"
+#include "Tools/MIL_IDManager.h"
 
 MIL_IDManager MIL_Effect_Weather::idManager_;
 
@@ -28,8 +29,8 @@ MIL_Effect_Weather::MIL_Effect_Weather( const MT_Ellipse& surface, const PHY_Ind
     : nID_                ( idManager_.GetFreeId() )
     , surface_            ( surface )
     , ammoCategory_       ( ammoCategory )
-    , nDeploymentTimeStep_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (uint)rDeploymentDuration )
-    , nLifeLastTimeStep_  ( nDeploymentTimeStep_ + (uint)rLifeDuration ) 
+    , nDeploymentTimeStep_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + (unsigned int)rDeploymentDuration )
+    , nLifeLastTimeStep_  ( nDeploymentTimeStep_ + (unsigned int)rLifeDuration ) 
     , bIsDeployed_        ( false )
 {
     assert( ammoCategory_ == PHY_IndirectFireDotationClass::eclairant_ || ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ );
@@ -50,7 +51,7 @@ MIL_Effect_Weather::~MIL_Effect_Weather()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_Weather::Execute()
 {
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( !bIsDeployed_ && nDeploymentTimeStep_ <= nCurrentTimeStep )
     {
         MIL_AgentServer::GetWorkspace().GetMeteoDataManager().RegisterWeatherEffect( surface_, ammoCategory_ );
@@ -74,14 +75,14 @@ bool MIL_Effect_Weather::Execute()
 //-----------------------------------------------------------------------------
 void MIL_Effect_Weather::SendMsgStartEffect() const
 {
-    NET_ASN_MsgStartFireEffect asnMsg;
+    client::StartFireEffect asnMsg;
 
-    asnMsg().effect_oid = nID_;
-    asnMsg().type       = ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? EnumFireEffectType::fumigene : EnumFireEffectType::eclairant;
-    NET_ASN_Tools::WriteEllipse( surface_, asnMsg().location );
+    asnMsg().set_effect_oid( nID_ );
+    asnMsg().set_type( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? Common::EnumFireEffectType::fumigene : Common::EnumFireEffectType::eclairant );
+    NET_ASN_Tools::WriteEllipse( surface_, *asnMsg().mutable_location() );
 
-    asnMsg.Send();
-    ASN_Delete::Delete( asnMsg().location );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    asnMsg().clear_location();
 }
 
 //-----------------------------------------------------------------------------
@@ -90,7 +91,7 @@ void MIL_Effect_Weather::SendMsgStartEffect() const
 //-----------------------------------------------------------------------------
 void MIL_Effect_Weather::SendMsgStopEffect() const
 {
-    NET_ASN_MsgStopFireEffect asnMsg;
-    asnMsg() = nID_;
-    asnMsg.Send();
+    client::StopFireEffect asnMsg;
+    asnMsg().set_oid( nID_ );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }

@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_Attaquer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_Attaquer& asnMission = *new ASN1T_Mission_Pion_ALAT_Attaquer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_attaquer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_attaquer = &asnMission;
+    Mission_Pion_ALAT_Attaquer& asnMission = *new Mission_Pion_ALAT_Attaquer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_attaquer = &asnMission;
 
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
     const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
@@ -65,8 +65,8 @@ void Mission_Pawn_ALAT_Attaquer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_Attaquer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_attaquer );
-    ASN1T_Mission_Pion_ALAT_Attaquer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_attaquer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_attaquer ());
+    Mission_Pion_ALAT_Attaquer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_attaquer;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
     ASN_Tools::Delete( asnMission.plots_ravitaillement );

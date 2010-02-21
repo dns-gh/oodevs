@@ -10,13 +10,18 @@
 #ifndef __Report_h_
 #define __Report_h_
 
-#include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
 
 namespace kernel
 {
     class ModelVisitor_ABC;
 }
+namespace MsgsSimToClient
+{
+    enum EnumReportType;
+    class MsgReport;
+}
+
 namespace dispatcher
 {
     class MissionParameter_ABC;
@@ -35,7 +40,7 @@ class Report : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             Report( Model&, const ASN1T_MsgReport& report );
+             Report( Model&, const MsgsSimToClient::MsgReport& report );
     virtual ~Report();
     //@}
 
@@ -67,7 +72,7 @@ private:
     const unsigned long id_;
     const unsigned long emitter_;
     const unsigned long report_;
-    const ASN1T_EnumReportType type_;
+    const MsgsSimToClient::EnumReportType type_;
     std::string date_;
     T_Parameters parameters_;
     //@}

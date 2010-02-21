@@ -40,9 +40,9 @@ DEC_BlackBoard_CanContainKnowledgeObjectPerception::~DEC_BlackBoard_CanContainKn
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObjectPerception::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_BlackBoard_CanContainKnowledgeObjectPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nNbr;
+    unsigned int nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -56,7 +56,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::load( MIL_CheckPointInA
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const T_KnowledgeObjectPerceptionMap::size_type size = knowledgeObjectPerceptionMap_.size();
     file << size;

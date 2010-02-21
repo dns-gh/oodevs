@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_AgentKnowledgeList.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,11 +17,11 @@ using namespace dispatcher;
 // Name: MissionParameter_AgentKnowledgeList constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_AgentKnowledgeList::MissionParameter_AgentKnowledgeList( const ASN1T_MissionParameter& asn )
+MissionParameter_AgentKnowledgeList::MissionParameter_AgentKnowledgeList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    std::copy( asn.value.u.unitKnowledgeList->elem, asn.value.u.unitKnowledgeList->elem + asn.value.u.unitKnowledgeList->n
-             , std::back_inserter( agentKnowledges_ ) );
+    for( int i = 0; i < asn.value().unitknowledgelist().elem_size(); ++i)
+        agentKnowledges_.push_back( asn.value().unitknowledgelist().elem( i ).oid() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -37,20 +37,18 @@ MissionParameter_AgentKnowledgeList::~MissionParameter_AgentKnowledgeList()
 // Name: MissionParameter_AgentKnowledgeList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_AgentKnowledgeList::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_AgentKnowledgeList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value = bNullValue_;
-    asn.value.t = T_MissionParameter_value_unitKnowledgeList;
-    asn.value.u.unitKnowledgeList = new ASN1T_UnitKnowledgeList();
-    asn.value.u.unitKnowledgeList->n = agentKnowledges_.size();
-    asn.value.u.unitKnowledgeList->elem = agentKnowledges_.empty() ? 0 : (int*)&agentKnowledges_.front();
+    asn.set_null_value ( bNullValue_ );
+    for (std::vector< int >::const_iterator iter(agentKnowledges_.begin()); iter != agentKnowledges_.end(); ++iter)
+        asn.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_oid( *iter );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_AgentKnowledgeList::AsnDelete
+// Name: MissionParameter_AgentKnowledgeList::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_AgentKnowledgeList::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_AgentKnowledgeList::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.unitKnowledgeList;
+    delete asn.mutable_value()->mutable_unitknowledgelist();
 }

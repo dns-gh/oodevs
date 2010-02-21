@@ -10,8 +10,18 @@
 #ifndef __LogConsignMaintenance_h_
 #define __LogConsignMaintenance_h_
 
-#include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
+
+namespace Common
+{
+    enum EnumLogMaintenanceHandlingStatus;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgLogMaintenanceHandlingCreation;
+    class MsgLogMaintenanceHandlingUpdate;
+}
 
 namespace kernel
 {
@@ -35,14 +45,14 @@ class LogConsignMaintenance : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignMaintenance( const Model& model, const ASN1T_MsgLogMaintenanceHandlingCreation& msg );
+             LogConsignMaintenance( const Model& model, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& msg );
     virtual ~LogConsignMaintenance();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& msg );
+    void Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& msg );
 
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -66,7 +76,7 @@ private:
     const unsigned int  nBreakdownType_; // XML reference - not resolved by dispatcher
 
     const kernel::Agent_ABC*               pTreatingAgent_;
-    ASN1T_EnumLogMaintenanceHandlingStatus nState_;
+    Common::EnumLogMaintenanceHandlingStatus nState_;
     bool                                   bDiagnosed_;
 };
 

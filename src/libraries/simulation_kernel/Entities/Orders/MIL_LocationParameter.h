@@ -25,7 +25,7 @@ class MIL_LocationParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LocationParameter( const ASN1T_Location& );
+    explicit MIL_LocationParameter( const Common::MsgLocation& );
     explicit MIL_LocationParameter( boost::shared_ptr< TER_Localisation > pLocalisation );
     virtual ~MIL_LocationParameter();
     //@}
@@ -37,9 +37,9 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToLocation( ASN1T_Location& ) const;
+    virtual bool ToLocation( Common::MsgLocation& ) const;
     virtual bool ToLocation( boost::shared_ptr< TER_Localisation >& ) const;
-    virtual bool ToPolygon( ASN1T_Polygon& ) const;
+    virtual bool ToPolygon( Common::MsgPolygon& ) const;
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const;
     //@}
 

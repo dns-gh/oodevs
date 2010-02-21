@@ -24,4 +24,6 @@
 
 std::string BOOST_RESOLVE( const std::string& filename );
 
+#undef max
+
 #endif // __plugins_test_pch_h_

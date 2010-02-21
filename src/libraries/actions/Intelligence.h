@@ -10,10 +10,14 @@
 #ifndef __ActionParameterIntelligence_h_
 #define __ActionParameterIntelligence_h_
 
-#include "game_asn/Simulation.h"
 #include "Entity.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Intelligence_ABC.h"
+
+namespace Common
+{
+    class MsgIntelligence;
+}
 
 namespace kernel
 {
@@ -45,14 +49,14 @@ public:
              Intelligence( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter
                                         , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
                                         , const kernel::FormationLevels& levels
-                                        , const ASN1T_Intelligence& asn, kernel::Controller& controller );
+                                        , const Common::MsgIntelligence& message, kernel::Controller& controller );
     virtual ~Intelligence();
     //@}
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_Intelligence& asn ) const;
-    void Clean( ASN1T_Intelligence& asn ) const;
+    void CommitTo( Common::MsgIntelligence& message ) const;
+    void Clean( Common::MsgIntelligence& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     void CommitToChildren();
     //@}

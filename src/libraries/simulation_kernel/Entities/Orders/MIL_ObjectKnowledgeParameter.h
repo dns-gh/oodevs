@@ -11,6 +11,7 @@
 #define __MIL_ObjectKnowledgeParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_Knowledge_Object;
 class DEC_KnowledgeResolver_ABC;
 
@@ -27,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_ObjectKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Object > pObjectKnowledge );
-             MIL_ObjectKnowledgeParameter( const ASN1T_ObjectKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_ObjectKnowledgeParameter( const Common::MsgObjectKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_ObjectKnowledgeParameter();
     //@}
 
@@ -38,7 +39,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToObjectKnowledge( ASN1T_ObjectKnowledge& asn ) const;
+    virtual bool ToObjectKnowledge( Common::MsgObjectKnowledge& asn ) const;
     virtual bool ToObjectKnowledge( boost::shared_ptr< DEC_Knowledge_Object >& ) const;
     //@}
 

@@ -43,9 +43,9 @@ void Mission_Automat_INF_AppuyerSurPosition::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_AppuyerSurPosition& asnMission = *new ASN1T_Mission_Automate_INF_AppuyerSurPosition();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_appuyer_sur_position;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_appuyer_sur_position = &asnMission;
+    Mission_Automate_INF_AppuyerSurPosition& asnMission = *new Mission_Automate_INF_AppuyerSurPosition();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_appuyer_sur_position = &asnMission;
 
     const Location& positionInstallation_ = pTarget_->GetTestParam_Polygon();
 
@@ -62,8 +62,8 @@ void Mission_Automat_INF_AppuyerSurPosition::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_AppuyerSurPosition::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_appuyer_sur_position );
-    ASN1T_Mission_Automate_INF_AppuyerSurPosition& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_appuyer_sur_position;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_appuyer_sur_position ());
+    Mission_Automate_INF_AppuyerSurPosition& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_appuyer_sur_position;
 
     ASN_Tools::Delete( asnMission.position_installation );
 

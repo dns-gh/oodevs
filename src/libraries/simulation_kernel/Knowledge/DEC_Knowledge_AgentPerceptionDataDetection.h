@@ -28,15 +28,18 @@ class DEC_Knowledge_AgentPerceptionDataDetection : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      DEC_Knowledge_AgentPerceptionDataDetection();
     virtual ~DEC_Knowledge_AgentPerceptionDataDetection();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -47,7 +50,7 @@ public:
 
     //! @name Accessors
     //@{
-          uint                   GetTimeLastUpdate             () const;
+          unsigned int                   GetTimeLastUpdate             () const;
     const MT_Vector2D&           GetPosition                   () const;
     const MT_Vector2D&           GetDirection                  () const;
           MT_Float               GetSpeed                      () const;
@@ -63,7 +66,7 @@ public:
     //@}
 
 private:
-    uint nTimeLastUpdate_;
+    unsigned int nTimeLastUpdate_;
 
     MT_Vector2D vPosition_;
     MT_Vector2D vDirection_;

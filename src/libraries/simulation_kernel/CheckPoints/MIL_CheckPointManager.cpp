@@ -11,7 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_CheckPointManager.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
 #include <boost/filesystem/path.hpp>
@@ -119,7 +120,7 @@ void MIL_CheckPointManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_CheckPointManager::UpdateNextCheckPointTick()
 {
-    uint nTick = nLastCheckPointTick_ + (uint)MIL_Tools::ConvertSecondsToSim( nCheckPointsFrequency_ );
+    unsigned int nTick = nLastCheckPointTick_ + (unsigned int)MIL_Tools::ConvertSecondsToSim( nCheckPointsFrequency_ );
 
     if( nTick < MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
         nNextCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -350,17 +351,17 @@ bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::
 {
     // création du fichier
     MT_LOG_INFO_MSG( "Begin save checkpoint " << name );
-    NET_ASN_MsgControlCheckPointSaveBegin asnSaveBeginMsg;
-    asnSaveBeginMsg.Send();
+    client::ControlCheckPointSaveBegin asnSaveBeginMsg;
+    asnSaveBeginMsg.Send( NET_Publisher_ABC::Publisher() );
 
     ::_mkdir( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", name ).c_str() );
 
     const bool bNotOk = !SaveOrbatCheckPoint( name ) || !SaveFullCheckPoint ( name, userName );
 
     MT_LOG_INFO_MSG( "End save checkpoint" );
-    NET_ASN_MsgControlCheckPointSaveEnd asnSaveEndMsg;
-    asnSaveEndMsg().name = name.c_str(); 
-    asnSaveEndMsg.Send();
+    client::ControlCheckPointSaveEnd asnSaveEndMsg;
+    asnSaveEndMsg().set_name(name); 
+    asnSaveEndMsg.Send( NET_Publisher_ABC::Publisher() );
 
     return !bNotOk;
 }
@@ -373,28 +374,28 @@ bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const ASN1T_MsgControlCheckPointSaveNow& asnMsg )
+void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const MsgsClientToSim::MsgControlCheckPointSaveNow& asnMsg )
 {
     std::string strCheckPointName;
-    if( asnMsg.m.namePresent )
-        strCheckPointName = asnMsg.name;
+    if( asnMsg.has_name()  )
+        strCheckPointName = asnMsg.name();
 
     SaveCheckPoint( BuildCheckPointName(), strCheckPointName );
     
-    NET_ASN_MsgControlCheckPointSaveNowAck asnReplyMsg;
-    asnReplyMsg.Send();
+    client::ControlCheckPointSaveNowAck asnReplyMsg;
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
 }
           
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgControlCheckPointSetFrequency& asnMsg )
+void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const MsgsClientToSim::MsgControlCheckPointSetFrequency& asnMsg )
 {
-    nCheckPointsFrequency_ = asnMsg * 60;
+    nCheckPointsFrequency_ = asnMsg.frequency() * 60; // $$$$ NLD 2007-01-11: beeeeeeaaaaah
      
-    NET_ASN_MsgControlCheckPointSetFrequencyAck asnReplyMsg;
-    asnReplyMsg.Send();
+    client::ControlCheckPointSetFrequencyAck asnReplyMsg;
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
 
     UpdateNextCheckPointTick();
 }
@@ -403,7 +404,7 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgC
 // Name: MIL_CheckPointManager::load
 // Created: JVT 2005-03-22
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> nCheckPointsFrequency_
          >> nMaxCheckPointNbr_;
@@ -419,7 +420,7 @@ void MIL_CheckPointManager::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_CheckPointManager::save
 // Created: JVT 2005-03-22
 // -----------------------------------------------------------------------------
-void MIL_CheckPointManager::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_CheckPointManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << nCheckPointsFrequency_
          << nMaxCheckPointNbr_;
@@ -429,7 +430,7 @@ void MIL_CheckPointManager::save( MIL_CheckPointOutArchive& file, const uint ) c
 // Name: MIL_CheckPointManager::GetCheckPointFrequency
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------
-uint MIL_CheckPointManager::GetCheckPointFrequency() const
+unsigned int MIL_CheckPointManager::GetCheckPointFrequency() const
 {
     return nCheckPointsFrequency_;
 }

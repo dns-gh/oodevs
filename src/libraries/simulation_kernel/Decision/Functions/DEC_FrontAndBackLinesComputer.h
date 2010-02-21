@@ -56,7 +56,7 @@ private:
     const MIL_Automate&     refAutomate_; // reference
           T_PionVector      pions_;           //$$$ Factoriser
           T_AutomateVector  automates_;
-          uint              nLastTimeComputed_;
+          unsigned int              nLastTimeComputed_;
 
     MT_Droite backLineDroite_;
     MT_Droite frontLineDroite_;

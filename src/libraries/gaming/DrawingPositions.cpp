@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "DrawingPositions.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "protocol/messengersenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: DrawingPositions constructor
@@ -24,10 +25,10 @@ DrawingPositions::DrawingPositions()
 // Name: DrawingPositions constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-DrawingPositions::DrawingPositions( const kernel::CoordinateConverter_ABC& converter, const ASN1T_MsgShapeCreation& asn )
+DrawingPositions::DrawingPositions( const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgShapeCreation& message )
 {
-    for( unsigned int i = 0; i < asn.shape.points.n; ++i )
-        AddPoint( converter.ConvertToXY( asn.shape.points.elem[i] ) );
+    for( int i = 0; i < message.shape().points().elem_size(); ++i )
+        AddPoint( converter.ConvertToXY( message.shape().points().elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------

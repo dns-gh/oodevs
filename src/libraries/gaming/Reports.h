@@ -10,11 +10,13 @@
 #ifndef __Reports_h_
 #define __Reports_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -35,9 +37,9 @@ class ReportFactory;
 // =============================================================================
 class Reports : public kernel::Extension_ABC
               , public tools::Resolver< Report >
-              , public kernel::Updatable_ABC< ASN1T_MsgReport >
-              , public kernel::Updatable_ABC< ASN1T_MsgInvalidateReport >
-              , public kernel::Updatable_ABC< ASN1T_MsgTrace >
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgReport >
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgInvalidateReport >
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgTrace >
               , public kernel::Displayable_ABC
 {
 
@@ -73,9 +75,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgReport& message );
-    virtual void DoUpdate( const ASN1T_MsgInvalidateReport& msg );
-    virtual void DoUpdate( const ASN1T_MsgTrace& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgReport& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgInvalidateReport& msg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgTrace& msg );
     //@}
 
 private:

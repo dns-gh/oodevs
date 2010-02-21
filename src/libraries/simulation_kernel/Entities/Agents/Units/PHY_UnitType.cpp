@@ -210,7 +210,7 @@ void PHY_UnitType::ReadCrewRank( xml::xistream& xis )
     if( commandersRepartition_.find( &rank ) != commandersRepartition_.end() )
         xis.error( "crew-rank: type undefined" );        
 
-    uint nValue = 0;
+    unsigned int nValue = 0;
     xis >> xml::attribute( "count", nValue );
     if( nValue > 0 )
         commandersRepartition_[ &rank ] = nValue;
@@ -244,7 +244,7 @@ void PHY_UnitType::ReadPosture( xml::xistream& xis )
     assert( postureTimes_.size() > posture.GetID() );
     MT_Float rTime;
     tools::ReadTimeAttribute( xis, "setup-time", rTime );
-    postureTimes_[ posture.GetID() ] = (uint)MIL_Tools::ConvertSecondsToSim( rTime );
+    postureTimes_[ posture.GetID() ] = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTime );
 }
 
 // -----------------------------------------------------------------------------
@@ -270,8 +270,8 @@ void PHY_UnitType::ReadSetup( xml::xistream& xis )
     if( rUninstallationTime_ < 0 )
         xis.error( "setup: uninstallation-time < 0" );
 
-    rInstallationTime_   = (uint)MIL_Tools::ConvertSecondsToSim( rInstallationTime_   );
-    rUninstallationTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ );
+    rInstallationTime_   = (unsigned int)MIL_Tools::ConvertSecondsToSim( rInstallationTime_   );
+    rUninstallationTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +336,7 @@ void PHY_UnitType::InstanciateComposantes( PHY_RolePion_Composantes& role ) cons
         const PHY_ComposanteTypePion& compType = *itComposanteType->first;
         const sComposanteTypeData&    compData =  itComposanteType->second;
 
-        for( uint i = 0; i < compData.nNbr_; ++i )
+        for( unsigned int i = 0; i < compData.nNbr_; ++i )
             compType.InstanciateComposante( role, compData.nNbrHumanInCrew_, compData.bMajor_, compData.bLoadable_, compData.bCanBePartOfConvoy_ );
     }
 }

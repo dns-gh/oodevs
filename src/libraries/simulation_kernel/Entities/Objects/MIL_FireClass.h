@@ -45,7 +45,7 @@ public:
     static void Terminate();
 
     static const MIL_FireClass* Find( const std::string& strName );
-    static const MIL_FireClass* Find( uint nID );
+    static const MIL_FireClass* Find( unsigned int nID );
     //@}
 
 private:

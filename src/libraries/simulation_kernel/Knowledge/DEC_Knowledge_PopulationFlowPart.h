@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace MsgsSimToClient
+{
+    class MsgFlowPart;
+}
+
 class DEC_Knowledge_PopulationFlowPerception;
 class DEC_Knowledge_PopulationCollision;
 class PHY_PerceptionLevel;
@@ -35,8 +40,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive& , const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive& , const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -50,7 +55,7 @@ public:
 
     //! @name Network operations
     //@{
-    void Serialize( ASN1T_FlowPart& asn );
+    void Serialize( MsgsSimToClient::MsgFlowPart& asn );
     //@}
 
 private:
@@ -64,7 +69,7 @@ private:
     MT_Float        rRelevance_;
     MT_Float        rLastRelevanceSent_;
     bool            bPerceived_;
-    uint            nTimeLastUpdate_;
+    unsigned int    nTimeLastUpdate_;
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_PopulationFlowPart )

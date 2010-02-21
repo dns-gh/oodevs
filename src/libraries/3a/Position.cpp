@@ -12,16 +12,20 @@
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>
 #include <boost/bind.hpp>
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace
 {
-    bool Initialize( geocoord::PlanarCartesian::Parameters& parameters, const ASN1T_CoordLatLong& coord  )
+    bool Initialize( geocoord::PlanarCartesian::Parameters& parameters, const MsgCoordLatLong& coord  )
     {
         const double rPiOver180 = std::acos( -1. ) / 180.;
-        parameters.SetOrigin( coord.latitude * rPiOver180, coord.longitude * rPiOver180);
+        parameters.SetOrigin( coord.latitude() * rPiOver180, coord.longitude() * rPiOver180);
         return true;
     }
-    geometry::Point2f ToPoint( const ASN1T_CoordLatLong& coord )
+    geometry::Point2f ToPoint( const MsgCoordLatLong& coord )
     {
         static geocoord::Geodetic geo_;
         static geocoord::PlanarCartesian::Parameters parameters_;
@@ -29,22 +33,22 @@ namespace
         static geocoord::PlanarCartesian planar_( parameters_ ) ;
         static const double rPiOver180 = std::acos( -1. ) / 180.;
 
-        geo_.Set( coord.latitude * rPiOver180, coord.longitude * rPiOver180 );
+        geo_.Set( coord.latitude() * rPiOver180, coord.longitude() * rPiOver180 );
         planar_.SetCoordinates( geo_ );
         return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) );
     }
-    std::string ToMgrs( const ASN1T_CoordLatLong& coord )
+    std::string ToMgrs( const MsgCoordLatLong& coord )
     {
         static geocoord::Geodetic geo_;
         static geocoord::MGRS mgrs_;
         static const double rPiOver180 = std::acos( -1. ) / 180.;
 
-        geo_.Set( coord.latitude * rPiOver180, coord.longitude * rPiOver180 );
+        geo_.Set( coord.latitude() * rPiOver180, coord.longitude() * rPiOver180 );
         mgrs_.SetCoordinates( geo_ );
         return mgrs_.GetString();
     }
 
-    ASN1T_CoordLatLong ToCoord( const std::string& mgrs )
+    MsgCoordLatLong ToCoord( const std::string& mgrs )
     {
         static geocoord::Geodetic geo_;
         static geocoord::MGRS mgrs_;
@@ -52,9 +56,9 @@ namespace
 
         mgrs_.SetString( mgrs );
         geo_.SetCoordinates( mgrs_ );
-        ASN1T_CoordLatLong result;
-        result.latitude = geo_.GetLatitude() / rPiOver180;
-        result.longitude = geo_.GetLongitude() / rPiOver180;
+        MsgCoordLatLong result;
+        result.set_latitude( geo_.GetLatitude() / rPiOver180 );
+        result.set_longitude( geo_.GetLongitude() / rPiOver180 );
         return result;
     }
 }
@@ -73,7 +77,7 @@ Position::Position()
 // Name: Position constructor
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-Position::Position( const ASN1T_CoordLatLong& coord )
+Position::Position( const MsgCoordLatLong& coord )
     : coord_( coord )
     , init_( false )
 {
@@ -116,8 +120,8 @@ float Position::Distance( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 bool Position::operator<( const Position& rhs ) const
 {
-    return coord_.latitude < rhs.coord_.latitude
-        || ( coord_.latitude == rhs.coord_.latitude && coord_.longitude < rhs.coord_.longitude );
+    return coord_.latitude() < rhs.coord_.latitude()
+        || ( coord_.latitude() == rhs.coord_.latitude() && coord_.longitude() < rhs.coord_.longitude() );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,8 +130,8 @@ bool Position::operator<( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 bool Position::operator>( const Position& rhs ) const
 {
-    return coord_.latitude > rhs.coord_.latitude
-        || ( coord_.latitude == rhs.coord_.latitude && coord_.longitude > rhs.coord_.longitude );
+    return coord_.latitude() > rhs.coord_.latitude()
+        || ( coord_.latitude() == rhs.coord_.latitude() && coord_.longitude() > rhs.coord_.longitude() );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,8 +140,8 @@ bool Position::operator>( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 bool Position::operator==( const Position& rhs ) const
 {
-    return coord_.latitude == rhs.coord_.latitude
-        && coord_.longitude == rhs.coord_.longitude;
+    return coord_.latitude() == rhs.coord_.latitude()
+        && coord_.longitude() == rhs.coord_.longitude();
 }
 
 // -----------------------------------------------------------------------------
@@ -146,8 +150,8 @@ bool Position::operator==( const Position& rhs ) const
 // -----------------------------------------------------------------------------
 bool Position::operator!=( const Position& rhs ) const
 {
-    return coord_.latitude != rhs.coord_.latitude
-        || coord_.longitude != rhs.coord_.longitude;
+    return coord_.latitude() != rhs.coord_.latitude()
+        || coord_.longitude() != rhs.coord_.longitude();
 }
 
 // -----------------------------------------------------------------------------

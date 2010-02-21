@@ -35,36 +35,36 @@ using namespace plugins::crossbow;
 
 namespace 
 {
-    void MakeTypeRegistration( OrderParameterTypeResolver& resolver )
+    void MakeTypeRegistration( OrderParameterTypeResolver& /*resolver*/ )
     {
-        resolver.Register( "location", T_MissionParameter_value_location )
-                .Register( "locationlist", T_MissionParameter_value_locationList )
-                .Register( "point", T_MissionParameter_value_point )
-                .Register( "pointlist", T_MissionParameter_value_pointList )
-                .Register( "polygon", T_MissionParameter_value_polygon )
-                .Register( "polygonlist", T_MissionParameter_value_polygonList )
-                .Register( "path", T_MissionParameter_value_path )
-                .Register( "bool", T_MissionParameter_value_aBool )
-                .Register( "real", T_MissionParameter_value_aReal )
-                .Register( "enumeration", T_MissionParameter_value_enumeration )
-                .Register( "string", T_MissionParameter_value_aCharStr ) 
-
-                .Register( "automate", T_MissionParameter_value_automat )
-                .Register( "automatelist", T_MissionParameter_value_automatList )
-                .Register( "agent", T_MissionParameter_value_unit )
-                .Register( "agentlist", T_MissionParameter_value_unitList )
-                .Register( "agentknowledge", T_MissionParameter_value_unitKnowledge )
-                .Register( "agentknowledgelist", T_MissionParameter_value_unitKnowledgeList )
-                .Register( "objectknowledge", T_MissionParameter_value_objectKnowledge )
-                .Register( "objectknowledgelist", T_MissionParameter_value_objectKnowledgeList )
-                .Register( "objective", T_MissionParameter_value_missionObjective )
-                .Register( "objectivelist", T_MissionParameter_value_missionObjectiveList )
-
-                .Register( "dangerdirection", T_MissionParameter_value_heading )
-                .Register( "direction", T_MissionParameter_value_heading )
-                .Register( "phaselinelist", T_MissionParameter_value_limasOrder )
-                .Register( "limit", T_MissionParameter_value_line )
-                .Register( "intelligencelist", T_MissionParameter_value_intelligenceList );
+//        resolver.Register( "location", T_MissionParameter_value_location )
+//                .Register( "locationlist", T_MissionParameter_value_locationList )
+//                .Register( "point", T_MissionParameter_value_point )
+//                .Register( "pointlist", T_MissionParameter_value_pointList )
+//                .Register( "polygon", T_MissionParameter_value_polygon )
+//                .Register( "polygonlist", T_MissionParameter_value_polygonList )
+//                .Register( "path", T_MissionParameter_value_path )
+//                .Register( "bool", T_MissionParameter_value_aBool )
+//                .Register( "real", T_MissionParameter_value_aReal )
+//                .Register( "enumeration", T_MissionParameter_value_enumeration )
+//                .Register( "string", T_MissionParameter_value_aCharStr ) 
+//
+//                .Register( "automate", T_MissionParameter_value_automat )
+//                .Register( "automatelist", T_MissionParameter_value_automatList )
+//                .Register( "agent", T_MissionParameter_value_unit )
+//                .Register( "agentlist", T_MissionParameter_value_unitList )
+//                .Register( "agentknowledge", T_MissionParameter_value_unitKnowledge )
+//                .Register( "agentknowledgelist", T_MissionParameter_value_unitKnowledgeList )
+//                .Register( "objectknowledge", T_MissionParameter_value_objectKnowledge )
+//                .Register( "objectknowledgelist", T_MissionParameter_value_objectKnowledgeList )
+//                .Register( "objective", T_MissionParameter_value_missionObjective )
+//                .Register( "objectivelist", T_MissionParameter_value_missionObjectiveList )
+//
+//                .Register( "dangerdirection", T_MissionParameter_value_heading )
+//                .Register( "direction", T_MissionParameter_value_heading )
+//                .Register( "phaselinelist", T_MissionParameter_value_limasOrder )
+//                .Register( "limit", T_MissionParameter_value_line )
+//                .Register( "intelligencelist", T_MissionParameter_value_intelligenceList );
     }
 }
 
@@ -97,10 +97,10 @@ namespace
         typedef TContainer Container;
         typedef TElement Element;
         
-        Element& operator()( Element& asn, const typename Container::value_type& e )
+        Element& operator()( Element& message, const typename Container::value_type& e )
 		{
-			f_( asn, e );
-			return asn;
+			f_( message, e );
+			return message;
 		}
 
         FunctorWrapper( Functor functor ) : f_ ( functor ) {}
@@ -108,18 +108,26 @@ namespace
     };
 
     template< typename Container, typename FunctorWrapper >
-    void SerializeList( Container*& asn, const typename FunctorWrapper::Container& values, FunctorWrapper wrapper )
+    void SerializeList( Container& message, const typename FunctorWrapper::Container& values, FunctorWrapper wrapper )
     {
-        asn = new Container();
-        asn->n = values.size();
+        //message = new Container();
+        //message->n 
+        int size = values.size();
         if( !values.empty() )
         {
-            asn->elem = new typename FunctorWrapper::Element[ asn->n ];
-            std::transform( asn->elem, asn->elem + asn->n, 
-                            values.begin(), asn->elem, wrapper );
+            //message.mutable_elem() = new typename FunctorWrapper::Element[ size ];
+//            for (int i = 0; i < size /*message.elem_size()*/; i++)
+//            {
+//                *message.mutable_elem( i ) = wrapper( *message.mutable_elem( i ), values[ i ] );
+//            }
+
+            std::transform( message.mutable_elem()->begin(), message.mutable_elem()->end(), 
+                values.begin(), message.mutable_elem()->begin(), wrapper );
+            
         }
-        else
-            asn->elem = 0;
+//        else
+//            //message->elem = 0;
+//            *message.mutable_elem() = NULL;
     }
 
     template< typename T, typename Functor > 
@@ -129,28 +137,28 @@ namespace
     };
 
     template< typename Element, typename Container, typename Functor >
-    void SerializeValueList( Container*& asn, const std::string& value, Functor functor )
+    void SerializeValueList( Container& message, const std::string& value, Functor functor )
     {
         std::vector< std::string > values;
 
         boost::split( values, value, boost::is_any_of( "," ) );
-        SerializeList( asn, values, FunctorWrapper< Element, std::vector< std::string >, Functor >( functor ) );
+        SerializeList( message, values, FunctorWrapper< Element, std::vector< std::string >, Functor >( functor ) );
     }
 
     struct CopyLocation
     {
-        void operator()( ASN1T_Location& lhs, const ASN1T_Location* rhs )
+        void operator()( Common::MsgLocation& lhs, const Common::MsgLocation* rhs )
         {
-            lhs.type = rhs->type;
-            lhs.coordinates.n = rhs->coordinates.n;
-            lhs.coordinates.elem = rhs->coordinates.elem;
+            lhs.set_type( rhs->type() );
+            for ( int i = 0; i < rhs->coordinates().elem_size(); i++ )
+                *lhs.mutable_coordinates()->add_elem() = rhs->coordinates().elem( i );
         }
     };
 
     template< typename AsnType >
-    void SerializeValue( AsnType& asn, const std::string& value )
+    void SerializeValue( AsnType& message, const std::string& value )
     {
-        asn = boost::lexical_cast< AsnType >( value );
+        message = boost::lexical_cast< AsnType >( value );
     }
 }
 
@@ -161,87 +169,76 @@ namespace
 // Name: OrderParameterSerializer::Serialize
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::Serialize( ASN1T_MissionParameter& asn, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const
+void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& /*parameter*/, unsigned long parameterId, const std::string& value ) const
 {
-    asn.value.t = types_->Resolve( parameter.GetType() );
-    switch( asn.value.t )
+    if (message.value().has_point() )
+        SerializeLocation( *message.mutable_value()->mutable_point()->mutable_location(), parameterId, value );
+    if (message.value().has_polygon() )
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_polygon()->mutable_location(), parameterId, value );
+    if (message.value().has_location() )
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_location(), parameterId, value );
+    if( message.value().has_path() )
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_path()->mutable_location(), parameterId, value );
+    if( message.value().has_automat() )
+        SerializeAutomat( *message.mutable_value()->mutable_automat(), value );
+    if( message.value().has_abool() )
     {
-    case T_MissionParameter_value_point:
-        SerializeLocation( asn.value.u.point, parameterId, value );
-        break;
-    case T_MissionParameter_value_pointList:
-        SerializeLocationList( asn.value.u.pointList, parameterId, value );
-        break;
-    case T_MissionParameter_value_polygon:
-        SerializeLocation( asn.value.u.polygon, parameterId, value );
-        break;
-    case T_MissionParameter_value_polygonList:
-        SerializeLocationList( asn.value.u.polygonList, parameterId, value );
-        break;
-    case T_MissionParameter_value_location:
-        SerializeLocation( asn.value.u.location, parameterId, value );
-        break;
-    case T_MissionParameter_value_locationList:
-        SerializeLocationList( asn.value.u.locationList, parameterId, value );
-        break;
-    case T_MissionParameter_value_path:
-        SerializeLocation( asn.value.u.path, parameterId, value );
-        break;
-    case T_MissionParameter_value_aBool:
-        SerializeBool( asn.value.u.aBool, value );
-        break;
-    case T_MissionParameter_value_aReal:
-        SerializeValue( asn.value.u.aReal, value );
-        break;
+        //SerializeBool( (bool &) message.mutable_value()->abool(), value );
+        message.mutable_value()->set_abool( value == "true" );
+    }
+    if( message.value().has_heading() )
+        SerializeDirection( *message.mutable_value()->mutable_heading(), value );
+    if( message.value().has_limasorder() )
+        SerializePhaseLines( *message.mutable_value()->mutable_limasorder(), parameterId, value );
+    if( message.value().has_line() )
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_line()->mutable_location(), parameterId, value );
+    if( message.value().has_intelligencelist() )
+        SerializeIntelligenceList( *message.mutable_value()->mutable_intelligencelist(), value );
+    if( message.value().has_pointlist() )
+        SerializeLocList< Common::MsgPointList >( *message.mutable_value()->mutable_pointlist(), parameterId, value );
+    if( message.value().has_polygonlist() )
+        SerializeLocList< Common::MsgPolygonList >( *message.mutable_value()->mutable_polygonlist(), parameterId, value );
+    if( message.value().has_locationlist() )
+        SerializeLocationList( *message.mutable_value()->mutable_locationlist(), parameterId, value );
+    if( message.value().has_areal() )
+    {
+        //SerializeValue( (float &)message.value().areal(), value );
+        message.mutable_value()->set_areal( boost::lexical_cast< float >( value ) );
+    }
     // case T_MissionParameter_value_aCharStr:
-    //    SerializeValue( asn.value.u.aCharStr, value );
+    //    SerializeValue( message.value.u.aCharStr, value );
     //    break;
-    case T_MissionParameter_value_enumeration:
-        SerializeValue( asn.value.u.enumeration, value );
-        break;
-    case T_MissionParameter_value_heading:
-        SerializeDirection( asn.value.u.heading, value );
-        break;
-    case T_MissionParameter_value_unit:
-        SerializeAutomat( asn.value.u.unit, value );
-        break;
-    case T_MissionParameter_value_unitList:
-        SerializeValueList< ASN1T_Unit >( asn.value.u.unitList, value, BIND_SERIALIZER( SerializeUnit ) );
-        break;    
-    case T_MissionParameter_value_automat:
-        SerializeAutomat( asn.value.u.automat, value );
-        break;
-    case T_MissionParameter_value_automatList:
-        SerializeValueList< ASN1T_Automat >( asn.value.u.automatList, value, BIND_SERIALIZER( SerializeAutomat ) );
-        break;    
-    case T_MissionParameter_value_unitKnowledge:
-        SerializeUnitKnowledge( asn.value.u.unitKnowledge, value );
-        break;
-    case T_MissionParameter_value_unitKnowledgeList:
-        SerializeValueList< ASN1T_UnitKnowledge >( asn.value.u.unitKnowledgeList, value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
-        break;    
-    case T_MissionParameter_value_objectKnowledge:
-        SerializeObjectKnowledge( asn.value.u.objectKnowledge, value );
-        break;
-    case T_MissionParameter_value_objectKnowledgeList:
-        SerializeValueList< ASN1T_ObjectKnowledge >( asn.value.u.objectKnowledgeList, value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
-        break;    
-    case T_MissionParameter_value_limasOrder:
-        SerializePhaseLines( asn.value.u.limasOrder, parameterId, value );
-        break;
-    case T_MissionParameter_value_line: // Boundary limit
-        SerializeLocation( asn.value.u.line, parameterId, value );
-        break;
-    case T_MissionParameter_value_intelligenceList:
-        SerializeIntelligenceList( asn.value.u.intelligenceList, value );
-        break;    
-    case T_MissionParameter_value_missionObjective:
-        SerializeMissionObjective( asn.value.u.missionObjective, value );
-        break;
-    case T_MissionParameter_value_missionObjectiveList:
-        SerializeMissionObjectiveList( asn.value.u.missionObjectiveList, value );
-        break;
-   
+    if( message.value().has_enumeration() )
+    {
+        //SerializeValue( message.value().enumeration(), value );
+        message.mutable_value()->set_enumeration( boost::lexical_cast< int >( value ) );
+    }
+    if( message.value().has_heading() )
+        SerializeDirection( *message.mutable_value()->mutable_heading(), value );
+    if( message.value().has_unit() )
+        SerializeUnit( *message.mutable_value()->mutable_unit(), value );
+    if( message.value().has_unitlist() )
+        SerializeValueList< Common::MsgUnit >( *message.mutable_value()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
+    if( message.value().has_automatlist() )
+        SerializeValueList< Common::MsgAutomat >( *message.mutable_value()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );
+
+    if( message.value().has_unitknowledge() )
+        SerializeUnitKnowledge( *message.mutable_value()->mutable_unitknowledge(), value );
+    if( message.value().has_unitknowledgelist() )
+        SerializeValueList< Common::MsgUnitKnowledge >( *message.mutable_value()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
+    if( message.value().has_objectknowledge() )
+        SerializeObjectKnowledge( *message.mutable_value()->mutable_objectknowledge(), value );
+    if( message.value().has_objectknowledgelist() )
+        SerializeValueList< Common::MsgObjectKnowledge >( *message.mutable_value()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
+
+    if( message.value().has_line() )
+        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_line()->mutable_location(), parameterId, value );
+    if( message.value().has_missionobjective() )
+        SerializeMissionObjective( *message.mutable_value()->mutable_missionobjective(), value );
+    if( message.value().has_missionobjectivelist() )
+        SerializeMissionObjectiveList( *message.mutable_value()->mutable_missionobjectivelist(), value );
+
+ 
     /* TODO
     case T_MissionParameter_value_atlasNature:
     case T_MissionParameter_value_populationKnowledge:
@@ -255,91 +252,67 @@ void OrderParameterSerializer::Serialize( ASN1T_MissionParameter& asn, const ker
     case T_MissionParameter_value_logMedicalPriorities:
     case T_MissionParameter_value_aCharStr:
     */
-    default:
-        break;
-    }
 }
 
-namespace
+// -----------------------------------------------------------------------------
+// Name: OrderParameterSerializer::CleanLocation
+// Created: SBO 2007-05-31
+// -----------------------------------------------------------------------------
+void OrderParameterSerializer::CleanLocation( Common::MsgLocation*& message ) const
 {
-    template< typename T >
-    void CleanAsn( T*& asn )
-    {
-        if( asn )
-        {
-            delete asn;
-            asn = 0;
-        }
-    }
-
-    template< typename T >
-    void CleanAsnList( T*& list )
-    {
-        if( list )
-        {
-            if ( list->n > 0 )
-                delete [] list->elem;
-            delete list;
-            list = 0;
-        }
-    }
+    delete message;
 }
+
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::Clean
 // Updated: JCR 2009-10-15
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::Clean( ASN1T_MissionParameter& asn ) const
+void OrderParameterSerializer::Clean( Common::MsgMissionParameter& message ) const
 {
-    switch( asn.value.t )
-    {
-    case T_MissionParameter_value_point:
-        CleanAsn( asn.value.u.point );
-        break;
-    case T_MissionParameter_value_pointList:
-        CleanAsnList( asn.value.u.pointList );
-        break;
-    case T_MissionParameter_value_polygon:
-        CleanAsn( asn.value.u.polygon );
-        break;
-    case T_MissionParameter_value_polygonList:
-        CleanAsnList( asn.value.u.polygonList );
-        break;
-    case T_MissionParameter_value_location:
-        CleanAsn( asn.value.u.location );
-        break;
-    case T_MissionParameter_value_locationList:        
-        CleanAsnList( asn.value.u.locationList );
-        break;
-    case T_MissionParameter_value_path:
-        CleanAsn( asn.value.u.path );
-        break;
-    case T_MissionParameter_value_line:
-        CleanAsn( asn.value.u.line );
-        break;
-    case T_MissionParameter_value_limasOrder:
-        if( asn.value.u.limasOrder && asn.value.u.limasOrder->elem )
+    if( message.value().has_point() )
+        message.mutable_value()->mutable_point()->Clear();
+    if( message.value().has_polygon() )
+        message.mutable_value()->mutable_polygon()->Clear();
+    if( message.value().has_location() )
+        message.mutable_value()->mutable_location()->Clear();
+    if( message.value().has_path() )
+        message.mutable_value()->mutable_path()->Clear();
+    if( message.value().has_line() )
+        message.mutable_value()->mutable_line()->Clear();
+    if( message.value().has_limasorder() )
+        if( message.value().limasorder().elem_size() )
         {
-            for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
-                delete[] asn.value.u.limasOrder->elem[i].fonctions.elem;
-            CleanAsnList( asn.value.u.limasOrder );
+            for( int i = 0; i < message.value().limasorder().elem_size(); ++i )
+                message.mutable_value()->mutable_limasorder()->mutable_elem(i)->clear_fonctions();
+            message.mutable_value()->mutable_limasorder()->mutable_elem()->Clear();
+            message.mutable_value()->mutable_limasorder()->Clear();
         }
-    case T_MissionParameter_value_objectKnowledgeList:
-         CleanAsnList( asn.value.u.objectKnowledgeList );
-        break;
-     case T_MissionParameter_value_unitList:
-        CleanAsnList( asn.value.u.intelligenceList );
-        break;
-    case T_MissionParameter_value_intelligenceList:
-        CleanAsnList( asn.value.u.intelligenceList );
-        break;
-    case T_MissionParameter_value_missionObjective:
-        CleanAsn( asn.value.u.missionObjective );
-    case T_MissionParameter_value_missionObjectiveList:
-         CleanAsnList( asn.value.u.missionObjectiveList );
-        break;
-    default:
-        break;
+    if( message.value().has_pointlist() )
+        message.mutable_value()->mutable_pointlist()->Clear();
+    if( message.value().has_polygonlist() )
+        message.mutable_value()->mutable_polygonlist()->Clear();
+    if( message.value().has_locationlist() )
+        message.mutable_value()->mutable_locationlist()->Clear();
+    if( message.value().has_objectknowledgelist() )
+        message.mutable_value()->mutable_objectknowledgelist()->Clear();
+    if( message.value().has_unitlist() )
+        message.mutable_value()->mutable_intelligencelist()->Clear();
+    if( message.value().has_intelligencelist() )
+        message.mutable_value()->mutable_intelligencelist()->Clear();
+    if( message.value().has_missionobjective() )
+        message.mutable_value()->mutable_missionobjective()->Clear();
+    if( message.value().has_missionobjectivelist() )
+        message.mutable_value()->mutable_missionobjectivelist()->Clear();
+
+    if( message.value().has_intelligencelist() )
+    {
+        if( message.mutable_value()->mutable_intelligencelist() )
+        {
+            message.mutable_value()->mutable_intelligencelist()->mutable_elem()->Clear();
+            message.mutable_value()->mutable_intelligencelist()->Clear();
+        }
+
     }
 }
 
@@ -348,9 +321,10 @@ void OrderParameterSerializer::Clean( ASN1T_MissionParameter& asn ) const
 // Updated: JCR 2009-10-15
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeDirection( ASN1T_Heading& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializeDirection( Common::MsgHeading& message, const std::string& value ) const
 {
-    asn = boost::lexical_cast< int >( value );
+    std::stringstream ss( value );
+    ss >> boost::lexical_cast< std::string >( message.heading() );
 }
 
 // -----------------------------------------------------------------------------
@@ -358,11 +332,11 @@ void OrderParameterSerializer::SerializeDirection( ASN1T_Heading& asn, const std
 // Updated: JCR 2009-10-15
 // Created: SBO 2007-06-07
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeAutomat( ASN1T_Automat& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializeAutomat( Common::MsgAutomat& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( const dispatcher::Agent* agent = model_.Agents().Find( id ) )
-        asn = agent->automat_->GetId();
+        message.set_oid( agent->automat_->GetId() );
      // $$$$ SBO 2007-06-07: else...
     else
         throw std::runtime_error( "unknown automat [" + value + "]" );
@@ -372,21 +346,21 @@ void OrderParameterSerializer::SerializeAutomat( ASN1T_Automat& asn, const std::
 // Name: OrderParameterSerializer::SerializeUnit
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeUnit( ASN1T_Unit& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializeUnit( Common::MsgUnit& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.Agents().Find( id ) )
         throw std::runtime_error( "unknown agent [" + value + "]" );
-    asn = id;
+    message.set_oid( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeBool
 // Created: SBO 2007-06-07
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeBool( ASN1BOOL& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializeBool( bool& message, const std::string& value ) const
 {
-    asn = ( value == "true" );
+    message = ( value == "true" );
 }
 
 // -----------------------------------------------------------------------------
@@ -394,24 +368,24 @@ void OrderParameterSerializer::SerializeBool( ASN1BOOL& asn, const std::string& 
 // Created: JCR 2009-06-05
 // -----------------------------------------------------------------------------
 template < typename LocationType >
-void OrderParameterSerializer::SerializeLocation( LocationType*& asn, const Row_ABC* row ) const
+void OrderParameterSerializer::SerializeLocation( LocationType& message, const Row_ABC* row ) const
 {
-    asn = new LocationType();
     if ( row == 0 )
         throw std::exception( "Cannot instanciate location parameter" );    
-    row->GetShape().Serialize( *asn );
+    row->GetShape().Serialize( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeLocation
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
+
 template< typename T >
-void OrderParameterSerializer::SerializeLocation( T*& asn, unsigned long parameterId, const std::string& tablename ) const
+void OrderParameterSerializer::SerializeLocation( T& message, unsigned long parameterId, const std::string& tablename ) const
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
     const std::string query( "parameter_id=" + boost::lexical_cast< std::string >( parameterId ) );
-    SerializeLocation( asn, table->Find( query ) );
+    SerializeLocation( message, table->Find( query ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -419,28 +393,44 @@ void OrderParameterSerializer::SerializeLocation( T*& asn, unsigned long paramet
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
 template< typename T >
-void OrderParameterSerializer::SerializeLocationList( T*& asn, unsigned long parameterId, const std::string& tablename ) const
+void OrderParameterSerializer::SerializeLocationList( T& message, unsigned long parameterId, const std::string& tablename ) const
 {
-    typedef boost::function< void ( ASN1T_Location&, const ASN1T_Location* ) > Functor;
-    std::vector< ASN1T_Location* > locations;
+    typedef boost::function< void ( Common::MsgLocation&, const Common::MsgLocation* ) > Functor;
+    std::vector< Common::MsgLocation* > locations;
     boost::shared_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
     FillLocationlist( locations, table, parameterId );
-    SerializeList( asn, locations, FunctorWrapperList< ASN1T_Location, Functor >( CopyLocation() ) );
+    SerializeList( message, locations, FunctorWrapperList< Common::MsgLocation, Functor >( CopyLocation() ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::OrderParameterSerializer::FillLocationlist
+// Name: OrderParameterSerializer::SerializeLocList
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::FillLocationlist( std::vector< ASN1T_Location* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const
+template< typename T >
+void OrderParameterSerializer::SerializeLocList( T& message, unsigned long parameterId, const std::string& tablename ) const
+{
+    typedef boost::function< void ( Common::MsgLocation&, const Common::MsgLocation* ) > Functor;
+    std::vector< Common::MsgLocation* > locations;
+    boost::shared_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
+    FillLocationlist( locations, table, parameterId );
+    CopyLocation c;
+    for ( int i = 0; i < locations.size(); i++)
+        c( *message.mutable_elem( i )->mutable_location(), locations[ i ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameterSerializer::FillLocationlist
+// Created: JCR 2009-10-15
+// -----------------------------------------------------------------------------
+void OrderParameterSerializer::FillLocationlist( std::vector< Common::MsgLocation* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const
 {
     const std::string query( "parameter_id=" + boost::lexical_cast< std::string >( oid ) );
     const Row_ABC* row = table->Find( query );
     while( row != 0 )
     {
-        ASN1T_Location* elt;
+        Common::MsgLocation elt;
         SerializeLocation( elt, row );
-        locations.push_back( elt );
+        locations.push_back( &elt );
         row = table->GetNextRow();
     }
 }
@@ -449,12 +439,12 @@ void OrderParameterSerializer::FillLocationlist( std::vector< ASN1T_Location* >&
 // Name: OrderParameterSerializer::SerializePhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializePhaseLines( ASN1T_LimasOrder*& asn, unsigned long /*parameterId*/, const std::string& /*tablename*/ ) const
+void OrderParameterSerializer::SerializePhaseLines( Common::MsgLimasOrder& message, unsigned long /*parameterId*/, const std::string& /*tablename*/ ) const
 {
     // $$$$ SBO 2008-03-10: Not Supported
-    asn = new ASN1T_LimasOrder();
-    asn->n = 0;
-    asn->elem = 0;
+    //message = new Common::MsgLimasOrder();
+    //message->set_n( 0 );
+//    message->mutable_elem() = NULL;
 
     /*
     std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
@@ -464,33 +454,33 @@ void OrderParameterSerializer::SerializePhaseLines( ASN1T_LimasOrder*& asn, unsi
         
     for( unsigned int i = 0; result != 0; ++i )
     {
-        SerializePhaseLine(asn->elem[i], v);
+        SerializePhaseLine(message->elem( i ), v);
         result = paramTable_.GetNextRow();
     }    
     */
     // $$$$ SBO 2008-03-04: value=id1,func1,func2;id2,func1;...    
     /*
-    asn = new ASN1T_LimasOrder();
-    asn->n = std::count( value.begin(), value.end(), ';' );
-    if( !asn->n )
+    message = new LimasOrder();
+    message->n = std::count( value.begin(), value.end(), ';' );
+    if( !message->n )
         return;
-    asn->elem = new ASN1T_LimaOrder[asn->n];
+    message->elem = new LimaOrder[message->n];
     std::stringstream ss( value );
     std::string v;
     for( unsigned int i = 0; std::getline( ss, v, ';' ); ++i )
-        SerializePhaseLine( asn->elem[i], v );
+        SerializePhaseLine( message->elem( i ), v );
     */
 }
 
 namespace
 {
-    ASN1T_EnumLimaType ConvertLimaTypeFromString( const std::string& type )
+    Common::MsgLimaOrder_Function ConvertLimaTypeFromString( const std::string& type )
     {
         static const std::string functions[] = { "LD", "LCA", "LC", "LI", "LO", "LCAR", "LR", "LDM", "LFM", "LIA" };
         for( int i = 0; i < 10; ++i )
         if( functions[i] == type )
-            return (ASN1T_EnumLimaType)i;
-        return (ASN1T_EnumLimaType)-1;
+            return (Common::MsgLimaOrder_Function)i;
+        return (Common::MsgLimaOrder_Function)-1;
     }
 }
 
@@ -498,13 +488,13 @@ namespace
 // Name: OrderParameterSerializer::SerializePhaseLine
 // Created: SBO 2008-03-10
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializePhaseLine( ASN1T_LimaOrder& /*asn*/, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializePhaseLine( Common::MsgLimaOrder& message, const std::string& /*value*/ ) const
 {
     // $$$$ SBO 2008-03-10: value=id,func1,func2
     /*
-    asn.fonctions.n = std::count( value.begin(), value.end(), ',' );
-    if( asn.fonctions.n )
-        asn.fonctions.elem = new ASN1T_EnumLimaType[asn.fonctions.n];
+    mutable_asn.fonctions()->set_n( std::count( value.begin(), value.end(), ',' ) );;
+    if( message.fonctions.elem_size() )
+        message.fonctions.elem = new MsgLimaOrder_Function[message.fonctions.n];
 
     std::stringstream ss( value );
     std::string v;
@@ -515,10 +505,10 @@ void OrderParameterSerializer::SerializePhaseLine( ASN1T_LimaOrder& /*asn*/, con
             unsigned int id;
             converter >> id;
             if( const dispatcher::Lima* lima = model_.GetLimas().Find( id ) )
-                lima->Send( asn.lima );
+                lima->Send( message.lima );
         }
         else
-            asn.fonctions.elem[i - 1] = ConvertLimaTypeFromString( v );
+            message.fonctions.elem[i - 1] = ConvertLimaTypeFromString( v );
     */
 }
 
@@ -541,55 +531,53 @@ namespace
 // Name: OrderParameterSerializer::SerializeIntelligenceList
 // Created: SBO 2008-03-10
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeIntelligenceList( ASN1T_IntelligenceList*& asn, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializeIntelligenceList( Common::MsgIntelligenceList& message, const std::string& /*value*/ ) const
 {
-    // $$$$ SBO 2008-03-10: Not Supported
-    typedef boost::function< void ( ASN1T_Intelligence&, const ASN1T_Intelligence* ) > Functor;
-    std::vector< ASN1T_Intelligence* > list;
-    SerializeList( asn, list, VoidFunctorWrapperList< ASN1T_Intelligence, Functor >() );
+    typedef boost::function< void ( Common::MsgIntelligence&, const Common::MsgIntelligence* ) > FunctorIntelligence;
+    std::vector< Common::MsgIntelligence* > list;
+    SerializeList( message, list, VoidFunctorWrapperList< Common::MsgIntelligence, FunctorIntelligence >() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeUnitKnowledge
 // Created: JCR 2009-10-14
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeUnitKnowledge( ASN1T_UnitKnowledge& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializeUnitKnowledge( Common::MsgUnitKnowledge& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.AgentKnowledges().Find( id ) )
         throw std::runtime_error( "unknown unit knowledge [" + value + "]" );
-    asn = id;
+    message.set_oid( id );
 }
     
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeObjectKnowledge
 // Created: JCR 2009-10-14
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeObjectKnowledge( ASN1T_ObjectKnowledge& asn, const std::string& value ) const
+void OrderParameterSerializer::SerializeObjectKnowledge( Common::MsgObjectKnowledge& message, const std::string& value ) const
 {
     unsigned long id = boost::lexical_cast< unsigned long >( value );
     if( ! model_.ObjectKnowledges().Find( id ) )
         throw std::runtime_error( "unknown object knowledge [" + value + "]" );
-    asn = id;
+    message.set_oid( id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeMissionObjective
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeMissionObjective( ASN1T_MissionObjective*& asn, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializeMissionObjective( Common::MsgMissionObjective& message, const std::string& /*value*/ ) const
 {
-    asn = new ASN1T_MissionObjective;
+   // message = new Common::MsgMissionObjective;
 }
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeMissionObjectiveList
 // Created: JCR 2009-10-15
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::SerializeMissionObjectiveList( ASN1T_MissionObjectiveList*& asn, const std::string& /*value*/ ) const
+void OrderParameterSerializer::SerializeMissionObjectiveList( Common::MsgMissionObjectiveList& message, const std::string& /*value*/ ) const
 {
-    typedef boost::function< void ( ASN1T_MissionObjective&, const ASN1T_MissionObjective* ) > Functor;
-    std::vector< ASN1T_MissionObjective* > list;
-    // build informations in ASN1T_MissionObjective
-    SerializeList( asn, list, VoidFunctorWrapperList< ASN1T_MissionObjective, Functor >() );
+    typedef boost::function< void ( Common::MsgMissionObjective&, const Common::MsgMissionObjective* ) > Functor;
+    std::vector< Common::MsgMissionObjective* > list;
+    SerializeList( message, list, VoidFunctorWrapperList< Common::MsgMissionObjective, Functor >() );
 }

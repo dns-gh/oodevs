@@ -12,8 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_SupplyConsign_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "protocol/clientsenders.h"
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyConsign_ABC constructor
 // Created: NLD 2004-12-23
@@ -55,28 +54,28 @@ PHY_SupplyConsign_ABC::~PHY_SupplyConsign_ABC()
 // Name: PHY_SupplyConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_SupplyConsign_ABC::SendFullState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const
+void PHY_SupplyConsign_ABC::SendFullState( client::LogSupplyHandlingUpdate& asn ) const
 {
     assert( pSupplyingAutomate_ );
     assert( pConvoyingAutomate_ );
     assert( pSuppliedAutomate_ );
 
-    asn().m.etatPresent                                       = 1;
-    asn().m.oid_automate_log_traitantPresent                  = 1;    
-    asn().m.oid_automate_log_fournissant_moyens_convoiPresent = 1;
-    asn().m.oid_pion_convoyantPresent                         = 1;
+//    asn().set_etatPresent( 1 );
+//    asn().set_oid_automate_log_traitantPresent( 1 );    
+//    asn().set_oid_automate_log_fournissant_moyens_convoiPresent( 1 );
+//    asn().set_oid_pion_convoyantPresent( 1 );
     
-    asn().etat                                       = (ASN1T_EnumLogSupplyHandlingStatus)nState_;
-    asn().oid_automate_log_traitant                  = pSupplyingAutomate_->GetID();
-    asn().oid_automate_log_fournissant_moyens_convoi = pConvoyingAutomate_->GetID();
-    asn().oid_pion_convoyant                         = 0;
+    asn().set_etat( MsgsSimToClient::EnumLogSupplyHandlingStatus( nState_ ) );
+    asn().set_oid_automate_log_traitant( pSupplyingAutomate_->GetID() );
+    asn().set_oid_automate_log_fournissant_moyens_convoi( pConvoyingAutomate_->GetID() );
+    asn().set_oid_pion_convoyant( 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyConsign_ABC::SendChangedState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_SupplyConsign_ABC::SendChangedState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const
+void PHY_SupplyConsign_ABC::SendChangedState( client::LogSupplyHandlingUpdate& asn ) const
 {
     if( bHasChanged_ )
         SendFullState( asn );
@@ -86,17 +85,17 @@ void PHY_SupplyConsign_ABC::SendChangedState( NET_ASN_MsgLogSupplyHandlingUpdate
 // Name: PHY_SupplyConsign_ABC::SendDefaultState
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-void PHY_SupplyConsign_ABC::SendDefaultState( NET_ASN_MsgLogSupplyHandlingUpdate& asn )
+void PHY_SupplyConsign_ABC::SendDefaultState( client::LogSupplyHandlingUpdate& asn )
 {
-    asn().m.oid_automate_log_traitantPresent                  = 1;
-    asn().m.oid_automate_log_fournissant_moyens_convoiPresent = 1;
-    asn().m.oid_pion_convoyantPresent                         = 1;
-    asn().m.etatPresent                                       = 1;
+//    asn().set_oid_automate_log_traitantPresent( 1 );
+//    asn().set_oid_automate_log_fournissant_moyens_convoiPresent( 1 );
+//    asn().set_oid_pion_convoyantPresent( 1 );
+//    asn().set_etatPresent( 1 );
 
-    asn().oid_pion_convoyant                         = 0;
-    asn().oid_automate_log_fournissant_moyens_convoi = 0;
-    asn().oid_automate_log_traitant                  = 0;
-    asn().etat                                       = EnumLogSupplyHandlingStatus::termine;
+    asn().set_oid_pion_convoyant( 0 );
+    asn().set_oid_automate_log_fournissant_moyens_convoi( 0 );
+    asn().set_oid_automate_log_traitant( 0 );
+    asn().set_etat( MsgsSimToClient::EnumLogSupplyHandlingStatus::termine );
 }
 
 // -----------------------------------------------------------------------------

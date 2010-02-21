@@ -43,9 +43,9 @@ void Mission_Pawn_ASS_EOP_AcquerirObjectifs::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASS_EOP_AcquerirObjectifs& asnMission = *new ASN1T_Mission_Pion_ASS_EOP_AcquerirObjectifs();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_eop_acquerir_objectifs;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_eop_acquerir_objectifs = &asnMission;
+    Mission_Pion_ASS_EOP_AcquerirObjectifs& asnMission = *new Mission_Pion_ASS_EOP_AcquerirObjectifs();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_ass_eop_acquerir_objectifs = &asnMission;
 
     const Location& zoneAObserver_ = pTarget_->GetTestParam_Polygon();
     const Position& positionInstallation_ = pTarget_->GetTestParam_Point();
@@ -67,8 +67,8 @@ void Mission_Pawn_ASS_EOP_AcquerirObjectifs::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASS_EOP_AcquerirObjectifs::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_ass_eop_acquerir_objectifs );
-    ASN1T_Mission_Pion_ASS_EOP_AcquerirObjectifs& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_eop_acquerir_objectifs;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_ass_eop_acquerir_objectifs ());
+    Mission_Pion_ASS_EOP_AcquerirObjectifs& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_ass_eop_acquerir_objectifs;
 
     ASN_Tools::Delete( asnMission.zone_a_observer );
     ASN_Tools::Delete( asnMission.position_installation );

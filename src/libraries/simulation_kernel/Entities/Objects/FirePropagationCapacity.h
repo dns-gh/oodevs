@@ -33,14 +33,14 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
     //@{
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
-    virtual void Update( Object& object, uint time );
+    virtual void Update( Object& object, unsigned int time );
     //@}
 
 private:

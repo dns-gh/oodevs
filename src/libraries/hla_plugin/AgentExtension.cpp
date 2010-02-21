@@ -22,9 +22,13 @@
 #include <hla/UpdateFunctor_ABC.h>
 #include <hla/AttributeIdentifier.h>
 #include <boost/bind.hpp>
+#include "protocol/protocol.h"
 
 using namespace plugins::hla;
 using namespace hla;
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension constructor
@@ -75,20 +79,20 @@ void AgentExtension::Serialize( UpdateFunctor_ABC& functor, bool bUpdateAll ) co
 // Name: AgentExtension::DoUpdate
 // Created: AGE 2008-02-22
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
+void AgentExtension::DoUpdate( const MsgUnitAttributes& attributes )
 {
-    spatialChanged_     = spatialChanged_     || attributes.m.positionPresent
-                                              || attributes.m.hauteurPresent
-                                              || attributes.m.vitessePresent
-                                              || attributes.m.directionPresent;
-    compositionChanged_ = compositionChanged_ || attributes.m.dotation_eff_materielPresent;
+    spatialChanged_     = spatialChanged_     || attributes.has_position()
+                                              || attributes.has_hauteur()
+                                              || attributes.has_vitesse()
+                                              || attributes.has_direction();
+    compositionChanged_ = compositionChanged_ || attributes.has_dotation_eff_materiel();
 }
 
 // -----------------------------------------------------------------------------
 // Name: AgentExtension::DoUpdate
 // Created: AGE 2008-02-25
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const ASN1T_MsgUnitEnvironmentType& attributes )
+void AgentExtension::DoUpdate( const MsgUnitEnvironmentType& attributes )
 {
     formation_.Update( attributes );
 }

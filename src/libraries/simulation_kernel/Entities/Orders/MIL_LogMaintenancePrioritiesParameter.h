@@ -24,7 +24,7 @@ class MIL_LogMaintenancePrioritiesParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LogMaintenancePrioritiesParameter( const ASN1T_LogMaintenancePriorities & asn );
+    explicit MIL_LogMaintenancePrioritiesParameter( const Common::MsgLogMaintenancePriorities & asn );
     virtual ~MIL_LogMaintenancePrioritiesParameter();
     //@}
 
@@ -35,7 +35,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToMaintenancePriorities( ASN1T_LogMaintenancePriorities& ) const;
+    virtual bool ToMaintenancePriorities( Common::MsgLogMaintenancePriorities& ) const;
     virtual bool ToMaintenancePriorities( T_MaintenancePriorityVector& ) const;
     //@}
 

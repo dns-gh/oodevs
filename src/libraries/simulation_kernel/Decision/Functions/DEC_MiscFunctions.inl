@@ -9,6 +9,14 @@
 //
 // *****************************************************************************
 
+#include "Entities/Orders/MIL_Report.h"
+#include "simulation_orders/MIL_MissionParameter_ABC.h"
+#include "Entities/Orders/MIL_MissionParameterFactory.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/clientsenders.h"
+
 // -----------------------------------------------------------------------------
 // Name: template< typename T > static void DEC_MiscFunctions::Report
 // Created: LDC 2009-06-16
@@ -226,10 +234,10 @@ void DEC_MiscFunctions::ReportTirPion( T& caller, int type, int reportId, int id
 template <typename T>
 void DEC_MiscFunctions::Trace( const T& caller, const std::string& message )
 {
-    NET_ASN_MsgTrace msg;
-    msg().oid = caller.GetID();
-    msg().message = message.c_str();
-    msg.Send();
+    client::Trace msg;
+    msg().set_oid( caller.GetID() );
+    *msg().mutable_message() = message.c_str();
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 //-----------------------------------------------------------------------------
@@ -252,11 +260,11 @@ void DEC_MiscFunctions::Debug( const T& caller, const std::string& callerType, c
 template <typename T>
 void DEC_MiscFunctions::DebugDrawPoints(const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points )
 {
-    NET_ASN_MsgDebugPoints asn;
-    asn().oid = caller.GetID();
-    NET_ASN_Tools::WriteCoordinates( points, asn().coordinates );
-    asn.Send();
-    ASN_Delete::Delete( asn().coordinates );
+    client::DebugPoints message;
+    message().set_oid( caller.GetID() );
+    NET_ASN_Tools::WriteCoordinates( points, *message().mutable_coordinates() );
+    message.Send( NET_Publisher_ABC::Publisher() );
+    delete message().mutable_coordinates();
 }
 
 // -----------------------------------------------------------------------------
@@ -268,11 +276,8 @@ void DEC_MiscFunctions::DebugDrawPoint( const T& caller, const MT_Vector2D* pPoi
 {
     assert( pPoint );
 
-    NET_ASN_MsgDebugPoints asn;
-    asn().oid = caller.GetID();
-    asn().coordinates.n = 1;
-    ASN1T_CoordLatLong coord;
-    NET_ASN_Tools::WritePoint( *pPoint, coord );
-    asn().coordinates.elem = &coord;
-    asn.Send();
+    client::DebugPoints message;
+    message().set_oid( caller.GetID() );
+    NET_ASN_Tools::WritePoint( *pPoint, *message().mutable_coordinates()->add_elem() );
+    message.Send( NET_Publisher_ABC::Publisher() );
 }

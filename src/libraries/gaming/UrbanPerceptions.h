@@ -10,7 +10,6 @@
 #ifndef __UrbanPerceptions_h_
 #define __UrbanPerceptions_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
@@ -21,6 +20,11 @@ namespace kernel
     class Controller;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgUrbanKnowledgeUpdate;
+}
+
 // =============================================================================
 /** @class  UrbanPerceptions
     @brief  UrbanPerceptions
@@ -28,7 +32,7 @@ namespace kernel
 // Created: MGD 2009-12-09
 // =============================================================================
 class UrbanPerceptions : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< ASN1T_MsgUrbanKnowledgeUpdate >
+    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
 {
 
 public:
@@ -40,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
     //@}
 
 private:

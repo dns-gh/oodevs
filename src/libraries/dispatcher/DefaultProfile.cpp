@@ -9,8 +9,22 @@
 
 #include "dispatcher_pch.h"
 #include "DefaultProfile.h"
+#include "protocol/Protocol.h"
 
 using namespace dispatcher;
+
+namespace MsgsClientToSim
+{
+    class MsgClientToSim;
+}
+namespace MsgsClientToReplay
+{
+    class MsgClientToReplay;
+}
+namespace MsgsClientToAuthentication
+{
+    class MsgClientToAuthentication;
+}
 
 // -----------------------------------------------------------------------------
 // Name: DefaultProfile constructor
@@ -34,7 +48,7 @@ DefaultProfile::~DefaultProfile()
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToSim& ) const
+bool DefaultProfile::CheckRights( const MsgsClientToSim::MsgClientToSim& ) const
 {
     return false;
 }
@@ -43,16 +57,16 @@ bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToSim& ) const
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToAuthentication& msg ) const
+bool DefaultProfile::CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper ) const
 {
-    return msg.msg.t == T_MsgsClientToAuthentication_msg_msg_authentication_request;
+    return wrapper.message().has_authentication_request();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToReplay& ) const
+bool DefaultProfile::CheckRights( const MsgsClientToReplay::MsgClientToReplay& ) const
 {
     return false;
 }
@@ -61,7 +75,7 @@ bool DefaultProfile::CheckRights( const ASN1T_MsgsClientToReplay& ) const
 // Name: DefaultProfile::CheckRights
 // Created: AGE 2008-06-10
 // -----------------------------------------------------------------------------
-bool DefaultProfile::CheckRights( const ASN1T_ChatTarget& , const ASN1T_ChatTarget& ) const
+bool DefaultProfile::CheckRights( const Common::MsgChatTarget& , const Common::MsgChatTarget& ) const
 {
     return false;
 }

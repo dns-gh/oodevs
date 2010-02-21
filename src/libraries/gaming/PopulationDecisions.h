@@ -10,10 +10,12 @@
 #ifndef __PopulationDecisions_h_
 #define __PopulationDecisions_h_
 
-#include "game_asn/Simulation.h"
+#include "Decisions_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "Decisions_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -29,7 +31,7 @@ namespace kernel
 // Created: AGE 2006-04-10
 // =============================================================================
 class PopulationDecisions : public kernel::Extension_ABC
-                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationOrder >
+	, public kernel::Updatable_ABC< Common::MsgPopulationOrder >
                           , public Decisions_ABC
 {
 
@@ -58,7 +60,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationOrder& message );
+	virtual void DoUpdate( const Common::MsgPopulationOrder& message );
     const kernel::DecisionalModel& GetDecisionalModel() const;
     //@}
 

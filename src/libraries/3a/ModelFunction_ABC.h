@@ -10,7 +10,10 @@
 #ifndef __ModelFunction_ABC_h_
 #define __ModelFunction_ABC_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 // =============================================================================
 /** @class  ModelFunction_ABC
@@ -31,7 +34,7 @@ public:
     //! @name Operations
     //@{
     virtual void BeginTick() = 0;
-    virtual void Receive( const ASN1T_MsgsSimToClient& message ) = 0;
+    virtual void Receive( const MsgSimToClient& message ) = 0;
     virtual void EndTick() = 0;
     //@}
 };

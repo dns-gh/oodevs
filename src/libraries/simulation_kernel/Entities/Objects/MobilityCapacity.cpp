@@ -94,7 +94,7 @@ MobilityCapacity::~MobilityCapacity()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void MobilityCapacity::serialize( Archive& file, const uint )
+void MobilityCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     file & nSpeedPolicy_

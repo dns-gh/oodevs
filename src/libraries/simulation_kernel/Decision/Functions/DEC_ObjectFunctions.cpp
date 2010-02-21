@@ -14,6 +14,7 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Decision/DEC_Gen_Object.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 // =============================================================================
@@ -35,7 +36,7 @@ std::string DEC_ObjectFunctions::GetGenObjectType( const DEC_Gen_Object* object)
 // -----------------------------------------------------------------------------
 bool DEC_ObjectFunctions::GetGenObjectReservedObstacle( const DEC_Gen_Object* object )
 {
-    return  object->GetObstacleType() == EnumDemolitionTargetType::reserved ;
+    return object->GetObstacleType() == Common::ObstacleType_DemolitionTargetType_reserved;
 }
 
 // -----------------------------------------------------------------------------

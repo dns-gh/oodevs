@@ -11,6 +11,7 @@
 #include "ObjectiveList.h"
 #include "Objective.h"
 #include "ParameterVisitor_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -42,11 +43,11 @@ ObjectiveList::ObjectiveList( const OrderParameter& parameter, xml::xistream& xi
 // Name: ObjectiveList constructor
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-ObjectiveList::ObjectiveList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_MissionObjectiveList& asn )
+ObjectiveList::ObjectiveList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgMissionObjectiveList& message )
     : Parameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Objective( OrderParameter( tools::translate( "Parameter", "Objective %1" ).arg( i + 1 ).ascii(), "objective", false ), converter, asn.elem[i] ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddParameter( *new Objective( OrderParameter( tools::translate( "Parameter", "Objective %1" ).arg( i + 1 ).ascii(), "objective", false ), converter, message.elem().Get(i) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,14 +76,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_MissionObjectiveList& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( Common::MsgMissionObjectiveList& message ) : message_( &message ) {}
         virtual void Visit( const Objective& param )
         {
-            param.CommitTo( asn_->elem[current_++] );
+            param.CommitTo( *message_->add_elem() );
         }
-
-        ASN1T_MissionObjectiveList* asn_;
-        unsigned int current_;
+        Common::MsgMissionObjectiveList* message_;
     };
 }
 
@@ -90,48 +89,25 @@ namespace
 // Name: ObjectiveList::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void ObjectiveList::CommitTo( ASN1T_MissionParameter& asn ) const
+void ObjectiveList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    ASN1T_MissionObjectiveList*& list = asn.value.u.missionObjectiveList = new ASN1T_MissionObjectiveList();
-    asn.value.t = T_MissionParameter_value_missionObjectiveList;
-    list->n = Count();
+    message.set_null_value( !IsSet() );
+    Common::MsgMissionObjectiveList* list = message.mutable_value()->mutable_missionobjectivelist();
     if( IsSet() )
     {
-        list->elem = new ASN1T_MissionObjective[list->n];
         AsnSerializer serializer( *list );
         Accept( serializer );
     }
-}
-
-namespace
-{
-    struct AsnCleaner : public ParameterVisitor_ABC
-    {
-        explicit AsnCleaner( ASN1T_MissionObjectiveList& asn ) : asn_( &asn ), current_( 0 ) {}
-        virtual void Visit( const Objective& param )
-        {
-            param.Clean( asn_->elem[current_++] );
-        }
-   
-        ASN1T_MissionObjectiveList* asn_;
-        unsigned int current_;
-    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectiveList::Clean
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void ObjectiveList::Clean( ASN1T_MissionParameter& asn ) const
+void ObjectiveList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.missionObjectiveList )
-    {
-        AsnCleaner cleaner( *asn.value.u.missionObjectiveList );
-        Accept( cleaner );
-        delete[] asn.value.u.missionObjectiveList->elem;
-    }
-    delete asn.value.u.missionObjectiveList;
+    if( message.value().has_missionobjectivelist() )
+        message.mutable_value()->clear_missionobjectivelist();
 }
 
 // -----------------------------------------------------------------------------

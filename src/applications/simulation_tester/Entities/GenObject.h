@@ -59,15 +59,15 @@ public:
     //! @name Accessors
     //@{
     const Location&                      GetLocation       () const;
-    ASN1T_EnumObjectType                 GetType           () const;
-    ASN1T_EnumMissionGenSousTypeObstacle GetObstacleSubType() const;
-    uint                                 GetDensity        () const;
+    EnumObjectType                 GetType           () const;
+    EnumMissionGenSousTypeObstacle GetObstacleSubType() const;
+    unsigned int                                 GetDensity        () const;
     //@}
 
     //! @name Test Parameters
     //@{
     static GenObject&         GetTestParam_GenObject    ( const Testable_Entity& target );
-    static T_GenObjectVector& GetTestParam_GenObjectList( const Testable_Entity& target, uint nGenObject );
+    static T_GenObjectVector& GetTestParam_GenObjectList( const Testable_Entity& target, unsigned int nGenObject );
     //@}
 
 private:
@@ -81,9 +81,9 @@ private:
     //! @name Member data
     //@{
     Location*                            pLocation_;
-    ASN1T_EnumObjectType                 eType_;
-    ASN1T_EnumMissionGenSousTypeObstacle eObstacleSubType_;
-    uint                                 nDensity_;
+    EnumObjectType                 eType_;
+    EnumMissionGenSousTypeObstacle eObstacleSubType_;
+    unsigned int                                 nDensity_;
     //@}
 };
 

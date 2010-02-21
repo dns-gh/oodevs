@@ -14,6 +14,11 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 
+namespace Common
+{
+    class MsgUnitKnowledge;
+}
+
 namespace kernel
 {
     class Agent_ABC;
@@ -45,9 +50,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    using Entity< kernel::AgentKnowledge_ABC >::CommitTo;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    void CommitTo( ASN1T_UnitKnowledge& asn ) const;
+    void CommitTo( Common::MsgUnitKnowledge& message ) const;
     //@}
 
 private:

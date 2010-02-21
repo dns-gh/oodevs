@@ -14,10 +14,11 @@
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlowPart )
 
@@ -32,8 +33,9 @@ DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart()
     , bPerceived_        ( true )
     , nTimeLastUpdate_   ( 0 )
 {
-    
+    // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPart destructor
 // Created: NLD 2004-03-11
@@ -47,7 +49,7 @@ DEC_Knowledge_PopulationFlowPart::~DEC_Knowledge_PopulationFlowPart()
 // Name: DEC_Knowledge_PopulationFlowPart::load
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPart::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_PopulationFlowPart::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> shape_
          >> rRelevance_
@@ -59,7 +61,7 @@ void DEC_Knowledge_PopulationFlowPart::load( MIL_CheckPointInArchive& file, cons
 // Name: DEC_Knowledge_PopulationFlowPart::save
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPart::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_PopulationFlowPart::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << shape_
          << rRelevance_
@@ -110,6 +112,7 @@ bool DEC_Knowledge_PopulationFlowPart::Update( const DEC_Knowledge_PopulationCol
     if( shape_ != shape )
     {
         shape_ = shape;
+        bPerceived_ = true;
         return true;
     }
     return false;
@@ -130,15 +133,18 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeT
         return ChangeRelevance( 0. );
 
     assert( rRelevance_ >= 0. && rRelevance_ <= 1. );
-
-    nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();    
+  
     if( rMaxLifeTime == 0. )
+    {
+        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();  
         return ChangeRelevance( 0. );
+    }
     else
     {
         // Degradation : effacement au bout de X minutes
         const MT_Float rTimeRelevanceDegradation = ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() - nTimeLastUpdate_ ) / rMaxLifeTime;
         const MT_Float rRelevance                = std::max( 0., rRelevance_ - rTimeRelevanceDegradation );       
+        nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();  
         return ChangeRelevance( rRelevance );
     }
 }
@@ -147,10 +153,10 @@ bool DEC_Knowledge_PopulationFlowPart::UpdateRelevance( const MT_Float rMaxLifeT
 // Name: DEC_Knowledge_PopulationFlowPart::Serialize
 // Created: NLD 2005-10-14
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPart::Serialize( ASN1T_FlowPart& asn ) 
+void DEC_Knowledge_PopulationFlowPart::Serialize( MsgsSimToClient::MsgFlowPart& asn ) 
 {
-    NET_ASN_Tools::WritePath( shape_, asn.forme );
-    asn.pertinence      = (uint)( rRelevance_ * 100. );
+    NET_ASN_Tools::WritePath( shape_, *asn.mutable_forme() );
+    asn.set_pertinence( rRelevance_ * 100. );
     rLastRelevanceSent_ = rRelevance_;    
 }
 

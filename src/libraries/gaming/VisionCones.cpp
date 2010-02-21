@@ -50,15 +50,15 @@ VisionCones::~VisionCones()
 // Name: VisionCones::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void VisionCones::DoUpdate( const ASN1T_MsgUnitVisionCones& message )
+void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message )
 {
     for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
         delete *itSurface;
-    elongationFactor_ = message.elongation;
+    elongationFactor_ = message.elongation();
     
-    surfaces_.resize( message.cones.n );
-    for( unsigned i = 0; i < message.cones.n; ++i )
-        surfaces_[i] = factory_.CreateSurface( agent_, message.cones.elem[i], elongationFactor_ );
+    surfaces_.resize( message.cones().elem_size() );
+    for( int i = 0; i < message.cones().elem_size(); ++i )
+        surfaces_[i] = factory_.CreateSurface( agent_, message.cones().elem( i ), elongationFactor_ );
     
     Invalidate();
 }
@@ -67,11 +67,11 @@ void VisionCones::DoUpdate( const ASN1T_MsgUnitVisionCones& message )
 // Name: VisionCones::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void VisionCones::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.positionPresent 
-     || message.m.experiencePresent 
-     || message.m.fatiguePresent )
+    if( message.has_position()  
+     || message.has_experience()  
+     || message.has_fatigue()  )
         Invalidate();
 }
 

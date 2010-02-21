@@ -42,13 +42,13 @@ SupplyRouteAttribute::~SupplyRouteAttribute()
 template< typename T >
 void SupplyRouteAttribute::UpdateData( const T& message )
 {
-    if( message.m.supply_routePresent )
+    if( message.has_supply_route()  )
     {
-        nLogRouteFlow_      = message.supply_route.flow_rate;
-        nLogRouteLength_    = message.supply_route.length;
-        nLogRouteWidth_     = message.supply_route.width;
-        nLogRouteMaxWeight_ = message.supply_route.max_weight;
-        bLogRouteEquipped_  = message.supply_route.equipped != 0;
+        nLogRouteFlow_      = message.supply_route().flow_rate();
+        nLogRouteLength_    = message.supply_route().length();
+        nLogRouteWidth_     = message.supply_route().width();
+        nLogRouteMaxWeight_ = message.supply_route().max_weight();
+        bLogRouteEquipped_  = message.supply_route().equipped() != 0;
         controller_.Update( *(SupplyRouteAttribute_ABC*)this );
     }
 }
@@ -57,27 +57,27 @@ void SupplyRouteAttribute::UpdateData( const T& message )
 // Name: SupplyRouteAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void SupplyRouteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void SupplyRouteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void SupplyRouteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

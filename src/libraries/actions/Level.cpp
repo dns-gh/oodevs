@@ -11,6 +11,7 @@
 #include "Level.h"
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/FormationLevels.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -32,9 +33,9 @@ Level::Level( const kernel::OrderParameter& parameter, const kernel::HierarchyLe
 // Name: Level constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Level::Level( const kernel::OrderParameter& parameter, const ASN1T_EnumNatureLevel& asn, const kernel::FormationLevels& levels )
+Level::Level( const kernel::OrderParameter& parameter, const Common::EnumNatureLevel& message, const kernel::FormationLevels& levels )
     : Parameter< QString >( parameter )
-    , level_( *levels.Resolve( asn ) )
+    , level_( *levels.Resolve( message ) )
 {
     SetValue( level_.GetName() );
 }
@@ -63,9 +64,9 @@ Level::~Level()
 // Name: Level::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Level::CommitTo( ASN1T_EnumNatureLevel& asn ) const
+void Level::CommitTo( T_Setter setter ) const
 {
-    asn = ASN1T_EnumNatureLevel( level_.GetId() );
+    setter( Common::EnumNatureLevel( level_.GetId() ) );
 }
 
 // -----------------------------------------------------------------------------

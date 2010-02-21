@@ -58,7 +58,7 @@ DecontaminationCapacity::~DecontaminationCapacity()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DecontaminationCapacity::serialize( Archive& file, const uint )
+void DecontaminationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
@@ -86,7 +86,7 @@ void DecontaminationCapacity::Instanciate( Object& object ) const
 // Name: DecontaminationCapacity::Update
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-void DecontaminationCapacity::Update( Object& object, uint /*time*/ )
+void DecontaminationCapacity::Update( Object& object, unsigned int /*time*/ )
 {
     if ( decontaminationQueue_.size() == 0 || object.IsMarkedForDestruction() || object.GetAttribute< ConstructionAttribute >().GetState() < 1. )
         return;

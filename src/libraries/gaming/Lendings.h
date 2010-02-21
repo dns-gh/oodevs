@@ -10,11 +10,15 @@
 #ifndef __Lendings_h_
 #define __Lendings_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "Loan.h"
+
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
+}
 
 namespace kernel
 {
@@ -30,7 +34,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Lendings : public kernel::Extension_ABC
-               , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
 
 public:
@@ -52,7 +56,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     //@}
 
 public:

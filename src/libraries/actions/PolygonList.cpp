@@ -9,7 +9,8 @@
 
 #include "actions_pch.h"
 #include "PolygonList.h"
-#include "game_asn/Simulation.h"
+#include "Polygon.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 using namespace actions;
@@ -29,8 +30,8 @@ PolygonList::PolygonList( const OrderParameter& parameter )
 // Name: PolygonList constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-PolygonList::PolygonList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_PolygonList& asn )
-    : LocationList( parameter, converter, (const ASN1T_LocationList&)asn )
+PolygonList::PolygonList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgPolygonList& message )
+    : LocationList( parameter, converter, message )
 {
     // NOTHING
 }
@@ -58,22 +59,20 @@ PolygonList::~PolygonList()
 // Name: PolygonList::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void PolygonList::CommitTo( ASN1T_MissionParameter& asn ) const
+void PolygonList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_polygonList;
-    asn.value.u.polygonList = new ASN1T_PolygonList();
+    message.set_null_value( !IsSet() );
+    message.mutable_value()->mutable_polygonlist();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        LocationList::CommitTo( *(ASN1T_LocationList*)asn.value.u.polygonList );
+        LocationList::CommitTo< Common::MsgPolygonList >( *message.mutable_value()->mutable_polygonlist() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PolygonList::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void PolygonList::Clean( ASN1T_MissionParameter& asn ) const
+void PolygonList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.polygonList )
-        LocationList::Clean( *(ASN1T_LocationList*)asn.value.u.polygonList );
-    delete asn.value.u.polygonList;
+    if( message.value().has_polygonlist() )
+        message.mutable_value()->clear_polygonlist();
 }

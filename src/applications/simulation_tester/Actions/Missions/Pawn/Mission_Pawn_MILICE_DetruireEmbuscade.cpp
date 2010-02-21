@@ -43,9 +43,9 @@ void Mission_Pawn_MILICE_DetruireEmbuscade::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_MILICE_DetruireEmbuscade& asnMission = *new ASN1T_Mission_Pion_MILICE_DetruireEmbuscade();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_milice_detruire_embuscade;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_detruire_embuscade = &asnMission;
+    Mission_Pion_MILICE_DetruireEmbuscade& asnMission = *new Mission_Pion_MILICE_DetruireEmbuscade();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_milice_detruire_embuscade = &asnMission;
 
     const Position& positionEmbuscade_ = pTarget_->GetTestParam_Point();
     const Position& positionRegroupement_ = pTarget_->GetTestParam_Point();
@@ -65,8 +65,8 @@ void Mission_Pawn_MILICE_DetruireEmbuscade::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_MILICE_DetruireEmbuscade::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_milice_detruire_embuscade );
-    ASN1T_Mission_Pion_MILICE_DetruireEmbuscade& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_detruire_embuscade;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_milice_detruire_embuscade ());
+    Mission_Pion_MILICE_DetruireEmbuscade& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_milice_detruire_embuscade;
 
     ASN_Tools::Delete( asnMission.position_embuscade );
     ASN_Tools::Delete( asnMission.position_regroupement );

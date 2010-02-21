@@ -86,9 +86,11 @@ void AtlasNature::Toggle( const AtlasNature& nature )
 // Name: AtlasNature::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AtlasNature::CommitTo( unsigned int& n, unsigned char* bits ) const
+void AtlasNature::CommitTo( T_Setter setter ) const
 {
-    n = 11;
-    bits[0] = unsigned char( value_ >> 8 );
-    bits[1] = unsigned char( value_ & 0x00FF );
+    unsigned short value = GetValue();
+    std::string nature;
+    nature[0] = unsigned char( value >> 8 );
+    nature[1] = unsigned char( value & 0x00FF );
+    setter( nature );
 }

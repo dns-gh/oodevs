@@ -11,7 +11,12 @@
 #define __MIL_MissionParameterFactory_h_
 
 #include <boost/shared_ptr.hpp>
-#include "game_asn/generated/Order.h"
+
+namespace Common
+{
+    class MsgMissionParameter;
+    class MsgMissionParameters;
+}
 
 class DEC_AutomateDecision;
 class DEC_Decision_ABC;
@@ -46,7 +51,7 @@ class MIL_MissionParameterFactory
 public:
     //! @name Operations
     //@{
-    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const ASN1T_MissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_DotationCategory* dotationType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_ComposanteTypePion* equipmentType );
@@ -68,6 +73,8 @@ public:
     static void SetPawnParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Decision_ABC* pion );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePawn( DEC_Decision_ABC* pion );
 
+//    static void Copy( const MsgMissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
+
     static void SetAutomatParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Decision_ABC* automat );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateAutomat( DEC_Decision_ABC* automat );
 
@@ -88,7 +95,8 @@ public:
     static void SetPolygonListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList );
     static void SetUrbanBlockParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock );
 
-    static void Copy( const ASN1T_MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
+    static void Copy( const Common::MsgMissionParameters& asn, std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
+
     //@}
 };
 

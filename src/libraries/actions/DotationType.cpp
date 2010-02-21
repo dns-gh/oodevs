@@ -11,11 +11,12 @@
 #include "DotationType.h"
 #include "clients_kernel/DotationType.h"
 #include "ParameterVisitor_ABC.h"
-#include <xeumeuleu/xml.h>
+#include "protocol/Protocol.h"
 #pragma warning( push )
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
+#include <xeumeuleu/xml.h>
 
 using namespace xml;
 using namespace actions;
@@ -75,11 +76,11 @@ void DotationType::CommitTo( std::string& content ) const
 // Name: DotationType::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void DotationType::CommitTo( ASN1T_MissionParameter& asn ) const
+void DotationType::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_dotationType;
-    asn.value.u.dotationType = type_.GetId();
+    message.set_null_value ( !IsSet() );
+    message.mutable_value()->mutable_dotationtype();    // enforce initialisation of parameter to force his type
+    message.mutable_value()->mutable_dotationtype()->set_oid( type_.GetId() );
 }
 
 // -----------------------------------------------------------------------------

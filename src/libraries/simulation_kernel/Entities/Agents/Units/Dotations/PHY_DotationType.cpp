@@ -15,6 +15,7 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationLogisticType.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 PHY_DotationType* PHY_DotationType::munition_ = 0;
@@ -44,13 +45,13 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
 {
     MT_LOG_INFO_MSG( "Initializing dotation types" );
 
-    PHY_DotationType::munition_  = new PHY_DotationType( "munition" , eMunition , EnumDotationFamily::munition , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::carburant_ = new PHY_DotationType( "carburant", eCarburant, EnumDotationFamily::carburant, PHY_DotationLogisticType::uniteEssence_   );
-    PHY_DotationType::mine_      = new PHY_DotationType( "mine"     , eMine     , EnumDotationFamily::mine     , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::explosif_  = new PHY_DotationType( "explosif" , eExplosif , EnumDotationFamily::explosif , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::barbele_   = new PHY_DotationType( "barbele"  , eBarbele  , EnumDotationFamily::barbele  , PHY_DotationLogisticType::uniteFeuSansTD_ );
-    PHY_DotationType::piece_     = new PHY_DotationType( "piece"    , ePiece    , EnumDotationFamily::piece    , PHY_DotationLogisticType::pieces_         );
-    PHY_DotationType::ration_    = new PHY_DotationType( "ration"   , eRation   , EnumDotationFamily::ration   , PHY_DotationLogisticType::uniteVivre_     );
+    PHY_DotationType::munition_  = new PHY_DotationType( "munition" , eMunition , Common::EnumDotationFamily::munition , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::carburant_ = new PHY_DotationType( "carburant", eCarburant, Common::EnumDotationFamily::carburant, PHY_DotationLogisticType::uniteEssence_   );
+    PHY_DotationType::mine_      = new PHY_DotationType( "mine"     , eMine     , Common::EnumDotationFamily::mine     , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::explosif_  = new PHY_DotationType( "explosif" , eExplosif , Common::EnumDotationFamily::explosif , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::barbele_   = new PHY_DotationType( "barbele"  , eBarbele  , Common::EnumDotationFamily::barbele  , PHY_DotationLogisticType::uniteFeuSansTD_ );
+    PHY_DotationType::piece_     = new PHY_DotationType( "piece"    , ePiece    , Common::EnumDotationFamily::piece    , PHY_DotationLogisticType::pieces_         );
+    PHY_DotationType::ration_    = new PHY_DotationType( "ration"   , eRation   , Common::EnumDotationFamily::ration   , PHY_DotationLogisticType::uniteVivre_     );
 
     dotationTypes_[ munition_ ->GetName() ] = munition_;
     dotationTypes_[ carburant_->GetName() ] = carburant_;
@@ -102,7 +103,7 @@ void PHY_DotationType::Terminate()
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
-PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType nType, ASN1T_EnumDotationFamily nAsnID, const PHY_DotationLogisticType& defaultLogisticType )
+PHY_DotationType::PHY_DotationType( const std::string& strName, E_DotationType nType, Common::EnumDotationFamily nAsnID, const PHY_DotationLogisticType& defaultLogisticType )
     : strName_            ( strName )
     , nType_              ( nType )
     , nAsnID_             ( nAsnID )
@@ -143,7 +144,7 @@ PHY_DotationType::~PHY_DotationType()
 // Name: PHY_DotationType::InternalFindDotationCategory
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* PHY_DotationType::InternalFindDotationCategory( uint nID ) const
+const PHY_DotationCategory* PHY_DotationType::InternalFindDotationCategory( unsigned int nID ) const
 {
     for( CIT_DotationCategoryMap it = dotationCategories_.begin(); it != dotationCategories_.end(); ++it )
     {
@@ -181,7 +182,7 @@ const PHY_DotationType* PHY_DotationType::FindDotationType( const std::string& s
 // Name: PHY_DotationType::FindDotationType
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-const PHY_DotationType* PHY_DotationType::FindDotationType( ASN1T_EnumDotationFamily nAsnID )
+const PHY_DotationType* PHY_DotationType::FindDotationType( Common::EnumDotationFamily nAsnID )
 {
     for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
         if( it->second->GetAsnID() == nAsnID )
@@ -193,7 +194,7 @@ const PHY_DotationType* PHY_DotationType::FindDotationType( ASN1T_EnumDotationFa
 // Name: PHY_DotationType::FindDotationType
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-const PHY_DotationType* PHY_DotationType::FindDotationType( uint nID )
+const PHY_DotationType* PHY_DotationType::FindDotationType( unsigned int nID )
 {
     for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
     {
@@ -207,7 +208,7 @@ const PHY_DotationType* PHY_DotationType::FindDotationType( uint nID )
 // Name: PHY_DotationType::FindDotationCategory
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( uint nID )
+const PHY_DotationCategory* PHY_DotationType::FindDotationCategory( unsigned int nID )
 {
     for( CIT_DotationTypeMap it = dotationTypes_.begin(); it != dotationTypes_.end(); ++it )
     {
@@ -246,7 +247,7 @@ const std::string& PHY_DotationType::GetName() const
 // Name: PHY_DotationType::GetID
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-uint PHY_DotationType::GetID() const
+unsigned int PHY_DotationType::GetID() const
 {
     return nType_;
 }
@@ -255,7 +256,7 @@ uint PHY_DotationType::GetID() const
 // Name: PHY_DotationType::GetAsnID
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-ASN1T_EnumDotationFamily PHY_DotationType::GetAsnID() const
+Common::EnumDotationFamily PHY_DotationType::GetAsnID() const
 {
     return nAsnID_;
 }

@@ -43,9 +43,9 @@ void Mission_Pawn_INF_FlancGarder::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_FlancGarder& asnMission = *new ASN1T_Mission_Pion_INF_FlancGarder();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_flanc_garder;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_flanc_garder = &asnMission;
+    Mission_Pion_INF_FlancGarder& asnMission = *new Mission_Pion_INF_FlancGarder();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_flanc_garder = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -62,8 +62,8 @@ void Mission_Pawn_INF_FlancGarder::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_FlancGarder::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_flanc_garder );
-    ASN1T_Mission_Pion_INF_FlancGarder& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_flanc_garder;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_flanc_garder ());
+    Mission_Pion_INF_FlancGarder& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_flanc_garder;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

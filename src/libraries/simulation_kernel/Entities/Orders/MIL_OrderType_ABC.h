@@ -10,6 +10,11 @@
 #ifndef __MIL_OrderType_ABC_h_
 #define __MIL_OrderType_ABC_h_
 
+namespace Common
+{
+    class MsgMissionParameters;
+}
+
 namespace xml
 {
     class xistream;
@@ -32,7 +37,7 @@ class MIL_OrderType_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_OrderType_ABC( uint nID, xml::xistream& xis );
+             MIL_OrderType_ABC( unsigned int nID, xml::xistream& xis );
     virtual ~MIL_OrderType_ABC();
     //@}
 
@@ -40,7 +45,7 @@ public:
     //@{
     const std::string& GetName   () const;
     const std::string& GetDIAType() const;
-          uint         GetID     () const;
+          unsigned int GetID     () const;
     const MIL_ParameterType_ABC& GetParameterType( unsigned int ) const;
     const std::string&           GetParameterName( unsigned int ) const;
     unsigned int                 GetParameterIndex( const std::string& name ) const;
@@ -48,8 +53,8 @@ public:
 
     //! @name Copy operations
     //@{
-    bool Copy                   ( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
-    void CleanAfterSerialization( ASN1T_MissionParameters& to, const MIL_OrderContext& context ) const;
+    bool Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const;
+    void CleanAfterSerialization( Common::MsgMissionParameters& to, const MIL_OrderContext& context ) const;
     //@}
 
 protected:
@@ -68,7 +73,7 @@ private:
     //@}
 
 private:
-    const uint                     nID_;
+    const unsigned int                     nID_;
           std::string              strName_;
           std::string              diaType_;
           T_MissionParameterVector parameters_;

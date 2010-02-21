@@ -40,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    void    NotifyTickBegin        ( uint nTick );
-    void    NotifyTickEnd          ( uint nTick );
+    void    NotifyTickBegin        ( unsigned int nTick );
+    void    NotifyTickEnd          ( unsigned int nTick );
     double  GetLastTickDuration    ();
     double  GetAverageTickDuration ();
 
@@ -57,7 +57,7 @@ private:
     //@{
     struct sDecFunctionProfiling
     {
-        uint        nAgentID_;
+        unsigned int        nAgentID_;
         std::string strFunction_;
         MT_Float    rTime_;
     };

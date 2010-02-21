@@ -10,7 +10,9 @@
 #ifndef __IndicatorRequest_h_
 #define __IndicatorRequest_h_
 
-#include "game_asn/Aar.h"
+#include "protocol/Protocol.h"
+#include "protocol/Aarsenders.h"
+#include "protocol/Publisher_ABC.h"
 
 namespace kernel
 {
@@ -47,8 +49,8 @@ public:
     void Commit() const;
 
     QString GetName() const;
-    void Update( const ASN1T_MsgPlotResult& message );
-    void Update( const ASN1T_MsgIndicator& message );
+    void Update( const MsgsAarToClient::MsgPlotResult& message );
+    void Update( const MsgsAarToClient::MsgIndicator& message );
     bool IsPending() const;
     bool IsDone() const;
     bool IsFailed() const;

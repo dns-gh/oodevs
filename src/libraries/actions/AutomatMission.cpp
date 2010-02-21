@@ -9,11 +9,13 @@
 
 #include "actions_pch.h"
 #include "AutomatMission.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "protocol/publisher_ABC.h"
+#include "protocol/simulationsenders.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 
+using namespace Common;
 using namespace kernel;
 using namespace actions;
 
@@ -52,12 +54,12 @@ AutomatMission::~AutomatMission()
 // -----------------------------------------------------------------------------
 void AutomatMission::Publish( Publisher_ABC& publisher ) const
 {
-    simulation::AutomatOrder asn;
-    asn().oid = GetEntity().GetId();
-    asn().mission = GetType().GetId();
-    CommitTo( asn().parametres );
-    asn.Send( publisher );
-    Clean( asn().parametres );
+    simulation::AutomatOrder message;
+    message().set_oid ( GetEntity().GetId());
+    message().set_mission ( GetType().GetId());
+    CommitTo( *message().mutable_parametres() );
+    message.Send( publisher );
+    Clean( *message().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------

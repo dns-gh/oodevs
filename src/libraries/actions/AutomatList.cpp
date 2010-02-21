@@ -12,6 +12,8 @@
 #include "Automat.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "protocol/Protocol.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -33,11 +35,11 @@ AutomatList::AutomatList( const kernel::OrderParameter& parameter )
 // Name: AutomatList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AutomatList::AutomatList( const OrderParameter& parameter, const ASN1T_AutomatList& asn, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
+AutomatList::AutomatList( const OrderParameter& parameter, const Common::MsgAutomatList& message, const tools::Resolver_ABC< Automat_ABC >& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Automat( OrderParameter( tools::translate( "Parameter", "Automat %1" ).arg( i + 1 ).ascii(), "automat", false ), asn.elem[i], resolver, controller ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddParameter( *new Automat( OrderParameter( tools::translate( "Parameter", "Automat %1" ).arg( i + 1 ).ascii(), "automat", false ), message.elem(i).oid(), resolver, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,14 +74,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_AutomatList& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( Common::MsgAutomatList& message ) : message_( &message ) {}
         virtual void Visit( const Automat& param )
         {
-            param.CommitTo( asn_->elem[current_++] );
+            param.CommitTo( *message_->add_elem() );
         }
-
-        ASN1T_AutomatList* asn_;
-        unsigned int current_;
+        Common::MsgAutomatList* message_;
     };
 }
 
@@ -87,15 +87,12 @@ namespace
 // Name: AutomatList::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AutomatList::CommitTo( ASN1T_MissionParameter& asn ) const
+void AutomatList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_automatList;
-    ASN1T_AutomatList*& list = asn.value.u.automatList = new ASN1T_AutomatList();
-    list->n = Count();
+    message.set_null_value( !IsSet() );
+    Common::MsgAutomatList* list = message.mutable_value()->mutable_automatlist();
     if( IsSet() )
     {
-        list->elem = new ASN1T_Automat[list->n];
         AsnSerializer serializer( *list );
         Accept( serializer );
     }
@@ -105,11 +102,10 @@ void AutomatList::CommitTo( ASN1T_MissionParameter& asn ) const
 // Name: AutomatList::Clean
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AutomatList::Clean( ASN1T_MissionParameter& asn ) const
+void AutomatList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.automatList )
-        delete[] asn.value.u.automatList->elem;
-    delete asn.value.u.automatList;
+    if( message.value().has_automatlist() )
+        message.mutable_value()->clear_automatlist();
 }
 
 // -----------------------------------------------------------------------------

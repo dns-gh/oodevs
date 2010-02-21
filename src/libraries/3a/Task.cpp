@@ -144,26 +144,27 @@ void Task::SetResult( boost::shared_ptr< Result_ABC > output )
 // Name: Task::Receive
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void Task::Receive( const ASN1T_MsgsSimToClient& message )
+void Task::Receive( const MsgSimToClient& wrapper )
 {
     // $$$$ AGE 2007-10-10: bDummies :
     // $$$$ AGE 2007-10-10: le LoadKeyFrame génère un BeginTick mais pas de EndTick()...
+
     try
     {
-        if( message.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
+        if (wrapper.message().has_control_begin_tick())
         {
             if( ! frameEnded_ )
                 composite_.EndTick();
             composite_.BeginTick();
             frameEnded_ = false;
         }
-        else if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+        else if (wrapper.message().has_control_end_tick())
         {
             composite_.EndTick();
             frameEnded_ = true;
         }
         else
-            composite_.Receive( message );
+            composite_.Receive( wrapper );
     }
     catch( std::exception& )
     {

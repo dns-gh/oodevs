@@ -10,8 +10,15 @@
 #ifndef __MessageHandler_ABC_h_
 #define __MessageHandler_ABC_h_
 
-#include "game_asn/Simulation.h"
-#include "game_asn/Aar.h"
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+
+namespace MsgsAarToClient
+{
+    class MsgAarToClient;
+}
 
 namespace dispatcher
 {
@@ -35,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& message ) = 0;
-    virtual void Receive( const ASN1T_MsgsAarToClient& /*message*/ ) {}
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message ) = 0;
+    virtual void Receive( const MsgsAarToClient::MsgAarToClient& /*message*/ ) {}
     //@}
 };
 

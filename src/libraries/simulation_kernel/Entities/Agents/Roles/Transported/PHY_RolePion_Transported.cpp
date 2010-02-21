@@ -11,11 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Transported.h"
+#include "AlgorithmsFactories.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
@@ -23,8 +24,6 @@
 #include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-
-#include "AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
@@ -76,7 +75,7 @@ PHY_RolePion_Transported::~PHY_RolePion_Transported()
 // Name: PHY_RolePion_Transported::load
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
          >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
@@ -91,7 +90,7 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_RolePion_Transported::save
 // Created: JVT 2005-05-12
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << ::boost::serialization::base_object< PHY_RoleInterface_Transported >( *this )
          << pTransporter_
@@ -249,20 +248,17 @@ void PHY_RolePion_Transported::Clean()
 // Name: PHY_RolePion_Transported::SendFullState
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Transported::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.pion_transporteurPresent = 1;
-    msg().pion_transporteur          = pTransporter_ ? pTransporter_->GetID() : 0;
-
-    msg().m.transporteurs_disponiblesPresent  = 1;
-    msg().transporteurs_disponibles           = !HasHumanTransportersToRecover();
+    msg().set_pion_transporteur( pTransporter_ ? pTransporter_->GetID() : 0 );
+    msg().set_transporteurs_disponibles( !HasHumanTransportersToRecover() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Transported::SendChangedState
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Transported::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Transported::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

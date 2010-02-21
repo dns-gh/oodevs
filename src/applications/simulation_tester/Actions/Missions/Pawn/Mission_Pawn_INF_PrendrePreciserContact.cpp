@@ -43,9 +43,9 @@ void Mission_Pawn_INF_PrendrePreciserContact::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_PrendrePreciserContact& asnMission = *new ASN1T_Mission_Pion_INF_PrendrePreciserContact();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_prendre_preciser_contact;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_prendre_preciser_contact = &asnMission;
+    Mission_Pion_INF_PrendrePreciserContact& asnMission = *new Mission_Pion_INF_PrendrePreciserContact();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_prendre_preciser_contact = &asnMission;
 
 
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.ennemi );
@@ -59,8 +59,8 @@ void Mission_Pawn_INF_PrendrePreciserContact::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_PrendrePreciserContact::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_prendre_preciser_contact );
-    ASN1T_Mission_Pion_INF_PrendrePreciserContact& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_prendre_preciser_contact;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_prendre_preciser_contact ());
+    Mission_Pion_INF_PrendrePreciserContact& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_prendre_preciser_contact;
 
 
     delete &asnMission;

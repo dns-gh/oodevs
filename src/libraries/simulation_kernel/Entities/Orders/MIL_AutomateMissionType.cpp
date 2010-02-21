@@ -44,7 +44,7 @@ void MIL_AutomateMissionType::Initialize( xml::xistream& xis )
 // Name: MIL_AutomateMissionType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_AutomateMissionType::MIL_AutomateMissionType( uint nID, xml::xistream& xis )
+MIL_AutomateMissionType::MIL_AutomateMissionType( unsigned int nID, xml::xistream& xis )
     : MIL_MissionType_ABC( nID, xis )
     , strDIAMrtBehavior_ ()
     , strDIACdtBehavior_ ()
@@ -66,7 +66,7 @@ MIL_AutomateMissionType::~MIL_AutomateMissionType()
 // Name: MIL_AutomateMissionType::Find
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-const MIL_MissionType_ABC* MIL_AutomateMissionType::Find( uint nID )
+const MIL_MissionType_ABC* MIL_AutomateMissionType::Find( unsigned int nID )
 {
     CIT_MissionIDMap it = missionIDs_.find( nID );
     if( it == missionIDs_.end() )

@@ -15,6 +15,12 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace Common
+{
+    class MsgObjectAttributes;
+    class MsgObjectAttributeStock;
+}
+
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -23,9 +29,8 @@ class PHY_DotationCategory;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class StockAttribute 
-    : public ObjectAttribute_ABC
-    , private UpdatableAttribute_ABC
+class StockAttribute : public ObjectAttribute_ABC
+                     , private UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -50,9 +55,9 @@ public:
 
     //! @name Network Update
     //@{
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void OnUpdate( const ASN1T_ObjectAttributes& asn );        
+    void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    void OnUpdate( const Common::MsgObjectAttributes& asn );
     //@}
 
     //! @name ODB
@@ -76,7 +81,7 @@ public:
 
     //@{
     void LoadDotation( xml::xistream& xis );
-    void Send( ASN1T_StockResourceList& attribute, bool send_max ) const;
+    void Send( Common::MsgObjectAttributeStock& attribute, bool send_max ) const;
     //@}
 
 public:

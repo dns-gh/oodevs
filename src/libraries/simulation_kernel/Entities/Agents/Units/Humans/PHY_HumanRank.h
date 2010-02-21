@@ -12,7 +12,10 @@
 #ifndef __PHY_HumanRank_h_
 #define __PHY_HumanRank_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    enum EnumHumanRank;
+}
 
 // =============================================================================
 // @class  PHY_HumanRank
@@ -41,15 +44,15 @@ public:
 
     static const T_HumanRankMap& GetHumanRanks();
     static const PHY_HumanRank*  Find( const std::string& strName );
-    static const PHY_HumanRank*  Find( uint nID );
-    static const PHY_HumanRank*  Find( ASN1T_EnumHumanRank nAsnID );
+    static const PHY_HumanRank*  Find( unsigned int nID );
+    static const PHY_HumanRank*  Find( Common::EnumHumanRank nAsnID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&  GetName    () const;
-    uint                GetID      () const;
-    ASN1T_EnumHumanRank GetAsnID   () const;
+    unsigned int                GetID      () const;
+    Common::EnumHumanRank GetAsnID   () const;
     bool                IsCommander() const;
     //@}
 
@@ -71,13 +74,13 @@ private:
     //@}
 
 private:
-     PHY_HumanRank( const std::string& strName, E_Rank nRank, ASN1T_EnumHumanRank nAsnID, bool bIsCommander );
+     PHY_HumanRank( const std::string& strName, E_Rank nRank, Common::EnumHumanRank nAsnID, bool bIsCommander );
     ~PHY_HumanRank();
 
 private:
     const std::string         strName_;
     const E_Rank              nRank_;
-    const ASN1T_EnumHumanRank nAsnID_;
+    const Common::EnumHumanRank nAsnID_;
     const bool                bIsCommander_;
 
 private:

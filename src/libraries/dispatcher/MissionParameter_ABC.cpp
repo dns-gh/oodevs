@@ -48,7 +48,9 @@
 #include "MissionParameter_LimasOrder.h"
 #include "MissionParameter_IntelligenceList.h"
 #include "MissionParameter_UrbanBlock.h"
+//#include "protocol/protocol.h"
 
+////using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -56,58 +58,95 @@ using namespace dispatcher;
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 // static
-MissionParameter_ABC* MissionParameter_ABC::Create( const ASN1T_MissionParameter& asn )
+MissionParameter_ABC* MissionParameter_ABC::Create( const Common::MsgMissionParameter& asn )
 {
-    switch( asn.value.t )
-    {
-        case T_MissionParameter_value_aBool                     : return new MissionParameter_Bool                  ( asn );
-        case T_MissionParameter_value_aReal                     : return new MissionParameter_Numeric               ( asn );
-        case T_MissionParameter_value_enumeration               : return new MissionParameter_Enumeration           ( asn );
-        case T_MissionParameter_value_path                      : return new MissionParameter_Path                  ( asn );
-        case T_MissionParameter_value_pathList                  : return new MissionParameter_PathList              ( asn );
-        case T_MissionParameter_value_point                     : return new MissionParameter_Point                 ( asn );
-        case T_MissionParameter_value_pointList                 : return new MissionParameter_PointList             ( asn );
-        case T_MissionParameter_value_polygon                   : return new MissionParameter_Polygon               ( asn );
-        case T_MissionParameter_value_polygonList               : return new MissionParameter_PolygonList           ( asn );
-        case T_MissionParameter_value_location                  : return new MissionParameter_Location              ( asn );
-        case T_MissionParameter_value_locationList              : return new MissionParameter_LocationList          ( asn );
-        case T_MissionParameter_value_heading                   : return new MissionParameter_Direction             ( asn );
-        case T_MissionParameter_value_atlasNature               : return new MissionParameter_NatureAtlas           ( asn );
-        case T_MissionParameter_value_unit                      : return new MissionParameter_Agent                 ( asn );
-        case T_MissionParameter_value_unitList                  : return new MissionParameter_AgentList             ( asn );
-        case T_MissionParameter_value_automat                   : return new MissionParameter_Automat               ( asn );
-        case T_MissionParameter_value_automatList               : return new MissionParameter_AutomatList           ( asn );
-        case T_MissionParameter_value_unitKnowledge             : return new MissionParameter_AgentKnowledge        ( asn );
-        case T_MissionParameter_value_unitKnowledgeList         : return new MissionParameter_AgentKnowledgeList    ( asn );
-        case T_MissionParameter_value_objectKnowledge           : return new MissionParameter_ObjectKnowledge       ( asn );
-        case T_MissionParameter_value_objectKnowledgeList       : return new MissionParameter_ObjectKnowledgeList   ( asn );
-        case T_MissionParameter_value_populationKnowledge       : return new MissionParameter_PopulationKnowledge   ( asn );
-        case T_MissionParameter_value_plannedWork               : return new MissionParameter_GenObject             ( asn );
-        case T_MissionParameter_value_plannedWorkList           : return new MissionParameter_GenObjectList         ( asn );
-        case T_MissionParameter_value_dotationType              : return new MissionParameter_DotationType          ( asn );
-        case T_MissionParameter_value_equipmentType             : return new MissionParameter_EquipmentType         ( asn );
-        case T_MissionParameter_value_tirIndirect               : return new MissionParameter_IndirectFire          ( asn );
-        case T_MissionParameter_value_dateTime                  : return new MissionParameter_GDH                   ( asn );
-        case T_MissionParameter_value_logMaintenancePriorities  : return new MissionParameter_MaintenancePriorities ( asn );
-        case T_MissionParameter_value_logMedicalPriorities      : return new MissionParameter_MedicalPriorities     ( asn );
-        case T_MissionParameter_value_aCharStr                  : return new MissionParameter_String                ( asn );
-        case T_MissionParameter_value_missionObjective          : return new MissionParameter_Objective             ( asn );
-        case T_MissionParameter_value_missionObjectiveList      : return new MissionParameter_ObjectiveList         ( asn );
-        case T_MissionParameter_value_line                      : return new MissionParameter_Line                  ( asn );
-        case T_MissionParameter_value_limasOrder                : return new MissionParameter_LimasOrder            ( asn );
-        case T_MissionParameter_value_intelligenceList          : return new MissionParameter_IntelligenceList      ( asn );
-        case T_MissionParameter_value_urbanBlock                : return new MissionParameter_UrbanBlock            ( asn );
-        default:
-            throw std::runtime_error( "Invalid mission parameter type" );
-    }
+    if( asn.null_value() )
+        return 0;
+    if( !asn.has_value() )
+        throw std::runtime_error( __FUNCTION__ " Invalid mission parameter type" );
+    if( asn.value().has_abool() )
+        return new MissionParameter_Bool( asn );
+    if( asn.value().has_areal() )
+        return new MissionParameter_Numeric( asn );
+    if( asn.value().has_enumeration() )
+        return new MissionParameter_Enumeration( asn );
+    if( asn.value().has_path() )
+        return new MissionParameter_Path( asn );
+    if( asn.value().has_pathlist() )
+        return new MissionParameter_PathList( asn );
+    if( asn.value().has_point() )
+        return new MissionParameter_Point( asn );
+    if( asn.value().has_pointlist() )
+        return new MissionParameter_PointList( asn );
+    if( asn.value().has_polygon() )
+        return new MissionParameter_Polygon( asn );
+    if( asn.value().has_polygonlist() )
+        return new MissionParameter_PolygonList( asn );
+    if( asn.value().has_location() )
+        return new MissionParameter_Location( asn );
+    if( asn.value().has_locationlist() )
+        return new MissionParameter_LocationList( asn );
+    if( asn.value().has_heading() )
+        return new MissionParameter_Direction( asn );
+    if( asn.value().has_atlasnature() )
+        return new MissionParameter_NatureAtlas( asn );
+    if( asn.value().has_unit() )
+        return new MissionParameter_Agent( asn );
+    if( asn.value().has_unitlist() )
+        return new MissionParameter_AgentList( asn );
+    if( asn.value().has_automat() )
+        return new MissionParameter_Automat( asn );
+    if( asn.value().has_automatlist() )
+        return new MissionParameter_AutomatList( asn );
+    if( asn.value().has_unitknowledge() )
+        return new MissionParameter_AgentKnowledge( asn );
+    if( asn.value().has_unitknowledgelist() )
+        return new MissionParameter_AgentKnowledgeList( asn );
+    if( asn.value().has_objectknowledge() )
+        return new MissionParameter_ObjectKnowledge( asn );
+    if( asn.value().has_objectknowledgelist() )
+        return new MissionParameter_ObjectKnowledgeList( asn );
+    if( asn.value().has_populationknowledge() )
+        return new MissionParameter_PopulationKnowledge( asn );
+    if( asn.value().has_plannedwork() )
+        return new MissionParameter_GenObject( asn );
+    if( asn.value().has_plannedworklist() )
+        return new MissionParameter_GenObjectList( asn );
+    if( asn.value().has_dotationtype() )
+        return new MissionParameter_DotationType( asn );
+    if( asn.value().has_equipmenttype() )
+        return new MissionParameter_EquipmentType( asn );
+    if( asn.value().has_tirindirect() )
+        return new MissionParameter_IndirectFire( asn );
+    if( asn.value().has_datetime() )
+        return new MissionParameter_GDH ( asn );
+    if( asn.value().has_logmaintenancepriorities() )
+        return new MissionParameter_MaintenancePriorities ( asn );
+    if( asn.value().has_logmedicalpriorities() )
+        return new MissionParameter_MedicalPriorities( asn );
+    if( asn.value().has_acharstr() )
+        return new MissionParameter_String( asn );
+    if( asn.value().has_missionobjective() )
+        return new MissionParameter_Objective( asn );
+    if( asn.value().has_missionobjectivelist() )
+        return new MissionParameter_ObjectiveList( asn );
+    if( asn.value().has_line() )
+        return new MissionParameter_Line( asn );
+    if( asn.value().has_limasorder() )
+        return new MissionParameter_LimasOrder( asn );
+    if( asn.value().has_intelligencelist() )
+        return new MissionParameter_IntelligenceList( asn );
+    if( asn.value().has_urbanblock() )
+        return new MissionParameter_UrbanBlock( asn );
+    throw std::runtime_error( __FUNCTION__ " Invalid mission parameter type" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_ABC constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_ABC::MissionParameter_ABC( const ASN1T_MissionParameter& asn )
-    : bNullValue_( asn.null_value != 0 )
+MissionParameter_ABC::MissionParameter_ABC( const Common::MsgMissionParameter& asn )
+    : bNullValue_( asn.null_value() )
 {
     // NOTHING
 }

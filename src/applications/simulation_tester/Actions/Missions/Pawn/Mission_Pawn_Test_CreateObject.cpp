@@ -43,9 +43,9 @@ void Mission_Pawn_Test_CreateObject::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_CreateObject& asnMission = *new ASN1T_Mission_Pion_Test_CreateObject();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_create_object;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_object = &asnMission;
+    Mission_Pion_Test_CreateObject& asnMission = *new Mission_Pion_Test_CreateObject();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_create_object = &asnMission;
 
     const Location& forme_ = pTarget_->GetTestParam_Location();
 
@@ -63,8 +63,8 @@ void Mission_Pawn_Test_CreateObject::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_CreateObject::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_create_object );
-    ASN1T_Mission_Pion_Test_CreateObject& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_object;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_create_object ());
+    Mission_Pion_Test_CreateObject& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_create_object;
 
     ASN_Tools::Delete( asnMission.forme );
 

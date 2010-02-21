@@ -11,6 +11,7 @@
 #define __MIL_AgentListParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_RolePion_Decision;
 class MIL_EntityManager_ABC;
 
@@ -26,7 +27,7 @@ class MIL_AgentListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AgentListParameter( const ASN1T_UnitList& asn, MIL_EntityManager_ABC& entityManager );
+             MIL_AgentListParameter( const Common::MsgUnitList& asn, MIL_EntityManager_ABC& entityManager );
     explicit MIL_AgentListParameter( const std::vector< DEC_RolePion_Decision* >& unitList );
     virtual ~MIL_AgentListParameter();
     //@}
@@ -38,7 +39,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToAgentList( ASN1T_UnitList& asn ) const;
+    virtual bool ToAgentList( Common::MsgUnitList& asn ) const;
     virtual bool ToAgentList( std::vector< DEC_Decision_ABC* >& value ) const;
     //@}
 

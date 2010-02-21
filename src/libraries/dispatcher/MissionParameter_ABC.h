@@ -10,7 +10,10 @@
 #ifndef __MissionParameter_ABC_h_
 #define __MissionParameter_ABC_h_
 
-struct ASN1T_MissionParameter;
+namespace Common
+{
+    class MsgMissionParameter;
+}
 
 namespace dispatcher
 {
@@ -26,19 +29,19 @@ class MissionParameter_ABC
 public:
     //! @name Statics
     //@{
-    static MissionParameter_ABC* Create( const ASN1T_MissionParameter& asn );
+    static MissionParameter_ABC* Create( const Common::MsgMissionParameter& asn );
     //@}
 
     //! @name Constructors/Destructor
     //@{
-    explicit MissionParameter_ABC( const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_ABC( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( ASN1T_MissionParameter& asn ) const = 0;
-    virtual void AsnDelete( ASN1T_MissionParameter& asn ) const = 0;
+    virtual void Send  ( Common::MsgMissionParameter& asn ) const = 0;
+    virtual void Delete( Common::MsgMissionParameter& asn ) const = 0;
     //@}
 
 private:

@@ -43,9 +43,9 @@ void Mission_Automat_ALAT_Appuyer::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ALAT_Appuyer& asnMission = *new ASN1T_Mission_Automate_ALAT_Appuyer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_appuyer;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_appuyer = &asnMission;
+    Mission_Automate_ALAT_Appuyer& asnMission = *new Mission_Automate_ALAT_Appuyer();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_alat_appuyer = &asnMission;
 
     const T_IdVector& unitesAAppuyer_ = pTarget_->GetTestParam_AgentList();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -74,8 +74,8 @@ void Mission_Automat_ALAT_Appuyer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ALAT_Appuyer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_alat_appuyer );
-    ASN1T_Mission_Automate_ALAT_Appuyer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_appuyer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_alat_appuyer ());
+    Mission_Automate_ALAT_Appuyer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_alat_appuyer;
 
     ASN_Tools::Delete( asnMission.unites_a_appuyer );
     ASN_Tools::Delete( asnMission.point_regroupement );

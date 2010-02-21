@@ -47,4 +47,8 @@ typedef T_PointVector::const_iterator  CIT_PointVector;
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 
+#ifdef uint
+# undef uint
+#endif
+
 #endif // __gaming_pch_h_

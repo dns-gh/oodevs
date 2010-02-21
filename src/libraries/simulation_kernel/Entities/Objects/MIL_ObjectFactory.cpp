@@ -13,7 +13,7 @@
 #include "MIL_ObjectManager.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
-
+#include "protocol/protocol.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 
 using namespace xml;
@@ -78,10 +78,10 @@ MIL_Object_ABC& MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ObjectFactory::BuildObject( const ASN1T_MagicActionCreateObject& asn, MIL_Army_ABC& army )
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectFactory::BuildObject( const MsgsClientToSim::MsgMagicActionCreateObject& asn, MIL_Army_ABC& army )
 {
-    ASN1T_EnumObjectErrorCode   value = EnumObjectErrorCode::no_error;
-    MIL_Object_ABC*             pObject = MIL_ObjectLoader::GetLoader().CreateObject( asn, army, value );
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode   value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
+    MIL_Object_ABC*                                      pObject =  MIL_ObjectLoader::GetLoader().CreateObject( asn, army, value );
     if ( pObject )
     {
         MIL_ObjectManipulator_ABC& obj = pObject->operator ()();
@@ -95,9 +95,9 @@ ASN1T_EnumObjectErrorCode MIL_ObjectFactory::BuildObject( const ASN1T_MagicActio
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-03
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, ASN1T_EnumDemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_ObjectFactory::BuildObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, Common::ObstacleType_DemolitionTargetType obstacleType )
 {
-    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( type, army, localisation, obstacleType == EnumDemolitionTargetType::reserved );
+    MIL_Object_ABC* pObject = MIL_ObjectLoader::GetLoader().CreateObject( type, army, localisation, obstacleType == Common::ObstacleType_DemolitionTargetType_reserved );
     if ( pObject )
         manager_.RegisterObject( *pObject );
     return pObject;

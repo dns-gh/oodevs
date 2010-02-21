@@ -65,11 +65,11 @@ DisPlugin::~DisPlugin()
 // Name: DisPlugin::Receive
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
-void DisPlugin::Receive( const ASN1T_MsgsSimToClient& message )
+void DisPlugin::Receive( const MsgSimToClient& wrapper )
 {
-    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
+    if( wrapper.message().has_control_begin_tick() )
         time_ += timeStep_;
-    fires_->Update( message );
+    fires_->Update( wrapper );
 }
 
 // -----------------------------------------------------------------------------

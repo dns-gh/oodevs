@@ -40,7 +40,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_PopulationElement_ABC( MIL_Population& population, uint nID );
+     MIL_PopulationElement_ABC( MIL_Population& population, unsigned int nID );
     virtual ~MIL_PopulationElement_ABC();
     //@}
 
@@ -60,8 +60,8 @@ public:
     T_Humans PullHumans   ( MT_Float rNbr );
     void     KillAllHumans();
     MT_Float Exterminate  ( MT_Float rSurface );
-    uint     Kill         ( uint count );
-    uint     Resurrect    ( uint count );
+    unsigned int     Kill         ( unsigned int count );
+    unsigned int     Resurrect    ( unsigned int count );
     //@}
 
     //! @name Actions
@@ -69,7 +69,7 @@ public:
     void     FireOnPions      ( MT_Float rIntensity, PHY_FireResults_Population& fireResult );
     void     FireOnPion       ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
     MT_Float GetDangerosity   ( const MIL_AgentPion& target ) const;
-    void     ApplyFire        (       uint                nNbrAmmoFired  , PHY_FireResults_ABC& fireResult );
+    void     ApplyFire        (       unsigned int                nNbrAmmoFired  , PHY_FireResults_ABC& fireResult );
     void     ApplyIndirectFire( const MT_Circle&          attritionCircle, PHY_FireResults_ABC& fireResult );
     void     ApplyExplosion   ( const AttritionCapacity& capacity, PHY_FireResults_ABC& fireResult );
     void     ApplyInjury      ( MIL_Injury_ABC& injury );
@@ -79,7 +79,7 @@ public:
     //@{
           MIL_Population&         GetPopulation    () const;
     const MIL_PopulationAttitude& GetAttitude      () const;
-          uint                    GetID            () const;
+          unsigned int                    GetID            () const;
           MT_Float                GetNbrAliveHumans() const;
           MT_Float                GetNbrDeadHumans () const;
           MT_Float                GetNbrHumans     () const;
@@ -102,8 +102,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 protected:
@@ -139,7 +139,7 @@ private:
     //@}
 
 private:
-    const uint                    nID_;
+    const unsigned int                    nID_;
           MIL_Population*         pPopulation_;
           MT_Float                rNbrAliveHumans_;
           MT_Float                rNbrDeadHumans_;

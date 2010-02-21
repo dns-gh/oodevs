@@ -43,9 +43,9 @@ void Mission_Automat_LOG_AppuyerMouvement::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_LOG_AppuyerMouvement& asnMission = *new ASN1T_Mission_Automate_LOG_AppuyerMouvement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_appuyer_mouvement;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement = &asnMission;
+    Mission_Automate_LOG_AppuyerMouvement& asnMission = *new Mission_Automate_LOG_AppuyerMouvement();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_log_appuyer_mouvement = &asnMission;
 
     const T_IdVector& unitesAAppuyer_ = pTarget_->GetTestParam_AgentList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_LOG_AppuyerMouvement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_LOG_AppuyerMouvement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_log_appuyer_mouvement );
-    ASN1T_Mission_Automate_LOG_AppuyerMouvement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_log_appuyer_mouvement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_log_appuyer_mouvement ());
+    Mission_Automate_LOG_AppuyerMouvement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_log_appuyer_mouvement;
 
     ASN_Tools::Delete( asnMission.unites_a_appuyer );
 

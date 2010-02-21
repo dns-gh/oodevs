@@ -36,27 +36,27 @@ DrawingsModel::~DrawingsModel()
 // Name: DrawingsModel::Create
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void DrawingsModel::Create( const ASN1T_MsgShapeCreation& asn )
+void DrawingsModel::Create( const MsgsMessengerToClient::MsgShapeCreation& message )
 {
-    factory_.CreateShape( asn );
+    factory_.CreateShape( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel::Update
 // Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void DrawingsModel::Update( const ASN1T_MsgShapeUpdate& asn )
+void DrawingsModel::Update( const MsgsMessengerToClient::MsgShapeUpdate& message )
 {
-    gui::Drawing_ABC* drawing = Find( asn.oid );
+    gui::Drawing_ABC* drawing = Find( message.oid() );
     if( drawing )
-        drawing->Update( asn );
+        drawing->Update( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel::Delete
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void DrawingsModel::Delete( const ASN1T_MsgShapeDestruction& asn )
+void DrawingsModel::Delete( const MsgsMessengerToClient::MsgShapeDestruction& message )
 {
-    gui::DrawerModel::Delete( asn.oid );
+    gui::DrawerModel::Delete( message.oid());
 }

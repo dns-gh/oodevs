@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "DateTime.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 )
@@ -38,9 +39,9 @@ DateTime::DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis 
 // Name: DateTime constructor
 // Created: SBO 2007-05-15
 // -----------------------------------------------------------------------------
-DateTime::DateTime( const OrderParameter& parameter, const ASN1T_DateTime& date )
+DateTime::DateTime( const OrderParameter& parameter, const Common::MsgDateTime& date )
     : Parameter< QString >( parameter )
-    , time_( (const char*)date.data, 15 )
+    , time_( date.data() )
 {
     bpt::ptime time( bpt::from_iso_string( time_ ) );
     SetValue( bpt::to_simple_string( time ).c_str() );
@@ -100,29 +101,28 @@ void DateTime::Serialize( xml::xostream& xos ) const
 // Name: DateTime::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void DateTime::CommitTo( ASN1T_DateTime& asn ) const
+void DateTime::CommitTo( Common::MsgDateTime& message ) const
 {
-    asn = time_.c_str();
+    message.set_data( time_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DateTime::CommitTo
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void DateTime::CommitTo( ASN1T_MissionParameter& asn ) const
+void DateTime::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_dateTime;
-    asn.value.u.dateTime = new ASN1T_DateTime();
+    message.set_null_value ( !IsSet() );
+    message.mutable_value()->mutable_datetime();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        CommitTo( *asn.value.u.dateTime );
+        CommitTo( *message.mutable_value()->mutable_datetime() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DateTime::Clean
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void DateTime::Clean( ASN1T_MissionParameter& asn ) const
+void DateTime::Clean( Common::MsgMissionParameter& message ) const
 {
-    delete asn.value.u.dateTime;
+    message.mutable_value()->clear_datetime();
 }

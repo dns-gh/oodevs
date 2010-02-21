@@ -14,6 +14,12 @@
 
 class MIL_AutomateLOG;
 
+// =============================================================================
+/** @class  PopulationAttribute
+    @brief  PopulationAttribute
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class PopulationAttribute : public ObjectAttribute_ABC
 {
 public:
@@ -29,7 +35,7 @@ public:
     MT_Float GetDensity() const;
     void  Reset();
     void  SetDensity( MT_Float rDensity );    
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Copy
@@ -46,8 +52,7 @@ private:
 private:
     //! @name 
     //@{
-//    ASN1T_ObjectAttributesLogistic asnAttributes_;
-    MT_Float    density_;
+    MT_Float density_;
     //@}
 };
 

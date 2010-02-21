@@ -14,8 +14,10 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "Tools/MIL_IDManager.h"
 
 MIL_IDManager PHY_FireResults_Pion::idManager_;
 
@@ -28,15 +30,13 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     , firer_             ( firer )
     , nID_               ( idManager_.GetFreeId() )
 {
-    NET_ASN_MsgStartUnitFire asnMsg;
-    asnMsg().m.ammunitionPresent = 0;
-    asnMsg().fire_oid            = nID_;
-    asnMsg().firer_oid           = firer.GetID();
-    asnMsg().type                = MsgStartUnitFire_type::direct;
-    asnMsg().target.t            = T_MsgStartUnitFire_target_unit;
-    asnMsg().target.u.unit       = target.GetID();    
+    client::StartUnitFire asnMsg;
+    asnMsg().set_fire_oid       ( nID_ );
+    asnMsg().set_firer_oid      ( firer.GetID() );
+    asnMsg().set_type           ( Common::MsgStartUnitFire_type::direct );
+    asnMsg().mutable_target()->set_unit( target.GetID() );    
     
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,15 +48,12 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     , firer_             ( firer )
     , nID_               ( idManager_.GetFreeId() )
 {
-    NET_ASN_MsgStartUnitFire asnMsg;
-    asnMsg().m.ammunitionPresent = 0;
-    asnMsg().fire_oid            = nID_;
-    asnMsg().firer_oid           = firer.GetID();
-    asnMsg().type                = MsgStartUnitFire_type::direct;
-    asnMsg().target.t            = T_MsgStartUnitFire_target_population;
-    asnMsg().target.u.population = target.GetID();    
-    
-    asnMsg.Send();
+    client::StartUnitFire asnMsg;
+    asnMsg().set_fire_oid( nID_ );
+    asnMsg().set_firer_oid( firer.GetID() );
+    asnMsg().set_type( Common::MsgStartUnitFire_type::direct );
+    asnMsg().mutable_target()->set_population( target.GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,19 +65,14 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
     , firer_             ( firer )
     , nID_               ( idManager_.GetFreeId() )
 {
-    NET_ASN_MsgStartUnitFire asnMsg;
-    asnMsg().m.ammunitionPresent = 1;
-    asnMsg().fire_oid            = nID_;
-    asnMsg().firer_oid           = firer.GetID();
-    asnMsg().type                = MsgStartUnitFire_type::indirect;
-    asnMsg().target.t            = T_MsgStartUnitFire_target_position;
-    asnMsg().target.u.position   = new ASN1T_CoordLatLong();
-    asnMsg().ammunition          = dotationCategory.GetMosID();
-    NET_ASN_Tools::WritePoint( targetPosition, *asnMsg().target.u.position );
+    client::StartUnitFire asnMsg;    
+    asnMsg().set_fire_oid( nID_ );
+    asnMsg().set_firer_oid( firer.GetID() );
+    asnMsg().set_type( Common::MsgStartUnitFire_type::indirect );
+    asnMsg().set_ammunition( dotationCategory.GetMosID() );
+    NET_ASN_Tools::WritePoint( targetPosition, *asnMsg().mutable_target()->mutable_position() );
 
-    asnMsg.Send();
-
-    delete asnMsg().target.u.position;   
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,16 +81,16 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::~PHY_FireResults_Pion()
 {
-    NET_ASN_MsgStopUnitFire asnMsg;
-    asnMsg().fire_oid = nID_;
+    client::StopUnitFire asnMsg;
+    asnMsg().set_fire_oid( nID_ );
 
-    Serialize( asnMsg().units_damages       );
-    Serialize( asnMsg().populations_damages );
+    Serialize( *asnMsg().mutable_units_damages() );
+    Serialize( *asnMsg().mutable_populations_damages() );
    
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    CleanAfterSerialization( asnMsg().units_damages       );
-    CleanAfterSerialization( asnMsg().populations_damages );
+    CleanAfterSerialization( *asnMsg().mutable_units_damages()       );
+    CleanAfterSerialization( *asnMsg().mutable_populations_damages() );
 
     // $$$ Merde pour VABF Popu
     static MT_Random randomGenerator;
@@ -108,7 +100,7 @@ PHY_FireResults_Pion::~PHY_FireResults_Pion()
         const MIL_Population&               population = *it->first;
         const PHY_FireDamages_Population&   damages    =  it->second;
 
-        uint rNbrWounded = static_cast< unsigned int >( damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 ) );
+        unsigned int rNbrWounded = static_cast< unsigned int >( damages.GetNbrKilledHumans() * randomGenerator.rand_ii( 0.6, 0.75 ) );
 
         MIL_Report::PostEvent( population, MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );
         MIL_Report::PostEvent( firer_    , MIL_Report::eReport_ConfrontationWithPopulation, damages.GetNbrKilledHumans(), rNbrWounded );

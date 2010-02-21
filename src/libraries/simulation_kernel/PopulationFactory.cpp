@@ -25,7 +25,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 PopulationFactory::PopulationFactory( DEC_DataBase& database )
     : database_( database )
 {
-    //NOTHING
+
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -34,7 +35,8 @@ PopulationFactory::PopulationFactory( DEC_DataBase& database )
 // -----------------------------------------------------------------------------
 PopulationFactory::~PopulationFactory()
 {
-    DeleteAll();
+
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

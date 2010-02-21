@@ -43,9 +43,9 @@ void Mission_Automat_Test_MoveTo::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_Test_MoveTo& asnMission = *new ASN1T_Mission_Automate_Test_MoveTo();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_test_move_to;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_test_move_to = &asnMission;
+    Mission_Automate_Test_MoveTo& asnMission = *new Mission_Automate_Test_MoveTo();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_test_move_to = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Automat_Test_MoveTo::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_Test_MoveTo::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_test_move_to );
-    ASN1T_Mission_Automate_Test_MoveTo& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_test_move_to;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_test_move_to ());
+    Mission_Automate_Test_MoveTo& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_test_move_to;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

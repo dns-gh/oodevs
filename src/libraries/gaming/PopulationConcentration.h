@@ -10,11 +10,13 @@
 #ifndef __PopulationConcentration_h_
 #define __PopulationConcentration_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -26,14 +28,14 @@ namespace kernel
 // =============================================================================
 class PopulationConcentration : public kernel::PopulationConcentration_ABC
                               , public kernel::Positions
-                              , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate >
+                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate >
                               , public kernel::Drawable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter, float density );
+             PopulationConcentration( const MsgsSimToClient::MsgPopulationConcentrationCreation& message, const kernel::CoordinateConverter_ABC& converter, float density );
     virtual ~PopulationConcentration();
     //@}
 
@@ -68,7 +70,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message );
     //@}
 
 private:

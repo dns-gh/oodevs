@@ -73,9 +73,9 @@ void ActivityTimeAttribute::DisplayInSummary( kernel::Displayer_ABC& displayer )
 template< typename T >     
 void ActivityTimeAttribute::UpdateData( const T& message )
 {
-    if( message.m.activity_timePresent )
+    if( message.has_activity_time()  )
     {
-        activityTime_ = static_cast< unsigned int >( message.activity_time.value );
+        activityTime_ = static_cast< unsigned int >( message.activity_time().value() );
         controller_.Update( *(ActivityTimeAttribute_ABC*)this );
     }
 }
@@ -84,9 +84,9 @@ void ActivityTimeAttribute::UpdateData( const T& message )
 // Name: ActivityTimeAttribute::DoUpdate
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void ActivityTimeAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 
@@ -94,7 +94,7 @@ void ActivityTimeAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
 // Name: ActivityTimeAttribute::DoUpdate
 // Created: JCR 2008-08-25
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void ActivityTimeAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }

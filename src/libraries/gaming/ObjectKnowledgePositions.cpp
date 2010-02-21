@@ -38,13 +38,13 @@ ObjectKnowledgePositions::~ObjectKnowledgePositions()
 // Name: ObjectKnowledgePositions::DoUpdate
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void ObjectKnowledgePositions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void ObjectKnowledgePositions::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    if( message.m.locationPresent )
-        Update( message.location );
-    if( message.m.perceivedPresent )
-        perceived_ = message.perceived != 0;
-    if( message.m.real_objectPresent )
+    if( message.has_location()  )
+        Update( message.location() );
+    if( message.has_perceived()  )
+        perceived_ = message.perceived() != 0;
+    if( message.has_real_object()  )
         realObjectKnown_ = true;
 }
 

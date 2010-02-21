@@ -41,7 +41,7 @@ public:
     //@{
              MedicalTreatmentAttribute();    
     explicit MedicalTreatmentAttribute( xml::xistream& xis );
-    explicit MedicalTreatmentAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit MedicalTreatmentAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
@@ -56,15 +56,15 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name 
     //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
+    void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    void SendUpdate( Common::MsgObjectAttributes& asn ) const;
     void WriteODB( xml::xostream& xos ) const;
     //@}
 

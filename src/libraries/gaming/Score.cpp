@@ -13,12 +13,12 @@
 #include "Services.h"
 #include "ScoreDefinition.h"
 #include "ScoreDefinitions.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
-#include "clients_gui/Tools.h"
-#include "game_asn/AarSenders.h"
 #include "indicators/Tendency.h"
 #include "indicators/Gauge.h"
+#include "protocol/AarSenders.h"
 #include <boost/algorithm/string.hpp>
 
 namespace
@@ -33,10 +33,10 @@ namespace
 // Name: Score constructor
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-Score::Score( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
+Score::Score( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
     , publisher_( publisher )
-    , name_( ExtractRoot( message.name ) )
+    , name_( ExtractRoot( QString( message.name().c_str() ) ) )
     , definition_( definitions.Get( name_ ) )
     , tendency_( new indicators::Tendency() )
     , gauge_( definition_.CreateGauge() )
@@ -69,13 +69,13 @@ QString Score::GetName() const
 // Name: Score::Update
 // Created: SBO 2009-03-12
 // -----------------------------------------------------------------------------
-void Score::Update( const ASN1T_MsgIndicator& message )
+void Score::Update( const MsgsAarToClient::MsgIndicator& message )
 {
-    if( boost::ends_with( message.name, "/Tendency" ) )
-        tendencyValue_ = message.value;
+    if( boost::ends_with( message.name(), "/Tendency" ) )
+        tendencyValue_ = message.value();
     else
     {
-        value_ = message.value;
+        value_ = message.value();
         UpdatePlots( message );
     }
     controller_.Update( *this );
@@ -85,7 +85,7 @@ void Score::Update( const ASN1T_MsgIndicator& message )
 // Name: Score::UpdatePlots
 // Created: SBO 2009-06-12
 // -----------------------------------------------------------------------------
-void Score::UpdatePlots( const ASN1T_MsgIndicator& message )
+void Score::UpdatePlots( const MsgsAarToClient::MsgIndicator& message )
 {
     if( request_ )
         request_->Update( message );

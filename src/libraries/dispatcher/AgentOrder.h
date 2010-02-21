@@ -12,7 +12,13 @@
 
 #include "Order_ABC.h"
 
-struct ASN1T_MsgUnitOrder;
+
+namespace Common
+{
+    class MsgUnitOrder;
+}
+
+
 
 namespace dispatcher
 {
@@ -31,7 +37,7 @@ class AgentOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentOrder( Model_ABC& model, Agent& agent, const ASN1T_MsgUnitOrder& asn );
+             AgentOrder( Model_ABC& model, Agent& agent, const Common::MsgUnitOrder& asn );
     virtual ~AgentOrder();
     //@}
 

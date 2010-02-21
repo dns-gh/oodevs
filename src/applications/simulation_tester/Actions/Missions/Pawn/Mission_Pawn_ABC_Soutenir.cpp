@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_Soutenir::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_Soutenir& asnMission = *new ASN1T_Mission_Pion_ABC_Soutenir();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_soutenir;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_soutenir = &asnMission;
+    Mission_Pion_ABC_Soutenir& asnMission = *new Mission_Pion_ABC_Soutenir();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_soutenir = &asnMission;
 
 
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.unite_a_soutenir );
@@ -59,8 +59,8 @@ void Mission_Pawn_ABC_Soutenir::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_Soutenir::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_soutenir );
-    ASN1T_Mission_Pion_ABC_Soutenir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_soutenir;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_soutenir ());
+    Mission_Pion_ABC_Soutenir& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_soutenir;
 
 
     delete &asnMission;

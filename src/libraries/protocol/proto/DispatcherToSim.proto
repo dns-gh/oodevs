@@ -1,0 +1,13 @@
+package MsgsDispatcherToSim;
+
+message MsgCtrlClientAnnouncement {
+    optional bool announce = 1;
+}
+
+message MsgDispatcherToSim {
+    message Content {
+       optional MsgCtrlClientAnnouncement control_client_announcement = 1;
+    }
+    optional int32   context = 1 [default = 0];
+    required Content message = 2;
+}

@@ -59,7 +59,7 @@ TerrainHeuristicCapacity::~TerrainHeuristicCapacity()
 void TerrainHeuristicCapacity::ReadTerrain( xml::xistream& xis )
 {
     std::string strTerrainType( xml::attribute( xis, "type", std::string() ) );
-    uint nScore = xml::attribute( xis, "value", 0 );
+    unsigned int nScore = xml::attribute( xis, "value", 0 );
 
     TerrainData nLandType = MIL_Tools::ConvertLandType( strTerrainType );
     if( nLandType.Area() == 0xFF )
@@ -72,7 +72,7 @@ void TerrainHeuristicCapacity::ReadTerrain( xml::xistream& xis )
 // Name: template< typename Archive > void TerrainHeuristicCapacity::serialize
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-template< typename Archive > void TerrainHeuristicCapacity::serialize( Archive& file, const uint )
+template< typename Archive > void TerrainHeuristicCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
          & environmentScores_;

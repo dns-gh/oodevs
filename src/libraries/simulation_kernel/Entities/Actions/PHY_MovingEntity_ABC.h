@@ -13,6 +13,16 @@
 #include "Decision/Path/DEC_PathWalker.h"
 #include <boost/shared_ptr.hpp>
 
+namespace Common
+{
+    class MsgPath;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUnitEnvironmentType;
+}
+
 class MIL_Object_ABC;
 class MIL_Object_ABC;
 class DEC_PathResult;
@@ -79,14 +89,14 @@ public:
     //! @name Serialization
     //@{
     template< typename Archive >
-    void serialize( Archive& /*file*/, const uint ) {}
+    void serialize( Archive& /*file*/, const unsigned int ) {}
     //@}
 
 protected:
     //! @name Network
     //@{
-    void SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg ) const;
-    bool SerializeCurrentPath    ( ASN1T_Path& asn                   ) const;
+    void SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnvironmentType& msg ) const;
+    bool SerializeCurrentPath( Common::MsgPath& asn ) const;
     //@}
 
     //! @name Tools

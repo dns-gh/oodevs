@@ -15,7 +15,7 @@
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
 inline
-bool32 MT_Profiler::IsStarted() const
+bool MT_Profiler::IsStarted() const
 {
     return nCounterStart_ != 0;
 }

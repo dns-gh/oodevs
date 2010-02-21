@@ -20,7 +20,7 @@ namespace boost
     {
         template< typename Archive >
         inline 
-        void serialize( Archive& file, MT_Vector2D& vect, const uint )
+        void serialize( Archive& file, MT_Vector2D& vect, const unsigned int )
         {
             file & vect.rX_;
             file & vect.rY_;

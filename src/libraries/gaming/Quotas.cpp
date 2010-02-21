@@ -37,12 +37,12 @@ Quotas::~Quotas()
 // Name: Quotas::DoUpdate
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Quotas::DoUpdate( const ASN1T_MsgLogSupplyQuotas& message )
+void Quotas::DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& message )
 {
-    quotas_.resize( message.quotas.n );
-    for( uint i = 0; i < message.quotas.n; ++i )
-        quotas_[ i ] = Dotation( dotationResolver_.Get( message.quotas.elem[i].ressource_id )
-                               , message.quotas.elem[i].quota_disponible );
+    quotas_.resize( message.quotas().elem_size() );
+    for( int i = 0; i < message.quotas().elem_size(); ++i )
+        quotas_[ i ] = Dotation( dotationResolver_.Get( message.quotas().elem( i ).ressource_id() )
+                               , message.quotas().elem( i ).quota_disponible() );
     controller_.Update( *this );
 }
 

@@ -12,10 +12,12 @@
 #ifndef __DEC_PathFind_Manager_h_
 #define __DEC_PathFind_Manager_h_
 
+#pragma warning( push, 1 )
+#pragma warning( disable : 4244 4275 )
 #include "tools/thread/MessageQueue_ABC.h"
-#pragma warning( disable : 4275 )
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>
+#pragma warning( pop )
 #include <boost/shared_ptr.hpp>
 
 class DEC_Path_ABC;
@@ -43,11 +45,11 @@ public:
     //! @name Accessors
     //@{
     int  GetCurrentThread         () const;
-    uint GetNbrShortRequests      () const;
-    uint GetNbrLongRequests       () const;
-    uint GetNbrRequests           () const;
-    uint GetNbrTreatedRequests    () const;
-    uint GetMaxComputationDuration() const;
+    unsigned int GetNbrShortRequests      () const;
+    unsigned int GetNbrLongRequests       () const;
+    unsigned int GetNbrRequests           () const;
+    unsigned int GetNbrTreatedRequests    () const;
+    unsigned int GetMaxComputationDuration() const;
     //@}
 
 private:
@@ -76,8 +78,8 @@ private:
     T_Requests shortRequests_;
     T_Requests longRequests_;
     MT_Float   rDistanceThreshold_;
-    uint       nMaxComputationDuration_;
-    uint       treatedRequests_;
+    unsigned int       nMaxComputationDuration_;
+    unsigned int       treatedRequests_;
 
     T_PathFindThreadPtrVector  pathFindThreads_;
 

@@ -43,9 +43,9 @@ void Mission_Automat_INF_PrendrePreciserMaintenirContact::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_PrendrePreciserMaintenirContact& asnMission = *new ASN1T_Mission_Automate_INF_PrendrePreciserMaintenirContact();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_prendre_preciser_maintenir_contact;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_prendre_preciser_maintenir_contact = &asnMission;
+    Mission_Automate_INF_PrendrePreciserMaintenirContact& asnMission = *new Mission_Automate_INF_PrendrePreciserMaintenirContact();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_prendre_preciser_maintenir_contact = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_INF_PrendrePreciserMaintenirContact::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_PrendrePreciserMaintenirContact::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_prendre_preciser_maintenir_contact );
-    ASN1T_Mission_Automate_INF_PrendrePreciserMaintenirContact& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_prendre_preciser_maintenir_contact;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_prendre_preciser_maintenir_contact ());
+    Mission_Automate_INF_PrendrePreciserMaintenirContact& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_prendre_preciser_maintenir_contact;
 
 
     delete &asnMission;

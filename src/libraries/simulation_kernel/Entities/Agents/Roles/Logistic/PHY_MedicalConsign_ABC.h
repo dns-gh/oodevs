@@ -12,9 +12,13 @@
 #ifndef __PHY_MedicalConsign_ABC_h_
 #define __PHY_MedicalConsign_ABC_h_
 
+namespace client
+{
+    class LogMedicalHandlingUpdate;
+}
+
 class PHY_RoleInterface_Medical;
 class PHY_MedicalHumanState;
-class NET_ASN_MsgLogMedicalHandlingUpdate;
 
 // =============================================================================
 // @class  PHY_MedicalConsign_ABC
@@ -30,7 +34,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -53,8 +57,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgLogMedicalHandlingUpdate& asn ) const;
-    void SendFullState   ( NET_ASN_MsgLogMedicalHandlingUpdate& asn ) const;
+    void SendChangedState( client::LogMedicalHandlingUpdate& asn ) const;
+    void SendFullState   ( client::LogMedicalHandlingUpdate& asn ) const;
     //@}
 
 protected:
@@ -112,7 +116,7 @@ protected:
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_MedicalConsign_ABC::serialize( Archive& file, const uint )
+void PHY_MedicalConsign_ABC::serialize( Archive& file, const unsigned int )
 {
     file & pMedical_   
          & pHumanState_

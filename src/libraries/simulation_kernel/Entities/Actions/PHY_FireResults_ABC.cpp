@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_FireResults_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireResults_ABC constructor
@@ -35,16 +36,13 @@ PHY_FireResults_ABC::~PHY_FireResults_ABC()
 // Name: PHY_FireResults_ABC::Serialize
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_FireResults_ABC::Serialize( ASN1T_UnitsFireDamages& asn ) const
+void PHY_FireResults_ABC::Serialize( MsgsSimToClient::MsgUnitsFireDamages& asn ) const
 {
-    asn.n = agentsDamages_.size();
     if( !agentsDamages_.empty() )
     {
-        ASN1T_UnitFireDamages* pDamages = new ASN1T_UnitFireDamages[ agentsDamages_.size() ]; 
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_AgentDamagesMap it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
-            it->second.Serialize( *it->first, pDamages[ i++ ] );
-        asn.elem = pDamages;
+            it->second.Serialize( *it->first, *asn.mutable_elem( i++ ) );
     }
 }
 
@@ -52,28 +50,25 @@ void PHY_FireResults_ABC::Serialize( ASN1T_UnitsFireDamages& asn ) const
 // Name: PHY_FireResults_ABC::CleanAfterSerialization
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_FireResults_ABC::CleanAfterSerialization( ASN1T_UnitsFireDamages& asn )
+void PHY_FireResults_ABC::CleanAfterSerialization( MsgsSimToClient::MsgUnitsFireDamages& asn )
 {
-    for( uint n = 0; n < asn.n; ++n )  
-        PHY_FireDamages_Agent::CleanAfterSerialization( asn.elem[ n ] );
-    if( asn.n > 0 )
-        delete [] asn.elem;
+    for( int i = 0; i < asn.elem_size(); ++i )  
+        PHY_FireDamages_Agent::CleanAfterSerialization( *asn.mutable_elem( i ) );
+    if( asn.elem_size() > 0 )
+        asn.Clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireResults_ABC::Serialize
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_FireResults_ABC::Serialize( ASN1T_PopulationsFireDamages& asn ) const
+void PHY_FireResults_ABC::Serialize( MsgsSimToClient::MsgPopulationsFireDamages& asn ) const
 {
-    asn.n = populationsDamages_.size();
     if( !populationsDamages_.empty() )
     {
-        ASN1T_PopulationFireDamages* pDamages = new ASN1T_PopulationFireDamages[ populationsDamages_.size() ]; 
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_PopulationDamagesMap it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
-            it->second.Serialize( *it->first, pDamages[ i++ ] );
-        asn.elem = pDamages;
+            it->second.Serialize( *it->first, *asn.mutable_elem( i++ ) );        
     }
 }
     
@@ -81,12 +76,12 @@ void PHY_FireResults_ABC::Serialize( ASN1T_PopulationsFireDamages& asn ) const
 // Name: PHY_FireResults_ABC::CleanAfterSerialization
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_FireResults_ABC::CleanAfterSerialization( ASN1T_PopulationsFireDamages& asn )
+void PHY_FireResults_ABC::CleanAfterSerialization( MsgsSimToClient::MsgPopulationsFireDamages& asn )
 {
-    for( uint n = 0; n < asn.n; ++n )  
-        PHY_FireDamages_Population::CleanAfterSerialization( asn.elem[ n ] );
-    if( asn.n > 0 )
-        delete [] asn.elem;
+    for( int n = 0; n < asn.elem_size(); ++n )  
+        PHY_FireDamages_Population::CleanAfterSerialization( *asn.mutable_elem( n ) );
+    if( asn.elem_size() > 0 )
+        asn.Clear();
 }
 
 // -----------------------------------------------------------------------------

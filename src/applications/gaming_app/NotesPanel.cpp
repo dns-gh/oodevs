@@ -19,9 +19,9 @@
 #include "gaming/Note.h"
 #include "gaming/NotesModel.h"
 #include "clients_kernel/Controller.h"
-#include "game_asn/Messenger.h"
-#include "game_asn/Publisher_ABC.h"
-#include "game_asn/MessengerSenders.h"
+//#include "game_asn/Messenger.h"
+#include "protocol/Publisher_ABC.h"
+#include "protocol/MessengerSenders.h"
 #include "clients_gui/ValuedDragObject.h"
 
 // -----------------------------------------------------------------------------
@@ -187,10 +187,10 @@ void NotesPanel::ConfirmDeleteAllTreeNote()
             {
 //                for (listIterator it = note->GetChildren(); it !=
                     
-                plugins::messenger::NoteDestructionRequest asn;
-                asn().id = note->GetId();
-                asn().deleteAll = true;
-                asn.Send( publisher_ );
+                plugins::messenger::NoteDestructionRequest message;
+                message().set_id( note->GetId() );
+                message().set_delete_all( true );
+                message.Send( publisher_ );
             }
         }
     }
@@ -212,8 +212,8 @@ void NotesPanel::ConfirmDeleteNote()
             if ( Note* note = item2->GetValue< Note >() ) 
             {
                 plugins::messenger::NoteDestructionRequest asn;
-                asn().id = note->GetId();
-                asn().deleteAll = false;
+                asn().set_id( note->GetId() );
+                asn().set_delete_all(false );
                 asn.Send(publisher_);
             }      
     }

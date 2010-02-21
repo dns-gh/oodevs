@@ -139,7 +139,7 @@ ControlZoneCapacity::~ControlZoneCapacity()
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void ControlZoneCapacity::serialize( Archive& file, const uint )
+void ControlZoneCapacity::serialize( Archive& file, const unsigned int )
 {    
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     file & const_cast< MIL_Agent_ABC*& >( controller_ );

@@ -15,8 +15,12 @@
 #include "Decision/DEC_Decision.h"
 #include "Entities/Populations/MIL_Population.h"
 
+namespace client
+{
+    class PopulationUpdate;
+}
+
 class MIL_Mission_ABC;
-class NET_ASN_MsgPopulationUpdate;
 
 // =============================================================================
 // @class  DEC_PopulationDecision
@@ -66,8 +70,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgPopulationUpdate& msg ) const ;
-    void SendFullState   ( NET_ASN_MsgPopulationUpdate& msg ) const ;
+    void SendChangedState( client::PopulationUpdate& msg );
+    void SendFullState   ( client::PopulationUpdate& msg ) const;
     //@}
 
 protected:

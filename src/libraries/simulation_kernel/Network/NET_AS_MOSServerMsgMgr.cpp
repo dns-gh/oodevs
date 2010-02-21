@@ -14,16 +14,15 @@
 #include "NET_AS_MOSServerMsgMgr.h"
 #include "MIL_AgentServer.h"
 #include "NET_AgentServer.h"
-
-#include "NET_ASN_Messages.h"
 #include "NET_Simulation_ABC.h"
+#include "CheckPoints/MIL_CheckPointManager.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "CheckPoints/MIL_CheckPointManager.h"
-#include "game_asn/ClientSenders.h"
-
-using namespace DIN;
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/SimulationSenders.h"
+#include "protocol/ClientSenders.h"
+#include "protocol/DispatcherSenders.h"
 
 //-----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr constructor
@@ -59,73 +58,91 @@ void NET_AS_MOSServerMsgMgr::RemoveClient( const std::string& client )
 // Name: NET_AS_MOSServerMsgMgr::Send
 // Created: NLD 2003-02-24
 //-----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::Send( ASN1T_MsgsSimToClient& asnMsg )
+void NET_AS_MOSServerMsgMgr::Send( MsgsSimToClient::MsgSimToClient& wrapper )
 {
     for( CIT_Clients it = clients_.begin(); it != clients_.end(); ++it )
-        agentServer_.Send( *it, asnMsg );
+        agentServer_.Send( *it, wrapper );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::OnReceiveClient
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const ASN1T_MsgsClientToSim& asnMsg )
+void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const MsgsClientToSim::MsgClientToSim& wrapper )
 {
     MIL_AgentServer& workspace = MIL_AgentServer::GetWorkspace();
-    uint nCtx = asnMsg.context;
-    switch( asnMsg.msg.t )
-    {
-        case T_MsgsClientToSim_msg_msg_control_stop                       : simulation_.Stop(); break;
-        case T_MsgsClientToSim_msg_msg_control_pause                      : simulation_.Pause(); break;
-        case T_MsgsClientToSim_msg_msg_control_resume                     : simulation_.Resume(); break;
-        case T_MsgsClientToSim_msg_msg_control_change_time_factor         : simulation_.SetTimeFactor( asnMsg.msg.u.msg_control_change_time_factor ); break;
-        case T_MsgsClientToSim_msg_msg_control_date_time_change           : simulation_.SetRealTime( std::string( (const char*)asnMsg.msg.u.msg_control_date_time_change->date_time.data, 15 ) ); break;
-        case T_MsgsClientToSim_msg_msg_control_global_meteo               : workspace.GetMeteoDataManager     ().OnReceiveMsgGlobalMeteo                    ( *asnMsg.msg.u.msg_control_global_meteo                      ); break;
-        case T_MsgsClientToSim_msg_msg_control_local_meteo                : workspace.GetMeteoDataManager     ().OnReceiveMsgLocalMeteo                     ( *asnMsg.msg.u.msg_control_local_meteo                       ); break;
-        case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now        : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( *asnMsg.msg.u.msg_control_checkpoint_save_now               ); break;
-        case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency   : workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency         (  asnMsg.msg.u.msg_control_checkpoint_set_frequency          ); break;
-        case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones        : agentServer_                        .SetMustSendUnitVisionCones                 (  asnMsg.msg.u.msg_control_toggle_vision_cones != 0          ); break;
-        case T_MsgsClientToSim_msg_msg_unit_order                         : workspace.GetEntityManager        ().OnReceiveMsgUnitOrder                      ( *asnMsg.msg.u.msg_unit_order                         , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_automat_order                      : workspace.GetEntityManager        ().OnReceiveMsgAutomatOrder                   ( *asnMsg.msg.u.msg_automat_order                      , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_population_order                   : workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder                ( *asnMsg.msg.u.msg_population_order                   , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_frag_order                         : workspace.GetEntityManager        ().OnReceiveMsgFragOrder                      ( *asnMsg.msg.u.msg_frag_order                         , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_population_magic_action            : workspace.GetEntityManager        ().OnReceiveMsgPopulationMagicAction          ( *asnMsg.msg.u.msg_population_magic_action            , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_set_automat_mode                   : workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode                ( *asnMsg.msg.u.msg_set_automat_mode                   , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_unit_creation_request              : workspace.GetEntityManager        ().OnReceiveMsgUnitCreationRequest            ( *asnMsg.msg.u.msg_unit_creation_request              , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_unit_magic_action                  : workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction                ( *asnMsg.msg.u.msg_unit_magic_action                  , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_object_magic_action                : workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( *asnMsg.msg.u.msg_object_magic_action                , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_change_diplomacy                   : workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy                ( *asnMsg.msg.u.msg_change_diplomacy                   , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_automat_change_knowledge_group     : workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeKnowledgeGroup   ( *asnMsg.msg.u.msg_automat_change_knowledge_group     , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_automat_change_logistic_links      : workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeLogisticLinks    ( *asnMsg.msg.u.msg_automat_change_logistic_links      , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_automat_change_superior            : workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeSuperior         ( *asnMsg.msg.u.msg_automat_change_superior            , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_unit_change_superior               : workspace.GetEntityManager        ().OnReceiveMsgUnitChangeSuperior             ( *asnMsg.msg.u.msg_unit_change_superior               , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_log_supply_change_quotas           : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyChangeQuotas          ( *asnMsg.msg.u.msg_log_supply_change_quotas           , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_log_supply_push_flow               : workspace.GetEntityManager        ().OnReceiveMsgLogSupplyPushFlow              ( *asnMsg.msg.u.msg_log_supply_push_flow               , nCtx ); break;
-        // LTO begin
-        case T_MsgsClientToSim_msg_msg_knowledge_group_enable             : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupEnable           ( *asnMsg.msg.u.msg_knowledge_group_enable             , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_change_superior    : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupChangeSuperior   ( *asnMsg.msg.u.msg_knowledge_group_change_superior    , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_delete             : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupDelete           ( *asnMsg.msg.u.msg_knowledge_group_delete             , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_set_type           : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupSetType          ( *asnMsg.msg.u.msg_knowledge_group_set_type           , nCtx ); break;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_creation           : workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation         ( *asnMsg.msg.u.msg_knowledge_group_creation           , nCtx ); break;
-        // LTO end
+    unsigned int nCtx = wrapper.context();
 
-        default:
-            assert( false );
-    }
+    if( wrapper.message().has_control_stop() )
+        simulation_.Stop(); 
+    else if( wrapper.message().has_control_pause() )
+        simulation_.Pause(); 
+    else if( wrapper.message().has_control_resume() )
+        simulation_.Resume(); 
+    else if( wrapper.message().has_control_change_time_factor() )
+        simulation_.SetTimeFactor( wrapper.message().control_change_time_factor().time_factor() ); 
+    else if( wrapper.message().has_control_date_time_change() )
+        simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data() ); 
+    else if( wrapper.message().has_control_global_meteo() )
+        workspace.GetMeteoDataManager     ().OnReceiveMsgGlobalMeteo                    ( wrapper.message().control_global_meteo()                      ); 
+    else if( wrapper.message().has_control_local_meteo() )
+        workspace.GetMeteoDataManager     ().OnReceiveMsgLocalMeteo                     ( wrapper.message().control_local_meteo()                       ); 
+    else if( wrapper.message().has_control_checkpoint_save_now() )
+        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( wrapper.message().control_checkpoint_save_now()               ); 
+    else if( wrapper.message().has_control_checkpoint_set_frequency() )
+        workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSetFrequency         ( wrapper.message().control_checkpoint_set_frequency()          ); 
+    else if( wrapper.message().has_control_toggle_vision_cones() )
+        agentServer_                        .SetMustSendUnitVisionCones                 ( wrapper.message().control_toggle_vision_cones().vision_cones()); 
+    else if( wrapper.message().has_unit_order() )
+        workspace.GetEntityManager        ().OnReceiveMsgUnitOrder                      ( wrapper.message().unit_order()                         , nCtx );          
+    else if( wrapper.message().has_automat_order() )
+        workspace.GetEntityManager        ().OnReceiveMsgAutomatOrder                   ( wrapper.message().automat_order()                      , nCtx ); 
+    else if( wrapper.message().has_population_order() )
+        workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder                ( wrapper.message().population_order()                   , nCtx ); 
+    else if( wrapper.message().has_frag_order() )
+        workspace.GetEntityManager        ().OnReceiveMsgFragOrder                      ( wrapper.message().frag_order()                         , nCtx ); 
+    else if( wrapper.message().has_population_magic_action() )
+        workspace.GetEntityManager        ().OnReceiveMsgPopulationMagicAction          ( wrapper.message().population_magic_action()            , nCtx ); 
+    else if( wrapper.message().has_set_automat_mode() )
+        workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx ); 
+    else if( wrapper.message().has_unit_creation_request() )
+        workspace.GetEntityManager        ().OnReceiveMsgUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx ); 
+    else if( wrapper.message().has_unit_magic_action() )
+        workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx ); 
+    else if( wrapper.message().has_object_magic_action() )
+        workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx ); 
+    else if( wrapper.message().has_change_diplomacy() )
+        workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy                ( wrapper.message().change_diplomacy()                   , nCtx ); 
+    else if( wrapper.message().has_automat_change_knowledge_group() )
+        workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeKnowledgeGroup   ( wrapper.message().automat_change_knowledge_group()     , nCtx ); 
+    else if( wrapper.message().has_automat_change_logistic_links() )
+        workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeLogisticLinks    ( wrapper.message().automat_change_logistic_links()      , nCtx ); 
+    else if( wrapper.message().has_automat_change_superior() )
+        workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeSuperior         ( wrapper.message().automat_change_superior()            , nCtx ); 
+    else if( wrapper.message().has_unit_change_superior() )
+        workspace.GetEntityManager        ().OnReceiveMsgUnitChangeSuperior             ( wrapper.message().unit_change_superior()               , nCtx ); 
+    else if( wrapper.message().has_log_supply_change_quotas() )
+        workspace.GetEntityManager        ().OnReceiveMsgLogSupplyChangeQuotas          ( wrapper.message().log_supply_change_quotas()           , nCtx ); 
+    else if( wrapper.message().has_log_supply_push_flow() )
+        workspace.GetEntityManager        ().OnReceiveMsgLogSupplyPushFlow              ( wrapper.message().log_supply_push_flow()               , nCtx ); 
+    // LTO BEGIN
+    else if( wrapper.message().has_knowledge_group_creation_request() )
+        workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation         ( wrapper.message().knowledge_group_creation_request()   , nCtx ); 
+    else if( wrapper.message().has_knowledge_group_update_request() )             
+        workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupUpdate           ( wrapper.message().knowledge_group_update_request()     , nCtx );        
+    // LTO END
 }
 
 // -----------------------------------------------------------------------------
 // Name: NET_AS_MOSServerMsgMgr::OnReceiveMiddle
 // Created: AGE 2007-09-06
 // -----------------------------------------------------------------------------
-void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const ASN1T_MsgsDispatcherToSim& asnMsg )
+void NET_AS_MOSServerMsgMgr::OnReceiveMiddle( const std::string& from, const MsgsDispatcherToSim::MsgDispatcherToSim& wrapper )
 {
-    switch( asnMsg.t )
-    {
-        case T_MsgsDispatcherToSim_msg_control_client_announcement : OnReceiveMsgCtrlClientAnnouncement( from ); break;
-        default:
-            assert( false );
-    }
+    if( wrapper.message().has_control_client_announcement() )
+        OnReceiveMsgCtrlClientAnnouncement( from );
+    else
+        assert( false );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,15 +153,9 @@ void NET_AS_MOSServerMsgMgr::OnReceiveMsgCtrlClientAnnouncement( const std::stri
 {
     MT_LOG_INFO_MSG( "Announcement from client " << from );
     clients_.insert( from );
-
     simulation_.SendControlInformation();
-
-    NET_ASN_MsgControlSendCurrentStateBegin asnMsgStateBegin;
-    asnMsgStateBegin.Send();
-    
+    client::ControlSendCurrentStateBegin().Send( NET_Publisher_ABC::Publisher() );
     MIL_AgentServer::GetWorkspace().SendStateToNewClient();
-        
-    NET_ASN_MsgControlSendCurrentStateEnd asnMsgStateEnd;
-    asnMsgStateEnd.Send();
+    client::ControlSendCurrentStateEnd().Send( NET_Publisher_ABC::Publisher() );
 }
 

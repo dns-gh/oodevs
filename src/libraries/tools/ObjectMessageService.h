@@ -12,7 +12,6 @@
 
 #include "MessageIdentifierFactory.h"
 #include "MessageDispatcher_ABC.h"
-#include "AsnMessageEncoder.h"
 #include "MessageCallback_ABC.h"
 #include <boost/function.hpp>
 #include <vector>

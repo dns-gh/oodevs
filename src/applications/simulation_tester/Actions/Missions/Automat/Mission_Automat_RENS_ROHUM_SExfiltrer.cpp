@@ -43,9 +43,9 @@ void Mission_Automat_RENS_ROHUM_SExfiltrer::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_RENS_ROHUM_SExfiltrer& asnMission = *new ASN1T_Mission_Automate_RENS_ROHUM_SExfiltrer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_rens_rohum_sexfiltrer;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_rohum_sexfiltrer = &asnMission;
+    Mission_Automate_RENS_ROHUM_SExfiltrer& asnMission = *new Mission_Automate_RENS_ROHUM_SExfiltrer();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_rens_rohum_sexfiltrer = &asnMission;
 
     const Location& zoneDeRegroupement_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_RENS_ROHUM_SExfiltrer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_RENS_ROHUM_SExfiltrer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_rens_rohum_sexfiltrer );
-    ASN1T_Mission_Automate_RENS_ROHUM_SExfiltrer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_rohum_sexfiltrer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_rens_rohum_sexfiltrer ());
+    Mission_Automate_RENS_ROHUM_SExfiltrer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_rens_rohum_sexfiltrer;
 
     ASN_Tools::Delete( asnMission.zone_de_regroupement );
 

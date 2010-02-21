@@ -11,6 +11,12 @@
 #define __ActionParameterObstacleType_h_
 
 #include "Parameter.h"
+#include <boost/function.hpp>
+
+namespace Common
+{
+    enum ObstacleType_DemolitionTargetType;
+}
 
 namespace actions {
     namespace parameters {
@@ -23,6 +29,12 @@ namespace actions {
 // =============================================================================
 class ObstacleType : public Parameter< QString >
 {
+public:
+    //! @name Functors
+    //@{
+
+    typedef boost::function< void ( const Common::ObstacleType_DemolitionTargetType& ) > T_Setter;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -34,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_EnumDemolitionTargetType& asn ) const;
+    void CommitTo( T_Setter setter ) const;
     //@}
 
 private:
@@ -52,7 +64,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_EnumDemolitionTargetType value_;
+    Common::ObstacleType_DemolitionTargetType value_;
     //@}
 };
 

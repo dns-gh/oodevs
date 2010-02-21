@@ -12,12 +12,20 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/publisher_ABC.h"
+#include "protocol/authenticationsenders.h"
+#include "protocol/publisher_ABC.h"
 
 namespace kernel
 {
     class Controller;
     class Entity_ABC;
+}
+
+namespace MsgsAuthenticationToClient
+{
+    class MsgProfileCreation;
+    class MsgProfileUpdate;
 }
 
 class Publisher_ABC;
@@ -29,13 +37,13 @@ class Publisher_ABC;
 // Created: SBO 2007-01-19
 // =============================================================================
 class UserProfile : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< ASN1T_MsgProfileUpdate >
+                  , public kernel::Updatable_ABC< MsgsAuthenticationToClient::MsgProfileUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UserProfile( const ASN1T_MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
+    UserProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const QString& login, kernel::Controller& controller, Publisher_ABC& publisher );
              UserProfile( const UserProfile& );
     virtual ~UserProfile();
@@ -46,7 +54,7 @@ public:
     void RequestCreation();
     void RequestDeletion();
     void RequestUpdate  ( const QString& newLogin );
-    virtual void DoUpdate( const ASN1T_MsgProfileUpdate& message );
+    virtual void DoUpdate( const MsgsAuthenticationToClient::MsgProfileUpdate& message );
     //@}
 
     //! @name Accessors
@@ -76,7 +84,7 @@ private:
 
     //! @name Helpers
     //@{
-    void SetProfile( const ASN1T_Profile& profile );
+    void SetProfile( const MsgsAuthenticationToClient::MsgProfile& profile );
     //@}
 
 private:

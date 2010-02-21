@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
+#include "protocol/protocol.h"
 #include "BypassAttribute.h"
 
 using namespace dispatcher;
@@ -17,9 +17,9 @@ using namespace dispatcher;
 // Name: BypassAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
+BypassAttribute::BypassAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
-    , nPercentageBypassing_ ( asnMsg.bypass.percentage )
+    , nPercentageBypassing_ ( asnMsg.bypass().percentage() )
 {
     // NOTHING
 }
@@ -37,28 +37,26 @@ BypassAttribute::~BypassAttribute()
 // Name: BypassAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void BypassAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void BypassAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if( asnMsg.m.bypassPresent )
-        nPercentageBypassing_ = asnMsg.bypass.percentage;
+    if( asnMsg.has_bypass()  )
+        nPercentageBypassing_ = asnMsg.bypass().percentage();
 }
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void BypassAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void BypassAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.m.bypassPresent = 1;
-    asnMsg.bypass.m.percentagePresent = 1;
-    asnMsg.bypass.percentage = nPercentageBypassing_;
+    asnMsg.mutable_bypass()->set_percentage( nPercentageBypassing_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: BypassAttribute::AsnDelete
+// Name: BypassAttribute::Delete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void BypassAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void BypassAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
 
 }

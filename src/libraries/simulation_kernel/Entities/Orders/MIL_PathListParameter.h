@@ -24,7 +24,7 @@ class MIL_PathListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_PathListParameter( const ASN1T_PathList& );
+    explicit MIL_PathListParameter( const Common::MsgPathList& );
     explicit MIL_PathListParameter( const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& pathList );
     virtual ~MIL_PathListParameter();
     //@}
@@ -36,7 +36,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToPathList( ASN1T_PathList& asn ) const;
+    virtual bool ToPathList( Common::MsgPathList& asn ) const;
     virtual bool ToPathList( std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& ) const;
     //@}
 

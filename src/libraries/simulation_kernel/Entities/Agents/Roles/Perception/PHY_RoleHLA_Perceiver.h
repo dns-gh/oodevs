@@ -131,6 +131,8 @@ public:
     //! @name Network
     //@{
     virtual void SendDebugState  () const {}
+    virtual void SendChangedState( client::UnitAttributes& /*msg*/ ) const {};
+    virtual void SendFullState   ( client::UnitAttributes& /*msg*/ ) const {};
     //@}
 
 private:

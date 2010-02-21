@@ -10,10 +10,10 @@
 #ifndef __Profile_h_
 #define __Profile_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include "protocol/publisher_ABC.h"
 
 namespace kernel
 {
@@ -24,6 +24,13 @@ namespace kernel
     class Population_ABC;
     class Hierarchies;
     class Formation_ABC;
+}
+
+namespace MsgsAuthenticationToClient
+{
+    class MsgAuthenticationResponse;
+    class MsgProfileUpdate;
+    class MsgProfile;
 }
 
 class Services;
@@ -58,8 +65,8 @@ public:
     //@{
     void Login() const;
     void Login( const std::string& login, const std::string& password ) const;
-    void Update( const ASN1T_MsgAuthenticationResponse& asnMsg );
-    void Update( const Model& model, const ASN1T_MsgProfileUpdate& asnMsg );
+    void Update( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message );
+    void Update( const Model& model, const MsgsAuthenticationToClient::MsgProfileUpdate& message );
     //@}
     
     //! @name Accessors
@@ -95,7 +102,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( const ASN1T_Profile& profile );
+    void Update( const MsgsAuthenticationToClient::MsgProfile& profile );
     void Clean();
     void ResolveEntities( const Model& model );
     template< typename Entity >

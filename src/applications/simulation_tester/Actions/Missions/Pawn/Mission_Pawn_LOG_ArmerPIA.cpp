@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_ArmerPIA::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_ArmerPIA& asnMission = *new ASN1T_Mission_Pion_LOG_ArmerPIA();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_armer_pia;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_armer_pia = &asnMission;
+    Mission_Pion_LOG_ArmerPIA& asnMission = *new Mission_Pion_LOG_ArmerPIA();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_armer_pia = &asnMission;
 
     const Position& point_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_LOG_ArmerPIA::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_ArmerPIA::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_armer_pia );
-    ASN1T_Mission_Pion_LOG_ArmerPIA& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_armer_pia;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_armer_pia ());
+    Mission_Pion_LOG_ArmerPIA& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_armer_pia;
 
     ASN_Tools::Delete( asnMission.point );
 

@@ -294,7 +294,9 @@ if( F_Pion_GeteEtatAmbiance( myself ) ~= eEtatAmbiance_Vitesse ) then
                             end
                         end
 
-                        Activate( self.activations.ACT_Points_Suppression, 1, { repAvantPt, } )
+                            if _continue then
+                            Activate( self.activations.ACT_Points_Suppression, 1, { repAvantPt, } )
+                        end
                     end
                 end
 

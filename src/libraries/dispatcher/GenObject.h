@@ -10,8 +10,15 @@
 #ifndef __GenObject_h_
 #define __GenObject_h_
 
-#include "game_asn/Simulation.h"
+
 #include "Localisation.h"
+
+namespace Common
+{
+    enum ObstacleType_DemolitionTargetType;
+
+    class MsgPlannedWork;
+}
 
 namespace dispatcher
 {
@@ -28,25 +35,25 @@ class GenObject
 public:
     //! @name Constructors/Destructor
     //@{
-    GenObject( const ASN1T_PlannedWork& asn );
+    GenObject( const Common::MsgPlannedWork& asn );
     GenObject();
    virtual ~GenObject();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_PlannedWork& asn ) const;
+   void Send( Common::MsgPlannedWork& asn ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::string                     type_;
-    Localisation                    location_;
-    ASN1T_EnumDemolitionTargetType  typeObstacle_;
-    double                          density_;
-    unsigned int                    tc2_;
-    unsigned int                    delaiActiviteMines_;
+    std::string                                 type_;
+    Localisation                                location_;
+    Common::ObstacleType_DemolitionTargetType   typeObstacle_;
+    double                                      density_;
+    unsigned int                                tc2_;
+    unsigned int                                delaiActiviteMines_;
     //@}
 };
 

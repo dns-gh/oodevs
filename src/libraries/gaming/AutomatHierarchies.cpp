@@ -40,18 +40,18 @@ AutomatHierarchies::~AutomatHierarchies()
 // Name: AutomatHierarchies::DoUpdate
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomatCreation& message )
+void AutomatHierarchies::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message )
 {
-    SetSuperior( &groupResolver_.Get( message.oid_groupe_connaissance) );
+    SetSuperior( &groupResolver_.Get( message.oid_groupe_connaissance()) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AutomatHierarchies::DoUpdate
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::DoUpdate( const ASN1T_MsgAutomatChangeKnowledgeGroup& message )
+void AutomatHierarchies::DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& message )
 {
-    ChangeSuperior( & groupResolver_.Get( message.oid_groupe_connaissance) );
+    ChangeSuperior( & groupResolver_.Get( message.oid_groupe_connaissance()) );
 }
 
 // -----------------------------------------------------------------------------

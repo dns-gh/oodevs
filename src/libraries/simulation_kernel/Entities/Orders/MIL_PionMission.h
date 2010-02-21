@@ -12,6 +12,11 @@
 
 #include "MIL_Mission_ABC.h"
 
+namespace Common
+{
+    class MsgUnitOrder;
+}
+
 class MIL_MissionType_ABC;
 class MIL_AgentPion;
 class MIL_AutomateMission;
@@ -27,7 +32,7 @@ class MIL_PionMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn );
+             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const Common::MsgUnitOrder& asn );
              MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent );
              MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion );
     virtual ~MIL_PionMission();

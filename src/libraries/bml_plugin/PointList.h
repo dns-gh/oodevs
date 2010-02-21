@@ -10,7 +10,10 @@
 #ifndef __PointList_h_
 #define __PointList_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace xml
 {
@@ -43,8 +46,8 @@ public:
     //! @name Operations
     //@{
     void Serialize( xml::xostream& xos ) const;
-    void Serialize( ASN1T_CoordLatLongList& asn ) const;
-    void Clean( ASN1T_CoordLatLongList& asn ) const;
+    void Serialize( MsgCoordLatLongList& asn ) const;
+    void Clean( MsgCoordLatLongList& asn ) const;
     //@}
 
 private:

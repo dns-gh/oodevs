@@ -10,6 +10,7 @@
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_Bool.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Bool constructor
@@ -34,18 +35,14 @@ MIL_ParameterType_Bool::~MIL_ParameterType_Bool()
 // Name: MIL_ParameterType_Bool::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_Bool::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Bool::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     bool value;
     if( !from.ToBool( value ) )
         return false;
-
-    to.null_value = false;
-    to.value.t    = T_MissionParameter_value_aBool;
-    
-    to.value.u.aBool = value;
-
+    to.set_null_value( false );
+    to.mutable_value()->set_abool( value );
     return true; 
 }
     
@@ -53,7 +50,7 @@ bool MIL_ParameterType_Bool::Copy( const MIL_MissionParameter_ABC& from, ASN1T_M
 // Name: MIL_ParameterType_Bool::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_Bool::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_Bool::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_aBool );
+    assert( to.value().has_abool() );
 }

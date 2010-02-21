@@ -34,7 +34,7 @@ public:
 
     //! @name Types
     //@{
-          uint             GetID         () const;
+          unsigned int             GetID         () const;
     const std::string&     GetName       () const;
     const PHY_NatureLevel& GetNatureLevel() const;
     const PHY_NatureAtlas& GetNatureAtlas() const;
@@ -56,7 +56,7 @@ private:
     //@}
 
 private:
-          uint             nID_;
+          unsigned int             nID_;
     const std::string      strName_;
     const PHY_NatureLevel* pNatureLevel_;
     const PHY_NatureAtlas* pNatureAtlas_;

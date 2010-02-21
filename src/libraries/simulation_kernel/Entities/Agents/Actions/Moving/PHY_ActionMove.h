@@ -56,7 +56,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< uint > T_ObjectKnowledgeSet; // Dia ids
+    typedef std::set< unsigned int > T_ObjectKnowledgeSet; // Dia ids
     //@}
 
 private:

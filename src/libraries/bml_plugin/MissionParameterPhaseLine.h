@@ -11,6 +11,9 @@
 #define __MissionParameterPhaseLine_h_
 
 #include "MissionParameter_ABC.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
 
 namespace xml
 {
@@ -41,11 +44,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( ASN1T_MissionParameter& parameter ) const;
-    virtual void Clean( ASN1T_MissionParameter& parameter ) const;
+    virtual void Serialize( MsgMissionParameter& parameter ) const;
+    virtual void Clean( MsgMissionParameter& parameter ) const;
 
-    void Serialize( ASN1T_LimaOrder& asn ) const;
-    void Clean( ASN1T_LimaOrder& asn ) const;
+    void Serialize( MsgLimaOrder& asn ) const;
+    void Clean( MsgLimaOrder& asn ) const;
     //@}
 
 private:

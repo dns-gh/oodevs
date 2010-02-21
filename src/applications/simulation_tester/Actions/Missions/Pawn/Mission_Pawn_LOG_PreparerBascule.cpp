@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_PreparerBascule::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_PreparerBascule& asnMission = *new ASN1T_Mission_Pion_LOG_PreparerBascule();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_preparer_bascule;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_preparer_bascule = &asnMission;
+    Mission_Pion_LOG_PreparerBascule& asnMission = *new Mission_Pion_LOG_PreparerBascule();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_preparer_bascule = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.automate_pour_bascule );
@@ -60,8 +60,8 @@ void Mission_Pawn_LOG_PreparerBascule::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_PreparerBascule::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_preparer_bascule );
-    ASN1T_Mission_Pion_LOG_PreparerBascule& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_preparer_bascule;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_preparer_bascule ());
+    Mission_Pion_LOG_PreparerBascule& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_preparer_bascule;
 
 
     delete &asnMission;

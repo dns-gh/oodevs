@@ -10,11 +10,14 @@
 #ifndef __Reinforcements_h_
 #define __Reinforcements_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
+}
 namespace kernel
 {
     class Agent_ABC;
@@ -30,7 +33,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Reinforcements : public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
 
 public:
@@ -55,7 +58,7 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     //@}
 
     //! @name Types

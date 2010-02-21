@@ -41,12 +41,12 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-          uint         GetID  () const;
+          unsigned int         GetID  () const;
     //@}
 
     //! @name Operations
     //@{
-    const PHY_Lighting& GetDegradedLighting( uint nDegradationFactor ) const;
+    const PHY_Lighting& GetDegradedLighting( unsigned int nDegradationFactor ) const;
     //@}
 
 public:

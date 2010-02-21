@@ -27,13 +27,14 @@ using namespace kernel;
 // Name: Agent constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-Agent::Agent( const ASN1T_MsgUnitCreation& message, Controller& controller,  const tools::Resolver_ABC< AgentType >& resolver )
-    : EntityImplementation< Agent_ABC >( controller, message.oid, message.nom )
-    , type_( resolver.Get( message.type_pion ) )
-    , isPc_( message.pc != 0 )
+Agent::Agent( const MsgsSimToClient::MsgUnitCreation& message, Controller& controller,  const tools::Resolver_ABC< AgentType >& resolver )
+
+    : EntityImplementation< Agent_ABC >( controller, message.oid(), QString( message.nom().c_str() ) )
+    , type_( resolver.Get( message.type_pion() ) )
+    , isPc_( message.pc() != 0 )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid() );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }

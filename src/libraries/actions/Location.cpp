@@ -14,6 +14,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -36,9 +37,9 @@ Location::Location( const OrderParameter& parameter, const CoordinateConverter_A
 // Name: Location constructor
 // Created: SBO 2007-04-19
 // -----------------------------------------------------------------------------
-Location::Location( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
+Location::Location( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgLocation& message )
     : Parameter< QString >( parameter )
-    , LocationBase( converter, asn )
+    , LocationBase( converter, message )
 {
     // NOTHING
 }
@@ -105,13 +106,12 @@ void Location::Serialize( xml::xostream& xos ) const
 // Name: Location::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Location::CommitTo( ASN1T_MissionParameter& asn ) const
+void Location::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_location;
-    asn.value.u.location = new ASN1T_Location();
+    message.set_null_value ( !IsSet() );
+    message.mutable_value()->mutable_location()->set_type( Common::MsgLocation::line );    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        LocationBase::CommitTo( *asn.value.u.location );
+        LocationBase::CommitTo( *message.mutable_value()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,29 +127,9 @@ void Location::CommitTo( std::string& content ) const
 // Name: Location::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Location::Clean( ASN1T_MissionParameter& asn ) const
+void Location::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.location )
-        LocationBase::Clean( *asn.value.u.location );
-    delete asn.value.u.location;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Location::CommitTo
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void Location::CommitTo( ASN1T_Location& asn ) const
-{
-    LocationBase::CommitTo( asn );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Location::Clean
-// Created: SBO 2007-05-21
-// -----------------------------------------------------------------------------
-void Location::Clean( ASN1T_Location& asn ) const
-{
-    LocationBase::Clean( asn );
+    message.mutable_value()->clear_location();
 }
 
 // -----------------------------------------------------------------------------

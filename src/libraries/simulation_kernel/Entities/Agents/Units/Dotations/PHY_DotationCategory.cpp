@@ -237,7 +237,7 @@ MT_Float PHY_DotationCategory::GetAttritionScore( const PHY_Protection& protecti
 // Name: PHY_DotationCategory::ApplyIndirectFireEffect
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
+void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
     assert( pIndirectFireData_ );
     const MT_Float rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
@@ -288,7 +288,7 @@ const PHY_AmmoDotationClass* PHY_DotationCategory::GetAmmoDotationClass() const
 // Name: PHY_DotationCategory::GetMosID
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-uint PHY_DotationCategory::GetMosID() const
+unsigned int PHY_DotationCategory::GetMosID() const
 {
     return nMosID_;
 }

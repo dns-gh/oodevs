@@ -59,7 +59,7 @@ private:
     {
         sAcquisitionData();
         sAcquisitionData( const sAcquisitionData& rhs );
-        const uint nFirstTimeStepPerceived_;
+        const unsigned int nFirstTimeStepPerceived_;
                bool bUpdated_;
     private:
         sAcquisitionData& operator= ( const sAcquisitionData& rhs );

@@ -14,6 +14,11 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class MIL_ToxicEffectManipulator;
 
 namespace nbc
@@ -60,6 +65,9 @@ public:
 private:
     //! @name Serialization
     //@{
+//    virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
+//    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
+
     friend class ::boost::serialization::access;
     template< typename Archive > void serialize( Archive& ar, const uint )
     {

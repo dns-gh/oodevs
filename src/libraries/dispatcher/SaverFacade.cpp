@@ -11,11 +11,14 @@
 #include "SaverFacade.h"
 #include "Saver.h"
 #include "Savable_ABC.h"
+#include "ClientPublisher_ABC.h"
 #include "Model.h"
 #include "Side.h"
 #include "Visitors.h"
 #include "tools/OutputBinaryWrapper.h"
-#include "ClientPublisher_ABC.h"
+#include <google/protobuf/Message.h>
+#include <google/protobuf/Descriptor.h>
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -44,53 +47,62 @@ SaverFacade::~SaverFacade()
 // Name: SaverFacade::Receive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SaverFacade::Receive( const ASN1T_MsgsSimToClient& asnMsg )
+void SaverFacade::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
-        StartFrame( const_cast< ASN1T_MsgsSimToClient& >( asnMsg ) );
-    else if( asnMsg.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
-        EndFrame( const_cast< ASN1T_MsgsSimToClient& >( asnMsg ) );
-    else if( filter_.IsRelevant( asnMsg ) )
-        SaveUpdate( const_cast< ASN1T_MsgsSimToClient& >( asnMsg ) );
+    if( wrapper.message().has_control_begin_tick())
+        StartFrame( wrapper );
+    else if( wrapper.message().has_control_end_tick() )
+        EndFrame( wrapper );
+    else if( filter_.IsRelevant( wrapper ) )
+        SaveUpdate( wrapper );
 }
 
 namespace
 {
     struct Message : public Savable_ABC
     {
-        Message( ASN1PEREncodeBuffer& buffer )
+        Message( std::string& buffer )
             : buffer_( &buffer ) {};
         virtual void Serialize( tools::OutputBinaryWrapper& output ) const
         {
-            output << buffer_->GetMsgLen();
-            output.Write( (const char*)buffer_->GetMsgPtr(), buffer_->GetMsgLen() );
+            output << buffer_->size();
+            output.Write( buffer_->c_str(), buffer_->size() );
         };
     private:
-        ASN1PEREncodeBuffer* buffer_;
+        std::string* buffer_;
     };
+
+    template< typename M >
+    std::string& SerializeToString( const M& message, std::string& buffer )
+    {
+        if( !message.SerializeToString( &buffer ) )
+        {
+            std::stringstream ss;
+            ss << "Error serializing message of type \"" << message.GetDescriptor()->full_name() << "\"" << std::endl;
+            throw std::runtime_error( ss.str() );
+        }
+        return buffer;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: SaverFacade::SaveUpdate
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SaverFacade::SaveUpdate( ASN1T_MsgsSimToClient& asnMsg )
+void SaverFacade::SaveUpdate( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-    ASN1C_MsgsSimToClient asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
-    asnMsgCtrl.Encode();
-    saver_->SaveUpdateMessage( Message( asnPEREncodeBuffer ) );
+    if( wrapper.has_message() )
+        saver_->SaveUpdateMessage( Message( SerializeToString( wrapper, encodingBuffer_ ) ) );
 }
 
 namespace
 {
     struct ModelMessage : public Savable_ABC, public ClientPublisher_ABC
     {
-        ModelMessage( Model& model, ASN1OCTET* buffer, unsigned size, bool firstFrame )
+        ModelMessage( Model& model, std::string& buffer, bool firstFrame )
             : model_( &model )
             , output_( 0 ) 
             , buffer_( buffer ) 
-            , size_( size )
             , firstFrame_( firstFrame ) {}
         virtual void Serialize( tools::OutputBinaryWrapper& output ) const
         {
@@ -108,24 +120,20 @@ namespace
             if( firstFrame_ )
                 model_->SendFirstTick( *that );
         }
-        virtual void Send( const ASN1T_MsgsSimToClient& msg )
+        virtual void Send( const MsgsSimToClient::MsgSimToClient& message )
         {
-            ASN1PEREncodeBuffer asnPEREncodeBuffer( buffer_, size_, TRUE );
-            ASN1C_MsgsSimToClient asnMsgCtrl( asnPEREncodeBuffer, const_cast< ASN1T_MsgsSimToClient& >( msg ) );
-            asnMsgCtrl.Encode();
-            Message( asnPEREncodeBuffer ).Serialize( *output_ );
+            Message( SerializeToString( message, buffer_ ) ).Serialize( *output_ );
         }
-        virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
-        virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
-        virtual void Send( const ASN1T_MsgsAarToClient& ) {}
-        virtual void Send( const ASN1T_MsgsMessengerToClient& ) {}
-        virtual void Send( const ASN1T_MsgsDispatcherToClient& ) {}
-        virtual void Send( const ASN1T_MsgsPluginToClient& ) {}
+        virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& ) {}
+        virtual void Send( const MsgsReplayToClient::MsgReplayToClient& ) {}
+        virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {}
+        virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {}
+        virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {}
+        virtual void Send( const MsgsPluginToClient::MsgPluginToClient& ) {}
         virtual std::string GetEndpoint() const { return ""; }
         Model* model_;
         tools::OutputBinaryWrapper* output_;
-        ASN1OCTET* buffer_;
-        unsigned size_;
+        std::string& buffer_;
         bool firstFrame_;
     };
 }
@@ -134,26 +142,19 @@ namespace
 // Name: SaverFacade::StartFrame
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void SaverFacade::StartFrame( ASN1T_MsgsSimToClient& asnMsg )
+void SaverFacade::StartFrame( const MsgsSimToClient::MsgSimToClient& message )
 {
     if( ( frameCount_ % 100 ) == 0 )
-        saver_->SaveKeyFrame( ModelMessage( model_, aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), frameCount_ == 0 ) );
+        saver_->SaveKeyFrame( ModelMessage( model_, encodingBuffer_, frameCount_ == 0 ) );
     ++frameCount_;
-
-    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-    ASN1C_MsgsSimToClient asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
-    asnMsgCtrl.Encode();
-    saver_->StartFrame( Message( asnPEREncodeBuffer ) );
+    saver_->StartFrame( Message( SerializeToString( message, encodingBuffer_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SaverFacade::EndFrame
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void SaverFacade::EndFrame( ASN1T_MsgsSimToClient& asnMsg )
+void SaverFacade::EndFrame( const MsgsSimToClient::MsgSimToClient& message )
 {
-    ASN1PEREncodeBuffer asnPEREncodeBuffer( aASNEncodeBuffer_, sizeof(aASNEncodeBuffer_), TRUE );
-    ASN1C_MsgsSimToClient asnMsgCtrl( asnPEREncodeBuffer, asnMsg );
-    asnMsgCtrl.Encode();
-    saver_->EndFrame( Message( asnPEREncodeBuffer ) );
+    saver_->EndFrame( Message( SerializeToString( message, encodingBuffer_ ) ) );
 }

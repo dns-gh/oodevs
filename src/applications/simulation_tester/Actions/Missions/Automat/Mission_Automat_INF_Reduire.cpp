@@ -43,9 +43,9 @@ void Mission_Automat_INF_Reduire::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Reduire& asnMission = *new ASN1T_Mission_Automate_INF_Reduire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_reduire;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_reduire = &asnMission;
+    Mission_Automate_INF_Reduire& asnMission = *new Mission_Automate_INF_Reduire();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_reduire = &asnMission;
 
     const T_PositionVector& pointsResistance_ = pTarget_->GetTestParam_PointList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_INF_Reduire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Reduire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_reduire );
-    ASN1T_Mission_Automate_INF_Reduire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_reduire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_reduire ());
+    Mission_Automate_INF_Reduire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_reduire;
 
     ASN_Tools::Delete( asnMission.points_resistance );
 

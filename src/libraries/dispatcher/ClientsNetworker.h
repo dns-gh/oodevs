@@ -16,7 +16,20 @@
 #include "tools/ServerNetworker.h"
 #include "tools/MessageDispatcher_ABC.h"
 
-struct ASN1T_MsgsInClient;
+
+////using namespace Common;
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+//using namespace MsgsAuthenticationToClient;
+//using namespace MsgsReplayToClient;
+//using namespace MsgsAarToClient;
+//using namespace MsgsMessengerToClient;
+//using namespace MsgsDispatcherToClient;
+//using namespace MsgsPluginToClient;
+
+struct MsgsInClient;
 
 namespace dispatcher 
 {
@@ -45,13 +58,13 @@ public:
 
     //! @name Main
     //@{
-    virtual void Send( const ASN1T_MsgsSimToClient& asnMsg );
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient& asnMsg );
-    virtual void Send( const ASN1T_MsgsReplayToClient& );
-    virtual void Send( const ASN1T_MsgsAarToClient& msg );
-    virtual void Send( const ASN1T_MsgsMessengerToClient& msg );
-    virtual void Send( const ASN1T_MsgsDispatcherToClient& msg );
-    virtual void Send( const ASN1T_MsgsPluginToClient& msg );
+    virtual void Send( const MsgsSimToClient::MsgSimToClient& asnMsg );
+    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& asnMsg );
+    virtual void Send( const MsgsReplayToClient::MsgReplayToClient& );
+    virtual void Send( const MsgsAarToClient::MsgAarToClient& msg );
+    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& msg );
+    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg );
+    virtual void Send( const MsgsPluginToClient::MsgPluginToClient& msg );
 
     virtual Profile_ABC&         GetProfile  ( const std::string& link );
     virtual ClientPublisher_ABC& GetPublisher( const std::string& link );
@@ -62,7 +75,7 @@ public:
 protected:
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
     //@}
 
 private:

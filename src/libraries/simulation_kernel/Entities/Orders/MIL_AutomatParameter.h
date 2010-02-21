@@ -11,6 +11,7 @@
 #define __MIL_AutomatParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_AutomateDecision;
 class MIL_EntityManager_ABC;
 
@@ -27,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_AutomatParameter( DEC_AutomateDecision* pDecision );
-             MIL_AutomatParameter( const ASN1T_Automat&, MIL_EntityManager_ABC& entityManager );
+             MIL_AutomatParameter( const Common::MsgAutomat&, MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AutomatParameter();
     //@}
 
@@ -38,7 +39,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToAutomat( ASN1T_Unit& ) const;
+    virtual bool ToAutomat( Common::MsgAutomat& ) const;
     virtual bool ToAutomat( DEC_Decision_ABC*& ) const;
     //@}
 

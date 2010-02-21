@@ -43,9 +43,9 @@ void Mission_Automat_RENS_ROHUM_OrienterGuider::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_RENS_ROHUM_OrienterGuider& asnMission = *new ASN1T_Mission_Automate_RENS_ROHUM_OrienterGuider();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_rens_rohum_orienter_guider;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_rohum_orienter_guider = &asnMission;
+    Mission_Automate_RENS_ROHUM_OrienterGuider& asnMission = *new Mission_Automate_RENS_ROHUM_OrienterGuider();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_rens_rohum_orienter_guider = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.ami );
@@ -59,8 +59,8 @@ void Mission_Automat_RENS_ROHUM_OrienterGuider::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_RENS_ROHUM_OrienterGuider::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_rens_rohum_orienter_guider );
-    ASN1T_Mission_Automate_RENS_ROHUM_OrienterGuider& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_rohum_orienter_guider;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_rens_rohum_orienter_guider ());
+    Mission_Automate_RENS_ROHUM_OrienterGuider& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_rens_rohum_orienter_guider;
 
 
     delete &asnMission;

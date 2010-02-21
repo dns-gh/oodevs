@@ -10,20 +10,21 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PopulationMission.h"
 #include "MIL_MissionType_ABC.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
-#include "Decision/DEC_Model_ABC.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const ASN1T_MsgPopulationOrder& asn )
-    : MIL_Mission_ABC       ( type, population.GetKnowledge(), asn.parametres )
+MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const Common::MsgPopulationOrder& asn )
+    : MIL_Mission_ABC       ( type, population.GetKnowledge(), asn.parametres() )
     , population_           ( population )
     , bDIABehaviorActivated_( false )
 {
@@ -82,11 +83,10 @@ void MIL_PopulationMission::Stop()
 // static
 void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
 {
-    NET_ASN_MsgPopulationOrder asn;
-    asn().oid           = population.GetID();
-    asn().mission       = 0;
-    asn().parametres.n  = 0;
-    asn.Send();
+    client::PopulationOrder asn;
+    asn().set_oid( population.GetID() );
+    asn().set_mission( 0 );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,10 +95,10 @@ void MIL_PopulationMission::SendNoMission( const MIL_Population& population )
 // -----------------------------------------------------------------------------
 void MIL_PopulationMission::Send() const
 {
-    NET_ASN_MsgPopulationOrder asn;
-    asn().oid     = population_.GetID();
-    asn().mission = GetType().GetID();
-    Serialize( asn().parametres );
-    asn.Send();
-    CleanAfterSerialization( asn().parametres );
+    client::PopulationOrder asn;
+    asn().set_oid( population_.GetID() );
+    asn().set_mission( GetType().GetID() );
+    Serialize( *asn().mutable_parametres() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
+    CleanAfterSerialization( *asn().mutable_parametres() );
 }

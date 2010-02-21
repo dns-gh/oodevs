@@ -73,7 +73,7 @@ PHY_MedicalCollectionAmbulance::~PHY_MedicalCollectionAmbulance()
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_MedicalCollectionAmbulance::serialize( Archive& file, const uint )
+void PHY_MedicalCollectionAmbulance::serialize( Archive& file, const unsigned int )
 {
     file & pMedical_
          & pCompAmbulance_
@@ -340,7 +340,7 @@ bool PHY_MedicalCollectionAmbulance::Update()
 // Name: PHY_MedicalCollectionAmbulance::GetNbrHumans
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
-uint PHY_MedicalCollectionAmbulance::GetNbrHumans() const
+unsigned int PHY_MedicalCollectionAmbulance::GetNbrHumans() const
 {
     return consigns_.size();
 }

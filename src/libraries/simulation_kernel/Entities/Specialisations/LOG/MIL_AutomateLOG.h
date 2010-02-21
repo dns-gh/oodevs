@@ -56,13 +56,13 @@ public:
     };
     
 public:
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database );
-             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database );
+             MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database );
     virtual ~MIL_AutomateLOG();
 
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const uint );
+    template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Initialize
@@ -125,13 +125,13 @@ public:
     //! @name Network
     //@{
     virtual void SendFullState                    () const;
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomatChangeLogisticLinks& msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas&  msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogSupplyPushFlow&   msg );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( const Common::MsgAutomatChangeLogisticLinks& msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( const MsgsClientToSim::MsgLogSupplyPushFlow& msg );
     //@}
 
 protected:
-    MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID);
+    MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID);
 
 private:
     //! @name Types
@@ -152,7 +152,7 @@ private:
 private:
     //! @name Tools
     //@{
-    MIL_AutomateLOG* GetLogisticAutomate   ( uint nID );
+    MIL_AutomateLOG* GetLogisticAutomate   ( unsigned int nID );
     void             SendQuotas            () const;
     bool             IsSupplyInProgress    ( const PHY_DotationCategory& dotationCategory ) const;
     void             RemoveSupplyStockState( const PHY_SupplyStockState& supplyState );
@@ -182,7 +182,7 @@ private:
     PHY_SupplyStockState* pExplicitStockSupplyState_;
     T_SupplyStockStateSet pushedFlowsSupplyStates_;
 
-    uint                  nTickRcStockSupplyQuerySent_;
+    unsigned int                  nTickRcStockSupplyQuerySent_;
 
     PHY_ActionLogistic< MIL_AutomateLOG >* pLogisticAction_;
 

@@ -13,6 +13,11 @@
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
 
+namespace Common
+{
+    class MsgUnitKnowledgeList;
+}
+
 namespace kernel
 {
     class Agent_ABC;
@@ -37,15 +42,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AgentKnowledgeList( const kernel::OrderParameter& parameter );
-             AgentKnowledgeList( const kernel::OrderParameter& parameter, const ASN1T_UnitKnowledgeList& asn, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             AgentKnowledgeList( const kernel::OrderParameter& parameter, const Common::MsgUnitKnowledgeList& message, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
              AgentKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~AgentKnowledgeList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     virtual bool IsSet() const;
     //@}
 

@@ -14,8 +14,10 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "game_asn/SimulationSenders.h"
 #include "gaming/Object.h"
+#include "protocol/simulationsenders.h"
+
+using namespace Common;
 
 using namespace kernel;
 
@@ -74,15 +76,14 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
 // Name: ObjectMagicOrdersInterface::SendObjectMagic
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::SendObjectMagic( ASN1T_MagicActionUpdateObject& asn )
+void ObjectMagicOrdersInterface::SendObjectMagic( MsgsClientToSim::MsgMagicActionUpdateObject& message )
 {
     if( selectedEntity_ )
     {
-        asn.oid = selectedEntity_->GetId();
-        simulation::ObjectMagicAction asnMsg;
-        asnMsg().action.t               = T_MsgObjectMagicAction_action_update_object;
-        asnMsg().action.u.update_object = &asn;
-        asnMsg.Send( publisher_ );
+        message.set_oid( selectedEntity_->GetId() );
+        simulation::ObjectMagicAction magicAction;
+        *magicAction().mutable_action()->mutable_update_object() = message;
+        magicAction.Send( publisher_ );
     }
 }
 
@@ -92,11 +93,9 @@ void ObjectMagicOrdersInterface::SendObjectMagic( ASN1T_MagicActionUpdateObject&
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::BuildObject()
 {
-    ASN1T_MagicActionUpdateObject asn;
-    asn.attributes.m.constructionPresent = 1;
-    asn.attributes.construction.m.percentagePresent = 1;
-    asn.attributes.construction.percentage = 100;
-    SendObjectMagic( asn );
+    MsgsClientToSim::MsgMagicActionUpdateObject magicAction;
+    magicAction.mutable_attributes()->mutable_construction()->set_percentage( 100 );
+    SendObjectMagic( magicAction );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,11 +104,9 @@ void ObjectMagicOrdersInterface::BuildObject()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::DestroyObject()
 {
-    ASN1T_MagicActionUpdateObject asn;
-    asn.attributes.m.constructionPresent = 1;
-    asn.attributes.construction.m.percentagePresent = 1;
-    asn.attributes.construction.percentage = 0;
-    SendObjectMagic( asn );
+    MsgsClientToSim::MsgMagicActionUpdateObject magicAction;
+    magicAction.mutable_attributes()->mutable_construction()->set_percentage( 0 );
+    SendObjectMagic( magicAction );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,11 +115,9 @@ void ObjectMagicOrdersInterface::DestroyObject()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::MineObject()
 {
-    ASN1T_MagicActionUpdateObject asn;
-    asn.attributes.m.minePresent = 1;
-    asn.attributes.mine.m.percentagePresent = 1;
-    asn.attributes.mine.percentage = 100;
-    SendObjectMagic( asn );
+    MsgsClientToSim::MsgMagicActionUpdateObject magicAction;
+    magicAction.mutable_attributes()->mutable_mine()->set_percentage( 100 );
+    SendObjectMagic( magicAction );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,11 +126,9 @@ void ObjectMagicOrdersInterface::MineObject()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::SweepMineObject()
 {
-    ASN1T_MagicActionUpdateObject asn;
-    asn.attributes.m.minePresent = 1;
-    asn.attributes.mine.m.percentagePresent = 1;
-    asn.attributes.mine.percentage = 0;
-    SendObjectMagic( asn );
+    MsgsClientToSim::MsgMagicActionUpdateObject magicAction;
+    magicAction.mutable_attributes()->mutable_mine()->set_percentage( 0 );
+    SendObjectMagic( magicAction );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,11 +137,10 @@ void ObjectMagicOrdersInterface::SweepMineObject()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 {
-    ASN1T_MagicActionUpdateObject asn;
-    asn.attributes.m.obstaclePresent = 1;
-    asn.attributes.obstacle.activated = 1;  
-    asn.attributes.obstacle.type =  EnumDemolitionTargetType.reserved; 
-    SendObjectMagic( asn );
+    MsgsClientToSim::MsgMagicActionUpdateObject magicAction;
+    magicAction.mutable_attributes()->mutable_obstacle()->set_activated( 1 );
+    magicAction.mutable_attributes()->mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved ); 
+    SendObjectMagic( magicAction );
 }
     
 // -----------------------------------------------------------------------------
@@ -157,11 +149,10 @@ void ObjectMagicOrdersInterface::ActivateReservedObstacle()
 // -----------------------------------------------------------------------------
 void ObjectMagicOrdersInterface::DeactivateReservedObstacle()
 {
-    ASN1T_MagicActionUpdateObject asn;
-    asn.attributes.m.obstaclePresent = 1;
-    asn.attributes.obstacle.activated = 0;
-    asn.attributes.obstacle.type =  EnumDemolitionTargetType.reserved; 
-    SendObjectMagic( asn );
+    MsgsClientToSim::MsgMagicActionUpdateObject magicAction;
+    magicAction.mutable_attributes()->mutable_obstacle()->set_activated( 0 );
+    magicAction.mutable_attributes()->mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved ); 
+    SendObjectMagic( magicAction );
 }
 
 // -----------------------------------------------------------------------------

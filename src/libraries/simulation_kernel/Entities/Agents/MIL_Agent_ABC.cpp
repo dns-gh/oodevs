@@ -50,7 +50,7 @@ MIL_Agent_ABC::~MIL_Agent_ABC()
 // Name: MIL_Agent_ABC::GetID
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-uint MIL_Agent_ABC::GetID() const
+unsigned int MIL_Agent_ABC::GetID() const
 {
     return nID_;
 }

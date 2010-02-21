@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_Renforcer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_Renforcer& asnMission = *new ASN1T_Mission_Pion_LOG_Renforcer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_renforcer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_renforcer = &asnMission;
+    Mission_Pion_LOG_Renforcer& asnMission = *new Mission_Pion_LOG_Renforcer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_renforcer = &asnMission;
 
     const Position& lieuRenforcement_ = pTarget_->GetTestParam_Point();
 
@@ -62,8 +62,8 @@ void Mission_Pawn_LOG_Renforcer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_Renforcer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_renforcer );
-    ASN1T_Mission_Pion_LOG_Renforcer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_renforcer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_renforcer ());
+    Mission_Pion_LOG_Renforcer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_renforcer;
 
     ASN_Tools::Delete( asnMission.lieu_renforcement );
 

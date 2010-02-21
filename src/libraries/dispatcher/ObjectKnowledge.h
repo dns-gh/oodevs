@@ -10,12 +10,23 @@
 #ifndef __ObjectKnowledge_h_
 #define __ObjectKnowledge_h_
 
-#include "game_asn/Simulation.h"
+
 #include "Localisation.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 
 #include <boost/ptr_container/ptr_vector.hpp>
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgObjectKnowledgeCreation;
+    class MsgObjectKnowledgeUpdate;
+}
 
 namespace kernel
 {
@@ -41,14 +52,14 @@ class ObjectKnowledge : public SimpleEntity< kernel::ObjectKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const Model& model, const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
+             ObjectKnowledge( const Model& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
     virtual ~ObjectKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgObjectKnowledgeCreation& asnMsg );
-    void Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg );
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg );
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -65,7 +76,7 @@ private:
     
     //! @name Attributes
     //@{
-    void Initialize( const Model& model, const ASN1T_ObjectAttributes& attribute );
+    void Initialize( const Model& model, const Common::MsgObjectAttributes& attribute );
     void AddAttribute( ObjectAttribute_ABC* attribute );
     //@}
 
@@ -112,7 +123,7 @@ private:
     T_ObjectAttributes           attributes_;
     T_Optionals                    optionals_;
     
-//    const ASN1T_EnumObstacleType nObstacleType_;
+//    const EnumObstacleType nObstacleType_;
 //    const unsigned int           nTypeDotationForConstruction_;
 //    const unsigned int           nTypeDotationForMining_;
 

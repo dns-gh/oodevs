@@ -5,13 +5,15 @@
 //
 // Copyright (c) 2010 MASA Group
 //
+// LTO
+//
 // *****************************************************************************
 
 #ifndef __Note_h_
 #define __Note_h_
 
 #include "clients_kernel/Displayable_ABC.h"
-#include "game_asn/Messenger.h"
+#include "protocol/MessengerSenders.h"
 
 #include <list>
 namespace kernel
@@ -50,7 +52,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-            void Update( const ASN1T_MsgNoteUpdate& asn );
+            void Update( const MsgsMessengerToClient::MsgNoteUpdate& message );
             void Delete();
     //@}
 

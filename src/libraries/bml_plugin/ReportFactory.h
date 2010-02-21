@@ -11,7 +11,10 @@
 #define __ReportFactory_h_
 
 #include "tools/Resolver_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -48,8 +51,8 @@ public:
 
     //! @name Operations
     //@{
-    OrderReport* CreateOrderReport( const dispatcher::Agent& entity, const ASN1T_MsgUnitOrder& asn ) const;
-    OrderReport* CreateOrderReport( const dispatcher::Automat& entity, const ASN1T_MsgAutomatOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Agent& entity, const MsgUnitOrder& asn ) const;
+    OrderReport* CreateOrderReport( const dispatcher::Automat& entity, const MsgAutomatOrder& asn ) const;
     //@}
 
 private:

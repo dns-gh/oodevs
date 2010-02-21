@@ -91,7 +91,7 @@ PHY_Lighting::~PHY_Lighting()
 // Name: PHY_Lighting::GetDegradedLighting
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-const PHY_Lighting& PHY_Lighting::GetDegradedLighting( uint nDegradationFactor ) const
+const PHY_Lighting& PHY_Lighting::GetDegradedLighting( unsigned int nDegradationFactor ) const
 {
     if( nDegradationFactor == 0 || !pNextDegradedLighting_ )
         return *this;

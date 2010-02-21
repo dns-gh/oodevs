@@ -19,7 +19,9 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controllers.h"
-#include "game_asn/Publisher_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineFactory constructor
@@ -47,11 +49,11 @@ TacticalLineFactory::~TacticalLineFactory()
 // Name: TacticalLineFactory::Create
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-::TacticalLine_ABC* TacticalLineFactory::Create( const ASN1T_MsgLimaCreation& asnMsg )
+::TacticalLine_ABC* TacticalLineFactory::Create( const MsgsMessengerToClient::MsgLimaCreation& message )
 {
-    ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, asnMsg );
-    line->Attach< kernel::Positions >( *new TacticalLinePositions( asnMsg.tactical_line.geometry, converter_, *line ) );
-    line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, asnMsg.tactical_line.diffusion, model_.agents_, model_.teams_ ) );
+    ::TacticalLine_ABC* line = new Lima( controllers_.controller_, publisher_, converter_, message );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( message.tactical_line().geometry(), converter_, *line ) );
+    line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.agents_, model_.teams_ ) );
     return line;
 }
     
@@ -59,11 +61,11 @@ TacticalLineFactory::~TacticalLineFactory()
 // Name: TacticalLineFactory::Create
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-::TacticalLine_ABC* TacticalLineFactory::Create( const ASN1T_MsgLimitCreation& asnMsg )
+::TacticalLine_ABC* TacticalLineFactory::Create( const MsgsMessengerToClient::MsgLimitCreation& message )
 {
-    ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, asnMsg );
-    line->Attach< kernel::Positions >( *new TacticalLinePositions( asnMsg.tactical_line.geometry, converter_, *line ) );
-    line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, asnMsg.tactical_line.diffusion, model_.agents_, model_.teams_ ) );
+    ::TacticalLine_ABC* line = new Limit( controllers_.controller_, publisher_, converter_, message );
+    line->Attach< kernel::Positions >( *new TacticalLinePositions( message.tactical_line().geometry(), converter_, *line ) );
+    line->Attach< kernel::TacticalHierarchies >( *new TacticalLineHierarchies( controllers_.controller_, *line, message.tactical_line().diffusion(), model_.agents_, model_.teams_ ) );
     return line;
 }
 

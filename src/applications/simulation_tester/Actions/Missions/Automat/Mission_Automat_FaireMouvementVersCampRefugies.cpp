@@ -43,9 +43,9 @@ void Mission_Automat_FaireMouvementVersCampRefugies::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_FaireMouvementVersCampRefugies& asnMission = *new ASN1T_Mission_Automate_FaireMouvementVersCampRefugies();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_faire_mouvement_vers_camp_refugies;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_faire_mouvement_vers_camp_refugies = &asnMission;
+    Mission_Automate_FaireMouvementVersCampRefugies& asnMission = *new Mission_Automate_FaireMouvementVersCampRefugies();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_faire_mouvement_vers_camp_refugies = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_FaireMouvementVersCampRefugies::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_FaireMouvementVersCampRefugies::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_faire_mouvement_vers_camp_refugies );
-    ASN1T_Mission_Automate_FaireMouvementVersCampRefugies& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_faire_mouvement_vers_camp_refugies;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_faire_mouvement_vers_camp_refugies ());
+    Mission_Automate_FaireMouvementVersCampRefugies& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_faire_mouvement_vers_camp_refugies;
 
 
     delete &asnMission;

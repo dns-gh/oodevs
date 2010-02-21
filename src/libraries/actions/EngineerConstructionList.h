@@ -10,9 +10,13 @@
 #ifndef __ActionsParameters_EngineerConstructionList_h_
 #define __ActionsParameters_EngineerConstructionList_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
+
+namespace Common
+{
+    class MsgPlannedWorkList;
+}
 
 namespace kernel
 {
@@ -38,15 +42,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit EngineerConstructionList( const kernel::OrderParameter& parameter );
-             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn, kernel::Controller& controller );
+             EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const Common::MsgPlannedWorkList& asn, kernel::Controller& controller );
              EngineerConstructionList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
     virtual ~EngineerConstructionList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
+    virtual void Clean( Common::MsgMissionParameter& asn ) const;
     virtual bool IsSet() const;
     //@}
 

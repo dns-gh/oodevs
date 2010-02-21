@@ -9,11 +9,15 @@
 
 #include "gaming_pch.h"
 #include "Limit.h"
-#include "game_asn/MessengerSenders.h"
+#include "Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "Tools.h"
+#include "protocol/MessengerSenders.h"
+#include "protocol/Protocol.h"
+#include "protocol/Publisher_ABC.h"
+
+using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: Limit constructor
@@ -30,8 +34,8 @@ Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const ke
 // Name: Limit constructor
 // Created: NLD 2003-04-28
 //-----------------------------------------------------------------------------
-Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MsgLimitCreation& asnMsg )
-    : TacticalLine_ABC( asnMsg.tactical_line.name, asnMsg.oid, publisher, converter )
+Limit::Limit( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgLimitCreation& message )
+    : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ), message.oid(), publisher, converter )
     , controller_( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -58,28 +62,28 @@ void Limit::UpdateToSim( E_State state )
     case eStateCreated:
         {
             plugins::messenger::LimitCreationRequest message;
-            message().name = GetName();
-            WriteGeometry ( message().geometry );
-            WriteDiffusion( message().diffusion );
+            message().mutable_tacticalline()->set_name( GetName() );
+            WriteGeometry ( *message().mutable_tacticalline()->mutable_geometry() );
+            WriteDiffusion( *message().mutable_tacticalline()->mutable_diffusion() );
             Send( message );
-            delete[] message().geometry.coordinates.elem;
+            delete[] message().mutable_tacticalline()->mutable_geometry()->mutable_coordinates()->mutable_elem();
         }
         break;
     case eStateModified:
         {
             plugins::messenger::LimitUpdateRequest message;
-            message().oid = GetId();
-            message().tactical_line.name  = GetName();
-            WriteGeometry ( message().tactical_line.geometry );
-            WriteDiffusion( message().tactical_line.diffusion );
+            message().set_oid( GetId() );
+            message().mutable_tactical_line()->set_name( GetName() );
+            WriteGeometry ( *message().mutable_tactical_line()->mutable_geometry() );
+            WriteDiffusion( *message().mutable_tactical_line()->mutable_diffusion() );
             Send( message );
-            delete[] message().tactical_line.geometry.coordinates.elem;
+            delete[] message().mutable_tactical_line()->mutable_geometry()->mutable_coordinates()->mutable_elem();
         }
         break;
     case eStateDeleted:
-        plugins::messenger::LimitDestructionRequest asnMsg;
-        asnMsg() = GetId();
-        Send( asnMsg );
+        plugins::messenger::LimitDestructionRequest message;
+        message().set_oid( GetId() );
+        Send( message );
         break;
     }
 }

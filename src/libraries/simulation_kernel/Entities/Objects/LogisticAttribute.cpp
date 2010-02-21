@@ -16,7 +16,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
 // -----------------------------------------------------------------------------
 LogisticAttribute::LogisticAttribute( xml::xistream& xis )    
 {
-    uint nTC2;   
+    unsigned int nTC2;   
     xis >> xml::attribute( "id", nTC2 );
             
     MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nTC2 );
@@ -42,9 +42,9 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 // Name: LogisticAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( const ASN1T_ObjectAttributes& asn )    
+LogisticAttribute::LogisticAttribute( const Common::MsgObjectAttributes& asn )    
 {
-    MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asn.logistic.tc2 );
+    MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asn.logistic().tc2() );
     if( !pTC2Tmp )
         throw std::runtime_error( "Automate TC2 specified is invalid" );
     if( !pTC2Tmp->GetType().IsLogistic() )
@@ -87,7 +87,7 @@ void LogisticAttribute::WriteODB( xml::xostream& xos ) const
 // Name: template < typename Archive > void LogisticAttribute::serialize
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-template < typename Archive > void LogisticAttribute::serialize( Archive& file, const uint )
+template < typename Archive > void LogisticAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & pTC2_;
@@ -106,17 +106,16 @@ void LogisticAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void LogisticAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void LogisticAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.m.logisticPresent = 1;
-    asn.logistic.tc2 = pTC2_->GetID();    
+    asn.mutable_logistic()->set_tc2( pTC2_->GetID() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-/*caller*/void LogisticAttribute::SendUpdate( ASN1T_ObjectAttributes& /*asn*/ ) const
+void LogisticAttribute::SendUpdate( Common::MsgObjectAttributes& /*asn*/ ) const
 {
     // NOTHING
 }

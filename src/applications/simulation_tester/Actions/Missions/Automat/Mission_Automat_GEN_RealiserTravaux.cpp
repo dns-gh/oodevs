@@ -43,9 +43,9 @@ void Mission_Automat_GEN_RealiserTravaux::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_GEN_RealiserTravaux& asnMission = *new ASN1T_Mission_Automate_GEN_RealiserTravaux();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_realiser_travaux;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux = &asnMission;
+    Mission_Automate_GEN_RealiserTravaux& asnMission = *new Mission_Automate_GEN_RealiserTravaux();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_gen_realiser_travaux = &asnMission;
 
     const T_GenObjectVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_GEN_RealiserTravaux::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_GEN_RealiserTravaux::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_realiser_travaux );
-    ASN1T_Mission_Automate_GEN_RealiserTravaux& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_realiser_travaux;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_gen_realiser_travaux ());
+    Mission_Automate_GEN_RealiserTravaux& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_gen_realiser_travaux;
 
     ASN_Tools::Delete( asnMission.travaux );
 

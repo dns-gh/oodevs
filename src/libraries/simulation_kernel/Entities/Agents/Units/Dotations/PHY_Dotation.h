@@ -32,16 +32,19 @@ class PHY_Dotation : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group );
      PHY_Dotation();
     virtual ~PHY_Dotation();
+    //@}
   
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -84,6 +87,8 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const PHY_DotationCategory* pCategory_;
           PHY_DotationGroup*    pGroup_;
           MT_Float              rValue_;
@@ -92,6 +97,7 @@ private:
           MT_Float              rFireReservation_;
           MT_Float              rSupplyThreshold_;
           bool                  bDotationBlocked_; // Prisoner
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_Dotation )

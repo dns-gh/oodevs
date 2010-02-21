@@ -10,10 +10,19 @@
 #ifndef __DatabasePublisher_h_
 #define __DatabasePublisher_h_
 
-#include "game_asn/Simulation.h"
-#include "game_asn/Messenger.h"
 #include "dispatcher/MessageHandler_ABC.h"
 #include <xeumeuleu/xml.h>
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+
+namespace MsgsMessengerToClient
+{
+    class MsgMessengerToClient;
+}
+
 
 namespace dispatcher
 {
@@ -53,8 +62,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& asn );
-    virtual void Receive( const ASN1T_MsgsMessengerToClient& asn );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
+    virtual void Receive( const MsgsMessengerToClient::MsgMessengerToClient& message );
     //@}
 
 private:
@@ -71,12 +80,12 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsRelevant( const ASN1T_MsgsSimToClient& asn ) const;
-    bool IsRelevant( const ASN1T_MsgsMessengerToClient& asn ) const;
-    void UpdateOnTick( const ASN1T_MsgsSimToClient& asn );
-    void UpdateDatabase( const ASN1T_MsgsSimToClient& asn );
-    void UpdateDatabase( const ASN1T_MsgsMessengerToClient& asn );
-    void UpdateFolkDatabase( const ASN1T_MsgsSimToClient& asn );
+    bool IsRelevant( const MsgsSimToClient::MsgSimToClient& message ) const;
+    bool IsRelevant( const MsgsMessengerToClient::MsgMessengerToClient& message ) const;
+    void UpdateOnTick( const MsgsSimToClient::MsgSimToClient& message );
+    void UpdateDatabase( const MsgsSimToClient::MsgSimToClient& message );
+    void UpdateDatabase( const MsgsMessengerToClient::MsgMessengerToClient& message );
+    void UpdateFolkDatabase( const MsgsSimToClient::MsgSimToClient& message );
     void UpdateListeners();
     //@}
 

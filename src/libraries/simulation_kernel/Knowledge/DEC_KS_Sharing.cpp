@@ -162,7 +162,7 @@ void DEC_KS_Sharing::Talk( int currentTimeStep )
 // Name: DEC_KS_Sharing::ShareFromSource
 // Created: NLD 2005-04-20
 // -----------------------------------------------------------------------------
-void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep )
+void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep )
 {
     shareSources_.insert( std::make_pair( nShareTimeStep, sShareSource( source ) ) );
 }
@@ -171,7 +171,7 @@ void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, uint nSh
 // Name: DEC_KS_Sharing::ShareFromSource
 // Created: NLD 2005-04-20
 // -----------------------------------------------------------------------------
-void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius )
+void DEC_KS_Sharing::ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius )
 {
     shareSources_.insert( std::make_pair( nShareTimeStep, sShareSource( source, vSharedCircleCenter, rSharedCircleRadius ) ) );
 }

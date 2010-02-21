@@ -13,7 +13,15 @@
 #include "SimulationPublisher_ABC.h"
 #include "tools/ClientNetworker.h"
 
-struct ASN1T_MsgsInSim;
+//using namespace Common;
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+//using namespace MsgsClientToSim;
+//using namespace MsgsDispatcherToSim;
+
+struct MsgsInSim;
 
 namespace dispatcher 
 {
@@ -41,8 +49,8 @@ public:
 
     //! @name Dispatching
     //@{
-    virtual void Send( const ASN1T_MsgsClientToSim& asnMsg );
-    virtual void Send( const ASN1T_MsgsDispatcherToSim& asnMsg );
+    virtual void Send( const MsgsClientToSim::MsgClientToSim& asnMsg );
+    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg );
     //@}
 
 private:
@@ -61,7 +69,7 @@ private:
 
     //! @name Messages callbacks
     //@{
-    void OnReceiveMsgSimToClient( const std::string& linkFrom, const ASN1T_MsgsSimToClient& message );    
+    void OnReceiveMsgSimToClient( const std::string& linkFrom, const MsgsSimToClient::MsgSimToClient& message );    
     //@}
 
 private:

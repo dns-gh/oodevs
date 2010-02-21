@@ -11,12 +11,16 @@
 #define __UrbanBlockDeserializer_h_
 
 #include <Urban/UrbanBlockDeserializer_ABC.h>
-#include "game_asn/Simulation.h"
 
 class ColorRGBA;
 namespace urban
 {
     class Block;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUrbanCreation;
 }
 
 // =============================================================================
@@ -31,7 +35,7 @@ class UrbanBlockDeserializer : public urban::UrbanBlockDeserializer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanBlockDeserializer( const ASN1T_MsgUrbanCreation& asn );
+    explicit UrbanBlockDeserializer( const MsgsSimToClient::MsgUrbanCreation& message );
     virtual ~UrbanBlockDeserializer();
     //@}
 
@@ -72,7 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const ASN1T_MsgUrbanCreation& message_;
+    const MsgsSimToClient::MsgUrbanCreation& message_;
     //@}
 };
 

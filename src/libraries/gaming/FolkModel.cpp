@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "FolkModel.h"
+#include "protocol/SimulationSenders.h"
 #include "clients_kernel/Controller.h"
 #include <boost/bind.hpp>
 #include <algorithm>
@@ -46,15 +47,15 @@ FolkModel::~FolkModel()
 // Name: FolkModel::Update
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::Update( const ASN1T_MsgFolkCreation& creation )
+void FolkModel::Update( const MsgsSimToClient::MsgFolkCreation& creation )
 {
-    activities_.reserve( creation.activities.n );
-    for( unsigned i = 0; i < creation.activities.n; ++i )
-        activities_.push_back( (const char*)creation.activities.elem[i].data );
-    profiles_.reserve( creation.profiles.n );
-    for( unsigned i = 0; i < creation.profiles.n; ++i )
-        profiles_.push_back( (const char*)creation.profiles.elem[i].data );
-    edgeCount_ = creation.edge_number;
+    activities_.reserve( creation.activities().elem_size() );
+    for( int i = 0; i < creation.activities().elem_size(); ++i )
+        activities_.push_back( creation.activities().elem( i ).data() );
+    profiles_.reserve( creation.profiles().elem_size() );
+    for( int i = 0; i < creation.profiles().elem_size(); ++i )
+        profiles_.push_back( creation.profiles().elem( i ).data() );
+    edgeCount_ = creation.edge_number();
     edgeSize_ = activities_.size() * profiles_.size() * containers_.size();
     
     boost::array< T_Values::index, 4 > shape = { edgeCount_, containers_.size(), profiles_.size(), activities_.size() };
@@ -68,24 +69,24 @@ void FolkModel::Update( const ASN1T_MsgFolkCreation& creation )
 // Name: FolkModel::Update
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::Update( const ASN1T_MsgFolkGraphUpdate& update )
+void FolkModel::Update( const MsgsSimToClient::MsgFolkGraphUpdate& update )
 {
-    for( unsigned i = 0; i < update.n; ++i )
-        Update( update.elem[i] );
+    for( int i = 0; i < update.elem_size(); ++i )
+        Update( update.elem( i ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FolkModel::Update
 // Created: AGE 2007-09-04
 // -----------------------------------------------------------------------------
-void FolkModel::Update( const ASN1T_MsgFolkGraphEdgeUpdate& update )
+void FolkModel::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& update )
 {
-    // $$$$ AGE 2007-09-05: 
-    assert( update.population_occupation.n == edgeSize_ );
-    assert( unsigned( update.shp_oid ) < edgeCount_ );
+    assert( update.population_occupation_size() == edgeSize_ );
+    assert( unsigned( update.shp_oid() ) < edgeCount_ );
 
     T_Values& values = *values_;
-    memcpy( values[ update.shp_oid ].origin(), update.population_occupation.elem, edgeSize_ * sizeof( int ) );
+    for( int i = 0; i < update.population_occupation_size(); ++i )
+        *values[ update.shp_oid() ].origin() = update.population_occupation( i );
     dirty_ = true;
 }
 

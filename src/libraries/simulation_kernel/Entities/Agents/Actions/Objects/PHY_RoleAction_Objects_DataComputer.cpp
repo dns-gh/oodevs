@@ -112,9 +112,9 @@ void PHY_RoleAction_Objects_DataComputer::RollbackConsumptionsReservations()
 // Name: PHY_RoleAction_Objects_DataComputer::HasDotations
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects_DataComputer::HasDotations( const PHY_DotationCategory& category, uint nNbr ) const
+bool PHY_RoleAction_Objects_DataComputer::HasDotations( const PHY_DotationCategory& category, unsigned int nNbr ) const
 {
-    uint nNbrAvailable = 0;
+    unsigned int nNbrAvailable = 0;
     for( CRIT_PionDataVector it = pionsData_.rbegin(); it != pionsData_.rend(); ++it )
     {
         nNbrAvailable += it->GetDotationValue( category );
@@ -128,7 +128,7 @@ bool PHY_RoleAction_Objects_DataComputer::HasDotations( const PHY_DotationCatego
 // Name: PHY_RoleAction_Objects_DataComputer::ConsumeDotations
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputer::ConsumeDotations( const PHY_DotationCategory& category, uint nNbr )
+void PHY_RoleAction_Objects_DataComputer::ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr )
 {
     for( RIT_PionDataVector it = pionsData_.rbegin(); it != pionsData_.rend(); ++it )
     {
@@ -140,7 +140,7 @@ void PHY_RoleAction_Objects_DataComputer::ConsumeDotations( const PHY_DotationCa
 // Name: PHY_RoleAction_Objects_DataComputer::RecoverDotations
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputer::RecoverDotations( const PHY_DotationCategory& category, uint nNbr )
+void PHY_RoleAction_Objects_DataComputer::RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr )
 {
     for( RIT_PionDataVector it = pionsData_.rbegin(); it != pionsData_.rend(); ++it )
     {
@@ -157,12 +157,12 @@ void PHY_RoleAction_Objects_DataComputer::RecoverDotations( const PHY_DotationCa
 MT_Float PHY_RoleAction_Objects_DataComputer::ComputeDeltaPercentage()
 {
     MT_Float rTotalOperationTime  = 0.;
-    uint     nTotalNbrComposantes = 0;
+    unsigned int     nTotalNbrComposantes = 0;
 
     for( CIT_PionDataVector it = pionsData_.begin(); it != pionsData_.end(); ++it )
     {
         MT_Float rOperationTime;
-        uint     nNbrComposantes;
+        unsigned int     nNbrComposantes;
         it->GetTotalOperationTime( rOperationTime, nNbrComposantes );
 
         rTotalOperationTime  += rOperationTime;

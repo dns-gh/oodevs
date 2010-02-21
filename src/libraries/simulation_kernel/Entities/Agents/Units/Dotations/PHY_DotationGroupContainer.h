@@ -14,6 +14,11 @@
 
 #include <boost/serialization/export.hpp>
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 namespace xml
 {
     class xostream;
@@ -26,7 +31,6 @@ class PHY_DotationCategory;
 class PHY_DotationCapacity;
 class PHY_Dotation;
 class PHY_SupplyDotationRequestContainer;
-class NET_ASN_MsgUnitAttributes;
 class MIL_AutomateLOG;
 class PHY_AmmoDotationClass;
 
@@ -42,13 +46,16 @@ class PHY_DotationGroupContainer : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation );
              PHY_DotationGroupContainer();
             ~PHY_DotationGroupContainer();
+    //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Init
@@ -97,8 +104,8 @@ public:
     void NotifyDotationChanged( const PHY_Dotation& dotation );
     bool HasChanged           () const;
     void Clean                ();
-    void SendChangedState     ( NET_ASN_MsgUnitAttributes& asn ) const;
-    void SendFullState        ( NET_ASN_MsgUnitAttributes& asn ) const;
+    void SendChangedState     ( client::UnitAttributes& asn ) const;
+    void SendFullState        ( client::UnitAttributes& asn ) const;
     //@}
 
 private:
@@ -124,9 +131,12 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     dotation::PHY_RoleInterface_Dotations* pRoleDotation_;
     T_DotationGroupMap      dotationGroups_;
     T_DotationSet           dotationsChanged_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_DotationGroupContainer )

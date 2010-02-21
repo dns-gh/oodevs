@@ -13,6 +13,7 @@
 #include "Model.h"
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientSenders.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -21,11 +22,11 @@ using namespace dispatcher;
 // Name: KnowledgeGroup constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const ASN1T_MsgKnowledgeGroupCreation& msg )
-    : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid )
-    , team_( model.Sides().Get( msg.oid_camp ) )
-    , parent_( msg.m.oid_knowledgegroup_parentPresent ? &model.KnowledgeGroups().Get( msg.oid_knowledgegroup_parent ) : 0 )
-    , nType_( msg.type ) // LTO
+KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& msg )
+    : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid() )
+    , team_( model.Sides().Get( msg.oid_camp() ) )
+    , parent_( msg.has_oid_parent() ? &model.KnowledgeGroups().Get( msg.oid_parent() ) : 0 )
+    , type_( msg.type() ) // LTO
 {
     // LTO begin
     if( parent_ == this )
@@ -56,19 +57,16 @@ KnowledgeGroup::~KnowledgeGroup()
 // -----------------------------------------------------------------------------
 void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::KnowledgeGroupCreation asn;
+    client::KnowledgeGroupCreation message;
     
-    asn().oid      = GetId();
-    asn().oid_camp = team_.GetId();
+    message().set_oid( GetId() );
+    message().set_oid_camp( team_.GetId() );
     // LTO begin
-    asn().type = nType_.c_str();
+    message().set_type( type_ );
     if( parent_ )
-    {
-        asn().m.oid_knowledgegroup_parentPresent = 1;
-        asn().oid_knowledgegroup_parent = parent_->GetId();
-    }
+        message().set_oid_parent( parent_->GetId() );
     // LTO end
-    asn.Send( publisher );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

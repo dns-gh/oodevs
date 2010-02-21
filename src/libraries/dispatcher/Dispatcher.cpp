@@ -15,6 +15,7 @@
 #include "PluginFactory.h"
 #include "Config.h"
 #include "Services.h"
+#include <google/protobuf/Message.h>
 
 using namespace dispatcher;
 
@@ -32,6 +33,8 @@ Dispatcher::Dispatcher( const Config& config )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, handler_, config_ ) )
     , factory_( new PluginFactory( config_, *model_, *simulationNetworker_, *clientsNetworker_, handler_, registrables_ ) )
 {
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
+
     handler_.AddHandler( clientsNetworker_ );
     handler_.AddHandler( model_ );
 }
@@ -48,7 +51,7 @@ Dispatcher::Dispatcher( const Config& config )
 // -----------------------------------------------------------------------------
 Dispatcher::~Dispatcher()
 {
-    // NOTHING
+    google::protobuf::ShutdownProtobufLibrary();
 }
 
 // -----------------------------------------------------------------------------

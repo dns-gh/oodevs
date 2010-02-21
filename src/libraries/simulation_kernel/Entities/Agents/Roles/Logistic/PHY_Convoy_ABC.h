@@ -49,7 +49,7 @@ public:
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -63,9 +63,9 @@ public:
           MIL_AutomateLOG& GetSupplyingAutomate() const;
           MIL_AutomateLOG& GetConvoyingAutomate() const;
     const MIL_Automate&    GetSuppliedAutomate () const;
-          uint             GetFormingTime      () const;
-          uint             GetLoadingTime      () const;
-          uint             GetUnloadingTime    () const;
+          unsigned int             GetFormingTime      () const;
+          unsigned int             GetLoadingTime      () const;
+          unsigned int             GetUnloadingTime    () const;
     //@}
 
     //! @name Events
@@ -103,8 +103,8 @@ private:
     //! @name Helpers
     //@{
     struct LoadingWrapper;
-    static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< uint, MT_Float >& upperBound );
-    static void ReadSpeedModifier( xml::xistream& xis, std::pair< uint, MT_Float >& upperBound );
+    static void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< unsigned int, MT_Float >& upperBound );
+    static void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, MT_Float >& upperBound );
     //@}
 
 protected:

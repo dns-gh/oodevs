@@ -13,7 +13,6 @@
 #define __MIL_CheckPointManager_h_
 
 #include "MIL.h"
-#include "game_asn/Simulation.h"
 
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
@@ -21,6 +20,12 @@
 #pragma warning ( pop )
 
 #include <queue>
+
+namespace MsgsClientToSim
+{
+    class MsgControlCheckPointSaveNow;
+    class MsgControlCheckPointSetFrequency;
+}
 
 namespace xml
 {
@@ -48,21 +53,21 @@ public:
 
     //! @name Accessors
     //@{
-    uint GetCheckPointFrequency() const;
+    unsigned int GetCheckPointFrequency() const;
     //@}
 
     //! @name Network
     //@{
-    void OnReceiveMsgCheckPointSaveNow     ( const ASN1T_MsgControlCheckPointSaveNow&      asnMsg );
-    void OnReceiveMsgCheckPointSetFrequency( const ASN1T_MsgControlCheckPointSetFrequency& asnMsg );
+    void OnReceiveMsgCheckPointSaveNow     ( const MsgsClientToSim::MsgControlCheckPointSaveNow&      asnMsg );
+    void OnReceiveMsgCheckPointSetFrequency( const MsgsClientToSim::MsgControlCheckPointSetFrequency& /*int&*/ asnMsg );
     //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:   
@@ -93,10 +98,10 @@ private:
     //@}
     
 private:
-    uint                 nMaxCheckPointNbr_;
-    uint                 nCheckPointsFrequency_; 
-    uint                 nLastCheckPointTick_;
-    uint                 nNextCheckPointTick_;
+    unsigned int         nMaxCheckPointNbr_;
+    unsigned int         nCheckPointsFrequency_; 
+    unsigned int         nLastCheckPointTick_;
+    unsigned int         nNextCheckPointTick_;
     T_CheckPointsQueue   currentCheckPoints_;
 };
 

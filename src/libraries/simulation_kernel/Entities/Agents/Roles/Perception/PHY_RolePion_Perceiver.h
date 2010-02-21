@@ -13,7 +13,6 @@
 #define __PHY_RolePion_Perceiver_h_
 
 #include "PHY_RoleInterface_Perceiver.h"
-
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/SurrenderNotificationHandler_ABC.h"
@@ -77,7 +76,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     void Initialization( const MT_Vector2D& perceiverPosition, const MT_Vector2D& perceiverDirection );
     //@}
 
@@ -183,8 +182,8 @@ public:
     //! @name Network
     //@{
     void SendDebugState  () const;
-    void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    void SendChangedState( client::UnitAttributes& msg ) const;
+    void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 private:
@@ -226,7 +225,7 @@ private:
     MT_Vector2D lastPerceiverPosition_;
 
     bool           bPeriphericalVisionEnabled_;
-    uint           nNextPeriphericalVisionStep_;
+    unsigned int           nNextPeriphericalVisionStep_;
     bool           bRecordModeEnabled_;
     
     // Perceptions
@@ -259,7 +258,7 @@ private:
     bool bRadarStateHasChanged_;
 
 private:
-    static const uint nNbrStepsBetweenPeriphericalVision_;
+    static const unsigned int nNbrStepsBetweenPeriphericalVision_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Perceiver* role, const unsigned int /*version*/ );

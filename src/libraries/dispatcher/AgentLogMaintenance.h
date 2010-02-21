@@ -10,8 +10,18 @@
 #ifndef __AgentLogMaintenance_h_
 #define __AgentLogMaintenance_h_
 
-#include "game_asn/Simulation.h"
 #include "EquipmentAvailability.h"
+
+namespace Common
+{
+    class MsgEquipmentType;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgLogMaintenanceState;
+    class MsgLogMaintenanceEquipmentAvailability;
+}
 
 namespace kernel
 {
@@ -35,20 +45,20 @@ class AgentLogMaintenance
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentLogMaintenance( const Model& model, const kernel::Agent_ABC& agent, const ASN1T_MsgLogMaintenanceState& asnMsg );
+             AgentLogMaintenance( const Model& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
     virtual ~AgentLogMaintenance();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const ASN1T_MsgLogMaintenanceState& asnMsg );
+    void Update(  const MsgsSimToClient::MsgLogMaintenanceState& asnMsg );
     void Send  ( ClientPublisher_ABC& publisher ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef EquipmentAvailability< ASN1T_LogMaintenanceEquipmentAvailability > T_Availability;
+    typedef EquipmentAvailability< MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability > T_Availability;
     //@}
 
 private:
@@ -62,7 +72,7 @@ private:
     const Model&             model_;
     const kernel::Agent_ABC& agent_;
     bool                     bSystemEnabled_;
-    std::vector< ASN1T_EquipmentType >        priorities_;
+    std::vector< Common::MsgEquipmentType >        priorities_;
     std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
 
     std::vector< T_Availability > haulersAvailability_;

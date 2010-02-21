@@ -12,7 +12,6 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
-#include "game_asn/Simulation.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"

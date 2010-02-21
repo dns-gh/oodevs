@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "DecisionalState.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -45,9 +46,9 @@ void DecisionalState::Clear()
 // Name: DecisionalState::Update
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void DecisionalState::Update( const ASN1T_MsgDecisionalState& asnMsg )
+void DecisionalState::Update( const MsgsSimToClient::MsgDecisionalState& asnMsg )
 {
-    decisionalInfos_[ asnMsg.key ] = decisionalInfos_[ asnMsg.value ];
+    decisionalInfos_[ asnMsg.key() ] = decisionalInfos_[ asnMsg.value() ];
 }
 
 // -----------------------------------------------------------------------------
@@ -59,9 +60,9 @@ void DecisionalState::Send( unsigned id, ClientPublisher_ABC& publisher ) const
     for( std::map< std::string, std::string >::const_iterator it = decisionalInfos_.begin(); it != decisionalInfos_.end(); ++it )
     {
         client::DecisionalState asn;
-        asn().oid   = id;
-        asn().key   = it->first.c_str();
-        asn().value = it->second.c_str();
+        asn().set_oid   ( id );
+        asn().set_key   ( it->first.c_str() );
+        asn().set_value ( it->second.c_str() );
         asn.Send( publisher );
     }
 }

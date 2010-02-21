@@ -37,18 +37,17 @@ MissionParameterAutomat::~MissionParameterAutomat()
 // Name: MissionParameterAutomat::Serialize
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterAutomat::Serialize( ASN1T_MissionParameter& parameter ) const
+void MissionParameterAutomat::Serialize( MsgMissionParameter& parameter ) const
 {
-    parameter.null_value = 0;
-    parameter.value.t = T_MissionParameter_value_automat;
-    parameter.value.u.automat = automat_.GetId();
+    parameter.set_null_value( 0 );
+    parameter.mutable_value()->mutable_automat()->set_oid( automat_.GetId() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterAutomat::Clean
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterAutomat::Clean( ASN1T_MissionParameter& ) const
+void MissionParameterAutomat::Clean( MsgMissionParameter& ) const
 {
     // NOTHING
 }

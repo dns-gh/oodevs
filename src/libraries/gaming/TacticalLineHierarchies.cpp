@@ -20,7 +20,7 @@ using namespace kernel;
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
 TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity_ABC& holder
-                                                , const ASN1T_TacticalLinesDiffusion& asnMsg
+                                                 , const Common::MsgTacticalLine::Diffusion& message
                                                 , const tools::Resolver_ABC< Automat_ABC >& automats
                                                 , const tools::Resolver_ABC< Formation_ABC >& formations )
     : SimpleHierarchies< TacticalHierarchies >( holder, 0 )
@@ -28,7 +28,7 @@ TacticalLineHierarchies::TacticalLineHierarchies( Controller& controller, Entity
     , automats_  ( automats )
     , formations_( formations )
 {
-    Update( asnMsg );
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,44 +60,44 @@ TacticalLineHierarchies::~TacticalLineHierarchies()
 // Name: TacticalLineHierarchies::Update
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::Update( const ASN1T_TacticalLinesDiffusion& message )
+void TacticalLineHierarchies::Update( const Common::MsgTacticalLine::Diffusion& message )
 {
-    superiorIsAutomat_ = message.t == T_TacticalLinesDiffusion_automat;
+    superiorIsAutomat_ = message.has_automat();
     if( superiorIsAutomat_ )
-        SetSuperior( &automats_.Get( message.u.automat ) );
+        SetSuperior( &automats_.Get( message.automat() ) );
     else
-        SetSuperior( &formations_.Get( message.u.formation ) );
+        SetSuperior( &formations_.Get( message.formation() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineHierarchies::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::DoUpdate( const ASN1T_MsgLimaUpdate& message )
+void TacticalLineHierarchies::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message )
 {
-    Update( message.tactical_line.diffusion );
+    Update( message.tactical_line().diffusion() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineHierarchies::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::DoUpdate( const ASN1T_MsgLimitUpdate& message )
+void TacticalLineHierarchies::DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message )
 {
-    Update( message.tactical_line.diffusion );
+    Update( message.tactical_line().diffusion() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLineHierarchies::WriteTo
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLineHierarchies::WriteTo( ASN1T_TacticalLinesDiffusion& message ) const
+void TacticalLineHierarchies::WriteTo( Common::MsgTacticalLine::Diffusion& message ) const
 {
     if( !GetSuperior() )
         throw std::runtime_error( __FUNCTION__ );
-    message.t = superiorIsAutomat_ ? T_TacticalLinesDiffusion_automat : T_TacticalLinesDiffusion_formation;
+
     if( superiorIsAutomat_ )
-        message.u.automat  = GetSuperior()->GetId();
+        message.set_automat( GetSuperior()->GetId() );
     else
-        message.u.formation = GetSuperior()->GetId();
+        message.set_formation( GetSuperior()->GetId() );
 }

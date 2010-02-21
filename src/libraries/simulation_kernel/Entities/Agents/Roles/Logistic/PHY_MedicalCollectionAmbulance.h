@@ -26,13 +26,16 @@ class PHY_MedicalCollectionAmbulance : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_MedicalCollectionAmbulance( PHY_RoleInterface_Medical& medical, PHY_ComposantePion& compAmbulance );
      PHY_MedicalCollectionAmbulance();
     virtual ~PHY_MedicalCollectionAmbulance();
+    //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -46,7 +49,7 @@ public:
     //! @name Accessors
     //@{
     bool IsAnEmergency() const;
-    uint GetNbrHumans () const;
+    unsigned int GetNbrHumans () const;
     //@}
 
 private:
@@ -85,6 +88,8 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_RoleInterface_Medical*  pMedical_;
     PHY_ComposantePion*         pCompAmbulance_;
     T_ConsignVector             consigns_;
@@ -93,6 +98,7 @@ private:
     bool                        bEmergencyAmbulance_;
     MT_Float                    rNbrHumanHandled_;
     PHY_RoleInterface_Medical*  pSortingArea_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_MedicalCollectionAmbulance )

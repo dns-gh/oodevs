@@ -10,8 +10,14 @@
 #ifndef __LogisticsModel_h_
 #define __LogisticsModel_h_
 
-#include "game_asn/Simulation.h"
 #include "tools/Resolver.h"
+
+namespace MsgsSimToClient
+{
+    class MsgLogMaintenanceHandlingCreation;
+    class MsgLogMedicalHandlingCreation;
+    class MsgLogSupplyHandlingCreation;
+}
 
 class LogMaintenanceConsign;
 class LogSupplyConsign;
@@ -40,15 +46,15 @@ public:
     //@{
     void Purge();
 
-    void CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceHandlingCreation& asnMsg );
+    void CreateMaintenanceConsign( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message );
     LogMaintenanceConsign& GetMaintenanceConsign( unsigned long id );
     void DeleteMaintenanceConsign( unsigned long id );
 
-    void CreateMedicalConsign( const ASN1T_MsgLogMedicalHandlingCreation& asnMsg );
+    void CreateMedicalConsign( const MsgsSimToClient::MsgLogMedicalHandlingCreation& message );
     LogMedicalConsign& GetMedicalConsign( unsigned long id );
     void DeleteMedicalConsign( unsigned long id );
 
-    void CreateSupplyConsign( const ASN1T_MsgLogSupplyHandlingCreation& asnMsg );
+    void CreateSupplyConsign( const MsgsSimToClient::MsgLogSupplyHandlingCreation& message );
     LogSupplyConsign& GetSupplyConsign( unsigned long id );
     void DeleteSupplyConsign( unsigned long id );
     //@}

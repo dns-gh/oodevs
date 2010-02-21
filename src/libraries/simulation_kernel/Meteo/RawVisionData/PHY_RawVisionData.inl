@@ -16,7 +16,7 @@
 // Created: JVT 02-11-05
 //-----------------------------------------------------------------------------
 inline
-const PHY_RawVisionData::sCell& PHY_RawVisionData::operator () ( uint col, uint row ) const
+const PHY_RawVisionData::sCell& PHY_RawVisionData::operator () ( unsigned int col, unsigned int row ) const
 {
     return ( col < nNbrCol_ && row < nNbrRow_ ) ? ppCells_[ col ][ row ] : emptyCell_;
 }
@@ -51,8 +51,8 @@ const PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double x, double
 inline
 PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double rCol, double rRow )
 {
-    uint nCol = GetCol( rCol );
-    uint nRow = GetRow( rRow );
+    unsigned int nCol = GetCol( rCol );
+    unsigned int nRow = GetRow( rRow );
 
     return ( nCol < nNbrCol_ && nRow < nNbrRow_ ) ? ppCells_[ nCol ][ nRow ] : emptyCell_;
 }
@@ -65,8 +65,8 @@ PHY_RawVisionData::sCell& PHY_RawVisionData::operator() ( double rCol, double rR
 inline
 MT_Float PHY_RawVisionData::GetAltitude( MT_Float rX, MT_Float rY ) const
 {
-    uint nCol = GetCol( rX );
-    uint nRow = GetRow( rY );
+    unsigned int nCol = GetCol( rX );
+    unsigned int nRow = GetRow( rY );
 
     MT_Float rScaledX = rX / rCellSize_;
 
@@ -138,9 +138,9 @@ PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( MT_Float rX_, MT_
 // Created: JVT 02-11-05
 //-----------------------------------------------------------------------------
 inline
-uint PHY_RawVisionData::GetCol( double x ) const
+unsigned int PHY_RawVisionData::GetCol( double x ) const
 {
-    return (uint)( x / rCellSize_ );
+    return (unsigned int)( x / rCellSize_ );
 }
 
 
@@ -149,9 +149,9 @@ uint PHY_RawVisionData::GetCol( double x ) const
 // Created: JVT 02-11-05
 //-----------------------------------------------------------------------------
 inline
-uint PHY_RawVisionData::GetRow( double y ) const
+unsigned int PHY_RawVisionData::GetRow( double y ) const
 {
-    return (uint)( y / rCellSize_);
+    return (unsigned int)( y / rCellSize_);
 }
 
 //-----------------------------------------------------------------------------
@@ -201,18 +201,18 @@ const PHY_Meteo::sWindData& PHY_RawVisionData::sCell::GetWind() const
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
 template< typename T > inline
-void PHY_RawVisionData::GetVisionObjectsInSurface( const T& localisation, uint& nEmptySurface, uint& nForestSurface, uint& nUrbanSurface ) const
+void PHY_RawVisionData::GetVisionObjectsInSurface( const T& localisation, unsigned int& nEmptySurface, unsigned int& nForestSurface, unsigned int& nUrbanSurface ) const
 {
     nEmptySurface  = 0;
     nForestSurface = 0;
     nUrbanSurface  = 0;
 
-    const uint nXEnd   = GetCol( localisation.GetBoundingBox().GetRight() );
-    const uint nYBegin = GetRow( localisation.GetBoundingBox().GetBottom() );
-    const uint nYEnd   = GetRow( localisation.GetBoundingBox().GetTop() );
+    const unsigned int nXEnd   = GetCol( localisation.GetBoundingBox().GetRight() );
+    const unsigned int nYBegin = GetRow( localisation.GetBoundingBox().GetBottom() );
+    const unsigned int nYEnd   = GetRow( localisation.GetBoundingBox().GetTop() );
     
-    for ( uint nX = GetCol( localisation.GetBoundingBox().GetLeft() ); nX <= nXEnd; ++nX )
-        for ( uint nY = nYBegin; nY <= nYEnd; ++nY )
+    for ( unsigned int nX = GetCol( localisation.GetBoundingBox().GetLeft() ); nX <= nXEnd; ++nX )
+        for ( unsigned int nY = nYBegin; nY <= nYEnd; ++nY )
         {
             if ( !localisation.IsInside( MT_Vector2D( nX * rCellSize_, nY * rCellSize_ ) ) )
                 continue;
@@ -230,7 +230,7 @@ void PHY_RawVisionData::GetVisionObjectsInSurface( const T& localisation, uint& 
             }
         }
 
-    nEmptySurface  *= ( uint) ( rCellSize_ * rCellSize_ );
-    nForestSurface *= ( uint) ( rCellSize_ * rCellSize_ );
-    nUrbanSurface  *= ( uint) ( rCellSize_ * rCellSize_ );
+    nEmptySurface  *= ( unsigned int) ( rCellSize_ * rCellSize_ );
+    nForestSurface *= ( unsigned int) ( rCellSize_ * rCellSize_ );
+    nUrbanSurface  *= ( unsigned int) ( rCellSize_ * rCellSize_ );
 }

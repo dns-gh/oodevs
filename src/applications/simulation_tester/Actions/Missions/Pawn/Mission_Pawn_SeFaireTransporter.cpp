@@ -43,9 +43,9 @@ void Mission_Pawn_SeFaireTransporter::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_SeFaireTransporter& asnMission = *new ASN1T_Mission_Pion_SeFaireTransporter();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_se_faire_transporter;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_se_faire_transporter = &asnMission;
+    Mission_Pion_SeFaireTransporter& asnMission = *new Mission_Pion_SeFaireTransporter();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_se_faire_transporter = &asnMission;
 
     const Position& pointEmbarquement_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_SeFaireTransporter::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_SeFaireTransporter::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_se_faire_transporter );
-    ASN1T_Mission_Pion_SeFaireTransporter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_se_faire_transporter;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_se_faire_transporter ());
+    Mission_Pion_SeFaireTransporter& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_se_faire_transporter;
 
     ASN_Tools::Delete( asnMission.point_embarquement );
 

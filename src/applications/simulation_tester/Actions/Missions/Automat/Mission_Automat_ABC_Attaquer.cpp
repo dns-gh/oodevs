@@ -43,9 +43,9 @@ void Mission_Automat_ABC_Attaquer::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_Attaquer& asnMission = *new ASN1T_Mission_Automate_ABC_Attaquer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_attaquer;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_attaquer = &asnMission;
+    Mission_Automate_ABC_Attaquer& asnMission = *new Mission_Automate_ABC_Attaquer();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_attaquer = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_ABC_Attaquer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_Attaquer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_attaquer );
-    ASN1T_Mission_Automate_ABC_Attaquer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_attaquer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_attaquer ());
+    Mission_Automate_ABC_Attaquer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_attaquer;
 
 
     delete &asnMission;

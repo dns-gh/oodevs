@@ -25,7 +25,7 @@ using namespace TEST;
 // Name: TestSet_ABC constructor
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-TestSet_ABC::TestSet_ABC( uint nIteration /* = 1 */ )
+TestSet_ABC::TestSet_ABC( unsigned int nIteration /* = 1 */ )
     : nIteration_ ( nIteration )
 {
     // NOTHING

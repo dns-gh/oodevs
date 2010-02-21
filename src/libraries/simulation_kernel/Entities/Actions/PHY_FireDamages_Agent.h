@@ -12,6 +12,11 @@
 #ifndef __PHY_FireDamages_Agent_h_
 #define __PHY_FireDamages_Agent_h_
 
+namespace MsgsSimToClient
+{
+    class MsgUnitFireDamages;
+}
+
 class MIL_Agent_ABC;
 class PHY_Human;
 class PHY_HumanWound;
@@ -19,7 +24,7 @@ class PHY_Composante_ABC;
 class PHY_ComposanteType_ABC;
 class PHY_ComposanteState;
 
-struct ASN1T_FireResult;
+struct FireResult;
 
 // =============================================================================
 // @class  PHY_FireDamages_Agent
@@ -39,8 +44,8 @@ public:
 
     //! @name Network
     //@{
-           void Serialize              ( const MIL_Agent_ABC& target, ASN1T_UnitFireDamages& asn ) const;
-    static void CleanAfterSerialization( ASN1T_UnitFireDamages& asn );
+    void Serialize( const MIL_Agent_ABC& target, MsgsSimToClient::MsgUnitFireDamages& asn ) const;
+    static void CleanAfterSerialization( MsgsSimToClient::MsgUnitFireDamages& asn );
     //@}
 
 private:

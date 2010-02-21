@@ -133,7 +133,7 @@ MIL_CheckPointManager& MIL_AgentServer::GetCheckPointManager() const
 // Created: JVT 02-08-02
 //-----------------------------------------------------------------------------
 inline
-uint MIL_AgentServer::GetSimTime() const
+unsigned int MIL_AgentServer::GetSimTime() const
 {
     return nSimTime_;
 }
@@ -153,7 +153,7 @@ void MIL_AgentServer::SetInitialRealTime( unsigned int time )
 // Created: JVT 02-08-02
 //-----------------------------------------------------------------------------
 inline
-uint MIL_AgentServer::GetRealTime() const
+unsigned int MIL_AgentServer::GetRealTime() const
 {
     return nRealTime_;
 }
@@ -173,7 +173,7 @@ unsigned int MIL_AgentServer::GetCurrentTick() const
 // Created: AGE 2007-08-10
 // -----------------------------------------------------------------------------
 inline
-uint MIL_AgentServer::GetCurrentTimeStep() const
+unsigned int MIL_AgentServer::GetCurrentTimeStep() const
 {
     return nCurrentTimeStep_;
 }
@@ -193,7 +193,7 @@ unsigned int MIL_AgentServer::GetTickDuration() const
 // Created: NLD 2002-09-10
 //-----------------------------------------------------------------------------
 inline
-uint MIL_AgentServer::GetTimeStepDuration() const
+unsigned int MIL_AgentServer::GetTimeStepDuration() const
 {
     return nTimeStepDuration_;
 }

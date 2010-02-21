@@ -57,6 +57,7 @@ MIL_AgentPion* AgentFactory::Create( const MIL_AgentTypePion& type, MIL_Automate
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "A unit with ID '%d' already exists.", pPion->GetID() ) );
 
     pPion = type.InstanciatePion( automate, *algorithmsFactories_, xis );
+
     type.RegisterRoles( *pPion , database_ );
     
     std::string strPosition;

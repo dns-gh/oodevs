@@ -13,6 +13,9 @@
 #include "EntityPublisher_ABC.h"
 #include "ClientPublisher_ABC.h"
 #include "Model.h"
+//#include "protocol/protocol.h"
+
+////using namespace Common;
 
 using namespace dispatcher;
 
@@ -68,17 +71,17 @@ namespace
         Publisher( ClientPublisher_ABC& forward, Model& model )
             : forward_( &forward )
             , model_  ( &model ) {}
-        virtual void Send( const ASN1T_MsgsSimToClient& msg )
+        virtual void Send( const MsgsSimToClient::MsgSimToClient& msg )
         {
             forward_->Send( msg );
             model_->Update( msg );
         }
-        virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) {}
-        virtual void Send( const ASN1T_MsgsReplayToClient& ) {}
-        virtual void Send( const ASN1T_MsgsAarToClient& ) {}
-        virtual void Send( const ASN1T_MsgsMessengerToClient& ) {}
-        virtual void Send( const ASN1T_MsgsDispatcherToClient& ) {}
-        virtual void Send( const ASN1T_MsgsPluginToClient& ) {}
+        virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& ) {}
+        virtual void Send( const MsgsReplayToClient::MsgReplayToClient& ) {}
+        virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {}
+        virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {}
+        virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {}
+        virtual void Send( const MsgsPluginToClient::MsgPluginToClient& ) {}
         virtual std::string GetEndpoint() const { return ""; }
         ClientPublisher_ABC* forward_;
         Model* model_;

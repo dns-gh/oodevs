@@ -14,13 +14,20 @@
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
 #include "tools/MessageDispatcher_ABC.h"
-#include "game_asn/AarSenders.h"
 #include "ClientPublisher_ABC.h"
 #include "Services.h"
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>
+#include "protocol/aarsenders.h"
 
 using namespace dispatcher;
+
+namespace MsgsClientToAar
+{
+    class MsgClientToAar;
+    class MsgPlotRequest;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: AarPlugin constructor
@@ -46,7 +53,7 @@ AarPlugin::~AarPlugin()
 // Name: AarPlugin::Receive
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::Receive( const ASN1T_MsgsSimToClient& )
+void AarPlugin::Receive( const MsgsSimToClient::MsgSimToClient& )
 {
     // NOTHING
 }
@@ -68,7 +75,7 @@ void AarPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_
 {
     aar::AarInformation info;
     const std::string description = "<functions/>"; // $$$$ AGE 2008-08-04: 
-    info().information = description.c_str();
+    info().set_information( description.c_str() );
     info.Send( client );
 }
 
@@ -85,29 +92,25 @@ void AarPlugin::NotifyClientLeft( ClientPublisher_ABC& )
 // Name: AarPlugin::OnReceive
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAar& asnMsg )
+void AarPlugin::OnReceive( const std::string& client, const MsgsClientToAar::MsgClientToAar& wrapper )
 {
-    switch( asnMsg.msg.t )
-    {
-    case T_MsgsClientToAar_msg_msg_plot_request:
-        OnReceiveIndicatorRequest( client, *asnMsg.msg.u.msg_plot_request );
-        break;
-    };
+    if ( wrapper.message().has_plot_request() )
+        OnReceiveIndicatorRequest( client, wrapper.message().plot_request() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AarPlugin::OnReceiveIndicatorRequest
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgPlotRequest& request )
+void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const MsgsClientToAar::MsgPlotRequest& request )
 {
     messages_->ReloadIndices();
     try
     {
-        if( boost::starts_with( request.request, "indicator://" ) )
+        if( boost::starts_with( request.request(), "indicator://" ) )
             return;
-        xml::xistringstream xis( request.request );
-        AarFacade factory( resolver_.GetPublisher( client ), request.identifier );
+        xml::xistringstream xis( request.request() );
+        AarFacade factory( resolver_.GetPublisher( client ), request.identifier() );
         xis >> xml::start( "indicator" );
         boost::shared_ptr< Task > task( factory.CreateTask( xis ) );
         xis >> xml::end();
@@ -116,9 +119,9 @@ void AarPlugin::OnReceiveIndicatorRequest( const std::string& client, const ASN1
     catch( std::exception& e )
     {
         aar::PlotResult message;
-        message().values.n = 0; message().values.elem = 0;
-        message().identifier = request.identifier;
-        message().error = e.what();
+        message().mutable_values();
+        message().set_identifier ( request.identifier() );
+        message().set_error( e.what() );
         message.Send( resolver_.GetPublisher( client ) );
     }
 }

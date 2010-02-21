@@ -10,7 +10,10 @@
 #ifndef __Order_ABC_h_
 #define __Order_ABC_h_
 
-struct ASN1T_MissionParameters;
+namespace Common
+{
+    class MsgMissionParameters;
+}
 
 namespace dispatcher
 {
@@ -28,14 +31,14 @@ class Order_ABC
 protected:
     //! @name Constructors/Destructor
     //@{
-             Order_ABC( Model_ABC& model, unsigned int missionID, const ASN1T_MissionParameters& parameters );
+             Order_ABC( Model_ABC& model, unsigned int missionID, const Common::MsgMissionParameters& parameters );
     virtual ~Order_ABC();
     //@}
 
     //! @name Operations
     //@{
-    void Send     ( ASN1T_MissionParameters& asn ) const;
-    void AsnDelete( ASN1T_MissionParameters& asn ) const;
+    void Send     ( Common::MsgMissionParameters& asn ) const;
+    void Delete( Common::MsgMissionParameters& asn ) const;
     //@}
 
 private:
@@ -47,7 +50,7 @@ private:
 
     //! @name Operations
     //@{
-    void InitializeParameters( const ASN1T_MissionParameters& parameters );
+    void InitializeParameters( const Common::MsgMissionParameters& parameters );
     //@}
 
 private:

@@ -8,9 +8,10 @@
 // *****************************************************************************
 
 #include "simulation_orders_pch.h"
+
 #include "MIL_ParameterType_AutomatList.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_AutomatList constructor
@@ -19,6 +20,7 @@
 MIL_ParameterType_AutomatList::MIL_ParameterType_AutomatList( const std::string& name )
     : MIL_ParameterType_ABC( name )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -27,37 +29,31 @@ MIL_ParameterType_AutomatList::MIL_ParameterType_AutomatList( const std::string&
 //-----------------------------------------------------------------------------
 MIL_ParameterType_AutomatList::~MIL_ParameterType_AutomatList()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_AutomatList::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_AutomatList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_AutomatList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
 
-    to.null_value           = false;
-    to.value.t              = T_MissionParameter_value_automatList;
-    to.value.u.automatList = new ASN1T_AutomatList();
-    
-    return from.ToAutomatList( *to.value.u.automatList );
+    to.set_null_value( false );
+    return from.ToAutomatList( *to.mutable_value()->mutable_automatlist() );
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_AutomatList::CleanAfterSerialization
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_AutomatList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_AutomatList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_automatList );
-    assert( to.value.u.automatList );
-    ASN_Delete::Delete( *to.value.u.automatList );
-    delete to.value.u.automatList;
+    assert( to.value().has_automatlist() );
+    assert( to.mutable_value()->mutable_automatlist() );
+    to.mutable_value()->mutable_automatlist()->Clear();
+    delete to.mutable_value()->mutable_automatlist();
 }

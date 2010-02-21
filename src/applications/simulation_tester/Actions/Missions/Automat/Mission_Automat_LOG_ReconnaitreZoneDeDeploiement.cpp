@@ -43,9 +43,9 @@ void Mission_Automat_LOG_ReconnaitreZoneDeDeploiement::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement& asnMission = *new ASN1T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_reconnaitre_zone_de_deploiement;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_de_deploiement = &asnMission;
+    Mission_Automate_LOG_ReconnaitreZoneDeDeploiement& asnMission = *new Mission_Automate_LOG_ReconnaitreZoneDeDeploiement();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_log_reconnaitre_zone_de_deploiement = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_LOG_ReconnaitreZoneDeDeploiement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_LOG_ReconnaitreZoneDeDeploiement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_log_reconnaitre_zone_de_deploiement );
-    ASN1T_Mission_Automate_LOG_ReconnaitreZoneDeDeploiement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_de_deploiement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_log_reconnaitre_zone_de_deploiement ());
+    Mission_Automate_LOG_ReconnaitreZoneDeDeploiement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_log_reconnaitre_zone_de_deploiement;
 
     ASN_Tools::Delete( asnMission.zone );
 

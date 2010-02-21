@@ -25,16 +25,19 @@ class PHY_DotationStock : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity );
      PHY_DotationStock();
     virtual ~PHY_DotationStock();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Accessors
@@ -66,11 +69,14 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
           PHY_DotationStockContainer* pStockContainer_;
     const PHY_DotationCategory*       pCategory_;
           MT_Float                    rValue_;
           MT_Float                    rCapacity_; // Les stocks peuvent dépasser leurs capacités (Stockage à terre)
           MT_Float                    rSupplyThreshold_;    
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_DotationStock )

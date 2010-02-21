@@ -70,7 +70,7 @@ private:
     const T_PointVector    points_;
           TER_DynamicData* pPathFindData_;
           T_DistancesData  distancesData_;
-    mutable uint           nNbRefs_;
+    mutable unsigned int           nNbRefs_;
 };
 
 #endif // __TER_LimitData_h_

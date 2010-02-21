@@ -11,6 +11,7 @@
 #define __MIL_AgentParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_RolePion_Decision;
 class MIL_EntityManager_ABC;
 
@@ -27,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_AgentParameter( DEC_RolePion_Decision* pAgent );
-             MIL_AgentParameter( const ASN1T_Unit&, MIL_EntityManager_ABC& entityManager );
+             MIL_AgentParameter( const Common::MsgUnit&, MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_AgentParameter();
     //@}
 
@@ -38,7 +39,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToAgent( ASN1T_Unit& ) const;
+    virtual bool ToAgent( Common::MsgUnit& ) const;
     virtual bool ToAgent( DEC_Decision_ABC*& ) const;
     //@}
 

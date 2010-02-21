@@ -12,7 +12,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeFire.h"
 #include "MIL_AgentServer.h"
-
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( FireAttribute )
@@ -55,14 +55,14 @@ FireAttribute::FireAttribute( xml::xistream& xis )
 // Name: FireAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( const ASN1T_ObjectAttributes& asn )
+FireAttribute::FireAttribute( const Common::MsgObjectAttributes& asn )
     : heat_        ( 0 )
     , pClass_    ( 0 )
     , width_    ( MIL_FireClass::GetWidth() )
     , length_   ( MIL_FireClass::GetLength() )
     , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {        
-    pClass_ = MIL_FireClass::Find( asn.fire.class_id );
+    pClass_ = MIL_FireClass::Find( asn.fire().class_id() );
     if( !pClass_ )
         throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );    
     heat_ = pClass_->GetDefaultHeat();
@@ -111,7 +111,7 @@ FireAttribute& FireAttribute::operator=( const FireAttribute& rhs )
 // Name: FireAttribute::load
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void FireAttribute::load( MIL_CheckPointInArchive& ar, const uint )
+void FireAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     std::string className;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
@@ -126,7 +126,7 @@ void FireAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: FireAttribute::save
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void FireAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void FireAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << pClass_->GetName()
@@ -146,18 +146,18 @@ void FireAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: FireAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void FireAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void FireAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.m.firePresent  = 1;
-    asn.fire.heat = heat_;
-    asn.fire.class_id = pClass_->GetID();
+//    asn.set_firePresent( 1 );
+    asn.mutable_fire()->set_heat( heat_ );
+    asn.mutable_fire()->set_class_id( pClass_->GetID() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void FireAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void FireAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if ( NeedUpdate() )
     {

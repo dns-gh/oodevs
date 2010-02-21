@@ -12,7 +12,6 @@
 #ifndef __MT_V3D_h_
 #define __MT_V3D_h_
 
-#include "MT/MT_Tools/MT_Types.h"
 #include "MT_Tools_Types.h"
 
 // Scipio types

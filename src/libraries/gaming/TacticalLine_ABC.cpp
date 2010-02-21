@@ -77,19 +77,19 @@ namespace
 {
     struct GeometrySerializer : public kernel::LocationVisitor_ABC
     {
-        GeometrySerializer( ASN1T_Line& line, const kernel::CoordinateConverter_ABC& converter )
-            : line_( line )
+        GeometrySerializer( MsgLocation& loc, const kernel::CoordinateConverter_ABC& converter )
+            : loc_( loc )
             , converter_( converter )
         {}
 
         virtual void VisitLines( const T_PointVector& points )
         {
-            line_.type = EnumLocationType::line;
-            line_.coordinates.n = points.size();
-            line_.coordinates.elem = points.empty() ? 0 : new ASN1T_CoordLatLong[ line_.coordinates.n ];
-            unsigned int i = 0;
-            for( CIT_PointVector it = points.begin(); it != points.end(); ++it, ++i )
-                converter_.ConvertToGeo( *it, line_.coordinates.elem[ i ] );
+            loc_.set_type( MsgLocation_Geometry_line );
+//            line_.mutable_location()->mutable_coordinates()->set_n( points.size() );
+//            for (int i = 0; i < points.size(); ++i )
+//                line_.mutable_location()->mutable_coordinates()->add_elem();
+            for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+                converter_.ConvertToGeo( *it, *loc_.mutable_coordinates()->add_elem() );
         }
 
         virtual void VisitPolygon( const T_PointVector& ) {}
@@ -101,7 +101,7 @@ namespace
         GeometrySerializer& operator=( const GeometrySerializer& );
 
         const kernel::CoordinateConverter_ABC& converter_;
-        ASN1T_Line& line_;
+        Common::MsgLocation& loc_;
     };
 }
 
@@ -109,9 +109,9 @@ namespace
 // Name: TacticalLine_ABC::WriteGeometry
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteGeometry( ASN1T_Line& line ) const
+void TacticalLine_ABC::WriteGeometry( MsgLocation& location ) const
 {
-    GeometrySerializer serializer( line, converter_ );
+    GeometrySerializer serializer( location, converter_ );
     Get< kernel::Positions >().Accept( serializer );
 }
 
@@ -119,7 +119,7 @@ void TacticalLine_ABC::WriteGeometry( ASN1T_Line& line ) const
 // Name: TacticalLine_ABC::WriteDiffusion
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion ) const
+void TacticalLine_ABC::WriteDiffusion( Common::MsgTacticalLine::Diffusion& diffusion ) const
 {
     // $$$$ SBO 2006-11-06: visitor or something
     static_cast< const TacticalLineHierarchies& >( Get< kernel::TacticalHierarchies >() ).WriteTo( diffusion );
@@ -129,16 +129,16 @@ void TacticalLine_ABC::WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion )
 // Name: TacticalLine_ABC::DoUpdate
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::DoUpdate( const ASN1T_MsgLimaUpdate& message )
+void TacticalLine_ABC::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message )
 {
-    name_ = message.tactical_line.name;
+    name_ = message.tactical_line().name().c_str();
 }
     
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::DoUpdate
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::DoUpdate( const ASN1T_MsgLimitUpdate& message )
+void TacticalLine_ABC::DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message )
 {
-    name_ = message.tactical_line.name;
+    name_ = message.tactical_line().name().c_str();
 }

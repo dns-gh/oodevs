@@ -38,9 +38,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual LogMaintenanceConsign* CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceHandlingCreation& message );
-    virtual LogSupplyConsign*      CreateSupplyConsign     ( const ASN1T_MsgLogSupplyHandlingCreation& message );
-    virtual LogMedicalConsign*     CreateMedicalConsign    ( const ASN1T_MsgLogMedicalHandlingCreation& message );
+    virtual LogMaintenanceConsign* CreateMaintenanceConsign( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message );
+    virtual LogSupplyConsign*      CreateSupplyConsign     ( const MsgsSimToClient::MsgLogSupplyHandlingCreation& message );
+    virtual LogMedicalConsign*     CreateMedicalConsign    ( const MsgsSimToClient::MsgLogMedicalHandlingCreation& message );
     //@}
 
 private:

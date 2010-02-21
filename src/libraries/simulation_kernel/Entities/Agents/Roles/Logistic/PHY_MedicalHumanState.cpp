@@ -11,13 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MedicalHumanState.h"
+#include "MIL_AgentServer.h"
 #include "PHY_MedicalConsign_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/clientsenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalHumanState )
 
@@ -80,10 +82,10 @@ PHY_MedicalHumanState::~PHY_MedicalHumanState()
 // Name: PHY_MedicalHumanState::load
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< uint& >( nID_ )
-         >> const_cast< uint& >( nCreationTick_ )
+    file >> const_cast< unsigned int& >( nID_ )
+         >> const_cast< unsigned int& >( nCreationTick_ )
          >> pPion_
          >> pHuman_
          >> pConsign_
@@ -100,7 +102,7 @@ void PHY_MedicalHumanState::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_MedicalHumanState::save
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-void PHY_MedicalHumanState::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_MedicalHumanState::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << nID_
          << nCreationTick_
@@ -185,7 +187,7 @@ void PHY_MedicalHumanState::Cancel()
 // Name: PHY_MedicalHumanState::Heal
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-uint PHY_MedicalHumanState::Heal( const PHY_ComposantePion& doctor )
+unsigned int PHY_MedicalHumanState::Heal( const PHY_ComposantePion& doctor )
 {
     assert( pHuman_ );
     bHumanStateHasChanged_ = true;
@@ -215,30 +217,24 @@ void PHY_MedicalHumanState::SendFullState() const
     assert( pPion_ );
 
     SendMsgCreation();
-    NET_ASN_MsgLogMedicalHandlingUpdate asn;
-    asn().oid_consigne          = nID_;
-    asn().oid_pion              = pPion_->GetID();
+    client::LogMedicalHandlingUpdate asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_pion( pPion_->GetID() );
 
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
     {
-        asn().m.oid_pion_log_traitantPresent = 1;
-        asn().m.etatPresent                  = 1;
-        asn().oid_pion_log_traitant          = 0;
-        asn().etat                           = EnumLogMedicalHandlingStatus::termine;
+        asn().set_oid_pion_log_traitant( 0 );
+        asn().set_etat( Common::EnumLogMedicalHandlingStatus::termine );
     }
 
-    asn().m.blesse_mentalPresent         = 1;
-    asn().m.blessurePresent              = 1;
-    asn().m.contamine_nbcPresent         = 1;        
-    asn().m.diagnostique_effectuePresent = 1;
-    asn().blessure                       = pHuman_->GetWound().GetAsnID();
-    asn().blesse_mental                  = pHuman_->IsMentalDiseased();
-    asn().contamine_nbc                  = pHuman_->IsContaminated();    
-    asn().diagnostique_effectue          = bDiagnosed_;
+    asn().set_blessure( pHuman_->GetWound().GetAsnID() );
+    asn().set_blesse_mental( pHuman_->IsMentalDiseased() );
+    asn().set_contamine_nbc( pHuman_->IsContaminated() );    
+    asn().set_diagnostique_effectue( bDiagnosed_ );
 
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,32 +249,25 @@ void PHY_MedicalHumanState::SendChangedState() const
     assert( pPion_ );
     assert( pHuman_ );
 
-    NET_ASN_MsgLogMedicalHandlingUpdate asn;
-    asn().oid_consigne = nID_;
-    asn().oid_pion     = pPion_->GetID();
+    client::LogMedicalHandlingUpdate asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_pion( pPion_->GetID() );
     if( pConsign_ )
         pConsign_->SendChangedState( asn );
     else
     {
-        asn().m.oid_pion_log_traitantPresent = 1;
-        asn().m.etatPresent                  = 1;
-        asn().oid_pion_log_traitant          = 0;
-        asn().etat                           = EnumLogMedicalHandlingStatus::termine;
+        asn().set_oid_pion_log_traitant( 0 );
+        asn().set_etat( Common::EnumLogMedicalHandlingStatus::termine );
     }
     if( bHumanStateHasChanged_ )
     {
-        asn().m.blesse_mentalPresent = 1;
-        asn().m.blessurePresent      = 1;
-        asn().m.contamine_nbcPresent = 1;        
-        asn().blessure               = pHuman_->GetWound().GetAsnID();
-        asn().blesse_mental          = pHuman_->IsMentalDiseased();
-        asn().contamine_nbc          = pHuman_->IsContaminated();
+        asn().set_blessure( pHuman_->GetWound().GetAsnID() );
+        asn().set_blesse_mental( pHuman_->IsMentalDiseased() );
+        asn().set_contamine_nbc( pHuman_->IsContaminated() );
     }
+    asn().set_diagnostique_effectue( bDiagnosed_ );
 
-    asn().m.diagnostique_effectuePresent = 1;
-    asn().diagnostique_effectue          = bDiagnosed_;
-
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,15 +291,15 @@ void PHY_MedicalHumanState::SendMsgCreation() const
     assert( pPion_ );
     assert( pHuman_ );
 
-    NET_ASN_MsgLogMedicalHandlingCreation asn;
-    asn().oid_consigne   = nID_;
-    asn().oid_pion       = pPion_->GetID();
-    asn().tick_creation  = nCreationTick_;
-    asn().rang           = pHuman_->GetRank ().GetAsnID();
-    asn().blessure       = pHuman_->GetWound().GetAsnID();
-    asn().blesse_mental  = pHuman_->IsMentalDiseased();
-    asn().contamine_nbc  = pHuman_->IsContaminated();
-    asn.Send();
+    client::LogMedicalHandlingCreation asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_pion( pPion_->GetID() );
+    asn().set_tick_creation( nCreationTick_ );
+    asn().set_rang         ( pHuman_->GetRank ().GetAsnID() );
+    asn().set_blessure( pHuman_->GetWound().GetAsnID() );
+    asn().set_blesse_mental( pHuman_->IsMentalDiseased() );
+    asn().set_contamine_nbc( pHuman_->IsContaminated() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
     
 // -----------------------------------------------------------------------------
@@ -321,10 +310,10 @@ void PHY_MedicalHumanState::SendMsgDestruction() const
 {
     assert( pPion_ );
     
-    NET_ASN_MsgLogMedicalHandlingDestruction asn;
-    asn().oid_consigne    = nID_;
-    asn().oid_pion        = pPion_->GetID();
-    asn.Send();
+    client::LogMedicalHandlingDestruction asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_pion( pPion_->GetID() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

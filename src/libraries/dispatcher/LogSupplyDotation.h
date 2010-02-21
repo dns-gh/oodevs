@@ -10,7 +10,10 @@
 #ifndef __LogSupplyDotation_h_
 #define __LogSupplyDotation_h_
 
-#include "game_asn/Simulation.h"
+namespace MsgsSimToClient
+{
+    class MsgDotationQuery;
+}
 
 namespace dispatcher
 {
@@ -27,14 +30,14 @@ class LogSupplyDotation
 public:
     //! @name Constructors/Destructor
     //@{
-     LogSupplyDotation( const Model& model, const ASN1T_DotationQuery& asnMsg );
+    LogSupplyDotation( const Model& model, const MsgsSimToClient::MsgDotationQuery& asnMsg );
     virtual ~LogSupplyDotation();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_DotationQuery& asnMsg );
-    void Send  ( ASN1T_DotationQuery& asnMsg ) const ;
+    void Update( const MsgsSimToClient::MsgDotationQuery& asnMsg );
+    void Send  ( MsgsSimToClient::MsgDotationQuery& asnMsg ) const ;
     //@}
 
 private:

@@ -10,15 +10,24 @@
 #ifndef __Logistics_h_
 #define __Logistics_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
     class Entity_ABC;
     class Controller;
     class PropertiesDictionary;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgLogMaintenanceState;
+    class MsgLogMedicalState;
+    class MsgLogSupplyState;
 }
 
 class Model;
@@ -32,9 +41,9 @@ class SupplyStates;
 // Created: AGE 2006-03-01
 // =============================================================================
 class Logistics : public kernel::Extension_ABC
-                , public kernel::Updatable_ABC< ASN1T_MsgLogMaintenanceState >
-                , public kernel::Updatable_ABC< ASN1T_MsgLogMedicalState >
-                , public kernel::Updatable_ABC< ASN1T_MsgLogSupplyState >
+                , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMaintenanceState >
+                , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogMedicalState >
+                , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyState >
 {
 
 public:
@@ -53,9 +62,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgLogMedicalState& message );
-    virtual void DoUpdate( const ASN1T_MsgLogMaintenanceState& message );
-    virtual void DoUpdate( const ASN1T_MsgLogSupplyState& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogMedicalState& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message );
     //@}
 
 private:

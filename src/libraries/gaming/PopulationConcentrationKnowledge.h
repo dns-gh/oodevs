@@ -12,12 +12,14 @@
 #ifndef __PopulationConcentrationKnowledge_h_
 #define __PopulationConcentrationKnowledge_h_
 
-#include "game_asn/Simulation.h"
+#include "PopulationPartKnowledge_ABC.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "PopulationPartKnowledge_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -33,14 +35,14 @@ namespace kernel
 // =============================================================================
 class PopulationConcentrationKnowledge : public PopulationPartKnowledge_ABC
                                        , public kernel::Drawable_ABC
-                                       , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeUpdate >
+                                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate >
 {
     
 public:
     //! @name Constructor/Destructor
     //@{
              PopulationConcentrationKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu,
-                 const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg );
+                 const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message );
     virtual ~PopulationConcentrationKnowledge();
     //@}
 
@@ -53,7 +55,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message );
     //@}
 
 private:

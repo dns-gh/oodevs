@@ -72,7 +72,7 @@ const PHY_RadarClass* PHY_RadarClass::Find( const std::string& strClass )
 // Name: PHY_RadarClass::Find
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-const PHY_RadarClass* PHY_RadarClass::Find( uint nID )
+const PHY_RadarClass* PHY_RadarClass::Find( unsigned int nID )
 {
     for( CIT_RadarClassMap it = radarClasses_.begin(); it != radarClasses_.end(); ++it )
         if( it->second->GetID() == nID )
@@ -85,7 +85,7 @@ const PHY_RadarClass* PHY_RadarClass::Find( uint nID )
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
 inline
-uint PHY_RadarClass::GetID() const
+unsigned int PHY_RadarClass::GetID() const
 {
     return nType_;
 }
@@ -112,7 +112,7 @@ const std::string& PHY_RadarClass::GetName() const
 // Name: PHY_RadarClass::GetNbrClasses
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-uint PHY_RadarClass::GetNbrClasses()
+unsigned int PHY_RadarClass::GetNbrClasses()
 {
     return radarClasses_.size();
 }

@@ -129,12 +129,12 @@ PHY_RolePion_Dotations::~PHY_RolePion_Dotations()
 // Name: PHY_RolePion_Dotations::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
          >> pDotations_;
          
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pCurrentConsumptionMode_ = PHY_ConsumptionType::FindConsumptionType( nID );
     
@@ -148,10 +148,10 @@ void PHY_RolePion_Dotations::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_RolePion_Dotations::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_RolePion_Dotations::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (uint)-1 ) ,
-             previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (uint)-1 );
+    unsigned current  = ( pCurrentConsumptionMode_  ? pCurrentConsumptionMode_->GetID()  : (unsigned int)-1 ) ,
+             previous = ( pPreviousConsumptionMode_ ? pPreviousConsumptionMode_->GetID() : (unsigned int)-1 );
     file << ::boost::serialization::base_object< PHY_RoleInterface_Dotations >( *this )
          << pDotations_
          << current
@@ -541,7 +541,7 @@ void PHY_RolePion_Dotations::FillSupplyRequest( PHY_SupplyDotationRequestContain
 // Name: PHY_RolePion_Dotations::SendChangedState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const
+void PHY_RolePion_Dotations::SendChangedState( client::UnitAttributes& asn ) const
 {
     assert( pDotations_ );
     pDotations_->SendChangedState( asn );
@@ -551,7 +551,7 @@ void PHY_RolePion_Dotations::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) 
 // Name: PHY_RolePion_Dotations::SendFullState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Dotations::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
+void PHY_RolePion_Dotations::SendFullState( client::UnitAttributes& asn ) const
 {
     assert( pDotations_ );
     pDotations_->SendFullState( asn );

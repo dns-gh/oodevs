@@ -42,9 +42,9 @@ DEC_Knowledge_AgentPerceptionDataIdentification::~DEC_Knowledge_AgentPerceptionD
 // Name: DEC_Knowledge_AgentPerceptionDataIdentification::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerceptionDataIdentification::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_AgentPerceptionDataIdentification::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nID;
+    unsigned int nID;
     
     file >> nTimeLastUpdate_
          >> nID;
@@ -55,9 +55,9 @@ void DEC_Knowledge_AgentPerceptionDataIdentification::load( MIL_CheckPointInArch
 // Name: DEC_Knowledge_AgentPerceptionDataIdentification::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerceptionDataIdentification::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_AgentPerceptionDataIdentification::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 );
+    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (unsigned int)-1 );
     file << nTimeLastUpdate_
          << agentType;
 }
@@ -71,7 +71,7 @@ void DEC_Knowledge_AgentPerceptionDataIdentification::Update( const MIL_Agent_AB
     if( perceptionLevel < PHY_PerceptionLevel::identified_ )
         return;
 
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nTimeLastUpdate_ >= nCurrentTimeStep )
         return;
     nTimeLastUpdate_ = nCurrentTimeStep;
@@ -82,7 +82,7 @@ void DEC_Knowledge_AgentPerceptionDataIdentification::Update( const MIL_Agent_AB
 // Name: DEC_Knowledge_AgentPerceptionDataIdentification::GetTimeLastUpdate
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_AgentPerceptionDataIdentification::GetTimeLastUpdate() const
+unsigned int DEC_Knowledge_AgentPerceptionDataIdentification::GetTimeLastUpdate() const
 {
     return nTimeLastUpdate_;
 }

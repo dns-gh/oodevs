@@ -11,7 +11,23 @@
 #define __Simulation_h_
 
 #include "SimulationPublisher_ABC.h"
-#include "game_asn/Simulation.h"
+
+
+//using namespace Common;
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+namespace MsgsDispatcherToSim
+{
+    class MsgDispatcherToSim;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgClientToSim;
+}
+
 
 namespace tools
 {
@@ -40,10 +56,10 @@ public:
 
     //! @name Messages
     //@{
-    void OnReceive( const ASN1T_MsgsSimToClient& asnMsg );
+    void OnReceive( const MsgsSimToClient::MsgSimToClient& asnMsg );
 
-    virtual void Send( const ASN1T_MsgsDispatcherToSim& asnMsg );
-    virtual void Send( const ASN1T_MsgsClientToSim& asnMsg );
+    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg );
+    virtual void Send( const MsgsClientToSim::MsgClientToSim& asnMsg );
     //@}
 
 private:

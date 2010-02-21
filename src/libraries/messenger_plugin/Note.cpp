@@ -11,6 +11,7 @@
 #include "Note.h"
 
 #include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/MessengerSenders.h"
 
 using namespace plugins::messenger;
 
@@ -18,12 +19,12 @@ using namespace plugins::messenger;
 // Name: Note destructor
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-Note::Note(unsigned long id, const ASN1T_MsgNoteCreationRequest& message )
+Note::Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message )
     : id_( id )
-    , name_( message.note.name )
-    , number_( message.note.number )
-    , description_( message.note.description )
-    , parent_( message.note.parent )
+    , name_( message.note().name() )
+    , number_( message.note().number() )
+    , description_( message.note().description() )
+    , parent_( message.note().parent() )
 {
     children_ = new std::list<unsigned long>();
 }
@@ -55,16 +56,16 @@ unsigned long  Note::GetId() const
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void Note::Update( const ASN1T_MsgNoteUpdateRequest& asn )
+void Note::Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message )
 {
-    if ( asn.m.namePresent )
-        name_ = asn.name;
-    if ( asn.m.numberPresent )
-        number_ = asn.number;
-    if ( asn.m.descriptionPresent )
-        description_ = asn.description;
-    if ( asn.m.parentPresent )
-        parent_ = asn.parent;
+    if( message.has_name() )
+        name_ = message.name();
+    if( message.has_number() )
+        number_ = message.number();
+    if( message.has_description() )
+        description_ = message.description();
+    if( message.has_parent() )
+        parent_ = message.parent();
 
 }
 
@@ -74,14 +75,14 @@ void Note::Update( const ASN1T_MsgNoteUpdateRequest& asn )
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void  Note::SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const
+void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    NoteCreation message;
-    message().id = id_;
-    message().note.name = name_.c_str();
-    message().note.description = description_.c_str();
-    message().note.number = number_.c_str();
-    message().note.parent = parent_;
+    messenger::NoteCreation message;
+    message().set_id( id_ );
+    message().mutable_note()->set_name( name_ );
+    message().mutable_note()->set_description( description_ );
+    message().mutable_note()->set_number( number_ );
+    message().mutable_note()->set_parent( parent_ );
     message.Send( publisher );
 }
 
@@ -93,25 +94,17 @@ void  Note::SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void  Note::SendUpdate( dispatcher::ClientPublisher_ABC& publisher, bool modifParent ) const
 {
-    NoteUpdate message;
-    message().id = id_;
+    messenger::NoteUpdate message;
+    message().set_id( id_ );
     if (modifParent)
     {
-        message().parent = parent_;
-        message().m.parentPresent = 1;
-        message().m.namePresent = 0;
-        message().m.numberPresent = 0;
-        message().m.descriptionPresent = 0;
+        message().set_parent( parent_ );
     }
     else
     {
-        message().name = name_.c_str();
-        message().description = description_.c_str();
-        message().number = number_.c_str();
-        message().m.descriptionPresent = 1;
-        message().m.namePresent = 1;
-        message().m.numberPresent = 1;
-        message().m.parentPresent = 0;
+        message().set_name( name_ );
+        message().set_description( description_ );
+        message().set_number( number_ );
     }
     message.Send( publisher );
 }
@@ -136,8 +129,8 @@ void  Note::SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void  Note::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    NoteDestruction message;
-    message().id = id_;
+    messenger::NoteDestruction message;
+    message().set_id( id_ );
     message.Send( publisher );
 }
 

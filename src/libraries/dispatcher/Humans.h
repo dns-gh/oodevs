@@ -10,7 +10,15 @@
 #ifndef __Humans_h_
 #define __Humans_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    enum EnumHumanRank;
+}
+
+namespace MsgsSimToClient
+{
+    class HumanDotations_HumanDotation;
+}
 
 namespace dispatcher
 {
@@ -27,18 +35,18 @@ class Humans
 public:
     //! @name Constructors/Destructor
     //@{
-     Humans( const Model& model, const ASN1T_HumanDotations& asnMsg );
+     Humans( const Model& model, const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg );
     virtual ~Humans();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_HumanDotations& asnMsg );
-    void Send  ( ASN1T_HumanDotations& asnMsg ) const ;
+    void Update( const MsgsSimToClient::HumanDotations_HumanDotation& asnMsg );
+    void Send  ( MsgsSimToClient::HumanDotations_HumanDotation& asnMsg ) const ;
     //@}
 
 public:
-    ASN1T_EnumHumanRank nRank_;
+    Common::EnumHumanRank nRank_;
     unsigned int        nNbrTotal_;
     unsigned int        nNbrOperational_;
     unsigned int        nNbrDead_;

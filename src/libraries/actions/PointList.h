@@ -12,6 +12,11 @@
 
 #include "LocationList.h"
 
+namespace Common
+{
+    class MsgPointList;
+}
+
 namespace actions {
     namespace parameters {
 
@@ -28,15 +33,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit PointList( const kernel::OrderParameter& parameter );
-             PointList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_PointList& asn );
+             PointList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgPointList& message );
              PointList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~PointList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     //@}
 
 private:

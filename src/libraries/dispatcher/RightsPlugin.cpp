@@ -13,7 +13,6 @@
 #include "LinkResolver_ABC.h"
 #include "Profile_ABC.h"
 #include "ClientPublisher_ABC.h"
-#include "game_asn/AuthenticationSenders.h"
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "DefaultProfile.h"
@@ -21,6 +20,12 @@
 #include "NoopPublisher.h"
 #include "CompositeRegistrable.h"
 #include "Services.h"
+//#include "protocol/protocol.h"
+
+#include "protocol/authenticationsenders.h"
+
+//using namespace Common;
+//using namespace MsgsAuthenticationToClient;
 
 using namespace dispatcher;
 
@@ -59,7 +64,7 @@ void RightsPlugin::Register( dispatcher::Services& services )
 // Name: RightsPlugin::Receive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::Receive( const ASN1T_MsgsSimToClient& message )
+void RightsPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
 {
     profiles_->Receive( message );
 }
@@ -91,21 +96,18 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: RightsPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceive( const std::string& link, const ASN1T_MsgsClientToAuthentication& message )
+void RightsPlugin::OnReceive( const std::string& link, const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper )
 {
-    if( GetProfile( link ).CheckRights( message ) )
+    if( GetProfile( link ).CheckRights( wrapper ) )
     {
-        switch( message.msg.t )
-        {
-        case T_MsgsClientToAuthentication_msg_msg_authentication_request:
-            OnReceiveMsgAuthenticationRequest( link, *message.msg.u.msg_authentication_request ); break;
-        case T_MsgsClientToAuthentication_msg_msg_profile_creation_request:
-            OnReceiveMsgProfileCreationRequest( GetPublisher( link ), *message.msg.u.msg_profile_creation_request ); break;
-        case T_MsgsClientToAuthentication_msg_msg_profile_update_request:
-            OnReceiveMsgProfileUpdateRequest( GetPublisher( link ), *message.msg.u.msg_profile_update_request ); break;
-        case T_MsgsClientToAuthentication_msg_msg_profile_destruction_request:
-            OnReceiveMsgProfileDestructionRequest( GetPublisher( link ), message.msg.u.msg_profile_destruction_request ); break;
-        };
+        if( wrapper.message().has_authentication_request() )
+            OnReceiveMsgAuthenticationRequest( link, wrapper.message().authentication_request() ); 
+        if( wrapper.message().has_profile_creation_request() )
+            OnReceiveMsgProfileCreationRequest( GetPublisher( link ), wrapper.message().profile_creation_request() ); 
+        if( wrapper.message().has_profile_update_request() )
+            OnReceiveMsgProfileUpdateRequest( GetPublisher( link ), wrapper.message().profile_update_request() ); 
+        if( wrapper.message().has_profile_destruction_request() )
+            OnReceiveMsgProfileDestructionRequest( GetPublisher( link ), wrapper.message().profile_destruction_request() ); 
     }
 }
 
@@ -113,25 +115,25 @@ void RightsPlugin::OnReceive( const std::string& link, const ASN1T_MsgsClientToA
 // Name: RightsPlugin::OnReceiveMsgAuthenticationRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, const ASN1T_MsgAuthenticationRequest& message )
+void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, const MsgsClientToAuthentication::MsgAuthenticationRequest& message )
 {
     ClientPublisher_ABC& client = base_.GetPublisher( link );
 
-    Profile* profile = profiles_->Authenticate( message.login, message.password );
+    Profile* profile = profiles_->Authenticate( message.login(), message.password() );
     if( !profile )
     {
         authentication::AuthenticationResponse ack;
-        ack().error_code = MsgAuthenticationResponse_error_code::invalid_login;
+        ack().set_error_code ( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_invalid_login );
         ack.Send( client );
     }
     else
     {
         authentication::AuthenticationResponse ack;
-        ack().error_code       = MsgAuthenticationResponse_error_code::success;
-        ack().m.profilePresent = 1;
-        profile->Send( ack().profile );
+        ack().set_error_code       ( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
+        //ack.profilePresent = 1;
+        profile->Send( *ack().mutable_profile() );
         ack.Send( client );
-        Profile::AsnDelete( ack().profile );
+        Profile::Delete( *ack().mutable_profile() );
         authenticated_[ link ] = profile;
         container_.NotifyClientAuthenticated( client, *profile );
     }
@@ -141,11 +143,11 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
 // Name: RightsPlugin::OnReceiveMsgProfileCreationRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveMsgProfileCreationRequest( ClientPublisher_ABC& client, const ASN1T_MsgProfileCreationRequest& message )
+void RightsPlugin::OnReceiveMsgProfileCreationRequest( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileCreationRequest& message )
 {
     authentication::ProfileCreationRequestAck ack;
-    ack().error_code = profiles_->Create( message );
-    ack().login       = message.login;
+    ack().set_error_code ( profiles_->Create( message ) );
+    ack().set_login      ( message.profile().login() );
     ack.Send( client );
 }   
 
@@ -153,11 +155,11 @@ void RightsPlugin::OnReceiveMsgProfileCreationRequest( ClientPublisher_ABC& clie
 // Name: RightsPlugin::OnReceiveMsgProfileUpdateRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveMsgProfileUpdateRequest( ClientPublisher_ABC& client, const ASN1T_MsgProfileUpdateRequest& message )
+void RightsPlugin::OnReceiveMsgProfileUpdateRequest( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileUpdateRequest& message )
 {
     authentication::ProfileUpdateRequestAck ack;
-    ack().error_code = profiles_->Update( message );
-    ack().login       = message.login;
+    ack().set_error_code ( profiles_->Update( message ) );
+    ack().set_login      ( message.login() );
     ack.Send( client );
 }
 
@@ -165,11 +167,11 @@ void RightsPlugin::OnReceiveMsgProfileUpdateRequest( ClientPublisher_ABC& client
 // Name: RightsPlugin::OnReceiveMsgProfileDestructionRequest
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void RightsPlugin::OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& client, const ASN1T_MsgProfileDestructionRequest& message )
+void RightsPlugin::OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileDestructionRequest& message )
 {
     authentication::ProfileDestructionRequestAck ack;
-    ack().error_code = profiles_->Destroy( message );
-    ack().login       = message;
+    ack().set_error_code ( profiles_->Destroy( message ) );
+    ack().set_login      ( message.login() );
     ack.Send( client );
 }
 

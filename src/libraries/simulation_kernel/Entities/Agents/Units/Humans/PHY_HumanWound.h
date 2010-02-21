@@ -13,7 +13,11 @@
 #define __PHY_HumanWound_h_
 
 #include "MT_Tools/MT_Random.h"
-#include "game_asn/Simulation.h"
+
+namespace Common
+{
+    enum EnumHumanWound;
+}
 
 namespace xml
 {
@@ -51,15 +55,15 @@ public:
 
     static const T_HumanWoundMap& GetHumanWounds();
     static const PHY_HumanWound*  Find( const std::string& strName );
-    static const PHY_HumanWound*  Find( ASN1T_EnumHumanWound nAsnID );
-    static const PHY_HumanWound*  Find( uint nID );
+    static const PHY_HumanWound*  Find( Common::EnumHumanWound nAsnID );
+    static const PHY_HumanWound*  Find( unsigned int nID );
 
-    static uint                  GetDiagnosticTime           ();
-    static uint                  GetSortingTime              ();
-    static uint                  GetContaminatedHealingTime  ();
-    static uint                  GetContaminatedRestingTime  ();
-    static uint                  GetMentalDiseaseHealingTime ();
-    static uint                  GetMentalDiseaseRestingTime ();
+    static unsigned int                  GetDiagnosticTime           ();
+    static unsigned int                  GetSortingTime              ();
+    static unsigned int                  GetContaminatedHealingTime  ();
+    static unsigned int                  GetContaminatedRestingTime  ();
+    static unsigned int                  GetMentalDiseaseHealingTime ();
+    static unsigned int                  GetMentalDiseaseRestingTime ();
     static bool                  ChooseMentalDisease         ();
     static const PHY_HumanWound& ChooseRandomWound           ();
     //@}
@@ -67,12 +71,12 @@ public:
     //! @name Accessors
     //@{
     const std::string&   GetName          () const;
-    uint                 GetID            () const;
-    ASN1T_EnumHumanWound GetAsnID         () const;
+    unsigned int                 GetID            () const;
+    Common::EnumHumanWound GetAsnID         () const;
     MT_Float             GetWoundedFactor () const;
-    uint                 GetLifeExpectancy() const;
-    uint                 GetHealingTime   () const;
-    uint                 GetRestingTime   () const;
+    unsigned int                 GetLifeExpectancy() const;
+    unsigned int                 GetHealingTime   () const;
+    unsigned int                 GetRestingTime   () const;
     //@}
 
     //! @name Operators
@@ -107,7 +111,7 @@ private:
     //@}
 
 private:
-     PHY_HumanWound( const std::string& strName, E_Wound nWound, const ASN1T_EnumHumanWound& nAsnID );
+     PHY_HumanWound( const std::string& strName, E_Wound nWound, const Common::EnumHumanWound& nAsnID );
     ~PHY_HumanWound();
 
     //! @name Init
@@ -119,22 +123,22 @@ private:
 private:
     const std::string           strName_;
     const E_Wound               nWound_;
-    const ASN1T_EnumHumanWound  nAsnID_;
+    const Common::EnumHumanWound  nAsnID_;
           MT_Float              rWoundedFactor_;
-          uint                  nLifeExpectancy_;
-          uint                  nHealingTime_;
-          uint                  nRestingTime_;
+          unsigned int                  nLifeExpectancy_;
+          unsigned int                  nHealingTime_;
+          unsigned int                  nRestingTime_;
 
 private:
     static T_HumanWoundMap humanWounds_;
     static MT_Random       randomGenerator_;
-    static uint            nDiagnosticTime_;
-    static uint            nSortingTime_;
+    static unsigned int            nDiagnosticTime_;
+    static unsigned int            nSortingTime_;
 
-    static uint            nContaminatedHealingTime_;
-    static uint            nContaminatedRestingTime_;
-    static uint            nMentalDiseaseHealingTime_;
-    static uint               nMentalDiseaseRestingTime_;
+    static unsigned int            nContaminatedHealingTime_;
+    static unsigned int            nContaminatedRestingTime_;
+    static unsigned int            nMentalDiseaseHealingTime_;
+    static unsigned int               nMentalDiseaseRestingTime_;
     static MT_Float        rMentalDiseaseFactor_;
 };
 

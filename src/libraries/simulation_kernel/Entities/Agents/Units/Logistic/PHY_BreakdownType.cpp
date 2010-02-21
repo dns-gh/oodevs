@@ -18,7 +18,7 @@
 #include <xeumeuleu/xml.h>
 
 PHY_BreakdownType::T_BreakdownMap PHY_BreakdownType::breakdowns_;
-uint                              PHY_BreakdownType::nDiagnosticTime_ = 0;
+unsigned int                              PHY_BreakdownType::nDiagnosticTime_ = 0;
 
 struct PHY_BreakdownType::LoadingWrapper
 {
@@ -63,7 +63,7 @@ void PHY_BreakdownType::Initialize( xml::xistream& xis )
             >> xml::end();
     if( ! tools::DecodeTime( timeVal, rTimeVal ) || rTimeVal < 0 )
         xis.error( "diagnosis: time < 0" );
-    nDiagnosticTime_ = (uint)MIL_Tools::ConvertSecondsToSim( rTimeVal );
+    nDiagnosticTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( rTimeVal );
     xis >> xml::list( "category", loader, &LoadingWrapper::ReadCategory )
         >> xml::end();
 }
@@ -91,7 +91,7 @@ void PHY_BreakdownType::ReadCategory( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_BreakdownType::ReadBreakdown( xml::xistream& xis, const PHY_MaintenanceLevel& maintenanceLevel )
 {
-    std::set< uint > ids_;
+    std::set< unsigned int > ids_;
     std::string strBreakdown;
     std::string strType;
     xis >> xml::attribute( "name", strBreakdown )
@@ -139,7 +139,7 @@ PHY_BreakdownType::PHY_BreakdownType( const std::string& strName, const PHY_Main
 
     if( !tools::DecodeTime( repairTime, nTheoricRepairTime_ ) || nTheoricRepairTime_ < 0 )
         xis.error( "average-repairing-time < 0" );
-    nTheoricRepairTime_ = (uint)MIL_Tools::ConvertSecondsToSim( nTheoricRepairTime_ );
+    nTheoricRepairTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( nTheoricRepairTime_ );
     if( !tools::DecodeTime( variance, rVariance ) )
         xis.error( "variance < 0" );
     rVariance = fabs( MIL_Tools::ConvertSecondsToSim( rVariance ) );
@@ -163,7 +163,7 @@ void PHY_BreakdownType::ReadPart( xml::xistream& xis )
     if( !pCategory )
         xis.error( "Unknown part category" );
 
-    uint& nNbr = parts_[ pCategory ];
+    unsigned int& nNbr = parts_[ pCategory ];
     if( nNbr > 0 )
         xis.error( "Part already initialized" );
     xis >> xml::attribute( "quantity", nNbr );
@@ -184,7 +184,7 @@ PHY_BreakdownType::~PHY_BreakdownType()
 // Name: PHY_BreakdownType::GetDiagnosticTime
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-uint PHY_BreakdownType::GetDiagnosticTime()
+unsigned int PHY_BreakdownType::GetDiagnosticTime()
 {
     return nDiagnosticTime_;
 }
@@ -202,7 +202,7 @@ const std::string& PHY_BreakdownType::GetName() const
 // Name: PHY_BreakdownType::GetMosID
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------
-uint PHY_BreakdownType::GetID() const
+unsigned int PHY_BreakdownType::GetID() const
 {
     return nID_;
 }
@@ -222,9 +222,9 @@ const PHY_BreakdownType* PHY_BreakdownType::Find( const std::string& strName )
 // Name: PHY_BreakdownType::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_BreakdownType* PHY_BreakdownType::Find( uint nID )
+const PHY_BreakdownType* PHY_BreakdownType::Find( unsigned int nID )
 {
-    CIT_BreakdownMap it = std::find_if( breakdowns_.begin(), breakdowns_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_BreakdownType::GetID ), std::select2nd< T_BreakdownMap::value_type >() ) ) );
+    CIT_BreakdownMap it = std::find_if( breakdowns_.begin(), breakdowns_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_BreakdownType::GetID ), std::select2nd< T_BreakdownMap::value_type >() ) ) );
 
     return it == breakdowns_.end() ? 0 :  it->second;
 }
@@ -270,16 +270,16 @@ const PHY_BreakdownType::T_PartMap& PHY_BreakdownType::GetParts() const
 // Name: PHY_BreakdownType::ChooseARepairTime
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-uint PHY_BreakdownType::ChooseARepairTime() const
+unsigned int PHY_BreakdownType::ChooseARepairTime() const
 {
-    return (uint)repairTime_.rand();
+    return (unsigned int)repairTime_.rand();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_BreakdownType::GetTheoricRepairTime
 // Created: NLD 2006-06-01
 // -----------------------------------------------------------------------------
-uint PHY_BreakdownType::GetTheoricRepairTime() const
+unsigned int PHY_BreakdownType::GetTheoricRepairTime() const
 {
     return nTheoricRepairTime_;
 }

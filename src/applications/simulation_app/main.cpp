@@ -11,6 +11,7 @@
 
 #include "MT/MT_Logger/MT_FileLogger.h"
 #include "tools/win32/FlexLm.h"
+#include <google/protobuf/message.h>
 #include <xeumeuleu/xml.h>
 
 #include <commctrl.h>
@@ -112,6 +113,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     int nResult = EXIT_FAILURE;
     try
     {
+        GOOGLE_PROTOBUF_VERIFY_VERSION;
         SIM_App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app.Execute();
@@ -154,6 +156,8 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
         MT_LOG_ERROR_MSG( exception.what() );
         MessageBox( 0, exception.what(), "SWORD - Exception standard", MB_ICONERROR | MB_OK | MB_TOPMOST );
     }
+
+    google::protobuf::ShutdownProtobufLibrary();
 
     MT_LOG_UNREGISTER_LOGGER( crashFileLogger );
     MT_LOG_UNREGISTER_LOGGER( fileLogger );

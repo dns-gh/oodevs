@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_ObjectiveList.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,12 +18,12 @@ using namespace dispatcher;
 // Name: MissionParameter_ObjectiveList constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_ObjectiveList::MissionParameter_ObjectiveList( const ASN1T_MissionParameter& asn )
+MissionParameter_ObjectiveList::MissionParameter_ObjectiveList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    objects_.reserve( asn.value.u.missionObjectiveList->n );
-    for( unsigned i = 0; i != asn.value.u.missionObjectiveList->n; ++i )
-        objects_.push_back( Objective( asn.value.u.missionObjectiveList->elem[i] ) );
+    objects_.reserve( asn.value().missionobjectivelist().elem_size() );
+    for( int i = 0; i != asn.value().missionobjectivelist().elem_size(); ++i )
+        objects_.push_back( Objective( asn.value().missionobjectivelist().elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,29 +43,24 @@ MissionParameter_ObjectiveList::~MissionParameter_ObjectiveList()
 // Name: MissionParameter_ObjectiveList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_ObjectiveList::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_ObjectiveList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value                   = bNullValue_;
-    asn.value.t                      = T_MissionParameter_value_missionObjectiveList;
-    asn.value.u.missionObjectiveList = new ASN1T_MissionObjectiveList();
-
-    asn.value.u.missionObjectiveList->n = objects_.size();
+    asn.set_null_value               ( bNullValue_ );
+    asn.mutable_value()->mutable_missionobjectivelist();
     if( !objects_.empty() )
     {
-        asn.value.u.missionObjectiveList->elem = new ASN1T_MissionObjective[ objects_.size() ];
-        unsigned int i = 0;
-        for( T_ObjectiveVector::const_iterator it = objects_.begin(); it != objects_.end(); ++it, ++i )
-            (*it).Send( asn.value.u.missionObjectiveList->elem[ i ] );
+        for( T_ObjectiveVector::const_iterator it = objects_.begin(); it != objects_.end(); ++it  )
+            (*it).Send( *asn.mutable_value()->mutable_missionobjectivelist()->add_elem() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_ObjectiveList::AsnDelete
+// Name: MissionParameter_ObjectiveList::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_ObjectiveList::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_ObjectiveList::Delete( Common::MsgMissionParameter& asn ) const
 {
-    if( asn.value.u.missionObjectiveList->n > 0 )
-        delete [] asn.value.u.missionObjectiveList->elem;
-    delete asn.value.u.missionObjectiveList;
+    if( asn.value().missionobjectivelist().elem_size() > 0 )
+        asn.mutable_value()->mutable_missionobjectivelist()->Clear();
+    delete asn.mutable_value()->mutable_missionobjectivelist();
 }

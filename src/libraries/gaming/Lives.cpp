@@ -12,6 +12,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -50,10 +51,10 @@ void Lives::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 // Name: Lives::DoUpdate
 // Created: AGE 2006-04-10
 // -----------------------------------------------------------------------------
-void Lives::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Lives::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.etat_operationnel_brutPresent )
-        life_ = message.etat_operationnel_brut * 0.01f;
+    if( message.has_etat_operationnel_brut()  )
+        life_ = message.etat_operationnel_brut() * 0.01f;
     controller_.Update( *this );
 }
 

@@ -55,7 +55,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_ComposantePion )
 // Name: PHY_ComposantePion constructor
 // Created: NLD 2004-08-12
 // -----------------------------------------------------------------------------
-PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
+PHY_ComposantePion::PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy )
     : PHY_Composante_ABC           ( )
     , time_                        ( time )
     , pState_                      ( &PHY_ComposanteState::undamaged_ )
@@ -139,17 +139,19 @@ PHY_ComposantePion::~PHY_ComposantePion()
 // Name: PHY_ComposantePion::load
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< PHY_Composante_ABC >( *this )
          >> pRole_;
          
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pState_ = &PHY_ComposanteState::Find( nID );
 
-    ASN1T_EquipmentType nEqID;
-    file >> nEqID;
+    Common::MsgEquipmentType nEqID;
+    int equipment_type;
+    file >> equipment_type;
+    nEqID.set_equipment( equipment_type );
     pType_ = PHY_ComposanteTypePion::Find( nEqID );
     assert( pType_ );
 
@@ -180,10 +182,10 @@ void PHY_ComposantePion::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_ComposantePion::save
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_ComposantePion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned state = pState_->GetID(),
-             type  = pType_->GetMosID();
+             type  = pType_->GetMosID().equipment();
     file << boost::serialization::base_object< PHY_Composante_ABC >( *this )
          << pRole_
          << state
@@ -549,7 +551,7 @@ void PHY_ComposantePion::EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 
 // Name: PHY_ComposantePion::PreprocessRandomBreakdowns
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::PreprocessRandomBreakdowns( uint nEndDayTimeStep )
+void PHY_ComposantePion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep )
 {
     assert( !pRandomBreakdownState_ && !nRandomBreakdownNextTimeStep_ );
     assert( pType_ );
@@ -773,7 +775,7 @@ double PHY_ComposantePion::GetOperationalState() const
 // Name: PHY_ComposantePion::GetNbrUsableHumans
 // Created: NLD 2005-01-07
 // -----------------------------------------------------------------------------
-uint PHY_ComposantePion::GetNbrUsableHumans() const
+unsigned int PHY_ComposantePion::GetNbrUsableHumans() const
 {
     assert( pHumans_ );
     return pHumans_->GetNbrUsableHumans();
@@ -890,7 +892,7 @@ bool PHY_ComposantePion::CanHealHuman( const PHY_Human& human ) const
 // Name: PHY_ComposantePion::Heal
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-uint PHY_ComposantePion::Heal( PHY_Human& human ) const
+unsigned int PHY_ComposantePion::Heal( PHY_Human& human ) const
 {
     assert( pType_ );
     assert( bUsedForLogistic_ );
@@ -902,7 +904,7 @@ uint PHY_ComposantePion::Heal( PHY_Human& human ) const
 // Name: PHY_ComposantePion::GetHealingTime
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-uint PHY_ComposantePion::GetHealingTime( const PHY_Human& human ) const
+unsigned int PHY_ComposantePion::GetHealingTime( const PHY_Human& human ) const
 {
     assert( pType_ );
     assert( bUsedForLogistic_ );
@@ -994,7 +996,7 @@ void PHY_ComposantePion::StopUsingForLogistic()
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
 
-uint PHY_ComposantePion::GetNeutralizationTime() const
+unsigned int PHY_ComposantePion::GetNeutralizationTime() const
 {
     assert( pState_ );
  
@@ -1048,7 +1050,7 @@ double PHY_ComposantePion::GetWeight() const
 // Name: PHY_ComposantePion::GetMajorScore
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-uint PHY_ComposantePion::GetMajorScore() const
+unsigned int PHY_ComposantePion::GetMajorScore() const
 {
     if( !pState_->IsUsable() && CanBeUsed() ) //$$$ C'est de la merde 
         return 0;
@@ -1292,7 +1294,7 @@ void PHY_ComposantePion::HealAllHumans()
 // Name: PHY_ComposantePion::HealHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-uint PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, uint nNbrToChange )
+unsigned int PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange )
 {
     assert( pHumans_ );
     if( *pState_ != PHY_ComposanteState::dead_ )
@@ -1304,7 +1306,7 @@ uint PHY_ComposantePion::HealHumans( const PHY_HumanRank& rank, uint nNbrToChang
 // Name: PHY_ComposantePion::WoundHumans
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-uint PHY_ComposantePion::WoundHumans( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& wound )
+unsigned int PHY_ComposantePion::WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound )
 {
     assert( pHumans_ );
     if( *pState_ != PHY_ComposanteState::dead_ )
@@ -1326,11 +1328,11 @@ bool PHY_ComposantePion::ChangeHumanRank( const PHY_HumanRank& oldRank, const PH
 // Name: PHY_ComposantePion::ApproximateTravelTime
 // Created: NLD 2004-12-24
 // -----------------------------------------------------------------------------
-uint PHY_ComposantePion::ApproximateTravelTime( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const
+unsigned int PHY_ComposantePion::ApproximateTravelTime( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const
 {
     assert( pType_ );
     assert( pType_->GetMaxSpeed() != 0. );
-    return (uint)( 1.439 * vSourcePos.Distance( vTargetPos ) / pType_->GetMaxSpeed() ); //$$$ Deplacer la formule magique (Cf. DEC_GeometryFunctions où elle existe aussi...)
+    return (unsigned int)( 1.439 * vSourcePos.Distance( vTargetPos ) / pType_->GetMaxSpeed() ); //$$$ Deplacer la formule magique (Cf. DEC_GeometryFunctions où elle existe aussi...)
 }
 
 // -----------------------------------------------------------------------------

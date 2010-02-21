@@ -43,9 +43,9 @@ void Mission_Pawn_INF_OrganiserUnCheckPoint::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_OrganiserUnCheckPoint& asnMission = *new ASN1T_Mission_Pion_INF_OrganiserUnCheckPoint();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_organiser_un_check_point;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_organiser_un_check_point = &asnMission;
+    Mission_Pion_INF_OrganiserUnCheckPoint& asnMission = *new Mission_Pion_INF_OrganiserUnCheckPoint();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_organiser_un_check_point = &asnMission;
 
     const Position& pointInstallation_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_INF_OrganiserUnCheckPoint::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_OrganiserUnCheckPoint::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_organiser_un_check_point );
-    ASN1T_Mission_Pion_INF_OrganiserUnCheckPoint& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_organiser_un_check_point;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_organiser_un_check_point ());
+    Mission_Pion_INF_OrganiserUnCheckPoint& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_organiser_un_check_point;
 
     ASN_Tools::Delete( asnMission.point_installation );
 

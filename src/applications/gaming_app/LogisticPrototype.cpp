@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "LogisticPrototype.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/Protocol.h"       
 
 using namespace kernel;
 using namespace gui;
@@ -19,7 +19,7 @@ using namespace gui;
 // Name: LogisticPrototype::LogisticPrototype
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-LogisticPrototype::LogisticPrototype( QWidget* parent, Controllers& controllers, ASN1T_MagicActionCreateObject& msg )
+LogisticPrototype::LogisticPrototype( QWidget* parent, Controllers& controllers, MsgsClientToSim::MsgMagicActionCreateObject& msg )
     : LogisticPrototype_ABC( parent, controllers )
     , msg_ ( msg )
 {
@@ -41,8 +41,7 @@ LogisticPrototype::~LogisticPrototype()
 // -----------------------------------------------------------------------------
 void LogisticPrototype::Commit()
 {
-    msg_.attributes.m.logisticPresent = 1;
-    msg_.attributes.logistic.tc2 = tc2s_->GetValue()->GetId();
+    msg_.mutable_attributes()->mutable_logistic()->set_tc2( tc2s_->GetValue()->GetId());
 }
 
 // -----------------------------------------------------------------------------
@@ -51,5 +50,4 @@ void LogisticPrototype::Commit()
 // -----------------------------------------------------------------------------
 void LogisticPrototype::Clean()
 {
-    msg_.attributes.m.logisticPresent = 0;
 }

@@ -14,7 +14,6 @@
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Automat.h"
-#include "clients_kernel/FormationLevels.h"
 #include "ClientPublisher_ABC.h"
 #include "Fire.h"
 #include "FireEffect.h"
@@ -39,8 +38,10 @@
 #include "UrbanObject.h"
 #include "Visitors.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -99,194 +100,287 @@ void Model::Reset()
 // Name: Model::Receive
 // Created: AGE 2007-07-05
 // -----------------------------------------------------------------------------
-void Model::Receive( const ASN1T_MsgsSimToClient& asn )
+void Model::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    if( asn.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_begin )
+    if( wrapper.message().has_control_send_current_state_begin() )
     {
         Reset();
         MT_LOG_INFO_MSG( "Dispatcher - Initializing model" );
     }
-    else if( asn.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
+    else if( wrapper.message().has_control_send_current_state_end() )
         MT_LOG_INFO_MSG( "Dispatcher - Model initialized" );
-    Update( asn );
+    Update( wrapper );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Model::Update
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void Model::Update( const ASN1T_MsgsSimToClient& asn )
+void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    switch( asn.msg.t )
+    if( wrapper.message().has_unit_order_ack() ||
+        wrapper.message().has_automat_order_ack() ||
+        wrapper.message().has_population_order_ack() ||
+        wrapper.message().has_frag_order_ack() ||
+        wrapper.message().has_set_automat_mode_ack() ||
+        wrapper.message().has_unit_magic_action_ack() ||
+        wrapper.message().has_object_magic_action_ack() ||
+        wrapper.message().has_population_magic_action_ack() )
+        { // NOTHING 
+        }
+    if( wrapper.message().has_change_diplomacy_ack() )
+        sides_.Get( wrapper.message().change_diplomacy_ack().oid_camp1() ).Update( wrapper.message().change_diplomacy_ack() ); 
+    if( wrapper.message().has_change_diplomacy() )
+        sides_.Get( wrapper.message().change_diplomacy().oid_camp1() ).Update( wrapper.message().change_diplomacy() ); 
+    if( wrapper.message().has_automat_change_logistic_links() )
+        automats_.Get( wrapper.message().automat_change_logistic_links().oid() ).Update( wrapper.message().automat_change_logistic_links() ); 
+    if( wrapper.message().has_automat_change_knowledge_group() )
+        automats_.Get( wrapper.message().automat_change_knowledge_group().oid() ).Update( wrapper.message().automat_change_knowledge_group() ); 
+    if( wrapper.message().has_automat_change_superior() )
+        automats_.Get( wrapper.message().automat_change_superior().oid() ).Update( wrapper.message().automat_change_superior() ); 
+    if (wrapper.message().has_automat_change_logistic_links_ack() ||
+        wrapper.message().has_automat_change_knowledge_group_ack() ||
+        wrapper.message().has_automat_change_superior_ack() ||
+        wrapper.message().has_unit_change_superior_ack() )
+        { // NOTHING 
+        }
+    if( wrapper.message().has_unit_change_superior() )
+        agents_.Get( wrapper.message().unit_change_superior().oid() ).Update( wrapper.message().unit_change_superior() ); 
+    if( wrapper.message().has_log_supply_push_flow_ack() ||
+        wrapper.message().has_log_supply_change_quotas_ack() )
+        { // NOTHING 
+        }
+    if( wrapper.message().has_control_information() )
+        simulation_->Update( wrapper.message().control_information() ); 
+    if( wrapper.message().has_control_begin_tick() )
+        simulation_->Update( wrapper.message().control_begin_tick() ); 
+    if( wrapper.message().has_control_end_tick() )
+        simulation_->Update( wrapper.message().control_end_tick() ); 
+    if( wrapper.message().has_control_stop_ack() )
+        simulation_->Update_Stop( wrapper.message().control_stop_ack() ); 
+    if( wrapper.message().has_control_pause_ack() )
+        simulation_->Update_Pause( wrapper.message().control_pause_ack() ); 
+    if( wrapper.message().has_control_resume_ack() )
+        simulation_->Update_Resume( wrapper.message().control_resume_ack() ); 
+    if( wrapper.message().has_control_change_time_factor_ack() )
+        simulation_->Update( wrapper.message().control_change_time_factor_ack() ); 
+    if( wrapper.message().has_control_date_time_change_ack() ||
+        wrapper.message().has_control_global_meteo_ack() ||
+        wrapper.message().has_control_local_meteo_ack() ||
+        wrapper.message().has_control_checkpoint_save_begin() ||
+        wrapper.message().has_control_checkpoint_save_end() ||
+        wrapper.message().has_control_checkpoint_set_frequency_ack() ||
+        wrapper.message().has_control_checkpoint_save_now_ack() ||
+        wrapper.message().has_control_send_current_state_begin() ||
+        wrapper.message().has_control_send_current_state_end() )
+        { // NOTHING // $$$$ AGE 2007-04-18: messages vides...
+        }
+        
+    if( wrapper.message().has_unit_knowledge_creation() )
+        CreateUpdate< AgentKnowledge >( agentKnowledges_, wrapper.message().unit_knowledge_creation() ); 
+    if( wrapper.message().has_unit_knowledge_update() )
+        agentKnowledges_.Get( wrapper.message().unit_knowledge_update().oid() ).Update( wrapper.message().unit_knowledge_update() ); 
+    if( wrapper.message().has_unit_knowledge_destruction() )
+        Destroy( agentKnowledges_, wrapper.message().unit_knowledge_destruction().oid() ); 
+    if( wrapper.message().has_side_creation() )
+        CreateUpdate< Side >( sides_, wrapper.message().side_creation() ); 
+    if( wrapper.message().has_knowledge_group_creation() )
+        CreateUpdate< KnowledgeGroup >( knowledgeGroups_, wrapper.message().knowledge_group_creation() ); 
+    if( wrapper.message().has_formation_creation() )
+        CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().oid(), wrapper.message().formation_creation(), *levels_ ); 
+    if( wrapper.message().has_unit_creation() )
+        CreateUpdate< Agent >( agents_, wrapper.message().unit_creation() ); 
+    if( wrapper.message().has_unit_environment_type() )
+        agents_.Get( wrapper.message().unit_environment_type().oid() ).Update( wrapper.message().unit_environment_type() ); 
+    if( wrapper.message().has_unit_destruction() )
+        Destroy( agents_, wrapper.message().unit_destruction().oid() ); 
+    if( wrapper.message().has_automat_creation() )
+        CreateUpdate< Automat >( automats_, wrapper.message().automat_creation() ); 
+    if( wrapper.message().has_unit_attributes() )
+        agents_.Get( wrapper.message().unit_attributes().oid() ).Update( wrapper.message().unit_attributes() ); 
+    if( wrapper.message().has_automat_attributes() )
+        automats_.Get( wrapper.message().automat_attributes().oid() ).Update( wrapper.message().automat_attributes()  ); 
+    if( wrapper.message().has_unit_pathfind() )
+        agents_.Get( wrapper.message().unit_pathfind().oid() ).Update( wrapper.message().unit_pathfind() ); 
+    if( wrapper.message().has_start_unit_fire() )
     {
-        case T_MsgsSimToClient_msg_msg_unit_order_ack:
-        case T_MsgsSimToClient_msg_msg_automat_order_ack:
-        case T_MsgsSimToClient_msg_msg_population_order_ack:
-        case T_MsgsSimToClient_msg_msg_frag_order_ack:
-        case T_MsgsSimToClient_msg_msg_set_automat_mode_ack:
-        case T_MsgsSimToClient_msg_msg_unit_magic_action_ack:
-        case T_MsgsSimToClient_msg_msg_object_magic_action_ack:
-        case T_MsgsSimToClient_msg_msg_population_magic_action_ack:
-            break; // NOTHING
-        case T_MsgsSimToClient_msg_msg_change_diplomacy_ack:                     sides_.Get( asn.msg.u.msg_change_diplomacy_ack->oid_camp1 ).Update( *asn.msg.u.msg_change_diplomacy_ack ); break;
-        case T_MsgsSimToClient_msg_msg_change_diplomacy:                         sides_.Get( asn.msg.u.msg_change_diplomacy->oid_camp1 ).Update( *asn.msg.u.msg_change_diplomacy ); break;
-        case T_MsgsSimToClient_msg_msg_automat_change_logistic_links:            automats_.Get( asn.msg.u.msg_automat_change_logistic_links->oid ).Update( *asn.msg.u.msg_automat_change_logistic_links ); break;
-        case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group:           automats_.Get( asn.msg.u.msg_automat_change_knowledge_group->oid ).Update( *asn.msg.u.msg_automat_change_knowledge_group ); break;
-        case T_MsgsSimToClient_msg_msg_automat_change_superior:                  automats_.Get( asn.msg.u.msg_automat_change_superior->oid ).Update( *asn.msg.u.msg_automat_change_superior ); break;
-        case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack:
-        case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:
-        case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:
-        case T_MsgsSimToClient_msg_msg_unit_change_superior_ack:                 
-            break; //NOTHING
-        case T_MsgsSimToClient_msg_msg_knowledge_group_update:                   knowledgeGroups_.Get( asn.msg.u.msg_knowledge_group_update->oid ).Update( *asn.msg.u.msg_knowledge_group_update ); break; // LTO
-        case T_MsgsSimToClient_msg_msg_unit_change_superior:                     agents_.Get( asn.msg.u.msg_unit_change_superior->oid ).Update( *asn.msg.u.msg_unit_change_superior ); break;
-        case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:
-        case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:
-            break; // NOTHING
-        case T_MsgsSimToClient_msg_msg_control_information:                  simulation_->Update( *asn.msg.u.msg_control_information ); break;
-        case T_MsgsSimToClient_msg_msg_control_begin_tick:                   simulation_->Update( *asn.msg.u.msg_control_begin_tick ); break;
-        case T_MsgsSimToClient_msg_msg_control_end_tick:                     simulation_->Update( *asn.msg.u.msg_control_end_tick ); break;
-        case T_MsgsSimToClient_msg_msg_control_stop_ack:                     simulation_->Update_Stop( asn.msg.u.msg_control_stop_ack ); break;
-        case T_MsgsSimToClient_msg_msg_control_pause_ack:                    simulation_->Update_Pause( asn.msg.u.msg_control_pause_ack ); break;
-        case T_MsgsSimToClient_msg_msg_control_resume_ack:                   simulation_->Update_Resume( asn.msg.u.msg_control_resume_ack ); break;
-        case T_MsgsSimToClient_msg_msg_control_change_time_factor_ack:       simulation_->Update( *asn.msg.u.msg_control_change_time_factor_ack ); break;
-        case T_MsgsSimToClient_msg_msg_control_date_time_change_ack:
-        case T_MsgsSimToClient_msg_msg_control_global_meteo_ack:
-        case T_MsgsSimToClient_msg_msg_control_local_meteo_ack:
-        case T_MsgsSimToClient_msg_msg_control_checkpoint_save_begin:
-        case T_MsgsSimToClient_msg_msg_control_checkpoint_save_end:
-        case T_MsgsSimToClient_msg_msg_control_checkpoint_set_frequency_ack:
-        case T_MsgsSimToClient_msg_msg_control_checkpoint_save_now_ack:
-        case T_MsgsSimToClient_msg_msg_control_send_current_state_begin:
-        case T_MsgsSimToClient_msg_msg_control_send_current_state_end:
-            break;  // $$$$ AGE 2007-04-18: messages vides...
-        case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:              CreateUpdate< AgentKnowledge, AgentKnowledge >( agentKnowledges_, *asn.msg.u.msg_unit_knowledge_creation ); break;
-        case T_MsgsSimToClient_msg_msg_unit_knowledge_update:                agentKnowledges_.Get( asn.msg.u.msg_unit_knowledge_update->oid ).Update( *asn.msg.u.msg_unit_knowledge_update ); break;
-        case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:           Destroy( agentKnowledges_, asn.msg.u.msg_unit_knowledge_destruction->oid ); break;
-        case T_MsgsSimToClient_msg_msg_side_creation:                        CreateUpdate< Sendable< kernel::Team_ABC >, Side >( sides_, *asn.msg.u.msg_side_creation ); break;
-        case T_MsgsSimToClient_msg_msg_knowledge_group_creation:             CreateUpdate< KnowledgeGroup, KnowledgeGroup >( knowledgeGroups_, *asn.msg.u.msg_knowledge_group_creation ); break;
-        case T_MsgsSimToClient_msg_msg_formation_creation:                   CreateUpdate2< Formation, Formation >( formations_, *levels_, *asn.msg.u.msg_formation_creation ); break;
-        case T_MsgsSimToClient_msg_msg_unit_creation:                        CreateUpdate< Agent, Agent >( agents_, *asn.msg.u.msg_unit_creation ); break;
-        case T_MsgsSimToClient_msg_msg_unit_environment_type:                agents_.Get( asn.msg.u.msg_unit_environment_type->oid ).Update( *asn.msg.u.msg_unit_environment_type ); break;
-        case T_MsgsSimToClient_msg_msg_unit_destruction:                     Destroy( agents_, asn.msg.u.msg_unit_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_automat_creation :                    CreateUpdate< Automat, Automat >( automats_, *asn.msg.u.msg_automat_creation ); break;
-        case T_MsgsSimToClient_msg_msg_unit_attributes:                      agents_.Get( asn.msg.u.msg_unit_attributes->oid ).Update( *asn.msg.u.msg_unit_attributes ); break;
-        case T_MsgsSimToClient_msg_msg_automat_attributes:                   automats_.Get( asn.msg.u.msg_automat_attributes->oid ).Update( *asn.msg.u.msg_automat_attributes  ); break;
-        case T_MsgsSimToClient_msg_msg_unit_pathfind:                        agents_.Get( asn.msg.u.msg_unit_pathfind->oid ).Update( *asn.msg.u.msg_unit_pathfind ); break;
-        case T_MsgsSimToClient_msg_msg_start_unit_fire:                      CreateUpdate< Fire, Fire >( fires_, asn.msg.u.msg_start_unit_fire->fire_oid, *asn.msg.u.msg_start_unit_fire );
-                                                                             agents_.Get( asn.msg.u.msg_start_unit_fire->firer_oid ).Update( *asn.msg.u.msg_start_unit_fire ); break;
-        case T_MsgsSimToClient_msg_msg_stop_unit_fire:                       Destroy( fires_, asn.msg.u.msg_stop_unit_fire->fire_oid ); break;
-        case T_MsgsSimToClient_msg_msg_start_population_fire:                CreateUpdate< PopulationFire, PopulationFire >( populationFires_, asn.msg.u.msg_start_population_fire->fire_oid, *asn.msg.u.msg_start_population_fire ); break;
-        case T_MsgsSimToClient_msg_msg_stop_population_fire:                 Destroy( populationFires_, asn.msg.u.msg_stop_population_fire->fire_oid ); break;
-        case T_MsgsSimToClient_msg_msg_explosion:
-            break;
-        case T_MsgsSimToClient_msg_msg_report:                               CreateUpdate< Report, Report >( reports_, asn.msg.u.msg_report->cr_oid, *asn.msg.u.msg_report ); break;
-        case T_MsgsSimToClient_msg_msg_invalidate_report:                    Destroy( reports_, asn.msg.u.msg_invalidate_report->cr_oid ); break;
-        case T_MsgsSimToClient_msg_msg_trace:
-            break;  // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
-        case T_MsgsSimToClient_msg_msg_unit_detection:                       agents_.Get( asn.msg.u.msg_unit_detection->oid ).Update( *asn.msg.u.msg_unit_detection ); break;
-        case T_MsgsSimToClient_msg_msg_object_detection:                     agents_.Get( asn.msg.u.msg_object_detection->oid ).Update( *asn.msg.u.msg_object_detection ); break;
-        case T_MsgsSimToClient_msg_msg_decisional_state:                     UpdateAnyAgent( asn.msg.u.msg_decisional_state->oid, *asn.msg.u.msg_decisional_state ); break;
-        case T_MsgsSimToClient_msg_msg_start_fire_effect:                    CreateUpdate< FireEffect, FireEffect >( fireEffects_, asn.msg.u.msg_start_fire_effect->effect_oid, *asn.msg.u.msg_start_fire_effect ); break;
-        case T_MsgsSimToClient_msg_msg_stop_fire_effect:                     Destroy( fireEffects_, asn.msg.u.msg_stop_fire_effect ); break;
-        case T_MsgsSimToClient_msg_msg_unit_order:                           agents_     .Get( asn.msg.u.msg_unit_order       ->oid ).Update( *asn.msg.u.msg_unit_order ); break;
-        case T_MsgsSimToClient_msg_msg_automat_order:                        automats_   .Get( asn.msg.u.msg_automat_order    ->oid ).Update( *asn.msg.u.msg_automat_order ); break;
-        case T_MsgsSimToClient_msg_msg_population_order:                     populations_.Get( asn.msg.u.msg_population_order ->oid ).Update( *asn.msg.u.msg_population_order ); break;
+        CreateUpdate< Fire >( fires_, wrapper.message().start_unit_fire().fire_oid(), wrapper.message().start_unit_fire() );
+        agents_.Get( wrapper.message().start_unit_fire().firer_oid() ).Update( wrapper.message().start_unit_fire() ); 
+    }
+    if( wrapper.message().has_stop_unit_fire() )
+        Destroy( fires_, wrapper.message().stop_unit_fire().fire_oid() ); 
+    if( wrapper.message().has_start_population_fire() )
+        CreateUpdate< PopulationFire >( populationFires_, wrapper.message().start_population_fire().fire_oid(), wrapper.message().start_population_fire() ); 
+    if( wrapper.message().has_stop_population_fire() )
+        Destroy( populationFires_, wrapper.message().stop_population_fire().fire_oid() ); 
+    if( wrapper.message().has_explosion() )
+	{} // $$$$ merge
 
-        case T_MsgsSimToClient_msg_msg_object_creation:                      CreateUpdate< Object, Object >( objects_, asn.msg.u.msg_object_creation->oid, *asn.msg.u.msg_object_creation ); break;
-        case T_MsgsSimToClient_msg_msg_object_update:                        objects_.Get( asn.msg.u.msg_object_update->oid ).Update( *asn.msg.u.msg_object_update ); break;
-        case T_MsgsSimToClient_msg_msg_object_destruction:                   Destroy( objects_, asn.msg.u.msg_object_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_object_knowledge_creation:            CreateUpdate< ObjectKnowledge, ObjectKnowledge >( objectKnowledges_, asn.msg.u.msg_object_knowledge_creation->oid, *asn.msg.u.msg_object_knowledge_creation ); break;
-        case T_MsgsSimToClient_msg_msg_object_knowledge_update:              objectKnowledges_.Get( asn.msg.u.msg_object_knowledge_update->oid ).Update( *asn.msg.u.msg_object_knowledge_update ); break;
-        case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:         Destroy( objectKnowledges_, asn.msg.u.msg_object_knowledge_destruction->oid ); break;
+        
+    if( wrapper.message().has_report() )
+        CreateUpdate< Report >( reports_, wrapper.message().report().cr_oid(), wrapper.message().report() ); 
+    if( wrapper.message().has_invalidate_report() )
+        Destroy( reports_, wrapper.message().invalidate_report().cr_oid() ); 
+    if( wrapper.message().has_trace() )
 
-        case T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation:    CreateUpdate< LogConsignMaintenance, LogConsignMaintenance >( logConsignsMaintenance_, asn.msg.u.msg_log_maintenance_handling_creation->oid_consigne, *asn.msg.u.msg_log_maintenance_handling_creation ); break;
-        case T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction: Destroy( logConsignsMaintenance_, asn.msg.u.msg_log_maintenance_handling_destruction->oid_consigne ); break;
-        case T_MsgsSimToClient_msg_msg_log_maintenance_handling_update:      logConsignsMaintenance_.Get( asn.msg.u.msg_log_maintenance_handling_update->oid_consigne ).Update( *asn.msg.u.msg_log_maintenance_handling_update ); break;
-        case T_MsgsSimToClient_msg_msg_log_maintenance_state:                agents_.Get( asn.msg.u.msg_log_maintenance_state->oid_pion ).Update( *asn.msg.u.msg_log_maintenance_state ); break;
+          // $$$$ AGE 2007-04-18: Evenements, modèle client => rien, ou remanier
+    if( wrapper.message().has_unit_detection() )
+        agents_.Get( wrapper.message().unit_detection().oid() ).Update( wrapper.message().unit_detection() ); 
+    if( wrapper.message().has_object_detection() )
+        agents_.Get( wrapper.message().object_detection().oid() ).Update( wrapper.message().object_detection() ); 
+    if( wrapper.message().has_decisional_state() )
+        UpdateAnyAgent( wrapper.message().decisional_state().oid(), wrapper.message().decisional_state() ); 
+    if( wrapper.message().has_start_fire_effect() )
+        CreateUpdate< FireEffect >( fireEffects_, wrapper.message().start_fire_effect().effect_oid(), wrapper.message().start_fire_effect() ); 
+    if( wrapper.message().has_stop_fire_effect() )
+        Destroy( fireEffects_, wrapper.message().stop_fire_effect().oid() ); 
+    if( wrapper.message().has_unit_order() )
+        agents_     .Get( wrapper.message().unit_order().oid() ).Update( wrapper.message().unit_order() ); 
+    if( wrapper.message().has_automat_order() )
+        automats_   .Get( wrapper.message().automat_order().oid() ).Update( wrapper.message().automat_order() ); 
+    if( wrapper.message().has_population_order() )
+        populations_.Get( wrapper.message().population_order().oid() ).Update( wrapper.message().population_order() ); 
 
-        case T_MsgsSimToClient_msg_msg_log_supply_handling_creation:        CreateUpdate< LogConsignSupply, LogConsignSupply >( logConsignsSupply_, asn.msg.u.msg_log_supply_handling_creation->oid_consigne, *asn.msg.u.msg_log_supply_handling_creation ); break;
-        case T_MsgsSimToClient_msg_msg_log_supply_handling_destruction:     Destroy( logConsignsSupply_, asn.msg.u.msg_log_supply_handling_destruction->oid_consigne ); break;
-        case T_MsgsSimToClient_msg_msg_log_supply_handling_update:          logConsignsSupply_.Get( asn.msg.u.msg_log_supply_handling_update->oid_consigne ).Update( *asn.msg.u.msg_log_supply_handling_update ); break;
-        case T_MsgsSimToClient_msg_msg_log_supply_state:                    agents_.Get( asn.msg.u.msg_log_medical_state->oid_pion ).Update( *asn.msg.u.msg_log_supply_state); break;
-        case T_MsgsSimToClient_msg_msg_log_supply_quotas:                   automats_.Get( asn.msg.u.msg_log_supply_quotas->oid_automate ).Update( *asn.msg.u.msg_log_supply_quotas ); break;
+    if( wrapper.message().has_object_creation() )
+        CreateUpdate< Object >( objects_, wrapper.message().object_creation().oid(), wrapper.message().object_creation() ); 
+    if( wrapper.message().has_object_update() )
+        objects_.Get( wrapper.message().object_update().oid() ).Update( wrapper.message().object_update() ); 
+    if( wrapper.message().has_object_destruction() )
+        Destroy( objects_, wrapper.message().object_destruction().oid() ); 
+    if( wrapper.message().has_object_knowledge_creation() )
+        CreateUpdate< ObjectKnowledge >( objectKnowledges_, wrapper.message().object_knowledge_creation().oid(), wrapper.message().object_knowledge_creation() ); 
+    if( wrapper.message().has_object_knowledge_update() )
+        objectKnowledges_.Get( wrapper.message().object_knowledge_update().oid() ).Update( wrapper.message().object_knowledge_update() ); 
+    if( wrapper.message().has_object_knowledge_destruction() )
+        Destroy( objectKnowledges_, wrapper.message().object_knowledge_destruction().oid() ); 
 
-        case T_MsgsSimToClient_msg_msg_log_medical_handling_creation:       CreateUpdate< LogConsignMedical, LogConsignMedical >( logConsignsMedical_, asn.msg.u.msg_log_medical_handling_creation->oid_consigne, *asn.msg.u.msg_log_medical_handling_creation ); break;
-        case T_MsgsSimToClient_msg_msg_log_medical_handling_destruction:    Destroy( logConsignsMedical_, asn.msg.u.msg_log_medical_handling_destruction->oid_consigne ); break;
-        case T_MsgsSimToClient_msg_msg_log_medical_handling_update:         logConsignsMedical_.Get( asn.msg.u.msg_log_medical_handling_update->oid_consigne ).Update( *asn.msg.u.msg_log_medical_handling_update ); break;
-        case T_MsgsSimToClient_msg_msg_log_medical_state:                   agents_.Get( asn.msg.u.msg_log_medical_state->oid_pion ).Update( *asn.msg.u.msg_log_medical_state ); break;
+    if( wrapper.message().has_log_maintenance_handling_creation() )
+        CreateUpdate< LogConsignMaintenance >( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_creation().oid_consigne(), wrapper.message().log_maintenance_handling_creation() ); 
+    if( wrapper.message().has_log_maintenance_handling_destruction() )
+        Destroy( logConsignsMaintenance_, wrapper.message().log_maintenance_handling_destruction().oid_consigne() ); 
+    if( wrapper.message().has_log_maintenance_handling_update() )
+        logConsignsMaintenance_.Get( wrapper.message().log_maintenance_handling_update().oid_consigne() ).Update( wrapper.message().log_maintenance_handling_update() ); 
+    if( wrapper.message().has_log_maintenance_state() )
+        agents_.Get( wrapper.message().log_maintenance_state().oid_pion() ).Update( wrapper.message().log_maintenance_state() ); 
 
-        case T_MsgsSimToClient_msg_msg_population_creation                       : CreateUpdate< Population, Population >( populations_, *asn.msg.u.msg_population_creation ); break;
-        case T_MsgsSimToClient_msg_msg_population_update                         : populations_.Get( asn.msg.u.msg_population_update->oid ).Update( *asn.msg.u.msg_population_update ); break;
-        case T_MsgsSimToClient_msg_msg_population_concentration_creation         : populations_.Get( asn.msg.u.msg_population_concentration_creation->oid_population ).Update( *asn.msg.u.msg_population_concentration_creation ); break;
-        case T_MsgsSimToClient_msg_msg_population_concentration_destruction      : populations_.Get( asn.msg.u.msg_population_concentration_destruction->oid_population ).Update( *asn.msg.u.msg_population_concentration_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_population_concentration_update           : populations_.Get( asn.msg.u.msg_population_concentration_update->oid_population ).Update( *asn.msg.u.msg_population_concentration_update ); break;
-        case T_MsgsSimToClient_msg_msg_population_flow_creation                  : populations_.Get( asn.msg.u.msg_population_flow_creation->oid_population ).Update( *asn.msg.u.msg_population_flow_creation ); break;
-        case T_MsgsSimToClient_msg_msg_population_flow_destruction               : populations_.Get( asn.msg.u.msg_population_flow_destruction->oid_population ).Update( *asn.msg.u.msg_population_flow_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_population_flow_update                    : populations_.Get( asn.msg.u.msg_population_flow_update->oid_population ).Update( *asn.msg.u.msg_population_flow_update ); break;
+    if( wrapper.message().has_log_supply_handling_creation() )
+        CreateUpdate< LogConsignSupply >( logConsignsSupply_, wrapper.message().log_supply_handling_creation().oid_consigne(), wrapper.message().log_supply_handling_creation() ); 
+    if( wrapper.message().has_log_supply_handling_destruction() )
+        Destroy( logConsignsSupply_, wrapper.message().log_supply_handling_destruction().oid_consigne() ); 
+    if( wrapper.message().has_log_supply_handling_update() )
+        logConsignsSupply_.Get( wrapper.message().log_supply_handling_update().oid_consigne() ).Update( wrapper.message().log_supply_handling_update() ); 
+    if( wrapper.message().has_log_medical_state() )
+        agents_.Get( wrapper.message().log_medical_state().oid_pion() ).Update( wrapper.message().log_medical_state()); 
+    if( wrapper.message().has_log_supply_quotas() )
+        automats_.Get( wrapper.message().log_supply_quotas().oid_automate() ).Update( wrapper.message().log_supply_quotas() ); 
 
-        case T_MsgsSimToClient_msg_msg_population_knowledge_creation                  : CreateUpdate< PopulationKnowledge, PopulationKnowledge >( populationKnowledges_, asn.msg.u.msg_population_knowledge_creation->oid_connaissance, *asn.msg.u.msg_population_knowledge_creation ); break;
-        case T_MsgsSimToClient_msg_msg_population_knowledge_update                    : populationKnowledges_.Get( asn.msg.u.msg_population_knowledge_update->oid_connaissance ).Update( *asn.msg.u.msg_population_knowledge_update ); break;
-        case T_MsgsSimToClient_msg_msg_population_knowledge_destruction               : Destroy( populationKnowledges_, asn.msg.u.msg_population_knowledge_destruction->oid_connaissance ); break;
-        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_creation    : populationKnowledges_.Get( asn.msg.u.msg_population_concentration_knowledge_creation->oid_connaissance_population ).Update( *asn.msg.u.msg_population_concentration_knowledge_creation ); break;
-        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_update      : populationKnowledges_.Get( asn.msg.u.msg_population_concentration_knowledge_update->oid_connaissance_population ).Update( *asn.msg.u.msg_population_concentration_knowledge_update ); break;
-        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction : populationKnowledges_.Get( asn.msg.u.msg_population_concentration_knowledge_destruction->oid_connaissance_population ).Update( *asn.msg.u.msg_population_concentration_knowledge_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_population_flow_knowledge_creation             : populationKnowledges_.Get( asn.msg.u.msg_population_flow_knowledge_creation->oid_connaissance_population ).Update( *asn.msg.u.msg_population_flow_knowledge_creation ); break;
-        case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update               : populationKnowledges_.Get( asn.msg.u.msg_population_flow_knowledge_update->oid_connaissance_population ).Update( *asn.msg.u.msg_population_flow_knowledge_update ); break;
-        case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction          : populationKnowledges_.Get( asn.msg.u.msg_population_flow_knowledge_destruction->oid_connaissance_population ).Update( *asn.msg.u.msg_population_flow_knowledge_destruction ); break;
-        case T_MsgsSimToClient_msg_msg_folk_creation                                  : folk_->Update( *asn.msg.u.msg_folk_creation ); break;
+    if( wrapper.message().has_log_medical_handling_creation() )
+        CreateUpdate< LogConsignMedical >( logConsignsMedical_, wrapper.message().log_medical_handling_creation().oid_consigne(),  wrapper.message().log_medical_handling_creation() ); 
+    if( wrapper.message().has_log_medical_handling_destruction() )
+        Destroy( logConsignsMedical_, wrapper.message().log_medical_handling_destruction().oid_consigne() ); 
+    if( wrapper.message().has_log_medical_handling_update() )
+        logConsignsMedical_.Get( wrapper.message().log_medical_handling_update().oid_consigne() ).Update( wrapper.message().log_medical_handling_update() ); 
+    if( wrapper.message().has_log_medical_state() )
+        agents_.Get( wrapper.message().log_medical_state().oid_pion() ).Update( wrapper.message().log_medical_state() ); 
 
-        case T_MsgsSimToClient_msg_msg_urban_creation                                 : CreateUpdate< UrbanObject, UrbanObject >( urbanBlocks_, *asn.msg.u.msg_urban_creation ); break;
-        case T_MsgsSimToClient_msg_msg_urban_knowledge_creation                       : CreateUpdate< UrbanKnowledge, UrbanKnowledge >( urbanKnowledges_, asn.msg.u.msg_urban_knowledge_creation->oid, *asn.msg.u.msg_urban_knowledge_creation ); break;
-        case T_MsgsSimToClient_msg_msg_urban_knowledge_update                         : urbanKnowledges_.Get( asn.msg.u.msg_urban_knowledge_update->oid ).Update( *asn.msg.u.msg_urban_knowledge_update ); break;
-        case T_MsgsSimToClient_msg_msg_urban_knowledge_destruction                    : Destroy( urbanKnowledges_, asn.msg.u.msg_urban_knowledge_destruction->oid ); break;
+    if( wrapper.message().has_population_creation() )
+	    CreateUpdate< Population >( populations_, wrapper.message().population_creation() ); 
+    if( wrapper.message().has_population_update() )
+	    populations_.Get( wrapper.message().population_update().oid() ).Update( wrapper.message().population_update() ); 
+    if( wrapper.message().has_population_concentration_creation() )
+	    populations_.Get( wrapper.message().population_concentration_creation().oid_population() ).Update( wrapper.message().population_concentration_creation() ); 
+    if( wrapper.message().has_population_concentration_destruction() )
+	    populations_.Get( wrapper.message().population_concentration_destruction().oid_population() ).Update( wrapper.message().population_concentration_destruction() ); 
+    if( wrapper.message().has_population_concentration_update() )
+	    populations_.Get( wrapper.message().population_concentration_update().oid_population() ).Update( wrapper.message().population_concentration_update() ); 
+    if( wrapper.message().has_population_flow_creation() )
+	     populations_.Get( wrapper.message().population_flow_creation().oid_population() ).Update( wrapper.message().population_flow_creation() ); 
+    if( wrapper.message().has_population_flow_destruction() )
+	     populations_.Get( wrapper.message().population_flow_destruction().oid_population() ).Update( wrapper.message().population_flow_destruction() ); 
+    if( wrapper.message().has_population_flow_update() )
+	     populations_.Get( wrapper.message().population_flow_update().oid_population() ).Update( wrapper.message().population_flow_update() ); 
+
+    if( wrapper.message().has_population_knowledge_creation() )
+	     CreateUpdate< PopulationKnowledge >( populationKnowledges_, wrapper.message().population_knowledge_creation().oid_connaissance(), wrapper.message().population_knowledge_creation() ); 
+    if( wrapper.message().has_population_knowledge_update() )
+	     populationKnowledges_.Get( wrapper.message().population_knowledge_update().oid_connaissance() ).Update( wrapper.message().population_knowledge_update() ); 
+    if( wrapper.message().has_population_knowledge_destruction() )
+	     Destroy( populationKnowledges_, wrapper.message().population_knowledge_destruction().oid_connaissance() ); 
+    if( wrapper.message().has_population_concentration_knowledge_creation() )
+	     populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_creation().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_creation() ); 
+    if( wrapper.message().has_population_concentration_knowledge_update() )
+	     populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_update().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_update() ); 
+    if( wrapper.message().has_population_concentration_knowledge_destruction() )
+	     populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_destruction().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_destruction() ); 
+    if( wrapper.message().has_population_flow_knowledge_creation() )
+	     populationKnowledges_.Get( wrapper.message().population_flow_knowledge_creation().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_creation() ); 
+    if( wrapper.message().has_population_flow_knowledge_update() )
+	     populationKnowledges_.Get( wrapper.message().population_flow_knowledge_update().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_update() ); 
+    if( wrapper.message().has_population_flow_knowledge_destruction() )
+	     populationKnowledges_.Get( wrapper.message().population_flow_knowledge_destruction().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_destruction() ); 
+    if( wrapper.message().has_folk_creation() )
+	     folk_->Update( wrapper.message().folk_creation() ); 
+
+    if( wrapper.message().has_urban_creation() )
+        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation() );
+
+
+    if( wrapper.message().has_urban_knowledge_creation() )
+        CreateUpdate< UrbanKnowledge >( urbanKnowledges_, wrapper.message().urban_knowledge_creation() );
+    if( wrapper.message().has_urban_knowledge_update() )
+        urbanKnowledges_.Get( wrapper.message().urban_knowledge_update().oid() ).Update( wrapper.message().urban_knowledge_update() ); 
+    if( wrapper.message().has_urban_knowledge_destruction() )
+        Destroy( urbanKnowledges_, wrapper.message().urban_knowledge_destruction().oid() ); 
+
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked
-    }
+//    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: Model::CreateUpdate
 // Created: SBO 2008-07-09
 // -----------------------------------------------------------------------------
-template< typename T, typename C, typename P_ASN >
-void Model::CreateUpdate( tools::Resolver< T >& resolver, const P_ASN& parameterAsn )
+template< typename Concrete, typename Base, typename Message >
+void Model::CreateUpdate( tools::Resolver< Base >& resolver, const Message& message )
 {
-    CreateUpdate< T, C, P_ASN >( resolver, parameterAsn.oid, parameterAsn );
-}
-// -----------------------------------------------------------------------------
-// Name: Model::CreateUpdate
-// Created: MGD 2009-12-22
-// -----------------------------------------------------------------------------
-template< typename T, typename C, typename P_ASN >
-void Model::CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P_ASN& parameterAsn )
-{
-    T* pElement = resolver.Find( id );
-    if( !pElement )
-    {
-        pElement = new C( *this, parameterAsn );
-        AddExtensions( *pElement );
-        resolver.Register( pElement->GetId(), *pElement );
-    }
-    static_cast< C* >( pElement )->Update( parameterAsn );
+    CreateUpdate< Concrete, Base, Message >( resolver, message.oid(), message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Model::CreateUpdate
 // Created: MGD 2009-12-22
 // -----------------------------------------------------------------------------
-template< typename T, typename C, typename P, typename P_ASN >
-void Model::CreateUpdate2( tools::Resolver< T >& resolver, const P& parameter, const P_ASN& parameterAsn )
+template< typename Concrete, typename Base, typename Message >
+void Model::CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const Message& message )
 {
-    T* pElement = resolver.Find( parameterAsn.oid );
+    Base* pElement = resolver.Find( id );
     if( !pElement )
     {
-        pElement = new C( *this, parameter, parameterAsn );
+        pElement = new Concrete( *this, message );
         AddExtensions( *pElement );
         resolver.Register( pElement->GetId(), *pElement );
     }
-    static_cast< C* >( pElement )->Update( parameterAsn );
+    static_cast< Concrete* >( pElement )->Update( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Model::CreateUpdate
+// Created: MGD 2009-12-22
+// -----------------------------------------------------------------------------
+template< typename Concrete, typename Base, typename Message, typename Parameter >
+void Model::CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const Message& message, const Parameter& parameter )
+{
+    Base* pElement = resolver.Find( id );
+    if( !pElement )
+    {
+        pElement = new Concrete( *this, message, parameter );
+        AddExtensions( *pElement );
+        resolver.Register( pElement->GetId(), *pElement );
+    }
+    static_cast< Concrete* >( pElement )->Update( message );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: Model::UpdateAnyAgent
@@ -353,7 +447,7 @@ void Model::SendFirstTick( ClientPublisher_ABC& publisher ) const
 // Name: Model::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const
+void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned factor ) const
 {
     simulation_->SendReplayInfo( publisher, totalTicks, status, factor );
 }

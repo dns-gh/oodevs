@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
-#include "game_asn/SimulationSenders.h"
 #include "gaming/Dotations.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
@@ -26,9 +25,19 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "protocol/Protocol.h"       
+#include "protocol/Publisher_ABC.h"
+#include "protocol/SimulationSenders.h"
+
 
 using namespace kernel;
 using namespace gui;
+
+namespace MsgsClientToSim
+{
+    class MsgMagicActionPartialRecovery;
+}
 
 class SpinTableItem : public QTableItem
 {
@@ -363,7 +372,7 @@ void LogisticSupplyRecompletionDialog::Show()
 // Name: LogisticSupplyRecompletionDialog::FillPersonal
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillPersonal( ASN1T_MagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillPersonal( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
 {
     uint nNbrPersonals = 0;
     for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
@@ -375,21 +384,20 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ASN1T_MagicActionPartialRec
 
     if( nNbrPersonals > 0 )
     {   
-        action.personnels.n        = nNbrPersonals;
-        action.m.personnelsPresent  = 1;
+//        action.mutable_personnels()->set_n( nNbrPersonals );
 
-        ASN1T_HumanRecovery* pAsnPersonnel = new ASN1T_HumanRecovery[ nNbrPersonals ];
-        action.personnels.elem = pAsnPersonnel;
-        uint nAsnIdx = 0;
+//        MsgHumanRecovery* pAsnPersonnel = new MsgHumanRecovery[ nNbrPersonals ];
+//        action.mutable_personnels()->mutable_elem() = pAsnPersonnel;
+//        unsigned int nAsnIdx = 0;
         for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pPersonnelItemCheckBox = static_cast< QCheckTableItem* >( personalsTable_->item( nRow, 0 ) );
             QTableItem*      pNbrItem               = personalsTable_->item( nRow, 2 );
             if( !pPersonnelItemCheckBox->isChecked() )
                 continue;
-            ASN1T_HumanRecovery& asnPersonnel = pAsnPersonnel[ nAsnIdx ++ ];
-            asnPersonnel.rang                           = (ASN1T_EnumHumanRank)nRow;
-            asnPersonnel.nombre_disponible              = pNbrItem->text().toUInt();
+            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfHumanRecovery_HumanRecovery& personnel = *action.mutable_personnels()->add_elem();
+            personnel.set_rang( ( EnumHumanRank )nRow );
+            personnel.set_nombre_disponible( pNbrItem->text().toUInt() );
         }
     }
 }
@@ -398,25 +406,23 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ASN1T_MagicActionPartialRec
 // Name: LogisticSupplyRecompletionDialog::FillEquipments
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillEquipments( ASN1T_MagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillEquipments( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
 {
     if( equipmentsTable_->numRows() > 1 )
     {
-        action.m.equipementsPresent = 1;
-        uint nAsnIdx = 0;
-        ASN1T_EquipmentRecovery* pAsnEquipement = new ASN1T_EquipmentRecovery[ equipmentsTable_->numRows() - 1 ];
+//        uint nAsnIdx = 0;
+//        MsgEquipmentRecovery* pAsnEquipement = new MsgEquipmentRecovery[ equipmentsTable_->numRows() - 1 ];
         for( int nRow = 0; nRow < equipmentsTable_->numRows() - 1; ++nRow )
         {
             QComboTableItem* pEquipementItem  = static_cast< QComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
             QTableItem*      pNbrItem         = equipmentsTable_->item( nRow, 1 );
 
-            ASN1T_EquipmentRecovery& asnEquipement = pAsnEquipement[ nAsnIdx ++ ];
-            asnEquipement.type_equipement   = equipments_[ pEquipementItem->currentText() ]->type_.GetId();
-            asnEquipement.nombre_disponible = pNbrItem->text().toUInt();
+            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfEquipmentRecovery_EquipmentRecovery& equipement = *action.mutable_equipements()->add_elem();
+            equipement.mutable_type_equipement()->set_equipment( equipments_[ pEquipementItem->currentText() ]->type_.GetId() );
+            equipement.set_nombre_disponible( pNbrItem->text().toUInt() );
         }
-
-        action.equipements.n    = equipmentsTable_->numRows() - 1;
-        action.equipements.elem = pAsnEquipement;
+//        action.mutable_equipements()->set_n( equipmentsTable_->numRows() - 1 );
+//        action.mutable_equipements()->mutable_elem() = pAsnEquipement;
     }
 }
 
@@ -424,9 +430,9 @@ void LogisticSupplyRecompletionDialog::FillEquipments( ASN1T_MagicActionPartialR
 // Name: LogisticSupplyRecompletionDialog::FillDotations
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillDotations( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
 {
-    uint nNbrDotations = 0;
+    unsigned int nNbrDotations = 0;
     for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
     {
         QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
@@ -435,12 +441,10 @@ void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionPartialR
     }
     if( nNbrDotations > 0 )
     {   
-        action.dotations.n        = nNbrDotations;
-        action.m.dotationsPresent = 1;
-
-        ASN1T_DotationRecovery* pAsnDotations = new ASN1T_DotationRecovery[ nNbrDotations ];
-        action.dotations.elem = pAsnDotations;
-        uint nAsnIdx = 0;
+//        action.mutable_dotations()->set_n( nNbrDotations );
+//        MsgDotationRecovery* pAsnDotations = new MsgDotationRecovery[ nNbrDotations ];
+//        action.mutable_dotations()->mutable_elem() = pAsnDotations;
+//        uint nAsnIdx = 0;
         for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pDotationItemCheckBox = static_cast< QCheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
@@ -451,9 +455,9 @@ void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionPartialR
             if( !pDotationItemCheckBox->isChecked() )
                 continue;
 
-            ASN1T_DotationRecovery& asnDotation = pAsnDotations[ nAsnIdx ++ ];
-            asnDotation.famille_dotation = (ASN1T_EnumDotationFamily)tools::DotationFamilyFromString( pDotationItem->text() );
-            asnDotation.pourcentage      = pPercentageItem->text().toUInt();
+            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfDotationRecovery_DotationRecovery& dotation = *action.mutable_dotations()->add_elem();
+            dotation.set_famille_dotation( ( EnumDotationFamily )tools::DotationFamilyFromString( pDotationItem->text() ) );
+            dotation.set_pourcentage( pPercentageItem->text().toUInt() );
         }
     } 
 }
@@ -462,7 +466,7 @@ void LogisticSupplyRecompletionDialog::FillDotations(  ASN1T_MagicActionPartialR
 // Name: LogisticSupplyRecompletionDialog::FillAmmunitions
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillAmmunitions( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
 {
     uint nNbrMunitions = 0;
     for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
@@ -474,12 +478,10 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartial
     }
     if( nNbrMunitions > 0 )
     {   
-        action.munitions.n        = nNbrMunitions;
-        action.m.munitionsPresent = 1;
-
-        ASN1T_AmmunitionDotationRecovery* pAsnMunitions = new ASN1T_AmmunitionDotationRecovery[ nNbrMunitions ];
-        action.munitions.elem = pAsnMunitions;
-        uint nAsnIdx = 0;
+//        action.mutable_munitions().set_n( nNbrMunitions );
+//        MsgsClientToSim::AmmunitionDotationRecovery* pAsnMunitions = new MsgAmmunitionDotationRecovery[ nNbrMunitions ];
+//        action.mutable_munitions()->mutable_elem() = pAsnMunitions;
+//        uint nAsnIdx = 0;
         for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pMunitionItemCheckBox = static_cast< QCheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
@@ -489,9 +491,9 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartial
             if( !pMunitionItemCheckBox->isChecked() )
                 continue;
 
-            ASN1T_AmmunitionDotationRecovery& asnMunition = pAsnMunitions[ nAsnIdx ++ ];
-            asnMunition.famille_munition = (ASN1T_EnumAmmunitionFamily)nRow; // $$$$ SBO 2008-06-16: should use munition family
-            asnMunition.pourcentage      = pPercentageItem->text().toUInt();
+            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery_AmmunitionDotationRecovery& munition = *action.mutable_munitions()->add_elem();
+            munition.set_famille_munition( ( EnumAmmunitionFamily )nRow ); // $$$$ SBO 2008-06-16: should use munition family
+            munition.set_pourcentage( pPercentageItem->text().toUInt() );
         }
     }   
 }
@@ -500,9 +502,9 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( ASN1T_MagicActionPartial
 // Name: LogisticSupplyRecompletionDialog::FillSupplies
 // Created: AGE 2006-05-02
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillSupplies( ASN1T_MagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillSupplies( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
 {
-    uint nNbrResources = 0;
+    unsigned int nNbrResources = 0;
     for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
     {
         QCheckTableItem* pCheckTableItem = static_cast< QCheckTableItem* >( stockTable_->item( nRow, 0 ) );
@@ -512,12 +514,9 @@ void LogisticSupplyRecompletionDialog::FillSupplies( ASN1T_MagicActionPartialRec
     }
     if( nNbrResources > 0 )
     {   
-        action.stocks.n        = nNbrResources;
-        action.m.stocksPresent = 1;
-
-        ASN1T_StockRecovery* pAsnStocks = new ASN1T_StockRecovery[ nNbrResources ];
-        action.stocks.elem = pAsnStocks;
-        uint nAsnIdx = 0;
+//        action.mutable_stocks()->set_n( nNbrResources );
+//        MsgsClientToSim::StockRecovery* pAsnStocks = new StockRecovery[ nNbrResources ];
+//        action.mutable_stocks()->add_elem() = pAsnStocks;
         for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pItemCheckBox = static_cast< QCheckTableItem* >( stockTable_->item( nRow, 0 ) );
@@ -531,9 +530,9 @@ void LogisticSupplyRecompletionDialog::FillSupplies( ASN1T_MagicActionPartialRec
             assert( pItem );            
             assert( pQttyItem );
 
-            ASN1T_StockRecovery& asnStock = pAsnStocks[ nAsnIdx ++ ];
-            asnStock.ressource_id        = stocks_[ pItem->text() ]->type_->GetId();
-            asnStock.quantite_disponible = pQttyItem->text().toUInt();
+            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery& stock = *action.mutable_stocks()->add_elem();
+            stock.set_ressource_id       ( stocks_[ pItem->text() ]->type_->GetId() );
+            stock.set_quantite_disponible( pQttyItem->text().toUInt() );
         }
     } 
 }
@@ -547,34 +546,33 @@ void LogisticSupplyRecompletionDialog::Validate()
     if( ! selected_ )
         return;
 
-    simulation::UnitMagicAction asnMsg;
-    asnMsg().oid = selected_->GetId();
+    simulation::UnitMagicAction message;
+    message().set_oid( selected_->GetId() );
 
-    ASN1T_MagicActionPartialRecovery asnMagicAction;
-    asnMsg().action.t                        = T_MsgUnitMagicAction_action_recompletement_partiel;
-    asnMsg().action.u.recompletement_partiel = &asnMagicAction;
+    MsgsClientToSim::MsgMagicActionPartialRecovery magicAction;
+    *message().mutable_action()->mutable_recompletement_partiel() = magicAction;   // $$$$ _RC_ FDS 2010-01-27: Je ne comprends pas cette innitialisation ???
 
-    FillPersonal( asnMagicAction );
-    FillEquipments( asnMagicAction );
-    FillDotations( asnMagicAction );
-    FillAmmunitions( asnMagicAction );
-    FillSupplies( asnMagicAction );
+    FillPersonal( magicAction );
+    FillEquipments( magicAction );
+    FillDotations( magicAction );
+    FillAmmunitions( magicAction );
+    FillSupplies( magicAction );
 
-    asnMsg.Send( publisher_ );
-    if( asnMagicAction.m.dotationsPresent && asnMagicAction.dotations.n > 0 )
-        delete [] asnMagicAction.dotations.elem;
+    message.Send( publisher_ );
+    if( magicAction.has_dotations()  && magicAction.dotations().elem_size() > 0 )
+        delete [] magicAction.mutable_dotations()->mutable_elem();
 
-    if( asnMagicAction.m.munitionsPresent && asnMagicAction.munitions.n > 0 )
-        delete [] asnMagicAction.munitions.elem;
+    if( magicAction.has_munitions()  && magicAction.munitions().elem_size() > 0 )
+        delete [] magicAction.mutable_munitions()->mutable_elem();
 
-    if( asnMagicAction.m.equipementsPresent && asnMagicAction.equipements.n > 0 )
-        delete [] asnMagicAction.equipements.elem;
+    if( magicAction.has_equipements()  && magicAction.equipements().elem_size() > 0 )
+        delete [] magicAction.mutable_equipements()->mutable_elem();
 
-    if( asnMagicAction.m.personnelsPresent && asnMagicAction.personnels.n > 0 )
-        delete [] asnMagicAction.personnels.elem;
+    if( magicAction.has_personnels()  && magicAction.personnels().elem_size() > 0 )
+        delete [] magicAction.mutable_personnels()->mutable_elem();
 
-    if( asnMagicAction.m.stocksPresent && asnMagicAction.stocks.n > 0 )
-        delete [] asnMagicAction.stocks.elem;
+    if( magicAction.has_stocks()  && magicAction.stocks().elem_size() > 0 )
+        delete [] magicAction.mutable_stocks()->mutable_elem();
     selected_ = 0;
     hide();
 }

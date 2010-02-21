@@ -206,7 +206,7 @@ void DEC_Agent_PathClass::ReadObject( xml::xistream& xis )
     std::string strType( xml::attribute( xis, "type", std::string() ) );
     
     const MIL_ObjectType_ABC& objectType = MIL_ObjectFactory::FindType( strType );
-    uint id = objectType.GetID();
+    unsigned int id = objectType.GetID();
     if ( objectCosts_.size() <= id )
         objectCosts_.resize( id + 1, 0 );
 

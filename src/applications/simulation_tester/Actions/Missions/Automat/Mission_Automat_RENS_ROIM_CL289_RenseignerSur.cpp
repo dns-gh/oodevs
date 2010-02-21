@@ -43,9 +43,9 @@ void Mission_Automat_RENS_ROIM_CL289_RenseignerSur::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur& asnMission = *new ASN1T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_rens_roim_cl289_renseigner_sur;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_roim_cl289_renseigner_sur = &asnMission;
+    Mission_Automate_RENS_ROIM_CL289_RenseignerSur& asnMission = *new Mission_Automate_RENS_ROIM_CL289_RenseignerSur();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_rens_roim_cl289_renseigner_sur = &asnMission;
 
     const Path& ficelleDeVole_ = pTarget_->GetTestParam_Path();
     const T_LocationVector& zonesDeRecherche_ = pTarget_->GetTestParam_PolygonList();
@@ -64,8 +64,8 @@ void Mission_Automat_RENS_ROIM_CL289_RenseignerSur::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_RENS_ROIM_CL289_RenseignerSur::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_rens_roim_cl289_renseigner_sur );
-    ASN1T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_roim_cl289_renseigner_sur;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_rens_roim_cl289_renseigner_sur ());
+    Mission_Automate_RENS_ROIM_CL289_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_rens_roim_cl289_renseigner_sur;
 
     ASN_Tools::Delete( asnMission.ficelle_de_vole );
     ASN_Tools::Delete( asnMission.zones_de_recherche );

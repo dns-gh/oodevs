@@ -10,8 +10,14 @@
 #ifndef __NBCAttribute_h_
 #define __NBCAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
+#include "protocol/SimulationSenders.h"
+
+namespace Common
+{
+    class MsgObjectAttributes;
+    class MsgObjectAttributeNBC;
+}
 
 namespace dispatcher
 {
@@ -28,15 +34,15 @@ class NBCAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     NBCAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
+     NBCAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~NBCAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_ObjectAttributes& asnMsg );
-    virtual void Send     ( ASN1T_ObjectAttributes& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 private:
     //! @name 
@@ -44,7 +50,7 @@ private:
     void Clear();
     //@}
 private:
-    ASN1T_ObjectAttributeNBC nbc_; // XML reference - no resolved by dispatcher
+    Common::MsgObjectAttributeNBC nbc_; // XML reference - no resolved by dispatcher
 };
 
 }

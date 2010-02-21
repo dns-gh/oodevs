@@ -20,13 +20,13 @@
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_Agent_ABC;
-class NET_ASN_MsgUnitAttributes;
 class HLA_UpdateFunctor;
 
 namespace dotation
 {
     class ConsumptionComputer_ABC;
 }
+
 namespace detection
 {
     class DetectionComputer_ABC;
@@ -52,8 +52,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -103,8 +103,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    void SendChangedState( client::UnitAttributes& asnMsg ) const;
+    void SendFullState   ( client::UnitAttributes& asnMsg ) const;
     //@}
 
     //! @name HLA

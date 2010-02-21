@@ -38,11 +38,9 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetMoraleShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetTirednessShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( ModifyPH )
-
     {}
     virtual ~MockPHY_RoleInterface_HumanFactors() {}
     //@}
-
 
     virtual const PHY_Morale& GetMorale() const
     {
@@ -55,20 +53,29 @@ public:
         PHY_Tiredness* result = GetTirednessShadow();
         return *result;
     }
+    
+    virtual void SendChangedState( client::UnitAttributes& msg ) const
+    {
+        throw;
+    }
 
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const
+    {
+        throw;
+    }
 
     //! @name Operations
     //@{
-    MOCKPP_VOID_CHAINABLE_EXT1  ( MockPHY_RoleInterface_HumanFactors    , Update, bool, , bool );
-    MOCKPP_VOID_CHAINABLE0      ( MockPHY_RoleInterface_HumanFactors    , Clean );
-    MOCKPP_CONST_CHAINABLE0     ( MockPHY_RoleInterface_HumanFactors    , bool, HasChanged );
-    MOCKPP_VOID_CHAINABLE_EXT1  ( MockPHY_RoleInterface_HumanFactors    , ReadOverloading, xml::xistream&, , xml::xistream );
-    MOCKPP_VOID_CHAINABLE1      ( MockPHY_RoleInterface_HumanFactors    , SetMorale, PHY_Morale );
-    MOCKPP_VOID_CHAINABLE1      ( MockPHY_RoleInterface_HumanFactors    , SetExperience, PHY_Experience );
-    MOCKPP_VOID_CHAINABLE1      ( MockPHY_RoleInterface_HumanFactors    , SetTiredness, PHY_Tiredness );
-    MOCKPP_CONST_CHAINABLE0     ( MockPHY_RoleInterface_HumanFactors    , PHY_Morale*, GetMoraleShadow );
-    MOCKPP_CONST_CHAINABLE0     ( MockPHY_RoleInterface_HumanFactors    , PHY_Tiredness*, GetTirednessShadow );
-    MOCKPP_CONST_CHAINABLE_EXT1 ( MockPHY_RoleInterface_HumanFactors    , MT_Float, ModifyPH, MT_Float, MT_Float, ,MT_Float );
+    MOCKPP_VOID_CHAINABLE_EXT1  ( MockPHY_RoleInterface_HumanFactors, Update, bool, , bool );
+    MOCKPP_VOID_CHAINABLE0      ( MockPHY_RoleInterface_HumanFactors, Clean );
+    MOCKPP_CONST_CHAINABLE0     ( MockPHY_RoleInterface_HumanFactors, bool, HasChanged );
+    MOCKPP_VOID_CHAINABLE_EXT1  ( MockPHY_RoleInterface_HumanFactors, ReadOverloading, xml::xistream&, , xml::xistream );
+    MOCKPP_VOID_CHAINABLE1      ( MockPHY_RoleInterface_HumanFactors, SetMorale, PHY_Morale );
+    MOCKPP_VOID_CHAINABLE1      ( MockPHY_RoleInterface_HumanFactors, SetExperience, PHY_Experience );
+    MOCKPP_VOID_CHAINABLE1      ( MockPHY_RoleInterface_HumanFactors, SetTiredness, PHY_Tiredness );
+    MOCKPP_CONST_CHAINABLE0     ( MockPHY_RoleInterface_HumanFactors, PHY_Morale*, GetMoraleShadow );
+    MOCKPP_CONST_CHAINABLE0     ( MockPHY_RoleInterface_HumanFactors, PHY_Tiredness*, GetTirednessShadow );
+    MOCKPP_CONST_CHAINABLE_EXT1 ( MockPHY_RoleInterface_HumanFactors, MT_Float, ModifyPH, MT_Float, MT_Float, ,MT_Float );
     //@}
 
 };

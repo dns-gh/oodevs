@@ -31,7 +31,7 @@ ImprovableCapacity::ImprovableCapacity( const PHY_ConsumptionType& consumption, 
     xis >> xml::optional()
         >> xml::start( "resources" )
             // $$$$ _RC_ SBO 2009-06-10: Not a real list, only allows one dotation
-            >> list( "dotation", *this, &ImprovableCapacity::ReadDotation )
+            >> xml::list( "dotation", *this, &ImprovableCapacity::ReadDotation )
         >> xml::end();
 }
 
@@ -90,7 +90,7 @@ ImprovableCapacity::~ImprovableCapacity()
 // Name: ImprovableCapacity::load
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void ImprovableCapacity::load( MIL_CheckPointInArchive& ar, const uint )
+void ImprovableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     unsigned int consumptionId, dotationId;
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
@@ -109,11 +109,11 @@ void ImprovableCapacity::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: ImprovableCapacity::save
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void ImprovableCapacity::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void ImprovableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar << (const uint&)( default_ ? default_->GetID() : 0 )
-       << (const uint&)( dotation_ ? dotation_->GetMosID() : 0 )
+    ar << (const unsigned int&)( default_ ? default_->GetID() : 0 )
+       << (const unsigned int&)( dotation_ ? dotation_->GetMosID() : 0 )
        << nFullNbrDotation_;
 }
 
@@ -171,7 +171,7 @@ ConstructionCapacity::E_UnitType ImprovableCapacity::GetUnit() const
 // Name: ImprovableCapacity::GetMaxDotation
 // Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-uint ImprovableCapacity::GetMaxDotation() const
+unsigned int ImprovableCapacity::GetMaxDotation() const
 {
     return nFullNbrDotation_;
 }

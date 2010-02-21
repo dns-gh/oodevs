@@ -15,9 +15,10 @@
 #include "clients_gui/LabelDisplayer.h"
 #include "clients_gui/CheckBoxDisplayer.h"
 #include "clients_gui/SpinBoxDisplayer.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/publisher_ABC.h"
+#include "protocol/simulationsenders.h"
 
 using namespace kernel;
 
@@ -116,37 +117,24 @@ void ObjectPanel::OnApply()
     const kernel::Object_ABC* object = GetSelected();
     if( object )
     {
-        ASN1T_MagicActionUpdateObject asnAction;
-
-        asnAction.attributes.m.constructionPresent = 1;
-        asnAction.attributes.m.minePresent         = 1;
-        asnAction.attributes.m.bypassPresent       = 1;
-
-        asnAction.attributes.construction.m.percentagePresent = 1;
-        asnAction.attributes.mine.m.percentagePresent         = 1;
-        asnAction.attributes.bypass.m.percentagePresent       = 1;
-
-        asnAction.oid = object->GetId();
+        MsgsClientToSim::MsgMagicActionUpdateObject magicAction;
+        magicAction.set_oid( object->GetId() );
 
         Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
         gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::translate( "Object", "Reserved obstacle activated:" ) ) );
         if( pCheckBox && pCheckBox->IsChecked() )
         {
-            asnAction.attributes.m.obstaclePresent = 1;
-            asnAction.attributes.obstacle.type = EnumDemolitionTargetType::reserved;
-            asnAction.attributes.obstacle.activated = true;
+            magicAction.mutable_attributes()->mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved );
+            magicAction.mutable_attributes()->mutable_obstacle()->set_activated( true );
         }
 
-        asnAction.attributes.construction.percentage = construction_ ->GetValue();
-        asnAction.attributes.mine.percentage         = valorisation_ ->GetValue();
-        asnAction.attributes.bypass.percentage       = contournement_->GetValue();
+        magicAction.mutable_attributes()->mutable_construction()->set_percentage( construction_ ->GetValue() );
+        magicAction.mutable_attributes()->mutable_mine()->set_percentage( valorisation_ ->GetValue() );
+        magicAction.mutable_attributes()->mutable_bypass()->set_percentage( contournement_->GetValue() );
 
-        simulation::ObjectMagicAction asnMsg;
-
-        asnMsg().action.t               = T_MsgObjectMagicAction_action_update_object;
-        asnMsg().action.u.update_object = &asnAction;
-
-        asnMsg.Send( publisher_ );
+        simulation::ObjectMagicAction message;
+        *message().mutable_action()->mutable_update_object() = magicAction;
+        message.Send( publisher_ );
     }
 }
 

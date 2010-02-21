@@ -19,7 +19,6 @@
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
-class NET_ASN_MsgUnitAttributes;
 
 namespace moving
 {
@@ -48,8 +47,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive& , const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive& , const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
    
     //! @name Operations
@@ -79,8 +78,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 private:

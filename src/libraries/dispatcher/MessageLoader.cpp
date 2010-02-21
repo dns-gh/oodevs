@@ -13,10 +13,12 @@
 #include "MessageHandler_ABC.h"
 #include "Config.h"
 #include "tools/InputBinaryStream.h"
-#include "tools/AsnMessageDecoder.h"
+//#include "tools/AsnMessageDecoder.h"
 #include "tools/thread/BarrierCommand.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/bind.hpp>
+#include "protocol/protocol.h"
+
 namespace bfs = boost::filesystem;
 using namespace dispatcher;
 
@@ -177,17 +179,12 @@ void MessageLoader::LoadBuffer( const boost::shared_ptr< Buffer >& buffer, Messa
 // -----------------------------------------------------------------------------
 void MessageLoader::LoadSimToClientMessage( unsigned char*& input, MessageHandler_ABC& handler )
 {
-    unsigned messageSize = *reinterpret_cast< const unsigned* >( input );
-    input += sizeof( unsigned );
+    unsigned long messageSize = *reinterpret_cast< const unsigned long* >( input );
+    input += sizeof( unsigned long );
 
-    ASN1T_MsgsSimToClient message;
-    ASN1PERDecodeBuffer decoder( input, messageSize, TRUE );
-    ASN1C_MsgsSimToClient ctrl( decoder, message );
-    if( ctrl.Decode() != ASN_OK )
-    {
-        decoder.PrintErrorInfo();
-        throw std::runtime_error( "ASN fussé" );
-    }
+    MsgsSimToClient::MsgSimToClient message;
+    if( ! message.ParseFromArray( input, messageSize ) )
+        throw std::runtime_error( __FUNCTION__ ": message deserialization failed." );
     handler.Receive( message );
 
     input += messageSize;

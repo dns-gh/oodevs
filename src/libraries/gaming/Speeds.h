@@ -10,10 +10,15 @@
 #ifndef __Speeds_h_
 #define __Speeds_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+
+namespace MsgsSimToClient
+{
+	class MsgUnitKnowledgeUpdate;
+	class MsgUnitAttributes;
+}
 
 namespace kernel
 {
@@ -27,8 +32,8 @@ namespace kernel
 // Created: AGE 2007-12-17
 // =============================================================================
 class Speeds : public kernel::Extension_ABC
-             , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-             , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+             , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+             , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
              , public kernel::Drawable_ABC
 {
 
@@ -52,8 +57,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& attributes );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& attributes );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     //@}
 

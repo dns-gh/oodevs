@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_ArmerPointDeControle::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_ArmerPointDeControle& asnMission = *new ASN1T_Mission_Pion_ABC_ArmerPointDeControle();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_armer_point_de_controle;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_armer_point_de_controle = &asnMission;
+    Mission_Pion_ABC_ArmerPointDeControle& asnMission = *new Mission_Pion_ABC_ArmerPointDeControle();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_armer_point_de_controle = &asnMission;
 
     const Position& pointDeControle_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ABC_ArmerPointDeControle::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_ArmerPointDeControle::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_armer_point_de_controle );
-    ASN1T_Mission_Pion_ABC_ArmerPointDeControle& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_armer_point_de_controle;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_armer_point_de_controle ());
+    Mission_Pion_ABC_ArmerPointDeControle& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_armer_point_de_controle;
 
     ASN_Tools::Delete( asnMission.point_de_controle );
 

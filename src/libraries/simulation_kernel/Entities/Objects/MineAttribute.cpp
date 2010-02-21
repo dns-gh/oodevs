@@ -14,6 +14,7 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeMine.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "HLA/HLA_UpdateFunctor.h"
+#include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.h>
 
@@ -38,7 +39,7 @@ MineAttribute::MineAttribute()
 // Name: MineAttribute constructor
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, uint nDefaultMaxNbrDotation )
+MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int nDefaultMaxNbrDotation )
     : dotation_( &dotation )
     , nFullNbrDotation_( nDefaultMaxNbrDotation )
     , nCurrentNbrDotation_( 0 )
@@ -53,7 +54,7 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, uint nDefaul
 // Name: MineAttribute constructor
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const ASN1T_ObjectAttributes& asn  )
+MineAttribute::MineAttribute( const Common::MsgObjectAttributes& asn  )
     : dotation_( 0 )
     , nFullNbrDotation_( 0 )
     , nCurrentNbrDotation_( 0 )
@@ -61,12 +62,12 @@ MineAttribute::MineAttribute( const ASN1T_ObjectAttributes& asn  )
     , nMinesActivityTime_( 0 )
     , nDeathTimeStep_( 0 )
 {
-    dotation_ = PHY_DotationType::FindDotationCategory( asn.mine.dotation_type );
+    dotation_ = PHY_DotationType::FindDotationCategory( asn.mine().dotation_type() );
     if( !dotation_ )
         throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
-    nFullNbrDotation_ = asn.mine.density;
-    nCurrentNbrDotation_ = asn.mine.dotation_nbr;
-    rMiningPercentage_ = asn.mine.percentage;
+    nFullNbrDotation_ = asn.mine().density();
+    nCurrentNbrDotation_ = asn.mine().dotation_nbr();
+    rMiningPercentage_ = asn.mine().percentage();
     //nMinesActivityTime_;
     //nDeathTimeStep_;
 }
@@ -82,7 +83,7 @@ void MineAttribute::Load( xml::xistream& xis )
     const MT_Float completion = xml::attribute< MT_Float >( xis, "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         rMiningPercentage_ = completion;
-    nCurrentNbrDotation_ = uint( rMiningPercentage_ * nFullNbrDotation_ );
+    nCurrentNbrDotation_ = unsigned int( rMiningPercentage_ * nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +112,7 @@ MineAttribute& MineAttribute::operator=( const MineAttribute& rhs )
 // Name: MineAttribute::load
 // Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-void MineAttribute::load( MIL_CheckPointInArchive& ar, const uint )
+void MineAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     std::string dotation;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
@@ -126,7 +127,7 @@ void MineAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: MineAttribute::save
 // Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-void MineAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     if ( dotation_ )
@@ -162,17 +163,13 @@ void MineAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: MineAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void MineAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void MineAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
     if( dotation_ )
     {
-        asn.m.minePresent = 1;
-        asn.mine.m.dotation_typePresent = 1;
-        asn.mine.dotation_type = dotation_->GetMosID();
-        asn.mine.m.percentagePresent = 1;
-        asn.mine.percentage = uint( rMiningPercentage_ * 100. );
-        asn.mine.m.dotation_nbrPresent = 1;
-        asn.mine.dotation_nbr = nCurrentNbrDotation_;
+        asn.mutable_mine()->set_dotation_type( dotation_->GetMosID() );
+        asn.mutable_mine()->set_percentage( unsigned int( rMiningPercentage_ * 100. ) );
+        asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
     }
 }
 
@@ -180,15 +177,12 @@ void MineAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 // Name: MineAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void MineAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void MineAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if( NeedUpdate() )
     {
-        asn.m.minePresent = 1;
-        asn.mine.m.percentagePresent = 1;
-        asn.mine.percentage = uint( rMiningPercentage_ * 100. );
-        asn.mine.m.dotation_nbrPresent = 1;
-        asn.mine.dotation_nbr = nCurrentNbrDotation_;
+        asn.mutable_mine()->set_percentage( unsigned int( rMiningPercentage_ * 100. ) );
+        asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
         Reset( eOnUpdate );
     }
 }
@@ -197,12 +191,12 @@ void MineAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 // Name: MineAttribute::OnUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void MineAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
+void MineAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
 {
-    if( asn.m.minePresent )
+    if( asn.has_mine() )
     {
-        if ( asn.mine.m.percentagePresent )
-            Set( asn.mine.percentage / 100. );
+        if ( asn.mine().has_percentage()  )
+            Set( asn.mine().percentage() / 100. );
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }
@@ -214,7 +208,7 @@ void MineAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
 void MineAttribute::Set( MT_Float percentage )
 {    
     rMiningPercentage_ = std::max( 0., std::min( 1., percentage ) );
-    nCurrentNbrDotation_ = (uint)( rMiningPercentage_ * nFullNbrDotation_ );
+    nCurrentNbrDotation_ = (unsigned int)( rMiningPercentage_ * nFullNbrDotation_ );
     NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 
@@ -231,20 +225,20 @@ void MineAttribute::Update( MT_Float rDeltaPercentage )
 // Name: MineAttribute::GetDotationNeededForConstruction
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-uint MineAttribute::GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const
+unsigned int MineAttribute::GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const
 {
     const MT_Float rNewPercentage = std::max( 0., std::min( 1., rMiningPercentage_ + rDeltaPercentage ) );
-    return (uint)( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
+    return (unsigned int)( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::GetDotationRecoveredWhenDestroying
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-uint MineAttribute::GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const
+unsigned int MineAttribute::GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const
 {
     const MT_Float rNewPercentage = std::max( 0., std::min( 1., rMiningPercentage_ - rDeltaPercentage ) );
-    return nCurrentNbrDotation_ - (uint)( rNewPercentage * nFullNbrDotation_ );
+    return nCurrentNbrDotation_ - (unsigned int)( rNewPercentage * nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,7 +278,7 @@ MT_Float MineAttribute::GetState() const
 // Name: MineAttribute::GetCurrentDotations
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-uint MineAttribute::GetCurrentDotations() const
+unsigned int MineAttribute::GetCurrentDotations() const
 {
     return nCurrentNbrDotation_;
 }

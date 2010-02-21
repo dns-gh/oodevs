@@ -12,6 +12,7 @@
 
 #include "ModelFunctionComposite.h"
 #include "dispatcher/MessageHandler_ABC.h"
+#include "protocol/protocol.h"
 
 #pragma warning (push)
 #pragma warning (disable : 4702 )
@@ -36,6 +37,7 @@ namespace xml
     class xistream;
 }
 
+using namespace MsgsSimToClient;
 // =============================================================================
 /** @class  Task
     @brief  Task
@@ -62,7 +64,7 @@ public:
     void AddConnector( const std::string& name, boost::shared_ptr< Connector_ABC > connector );
     void Connect( xml::xistream& xis );
 
-    virtual void Receive( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive( const MsgSimToClient& message );
 
     void Commit();
     void Process( dispatcher::MessageLoader_ABC& loader );

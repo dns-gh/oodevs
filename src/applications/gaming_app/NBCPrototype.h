@@ -12,9 +12,13 @@
 
 #include "clients_gui/NBCPrototype_ABC.h"
 
-struct ASN1T_ObjectAttributesNbcZone;
-struct ASN1T_ObjectAttributesNbcCloud;
-struct ASN1T_MagicActionCreateObject;
+namespace MsgsClientToSim 
+{
+    class MsgMagicActionCreateObject;
+}
+
+struct MsgObjectAttributesNbcZone;
+struct MsgObjectAttributesNbcCloud;
 
 // =============================================================================
 /** @class  NBCPrototype
@@ -28,7 +32,7 @@ class NBCPrototype : public gui::NBCPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NBCPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic, ASN1T_MagicActionCreateObject& msg );
+    NBCPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic, MsgsClientToSim::MsgMagicActionCreateObject& msg );
     virtual ~NBCPrototype();
     //@}
 
@@ -48,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;
+    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
     //@}
 };
 

@@ -9,15 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_LocationListParameter.h"
-
 #include "simulation_orders/MIL_ParameterType_LocationList.h"
+#include "simulation_terrain/TER_Localisation.h"
 #include "Network/NET_ASN_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LocationListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_LocationListParameter::MIL_LocationListParameter( const ASN1T_LocationList& asn )
+MIL_LocationListParameter::MIL_LocationListParameter( const Common::MsgLocationList& asn )
 {
     NET_ASN_Tools::ReadLocationList( asn, locationList_ );
 }
@@ -54,7 +54,7 @@ bool MIL_LocationListParameter::IsOfType( const MIL_ParameterType_ABC& type ) co
 // Name: MIL_LocationListParameter::ToLocationList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_LocationListParameter::ToLocationList( ASN1T_LocationList& asn ) const
+bool MIL_LocationListParameter::ToLocationList( Common::MsgLocationList& asn ) const
 {
     NET_ASN_Tools::WriteLocationList( locationList_, asn );
     return true;

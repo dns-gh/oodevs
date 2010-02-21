@@ -31,7 +31,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -53,7 +53,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendFullState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const;
+    virtual void SendFullState( client::LogSupplyHandlingUpdate& asn ) const;
     //@}
 
 private:

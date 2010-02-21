@@ -16,8 +16,8 @@
 // Name: MIL_PolygonParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_PolygonParameter::MIL_PolygonParameter( const ASN1T_Polygon& asn )
-: pPolygon_( new TER_Localisation() )
+MIL_PolygonParameter::MIL_PolygonParameter( const Common::MsgPolygon& asn )
+    : pPolygon_( new TER_Localisation() )
 {
     NET_ASN_Tools::ReadPolygon( asn, *pPolygon_ );
 }
@@ -44,7 +44,7 @@ bool MIL_PolygonParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_PolygonParameter::ToPolygon
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PolygonParameter::ToPolygon( ASN1T_Polygon& asn ) const
+bool MIL_PolygonParameter::ToPolygon( Common::MsgPolygon& asn ) const
 {
     NET_ASN_Tools::WritePolygon( *pPolygon_, asn );
     return true;

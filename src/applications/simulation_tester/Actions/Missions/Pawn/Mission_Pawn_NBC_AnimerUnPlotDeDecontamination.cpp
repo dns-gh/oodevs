@@ -43,9 +43,9 @@ void Mission_Pawn_NBC_AnimerUnPlotDeDecontamination::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination& asnMission = *new ASN1T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_animer_un_plot_de_decontamination = &asnMission;
+    Mission_Pion_NBC_AnimerUnPlotDeDecontamination& asnMission = *new Mission_Pion_NBC_AnimerUnPlotDeDecontamination();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_nbc_animer_un_plot_de_decontamination = &asnMission;
 
     const Position& positionSiteDecontamination_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_NBC_AnimerUnPlotDeDecontamination::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_NBC_AnimerUnPlotDeDecontamination::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_nbc_animer_un_plot_de_decontamination );
-    ASN1T_Mission_Pion_NBC_AnimerUnPlotDeDecontamination& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_animer_un_plot_de_decontamination;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_nbc_animer_un_plot_de_decontamination ());
+    Mission_Pion_NBC_AnimerUnPlotDeDecontamination& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_nbc_animer_un_plot_de_decontamination;
 
     ASN_Tools::Delete( asnMission.position_site_decontamination );
 

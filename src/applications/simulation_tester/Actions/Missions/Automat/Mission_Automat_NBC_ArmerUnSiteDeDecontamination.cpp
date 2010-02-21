@@ -43,9 +43,9 @@ void Mission_Automat_NBC_ArmerUnSiteDeDecontamination::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination& asnMission = *new ASN1T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_nbc_armer_un_site_de_decontamination;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_nbc_armer_un_site_de_decontamination = &asnMission;
+    Mission_Automate_NBC_ArmerUnSiteDeDecontamination& asnMission = *new Mission_Automate_NBC_ArmerUnSiteDeDecontamination();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_nbc_armer_un_site_de_decontamination = &asnMission;
 
     const Location& site_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_NBC_ArmerUnSiteDeDecontamination::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_NBC_ArmerUnSiteDeDecontamination::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_nbc_armer_un_site_de_decontamination );
-    ASN1T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_nbc_armer_un_site_de_decontamination;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_nbc_armer_un_site_de_decontamination ());
+    Mission_Automate_NBC_ArmerUnSiteDeDecontamination& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_nbc_armer_un_site_de_decontamination;
 
     ASN_Tools::Delete( asnMission.site );
 

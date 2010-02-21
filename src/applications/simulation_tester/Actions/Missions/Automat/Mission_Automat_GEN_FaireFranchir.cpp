@@ -43,9 +43,9 @@ void Mission_Automat_GEN_FaireFranchir::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_GEN_FaireFranchir& asnMission = *new ASN1T_Mission_Automate_GEN_FaireFranchir();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_faire_franchir;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_faire_franchir = &asnMission;
+    Mission_Automate_GEN_FaireFranchir& asnMission = *new Mission_Automate_GEN_FaireFranchir();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_gen_faire_franchir = &asnMission;
 
     const T_IdVector& sitesDeFranchissement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
     const Location& zoneRegroupement_ = pTarget_->GetTestParam_Location();
@@ -64,8 +64,8 @@ void Mission_Automat_GEN_FaireFranchir::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_GEN_FaireFranchir::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_faire_franchir );
-    ASN1T_Mission_Automate_GEN_FaireFranchir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_faire_franchir;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_gen_faire_franchir ());
+    Mission_Automate_GEN_FaireFranchir& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_gen_faire_franchir;
 
     ASN_Tools::Delete( asnMission.sites_de_franchissement );
     ASN_Tools::Delete( asnMission.zone_regroupement );

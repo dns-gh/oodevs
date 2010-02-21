@@ -36,7 +36,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& asnMsg );
     virtual void StartSynchronisation();
     virtual void EndSynchronisation();
     virtual bool IsSynching() const;
@@ -51,7 +51,7 @@ private:
 
     //! @name Helpers
     //@{
-    bool IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg ) const;
+    bool IsNotDestruction( const MsgsSimToClient::MsgSimToClient& asnMsg ) const;
     //@}
 
 private:

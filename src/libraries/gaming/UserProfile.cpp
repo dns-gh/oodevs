@@ -9,19 +9,19 @@
 
 #include "gaming_pch.h"
 #include "UserProfile.h"
-#include "game_asn/Publisher_ABC.h"
+
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Population_ABC.h"
-#include "game_asn/AuthenticationSenders.h"
+#include "protocol/AuthenticationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-UserProfile::UserProfile( const ASN1T_MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
+UserProfile::UserProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message, kernel::Controller& controller, Publisher_ABC& publisher )
     : controller_( controller )
     , publisher_( publisher )
     , registered_( true )
@@ -29,7 +29,7 @@ UserProfile::UserProfile( const ASN1T_MsgProfileCreation& message, kernel::Contr
     , supervision_( false )
 {
     controller_.Create( *this );
-    SetProfile( message );
+    SetProfile( message.profile() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,9 +85,9 @@ UserProfile::~UserProfile()
 // -----------------------------------------------------------------------------
 void UserProfile::RequestCreation()
 {
-    authentication::ProfileCreationRequest message;
-    message().login       = login_.ascii();
-    message().superviseur = supervision_;
+	authentication::ProfileCreationRequest message;
+    message().mutable_profile()->set_login( login_.ascii() );
+    message().mutable_profile()->set_superviseur( supervision_ );
     message.Send( publisher_ );
 }
 
@@ -98,7 +98,7 @@ void UserProfile::RequestCreation()
 void UserProfile::RequestDeletion()
 {
     authentication::ProfileDestructionRequest message;
-    message() = login_.ascii();
+    message().set_login( login_.ascii() );
     message.Send( publisher_ );
 }
 
@@ -107,13 +107,13 @@ namespace
     template< typename List >
     bool CopyList( const std::vector< unsigned long >& from, List& to )
     {
-        to.n = from.size();
-        to.elem = 0;
+        to.set_n( from.size() );
+        to.mutable_elem() = 0;
         if( from.empty() )
             return true; // $$$$ SBO 2007-01-23: send empty lists to SIM to reset rights
-        to.elem = new ASN1T_OID[ to.n ];
+        to.elem = new OID[ to.elem_size() ];
         for( unsigned int i = 0; i < from.size(); ++i )
-            to.elem[i] = from[i];
+            to.mutable_elem( i ) = from[i];
         return true;
     }
 }
@@ -124,56 +124,47 @@ namespace
 // -----------------------------------------------------------------------------
 void UserProfile::RequestUpdate( const QString& newLogin )
 {
-    authentication::ProfileUpdateRequest message;
-    message().login = login_.ascii();
+	authentication::ProfileUpdateRequest message;
+    message().set_login( login_.ascii() );
 
-    ASN1T_Profile& profile = message().profile;
-    profile.login       = newLogin.ascii();
-    profile.m.passwordPresent = 1;
-    profile.password    = password_.ascii();
-    profile.superviseur = supervision_;
+    MsgsAuthenticationToClient::MsgProfile& profile = *message().mutable_profile();
+    profile.set_login( newLogin.ascii() );
 
-    profile.m.read_only_campsPresent        = CopyList( readSides_       , profile.read_only_camps        );
-    profile.m.read_only_formationsPresent   = CopyList( readFormations_  , profile.read_only_formations   );
-    profile.m.read_only_automatesPresent    = CopyList( readAutomats_    , profile.read_only_automates    );
-    profile.m.read_only_populationsPresent  = CopyList( readPopulations_ , profile.read_only_populations  );
-    profile.m.read_write_campsPresent       = CopyList( writeSides_      , profile.read_write_camps       );
-    profile.m.read_write_formationsPresent  = CopyList( writeFormations_ , profile.read_write_formations  );
-    profile.m.read_write_automatesPresent   = CopyList( writeAutomats_   , profile.read_write_automates   );
-    profile.m.read_write_populationsPresent = CopyList( writePopulations_, profile.read_write_populations );
+    profile.set_password( password_.ascii() );
+    profile.set_superviseur( supervision_ );
 
     message.Send( publisher_ );
 
-    delete[] profile.read_only_camps.elem;
-    delete[] profile.read_only_formations.elem;
-    delete[] profile.read_only_automates.elem;
-    delete[] profile.read_only_populations.elem;
-    delete[] profile.read_write_camps.elem;
-    delete[] profile.read_write_formations.elem;
-    delete[] profile.read_write_automates.elem;
-    delete[] profile.read_write_populations.elem;
+    delete[] profile.mutable_read_only_camps()->mutable_elem();
+    delete[] profile.mutable_read_only_formations()->mutable_elem();
+    delete[] profile.mutable_read_only_automates()->mutable_elem();
+    delete[] profile.mutable_read_only_populations()->mutable_elem();
+    delete[] profile.mutable_read_write_camps()->mutable_elem();
+    delete[] profile.mutable_read_write_formations()->mutable_elem();
+    delete[] profile.mutable_read_write_automates()->mutable_elem();
+    delete[] profile.mutable_read_write_populations()->mutable_elem();
 }
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile::DoUpdate
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfile::DoUpdate( const ASN1T_MsgProfileUpdate& message )
+void UserProfile::DoUpdate( const MsgsAuthenticationToClient::MsgProfileUpdate& message )
 {
-    SetProfile( message.profile );
+    SetProfile( message.profile() );
 }
 
 namespace
 {
     template< typename List >
-    void CopyList( const List& from, std::vector< unsigned long >& to )
+	void CopyList( const List& from, std::vector< unsigned long >& to )
     {
         to.clear();
-        if( from.n == 0 )
+        if( from.elem_size() == 0 )
             return;
-        to.reserve( from.n );
-        for( unsigned int i = 0; i < from.n; ++i )
-            to.push_back( from.elem[i] );
+        to.reserve( from.elem_size() );
+        for( int i = 0; i < from.elem_size(); ++i )
+            to.push_back( from.elem(i).oid() );
     }
 }
 
@@ -181,30 +172,30 @@ namespace
 // Name: UserProfile::SetProfile
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfile::SetProfile( const ASN1T_Profile& profile )
+void UserProfile::SetProfile( const MsgsAuthenticationToClient::MsgProfile& profile )
 {
-    login_ = profile.login;
-    if( profile.m.passwordPresent )
-        password_ = profile.password;
-    supervision_ = profile.superviseur != 0;
+    login_ = profile.login().c_str();
+    if( profile.has_password()  )
+        password_ = profile.password().c_str();
+    supervision_ = profile.superviseur() != 0;
 
-    if( profile.m.read_only_campsPresent )
-        CopyList( profile.read_only_camps, readSides_);
-    if( profile.m.read_only_formationsPresent )
-        CopyList( profile.read_only_formations, readFormations_ );
-    if( profile.m.read_only_automatesPresent )
-        CopyList( profile.read_only_automates, readAutomats_ );
-    if( profile.m.read_only_populationsPresent )
-        CopyList( profile.read_only_populations, readPopulations_ );
+    if( profile.has_read_only_camps()  )
+        CopyList( profile.read_only_camps(), readSides_);
+    if( profile.has_read_only_formations()  )
+        CopyList( profile.read_only_formations(), readFormations_ );
+    if( profile.has_read_only_automates()  )
+        CopyList( profile.read_only_automates(), readAutomats_ );
+    if( profile.has_read_only_populations()  )
+        CopyList( profile.read_only_populations(), readPopulations_ );
 
-    if( profile.m.read_write_campsPresent )
-        CopyList( profile.read_write_camps, writeSides_);
-    if( profile.m.read_write_formationsPresent )
-        CopyList( profile.read_write_formations, writeFormations_ );
-    if( profile.m.read_write_automatesPresent )
-        CopyList( profile.read_write_automates, writeAutomats_ );
-    if( profile.m.read_write_populationsPresent )
-        CopyList( profile.read_write_populations, writePopulations_ );
+    if( profile.has_read_write_camps()  )
+        CopyList( profile.read_write_camps(), writeSides_);
+    if( profile.has_read_write_formations()  )
+        CopyList( profile.read_write_formations(), writeFormations_ );
+    if( profile.has_read_write_automates()  )
+        CopyList( profile.read_write_automates(), writeAutomats_ );
+    if( profile.has_read_write_populations()  )
+        CopyList( profile.read_write_populations(), writePopulations_ );
 
     if( registered_ )
         controller_.Update( *this );

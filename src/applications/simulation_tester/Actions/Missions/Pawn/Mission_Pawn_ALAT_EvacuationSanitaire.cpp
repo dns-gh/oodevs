@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_EvacuationSanitaire::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_EvacuationSanitaire& asnMission = *new ASN1T_Mission_Pion_ALAT_EvacuationSanitaire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_evacuation_sanitaire;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_evacuation_sanitaire = &asnMission;
+    Mission_Pion_ALAT_EvacuationSanitaire& asnMission = *new Mission_Pion_ALAT_EvacuationSanitaire();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_evacuation_sanitaire = &asnMission;
 
     const Position& pointDebarquement_ = pTarget_->GetTestParam_Point();
     const Location& zoneExtraction_ = pTarget_->GetTestParam_Polygon();
@@ -71,8 +71,8 @@ void Mission_Pawn_ALAT_EvacuationSanitaire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_EvacuationSanitaire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_evacuation_sanitaire );
-    ASN1T_Mission_Pion_ALAT_EvacuationSanitaire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_evacuation_sanitaire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_evacuation_sanitaire ());
+    Mission_Pion_ALAT_EvacuationSanitaire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_evacuation_sanitaire;
 
     ASN_Tools::Delete( asnMission.point_debarquement );
     ASN_Tools::Delete( asnMission.zone_extraction );

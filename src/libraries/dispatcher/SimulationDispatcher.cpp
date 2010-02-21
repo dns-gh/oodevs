@@ -16,6 +16,7 @@
 #include "Synchroniser.h"
 #include "ReplaySynchronisations.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
 
@@ -49,36 +50,32 @@ SimulationDispatcher::~SimulationDispatcher()
 // Name: SimulationDispatcher::IsNotDestruction
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool SimulationDispatcher::IsNotDestruction( const ASN1T_MsgsSimToClient& asnMsg ) const
+bool SimulationDispatcher::IsNotDestruction( const MsgsSimToClient::MsgSimToClient& wrapper ) const
 {
-    switch( asnMsg.msg.t )
-    {
-        case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_object_destruction:
-        case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_log_medical_handling_destruction:
-        case T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction:
-        case T_MsgsSimToClient_msg_msg_log_supply_handling_destruction:
-        case T_MsgsSimToClient_msg_msg_population_concentration_destruction:
-        case T_MsgsSimToClient_msg_msg_population_flow_destruction:
-        case T_MsgsSimToClient_msg_msg_population_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_stop_fire_effect:
-        case T_MsgsSimToClient_msg_msg_stop_unit_fire:
-        case T_MsgsSimToClient_msg_msg_stop_population_fire:
-        case T_MsgsSimToClient_msg_msg_invalidate_report:
-            return false;
-        default:
-            return true;
-    };
+    if( wrapper.message().has_unit_knowledge_destruction() ||
+        wrapper.message().has_object_destruction() ||
+        wrapper.message().has_object_knowledge_destruction() ||
+        wrapper.message().has_log_medical_handling_destruction() ||
+        wrapper.message().has_log_maintenance_handling_destruction() ||
+        wrapper.message().has_log_supply_handling_destruction() ||
+        wrapper.message().has_population_concentration_destruction() ||
+        wrapper.message().has_population_flow_destruction() ||
+        wrapper.message().has_population_knowledge_destruction() ||
+        wrapper.message().has_population_concentration_knowledge_destruction() ||
+        wrapper.message().has_population_flow_knowledge_destruction() ||
+        wrapper.message().has_stop_fire_effect() ||
+        wrapper.message().has_stop_unit_fire() ||
+        wrapper.message().has_stop_population_fire() ||
+        wrapper.message().has_invalidate_report() )
+        return false;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationDispatcher::Receive
 // Created: AGE 2007-04-10
 // -----------------------------------------------------------------------------
-void SimulationDispatcher::Receive( const ASN1T_MsgsSimToClient& asnMsg )
+void SimulationDispatcher::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
 {
     if( synching_ && IsNotDestruction( asnMsg ) )
         return;

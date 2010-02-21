@@ -10,7 +10,10 @@
 #ifndef __AgentKnowledgeFactory_ABC_h_
 #define __AgentKnowledgeFactory_ABC_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -37,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::AgentKnowledge_ABC* CreateAgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message ) = 0;
+    virtual kernel::AgentKnowledge_ABC* CreateAgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message ) = 0;
     //@}
 };
 

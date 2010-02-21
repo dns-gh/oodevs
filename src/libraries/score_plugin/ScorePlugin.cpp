@@ -13,12 +13,14 @@
 #include "dispatcher/CompositeRegistrable.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
-#include "game_asn/AarSenders.h"
+#include "protocol/protocol.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/foreach.hpp>
 #include <xeumeuleu/xml.h>
+
+#include "protocol/aarsenders.h"
 
 using namespace plugins::score;
 
@@ -57,29 +59,33 @@ void ScorePlugin::Register( dispatcher::Services& services )
 // Name: ScorePlugin::Receive
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void ScorePlugin::Receive( const ASN1T_MsgsSimToClient& message )
+void ScorePlugin::Receive( const MsgSimToClient& wrapper )
 {
-    scores_->Update( message );
+    scores_->Update( wrapper );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScorePlugin::Receive
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void ScorePlugin::Receive( const ASN1T_MsgsAarToClient& message )
+void ScorePlugin::Receive( const MsgAarToClient& wrapper )
 {
-    if( message.msg.t == T_MsgsAarToClient_msg_msg_indicator )
-        scores_->Update( *message.msg.u.msg_indicator );
+    if (wrapper.message().has_indicator())
+        scores_->Update( wrapper.message().indicator() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScorePlugin::OnReceive
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void ScorePlugin::OnReceive( const std::string& client, const ASN1T_MsgsClientToAar& message )
+void ScorePlugin::OnReceive( const std::string& client, const MsgClientToAar& wrapper )
 {
-    if( message.msg.t == T_MsgsClientToAar_msg_msg_plot_request )
-        scores_->RequestPlot( resolver_.GetPublisher( client ), *message.msg.u.msg_plot_request );
+    if (wrapper.message().has_plot_request())
+    {
+        const MsgPlotRequest& request = wrapper.message().plot_request();
+        if( boost::starts_with( request.request(), "indicator://" ) )
+            scores_->RequestPlot( resolver_.GetPublisher( client ), request );
+    }
 }
 
 // -----------------------------------------------------------------------------

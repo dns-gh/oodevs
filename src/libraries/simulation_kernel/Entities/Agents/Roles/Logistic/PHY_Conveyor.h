@@ -27,9 +27,12 @@ class PHY_Conveyor : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_Conveyor();
      PHY_Conveyor( PHY_ComposantePion& conveyorComp, MIL_AgentPion& conveyorPion );
     virtual ~PHY_Conveyor();
+    //@}
 
     //! @name Dotations
     //@{
@@ -47,12 +50,12 @@ public:
 
     //! @name Operations
     //@{
-    uint ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos );   
+    unsigned int ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos );   
     //@}
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //!/cygdrive/ @name Debug
@@ -69,6 +72,8 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     PHY_ComposantePion*  pConveyorComp_;
     MIL_AgentPion*       pConveyorPion_;
     MT_Float             rWeightCapacity_;
@@ -76,6 +81,7 @@ private:
     T_DotationMap        dotationsConvoyed_;
 
     MIL_AgentPion*       pLentTo_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_Conveyor )

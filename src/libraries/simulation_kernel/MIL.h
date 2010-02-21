@@ -3,9 +3,7 @@
 #ifndef __MIL_h_
 #define __MIL_h_
 
-#include "MT/MT_Tools/MT_Types.h"
 #include "simulation_terrain/TER.h"
-
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 
@@ -36,10 +34,6 @@ class PHY_DotationCategory;
 typedef std::map< const PHY_DotationCategory*, MT_Float /*rNbrToConvoy*/ > T_MerchandiseToConvoyMap;
 typedef T_MerchandiseToConvoyMap::iterator                                 IT_MerchandiseToConvoyMap;
 typedef T_MerchandiseToConvoyMap::const_iterator                           CIT_MerchandiseToConvoyMap;
-
-/// $$$ NLD - Degueu à déplacer
-
-//typedef uint32 uint;
 
 namespace boost
 {

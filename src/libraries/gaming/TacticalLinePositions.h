@@ -13,7 +13,10 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -31,15 +34,15 @@ class TacticalLine_ABC;
 // =============================================================================
 class TacticalLinePositions : public kernel::Positions
                             , public kernel::Drawable_ABC
-                            , public kernel::Updatable_ABC< ASN1T_MsgLimaUpdate >
-                            , public kernel::Updatable_ABC< ASN1T_MsgLimitUpdate >
+                            , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
+                            , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              TacticalLinePositions( const T_PointVector& pointList, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
-             TacticalLinePositions( const ASN1T_Line& asnMsg, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
+             TacticalLinePositions( const Common::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner );
     virtual ~TacticalLinePositions();
     //@}
 
@@ -63,9 +66,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgLimaUpdate&  message );
-    virtual void DoUpdate( const ASN1T_MsgLimitUpdate& message );
-    void Update( const ASN1T_TacticalLine& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate&  message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message );
+    void Update( const Common::MsgTacticalLine& message );
     //@}
 
 private:

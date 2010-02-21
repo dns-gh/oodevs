@@ -43,9 +43,9 @@ void Mission_Automat_INF_Semparer::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Semparer& asnMission = *new ASN1T_Mission_Automate_INF_Semparer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_semparer;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_semparer = &asnMission;
+    Mission_Automate_INF_Semparer& asnMission = *new Mission_Automate_INF_Semparer();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_semparer = &asnMission;
 
     const Location& objectif_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_INF_Semparer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Semparer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_semparer );
-    ASN1T_Mission_Automate_INF_Semparer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_semparer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_semparer ());
+    Mission_Automate_INF_Semparer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_semparer;
 
     ASN_Tools::Delete( asnMission.objectif );
 

@@ -60,7 +60,7 @@ PHY_MedicalHealingConsign::~PHY_MedicalHealingConsign()
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_MedicalHealingConsign::serialize( Archive& file, const uint )
+void PHY_MedicalHealingConsign::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_MedicalConsign_ABC >( *this )
          & pDoctor_;
@@ -112,7 +112,7 @@ void PHY_MedicalHealingConsign::EnterStateHealing()
     assert( pHumanState_ );
     assert( pDoctor_ );
     SetState( eHealing );
-    nTimer_ = (uint)( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) );
+    nTimer_ = (unsigned int)( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -48,7 +48,7 @@ void PHY_NatureAtlas::Terminate()
 // Name: PHY_NatureAtlas constructor
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-PHY_NatureAtlas::PHY_NatureAtlas( const std::string& strName, E_Type nType, uint nAsnID )
+PHY_NatureAtlas::PHY_NatureAtlas( const std::string& strName, E_Type nType, unsigned int nAsnID )
     : strName_ ( strName )
     , nType_   ( nType   )
     , nAsnID_  ( nAsnID  )
@@ -90,7 +90,7 @@ const std::string& PHY_NatureAtlas::GetName() const
 // Name: PHY_NatureAtlas::GetID
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-uint PHY_NatureAtlas::GetID() const
+unsigned int PHY_NatureAtlas::GetID() const
 {
     return nType_;
 }
@@ -99,7 +99,7 @@ uint PHY_NatureAtlas::GetID() const
 // Name: PHY_NatureAtlas::GetAsnID
 // Created: JVT 2004-12-09
 // -----------------------------------------------------------------------------
-uint PHY_NatureAtlas::GetAsnID() const
+unsigned int PHY_NatureAtlas::GetAsnID() const
 {
     return nAsnID_;
 }

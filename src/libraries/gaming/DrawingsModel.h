@@ -11,7 +11,9 @@
 #define __DrawingsModel_h_
 
 #include "clients_gui/DrawerModel.h"
-#include "game_asn/Messenger.h"
+#include "protocol/messengersenders.h"
+
+using namespace Common;
 
 class DrawingFactory;
 
@@ -33,9 +35,9 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const ASN1T_MsgShapeCreation& asn );
-    void Update( const ASN1T_MsgShapeUpdate& asn );
-    void Delete( const ASN1T_MsgShapeDestruction& asn );
+    void Create( const MsgsMessengerToClient::MsgShapeCreation& message );
+    void Update( const MsgsMessengerToClient::MsgShapeUpdate& message );
+    void Delete( const MsgsMessengerToClient::MsgShapeDestruction& message );
     //@}
 
 private:

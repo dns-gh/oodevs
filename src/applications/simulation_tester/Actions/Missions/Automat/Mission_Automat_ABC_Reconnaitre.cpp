@@ -43,9 +43,9 @@ void Mission_Automat_ABC_Reconnaitre::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_Reconnaitre& asnMission = *new ASN1T_Mission_Automate_ABC_Reconnaitre();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_reconnaitre;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_reconnaitre = &asnMission;
+    Mission_Automate_ABC_Reconnaitre& asnMission = *new Mission_Automate_ABC_Reconnaitre();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_reconnaitre = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_ABC_Reconnaitre::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_Reconnaitre::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_reconnaitre );
-    ASN1T_Mission_Automate_ABC_Reconnaitre& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_reconnaitre;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_reconnaitre ());
+    Mission_Automate_ABC_Reconnaitre& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_reconnaitre;
 
 
     delete &asnMission;

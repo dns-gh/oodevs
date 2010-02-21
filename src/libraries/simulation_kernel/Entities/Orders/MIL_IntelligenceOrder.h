@@ -10,7 +10,8 @@
 #ifndef __MIL_IntelligenceOrder_h_
 #define __MIL_IntelligenceOrder_h_
 
-struct ASN1T_Intelligence;
+#include "protocol/protocol.h"
+
 class MIL_Fuseau;
 
 // =============================================================================
@@ -25,7 +26,7 @@ class MIL_IntelligenceOrder
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_IntelligenceOrder( const ASN1T_Intelligence& asn );
+    explicit MIL_IntelligenceOrder( const Common::MsgIntelligence& asn );
     virtual ~MIL_IntelligenceOrder();
     //@}
 
@@ -39,8 +40,8 @@ public:
     bool IsEmbarked() const;
     bool IsEnemy() const;
     bool IsFriend() const;
-    ASN1T_EnumNatureLevel GetLevel() const;
-    void Serialize( ASN1T_Intelligence& asn ) const;
+    Common::EnumNatureLevel GetLevel() const;
+    void Serialize( Common::MsgIntelligence& asn ) const;
     //@}
 
 private:
@@ -54,10 +55,10 @@ private:
     //@{
     const std::string name_;
     const std::string nature_;
-    const ASN1T_EnumNatureLevel level_;
+    const Common::EnumNatureLevel level_;
     const bool embarked_;
-    const ASN1T_CoordLatLong position_;
-    const ASN1T_EnumDiplomacy diplomacy_;
+    const Common::MsgCoordLatLong position_;
+    const Common::EnumDiplomacy diplomacy_;
     const unsigned int formation_;
     //@}
 };

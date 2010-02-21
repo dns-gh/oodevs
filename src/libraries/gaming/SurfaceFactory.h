@@ -10,8 +10,11 @@
 #ifndef __SurfaceFactory_h_
 #define __SurfaceFactory_h_
 
+#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
-#include "game_asn/Simulation.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -43,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    Surface* CreateSurface( const kernel::Agent_ABC& agent, const ASN1T_VisionCone& input, float elongation );
+    Surface* CreateSurface( const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& input, float elongation );
     VisionMap* CreateVisionMap();
     //@}
 

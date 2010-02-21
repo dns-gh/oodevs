@@ -75,16 +75,16 @@ bool EntityParameter< ConcreteEntity >::CheckValidity()
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::CommitTo( ASN1T_OID& asn ) const
+void EntityParameter< ConcreteEntity >::CommitTo( int& message ) const
 {
-    asn = 0;
+    message = 0;
     if( ! selected_ )
     {
         if( IsOptional() )
             return;
         throw std::runtime_error( "Entity not set!" );
     }
-    asn = selected_->GetId();
+    message = selected_->GetId();
 }
 
 // -----------------------------------------------------------------------------

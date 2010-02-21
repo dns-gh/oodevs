@@ -15,7 +15,8 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockState )
 
@@ -82,13 +83,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_SupplyStockState::T_RequestMap& map, const uint nVersion )
+        void serialize( Archive& file, PHY_SupplyStockState::T_RequestMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_SupplyStockState::T_RequestMap& map, const uint )
+        void save( Archive& file, const PHY_SupplyStockState::T_RequestMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -101,13 +102,13 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_SupplyStockState::T_RequestMap& map, const uint )
+        void load( Archive& file, PHY_SupplyStockState::T_RequestMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
-                uint nCategoryID;
+                unsigned int nCategoryID;
                 
                 file >> nCategoryID;
                 file >> map[ PHY_DotationType::FindDotationCategory( nCategoryID ) ];
@@ -121,7 +122,7 @@ namespace boost
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void PHY_SupplyStockState::serialize( Archive& file, const uint )
+void PHY_SupplyStockState::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_SupplyState_ABC >( *this )
          & pSuppliedAutomate_
@@ -216,24 +217,19 @@ void PHY_SupplyStockState::SendMsgCreation() const
     assert( !requests_.empty() );
     assert( pSuppliedAutomate_ );
 
-    NET_ASN_MsgLogSupplyHandlingCreation asn;
-    asn().oid_consigne  = nID_;
-    asn().oid_automate  = pSuppliedAutomate_->GetID();
-    asn().tick_creation = nCreationTick_;
+    client::LogSupplyHandlingCreation asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_automate( pSuppliedAutomate_->GetID() );
+    asn().set_tick_creation( nCreationTick_ );
 
-    ASN1T_DotationQuery* pAsnRequests = new ASN1T_DotationQuery[ requests_.size() ];
-    uint i = 0;
-    for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it, ++i )
+    for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
     {
-        ASN1T_DotationQuery& asnDemande = pAsnRequests[ i ];
+        MsgsSimToClient::MsgDotationQuery& asnDemande = *asn().mutable_dotations()->add_elem();
         it->second.Serialize( asnDemande );
     }
 
-    asn().dotations.n    = requests_.size();
-    asn().dotations.elem = pAsnRequests;
-    asn.Send();
-
-    delete [] asn().dotations.elem;
+    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn().mutable_dotations()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -245,14 +241,14 @@ void PHY_SupplyStockState::SendFullState() const
     assert( pSuppliedAutomate_ );
 
     SendMsgCreation();
-    NET_ASN_MsgLogSupplyHandlingUpdate asn;
-    asn().oid_consigne = nID_;
-    asn().oid_automate = pSuppliedAutomate_->GetID();
+    client::LogSupplyHandlingUpdate asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_automate( pSuppliedAutomate_->GetID() );
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
         PHY_SupplyConsign_ABC::SendDefaultState( asn );
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -266,9 +262,9 @@ void PHY_SupplyStockState::SendChangedState() const
 
     assert( pSuppliedAutomate_ );
 
-    NET_ASN_MsgLogSupplyHandlingUpdate asn;
-    asn().oid_consigne = nID_;
-    asn().oid_automate = pSuppliedAutomate_->GetID();
+    client::LogSupplyHandlingUpdate asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_automate( pSuppliedAutomate_->GetID() );
 
     if( bConsignChanged_ || ( pConsign_ && pConsign_->HasChanged() ) )
     {
@@ -281,24 +277,15 @@ void PHY_SupplyStockState::SendChangedState() const
     if( bRequestsChanged_ )
     {
         assert( !requests_.empty() );
-
-        asn().m.dotationsPresent = 1;
-
-        ASN1T_DotationQuery* pAsnRequests = new ASN1T_DotationQuery[ requests_.size() ];
-        uint i = 0;
-        for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it, ++i )
+        for( CIT_RequestMap it = requests_.begin(); it != requests_.end(); ++it )
         {
-            ASN1T_DotationQuery& asnDemande = pAsnRequests[ i ];
+            MsgsSimToClient::MsgDotationQuery& asnDemande = *asn().mutable_dotations()->add_elem();
             it->second.Serialize( asnDemande );
         }
-
-        asn().dotations.n    = requests_.size();
-        asn().dotations.elem = pAsnRequests;   
     }
-
-    asn.Send();
-    if( asn().m.dotationsPresent && asn().dotations.n > 0 )
-        delete [] asn().dotations.elem;
+    asn.Send( NET_Publisher_ABC::Publisher() );
+    if( asn().has_dotations() && asn().dotations().elem_size() > 0 )
+        asn().mutable_dotations()->Clear();
 }
     
 // -----------------------------------------------------------------------------
@@ -309,10 +296,10 @@ void PHY_SupplyStockState::SendMsgDestruction() const
 {
     assert( pSuppliedAutomate_ );
 
-    NET_ASN_MsgLogSupplyHandlingDestruction asn;
-    asn().oid_consigne = nID_;
-    asn().oid_automate = pSuppliedAutomate_->GetID();
-    asn.Send();
+    client::LogSupplyHandlingDestruction asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_automate( pSuppliedAutomate_->GetID() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

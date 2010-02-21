@@ -12,7 +12,19 @@
 
 #include "ActionFactory_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include "game_asn/simulation.h"
+
+namespace Common
+{
+    class MsgMissionParameters;
+    class MsgUnitOrder;
+    class MsgAutomatOrder;
+    class MsgPopulationOrder;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgFragOrder;
+}
 
 namespace kernel
 {
@@ -48,10 +60,10 @@ public:
     virtual actions::Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission ) const;
     virtual actions::Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const;
 
-    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgUnitOrder& message ) const;
-    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgAutomatOrder& message ) const;
-    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgPopulationOrder& message ) const;
-    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgFragOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const Common::MsgUnitOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const Common::MsgAutomatOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const Common::MsgPopulationOrder& message ) const;
+    virtual actions::Action_ABC* CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const;
 
     virtual actions::Action_ABC* CreateAction( xml::xistream& xis ) const;
     //@}
@@ -68,7 +80,7 @@ private:
     actions::Action_ABC* CreateMission( xml::xistream& xis ) const;
     actions::Action_ABC* CreateFragOrder( xml::xistream& xis ) const;
 
-    void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const ASN1T_MissionParameters& asn ) const;
+	void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const Common::MsgMissionParameters& message ) const;
     void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
     //@}
 

@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_IndirectFire.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_IndirectFire constructor
@@ -35,23 +35,22 @@ MIL_ParameterType_IndirectFire::~MIL_ParameterType_IndirectFire()
 // Name: MIL_ParameterType_IndirectFire::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_IndirectFire::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_IndirectFire::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value = false;
-    to.value.t    = T_MissionParameter_value_tirIndirect;
-    
-    return from.ToIndirectFire( to.value.u.tirIndirect );
+    to.set_null_value( false );
+    Common::MsgUnitFire fire;
+    fire.set_oid( to.value().tirindirect() );
+    return from.ToIndirectFire( fire );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_IndirectFire::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_IndirectFire::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_IndirectFire::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_tirIndirect );
+    assert( to.value().has_tirindirect() );
 }

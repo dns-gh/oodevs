@@ -43,9 +43,9 @@ void Mission_Automat_GEN_ReconnaitreZone::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_GEN_ReconnaitreZone& asnMission = *new ASN1T_Mission_Automate_GEN_ReconnaitreZone();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_gen_reconnaitre_zone;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_reconnaitre_zone = &asnMission;
+    Mission_Automate_GEN_ReconnaitreZone& asnMission = *new Mission_Automate_GEN_ReconnaitreZone();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_gen_reconnaitre_zone = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_GEN_ReconnaitreZone::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_GEN_ReconnaitreZone::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_gen_reconnaitre_zone );
-    ASN1T_Mission_Automate_GEN_ReconnaitreZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_gen_reconnaitre_zone;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_gen_reconnaitre_zone ());
+    Mission_Automate_GEN_ReconnaitreZone& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_gen_reconnaitre_zone;
 
     ASN_Tools::Delete( asnMission.zone );
 

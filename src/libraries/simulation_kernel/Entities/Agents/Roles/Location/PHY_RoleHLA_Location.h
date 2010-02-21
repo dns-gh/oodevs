@@ -73,7 +73,6 @@ public:
     //@{
     virtual MT_Float GetCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData& nToTerrainType, const TerrainData& nLinkTerrainType, void* pParams ) const;
     //@}
-
     virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {};
 
 private:

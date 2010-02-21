@@ -65,9 +65,9 @@ TeamFactory::~TeamFactory()
 // Name: TeamFactory::CreateTeam
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
+Team_ABC* TeamFactory::CreateTeam( const MsgsSimToClient::MsgTeamCreation& message )
 {
-    Team* result = new Team( asnMsg, controllers_.controller_ );
+    Team* result = new Team( message, controllers_.controller_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new UrbanKnowledges( *result, controllers_.controller_, model_.urbanKnowledgeFactory_ ) );
@@ -78,7 +78,7 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
     result->Attach( *new Equipments( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
-    result->Update( asnMsg );
+    result->Update( message );
     result->Polish();
     return result;
 }
@@ -87,13 +87,13 @@ Team_ABC* TeamFactory::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
 // Name: TeamFactory::CreateFormation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCreation& asnMsg )
+kernel::Formation_ABC* TeamFactory::CreateFormation( const Common::MsgFormationCreation& message )
 {
-    Entity_ABC* superior = asnMsg.m.oid_formation_parentePresent ? 
-        (Entity_ABC*) &model_.teams_.Resolver< Formation_ABC >::Get( asnMsg.oid_formation_parente ) :
-        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( asnMsg.oid_camp );
+    Entity_ABC* superior = message.has_oid_formation_parente()  ? 
+        (Entity_ABC*) &model_.teams_.Resolver< Formation_ABC >::Get( message.oid_formation_parente() ) :
+        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.oid_camp() );
 
-    Formation* result = new Formation( asnMsg, controllers_.controller_, model_.static_.levels_ );
+    Formation* result = new Formation( message, controllers_.controller_, model_.static_.levels_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< TacticalHierarchies >( *new FormationHierarchy( controllers_.controller_, *result, superior ) );
     result->Attach< IntelligenceHierarchies >( *new EntityIntelligences( controllers_.controller_, *result, superior, model_.teams_ ) );
@@ -101,7 +101,7 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCre
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Dotations( controllers_.controller_, model_.static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new ConvexHulls( *result ) );
-    result->Update( asnMsg );
+    result->Update( message );
     result->Polish();
     return result;
 }
@@ -110,14 +110,14 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const ASN1T_MsgFormationCre
 // Name: TeamFactory::CreateKnowledgeGroup
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const ASN1T_MsgKnowledgeGroupCreation& asnMsg, Team_ABC& team  )
+KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, Team_ABC& team  )
 {
-    // LTO begin
-    Entity_ABC* superior = asnMsg.m.oid_knowledgegroup_parentPresent ? 
-        (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( asnMsg.oid_knowledgegroup_parent ) :
-        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( asnMsg.oid_camp );
+// LTO begin
+    Entity_ABC* superior = message.has_oid_parent() ? 
+        (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( message.oid_parent() ) :
+        (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.oid_camp() );
 
-    KnowledgeGroup* result = new KnowledgeGroup( asnMsg.oid, controllers_.controller_, asnMsg.type, model_.static_.types_ );
+    KnowledgeGroup* result = new KnowledgeGroup( message.oid(), controllers_.controller_, message.type(), model_.static_.types_ );
     // LTO end
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );

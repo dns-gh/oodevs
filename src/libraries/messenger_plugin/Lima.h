@@ -12,6 +12,13 @@
 
 #include "TacticalLine_ABC.h"
 
+
+namespace MsgsClientToMessenger
+{
+    class MsgLimaCreationRequest;
+    class MsgLimaUpdateRequest;
+}
+
 namespace dispatcher
 {
     class ClientPublisher_ABC;
@@ -40,14 +47,14 @@ class Lima : public TacticalLine_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Lima( unsigned int id, const ASN1T_MsgLimaCreationRequest& message );
-             Lima( unsigned int id, xml::xistream&, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter ); 
+             Lima( unsigned int id, const MsgsClientToMessenger::MsgLimaCreationRequest& message );
+             Lima( unsigned int id, xml::xistream&, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter ); 
     virtual ~Lima();
     //@}
 
     //! @name Network
     //@{
-    void Update( const ASN1T_MsgLimaUpdateRequest& message );
+    void Update         ( const MsgsClientToMessenger::MsgLimaUpdateRequest& message );
     void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher ) const;
     void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;

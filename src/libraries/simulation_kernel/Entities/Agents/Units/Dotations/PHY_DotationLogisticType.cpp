@@ -80,7 +80,7 @@ const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( const std::strin
 // Name: PHY_DotationLogisticType::Find
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( uint nID )
+const PHY_DotationLogisticType* PHY_DotationLogisticType::Find( unsigned int nID )
 {
     for( CIT_DotationLogisticTypeMap it = dotationLogisticTypes_.begin(); it != dotationLogisticTypes_.end(); ++it )
     {
@@ -103,7 +103,7 @@ const PHY_DotationLogisticType::T_DotationLogisticTypeMap& PHY_DotationLogisticT
 // Name: PHY_DotationLogisticType::GetID
 // Created: NLD 2006-01-03
 // -----------------------------------------------------------------------------
-uint PHY_DotationLogisticType::GetID() const
+unsigned int PHY_DotationLogisticType::GetID() const
 {
     return nType_;
 }

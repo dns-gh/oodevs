@@ -60,7 +60,7 @@ Scheduler::~Scheduler()
 // Name: Scheduler::RecoverIfNeeded
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-void Scheduler::RecoverIfNeeded( uint nCurrentTick )
+void Scheduler::RecoverIfNeeded( unsigned int nCurrentTick )
 {
     if( nRecoveryTick_ == 0 )
         return;
@@ -81,7 +81,7 @@ void Scheduler::RecoverIfNeeded( uint nCurrentTick )
 // Name: Scheduler::Process
 // Created: SBO 2005-08-04
 // -----------------------------------------------------------------------------
-bool Scheduler::Run( uint nCurrentTick )
+bool Scheduler::Run( unsigned int nCurrentTick )
 {
     nSimTicks_ = nCurrentTick;
     if( itCurrentAction_ == actions_.end() )
@@ -132,9 +132,9 @@ void Scheduler::AddAction( Action_ABC& action )
 // Name: Scheduler::AddActions
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
-void Scheduler::AddActions( Action_ABC& action, uint nIteration )
+void Scheduler::AddActions( Action_ABC& action, unsigned int nIteration )
 {
-    for( uint i = 0; i < nIteration; ++i )
+    for( unsigned int i = 0; i < nIteration; ++i )
     {
         actions_.insert( std::make_pair( nNextExecutionTick_ + i * nSameMissionInterval_, &action ) );
         itCurrentAction_ = actions_.begin();
@@ -147,7 +147,7 @@ void Scheduler::AddActions( Action_ABC& action, uint nIteration )
 // Name: Scheduler::GetNextExecutionTick
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
-uint Scheduler::GetNextExecutionTick() const
+unsigned int Scheduler::GetNextExecutionTick() const
 {
     return nLastExecutionTick_ + nExecutionPeriod_;
 }
@@ -165,7 +165,7 @@ void Scheduler::ResetExecutionTick()
 // Name: Scheduler::GetCurrentTick
 // Created: SBO 2005-08-30
 // -----------------------------------------------------------------------------
-uint Scheduler::GetCurrentTick() const
+unsigned int Scheduler::GetCurrentTick() const
 {
     return nCurrentTick_ > 0 ? nCurrentTick_ : 0;
 }

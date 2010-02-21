@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_PathList.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_PathList constructor
@@ -35,27 +35,23 @@ MIL_ParameterType_PathList::~MIL_ParameterType_PathList()
 // Name: MIL_ParameterType_PathList::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_PathList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_PathList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value              = false;
-    to.value.t                = T_MissionParameter_value_pathList;
-    to.value.u.pathList = new ASN1T_PathList();
-    
-    return from.ToPathList( *to.value.u.pathList );
+    to.set_null_value( false );
+    return from.ToPathList( *to.mutable_value()->mutable_pathlist() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_PathList::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_PathList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_PathList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_pathList );
-    assert( to.value.u.pathList );
-    ASN_Delete::Delete( *to.value.u.pathList );
-    delete to.value.u.pathList;
+    assert( to.value().has_pathlist() );
+    assert( to.mutable_value()->mutable_pathlist() != NULL );
+    to.mutable_value()->mutable_pathlist()->Clear();
+    delete to.mutable_value()->mutable_pathlist();
 }

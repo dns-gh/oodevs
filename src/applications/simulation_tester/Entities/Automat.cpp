@@ -33,12 +33,12 @@ using namespace TEST;
 // Name: Automat::Automat
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Automat::Automat( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg )
+Automat::Automat( const Workspace& workspace, const MsgAutomatCreation& asnMsg )
     : Testable_Entity  ( workspace )
-    , nId_             ( asnMsg.oid_automate )
-    , pTeam_           ( workspace.GetEntityManager().FindTeam( asnMsg.oid_camp ) )
-    , pKnowledgeGroup_ ( workspace.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_connaissance ) )
-    , pType_           ( workspace.GetTypeManager().FindAutomatType( asnMsg.type_automate ) )
+    , nId_             ( asnMsg.oid_automate() )
+    , pTeam_           ( workspace.GetEntityManager().FindTeam( asnMsg.oid_camp() ) )
+    , pKnowledgeGroup_ ( workspace.GetEntityManager().FindKnowledgeGroup( asnMsg.oid_groupe_connaissance() ) )
+    , pType_           ( workspace.GetTypeManager().FindAutomatType( asnMsg.type_automate() ) )
 {
     assert( pTeam_ );
     assert( pKnowledgeGroup_ );
@@ -106,7 +106,7 @@ void Automat::SendMagicAction( int action ) const
 // Name: Automat::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Automat::ScheduleAllMissions( Scheduler& scheduler, uint nIteration /* = 1 */ )
+void Automat::ScheduleAllMissions( Scheduler& scheduler, unsigned int nIteration /* = 1 */ )
 {
     assert( pType_ );
     pType_->GetModel().ScheduleAllMissions( *this, scheduler, nIteration );
@@ -116,7 +116,7 @@ void Automat::ScheduleAllMissions( Scheduler& scheduler, uint nIteration /* = 1 
 // Name: Automat::ScheduleMission
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Automat::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName, uint nIteration /* = 1 */ )
+void Automat::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName, unsigned int nIteration /* = 1 */ )
 {
     assert( pType_ );
     pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName, nIteration );

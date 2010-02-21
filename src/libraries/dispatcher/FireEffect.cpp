@@ -12,17 +12,21 @@
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 
+#include "protocol/clientsenders.h"
+
+////using namespace Common;
+//using namespace MsgsClientToSim;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: FireEffect constructor
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-FireEffect::FireEffect( Model& , const ASN1T_MsgStartFireEffect& message )
-    : SimpleEntity< >( message.effect_oid )
-    , id_            ( message.effect_oid )
-    , localisation_  ( message.location )
-    , type_          ( message.type )
+FireEffect::FireEffect( Model& , const MsgsSimToClient::MsgStartFireEffect& message )
+    : SimpleEntity< >( message.effect_oid() )
+    , id_            ( message.effect_oid() )
+    , localisation_  ( message.location() )
+    , type_          ( message.type() )
 {
     // NOTHING
 }
@@ -52,9 +56,9 @@ void FireEffect::SendFullUpdate( ClientPublisher_ABC& ) const
 void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::StartFireEffect asn;
-    asn().effect_oid = id_;
-    localisation_.Send( asn().location );
-    asn().type = type_;
+    asn().set_effect_oid( id_ );
+    localisation_.Send( *asn().mutable_location() );
+    asn().set_type ( type_ );
     asn.Send( publisher );
 }
 
@@ -65,7 +69,7 @@ void FireEffect::SendCreation( ClientPublisher_ABC& publisher ) const
 void FireEffect::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::StopFireEffect asn;
-    asn() = id_;
+    asn().set_oid( id_ );
     asn.Send( publisher );
 }
 

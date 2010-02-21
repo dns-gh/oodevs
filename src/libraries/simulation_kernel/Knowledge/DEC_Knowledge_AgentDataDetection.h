@@ -15,12 +15,16 @@
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 
+namespace MsgsSimToClient
+{
+    class MsgUnitKnowledgeUpdate;
+}
+
 class DEC_Knowledge_AgentPerceptionDataDetection;
 class MIL_KnowledgeGroupType;
 class PHY_Posture;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
-struct ASN1T_MsgUnitKnowledgeUpdate;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -29,15 +33,18 @@ class DEC_Knowledge_AgentDataDetection : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      DEC_Knowledge_AgentDataDetection();
     virtual ~DEC_Knowledge_AgentDataDetection();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -58,7 +65,7 @@ public:
     const PHY_Posture&           GetLastPosture                () const;
     const PHY_Posture&           GetCurrentPosture             () const;
           MT_Float               GetPostureCompletionPercentage() const;
-          uint                   GetTimeLastUpdate             () const;
+          unsigned int                   GetTimeLastUpdate             () const;
     const MIL_Army_ABC*              GetArmySurrenderedTo          () const;
           bool                   IsSurrendered                 () const;
           bool                   IsPrisoner                    () const;
@@ -69,8 +76,8 @@ public:
     //! @name Network
     //@{
     bool HasChanged      () const;
-    void SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState   ( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendFullState   ( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
 private:
@@ -80,7 +87,9 @@ private:
     //@}
 
 private:
-    uint nTimeLastUpdate_;
+    //! @name Member data
+    //@{
+    unsigned int nTimeLastUpdate_;
 
     MT_Vector2D vPosition_;
     MT_Vector2D vDirection_;
@@ -106,6 +115,7 @@ private:
     bool bSurrenderedUpdated_;
     bool bRefugeeManagedUpdated_;
     bool bDeadUpdated_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentDataDetection )

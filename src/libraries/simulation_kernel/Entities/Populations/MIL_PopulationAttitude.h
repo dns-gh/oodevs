@@ -12,7 +12,7 @@
 #ifndef __MIL_PopulationAttitude_h_
 #define __MIL_PopulationAttitude_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
 
 // =============================================================================
 // @class  MIL_PopulationAttitude
@@ -35,16 +35,16 @@ public:
     static void Terminate ();
 
     static const MIL_PopulationAttitude* Find        ( const std::string&           strName );
-    static const MIL_PopulationAttitude* Find        ( ASN1T_EnumPopulationAttitude nAsnID  );
-    static const MIL_PopulationAttitude* Find        ( uint                         nID     );
+    static const MIL_PopulationAttitude* Find        ( Common::EnumPopulationAttitude nAsnID  );
+    static const MIL_PopulationAttitude* Find        ( unsigned int                         nID     );
     static const T_AttitudeMap&          GetAttitudes();
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&           GetName () const;
-    uint                         GetID   () const;
-    ASN1T_EnumPopulationAttitude GetAsnID() const;
+    const std::string& GetName() const;
+    unsigned int GetID() const;
+    Common::EnumPopulationAttitude GetAsnID() const;
     //@}
 
     //! @name Operators
@@ -70,16 +70,25 @@ private:
     //@}
 
 private:
-     MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, ASN1T_EnumPopulationAttitude nAsnID );
+    //! @name Constructors/Destructor
+    //@{
+     MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, Common::EnumPopulationAttitude nAsnID );
     ~MIL_PopulationAttitude();
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     const std::string                  strName_;
     const E_Attitude                   nAttitude_;
-    const ASN1T_EnumPopulationAttitude nAsnID_;
+    const Common::EnumPopulationAttitude nAsnID_;
+    //@}
 
 private:
+    //! @name Static members
+    //@{
     static T_AttitudeMap attitudes_;
+    //@}
 };
 
 #endif // __MIL_PopulationAttitude_h_

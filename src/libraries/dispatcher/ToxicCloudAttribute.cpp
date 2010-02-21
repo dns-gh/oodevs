@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
+#include "protocol/SimulationSenders.h"
 #include "ToxicCloudAttribute.h"
 
 using namespace dispatcher;
@@ -17,11 +17,10 @@ using namespace dispatcher;
 // Name: ToxicCloudAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ToxicCloudAttribute::ToxicCloudAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
+ToxicCloudAttribute::ToxicCloudAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
 {
-    quantities_.n = 0;
-    quantities_.elem = 0;
+    quantities_.clear_elem();
     Update( asnMsg );    
 }
 
@@ -38,14 +37,13 @@ ToxicCloudAttribute::~ToxicCloudAttribute()
 // Name: ToxicCloudAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void ToxicCloudAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if( asnMsg.m.toxic_cloudPresent )
+    if( asnMsg.has_toxic_cloud() )
     {         
         Clear();
-        quantities_.n = asnMsg.toxic_cloud.quantities.n;
-        quantities_.elem = new ASN1T_LocatedQuantity[ quantities_.n ];
-        memcpy( quantities_.elem, asnMsg.toxic_cloud.quantities.elem, sizeof( ASN1T_LocatedQuantity ) * quantities_.n );
+        for( int i = 0; i < quantities_.elem_size(); ++i )
+            *quantities_.add_elem() = asnMsg.toxic_cloud().quantities().elem( i );
     }
 }
 
@@ -55,10 +53,9 @@ void ToxicCloudAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void ToxicCloudAttribute::Clear()
 {
-    if ( quantities_.n > 0 )
+    if ( quantities_.elem_size() > 0 )
     {
-        delete [] quantities_.elem;
-        quantities_.n = 0;
+        quantities_.Clear();
     }
 }
 
@@ -66,18 +63,17 @@ void ToxicCloudAttribute::Clear()
 // Name: ToxicCloudAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void ToxicCloudAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.m.toxic_cloudPresent = 1;
-    asnMsg.toxic_cloud.quantities.n = quantities_.n;
-    asnMsg.toxic_cloud.quantities.elem = quantities_.elem;
+    for( int i = 0; i < quantities_.elem_size(); ++i )
+        *asnMsg.mutable_toxic_cloud()->mutable_quantities()->add_elem() = quantities_.elem( i );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ToxicCloudAttribute::AsnDelete
+// Name: ToxicCloudAttribute::Delete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void ToxicCloudAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
-//    delete asnMsg.u.mine_jam;
+//    delete asnMsg().mine_jam;
 }

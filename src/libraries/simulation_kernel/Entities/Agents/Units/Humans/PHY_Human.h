@@ -45,17 +45,20 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_Human( const MIL_Time_ABC& time, PHY_HumansComposante& composante );
      PHY_Human( const PHY_Human& rhs );
      PHY_Human();
     virtual ~PHY_Human();
+    //@}
     
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -128,7 +131,7 @@ private:
           bool                   bContamined_;  
           E_Location             nLocation_;
           PHY_MedicalHumanState* pMedicalState_;
-          uint                   nDeathTimeStep_;
+          unsigned int                   nDeathTimeStep_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_Human )

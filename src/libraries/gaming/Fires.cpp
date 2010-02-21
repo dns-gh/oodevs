@@ -45,10 +45,10 @@ Fires::~Fires()
 template< typename T >
 void Fires::CreateFire( const T& message )
 {
-    if( ! Find( message.fire_oid ) )
+    if( ! Find( message.fire_oid() ) )
     {
         Fire_ABC* fire = factory_.CreateFire( message );
-        Register( message.fire_oid, *fire );
+        Register( message.fire_oid(), *fire );
         controller_.Update( *this );
     }
 }
@@ -60,10 +60,10 @@ void Fires::CreateFire( const T& message )
 template< typename T >
 void Fires::DestroyFire( const T& message )
 {
-    Fire_ABC* fire = Find( message.fire_oid );
+    Fire_ABC* fire = Find( message.fire_oid() );
     if( fire )
     {
-        Remove( message.fire_oid );
+        Remove( message.fire_oid() );
         delete fire;
         controller_.Update( *this );
     }
@@ -73,7 +73,7 @@ void Fires::DestroyFire( const T& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const ASN1T_MsgStartUnitFire& message )
+void Fires::DoUpdate( const MsgsSimToClient::MsgStartUnitFire& message )
 {
     CreateFire( message );
 }
@@ -82,7 +82,7 @@ void Fires::DoUpdate( const ASN1T_MsgStartUnitFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const ASN1T_MsgStopUnitFire& message )
+void Fires::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
 {
     DestroyFire( message );
 }
@@ -91,7 +91,7 @@ void Fires::DoUpdate( const ASN1T_MsgStopUnitFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const ASN1T_MsgStartPopulationFire& message )
+void Fires::DoUpdate( const MsgsSimToClient::MsgStartPopulationFire& message )
 {
     CreateFire( message );
 }
@@ -100,7 +100,7 @@ void Fires::DoUpdate( const ASN1T_MsgStartPopulationFire& message )
 // Name: Fires::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fires::DoUpdate( const ASN1T_MsgStopPopulationFire& message )
+void Fires::DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message )
 {
     DestroyFire( message );
 }

@@ -11,7 +11,6 @@
 #define __PHY_RoleHLA_Posture_h_
 
 #include "PHY_RoleInterface_Posture.h"
-
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "hla/Deserializer.h"
 
@@ -100,6 +99,12 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsStealth() const { return false; }
+    //@}
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( client::UnitAttributes& /*asnMsg*/ ) const {};
+    virtual void SendFullState   ( client::UnitAttributes& /*asnMsg*/ ) const {};
     //@}
 
     //! @name HLA

@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Urban.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -18,6 +18,7 @@
 #include "simulation_kernel/Entities/MIL_EntityManager.h"
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "urban/TerrainObject_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )
 
@@ -248,8 +249,10 @@ void DEC_Knowledge_Urban::UpdateRelevance()
 // Name: DEC_Knowledge_Agent::WriteMsgPerceptionSources
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Urban::WriteMsgPerceptionSources( ASN1T_MsgUrbanKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Urban::WriteMsgPerceptionSources( MsgsSimToClient::MsgUrbanKnowledgeUpdate& message ) const
 {
+// $$$$ FDS 2010-01-13: Modif à faire valider avant suppression du commentaire
+/*
     asnMsg.m.automat_perceptionPresent = 1;
 
     asnMsg.automat_perception.n    = perceptionLevelPerAutomateMap_.size();
@@ -265,6 +268,11 @@ void DEC_Knowledge_Urban::WriteMsgPerceptionSources( ASN1T_MsgUrbanKnowledgeUpda
         }
         asnMsg.automat_perception.elem = pPerceptions;
     }
+*/
+    unsigned int i = 0;
+    if( !perceptionLevelPerAutomateMap_.empty() )
+        for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
+            message.mutable_automat_perception()->set_elem(i++, it->first->GetID() );
 }
 
 
@@ -274,43 +282,39 @@ void DEC_Knowledge_Urban::WriteMsgPerceptionSources( ASN1T_MsgUrbanKnowledgeUpda
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::SendChangedState()
 {
-    NET_ASN_MsgUrbanKnowledgeUpdate asnMsg;
+    client::UrbanKnowledgeUpdate message;
     bool bMustSend = false;
 
     if( std::abs( rLastRelevanceSent_ - rRelevance_ ) > 0.05 )
     {
-        asnMsg().m.relevancePresent = 1;
-        asnMsg().relevance = (int)( rRelevance_ * 100. );
+        message().set_relevance( (int)( rRelevance_ * 100. ) );
         rLastRelevanceSent_ = rRelevance_;
         bMustSend = true;
     }
 
     if( pCurrentPerceptionLevel_ != pPreviousPerceptionLevel_ )
     {
-        asnMsg().m.identification_levelPresent = 1;
-        pCurrentPerceptionLevel_->Serialize( asnMsg().identification_level );
+        MsgsSimToClient::EnumUnitIdentificationLevel level( message().identification_level() );
+        pCurrentPerceptionLevel_->Serialize( level );
         bMustSend = true;
     }
 
     if( std::abs( rLastProgressSent_ - rProgressPercent_ ) >= 0.01 )
     {
-        asnMsg().m.progressPresent = 1;
-        asnMsg().progress = (int)( rProgressPercent_ * 100. );
+        message().set_progress( (int)( rProgressPercent_ * 100. ) );
         rLastProgressSent_ = rProgressPercent_;
         bMustSend = true;
     }
 
     if( perceptionLevelPerAutomateMap_.size() == 0 && bLastPerceived_ )
     {
-        asnMsg().m.perceivedPresent = 1;
-        asnMsg().perceived = 0;
+        message().set_perceived( 0 );
         bLastPerceived_ = false;
         bMustSend = true;
     }
     else if( perceptionLevelPerAutomateMap_.size() > 0 && !bLastPerceived_ )
     {
-        asnMsg().m.perceivedPresent = 1;
-        asnMsg().perceived = 1;
+        message().set_perceived( true ) ;
         bLastPerceived_ = true;
         bMustSend = true;
     }
@@ -318,10 +322,10 @@ void DEC_Knowledge_Urban::SendChangedState()
     if( bMustSend )
     {
         nTimeLastUpdate_ = GetCurrentTimeStep();
-        asnMsg().oid = nID_;
-        asnMsg().team = army_.GetID();
-        asnMsg().real_urban = object_.GetId();
-        asnMsg.Send();
+        message().set_oid( nID_ );
+        message().set_team( army_.GetID() );
+        message().set_real_urban( object_.GetId() );
+        message.Send( NET_Publisher_ABC::Publisher() );
     }
 }
 
@@ -331,36 +335,31 @@ void DEC_Knowledge_Urban::SendChangedState()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::SendFullState()
 {
-    NET_ASN_MsgUrbanKnowledgeUpdate asnMsg;
-    asnMsg().oid = nID_;
-    asnMsg().team = army_.GetID();
-    asnMsg().real_urban = object_.GetId();
+    client::UrbanKnowledgeUpdate message;
+    message().set_oid( nID_ );
+    message().set_team( army_.GetID() );
+    message().set_real_urban( object_.GetId() );
 
-
-    asnMsg().m.relevancePresent = 1;
-    asnMsg().relevance = (int)( rRelevance_ * 100. );
+    message().set_relevance( (int)( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
 
-    asnMsg().m.identification_levelPresent = 1;
-    pCurrentPerceptionLevel_->Serialize( asnMsg().identification_level );
+    MsgsSimToClient::EnumUnitIdentificationLevel level( message().identification_level() );
+    pCurrentPerceptionLevel_->Serialize( level );
 
-    asnMsg().m.relevancePresent = 1;
-    asnMsg().relevance = (int)( rRelevance_ * 100. );
+    message().set_relevance( (int)( rRelevance_ * 100. ) );
 
-    asnMsg().m.progressPresent = 1;
-    asnMsg().progress = (int)( rProgressPercent_ * 100. );
+    message().set_progress( (int)( rProgressPercent_ * 100. ) );
     rLastProgressSent_ = rProgressPercent_;
 
-    asnMsg().m.perceivedPresent = 1;
-    asnMsg().perceived = 1;
+    message().set_perceived( true );
     bLastPerceived_ = true;
 
-    WriteMsgPerceptionSources( asnMsg() );
+    WriteMsgPerceptionSources( message() );
 
-    asnMsg.Send();
+    message.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asnMsg().m.automat_perceptionPresent && asnMsg().automat_perception.n > 0 )
-        delete [] asnMsg().automat_perception.elem; //$$$ RAM
+    if( message().has_automat_perception() && message().automat_perception().elem_size() > 0 )
+        message().mutable_automat_perception()->Clear(); //$$$ RAM
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::UpdateOnNetwork
@@ -397,12 +396,12 @@ void DEC_Knowledge_Urban::SendStateToNewClient()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::SendMsgCreation() const
 {
-    NET_ASN_MsgUrbanKnowledgeCreation asnMsg;
-    asnMsg().oid = nID_;
-    asnMsg().team = army_.GetID();
-    asnMsg().real_urban = object_.GetId();
+    client::UrbanKnowledgeCreation message;
+    message().set_oid( nID_ );
+    message().set_team( army_.GetID() );
+    message().set_real_urban( object_.GetId() );
 
-    asnMsg.Send();
+    message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -411,11 +410,11 @@ void DEC_Knowledge_Urban::SendMsgCreation() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::SendMsgDestruction() const
 {
-    NET_ASN_MsgUrbanKnowledgeDestruction asnMsg;
-    asnMsg().oid = nID_;
-    asnMsg().team = army_.GetID();
+    client::UrbanKnowledgeDestruction message;
+    message().set_oid( nID_ );
+    message().set_team( army_.GetID() );
 
-    asnMsg.Send();
+    message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // =============================================================================

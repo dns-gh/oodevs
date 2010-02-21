@@ -60,7 +60,7 @@ NET_Publisher_ABC::~NET_Publisher_ABC()
 // Name: NET_Publisher_ABC::SendAsnMessage
 // Created: LDC 2010-01-04
 // -----------------------------------------------------------------------------
-void NET_Publisher_ABC::SendAsnMessage( ASN1T_MsgsSimToClient& msg )
+void NET_Publisher_ABC::SendAsnMessage( MsgsSimToClient::MsgSimToClient& msg )
 {
     if( pPublisher_ )
         pPublisher_->Send( msg );
@@ -68,3 +68,13 @@ void NET_Publisher_ABC::SendAsnMessage( ASN1T_MsgsSimToClient& msg )
         throw std::runtime_error( "No publisher registered" );
 }
 
+// -----------------------------------------------------------------------------
+// Name: NET_Publisher_ABC::Publisher
+// Created: LDC 2010-02-04
+// -----------------------------------------------------------------------------
+NET_Publisher_ABC& NET_Publisher_ABC::Publisher()
+{
+    if( !pPublisher_ )
+        throw std::runtime_error( "No publisher registered" );
+    return *pPublisher_;
+}

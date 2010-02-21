@@ -10,13 +10,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ObjectExplosionFireResult.h"
-
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ObjectExplosionFireResult constructor
@@ -27,6 +26,7 @@ PHY_ObjectExplosionFireResult::PHY_ObjectExplosionFireResult( const MIL_Object_A
     , object_ ( object )
     , hits_ ( 0 )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -35,16 +35,16 @@ PHY_ObjectExplosionFireResult::PHY_ObjectExplosionFireResult( const MIL_Object_A
 // -----------------------------------------------------------------------------
 PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
 {
-    NET_ASN_MsgExplosion asnMsg;
-    asnMsg().object_oid = object_.GetID();
+    client::Explosion asnMsg;
+    asnMsg().set_object_oid( object_.GetID() );
 
-    Serialize( asnMsg().units_damages       );
-    Serialize( asnMsg().populations_damages );
+    Serialize( *asnMsg().mutable_units_damages ()      );
+    Serialize( *asnMsg().mutable_populations_damages() );
     
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    CleanAfterSerialization( asnMsg().units_damages );
-    CleanAfterSerialization( asnMsg().populations_damages );
+    CleanAfterSerialization( *asnMsg().mutable_units_damages() );
+    CleanAfterSerialization( *asnMsg().mutable_populations_damages() );
 
     // $$$ Merde pour VABF Popu
     static MT_Random randomGenerator;
@@ -71,7 +71,7 @@ void PHY_ObjectExplosionFireResult::Hit()
 // Name: PHY_ObjectExplosionFireResult::Hit
 // Created: JCR 2008-08-08
 // -----------------------------------------------------------------------------
-uint PHY_ObjectExplosionFireResult::GetHits() const
+unsigned int PHY_ObjectExplosionFireResult::GetHits() const
 {
     return hits_;
 }

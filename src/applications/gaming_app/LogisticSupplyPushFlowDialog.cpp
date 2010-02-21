@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
-#include "game_asn/SimulationSenders.h"
 #include "gaming/Dotation.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -20,6 +19,8 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
+#include "protocol/publisher_ABC.h"
+#include "protocol/simulationsenders.h"
 
 using namespace kernel;
 using namespace gui;
@@ -137,31 +138,30 @@ void LogisticSupplyPushFlowDialog::Validate()
 
     simulation::LogSupplyPushFlow message;
 
-    message().oid_donneur  = selected_->GetId();
-    message().oid_receveur = target->GetId();
+    message().set_oid_donneur( selected_->GetId() );
+    message().set_oid_receveur( target->GetId() );
 
     unsigned int rows = 0;
     for( int i = 0; i < table_->numRows(); ++i )
         if( !table_->item( i, 0 )->text().isEmpty() )
             ++rows;
 
-    message().stocks.n = rows;
+//    message.mutable_stocks()->set_n( rows );
     if( rows > 0 )
     {
-        ASN1T_DotationStock* stock = new ASN1T_DotationStock[rows];
         for( int i = 0; i < table_->numRows(); ++i )
         {
             const QString text = table_->text( i, 0 );
             if( text.isEmpty() )
                 continue;
-            stock[i].ressource_id        = supplies_[ text ].type_->GetId();
-            stock[i].quantite_disponible = table_->text( i, 1 ).toInt();
+            message().mutable_stocks()->add_elem()->set_ressource_id( supplies_[ text ].type_->GetId() );
+            message().mutable_stocks()->mutable_elem( i )->set_quantite_disponible( table_->text( i, 1 ).toInt() );
         }
-        message().stocks.elem = stock;
+//        message.mutable_stocks()->set_elem( stock );
     }
     message.Send( publisher_ );
-    if( message().stocks.n > 0 )
-        delete [] message().stocks.elem;
+    if( message().stocks().elem_size() > 0 )
+        message().mutable_stocks()->mutable_elem()->Clear();
     hide();
 }
 

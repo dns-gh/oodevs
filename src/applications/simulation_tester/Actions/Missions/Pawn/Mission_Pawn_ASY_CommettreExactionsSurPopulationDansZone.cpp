@@ -43,9 +43,9 @@ void Mission_Pawn_ASY_CommettreExactionsSurPopulationDansZone::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_commettre_exactions_sur_population_dans_zone = &asnMission;
+    Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone& asnMission = *new Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_asy_commettre_exactions_sur_population_dans_zone = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ASY_CommettreExactionsSurPopulationDansZone::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASY_CommettreExactionsSurPopulationDansZone::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_asy_commettre_exactions_sur_population_dans_zone );
-    ASN1T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_commettre_exactions_sur_population_dans_zone;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_asy_commettre_exactions_sur_population_dans_zone ());
+    Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_asy_commettre_exactions_sur_population_dans_zone;
 
     ASN_Tools::Delete( asnMission.zone );
 

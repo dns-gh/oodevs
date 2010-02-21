@@ -33,13 +33,13 @@ class PHY_ComposanteHLA : public PHY_Composante_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ComposanteHLA( const PHY_ComposanteType_ABC& type, uint nElements );
+             PHY_ComposanteHLA( const PHY_ComposanteType_ABC& type, unsigned int nElements );
     virtual ~PHY_ComposanteHLA();
     //@}
 
     //! @name Operations
     //@{
-    void Update( uint nElements );
+    void Update( unsigned int nElements );
     //@}
 
     //! @name Accessors
@@ -47,12 +47,12 @@ public:
     virtual const PHY_ComposanteType_ABC& GetType            () const;
     virtual bool                          CanFire            () const;
     virtual bool                          CanFireWhenUnloaded() const;
-    virtual uint                          GetMajorScore      () const;
+    virtual unsigned int                          GetMajorScore      () const;
 
     bool IsActive() const; //!< Test whether the composante should be taken into account in various algorithms
 
-    uint CurrentElements() const;
-    uint MaxElements();
+    unsigned int CurrentElements() const;
+    unsigned int MaxElements();
     //@}
 
 private:
@@ -70,8 +70,8 @@ private:
     //! @name Member data
     //@{
     const PHY_ComposanteType_ABC& type_;
-    uint nCurrentElements_;
-    uint nMaxElements_;
+    unsigned int nCurrentElements_;
+    unsigned int nMaxElements_;
     //@}
 };
 

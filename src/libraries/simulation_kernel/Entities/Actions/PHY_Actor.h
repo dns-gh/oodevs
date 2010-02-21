@@ -30,7 +30,7 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive > // Actions are not serialized
-    void serialize( Archive&, const uint ) {}
+    void serialize( Archive&, const unsigned int ) {}
     //@}
 
     //! @name Operations

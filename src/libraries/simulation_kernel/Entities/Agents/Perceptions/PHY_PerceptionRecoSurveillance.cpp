@@ -44,15 +44,15 @@ PHY_PerceptionRecoSurveillanceReco::PHY_PerceptionRecoSurveillanceReco( const TE
     , nUrbanDetectionTimeStep_  ( nForestDetectionTimeStep_ )
     , nEmptyDetectionTimeStep_  ( nForestDetectionTimeStep_ )
 {
-    uint nForestSurface = 0;
-    uint nEmptySurface  = 0;
-    uint nUrbanSurface  = 0;
+    unsigned int nForestSurface = 0;
+    unsigned int nEmptySurface  = 0;
+    unsigned int nUrbanSurface  = 0;
 
     MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObjectsInSurface( localisation, nEmptySurface, nForestSurface, nUrbanSurface );
 
-    const_cast< uint& >( nForestDetectionTimeStep_ ) += (uint)( nForestSurface * rForestSurveillanceTime_ );
-    const_cast< uint& >( nEmptyDetectionTimeStep_  ) += (uint)( nEmptySurface  * rEmptySurveillanceTime_  );
-    const_cast< uint& >( nUrbanDetectionTimeStep_  ) += (uint)( nUrbanSurface  * rForestSurveillanceTime_ );
+    const_cast< unsigned int& >( nForestDetectionTimeStep_ ) += (unsigned int)( nForestSurface * rForestSurveillanceTime_ );
+    const_cast< unsigned int& >( nEmptyDetectionTimeStep_  ) += (unsigned int)( nEmptySurface  * rEmptySurveillanceTime_  );
+    const_cast< unsigned int& >( nUrbanDetectionTimeStep_  ) += (unsigned int)( nUrbanSurface  * rForestSurveillanceTime_ );
 }
 
 struct PHY_PerceptionRecoSurveillance::LoadingWrapper
@@ -108,7 +108,7 @@ bool PHY_PerceptionRecoSurveillanceReco::IsInside( const MT_Vector2D& vPoint ) c
     if ( !localisation_.IsInside( vPoint ) )
         return false;
 
-    const uint                       nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(); 
+    const unsigned int                       nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep(); 
     const PHY_RawVisionData::envBits env          = MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetRawVisionData().GetVisionObject( vPoint );
 
     if ( env == PHY_RawVisionData::eVisionEmpty )

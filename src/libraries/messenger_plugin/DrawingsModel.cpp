@@ -21,6 +21,14 @@
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
+#include "protocol/protocol.h"
+#include "protocol/messengersenders.h"
+
+using namespace Common;
+using namespace MsgsAuthenticationToClient;
+using namespace MsgsClientToMessenger;
+using namespace MsgsMessengerToClient;
+
 namespace bfs = boost::filesystem;
 using namespace plugins::messenger;
 
@@ -105,10 +113,10 @@ void DrawingsModel::Save( const std::string& directory ) const
 // Name: DrawingsModel::HandleRequest
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeCreationRequest& message )
+void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeCreationRequest& message )
 {
-    ShapeCreationRequestAck ack ;
-    ack() = EnumShapeErrorCode::no_error;
+    plugins::messenger::ShapeCreationRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_no_error );
     try
     {
         std::auto_ptr< Drawing > drawing( new Drawing( idManager_.NextId(), message, converter_ ) );
@@ -118,7 +126,7 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
     }
     catch( ... )
     {
-        ack() = EnumShapeErrorCode::error_invalid_oid; // $$$$ SBO 2008-06-09:
+        ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_error_invalid_oid ); // $$$$ SBO 2008-06-09:
     }
     ack.Send( publisher );
 }
@@ -127,19 +135,19 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
 // Name: DrawingsModel::HandleRequest
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeUpdateRequest& message )
+void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeUpdateRequest& message )
 {
-    ShapeUpdateRequestAck ack ;
-    ack() = EnumShapeErrorCode::no_error;
+    plugins::messenger::ShapeUpdateRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_no_error );
 
-    Drawing* drawing = Find( message.oid );
+    Drawing* drawing = Find( message.oid() );
     if( drawing )
     {
         drawing->Update( message );
         drawing->SendUpdate( clients_ );
     }
     else
-        ack() = EnumShapeErrorCode::error_invalid_oid;
+        ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_error_invalid_oid );
     ack.Send( publisher );
 }
 
@@ -147,20 +155,20 @@ void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, c
 // Name: DrawingsModel::HandleRequest
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeDestructionRequest& message )
+void DrawingsModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeDestructionRequest& message )
 {
-    ShapeDestructionRequestAck ack ;
-    ack() = EnumShapeErrorCode::no_error;
+    plugins::messenger::ShapeDestructionRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_no_error );
 
-    Drawing* drawing = Find( message.oid );
+    Drawing* drawing = Find( message.oid() );
     if( drawing )
     {
         drawing->SendDestruction( clients_ );
         delete drawing;
-        Remove( message.oid );
+        Remove( message.oid() );
     }
     else
-        ack() = EnumShapeErrorCode::error_invalid_oid;
+        ack().set_error_code( MsgsMessengerToClient::ShapeRequestAck_ErrorCode_error_invalid_oid );
     ack.Send( publisher );
 }
 

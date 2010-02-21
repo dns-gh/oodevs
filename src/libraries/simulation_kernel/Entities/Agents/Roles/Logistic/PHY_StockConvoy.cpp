@@ -69,7 +69,7 @@ PHY_StockConvoy::~PHY_StockConvoy()
 // Name: MIL_AgentPionLOGConvoy::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void PHY_StockConvoy::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_StockConvoy::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< PHY_Convoy_ABC >( *this )
          >> pConsign_
@@ -84,7 +84,7 @@ void PHY_StockConvoy::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_AgentPionLOGConvoy::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void PHY_StockConvoy::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_StockConvoy::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< PHY_Convoy_ABC >( *this )
          << pConsign_

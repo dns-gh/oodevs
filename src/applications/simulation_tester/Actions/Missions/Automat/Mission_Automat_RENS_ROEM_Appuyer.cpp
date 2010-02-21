@@ -43,9 +43,9 @@ void Mission_Automat_RENS_ROEM_Appuyer::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_RENS_ROEM_Appuyer& asnMission = *new ASN1T_Mission_Automate_RENS_ROEM_Appuyer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_rens_roem_appuyer;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_roem_appuyer = &asnMission;
+    Mission_Automate_RENS_ROEM_Appuyer& asnMission = *new Mission_Automate_RENS_ROEM_Appuyer();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_rens_roem_appuyer = &asnMission;
 
     const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -64,8 +64,8 @@ void Mission_Automat_RENS_ROEM_Appuyer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_RENS_ROEM_Appuyer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_rens_roem_appuyer );
-    ASN1T_Mission_Automate_RENS_ROEM_Appuyer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_rens_roem_appuyer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_rens_roem_appuyer ());
+    Mission_Automate_RENS_ROEM_Appuyer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_rens_roem_appuyer;
 
     ASN_Tools::Delete( asnMission.position_deploiement );
     ASN_Tools::Delete( asnMission.point_regroupement );

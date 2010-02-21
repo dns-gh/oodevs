@@ -43,9 +43,9 @@ void Mission_Automat_ASA_DefendreZone::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ASA_DefendreZone& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreZone();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_zone;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_defendre_zone = &asnMission;
+    Mission_Automate_ASA_DefendreZone& asnMission = *new Mission_Automate_ASA_DefendreZone();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_asa_defendre_zone = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
     const T_PositionVector& positionsSections_ = pTarget_->GetTestParam_PointList();
@@ -64,8 +64,8 @@ void Mission_Automat_ASA_DefendreZone::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ASA_DefendreZone::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_asa_defendre_zone );
-    ASN1T_Mission_Automate_ASA_DefendreZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_defendre_zone;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_asa_defendre_zone ());
+    Mission_Automate_ASA_DefendreZone& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_asa_defendre_zone;
 
     ASN_Tools::Delete( asnMission.zone );
     ASN_Tools::Delete( asnMission.positions_sections );

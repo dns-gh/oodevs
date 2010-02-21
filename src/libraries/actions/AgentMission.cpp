@@ -9,12 +9,16 @@
 
 #include "actions_pch.h"
 #include "AgentMission.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "protocol/Protocol.h"
+#include "protocol/Publisher_ABC.h"
+#include "protocol/SimulationSenders.h"
 
+using namespace Common;
+using namespace MsgsSimToClient;
 using namespace kernel;
 using namespace actions;
 
@@ -53,12 +57,12 @@ AgentMission::~AgentMission()
 // -----------------------------------------------------------------------------
 void AgentMission::Publish( Publisher_ABC& publisher ) const
 {
-    simulation::UnitOrder asn;
-    asn().oid = GetEntity().GetId();
-    asn().mission = GetType().GetId();
-    CommitTo( asn().parametres );
-    asn.Send( publisher );
-    Clean( asn().parametres );
+    simulation::UnitOrder message;
+    message().set_oid ( GetEntity().GetId() );
+    message().set_mission ( GetType().GetId() );
+    CommitTo( *message().mutable_parametres() );
+    message.Send( publisher, 0 );
+    Clean( *message().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------

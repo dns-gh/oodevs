@@ -6,26 +6,17 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-30 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathWalker.h"
-
+#include "MIL_AgentServer.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "MIL_AgentServer.h"
+#include "protocol/protocol.h"
 
 //$$$ Refactorer gestion collisions objets
 
@@ -499,19 +490,19 @@ void DEC_PathWalker::Apply()
 // Name: DEC_PathWalker::SerializeEnvironmentType
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void DEC_PathWalker::SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg ) const
+void DEC_PathWalker::SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnvironmentType& msg ) const
 {
-    msg.area   = environment_.Area();
-    msg.left   = environment_.Left();
-    msg.right  = environment_.Right();
-    msg.linear = environment_.Linear();
+    msg.set_area   ( environment_.Area() );
+    msg.set_left   ( environment_.Left() );
+    msg.set_right  ( environment_.Right() );
+    msg.set_linear ( environment_.Linear() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::SerializeCurrentPath
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::SerializeCurrentPath( ASN1T_Path& asn ) const
+bool DEC_PathWalker::SerializeCurrentPath( Common::MsgPath& asn ) const
 {
     if( !pCurrentPath_.get() )
         return false;

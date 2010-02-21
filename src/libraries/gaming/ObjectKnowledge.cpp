@@ -31,17 +31,17 @@ using namespace kernel;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
+ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
                                   const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
-    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid, "" )
+    : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid(), "" )
     , converter_     ( converter )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
-    , type_          ( & typeResolver.Get( message.type ) )
+    , type_          ( & typeResolver.Get( message.type() ) )
     , pRealObject_   ( 0 )
 {
     RegisterSelf( *this );
-    pRealObject_ = objectResolver_.Find( message.real_object );
+    pRealObject_ = objectResolver_.Find( message.real_object() );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,13 +57,13 @@ ObjectKnowledge::~ObjectKnowledge()
 // Name: ObjectKnowledge::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void ObjectKnowledge::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    if( message.m.real_objectPresent )
-        pRealObject_ = objectResolver_.Find( message.real_object );
+    if( message.has_real_object()  )
+        pRealObject_ = objectResolver_.Find( message.real_object() );
 
-    if( message.m.relevancePresent )
-        nRelevance_ = message.relevance;
+    if( message.has_relevance()  )
+        nRelevance_ = message.relevance();
 
     Touch();
 }

@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "AttributeFactory.h"
 #include "Object.h"
-
 #include "ConstructionAttribute.h"
 #include "CrossingSiteAttribute.h"
 #include "FireAttribute.h"
@@ -27,10 +26,9 @@
 #include "SupplyRouteAttribute.h"
 #include "TimeLimitedAttribute.h"
 #include "StockAttribute.h"
-
 #include "ImprovableCapacity.h"
 #include "BuildableCapacity.h"
-
+#include "protocol/protocol.h"
 #include <boost/bind.hpp>
 
 namespace 
@@ -132,14 +130,14 @@ void AttributeFactory::Create( Object& object, const std::string& attribute, xml
 }
 
 #define ASN_CREATE_ATTRIBUTE( ASN, CLASS )      \
-    if( asn.m.##ASN##Present )    \
+    if( asn.has_##ASN##() )    \
         object.GetAttribute< CLASS >() = CLASS( asn );
 
 // -----------------------------------------------------------------------------
 // Name: AttributeFactory::Create
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void AttributeFactory::Create( Object& object, const ASN1T_ObjectAttributes& asn ) const
+void AttributeFactory::Create( Object& object, const Common::MsgObjectAttributes& asn ) const
 {
     // Initialize construction with 100%
     object.GetAttribute< ConstructionAttribute >();

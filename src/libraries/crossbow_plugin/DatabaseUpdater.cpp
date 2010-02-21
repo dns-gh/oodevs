@@ -1,4 +1,4 @@
-        // *****************************************************************************
+// *****************************************************************************
 //
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
@@ -104,15 +104,15 @@ void DatabaseUpdater::Flush()
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgUnitCreation& msg )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitCreation& msg )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "UnitForces" ) );
     Row_ABC& row = table->CreateRow();
-    row.SetField( "public_oid", FieldVariant( msg.oid ) );
-    row.SetField( "parent_oid", FieldVariant( msg.oid_automate ) );
-    row.SetField( "name"      , FieldVariant( std::string( msg.nom ) ) );
-    row.SetField( "type"      , FieldVariant( msg.type_pion ) );
-    UpdateSymbol( row, model_.agents_, msg.oid );
+    row.SetField( "public_oid", FieldVariant( ( long ) msg.oid() ) );
+    row.SetField( "parent_oid", FieldVariant( ( long ) msg.oid_automate() ) );
+    row.SetField( "name"      , FieldVariant( std::string( msg.nom() ) ) );
+    row.SetField( "type"      , FieldVariant( ( long ) msg.type_pion() ) );
+    UpdateSymbol( row, model_.agents_, msg.oid() );
     row.SetShape( Point() );
     table->InsertRow( row );
 }
@@ -131,15 +131,15 @@ namespace
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeCreation& msg )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "KnowledgeUnits" ) );
     Row_ABC& row = table->CreateRow();
-    row.SetField( "public_oid"  , FieldVariant( msg.oid ) );
-    row.SetField( "group_oid"   , FieldVariant( msg.oid_groupe_possesseur ) );
-    row.SetField( "unit_oid", FieldVariant( msg.oid_unite_reelle ) );
-    
-    if( const dispatcher::Agent* realAgent = model_.agents_.Find( msg.oid_unite_reelle ) )
+    row.SetField( "public_oid"  , FieldVariant( ( long ) msg.oid() ) );
+    row.SetField( "group_oid"   , FieldVariant( ( long ) msg.oid_groupe_possesseur() ) );
+    row.SetField( "unit_oid", FieldVariant( ( long ) msg.oid_unite_reelle() ) );
+
+    if( const dispatcher::Agent* realAgent = model_.agents_.Find( msg.oid_unite_reelle() ) )
     {
         std::string a = tools::app6::GetAffiliation( realAgent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() );
         row.SetField( "observer_affiliation", FieldVariant( InverseAffiliation( a ) ) );
@@ -153,7 +153,7 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeCreation& msg )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgLimitCreation& msg )
+void DatabaseUpdater::Update( const MsgsMessengerToClient::MsgLimitCreation& msg )
 {
 //    QueryBuilder builder( "BoundaryLimits" );
 //    builder.AddParameter( "public_oid", msg.oid );
@@ -165,10 +165,10 @@ void DatabaseUpdater::Update( const ASN1T_MsgLimitCreation& msg )
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "BoundaryLimits" ) );
    
     Row_ABC& row = table->CreateRow();
-    row.SetField( "public_oid", FieldVariant( msg.oid ) );
-    row.SetField( "name"      , FieldVariant( std::string( msg.tactical_line.name ) ) );
+    row.SetField( "public_oid", FieldVariant( ( long ) msg.oid() ) );
+    row.SetField( "name"      , FieldVariant( std::string( msg.tactical_line().name() ) ) );
     row.SetField( "symbol_id" , FieldVariant( std::string( "G-GPGLB----H--X" ) ) ); // default
-    row.SetShape( Line( msg.tactical_line.geometry.coordinates ) );
+    row.SetShape( Line( msg.tactical_line().geometry().coordinates() ) );
     table->InsertRow( row );
 }
 
@@ -176,25 +176,25 @@ void DatabaseUpdater::Update( const ASN1T_MsgLimitCreation& msg )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgLimaCreation& msg )
+void DatabaseUpdater::Update( const MsgsMessengerToClient::MsgLimaCreation& msg )
 {    
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "TacticalLines" ) );
     Row_ABC& row = table->CreateRow();
-    row.SetField( "public_oid", FieldVariant( msg.oid ) );
-    row.SetField( "name"      , FieldVariant( std::string( msg.tactical_line.name ) ) );
-    row.SetShape( Line( msg.tactical_line.geometry.coordinates ) );
+    row.SetField( "public_oid", FieldVariant( ( long ) msg.oid() ) );
+    row.SetField( "name"      , FieldVariant( std::string( msg.tactical_line().name() ) ) );
+    row.SetShape( Line( msg.tactical_line().geometry().coordinates() ) );
     table->InsertRow( row );
 }
 
 namespace
 {
-    std::string GetObjectTable( const ASN1T_Location& location )
+    std::string GetObjectTable( const Common::MsgLocation& location )
     {
         std::string className = "TacticalObject_Area";
-        switch ( location.type )
+        switch ( location.type() )
         {
-        case EnumLocationType::point: className = "TacticalObject_Point"; break;
-        case EnumLocationType::line:  className = "TacticalObject_Line"; break;
+        case MsgLocation::point: className = "TacticalObject_Point"; break;
+        case MsgLocation::line:  className = "TacticalObject_Line"; break;
         }
         return className;
     }
@@ -204,18 +204,18 @@ namespace
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgObjectCreation& msg )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
 {
-    std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location ) ) );
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location() ) ) );
     Row_ABC& row = table->CreateRow();
-    row.SetField( "public_oid", FieldVariant( msg.oid ) );
-    row.SetField( "name"      , FieldVariant( std::string( msg.name ) ) );
-    UpdateSymbol( row, model_.objects_, msg.oid );
-    switch ( msg.location.type )
+    row.SetField( "public_oid", FieldVariant( ( long ) msg.oid() ) );
+    row.SetField( "name"      , FieldVariant( std::string( msg.name() ) ) );
+    UpdateSymbol( row, model_.objects_, msg.oid() );
+    switch ( msg.location().type() )
     {
-    case EnumLocationType::point: row.SetShape( Point( msg.location.coordinates.elem[ 0 ] ) ); break;
-    case EnumLocationType::line:  row.SetShape( Line( msg.location.coordinates ) ); break;
-    default:                      /*row.SetShape( Location( asn.location ) );*/ break; // $$$$ SBO 2007-08-31: TODO
+        case MsgLocation_Geometry_point: row.SetShape( Point( msg.location().coordinates().elem( 0 ) ) ); break;
+        case MsgLocation_Geometry_line:  row.SetShape( Line( msg.location().coordinates() ) ); break;
+        default:    break;
     }
     table->InsertRow( row );
 }
@@ -224,11 +224,11 @@ void DatabaseUpdater::Update( const ASN1T_MsgObjectCreation& msg )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgReport& msg )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgReport& msg )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "Reports" ) );
     Row_ABC& row = table->CreateRow();
-    row.SetField( "unit_id", FieldVariant( msg.oid ) );
+    row.SetField( "unit_id", FieldVariant( ( long ) msg.oid() ) );
     row.SetField( "message", FieldVariant( reportFactory_.CreateMessage( msg ) ) );
     table->InsertRow( row );
 }
@@ -237,19 +237,19 @@ void DatabaseUpdater::Update( const ASN1T_MsgReport& msg )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgFormationCreation& asn )
+void DatabaseUpdater::Update( const Common::MsgFormationCreation& message )
 {
     Table_ABC& table = database_.OpenBufferedTable( "Formations" );
     Row_ABC& row = table.CreateRow();
-    row.SetField( "public_oid", FieldVariant( asn.oid ) );
-    if ( asn.m.oid_formation_parentePresent )
-        row.SetField( "parent_oid", FieldVariant( asn.oid_formation_parente ) );
+    row.SetField( "public_oid", FieldVariant( ( long ) message.oid() ) );
+    if( message.has_oid_formation_parente() )
+        row.SetField( "parent_oid", FieldVariant( ( long ) message.oid_formation_parente() ) );
     else
-        row.SetField( "parent_oid", FieldVariant( 0 ) );
-    row.SetField( "name", FieldVariant( std::string( asn.nom ) ) );
+        row.SetField( "parent_oid", FieldVariant( ( long ) 0 ) );
+    row.SetField( "name", FieldVariant( std::string( message.nom() ) ) );
     row.SetField( "type", FieldVariant( -1 ) );
     row.SetField( "engaged", FieldVariant( 0 ) );
-    UpdateSymbol( row, model_.formations_, asn.oid );
+    UpdateSymbol( row, model_.formations_, message.oid() );
     table.InsertRow( row );
 }
 
@@ -257,18 +257,18 @@ void DatabaseUpdater::Update( const ASN1T_MsgFormationCreation& asn )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgAutomatCreation& asn )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatCreation& message )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "Formations" ) );
     Row_ABC& row = table->CreateRow();
-    row.SetField( "public_oid", FieldVariant( asn.oid ) );
-    if( asn.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation )
-        row.SetField( "parent_oid", FieldVariant( asn.oid_parent.u.formation ) );
+    row.SetField( "public_oid", FieldVariant( ( long ) message.oid() ) );
+    if( message.oid_parent().has_formation() )
+        row.SetField( "parent_oid", FieldVariant( ( long ) message.oid_parent().formation().oid() ) );
     else
-        row.SetField( "parent_oid", FieldVariant( asn.oid_parent.u.automate ) );
-    row.SetField( "name", FieldVariant( std::string( asn.nom ) ) );
-    row.SetField( "type", FieldVariant( asn.type_automate ) );
-    UpdateSymbol( row, model_.automats_, asn.oid );
+        row.SetField( "parent_oid", FieldVariant( ( long ) message.oid_parent().automate().oid() ) );
+    row.SetField( "name", FieldVariant( std::string( message.nom() ) ) );
+    row.SetField( "type", FieldVariant( ( long ) message.type_automate() ) );
+    UpdateSymbol( row, model_.automats_, ( long ) message.oid() );
     table->InsertRow( row );
 }
 
@@ -276,17 +276,17 @@ void DatabaseUpdater::Update( const ASN1T_MsgAutomatCreation& asn )
 // Name: DatabaseUpdater::Update
 // Created: JCR 2008-07-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgAutomatAttributes& msg )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatAttributes& msg )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "Formations" ) );
     std::stringstream query;
-    query << "public_oid=" << msg.oid;        
+    query << "public_oid=" << msg.oid();
     
     table->EndTransaction();
     if( Row_ABC* row = table->Find( query.str() ) )
     {
-        if( msg.m.etat_automatePresent )
-            row->SetField( "engaged", FieldVariant( ( msg.etat_automate == EnumAutomatMode::embraye ) ? -1 : 0 ) );        
+        if( msg.has_etat_automate() )
+            row->SetField( "engaged", FieldVariant( ( msg.etat_automate() == EnumAutomatMode::embraye ) ? -1 : 0 ) );        
         table->UpdateRow( *row );
     }  
 }
@@ -306,24 +306,24 @@ void DatabaseUpdater::Update( const ASN1T_MsgAutomatAttributes& msg )
 */
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitAttributes& msg )
 {    
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "UnitForces" ) );
     std::stringstream query;
-    query << "public_oid=" << msg.oid;
+    query << "public_oid=" << msg.oid();
     
-    if( msg.m.positionPresent )
+    if( msg.has_position() )
         table->BeginTransaction();
     else
         table->EndTransaction();
     if( Row_ABC* row = table->Find( query.str() ) )
     {
-		if( msg.m.vitessePresent )
-            row->SetField( "speed", FieldVariant( msg.vitesse ) );
-        if( msg.m.etat_operationnelPresent )
-            row->SetField( "op_state", FieldVariant( msg.etat_operationnel_brut ) );
-        if( msg.m.positionPresent )
-            row->SetShape( Point( msg.position ) );
+		if( msg.has_vitesse() )
+            row->SetField( "speed", FieldVariant( msg.vitesse() ) );
+        if( msg.has_etat_operationnel_brut() )
+            row->SetField( "op_state", FieldVariant( msg.etat_operationnel_brut() ) );
+        if( msg.has_position() )
+            row->SetShape( Point( msg.position() ) );
 
 		/*table->BeginTransaction();
         table->UpdateRow( *row );
@@ -335,28 +335,28 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitAttributes& msg )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg )
 {    
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "KnowledgeUnits" ) );
     std::stringstream query;
-    query << "public_oid=" << msg.oid;
+    query << "public_oid=" << msg.oid();
     
-    if( msg.m.positionPresent )
+    if( msg.has_position() )
         table->BeginTransaction();
     else
         table->EndTransaction();
     if( Row_ABC* row = table->Find( query.str() ) )
     {
-        if( msg.m.speedPresent )
-            row->SetField( "speed", FieldVariant( msg.speed ) );
-        if( msg.m.identification_levelPresent )
-            row->SetField( "identification_level", FieldVariant( msg.identification_level ) );
-        if( msg.m.mortPresent )
-            row->SetField( "dead", FieldVariant( msg.mort ) );
-        if( msg.m.max_identification_levelPresent )
-            UpdateSymbol( *row, model_.agentKnowledges_, msg.oid );
-        if( msg.m.positionPresent )
-            row->SetShape( Point( msg.position ) );
+        if( msg.has_speed() )
+            row->SetField( "speed", FieldVariant( msg.speed() ) );
+        if( msg.has_identification_level() )
+            row->SetField( "identification_level", FieldVariant( msg.identification_level() ) );
+        if( msg.has_mort() )
+            row->SetField( "dead", FieldVariant( msg.mort() ) );
+        if( msg.has_max_identification_level() )
+            UpdateSymbol( *row, model_.agentKnowledges_, msg.oid() );
+        if( msg.has_position() )
+            row->SetShape( Point( msg.position() ) );
         table->UpdateRow( *row );
     }    
 }
@@ -365,11 +365,11 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeUpdate& msg )
 // Name: DatabaseUpdater::DestroyUnit
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::DestroyUnit( const ASN1T_MsgUnitDestruction& msg )
+void DatabaseUpdater::DestroyUnit( const MsgsSimToClient::MsgUnitDestruction& msg )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "UnitForces" ) );
     std::stringstream query;
-    query << "public_oid=" << msg;
+    query << "public_oid=" << msg.oid();
     table->DeleteRows( query.str() );
 }
 
@@ -377,11 +377,11 @@ void DatabaseUpdater::DestroyUnit( const ASN1T_MsgUnitDestruction& msg )
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-08-31
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeDestruction& msg )
+void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg )
 {
     std::auto_ptr< Table_ABC > table( database_.OpenTable( "KnowledgeUnits" ) );
     std::stringstream query;
-    query << "public_oid=" << msg.oid;
+    query << "public_oid=" << msg.oid();
     table->DeleteRows( query.str() );
 }
 
@@ -389,10 +389,10 @@ void DatabaseUpdater::Update( const ASN1T_MsgUnitKnowledgeDestruction& msg )
 // Name: DatabaseUpdater::DestroyObject
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-void DatabaseUpdater::DestroyObject( const ASN1T_MsgObjectDestruction& msg )
+void DatabaseUpdater::DestroyObject( const MsgsSimToClient::MsgObjectDestruction& msg )
 {
     std::stringstream ss;
-    ss << "public_oid=" << msg;
+    ss << "public_oid=" << msg.oid();
     {
         std::auto_ptr< Table_ABC > table( database_.OpenTable( "TacticalObject_Point" ) );
         table->DeleteRows( ss.str() );

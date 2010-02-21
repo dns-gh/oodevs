@@ -14,6 +14,12 @@
 
 class Object;
 
+// =============================================================================
+/** @class  ObjectCapacity_ABC
+    @brief  ObjectCapacity_ABC
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class ObjectCapacity_ABC 
 {
 public:
@@ -25,19 +31,19 @@ public:
 
     //! @name CheckPoints / boost serialize/deserialize
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
-    virtual void Register( Object& /*object*/ ) = 0;
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
+    virtual void Register( Object& object ) = 0;
     //@}
 
     //! @name Capacity creation
     //@{
-    virtual void Instanciate( Object& /*object*/ ) const = 0;
+    virtual void Instanciate( Object& object ) const = 0;
     virtual void Finalize( Object& /*object*/ ) {};    
     //@}
 
     //! @name Update
     //@{
-    virtual void Update( Object& /*object*/, uint /*time*/ ) {};
+    virtual void Update( Object& /*object*/, unsigned int /*time*/ ) {};
     //@}
 };
 

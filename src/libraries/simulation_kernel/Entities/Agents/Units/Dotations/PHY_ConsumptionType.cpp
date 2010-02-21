@@ -84,10 +84,10 @@ const PHY_ConsumptionType* PHY_ConsumptionType::FindConsumptionType( const std::
 // Name: PHY_ConsumptionType::FindConsumptionType
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_ConsumptionType* PHY_ConsumptionType::FindConsumptionType( uint nID )
+const PHY_ConsumptionType* PHY_ConsumptionType::FindConsumptionType( unsigned int nID )
 {
     // $$$$ JVT : Recherche linéaire, mais n'est utilisé que lors de la reprise de la sim depuis un checkpoint
-    CIT_ConsumptionTypeMap it = std::find_if( consumptionTypes_.begin(), consumptionTypes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_ConsumptionType::GetID ), std::select2nd< T_ConsumptionTypeMap::value_type >() ) ) );
+    CIT_ConsumptionTypeMap it = std::find_if( consumptionTypes_.begin(), consumptionTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_ConsumptionType::GetID ), std::select2nd< T_ConsumptionTypeMap::value_type >() ) ) );
 
     return it == consumptionTypes_.end() ? 0 : it->second;
 }
@@ -105,9 +105,9 @@ const std::string& PHY_ConsumptionType::GetName() const
 // Name: PHY_ConsumptionType::GetID
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-uint PHY_ConsumptionType::GetID() const
+unsigned int PHY_ConsumptionType::GetID() const
 {
-    return (uint)nType_;
+    return (unsigned int)nType_;
 }
 
 // -----------------------------------------------------------------------------

@@ -81,7 +81,7 @@ PHY_RoleAction_DirectFiring::~PHY_RoleAction_DirectFiring()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RoleAction_DirectFiring::serialize( Archive& archive, const uint )
+void PHY_RoleAction_DirectFiring::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< tools::Role_ABC >( *this );
 }
@@ -94,7 +94,7 @@ void PHY_RoleAction_DirectFiring::serialize( Archive& archive, const uint )
 // Name: PHY_RoleAction_DirectFiring::GetPopulationTarget
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( uint nTargetKnowledgeID )
+MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( unsigned int nTargetKnowledgeID )
 {
     DEC_Knowledge_Population* pKnowledge = pion_.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nTargetKnowledgeID );
     return pKnowledge ? &pKnowledge->GetPopulationKnown() : 0;
@@ -111,7 +111,7 @@ MIL_Population* PHY_RoleAction_DirectFiring::GetPopulationTarget( uint nTargetKn
 void PHY_RoleAction_DirectFiring::FirePion( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult )
 {
     // Pour chaque cible, choix de la meilleure arme
-    uint nNbrWeaponsUsed = 0;
+    unsigned int nNbrWeaponsUsed = 0;
     for( PHY_Composante_ABC::CIT_ComposanteVector itCompTarget = compTargets.begin(); itCompTarget != compTargets.end(); ++itCompTarget )
     {
         PHY_Composante_ABC& compTarget       = **itCompTarget;
@@ -176,7 +176,7 @@ int PHY_RoleAction_DirectFiring::FirePion( boost::shared_ptr< DEC_Knowledge_Agen
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer = pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons );
     pion_.Execute( *weaponAvailabilityComputer );
 
-    const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
+    const unsigned int nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )
     {
         if( firerWeapons.HasWeaponsNotReady() )
@@ -316,7 +316,7 @@ void PHY_RoleAction_DirectFiring::FireZone( const MIL_Object_ABC& object, PHY_Fi
 // Name: PHY_RoleAction_DirectFiring::FirePopulation
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult )
+int PHY_RoleAction_DirectFiring::FirePopulation( unsigned int nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult )
 {
 
     MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
@@ -335,7 +335,7 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
     std::auto_ptr< WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
     pion_.Execute( *weaponAvailabilityComputer );
 
-    const uint nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
+    const unsigned int nNbrWeaponsUsable = firerWeapons.GetNbrWeaponsUsable();
     if( nNbrWeaponsUsable == 0 )
     {
         if( firerWeapons.HasWeaponsNotReady() )
@@ -367,7 +367,7 @@ int PHY_RoleAction_DirectFiring::FirePopulation( uint nTargetKnowledgeID, PHY_Fi
 // Name: PHY_RoleAction_DirectFiring::FirePopulationSuspended
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_DirectFiring::FirePopulationSuspended( uint nTargetKnowledgeID )
+void PHY_RoleAction_DirectFiring::FirePopulationSuspended( unsigned int nTargetKnowledgeID )
 {
     MIL_Population* pTarget = GetPopulationTarget( nTargetKnowledgeID );
     if ( pTarget )

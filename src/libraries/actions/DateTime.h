@@ -11,7 +11,11 @@
 #define __ActionParameterDateTime_h_
 
 #include "Parameter.h"
-#include "game_asn/Simulation.h"
+
+namespace Common
+{
+    class MsgDateTime;
+}
 
 namespace actions {
     namespace parameters {
@@ -29,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DateTime( const kernel::OrderParameter& parameter, xml::xistream& xis );
-             DateTime( const kernel::OrderParameter& parameter, const ASN1T_DateTime& date );
+             DateTime( const kernel::OrderParameter& parameter, const Common::MsgDateTime& date );
              DateTime( const kernel::OrderParameter& parameter, const QDateTime& date );
     virtual ~DateTime();
     //@}
@@ -38,9 +42,9 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
-    void CommitTo( ASN1T_DateTime& asn ) const;
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( Common::MsgDateTime& message ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     //@}
 
 private:

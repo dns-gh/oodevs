@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_DetruireAeromobile::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_DetruireAeromobile& asnMission = *new ASN1T_Mission_Pion_ALAT_DetruireAeromobile();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_detruire_aeromobile;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_detruire_aeromobile = &asnMission;
+    Mission_Pion_ALAT_DetruireAeromobile& asnMission = *new Mission_Pion_ALAT_DetruireAeromobile();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_detruire_aeromobile = &asnMission;
 
     const T_IdVector& uniteADetruire_ = pTarget_->GetTestParam_AgentKnowledgeList();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -67,8 +67,8 @@ void Mission_Pawn_ALAT_DetruireAeromobile::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_DetruireAeromobile::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_detruire_aeromobile );
-    ASN1T_Mission_Pion_ALAT_DetruireAeromobile& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_detruire_aeromobile;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_detruire_aeromobile ());
+    Mission_Pion_ALAT_DetruireAeromobile& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_detruire_aeromobile;
 
     ASN_Tools::Delete( asnMission.unite_a_detruire );
     ASN_Tools::Delete( asnMission.point_regroupement );

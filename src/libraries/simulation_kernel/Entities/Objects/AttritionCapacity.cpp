@@ -17,11 +17,9 @@
 #include "Entities\Agents\Roles\Composantes\PHY_RoleInterface_Composantes.h"
 #include "Entities\Populations\MIL_PopulationElement_ABC.h"
 #include "Entities\MIL_Army.h"
-
 #include "ObstacleAttribute.h"
 #include "BypassAttribute.h"
 #include "ConstructionAttribute.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AttritionCapacity )
@@ -72,7 +70,7 @@ AttritionCapacity::~AttritionCapacity()
 // Name: AttritionCapacity::load
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const uint )
+void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {    
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
@@ -86,7 +84,7 @@ void AttritionCapacity::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: AttritionCapacity::save
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void AttritionCapacity::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void AttritionCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
        << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
@@ -145,7 +143,7 @@ void AttritionCapacity::ProcessAgentMovingInside( Object& object, MIL_Agent_ABC&
     PHY_ObjectExplosionFireResult fireResult( object );    
     agent.GetRole< PHY_RoleInterface_Composantes >().ApplyExplosion( *this, fireResult );
 
-    uint hits = fireResult.GetHits();
+    unsigned int hits = fireResult.GetHits();
     if ( hits > 0 )    
         construction->Build( - MT_Float( hits ) / MT_Float( construction->GetMaxDotation() ) );
 }

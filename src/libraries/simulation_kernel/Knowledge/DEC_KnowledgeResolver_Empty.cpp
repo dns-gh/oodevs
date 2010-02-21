@@ -28,15 +28,11 @@ DEC_KnowledgeResolver_Empty::~DEC_KnowledgeResolver_Empty()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( const Common::MsgUnitKnowledge& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
@@ -45,7 +41,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKno
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKnowledgeAgent( unsigned int /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
@@ -54,7 +50,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeResolver_Empty::ResolveKno
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( const Common::MsgObjectKnowledge& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
@@ -63,7 +59,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKn
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKnowledgeObject( unsigned int /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
@@ -72,7 +68,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeResolver_Empty::ResolveKn
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& /*asn*/ ) const
+DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& /*asn*/ ) const
 {
     return 0;
 }
@@ -81,7 +77,7 @@ DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulatio
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation
 // Created: NLD 2006-11-22
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation( uint /*nID*/ ) const
+DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulation( unsigned int /*nID*/ ) const
 {
     return 0;
 }
@@ -90,7 +86,7 @@ DEC_Knowledge_Population* DEC_KnowledgeResolver_Empty::ResolveKnowledgePopulatio
 // Name: DEC_KnowledgeResolver_Empty::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeResolver_Empty::ResolveKnowledgeUrban( const ASN1T_UrbanKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeResolver_Empty::ResolveKnowledgeUrban( const Common::MsgUrbanKnowledge& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Urban >();
 }

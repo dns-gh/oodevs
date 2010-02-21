@@ -30,7 +30,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
@@ -43,7 +43,7 @@ public:
 private:
     //! @name Member data
     //@{
-    uint bypassSpeed_;
+    unsigned int bypassSpeed_;
     //@}
 };
 

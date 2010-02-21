@@ -21,7 +21,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
 #include "statusicons.h"
-
+#include "protocol/Simulation.h"
 #include "urban/TerrainObject_ABC.h"
 #include "urban/Block.h"
 
@@ -31,15 +31,15 @@ using namespace kernel;
 // Name: UrbanKnowledge constructor
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const ASN1T_MsgUrbanKnowledgeCreation& message, Controller& controller, 
+UrbanKnowledge::UrbanKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message, Controller& controller, 
                                const tools::Resolver_ABC< urban::Block >& terrainObjectResolver )
-    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.oid, "" )
+    : EntityImplementation< UrbanKnowledge_ABC >( controller, message.oid(), "" )
     , owner_         ( owner )
     , terrainObjectResolver_( terrainObjectResolver )
     , pRealUrban_   ( 0 )
 {
     RegisterSelf( *this );
-    pRealUrban_ = terrainObjectResolver_.Find( message.real_urban );
+    pRealUrban_ = terrainObjectResolver_.Find( message.real_urban() );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,22 +55,22 @@ UrbanKnowledge::~UrbanKnowledge()
 // Name: UrbanKnowledge::DoUpdate
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::DoUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& message )
+void UrbanKnowledge::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    if( message.m.real_urbanPresent )
-        pRealUrban_ = terrainObjectResolver_.Find( message.real_urban );
+    if( message.has_real_urban() )
+        pRealUrban_ = terrainObjectResolver_.Find( message.real_urban() );
 
-    if( message.m.relevancePresent )
-        nRelevance_ = message.relevance;
+    if( message.has_relevance() )
+        nRelevance_ = message.relevance();
 
-    if( message.m.perceivedPresent )
-        bIsPerceived_ = message.perceived;
+    if( message.has_perceived() )
+        bIsPerceived_ = message.perceived();
 
-    if( message.m.identification_levelPresent )
-        nCurrrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level );//@TODO MGD Fix enum
+    if( message.has_identification_level() )
+        nCurrrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level() );//@TODO MGD Fix enum
 
-    if( message.m.progressPresent )
-        nProgress_ = message.progress;
+    if( message.has_progress() )
+        nProgress_ = message.progress();
 
 
     Touch();

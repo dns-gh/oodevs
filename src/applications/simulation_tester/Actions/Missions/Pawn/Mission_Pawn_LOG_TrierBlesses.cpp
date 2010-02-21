@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_TrierBlesses::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_TrierBlesses& asnMission = *new ASN1T_Mission_Pion_LOG_TrierBlesses();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_trier_blesses;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_trier_blesses = &asnMission;
+    Mission_Pion_LOG_TrierBlesses& asnMission = *new Mission_Pion_LOG_TrierBlesses();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_trier_blesses = &asnMission;
 
     const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_LOG_TrierBlesses::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_TrierBlesses::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_trier_blesses );
-    ASN1T_Mission_Pion_LOG_TrierBlesses& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_trier_blesses;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_trier_blesses ());
+    Mission_Pion_LOG_TrierBlesses& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_trier_blesses;
 
     ASN_Tools::Delete( asnMission.position_deploiement );
 

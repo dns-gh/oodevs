@@ -9,16 +9,16 @@
 
 #include "actions_pch.h"
 #include "EngineerConstruction.h"
-
-#include "clients_kernel/ObjectType.h"
-#include "clients_kernel/ObjectIcons.h"
-#include "clients_kernel/Tools.h"
-#include "Location.h"
 #include "Automat.h"
+#include "Location.h"
 #include "Numeric.h"
 #include "ObstacleType.h"
 #include "ParameterVisitor_ABC.h"
-
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/ObjectIcons.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -41,30 +41,30 @@ EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, con
 // Name: EngineerConstruction constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const tools::Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWork& asn, kernel::Controller& controller )
+EngineerConstruction::EngineerConstruction( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, const tools::Resolver_ABC< Automat_ABC >& automats, const Common::MsgPlannedWork& message, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
-    , type_( types.Get( asn.type ) )
+    , type_( types.Get( message.type() ) )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, asn.position ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.position() ) );
     SetValue( type_.GetName() );
-    SetParameters( asn, automats, controller );
+    SetParameters( message, automats, controller );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EngineerConstruction::SetParameters
 // Created: LDC 2009-04-01
 // -----------------------------------------------------------------------------
-void EngineerConstruction::SetParameters( const ASN1T_PlannedWork& asn, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller )
+void EngineerConstruction::SetParameters( const Common::MsgPlannedWork& message, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller )
 {
-    if( asn.tc2 != 0 )
+    if( message.tc2() != 0 )
     {
         const OrderParameter param( tools::translate( "ActionParameter", "TC2" ).ascii(), "tc2", false );
-        AddParameter( *new Automat( param, asn.tc2, automats, controller ) );
+        AddParameter( *new Automat( param, message.tc2(), automats, controller ) );
     }
-    if( asn.densite != 0 )
+    if( message.densite() != 0 )
     {
         const OrderParameter param( tools::translate( "ActionParameter", "Density" ).ascii(), "density", false );
-        AddParameter( *new Numeric( param, asn.densite ) );
+        AddParameter( *new Numeric( param, message.densite() ) );
     }
 }
 
@@ -142,43 +142,40 @@ void EngineerConstruction::Serialize( xml::xostream& xos ) const
 // Name: EngineerConstruction::CommitTo
 // Created: JCR 2008-11-03
 // -----------------------------------------------------------------------------
-void EngineerConstruction::CommitTo( ASN1T_MissionParameter& asn ) const
+void EngineerConstruction::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = 0;    
-    asn.value.t = T_MissionParameter_value_plannedWork;
-    asn.value.u.plannedWork = new ASN1T_PlannedWork();
-    CommitTo( *asn.value.u.plannedWork );
+    message.set_null_value( 0 );
+    message.mutable_value()->mutable_plannedwork();    // enforce initialisation of parameter to force his type
+    CommitTo( *message.mutable_value()->mutable_plannedwork() );
 }
     
 // -----------------------------------------------------------------------------
 // Name: EngineerConstruction::Clean
 // Created: JCR 2008-11-03
 // -----------------------------------------------------------------------------
-void EngineerConstruction::Clean( ASN1T_MissionParameter& asn ) const
+void EngineerConstruction::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.plannedWork )
-        Clean( *asn.value.u.plannedWork );
-    delete asn.value.u.plannedWork;
+    message.mutable_value()->clear_plannedwork();
 }
 
 // -----------------------------------------------------------------------------
 // Name: EngineerConstruction::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void EngineerConstruction::CommitTo( ASN1T_PlannedWork& asn ) const
+void EngineerConstruction::CommitTo( Common::MsgPlannedWork& message ) const
 {    
-    asn.type = type_.GetType().c_str();
+    message.set_type( type_.GetType().c_str() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();
         if( type == "location" )
-            static_cast< const Location* >( it->second )->CommitTo( asn.position );
+            static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
         else if( type == "obstacletype" )
-            static_cast< const ObstacleType* >( it->second )->CommitTo( asn.type_obstacle );
+            static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_type_obstacle, message, _1 ) );
         else if( type == "density" )
-            static_cast< const Numeric* >( it->second )->CommitTo( asn.densite );
+            static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_densite, message, _1 ) );
         else if( type == "tc2" || type == "automat" )
-            static_cast< const Automat* >( it->second )->CommitTo( asn.tc2 );
+            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_tc2, message, _1 ) );
     }
 }
 
@@ -186,14 +183,9 @@ void EngineerConstruction::CommitTo( ASN1T_PlannedWork& asn ) const
 // Name: EngineerConstruction::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void EngineerConstruction::Clean( ASN1T_PlannedWork& asn ) const
+void EngineerConstruction::Clean( Common::MsgPlannedWork& message ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        const std::string type = it->second->GetType();
-        if( type == "location" )
-            static_cast< const Location* >( it->second )->Clean( asn.position );
-    }
+    message.Clear();
 }
 
 // -----------------------------------------------------------------------------

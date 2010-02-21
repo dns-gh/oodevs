@@ -10,7 +10,6 @@
 #ifndef __EntityParameter_h_
 #define __EntityParameter_h_
 
-#include "game_asn/Simulation.h"
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
@@ -18,6 +17,9 @@
 #include "clients_kernel/Controller.h"
 #include "actions/Entity.h"
 #include "actions/Action_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace gui
 {
@@ -98,7 +100,7 @@ public:
     //! @name Operations
     //@{
     virtual bool CheckValidity();
-    void CommitTo( ASN1T_OID& asn ) const;
+    void CommitTo( int& message ) const;
     void CommitTo( actions::parameters::Entity< ConcreteEntity >& parameter ) const;
     virtual void MenuItemValidated();
     //@}

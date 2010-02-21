@@ -11,9 +11,10 @@
 #define __LogisticPrototype_h_
 
 #include "clients_gui/LogisticPrototype_ABC.h"
-
-struct ASN1T_MagicActionCreateObject;
-
+namespace MsgsClientToSim
+{
+    class MsgMagicActionCreateObject;
+}
 // =============================================================================
 /** @class  LogisticPrototype
     @brief  LogisticPrototype
@@ -26,7 +27,7 @@ class LogisticPrototype : public gui::LogisticPrototype_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             LogisticPrototype( QWidget* parent, kernel::Controllers& controllers, ASN1T_MagicActionCreateObject& msg );
+    LogisticPrototype( QWidget* parent, kernel::Controllers& controllers, MsgsClientToSim::MsgMagicActionCreateObject& msg );
     virtual ~LogisticPrototype();
     //@}
 
@@ -46,7 +47,7 @@ private:
 private:
     //! @name Member Data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;
+    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
     //@}
 };
 

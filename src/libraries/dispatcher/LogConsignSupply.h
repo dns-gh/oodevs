@@ -10,9 +10,16 @@
 #ifndef __LogConsignSupply_h_
 #define __LogConsignSupply_h_
 
-#include "game_asn/Simulation.h"
+
 #include "SimpleEntity.h"
 #include "tools/Resolver.h"
+
+namespace MsgsSimToClient
+{
+    enum EnumLogSupplyHandlingStatus;
+    class MsgLogSupplyHandlingCreation;
+    class MsgLogSupplyHandlingUpdate;
+}
 
 namespace kernel
 {
@@ -40,14 +47,14 @@ class LogConsignSupply : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{F
-             LogConsignSupply( const Model& model, const ASN1T_MsgLogSupplyHandlingCreation& msg );
+             LogConsignSupply( const Model& model, const MsgsSimToClient::MsgLogSupplyHandlingCreation& msg );
     virtual ~LogConsignSupply();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const ASN1T_MsgLogSupplyHandlingUpdate& msg );
+    void Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -69,7 +76,7 @@ private:
     const kernel::Automat_ABC*        pTreatingAutomat_;
     const kernel::Automat_ABC*        pConvoyingAutomat_;
     const kernel::Agent_ABC*          pConvoy_;
-    ASN1T_EnumLogSupplyHandlingStatus nState_;
+    MsgsSimToClient::EnumLogSupplyHandlingStatus nState_;
     tools::Resolver< LogSupplyDotation > dotations_;
 };
 

@@ -14,9 +14,16 @@
 #include "SimpleEntity.h"
 #include <boost/ptr_container/ptr_vector.hpp>
 
+namespace MsgsSimToClient
+{
+    class MsgUrbanCreation;
+    class MsgUrbanAttributes;
+}
+
 namespace kernel
 {
     class ModelVisitor_ABC;
+    class Displayer_ABC;
 }
 namespace dispatcher
 {
@@ -26,7 +33,7 @@ namespace dispatcher
 
 // =============================================================================
 /** @class  UrbanObject
-@brief  UrbanObject
+    @brief  UrbanObject
 */
 // Created: SLG 2009-12-03
 // =============================================================================
@@ -35,7 +42,7 @@ class UrbanObject : public SimpleEntity<>
 public:
     //! @name Constructors/Destructor
     //@{
-    UrbanObject( Model& model, const ASN1T_MsgUrbanCreation& msg );
+             UrbanObject( Model& model, const MsgsSimToClient::MsgUrbanCreation& msg );
     virtual ~UrbanObject();
     //@}
 
@@ -44,8 +51,8 @@ public:
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
-    void Accept( kernel::ModelVisitor_ABC& visitor ) const;
-    void Update             ( const ASN1T_MsgUrbanCreation& msg  );
+    void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
+    void Update         ( const MsgsSimToClient::MsgUrbanCreation& msg  );
     //@}
 
 private:
@@ -57,7 +64,7 @@ private:
 
     //! @name Attributes
     //@{
-    void Initialize( Model& model, const ASN1T_UrbanAttributes& attributes );
+    void Initialize( Model& model, const MsgsSimToClient::MsgUrbanAttributes& attributes );
     void AddAttribute( UrbanObjectAttribute_ABC* attribute );
     //@}
 

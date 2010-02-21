@@ -14,6 +14,7 @@
 #include "DEC_Knowledge_AgentPerceptionDataIdentification.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataIdentification )
 
@@ -42,11 +43,11 @@ DEC_Knowledge_AgentDataIdentification::~DEC_Knowledge_AgentDataIdentification()
 // Name: DEC_Knowledge_AgentDataIdentification::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_AgentDataIdentification::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> nTimeLastUpdate_;
    
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
     
@@ -57,9 +58,9 @@ void DEC_Knowledge_AgentDataIdentification::load( MIL_CheckPointInArchive& file,
 // Name: DEC_Knowledge_AgentDataIdentification::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_AgentDataIdentification::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 );
+    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (unsigned int)-1 );
     file << nTimeLastUpdate_
          << agentType
          << bAgentTypeUpdated_;
@@ -116,7 +117,7 @@ void DEC_Knowledge_AgentDataIdentification::Update( const DEC_Knowledge_AgentDat
 // Name: DEC_Knowledge_AgentDataIdentification::SendChangedState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
+void DEC_Knowledge_AgentDataIdentification::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
 {
     if( bAgentTypeUpdated_ )
     {
@@ -128,7 +129,7 @@ void DEC_Knowledge_AgentDataIdentification::SendChangedState( ASN1T_MsgUnitKnowl
 // Name: DEC_Knowledge_AgentDataIdentification::SendFullState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataIdentification::SendFullState( ASN1T_MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
+void DEC_Knowledge_AgentDataIdentification::SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& /*asnMsg*/ ) const
 {
     if( nTimeLastUpdate_ == 0 )
         return;
@@ -148,7 +149,7 @@ bool DEC_Knowledge_AgentDataIdentification::HasChanged() const
 // Name: DEC_Knowledge_AgentDataIdentification::GetTimeLastUpdate
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_AgentDataIdentification::GetTimeLastUpdate() const
+unsigned int DEC_Knowledge_AgentDataIdentification::GetTimeLastUpdate() const
 {
     return nTimeLastUpdate_;
 }

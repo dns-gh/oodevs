@@ -43,9 +43,9 @@ void Mission_Pawn_Test_ChangePosture::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_ChangePosture& asnMission = *new ASN1T_Mission_Pion_Test_ChangePosture();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_change_posture;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_change_posture = &asnMission;
+    Mission_Pion_Test_ChangePosture& asnMission = *new Mission_Pion_Test_ChangePosture();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_change_posture = &asnMission;
 
 
     ASN_Tools::CopyEnumeration( pTarget_->GetTestParam_Enumeration( 0, 6 ), asnMission.posture );
@@ -59,8 +59,8 @@ void Mission_Pawn_Test_ChangePosture::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_ChangePosture::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_change_posture );
-    ASN1T_Mission_Pion_Test_ChangePosture& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_change_posture;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_change_posture ());
+    Mission_Pion_Test_ChangePosture& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_change_posture;
 
 
     delete &asnMission;

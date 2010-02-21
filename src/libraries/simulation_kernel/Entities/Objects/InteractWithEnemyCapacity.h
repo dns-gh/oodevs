@@ -13,9 +13,6 @@
 #include "ObjectCapacity_ABC.h"
 #include "MIL_InteractiveContainer_ABC.h"
 
-class Object;
-class MIL_Agent_ABC;
-
 // =============================================================================
 /** @class  InteractWithEnemyCapacity
     @brief  InteractWithEnemyCapacity
@@ -36,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     virtual void CanInteractWith( const Object& object, const MIL_Agent_ABC& agent, bool& canInteract );
@@ -45,7 +42,6 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    InteractWithEnemyCapacity( const InteractWithEnemyCapacity& );            //!< Copy constructor
     InteractWithEnemyCapacity& operator=( const InteractWithEnemyCapacity& ); //!< Assignment operator
     //@}
 };

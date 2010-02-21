@@ -9,20 +9,20 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanBlockParameter.h"
+#include "protocol/protocol.h"
 #include "simulation_orders/MIL_ParameterType_UrbanBlock.h"
 #include "simulation_kernel/knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "simulation_kernel/knowledge/DEC_Knowledge_Urban.h"
 #include "UrbanModel.h"
 #include <urban/Model.h>
 #include <urban/BlockModel.h>
-#include "Network/NET_ASN_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_UrbanBlockParameter constructor
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const ASN1T_UrbanBlock& asn, const DEC_KnowledgeResolver_ABC& resolver )
-: pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn ) )
+MIL_UrbanBlockParameter::MIL_UrbanBlockParameter( const Common::MsgUrbanBlock& asn, const DEC_KnowledgeResolver_ABC& resolver )
+: pKnowledgeUrbanBlock_( resolver.ResolveKnowledgeUrban( asn.oid() ) )
 {
 }
 
@@ -58,9 +58,9 @@ bool MIL_UrbanBlockParameter::IsOfType( const MIL_ParameterType_ABC& type ) cons
 // Name: MIL_UrbanBlockParameter::ToUrbanBlock
 // Created: MGD 2009-11-02
 // -----------------------------------------------------------------------------
-bool MIL_UrbanBlockParameter::ToUrbanBlock( ASN1T_UrbanBlock& asn ) const
+bool MIL_UrbanBlockParameter::ToUrbanBlock( Common::MsgUrbanBlock& asn ) const
 {
-    asn = pKnowledgeUrbanBlock_->GetId();
+    asn.set_oid( pKnowledgeUrbanBlock_->GetId() );
     return true;
 }
 

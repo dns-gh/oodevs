@@ -15,36 +15,47 @@
 #include "3a/Task.h"
 #include "dispatcher/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.h>
-#include "game_asn/Simulation.h"
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>
 #include <boost/lexical_cast.hpp>
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
+using namespace MsgsPluginToClient;
+using namespace MsgsMessengerToClient;
+using namespace MsgsDispatcherToClient;
+using namespace MsgsAuthenticationToClient;
+using namespace MsgsReplayToClient;
+using namespace MsgsAarToClient;
+
 
 using namespace mockpp;
 
 namespace
 {
-    ASN1T_MsgsSimToClient OperationalState( unsigned opstate, unsigned long id )
+    MsgSimToClient OperationalState( unsigned opstate, unsigned long id )
     {
-        static ASN1T_MsgUnitAttributes attributes;
-        attributes.m.etat_operationnel_brutPresent = 1;
-        attributes.etat_operationnel_brut = opstate;
-        attributes.oid = id;
-        ASN1T_MsgsSimToClient result;result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
-        result.msg.u.msg_unit_attributes = &attributes;
+        MsgSimToClient result;
+        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.set_oid( id );
+        attributes.set_etat_operationnel_brut( opstate );
         return result;
     }
-    ASN1T_MsgsSimToClient BeginTick()
+    MsgSimToClient BeginTick()
     {
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_control_begin_tick;
+        MsgSimToClient result;
+        MsgControlBeginTick beginTick;
+        *result.mutable_message()->mutable_control_begin_tick() = beginTick ;
         return result;
     }
-    ASN1T_MsgsSimToClient EndTick()
+    MsgSimToClient EndTick()
     {
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_control_end_tick;
+        MsgSimToClient result;
+        MsgControlEndTick endTick;
+        *result.mutable_message()->mutable_control_end_tick() = endTick ;
         return result;
+
     }
 
     class MockPublisher : public dispatcher::ClientPublisher_ABC, public mockpp::ChainableMockObject
@@ -54,18 +65,18 @@ namespace
             : mockpp::ChainableMockObject( "MockPublisher", 0 )
             , Send_mocker( "Send", this ) {}
 
-        virtual void Send( const ASN1T_MsgsSimToClient& ) { }
-        virtual void Send( const ASN1T_MsgsAuthenticationToClient& ) { }
-        virtual void Send( const ASN1T_MsgsReplayToClient& ) { }
-        virtual void Send( const ASN1T_MsgsAarToClient& msg )
+        virtual void Send( const MsgSimToClient& ) { }
+        virtual void Send( const MsgAuthenticationToClient& ) { }
+        virtual void Send( const MsgReplayToClient& ) { }
+        virtual void Send( const MsgAarToClient& wrapper )
         {
-            const ASN1T_MsgPlotResult& result = *msg.msg.u.msg_plot_result;
-            for( unsigned i = 0; i < result.values.n; ++i )
-                Send_mocker.forward( result.values.elem[i] );
+            const MsgPlotResult& result = wrapper.message().plot_result();
+            for( unsigned i = 0; i < result.values_size(); ++i )
+                Send_mocker.forward( result.values(i) );
         };
-        virtual void Send( const ASN1T_MsgsMessengerToClient& msg ) { }
-        virtual void Send( const ASN1T_MsgsDispatcherToClient& msg ) { }
-        virtual void Send(const ASN1T_MsgsPluginToClient & msg ) { }
+        virtual void Send( const MsgMessengerToClient& msg ) { }
+        virtual void Send( const MsgDispatcherToClient& msg ) { }
+        virtual void Send(const MsgPluginToClient & msg ) { }
         virtual std::string GetEndpoint() const { return "";}
 
         mockpp::ChainableMockMethod< void, double > Send_mocker;
@@ -171,19 +182,15 @@ BOOST_AUTO_TEST_CASE( Facade_TestOperationalStateNormalized )
 
 namespace
 {
-    ASN1T_MsgsSimToClient MakePosition( const char* position, unsigned long id )
+    MsgSimToClient MakePosition( const char* position, unsigned long id )
     {
-        static ASN1T_MsgUnitAttributes attributes;
-        attributes.m.positionPresent = 1;
+        MsgSimToClient result;
+        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.set_oid(id);
         geocoord::MGRS mgrs( position );
         geocoord::Geodetic geodetic( mgrs );
-
-        attributes.position.latitude = geodetic.GetLatitude() * 180 / std::acos( -1. );
-        attributes.position.longitude = geodetic.GetLongitude() * 180 / std::acos( -1. );
-        attributes.oid = id;
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
-        result.msg.u.msg_unit_attributes = &attributes;
+        attributes.mutable_position()->set_latitude( geodetic.GetLatitude() * 180 / std::acos( -1. ) );
+        attributes.mutable_position()->set_longitude( geodetic.GetLongitude() * 180 / std::acos( -1. ) );
         return result;
     }
 }
@@ -254,26 +261,20 @@ BOOST_AUTO_TEST_CASE( Facade_TestTypeInstanciationIsVerifiedAtRuntime )
 
 namespace
 {
-    ASN1T_MsgsSimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )
+    MsgSimToClient CreateConsign( unsigned long id, unsigned long unit_id = 0  )
     {
-        static ASN1T_MsgLogMaintenanceHandlingCreation creation;
-        creation.oid_consigne = id;
-        creation.oid_pion = unit_id;
-
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation;
-        result.msg.u.msg_log_maintenance_handling_creation = &creation;
+        MsgSimToClient result;
+        MsgLogMaintenanceHandlingCreation& creation = *result.mutable_message()->mutable_log_maintenance_handling_creation();
+        creation.set_oid_consigne( id );
+        creation.set_oid_pion( unit_id ) ;
         return result;
     }
 
-    ASN1T_MsgsSimToClient DestroyConsign( unsigned long id )
+    MsgSimToClient DestroyConsign( unsigned long id )
     {
-        static ASN1T_MsgLogMaintenanceHandlingDestruction destruction;
-        destruction.oid_consigne = id;
-
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction;
-        result.msg.u.msg_log_maintenance_handling_destruction = &destruction;
+        MsgSimToClient result;
+        MsgLogMaintenanceHandlingDestruction& destruction = *result.mutable_message()->mutable_log_maintenance_handling_destruction();
+        destruction.set_oid_consigne( id );
         return result;
     }
 }
@@ -371,33 +372,22 @@ BOOST_AUTO_TEST_CASE( Facade_TestNumberOfBreakdownsWithUnitFilter )
 
 namespace
 {
-    ASN1T_MsgsSimToClient CreateDirectFire( unsigned fire_id, unsigned long firer )
+    MsgSimToClient CreateDirectFire( unsigned fire_id, unsigned long firer )
     {
-        static ASN1T_MsgStartUnitFire fire;
-        fire.fire_oid  = fire_id;
-        fire.firer_oid = firer;
-
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_start_unit_fire;
-        result.msg.u.msg_start_unit_fire = &fire;
+        MsgSimToClient result;
+        MsgStartUnitFire& fire = *result.mutable_message()->mutable_start_unit_fire();
+        fire.set_fire_oid( fire_id );
+        fire.set_firer_oid( firer );
         return result;
     }
 
-    ASN1T_MsgsSimToClient StopFire( unsigned fire_id, unsigned long damage_count = 0 )
+    MsgSimToClient StopFire( unsigned fire_id, unsigned long damage_count = 0 )
     {
-        static ASN1T_MsgStopUnitFire fire;
-        static ASN1T_UnitFireDamages damages;
-        static ASN1T_UnitEquipmentFireDamage damage;
-        fire.fire_oid  = fire_id;
-        fire.units_damages.n = 1;
-        fire.units_damages.elem = &damages;
-        damages.equipments.n = 1;
-        damages.equipments.elem = &damage;
-        damage.unavailable_nbr = damage_count;
-
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_stop_unit_fire;
-        result.msg.u.msg_stop_unit_fire = &fire;
+        MsgSimToClient result;
+        MsgStopUnitFire& fire = *result.mutable_message()->mutable_stop_unit_fire();
+        fire.set_fire_oid( fire_id );
+        MsgUnitFireDamages& damage = *fire.mutable_units_damages()->add_elem();
+        damage.mutable_equipments()->add_elem()->set_unavailable_nbr( damage_count );
         return result;
     }
 }
@@ -585,19 +575,14 @@ BOOST_AUTO_TEST_CASE( Facade_TestInflictedComponentDamagesFromDirectFireWithComp
 
 namespace
 {
-    ASN1T_MsgsSimToClient MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId = 42 )
+    MsgSimToClient MakeResourceVariation( int variation, unsigned long id, unsigned long resourceId = 42 )
     {
-        static ASN1T_MsgUnitAttributes attributes;
-        static ASN1T_ResourceDotations resource;
-        attributes.m.dotation_eff_ressourcePresent = 1;
-        attributes.dotation_eff_ressource.n = 1;
-        attributes.dotation_eff_ressource.elem = &resource;
-        resource.ressource_id = resourceId;
-        resource.quantite_disponible = variation;
-        attributes.oid = id;
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
-        result.msg.u.msg_unit_attributes = &attributes;
+        MsgSimToClient result;
+        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.set_oid( id );
+        ResourceDotations_ResourceDotation& resource = *attributes.mutable_dotation_eff_ressource()->add_elem();
+        resource.set_ressource_id( resourceId );
+        resource.set_quantite_disponible( variation );
         return result;
     }
 }
@@ -695,23 +680,18 @@ BOOST_AUTO_TEST_CASE( Facade_TestResourceConsumptionsWithResourceFilter )
 
 namespace
 {
-    ASN1T_MsgsSimToClient MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId = 42 )
+    MsgSimToClient MakeEquipementVariation( int variation[5], unsigned long id, unsigned long equipmentId = 42 )
     {
-        static ASN1T_MsgUnitAttributes attributes;
-        static ASN1T_EquipmentDotations equipment;
-        attributes.m.dotation_eff_materielPresent = 1;
-        attributes.dotation_eff_materiel.n = 1;
-        attributes.dotation_eff_materiel.elem = &equipment;
-        equipment.type_equipement = equipmentId;
-        equipment.nb_disponibles             = variation[0];
-        equipment.nb_indisponibles           = variation[1];
-        equipment.nb_reparables              = variation[2];
-        equipment.nb_dans_chaine_maintenance = variation[3];
-        equipment.nb_prisonniers             = variation[4];
-        attributes.oid = id;
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
-        result.msg.u.msg_unit_attributes = &attributes;
+        MsgSimToClient result;
+        MsgUnitAttributes& attributes = *result.mutable_message()->mutable_unit_attributes();
+        attributes.set_oid( id );
+        EquipmentDotations_EquipmentDotation& equipment = *attributes.mutable_dotation_eff_materiel()->add_elem();        
+        equipment.set_type_equipement( equipmentId );
+        equipment.set_nb_disponibles            ( variation[0] );
+        equipment.set_nb_indisponibles          ( variation[1] );
+        equipment.set_nb_reparables             ( variation[2] );
+        equipment.set_nb_dans_chaine_maintenance( variation[3] );
+        equipment.set_nb_prisonniers            ( variation[4] );
         return result;
     }
 }

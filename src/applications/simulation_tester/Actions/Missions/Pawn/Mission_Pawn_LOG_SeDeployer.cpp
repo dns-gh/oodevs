@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_SeDeployer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_SeDeployer& asnMission = *new ASN1T_Mission_Pion_LOG_SeDeployer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_se_deployer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_se_deployer = &asnMission;
+    Mission_Pion_LOG_SeDeployer& asnMission = *new Mission_Pion_LOG_SeDeployer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_se_deployer = &asnMission;
 
     const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_LOG_SeDeployer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_SeDeployer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_se_deployer );
-    ASN1T_Mission_Pion_LOG_SeDeployer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_se_deployer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_se_deployer ());
+    Mission_Pion_LOG_SeDeployer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_se_deployer;
 
     ASN_Tools::Delete( asnMission.position_deploiement );
 

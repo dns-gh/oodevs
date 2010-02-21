@@ -10,16 +10,18 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_String.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
+
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_String constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_String::MissionParameter_String( const ASN1T_MissionParameter& asn )
+MissionParameter_String::MissionParameter_String( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , value_              ( asn.value.u.aCharStr )
+    , value_              ( asn.value().acharstr() )
 {
     // NOTHING
 }
@@ -41,18 +43,17 @@ MissionParameter_String::~MissionParameter_String()
 // Name: MissionParameter_String::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_String::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_String::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value       = bNullValue_;
-    asn.value.t          = T_MissionParameter_value_aCharStr;
-    asn.value.u.aCharStr = value_.c_str();
+    asn.set_null_value( bNullValue_ );
+    asn.mutable_value()->set_acharstr( value_.c_str() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_String::AsnDelete
+// Name: MissionParameter_String::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_String::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_String::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

@@ -11,6 +11,7 @@
 #define __MIL_EquipmentTypeParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class PHY_ComposanteTypePion;
 
 // =============================================================================
@@ -25,7 +26,7 @@ class MIL_EquipmentTypeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_EquipmentTypeParameter( const ASN1T_EquipmentType & asn );
+    explicit MIL_EquipmentTypeParameter( const Common::MsgEquipmentType & asn );
     explicit MIL_EquipmentTypeParameter( const PHY_ComposanteTypePion* pEquipmentType );
     virtual ~MIL_EquipmentTypeParameter();
     //@}
@@ -37,7 +38,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToEquipmentType( ASN1T_EquipmentType& ) const;
+    virtual bool ToEquipmentType( Common::MsgEquipmentType& ) const;
     virtual bool ToEquipmentType( const PHY_ComposanteTypePion*& ) const;
     //@}
 

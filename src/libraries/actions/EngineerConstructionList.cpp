@@ -11,6 +11,7 @@
 #include "EngineerConstructionList.h"
 #include "EngineerConstruction.h"
 #include "ParameterVisitor_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -32,11 +33,11 @@ EngineerConstructionList::EngineerConstructionList( const OrderParameter& parame
 // Name: EngineerConstructionList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-EngineerConstructionList::EngineerConstructionList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& resolver, const tools::Resolver_ABC< Automat_ABC >& automats, const ASN1T_PlannedWorkList& asn, kernel::Controller& controller )
+EngineerConstructionList::EngineerConstructionList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& resolver, const tools::Resolver_ABC< Automat_ABC >& automats, const Common::MsgPlannedWorkList& message, kernel::Controller& controller )
     : Parameter< std::string >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new EngineerConstruction( OrderParameter( tools::translate( "Parameter", "Obstacle %1" ).arg( i + 1 ).ascii(), "obstacle", false ), converter, resolver, automats, asn.elem[i], controller ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddParameter( *new EngineerConstruction( OrderParameter( tools::translate( "Parameter", "Obstacle %1" ).arg( i + 1 ).ascii(), "obstacle", false ), converter, resolver, automats, message.elem(i), controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,14 +73,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_PlannedWorkList& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( Common::MsgPlannedWorkList& message ) : message_( &message ) {}
         virtual void Visit( const EngineerConstruction& param )
         {
-            param.CommitTo( asn_->elem[current_++] );
+            param.CommitTo( *message_->add_elem() );
         }
-
-        ASN1T_PlannedWorkList* asn_;
-        unsigned int current_;
+        Common::MsgPlannedWorkList* message_;
     };
 }
 
@@ -87,48 +86,25 @@ namespace
 // Name: EngineerConstructionList::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void EngineerConstructionList::CommitTo( ASN1T_MissionParameter& asn ) const
+void EngineerConstructionList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    ASN1T_PlannedWorkList*& list = asn.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
-    asn.value.t = T_MissionParameter_value_plannedWorkList;
-    list->n = Count();
+    message.set_null_value ( !IsSet() );
+    Common::MsgPlannedWorkList* list = message.mutable_value()->mutable_plannedworklist();
     if( IsSet() )
     {
-        list->elem = new ASN1T_PlannedWork[list->n];
         AsnSerializer serializer( *list );
         Accept( serializer );
     }
-}
-
-namespace
-{
-    struct AsnCleaner : public ParameterVisitor_ABC
-    {
-        explicit AsnCleaner( ASN1T_PlannedWorkList& asn ) : asn_( &asn ), current_( 0 ) {}
-        virtual void Visit( const EngineerConstruction& param )
-        {
-            param.Clean( asn_->elem[current_++] );
-        }
-   
-        ASN1T_PlannedWorkList* asn_;
-        unsigned int current_;
-    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: EngineerConstructionList::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void EngineerConstructionList::Clean( ASN1T_MissionParameter& asn ) const
+void EngineerConstructionList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.plannedWorkList )
-    {
-        AsnCleaner cleaner( *asn.value.u.plannedWorkList );
-        Accept( cleaner );
-        delete[] asn.value.u.plannedWorkList->elem;
-    }
-    delete asn.value.u.plannedWorkList;
+    if( message.value().has_plannedworklist() )
+        message.mutable_value()->clear_plannedworklist();
 }
 
 // -----------------------------------------------------------------------------

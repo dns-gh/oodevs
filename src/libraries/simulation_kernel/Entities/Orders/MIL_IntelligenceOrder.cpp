@@ -11,21 +11,20 @@
 #include "MIL_IntelligenceOrder.h"
 #include "MIL_Fuseau.h"
 #include "simulation_terrain/TER_Localisation.h"
-#include "game_asn/generated/Intelligence.h"
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_IntelligenceOrder constructor
 // Created: SBO 2007-10-30
 // -----------------------------------------------------------------------------
-MIL_IntelligenceOrder::MIL_IntelligenceOrder( const ASN1T_Intelligence& asn )
-    : name_     ( asn.name )
-    , nature_   ( asn.nature )
-    , level_    ( asn.level )
-    , embarked_ ( asn.embarked ? true : false )
-    , position_ ( asn.location )
-    , diplomacy_( asn.diplomacy )
-    , formation_( asn.formation )
+MIL_IntelligenceOrder::MIL_IntelligenceOrder( const Common::MsgIntelligence& asn )
+    : name_     ( asn.name() )
+    , nature_   ( asn.nature() )
+    , level_    ( asn.level() )
+    , embarked_ ( asn.embarked() ? true : false )
+    , position_ ( asn.location() )
+    , diplomacy_( asn.diplomacy() )
+    , formation_( asn.formation().oid() )
 {
     // NOTHING
 }
@@ -43,15 +42,15 @@ MIL_IntelligenceOrder::~MIL_IntelligenceOrder()
 // Name: MIL_IntelligenceOrder::Serialize
 // Created: SBO 2007-10-30
 // -----------------------------------------------------------------------------
-void MIL_IntelligenceOrder::Serialize( ASN1T_Intelligence& asn ) const
+void MIL_IntelligenceOrder::Serialize( Common::MsgIntelligence& asn ) const
 {
-    asn.name      = name_.c_str();
-    asn.nature    = nature_.c_str();
-    asn.level     = level_;
-    asn.embarked  = embarked_ ? 1 : 0;
-    asn.location  = position_;
-    asn.diplomacy = diplomacy_;
-    asn.formation = formation_;
+    asn.set_name( name_ );
+    asn.set_nature( nature_ );
+    asn.set_level( level_ );
+    asn.set_embarked( embarked_ );
+    *asn.mutable_location() = position_;
+    asn.set_diplomacy( diplomacy_ );
+    asn.mutable_formation()->set_oid( formation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +101,7 @@ bool MIL_IntelligenceOrder::IsEmbarked() const
 // -----------------------------------------------------------------------------
 bool MIL_IntelligenceOrder::IsEnemy() const
 {
-    return diplomacy_ == EnumDiplomacy::ennemi; // $$$$ SBO 2007-12-06: should depend upon caller
+    return diplomacy_ == Common::EnumDiplomacy::enemy_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
 }
 
 // -----------------------------------------------------------------------------
@@ -111,14 +110,14 @@ bool MIL_IntelligenceOrder::IsEnemy() const
 // -----------------------------------------------------------------------------
 bool MIL_IntelligenceOrder::IsFriend() const
 {
-    return diplomacy_ == EnumDiplomacy::ami; // $$$$ SBO 2007-12-06: should depend upon caller
+    return diplomacy_ == Common::EnumDiplomacy::friend_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_IntelligenceOrder::GetLevel
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------
-ASN1T_EnumNatureLevel MIL_IntelligenceOrder::GetLevel() const
+Common::EnumNatureLevel MIL_IntelligenceOrder::GetLevel() const
 {
     return level_;
 }

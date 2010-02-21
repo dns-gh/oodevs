@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 
 #include "PHY_RoleHLA_Refugee.h"
-#include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RoleHLA_Refugee )
 

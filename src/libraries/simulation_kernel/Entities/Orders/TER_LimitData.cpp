@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "TER_LimitData.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "Entities/MIL_Formation.h"

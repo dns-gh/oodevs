@@ -260,7 +260,7 @@ const MT_Vector2D& TER_Localisation::GetCircleCenter() const
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
 template<class Archive>
-void TER_Localisation::load( Archive& ar, const uint )
+void TER_Localisation::load( Archive& ar, const unsigned int )
 {
     ar >> nType_
          >> pointVector_
@@ -276,7 +276,7 @@ void TER_Localisation::load( Archive& ar, const uint )
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
 template<class Archive>
-void TER_Localisation::save( Archive& ar, const uint ) const
+void TER_Localisation::save( Archive& ar, const unsigned int ) const
 {
     ar  << nType_
          << pointVector_

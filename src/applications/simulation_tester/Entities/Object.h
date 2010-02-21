@@ -43,7 +43,7 @@ class Object
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( const Workspace& workspace, const ASN1T_MsgObjectCreation& asnMsg );
+             Object( const Workspace& workspace, const MsgObjectCreation& asnMsg );
     virtual ~Object();
     //@}
 
@@ -72,8 +72,8 @@ private:
     //@{
     T_EntityId       nId_;
     Team*            pTeam_;
-    uint             nType_;
-    uint             nTypeLocalisation_;
+    unsigned int             nType_;
+    unsigned int             nTypeLocalisation_;
     T_PositionVector positionVector_;
     //@}
 };

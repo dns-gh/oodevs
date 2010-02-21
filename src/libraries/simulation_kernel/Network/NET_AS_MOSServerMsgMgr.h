@@ -14,8 +14,21 @@
 
 #include "MIL.h"
 #include "NET_Publisher_ABC.h"
-#include "game_asn/SimulationSenders.h"
-#include "game_asn/DispatcherSenders.h"
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgClientToSim;
+}
+
+namespace MsgsDispatcherToSim
+{
+    class MsgDispatcherToSim;
+}
 
 class NET_AgentServer;
 class NET_Simulation_ABC;
@@ -38,15 +51,15 @@ public:
 
     //! @name Message sending
     //@{
-    virtual void Send( ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Send( MsgsSimToClient::MsgSimToClient& asnMsg );
     void RemoveClient( const std::string& client );
     //@}
 
 private:
     //! @name Msg callbacks
     //@{
-    void OnReceiveClient( const std::string& from, const ASN1T_MsgsClientToSim& message );
-    void OnReceiveMiddle( const std::string& from, const ASN1T_MsgsDispatcherToSim& message );
+    void OnReceiveClient( const std::string& from, const MsgsClientToSim::MsgClientToSim& message );
+    void OnReceiveMiddle( const std::string& from, const MsgsDispatcherToSim::MsgDispatcherToSim& message );
     void OnReceiveMsgCtrlClientAnnouncement( const std::string& from );
     //@}
 

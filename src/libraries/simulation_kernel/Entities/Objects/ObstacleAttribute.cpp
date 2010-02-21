@@ -13,7 +13,7 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeObstacle.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
-
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ObstacleAttribute )
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute()
-    : obstacle_ ( EnumDemolitionTargetType::preliminary )
+    : obstacle_ ( Common::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_ ( true )
 {
     // NOTHING
@@ -34,26 +34,26 @@ ObstacleAttribute::ObstacleAttribute()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( bool reserved )
-    : obstacle_ ( ( reserved ) ? EnumDemolitionTargetType::reserved : EnumDemolitionTargetType::preliminary )
-    , bActivated_ ( !reserved )
+    : obstacle_( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
+    , bActivated_( !reserved )
 {
     // NOTHING
 }
 
 namespace 
 {
-    EnumDemolitionTargetType::Root ExtractObstacle( const std::string& obstacle )
+    Common::ObstacleType_DemolitionTargetType ExtractObstacle( const std::string& obstacle )
     {
         if ( obstacle == "reserved" )
-            return EnumDemolitionTargetType::reserved;
-        return EnumDemolitionTargetType::preliminary;
+            return Common::ObstacleType_DemolitionTargetType_reserved;
+        return Common::ObstacleType_DemolitionTargetType_preliminary;
     }
 
-    std::string ExtractObstacle( EnumDemolitionTargetType::Root obstacle )
+    std::string ExtractObstacle( Common::ObstacleType_DemolitionTargetType obstacle )
     {
         switch ( obstacle )
         {
-        case EnumDemolitionTargetType::reserved:
+        case Common::ObstacleType_DemolitionTargetType_reserved:
             return "reserved";
         default:
             return "preliminary";
@@ -67,7 +67,7 @@ namespace
 // -----------------------------------------------------------------------------
 ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
     : obstacle_ ( ExtractObstacle( xml::attribute( xis, "type", std::string() ) ) )
-    , bActivated_ ( obstacle_ == EnumDemolitionTargetType::preliminary )
+    , bActivated_ ( obstacle_ == Common::ObstacleType_DemolitionTargetType_preliminary )
 {
     // NOTHING
 }
@@ -76,9 +76,9 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 // Name: ObstacleAttribute::ObstacleAttribute
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( const ASN1T_ObjectAttributes& asn )
-    : obstacle_  ( asn.obstacle.type )
-    , bActivated_ ( asn.obstacle.activated != 0 )
+ObstacleAttribute::ObstacleAttribute( const Common::MsgObjectAttributes& asn )
+    : obstacle_  ( asn.obstacle().type() )
+    , bActivated_ ( asn.obstacle().activated() != 0 )
 {
     // NOTHING
 }
@@ -96,7 +96,7 @@ ObstacleAttribute::~ObstacleAttribute()
 // Name: template < typename Archive > void ObstacleAttribute::serialize
 // Created: JCR 2008-06-19
 // -----------------------------------------------------------------------------
-template < typename Archive > void ObstacleAttribute::serialize( Archive& file, const uint )
+template < typename Archive > void ObstacleAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & obstacle_
@@ -107,7 +107,7 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
 // Name: ObstacleAttribute::SetType
 // Created: LDC 2009-03-23
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SetType( ASN1T_EnumDemolitionTargetType obstacleType )
+void ObstacleAttribute::SetType( Common::ObstacleType_DemolitionTargetType obstacleType )
 {
     obstacle_ = obstacleType;
 }
@@ -118,7 +118,7 @@ void ObstacleAttribute::SetType( ASN1T_EnumDemolitionTargetType obstacleType )
 // -----------------------------------------------------------------------------
 bool ObstacleAttribute::IsActivable() const
 {
-    return obstacle_ == EnumDemolitionTargetType::reserved;
+    return obstacle_ == Common::ObstacleType_DemolitionTargetType_reserved;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,24 +157,22 @@ void ObstacleAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: ObstacleAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void ObstacleAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.m.obstaclePresent = 1;
-    asn.obstacle.type = obstacle_;
-    asn.obstacle.activated = bActivated_;        
+    asn.mutable_obstacle()->set_type( obstacle_ );
+    asn.mutable_obstacle()->set_activated( bActivated_ );   
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void ObstacleAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
-        asn.m.obstaclePresent = 1;
-        asn.obstacle.activated = bActivated_;
-        asn.obstacle.type = EnumDemolitionTargetType::reserved;
+        asn.mutable_obstacle()->set_activated( bActivated_ );
+        asn.mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved );
         Reset();
     }
 }
@@ -205,11 +203,11 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
 // Name: ObstacleAttribute::OnUpdate
 // Created: LDC 2009-03-16
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
+void ObstacleAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
 {
-    if( asn.m.obstaclePresent != 0 && bActivated_ != ( asn.obstacle.activated != 0 ) )
+    if( asn.has_obstacle() != 0 && bActivated_ != ( asn.obstacle().activated() != 0 ) )
     {
-        bActivated_ = (asn.obstacle.activated != 0);
+        bActivated_ = (asn.obstacle().activated() != 0);
         NotifyAttributeUpdated( eOnUpdate );
     }
 }

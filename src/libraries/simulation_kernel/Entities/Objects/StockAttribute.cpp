@@ -15,7 +15,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "HLA/HLA_UpdateFunctor.h"
 #include <hla/AttributeIdentifier.h>
-
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( StockAttribute )
@@ -155,19 +155,16 @@ void StockAttribute::WriteODB( xml::xostream& xos ) const
 // Name: StockAttribute::Send
 // Created: JCR 2009-06-05
 // -----------------------------------------------------------------------------
-void StockAttribute::Send( ASN1T_StockResourceList& attribute, bool send_max ) const
+void StockAttribute::Send( Common::MsgObjectAttributeStock& attribute, bool send_max ) const
 {
     int i = 0;
-    for ( CIT_DotationProgress it = stock_.begin(); it != stock_.end(); ++it )
+    for( CIT_DotationProgress it = stock_.begin(); it != stock_.end(); ++it, ++i )
     {
-        ASN1T_StockResource* resource = attribute.elem + i++;
-        resource->dotation_type = it->first->GetType().GetID();
-        resource->current = it->second.first;
-        if ( send_max )
-        {
-            resource->m.maxPresent = 1;
-            resource->max = it->second.second;
-        }
+        Common::StockResource* resource = attribute.add_resources();
+        resource->mutable_dotation_type()->set_oid( it->first->GetType().GetID() );
+        resource->set_current( it->second.first );
+        if( send_max )
+            resource->set_max( it->second.second );
     }
 }
 
@@ -175,39 +172,29 @@ void StockAttribute::Send( ASN1T_StockResourceList& attribute, bool send_max ) c
 // Name: StockAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void StockAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void StockAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    if ( stock_.size() > 0 )
-    {
-        asn.m.stockPresent = 1;
-        asn.stock.resources.n = stock_.size();
-        asn.stock.resources.elem = new ASN1T_StockResource[ stock_.size() ];
-        Send( asn.stock.resources, true );
-    }
+    if( stock_.size() > 0 )
+        Send( *asn.mutable_stock(), true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void StockAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void StockAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate) )
-    {
-        asn.m.stockPresent = 1;
-        asn.stock.resources.n = stock_.size();
-        asn.stock.resources.elem = new ASN1T_StockResource[ stock_.size() ];
-        Send( asn.stock.resources, false );
-    }
+    if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate) )
+        Send( *asn.mutable_stock(), false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void StockAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
+void StockAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
 {
-    if( asn.m.stockPresent != 0 )
+    if( asn.has_stock() )
     {
         // Shold not be called
         NotifyAttributeUpdated( eOnUpdate );

@@ -14,21 +14,24 @@
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
+#include <protocol/messengersenders.h>
+
 using namespace plugins::messenger;
+
 
 // -----------------------------------------------------------------------------
 // Name: Drawing constructor
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-Drawing::Drawing( unsigned int id, const ASN1T_MsgShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter )
+Drawing::Drawing( unsigned int id, const MsgShapeCreationRequest& asn, const kernel::CoordinateConverter_ABC& converter )
     : converter_( converter )
     , id_       ( id )
-    , category_ ( asn.shape.category )
-    , color_    ( asn.shape.color )
-    , template_ ( asn.shape.template_ )
+    , category_ ( asn.shape().category() )
+    , color_    ( asn.shape().color() )
+    , template_ ( asn.shape().template_() )
 {
-    for( unsigned int i = 0; i < asn.shape.points.n; ++i )
-        points_.push_back( asn.shape.points.elem[i] );
+    for( int i = 0; i < asn.shape().points().elem_size(); ++i )
+        points_.push_back( asn.shape().points().elem(i) );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,7 +78,7 @@ Drawing::~Drawing()
 // -----------------------------------------------------------------------------
 void Drawing::ReadPoint( xml::xistream& xis )
 {
-    ASN1T_CoordLatLong asn;
+    MsgCoordLatLong asn;
     geometry::Point2f point( xml::attribute< float >( xis, "x" ), xml::attribute< float >( xis, "y" ) );
     converter_.ConvertToGeo( point, asn );
     points_.push_back( asn );
@@ -94,19 +97,19 @@ unsigned long Drawing::GetId() const
 // Name: Drawing::Update
 // Created: SBO 2008-06-06
 // -----------------------------------------------------------------------------
-void Drawing::Update( const ASN1T_MsgShapeUpdateRequest& asn )
+void Drawing::Update( const MsgShapeUpdateRequest& asn )
 {
-    if( asn.m.categoryPresent )
-        category_ = asn.category;
-    if( asn.m.colorPresent )
-        color_ = asn.color;
-    if( asn.m.template_Present )
-        template_ = asn.template_;
-    if( asn.m.pointsPresent )
+    if( asn.has_category() )
+        category_ = asn.category();
+    if( asn.has_color() )
+        color_ = asn.color();
+    if( asn.has_template_() )
+        template_ = asn.template_();
+    if( asn.has_points() )
     {
         points_.clear();
-        for( unsigned int i = 0; i < asn.points.n; ++i )
-            points_.push_back( asn.points.elem[i] );
+        for( int i = 0; i < asn.points().elem_size(); ++i )
+            points_.push_back( asn.points().elem(i) );
     }
 }
 
@@ -116,13 +119,13 @@ void Drawing::Update( const ASN1T_MsgShapeUpdateRequest& asn )
 // -----------------------------------------------------------------------------
 void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    ShapeCreation message;
-    message().oid = id_;
-    message().shape.category    = category_.c_str();
-    message().shape.color       = color_.c_str();
-    message().shape.template_   = template_.c_str();
-    message().shape.points.n    = points_.size();
-    message().shape.points.elem = const_cast< ASN1T_CoordLatLong* >( &points_.front() );
+    plugins::messenger::ShapeCreation message;
+    message().set_oid( id_ );
+    message().mutable_shape()->set_category( category_.c_str() );
+    message().mutable_shape()->set_color( color_.c_str() );
+    message().mutable_shape()->set_template_( template_.c_str() );
+    for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
+        *message().mutable_shape()->mutable_points()->add_elem() = *iter;        //const_cast< MsgCoordLatLong* >( &points_.front() );
     message.Send( publisher );
 }
 
@@ -133,14 +136,13 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 void Drawing::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     // $$$$ SBO 2008-06-09: keep track of updated fields...
-    ShapeUpdate message;
-    message().oid = id_;
-    message().m.categoryPresent  = 1; message().category  = category_.c_str();
-    message().m.colorPresent     = 1; message().color     = color_.c_str();
-    message().m.template_Present = 1; message().template_ = template_.c_str();
-    message().m.pointsPresent    = 1;
-    message().points.n           = points_.size();
-    message().points.elem        = const_cast< ASN1T_CoordLatLong* >( &points_.front() );
+    messenger::ShapeUpdate message;
+    message().set_oid( id_ );
+    message().set_category( category_.c_str() );
+    message().set_color    ( color_.c_str() );
+    message().set_template_( template_.c_str() );
+    for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
+        *message().mutable_points()->add_elem() = *iter;
     message.Send( publisher );
 }
 
@@ -159,8 +161,9 @@ void Drawing::SendFullState( dispatcher::ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void Drawing::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    ShapeDestruction message;
-    message().oid = id_;
+    plugins::messenger::ShapeDestruction message;
+    //MsgShapeDestruction message;
+    message().set_oid( id_ );
     message.Send( publisher );
 }
 
@@ -182,7 +185,7 @@ void Drawing::Serialize( xml::xostream& xos ) const
 // Name: Drawing::SerializePoint
 // Created: SBO 2008-06-10
 // -----------------------------------------------------------------------------
-void Drawing::SerializePoint( const ASN1T_CoordLatLong& asn, xml::xostream& xos ) const
+void Drawing::SerializePoint( const MsgCoordLatLong& asn, xml::xostream& xos ) const
 {
     // $$$$ AGE 2008-07-09: serializer en mgrs ?
     const geometry::Point2f point( converter_.ConvertToXY( asn ) );

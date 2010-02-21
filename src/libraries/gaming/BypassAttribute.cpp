@@ -70,27 +70,27 @@ void BypassAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // Name: BypassAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void BypassAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void BypassAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void BypassAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
    
 // -----------------------------------------------------------------------------
@@ -100,9 +100,9 @@ void BypassAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
 template< typename T >
 void BypassAttribute::UpdateData( const T& message )
 {
-    if( message.m.bypassPresent )
+    if( message.has_bypass()  )
     {
-        rBypassConstructionPercentage_ = static_cast< float >( message.bypass.percentage );
+        rBypassConstructionPercentage_ = static_cast< float >( message.bypass().percentage() );
         controller_.Update( *(BypassAttribute_ABC*)this );
     }
 }

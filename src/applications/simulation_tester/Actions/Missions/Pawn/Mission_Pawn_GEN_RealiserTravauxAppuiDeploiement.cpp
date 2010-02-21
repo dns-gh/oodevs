@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_RealiserTravauxAppuiDeploiement::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_RealiserTravauxAppuiDeploiement& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserTravauxAppuiDeploiement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_appui_deploiement;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_appui_deploiement = &asnMission;
+    Mission_Pion_GEN_RealiserTravauxAppuiDeploiement& asnMission = *new Mission_Pion_GEN_RealiserTravauxAppuiDeploiement();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_realiser_travaux_appui_deploiement = &asnMission;
 
     const T_GenObjectVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_GEN_RealiserTravauxAppuiDeploiement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_RealiserTravauxAppuiDeploiement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_realiser_travaux_appui_deploiement );
-    ASN1T_Mission_Pion_GEN_RealiserTravauxAppuiDeploiement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_appui_deploiement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_realiser_travaux_appui_deploiement ());
+    Mission_Pion_GEN_RealiserTravauxAppuiDeploiement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_realiser_travaux_appui_deploiement;
 
     ASN_Tools::Delete( asnMission.travaux );
 

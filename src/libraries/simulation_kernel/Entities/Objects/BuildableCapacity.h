@@ -43,8 +43,8 @@ public:
      //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -62,7 +62,7 @@ public:
     //@{
     const PHY_ConsumptionType&  GetDefaultConsumptionMode() const;
     const PHY_DotationCategory* GetDotationCategory() const;
-    uint                        GetMaxDotation() const;
+    unsigned int                        GetMaxDotation() const;
     ConstructionCapacity::E_UnitType GetUnit() const;
     //@}
 
@@ -83,7 +83,7 @@ private:
     //@{
     const PHY_ConsumptionType* default_;
     const PHY_DotationCategory* dotation_;
-    uint nFullNbrDotation_;
+    unsigned int nFullNbrDotation_;
     ConstructionCapacity::E_UnitType unitType_;
     //@}
 };

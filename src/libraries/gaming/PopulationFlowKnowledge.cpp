@@ -33,12 +33,12 @@ using namespace kernel;
 // Name: PopulationFlowKnowledge::FlowPart::FlowPart
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_FlowPart& asn, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
-     : relevance_ ( unsigned short( asn.pertinence ) )
+PopulationFlowKnowledge::FlowPart::FlowPart( const MsgsSimToClient::MsgFlowPart& message, const CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox )
+     : relevance_ ( unsigned short( message.pertinence() ) )
 {
-    for( uint i = 0; i < asn.forme.coordinates.n; ++i )
+    for( int i = 0; i < message.forme().location().coordinates().elem_size(); ++i )
     {
-        const geometry::Point2f point = converter.ConvertToXY( asn.forme.coordinates.elem[ i ] );
+        const geometry::Point2f point = converter.ConvertToXY( message.forme().location().coordinates().elem( i ) );
         flowPart_.push_back( point );
         boundingBox.Incorporate( point );
     }
@@ -52,14 +52,14 @@ PopulationFlowKnowledge::FlowPart::FlowPart( ASN1T_FlowPart& asn, const Coordina
 // Name: PopulationFlowKnowledge::PopulationFlowKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const ASN1T_MsgPopulationFlowKnowledgeCreation& asnMsg )
+PopulationFlowKnowledge::PopulationFlowKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& popu, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message )
     : controller_( controller )
     , converter_ ( converter )
     , popu_      ( popu )
-    , nID_       ( asnMsg.oid_connaissance_flux )
+    , nID_       ( message.oid_connaissance_flux() )
     , pFlow_     ( 0 )
 {
-    pFlow_ = popu_.FindFlow( asnMsg.oid_flux_reel );
+    pFlow_ = popu_.FindFlow( message.oid_flux_reel() );
     controller_.Create( *this );
 }
 
@@ -76,28 +76,28 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 // Name: PopulationFlowKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& asnMsg )
+void PopulationFlowKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message )
 {
-    if( asnMsg.m.attitudePresent )
-        eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;
-    if( asnMsg.m.directionPresent )
-        rDirection_ = ( float )asnMsg.direction;
-    if( asnMsg.m.vitessePresent )
-        rSpeed_ = ( float )asnMsg.vitesse;
-    if( asnMsg.m.est_percuPresent )
-        bIsPerceived_ = asnMsg.est_percu != 0;
-    if( asnMsg.m.nb_humains_vivantsPresent )
-        nNbrAliveHumans_ = ( uint )asnMsg.nb_humains_vivants;
-    if( asnMsg.m.nb_humains_mortsPresent )
-        nNbrDeadHumans_ = ( uint )asnMsg.nb_humains_morts;
-    if( asnMsg.m.oid_flux_reelPresent )
-        pFlow_ = popu_.FindFlow( asnMsg.oid_flux_reel );
-    if( asnMsg.m.portions_fluxPresent )
+    if( message.has_attitude()  )
+        eAttitude_ = ( E_PopulationAttitude )message.attitude();
+    if( message.has_direction()  )
+        rDirection_ = ( float )message.direction().heading();
+    if( message.has_vitesse()  )
+        rSpeed_ = ( float )message.vitesse();
+    if( message.has_est_percu()  )
+        bIsPerceived_ = message.est_percu() != 0;
+    if( message.has_nb_humains_vivants()  )
+        nNbrAliveHumans_ = ( uint )message.nb_humains_vivants();
+    if( message.has_nb_humains_morts()  )
+        nNbrDeadHumans_ = ( uint )message.nb_humains_morts();
+    if( message.has_oid_flux_reel()  )
+        pFlow_ = popu_.FindFlow( message.oid_flux_reel() );
+    if( message.has_portions_flux()  )
     {
         boundingBox_ = geometry::Rectangle2f();
-        flowParts_.clear(); flowParts_.reserve( asnMsg.portions_flux.n );
-        for( uint i = 0; i < asnMsg.portions_flux.n; ++i )
-            flowParts_.push_back( FlowPart( asnMsg.portions_flux.elem[ i ], converter_, boundingBox_ ) );
+        flowParts_.clear(); flowParts_.reserve( message.portions_flux().elem_size() );
+        for( int i = 0; i < message.portions_flux().elem_size(); ++i )
+            flowParts_.push_back( FlowPart( message.portions_flux().elem( i ), converter_, boundingBox_ ) );
     }
     controller_.Update( *this );
 }

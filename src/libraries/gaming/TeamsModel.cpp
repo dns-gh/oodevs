@@ -52,12 +52,12 @@ void TeamsModel::Purge()
 // Name: TeamsModel::CreateTeam
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
+void TeamsModel::CreateTeam( const MsgsSimToClient::MsgTeamCreation& message )
 {
-    if( ! tools::Resolver< Team_ABC >::Find( asnMsg.oid ) )
+    if( ! tools::Resolver< Team_ABC >::Find( message.oid() ) )
     {
-        Team_ABC* team = factory_.CreateTeam( asnMsg );
-        tools::Resolver< Team_ABC >::Register( asnMsg.oid, *team );
+        Team_ABC* team = factory_.CreateTeam( message );
+        tools::Resolver< Team_ABC >::Register( message.oid(), *team );
     }
 }
 
@@ -65,12 +65,12 @@ void TeamsModel::CreateTeam( const ASN1T_MsgTeamCreation& asnMsg )
 // Name: TeamsModel::CreateFormation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
-void TeamsModel::CreateFormation( const ASN1T_MsgFormationCreation& asnMsg )
+void TeamsModel::CreateFormation( const Common::MsgFormationCreation& message )
 {
-    if( ! tools::Resolver< Formation_ABC >::Find( asnMsg.oid ) )
+    if( ! tools::Resolver< Formation_ABC >::Find( message.oid() ) )
     {
-        Formation_ABC* formation = factory_.CreateFormation( asnMsg );
-        tools::Resolver< Formation_ABC >::Register( asnMsg.oid, *formation );
+        Formation_ABC* formation = factory_.CreateFormation( message );
+        tools::Resolver< Formation_ABC >::Register( message.oid(), *formation );
     }
 }
  

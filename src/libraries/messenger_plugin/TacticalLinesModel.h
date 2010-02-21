@@ -10,8 +10,13 @@
 #ifndef __TacticalLinesModel_h_
 #define __TacticalLinesModel_h_
 
-#include "game_asn/Messenger.h"
+
 #include "tools/Resolver.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsClientToMessenger;
+using namespace MsgsMessengerToClient;
 
 namespace dispatcher
 {
@@ -56,19 +61,19 @@ public:
 
     //! @name Network
     //@{
-    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitCreationRequest&    asn );
-    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitDestructionRequest& asn );
-    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitUpdateRequest&      asn );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaCreationRequest&     asn );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaDestructionRequest&  asn );
-    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaUpdateRequest&       asn );
+    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitCreationRequest&    message );
+    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitDestructionRequest& message );
+    void HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitUpdateRequest&      message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimaCreationRequest&     message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimaDestructionRequest&  message );
+    void HandleLimaRequest ( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimaUpdateRequest&       message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name xml read / write
     //@{
-    void ReadLima ( xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion );
-    void ReadLimit( xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion );
+    void ReadLima ( xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion );
+    void ReadLimit( xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion );
     void Write    ( xml::xostream& xos ) const;
     //@}
 

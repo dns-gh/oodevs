@@ -28,7 +28,7 @@ AnimatorAttribute::AnimatorAttribute()
 // Name: AnimatorAttribute constructor
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
-AnimatorAttribute::AnimatorAttribute( uint maxAnimator )
+AnimatorAttribute::AnimatorAttribute( unsigned int maxAnimator )
     : maxAnimators_ ( maxAnimator )
 {
     // NOTHING
@@ -68,7 +68,7 @@ AnimatorAttribute& AnimatorAttribute::operator=( const AnimatorAttribute& rhs )
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void AnimatorAttribute::serialize( Archive& file, const uint )
+void AnimatorAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & maxAnimators_;
@@ -109,7 +109,7 @@ void AnimatorAttribute::ReleaseAnimator( const MIL_Agent_ABC& agent )
 // Name: AnimatorAttribute::GetMaxAnimator
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
-uint AnimatorAttribute::GetMaxAnimators() const
+unsigned int AnimatorAttribute::GetMaxAnimators() const
 {
     return maxAnimators_;
 }
@@ -118,7 +118,7 @@ uint AnimatorAttribute::GetMaxAnimators() const
 // Name: AnimatorAttribute::GetCurrent
 // Created: JCR 2008-08-20
 // -----------------------------------------------------------------------------
-uint AnimatorAttribute::GetCurrent() const
+unsigned int AnimatorAttribute::GetCurrent() const
 {
     return animators_.size();
 }

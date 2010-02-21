@@ -12,10 +12,10 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
-#include "game_asn/Simulation.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
 #include "geometry/Types.h"
+
 
 class DEC_Knowledge_UrbanPerception;
 class MIL_Army_ABC;
@@ -24,6 +24,11 @@ class MIL_Agent_ABC;
 namespace urban
 {
     class TerrainObject_ABC;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUrbanKnowledgeUpdate;
 }
 
 // =============================================================================
@@ -98,7 +103,7 @@ private:
 
     //! @name Network operations
     //@{
-    void WriteMsgPerceptionSources( ASN1T_MsgUrbanKnowledgeUpdate& asnMsg ) const;
+    void WriteMsgPerceptionSources( MsgsSimToClient::MsgUrbanKnowledgeUpdate& asnMsg ) const;
     void SendMsgCreation   () const;
     void SendMsgDestruction() const;
     void SendChangedState  ();

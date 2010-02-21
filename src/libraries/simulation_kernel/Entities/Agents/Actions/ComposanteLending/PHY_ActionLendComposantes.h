@@ -62,8 +62,8 @@ private:
     
     PHY_RolePion_Composantes* pTarget_;
     T_ComposantePredicate     predicate_;
-    const uint                nNbrToLend_;
-          uint                nTimer_;
+    const unsigned int                nNbrToLend_;
+          unsigned int                nTimer_;
           bool                bLoanDone_;
 };
 

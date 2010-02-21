@@ -47,7 +47,7 @@ private:
 
     //! @name Helpers
     //@{
-    void AddField( const QString& name, unsigned char byte, unsigned char mask );
+    void AddField( const QString& name, unsigned short value );
     //@}
 };
 

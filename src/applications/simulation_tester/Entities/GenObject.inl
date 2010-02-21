@@ -36,7 +36,7 @@ const Location& GenObject::GetLocation() const
 // Created: SBO 2005-08-26
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumObjectType GenObject::GetType() const
+EnumObjectType GenObject::GetType() const
 {
     return eType_;
 }
@@ -46,7 +46,7 @@ ASN1T_EnumObjectType GenObject::GetType() const
 // Created: SBO 2005-08-26
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumMissionGenSousTypeObstacle GenObject::GetObstacleSubType() const
+EnumMissionGenSousTypeObstacle GenObject::GetObstacleSubType() const
 {
     return eObstacleSubType_;
 }

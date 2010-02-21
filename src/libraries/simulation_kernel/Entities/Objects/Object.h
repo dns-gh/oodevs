@@ -16,6 +16,16 @@
 #include "tools/Extendable.h"
 #include "Tools/MIL_IDManager.h"
 
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
+namespace MsgsSimToClient
+{
+    enum MsgObjectMagicActionAck_ErrorCode;
+}
+
 class ObjectAttribute_ABC;
 class MIL_ObjectType_ABC;
 class MIL_Army_ABC;
@@ -43,8 +53,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name ODB
@@ -67,7 +77,7 @@ public:
 
     //! @name Construction
     //@{
-    void Update( uint time );
+	void Update( unsigned int time );
     void UpdateLocalisation( const TER_Localisation& location );
     //@}
 
@@ -102,10 +112,10 @@ public:
     //! @name Network
     //@{
     virtual   void    UpdateState();
-    ASN1T_EnumObjectErrorCode OnUpdate( const ASN1T_ObjectAttributes& asn );
-    void    SendCreation() const;
-    void    SendDestruction() const;
-    void    SendFullState() const;
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode  OnUpdate( const Common::MsgObjectAttributes& asn );
+    void                                                SendCreation() const;
+    void                                                SendDestruction() const;
+    void                                                SendFullState() const;
     //@}
 
     //! @name HLA
@@ -118,7 +128,7 @@ public:
 
     //! @name 
     //@{
-    uint  GetID() const;    
+    unsigned int  GetID() const;    
     //@}
 
 private:
@@ -166,7 +176,7 @@ private:
     //! @name Member data
     //@{
     std::string             name_;
-    uint                    id_;
+    unsigned int                    id_;
     T_Capacities            capacities_;
     T_InteractiveCapacities interactives_;
     T_Attributes            attributes_;   
@@ -185,8 +195,8 @@ private:
 
     //! @name Network
     //@{ 
-    mutable uint8 xAttrToUpdate_;
-    mutable uint8 xAttrToUpdateForHLA_;
+    mutable unsigned char xAttrToUpdate_;
+    mutable unsigned char xAttrToUpdateForHLA_;
     //@}
 
     static MIL_IDManager idManager_;

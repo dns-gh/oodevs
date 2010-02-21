@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -24,7 +25,9 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "Tools/MIL_IDManager.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
 
@@ -164,7 +167,7 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> dataRecognition_
          >> dataIdentification_
          >> nTimeLastUpdate_;
-
+    
     idManager_.Lock( nID_ );
 
     unsigned int nID;
@@ -411,25 +414,17 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
 // Name: DEC_Knowledge_Agent::WriteMsgPerceptionSources
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Agent::WriteMsgPerceptionSources( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_Agent::WriteMsgPerceptionSources( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
 {
-    asnMsg.m.perception_par_compagniePresent = 1;
-
-    asnMsg.perception_par_compagnie.n    = perceptionLevelPerAutomateMap_.size();
-    asnMsg.perception_par_compagnie.elem = 0;
-
     if( !perceptionLevelPerAutomateMap_.empty() )
-    {
-        ASN1T_AutomatPerception* pPerceptions = new ASN1T_AutomatPerception[ perceptionLevelPerAutomateMap_.size() ]; //$$ RAM
-        unsigned int i = 0;
         for( CIT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
         {
-            pPerceptions[i].oid_compagnie        = it->first->GetID();
-            it->second->Serialize( pPerceptions[i].identification_level );
-            ++i;
+            MsgsSimToClient::AutomatPerception& perception = *asnMsg.mutable_perception_par_compagnie()->add_elem();
+            perception.set_oid_compagnie( it->first->GetID() );
+            MsgsSimToClient::EnumUnitIdentificationLevel val;
+            it->second->Serialize( val );
+            perception.set_identification_level( val );
         }
-        asnMsg.perception_par_compagnie.elem = pPerceptions;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -446,27 +441,26 @@ void DEC_Knowledge_Agent::SendChangedState()
 
     assert( pKnowledgeGroup_ );
 
-    NET_ASN_MsgUnitKnowledgeUpdate asnMsg;
-    asnMsg().oid                   = nID_;
-    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
+    client::UnitKnowledgeUpdate asnMsg;
+    asnMsg().set_oid( nID_ );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetID() );
     
     if( bRelevanceUpdated_ )
     {
-        asnMsg().m.pertinencePresent = 1;
-        asnMsg().pertinence = (int)( rRelevance_ * 100. );
+        asnMsg().set_pertinence( (int)( rRelevance_ * 100. ) );
         rLastRelevanceSent_ = rRelevance_;
     }
 
     if( bCurrentPerceptionLevelUpdated_ )
-    {
-        asnMsg().m.identification_levelPresent = 1;
-        pCurrentPerceptionLevel_->Serialize( asnMsg().identification_level );
+    {        
+        MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
+        pCurrentPerceptionLevel_->Serialize( level );
     }
 
     if( bMaxPerceptionLevelUpdated_ )
     {
-        asnMsg().m.max_identification_levelPresent = 1;
-        pMaxPerceptionLevel_->Serialize( asnMsg().max_identification_level );
+        MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().max_identification_level() );
+        pMaxPerceptionLevel_->Serialize( level );
     }
 
     if( bPerceptionPerAutomateUpdated )
@@ -476,10 +470,10 @@ void DEC_Knowledge_Agent::SendChangedState()
     dataRecognition_   .SendChangedState( asnMsg() );
     dataIdentification_.SendChangedState( asnMsg() );
 
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asnMsg().m.perception_par_compagniePresent && asnMsg().perception_par_compagnie.n > 0 )
-        delete [] asnMsg().perception_par_compagnie.elem; //$$$ RAM
+    if( asnMsg().has_perception_par_compagnie()  && asnMsg().perception_par_compagnie().elem_size() > 0 )
+        asnMsg().mutable_perception_par_compagnie()->Clear(); //$$$ RAM
 }
 
 // -----------------------------------------------------------------------------
@@ -490,19 +484,17 @@ void DEC_Knowledge_Agent::SendFullState()
 {
     assert( pKnowledgeGroup_ );
 
-    NET_ASN_MsgUnitKnowledgeUpdate asnMsg;
-    asnMsg().oid                   = nID_;
-    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
+    client::UnitKnowledgeUpdate asnMsg;
+    asnMsg().set_oid( nID_ );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetID() );
     
-    asnMsg().m.pertinencePresent = 1;
-    asnMsg().pertinence = (int)( rRelevance_ * 100. );
+    asnMsg().set_pertinence( (int)( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
     
-    asnMsg().m.identification_levelPresent = 1;
-    pCurrentPerceptionLevel_->Serialize( asnMsg().identification_level );
-
-    asnMsg().m.max_identification_levelPresent = 1;
-    pMaxPerceptionLevel_->Serialize( asnMsg().max_identification_level );
+    MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
+    pCurrentPerceptionLevel_->Serialize( level );
+    MsgsSimToClient::EnumUnitIdentificationLevel maxlevel( asnMsg().max_identification_level() );
+    pMaxPerceptionLevel_->Serialize( maxlevel );
 
     WriteMsgPerceptionSources( asnMsg() );
 
@@ -510,10 +502,10 @@ void DEC_Knowledge_Agent::SendFullState()
     dataRecognition_   .SendFullState( asnMsg() );
     dataIdentification_.SendFullState( asnMsg() );
 
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asnMsg().m.perception_par_compagniePresent && asnMsg().perception_par_compagnie.n > 0 )
-        delete [] asnMsg().perception_par_compagnie.elem; //$$$ RAM
+    if( asnMsg().has_perception_par_compagnie()  && asnMsg().perception_par_compagnie().elem_size() > 0 )
+        asnMsg().mutable_perception_par_compagnie()->Clear(); //$$$ RAM
 }
 
 // -----------------------------------------------------------------------------
@@ -567,12 +559,12 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
     assert( pKnowledgeGroup_ );
     assert( pAgentKnown_ );
 
-    NET_ASN_MsgUnitKnowledgeCreation asnMsg;
-    asnMsg().oid                   = nID_;
-    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
-    asnMsg().oid_unite_reelle      = pAgentKnown_->GetID();    
-    asnMsg().type_unite            = pAgentKnown_->GetType().GetID();
-    asnMsg.Send();
+    client::UnitKnowledgeCreation asnMsg;
+    asnMsg().set_oid                  ( nID_ );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetID() );
+    asnMsg().set_oid_unite_reelle     ( pAgentKnown_->GetID() );    
+    asnMsg().mutable_type_unite()->set_type( pAgentKnown_->GetType().GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -583,10 +575,10 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
 {
     if( pKnowledgeGroup_ )
     {    
-        NET_ASN_MsgUnitKnowledgeDestruction asnMsg;
-        asnMsg().oid                   = nID_;
-        asnMsg().oid_groupe_possesseur = pKnowledgeGroup_->GetID();
-        asnMsg.Send();
+        client::UnitKnowledgeDestruction asnMsg;
+        asnMsg().set_oid                  ( nID_ );
+        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetID() );
+        asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }
     

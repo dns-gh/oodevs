@@ -10,8 +10,8 @@
 #include "gaming_app_pch.h"
 #include "FirePrototype.h"
 #include "clients_kernel/FireClass.h"
+#include "protocol/Protocol.h"
 #include "tools/Iterator.h"
-#include "game_asn/SimulationSenders.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,7 +20,7 @@ using namespace gui;
 // Name: FirePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass >& resolver, ASN1T_MagicActionCreateObject& msg )
+FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass >& resolver, MsgsClientToSim::MsgMagicActionCreateObject& msg )
     : FirePrototype_ABC( parent, resolver )
     , msg_( msg )     
 {
@@ -42,9 +42,8 @@ FirePrototype::~FirePrototype()
 // -----------------------------------------------------------------------------
 void FirePrototype::Commit()
 {
-    msg_.attributes.m.firePresent = 1;
-    msg_.attributes.fire.class_id = fireClass_->GetValue()->GetId();
-//    msg_.attributes.fire.heat = fireClass_->heat;
+    msg_.mutable_attributes()->mutable_fire()->set_class_id( fireClass_->GetValue()->GetId() );
+//    msg_.attributes.fire.heat = fireClass_->heat; // $$$$ SBO 2010-01-13: PROTOBUF
 }
 
 // -----------------------------------------------------------------------------
@@ -53,5 +52,6 @@ void FirePrototype::Commit()
 // -----------------------------------------------------------------------------
 void FirePrototype::Clean()
 {
-    msg_.attributes.m.firePresent = 0;
+    if( msg_.attributes().has_fire() )
+        msg_.mutable_attributes()->clear_fire();
 }

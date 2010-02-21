@@ -10,12 +10,16 @@
 #ifndef __Model_h_
 #define __Model_h_
 
-#include "game_asn/Simulation.h"
-#include "MessageHandler_ABC.h"
-#include "Model_ABC.h"
 #include "CompositeFactory.h"
 #include "EntityPublisher.h"
+#include "MessageHandler_ABC.h"
+#include "Model_ABC.h"
 #include "tools/Resolver.h"
+
+namespace Common
+{
+    enum EnumSimulationState;
+}
 
 namespace kernel
 {
@@ -81,11 +85,11 @@ public:
     //@{
     void Reset();
 
-    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
-    void Update( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& asnMsg );
+    void Update( const MsgsSimToClient::MsgSimToClient& asnMsg );
     void Send( ClientPublisher_ABC& publisher ) const;
 
-    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const;
+    void SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned factor ) const;
     void SendFirstTick( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -130,12 +134,12 @@ private:
 
     //! @name Helpers
     //@{
-    template< typename T, typename C, typename P_ASN >
-    void CreateUpdate( tools::Resolver< T >& resolver, const P_ASN& parameterAsn );
-    template< typename T, typename C, typename P_ASN >
-    void CreateUpdate( tools::Resolver< T >& resolver, unsigned id, const P_ASN& parameterAsn );
-    template< typename T, typename C, typename P, typename P_ASN >
-    void CreateUpdate2( tools::Resolver< T >& resolver, const P& parameter, const P_ASN& parameterAsn );
+    template< typename Concrete, typename Base, typename Message >
+    void CreateUpdate( tools::Resolver< Base >& resolver, const Message& message );
+    template< typename Concrete, typename Base, typename Message >
+    void CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const Message& message );
+    template< typename Concrete, typename Base, typename Message, typename Parameter >
+    void CreateUpdate( tools::Resolver< Base >& resolver, unsigned id, const Message& message, const Parameter& parameter );
     template< typename T >
     void UpdateAnyAgent( unsigned id, const T& message );
     template< typename T >

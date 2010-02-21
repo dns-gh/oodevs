@@ -19,7 +19,8 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "gaming/KnowledgeGroup.h"
 #include "gaming/StaticModel.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/publisher_ABC.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace kernel;
 
@@ -59,15 +60,6 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
     selectedEntity_ = &entity;
     QPopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     const KnowledgeGroup& knowledgeGroup = static_cast< const KnowledgeGroup& >( entity );
-    
-    // provide Delete menu item only if knowledge group node is empty
-    if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
-    {
-        int nMenuId = -1;
-        tools::Iterator< const kernel::Entity_ABC& > it( hierarchies->CreateSubordinateIterator() );
-        nMenuId = AddMagic( tr( "Delete" ), SLOT( OnDeleteKnowledgeGroup() ), magicMenu );
-        magicMenu->setItemEnabled( nMenuId, !it.HasMoreElements() );
-    }
 
     if( knowledgeGroup.IsActivated() ) 
         AddMagic( tr( "Desactivate" ), SLOT( OnDesactivateKnowledgeGroup() ), magicMenu );  
@@ -91,12 +83,12 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicOrdersInterface::OnActivateKnowledgeGroup()
 {
-    simulation::KnowledgeGroupEnable asnMsg;
+    simulation::KnowledgeGroupUpdateRequest message;
     if( selectedEntity_ )
     {
-        asnMsg().oid = selectedEntity_->GetId();
-        asnMsg().enabled = true;
-        asnMsg.Send( publisher_ );
+        message().set_oid( selectedEntity_->GetId() );
+        message().set_enabled( true );
+        message.Send( publisher_ );
     }
 }
 
@@ -106,12 +98,12 @@ void KnowledgeGroupMagicOrdersInterface::OnActivateKnowledgeGroup()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicOrdersInterface::OnDesactivateKnowledgeGroup()
 {
-    simulation::KnowledgeGroupEnable asnMsg;
+    simulation::KnowledgeGroupUpdateRequest message;
     if( selectedEntity_ )
     {
-        asnMsg().oid = selectedEntity_->GetId();
-        asnMsg().enabled = false;
-        asnMsg.Send( publisher_ );
+        message().set_oid( selectedEntity_->GetId() );
+        message().set_enabled( false );
+        message.Send( publisher_ );
     }
 }
 
@@ -126,37 +118,12 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
         T_Items::const_iterator it = items_.find( id );
         if( it != items_.end() )
         {
-            simulation::KnowledgeGroupSetType asnMsg;
-            asnMsg().oid = selectedEntity_->GetId();
-            asnMsg().type = it->second->GetName().c_str();
-            asnMsg.Send( publisher_ );
+            simulation::KnowledgeGroupUpdateRequest message;
+            message().set_oid( selectedEntity_->GetId() );
+            message().set_type( it->second->GetName().c_str() );
+            message.Send( publisher_ );
         }
     }
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicOrdersInterface::OnDeleteKnowledgeGroup
-// Created: SLG 2009-12-22
-// -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::OnDeleteKnowledgeGroup()
-{
-    if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
-    {
-        int oid_parent = hierarchies->GetSuperior()->GetId();
-        int oid_camp = hierarchies->GetTop().GetId();
-        tools::Iterator< const kernel::Entity_ABC& > it( hierarchies->CreateSubordinateIterator() );
-        if( !it.HasMoreElements() )
-        {
-            simulation::KnowledgeGroupDelete asnMsg;
-            if( selectedEntity_ )
-            {
-                asnMsg().oid = selectedEntity_->GetId();
-                asnMsg.Send( publisher_ );
-            }
-        }
-    }
-
 }
 
 // -----------------------------------------------------------------------------
@@ -165,14 +132,14 @@ void KnowledgeGroupMagicOrdersInterface::OnDeleteKnowledgeGroup()
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
 {
-    simulation::KnowledgeGroupCreation asnMsg;
+    simulation::KnowledgeGroupCreationRequest message;
     if( selectedEntity_ )
     {
-        asnMsg().type = "Standard";
+        message().set_type( "Standard" );
         if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
-            asnMsg().oid_camp = hierarchies->GetTop().GetId();
-        asnMsg().oid_knowledgegroup_parent = selectedEntity_->GetId();
-        asnMsg.Send( publisher_ );
+            message().set_oid_camp( hierarchies->GetTop().GetId() );
+        message().set_oid_parent( selectedEntity_->GetId() );
+        message.Send( publisher_ );
     }
 }
 

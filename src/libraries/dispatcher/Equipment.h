@@ -10,7 +10,13 @@
 #ifndef __Equipment_h_
 #define __Equipment_h_
 
-#include "game_asn/Simulation.h"
+
+
+////using namespace Common;
+namespace MsgsSimToClient
+{
+    class EquipmentDotations_EquipmentDotation;
+}
 
 namespace dispatcher
 {
@@ -27,14 +33,14 @@ class Equipment
 public:
     //! @name Constructors/Destructor
     //@{
-     Equipment( const Model& model, const ASN1T_EquipmentDotations& asnMsg );
+     Equipment( const Model& model, const MsgsSimToClient::EquipmentDotations_EquipmentDotation& asnMsg );
     virtual ~Equipment();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_EquipmentDotations& asnMsg );
-    void Send  ( ASN1T_EquipmentDotations& asnMsg ) const;
+    void Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& asnMsg );
+    void Send  ( MsgsSimToClient::EquipmentDotations_EquipmentDotation& asnMsg ) const;
     //@}
 
 private:

@@ -17,9 +17,13 @@
 #include "DEC_Knowledge_AgentDataDetection.h"
 #include "DEC_Knowledge_AgentDataRecognition.h"
 #include "DEC_Knowledge_AgentDataIdentification.h"
-#include "game_asn/Simulation.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
+
+namespace MsgsSimToClient
+{
+    class MsgUnitKnowledgeUpdate;
+}
 
 class MIL_AgentPion;
 class MIL_Agent_ABC;
@@ -60,8 +64,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -96,7 +100,7 @@ public:
           bool                           IsPrisoner               () const;
           bool                           IsRefugeeManaged         () const;
           bool                           IsDead                   () const;
-          uint                           GetID                    () const;
+          unsigned int                           GetID                    () const;
           MT_Float                       GetAltitude              () const;
     const MT_Vector2D&                   GetPosition              () const;
     const MT_Vector2D&                   GetDirection             () const;
@@ -155,7 +159,7 @@ private:
 
     //! @name Internal network senders
     //@{
-    void WriteMsgPerceptionSources( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void WriteMsgPerceptionSources( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
 
     void SendMsgCreation   () const;
     void SendMsgDestruction() const;
@@ -172,14 +176,14 @@ private:
 private:
     const MIL_KnowledgeGroup* pKnowledgeGroup_;
           MIL_Agent_ABC*      pAgentKnown_;
-    const uint                nID_;
+    const unsigned int        nID_;
          
     DEC_Knowledge_AgentDataDetection      dataDetection_;
     DEC_Knowledge_AgentDataRecognition    dataRecognition_;
     DEC_Knowledge_AgentDataIdentification dataIdentification_;
 
     // Internal attributes
-          uint                  nTimeLastUpdate_;
+    unsigned int                nTimeLastUpdate_;
     const PHY_PerceptionLevel*  pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel*  pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel*  pMaxPerceptionLevel_;        // Niveau maximal de perception auquel l'unité a été vue
@@ -187,7 +191,7 @@ private:
           T_PerceptionAutomateSourceMap previousPerceptionLevelPerAutomateMap_;
           T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
           MT_Float              rRelevance_;
-          int                   nTimeExtrapolationEnd_;
+          unsigned int          nTimeExtrapolationEnd_;
           bool                  bLocked_;
           bool                  bValid_;
 

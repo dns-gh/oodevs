@@ -10,11 +10,13 @@
 #ifndef __PopulationDetections_h_
 #define __PopulationDetections_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -32,8 +34,8 @@ namespace kernel
 // Created: AGE 2006-02-27
 // =============================================================================
 class PopulationDetections : public kernel::Extension_ABC
-                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationDetection >
-                           , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowDetection >
+                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationDetection >
+                           , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowDetection >
                            , public kernel::Drawable_ABC
 {
 
@@ -58,8 +60,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationDetection& message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationFlowDetection& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDetection& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowDetection& message );
     //@}
 
     //! @name Types

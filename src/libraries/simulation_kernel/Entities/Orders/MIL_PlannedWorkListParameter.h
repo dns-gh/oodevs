@@ -12,6 +12,7 @@
 
 #include "MIL_BaseParameter.h"
 #include "simulation_terrain/TER_Localisation.h"
+
 class DEC_Gen_Object;
 class MIL_EntityManager_ABC;
 
@@ -27,7 +28,7 @@ class MIL_PlannedWorkListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PlannedWorkListParameter( const ASN1T_PlannedWorkList&, const MIL_EntityManager_ABC& entityManager );
+             MIL_PlannedWorkListParameter( const Common::MsgPlannedWorkList&, const MIL_EntityManager_ABC& entityManager );
     explicit MIL_PlannedWorkListParameter( const std::vector< boost::shared_ptr< DEC_Gen_Object > >& plannedWorkList );
     virtual ~MIL_PlannedWorkListParameter();
     //@}
@@ -39,7 +40,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToGenObjectList( ASN1T_PlannedWorkList& ) const;
+    virtual bool ToGenObjectList( Common::MsgPlannedWorkList& ) const;
     virtual bool ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& ) const;
     //@}
 

@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_PointList.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_PointList constructor
@@ -35,19 +35,14 @@ MIL_ParameterType_PointList::~MIL_ParameterType_PointList()
 // Name: MIL_ParameterType_PointList::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_PointList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_PointList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value        = false;
-    to.value.t           = T_MissionParameter_value_pointList;
-    to.value.u.pointList = new ASN1T_PointList();
-    
-    if( !from.ToPointList( *to.value.u.pointList ) )
+    to.set_null_value( false );
+    if( !from.ToPointList( *to.mutable_value()->mutable_pointlist() ) )
         return false;
-
     return true;
 }
 
@@ -55,10 +50,9 @@ bool MIL_ParameterType_PointList::Copy( const MIL_MissionParameter_ABC& from, AS
 // Name: MIL_ParameterType_PointList::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_PointList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_PointList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_pointList );
-    assert( to.value.u.pointList );
-    ASN_Delete::Delete( *to.value.u.pointList );
-    delete to.value.u.pointList;    
+    assert( to.value().has_pointlist() );
+    to.mutable_value()->mutable_pointlist()->Clear();
+    delete to.mutable_value()->mutable_pointlist();
 }

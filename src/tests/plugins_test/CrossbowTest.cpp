@@ -12,24 +12,24 @@
 #include "crossbow_plugin/Database_ABC.h"
 #include "dispatcher/Model_ABC.h"
 #include "clients_kernel/OrderParameter.h"
-
+#include "protocol/protocol.h"
 #include <turtle/mock.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
 
 
-MOCK_BASE_CLASS( MockDatabase, Database_ABC )     // defines a 'MockDatabase' class implementing 'Database_ABC'
+MOCK_BASE_CLASS( MockDatabase, Database_ABC )
 {
     MOCK_METHOD( OpenBufferedTable, 2 )
-    MOCK_METHOD( OpenTable, 1 )                   // implements the 'display' method from 'view' (taking 1 argument)
+    MOCK_METHOD( OpenTable, 1 )
     MOCK_METHOD( GetTableName, 1 )
     MOCK_METHOD( ClearTable, 1 )
     MOCK_METHOD( Execute, 1 )
     MOCK_METHOD( Flush, 0 )
 };
 
-MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )     // defines a 'MockModel' class implementing 'Model_ABC'
+MOCK_BASE_CLASS( MockModel, dispatcher::Model_ABC )
 {
     MOCK_METHOD( Sides, 0 )
     MOCK_METHOD( KnowledgeGroups, 0 )
@@ -58,11 +58,11 @@ BOOST_AUTO_TEST_CASE( CrossbowTest_OrderSerialize_Bool )
     MockModel mockModel;
 
     OrderParameterSerializer serializer( mockDatabase, mockModel );
-    ASN1T_MissionParameter asn;    
+    Common::MsgMissionParameter message;    
     kernel::OrderParameter parameter( "param", "bool", false );
-    serializer.Serialize( asn, parameter, 0, "true" );
-    BOOST_CHECK_EQUAL( asn.value.t, T_MissionParameter_value_aBool );
-    BOOST_CHECK_EQUAL( asn.value.u.aBool, static_cast< asn::ASN1BOOL >( true ) );
+    serializer.Serialize( message, parameter, 0, "true" );
+    BOOST_CHECK_EQUAL( true, message.value().has_abool() );
+    BOOST_CHECK_EQUAL( true, message.value().abool() );
 }
 
 /*

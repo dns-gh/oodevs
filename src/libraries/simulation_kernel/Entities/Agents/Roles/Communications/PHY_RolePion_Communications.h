@@ -21,7 +21,6 @@ namespace xml
     class xistream;
 }
 
-class NET_ASN_MsgUnitAttributes;
 class MIL_Entity_ABC;
 
 namespace firing
@@ -54,7 +53,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -85,8 +84,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    void SendChangedState( client::UnitAttributes& msg ) const;
+    void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 public:

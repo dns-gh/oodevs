@@ -10,9 +10,11 @@
 #include "gaming_pch.h"
 #include "CommandPublisher.h"
 #include "Services.h"
-#include "game_asn/MessengerSenders.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "clients_kernel/Controllers.h"
+#include "protocol/MessengerSenders.h"
+#include "protocol/Publisher_ABC.h"
+
+using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: CommandPublisher constructor
@@ -57,12 +59,12 @@ void CommandPublisher::Send( const std::string& target, const std::string& messa
 {
     if( messenger_ && profile_ && !profile_->GetLogin().isNull() )
     {
-        plugins::messenger::TextMessage asn;
+        plugins::messenger::TextMessage textMessage;
         const std::string source = profile_->GetLogin().ascii();
-        asn().source.profile = source.c_str();
-        asn().target.profile = target.c_str();
-        asn().message = message.c_str();
-        asn.Send( publisher_ );
+        textMessage().mutable_source()->set_profile( source );
+        textMessage().mutable_target()->set_profile( target );
+        textMessage().set_message( message );
+        textMessage.Send( publisher_ );
     }
 }
 

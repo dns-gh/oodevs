@@ -10,15 +10,19 @@
 #ifndef __ObjectAttribute_ABC_h_
 #define __ObjectAttribute_ABC_h_
 
-class NET_ASN_MsgObjectCreation;
-
 #include <HLA/Deserializer.h>
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
 namespace hla 
 {
     class AttributeIdentifier;
 }
-class HLA_UpdateFunctor;
 
+class HLA_UpdateFunctor;
 class Object;
 class DEC_Knowledge_Object;
 struct ASN1T_ObjectAttributes;
@@ -28,6 +32,12 @@ namespace xml
     class xostream;
 }
 
+// =============================================================================
+/** @class  ObjectAttribute_ABC
+    @brief  ObjectAttribute_ABC
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class ObjectAttribute_ABC
 {
 public:
@@ -40,7 +50,7 @@ public:
     //! @name Serialization
     //@{
     template< typename Archive > 
-    void serialize( Archive&, const uint )
+    void serialize( Archive&, const unsigned int )
     {
         // NOTHING
     }
@@ -53,9 +63,9 @@ public:
 
     //! @name ASN Network update
     //@{     
-    virtual void SendFullState( ASN1T_ObjectAttributes& /*asn*/ ) const {} //<! Send update to ASN client
-    virtual void SendUpdate( ASN1T_ObjectAttributes& /*asn*/ ) const {} //<! Send update to ASN client
-    virtual void OnUpdate( const ASN1T_ObjectAttributes& /*asn*/ ) {} //<! Update from ASN msg
+    virtual void SendFullState( Common::MsgObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
+    virtual void SendUpdate( Common::MsgObjectAttributes& /*asn*/ ) const {} //<! Send update to asn client
+    virtual void OnUpdate( const Common::MsgObjectAttributes& /*asn*/ ) {} //<! Update from asn msg
     virtual void Serialize( HLA_UpdateFunctor& /*functor*/ ) const {} //<! Send update to HLA client
     virtual void Deserialize( const hla::AttributeIdentifier& /*attributeID*/, hla::Deserializer /*deserializer*/ ) {} //<! Update from HLA
     //@}

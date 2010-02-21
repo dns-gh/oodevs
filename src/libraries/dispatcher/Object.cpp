@@ -25,23 +25,26 @@
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "protocol/clientsenders.h"
 
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
+//using namespace Common;
+//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: Object constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Object::Object( Model& model, const ASN1T_MsgObjectCreation& msg )
-    : SimpleEntity< kernel::Object_ABC >( msg.oid, msg.name )
-    , type_                        ( model.GetObjectTypes().Get( msg.type ) )
-    , strName_                     ( msg.name  )
-    , localisation_                ( msg.location )
-    , side_                        ( model.sides_.Get( msg.team ) )
+Object::Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg )
+    : SimpleEntity< kernel::Object_ABC >( msg.oid(), QString( msg.name().c_str() ) )
+    , type_                        ( model.GetObjectTypes().Get( msg.type() ) )
+    , strName_                     ( msg.name()  )
+    , localisation_                ( msg.location() )
+    , side_                        ( model.sides_.Get( msg.team() ) )
 {
-    Initialize( model, msg.attributes );
+    Initialize( model, msg.attributes() );
 	side_.Register( *this );
 }
 
@@ -55,14 +58,14 @@ Object::~Object()
 }
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \
-    if ( attributes.m.##ASN##Present ) \
+    if ( attributes.has_##ASN##()  ) \
         AddAttribute( new CLASS( model, attributes ) )
 
 // -----------------------------------------------------------------------------
 // Name: Object::Initialize
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void Object::Initialize( Model& model, const ASN1T_ObjectAttributes& attributes )
+void Object::Initialize( Model& model, const Common::MsgObjectAttributes& attributes )
 {
     MSG_ASN_CREATION( construction      , ConstructionAttribute );
     MSG_ASN_CREATION( obstacle          , ObstacleAttribute );
@@ -90,13 +93,13 @@ void Object::AddAttribute( ObjectAttribute_ABC* attribute )
 // Name: Object::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Object::Update( const ASN1T_MsgObjectUpdate& msg )
+void Object::Update( const MsgsSimToClient::MsgObjectUpdate& msg )
 {
-    if( msg.m.locationPresent )
-        localisation_.Update( msg.location );
+    if( msg.has_location()  )
+        localisation_.Update( msg.location() );
     
     std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes ) ) );
+                   boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( msg.attributes() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,20 +110,19 @@ void Object::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectCreation asn;
 
-    asn().oid  = GetId();
-    asn().type = type_.GetType().c_str();
-    asn().name = strName_.c_str();
-    asn().team = side_.GetId();
+    asn().set_oid( GetId() );
+    asn().set_type( type_.GetType().c_str() );
+    asn().set_name( strName_.c_str() );
+    asn().set_team( side_.GetId() );
 
-    localisation_.Send( asn().location );
+    localisation_.Send( *asn().mutable_location() );
 
     std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( asn().attributes ) ) );
-
+                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
     asn.Send( publisher );
-
+    
 //    if( pAttributes_ )
-//        pAttributes_->AsnDelete( asn().specific_attributes );
+//        pAttributes_->Delete( asn().specific_attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,18 +133,16 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectUpdate asn;
 
-    asn().oid = GetId();
-
-    asn().m.locationPresent = 1;
-    localisation_.Send( asn().location );
+    asn().set_oid( GetId() );
+    localisation_.Send( *asn().mutable_location() );
 
     std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( asn().attributes ) ) );
+        boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
     asn.Send( publisher );
 
 //    if( pAttributes_ )
-//        pAttributes_->AsnDelete( asn().specific_attributes );
+//        pAttributes_->Delete( asn.specific_attributes );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,7 +152,7 @@ void Object::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void Object::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectDestruction destruction;
-    destruction() = GetId();
+    destruction().set_oid( GetId() );
     destruction.Send( publisher );
 }
 

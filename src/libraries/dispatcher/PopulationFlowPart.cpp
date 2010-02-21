@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "PopulationFlowPart.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -16,9 +17,9 @@ using namespace dispatcher;
 // Name: PopulationFlowPart constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-PopulationFlowPart::PopulationFlowPart( const ASN1T_FlowPart& asn )
-    : localisation_( asn.forme )
-    , nRelevance_  ( asn.pertinence )
+PopulationFlowPart::PopulationFlowPart( const MsgsSimToClient::MsgFlowPart& asn )
+    : localisation_( asn.forme().location() )
+    , nRelevance_  ( asn.pertinence() )
 {
     // NOTHING
 }
@@ -36,8 +37,8 @@ PopulationFlowPart::~PopulationFlowPart()
 // Name: PopulationFlowPart::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void PopulationFlowPart::Send( ASN1T_FlowPart& asn ) const
+void PopulationFlowPart::Send( MsgsSimToClient::MsgFlowPart& asn ) const
 {
-    asn.pertinence = nRelevance_;
-    localisation_.Send( asn.forme );
+    asn.set_pertinence( nRelevance_ );
+    localisation_.Send( *asn.mutable_forme()->mutable_location() );
 }

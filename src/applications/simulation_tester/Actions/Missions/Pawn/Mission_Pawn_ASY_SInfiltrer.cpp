@@ -43,9 +43,9 @@ void Mission_Pawn_ASY_SInfiltrer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASY_SInfiltrer& asnMission = *new ASN1T_Mission_Pion_ASY_SInfiltrer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_sinfiltrer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_sinfiltrer = &asnMission;
+    Mission_Pion_ASY_SInfiltrer& asnMission = *new Mission_Pion_ASY_SInfiltrer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_asy_sinfiltrer = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ASY_SInfiltrer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASY_SInfiltrer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_asy_sinfiltrer );
-    ASN1T_Mission_Pion_ASY_SInfiltrer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_sinfiltrer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_asy_sinfiltrer ());
+    Mission_Pion_ASY_SInfiltrer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_asy_sinfiltrer;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

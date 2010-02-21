@@ -12,16 +12,14 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Human.h"
 #include "PHY_HumanRank.h"
+#include "MIL_AgentServer.h"
+#include "MIL_Singletons.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "MIL_AgentServer.h"
-#include "MIL_Singletons.h"
-
 #include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
-
 #include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Human )
@@ -39,7 +37,7 @@ PHY_Human::PHY_Human( const MIL_Time_ABC& time, PHY_HumansComposante& composante
     , bContamined_    ( false )
     , nLocation_      ( eBattleField )
     , pMedicalState_  ()
-    , nDeathTimeStep_ ( std::numeric_limits< uint >::max() )
+    , nDeathTimeStep_ ( std::numeric_limits< unsigned int >::max() )
 {
     pComposante_->NotifyHumanAdded( *this );
 }
@@ -75,7 +73,7 @@ PHY_Human::PHY_Human()
     , bContamined_    ( false )
     , nLocation_      ( eBattleField )
     , pMedicalState_  ( 0 )
-    , nDeathTimeStep_ ( std::numeric_limits< uint >::max() )
+    , nDeathTimeStep_ ( std::numeric_limits< unsigned int >::max() )
 {
 }
 
@@ -93,11 +91,11 @@ PHY_Human::~PHY_Human()
 // Name: PHY_Human::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_Human::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_Human::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> pComposante_;
     
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pRank_ = PHY_HumanRank::Find( nID );
     
@@ -115,7 +113,7 @@ void PHY_Human::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_Human::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_Human::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_Human::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pRank_ );
     assert( pWound_ );
@@ -213,7 +211,7 @@ void PHY_Human::HealWound()
         return;
     PHY_Human oldHumanState( *this );
     pWound_ = &PHY_HumanWound::notWounded_;
-    nDeathTimeStep_ = std::numeric_limits< uint >::max();
+    nDeathTimeStep_ = std::numeric_limits< unsigned int >::max();
     NotifyHumanChanged( oldHumanState );
 }
  
@@ -321,7 +319,7 @@ bool PHY_Human::SetWound( const PHY_HumanWound& newWound )
         bContamined_     = false;        
     }
     else if( *pWound_ == PHY_HumanWound::notWounded_ )
-        nDeathTimeStep_ = std::numeric_limits< uint >::max();
+        nDeathTimeStep_ = std::numeric_limits< unsigned int >::max();
     else
         nDeathTimeStep_ = std::min( nDeathTimeStep_, time_.GetCurrentTick() + pWound_->GetLifeExpectancy() );
     

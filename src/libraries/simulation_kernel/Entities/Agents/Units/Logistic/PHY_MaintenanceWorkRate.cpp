@@ -11,15 +11,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceWorkRate.h"
+#include "PHY_Breakdown.h"
+#include "protocol/protocol.h"
+#include "tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;
 
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", EnumLogMaintenanceRegimeTravail::regime_1 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", EnumLogMaintenanceRegimeTravail::regime_2 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", EnumLogMaintenanceRegimeTravail::regime_3 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", EnumLogMaintenanceRegimeTravail::regime_4 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", Common::EnumLogMaintenanceRegimeTravail::regime_1 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", Common::EnumLogMaintenanceRegimeTravail::regime_2 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", Common::EnumLogMaintenanceRegimeTravail::regime_3 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", Common::EnumLogMaintenanceRegimeTravail::regime_4 );
 
 struct PHY_MaintenanceWorkRate::LoadingWrapper
 {
@@ -61,12 +64,12 @@ void PHY_MaintenanceWorkRate::Terminate()
 // Name: PHY_MaintenanceWorkRate constructor
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-PHY_MaintenanceWorkRate::PHY_MaintenanceWorkRate( const std::string& strName, ASN1T_EnumLogMaintenanceRegimeTravail asn )
+PHY_MaintenanceWorkRate::PHY_MaintenanceWorkRate( const std::string& strName, Common::EnumLogMaintenanceRegimeTravail asn )
     : strName_              ( strName )
     , asn_                  ( asn )
     , rWorkerRatio_         ( 1. )
     , rWorkTime_            ( 0. )
-    , nDelayBeforeWarningRC_( std::numeric_limits< uint >::max() )
+    , nDelayBeforeWarningRC_( std::numeric_limits< unsigned int >::max() )
 {
     // NOTHING
 }
@@ -109,13 +112,11 @@ void PHY_MaintenanceWorkRate::ReadWorkRate( xml::xistream& xis )
 // Name: PHY_MaintenanceWorkRate::Find
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( ASN1T_EnumLogMaintenanceRegimeTravail nID )
+const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( Common::EnumLogMaintenanceRegimeTravail nID )
 {
     for( CIT_WorkRateMap it = workRates_.begin(); it != workRates_.end(); ++it )
-    {
         if( it->second->GetAsnID() == nID )
             return it->second;
-    }
     return 0;
 }
 
@@ -123,7 +124,7 @@ const PHY_MaintenanceWorkRate* PHY_MaintenanceWorkRate::Find( ASN1T_EnumLogMaint
 // Name: PHY_MaintenanceWorkRate::GetAsnID
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-ASN1T_EnumLogMaintenanceRegimeTravail PHY_MaintenanceWorkRate::GetAsnID() const
+Common::EnumLogMaintenanceRegimeTravail PHY_MaintenanceWorkRate::GetAsnID() const
 {
     return asn_;
 }
@@ -141,16 +142,16 @@ const std::string& PHY_MaintenanceWorkRate::GetName() const
 // Name: PHY_MaintenanceWorkRate::GetNbrWorkerAllowedToWork
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
-uint PHY_MaintenanceWorkRate::GetNbrWorkerAllowedToWork( uint nNbrAvailable ) const
+unsigned int PHY_MaintenanceWorkRate::GetNbrWorkerAllowedToWork( unsigned int nNbrAvailable ) const
 {
-    return std::min( nNbrAvailable, (uint)ceil( rWorkerRatio_ * nNbrAvailable ) );
+    return std::min( nNbrAvailable, (unsigned int)ceil( rWorkerRatio_ * nNbrAvailable ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceWorkRate::GetDelayBeforeWarningRC
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
-uint PHY_MaintenanceWorkRate::GetDelayBeforeWarningRC() const
+unsigned int PHY_MaintenanceWorkRate::GetDelayBeforeWarningRC() const
 {
     return nDelayBeforeWarningRC_;
 }

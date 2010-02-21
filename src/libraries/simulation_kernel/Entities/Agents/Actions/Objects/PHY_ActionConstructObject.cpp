@@ -17,15 +17,16 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConstructObject constructor
 // Constructd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation )
-    : PHY_DecisionCallbackAction_ABC     ( pion )
-    , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, EnumDemolitionTargetType::preliminary ) ) 
+    : PHY_DecisionCallbackAction_ABC( pion )
+    , role_( pion.GetRole< PHY_RoleAction_Objects >() )
+    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_preliminary ) ) 
 {    
     role_.SetCreator( *pObject_ );
     Callback( role_.GetInitialReturnCode() );

@@ -10,6 +10,7 @@
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_String.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_String constructor
@@ -34,23 +35,20 @@ MIL_ParameterType_String::~MIL_ParameterType_String()
 // Name: MIL_ParameterType_String::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_String::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_String::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value = false;
-    to.value.t    = T_MissionParameter_value_aCharStr;
-    
-    return from.ToString( to.value.u.aCharStr );
+    to.set_null_value( false );
+    return from.ToString( *to.mutable_value()->mutable_acharstr() );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_String::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_String::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_String::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_aCharStr );
+    assert( to.value().has_acharstr() );
 }

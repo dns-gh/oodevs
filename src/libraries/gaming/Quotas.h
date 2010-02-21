@@ -10,11 +10,14 @@
 #ifndef __Quotas_h_
 #define __Quotas_h_
 
-#include "game_asn/Simulation.h"
+
+#include "Dotation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include "Dotation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -31,7 +34,7 @@ namespace kernel
 // Created: AGE 2006-10-11
 // =============================================================================
 class Quotas  : public kernel::Extension_ABC
-              , public kernel::Updatable_ABC< ASN1T_MsgLogSupplyQuotas >
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgLogSupplyQuotas >
 {
 
 public:
@@ -44,7 +47,7 @@ public:
     //! @name Operations
     //@{
     bool IsRelevant() const;
-    virtual void DoUpdate( const ASN1T_MsgLogSupplyQuotas& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgLogSupplyQuotas& message );
     //@}
 
 private:

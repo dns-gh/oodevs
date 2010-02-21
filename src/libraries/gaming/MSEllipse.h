@@ -10,7 +10,10 @@
 #ifndef __MSEllipse_h_
 #define __MSEllipse_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -30,7 +33,7 @@ class MSEllipse
 public:
     //! @name Constructors/Destructor
     //@{
-             MSEllipse( const ASN1T_Location& localisation, const kernel::CoordinateConverter_ABC& converter );
+	MSEllipse( const Common::MsgLocation& localisation, const kernel::CoordinateConverter_ABC& converter );
     virtual ~MSEllipse();
     //@}
 

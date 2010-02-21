@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
-#include "game_asn/SimulationSenders.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/tools.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -21,6 +20,8 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "protocol/publisher_ABC.h"
+#include "protocol/simulationsenders.h"
 
 using namespace kernel;
 using namespace gui;
@@ -135,9 +136,9 @@ void ChangeHumanFactorsDialog::Validate()
 {
     if( ! selected_ )
         return;
-    const ASN1T_EnumUnitTiredness tiredness = (ASN1T_EnumUnitTiredness)pTirednessCombo_->GetValue();
-    const ASN1T_EnumUnitMorale moral = (ASN1T_EnumUnitMorale)pMoralCombo_->GetValue();
-    const ASN1T_EnumUnitExperience experience = (ASN1T_EnumUnitExperience)pExperienceCombo_->GetValue();
+    const EnumUnitTiredness tiredness = (EnumUnitTiredness)pTirednessCombo_->GetValue();
+    const EnumUnitMorale moral = (EnumUnitMorale)pMoralCombo_->GetValue();
+    const EnumUnitExperience experience = (EnumUnitExperience)pExperienceCombo_->GetValue();
     tools::Iterator< const Entity_ABC& > it = selected_->Get< CommunicationHierarchies >().CreateSubordinateIterator();
     SendMessage( *selected_, tiredness, moral, experience );
     hide();
@@ -147,7 +148,7 @@ void ChangeHumanFactorsDialog::Validate()
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2006-12-01
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitTiredness tiredness, ASN1T_EnumUnitMorale moral, ASN1T_EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
 {
     if( entity.Retrieve< HumanFactors_ABC >() )
         SendMessage( entity.GetId(), tiredness, moral, experience );
@@ -166,21 +167,18 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, AS
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( uint id, ASN1T_EnumUnitTiredness tiredness, ASN1T_EnumUnitMorale moral, ASN1T_EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendMessage( unsigned int id, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
 {
-    simulation::UnitMagicAction asnMsg;
-    asnMsg().oid = id;
+    simulation::UnitMagicAction message;
+    message().set_oid( id );
 
-    ASN1T_MagicActionChangeHumanFactors asnMagicAction;
-
-    asnMsg().action.t                         = T_MsgUnitMagicAction_action_change_facteurs_humains;
-    asnMsg().action.u.change_facteurs_humains = &asnMagicAction;
-
-    asnMagicAction.m.fatiguePresent = asnMagicAction.m.moralPresent = asnMagicAction.m.experiencePresent = 1;
-    asnMagicAction.fatigue    = tiredness;
-    asnMagicAction.moral      = moral;
-    asnMagicAction.experience = experience;
-    asnMsg.Send( publisher_ );
+    Common::MsgMagicActionChangeHumanFactors magicAction;
+    *message().mutable_action()->mutable_change_facteurs_humains() = magicAction;     // $$$$ _RC_ FDS 2010-01-27: Pas trés clair pour moi ???
+ 
+    magicAction.set_fatigue    ( tiredness );
+    magicAction.set_moral      ( moral );
+    magicAction.set_experience ( experience );
+    message.Send( publisher_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -12,12 +12,13 @@
 #include "MIL_FragOrderType.h"
 #include "MIL_MissionParameterFactory.h"
 #include "MIL_OrderContext.h"
-#include "simulation_orders/MIL_MissionParameter_ABC.h"
-#include "simulation_orders/MIL_ParameterType_MedicalPriorities.h"
-#include "simulation_orders/MIL_ParameterType_MaintenancePriorities.h"
 #include "Decision/DEC_Representations.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "protocol/protocol.h"
+#include "simulation_orders/MIL_MissionParameter_ABC.h"
+#include "simulation_orders/MIL_ParameterType_MedicalPriorities.h"
+#include "simulation_orders/MIL_ParameterType_MaintenancePriorities.h"
 
 #include <directia/Brain.h>
 
@@ -25,11 +26,11 @@
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MsgFragOrder& asn )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn )
     : type_           ( type )
     , representations_( engine )
 {
-    MIL_MissionParameterFactory::Copy( asn.parametres, parameters_, knowledgeResolver );
+    MIL_MissionParameterFactory::Copy( asn.parametres(), parameters_, knowledgeResolver );
 }
 
 // -----------------------------------------------------------------------------

@@ -71,7 +71,7 @@ PawnModel::~PawnModel()
 // Name: PawnModel::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void PawnModel::ScheduleAllMissions( Pawn& pawn, Scheduler& scheduler, uint nIteration /* = 1 */ ) const
+void PawnModel::ScheduleAllMissions( Pawn& pawn, Scheduler& scheduler, unsigned int nIteration /* = 1 */ ) const
 {
     for( CIT_MissionPawnTypeVector it = missionTypes_.begin(); it != missionTypes_.end(); ++it )
         scheduler.AddActions( Mission_Pawn_Type::CreateMission( **it, pawn ), nIteration );
@@ -81,7 +81,7 @@ void PawnModel::ScheduleAllMissions( Pawn& pawn, Scheduler& scheduler, uint nIte
 // Name: PawnModel::ScheduleMission
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void PawnModel::ScheduleMission( Pawn& pawn, Scheduler& scheduler, const std::string& strMissionName, uint nIteration /* = 1 */ ) const
+void PawnModel::ScheduleMission( Pawn& pawn, Scheduler& scheduler, const std::string& strMissionName, unsigned int nIteration /* = 1 */ ) const
 {
     scheduler.AddActions( Mission_Pawn_Type::CreateMission( strMissionName, pawn ), nIteration );
 }

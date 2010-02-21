@@ -43,9 +43,9 @@ void Mission_Automat_SeFaireDecontaminer::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_SeFaireDecontaminer& asnMission = *new ASN1T_Mission_Automate_SeFaireDecontaminer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_se_faire_decontaminer;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_se_faire_decontaminer = &asnMission;
+    Mission_Automate_SeFaireDecontaminer& asnMission = *new Mission_Automate_SeFaireDecontaminer();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_se_faire_decontaminer = &asnMission;
 
     const Location& zoneArrivee_ = pTarget_->GetTestParam_Polygon();
 
@@ -62,8 +62,8 @@ void Mission_Automat_SeFaireDecontaminer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_SeFaireDecontaminer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_se_faire_decontaminer );
-    ASN1T_Mission_Automate_SeFaireDecontaminer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_se_faire_decontaminer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_se_faire_decontaminer ());
+    Mission_Automate_SeFaireDecontaminer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_se_faire_decontaminer;
 
     ASN_Tools::Delete( asnMission.zone_arrivee );
 

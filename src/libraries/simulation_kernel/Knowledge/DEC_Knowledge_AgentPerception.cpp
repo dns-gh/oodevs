@@ -11,11 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentPerception.h"
+#include "MIL_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AgentServer.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities\Agents\Perceptions\PHY_PerceptionLevel.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "protocol/clientsenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
 
@@ -78,7 +79,7 @@ DEC_Knowledge_AgentPerception::~DEC_Knowledge_AgentPerception()
 // Name: DEC_Knowledge_AgentPerception::Serialize
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned current  = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID(),
@@ -103,7 +104,7 @@ void DEC_Knowledge_AgentPerception::save( MIL_CheckPointOutArchive& file, const 
 // Name: DEC_Knowledge_AgentPerception::Unserialize
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerception::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_AgentPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> nCreationTimeStep_
@@ -117,7 +118,7 @@ void DEC_Knowledge_AgentPerception::load( MIL_CheckPointInArchive& file, const u
          >> nRecordModeDisablingDelay_
          >> bAttacker_;
     
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
     
@@ -184,12 +185,12 @@ void DEC_Knowledge_AgentPerception::Update( const PHY_PerceptionLevel& perceptio
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_AgentPerception::SendStateToNewClient() const
 {
-    NET_ASN_MsgUnitDetection asn;
-    asn().oid                = pAgentPerceiving_   ->GetID();
-    asn().detected_unit_oid  = pAgentPerceived_    ->GetID();
-    asn().current_visibility = bRecordModeEnabled_ ? EnumUnitVisibility::recorded : ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
-    asn().max_visibility     = ASN1T_EnumUnitVisibility( pMaxPerceptionLevel_->GetID() );
-    asn.Send();
+    client::UnitDetection asn;
+    asn().set_oid               ( pAgentPerceiving_   ->GetID() );
+    asn().set_detected_unit_oid ( pAgentPerceived_    ->GetID() );
+    asn().set_current_visibility( bRecordModeEnabled_ ? Common::EnumUnitVisibility::recorded : Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
+    asn().set_max_visibility    ( Common::EnumUnitVisibility( pMaxPerceptionLevel_->GetID() ) );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -304,7 +305,7 @@ bool DEC_Knowledge_AgentPerception::IsAvailable() const
 // Name: DEC_Knowledge_AgentPerception::MakeAvailable
 // Created: NLD 2004-11-16
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerception::MakeAvailable( uint nDelay )
+void DEC_Knowledge_AgentPerception::MakeAvailable( unsigned int nDelay )
 {
     if( bRecordModeEnabled_ )
     {
@@ -317,7 +318,7 @@ void DEC_Knowledge_AgentPerception::MakeAvailable( uint nDelay )
 // Name: DEC_Knowledge_AgentPerception::GetCreationTimeStep
 // Created: NLD 2004-11-16
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_AgentPerception::GetCreationTimeStep() const
+unsigned int DEC_Knowledge_AgentPerception::GetCreationTimeStep() const
 {
     return nCreationTimeStep_;
 }

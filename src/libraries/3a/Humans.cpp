@@ -9,6 +9,9 @@
 
 #include "Humans.h"
 
+#include "protocol/Simulation.h"
+
+using namespace MsgsSimToClient;
 using namespace extractors;
 
 // -----------------------------------------------------------------------------
@@ -23,16 +26,17 @@ Humans::Humans()
 namespace
 {
     const unsigned nHumanStates = 8;
-    ASN1INT ASN1T_HumanDotations::*humanData[8] = 
+    typedef int (HumanDotations_HumanDotation::*HumanDotationsMemberFn)()const;    
+    HumanDotationsMemberFn humanData[8] = 
     {
-        &ASN1T_HumanDotations::nb_total,
-        &ASN1T_HumanDotations::nb_operationnels, 
-        &ASN1T_HumanDotations::nb_morts, 
-        &ASN1T_HumanDotations::nb_blesses, 
-        &ASN1T_HumanDotations::nb_blesses_mentaux,
-        &ASN1T_HumanDotations::nb_contamines_nbc,
-        &ASN1T_HumanDotations::nb_dans_chaine_sante,
-        &ASN1T_HumanDotations::nb_utilises_pour_maintenance,
+        &HumanDotations_HumanDotation::nb_total,
+        &HumanDotations_HumanDotation::nb_operationnels, 
+        &HumanDotations_HumanDotation::nb_morts, 
+        &HumanDotations_HumanDotation::nb_blesses, 
+        &HumanDotations_HumanDotation::nb_blesses_mentaux,
+        &HumanDotations_HumanDotation::nb_contamines_nbc,
+        &HumanDotations_HumanDotation::nb_dans_chaine_sante,
+        &HumanDotations_HumanDotation::nb_utilises_pour_maintenance,
     };
     const char* humanStates[8] = 
     {
@@ -88,21 +92,21 @@ Humans::Humans( xml::xistream& xis )
 // Name: Humans::Extract
 // Created: AGE 2007-10-29
 // -----------------------------------------------------------------------------
-int Humans::Extract( const ASN1T_MsgUnitAttributes& attributes )
+int Humans::Extract( const MsgUnitAttributes& attributes )
 {
-    unsigned size = attributes.dotation_eff_personnel.n;
+    unsigned size = attributes.dotation_eff_personnel().elem_size();
     while( size > 0 )
     {
         --size;
-        const ASN1T_HumanDotations& humans = attributes.dotation_eff_personnel.elem[ size ];
-        if( ( rankMask_ & ( 1 << humans.rang ) ) != 0 )
+        const HumanDotations_HumanDotation& humans = attributes.dotation_eff_personnel().elem( size );
+        if( ( rankMask_ & ( 1 << humans.rang() ) ) != 0 )
         {
             int quantity = 0;
-            ASN1INT ASN1T_HumanDotations::** data = humanData;
+            HumanDotationsMemberFn *data = humanData;
             for( unsigned i = 0; i < nHumanStates; ++i, ++data )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                    quantity += humans.**data;
-            humans_[ humans.rang ] += quantity;
+                    quantity += (humans.*data[i])();
+            humans_[ humans.rang() ] += quantity;
         }
     }
     int result = 0;

@@ -12,6 +12,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -39,13 +40,13 @@ Speeds::~Speeds()
 // Name: Speeds::DoUpdate
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------
-void Speeds::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Speeds::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.vitessePresent )
-        speed_ = float( message.vitesse );
-    if( message.m.directionPresent )
+    if( message.has_vitesse()  )
+        speed_ = float( message.vitesse() );
+    if( message.has_direction()  )
     {
-        const float angle = message.direction * 3.14f / 180.f;
+        const float angle = message.direction().heading() * 3.14f / 180.f;
         direction_ = geometry::Vector2f( std::sin( angle ), std::cos( angle ) );
     }
 }
@@ -54,14 +55,14 @@ void Speeds::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // Name: Speeds::DoUpdate
 // Created: AGE 2007-12-17
 // -----------------------------------------------------------------------------
-void Speeds::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
+void Speeds::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
     // $$$$ AGE 2007-12-17: *soupir*
-    if( message.m.speedPresent )
-        speed_ = float( message.speed );
-    if( message.m.directionPresent )
+    if( message.has_speed()  )
+        speed_ = float( message.speed() );
+    if( message.has_direction()  )
     {
-        const float angle = message.direction * 3.14f / 180.f;
+        const float angle = message.direction().heading() * 3.14f / 180.f;
         direction_ = geometry::Vector2f( std::sin( angle ), std::cos( angle ) );
     }
 }

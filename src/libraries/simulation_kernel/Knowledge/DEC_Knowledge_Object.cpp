@@ -29,8 +29,8 @@
 
 
 #include "Entities/MIL_Army.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_IDManager.h"
 
 #include "DEC_Knowledge_ObjectAttributeConstruction.h"
@@ -38,9 +38,8 @@
 #include "DEC_Knowledge_ObjectAttributeObstacle.h"
 #include "DEC_Knowledge_ObjectAttributeInteractionHeight.h"
 
+#include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
-
-#include "game_asn/ASN_Delete.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Object )
 
@@ -117,7 +116,7 @@ DEC_Knowledge_Object::~DEC_Knowledge_Object()
 // Name: DEC_Knowledge_Object::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this ); 
     
@@ -127,7 +126,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
     
     file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
          >> pObjectKnown_
-         >> const_cast< uint& >( nID_ )
+         >> const_cast< unsigned int& >( nID_ )
          >> attributes_
          >> nAttributesUpdated_
          >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
@@ -136,7 +135,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
          
     idManager_.Lock( nID_ );
 
-    uint nPerceptionID;
+    unsigned int nPerceptionID;
     file >> nPerceptionID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nPerceptionID );
     
@@ -155,11 +154,11 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
         (*it)->Register( *this );
 
     // récupération des noms des types
-    uint nSize;
+    unsigned int nSize;
     file >> nSize;
     while ( nSize-- )
     {
-        uint nID;
+        unsigned int nID;
         file >> nID;
         reconByAgentTypes_.insert( MIL_AgentTypePion::Find( nID ) );
     }
@@ -169,7 +168,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const uint )
 // Name: DEC_Knowledge_Object::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pObjectType_ );
     unsigned current      = pCurrentPerceptionLevel_->GetID(),
@@ -195,11 +194,11 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const uint ) co
     file << rRelevance_;
     
     // On stocke les types selon leur nom
-    uint size = reconByAgentTypes_.size();
+    unsigned int size = reconByAgentTypes_.size();
     file << size;
     for ( CIT_AgentTypeSet it = reconByAgentTypes_.begin(); it != reconByAgentTypes_.end(); ++it )
     {
-        uint id = (*it)->GetID();
+        unsigned int id = (*it)->GetID();
         file << id;
     }
 }
@@ -437,78 +436,66 @@ void DEC_Knowledge_Object::UpdateRelevance()
 // Name: DEC_Knowledge_Object::BuildMsgPerceptionSources
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgPerceptionSources( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgPerceptionSources( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_PerceptionSources ) )
         return;
-
-    asn.m.automat_perceptionPresent = 1;
-    asn.automat_perception.n        = perceptionPerAutomateSet_.size();
-
-    if( perceptionPerAutomateSet_.empty() )
-        return;
-
-    ASN1T_OID* pPerceptions = new ASN1T_OID[ perceptionPerAutomateSet_.size() ]; //$$ RAM
-    uint i = 0;
-    for( CIT_PerceptionSourceSet it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it )
-    {
-        pPerceptions[i] = (*it)->GetID();
-        ++i;
-    }
-    asn.automat_perception.elem = pPerceptions;
+    unsigned int i = 0;
+    for( CIT_PerceptionSourceSet it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it, ++i )
+        asn.mutable_automat_perception()->add_elem( (*it)->GetID() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgRelevance
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgRelevance( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgRelevance( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_Relevance ) )
         return;
 
-    asn.m.relevancePresent = 1;
-    asn.relevance = (uint)( rRelevance_ * 100. );    
+//    asn.set_relevancePresent( 1 );
+    asn.set_relevance( (unsigned int)( rRelevance_ * 100. ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgLocalisations
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgLocalisations( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgLocalisations( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_Localisation ) )
         return;
 
-    asn.m.locationPresent = 1;
-    NET_ASN_Tools::WriteLocation( localisation_, asn.location );
+//    asn.set_locationPresent( 1 );
+    NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_CurrentPerceptionLevel ) )
         return;
 
-    asn.m.perceivedPresent = 1;
-    asn.perceived = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+//    asn.set_perceivedPresent( 1 );
+    asn.set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::BuildMsgStates
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Object::BuildMsgAttributes( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     assert( pObjectType_ );
     if( *pMaxPerceptionLevel_ == PHY_PerceptionLevel::notSeen_ )
         return;
     
     UpdateAttributes( attributes_, 
-                      boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( asn.attributes ) ) );
+                      boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn.mutable_attributes() ) ) );
     
 }
 
@@ -517,13 +504,13 @@ void DEC_Knowledge_Object::BuildMsgAttributes( ASN1T_MsgObjectKnowledgeUpdate& a
 // Created: NLD 2004-03-26
 // -----------------------------------------------------------------------------
 inline
-void DEC_Knowledge_Object::BuildMsgRealObject( ASN1T_MsgObjectKnowledgeUpdate& asn ) const
+void DEC_Knowledge_Object::BuildMsgRealObject( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     if( !IsAttributeUpdated( eAttr_RealObject ) )
         return;
 
-    asn.m.real_objectPresent = 1;
-    asn.real_object = pObjectKnown_ ? pObjectKnown_->GetID() : 0;
+//    asn.set_real_objectPresent( 1 );
+    asn.set_real_object( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -541,11 +528,11 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
     if( nAttributesUpdated_ == eAttr_Nothing )
         return;
 
-    NET_ASN_MsgObjectKnowledgeUpdate asn;
-    asn().oid    = nID_;
+    client::ObjectKnowledgeUpdate asn;
+    asn().set_oid( nID_ );
     
     assert( pArmyKnowing_ );
-    asn().team = pArmyKnowing_->GetID();
+    asn().set_team( pArmyKnowing_->GetID() );
     
     BuildMsgRealObject            ( asn() );
     BuildMsgPerceptionSources     ( asn() );
@@ -554,13 +541,10 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
     BuildMsgCurrentPerceptionLevel( asn() );
     BuildMsgAttributes            ( asn() );
     
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asn().m.automat_perceptionPresent && asn().automat_perception.n > 0 )
-        delete [] asn().automat_perception.elem; //$$$ RAM
-
-    if( asn().m.locationPresent )
-        ASN_Delete::Delete( asn().location );
+    asn().Clear();
+    asn().Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -569,19 +553,19 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::SendMsgCreation() const
 {
-    NET_ASN_MsgObjectKnowledgeCreation asn;
-    asn().oid    = nID_;
+    client::ObjectKnowledgeCreation asn;
+    asn().set_oid( nID_ );
     
-    asn().real_object = pObjectKnown_ ? pObjectKnown_->GetID() : 0;
+    asn().set_real_object( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
 
     assert( pArmyKnowing_ );
-    asn().team = pArmyKnowing_->GetID();
-    asn().type = pObjectType_->GetName().c_str();
+    asn().set_team( pArmyKnowing_->GetID() );
+    asn().set_type( pObjectType_->GetName().c_str() );
 
     std::for_each( attributes_.begin(), attributes_.end(), 
-        boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, asn().attributes ) );
+        boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, *asn().mutable_attributes() ) );
 
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -590,12 +574,12 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::SendMsgDestruction() const
 {
-    NET_ASN_MsgObjectKnowledgeDestruction asn;
-    asn().oid    = nID_;
+    client::ObjectKnowledgeDestruction asn;
+    asn().set_oid( nID_ );
     
     assert( pArmyKnowing_ );
-    asn().team = pArmyKnowing_->GetID();
-    asn.Send();
+    asn().set_team( pArmyKnowing_->GetID() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
     
 
@@ -658,8 +642,6 @@ bool DEC_Knowledge_Object::IsConstructed() const
         return construction->IsConstructed();
     return false;    
 }
-
-
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::IsReservedObstacle
 // Created: NLD 2007-05-22
@@ -695,7 +677,7 @@ bool DEC_Knowledge_Object::CanCollideWith( const MIL_Agent_ABC& agent ) const
 // Name: DEC_Knowledge_Object::GetID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_Object::GetID() const
+unsigned int DEC_Knowledge_Object::GetID() const
 {
     return nID_;    
 }

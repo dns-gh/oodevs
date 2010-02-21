@@ -67,9 +67,9 @@ PHY_Dotation::~PHY_Dotation()
 // Name: PHY_Dotation::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_Dotation::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_Dotation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nID;
+    unsigned int nID;
         
     file >> nID;
     pCategory_ = PHY_DotationType::FindDotationCategory( nID );
@@ -87,7 +87,7 @@ void PHY_Dotation::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_Dotation::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned category = pCategory_->GetMosID();
     file << category
@@ -129,7 +129,7 @@ void PHY_Dotation::SetValue( MT_Float rValue )
         return;
 
     //assert( rValue <= rCapacity_ ); $$$ precision de merde
-    if ( (uint)rValue_ != (uint)rValue )
+    if ( (unsigned int)rValue_ != (unsigned int)rValue )
     {
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );

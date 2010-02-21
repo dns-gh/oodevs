@@ -63,20 +63,20 @@ void Weapons::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& 
 // Name: Weapons::DoUpdate
 // Created: SBO 2008-08-06
 // -----------------------------------------------------------------------------
-void Weapons::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Weapons::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if ( message.m.dotation_eff_materielPresent != 1 )
+    if ( message.has_dotation_eff_materiel()  != 1 )
         return;
     minRange_ = std::numeric_limits< unsigned int >::max();
     maxRange_ = 0;
-    for( unsigned int i = 0; i < message.dotation_eff_materiel.n; ++i )
+    for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
     {
-        const ASN1T_EquipmentDotations& value = message.dotation_eff_materiel.elem[ i ];
-        Equipment* equipment = Find( value.type_equipement );
+        const MsgsSimToClient::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( i );
+        Equipment* equipment = Find( value.type_equipement() );
         if( !equipment )
         {
-            equipment = new Equipment( equipments_.Get( value.type_equipement ) );
-            Register( value.type_equipement, *equipment );
+            equipment = new Equipment( equipments_.Get( value.type_equipement() ) );
+            Register( value.type_equipement(), *equipment );
         }
         equipment->Update( value );
     }

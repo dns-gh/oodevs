@@ -128,13 +128,13 @@ void PHY_RoleAction_Objects_DataComputerPionData::RollbackConsumptionsReservatio
 // Name: PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue
 // Created: NLD 2007-02-12
 // -----------------------------------------------------------------------------
-uint PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_DotationCategory& category ) const
+unsigned int PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_DotationCategory& category ) const
 {
     assert( pPion_ );
+ //   return ( unsigned int ) pPion_->GetRole< PHY_RoleInterface_Dotations >().GetDotationValue( category ); 
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pPion_->GetAlgorithms().dotationComputerFactory_->Create() );
     pPion_->Execute( *dotationComputer );
-
     return ( unsigned int ) dotationComputer->GetDotationValue( category ); 
 }
 
@@ -142,7 +142,7 @@ uint PHY_RoleAction_Objects_DataComputerPionData::GetDotationValue( const PHY_Do
 // Name: PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations
 // Created: NLD 2007-02-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_DotationCategory& category, uint nNbr )
+void PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_DotationCategory& category, unsigned int nNbr )
 {
     pPion_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, category, nNbr );  
 }
@@ -151,9 +151,9 @@ void PHY_RoleAction_Objects_DataComputerPionData::ConsumeDotations( const PHY_Do
 // Name: PHY_RoleAction_Objects_DataComputerPionData::RecoverDotations
 // Created: NLD 2007-02-13
 // -----------------------------------------------------------------------------
-uint PHY_RoleAction_Objects_DataComputerPionData::RecoverDotations( const PHY_DotationCategory& category, uint nNbr )
+unsigned int PHY_RoleAction_Objects_DataComputerPionData::RecoverDotations( const PHY_DotationCategory& category, unsigned int nNbr )
 {
-    return (uint)pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().SupplyDotation( category, nNbr );    
+    return (unsigned int)pPion_->GetRole< dotation::PHY_RoleInterface_Dotations >().SupplyDotation( category, nNbr );    
 }
 
 // -----------------------------------------------------------------------------
@@ -175,7 +175,7 @@ MT_Float PHY_RoleAction_Objects_DataComputerPionData::GetMinOperationTime() cons
 // Name: PHY_RoleAction_Objects_DataComputerPionData::GetOperationTime
 // Created: NLD 2007-02-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationTime( MT_Float& rOperationTime, uint& nNbrComposantes ) const
+void PHY_RoleAction_Objects_DataComputerPionData::GetTotalOperationTime( MT_Float& rOperationTime, unsigned int& nNbrComposantes ) const
 {
     rOperationTime  = 0.;
     nNbrComposantes = 0;

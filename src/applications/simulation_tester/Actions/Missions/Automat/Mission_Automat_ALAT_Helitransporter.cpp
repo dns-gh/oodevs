@@ -43,9 +43,9 @@ void Mission_Automat_ALAT_Helitransporter::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ALAT_Helitransporter& asnMission = *new ASN1T_Mission_Automate_ALAT_Helitransporter();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_helitransporter;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_helitransporter = &asnMission;
+    Mission_Automate_ALAT_Helitransporter& asnMission = *new Mission_Automate_ALAT_Helitransporter();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_alat_helitransporter = &asnMission;
 
     const T_IdVector& unitesAHelitransporter_ = pTarget_->GetTestParam_AgentList();
     const Position& pointDebarquement_ = pTarget_->GetTestParam_Point();
@@ -74,8 +74,8 @@ void Mission_Automat_ALAT_Helitransporter::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ALAT_Helitransporter::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_alat_helitransporter );
-    ASN1T_Mission_Automate_ALAT_Helitransporter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_helitransporter;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_alat_helitransporter ());
+    Mission_Automate_ALAT_Helitransporter& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_alat_helitransporter;
 
     ASN_Tools::Delete( asnMission.unites_a_helitransporter );
     ASN_Tools::Delete( asnMission.point_debarquement );

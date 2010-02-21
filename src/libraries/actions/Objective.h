@@ -10,8 +10,12 @@
 #ifndef __ActionParameterObjective_h_
 #define __ActionParameterObjective_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
+
+namespace Common
+{
+    class MsgMissionObjective;
+}
 
 namespace kernel
 {
@@ -35,16 +39,16 @@ public:
     explicit Objective( const kernel::OrderParameter& parameter );
              Objective( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
              Objective( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
-             Objective( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MissionObjective& asn );
+             Objective( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgMissionObjective& message );
     virtual ~Objective();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1T_MissionObjective& asn ) const;
-    void Clean( ASN1T_MissionObjective& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
+    void CommitTo( Common::MsgMissionObjective& message ) const;
+    void Clean( Common::MsgMissionObjective& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

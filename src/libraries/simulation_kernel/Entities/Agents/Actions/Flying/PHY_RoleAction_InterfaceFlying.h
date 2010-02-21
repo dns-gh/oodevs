@@ -34,7 +34,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );    //@@TODO: this class is actually seen as concrete -> clean MIL_AgentPion.cpp...
+    template< typename Archive > void serialize( Archive&, const unsigned int );    //@@TODO: this class is actually seen as concrete -> clean MIL_AgentPion.cpp...
     //@}
 
     //! @name Operations
@@ -64,7 +64,7 @@ BOOST_CLASS_EXPORT_KEY( PHY_RoleAction_InterfaceFlying )
 // Created: RPD 2009-08-13
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void PHY_RoleAction_InterfaceFlying::serialize( Archive& archive , const uint )
+void PHY_RoleAction_InterfaceFlying::serialize( Archive& archive , const unsigned int )
 {
     archive & boost::serialization::base_object< tools::Role_ABC >( *this );
 }

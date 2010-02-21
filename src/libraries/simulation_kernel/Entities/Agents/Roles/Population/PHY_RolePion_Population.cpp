@@ -14,7 +14,6 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_PopulationCollision.h"
-#include "Network/NET_ASN_Messages.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
@@ -62,7 +61,7 @@ PHY_RolePion_Population::~PHY_RolePion_Population()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_Population::serialize( Archive& file, const uint )
+void PHY_RolePion_Population::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Population >( *this );
 }

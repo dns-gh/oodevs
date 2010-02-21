@@ -44,7 +44,7 @@ DEC_PathSection_ABC::~DEC_PathSection_ABC()
 // Name: DEC_PathSection_ABC::Execute
 // Created: AGE 2005-02-24
 // -----------------------------------------------------------------------------
-bool DEC_PathSection_ABC::Execute( TerrainPathfinder& pathfind, uint nComputationEndTime )
+bool DEC_PathSection_ABC::Execute( TerrainPathfinder& pathfind, unsigned int nComputationEndTime )
 {
     geometry::Point2f from( float( startPoint_.rX_ ), float( startPoint_.rY_ ) );
     geometry::Point2f to  ( float( endPoint_  .rX_ ), float( endPoint_  .rY_ ) );
@@ -86,7 +86,7 @@ bool DEC_PathSection_ABC::ShouldEndComputation( float /*rCostToCurrentNode*/, fl
     if( bCanceled_ )
         return true;
 
-    if( (uint)time( 0 ) >= nComputationEndTime_ )
+    if( (unsigned int)time( 0 ) >= nComputationEndTime_ )
     {
         MT_LOG_ERROR_MSG( "Pathfind computation aborted - timeout" );
         return true;

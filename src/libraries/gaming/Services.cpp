@@ -9,9 +9,11 @@
 
 #include "gaming_pch.h"
 #include "Services.h"
-#include "game_asn/Dispatcher.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Logger_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: Services constructor
@@ -37,11 +39,12 @@ Services::~Services()
 // Name: Services::Update
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void Services::Update( const ASN1T_MsgServicesDescription& message )
+void Services::Update( const MsgsDispatcherToClient::MsgServicesDescription& message )
 {
     services_.clear();
-    std::copy( message.services.elem, message.services.elem + message.services.n,
-                std::inserter( services_, services_.begin() ) );
+    for( int i = 0; i < message.services_size(); ++i )
+        services_.insert( message.services(i) );
+                
     controller_.Update( *this );
 }
 

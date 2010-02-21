@@ -21,6 +21,7 @@
 #include "Report.h"
 #include "Side.h"
 #include <boost/bind.hpp>
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -28,24 +29,24 @@ using namespace dispatcher;
 // Name: Automat constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Automat::Automat( Model_ABC& model, const ASN1T_MsgAutomatCreation& msg )
-    : SimpleEntity< kernel::Automat_ABC >( msg.oid, msg.nom )
+Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& msg )
+    : SimpleEntity< kernel::Automat_ABC >( msg.oid(), QString( msg.nom().c_str() ) )
     , model_            ( model )
-    , type_             ( msg.type_automate )
-    , name_             ( msg.nom )
-    , team_             ( model.Sides().Get( msg.oid_camp ) )
-    , parentFormation_  ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation ? static_cast< Formation* >( &model.Formations().Get( msg.oid_parent.u.formation ) ) : 0 )
-    , parentAutomat_    ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  ? static_cast< Automat* >( &model.Automats().Get( msg.oid_parent.u.automate ) ) : 0 )
-    , knowledgeGroup_   ( &model.KnowledgeGroups().Get( msg.oid_groupe_connaissance ) )
+    , type_             ( msg.type_automate() )
+    , name_             ( msg.nom().c_str() )
+    , team_             ( model.Sides().Get( msg.oid_camp() ) )
+    , parentFormation_  ( msg.oid_parent().has_formation() ? static_cast< Formation* >( &model.Formations().Get( msg.oid_parent().formation().oid() ) ) : 0 )
+    , parentAutomat_    ( msg.oid_parent().has_automate()  ? static_cast< Automat* >( &model.Automats().Get( msg.oid_parent().automate().oid() ) ) : 0 )
+    , knowledgeGroup_   ( static_cast< KnowledgeGroup* >( &model.KnowledgeGroups().Get( msg.oid_groupe_connaissance() ) ) )
     , pTC2_             ( 0 )
     , pLogMaintenance_  ( 0 )
     , pLogMedical_      ( 0 )
     , pLogSupply_       ( 0 )
-    , nAutomatState_    ( EnumAutomatMode::debraye )
-    , nForceRatioState_ ( EnumForceRatioStatus::neutre )
-    , nCloseCombatState_( EnumMeetingEngagementStatus::etat_fixe )
-    , nOperationalState_( EnumOperationalStatus::detruit_totalement )
-    , nRoe_             ( EnumRoe::tir_interdit )
+    , nAutomatState_    ( Common::EnumAutomatMode::debraye )
+    , nForceRatioState_ ( MsgsSimToClient::ForceRatio_Value_neutre )
+    , nCloseCombatState_( Common::EnumMeetingEngagementStatus::etat_fixe )
+    , nOperationalState_( Common::EnumOperationalStatus::detruit_totalement )
+    , nRoe_             ( MsgsSimToClient::RulesOfEngagement_Value_tir_interdit )
     , order_            ( 0 )
 {
     assert( parentFormation_ || parentAutomat_ );
@@ -75,12 +76,15 @@ Automat::~Automat()
 // Name: Automat::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomatCreation& msg )
+void Automat::Update( const MsgsSimToClient::MsgAutomatCreation& msg )
 {
-    ChangeKnowledgeGroup( msg.oid_groupe_connaissance );
-    if(   parentFormation_ && ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  || ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation && msg.oid_parent.u.formation != parentFormation_->GetId() ) )
-       || parentAutomat_   && ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation || ( msg.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate  && msg.oid_parent.u.automate  != parentAutomat_  ->GetId() ) ) )
-       ChangeSuperior( msg.oid_parent );
+    ChangeKnowledgeGroup( msg.oid_groupe_connaissance() );
+    if( parentFormation_ && 
+        ( msg.oid_parent().has_automate()  || 
+        ( msg.oid_parent().has_formation() && msg.oid_parent().formation().oid() != parentFormation_->GetId() ) ) )
+        ChangeSuperior( msg.oid_parent() );
+    if( parentAutomat_ && ( msg.oid_parent().has_formation() || ( msg.oid_parent().has_automate()  && msg.oid_parent().automate().oid()  != parentAutomat_  ->GetId() ) ) )
+       ChangeSuperior( msg.oid_parent() );
     decisionalInfos_.Clear();
     ApplyUpdate( msg );
 }
@@ -89,34 +93,34 @@ void Automat::Update( const ASN1T_MsgAutomatCreation& msg )
 // Name: Automat::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomatChangeLogisticLinks& msg )
+void Automat::Update( const Common::MsgAutomatChangeLogisticLinks& msg )
 {
-    if( msg.m.oid_tc2Present )
-        pTC2_ = msg.oid_tc2 == 0 ? 0 : &model_.Automats().Get( msg.oid_tc2 );
-    if( msg.m.oid_maintenancePresent )
-        pLogMaintenance_ = msg.oid_maintenance == 0 ? 0 : &model_.Automats().Get( msg.oid_maintenance );
-    if( msg.m.oid_santePresent )
-        pLogMedical_ = msg.oid_sante == 0 ? 0 : &model_.Automats().Get( msg.oid_sante );
-    if( msg.m.oid_ravitaillementPresent )
-        pLogSupply_ = msg.oid_ravitaillement == 0 ? 0 : &model_.Automats().Get( msg.oid_ravitaillement );
+    if( msg.has_oid_tc2()  )
+        pTC2_ = msg.oid_tc2() == 0 ? 0 : &model_.Automats().Get( msg.oid_tc2() );
+    if( msg.has_oid_maintenance()  )
+        pLogMaintenance_ = msg.oid_maintenance() == 0 ? 0 : &model_.Automats().Get( msg.oid_maintenance() );
+    if( msg.has_oid_sante()  )
+        pLogMedical_ = msg.oid_sante() == 0 ? 0 : &model_.Automats().Get( msg.oid_sante() );
+    if( msg.has_oid_ravitaillement()  )
+        pLogSupply_ = msg.oid_ravitaillement() == 0 ? 0 : &model_.Automats().Get( msg.oid_ravitaillement() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat::Update
 // Created: SBO 2008-02-13
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomatChangeSuperior& msg )
+void Automat::Update( const Common::MsgAutomatChangeSuperior& msg )
 {
-    ChangeSuperior( msg.oid_superior );
+    ChangeSuperior( msg.oid_superior() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat::Update
 // Created: SBO 2008-02-13
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg )
+void Automat::Update( const Common::MsgAutomatChangeKnowledgeGroup& msg )
 {
-    ChangeKnowledgeGroup( msg.oid_groupe_connaissance );
+    ChangeKnowledgeGroup( msg.oid_groupe_connaissance() );
 }
 
 // -----------------------------------------------------------------------------
@@ -146,14 +150,14 @@ void Automat::ChangeSuperior( const Superior& superior )
         parentAutomat_->Remove( *this );
     parentFormation_ = 0;
     parentAutomat_   = 0;
-    if( superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
+    if( superior.has_formation() )
     {
-        parentFormation_ = &model_.Formations().Get( superior.u.formation );
+        parentFormation_ = &model_.Formations().Get( superior.formation().oid() );
         parentFormation_->Register( *this );
     }
-    else if( superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
+    else if( superior.has_automate() )
     {
-        parentAutomat_ = &model_.Automats().Get( superior.u.automate );
+        parentAutomat_ = &model_.Automats().Get( superior.automate().oid() );
         parentAutomat_->Register( *this );
     }
 }
@@ -162,25 +166,25 @@ void Automat::ChangeSuperior( const Superior& superior )
 // Name: Automat::Update
 // Created: NLD 2006-10-05
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomatAttributes& msg )
+void Automat::Update( const MsgsSimToClient::MsgAutomatAttributes& msg )
 {
-    if( msg.m.etat_automatePresent )
-        nAutomatState_ = msg.etat_automate;
-    if( msg.m.rapport_de_forcePresent )
-        nForceRatioState_ = msg.rapport_de_force;
-    if( msg.m.combat_de_rencontrePresent )
-        nCloseCombatState_ = msg.combat_de_rencontre;
-    if( msg.m.etat_operationnelPresent )
-        nOperationalState_ = msg.etat_operationnel;
-    if( msg.m.roePresent )
-        nRoe_ = msg.roe;
+    if( msg.has_etat_automate()  )
+        nAutomatState_ = msg.etat_automate();
+    if( msg.has_rapport_de_force()  )
+        nForceRatioState_ = msg.rapport_de_force();
+    if( msg.has_combat_de_rencontre()  )
+        nCloseCombatState_ = msg.combat_de_rencontre();
+    if( msg.has_etat_operationnel()  )
+        nOperationalState_ = msg.etat_operationnel();
+    if( msg.has_roe()  )
+        nRoe_ = msg.roe();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Automat::Update
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgDecisionalState& asnMsg )
+void Automat::Update( const MsgsSimToClient::MsgDecisionalState& asnMsg )
 {
     decisionalInfos_.Update( asnMsg );
 }
@@ -189,13 +193,13 @@ void Automat::Update( const ASN1T_MsgDecisionalState& asnMsg )
 // Name: Automat::Update
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgLogSupplyQuotas& msg )
+void Automat::Update( const MsgsSimToClient::MsgLogSupplyQuotas& msg )
 {
     quotas_.DeleteAll();
-    for( unsigned i = 0; i < msg.quotas.n; ++i )
+    for( int i = 0; i < msg.quotas().elem_size(); ++i )
     {
-        DotationQuota* quota = new DotationQuota( model_, msg.quotas.elem[ i ] );
-        quotas_.Register( msg.quotas.elem[ i ].ressource_id, *quota );
+        DotationQuota* quota = new DotationQuota( model_, msg.quotas().elem( i ) );
+        quotas_.Register( msg.quotas().elem( i ).ressource_id(), *quota );
     }
 }
 
@@ -203,17 +207,17 @@ void Automat::Update( const ASN1T_MsgLogSupplyQuotas& msg )
 // Name: Automat::Update
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Automat::Update( const ASN1T_MsgAutomatOrder& msg )
+void Automat::Update( const Common::MsgAutomatOrder& msg )
 {
     order_.reset();
-    if( msg.mission != 0 )
+    if( msg.mission() != 0 )
         order_.reset( new AutomatOrder( model_, *this, msg ) );
     ApplyUpdate( msg );
 }
 
 namespace
 {
-    void SerializeQuota( ASN1T_DotationQuota* asn, const DotationQuota& quota )
+    void SerializeQuota( ::google::protobuf::RepeatedPtrField< ::Common::MsgDotationQuota >::iterator& asn, const DotationQuota& quota )
     {
         quota.Send( *asn );
         ++asn;
@@ -228,27 +232,30 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     {
         client::AutomatCreation asn;
-        asn().oid                     = GetId();
-        asn().type_automate           = type_;
-        asn().nom                     = name_.c_str();
-        asn().oid_camp                = team_.GetId();
-        asn().oid_groupe_connaissance = knowledgeGroup_->GetId();
-        asn().oid_parent.t = parentFormation_ ? T_MsgAutomatCreation_oid_parent_formation : T_MsgAutomatCreation_oid_parent_automate;
+        asn().set_oid( GetId() );
+        asn().set_type_automate( type_ );
+        asn().set_nom( name_ );
+        asn().set_oid_camp( team_.GetId() );
+        asn().set_oid_groupe_connaissance( knowledgeGroup_->GetId() );
+
         if( parentFormation_ )
-            asn().oid_parent.u.formation = parentFormation_->GetId();
+            asn().mutable_oid_parent()->mutable_formation()->set_oid( parentFormation_->GetId() );
         if( parentAutomat_ )
-            asn().oid_parent.u.automate = parentAutomat_->GetId();
+            asn().mutable_oid_parent()->mutable_automate()->set_oid( parentAutomat_->GetId() );
         asn.Send( publisher );
     }
     {
         client::LogSupplyQuotas asn;
-        asn().oid_automate = GetId();
-        asn().quotas.n = quotas_.Count();
-        asn().quotas.elem = asn().quotas.n > 0 ? new ASN1T_DotationQuota[ asn().quotas.n ] : 0;
-        quotas_.Apply( boost::bind( &::SerializeQuota, asn().quotas.elem, _1 ) );
+        asn().set_oid_automate ( GetId() );
+
+        for ( int i = 0; i < asn().quotas().elem_size(); ++i )
+            asn().mutable_quotas()->add_elem( );
+
+        quotas_.Apply( boost::bind( &::SerializeQuota, boost::ref( asn().mutable_quotas()->mutable_elem()->begin() ), _1 ) );
+
         asn.Send( publisher );
-        if( asn().quotas.n > 0 )
-            delete [] asn().quotas.elem;
+        if( asn().quotas().elem_size() > 0 )
+            asn().mutable_quotas()->Clear();
     }
 }
 
@@ -260,58 +267,58 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
         client::AutomatAttributes asn;
-        asn().m.etat_automatePresent = 1;
-        asn().m.rapport_de_forcePresent = 1;
-        asn().m.combat_de_rencontrePresent = 1;
-        asn().m.etat_operationnelPresent = 1;
-        asn().m.roePresent = 1;
-        asn().oid = GetId();
-        asn().etat_automate = nAutomatState_;
-        asn().rapport_de_force = nForceRatioState_;
-        asn().combat_de_rencontre = nCloseCombatState_;
-        asn().etat_operationnel = nOperationalState_;
-        asn().roe = nRoe_;
+//        asn().set_etat_automatePresent( 1 );
+//        asn().set_rapport_de_forcePresent( 1 );
+//        asn().set_combat_de_rencontrePresent( 1 );
+//        asn().set_etat_operationnelPresent( 1 );
+//        asn().set_roePresent( 1 );
+        asn().set_oid ( GetId() );
+        asn().set_etat_automate( nAutomatState_ );
+        asn().set_rapport_de_force( nForceRatioState_);
+        asn().set_combat_de_rencontre( nCloseCombatState_);
+        asn().set_etat_operationnel( nOperationalState_ );
+        asn().set_roe( nRoe_ );
         asn.Send( publisher );
     }
     {
         client::AutomatChangeKnowledgeGroup asn;
-        asn().oid = GetId();
-        asn().oid_camp = team_.GetId();
-        asn().oid_groupe_connaissance = knowledgeGroup_->GetId();
+        asn().set_oid( GetId() );
+        asn().set_oid_camp( team_.GetId() );
+        asn().set_oid_groupe_connaissance( knowledgeGroup_->GetId() );
         asn.Send( publisher );
     }
     {
         client::AutomatChangeSuperior asn;
-        asn().oid = GetId();
-        asn().oid_superior.t = parentFormation_ ? T_MsgAutomatCreation_oid_parent_formation : T_MsgAutomatCreation_oid_parent_automate;
+        asn().set_oid( GetId() );
+
         if( parentFormation_ )
-            asn().oid_superior.u.formation = parentFormation_->GetId();
+            asn().mutable_oid_superior()->mutable_formation()->set_oid( parentFormation_->GetId() );
         if( parentAutomat_ )
-            asn().oid_superior.u.automate = parentAutomat_->GetId();
+            asn().mutable_oid_superior()->mutable_automate()->set_oid( parentAutomat_->GetId() );
         asn.Send( publisher );
     }
     {
         client::AutomatChangeLogisticLinks asn;
-        asn().oid  = GetId();
+        asn().set_oid( GetId() );
         if( pTC2_ )
         {
-            asn().m.oid_tc2Present = 1;
-            asn().oid_tc2 = pTC2_->GetId();
+            //asn().set_oid_tc2Present( 1 );
+            asn().set_oid_tc2( pTC2_->GetId() );
         }
         if( pLogMaintenance_ )
         {
-            asn().m.oid_maintenancePresent = 1;
-            asn().oid_maintenance = pLogMaintenance_->GetId();
+            //asn().set_oid_maintenancePresent( 1 );
+            asn().set_oid_maintenance( pLogMaintenance_->GetId() );
         }
         if( pLogMedical_ )
         {
-            asn().m.oid_santePresent = 1;
-            asn().oid_sante = pLogMedical_->GetId();
+            //asn().set_oid_santePresent( 1 );
+            asn().set_oid_sante( pLogMedical_->GetId() );
         }
         if( pLogSupply_ )
         {
-            asn().m.oid_ravitaillementPresent = 1;
-            asn().oid_ravitaillement = pLogSupply_->GetId();
+            //asn().set_oid_ravitaillementPresent( 1 );
+            asn().set_oid_ravitaillement( pLogSupply_->GetId() );
         }
         asn.Send( publisher );
     }
@@ -367,7 +374,7 @@ const kernel::AutomatType& Automat::GetType() const
 // -----------------------------------------------------------------------------
 bool Automat::IsEngaged() const
 {
-    return nAutomatState_ == EnumAutomatMode::embraye;
+    return nAutomatState_ == Common::EnumAutomatMode::embraye;
 }
 
 // -----------------------------------------------------------------------------

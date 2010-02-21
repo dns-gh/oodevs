@@ -79,7 +79,7 @@ MT_Float MT_Sector::GetAngle() const
 // -----------------------------------------------------------------------------
 template< typename Archive >
 inline
-void MT_Sector::serialize( Archive& file, const uint )
+void MT_Sector::serialize( Archive& file, const unsigned int )
 {
     file & vOrigin_
          & vDirection_

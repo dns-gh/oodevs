@@ -43,9 +43,9 @@ void Mission_Automat_INF_BarrerDirection::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_BarrerDirection& asnMission = *new ASN1T_Mission_Automate_INF_BarrerDirection();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_barrer_direction;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_barrer_direction = &asnMission;
+    Mission_Automate_INF_BarrerDirection& asnMission = *new Mission_Automate_INF_BarrerDirection();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_barrer_direction = &asnMission;
 
     const Location& position_ = pTarget_->GetTestParam_Polygon();
 
@@ -62,8 +62,8 @@ void Mission_Automat_INF_BarrerDirection::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_BarrerDirection::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_barrer_direction );
-    ASN1T_Mission_Automate_INF_BarrerDirection& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_barrer_direction;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_barrer_direction ());
+    Mission_Automate_INF_BarrerDirection& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_barrer_direction;
 
     ASN_Tools::Delete( asnMission.position );
 

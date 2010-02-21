@@ -11,9 +11,14 @@
 #define __MedicalTreatmentPrototype_h_
 
 #include "clients_gui/MedicalTreatmentPrototype_ABC.h"
+#include "protocol/clientsenders.h"
 
-struct ASN1T_ObjectAttributeMedicalTreatment;
-struct ASN1T_MagicActionCreateObject;
+namespace MsgsClientToSim
+{
+    class MagicActionCreateObject;
+}
+struct ObjectAttributeMedicalTreatment;
+
 
 // =============================================================================
 /** @class  MedicalTreatmentPrototype
@@ -27,7 +32,7 @@ class MedicalTreatmentPrototype : public gui::MedicalTreatmentPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver, ASN1T_MagicActionCreateObject& msg );
+             MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver, MsgsClientToSim::MsgMagicActionCreateObject& msg );
     virtual ~MedicalTreatmentPrototype();
     //@}
 
@@ -47,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;    
+    MsgsClientToSim::MsgMagicActionCreateObject& msg_;    
     //@}
 };
 

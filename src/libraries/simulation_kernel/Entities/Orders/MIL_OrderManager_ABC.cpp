@@ -153,7 +153,7 @@ MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( const MIL_LimaFunction& function 
 // Name: MIL_OrderManager_ABC::FindLima
 // Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------
-MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( uint nID ) const
+MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( unsigned int nID ) const
 {
     if( !pMission_ )
         return 0;

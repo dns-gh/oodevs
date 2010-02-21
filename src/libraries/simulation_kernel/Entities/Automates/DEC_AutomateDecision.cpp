@@ -19,7 +19,6 @@
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_FragOrder.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
-#include "Network/NET_ASN_Messages.h"
 
 #include "Decision/Functions/DEC_AutomateFunctions.h"
 #include "Decision/Functions/DEC_OrdersFunctions.h"
@@ -35,6 +34,10 @@
 #include "Decision/Functions/DEC_CommunicationFunctions.h"
 
 #include <boost/bind.hpp>
+
+
+#include "protocol/ClientSenders.h"
+#include "protocol/SimulationSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
 
@@ -90,7 +93,7 @@ DEC_AutomateDecision::~DEC_AutomateDecision()
 // Name: DEC_AutomateDecision::load
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Decision< MIL_Automate > >( *this )
          >> pEntity_
@@ -100,7 +103,7 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
     
     assert( pEntity_ );
     
-    uint nID;
+    unsigned int nID;
     file >> nID;
     
     const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( nID );
@@ -124,7 +127,7 @@ void DEC_AutomateDecision::load( MIL_CheckPointInArchive& file, const uint )
 // Name: DEC_AutomateDecision::save
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_AutomateDecision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pEntity_ );
     unsigned id = pEntity_->GetType().GetID();
@@ -301,9 +304,9 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionParRapportALima",
         boost::function< boost::shared_ptr< MT_Vector2D >( int, float ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLima< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionParRapportALimaDansFuseau",
-        boost::function< boost::shared_ptr< MT_Vector2D >( uint, MT_Float, const MIL_Fuseau* ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( unsigned int, MT_Float, const MIL_Fuseau* ) >( boost::bind( &DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionsParRapportALima",
-        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( uint, MT_Float, uint ) >( boost::bind( &DEC_GeometryFunctions::ComputePointsBeforeLima, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
+        boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( unsigned int, MT_Float, unsigned int ) >( boost::bind( &DEC_GeometryFunctions::ComputePointsBeforeLima, boost::ref( GetAutomate() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_PositionsParRapportALocalisation",
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const std::vector< DEC_Decision_ABC* >&, TER_Localisation*, MT_Vector2D*, MT_Float ) >( boost::bind( &DEC_GeometryFunctions ::ComputeLocalisationPointsForPionsInFuseau, _1, _2, _3, _4 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_StartCalculLignesAvantEtArriere",
@@ -500,24 +503,19 @@ void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_Mission_ABC& mission
 // Name: DEC_AutomateDecision::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::SendFullState( NET_ASN_MsgAutomatAttributes& msg ) const
+void DEC_AutomateDecision::SendFullState( client::AutomatAttributes& msg ) const
 {
-    msg().m.rapport_de_forcePresent    = 1;
-    msg().m.roePresent                 = 1;
-    msg().m.combat_de_rencontrePresent = 1;
-    msg().m.etat_operationnelPresent   = 1;
-
-    msg().rapport_de_force      = (ASN1T_EnumForceRatioStatus)eForceRatioStateNone;
-    msg().combat_de_rencontre   = (ASN1T_EnumMeetingEngagementStatus)nCloseCombatState_;
-    msg().etat_operationnel     = (ASN1T_EnumOperationalStatus)nOperationalState_;
-    msg().roe                   = (ASN1T_EnumRoe)nRulesOfEngagementState_;
+    msg().set_rapport_de_force   ( MsgsSimToClient::ForceRatio_Value( eForceRatioStateNone ) );
+    msg().set_combat_de_rencontre( Common::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
+    msg().set_etat_operationnel  ( Common::EnumOperationalStatus( nOperationalState_ ) );
+    msg().set_roe                ( MsgsSimToClient::RulesOfEngagement_Value( nRulesOfEngagementState_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::SendChangedState( NET_ASN_MsgAutomatAttributes& msg ) const
+void DEC_AutomateDecision::SendChangedState( client::AutomatAttributes& msg ) const
 {
     if( bStateHasChanged_ )
         SendFullState( msg );

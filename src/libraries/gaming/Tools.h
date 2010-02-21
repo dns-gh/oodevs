@@ -10,13 +10,16 @@
 #ifndef __Gaming_Tools_h_
 #define __Gaming_Tools_h_
 
-#include "clients_kernel/Tools.h"
 #include "Types.h"
-#include "game_asn/Simulation.h"
+#include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace tools
 {
-    QString ToString( ASN1T_EnumLocationType nType );
+    QString ToString( Common::MsgLocation::Geometry nType );
 
     E_LocationType     LocationFromString        ( const QString& type );
     E_AmmunitionFamily AmmunitionFamilyFromString( const QString& type );

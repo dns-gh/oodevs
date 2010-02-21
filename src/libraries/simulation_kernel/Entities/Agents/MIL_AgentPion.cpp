@@ -56,20 +56,19 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
-
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_KS_Fire.h"
-#include "Hla/HLA_UpdateFunctor.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
-#include "simulation_kernel/AlgorithmsFactories.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "Hla/HLA_UpdateFunctor.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
+#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
@@ -159,7 +158,7 @@ void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned 
 // Name: MIL_AgentPion::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
     
@@ -203,7 +202,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_AgentPion::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pType_ );
 
@@ -437,7 +436,7 @@ void MIL_AgentPion::UpdateNetwork()
 // Name: MIL_AgentPion::PreprocessRandomBreakdowns
 // Created: NLD 2005-01-06
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::PreprocessRandomBreakdowns( uint nEndDayTimeStep ) const
+void MIL_AgentPion::PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const
 {
     GetRole< PHY_RolePion_Composantes >().PreprocessRandomBreakdowns( nEndDayTimeStep );
 }
@@ -579,13 +578,13 @@ void MIL_AgentPion::SendCreation() const
 {
     assert( pType_ );
 
-    NET_ASN_MsgUnitCreation asnMsg;
-    asnMsg().oid          = GetID();
-    asnMsg().type_pion    = pType_->GetID();
-    asnMsg().nom          = GetName().c_str(); // !! pointeur sur const char*
-    asnMsg().oid_automate = GetAutomate().GetID();    
-    asnMsg().pc           = IsPC();
-    asnMsg.Send();
+    client::UnitCreation asnMsg;
+    asnMsg().set_oid         ( GetID() );
+    asnMsg().set_type_pion   ( pType_->GetID() );
+    asnMsg().set_nom         ( GetName().c_str() ); // !! pointeur sur const char*
+    asnMsg().set_oid_automate( GetAutomate().GetID() );
+    asnMsg().set_pc          ( IsPC() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -612,7 +611,7 @@ void MIL_AgentPion::SendKnowledge() const
 // Name: MIL_AgentPion::OnReceiveMsgOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgOrder( const ASN1T_MsgUnitOrder& msg )
+void MIL_AgentPion::OnReceiveMsgOrder( const Common::MsgUnitOrder& msg )
 {
     orderManager_.OnReceiveMission( msg );
 }
@@ -622,7 +621,7 @@ void MIL_AgentPion::OnReceiveMsgOrder( const ASN1T_MsgUnitOrder& msg )
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
 
-void MIL_AgentPion::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& msg )
+void MIL_AgentPion::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg )
 {
     orderManager_.OnReceiveFragOrder( msg );
 }
@@ -661,13 +660,13 @@ void MIL_AgentPion::OnReceiveMsgMagicMove( const MT_Vector2D& vPosition )
 // Name: MIL_AgentPion::OnReceiveMsgMagicMove
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgMagicMove( const ASN1T_MagicActionMoveTo& asn )
+void MIL_AgentPion::OnReceiveMsgMagicMove( const Common::MsgMagicActionMoveTo& asn )
 {
     if( pAutomate_->IsEngaged() )
-        throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_automate_embraye );
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_automate_embraye );
 
     MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
+    MIL_Tools::ConvertCoordMosToSim( asn.move_to(), vPosTmp );
 
     MagicMove( vPosTmp );
     UpdatePhysicalState();
@@ -677,29 +676,29 @@ void MIL_AgentPion::OnReceiveMsgMagicMove( const ASN1T_MagicActionMoveTo& asn )
 // Name: MIL_AgentPion::OnReceiveMsgChangeHumanFactors
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const ASN1T_MagicActionChangeHumanFactors& asn )
+void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const Common::MsgMagicActionChangeHumanFactors& asn )
 {
-    if( asn.m.experiencePresent )
+    if( asn.has_experience() )
     {
-        const PHY_Experience* pExperience = PHY_Experience::Find( asn.experience );
+        const PHY_Experience* pExperience = PHY_Experience::Find( asn.experience() );
         if( !pExperience )
-            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
 
-    if( asn.m.moralPresent )
+    if( asn.has_moral() )
     {
-        const PHY_Morale* pMoral = PHY_Morale::Find( asn.moral );
+        const PHY_Morale* pMoral = PHY_Morale::Find( asn.moral() );
         if( !pMoral )
-            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
 
-    if( asn.m.fatiguePresent )
+    if( asn.has_fatigue() )
     {
-        const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( asn.fatigue );
+        const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( asn.fatigue() );
         if( !pTiredness )
-            throw NET_AsnException< ASN1T_EnumUnitErrorCode >( EnumUnitErrorCode::error_invalid_attribute );
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
 }
@@ -754,70 +753,65 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
 // Name: MIL_AgentPion::OnReceiveMsgResupply
 // Created: NLD 2005-07-27
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgResupply( const ASN1T_MagicActionPartialRecovery& asn )
+void  MIL_AgentPion::OnReceiveMsgResupply( const MsgsClientToSim::MsgMagicActionPartialRecovery& asn )
 {
-    if( asn.m.equipementsPresent )
+    if( asn.has_equipements() )
     {
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
-        for( uint i = 0; i < asn.equipements.n; ++i )
+        for( int i = 0; i < asn.equipements().elem_size(); ++i )
         {
-            const ASN1T_EquipmentRecovery& asnEquipement = asn.equipements.elem[ i ];
-            const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( asnEquipement.type_equipement );
+            const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfEquipmentRecovery_EquipmentRecovery& asnEquipement = asn.equipements().elem( i );
+            const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( asnEquipement.type_equipement() );
             if( pComposanteType )
-                roleComposantes.ChangeComposantesAvailability( *pComposanteType, asnEquipement.nombre_disponible );
+                roleComposantes.ChangeComposantesAvailability( *pComposanteType, asnEquipement.nombre_disponible() );
         }
     }
 
-    if( asn.m.personnelsPresent )
+    if( asn.has_personnels() )
     {
         human::PHY_RolePion_Humans& roleHumans = GetRole< human::PHY_RolePion_Humans >();
-        for( uint i = 0 ; i < asn.personnels.n; ++i )
+        for( int i = 0 ; i < asn.personnels().elem_size(); ++i )
         {
-            const ASN1T_HumanRecovery& asnPersonnel = asn.personnels.elem[ i ];
-            const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( asnPersonnel.rang );
+            const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfHumanRecovery_HumanRecovery& asnPersonnel = asn.personnels().elem( i );
+            const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( asnPersonnel.rang() );
             if( pHumanRank )
-                roleHumans.ChangeHumansAvailability( *pHumanRank, asnPersonnel.nombre_disponible ); 
+                roleHumans.ChangeHumansAvailability( *pHumanRank, asnPersonnel.nombre_disponible() ); 
         }
     }
     
-    if( asn.m.dotationsPresent )
+    if( asn.has_dotations() )
     {
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
-        for( uint i = 0; i < asn.dotations.n; ++i )
+        for( int i = 0; i < asn.dotations().elem_size(); ++i )
         {
-            const ASN1T_DotationRecovery& asnDotation = asn.dotations.elem[ i ];
-            const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( asnDotation.famille_dotation ); 
+            const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfDotationRecovery_DotationRecovery& asnDotation = asn.dotations().elem( i );
+            const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( asnDotation.famille_dotation() ); 
             if( pDotationType )
-                roleDotations.ResupplyDotations( *pDotationType, asnDotation.pourcentage / 100. );
+                roleDotations.ResupplyDotations( *pDotationType, asnDotation.pourcentage() / 100. );
         }
     }
 
-    if( asn.m.munitionsPresent )
+    if( asn.has_munitions() )
     {
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
-        for( uint i = 0; i < asn.munitions.n; ++i )
+        for( int i = 0; i < asn.munitions().elem_size(); ++i )
         {
-            const ASN1T_AmmunitionDotationRecovery& asnMunition = asn.munitions.elem[ i ];
-            const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( asnMunition.famille_munition ); 
+            const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery_AmmunitionDotationRecovery& asnMunition = asn.munitions().elem( i );
+            const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( asnMunition.famille_munition() ); 
             if( pAmmoClass )
-                roleDotations.ResupplyDotations( *pAmmoClass, asnMunition.pourcentage / 100. );
+                roleDotations.ResupplyDotations( *pAmmoClass, asnMunition.pourcentage() / 100. );
         }
     }
 
-    if( asn.m.stocksPresent )
-    {
-        PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >();
-        if( roleSupply )
-        {
-            for( uint i = 0; i < asn.stocks.n; ++i )
+    if( asn.has_stocks() )
+        if( PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >() )
+            for( int i = 0; i < asn.stocks().elem_size(); ++i )
             {
-                const ASN1T_StockRecovery& asnStock = asn.stocks.elem[ i ];
-                const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id );
+                const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery& asnStock = asn.stocks().elem( i );
+                const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id() );
                 if( pDotationCategory )
-                    roleSupply->ResupplyStocks( *pDotationCategory, asnStock.quantite_disponible );
+                    roleSupply->ResupplyStocks( *pDotationCategory, asnStock.quantite_disponible() );
             }
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -842,25 +836,41 @@ void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const ASN1T_MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army_ABC>& armies )
+void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army_ABC>& armies )
 {
-    switch( asnMsg.action.t )
+    if( asnMsg.action().has_move_to                    () ) 
+        OnReceiveMsgMagicMove                  ( asnMsg.action().move_to() );
+    else if( asnMsg.action().has_recompletement_personnel   () ) 
+        OnReceiveMsgResupplyHumans             (); 
+    else if( asnMsg.action().has_recompletement_ressources  () ) 
+        OnReceiveMsgResupplyResources          (); 
+    else if( asnMsg.action().has_recompletement_equipement  () ) 
+        OnReceiveMsgResupplyEquipement         (); 
+    else if( asnMsg.action().has_recompletement_total       () ) 
+        OnReceiveMsgResupplyAll                (); 
+    else if( asnMsg.action().has_recompletement_partiel     () ) 
+        OnReceiveMsgResupply                   ( asnMsg.action().recompletement_partiel() );
+    else if( asnMsg.action().has_change_facteurs_humains    () ) 
+        OnReceiveMsgChangeHumanFactors         ( asnMsg.action().change_facteurs_humains() );
+    else if( asnMsg.action().has_destruction_totale         () ) 
+        OnReceiveMsgDestroyAll                 (); 
+    else if( asnMsg.action().has_destruction_composante     () ) 
+        OnReceiveMsgDestroyComponent           (); 
+    else if( asnMsg.action().has_recuperer_transporteurs    () ) 
+        OnReceiveMsgRecoverHumansTransporters  (); 
+    else if( asnMsg.action().has_se_rendre                  () )
     {
-        case T_MsgUnitMagicAction_action_move_to                    : OnReceiveMsgMagicMove                  ( *asnMsg.action.u.move_to ); break;
-        case T_MsgUnitMagicAction_action_recompletement_personnel   : OnReceiveMsgResupplyHumans             (); break;
-        case T_MsgUnitMagicAction_action_recompletement_ressources  : OnReceiveMsgResupplyResources          (); break;
-        case T_MsgUnitMagicAction_action_recompletement_equipement  : OnReceiveMsgResupplyEquipement         (); break;
-        case T_MsgUnitMagicAction_action_recompletement_total       : OnReceiveMsgResupplyAll                (); break;
-        case T_MsgUnitMagicAction_action_recompletement_partiel     : OnReceiveMsgResupply                   ( *asnMsg.action.u.recompletement_partiel ); break;
-        case T_MsgUnitMagicAction_action_change_facteurs_humains    : OnReceiveMsgChangeHumanFactors         ( *asnMsg.action.u.change_facteurs_humains ); break;
-        case T_MsgUnitMagicAction_action_destruction_totale         : OnReceiveMsgDestroyAll                 (); break;
-        case T_MsgUnitMagicAction_action_destruction_composante     : OnReceiveMsgDestroyComponent           (); break;
-        case T_MsgUnitMagicAction_action_recuperer_transporteurs    : OnReceiveMsgRecoverHumansTransporters  (); break;
-        case T_MsgUnitMagicAction_action_se_rendre                  : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, armies ); return;        
-        case T_MsgUnitMagicAction_action_annuler_reddition          : pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, armies ); return;        
-        default:
-            assert( false );
+        pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, armies );
+        return;
     }
+    else if( asnMsg.action().has_annuler_reddition() )
+    {
+        pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, armies );
+        return;
+    }
+    else
+        assert( false );
+
     UpdatePhysicalState();
 }
 
@@ -889,14 +899,14 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // Name: MIL_AgentPion::OnReceiveMsgChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const ASN1T_MsgUnitChangeSuperior& asnMsg )
+void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const Common::MsgUnitChangeSuperior& asnMsg )
 {
-    MIL_Automate* pNewAutomate = manager.FindAutomate( asnMsg.oid_automate );
+    MIL_Automate* pNewAutomate = manager.FindAutomate( asnMsg.oid_automate() );
     if( !pNewAutomate )
-        throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
 
     if( pNewAutomate->GetArmy() != GetArmy() )
-        throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_camps_incompatibles );
+        throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_camps_incompatibles );
 
     pAutomate_->UnregisterPion( *this );
     pAutomate_ = pNewAutomate;
@@ -958,10 +968,10 @@ void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
     pAutomate_ = &newAutomate;
     pAutomate_->RegisterPion  ( *this );
 
-    NET_ASN_MsgUnitChangeSuperior asnMsg;
-    asnMsg().oid          = GetID();
-    asnMsg().oid_automate = newAutomate.GetID();
-    asnMsg.Send();
+    client::UnitChangeSuperior asnMsg;
+    asnMsg().set_oid( GetID() );
+    asnMsg().set_oid_automate( newAutomate.GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

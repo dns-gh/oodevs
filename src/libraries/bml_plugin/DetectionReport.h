@@ -10,7 +10,10 @@
 #ifndef __DetectionReport_h_
 #define __DetectionReport_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace xml
 {

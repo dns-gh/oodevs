@@ -11,8 +11,12 @@
 #define __DEC_Objective_h_
 
 #include "MIL.h"
-
 #include "simulation_terrain/TER_Localisation.h"
+
+namespace Common
+{
+    class MsgMissionObjective;
+}
 
 // =============================================================================
 /** @class  DEC_Objective
@@ -25,21 +29,21 @@ class DEC_Objective
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Objective( const ASN1T_MissionObjective& asn );
+    explicit DEC_Objective( const Common::MsgMissionObjective& asn );
     virtual ~DEC_Objective();
     //@}
 
     //! @name Accessors
     //@{
     const TER_Localisation& GetLocalisation() const;
-          uint              GetSchedule    () const;
+          unsigned int              GetSchedule    () const;
           bool              IsFlagged      () const;
     //@}
 
     //! @name Operations
     //@{
     void operator=( const DEC_Objective& rhs );
-    void Serialize( ASN1T_MissionObjective& asn ) const;
+    void Serialize( Common::MsgMissionObjective& asn ) const;
     void Flag     ( bool bValue );
 
     MT_Vector2D ComputerBarycenter() const;
@@ -47,7 +51,7 @@ public:
 
 private:
     TER_Localisation  localisation_;
-    uint              nSchedule_;
+    unsigned int              nSchedule_;
     bool              bFlag_;
 };
 

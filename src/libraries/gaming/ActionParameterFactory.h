@@ -10,8 +10,12 @@
 #ifndef __ActionParameterFactory_h_
 #define __ActionParameterFactory_h_
 
-#include "game_asn/Simulation.h"
 #include "ParameterFactory_ABC.h"
+
+namespace Common
+{
+    class MsgMissionParameter;
+}
 
 namespace kernel
 {
@@ -43,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const ASN1T_MissionParameter& asn, const kernel::Entity_ABC& entity ) const;
+	virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, const Common::MsgMissionParameter& message, const kernel::Entity_ABC& entity ) const;
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const;
     //@}
 

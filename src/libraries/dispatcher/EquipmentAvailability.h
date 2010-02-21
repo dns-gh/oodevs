@@ -10,7 +10,10 @@
 #ifndef __EquipmentAvailability_h_
 #define __EquipmentAvailability_h_
 
-#include "game_asn/Simulation.h"
+
+
+////using namespace Common;
+
 
 namespace dispatcher
 {

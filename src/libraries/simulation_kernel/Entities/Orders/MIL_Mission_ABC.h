@@ -53,7 +53,7 @@ public:
     const   MT_Vector2D&   GetDirDanger         () const;
     const   MIL_Fuseau&    GetFuseau            () const;
     const   T_LimaVector&  GetLimas             () const;
-            MIL_LimaOrder* FindLima             ( uint nID );
+            MIL_LimaOrder* FindLima             ( unsigned int nID );
             MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function );
             MIL_LimaOrder* FindNextScheduledLima();
             void           AffectFuseau         ( const MIL_Fuseau& fuseau );
@@ -71,16 +71,16 @@ protected:
     //! @name Constructors/Destructor
     //@{
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const ASN1T_MissionParameters& parameters, const MT_Vector2D& refPosition );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const Common::MsgMissionParameters& parameters );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const Common::MsgMissionParameters& parameters, const MT_Vector2D& refPosition );
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& parent );
     MIL_Mission_ABC( const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& rhs );
     //@}
 
     //! @name Network
     //@{
-    void Serialize              ( ASN1T_MissionParameters& asn ) const;
-    void CleanAfterSerialization( ASN1T_MissionParameters& asn ) const;
+    void Serialize              ( Common::MsgMissionParameters& asn ) const;
+    void CleanAfterSerialization( Common::MsgMissionParameters& asn ) const;
     //@}
 
 private:

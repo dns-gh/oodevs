@@ -10,9 +10,13 @@
 #ifndef __ActionParameterAgentList_h_
 #define __ActionParameterAgentList_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
+
+namespace Common
+{
+    class MsgUnitList;
+}
 
 namespace kernel
 {
@@ -36,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AgentList( const kernel::OrderParameter& parameter );
-             AgentList( const kernel::OrderParameter& parameter, const ASN1T_UnitList& asn, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
+             AgentList( const kernel::OrderParameter& parameter, const Common::MsgUnitList& message, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
              AgentList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::Controller& controller );
     virtual ~AgentList();
     //@}
@@ -44,8 +48,8 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( std::string& content ) const;
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     virtual bool IsSet() const;
     //@}
 

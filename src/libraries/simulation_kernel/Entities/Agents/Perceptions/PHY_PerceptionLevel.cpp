@@ -11,11 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_PerceptionLevel.h"
+#include "protocol/protocol.h"
 
-const PHY_PerceptionLevel PHY_PerceptionLevel::identified_( "Identified", eIdentified, EnumUnitIdentificationLevel::identifiee );
-const PHY_PerceptionLevel PHY_PerceptionLevel::recognized_( "Recognized", eRecognized, EnumUnitIdentificationLevel::reconnue   );
-const PHY_PerceptionLevel PHY_PerceptionLevel::detected_  ( "Detected"  , eDetected  , EnumUnitIdentificationLevel::detectee   );
-const PHY_PerceptionLevel PHY_PerceptionLevel::notSeen_   ( "NotSeen"   , eNotSeen   , EnumUnitIdentificationLevel::signale    );
+const PHY_PerceptionLevel PHY_PerceptionLevel::identified_( "Identified", eIdentified, MsgsSimToClient::identifiee );
+const PHY_PerceptionLevel PHY_PerceptionLevel::recognized_( "Recognized", eRecognized, MsgsSimToClient::reconnue   );
+const PHY_PerceptionLevel PHY_PerceptionLevel::detected_  ( "Detected"  , eDetected  , MsgsSimToClient::detectee   );
+const PHY_PerceptionLevel PHY_PerceptionLevel::notSeen_   ( "NotSeen"   , eNotSeen   , MsgsSimToClient::signale    );
 
 PHY_PerceptionLevel::T_LevelMap PHY_PerceptionLevel::levels_;
 
@@ -44,7 +45,7 @@ void PHY_PerceptionLevel::Terminate()
 // Name: PHY_PerceptionLevel constructor
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-PHY_PerceptionLevel::PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const ASN1T_EnumUnitIdentificationLevel& nAsnID )
+PHY_PerceptionLevel::PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const MsgsSimToClient::EnumUnitIdentificationLevel& nAsnID )
     : strName_( strName )
     , nLevel_ ( nLevel  )
     , nAsnID_ ( nAsnID  )
@@ -65,7 +66,7 @@ PHY_PerceptionLevel::~PHY_PerceptionLevel()
 // Name: PHY_PerceptionLevel::FindPerceptionLevel
 // Created: JVT 2005-03-16
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_PerceptionLevel::FindPerceptionLevel( uint nID )
+const PHY_PerceptionLevel& PHY_PerceptionLevel::FindPerceptionLevel( unsigned int nID )
 {
     CIT_LevelMap it = levels_.find( nID );
     
@@ -94,16 +95,16 @@ const std::string& PHY_PerceptionLevel::GetName() const
 // Name: PHY_PerceptionLevel::GetID
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-uint PHY_PerceptionLevel::GetID() const
+unsigned int PHY_PerceptionLevel::GetID() const
 {
-    return (uint)nLevel_;
+    return (unsigned int)nLevel_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionLevel::Serialize
 // Created: SBO 2009-06-30
 // -----------------------------------------------------------------------------
-void PHY_PerceptionLevel::Serialize( ASN1T_EnumUnitIdentificationLevel& level ) const
+void PHY_PerceptionLevel::Serialize( MsgsSimToClient::EnumUnitIdentificationLevel& level ) const
 {
     level = nAsnID_;
 }

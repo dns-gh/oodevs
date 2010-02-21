@@ -38,11 +38,11 @@ Troops::~Troops()
 
 namespace
 {
-    unsigned Humans::* Rank( ASN1T_EnumHumanRank rank )
+    unsigned Humans::* Rank( Common::EnumHumanRank rank )
     {
-        if( rank == EnumHumanRank::officier )
+        if( rank == Common::EnumHumanRank::officier )
             return &Humans::officers_;
-        if( rank == EnumHumanRank::sous_officer )
+        if( rank == Common::EnumHumanRank::sous_officer )
             return &Humans::subOfficers_;
         return &Humans::troopers_;
     }
@@ -52,7 +52,7 @@ namespace
 // Name: Troops::AddDifference
 // Created: SBO 2007-04-11
 // -----------------------------------------------------------------------------
-void Troops::AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, ASN1T_EnumHumanRank rank, int value )
+void Troops::AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, Common::EnumHumanRank rank, int value )
 {
     differences[ std::make_pair( state, rank ) ] = value - humans_[state].*Rank( rank );
 }
@@ -61,24 +61,24 @@ void Troops::AddDifference( T_Differences& differences, kernel::E_TroopHealthSta
 // Name: Troops::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Troops::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Troops::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( ! message.m.dotation_eff_personnelPresent  )
+    if( ! message.has_dotation_eff_personnel()   )
         return;
 
     T_Differences differences;
-    uint nSize = message.dotation_eff_personnel.n;
+    uint nSize = message.dotation_eff_personnel().elem_size();
     while( nSize > 0 )
     {
-        const ASN1T_HumanDotations& dot = message.dotation_eff_personnel.elem[ --nSize ];
-        AddDifference( differences, eTroopHealthStateTotal             , dot.rang, dot.nb_total );
-        AddDifference( differences, eTroopHealthStateOperational       , dot.rang, dot.nb_operationnels );
-        AddDifference( differences, eTroopHealthStateDead              , dot.rang, dot.nb_morts );
-        AddDifference( differences, eTroopHealthStateWounded           , dot.rang, dot.nb_blesses );
-        AddDifference( differences, eTroopHealthStateMentalWounds      , dot.rang, dot.nb_blesses_mentaux );
-        AddDifference( differences, eTroopHealthStateContaminated      , dot.rang, dot.nb_contamines_nbc );
-        AddDifference( differences, eTroopHealthStateInTreatment       , dot.rang, dot.nb_dans_chaine_sante );
-        AddDifference( differences, eTroopHealthStateUsedForMaintenance, dot.rang, dot.nb_utilises_pour_maintenance );
+        const MsgsSimToClient::HumanDotations_HumanDotation& dot = message.dotation_eff_personnel().elem( --nSize );
+        AddDifference( differences, eTroopHealthStateTotal             , dot.rang(), dot.nb_total() );
+        AddDifference( differences, eTroopHealthStateOperational       , dot.rang(), dot.nb_operationnels() );
+        AddDifference( differences, eTroopHealthStateDead              , dot.rang(), dot.nb_morts() );
+        AddDifference( differences, eTroopHealthStateWounded           , dot.rang(), dot.nb_blesses() );
+        AddDifference( differences, eTroopHealthStateMentalWounds      , dot.rang(), dot.nb_blesses_mentaux() );
+        AddDifference( differences, eTroopHealthStateContaminated      , dot.rang(), dot.nb_contamines_nbc() );
+        AddDifference( differences, eTroopHealthStateInTreatment       , dot.rang(), dot.nb_dans_chaine_sante() );
+        AddDifference( differences, eTroopHealthStateUsedForMaintenance, dot.rang(), dot.nb_utilises_pour_maintenance() );
     }
     Update( differences );
 }
@@ -107,9 +107,9 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
     T_Differences differences;
     for( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ); ++i )
     {
-        differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::officier )]     = int( humans_[i].officers_ );
-        differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::sous_officer )] = int( humans_[i].subOfficers_ );
-        differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::mdr )]          = int( humans_[i].troopers_ );
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::officier )]     = int( humans_[i].officers_ );
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::sous_officer )] = int( humans_[i].subOfficers_ );
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::mdr )]          = int( humans_[i].troopers_ );
     }
     if( Troops* troops = const_cast< Troops* >( superior.Retrieve< Troops >() ) )
         troops->Update( differences );
@@ -120,9 +120,9 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
             differences.clear();
             for( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ); ++i )
             {
-                differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::officier )]     = -int( humans_[i].officers_ );
-                differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::sous_officer )] = -int( humans_[i].subOfficers_ );
-                differences[std::make_pair( (kernel::E_TroopHealthState)i, EnumHumanRank::mdr )]          = -int( humans_[i].troopers_ );
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::officier )]     = -int( humans_[i].officers_ );
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::sous_officer )] = -int( humans_[i].subOfficers_ );
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::mdr )]          = -int( humans_[i].troopers_ );
             }
             troops->Update( differences );
         }

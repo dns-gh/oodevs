@@ -9,7 +9,9 @@
 
 #include "actions_pch.h"
 #include "Point.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 using namespace kernel;
 using namespace actions;
@@ -29,8 +31,8 @@ Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& co
 // Name: Point constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_Point& asn )
-    : Location( parameter, converter, asn )
+Point::Point( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgPoint& message )
+    : Location( parameter, converter, message.location() )
 {
     // NOTHING
 }
@@ -58,34 +60,32 @@ Point::~Point()
 // Name: Point::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Point::CommitTo( ASN1T_MissionParameter& asn ) const
+void Point::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_point;
-    asn.value.u.point = new ASN1T_Point();
+    message.set_null_value( !IsSet() );
+    message.mutable_value()->mutable_point();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Location::CommitTo( *asn.value.u.point );
+        Location::CommitTo( *message.mutable_value()->mutable_point()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Point::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Point::Clean( ASN1T_MissionParameter& asn ) const
+void Point::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.point )
-        Location::Clean( *asn.value.u.point );
-    delete asn.value.u.point;
+    if( message.value().has_point() )
+        message.mutable_value()->clear_point();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Point::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Point::CommitTo( ASN1T_CoordLatLong& asn ) const
+void Point::CommitTo( Common::MsgCoordLatLong& message ) const
 {
-    ASN1T_Location loc;
+    Common::MsgLocation loc;
     Location::CommitTo( loc );
-    asn = loc.coordinates.elem[0];
+    message = loc.coordinates().elem( 0 );
     Location::Clean( loc );
 }

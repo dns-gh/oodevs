@@ -13,15 +13,14 @@
 #define __PHY_RolePion_Reinforcement_h_
 
 #include "PHY_RoleInterface_Reinforcement.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
-#include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
 
 class MIL_AgentPion;
-class NET_ASN_MsgUnitAttributes;
 
 namespace moving
 {
@@ -56,7 +55,7 @@ public:
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -91,8 +90,9 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+
+    void SendChangedState( client::UnitAttributes& msg ) const;
+    void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
     //! @name Accessors

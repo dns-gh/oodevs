@@ -14,7 +14,7 @@
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 inline
-MIL_Object_ABC* MIL_ObjectManager::Find( uint nID ) const
+MIL_Object_ABC* MIL_ObjectManager::Find( unsigned int nID ) const
 {
     CIT_ObjectMap it = objects_.find( nID );
     if( it == objects_.end() )

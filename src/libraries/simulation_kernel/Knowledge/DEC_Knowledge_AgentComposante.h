@@ -28,6 +28,7 @@ class MIL_Agent_ABC;
 // =============================================================================
 class DEC_Knowledge_AgentComposante
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -40,14 +41,14 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Accessors
     //@{
-    const PHY_ComposanteType_ABC& GetType      () const;
-          uint                    GetMajorScore() const;
+    const PHY_ComposanteType_ABC& GetType() const;
+    unsigned int GetMajorScore() const;
     //@}
 
     //! @name Operations
@@ -58,10 +59,13 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const PHY_ComposanteType_ABC* pType_;
-          bool                    bCanFire_;
-          bool                    bCanFireWhenUnloaded_;
-          uint                    nMajorScore_;
+    bool bCanFire_;
+    bool bCanFireWhenUnloaded_;
+    unsigned int nMajorScore_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentComposante )

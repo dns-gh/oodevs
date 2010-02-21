@@ -89,12 +89,9 @@ void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( MIL_AgentPi
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( MIL_AgentPion& callerAgent, int workRate )
 {
-    if( const PHY_MaintenanceWorkRate* pWorkRate = PHY_MaintenanceWorkRate::Find( (ASN1T_EnumLogMaintenanceRegimeTravail)workRate ) )
-    {
-        PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >();
-        if( role )
+    if( const PHY_MaintenanceWorkRate* pWorkRate = PHY_MaintenanceWorkRate::Find( Common::EnumLogMaintenanceRegimeTravail( workRate ) ) )
+        if( PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >() )
             role->ChangeWorkRate( *pWorkRate );
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -518,10 +515,10 @@ void DEC_LogisticFunctions::ConvoyEndMission( MIL_AgentPion& callerAgent )
 // Name: UndoLendComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack, T_ComposantePredicate funcPredicate )
+void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate )
 {
     assert( pTarget );
-    const uint nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
+    const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
 
     if( nNbrGotBack == 0 )
         MIL_Report::PostEvent( callerAgent, MIL_Report::eReport_EquipmentLoanRetrievingImpossible );
@@ -539,7 +536,7 @@ void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, con
 // Name: DEC_LogisticFunctions::UndoLendCollectionComposantes
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack )
+void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
 {
     UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, &PHY_ComposantePion::CanCollectCasualties );
 }
@@ -548,7 +545,7 @@ void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_AgentPion& caller
 // Name: DEC_LogisticFunctions::UndoLendHaulerComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack )
+void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
 {
     UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, &PHY_ComposantePion::CanHaul );
 }

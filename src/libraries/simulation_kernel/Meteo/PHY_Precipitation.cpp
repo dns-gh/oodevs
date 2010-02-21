@@ -19,13 +19,13 @@ PHY_Precipitation::T_PrecipitationMap PHY_Precipitation::precipitations_;
 // STATIC INITIALIZATION (MANAGER)
 // =============================================================================
 
-PHY_Precipitation PHY_Precipitation::none_     ( "PasDePrecipitation", eNone     , EnumPrecipitationType::pas_de_precipitation );
-PHY_Precipitation PHY_Precipitation::sandStorm_( "TempeteDeSable"    , eSandStorm, EnumPrecipitationType::tempete_sable        );
-PHY_Precipitation PHY_Precipitation::fog_      ( "Brouillard"        , eFog      , EnumPrecipitationType::brouillard           );
-PHY_Precipitation PHY_Precipitation::drizzle_  ( "Crachin"           , eDrizzle  , EnumPrecipitationType::crachin              );
-PHY_Precipitation PHY_Precipitation::rain_     ( "Pluie"             , eRain     , EnumPrecipitationType::pluie                );
-PHY_Precipitation PHY_Precipitation::snow_     ( "Neige"             , eSnow     , EnumPrecipitationType::neige                );
-PHY_Precipitation PHY_Precipitation::smoke_    ( "Fumigene"          , eSmoke    , (ASN1T_EnumPrecipitationType)-1             );
+PHY_Precipitation PHY_Precipitation::none_     ( "PasDePrecipitation", eNone     , Common::EnumPrecipitationType::pas_de_precipitation );
+PHY_Precipitation PHY_Precipitation::sandStorm_( "TempeteDeSable"    , eSandStorm, Common::EnumPrecipitationType::tempete_sable        );
+PHY_Precipitation PHY_Precipitation::fog_      ( "Brouillard"        , eFog      , Common::EnumPrecipitationType::brouillard           );
+PHY_Precipitation PHY_Precipitation::drizzle_  ( "Crachin"           , eDrizzle  , Common::EnumPrecipitationType::crachin              );
+PHY_Precipitation PHY_Precipitation::rain_     ( "Pluie"             , eRain     , Common::EnumPrecipitationType::pluie                );
+PHY_Precipitation PHY_Precipitation::snow_     ( "Neige"             , eSnow     , Common::EnumPrecipitationType::neige                );
+PHY_Precipitation PHY_Precipitation::smoke_    ( "Fumigene"          , eSmoke    , (Common::EnumPrecipitationType)-1             );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Precipitation::Initialize
@@ -60,11 +60,12 @@ void PHY_Precipitation::Terminate()
 // Name: PHY_Precipitation constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Precipitation::PHY_Precipitation( const std::string& strName, E_Precipitation nType, ASN1T_EnumPrecipitationType nAsnID )
+PHY_Precipitation::PHY_Precipitation( const std::string& strName, E_Precipitation nType, Common::EnumPrecipitationType nAsnID )
     : strName_( strName )
     , nType_  ( nType   )
     , nAsnID_ ( nAsnID  )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -73,4 +74,5 @@ PHY_Precipitation::PHY_Precipitation( const std::string& strName, E_Precipitatio
 // -----------------------------------------------------------------------------
 PHY_Precipitation::~PHY_Precipitation()
 {
+    // NOTHING
 }

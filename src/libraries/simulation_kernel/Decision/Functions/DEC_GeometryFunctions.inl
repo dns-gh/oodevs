@@ -77,7 +77,7 @@ std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int > 
     unsigned int errCode = eError_LocalisationPasDansFuseau;
     if ( ClipLocalisationInFuseau( *pLocalisation, caller.GetOrderManager().GetFuseau(), clippedLocalisation ) )
     {
-        const uint nNbrParts = std::max( (uint)1, (uint)( pLocalisation->GetArea() / rAverageArea ) );
+        const unsigned int nNbrParts = std::max( (unsigned int)1, (unsigned int)( pLocalisation->GetArea() / rAverageArea ) );
         errCode = SplitLocalisation( *pLocalisation, nNbrParts, result );
     }
     return std::pair< std::vector< boost::shared_ptr< TER_Localisation > >, unsigned int >( result, errCode );
@@ -250,7 +250,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLima( 
 // Modified RPD 2009-08-06
 // -----------------------------------------------------------------------------
 template< typename T >
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau( const T& caller, uint limaID, MT_Float rDistBeforeLima, const MIL_Fuseau* pFuseau )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputePointBeforeLimaInFuseau( const T& caller, unsigned int limaID, MT_Float rDistBeforeLima, const MIL_Fuseau* pFuseau )
 {
     MIL_LimaOrder* pLima = caller.GetOrderManager().FindLima( limaID );
 
@@ -329,7 +329,7 @@ float DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives( const T& cal
     }
 
     MT_Float rDistanceFromScheduled = std::numeric_limits< MT_Float >::max();
-    uint     nSchedule              = 0;
+    unsigned int     nSchedule              = 0;
     if( pNextObjective )
     {
         rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromObjective( *pNextObjective, _ComputeAutomatesBarycenter( automates ) );

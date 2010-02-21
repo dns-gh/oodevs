@@ -10,7 +10,10 @@
 #ifndef __UserProfileFactory_ABC_h_
 #define __UserProfileFactory_ABC_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 class UserProfile;
 
@@ -32,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual UserProfile* Create( const ASN1T_MsgProfileCreation& message ) const = 0;
+    virtual UserProfile* Create( const MsgsAuthenticationToClient::MsgProfileCreation& message ) const = 0;
     virtual void Create() = 0;
     //@}
 };

@@ -9,8 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "CrossingSitePrototype.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Units.h"
+#include "protocol/Protocol.h"       
 
 using namespace kernel;
 using namespace gui;
@@ -19,7 +19,7 @@ using namespace gui;
 // Name: CrossingSitePrototype constructor
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg )
+CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg )
     : CrossingSitePrototype_ABC( parent )
     , msg_( msg )
 {
@@ -41,11 +41,10 @@ CrossingSitePrototype::~CrossingSitePrototype()
 // -----------------------------------------------------------------------------
 void CrossingSitePrototype::Commit()
 {
-    msg_.attributes.m.crossing_sitePresent = 1;
-    msg_.attributes.crossing_site.width                 = width_->value();
-    msg_.attributes.crossing_site.depth                 = depth_->value();
-    msg_.attributes.crossing_site.flow_rate             = speed_->value();
-    msg_.attributes.crossing_site.banks_require_fitting = needsConstruction_->isOn();    
+    msg_.mutable_attributes()->mutable_crossing_site()->set_width                 ( width_->value() );
+    msg_.mutable_attributes()->mutable_crossing_site()->set_depth                 ( depth_->value() );
+    msg_.mutable_attributes()->mutable_crossing_site()->set_flow_rate             ( speed_->value() );
+    msg_.mutable_attributes()->mutable_crossing_site()->set_banks_require_fitting ( needsConstruction_->isOn() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -54,5 +53,4 @@ void CrossingSitePrototype::Commit()
 // -----------------------------------------------------------------------------
 void CrossingSitePrototype::Clean()
 {
-    msg_.attributes.m.crossing_sitePresent = 0;
 }

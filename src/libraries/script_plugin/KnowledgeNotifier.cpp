@@ -13,6 +13,8 @@
 #include "clients_kernel/Controller.h"
 #include "AgentEvents.h"
 
+using namespace MsgsSimToClient;
+
 using namespace plugins::script;
 
 // -----------------------------------------------------------------------------
@@ -40,7 +42,7 @@ KnowledgeNotifier::~KnowledgeNotifier()
 // Name: KnowledgeNotifier::DoUpdate
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
-void KnowledgeNotifier::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
+void KnowledgeNotifier::DoUpdate( const MsgUnitKnowledgeUpdate& message )
 {
     if( !created_ )
     {
@@ -49,9 +51,9 @@ void KnowledgeNotifier::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
     }
     else 
     {
-        if( message.m.max_identification_levelPresent )
+        if( message.has_max_identification_level() )
             controller_.Update( events::PerceptionChanged( knowledge_ ) );
-        if( message.m.positionPresent )
+        if( message.has_position())
             controller_.Update( events::KnowledgeMoved( knowledge_ ) );
     }
 }

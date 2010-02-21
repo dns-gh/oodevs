@@ -41,21 +41,21 @@ MissionParameterLimit::~MissionParameterLimit()
 // Name: MissionParameterLimit::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterLimit::Serialize( ASN1T_MissionParameter& parameter ) const
+void MissionParameterLimit::Serialize( MsgMissionParameter& parameter ) const
 {
-    parameter.null_value = 0;
-    parameter.value.t = T_MissionParameter_value_line;
-    parameter.value.u.line = new ASN1T_Line();
-    parameter.value.u.line->type = EnumLocationType::line;
-    points_->Serialize( parameter.value.u.line->coordinates );
+    parameter.set_null_value( 0 );
+
+//    parameter.mutable_value()->mutable_line() = new MsgLine();
+    parameter.mutable_value()->mutable_line()->mutable_location()->set_type( MsgLocation::line );
+    points_->Serialize( *parameter.mutable_value()->mutable_line()->mutable_location()->mutable_coordinates() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterLimit::Clean
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterLimit::Clean( ASN1T_MissionParameter& parameter ) const
+void MissionParameterLimit::Clean( MsgMissionParameter& parameter ) const
 {
-    points_->Clean( parameter.value.u.line->coordinates );
-    delete parameter.value.u.line;
+    points_->Clean( *parameter.mutable_value()->mutable_line()->mutable_location()->mutable_coordinates() );
+    delete parameter.mutable_value()->mutable_line();
 }

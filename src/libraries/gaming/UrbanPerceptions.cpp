@@ -11,8 +11,10 @@
 #include "UrbanPerceptions.h"
 
 #include "clients_kernel/Automat_ABC.h"
+#include "protocol/Simulation.h"
 
 using namespace kernel;
+
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPerceptions constructor
@@ -38,13 +40,13 @@ UrbanPerceptions::~UrbanPerceptions()
 // Name: UrbanPerceptions::DoUpdate
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanPerceptions::DoUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& message )
+void UrbanPerceptions::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    if( message.m.automat_perceptionPresent )
+    if( message.has_automat_perception() )
     {
         detectingAutomats_.clear();
-        detectingAutomats_.reserve( message.automat_perception.n );
-        for( uint i = 0; i < message.automat_perception.n; ++i )
-            detectingAutomats_.push_back( & agentResolver_.Get( message.automat_perception.elem[i] ) );
+        detectingAutomats_.reserve( message.automat_perception().elem_size() );
+        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
+            detectingAutomats_.push_back( & agentResolver_.Get( message.automat_perception().elem(i) ) );
     }
 }

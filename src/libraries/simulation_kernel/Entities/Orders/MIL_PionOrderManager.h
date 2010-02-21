@@ -11,8 +11,17 @@
 #define __MIL_PionOrderManager_h_
 
 #include "MIL.h"
-
 #include "MIL_OrderManager_ABC.h"
+
+namespace Common
+{
+    class MsgUnitOrder;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgFragOrder;
+}
 
 class MIL_AgentPion;
 class MIL_MissionType_ABC;
@@ -31,8 +40,8 @@ public:
 
     // @name Events 
     //@{
-    virtual void OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn );
-            void OnReceiveMission  ( const ASN1T_MsgUnitOrder& asn );
+    virtual void OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn );
+            void OnReceiveMission  ( const Common::MsgUnitOrder& asn );
             void OnReceiveMission  ( const MIL_MissionType_ABC& type );
     //@}
 

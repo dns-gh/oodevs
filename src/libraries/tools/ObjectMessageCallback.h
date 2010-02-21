@@ -10,16 +10,11 @@
 #ifndef __ObjectMessageCallback_h_
 #define __ObjectMessageCallback_h_
 
-#include "AsnMessageDecoder.h"
+#include "MessageDecoder.h"
 #include <boost/function.hpp>
 #include <boost/bind.hpp>
 #include <boost/bind/apply.hpp>
 #include <vector>
-
-namespace DIN
-{
-    class DIN_Input;
-}
 
 namespace tools
 {
@@ -76,7 +71,7 @@ public:
     }
     virtual void OnMessage( const std::string& link, Message& input )
     {
-        AsnMessageDecoder< T > decoder( input );
+        MessageDecoder< T > decoder( input );
         std::for_each( callbacks_.begin(), callbacks_.end(),
             boost::bind( boost::apply< void >(), _1, boost::ref( link ), boost::ref( decoder ) ) );
     }

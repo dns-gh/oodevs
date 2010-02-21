@@ -10,10 +10,21 @@
 #ifndef __Paths_h_
 #define __Paths_h_
 
-#include "game_asn/Simulation.h"
+
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+
+namespace MsgsSimToClient
+{
+	class MsgUnitPathFind;
+	class MsgUnitAttributes;
+}
+
+namespace MsgsClientToSim
+{
+	class MsgUnitMagicAction;
+}
 
 namespace kernel
 {
@@ -27,9 +38,9 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Paths : public kernel::Extension_ABC
-            , public kernel::Updatable_ABC< ASN1T_MsgUnitPathFind >
-            , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-            , public kernel::Updatable_ABC< ASN1T_MsgUnitMagicAction >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitPathFind >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+			, public kernel::Updatable_ABC< MsgsClientToSim::MsgUnitMagicAction >
             , public kernel::Drawable_ABC
 {
 
@@ -54,9 +65,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitPathFind& message );
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
-    virtual void DoUpdate( const ASN1T_MsgUnitMagicAction& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitPathFind& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsClientToSim::MsgUnitMagicAction& message );
     void UpdatePathfind();
     //@}
 

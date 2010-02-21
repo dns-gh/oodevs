@@ -43,9 +43,9 @@ void Mission_Automat_INF_Eclairer::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Eclairer& asnMission = *new ASN1T_Mission_Automate_INF_Eclairer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_eclairer;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_eclairer = &asnMission;
+    Mission_Automate_INF_Eclairer& asnMission = *new Mission_Automate_INF_Eclairer();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_eclairer = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_INF_Eclairer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Eclairer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_eclairer );
-    ASN1T_Mission_Automate_INF_Eclairer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_eclairer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_eclairer ());
+    Mission_Automate_INF_Eclairer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_eclairer;
 
 
     delete &asnMission;

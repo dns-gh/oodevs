@@ -10,12 +10,14 @@
 #ifndef __PopulationFlow_h_
 #define __PopulationFlow_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -30,13 +32,13 @@ namespace kernel
 // =============================================================================
 class PopulationFlow : public kernel::PopulationFlow_ABC
                      , public kernel::Positions
-                     , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowUpdate >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
                      , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow( const ASN1T_MsgPopulationFlowCreation& asnMsg, const kernel::CoordinateConverter_ABC& converter );
+             PopulationFlow( const MsgsSimToClient::MsgPopulationFlowCreation& message, const kernel::CoordinateConverter_ABC& converter );
     virtual ~PopulationFlow();
     //@}
 
@@ -69,7 +71,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message );
     //@}
 
 private:

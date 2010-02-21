@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_UrbanBlock.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_UrbanBlock constructor
 // Created: SLG 2009-11-06
 // -----------------------------------------------------------------------------
-MissionParameter_UrbanBlock::MissionParameter_UrbanBlock( const ASN1T_MissionParameter& asn )
-: MissionParameter_ABC( asn )
-, block_              ( asn.value.u.urbanBlock )
+MissionParameter_UrbanBlock::MissionParameter_UrbanBlock( const Common::MsgMissionParameter& asn )
+    : MissionParameter_ABC( asn )
+    , block_              ( asn.value().urbanblock().oid() )
 {
     // NOTHING
 }
@@ -33,26 +34,21 @@ MissionParameter_UrbanBlock::~MissionParameter_UrbanBlock()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_UrbanBlock::Send
 // Created: SLG 2009-11-06
 // -----------------------------------------------------------------------------
-void MissionParameter_UrbanBlock::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_UrbanBlock::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value          = bNullValue_;
-    asn.value.t             = T_MissionParameter_value_urbanBlock;
-    asn.value.u.urbanBlock  = block_;
+    asn.set_null_value( bNullValue_ );
+    asn.mutable_value()->mutable_urbanblock()->set_oid( block_ ); 
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_UrbanBlock::AsnDelete
+// Name: MissionParameter_UrbanBlock::Delete
 // Created: SLG 2009-11-06
 // -----------------------------------------------------------------------------
-void MissionParameter_UrbanBlock::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_UrbanBlock::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

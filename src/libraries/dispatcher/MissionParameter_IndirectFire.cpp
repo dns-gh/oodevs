@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_IndirectFire.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_IndirectFire constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_IndirectFire::MissionParameter_IndirectFire( const ASN1T_MissionParameter& asn )
+MissionParameter_IndirectFire::MissionParameter_IndirectFire( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , fire_               ( asn.value.u.tirIndirect )
+    , fire_               ( asn.value().tirindirect() )
 {
     // NOTHING
 }
@@ -41,18 +42,18 @@ MissionParameter_IndirectFire::~MissionParameter_IndirectFire()
 // Name: MissionParameter_IndirectFire::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_IndirectFire::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_IndirectFire::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value          = bNullValue_;
-    asn.value.t             = T_MissionParameter_value_tirIndirect;
-    asn.value.u.tirIndirect = fire_;
+    asn.set_null_value( bNullValue_ );
+//    asn.value.t             = T_MissionParameter_value_tirIndirect;
+    asn.mutable_value()->set_tirindirect( fire_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_IndirectFire::AsnDelete
+// Name: MissionParameter_IndirectFire::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_IndirectFire::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_IndirectFire::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

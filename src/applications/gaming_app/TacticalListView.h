@@ -12,6 +12,7 @@
 
 #include "clients_gui/HierarchyListView.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "protocol/Publisher_ABC.h"
 
 namespace kernel
 {

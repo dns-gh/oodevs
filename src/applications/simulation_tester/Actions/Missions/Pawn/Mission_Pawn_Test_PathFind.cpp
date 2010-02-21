@@ -43,9 +43,9 @@ void Mission_Pawn_Test_PathFind::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_PathFind& asnMission = *new ASN1T_Mission_Pion_Test_PathFind();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_path_find;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_path_find = &asnMission;
+    Mission_Pion_Test_PathFind& asnMission = *new Mission_Pion_Test_PathFind();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_path_find = &asnMission;
 
 
     ASN_Tools::CopyNumeric( pTarget_->GetTestParam_Numeric( 0, 4294967295 ), asnMission.nb_pathfind );
@@ -59,8 +59,8 @@ void Mission_Pawn_Test_PathFind::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_PathFind::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_path_find );
-    ASN1T_Mission_Pion_Test_PathFind& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_path_find;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_path_find ());
+    Mission_Pion_Test_PathFind& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_path_find;
 
 
     delete &asnMission;

@@ -14,6 +14,7 @@
 #include "clients_kernel/CommunicationHierarchies.h" // LTO
 #include "clients_kernel/Controllers.h" // LTO
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "protocol/simulationSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupsModel constructor
@@ -40,15 +41,4 @@ KnowledgeGroupsModel::~KnowledgeGroupsModel()
 void KnowledgeGroupsModel::Purge()
 {
     DeleteAll();
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupsModel::KnowledgeGroupsModel::Delete
-// Created: FHD 2009-12-21
-// LTO
-// -----------------------------------------------------------------------------
-void KnowledgeGroupsModel::Delete( const ASN1T_MsgKnowledgeGroupDelete& asn )
-{
-    delete Find( asn.oid );
-    Remove( asn.oid );
 }

@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_Convoyer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_Convoyer& asnMission = *new ASN1T_Mission_Pion_LOG_Convoyer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_convoyer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_convoyer = &asnMission;
+    Mission_Pion_LOG_Convoyer& asnMission = *new Mission_Pion_LOG_Convoyer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_convoyer = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Pawn_LOG_Convoyer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_Convoyer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_convoyer );
-    ASN1T_Mission_Pion_LOG_Convoyer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_convoyer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_convoyer ());
+    Mission_Pion_LOG_Convoyer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_convoyer;
 
 
     delete &asnMission;

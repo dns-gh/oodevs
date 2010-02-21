@@ -49,22 +49,22 @@ PHY_Breakdown::~PHY_Breakdown()
 // Name: PHY_Breakdown::load
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void PHY_Breakdown::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_Breakdown::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nID;
+    unsigned int nID;
     
     file >> nID;
     pType_ = PHY_BreakdownType::Find( nID );
     assert( pType_ );
     
-    file >> const_cast< uint& >( nRepairTime_ );
+    file >> const_cast< unsigned int& >( nRepairTime_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Breakdown::save
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void PHY_Breakdown::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_Breakdown::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pType_ );
     unsigned type = pType_->GetID();
@@ -76,7 +76,7 @@ void PHY_Breakdown::save( MIL_CheckPointOutArchive& file, const uint ) const
 // Name: PHY_Breakdown::GetRepairTime
 // Created: JVT 2005-02-03
 // -----------------------------------------------------------------------------
-uint PHY_Breakdown::GetRepairTime() const
+unsigned int PHY_Breakdown::GetRepairTime() const
 {
     return nRepairTime_;
 }
@@ -85,7 +85,7 @@ uint PHY_Breakdown::GetRepairTime() const
 // Name: PHY_Breakdown::GetTheoricRepairTime
 // Created: NLD 2006-06-01
 // -----------------------------------------------------------------------------
-uint PHY_Breakdown::GetTheoricRepairTime() const
+unsigned int PHY_Breakdown::GetTheoricRepairTime() const
 {
     assert( pType_ );
     return pType_->GetTheoricRepairTime();
@@ -115,7 +115,7 @@ const PHY_BreakdownType::T_PartMap& PHY_Breakdown::GetNeededParts() const
 // Name: PHY_Breakdown::GetMosID
 // Created: JVT 2005-02-03
 // -----------------------------------------------------------------------------
-uint PHY_Breakdown::GetID() const
+unsigned int PHY_Breakdown::GetID() const
 {
     assert( pType_ );
     return pType_->GetID();

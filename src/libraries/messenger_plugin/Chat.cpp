@@ -12,6 +12,7 @@
 #include "tools/MessageDispatcher_ABC.h"
 #include "dispatcher/Profile_ABC.h"
 #include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/MessengerSenders.h"
 
 using namespace plugins::messenger;
 using namespace dispatcher;
@@ -56,13 +57,12 @@ void Chat::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: Chat::OnReceive
 // Created: AGE 2008-06-10
 // -----------------------------------------------------------------------------
-void Chat::OnReceive( const ASN1T_MsgTextMessage& message )
+void Chat::OnReceive( const MsgTextMessage& message )
 {
-    ASN1T_MsgsMessengerToClient answer;
-    answer.t = T_MsgsMessengerToClient_msg_text_message;
-    answer.u.msg_text_message = const_cast< ASN1T_MsgTextMessage* >( &message );
+    MsgsMessengerToClient::MsgMessengerToClient answer;
+    *answer.mutable_message()->mutable_text_message() = message;
 
     for( T_Clients::const_iterator it = clients_.begin(); it != clients_.end(); ++it )
-        if( it->second->CheckRights( message.source, message.target ) )
+        if( it->second->CheckRights( message.source(), message.target() ) )
             it->first->Send( answer );
 }

@@ -15,6 +15,13 @@
 #include "QueryBuilder.h"
 #include "WorkingSession.h"
 
+namespace MsgsSimToClient
+{
+    class MsgFolkGraphUpdate;
+    class MsgFolkGraphEdgeUpdate;
+    class MsgFolkCreation;
+}
+
 using namespace plugins;
 using namespace plugins::crossbow;
 
@@ -53,9 +60,9 @@ namespace
     template< typename Message >
     void Update( std::vector< std::string >& list, const Message& msg )
     {
-        list.resize( msg.n );
-        for( unsigned i = 0; i < msg.n; ++i )
-            list[i] = (const char*)msg.elem[i].data; // $$$$ SBO 2007-09-26: length ?
+        list.resize( msg.elem_size() );
+        for( unsigned i = 0; i < msg.elem_size(); ++i )
+            list[i] = (const char*)msg.elem( i ).data(); // $$$$ SBO 2007-09-26: length ?
     }
 }
 
@@ -63,24 +70,24 @@ namespace
 // Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( const ASN1T_MsgFolkCreation& msg )
+void FolkUpdater::Update( const MsgsSimToClient::MsgFolkCreation& msg )
 {
-    ::Update( activities_, msg.activities );
-    ::Update( profiles_, msg.profiles );
+    ::Update( activities_, msg.activities() );
+    ::Update( profiles_, msg.profiles() );
     // $$$$ SBO 2007-09-19: container_size/edge_number
-    edges_.resize( msg.edge_number );
+    edges_.resize( msg.edge_number() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DatabaseUpdater::Update
 // Created: SBO 2007-09-27
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( const ASN1T_MsgFolkGraphUpdate& msg )
+void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphUpdate& msg )
 {
     if( edges_.size() == 0 )
         throw std::runtime_error( "Trying to update population graph before its creation." );    
-    for( unsigned int i = 0; i < msg.n; ++i )
-        Update( msg.elem[i] );
+    for( unsigned int i = 0; i < msg.elem_size(); ++i )
+        Update( msg.elem( i ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,9 +104,9 @@ void FolkUpdater::Drop()
 // Name: FolkUpdater::Update
 // Created: SBO 2007-09-19
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( const ASN1T_MsgFolkGraphEdgeUpdate& msg )
+void FolkUpdater::Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg )
 {
-    Edge& edge = edges_[msg.shp_oid];
+    Edge& edge = edges_[msg.shp_oid()];
     Update( edge, msg );
     if( ++updated_ >= edges_.size() )
     {
@@ -149,19 +156,19 @@ void FolkUpdater::CommitEdge( Row_ABC& row, const Edge& edge )
 
 // -----------------------------------------------------------------------------
 // Name: FolkUpdater::Update
-/* Read asn message containing population information and store appropriate 
+/* Read message containing population information and store appropriate 
    indiviudals
 */
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-void FolkUpdater::Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const
+void FolkUpdater::Update( Edge& edge, const MsgsSimToClient::MsgFolkGraphEdgeUpdate& msg ) const
 {
     const unsigned size = activities_.size() * profiles_.size();
     int c = -1;
     edge.population_ = 0;
-    for ( unsigned i = 0; i < msg.population_occupation.n; ++i )
+    for ( unsigned i = 0; i < msg.population_occupation_size(); ++i )
     {
-        const int individuals = msg.population_occupation.elem[i];
+        const int individuals = msg.population_occupation( i );
         if ( i % size == 0 )
             ++c;
         edge.population_    += individuals;

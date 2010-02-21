@@ -14,12 +14,16 @@
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 
+namespace Common
+{
+    class MsgPopulationKnowledge;
+}
+
 namespace kernel
 {
     class Population_ABC;
     class AgentKnowledgeConverter_ABC;
 }
-
 
 namespace actions {
     namespace parameters {
@@ -45,9 +49,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    void CommitTo( ASN1T_PopulationKnowledge& asn ) const;
+    void CommitTo( Common::MsgPopulationKnowledge& asn ) const;
     //@}
 
 private:

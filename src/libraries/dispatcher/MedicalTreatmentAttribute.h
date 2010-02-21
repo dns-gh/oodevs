@@ -10,9 +10,16 @@
 #ifndef __MedicalTreatmentAttribute_h_
 #define __MedicalTreatmentAttribute_h_
 
-#include "game_asn/Simulation.h"
+
 #include "ObjectAttribute_ABC.h"
 #include <list>
+
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
 
 namespace dispatcher
 {
@@ -34,15 +41,15 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-     MedicalTreatmentAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
+     MedicalTreatmentAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~MedicalTreatmentAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_ObjectAttributes& asnMsg );
-    virtual void Send     ( ASN1T_ObjectAttributes& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

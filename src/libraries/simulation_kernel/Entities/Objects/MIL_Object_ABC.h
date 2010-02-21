@@ -13,14 +13,17 @@
 #define __MIL_Object_ABC_h_
 
 #include "simulation_kernel/MIL.h"
-
 #include "simulation_terrain/TER_Object_ABC.h"
-
 #include "MIL_InteractiveContainer_ABC.h"
 #include "MIL_ObjectInteraction.h"
 #include "ObjectCapacity_ABC.h"
 #include "ObjectAttribute_ABC.h"
 #include "tools/Extendable.h"
+
+namespace MsgsSimToClient
+{
+    enum MsgObjectMagicActionAck_ErrorCode;
+}
 
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
@@ -52,8 +55,8 @@ class MIL_Object_ABC : public TER_Object_ABC
 {
    
 public:
-    explicit MIL_Object_ABC( MIL_Army_ABC& army, const MIL_ObjectType_ABC& type );
              MIL_Object_ABC();
+             MIL_Object_ABC( MIL_Army_ABC& army, const MIL_ObjectType_ABC& type );
     virtual ~MIL_Object_ABC();
     
     //! @name Init
@@ -65,8 +68,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;    
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;    
     //@}
 
     //! @name ODB
@@ -139,15 +142,15 @@ public:
     
     //! @name Network
     //@{
-    virtual ASN1T_EnumObjectErrorCode OnUpdate( const ASN1T_ObjectAttributes& asn ) = 0;
-    virtual void    SendCreation() const = 0;
-    virtual void    SendDestruction() const = 0;
-    virtual void    SendFullState() const = 0;
+    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgObjectAttributes& asn ) = 0;
+    virtual void SendCreation() const = 0;
+    virtual void SendDestruction() const = 0;
+    virtual void SendFullState() const = 0;
     //@}
 
     //! @name Accessors
     //@{    
-    virtual uint              GetID() const = 0;
+    virtual unsigned int              GetID() const = 0;
     const MIL_ObjectType_ABC& GetType() const;
     const MIL_Army_ABC& GetArmy() const;
           MIL_Army_ABC& GetArmy();
@@ -164,7 +167,7 @@ protected:
     //@{
     virtual bool CanCollideWithEntity() const;
     virtual void UpdateLocalisation( const TER_Localisation& newLocalisation ); 
-    virtual void Update( uint time ) = 0;
+    virtual void Update( unsigned int time ) = 0;
     void Register();
     void Unregister();
     //@}
@@ -172,19 +175,19 @@ protected:
 private:
     //! @name Members
     //@{
-    const MIL_ObjectType_ABC*   pType_;    
-          MIL_Army_ABC*         pArmy_;
+    const MIL_ObjectType_ABC* pType_;    
+          MIL_Army_ABC*       pArmy_;
     //@}
 
     //! @name Interaction proxy
     //@{
-    MIL_ObjectInteraction       interaction_;
+    MIL_ObjectInteraction interaction_;
     //@}
 
     //! @name destruction management
     //@{
-    bool                        bMarkedForDestruction_;
-    bool                        bReadyForDeletion_;        
+    bool bMarkedForDestruction_;
+    bool bReadyForDeletion_;        
     //@}
 };
 

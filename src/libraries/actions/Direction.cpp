@@ -11,6 +11,7 @@
 #include "Direction.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 #include <windows.h>
@@ -86,12 +87,12 @@ void Direction::Serialize( xml::xostream& xos ) const
 // Name: Direction::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Direction::CommitTo( ASN1T_MissionParameter& asn ) const
+void Direction::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_heading;
+    message.set_null_value ( !IsSet() );
+    message.mutable_value()->mutable_heading();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        asn.value.u.heading = GetValue();
+        message.mutable_value()->mutable_heading()->set_heading( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

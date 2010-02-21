@@ -19,18 +19,18 @@ using namespace kernel;
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( const ASN1T_MsgTeamCreation& asnMsg, Controller& controller )
-    : EntityImplementation< Team_ABC >( controller, asnMsg.oid, asnMsg.nom )
+Team::Team( const MsgsSimToClient::MsgTeamCreation& message, Controller& controller )
+    : EntityImplementation< Team_ABC >( controller, message.oid(), QString( message.nom().c_str() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( tools::translate( "Team", "Army %1" ) ).arg( asnMsg.oid );
+        name_ = QString( tools::translate( "Team", "Army %1" ) ).arg( message.oid() );
     
-    switch( asnMsg.type )
+    switch( message.type() )
     {
-        case EnumDiplomacy::inconnu : karma_ = kernel::Karma::unknown_; break;
-        case EnumDiplomacy::ami :     karma_ = kernel::Karma::friend_; break;
-        case EnumDiplomacy::ennemi :  karma_ = kernel::Karma::enemy_; break;
-        case EnumDiplomacy::neutre :  karma_ = kernel::Karma::neutral_; break;
+        case EnumDiplomacy::unknown_diplo   : karma_ = kernel::Karma::unknown_; break;
+        case EnumDiplomacy::friend_diplo    : karma_ = kernel::Karma::friend_;  break;
+        case EnumDiplomacy::enemy_diplo     : karma_ = kernel::Karma::enemy_;   break;
+        case EnumDiplomacy::neutral_diplo   : karma_ = kernel::Karma::neutral_; break;
     }
 
     CreateDictionary( controller );

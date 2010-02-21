@@ -50,16 +50,16 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 template< typename T >
 void MedicalTreatmentAttribute::UpdateData( const T& message )
 {
-    if ( message.m.medical_treatmentPresent )
+    if ( message.has_medical_treatment()  )
     {
-        beds_             = message.medical_treatment.beds;
-        availableBeds_    = message.medical_treatment.available_beds;
-        doctors_          = message.medical_treatment.doctors;
-        availableDoctors_ = message.medical_treatment.available_doctors;
+        beds_             = message.medical_treatment().beds();
+        availableBeds_    = message.medical_treatment().available_beds();
+        doctors_          = message.medical_treatment().doctors();
+        availableDoctors_ = message.medical_treatment().available_doctors();
 
-        nMedicalTreatmentType_ = message.medical_treatment.type_id.n;
+        nMedicalTreatmentType_ = message.medical_treatment().type_id().elem_size();
         for( int i = 0 ; i < nMedicalTreatmentType_ ; i++ )
-            typeList_.push_back( & resolver_.Get( message.medical_treatment.type_id.elem [ i ] ) );
+            typeList_.push_back( & resolver_.Get( message.medical_treatment().type_id().elem ( i ) ) );
 
         controller_.Update( *(MedicalTreatmentAttribute_ABC*)this );        
     }
@@ -69,27 +69,27 @@ void MedicalTreatmentAttribute::UpdateData( const T& message )
 // Name: MedicalTreatmentAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MedicalTreatmentAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void MedicalTreatmentAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

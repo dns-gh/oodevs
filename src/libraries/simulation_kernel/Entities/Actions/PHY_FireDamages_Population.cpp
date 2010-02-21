@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_FireDamages_Population.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Population constructor
@@ -36,17 +37,17 @@ PHY_FireDamages_Population::~PHY_FireDamages_Population()
 // Name: PHY_FireDamages_Population::Serialize
 // Created: JVT 04-03-29
 //-----------------------------------------------------------------------------
-void PHY_FireDamages_Population::Serialize( const MIL_Population& target, ASN1T_PopulationFireDamages& asn ) const
+void PHY_FireDamages_Population::Serialize( const MIL_Population& target, MsgsSimToClient::MsgPopulationFireDamages& asn ) const
 {
-    asn.target   = target.GetID();
-    asn.dead_nbr = nNbrKilledHumans_;
+    asn.set_target( target.GetID() );
+    asn.set_dead_nbr( nNbrKilledHumans_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Population::CleanAfterSerialization
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_FireDamages_Population::CleanAfterSerialization( ASN1T_PopulationFireDamages& /*asn*/ )
+void PHY_FireDamages_Population::CleanAfterSerialization( MsgsSimToClient::MsgPopulationFireDamages& /*asn*/ )
 {
     // NOTHING
 }
@@ -55,7 +56,7 @@ void PHY_FireDamages_Population::CleanAfterSerialization( ASN1T_PopulationFireDa
 // Name: PHY_FireDamages_Population::NotifyHumansKilled
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------
-void PHY_FireDamages_Population::NotifyHumansKilled( uint nNbrHumans )
+void PHY_FireDamages_Population::NotifyHumansKilled( unsigned int nNbrHumans )
 {
     nNbrKilledHumans_ += nNbrHumans;
 }
@@ -64,7 +65,7 @@ void PHY_FireDamages_Population::NotifyHumansKilled( uint nNbrHumans )
 // Name: PHY_FireDamages_Population::GetNbrKilledHumans
 // Created: NLD 2006-04-26
 // -----------------------------------------------------------------------------
-uint PHY_FireDamages_Population::GetNbrKilledHumans() const
+unsigned int PHY_FireDamages_Population::GetNbrKilledHumans() const
 {
     return nNbrKilledHumans_;
 }

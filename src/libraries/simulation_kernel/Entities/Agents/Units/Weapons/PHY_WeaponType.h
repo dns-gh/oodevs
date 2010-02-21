@@ -58,8 +58,8 @@ public:
     //! @name Accessors
     //@{
     const PHY_DotationCategory& GetDotationCategory () const;
-          uint                  GetNbrAmmoPerLoader () const;
-          uint                  GetNbrAmmoPerBurst  () const;
+          unsigned int                  GetNbrAmmoPerLoader () const;
+          unsigned int                  GetNbrAmmoPerBurst  () const;
           MT_Float              GetBurstDuration    () const;
           MT_Float              GetReloadingDuration() const;
     const std::string&          GetName             () const;
@@ -124,9 +124,9 @@ private:
     const PHY_DotationCategory* pDotationCategory_;
           std::string           strName_;
 
-          uint                  nNbrAmmoPerBurst_;
+          unsigned int                  nNbrAmmoPerBurst_;
           MT_Float              rBurstDuration_;
-          uint                  nNbrAmmoPerLoader_;
+          unsigned int                  nNbrAmmoPerLoader_;
           MT_Float              rReloadingDuration_;
 
     PHY_WeaponDataType_DirectFire*   pDirectFireData_;

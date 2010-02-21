@@ -15,6 +15,12 @@
 #include "PHY_FireDamages_Agent.h"
 #include "PHY_FireDamages_Population.h"
 
+namespace MsgsSimToClient
+{
+    class MsgPopulationsFireDamages;
+    class MsgUnitsFireDamages;
+}
+
 class MIL_Agent_ABC;
 class MIL_Population;
 
@@ -64,10 +70,10 @@ protected:
 
     //! @name Network tools
     //@{
-           void Serialize              ( ASN1T_UnitsFireDamages&      asn ) const;
-           void Serialize              ( ASN1T_PopulationsFireDamages& asn ) const;
-    static void CleanAfterSerialization( ASN1T_UnitsFireDamages&      asn );
-    static void CleanAfterSerialization( ASN1T_PopulationsFireDamages& asn );
+           void Serialize              ( MsgsSimToClient::MsgUnitsFireDamages&      asn ) const;
+           void Serialize              ( MsgsSimToClient::MsgPopulationsFireDamages& asn ) const;
+    static void CleanAfterSerialization( MsgsSimToClient::MsgUnitsFireDamages&      asn );
+    static void CleanAfterSerialization( MsgsSimToClient::MsgPopulationsFireDamages& asn );
     //@}
 
 private:
@@ -75,7 +81,7 @@ private:
     //@{
     T_AgentDamagesMap      agentsDamages_;
     T_PopulationDamagesMap populationsDamages_;
-    uint                   nNbrRefs_;
+    unsigned int                   nNbrRefs_;
     //@}
 };
 

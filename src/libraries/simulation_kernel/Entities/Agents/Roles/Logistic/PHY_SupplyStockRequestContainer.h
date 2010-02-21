@@ -13,16 +13,18 @@
 #define __PHY_SupplyStockRequestContainer_h_
 
 #include "MIL.h"
-
 #include "PHY_SupplyStockRequest.h"
+
+namespace Common
+{
+    class SeqOfDotationStock;
+}
 
 class PHY_DotationCategory;
 class PHY_DotationStock;
 class PHY_SupplyStockRequest;
 class PHY_SupplyStockState;
 class MIL_AutomateLOG;
-
-struct ASN1T__SeqOfDotationStock;
 
 // =============================================================================
 // @class  PHY_SupplyStockRequestContainer
@@ -33,7 +35,7 @@ class PHY_SupplyStockRequestContainer : private boost::noncopyable
 
 public:
     explicit PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate );
-             PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const ASN1T__SeqOfDotationStock& asnStocks );
+             PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::SeqOfDotationStock& asnStocks );
     virtual  ~PHY_SupplyStockRequestContainer();
 
     //! @name Operations

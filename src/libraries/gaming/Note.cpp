@@ -48,16 +48,16 @@ Note::~Note()
 // Name: Note::Update
 // Created: HBD 2010-01-14
 // -----------------------------------------------------------------------------
-void Note::Update(const ASN1T_MsgNoteUpdate& asn)
+void Note::Update(const MsgsMessengerToClient::MsgNoteUpdate& asn)
 {
-    if ( asn.m.namePresent )
-        name_ = asn.name;
-    if ( asn.m.numberPresent )
-        noteNumber_ = asn.number;
-    if ( asn.m.descriptionPresent )
-        noteText_ = asn.description;
-    if ( asn.m.parentPresent )
-        parent_ = asn.parent;
+    if ( asn.has_name() )
+        name_ = asn.name();
+    if ( asn.has_number() )
+        noteNumber_ = asn.number();
+    if ( asn.has_description() )
+        noteText_ = asn.description();
+    if ( asn.has_parent() )
+        parent_ = asn.parent();
     controller_.Update(*this);
 }
 

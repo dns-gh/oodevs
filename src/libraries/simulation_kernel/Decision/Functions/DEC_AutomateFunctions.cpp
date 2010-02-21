@@ -22,8 +22,9 @@
 #include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
     
 
 // -----------------------------------------------------------------------------
@@ -124,11 +125,11 @@ DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPCOfAutomate( DEC_Decision_ABC* 
 // -----------------------------------------------------------------------------
 void DEC_AutomateFunctions::DecisionalState( const MIL_Automate& callerAutomate, const std::string& key, const std::string& value )
 {
-    NET_ASN_MsgDecisionalState msg;
-    msg().oid     = callerAutomate.GetID();
-    msg().key     = key.c_str();
-    msg().value   = value.c_str();
-    msg.Send();
+    client::DecisionalState msg;
+    msg().set_oid  ( callerAutomate.GetID() );
+    msg().set_key  ( key.c_str() );
+    msg().set_value( value.c_str() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

@@ -102,7 +102,7 @@ void DEC_Workspace::InitializeConfig( MIL_Config& config )
     xml::xifstream xisDecisional( strDecFile );
     config.AddFileToCRC( strDecFile );
 
-    uint nTmp;
+    unsigned int nTmp;
 
     xisDecisional >> xml::start( "decisonal" )
                       >> xml::start( "dangerosity-modifiers" )

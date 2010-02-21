@@ -36,13 +36,13 @@ ObjectPerceptions::~ObjectPerceptions()
 // Name: ObjectPerceptions::DoUpdate
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-void ObjectPerceptions::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void ObjectPerceptions::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    if( message.m.automat_perceptionPresent )
+    if( message.has_automat_perception()  )
     {
         detectingAutomats_.clear();
-        detectingAutomats_.reserve( message.automat_perception.n );
-        for( uint i = 0; i < message.automat_perception.n; ++i )
-            detectingAutomats_.push_back( & agentResolver_.Get( message.automat_perception.elem[i] ) );
+        detectingAutomats_.reserve( message.automat_perception().elem_size() );
+        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
+            detectingAutomats_.push_back( & agentResolver_.Get( message.automat_perception().elem( i ) ) );
     }
 }

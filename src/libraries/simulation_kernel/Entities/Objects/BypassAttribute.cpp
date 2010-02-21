@@ -12,12 +12,10 @@
 #include "Knowledge/DEC_Knowledge_ObjectAttributeBypass.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Hla/HLA_UpdateFunctor.h"
-
+#include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BypassAttribute )
-
-using namespace hla;
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute constructor
@@ -33,8 +31,8 @@ BypassAttribute::BypassAttribute()
 // Name: BypassAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( const ASN1T_ObjectAttributes& asn )
-    : rBypass_ ( asn.bypass.percentage )
+BypassAttribute::BypassAttribute( const Common::MsgObjectAttributes& asn )
+    : rBypass_ ( asn.bypass().percentage() )
 {
     // NOTHING
 }
@@ -54,7 +52,7 @@ BypassAttribute::~BypassAttribute()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void BypassAttribute::serialize( Archive& file, const uint )
+void BypassAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & rBypass_;         
@@ -73,20 +71,18 @@ void BypassAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: BypassAttribute::SendFullState
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void BypassAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void BypassAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {    
-    asn.m.bypassPresent = 1;
-    asn.bypass.m.percentagePresent = 1;
-    asn.bypass.percentage = uint( rBypass_ * 100. );
+    asn.mutable_bypass()->set_percentage( unsigned int( rBypass_ * 100. ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: BypassAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void BypassAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void BypassAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate( eOnUpdate ) )
+    if( NeedUpdate( eOnUpdate ) )
     {
         SendFullState( asn );
         Reset( eOnUpdate );
@@ -97,10 +93,10 @@ void BypassAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 // Name: BypassAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
+void BypassAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
 {
-    if( asn.m.bypassPresent ) 
-        rBypass_ = asn.bypass.percentage / 100.;
+    if( asn.has_bypass() ) 
+        rBypass_ = asn.bypass().percentage() / 100.;
 }
 
 // -----------------------------------------------------------------------------
@@ -155,7 +151,7 @@ void BypassAttribute::Serialize( HLA_UpdateFunctor& functor ) const
 // Name: BypassAttribute::Deserialize
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void BypassAttribute::Deserialize( const AttributeIdentifier& attributeID, Deserializer deserializer )
+void BypassAttribute::Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer )
 {
     if ( attributeID == "contournement" )
     {

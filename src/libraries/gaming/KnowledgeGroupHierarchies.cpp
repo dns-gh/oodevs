@@ -39,16 +39,22 @@ KnowledgeGroupHierarchies::~KnowledgeGroupHierarchies()
 // Created: FHD 2009-12-21
 // LTO
 // -----------------------------------------------------------------------------
-void KnowledgeGroupHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupChangeSuperior& message )
+void KnowledgeGroupHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
-    if( message.oid_knowledgegroup_parent )
+    if( message.has_oid_parent())
     {
-        if( kernel::KnowledgeGroup_ABC* parent = resolver_.Find( message.oid_knowledgegroup_parent ) )
-            ChangeSuperior( parent );
-    }
-    else if( message.oid_camp )
-    {
-        if( const kernel::Entity_ABC* top = &resolver_.Get( message.oid ).Retrieve< kernel::CommunicationHierarchies >()->GetTop() )
+        if( message.oid_parent() != 0 )
+            ChangeSuperior( &resolver_.Get( message.oid_parent() ) );    
+        else
+        {
+            const kernel::Entity_ABC* top = &resolver_.Get( message.oid() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop();
             ChangeSuperior( const_cast< kernel::Entity_ABC* >( top ) );
+        }
     }
+    else if( message.has_oid_camp() )
+    {
+        if( const kernel::Entity_ABC* top = &resolver_.Get( message.oid() ).Retrieve< kernel::CommunicationHierarchies >()->GetTop() )
+            ChangeSuperior( const_cast< kernel::Entity_ABC* >( top ) );
+    }    
+    resolver_.Get( message.oid() ).DoUpdate( message );
 }

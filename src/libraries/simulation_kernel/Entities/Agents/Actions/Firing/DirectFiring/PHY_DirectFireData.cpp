@@ -96,23 +96,23 @@ PHY_DirectFireData::~PHY_DirectFireData()
 // Name: PHY_DirectFireData::GetNbrWeaponsUsable
 // Created: NLD 2005-11-02
 // -----------------------------------------------------------------------------
-uint PHY_DirectFireData::GetNbrWeaponsUsable() const
+unsigned int PHY_DirectFireData::GetNbrWeaponsUsable() const
 {
     if( nFiringMode_ == eFiringModeFree )
     {
-        uint nNbrWeaponsUsable = 0;
+        unsigned int nNbrWeaponsUsable = 0;
         for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
             nNbrWeaponsUsable += itData->second.GetNbrWeaponsUsable();
         return nNbrWeaponsUsable;
     }
     else if( nFiringMode_ == eFiringModeNormal )
     {
-        uint nNbrUsedComposantes = 0;
+        unsigned int nNbrUsedComposantes = 0;
         for( CIT_ComposanteWeaponsMap itData = composantesWeapons_.begin(); itData != composantesWeapons_.end(); ++itData )
             if( itData->second.IsFiring() )
                 ++ nNbrUsedComposantes;
             
-        uint nNbrComps = (uint)( composantesWeapons_.size() * rPercentageComposantesToUse_ );
+        unsigned int nNbrComps = (unsigned int)( composantesWeapons_.size() * rPercentageComposantesToUse_ );
         if( !( nNbrComps || composantesWeapons_.empty() ) )
             nNbrComps = 1;
 
@@ -203,12 +203,12 @@ bool PHY_DirectFireData::sComposanteWeapons::GetBestWeapon( MT_Float& rBestScore
 // -----------------------------------------------------------------------------
 bool PHY_DirectFireData::sComposanteWeapons::GetRandomWeapon( const MIL_AgentPion& firer, const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, PHY_Weapon*& pRandomWeapon ) const
 {
-    const uint nRnd = randomGenerator_.rand32_ii( 0, weaponsReady_.size() - 1 );
+    const unsigned int nRnd = randomGenerator_.rand32_ii( 0, weaponsReady_.size() - 1 );
 
     CIT_WeaponVector it = weaponsReady_.begin();
     std::advance( it, nRnd );
 
-    for( uint i = 0; i < weaponsReady_.size(); ++i )
+    for( unsigned int i = 0; i < weaponsReady_.size(); ++i )
     {
         PHY_Weapon& weapon = **it;
         if( weapon.GetDangerosity( firer, target, compTarget.GetType(), false  ) > 0 ) // 'true' = 'don't use PH'
@@ -249,12 +249,12 @@ void PHY_DirectFireData::ChooseBestWeapon( const MIL_Agent_ABC& target, const PH
 // -----------------------------------------------------------------------------
 void PHY_DirectFireData::ChooseRandomWeapon( const MIL_Agent_ABC& target, const PHY_Composante_ABC& compTarget, const PHY_ComposantePion*& pRandomFirer, PHY_Weapon*& pRandomWeapon ) const
 {
-    const uint nRnd = randomGenerator_.rand32_ii( 0, composantesWeapons_.size() - 1 );
+    const unsigned int nRnd = randomGenerator_.rand32_ii( 0, composantesWeapons_.size() - 1 );
 
     CIT_ComposanteWeaponsMap it = composantesWeapons_.begin();
     std::advance( it, nRnd );
 
-    for( uint i = 0; i < composantesWeapons_.size(); ++i )
+    for( unsigned int i = 0; i < composantesWeapons_.size(); ++i )
     {
         const sComposanteWeapons& data = it->second;
 
@@ -326,7 +326,7 @@ bool PHY_DirectFireData::HasWeaponsAndNoAmmo() const
 // Name: PHY_DirectFireData::GetNbrWeaponsUsable
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------
-uint PHY_DirectFireData::sComposanteWeapons::GetNbrWeaponsUsable() const
+unsigned int PHY_DirectFireData::sComposanteWeapons::GetNbrWeaponsUsable() const
 {
     return weaponsReady_.size();
 }

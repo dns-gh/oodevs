@@ -46,7 +46,7 @@ public:
 
 private:
           firing::PHY_RoleAction_DirectFiring& role_;
-    const uint                         nTargetKnowledgeID_;
+    const unsigned int                         nTargetKnowledgeID_;
           PHY_FireResults_Pion*        pFireResult_;
 };
 

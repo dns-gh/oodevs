@@ -41,9 +41,9 @@ DEC_BlackBoard_CanContainKnowledgePopulation::~DEC_BlackBoard_CanContainKnowledg
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nNbr;
+    unsigned int nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -57,7 +57,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::load( MIL_CheckPointInArchive
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     const T_KnowledgePopulationMap::size_type size = knowledgePopulationMap_.size();
     file << size;
@@ -96,7 +96,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation( D
 // Name: DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID
 // Created: NLD 2004-03-24
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID( uint nID ) const
+DEC_Knowledge_Population* DEC_BlackBoard_CanContainKnowledgePopulation::GetKnowledgePopulationFromID( unsigned int nID ) const
 {
     for( CIT_KnowledgePopulationMap it = knowledgePopulationMap_.begin(); it != knowledgePopulationMap_.end(); ++it )
     {

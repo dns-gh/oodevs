@@ -18,8 +18,8 @@
 
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "CheckPoints/MIL_CheckPointManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
@@ -35,6 +35,8 @@
 #include "tools/win32/ProcessMonitor.h"
 #include <xeumeuleu/xml.h>
 
+#include "protocol/simulationsenders.h"
+#include "protocol/clientsenders.h"
 
 
 MIL_AgentServer* MIL_AgentServer::pTheAgentServer_ = 0;
@@ -293,10 +295,10 @@ void MIL_AgentServer::MainSimLoop()
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SendMsgBeginTick() const
 {
-    NET_ASN_MsgControlBeginTick msgBeginTick;
-    msgBeginTick().current_tick = GetCurrentTimeStep();
-    NET_ASN_Tools::WriteGDH( nRealTime_, msgBeginTick().date_time );
-    msgBeginTick.Send();
+    client::ControlBeginTick msgBeginTick;
+    msgBeginTick().set_current_tick( GetCurrentTimeStep() );
+    NET_ASN_Tools::WriteGDH( nRealTime_, *msgBeginTick().mutable_date_time() );
+    msgBeginTick.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -307,14 +309,14 @@ void MIL_AgentServer::SendMsgEndTick() const
 {
     assert( pProcessMonitor_ );
 
-    NET_ASN_MsgControlEndTick msgEndTick;
-    msgEndTick().current_tick      = GetCurrentTimeStep();
-    msgEndTick().tick_duration     = (ASN1INT)pProfilerMgr_->GetLastTickDuration();
-    msgEndTick().short_pathfinds   = pPathFindManager_->GetNbrShortRequests();
-    msgEndTick().long_pathfinds    = pPathFindManager_->GetNbrLongRequests ();
-    msgEndTick().memory            = pProcessMonitor_->GetMemory();
-    msgEndTick().virtual_memory    = pProcessMonitor_->GetVirtualMemory();
-    msgEndTick.Send();
+    client::ControlEndTick msgEndTick;
+    msgEndTick().set_current_tick      ( GetCurrentTimeStep() );
+    msgEndTick().set_tick_duration     ( (int)pProfilerMgr_->GetLastTickDuration() );
+    msgEndTick().set_short_pathfinds   ( pPathFindManager_->GetNbrShortRequests() );
+    msgEndTick().set_long_pathfinds    ( pPathFindManager_->GetNbrLongRequests () );
+    msgEndTick().set_memory            ( pProcessMonitor_->GetMemory() );
+    msgEndTick().set_virtual_memory    ( pProcessMonitor_->GetVirtualMemory() );
+    msgEndTick.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -406,18 +408,17 @@ void MIL_AgentServer::WriteODB( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SendControlInformation() const
 {
-    NET_ASN_MsgControlInformation message;
-
-    message().current_tick         = GetCurrentTimeStep();
-    NET_ASN_Tools::WriteGDH( nInitialRealTime_, message().initial_date_time );
-    NET_ASN_Tools::WriteGDH( nRealTime_       , message().date_time );
-    message().tick_duration        = GetTimeStepDuration();
-    message().time_factor          = nTimeFactor_;
-    message().status               = (ASN1T_EnumSimulationState)GetSimState();
-    message().checkpoint_frequency = GetCheckPointManager().GetCheckPointFrequency();
-    message().send_vision_cones    = GetAgentServer().MustSendUnitVisionCones();
-    message().profiling_enabled    = GetProfilerManager().IsProfilingEnabled();
-    message.Send();
+    client::ControlInformation message;
+    message().set_current_tick( GetCurrentTimeStep() );
+    NET_ASN_Tools::WriteGDH( nInitialRealTime_, *message().mutable_initial_date_time() );
+    NET_ASN_Tools::WriteGDH( nRealTime_       , *message().mutable_date_time() );
+    message().set_tick_duration( GetTimeStepDuration() );
+    message().set_time_factor( nTimeFactor_ );
+    message().set_status( Common::EnumSimulationState( GetSimState() ) );
+    message().set_checkpoint_frequency( GetCheckPointManager().GetCheckPointFrequency() );
+    message().set_send_vision_cones( GetAgentServer().MustSendUnitVisionCones() );
+    message().set_profiling_enabled( GetProfilerManager().IsProfilingEnabled() );
+    message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -426,17 +427,17 @@ void MIL_AgentServer::SendControlInformation() const
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::Stop()
 {
-    NET_ASN_MsgControlStopAck msg;
+    client::ControlStopAck msg;
     if( nSimState_ == eSimStopped )
-        msg() = EnumControlErrorCode::error_not_started;
+        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_not_started );
     else
     {
         nSimState_ = eSimStopped;
         MT_Timer_ABC::Stop();
         MT_LOG_INFO_MSG( "Simulation stopped" );
-        msg() = EnumControlErrorCode::no_error;
+        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
     }
-    msg.Send();
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -445,17 +446,17 @@ void MIL_AgentServer::Stop()
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::Pause()
 {
-    NET_ASN_MsgControlPauseAck msg;
+    client::ControlPauseAck msg;
     if( nSimState_ != eSimRunning )
-        msg() = EnumControlErrorCode::error_already_paused;
+        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode::ControlAck_ErrorCode_error_already_paused );
     else
     {
         nSimState_ = eSimPaused;
         MT_Timer_ABC::Stop();
         MT_LOG_INFO_MSG( "Simulation paused" );
-        msg() = EnumControlErrorCode::no_error;
+        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode::ControlAck_ErrorCode_no_error );
     }
-    msg.Send();
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -464,17 +465,17 @@ void MIL_AgentServer::Pause()
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::Resume()
 {
-    NET_ASN_MsgControlResumeAck msg;
+    client::ControlResumeAck msg;
     if( nSimState_ != eSimPaused )
-        msg() = EnumControlErrorCode::error_not_paused;
+        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode::ControlAck_ErrorCode_error_not_paused );
     else
     {
         nSimState_ = eSimRunning;
         MT_Timer_ABC::Start( MT_TimeSpan( (int)( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
         MT_LOG_INFO_MSG( "Simulation resumed" );
-        msg() = EnumControlErrorCode::no_error;
+        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode::ControlAck_ErrorCode_no_error );
     }
-    msg.Send();
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -483,9 +484,9 @@ void MIL_AgentServer::Resume()
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
 {
-    NET_ASN_MsgControlChangeTimeFactorAck msg;
+    client::ControlChangeTimeFactorAck msg;
     if( timeFactor == 0 )
-        msg().error_code = EnumControlErrorCode::error_invalid_time_factor;
+        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode::ControlAck_ErrorCode_error_invalid_time_factor );
     else
     {
         nTimeFactor_ = timeFactor;
@@ -494,10 +495,10 @@ void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
             MT_Timer_ABC::Start( MT_TimeSpan( (int)( 1000 * nTimeStepDuration_ / nTimeFactor_ ) ) );
             MT_LOG_INFO_MSG( MT_FormatString( "Time factor set to %d", nTimeFactor_ ).c_str() )
         }
-        msg().error_code = EnumControlErrorCode::no_error;
+        msg().set_error_code( MsgsSimToClient::ControlAck_ErrorCode::ControlAck_ErrorCode_no_error );
     }
-    msg().time_factor = nTimeFactor_;
-    msg.Send();
+    msg().set_time_factor( nTimeFactor_ );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -506,24 +507,26 @@ void MIL_AgentServer::SetTimeFactor( unsigned timeFactor )
 // -----------------------------------------------------------------------------
 void MIL_AgentServer::SetRealTime( const std::string& realTime )
 {
-    uint secs = 0;
-    NET_ASN_Tools::ReadGDH( realTime.c_str(), secs );
-    NET_ASN_MsgControlDatetimeChangeAck ack;
+    unsigned int secs = 0;
+    Common::MsgDateTime datetime;
+    datetime.set_data( realTime );
+    NET_ASN_Tools::ReadGDH( datetime, secs );
+    client::ControlDatetimeChangeAck ack;
     if( secs < nInitialRealTime_ )
-        ack() = EnumControlErrorCode::error_invalid_date_time;
+        ack().set_error_code( MsgsSimToClient::ControlAck_ErrorCode::ControlAck_ErrorCode_error_invalid_date_time );
     else
     {
         nRealTime_ = secs;
-        ack() = EnumControlErrorCode::no_error;
+        ack().set_error_code( MsgsSimToClient::ControlAck_ErrorCode::ControlAck_ErrorCode_no_error );
     }
-    ack.Send();
+    ack.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentServer::RealTimeToTick
 // Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
-uint MIL_AgentServer::RealTimeToTick( uint rt ) const
+unsigned int MIL_AgentServer::RealTimeToTick( unsigned int rt ) const
 {
     return ( rt - nRealTime_ + nSimTime_ ) / nTimeStepDuration_;
 }
@@ -532,7 +535,7 @@ uint MIL_AgentServer::RealTimeToTick( uint rt ) const
 // Name: MIL_AgentServer::TickToRealTime
 // Created: AGE 2007-10-12
 // -----------------------------------------------------------------------------
-uint MIL_AgentServer::TickToRealTime( uint tick ) const
+unsigned int MIL_AgentServer::TickToRealTime( unsigned int tick ) const
 {
     return nTimeStepDuration_ * tick - nSimTime_ + nRealTime_;
 }

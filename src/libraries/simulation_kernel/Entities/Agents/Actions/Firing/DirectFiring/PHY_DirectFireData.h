@@ -72,7 +72,7 @@ public:
     //@{
     bool HasWeaponsNotReady () const;
     bool HasWeaponsAndNoAmmo() const;
-    uint GetNbrWeaponsUsable() const;
+    unsigned int GetNbrWeaponsUsable() const;
     //@}
 
 private:
@@ -95,7 +95,7 @@ private:
 
         //! @name Accessors
         //@{
-        uint GetNbrWeaponsUsable() const;
+        unsigned int GetNbrWeaponsUsable() const;
         bool IsFiring           () const;
         //@}
 

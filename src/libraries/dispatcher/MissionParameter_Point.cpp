@@ -10,16 +10,18 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_Point.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
+
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Point constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_Point::MissionParameter_Point( const ASN1T_MissionParameter& asn )
+MissionParameter_Point::MissionParameter_Point( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , point_              ( *asn.value.u.point )
+    , point_( asn.value().point().location() )
 {
     // NOTHING
 }
@@ -33,27 +35,21 @@ MissionParameter_Point::~MissionParameter_Point()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Point::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Point::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Point::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value    = bNullValue_;
-    asn.value.t       = T_MissionParameter_value_point;
-    asn.value.u.point = new ASN1T_Location();
-    point_.Send( *asn.value.u.point );
+    asn.set_null_value( bNullValue_ );
+    point_.Send( *asn.mutable_value()->mutable_point()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Point::AsnDelete
+// Name: MissionParameter_Point::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Point::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Point::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.point;
+    asn.mutable_value()->clear_point();
 }

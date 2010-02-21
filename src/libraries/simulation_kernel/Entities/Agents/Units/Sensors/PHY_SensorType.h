@@ -35,7 +35,7 @@ public:
     static void Terminate ();
 
     static const PHY_SensorType* FindSensorType( const std::string& strType );
-    static const PHY_SensorType* FindSensorType( const uint         nID     );
+    static const PHY_SensorType* FindSensorType( const unsigned int         nID     );
     //@}
 
     //! @name Instanciation
@@ -48,7 +48,7 @@ public:
     const PHY_SensorTypeObject* GetTypeObject() const;
     const PHY_SensorTypeAgent*  GetTypeAgent () const;
     const std::string&          GetName      () const;
-          uint                  GetID        () const;
+          unsigned int                  GetID        () const;
     //@}
 
 private:
@@ -71,14 +71,14 @@ private:
     //@}
     
 private:
-    const uint                  nID_;
+    const unsigned int                  nID_;
     const std::string           strName_;
     const PHY_SensorTypeObject* pTypeObject_;
     const PHY_SensorTypeAgent*  pTypeAgent_;
 
 private:
     static T_SensorTypeMap sensorTypes_;
-    static uint            nNextID_;
+    static unsigned int            nNextID_;
 };
 
 #endif // __PHY_SensorType_h_

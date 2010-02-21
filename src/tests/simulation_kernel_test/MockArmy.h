@@ -61,8 +61,8 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendFullState )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendKnowledge )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( FindKnowledgeGroup )
-       {
-        }
+    {
+    }
     virtual ~MockArmy() {}
     //@}
         
@@ -101,9 +101,9 @@ public:
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, RegisterFormation, MIL_Formation&, , MIL_Formation );   
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, UnregisterFormation, MIL_Formation&, , MIL_Formation);   
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, InitializeDiplomacy, xml::xistream&,  ,  xml::xistream);   
-    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, OnReceiveMsgChangeDiplomacy, const ASN1T_MsgChangeDiplomacy& , , const ASN1T_MsgChangeDiplomacy);   
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, OnReceiveMsgChangeDiplomacy, const Common::MsgChangeDiplomacy&, , const Common::MsgChangeDiplomacy );   
     MOCKPP_VOID_CONST_CHAINABLE_EXT1 ( MockArmy, WriteODB, xml::xostream&, , xml::xostream );  
-    MOCKPP_VOID_CONST_CHAINABLE_EXT1 ( MockArmy, WriteDiplomacyODB, xml::xostream& , , xml::xostream);   
+    MOCKPP_VOID_CONST_CHAINABLE_EXT1 ( MockArmy, WriteDiplomacyODB, xml::xostream& , , xml::xostream );   
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, UpdateKnowledges, int, , int);  
     MOCKPP_VOID_CHAINABLE0           ( MockArmy, CleanKnowledges );   
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendCreation );   

@@ -71,13 +71,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_Conveyor::T_DotationMap& map, const uint nVersion )
+        void serialize( Archive& file, PHY_Conveyor::T_DotationMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_Conveyor::T_DotationMap& map, const uint )
+        void save( Archive& file, const PHY_Conveyor::T_DotationMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -90,13 +90,13 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_Conveyor::T_DotationMap& map, const uint )
+        void load( Archive& file, PHY_Conveyor::T_DotationMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
-                uint nID;
+                unsigned int nID;
                 
                 file >> nID;
                 file >> map[ PHY_DotationType::FindDotationCategory( nID ) ];
@@ -110,7 +110,7 @@ namespace boost
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_Conveyor::serialize( Archive& file, const uint )
+void PHY_Conveyor::serialize( Archive& file, const unsigned int )
 { 
     file & pConveyorComp_
          & pConveyorPion_
@@ -207,7 +207,7 @@ void PHY_Conveyor::EmptyOut()
 // Name: PHY_Conveyor::ApproximateTravelTime
 // Created: NLD 2005-07-19
 // -----------------------------------------------------------------------------
-uint PHY_Conveyor::ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos )
+unsigned int PHY_Conveyor::ApproximateTravelTime( const MT_Vector2D& vStartPos, const MT_Vector2D& vEndPos )
 {
     return pConveyorComp_->ApproximateTravelTime( vStartPos, vEndPos );
 }

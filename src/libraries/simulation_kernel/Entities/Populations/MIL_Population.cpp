@@ -15,16 +15,17 @@
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationDecision.h"
 #include "DEC_PopulationKnowledge.h"
+#include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
-#include "MIL_AgentServer.h"
-#include "Tools/MIL_Tools.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Population )
@@ -152,14 +153,14 @@ DEC_PopulationDecision& MIL_Population::GetDecision()
 // Name: MIL_Population::load
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Entity_ABC >( *this ); 
 
-    file >> const_cast< uint& >( nID_ )
+    file >> const_cast< unsigned int& >( nID_ )
          >> const_cast< MIL_Army*& >( pArmy_ ); 
 
-    uint nAttitudeID;
+    unsigned int nAttitudeID;
     file >> nAttitudeID;
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
     assert( pDefaultAttitude_ );
@@ -185,7 +186,7 @@ void MIL_Population::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_Population::save
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-void MIL_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Entity_ABC >( *this );
     
@@ -847,7 +848,7 @@ MT_Float MIL_Population::GetPionMaxSpeed( const MIL_PopulationAttitude& attitude
 // Name: MIL_Population::OnReceiveMsgOrder
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgOrder( const ASN1T_MsgPopulationOrder& msg )
+void MIL_Population::OnReceiveMsgOrder( const Common::MsgPopulationOrder& msg )
 {
     orderManager_.OnReceiveMission( msg );
 }
@@ -856,7 +857,7 @@ void MIL_Population::OnReceiveMsgOrder( const ASN1T_MsgPopulationOrder& msg )
 // Name: MIL_Population::OnReceiveMsgFragOrder
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& msg )
+void MIL_Population::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder& msg )
 {
     orderManager_.OnReceiveFragOrder( msg );
 }
@@ -865,28 +866,30 @@ void MIL_Population::OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder& msg )
 // Name: MIL_Population::OnReceiveMsgPopulationMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopulationMagicAction& asnMsg )
+void MIL_Population::OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::MsgPopulationMagicAction& asnMsg )
 {
-    switch( asnMsg.action.t )
-    {
-        case T_MsgPopulationMagicAction_action_move_to           : OnReceiveMsgMagicMove     ( *asnMsg.action.u.move_to ); break;
-        case T_MsgPopulationMagicAction_action_destruction_totale: OnReceiveMsgDestroyAll    (); break;
-        case T_MsgPopulationMagicAction_action_change_attitude   : OnReceiveMsgChangeAttitude( *asnMsg.action.u.change_attitude ); break;
-        case T_MsgPopulationMagicAction_action_tuer              : OnReceiveMsgKill          ( asnMsg.action.u.tuer ); break;
-        case T_MsgPopulationMagicAction_action_ressusciter       : OnReceiveMsgResurrect     ( asnMsg.action.u.ressusciter ); break;
-        default:
-            assert( false );
-    }
+    if( asnMsg.action().has_move_to() )
+        OnReceiveMsgMagicMove     ( asnMsg.action().move_to() );
+    else if( asnMsg.action().has_destruction_totale())
+        OnReceiveMsgDestroyAll    ();
+    else if( asnMsg.action().has_change_attitude())
+        OnReceiveMsgChangeAttitude( asnMsg.action().change_attitude() );
+    else if( asnMsg.action().has_tuer())
+        OnReceiveMsgKill          ( asnMsg.action().tuer() );
+    else if( asnMsg.action().has_ressusciter())
+        OnReceiveMsgResurrect     ( asnMsg.action().ressusciter() );
+    else
+        assert( false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgMagicMove
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgMagicMove( const ASN1T_MagicActionPopulationMoveTo& asn )
+void MIL_Population::OnReceiveMsgMagicMove( const Common::MsgMagicActionPopulationMoveTo& asn )
 {
     MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( asn, vPosTmp );
+    MIL_Tools::ConvertCoordMosToSim( asn.coord(), vPosTmp );
 
    // merge all concentrations into new
     T_ConcentrationVector concentrations = concentrations_;
@@ -922,36 +925,36 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 // Name: MIL_Population::OnReceiveMsgChangeAttitude
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulationChangeAttitude& asn )
+void MIL_Population::OnReceiveMsgChangeAttitude( const Common::MsgMagicActionPopulationChangeAttitude& asn )
 {
-    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( asn.attitude );
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( asn.attitude() );
     if( !pAttitude )
-        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
 
     // concentration
-    if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_concentration )
+    if( asn.beneficiaire().has_concentration() )
     {
         for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
-            if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire.u.concentration )
+            if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire().concentration() )
             {
                 ( **it ).SetAttitude( *pAttitude );
                 return;
             }
-        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
     }
     // flow
-    else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_flux )
+    else if( asn.beneficiaire().has_flux() )
     {
         for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
-            if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire.u.flux )
+            if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire().flux() )
             {
                 ( **it ).SetAttitude( *pAttitude );
                 return;
             }
-        throw NET_AsnException< ASN1T_EnumPopulationErrorCode >( EnumPopulationErrorCode::error_invalid_attribute );
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
     }
     // global
-    else if( asn.beneficiaire.t == T_MagicActionPopulationChangeAttitude_beneficiaire_global )
+    else if( asn.beneficiaire().has_global() )
     {
         for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
             ( **it ).SetAttitude( *pAttitude );
@@ -964,9 +967,9 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulati
 // Name: MIL_Population::OnReceiveMsgKill
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgKill( const ASN1T_MagicActionPopulationKill& asn )
+void MIL_Population::OnReceiveMsgKill( const Common::MsgMagicActionPopulationKill& asn )
 {
-    uint remainingKills = asn;
+    unsigned int remainingKills = asn.kill();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( remainingKills == 0 )
@@ -985,9 +988,9 @@ void MIL_Population::OnReceiveMsgKill( const ASN1T_MagicActionPopulationKill& as
 // Name: MIL_Population::OnReceiveMsgResurrect
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgResurrect( const ASN1T_MagicActionPopulationResurrect& asn )
+void MIL_Population::OnReceiveMsgResurrect( const Common::MsgMagicActionPopulationResurrect& asn )
 {
-    uint remainingResurrections = asn;
+    unsigned int remainingResurrections = asn.resurrect();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( remainingResurrections == 0 )
@@ -1008,12 +1011,12 @@ void MIL_Population::OnReceiveMsgResurrect( const ASN1T_MagicActionPopulationRes
 // -----------------------------------------------------------------------------
 void MIL_Population::SendCreation() const
 {
-    NET_ASN_MsgPopulationCreation asnMsg;
-    asnMsg().oid             = nID_;
-    asnMsg().type_population = pType_->GetID();
-    asnMsg().oid_camp        = pArmy_->GetID();
-    asnMsg().nom             = GetName().c_str(); // !! pointeur sur const char*
-    asnMsg.Send();
+    client::PopulationCreation asnMsg;
+    asnMsg().set_oid( nID_ );
+    asnMsg().set_type_population( pType_->GetID() );
+    asnMsg().set_oid_camp       ( pArmy_->GetID() );
+    asnMsg().set_nom            ( GetName().c_str() ); // !! pointeur sur const char*
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
         (**it).SendCreation();
@@ -1032,10 +1035,10 @@ void MIL_Population::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_Population::SendFullState() const
 {
-    NET_ASN_MsgPopulationUpdate asnMsg;
-    asnMsg().oid = nID_;
+    client::PopulationUpdate asnMsg;
+    asnMsg().set_oid( nID_ );
     GetRole< DEC_PopulationDecision >().SendFullState( asnMsg );
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
     sPeopleCounter counter( rPeopleCount_ );
     sPeopleCounter trashCounter( rPeopleCount_ );
@@ -1061,10 +1064,10 @@ void MIL_Population::UpdateNetwork()
 {
     if( GetRole< DEC_PopulationDecision >().HasStateChanged() )
     {
-        NET_ASN_MsgPopulationUpdate asnMsg;
-        asnMsg().oid = nID_;
+        client::PopulationUpdate asnMsg;
+        asnMsg().set_oid( nID_ );
         GetRole< DEC_PopulationDecision >().SendChangedState( asnMsg );
-        asnMsg.Send();
+        asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 
     sPeopleCounter counter( rPeopleCount_ );
@@ -1109,7 +1112,7 @@ MIL_Population::sPeopleCounter::sPeopleCounter( MT_Float rInit )
 // Name: MIL_Population::sPeopleCounter::GetBoundedPeople
 // Created: SBO 2006-04-03
 // -----------------------------------------------------------------------------
-uint MIL_Population::sPeopleCounter::GetBoundedPeople( MT_Float rPeople )
+unsigned int MIL_Population::sPeopleCounter::GetBoundedPeople( MT_Float rPeople )
 {
     uint nResult = std::min( nPeople_, int( ceil( rPeople ) ) );
     nPeople_ -= nResult;
@@ -1142,7 +1145,7 @@ const MIL_PopulationAttitude& MIL_Population::GetDefaultAttitude() const
 // Name: MIL_Population::GetID
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-uint MIL_Population::GetID() const
+unsigned int MIL_Population::GetID() const
 {
     return nID_;
 }

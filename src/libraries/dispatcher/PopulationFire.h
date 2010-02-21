@@ -11,7 +11,11 @@
 #define __PopulationFire_h_
 
 #include "SimpleEntity.h"
-#include "game_asn/Simulation.h"
+
+namespace MsgsSimToClient
+{
+    class MsgStartPopulationFire;
+}
 
 namespace kernel
 {
@@ -34,7 +38,7 @@ class PopulationFire : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFire( Model& model, const ASN1T_MsgStartPopulationFire& msg );
+             PopulationFire( Model& model, const MsgsSimToClient::MsgStartPopulationFire& msg );
     virtual ~PopulationFire();
     //@}
 
@@ -57,7 +61,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MsgStartPopulationFire msg_;
+    const MsgsSimToClient::MsgStartPopulationFire& msg_;
     //@}
 };
 

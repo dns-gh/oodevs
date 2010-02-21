@@ -12,14 +12,17 @@
 #include "ClientPublisher_ABC.h"
 #include "Population.h"
 
+#include "protocol/clientsenders.h"
+
 using namespace dispatcher;
+//using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-PopulationOrder::PopulationOrder( Model_ABC& model, Population& population, const ASN1T_MsgPopulationOrder& asn )
-    : Order_ABC  ( model, asn.mission, asn.parametres )
+PopulationOrder::PopulationOrder( Model_ABC& model, Population& population, const Common::MsgPopulationOrder& asn )
+    : Order_ABC  ( model, asn.mission(), asn.parametres() )
     , population_( population )
 {
     // NOTHING
@@ -45,14 +48,14 @@ PopulationOrder::~PopulationOrder()
 void PopulationOrder::Send( ClientPublisher_ABC& publisher )
 {
     client::PopulationOrder asn;
-    asn().oid       = population_.GetId();
-    asn().mission   = missionID_;
+    asn().set_oid( population_.GetId() );
+    asn().set_mission( missionID_ );
     
-    Order_ABC::Send( asn().parametres );
+    Order_ABC::Send( *asn().mutable_parametres() );
 
     asn.Send( publisher );
 
-    AsnDelete( asn().parametres );    
+    Delete( *asn().mutable_parametres() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -64,8 +67,7 @@ void PopulationOrder::SendNoMission( const Population& population, ClientPublish
 {
     client::PopulationOrder asn;
 
-    asn().oid          = population.GetId();
-    asn().mission      = 0;
-    asn().parametres.n = 0;
+    asn().set_oid( population.GetId() );
+    asn().set_mission( 0 );
     asn.Send( publisher );
 }

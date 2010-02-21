@@ -43,9 +43,9 @@ void Mission_Automat_ABC_Interdire::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_Interdire& asnMission = *new ASN1T_Mission_Automate_ABC_Interdire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_interdire;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_interdire = &asnMission;
+    Mission_Automate_ABC_Interdire& asnMission = *new Mission_Automate_ABC_Interdire();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_interdire = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_ABC_Interdire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_Interdire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_interdire );
-    ASN1T_Mission_Automate_ABC_Interdire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_interdire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_interdire ());
+    Mission_Automate_ABC_Interdire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_interdire;
 
 
     delete &asnMission;

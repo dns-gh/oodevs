@@ -10,6 +10,7 @@
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_Direction.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Direction constructor
@@ -34,23 +35,21 @@ MIL_ParameterType_Direction::~MIL_ParameterType_Direction()
 // Name: MIL_ParameterType_Direction::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_Direction::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Direction::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
 
-    to.null_value = false;
-    to.value.t    = T_MissionParameter_value_heading;
-    
-    return from.ToDirection( to.value.u.heading );
+    to.set_null_value( false );
+    return from.ToDirection( *to.mutable_value()->mutable_heading() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Direction::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_Direction::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_Direction::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_heading );
+    assert( to.value().has_heading() );
 }

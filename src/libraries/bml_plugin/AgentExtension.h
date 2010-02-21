@@ -12,7 +12,10 @@
 
 #include "BmlExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace dispatcher
 {
@@ -35,9 +38,9 @@ namespace bml
 // Created: SBO 2008-02-29
 // =============================================================================
 class AgentExtension : public BmlExtension_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitDetection >
+                     , public kernel::Updatable_ABC< MsgUnitAttributes >
+                     , public kernel::Updatable_ABC< MsgUnitOrder >
+                     , public kernel::Updatable_ABC< MsgUnitDetection >
 {
 
 public:
@@ -49,9 +52,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
-    virtual void DoUpdate( const ASN1T_MsgUnitDetection& message );
+    virtual void DoUpdate( const MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const MsgUnitOrder& message );
+    virtual void DoUpdate( const MsgUnitDetection& message );
     //@}
 
 private:

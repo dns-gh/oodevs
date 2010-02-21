@@ -53,9 +53,9 @@ KnowledgeGroup::~KnowledgeGroup()
 // Name: KnowledgeGroup::OnReceiveMsgUnitKnowledgeCreation
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
+void KnowledgeGroup::OnReceiveMsgUnitKnowledgeCreation( const MsgUnitKnowledgeCreation& asnMsg )
 {
-    if( knownPawns_.find( asnMsg.oid_connaissance ) != knownPawns_.end() )
+    if( knownPawns_.find( asnMsg.oid_connaissance() ) != knownPawns_.end() )
         return;
     PawnKnowledge* pKnownPawn = new PawnKnowledge( entityManager_, asnMsg, *this );    
     bool bOut = knownPawns_.insert( std::make_pair( pKnownPawn->GetId(), pKnownPawn ) ).second;
@@ -66,7 +66,7 @@ void KnowledgeGroup::OnReceiveMsgUnitKnowledgeCreation( const ASN1T_MsgUnitKnowl
 // Name: KnowledgeGroup::OnReceiveMsgUnitKnowledgeUpdate
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowledgeUpdate& /*asnMsg*/ )
+void KnowledgeGroup::OnReceiveMsgUnitKnowledgeUpdate( const MsgUnitKnowledgeUpdate& /*asnMsg*/ )
 {
     //$$$ TODO
 }
@@ -75,18 +75,18 @@ void KnowledgeGroup::OnReceiveMsgUnitKnowledgeUpdate( const ASN1T_MsgUnitKnowled
 // Name: KnowledgeGroup::OnReceiveMsgUnitKnowledgeDestruction
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg )
+void KnowledgeGroup::OnReceiveMsgUnitKnowledgeDestruction( const MsgUnitKnowledgeDestruction& asnMsg )
 {
-    knownPawns_.erase( asnMsg.oid_connaissance );
+    knownPawns_.erase( asnMsg.oid_connaissance() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup::OnReceiveMsgPopulationKnowledgeCreation
 // Created: SBO 2006-01-03
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPopulationKnowledgeCreation& asnMsg )
+void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeCreation( const MsgPopulationKnowledgeCreation& asnMsg )
 {
-    if( knownPopulations_.find( asnMsg.oid_connaissance ) != knownPopulations_.end() )
+    if( knownPopulations_.find( asnMsg.oid_connaissance() ) != knownPopulations_.end() )
         return;
     PopulationKnowledge* pKnownPopulation = new PopulationKnowledge( entityManager_, asnMsg, *this );
     bool bOut = knownPopulations_.insert( std::make_pair( pKnownPopulation->GetId(), pKnownPopulation ) ).second;
@@ -97,7 +97,7 @@ void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeCreation( const ASN1T_MsgPop
 // Name: KnowledgeGroup::OnReceiveMsgPopulationKnowledgeUpdate
 // Created: SBO 2006-01-03
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& /*asnMsg*/ )
+void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeUpdate( const MsgPopulationKnowledgeUpdate& /*asnMsg*/ )
 {
     //$$$ TODO
 }
@@ -106,9 +106,9 @@ void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeUpdate( const ASN1T_MsgPopul
 // Name: KnowledgeGroup::OnReceiveMsgPopulationKnowledgeDestruction
 // Created: SBO 2006-01-03
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg )
+void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeDestruction( const MsgPopulationKnowledgeDestruction& asnMsg )
 {
-    knownPopulations_.erase( asnMsg.oid_connaissance );
+    knownPopulations_.erase( asnMsg.oid_connaissance() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ void KnowledgeGroup::OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_Msg
 // Name: KnowledgeGroup::GetTestParam_Knowledges
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-T_IdVector& KnowledgeGroup::GetTestParam_Knowledges( uint nNbr ) const
+T_IdVector& KnowledgeGroup::GetTestParam_Knowledges( unsigned int nNbr ) const
 {
     // return the list of known enemies
     T_IdVector& targets = *new T_IdVector();

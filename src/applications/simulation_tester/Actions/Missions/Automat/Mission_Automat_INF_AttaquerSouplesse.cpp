@@ -43,9 +43,9 @@ void Mission_Automat_INF_AttaquerSouplesse::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_AttaquerSouplesse& asnMission = *new ASN1T_Mission_Automate_INF_AttaquerSouplesse();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_attaquer_souplesse;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_attaquer_souplesse = &asnMission;
+    Mission_Automate_INF_AttaquerSouplesse& asnMission = *new Mission_Automate_INF_AttaquerSouplesse();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_attaquer_souplesse = &asnMission;
 
     const T_PositionVector& objectifs_ = pTarget_->GetTestParam_PointList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_INF_AttaquerSouplesse::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_AttaquerSouplesse::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_attaquer_souplesse );
-    ASN1T_Mission_Automate_INF_AttaquerSouplesse& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_attaquer_souplesse;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_attaquer_souplesse ());
+    Mission_Automate_INF_AttaquerSouplesse& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_attaquer_souplesse;
 
     ASN_Tools::Delete( asnMission.objectifs );
 

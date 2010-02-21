@@ -11,8 +11,9 @@
 #include "LocationSerializer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 
+using namespace Common;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -21,8 +22,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter )
     : converter_   ( converter )
-    , localisation_( 0 )
-    , pCoords_     ( 0 )
+    , localisation_( NULL )
+    //, pCoords_     ( 0 )
     , ownsCoords_  ( false )
 {
     // NOTHING
@@ -32,13 +33,15 @@ LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter
 // Name: LocationSerializer constructor
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter, ASN1T_Location& localisation )
+LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter, MsgLocation& localisation )
     : converter_   ( converter )
-    , localisation_( &localisation )
-    , pCoords_     ( 0 )
+    //, localisation_( &localisation )
+    //, pCoords_     ( 0 )
     , ownsCoords_  ( true )
 {
     // NOTHING
+    localisation_ = new MsgLocation();
+    localisation_->CopyFrom( localisation );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,8 +50,8 @@ LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter
 // -----------------------------------------------------------------------------
 LocationSerializer::~LocationSerializer()
 {
-    if( ownsCoords_ )
-        delete[] pCoords_;
+//    if( ownsCoords_ )
+//        delete[] pCoords_;
 }
 
 // -----------------------------------------------------------------------------
@@ -64,9 +67,9 @@ void LocationSerializer::Serialize( const Location_ABC& location )
 // Name: LocationSerializer::Serialize
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
-void LocationSerializer::Serialize( const Location_ABC& location, ASN1T_Location& localisation )
+void LocationSerializer::Serialize( const Location_ABC& location, MsgLocation& localisation )
 {
-    localisation_ = &localisation;
+    *localisation_ = localisation;
     Serialize( location );
 }
 
@@ -79,17 +82,17 @@ void LocationSerializer::SetPoints( const T_PointVector& points )
     if( ! localisation_ )
         throw std::runtime_error( "localisation not set" );
     const unsigned nNbrPoints = points.size();
-    localisation_->coordinates.n = nNbrPoints;
-    if( nNbrPoints )
-    {
-        if( ownsCoords_ )
-            delete[] pCoords_;
-        pCoords_ = new ASN1T_CoordLatLong[ nNbrPoints ];
-        localisation_->coordinates.elem = pCoords_;
 
-        for( unsigned i = 0; i < nNbrPoints; ++i )
-            converter_.ConvertToGeo( points[i], localisation_->coordinates.elem[i] );
-    }
+//    if( nNbrPoints )
+//    {
+//        if( ownsCoords_ )
+//            delete[] pCoords_;
+//        pCoords_ = new MsgCoordLatLong[ nNbrPoints ];
+//        localisation_->mutable_coordinates().mutable_elem() = pCoords_;
+
+        for( unsigned int i = 0; i < nNbrPoints; ++i )
+            converter_.ConvertToGeo( points[i], *localisation_->mutable_coordinates()->add_elem() );
+//    }
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +102,7 @@ void LocationSerializer::SetPoints( const T_PointVector& points )
 void LocationSerializer::VisitLines( const T_PointVector& points )
 {
     SetPoints( points );
-    localisation_->type = EnumLocationType::line;
+    localisation_->set_type( MsgLocation_Geometry_line );
 }
 
 // -----------------------------------------------------------------------------
@@ -109,7 +112,7 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 void LocationSerializer::VisitPolygon( const T_PointVector& points )
 {
     SetPoints( points );
-    localisation_->type = EnumLocationType::polygon;
+    localisation_->set_type( MsgLocation_Geometry_polygon );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,7 +134,7 @@ void LocationSerializer::VisitCircle( const geometry::Point2f& center, float rad
     points.push_back( center );
     points.push_back( geometry::Point2f( center.X(), center.Y() + radius ) ); // $$$$ AGE 2006-08-09: may go out of extent !
     SetPoints( points );
-    localisation_->type = EnumLocationType::circle ;
+    localisation_->set_type( MsgLocation_Geometry_circle );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,5 +145,5 @@ void LocationSerializer::VisitPoint( const geometry::Point2f& point )
 {
     T_PointVector points( 1, point );
     SetPoints( points );
-    localisation_->type = EnumLocationType::point;
+    localisation_->set_type( MsgLocation_Geometry_point );
 }

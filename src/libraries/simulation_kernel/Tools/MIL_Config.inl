@@ -54,7 +54,7 @@ bool MIL_Config::UseDiaDebugger() const
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-uint16 MIL_Config::GetDiaDebuggerPort() const
+unsigned short MIL_Config::GetDiaDebuggerPort() const
 {
     return diaDebuggerPort_;
 }
@@ -144,7 +144,7 @@ bool MIL_Config::UseNetworkLogger() const
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-uint16 MIL_Config::GetNetworkLoggerPort() const
+unsigned short MIL_Config::GetNetworkLoggerPort() const
 {
     return networkLoggerPort_;
 }
@@ -154,7 +154,7 @@ uint16 MIL_Config::GetNetworkLoggerPort() const
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-uint MIL_Config::GetCheckPointsFrequency() const
+unsigned int MIL_Config::GetCheckPointsFrequency() const
 {
     return checkPointsFrequency_;
 }
@@ -164,7 +164,7 @@ uint MIL_Config::GetCheckPointsFrequency() const
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-uint MIL_Config::GetCheckPointsKept() const
+unsigned int MIL_Config::GetCheckPointsKept() const
 {
     return checkPointsKept_;
 }
@@ -174,7 +174,7 @@ uint MIL_Config::GetCheckPointsKept() const
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-uint MIL_Config::GetTimeStep() const
+unsigned int MIL_Config::GetTimeStep() const
 {
     return timeStep_;
 }
@@ -184,7 +184,7 @@ uint MIL_Config::GetTimeStep() const
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-uint MIL_Config::GetTimeFactor() const
+unsigned int MIL_Config::GetTimeFactor() const
 {
     return timeFactor_; 
 }
@@ -194,7 +194,7 @@ uint MIL_Config::GetTimeFactor() const
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 inline
-uint16 MIL_Config::GetNetworkPort() const
+unsigned short MIL_Config::GetNetworkPort() const
 {
     return networkPort_;
 }
@@ -204,7 +204,7 @@ uint16 MIL_Config::GetNetworkPort() const
 // Created: NLD 2007-01-11
 // -----------------------------------------------------------------------------
 inline
-uint MIL_Config::GetPathFinderThreads() const
+unsigned int MIL_Config::GetPathFinderThreads() const
 {
     return pathFinderThreads_;
 }

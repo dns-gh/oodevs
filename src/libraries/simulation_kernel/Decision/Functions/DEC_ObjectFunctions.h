@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "protocol/protocol.h"
 
 class DEC_Decision_ABC;
 class DEC_Gen_Object;

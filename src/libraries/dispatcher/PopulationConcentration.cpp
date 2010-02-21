@@ -13,6 +13,7 @@
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "EntityPublisher.h"
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -20,14 +21,14 @@ using namespace dispatcher;
 // Name: PopulationConcentration constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( const Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg )
-    : SimpleEntity< kernel::PopulationConcentration_ABC >( msg.oid )
+PopulationConcentration::PopulationConcentration( const Population& population, const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
+    : SimpleEntity< kernel::PopulationConcentration_ABC >( msg.oid() )
     , population_     ( population )
-    , nID_            ( msg.oid )
-    , position_       ( msg.position )
+    , nID_            ( msg.oid() )
+    , position_       ( msg.position() )
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( EnumPopulationAttitude::agressive )    
+    , nAttitude_      ( Common::EnumPopulationAttitude::agressive )    
 {
 //    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentration >( *this ) );
 }
@@ -45,14 +46,14 @@ PopulationConcentration::~PopulationConcentration()
 // Name: PopulationConcentration::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentration::Update( const ASN1T_MsgPopulationConcentrationUpdate& msg )
+void PopulationConcentration::Update( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
 {
-    if( msg.m.attitudePresent )
-        nAttitude_ = msg.attitude;
-    if( msg.m.nb_humains_mortsPresent )
-        nNbrDeadHumans_ = msg.nb_humains_morts;
-    if( msg.m.nb_humains_vivantsPresent )
-        nNbrAliveHumans_ = msg.nb_humains_vivants;
+    if( msg.has_attitude()  )
+        nAttitude_ = msg.attitude();
+    if( msg.has_nb_humains_morts()  )
+        nNbrDeadHumans_ = msg.nb_humains_morts();
+    if( msg.has_nb_humains_vivants()  )
+        nNbrAliveHumans_ = msg.nb_humains_vivants();
 }
 
 // =============================================================================
@@ -67,9 +68,9 @@ void PopulationConcentration::SendCreation( ClientPublisher_ABC& publisher ) con
 {
     client::PopulationConcentrationCreation asn;
 
-    asn().oid = nID_;
-    asn().oid_population    = population_.GetId();
-    asn().position = position_;
+    asn().set_oid( nID_ );
+    asn().set_oid_population( population_.GetId() );
+    *asn().mutable_position() = position_;
 
     asn.Send( publisher );
 }
@@ -82,15 +83,15 @@ void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 {
     client::PopulationConcentrationUpdate asn;
 
-    asn().m.attitudePresent           = 1;
-    asn().m.nb_humains_mortsPresent   = 1;
-    asn().m.nb_humains_vivantsPresent = 1;
+//    asn().set_attitudePresent( 1 );
+//    asn().set_nb_humains_mortsPresent( 1 );
+//    asn().set_nb_humains_vivantsPresent( 1 );
 
-    asn().oid = nID_;
-    asn().oid_population     = population_.GetId();
-    asn().attitude           = nAttitude_;
-    asn().nb_humains_morts   = nNbrDeadHumans_;
-    asn().nb_humains_vivants = nNbrAliveHumans_;
+    asn().set_oid( nID_ );
+    asn().set_oid_population( population_.GetId() );
+    asn().set_attitude( nAttitude_ );
+    asn().set_nb_humains_morts( nNbrDeadHumans_ );
+    asn().set_nb_humains_vivants( nNbrAliveHumans_ );
     
     asn.Send( publisher );
 }
@@ -102,8 +103,8 @@ void PopulationConcentration::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 void PopulationConcentration::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationDestruction destruction;
-    destruction().oid_population    = population_.GetId();
-    destruction().oid               = nID_;
+    destruction().set_oid_population( population_.GetId() );
+    destruction().set_oid           ( nID_ );
     destruction.Send( publisher );
 }
 

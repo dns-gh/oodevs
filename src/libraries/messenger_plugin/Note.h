@@ -10,7 +10,7 @@
 #ifndef __Note_h_
 #define __Note_h_
 
-#include "game_asn/Messenger.h"
+#include "protocol/MessengerSenders.h"
 #include <list>
 
 namespace xml
@@ -41,7 +41,7 @@ class Note
 public:
     //! @name Constructors/Destructor
     //@{
-             Note(unsigned long id, const ASN1T_MsgNoteCreationRequest& message );
+             Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message );
     virtual ~Note();
     //@}
 
@@ -54,7 +54,7 @@ public:
     void AddChild( unsigned long note );
     void SetParent(unsigned long note);
 
-    void Update( const ASN1T_MsgNoteUpdateRequest& asn );
+    void Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher, bool stateParent ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;

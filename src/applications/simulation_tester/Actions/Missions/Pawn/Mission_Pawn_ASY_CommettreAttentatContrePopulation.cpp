@@ -43,9 +43,9 @@ void Mission_Pawn_ASY_CommettreAttentatContrePopulation::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContrePopulation = &asnMission;
+    Mission_Pion_ASY_CommettreAttentatContrePopulation& asnMission = *new Mission_Pion_ASY_CommettreAttentatContrePopulation();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_asy_commettre_attentatContrePopulation = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
     const Position& pointRepli_ = pTarget_->GetTestParam_Point();
@@ -65,8 +65,8 @@ void Mission_Pawn_ASY_CommettreAttentatContrePopulation::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASY_CommettreAttentatContrePopulation::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_asy_commettre_attentatContrePopulation );
-    ASN1T_Mission_Pion_ASY_CommettreAttentatContrePopulation& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContrePopulation;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_asy_commettre_attentatContrePopulation ());
+    Mission_Pion_ASY_CommettreAttentatContrePopulation& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_asy_commettre_attentatContrePopulation;
 
     ASN_Tools::Delete( asnMission.itineraire );
     ASN_Tools::Delete( asnMission.point_repli );

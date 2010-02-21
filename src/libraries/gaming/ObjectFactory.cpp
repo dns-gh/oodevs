@@ -36,6 +36,8 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
 
+#include "protocol/Simulation.h"
+
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -63,14 +65,14 @@ ObjectFactory::~ObjectFactory()
 // Name: ObjectFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
+Object_ABC* ObjectFactory::Create( const MsgsSimToClient::MsgObjectCreation& message )
 {
     Object* result = new Object( message, controllers_.controller_, static_.coordinateConverter_, static_.objectTypes_ );
     result->Attach( *new Explosions( controllers_.controller_, model_.fireResultsFactory_ ) );
     result->Attach< Positions >( *new ObjectPositions( result->GetType(), static_.coordinateConverter_ ) );
-    result->Attach< TacticalHierarchies >( *new ObjectHierarchies( *result, &model_.teams_.GetTeam( message.team ) ) );
+    result->Attach< TacticalHierarchies >( *new ObjectHierarchies( *result, &model_.teams_.GetTeam( message.team() ) ) );
     
-    Register( *result, message.attributes );
+    Register( *result, message.attributes() );
     
     result->Update( message );
     result->Polish();
@@ -81,44 +83,44 @@ Object_ABC* ObjectFactory::Create( const ASN1T_MsgObjectCreation& message )
 // Name: ObjectFactory::Register
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ObjectFactory::Register( Object_ABC& result, const ASN1T_ObjectAttributes& attributes ) const
+void ObjectFactory::Register( Object_ABC& result, const Common::MsgObjectAttributes& attributes ) const
 {
-    if ( attributes.m.logisticPresent )
+    if ( attributes.has_logistic()  )
         result.Attach< LogisticAttribute_ABC >( *new LogisticAttribute( controllers_.controller_, model_.agents_ ) );    
     
-    if ( attributes.m.constructionPresent )
+    if ( attributes.has_construction()  )
         result.Attach< ConstructionAttribute_ABC >( *new ConstructionAttribute( controllers_.controller_, static_.objectTypes_ ) );
     
-    if ( attributes.m.minePresent )
+    if ( attributes.has_mine()  )
         result.Attach< MineAttribute_ABC >( *new MineAttribute( controllers_.controller_, static_.objectTypes_ ) );
     
-    if ( attributes.m.bypassPresent )
+    if ( attributes.has_bypass()  )
         result.Attach< BypassAttribute_ABC >( *new BypassAttribute( controllers_.controller_ ) );
     
-    if ( attributes.m.obstaclePresent )
+    if ( attributes.has_obstacle()  )
         result.Attach< ObstacleAttribute_ABC >( *new ObstacleAttribute( controllers_.controller_ ) );
     
-    if ( attributes.m.crossing_sitePresent )
+    if ( attributes.has_crossing_site()  )
         result.Attach< CrossingSiteAttribute_ABC >( *new CrossingSiteAttribute( controllers_.controller_ ) );
     
-    if ( attributes.m.supply_routePresent )
+    if ( attributes.has_supply_route()  )
         result.Attach< SupplyRouteAttribute_ABC >( *new SupplyRouteAttribute( controllers_.controller_ ) );    
     
-    if ( attributes.m.nbcPresent )
+    if ( attributes.has_nbc()  )
         result.Attach< NBCAttribute_ABC >( *new NBCAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if ( attributes.m.activity_timePresent )
+    if ( attributes.has_activity_time()  )
         result.Attach< ActivityTimeAttribute_ABC >( *new ActivityTimeAttribute( controllers_.controller_ ) );
 
-    if ( attributes.m.toxic_cloudPresent )
+    if ( attributes.has_toxic_cloud()  )
         result.Attach< ToxicCloudAttribute_ABC >( *new ToxicCloudAttribute( controllers_.controller_, static_.coordinateConverter_ ) );
 
-    if( attributes.m.firePresent )
+    if( attributes.has_fire()  )
         result.Attach< FireAttribute_ABC >( *new FireAttribute( controllers_.controller_, static_.objectTypes_ ) );
 
-    if( attributes.m.medical_treatmentPresent )
+    if( attributes.has_medical_treatment()  )
         result.Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( controllers_.controller_, static_.objectTypes_ ) );
     
-    if( attributes.m.stockPresent )
+    if( attributes.has_stock() )
         result.Attach< StockAttribute_ABC >( *new StockAttribute( controllers_.controller_, static_.objectTypes_ ) );
 }

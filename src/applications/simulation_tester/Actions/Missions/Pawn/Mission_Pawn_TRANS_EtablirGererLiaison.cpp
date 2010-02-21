@@ -43,9 +43,9 @@ void Mission_Pawn_TRANS_EtablirGererLiaison::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_TRANS_EtablirGererLiaison& asnMission = *new ASN1T_Mission_Pion_TRANS_EtablirGererLiaison();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_trans_etablir_gerer_liaison;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_trans_etablir_gerer_liaison = &asnMission;
+    Mission_Pion_TRANS_EtablirGererLiaison& asnMission = *new Mission_Pion_TRANS_EtablirGererLiaison();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_trans_etablir_gerer_liaison = &asnMission;
 
     const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_TRANS_EtablirGererLiaison::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_TRANS_EtablirGererLiaison::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_trans_etablir_gerer_liaison );
-    ASN1T_Mission_Pion_TRANS_EtablirGererLiaison& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_trans_etablir_gerer_liaison;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_trans_etablir_gerer_liaison ());
+    Mission_Pion_TRANS_EtablirGererLiaison& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_trans_etablir_gerer_liaison;
 
     ASN_Tools::Delete( asnMission.position_deploiement );
 

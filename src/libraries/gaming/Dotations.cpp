@@ -58,21 +58,21 @@ void Dotations::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: Dotations::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Dotations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Dotations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( ! message.m.dotation_eff_ressourcePresent  )
+    if( ! message.has_dotation_eff_ressource()   )
         return;
 
-    uint nSize = message.dotation_eff_ressource.n;
+    uint nSize = message.dotation_eff_ressource().elem_size();
     std::vector< Dotation > differences; differences.reserve( nSize );
     while ( nSize > 0 )
     {
-        const ASN1T_ResourceDotations& value = message.dotation_eff_ressource.elem[ --nSize ];
-        Dotation previous( resolver_.Get( value.ressource_id ) );
-        if( Dotation* dotation = Find( value.ressource_id ) )
+        const MsgsSimToClient::ResourceDotations_ResourceDotation& value = message.dotation_eff_ressource().elem( --nSize );
+        Dotation previous( resolver_.Get( value.ressource_id() ) );
+        if( Dotation* dotation = Find( value.ressource_id() ) )
             previous = *dotation;
         Dotation current( previous );
-        current.quantity_ = value.quantite_disponible;
+        current.quantity_ = value.quantite_disponible();
         differences.push_back( current - previous );
     }
     Update( differences );

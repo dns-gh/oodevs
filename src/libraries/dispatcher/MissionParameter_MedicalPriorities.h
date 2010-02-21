@@ -10,8 +10,9 @@
 #ifndef __MissionParameter_MedicalPriorities_h_
 #define __MissionParameter_MedicalPriorities_h_
 
-#include "game_asn/Simulation.h"
+
 #include "MissionParameter_ABC.h"
+
 
 namespace dispatcher
 {
@@ -28,14 +29,14 @@ class MissionParameter_MedicalPriorities : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionParameter_MedicalPriorities( const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_MedicalPriorities( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_MedicalPriorities();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( ASN1T_MissionParameter& asn ) const;
-    virtual void AsnDelete( ASN1T_MissionParameter& asn ) const;
+    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
+    virtual void Delete( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:
@@ -48,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::vector< ASN1T_EnumHumanWound > medicalPriorities_;
+    std::vector< int > medicalPriorities_;
     //@}
 };
 

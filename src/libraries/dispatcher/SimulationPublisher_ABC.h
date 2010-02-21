@@ -10,8 +10,18 @@
 #ifndef __SimulationPublisher_ABC_h_
 #define __SimulationPublisher_ABC_h_
 
-#include "game_asn/SimulationSenders.h"
-#include "game_asn/DispatcherSenders.h"
+
+////using namespace Common;
+namespace MsgsDispatcherToSim
+{
+    class MsgDispatcherToSim;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgClientToSim;
+}
+
 
 namespace dispatcher
 {
@@ -34,8 +44,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsClientToSim& msg ) = 0;
-    virtual void Send( const ASN1T_MsgsDispatcherToSim& msg ) = 0;
+    virtual void Send( const MsgsClientToSim::MsgClientToSim& msg ) = 0;
+    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& msg ) = 0;
     //@}
 };
 

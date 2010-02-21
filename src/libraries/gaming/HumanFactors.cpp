@@ -53,16 +53,16 @@ void HumanFactors::CreateDictionary( kernel::PropertiesDictionary& dictionary ) 
 // Name: HumanFactors::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void HumanFactors::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void HumanFactors::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.moralPresent )
-        morale_ = (E_UnitMorale)message.moral;
+    if( message.has_moral()  )
+        morale_ = (E_UnitMorale)message.moral();
 
-    if( message.m.experiencePresent )
-        experience_ = (E_UnitExperience)message.experience;
+    if( message.has_experience()  )
+        experience_ = (E_UnitExperience)message.experience();
 
-    if( message.m.fatiguePresent )
-        tiredness_ = (E_UnitTiredness)message.fatigue;
+    if( message.has_fatigue()  )
+        tiredness_ = (E_UnitTiredness)message.fatigue();
 
     controller_.Update( *(HumanFactors_ABC*)this );
 }

@@ -12,11 +12,17 @@
 #ifndef __PopulationFlowKnowledge_h_
 #define __PopulationFlowKnowledge_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "PopulationPartKnowledge_ABC.h"
+
+namespace MsgsSimToClient
+{
+    class MsgFlowPart;
+    class MsgPopulationFlowKnowledgeCreation;
+    class MsgPopulationFlowKnowledgeUpdate;
+}
 
 namespace kernel
 {
@@ -31,14 +37,14 @@ namespace kernel
 // =============================================================================
 class PopulationFlowKnowledge : public PopulationPartKnowledge_ABC
                               , public kernel::Drawable_ABC
-                              , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeUpdate >
+                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate >
 {
 public:
     //! @name Types
     //@{
     struct FlowPart
     {
-        FlowPart( ASN1T_FlowPart& asn, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
+        FlowPart( const MsgsSimToClient::MsgFlowPart& message, const kernel::CoordinateConverter_ABC& converter, geometry::Rectangle2f& boundingBox );
         T_PointVector flowPart_;
         unsigned short relevance_;
     };
@@ -50,7 +56,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const ASN1T_MsgPopulationFlowKnowledgeCreation& asnMsg );
+             PopulationFlowKnowledge( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::Population_ABC& popu, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message );
     virtual ~PopulationFlowKnowledge();
     //@}
 
@@ -63,7 +69,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& asnMsg );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message );
     //@}
 
 private:

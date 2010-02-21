@@ -10,7 +10,15 @@
 #ifndef __IntelligenceOrder_h_
 #define __IntelligenceOrder_h_
 
-#include "game_asn/simulation.h"
+#include "protocol/Protocol.h"
+
+namespace Common
+{
+    class MsgIntelligence;
+    enum EnumNatureLevel;
+    enum EnumDiplomacy;
+    class MsgCoordLatLong;
+}
 
 namespace dispatcher
 {
@@ -28,13 +36,13 @@ class IntelligenceOrder
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit IntelligenceOrder( const ASN1T_Intelligence& asn );
+    explicit IntelligenceOrder( const Common::MsgIntelligence& asn );
     virtual ~IntelligenceOrder();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_Intelligence& asn ) const;
+    void Send( Common::MsgIntelligence& asn ) const;
     //@}
 
 private:
@@ -42,10 +50,10 @@ private:
     //@{
     std::string name_;
     std::string nature_;
-    ASN1T_EnumNatureLevel level_;
+    Common::EnumNatureLevel level_;
     bool embarked_;
-    ASN1T_CoordLatLong position_;
-    ASN1T_EnumDiplomacy diplomacy_;
+    Common::MsgCoordLatLong position_;
+    Common::EnumDiplomacy diplomacy_;
     unsigned int formation_;
     //@}
 };

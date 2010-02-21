@@ -39,14 +39,15 @@
 
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "DEC_AutomateFunctions.h"
 #include "DEC_GeometryFunctions.h"
+#include "protocol/ClientSenders.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsNeutralized
@@ -285,11 +286,11 @@ void DEC_AgentFunctions::DisableDiscreteMode( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::DecisionalState( const MIL_AgentPion& callerAgent, const std::string& key, const std::string& value )
 {
-    NET_ASN_MsgDecisionalState msg;
-    msg().oid   = callerAgent.GetID();
-    msg().key   = key.c_str();
-    msg().value = value.c_str();
-    msg.Send();
+    client::DecisionalState msg;
+    msg().set_oid   ( callerAgent.GetID() );
+    msg().set_key   ( key.c_str() );
+    msg().set_value ( value.c_str() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

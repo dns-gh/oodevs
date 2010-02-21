@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_HumanFactors.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
@@ -24,6 +23,7 @@
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 
 #include <xeumeuleu/xml.h>
+#include "protocol/clientsenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_HumanFactors )
 
@@ -69,10 +69,10 @@ PHY_RolePion_HumanFactors::~PHY_RolePion_HumanFactors()
 // Name: PHY_RolePion_HumanFactors::load
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< PHY_RoleInterface_HumanFactors >( *this );
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pMorale_ = PHY_Morale::Find( nID );
     assert( pMorale_ );
@@ -90,7 +90,7 @@ void PHY_RolePion_HumanFactors::load( MIL_CheckPointInArchive& file, const uint 
 // Name: PHY_RolePion_HumanFactors::save
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-void PHY_RolePion_HumanFactors::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_RolePion_HumanFactors::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pMorale_ );
     assert( pExperience_ );
@@ -169,22 +169,18 @@ void PHY_RolePion_HumanFactors::ReadExperience( xml::xistream& xis )
 // Name: PHY_RolePion_HumanFactors::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_HumanFactors::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_HumanFactors::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.fatiguePresent    = 1;
-    msg().m.moralPresent      = 1;
-    msg().m.experiencePresent = 1;
-
-    msg().fatigue    = pTiredness_ ->GetAsnID();
-    msg().moral      = pMorale_    ->GetAsnID();
-    msg().experience = pExperience_->GetAsnID();
+    msg().set_fatigue   ( pTiredness_ ->GetAsnID() );
+    msg().set_moral     ( pMorale_    ->GetAsnID() );
+    msg().set_experience( pExperience_->GetAsnID() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_HumanFactors::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_HumanFactors::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_HumanFactors::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

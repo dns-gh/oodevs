@@ -11,13 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Tiredness.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
 
-const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , EnumUnitTiredness::normal , 1. );
-const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, EnumUnitTiredness::fatigue, 1. );
-const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , EnumUnitTiredness::epuise , 1. );
+const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , Common::EnumUnitTiredness::normal , 1. );
+const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, Common::EnumUnitTiredness::fatigue, 1. );
+const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , Common::EnumUnitTiredness::epuise , 1. );
 
 struct PHY_Tiredness::LoadingWrapper
 {
@@ -76,7 +77,7 @@ void PHY_Tiredness::Terminate()
 // Name: PHY_Tiredness constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Tiredness::PHY_Tiredness( const std::string& strName, E_TirednessType nType, ASN1T_EnumUnitTiredness nAsnID, MT_Float rDIAWeight )
+PHY_Tiredness::PHY_Tiredness( const std::string& strName, E_TirednessType nType, Common::EnumUnitTiredness nAsnID, MT_Float rDIAWeight )
     : strName_                       ( strName )
     , nType_                         ( nType   )
     , nAsnID_                        ( nAsnID  )
@@ -127,9 +128,9 @@ void PHY_Tiredness::Read( xml::xistream& xis )
 // Name: PHY_Tiredness::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Tiredness* PHY_Tiredness::Find( ASN1T_EnumUnitTiredness nAsnID )
+const PHY_Tiredness* PHY_Tiredness::Find( Common::EnumUnitTiredness nAsnID )
 {
-    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumUnitTiredness >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetAsnID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
+    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< Common::EnumUnitTiredness >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetAsnID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
 
     return it == tirednesses_.end() ? 0 : it->second;
 }
@@ -138,9 +139,9 @@ const PHY_Tiredness* PHY_Tiredness::Find( ASN1T_EnumUnitTiredness nAsnID )
 // Name: PHY_Tiredness::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Tiredness* PHY_Tiredness::Find( uint nID )
+const PHY_Tiredness* PHY_Tiredness::Find( unsigned int nID )
 {
-    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
+    CIT_TirednessMap it = std::find_if( tirednesses_.begin(), tirednesses_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Tiredness::GetID ), std::select2nd< T_TirednessMap::value_type >() ) ) );
 
     return it == tirednesses_.end() ? 0 : it->second;
 }
@@ -170,7 +171,7 @@ const std::string& PHY_Tiredness::GetName() const
 // Name: PHY_Tiredness::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitTiredness PHY_Tiredness::GetAsnID() const
+Common::EnumUnitTiredness PHY_Tiredness::GetAsnID() const
 {
     return nAsnID_;
 }
@@ -242,9 +243,9 @@ bool PHY_Tiredness::operator!=( const PHY_Tiredness& rhs ) const
 // Name: PHY_Tiredness::GetID
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
-uint PHY_Tiredness::GetID() const
+unsigned int PHY_Tiredness::GetID() const
 {
-    return (uint)nType_;
+    return (unsigned int)nType_;
 }
 
 // -----------------------------------------------------------------------------

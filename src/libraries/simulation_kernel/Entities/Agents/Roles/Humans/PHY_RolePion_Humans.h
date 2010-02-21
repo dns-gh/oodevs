@@ -36,15 +36,15 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     void WriteODB( xml::xostream& xos ) const;
     //@}
     
     //! @name Accessors
     //@{
-    virtual uint GetNbrUsableHumans() const;
-    virtual uint GetNbrAliveHumans ( const PHY_HumanRank& rank ) const;
-    virtual uint GetNbrHumans      ( const PHY_HumanRank& rank ) const;
+    virtual unsigned int GetNbrUsableHumans() const;
+    virtual unsigned int GetNbrAliveHumans ( const PHY_HumanRank& rank ) const;
+    virtual unsigned int GetNbrHumans      ( const PHY_HumanRank& rank ) const;
     //@}
 
     //! @name Notifications
@@ -71,13 +71,13 @@ public:
     virtual bool HasChanged    () const;
 
     virtual void HealAllHumans           ();
-    virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNbrAvailable );
+    virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNbrAvailable );
     //@}
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
+    virtual void SendChangedState( client::UnitAttributes& asn ) const;
+    virtual void SendFullState   ( client::UnitAttributes& asn ) const;
     //@}
 
 private:
@@ -97,16 +97,16 @@ private:
     {
         T_HumanData();
         
-        template< typename Archive > void serialize( Archive&, const uint );
+        template< typename Archive > void serialize( Archive&, const unsigned int );
         
-        uint nNbrTotal_;
-        uint nNbrOperational_;
-        uint nNbrDead_;
-        uint nNbrWounded_;
-        uint nNbrMentalDiseased_;
-        uint nNbrNBC_;
-        uint nNbrInLogisticMedical_;
-        uint nNbrInLogisticMaintenance_;
+        unsigned int nNbrTotal_;
+        unsigned int nNbrOperational_;
+        unsigned int nNbrDead_;
+        unsigned int nNbrWounded_;
+        unsigned int nNbrMentalDiseased_;
+        unsigned int nNbrNBC_;
+        unsigned int nNbrInLogisticMedical_;
+        unsigned int nNbrInLogisticMaintenance_;
         bool bHasChanged_;
     };
 
@@ -125,15 +125,15 @@ private:
 private:
     MIL_AgentPion&    pion_;
     T_HumanDataVector humansData_;
-    uint              nNbrUsableHumans_;
+    unsigned int              nNbrUsableHumans_;
 
-    uint              nNbrHumans_;
-    uint              nNbrHumansDataChanged_;
+    unsigned int              nNbrHumans_;
+    unsigned int              nNbrHumansDataChanged_;
     T_HumanSet        humansToUpdate_; // $$$ A virer - Tester perfs avec update sur tous les humains
 
     // Medical
     T_MedicalHumanStateSet medicalHumanStates_;
-    uint                   nTickRcMedicalQuerySent_;
+    unsigned int                   nTickRcMedicalQuerySent_;
     E_EvacuationMode       nEvacuationMode_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Humans* role, const unsigned int /*version*/ );

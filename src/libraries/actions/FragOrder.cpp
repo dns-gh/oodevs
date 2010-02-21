@@ -9,16 +9,20 @@
 
 #include "actions_pch.h"
 #include "FragOrder.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/publisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include <xeumeuleu/xml.h>
 
+using namespace Common;
 using namespace kernel;
 using namespace actions;
+
+using namespace MsgsClientToSim;
 
 namespace
 {
@@ -94,12 +98,12 @@ void FragOrder::Serialize( xml::xostream& xos ) const
 // -----------------------------------------------------------------------------
 void FragOrder::Publish( Publisher_ABC& publisher ) const
 {
-    simulation::FragOrder asn;
-    asn().oid = GetEntity().GetId();
-    asn().frag_order = GetType().GetId();
-    CommitTo( asn().parametres );
-    asn.Send( publisher );
-    Clean( asn().parametres );
+    simulation::FragOrder message;
+    message().set_oid( GetEntity().GetId() );
+    message().set_frag_order( GetType().GetId() );
+    CommitTo( *message().mutable_parametres() );
+    message.Send( publisher );
+    message().Clear();
 }
 // -----------------------------------------------------------------------------
 // Name: FragOrder::Accept

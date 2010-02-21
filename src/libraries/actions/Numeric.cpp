@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "Numeric.h"
 #include "ParameterVisitor_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -31,7 +32,7 @@ Numeric::Numeric( const kernel::OrderParameter& parameter, float value )
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
 Numeric::Numeric( const kernel::OrderParameter& parameter, xml::xistream& xis )
-: Parameter< float >( parameter, xml::attribute< float >( xis, "value" ) )
+    : Parameter< float >( parameter, xml::attribute< float >( xis, "value" ) )
 {
     // NOTHING
 }
@@ -59,21 +60,21 @@ void Numeric::Serialize( xml::xostream& xos ) const
 // Name: Numeric::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Numeric::CommitTo( ASN1T_MissionParameter& asn ) const
+void Numeric::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_aReal;
+    message.set_null_value( !IsSet() );
+    message.mutable_value();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        asn.value.u.aReal = GetValue();
+        message.mutable_value()->set_areal( GetValue() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Numeric::CommitTo
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-void Numeric::CommitTo( ASN1REAL& asn ) const
+void Numeric::CommitTo( T_Setter setter ) const
 {
-    asn = GetValue();
+    setter( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

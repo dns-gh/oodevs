@@ -43,9 +43,9 @@ void Mission_Pawn_SecuriserZoneContrePopulations::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_SecuriserZoneContrePopulations& asnMission = *new ASN1T_Mission_Pion_SecuriserZoneContrePopulations();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_securiser_zone_contre_populations;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_securiser_zone_contre_populations = &asnMission;
+    Mission_Pion_SecuriserZoneContrePopulations& asnMission = *new Mission_Pion_SecuriserZoneContrePopulations();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_securiser_zone_contre_populations = &asnMission;
 
     const Position& point_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_SecuriserZoneContrePopulations::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_SecuriserZoneContrePopulations::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_securiser_zone_contre_populations );
-    ASN1T_Mission_Pion_SecuriserZoneContrePopulations& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_securiser_zone_contre_populations;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_securiser_zone_contre_populations ());
+    Mission_Pion_SecuriserZoneContrePopulations& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_securiser_zone_contre_populations;
 
     ASN_Tools::Delete( asnMission.point );
 

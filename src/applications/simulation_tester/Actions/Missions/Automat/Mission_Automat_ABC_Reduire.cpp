@@ -43,9 +43,9 @@ void Mission_Automat_ABC_Reduire::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_Reduire& asnMission = *new ASN1T_Mission_Automate_ABC_Reduire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_reduire;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_reduire = &asnMission;
+    Mission_Automate_ABC_Reduire& asnMission = *new Mission_Automate_ABC_Reduire();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_reduire = &asnMission;
 
     const Location& zoneResistance_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_ABC_Reduire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_Reduire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_reduire );
-    ASN1T_Mission_Automate_ABC_Reduire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_reduire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_reduire ());
+    Mission_Automate_ABC_Reduire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_reduire;
 
     ASN_Tools::Delete( asnMission.zone_resistance );
 

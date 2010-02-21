@@ -24,7 +24,7 @@ class DEC_Rep_PathPoint_Lima : public DEC_Rep_PathPoint
 {
 
 public:
-    DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, uint nLimaID, const MIL_LimaFunction& function );
+    DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, unsigned int nLimaID, const MIL_LimaFunction& function );
     virtual ~DEC_Rep_PathPoint_Lima();
 
     //! @name Accessors

@@ -13,12 +13,15 @@
 #define __PHY_ComposanteType_h_
 
 #include "MIL.h"
-
 #include "PHY_ComposanteType_ABC.h"
-
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacities.h"
 #include "MT_Tools/MT_Random.h"
+
+namespace Common
+{
+    class MsgEquipmentType;
+}
 
 namespace xml
 {
@@ -64,12 +67,12 @@ public:
     static void Terminate ();
 
     static const PHY_ComposanteTypePion* Find( const std::string& strName );
-    static const PHY_ComposanteTypePion* Find( ASN1T_EquipmentType nAsnID );
+    static const PHY_ComposanteTypePion* Find( Common::MsgEquipmentType nAsnID );
     //@}
 
     //! @name Instanciation
     //@{
-    PHY_ComposantePion& InstanciateComposante( PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const;
+    PHY_ComposantePion& InstanciateComposante( PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy ) const;
     void                InstanciateWeapons   ( std::back_insert_iterator < std::vector< PHY_Weapon* > > inserter ) const;
     void                InstanciateSensors   ( std::back_insert_iterator < std::vector< PHY_Sensor* > > inserter ) const;
     void                InstanciateProtections  ( std::back_insert_iterator < std::vector< PHY_HumanProtection* > > inserter ) const;
@@ -159,22 +162,22 @@ public:
     bool     CanHealHumans                               () const;
     bool     CanDiagnoseHumans                           () const;
     bool     CanSortHumans                               () const;
-    uint     GetAmbulanceCollectionCapacity              () const;
+    unsigned int     GetAmbulanceCollectionCapacity              () const;
     MT_Float GetNbrHumansLoadedForCollectionPerTimeStep  () const;
     MT_Float GetNbrHumansUnloadedForCollectionPerTimeStep() const;
-    uint     GetAmbulanceEvacuationCapacity              () const;
+    unsigned int     GetAmbulanceEvacuationCapacity              () const;
     MT_Float GetNbrHumansLoadedForEvacuationPerTimeStep  () const;
     MT_Float GetNbrHumansUnloadedForEvacuationPerTimeStep() const;
-    uint     GetHealingTime                              ( const PHY_Human& human ) const;
-    uint     Heal                                        (       PHY_Human& human ) const;
+    unsigned int     GetHealingTime                              ( const PHY_Human& human ) const;
+    unsigned int     Heal                                        (       PHY_Human& human ) const;
     //@}
 
     //! @name Logistic - supply
     //@{
           bool                 CanTransportStock               ( const PHY_DotationCategory& dotationCategory ) const;  // Indépendamment du fait que la composante peut faire partie d'un convoi
           void                 GetStockTransporterCapacity     ( MT_Float& rWeightMax, MT_Float& rVolumeMax ) const;
-          uint                 GetStockTransporterLoadingTime  () const;
-          uint                 GetStockTransporterUnloadingTime() const;
+          unsigned int                 GetStockTransporterLoadingTime  () const;
+          unsigned int                 GetStockTransporterUnloadingTime() const;
     const PHY_DotationNature*  GetStockTransporterNature       () const;
     //@}
 
@@ -224,7 +227,7 @@ private:
         const PHY_MaintenanceLevel* pMaintenanceLevel_;
               bool                  bMobility_;
               bool                  bElectronic_;
-              uint                  nMaxTime_;
+              unsigned int                  nMaxTime_;
     };
 
     typedef std::set< sNTICapability >         T_NTICapabilitySet;
@@ -341,13 +344,13 @@ private:
     T_WoundCapabilityVector woundCollectionCapabilities_;
     bool                    bCanCollectMentalDiseases_;
     bool                    bCanCollectContaminated_;
-    uint                    nAmbulanceCollectionCapacity_;
+    unsigned int                    nAmbulanceCollectionCapacity_;
     MT_Float                rNbrHumansLoadedForCollectionPerTimeStep_;
     MT_Float                rNbrHumansUnloadedForCollectionPerTimeStep_;
     T_WoundCapabilityVector woundEvacuationCapabilities_;
     bool                    bCanEvacuateMentalDiseases_;
     bool                    bCanEvacuateContaminated_;
-    uint                    nAmbulanceEvacuationCapacity_;
+    unsigned int                    nAmbulanceEvacuationCapacity_;
     MT_Float                rNbrHumansLoadedForEvacuationPerTimeStep_;
     MT_Float                rNbrHumansUnloadedForEvacuationPerTimeStep_;
     T_WoundCapabilityVector woundHealingCapabilities_;

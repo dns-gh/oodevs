@@ -48,7 +48,7 @@ Deserializer& operator>>( Deserializer& deserializer,       TER_Localisation& lo
 template< typename Type >
 Serializer& operator<<( Serializer& serializer, const std::vector< Type >& v )
 {
-    serializer << uint32( v.size() );
+    serializer << unsigned long( v.size() );
     for( std::vector< Type >::const_iterator it = v.begin(); it != v.end(); ++it )
         serializer << *it;
     return serializer;
@@ -57,7 +57,7 @@ Serializer& operator<<( Serializer& serializer, const std::vector< Type >& v )
 template< typename Type >
 Deserializer& operator>>( Deserializer& deserializer, std::vector< Type >& v )
 {
-    uint32 nSize;
+    unsigned long nSize;
     deserializer >> nSize;
     v.reserve( nSize );
     while( nSize-- > 0 )

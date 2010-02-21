@@ -37,7 +37,7 @@ class NetworkManager
 public:
     //! @name Constructors/Destructor
     //@{
-             NetworkManager( Workspace& workspace, const std::string& strHostName, uint nPort );
+             NetworkManager( Workspace& workspace, const std::string& strHostName, unsigned int nPort );
     virtual ~NetworkManager();
     //@}
 
@@ -67,7 +67,7 @@ private:
     //! @name Member data
     //@{
 	std::string        strServerHost_;
-	uint               nServerPort_;
+	unsigned int               nServerPort_;
 
 	DIN::DIN_Engine    dinEngine_;
     DIN::DIN_Link*     pLink_;

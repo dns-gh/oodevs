@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_ComposanteTypePion.h"
-
 #include "PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ActiveProtection.h"
@@ -34,11 +32,10 @@
 #include "Entities/Objects/BuildableCapacity.h"
 #include "Entities/Objects/MobilityCapacity.h"
 #include "PHY_ComposanteTypeObjectData.h"
+#include "protocol/protocol.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
-
-
 
 PHY_ComposanteTypePion::T_ComposanteTypeMap PHY_ComposanteTypePion::composantesTypes_;
 MT_Random                                   PHY_ComposanteTypePion::randomGenerator_;
@@ -106,7 +103,7 @@ void PHY_ComposanteTypePion::ReadElement( xml::xistream& xis, const MIL_Time_ABC
         xis.error( "Composante type '" + strComposanteType + "' already registered" );
     pComposanteType = new PHY_ComposanteTypePion( time, strComposanteType, xis );
 
-    if( !ids_.insert( pComposanteType->GetMosID() ).second )
+    if( !ids_.insert( pComposanteType->GetMosID().equipment() ).second )
         xis.error( "Composante ID already used" );
 }
 

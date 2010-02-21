@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_Reduire::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_Reduire& asnMission = *new ASN1T_Mission_Pion_ABC_Reduire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_reduire;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_reduire = &asnMission;
+    Mission_Pion_ABC_Reduire& asnMission = *new Mission_Pion_ABC_Reduire();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_reduire = &asnMission;
 
 
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.unite_a_reduire );
@@ -59,8 +59,8 @@ void Mission_Pawn_ABC_Reduire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_Reduire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_reduire );
-    ASN1T_Mission_Pion_ABC_Reduire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_reduire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_reduire ());
+    Mission_Pion_ABC_Reduire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_reduire;
 
 
     delete &asnMission;

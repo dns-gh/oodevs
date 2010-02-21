@@ -46,7 +46,7 @@ LogisticConsignFactory::~LogisticConsignFactory()
 // Name: LogisticConsignFactory::CreateMaintenanceConsign
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const ASN1T_MsgLogMaintenanceHandlingCreation& message )
+LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message )
 {
     return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, static_.types_, static_.objectTypes_ );
 }
@@ -55,7 +55,7 @@ LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const A
 // Name: LogisticConsignFactory::CreateSupplyConsign
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const ASN1T_MsgLogSupplyHandlingCreation& message )
+LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const MsgsSimToClient::MsgLogSupplyHandlingCreation& message )
 {
     return new LogSupplyConsign( controllers_.controller_, model_.agents_, model_.agents_, static_.objectTypes_, message );
 }
@@ -64,7 +64,7 @@ LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const ASN1T_MsgLo
 // Name: LogisticConsignFactory::CreateMedicalConsign
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMedicalConsign* LogisticConsignFactory::CreateMedicalConsign( const ASN1T_MsgLogMedicalHandlingCreation& message )
+LogMedicalConsign* LogisticConsignFactory::CreateMedicalConsign( const MsgsSimToClient::MsgLogMedicalHandlingCreation& message )
 {
     return new LogMedicalConsign( controllers_.controller_, model_.agents_, message );
 }

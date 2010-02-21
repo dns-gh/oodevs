@@ -10,11 +10,21 @@
 #ifndef __Diplomacies_h_
 #define __Diplomacies_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+namespace Common
+{
+    class MsgChangeDiplomacyAck;
+    class MsgChangeDiplomacy;
+}
+namespace MsgsSimToClient
+{
+    class MsgTeamCreation;
+}
 
 namespace kernel
 {
@@ -30,9 +40,9 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class Diplomacies : public kernel::Diplomacies_ABC
-                  , public kernel::Updatable_ABC< ASN1T_MsgTeamCreation >
-                  , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacyAck >
-                  , public kernel::Updatable_ABC< ASN1T_MsgChangeDiplomacy >
+                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgTeamCreation >
+                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgChangeDiplomacyAck >
+                  , public kernel::Updatable_ABC< Common::MsgChangeDiplomacy >
 {
 
 public:
@@ -63,9 +73,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgTeamCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeDiplomacyAck& message );
-    virtual void DoUpdate( const ASN1T_MsgChangeDiplomacy& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgTeamCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& message );
+    virtual void DoUpdate( const Common::MsgChangeDiplomacy& message );
     template< typename T >
     void UpdateData( const T& message );
     //@}

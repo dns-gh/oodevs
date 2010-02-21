@@ -18,11 +18,11 @@ using namespace kernel;
 // Name: AmmoEffect constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-AmmoEffect::AmmoEffect( const ASN1T_MsgStartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
+AmmoEffect::AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, Controller& controller, const CoordinateConverter_ABC& converter )
     : controller_( controller )
-    , id_( message.effect_oid )
-    , type_( message.type )
-    , ellipse_( message.location, converter )
+    , id_( message.effect_oid() )
+    , type_( message.type() )
+    , ellipse_( message.location(), converter )
 {
     controller_.Create( *this );
 }

@@ -11,15 +11,196 @@
 #define __AgentServerMsgMgr_h_
 
 #include "clients_kernel/Types.h"
-#include "game_asn/Simulation.h"
-#include "game_asn/Messenger.h"
-#include "game_asn/Aar.h"
-#include "game_asn/Plugin.h"
-#include "game_asn/Messenger.h"
-#include "game_asn/Dispatcher.h"
-#include "game_asn/Replay.h"
-#include "game_asn/Authentication.h"
-#include "game_asn/Publisher_ABC.h"
+#include "protocol/publisher_ABC.h"
+
+namespace MsgsDispatcherToClient
+{
+    class MsgDispatcherToClient;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+
+    class MsgUnitVisionCones;
+    class MsgUnitDetection;
+    class MsgObjectDetection;
+    class MsgPopulationConcentrationDetection;
+    class MsgPopulationFlowDetection;
+    class MsgDebugPoints;
+    class MsgControlDatetimeChangeAck;
+    class MsgControlInformation;
+    class MsgControlProfilingInformation;
+    class MsgControlBeginTick;
+    class MsgControlEndTick;
+    class MsgAutomatCreation;
+    class MsgUnitCreation;
+    class MsgUnitDestruction;
+    class MsgTeamCreation;
+    class MsgUnitAttributes;
+    class MsgUnitMagicActionAck;
+    class MsgUnitPathFind;
+    class MsgAutomatAttributes;
+    class MsgLogMaintenanceHandlingCreation;
+    class MsgLogMaintenanceHandlingDestruction;
+    class MsgLogMaintenanceHandlingUpdate;
+    class MsgLogMaintenanceState;
+    class MsgLogMedicalHandlingCreation;
+    class MsgLogMedicalHandlingDestruction;
+    class MsgLogMedicalHandlingUpdate;
+    class MsgLogMedicalState;
+    class MsgLogSupplyHandlingCreation;
+    class MsgLogSupplyHandlingDestruction;
+    class MsgLogSupplyHandlingUpdate;
+    class MsgLogSupplyState;
+    class MsgLogSupplyQuotas;
+    class MsgLogSupplyChangeQuotasAck;
+    class MsgLogSupplyPushFlowAck;
+    class MsgObjectCreation;
+    class MsgObjectUpdate;
+    class MsgObjectDestruction;
+    class MsgObjectMagicActionAck;
+    class MsgUnitKnowledgeCreation;
+    class MsgUnitKnowledgeUpdate;
+    class MsgUnitKnowledgeDestruction;
+    class MsgObjectKnowledgeCreation;
+    class MsgObjectKnowledgeUpdate;
+    class MsgObjectKnowledgeDestruction;
+    class MsgPopulationKnowledgeCreation;
+    class MsgPopulationKnowledgeUpdate;
+    class MsgPopulationKnowledgeDestruction;
+    class MsgPopulationConcentrationKnowledgeCreation;
+    class MsgPopulationConcentrationKnowledgeUpdate;
+    class MsgPopulationConcentrationKnowledgeDestruction;
+    class MsgPopulationFlowKnowledgeCreation;
+    class MsgPopulationFlowKnowledgeUpdate;
+    class MsgPopulationFlowKnowledgeDestruction;
+    class MsgAutomatOrderAck;
+    class MsgUnitOrderAck;
+    class MsgFragOrderAck;
+    class MsgUnitCreationRequestAck;
+    class MsgSetAutomatModeAck;
+    class MsgUnitChangeSuperiorAck;
+    class MsgChangeDiplomacyAck;
+    class MsgAutomatChangeSuperiorAck;
+    class MsgAutomatChangeKnowledgeGroupAck;
+    class MsgAutomatChangeLogisticLinksAck;
+    class MsgReport;
+    class MsgInvalidateReport;
+    class MsgTrace;
+    class MsgDecisionalState;
+    class MsgStartUnitFire;
+    class MsgStopUnitFire;
+    class MsgExplosion;
+    class MsgStartFireEffect;
+    class MsgStopFireEffect;
+    class MsgStartPopulationFire;
+    class MsgStopPopulationFire;
+    class MsgPopulationCreation;
+    class MsgPopulationUpdate;
+    class MsgPopulationConcentrationCreation;
+    class MsgPopulationConcentrationDestruction;
+    class MsgPopulationConcentrationUpdate;
+    class MsgPopulationFlowCreation;
+    class MsgPopulationFlowDestruction;
+    class MsgPopulationFlowUpdate;
+    class MsgPopulationMagicActionAck;
+    class MsgPopulationOrderAck;
+    class MsgFolkCreation;
+    class MsgFolkGraphUpdate;
+    class MsgUrbanKnowledgeCreation;
+    class MsgUrbanKnowledgeUpdate;
+    class MsgUrbanKnowledgeDestruction;
+    class MsgKnowledgeGroupCreation;
+    class MsgKnowledgeGroupCreationAck;
+    class MsgKnowledgeGroupUpdate;
+    class MsgKnowledgeGroupUpdateAck;
+    class MsgUrbanCreation;
+    class MsgUrbanDetection;
+    class MsgControlPauseAck;
+    class MsgControlResumeAck;
+    class MsgControlChangeTimeFactorAck;
+}
+
+namespace Common
+{
+    class MsgChangeDiplomacy;
+    class MsgFormationCreation;
+    class MsgAutomatOrder;
+    class MsgUnitOrder;
+    class MsgUnitChangeSuperior;
+    class MsgAutomatChangeSuperior;
+    class MsgAutomatChangeKnowledgeGroup;
+    class MsgAutomatChangeLogisticLinks;
+    class MsgPopulationOrder;
+    class MsgTextMessage;
+}
+
+namespace MsgsReplayToClient
+{
+    class MsgReplayToClient;
+    class MsgControlSkipToTickAck;
+    class MsgControlReplayInformation;
+}
+
+namespace MsgsAuthenticationToClient
+{
+    class MsgAuthenticationToClient;
+    class MsgAuthenticationResponse;
+    class MsgProfileCreation;
+    class MsgProfileCreationRequestAck;
+    class MsgProfileDestruction;
+    class MsgProfileDestructionRequestAck;
+    class MsgProfileUpdate;
+    class MsgProfileUpdateRequestAck;
+}
+
+namespace MsgsMessengerToClient
+{
+    class MsgMessengerToClient;
+    class MsgLimitCreationRequestAck;
+    class MsgLimitUpdateRequestAck;
+    class MsgLimitDestructionRequestAck;
+    class MsgLimaCreationRequestAck;
+    class MsgLimaUpdateRequestAck;
+    class MsgLimaDestructionRequestAck;
+    class MsgLimitCreation;
+    class MsgLimitUpdate;
+    class MsgLimitDestruction;
+    class MsgLimaCreation;
+    class MsgLimaUpdate;
+    class MsgLimaDestruction;
+    class MsgMessengerToClient;
+    class MsgIntelligenceCreation;
+    class MsgIntelligenceUpdate;
+    class MsgIntelligenceDestruction;
+    class MsgIntelligenceCreationRequestAck;
+    class MsgIntelligenceUpdateRequestAck;
+    class MsgIntelligenceDestructionRequestAck;
+    class MsgShapeCreation;
+    class MsgShapeUpdate;
+    class MsgShapeDestruction;
+    class MsgShapeCreationRequestAck;
+    class MsgShapeUpdateRequestAck;
+    class MsgShapeDestructionRequestAck;
+    class MsgNoteCreation;
+    class MsgNoteUpdate;
+    class MsgNoteDestruction;
+}
+
+namespace MsgsAarToClient
+{
+    class MsgAarToClient;
+    class MsgAarInformation;
+    class MsgPlotResult;
+    class MsgIndicator;
+}
+
+namespace MsgsPluginToClient
+{
+    class MsgPluginToClient;
+    class MsgPluginTextMessage;
+}
 
 namespace tools
 {
@@ -49,7 +230,7 @@ public:
     //! @name Constructor/Destructor
     //@{
              AgentServerMsgMgr( tools::MessageDispatcher_ABC& dispatcher, tools::MessageSender_ABC& sender, 
-                 Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands ); 
+             Services& services, Simulation& simu, kernel::Logger_ABC& logger, CommandHandler& commands ); 
     virtual ~AgentServerMsgMgr();
     //@}
 
@@ -58,11 +239,11 @@ public:
     void Connect( const std::string& host );
     void Disconnect();
 
-    virtual void Send( const ASN1T_MsgsClientToSim& message );
-    virtual void Send( const ASN1T_MsgsClientToAuthentication& message );
-    virtual void Send( const ASN1T_MsgsClientToReplay& message );
-    virtual void Send( const ASN1T_MsgsClientToAar& message );
-    virtual void Send( const ASN1T_MsgsClientToMessenger& message ) ;
+    virtual void Send( const MsgsClientToSim::MsgClientToSim&                       wrapper );
+    virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper );
+    virtual void Send( const MsgsClientToReplay::MsgClientToReplay&                 wrapper );
+    virtual void Send( const MsgsClientToAar::MsgClientToAar&                       wrapper );
+    virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger&           wrapper ) ;
 
     void SetElements( Model& model, Profile& profile );
     //@}
@@ -70,228 +251,222 @@ public:
 private:
     //! @name Message callbacks
     //@{
-    // ASN
-    void OnReceiveMsgSimToClient           ( const std::string& from, const ASN1T_MsgsSimToClient& message );
-    void OnReceiveMsgAuthenticationToClient( const std::string& from, const ASN1T_MsgsAuthenticationToClient& message );
-    void OnReceiveMsgReplayToClient        ( const std::string& from, const ASN1T_MsgsReplayToClient& message );
-    void OnReceiveMsgAarToClient           ( const std::string& from, const ASN1T_MsgsAarToClient& message );
-    void OnReceiveMsgMessengerToClient     ( const std::string& from, const ASN1T_MsgsMessengerToClient& message );
-    void OnReceiveMsgDispatcherToClient    ( const std::string& from, const ASN1T_MsgsDispatcherToClient& message );
-    void OnReceiveMsgPluginToClient    ( const std::string& from, const ASN1T_MsgsPluginToClient& message );
+    void OnReceiveMsgSimToClient           ( const std::string& from, const MsgsSimToClient::MsgSimToClient&                        wrapper );
+    void OnReceiveMsgAuthenticationToClient( const std::string& from, const MsgsAuthenticationToClient::MsgAuthenticationToClient&  wrapper );
+    void OnReceiveMsgReplayToClient        ( const std::string& from, const MsgsReplayToClient::MsgReplayToClient&                  wrapper );
+    void OnReceiveMsgAarToClient           ( const std::string& from, const MsgsAarToClient::MsgAarToClient&                        wrapper );
+    void OnReceiveMsgMessengerToClient     ( const std::string& from, const MsgsMessengerToClient::MsgMessengerToClient&            wrapper );
+    void OnReceiveMsgDispatcherToClient    ( const std::string& from, const MsgsDispatcherToClient::MsgDispatcherToClient&          wrapper );
+    void OnReceiveMsgPluginToClient        ( const std::string& from, const MsgsPluginToClient::MsgPluginToClient&                  wrapper );
 
-    void OnReceiveMsgUnitVisionCones                       ( const ASN1T_MsgUnitVisionCones& message );
-    void OnReceiveMsgUnitInterVisibility                   ( const ASN1T_MsgUnitDetection& message );
-    void OnReceiveMsgObjectInterVisibility                 ( const ASN1T_MsgObjectDetection& message );
-    void OnReceiveMsgPopulationConcentrationInterVisibility( const ASN1T_MsgPopulationConcentrationDetection& message );
-    void OnReceiveMsgPopulationFlowInterVisibility         ( const ASN1T_MsgPopulationFlowDetection& message );
-    void OnReceiveMsgDebugDrawPoints                       ( const ASN1T_MsgDebugPoints& message );
+    void OnReceiveMsgUnitVisionCones                       ( const MsgsSimToClient::MsgUnitVisionCones&                  message );
+    void OnReceiveMsgUnitInterVisibility                   ( const MsgsSimToClient::MsgUnitDetection&                    message );
+    void OnReceiveMsgObjectInterVisibility                 ( const MsgsSimToClient::MsgObjectDetection&                  message );
+    void OnReceiveMsgPopulationConcentrationInterVisibility( const MsgsSimToClient::MsgPopulationConcentrationDetection& message );
+    void OnReceiveMsgPopulationFlowInterVisibility         ( const MsgsSimToClient::MsgPopulationFlowDetection&          message );
+    void OnReceiveMsgDebugDrawPoints                       ( const MsgsSimToClient::MsgDebugPoints&                      message );
 
     // Control
-    void OnReceiveMsgControlPauseAck             ( const ASN1T_MsgControlPauseAck&  asnMsg );
-    void OnReceiveMsgControlResumeAck            ( const ASN1T_MsgControlResumeAck& asnMsg );
-    void OnReceiveMsgControlChangeTimeFactorAck  ( const ASN1T_MsgControlChangeTimeFactorAck& asnMsg );
-    void OnReceiveMsgControlDatetimeChangeAck    ( const ASN1T_MsgControlDatetimeChangeAck& asnMsg );
-    void OnReceiveMsgControlSkipToTickAck        ( const ASN1T_MsgControlSkipToTickAck& asnMsg );
-    void OnReceiveMsgControlInformation          ( const ASN1T_MsgControlInformation& asnMsg );
-    void OnReceiveMsgProfilingValues             ( const ASN1T_MsgControlProfilingInformation& message );
-    void OnReceiveMsgCtrReplayInfo            ( const ASN1T_MsgControlReplayInformation& asnMsg );
+    void OnReceiveMsgControlPauseAck             ( const MsgsSimToClient::MsgControlPauseAck&                   message );
+    void OnReceiveMsgControlResumeAck            ( const MsgsSimToClient::MsgControlResumeAck&                  message );
+    void OnReceiveMsgControlChangeTimeFactorAck  ( const MsgsSimToClient::MsgControlChangeTimeFactorAck&        message );
+    void OnReceiveMsgControlDatetimeChangeAck    ( const MsgsSimToClient::MsgControlDatetimeChangeAck&          message );
+    void OnReceiveMsgControlSkipToTickAck        ( const MsgsReplayToClient::MsgControlSkipToTickAck&           message );
+    void OnReceiveMsgControlInformation          ( const MsgsSimToClient::MsgControlInformation&                message );
+    void OnReceiveMsgProfilingValues             ( const MsgsSimToClient::MsgControlProfilingInformation&       message );
+    void OnReceiveMsgCtrReplayInfo               ( const MsgsReplayToClient::MsgControlReplayInformation&       message );
     void OnReceiveMsgControlMeteoGlobalAck       ();
     void OnReceiveMsgControlMeteoLocalAck        ();
-    void OnReceiveMsgCheckPointSaveBegin      ();
-    void OnReceiveMsgCheckPointSaveEnd        ();
-    void OnReceiveMsgCheckPointSetFrequencyAck();
-    void OnReceiveMsgCheckPointSaveNowAck     ();
-    void OnReceiveMsgControlBeginTick            ( const ASN1T_MsgControlBeginTick& asnMsg );
-    void OnReceiveMsgControlEndTick              ( const ASN1T_MsgControlEndTick& asnMsg );
-    void OnReceiveMsgAutomatCreation         ( const ASN1T_MsgAutomatCreation& asnMsg );
-    void OnReceiveMsgUnitCreation             ( const ASN1T_MsgUnitCreation& asnMsg );
-    void OnReceiveMsgUnitDestruction          ( const ASN1T_MsgUnitDestruction& asnMsg );
-    void OnReceiveMsgChangeDiplomacy         ( const ASN1T_MsgChangeDiplomacy& asnMsg );
-    void OnReceiveMsgAuthenticationResponse   ( const ASN1T_MsgAuthenticationResponse& asnMsg );
+    void OnReceiveMsgCheckPointSaveBegin         ();
+    void OnReceiveMsgCheckPointSaveEnd           ();
+    void OnReceiveMsgCheckPointSetFrequencyAck   ();
+    void OnReceiveMsgCheckPointSaveNowAck        ();
+    void OnReceiveMsgControlBeginTick            ( const MsgsSimToClient::MsgControlBeginTick&                  message );
+    void OnReceiveMsgControlEndTick              ( const MsgsSimToClient::MsgControlEndTick&                    message );
+    void OnReceiveMsgAutomatCreation             ( const MsgsSimToClient::MsgAutomatCreation&                   message );
+    void OnReceiveMsgUnitCreation                ( const MsgsSimToClient::MsgUnitCreation&                      message );
+    void OnReceiveMsgUnitDestruction             ( const MsgsSimToClient::MsgUnitDestruction&                   message );
+    void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                            message );
+    void OnReceiveMsgAuthenticationResponse      ( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message );
 
     // Profiles
-    void OnReceiveMsgProfileCreation             ( const ASN1T_MsgProfileCreation& message );
-    void OnReceiveMsgProfileCreationRequestAck   ( const ASN1T_MsgProfileCreationRequestAck& message );
-    void OnReceiveMsgProfileDestruction          ( const ASN1T_MsgProfileDestruction& message );
-    void OnReceiveMsgProfileDestructionRequestAck( const ASN1T_MsgProfileDestructionRequestAck& message );
-    void OnReceiveMsgProfileUpdate               ( const ASN1T_MsgProfileUpdate& message );
-    void OnReceiveMsgProfileUpdateRequestAck     ( const ASN1T_MsgProfileUpdateRequestAck& message );
+    void OnReceiveMsgProfileCreation             ( const MsgsAuthenticationToClient::MsgProfileCreation&                message );
+    void OnReceiveMsgProfileCreationRequestAck   ( const MsgsAuthenticationToClient::MsgProfileCreationRequestAck&      message );
+    void OnReceiveMsgProfileDestruction          ( const MsgsAuthenticationToClient::MsgProfileDestruction&             message );
+    void OnReceiveMsgProfileDestructionRequestAck( const MsgsAuthenticationToClient::MsgProfileDestructionRequestAck&   message );
+    void OnReceiveMsgProfileUpdate               ( const MsgsAuthenticationToClient::MsgProfileUpdate&                  message );
+    void OnReceiveMsgProfileUpdateRequestAck     ( const MsgsAuthenticationToClient::MsgProfileUpdateRequestAck&        message );
 
     // Side/Formation/Knowledge Group creation
-    void OnReveiveMsgKnowledgeGroupCreation   ( const ASN1T_MsgKnowledgeGroupCreation& asnMsg );
-    void OnReveiveMsgTeamCreation             ( const ASN1T_MsgTeamCreation& asnMsg );
-    void OnReveiveMsgFormationCreation        ( const ASN1T_MsgFormationCreation& asnMsg );
+    void OnReveiveMsgKnowledgeGroupCreation   ( const MsgsSimToClient::MsgKnowledgeGroupCreation&            message );
+    void OnReveiveMsgTeamCreation             ( const MsgsSimToClient::MsgTeamCreation&             message );
+    void OnReveiveMsgFormationCreation        ( const Common::MsgFormationCreation&                 message );
 
     // Attributes
-    void OnReceiveMsgUnitAttributes    ( const ASN1T_MsgUnitAttributes& asnMsg );
-    void OnReceiveMsgUnitMagicActionAck( const ASN1T_MsgUnitMagicActionAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgUnitPathFind      ( const ASN1T_MsgUnitPathFind& asnMsg );
-    void OnReceiveMsgAutomatAttributes( const ASN1T_MsgAutomatAttributes& asnMsg );
+    void OnReceiveMsgUnitAttributes     ( const MsgsSimToClient::MsgUnitAttributes&         message );
+    void OnReceiveMsgUnitMagicActionAck ( const MsgsSimToClient::MsgUnitMagicActionAck&     message, unsigned long nCtx );
+    void OnReceiveMsgUnitPathFind       ( const MsgsSimToClient::MsgUnitPathFind&           message );
+    void OnReceiveMsgAutomatAttributes  ( const MsgsSimToClient::MsgAutomatAttributes&      message );
 
     // Log maintenance
-    void OnReceiveMsgLogMaintenanceHandlingCreation   ( const ASN1T_MsgLogMaintenanceHandlingCreation& asnMsg );
-    void OnReceiveMsgLogMaintenanceHandlingDestruction( const ASN1T_MsgLogMaintenanceHandlingDestruction& asnMsg );
-    void OnReceiveMsgLogMaintenanceHandlingUpdate     ( const ASN1T_MsgLogMaintenanceHandlingUpdate& asnMsg );
-    void OnReceiveMsgLogMaintenanceState                           ( const ASN1T_MsgLogMaintenanceState&                  asnMsg );
+    void OnReceiveMsgLogMaintenanceHandlingCreation   ( const MsgsSimToClient::MsgLogMaintenanceHandlingCreation&       message );
+    void OnReceiveMsgLogMaintenanceHandlingDestruction( const MsgsSimToClient::MsgLogMaintenanceHandlingDestruction&    message );
+    void OnReceiveMsgLogMaintenanceHandlingUpdate     ( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate&         message );
+    void OnReceiveMsgLogMaintenanceState              ( const MsgsSimToClient::MsgLogMaintenanceState&                  message );
 
     // Log sante
-    void OnReceiveMsgLogMedicalHandlingCreation   ( const ASN1T_MsgLogMedicalHandlingCreation& asnMsg );
-    void OnReceiveMsgLogMedicalHandlingDestruction( const ASN1T_MsgLogMedicalHandlingDestruction& asnMsg );
-    void OnReceiveMsgLogMedicalHandlingUpdate     ( const ASN1T_MsgLogMedicalHandlingUpdate& asnMsg );
-    void OnReceiveMsgLogMedicalState                       ( const ASN1T_MsgLogMedicalState&                  asnMsg );
+    void OnReceiveMsgLogMedicalHandlingCreation   ( const MsgsSimToClient::MsgLogMedicalHandlingCreation&       message );
+    void OnReceiveMsgLogMedicalHandlingDestruction( const MsgsSimToClient::MsgLogMedicalHandlingDestruction&    message );
+    void OnReceiveMsgLogMedicalHandlingUpdate     ( const MsgsSimToClient::MsgLogMedicalHandlingUpdate&         message );
+    void OnReceiveMsgLogMedicalState              ( const MsgsSimToClient::MsgLogMedicalState&                  message );
 
     // Log supply
-    void OnReceiveMsgLogSupplyHandlingCreation   ( const ASN1T_MsgLogSupplyHandlingCreation& asnMsg );
-    void OnReceiveMsgLogSupplyHandlingDestruction( const ASN1T_MsgLogSupplyHandlingDestruction& asnMsg );
-    void OnReceiveMsgLogSupplyHandlingUpdate     ( const ASN1T_MsgLogSupplyHandlingUpdate& asnMsg );
-    void OnReceiveMsgLogSupplyState                 ( const ASN1T_MsgLogSupplyState&  asnMsg );
-    void OnReceiveMsgLogSupplyQuotas               ( const ASN1T_MsgLogSupplyQuotas& asnMsg );
-    void OnReceiveMsgLogRavitaillementChangeQuotaAck       ( const ASN1T_MsgLogSupplyChangeQuotasAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgLogSupplyPushFlowAck       ( const ASN1T_MsgLogSupplyPushFlowAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgLogSupplyHandlingCreation          ( const MsgsSimToClient::MsgLogSupplyHandlingCreation&      message );
+    void OnReceiveMsgLogSupplyHandlingDestruction       ( const MsgsSimToClient::MsgLogSupplyHandlingDestruction&   message );
+    void OnReceiveMsgLogSupplyHandlingUpdate            ( const MsgsSimToClient::MsgLogSupplyHandlingUpdate&        message );
+    void OnReceiveMsgLogSupplyState                     ( const MsgsSimToClient::MsgLogSupplyState&                 message );
+    void OnReceiveMsgLogSupplyQuotas                    ( const MsgsSimToClient::MsgLogSupplyQuotas&                message );
+    void OnReceiveMsgLogRavitaillementChangeQuotaAck    ( const MsgsSimToClient::MsgLogSupplyChangeQuotasAck&       message, unsigned long nCtx );
+    void OnReceiveMsgLogSupplyPushFlowAck               ( const MsgsSimToClient::MsgLogSupplyPushFlowAck&           message, unsigned long nCtx );
 
     // Limas / Limits
-    void OnReceiveMsgLimitCreationRequestAck   ( const ASN1T_MsgLimitCreationRequestAck&    asnMsg);
-    void OnReceiveMsgLimitUpdateRequestAck     ( const ASN1T_MsgLimitUpdateRequestAck&      asnMsg);
-    void OnReceiveMsgLimitDestructionRequestAck( const ASN1T_MsgLimitDestructionRequestAck& asnMsg);
-    void OnReceiveMsgLimaCreationRequestAck    ( const ASN1T_MsgLimaCreationRequestAck&    asnMsg);
-    void OnReceiveMsgLimaUpdateRequestAck      ( const ASN1T_MsgLimaUpdateRequestAck&      asnMsg);
-    void OnReceiveMsgLimaDestructionRequestAck ( const ASN1T_MsgLimaDestructionRequestAck& asnMsg);
-    void OnReceiveMsgLimitCreation      ( const ASN1T_MsgLimitCreation& asnMsg );
-    void OnReceiveMsgLimitUpdate        ( const ASN1T_MsgLimitUpdate& asnMsg );
-    void OnReceiveMsgLimitDestruction   ( const ASN1T_MsgLimitDestruction& asnMsg );
-    void OnReceiveMsgLimaCreation       ( const ASN1T_MsgLimaCreation& asnMsg );
-    void OnReceiveMsgLimaUpdate         ( const ASN1T_MsgLimaUpdate& asnMsg );
-    void OnReceiveMsgLimaDestruction    ( const ASN1T_MsgLimaDestruction& asnMsg );
+    void OnReceiveMsgLimitCreationRequestAck    ( const MsgsMessengerToClient::MsgLimitCreationRequestAck&    message);
+    void OnReceiveMsgLimitUpdateRequestAck      ( const MsgsMessengerToClient::MsgLimitUpdateRequestAck&      message);
+    void OnReceiveMsgLimitDestructionRequestAck ( const MsgsMessengerToClient::MsgLimitDestructionRequestAck& message);
+    void OnReceiveMsgLimaCreationRequestAck     ( const MsgsMessengerToClient::MsgLimaCreationRequestAck&     message);
+    void OnReceiveMsgLimaUpdateRequestAck       ( const MsgsMessengerToClient::MsgLimaUpdateRequestAck&       message);
+    void OnReceiveMsgLimaDestructionRequestAck  ( const MsgsMessengerToClient::MsgLimaDestructionRequestAck&  message);
+    void OnReceiveMsgLimitCreation              ( const MsgsMessengerToClient::MsgLimitCreation&              message );
+    void OnReceiveMsgLimitUpdate                ( const MsgsMessengerToClient::MsgLimitUpdate&                message );
+    void OnReceiveMsgLimitDestruction           ( const MsgsMessengerToClient::MsgLimitDestruction&           message );
+    void OnReceiveMsgLimaCreation               ( const MsgsMessengerToClient::MsgLimaCreation&               message );
+    void OnReceiveMsgLimaUpdate                 ( const MsgsMessengerToClient::MsgLimaUpdate&                 message );
+    void OnReceiveMsgLimaDestruction            ( const MsgsMessengerToClient::MsgLimaDestruction&            message );
 
     // Object
-    void OnReceiveMsgObjectCreation      ( const ASN1T_MsgObjectCreation& asnMsg );
-    void OnReceiveMsgObjectUpdate        ( const ASN1T_MsgObjectUpdate& asnMsg );
-    void OnReceiveMsgObjectDestruction   ( const ASN1T_MsgObjectDestruction& asnMsg );
-    void OnReceiveMsgObjectMagicActionAck( const ASN1T_MsgObjectMagicActionAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgObjectCreation      ( const MsgsSimToClient::MsgObjectCreation&       message );
+    void OnReceiveMsgObjectUpdate        ( const MsgsSimToClient::MsgObjectUpdate&         message );
+    void OnReceiveMsgObjectDestruction   ( const MsgsSimToClient::MsgObjectDestruction&    message );
+    void OnReceiveMsgObjectMagicActionAck( const MsgsSimToClient::MsgObjectMagicActionAck& message, unsigned long nCtx );
 
     // Knowledge unit
-    void OnReceiveMsgUnitKnowledgeCreation   ( const ASN1T_MsgUnitKnowledgeCreation&    asnMsg );
-    void OnReceiveMsgUnitKnowledgeUpdate     ( const ASN1T_MsgUnitKnowledgeUpdate&      asnMsg );
-    void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
+    void OnReceiveMsgUnitKnowledgeCreation   ( const MsgsSimToClient::MsgUnitKnowledgeCreation&    message );
+    void OnReceiveMsgUnitKnowledgeUpdate     ( const MsgsSimToClient::MsgUnitKnowledgeUpdate&      message );
+    void OnReceiveMsgUnitKnowledgeDestruction( const MsgsSimToClient::MsgUnitKnowledgeDestruction& message );
 
     // Knowledge object
-    void OnReceiveMsgObjectKnowledgeCreation   ( const ASN1T_MsgObjectKnowledgeCreation&    asnMsg );
-    void OnReceiveMsgObjectKnowledgeUpdate     ( const ASN1T_MsgObjectKnowledgeUpdate&      asnMsg );
-    void OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
+    void OnReceiveMsgObjectKnowledgeCreation   ( const MsgsSimToClient::MsgObjectKnowledgeCreation&    v );
+    void OnReceiveMsgObjectKnowledgeUpdate     ( const MsgsSimToClient::MsgObjectKnowledgeUpdate&      message );
+    void OnReceiveMsgObjectKnowledgeDestruction( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message );
 
     // Knowledge population
-    void OnReceiveMsgPopulationKnowledgeCreation                ( const ASN1T_MsgPopulationKnowledgeCreation&                 asnMsg );
-    void OnReceiveMsgPopulationKnowledgeUpdate                  ( const ASN1T_MsgPopulationKnowledgeUpdate&                   asnMsg );
-    void OnReceiveMsgPopulationKnowledgeDestruction             ( const ASN1T_MsgPopulationKnowledgeDestruction&              asnMsg );
-    void OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    asnMsg );
-    void OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      asnMsg );
-    void OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& asnMsg );
-    void OnReceiveMsgPopulationFlowKnowledgeCreation            ( const ASN1T_MsgPopulationFlowKnowledgeCreation&             asnMsg );
-    void OnReceiveMsgPopulationFlowKnowledgeUpdate              ( const ASN1T_MsgPopulationFlowKnowledgeUpdate&               asnMsg );
-    void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const ASN1T_MsgPopulationFlowKnowledgeDestruction&          asnMsg );
+    void OnReceiveMsgPopulationKnowledgeCreation                ( const MsgsSimToClient::MsgPopulationKnowledgeCreation&                 message );
+    void OnReceiveMsgPopulationKnowledgeUpdate                  ( const MsgsSimToClient::MsgPopulationKnowledgeUpdate&                   message );
+    void OnReceiveMsgPopulationKnowledgeDestruction             ( const MsgsSimToClient::MsgPopulationKnowledgeDestruction&              message );
+    void OnReceiveMsgPopulationConcentrationKnowledgeCreation   ( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation&    message );
+    void OnReceiveMsgPopulationConcentrationKnowledgeUpdate     ( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate&      message );
+    void OnReceiveMsgPopulationConcentrationKnowledgeDestruction( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& message );
+    void OnReceiveMsgPopulationFlowKnowledgeCreation            ( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation&             message );
+    void OnReceiveMsgPopulationFlowKnowledgeUpdate              ( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate&               message );
+    void OnReceiveMsgPopulationFlowKnowledgeDestruction         ( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction&          message );
 
     // Orders
-    void OnReceiveMsgAutomatOrder          ( const ASN1T_MsgAutomatOrder& asnMsg ); 
-    void OnReceiveMsgAutomatOrderAck       ( const ASN1T_MsgAutomatOrderAck& asnMsg, unsigned long nCtx ); 
-    void OnReceiveMsgUnitOrder             ( const ASN1T_MsgUnitOrder& asnMsg ); 
-    void OnReceiveMsgUnitOrderAck          ( const ASN1T_MsgUnitOrderAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgFragOrderAck          ( const ASN1T_MsgFragOrderAck& asnMsg, unsigned long nCtx ); 
-    void OnReceiveMsgUnitCreationRequestAck( const ASN1T_MsgUnitCreationRequestAck& asn );
+    void OnReceiveMsgAutomatOrder          ( const Common::MsgAutomatOrder&                    message ); 
+    void OnReceiveMsgAutomatOrderAck       ( const MsgsSimToClient::MsgAutomatOrderAck&        message, unsigned long nCtx ); 
+    void OnReceiveMsgUnitOrder             ( const Common::MsgUnitOrder&                       message ); 
+    void OnReceiveMsgUnitOrderAck          ( const MsgsSimToClient::MsgUnitOrderAck&           message, unsigned long nCtx );
+    void OnReceiveMsgFragOrderAck          ( const MsgsSimToClient::MsgFragOrderAck&           message, unsigned long nCtx ); 
+    void OnReceiveMsgUnitCreationRequestAck( const MsgsSimToClient::MsgUnitCreationRequestAck& message );
 
     // Automate mode
-    void OnReceiveMsgSetAutomatModeAck( const ASN1T_MsgSetAutomatModeAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgSetAutomatModeAck( const MsgsSimToClient::MsgSetAutomatModeAck& message, unsigned long nCtx );
     
     // Hierachy changes
-    void OnReceiveMsgUnitChangeSuperiorAck          ( const ASN1T_MsgUnitChangeSuperiorAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgUnitChangeSuperior             ( const ASN1T_MsgUnitChangeSuperior& asnMsg );
-    void OnReceiveMsgChangeDiplomacyAck             ( const ASN1T_MsgChangeDiplomacyAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgAutomatChangeSuperior          ( const ASN1T_MsgAutomatChangeSuperior& asnMsg );
-    void OnReceiveMsgAutomatChangeSuperiorAck       ( const ASN1T_MsgAutomatChangeSuperiorAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgAutomatChangeKnowledgeGroup    ( const ASN1T_MsgAutomatChangeKnowledgeGroup& asnMsg );
-    void OnReceiveMsgAutomatChangeKnowledgeGroupAck ( const ASN1T_MsgAutomatChangeKnowledgeGroupAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgAutomatChangeLogisticLinks     ( const ASN1T_MsgAutomatChangeLogisticLinks& asnMsg );
-    void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const ASN1T_MsgAutomatChangeLogisticLinksAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgUnitChangeSuperiorAck          ( const MsgsSimToClient::MsgUnitChangeSuperiorAck&          message, unsigned long nCtx );
+    void OnReceiveMsgUnitChangeSuperior             ( const Common::MsgUnitChangeSuperior&                      message );
+    void OnReceiveMsgChangeDiplomacyAck             ( const MsgsSimToClient::MsgChangeDiplomacyAck&             message, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeSuperior          ( const Common::MsgAutomatChangeSuperior&                   message );
+    void OnReceiveMsgAutomatChangeSuperiorAck       ( const MsgsSimToClient::MsgAutomatChangeSuperiorAck&       message, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeKnowledgeGroup    ( const Common::MsgAutomatChangeKnowledgeGroup&             message );
+    void OnReceiveMsgAutomatChangeKnowledgeGroupAck ( const MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck& message, unsigned long nCtx );
+    void OnReceiveMsgAutomatChangeLogisticLinks     ( const Common::MsgAutomatChangeLogisticLinks&              message );
+    void OnReceiveMsgAutomatChangeLogisticLinksAck  ( const MsgsSimToClient::MsgAutomatChangeLogisticLinksAck&  message, unsigned long nCtx );
 
     // RC
-    void OnReceiveMsgCR              ( const ASN1T_MsgReport& asnMsg );
-    void OnReceiveMsgInvalidateReport( const ASN1T_MsgInvalidateReport& asnMsg );
-    void OnReceiveMsgTrace           ( const ASN1T_MsgTrace& asnMsg );
-    void OnReceiveMsgDecisionalState ( const ASN1T_MsgDecisionalState& asnMsg );
+    void OnReceiveMsgCR              ( const MsgsSimToClient::MsgReport&           message );
+    void OnReceiveMsgInvalidateReport( const MsgsSimToClient::MsgInvalidateReport& message );
+    void OnReceiveMsgTrace           ( const MsgsSimToClient::MsgTrace&            message );
+    void OnReceiveMsgDecisionalState ( const MsgsSimToClient::MsgDecisionalState&  message );
 
     // Tirs
-    void OnReceiveMsgStartUnitFire         ( const ASN1T_MsgStartUnitFire&       asnMsg );
-    void OnReceiveMsgStopUnitFire          ( const ASN1T_MsgStopUnitFire&        asnMsg );
-    void OnReceiveMsgExplosion             ( const ASN1T_MsgExplosion&           asnMsg );
-    void OnReceiveMsgStartFireEffect       ( const ASN1T_MsgStartFireEffect&     asnMsg );
-    void OnReceiveMsgStopFireEffect        ( const ASN1T_MsgStopFireEffect&      asnMsg );
-    void OnReceiveMsgStartPopulationFire   ( const ASN1T_MsgStartPopulationFire& asnMsg );
-    void OnReceiveMsgStopPopulationFire    ( const ASN1T_MsgStopPopulationFire&  asnMsg );
-	
-	// Population
-	void OnMsgPopulationCreation				( const ASN1T_MsgPopulationCreation& asnMsg );
-	void OnMsgPopulationUpdate					( const ASN1T_MsgPopulationUpdate& asnMsg ); 
-	void OnMsgPopulationConcentrationCreation	( const ASN1T_MsgPopulationConcentrationCreation& asnMsg ); 
-	void OnMsgPopulationConcentrationDestruction( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
-	void OnMsgPopulationConcentrationUpdate		( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
-	void OnMsgPopulationFlowCreation			( const ASN1T_MsgPopulationFlowCreation& asnMsg );
-	void OnMsgPopulationFlowDestruction			( const ASN1T_MsgPopulationFlowDestruction& asnMsg ); 
-	void OnMsgPopulationFlowUpdate				( const ASN1T_MsgPopulationFlowUpdate& asnMsg ); 
-    void OnReceiveMsgPopulationMagicActionAck   ( const ASN1T_MsgPopulationMagicActionAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgPopulationOrderAck         ( const ASN1T_MsgPopulationOrderAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgPopulationOrder            ( const ASN1T_MsgPopulationOrder& asnMsg ); 
+    void OnReceiveMsgStartUnitFire         ( const MsgsSimToClient::MsgStartUnitFire&       message );
+    void OnReceiveMsgStopUnitFire          ( const MsgsSimToClient::MsgStopUnitFire&        message );
+    void OnReceiveMsgExplosion             ( const MsgsSimToClient::MsgExplosion&           message );
+    void OnReceiveMsgStartFireEffect       ( const MsgsSimToClient::MsgStartFireEffect&     message );
+    void OnReceiveMsgStopFireEffect        ( const MsgsSimToClient::MsgStopFireEffect&      message );
+    void OnReceiveMsgStartPopulationFire   ( const MsgsSimToClient::MsgStartPopulationFire& message );
+    void OnReceiveMsgStopPopulationFire    ( const MsgsSimToClient::MsgStopPopulationFire&  message );
+
+    // Population
+    void OnMsgPopulationCreation                ( const MsgsSimToClient::MsgPopulationCreation&                 message );
+    void OnMsgPopulationUpdate                  ( const MsgsSimToClient::MsgPopulationUpdate&                   message ); 
+    void OnMsgPopulationConcentrationCreation   ( const MsgsSimToClient::MsgPopulationConcentrationCreation&    message ); 
+    void OnMsgPopulationConcentrationDestruction( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message );
+    void OnMsgPopulationConcentrationUpdate     ( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      message );
+    void OnMsgPopulationFlowCreation            ( const MsgsSimToClient::MsgPopulationFlowCreation&             message );
+    void OnMsgPopulationFlowDestruction         ( const MsgsSimToClient::MsgPopulationFlowDestruction&          message ); 
+    void OnMsgPopulationFlowUpdate              ( const MsgsSimToClient::MsgPopulationFlowUpdate&               message ); 
+    void OnReceiveMsgPopulationMagicActionAck   ( const MsgsSimToClient::MsgPopulationMagicActionAck&           message, unsigned long nCtx );
+    void OnReceiveMsgPopulationOrderAck         ( const MsgsSimToClient::MsgPopulationOrderAck&                 message, unsigned long nCtx );
+    void OnReceiveMsgPopulationOrder            ( const Common::MsgPopulationOrder&                             message ); 
 
     // Folk
-    void OnReceiveMsgFolkCreation               ( const ASN1T_MsgFolkCreation& asnMsg );
-    void OnReceiveMsgFolkGraphUpdate            ( const ASN1T_MsgFolkGraphUpdate& asnMsg );
+    void OnReceiveMsgFolkCreation               ( const MsgsSimToClient::MsgFolkCreation&    message );
+    void OnReceiveMsgFolkGraphUpdate            ( const MsgsSimToClient::MsgFolkGraphUpdate& message );
 
     // Intelligence
-    void OnReceiveMsgIntelligenceCreation             ( const ASN1T_MsgIntelligenceCreation&              message );
-    void OnReceiveMsgIntelligenceUpdate               ( const ASN1T_MsgIntelligenceUpdate&                message );
-    void OnReceiveMsgIntelligenceDestruction          ( const ASN1T_MsgIntelligenceDestruction&           message );
-    void OnReceiveMsgIntelligenceCreationRequestAck   ( const ASN1T_MsgIntelligenceCreationRequestAck&    message );
-    void OnReceiveMsgIntelligenceUpdateRequestAck     ( const ASN1T_MsgIntelligenceUpdateRequestAck&      message );
-    void OnReceiveMsgIntelligenceDestructionRequestAck( const ASN1T_MsgIntelligenceDestructionRequestAck& message );
+    void OnReceiveMsgIntelligenceCreation             ( const MsgsMessengerToClient::MsgIntelligenceCreation&              message );
+    void OnReceiveMsgIntelligenceUpdate               ( const MsgsMessengerToClient::MsgIntelligenceUpdate&                message );
+    void OnReceiveMsgIntelligenceDestruction          ( const MsgsMessengerToClient::MsgIntelligenceDestruction&           message );
+    void OnReceiveMsgIntelligenceCreationRequestAck   ( const MsgsMessengerToClient::MsgIntelligenceCreationRequestAck&    message );
+    void OnReceiveMsgIntelligenceUpdateRequestAck     ( const MsgsMessengerToClient::MsgIntelligenceUpdateRequestAck&      message );
+    void OnReceiveMsgIntelligenceDestructionRequestAck( const MsgsMessengerToClient::MsgIntelligenceDestructionRequestAck& message );
 
     // Drawings
-    void OnReceiveMsgShapeCreation             ( const ASN1T_MsgShapeCreation&              message );
-    void OnReceiveMsgShapeUpdate               ( const ASN1T_MsgShapeUpdate&                message );
-    void OnReceiveMsgShapeDestruction          ( const ASN1T_MsgShapeDestruction&           message );
-    void OnReceiveMsgShapeCreationRequestAck   ( const ASN1T_MsgShapeCreationRequestAck&    message );
-    void OnReceiveMsgShapeUpdateRequestAck     ( const ASN1T_MsgShapeUpdateRequestAck&      message );
-    void OnReceiveMsgShapeDestructionRequestAck( const ASN1T_MsgShapeDestructionRequestAck& message );
+    void OnReceiveMsgShapeCreation             ( const MsgsMessengerToClient::MsgShapeCreation&              message );
+    void OnReceiveMsgShapeUpdate               ( const MsgsMessengerToClient::MsgShapeUpdate&                message );
+    void OnReceiveMsgShapeDestruction          ( const MsgsMessengerToClient::MsgShapeDestruction&           message );
+    void OnReceiveMsgShapeCreationRequestAck   ( const MsgsMessengerToClient::MsgShapeCreationRequestAck&    message );
+    void OnReceiveMsgShapeUpdateRequestAck     ( const MsgsMessengerToClient::MsgShapeUpdateRequestAck&      message );
+    void OnReceiveMsgShapeDestructionRequestAck( const MsgsMessengerToClient::MsgShapeDestructionRequestAck& message );
 
-    // Notes
-    void OnReceiveMsgNoteCreation             ( const ASN1T_MsgNoteCreation&              message );
-    void OnReceiveMsgNoteUpdate               ( const ASN1T_MsgNoteUpdate&                message );
-    void OnReceiveMsgNoteDestruction          ( const ASN1T_MsgNoteDestruction&           message );
+    // LTO Notes
+    void OnReceiveMsgNoteCreation             ( const MsgsMessengerToClient::MsgNoteCreation&              message );
+    void OnReceiveMsgNoteUpdate               ( const MsgsMessengerToClient::MsgNoteUpdate&                message );
+    void OnReceiveMsgNoteDestruction          ( const MsgsMessengerToClient::MsgNoteDestruction&           message );
 
 
     // Chat
-    void OnReceiveMsgTextMessage( const ASN1T_MsgTextMessage& message );
+    void OnReceiveMsgTextMessage( const Common::MsgTextMessage& message );
 
     // 3a
-    void OnReceiveMsgAarInformation( const ASN1T_MsgAarInformation& asnMsg );
-    void OnReceiveMsgAarResult     ( const ASN1T_MsgPlotResult& asnMsg );
-    void OnReceiveMsgAarIndicator  ( const ASN1T_MsgIndicator& asnMsg );
+    void OnReceiveMsgAarInformation( const MsgsAarToClient::MsgAarInformation& message );
+    void OnReceiveMsgAarResult     ( const MsgsAarToClient::MsgPlotResult&     message );
+    void OnReceiveMsgAarIndicator  ( const MsgsAarToClient::MsgIndicator&      message );
 
     // Urban
-    void OnReceiveMsgUrbanCreation( const ASN1T_MsgUrbanCreation& asnMsg );
-    void OnReceiveMsgUrbanDetection( const ASN1T_MsgUrbanDetection& asnMsg );
-    void OnReceiveMsgUrbanKnowledgeCreation( const ASN1T_MsgUrbanKnowledgeCreation& asnMsg );
-    void OnReceiveMsgUrbanKnowledgeUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg );
-    void OnReceiveMsgUrbanKnowledgeDestruction( const ASN1T_MsgUrbanKnowledgeDestruction& asnMsg );
+    void OnReceiveMsgUrbanCreation            ( const MsgsSimToClient::MsgUrbanCreation&                    message );
+    void OnReceiveMsgUrbanDetection           ( const MsgsSimToClient::MsgUrbanDetection&                   message );
+    void OnReceiveMsgUrbanKnowledgeCreation   ( const MsgsSimToClient::MsgUrbanKnowledgeCreation&           message );
+    void OnReceiveMsgUrbanKnowledgeUpdate     ( const MsgsSimToClient::MsgUrbanKnowledgeUpdate&             message );
+    void OnReceiveMsgUrbanKnowledgeDestruction( const MsgsSimToClient::MsgUrbanKnowledgeDestruction&        message );
 
     // LTO begin
     //knowledgegroup
-    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& asnMsg );
-    void OnReceiveMsgKnowledgeGroupChangeSuperiorAck( const ASN1T_MsgKnowledgeGroupChangeSuperiorAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgKnowledgeGroupUpdate( const ASN1T_MsgKnowledgeGroupUpdate& asnMsg );
-    void OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& asnMsg );
-    void OnReceiveMsgKnowledgeGroupDeleteAck( const ASN1T_MsgKnowledgeGroupDeleteAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& asnMsg );
-    void OnReceiveMsgKnowledgeGroupSetTypeAck( const ASN1T_MsgKnowledgeGroupSetTypeAck& asnMsg, unsigned long nCtx );
-    void OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& asnMsg );
-    void OnReceiveMsgKnowledgeGroupCreationAck( const ASN1T_MsgKnowledgeGroupCreationAck& asnMsg, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupUpdate            ( const MsgsSimToClient::MsgKnowledgeGroupUpdate&           message );
+    void OnReceiveMsgKnowledgeGroupUpdateAck         ( const MsgsSimToClient::MsgKnowledgeGroupUpdateAck&        message, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupCreation          ( const MsgsSimToClient::MsgKnowledgeGroupCreation&         message );
+    void OnReceiveMsgKnowledgeGroupCreationAck       ( const MsgsSimToClient::MsgKnowledgeGroupCreationAck&      message, unsigned long nCtx );
     // LTO end
     //@}
 

@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Dotation.h"
+#include "protocol/simulationsenders.h"
 
 using namespace dispatcher;
 
@@ -16,9 +17,9 @@ using namespace dispatcher;
 // Name: Dotation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const ASN1T_ResourceDotations& asnMsg )
-   : nDotationType_( asnMsg.ressource_id )
-   , nNbr_         ( asnMsg.quantite_disponible )
+Dotation::Dotation( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg )
+   : nDotationType_( asnMsg.ressource_id() )
+   , nNbr_         ( asnMsg.quantite_disponible() )
 {
     // NOTHING
 }
@@ -27,9 +28,9 @@ Dotation::Dotation( const ASN1T_ResourceDotations& asnMsg )
 // Name: Dotation constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-Dotation::Dotation( const ASN1T_DotationStock & asnMsg )
-   : nDotationType_( asnMsg.ressource_id )
-   , nNbr_         ( asnMsg.quantite_disponible )
+Dotation::Dotation( const Common::MsgDotationStock & asnMsg )
+   : nDotationType_( asnMsg.ressource_id() )
+   , nNbr_         ( asnMsg.quantite_disponible() )
 {
     // NOTHING
 }
@@ -47,36 +48,36 @@ Dotation::~Dotation()
 // Name: Dotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Dotation::Update( const ASN1T_ResourceDotations& asnMsg )
+void Dotation::Update( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg )
 {
-    nNbr_ = asnMsg.quantite_disponible;
+    nNbr_ = asnMsg.quantite_disponible();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Dotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Dotation::Update( const ASN1T_DotationStock& asnMsg )
+void Dotation::Update( const Common::MsgDotationStock& asnMsg )
 {
-    nNbr_ = asnMsg.quantite_disponible;
+    nNbr_ = asnMsg.quantite_disponible();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Dotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Dotation::Send( ASN1T_ResourceDotations& asnMsg ) const
+void Dotation::Send( MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg ) const
 {
-    asnMsg.ressource_id        = nDotationType_;
-    asnMsg.quantite_disponible = nNbr_;
+    asnMsg.set_ressource_id( nDotationType_ );
+    asnMsg.set_quantite_disponible( nNbr_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Dotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Dotation::Send( ASN1T_DotationStock& asnMsg ) const
+void Dotation::Send( Common::MsgDotationStock& asnMsg ) const
 {
-    asnMsg.ressource_id        = nDotationType_;
-    asnMsg.quantite_disponible = nNbr_;
+    asnMsg.set_ressource_id( nDotationType_ );
+    asnMsg.set_quantite_disponible( nNbr_ );
 }

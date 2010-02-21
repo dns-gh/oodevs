@@ -46,11 +46,11 @@ Explosions::~Explosions()
 template< typename T >
 void Explosions::UpdateData( const T& message )
 {
-    for( uint i = 0; i < message.units_damages.n; ++i )
-        Update( message.units_damages.elem[ i ] );
+    for( int i = 0; i < message.units_damages().elem_size(); ++i )
+        Update( message.units_damages().elem( i ) );
 
-    for( uint i = 0; i < message.populations_damages.n; ++i )
-        Update( message.populations_damages.elem[ i ] );
+    for( int i = 0; i < message.populations_damages().elem_size(); ++i )
+        Update( message.populations_damages().elem( i ) );
 
     controller_.Update( *this );
 }
@@ -59,7 +59,7 @@ void Explosions::UpdateData( const T& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const ASN1T_MsgExplosion& message )
+void Explosions::DoUpdate( const MsgsSimToClient::MsgExplosion& message )
 {
     UpdateData( message );
 }
@@ -68,7 +68,7 @@ void Explosions::DoUpdate( const ASN1T_MsgExplosion& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const ASN1T_MsgStopUnitFire& message )
+void Explosions::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
 {
     UpdateData( message );
 }
@@ -77,10 +77,10 @@ void Explosions::DoUpdate( const ASN1T_MsgStopUnitFire& message )
 // Name: Explosions::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::DoUpdate( const ASN1T_MsgStopPopulationFire& message )
+void Explosions::DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message )
 {
-    for( uint i = 0; i < message.units_damages.n; ++i )
-        Update( message.units_damages.elem[ i ] );
+    for( int i = 0; i < message.units_damages().elem_size(); ++i )
+        Update( message.units_damages().elem( i ) );
     controller_.Update( *this );
 }
 
@@ -88,7 +88,7 @@ void Explosions::DoUpdate( const ASN1T_MsgStopPopulationFire& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const ASN1T_UnitFireDamages& message )
+void Explosions::Update( const MsgsSimToClient::MsgUnitFireDamages& message )
 {
     agentExplosions_.push_back( factory_.CreateFireResult( message ) );
     if( agentExplosions_.size() > 20 )
@@ -102,7 +102,7 @@ void Explosions::Update( const ASN1T_UnitFireDamages& message )
 // Name: Explosions::Update
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Explosions::Update( const ASN1T_PopulationFireDamages& message )
+void Explosions::Update( const MsgsSimToClient::MsgPopulationFireDamages& message )
 {
     populationExplosions_.push_back( factory_.CreateFireResult( message ) );
     if( populationExplosions_.size() > 20 )

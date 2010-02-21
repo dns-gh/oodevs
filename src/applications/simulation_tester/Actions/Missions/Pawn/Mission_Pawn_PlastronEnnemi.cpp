@@ -43,9 +43,9 @@ void Mission_Pawn_PlastronEnnemi::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_PlastronEnnemi& asnMission = *new ASN1T_Mission_Pion_PlastronEnnemi();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_plastron_ennemi;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_plastron_ennemi = &asnMission;
+    Mission_Pion_PlastronEnnemi& asnMission = *new Mission_Pion_PlastronEnnemi();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_plastron_ennemi = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
     const Position& pointMission_ = pTarget_->GetTestParam_Point();
@@ -65,8 +65,8 @@ void Mission_Pawn_PlastronEnnemi::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_PlastronEnnemi::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_plastron_ennemi );
-    ASN1T_Mission_Pion_PlastronEnnemi& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_plastron_ennemi;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_plastron_ennemi ());
+    Mission_Pion_PlastronEnnemi& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_plastron_ennemi;
 
     ASN_Tools::Delete( asnMission.itineraire );
     ASN_Tools::Delete( asnMission.point_mission );

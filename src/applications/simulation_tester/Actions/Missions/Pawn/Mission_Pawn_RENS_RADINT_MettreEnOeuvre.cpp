@@ -43,9 +43,9 @@ void Mission_Pawn_RENS_RADINT_MettreEnOeuvre::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_RENS_RADINT_MettreEnOeuvre& asnMission = *new ASN1T_Mission_Pion_RENS_RADINT_MettreEnOeuvre();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_rens_radint_mettre_en_oeuvre;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_radint_mettre_en_oeuvre = &asnMission;
+    Mission_Pion_RENS_RADINT_MettreEnOeuvre& asnMission = *new Mission_Pion_RENS_RADINT_MettreEnOeuvre();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_rens_radint_mettre_en_oeuvre = &asnMission;
 
     const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_RENS_RADINT_MettreEnOeuvre::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_RENS_RADINT_MettreEnOeuvre::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_rens_radint_mettre_en_oeuvre );
-    ASN1T_Mission_Pion_RENS_RADINT_MettreEnOeuvre& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_radint_mettre_en_oeuvre;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_rens_radint_mettre_en_oeuvre ());
+    Mission_Pion_RENS_RADINT_MettreEnOeuvre& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_rens_radint_mettre_en_oeuvre;
 
     ASN_Tools::Delete( asnMission.position_deploiement );
 

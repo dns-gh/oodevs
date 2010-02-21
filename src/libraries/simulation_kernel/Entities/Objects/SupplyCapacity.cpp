@@ -14,7 +14,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
-
+#include "protocol/ClientSenders.h"
 #include "tools/Resolver.h"
 
 #include <boost/ptr_container/serialize_ptr_vector.hpp>
@@ -65,7 +65,7 @@ SupplyCapacity::~SupplyCapacity()
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void SupplyCapacity::serialize( Archive& file, const uint )
+void SupplyCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
@@ -103,8 +103,8 @@ void SupplyCapacity::ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent 
         MIL_AgentPion* pion = dynamic_cast< MIL_AgentPion* >( &agent );
         if( pion )
         {
-            ASN1T_MsgUnitMagicAction asnMsg;
-            asnMsg.action.t = T_MsgUnitMagicAction_action_recompletement_ressources;
+            MsgsClientToSim::MsgUnitMagicAction asnMsg;
+            asnMsg.mutable_action()->set_recompletement_ressources( 1 );
             //@TODO MGD replace asn by action in general, temp hack with an empty resolver because this magic action dont't use armies
             pion->OnReceiveMsgUnitMagicAction( asnMsg, tools::Resolver< MIL_Army_ABC >() );
         }

@@ -43,8 +43,8 @@ class Pawn : public Testable_Entity
 public:
     //! @name Constructors/Destructor
     //@{
-             Pawn( const Workspace& workspace, const ASN1T_MsgUnitCreation& asnMsg );
-             Pawn( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg, Automat& automat  );
+             Pawn( const Workspace& workspace, const MsgUnitCreation& asnMsg );
+             Pawn( const Workspace& workspace, const MsgAutomatCreation& asnMsg, Automat& automat  );
     virtual ~Pawn();
     //@}
 
@@ -67,8 +67,8 @@ public:
     //! @name Messages handlers
     //@{
     void OnAutomatChanged    (       Automat&                 automat );
-    void OnAttributeUpdated  ( const ASN1T_MsgUnitAttributes& asnMsg  );
-    void OnReceivePathfind   ( const ASN1T_MsgUnitPathFind&   asnMsg  );
+    void OnAttributeUpdated  ( const MsgUnitAttributes& asnMsg  );
+    void OnReceivePathfind   ( const MsgUnitPathFind&   asnMsg  );
     void OnReceiveTerrainType(       DIN::DIN_Input&          input   );
     //@}
 
@@ -79,8 +79,8 @@ public:
 
     //! @name Mission Scheduling
     //@{
-    void ScheduleAllMissions ( Scheduler& scheduler, uint nIteration = 1 );
-    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName, uint nIteration = 1 );
+    void ScheduleAllMissions ( Scheduler& scheduler, unsigned int nIteration = 1 );
+    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName, unsigned int nIteration = 1 );
     //@}
 
 private:

@@ -34,7 +34,6 @@ class MIL_CheckPointOutArchive;
 // @class  UrbanModel
 // Created: SLG 2009-10-23
 // =============================================================================
-
 class UrbanModel
 {
 

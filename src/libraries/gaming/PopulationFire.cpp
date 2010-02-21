@@ -17,9 +17,9 @@ using namespace kernel;
 // Name: PopulationFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFire::PopulationFire( const ASN1T_MsgStartPopulationFire& message, const tools::Resolver_ABC< Population_ABC >& resolver )
-    : Fire_ABC( resolver.Get( message.firer_oid ) )
-    , id_( message.fire_oid )
+PopulationFire::PopulationFire( const MsgsSimToClient::MsgStartPopulationFire& message, const tools::Resolver_ABC< Population_ABC >& resolver )
+    : Fire_ABC( resolver.Get( message.firer_oid() ) )
+    , id_( message.fire_oid() )
 {
     // NOTHING
 }

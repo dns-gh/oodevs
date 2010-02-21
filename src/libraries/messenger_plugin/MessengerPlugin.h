@@ -11,7 +11,12 @@
 #define __MessengerPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include "game_asn/Messenger.h"
+#include "protocol/protocol.h"
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
 
 namespace dispatcher
 {
@@ -57,7 +62,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void Receive                  ( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual void Register                 ( dispatcher::Services& );
@@ -72,7 +77,7 @@ private:
 
     //! @name Network
     //@{
-    void OnReceiveClientToMessenger( const std::string&, const ASN1T_MsgsClientToMessenger& );
+    void OnReceiveClientToMessenger( const std::string&, const MsgsClientToMessenger::MsgClientToMessenger& );
     //@}
 
 private:

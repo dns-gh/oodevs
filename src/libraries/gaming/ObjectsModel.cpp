@@ -46,12 +46,12 @@ void ObjectsModel::Purge()
 // Name: ObjectsModel::CreateObject
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void ObjectsModel::CreateObject( const ASN1T_MsgObjectCreation& asnMsg )
+void ObjectsModel::CreateObject( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    if( ! tools::Resolver< Object_ABC >::Find( asnMsg.oid ) )
+    if( ! tools::Resolver< Object_ABC >::Find( message.oid() ) )
     {
-        Object_ABC* pObject = objectFactory_.Create( asnMsg );
-        tools::Resolver< Object_ABC >::Register( asnMsg.oid, *pObject );
+        Object_ABC* pObject = objectFactory_.Create( message );
+        tools::Resolver< Object_ABC >::Register( message.oid(), *pObject );
     }
 }
  

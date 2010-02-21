@@ -62,7 +62,7 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive >
-    void serialize( Archive& file, const uint );
+    void serialize( Archive& file, const unsigned int );
     //@}
 
 private:
@@ -90,7 +90,7 @@ private:
 // -----------------------------------------------------------------------------
 template< typename Archive >
 inline
-void TER_PopulationFlow_ABC::serialize( Archive& /*file*/, const uint )
+void TER_PopulationFlow_ABC::serialize( Archive& /*file*/, const unsigned int )
 {
     // NOTHING
 }

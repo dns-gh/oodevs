@@ -32,7 +32,7 @@ using namespace hla;
 // -----------------------------------------------------------------------------
 HLA_LocalObject::HLA_LocalObject( MIL_Object_ABC& object )
     : object_( object )
-    , id_( uint( -1 ) )
+    , id_( unsigned int( -1 ) )
 {
     // NOTHING
 }

@@ -20,7 +20,9 @@
 #pragma warning( disable : 4996 4512 )
 #include <qstring.h>
 #include <qstringlist.h>
-#include <game_asn/generated/base.h>
+#include "protocol/protocol.h"
+
+using namespace Common;
 #pragma warning( pop )
 
 #endif // __script_plugin_pch_h_

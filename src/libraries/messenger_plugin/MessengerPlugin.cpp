@@ -13,11 +13,12 @@
 #include "TacticalLinesModel.h"
 #include "IntelligencesModel.h"
 #include "DrawingsModel.h"
-#include "NotesModel.h"
+#include "NotesModel.h" // LTO
 #include "Chat.h"
 #include "dispatcher/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
+#include "protocol/MessengerSenders.h"
 #include "tools/MessageDispatcher_ABC.h"
 
 using namespace plugins::messenger;
@@ -58,16 +59,10 @@ void MessengerPlugin::Register( dispatcher::Services& services )
 // Name: MessengerPlugin::Receive
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void MessengerPlugin::Receive( const ASN1T_MsgsSimToClient& message )
+void MessengerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    switch( message.msg.t )
-    {
-    case T_MsgsSimToClient_msg_msg_control_checkpoint_save_end:
-        model_.Save( message.msg.u.msg_control_checkpoint_save_end->name );
-        break;
-    default:
-        ;
-    }
+    if( wrapper.message().has_control_checkpoint_save_end() )
+        model_.Save( wrapper.message().control_checkpoint_save_end().name() );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,50 +88,47 @@ void MessengerPlugin::NotifyClientLeft( dispatcher::ClientPublisher_ABC& client 
 // Name: MessengerPlugin::OnReceiveClientToMessenger
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, const ASN1T_MsgsClientToMessenger& message )
+void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, const MsgsClientToMessenger::MsgClientToMessenger& wrapper )
 {
     dispatcher::ClientPublisher_ABC& publisher = links_.GetPublisher( client );
-    switch( message.t )
-    {
     // Limit
-    case T_MsgsClientToMessenger_msg_limit_creation_request:
-        model_.tacticalLines_.HandleLimitRequest( publisher, *message.u.msg_limit_creation_request ); break;
-    case T_MsgsClientToMessenger_msg_limit_destruction_request:
-        model_.tacticalLines_.HandleLimitRequest( publisher, message.u.msg_limit_destruction_request ); break;
-    case T_MsgsClientToMessenger_msg_limit_update_request:
-        model_.tacticalLines_.HandleLimitRequest( publisher, *message.u.msg_limit_update_request ); break;
+    if( wrapper.message().has_limit_creation_request() )
+        model_.tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_creation_request() ); 
+    if( wrapper.message().has_limit_destruction_request() )
+        model_.tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_destruction_request() ); 
+    if( wrapper.message().has_limit_update_request() )
+        model_.tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_update_request() ); 
     // Lima
-    case T_MsgsClientToMessenger_msg_lima_creation_request:
-        model_.tacticalLines_.HandleLimaRequest( publisher, *message.u.msg_lima_creation_request ); break;
-    case T_MsgsClientToMessenger_msg_lima_destruction_request:
-        model_.tacticalLines_.HandleLimaRequest( publisher, message.u.msg_lima_destruction_request ); break;
-    case T_MsgsClientToMessenger_msg_lima_update_request:
-        model_.tacticalLines_.HandleLimaRequest( publisher, *message.u.msg_lima_update_request ); break;
+    if( wrapper.message().has_lima_creation_request() )
+        model_.tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_creation_request() ); 
+    if( wrapper.message().has_lima_destruction_request() )
+        model_.tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_destruction_request() ); 
+    if( wrapper.message().has_lima_update_request() )
+        model_.tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_update_request() ); 
     // Intelligence
-    case T_MsgsClientToMessenger_msg_intelligence_creation_request:
-        model_.intelligences_.HandleRequest( publisher, *message.u.msg_intelligence_creation_request ); break;
-    case T_MsgsClientToMessenger_msg_intelligence_update_request:
-        model_.intelligences_.HandleRequest( publisher, *message.u.msg_intelligence_update_request ); break;
-    case T_MsgsClientToMessenger_msg_intelligence_destruction_request:
-        model_.intelligences_.HandleRequest( publisher, *message.u.msg_intelligence_destruction_request ); break;
+    if( wrapper.message().has_intelligence_creation_request() )
+        model_.intelligences_.HandleRequest( publisher, wrapper.message().intelligence_creation_request() ); 
+    if( wrapper.message().has_intelligence_update_request() )
+        model_.intelligences_.HandleRequest( publisher, wrapper.message().intelligence_update_request() ); 
+    if( wrapper.message().has_intelligence_destruction_request() )
+        model_.intelligences_.HandleRequest( publisher, wrapper.message().intelligence_destruction_request() ); 
     // Drawings
-    case T_MsgsClientToMessenger_msg_shape_creation_request:
-        model_.drawings_.HandleRequest( publisher, *message.u.msg_shape_creation_request ); break;
-    case T_MsgsClientToMessenger_msg_shape_update_request:
-        model_.drawings_.HandleRequest( publisher, *message.u.msg_shape_update_request ); break;
-    case T_MsgsClientToMessenger_msg_shape_destruction_request:
-        model_.drawings_.HandleRequest( publisher, *message.u.msg_shape_destruction_request ); break;
+    if( wrapper.message().has_shape_creation_request() )
+        model_.drawings_.HandleRequest( publisher, wrapper.message().shape_creation_request() ); 
+    if( wrapper.message().has_shape_update_request() )
+        model_.drawings_.HandleRequest( publisher, wrapper.message().shape_update_request() ); 
+    if( wrapper.message().has_shape_destruction_request() )
+        model_.drawings_.HandleRequest( publisher, wrapper.message().shape_destruction_request() ); 
     // Chat
-    case T_MsgsClientToMessenger_msg_text_message:
-        chat_->OnReceive( *message.u.msg_text_message ); break;
-        // Notes
-    case T_MsgsClientToMessenger_msg_note_creation_request:
-        model_.notes_.HandleRequest( *message.u.msg_note_creation_request ); break;
-    case T_MsgsClientToMessenger_msg_note_update_request:
-        model_.notes_.HandleRequest( *message.u.msg_note_update_request ); break;
-    case T_MsgsClientToMessenger_msg_note_destruction_request:
-        model_.notes_.HandleRequest( *message.u.msg_note_destruction_request ); break;
-    default:
-        break;
-    }
+    if( wrapper.message().has_text_message() )
+        chat_->OnReceive( wrapper.message().text_message() ); 
+    // LTO Begin
+    // Notes
+    if ( wrapper.message().has_note_creation_request() )
+        model_.notes_.HandleRequest( wrapper.message().note_creation_request() );
+    if ( wrapper.message().has_note_update_request() )
+        model_.notes_.HandleRequest( wrapper.message().note_update_request() );
+    if ( wrapper.message().has_note_destruction_request() )
+        model_.notes_.HandleRequest( wrapper.message().note_destruction_request() );
+    // LTO end
 }

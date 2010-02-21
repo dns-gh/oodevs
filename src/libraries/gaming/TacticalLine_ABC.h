@@ -12,7 +12,7 @@
 
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {
@@ -21,8 +21,9 @@ namespace kernel
 
 class Publisher_ABC;
 
-struct ASN1T_MsgLimaUpdate;
-struct ASN1T_MsgLimitUpdate;
+// $$$$ _RC_ FDS 2010-01-27: n doit pouvoir supprimer
+//struct ASN1T_MsgLimaUpdate;
+//struct ASN1T_MsgLimitUpdate;
 
 
 // =============================================================================
@@ -33,8 +34,8 @@ struct ASN1T_MsgLimitUpdate;
 // =============================================================================
 class TacticalLine_ABC : public kernel::TacticalLine_ABC
                        , public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgLimaUpdate >
-                       , public kernel::Updatable_ABC< ASN1T_MsgLimitUpdate >
+                       , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
+                       , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
 {
 
 public:
@@ -70,8 +71,8 @@ protected:
 
     //! @name Helpers
     //@{
-    void WriteGeometry( ASN1T_Line& line ) const;
-    void WriteDiffusion( ASN1T_TacticalLinesDiffusion& diffusion ) const;
+    void WriteGeometry( Common::MsgLocation& loc ) const;
+    void WriteDiffusion( Common::MsgTacticalLine::Diffusion& diffusion ) const;
     virtual void UpdateToSim( E_State state ) = 0;
     template< typename Message >
     void Send( Message& message )
@@ -79,8 +80,8 @@ protected:
         message.Send( publisher_);
     }
 
-    virtual void DoUpdate( const ASN1T_MsgLimaUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgLimitUpdate& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate&  message );
     //@}
 
 private:

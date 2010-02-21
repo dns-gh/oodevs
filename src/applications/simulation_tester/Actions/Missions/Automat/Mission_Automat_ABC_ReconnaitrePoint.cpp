@@ -43,9 +43,9 @@ void Mission_Automat_ABC_ReconnaitrePoint::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_ReconnaitrePoint& asnMission = *new ASN1T_Mission_Automate_ABC_ReconnaitrePoint();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_reconnaitre_point;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_reconnaitre_point = &asnMission;
+    Mission_Automate_ABC_ReconnaitrePoint& asnMission = *new Mission_Automate_ABC_ReconnaitrePoint();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_reconnaitre_point = &asnMission;
 
     const Location& pointAReconnaitre_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_ABC_ReconnaitrePoint::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_ReconnaitrePoint::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_reconnaitre_point );
-    ASN1T_Mission_Automate_ABC_ReconnaitrePoint& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_reconnaitre_point;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_reconnaitre_point ());
+    Mission_Automate_ABC_ReconnaitrePoint& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_reconnaitre_point;
 
     ASN_Tools::Delete( asnMission.point_a_reconnaitre );
 

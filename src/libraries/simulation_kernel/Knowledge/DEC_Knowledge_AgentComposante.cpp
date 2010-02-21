@@ -54,10 +54,12 @@ DEC_Knowledge_AgentComposante::~DEC_Knowledge_AgentComposante()
 // Name: DEC_Knowledge_AgentComposante::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    ASN1T_EquipmentType nMosID;
-    file >> nMosID;
+    Common::MsgEquipmentType nMosID;
+    int nMosIDoid;
+    file >> nMosIDoid;
+    nMosID.set_equipment( nMosIDoid );
     pType_ = PHY_ComposanteTypePion::Find( nMosID );
     
     file >> bCanFire_
@@ -69,10 +71,11 @@ void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const u
 // Name: DEC_Knowledge_AgentComposante::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    ASN1T_EquipmentType type = pType_->GetMosID();
-    file << type
+    Common::MsgEquipmentType type = pType_->GetMosID();
+    int equipmenttype_val = type.equipment();
+    file << equipmenttype_val
          << bCanFire_
          << bCanFireWhenUnloaded_
          << nMajorScore_;
@@ -128,7 +131,7 @@ const PHY_ComposanteType_ABC& DEC_Knowledge_AgentComposante::GetType() const
 // Name: DEC_Knowledge_AgentComposante::GetMajorScore
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_AgentComposante::GetMajorScore() const
+unsigned int DEC_Knowledge_AgentComposante::GetMajorScore() const
 {
     return nMajorScore_;
 }

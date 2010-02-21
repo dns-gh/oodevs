@@ -11,13 +11,14 @@
 #include "AfterAction.h"
 #include "AfterActionFunctionList.h"
 #include "AfterActionRequestList.h"
+#include "icons.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/AfterActionModel.h"
 #include "gaming/Services.h"
 #include "gaming/Tools.h"
-#include "game_asn/AarSenders.h"
-#include "game_asn/ReplaySenders.h"
-#include "icons.h"
+#include "protocol/Protocol.h"
+#include "protocol/ReplaySenders.h"
+#include "protocol/AarSenders.h"
 
 using namespace gui;
 using namespace kernel;

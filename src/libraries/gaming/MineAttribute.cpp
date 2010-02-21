@@ -82,27 +82,27 @@ void MineAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 // Name: MineAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MineAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MineAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MineAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void MineAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void MineAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
    
 // -----------------------------------------------------------------------------
@@ -112,17 +112,17 @@ void MineAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
 template< typename T >
 void MineAttribute::UpdateData( const T& message )
 {
-    if ( message.m.minePresent )
+    if ( message.has_mine()  )
     {
-        if( ! valorization_ && message.mine.m.dotation_typePresent )
-            valorization_ = & resolver_.Get( message.mine.dotation_type );
+        if( ! valorization_ && message.mine().has_dotation_type()  )
+            valorization_ = & resolver_.Get( message.mine().dotation_type() );
 
-        if ( message.mine.m.dotation_nbrPresent )
-            nDotationValorization_ = message.mine.dotation_nbr;
-        if ( message.mine.m.percentagePresent )
-            rValorizationPercentage_ = float( message.mine.percentage );
-        if ( message.mine.m.densityPresent )
-            density_ = float( message.mine.density );
+        if ( message.mine().has_dotation_nbr()  )
+            nDotationValorization_ = message.mine().dotation_nbr();
+        if ( message.mine().has_percentage()  )
+            rValorizationPercentage_ = float( message.mine().percentage() );
+        if ( message.mine().has_density()  )
+            density_ = float( message.mine().density() );
         controller_.Update( *(MineAttribute_ABC*)this );
     }
 }

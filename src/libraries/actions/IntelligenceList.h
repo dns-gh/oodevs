@@ -10,9 +10,13 @@
 #ifndef __ActionParameterIntelligenceList_h_
 #define __ActionParameterIntelligenceList_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
+
+namespace Common
+{
+    class MsgIntelligenceList;
+}
 
 namespace kernel
 {
@@ -41,7 +45,7 @@ public:
              IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis
                                             , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
                                             , const kernel::FormationLevels& levels, kernel::Controller& controller );
-             IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_IntelligenceList& asn 
+             IntelligenceList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgIntelligenceList& asn 
                                             , const tools::Resolver_ABC< kernel::Formation_ABC >& resolver
                                             , const kernel::FormationLevels& levels, kernel::Controller& controller );
     virtual ~IntelligenceList();
@@ -49,8 +53,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
+    virtual void Clean( Common::MsgMissionParameter& asn ) const;
     virtual bool IsSet() const;
     //@}
 

@@ -10,7 +10,15 @@
 #ifndef __TeamFactory_ABC_h_
 #define __TeamFactory_ABC_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    class MsgFormationCreation;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgTeamCreation;
+}
 
 namespace kernel
 {
@@ -37,8 +45,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC*      CreateTeam     ( const ASN1T_MsgTeamCreation& asnMsg ) = 0;
-    virtual kernel::Formation_ABC* CreateFormation( const ASN1T_MsgFormationCreation& asnMsg ) = 0;
+    virtual kernel::Team_ABC*      CreateTeam     ( const MsgsSimToClient::MsgTeamCreation& message ) = 0;
+    virtual kernel::Formation_ABC* CreateFormation( const Common::MsgFormationCreation& message ) = 0;
     //@}
 };
 

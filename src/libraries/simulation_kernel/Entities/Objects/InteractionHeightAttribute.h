@@ -13,8 +13,6 @@
 #include "ObjectAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
-struct ASN1T_ObjectAttributes;
-
 // =============================================================================
 /** @class  InteractionHeightAttribute
     @brief  InteractionHeightAttribute
@@ -28,24 +26,24 @@ public:
     //! @name Constructors/Destructor
     //@{
              InteractionHeightAttribute();
-    explicit InteractionHeightAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit InteractionHeightAttribute( const Common::MsgObjectAttributes& asn );
     explicit InteractionHeightAttribute( xml::xistream& xis );
     virtual ~InteractionHeightAttribute();
     //@}
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Knowledge instance
     //@{    
-    virtual void Instanciate( DEC_Knowledge_Object& /*object*/ ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
     //! @name ASN Network update
     //@{     
-    virtual void SendFullState( ASN1T_ObjectAttributes& /*asn*/ ) const; //<! Send update to ASN client
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const; //<! Send update to asn client
     //@}
 
     //! @name ODB

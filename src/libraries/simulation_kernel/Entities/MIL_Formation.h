@@ -35,7 +35,7 @@ class MIL_Formation : public tools::Resolver< MIL_Formation >
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Formation(  xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory );
+             MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Formation* pParent, FormationFactory_ABC& formationFactory, AutomateFactory_ABC& automateFactory );
              MIL_Formation();
     virtual ~MIL_Formation();
     //@}
@@ -43,8 +43,8 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()   
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
     void WriteODB             ( xml::xostream& xos ) const;
     void WriteLogisticLinksODB( xml::xostream& xos ) const;
@@ -63,7 +63,7 @@ public:
     //! @name Accessors
     //@{
     MIL_Army_ABC& GetArmy() const;
-    uint      GetID  () const;
+    unsigned int GetID() const;
     //@}
 
     //! @name Network
@@ -88,7 +88,7 @@ private:
 private:
     //! @name Attributes
     //@{
-          uint              nID_;
+          unsigned int      nID_;
           MIL_Army_ABC*     pArmy_;
           MIL_Formation*    pParent_;
     const PHY_NatureLevel*  pLevel_;

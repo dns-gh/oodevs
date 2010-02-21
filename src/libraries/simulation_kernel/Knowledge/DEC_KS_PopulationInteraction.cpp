@@ -55,7 +55,7 @@ DEC_KS_PopulationInteraction::~DEC_KS_PopulationInteraction()
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DEC_KS_PopulationInteraction::serialize( Archive& archive, const uint )
+void DEC_KS_PopulationInteraction::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
             & pBlackBoard_

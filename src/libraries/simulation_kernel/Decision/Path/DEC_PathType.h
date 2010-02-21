@@ -45,12 +45,12 @@ public:
 
     static       T_PathTypeMap& GetPathTypes();
     static const DEC_PathType*  Find        ( const std::string& strName );
-    static const DEC_PathType*  Find        ( uint nID );
+    static const DEC_PathType*  Find        ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-          uint         GetID  () const;
+          unsigned int         GetID  () const;
     const std::string& GetName() const;
     //@}
 

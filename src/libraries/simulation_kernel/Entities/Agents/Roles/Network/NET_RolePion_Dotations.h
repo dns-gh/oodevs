@@ -15,8 +15,12 @@
 #include "NET_RoleInterface_Dotations.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class MIL_AgentPion;
-class NET_ASN_MsgUnitAttributes;
 
 namespace network
 {
@@ -36,7 +40,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Network
@@ -55,7 +59,7 @@ private:
     //! @name Tools
     //@{
     bool DataUpdated() const;
-    void SendMsg    ( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    void SendMsg    ( client::UnitAttributes& asnMsg ) const;
     //@}
 
 private:

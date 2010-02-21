@@ -40,9 +40,9 @@ DEC_BlackBoard_CanContainKnowledgePopulationPerception::~DEC_BlackBoard_CanConta
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgePopulationPerception::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_BlackBoard_CanContainKnowledgePopulationPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nNbr;
+    unsigned int nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -56,9 +56,9 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::load( MIL_CheckPoin
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    uint size = knowledgePopulationPerceptionMap_.size();
+    unsigned int size = knowledgePopulationPerceptionMap_.size();
     file << size;
     for ( CIT_KnowledgePopulationPerceptionMap it = knowledgePopulationPerceptionMap_.begin(); it != knowledgePopulationPerceptionMap_.end(); ++it )
     {

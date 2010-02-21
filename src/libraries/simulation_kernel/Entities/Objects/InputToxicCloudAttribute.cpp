@@ -16,6 +16,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeInputToxicCloud.h"
 #include "simulation_terrain/TER_World.h"
+#include "protocol/protocol.h"
 #include <geodata/Feature_ABC.h>
 #include <geodata/FeatureHandler_ABC.h>
 #include <geodata/Primitive_ABC.h>
@@ -80,7 +81,7 @@ InputToxicCloudAttribute::~InputToxicCloudAttribute()
 // Name: InputToxicCloudAttribute::load
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::load( MIL_CheckPointInArchive& ar, const uint )
+void InputToxicCloudAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >> filename_
        >> field_
@@ -93,7 +94,7 @@ void InputToxicCloudAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: InputToxicCloudAttribute::save
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void InputToxicCloudAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << filename_
@@ -138,7 +139,7 @@ void InputToxicCloudAttribute::LoadConfig()
 
 namespace 
 {
-    uint ReadGDH( const std::string& gdh )
+    unsigned int ReadGDH( const std::string& gdh )
     {
         bpt::ptime time = bpt::from_iso_string( gdh );
         return ( time - bpt::from_time_t( 0 ) ).total_seconds();
@@ -181,8 +182,8 @@ void InputToxicCloudAttribute::ReadFiles( xml::xistream& xis )
 
     if ( CanConvertWeirdFormat( schedule, eventGDH ) )
     {    
-        uint eventTime = ReadGDH( eventGDH );
-        uint simTime = MIL_AgentServer::GetWorkspace().RealTimeToTick( eventTime );
+        unsigned int eventTime = ReadGDH( eventGDH );
+        unsigned int simTime = MIL_AgentServer::GetWorkspace().RealTimeToTick( eventTime );
         (*schedule_)[ simTime ] = schedule;
     }
 }
@@ -200,14 +201,17 @@ void InputToxicCloudAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: InputToxicCloudAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void InputToxicCloudAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
     if( bExport_ )
     {
-        asn.m.toxic_cloudPresent  = 1;
-        asn.toxic_cloud.quantities.n = export_.size();
-        if ( export_.size() > 0 )
-            asn.toxic_cloud.quantities.elem = ( ASN1T_LocatedQuantity * )&export_.front();
+        unsigned int i = 0;
+        for (CIT_QuantityContainer it(export_.begin()); it != export_.end(); ++it, i++)
+        {
+            asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->mutable_coordinate()->set_latitude( (*it).first.rX_ );
+            asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->mutable_coordinate()->set_longitude( (*it).first.rY_ );
+            asn.mutable_toxic_cloud()->mutable_quantities()->mutable_elem( i )->set_quantity( (*it).second ) ;
+        }
     }
 }
 
@@ -215,7 +219,7 @@ void InputToxicCloudAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) cons
 // Name: InputToxicCloudAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void InputToxicCloudAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void InputToxicCloudAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if( bExport_ && NeedUpdate() )
     {
@@ -303,7 +307,7 @@ void InputToxicCloudAttribute::BuildConvexHull( TER_Polygon& polygon ) const
 // Name: InputToxicCloudAttribute::Update
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------
-bool InputToxicCloudAttribute::Update( uint time, TER_Polygon& polygon )
+bool InputToxicCloudAttribute::Update( unsigned int time, TER_Polygon& polygon )
 {
     CIT_Schedule it = schedule_->find( time );
     if ( it != schedule_->end() )
@@ -358,7 +362,7 @@ namespace
         }
     private:    
         MT_Float& quantity_;
-        uint      n_;
+        unsigned int      n_;
     };
 }
 

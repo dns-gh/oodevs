@@ -10,8 +10,15 @@
 #ifndef __CrossingSiteAttribute_h_
 #define __CrossingSiteAttribute_h_
 
-#include "game_asn/Simulation.h"
+
 #include "ObjectAttribute_ABC.h"
+
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
 
 namespace dispatcher
 {
@@ -28,15 +35,15 @@ class CrossingSiteAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     CrossingSiteAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
+     CrossingSiteAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~CrossingSiteAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_ObjectAttributes& asnMsg );
-    virtual void Send     ( ASN1T_ObjectAttributes& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

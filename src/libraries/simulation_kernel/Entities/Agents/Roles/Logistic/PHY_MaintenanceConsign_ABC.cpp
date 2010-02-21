@@ -16,7 +16,7 @@
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "Network/NET_ASN_Messages.h"
+#include "protocol/clientsenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC constructor
@@ -102,21 +102,20 @@ void PHY_MaintenanceConsign_ABC::EnterStateFinished()
 // Name: PHY_MaintenanceConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceConsign_ABC::SendFullState( NET_ASN_MsgLogMaintenanceHandlingUpdate& asn ) const
+void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUpdate& asn ) const
 {
     assert( pComposanteState_ );
     assert( pMaintenance_ );
     
-    asn().oid_pion_log_traitant = pMaintenance_->GetID();
-    asn().m.etatPresent         = 1;
-    asn().etat                  = (ASN1T_EnumLogMaintenanceHandlingStatus)nState_;
+    asn().set_oid_pion_log_traitant( pMaintenance_->GetID() );
+    asn().set_etat( Common::EnumLogMaintenanceHandlingStatus( nState_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::SendChangedState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceConsign_ABC::SendChangedState( NET_ASN_MsgLogMaintenanceHandlingUpdate& asn ) const
+void PHY_MaintenanceConsign_ABC::SendChangedState( client::LogMaintenanceHandlingUpdate& asn ) const
 {
     assert( pComposanteState_ );
     if( bHasChanged_ )

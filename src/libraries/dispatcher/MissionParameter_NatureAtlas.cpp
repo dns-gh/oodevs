@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_NatureAtlas.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_NatureAtlas constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_NatureAtlas::MissionParameter_NatureAtlas( const ASN1T_MissionParameter& asn )
+MissionParameter_NatureAtlas::MissionParameter_NatureAtlas( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , natureAtlas_        ( asn.value.u.atlasNature->numbits, asn.value.u.atlasNature->data )
+    , natureAtlas_( asn.value().atlasnature() )
 {
     // NOTHING
 }
@@ -41,18 +42,17 @@ MissionParameter_NatureAtlas::~MissionParameter_NatureAtlas()
 // Name: MissionParameter_NatureAtlas::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_NatureAtlas::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_NatureAtlas::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value          = bNullValue_;
-    asn.value.t             = T_MissionParameter_value_atlasNature;
-    asn.value.u.atlasNature = new ASN1T_AtlasNature( natureAtlas_.numbits, natureAtlas_.data );
+    asn.set_null_value( bNullValue_ );
+    asn.mutable_value()->mutable_atlasnature()->set_nature( natureAtlas_.nature() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_NatureAtlas::AsnDelete
+// Name: MissionParameter_NatureAtlas::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_NatureAtlas::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_NatureAtlas::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.atlasNature;
+    delete asn.mutable_value()->mutable_atlasnature();
 }

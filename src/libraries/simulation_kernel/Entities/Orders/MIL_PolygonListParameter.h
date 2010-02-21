@@ -25,7 +25,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_PolygonListParameter();
-    explicit MIL_PolygonListParameter( const ASN1T_PolygonList& );
+    explicit MIL_PolygonListParameter( const Common::MsgPolygonList& );
     explicit MIL_PolygonListParameter( const std::vector< boost::shared_ptr< TER_Localisation > >& );
     virtual ~MIL_PolygonListParameter();
     //@}
@@ -37,7 +37,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToPolygonList( ASN1T_PolygonList& ) const;
+    virtual bool ToPolygonList( Common::MsgPolygonList& ) const;
     virtual bool ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
     //@}
 

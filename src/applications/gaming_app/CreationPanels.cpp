@@ -17,7 +17,7 @@
 #include "clients_gui/DrawerPanel.h"
 #include "gaming/DrawingsModel.h"
 #include "gaming/Services.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/simulationsenders.h"
 #include "ObjectCreationPanel.h"
 
 using namespace kernel;

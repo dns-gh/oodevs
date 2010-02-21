@@ -10,14 +10,10 @@
 #ifndef __LoggerApplication_h_
 #define __LoggerApplication_h_
 
-#include <string>
-#include "game_asn/Aar.h"
-#include "game_asn/Authentication.h"
-#include "game_asn/Dispatcher.h"
-#include "game_asn/Messenger.h"
-#include "game_asn/Replay.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 #include "tools/ClientNetworker.h"
+
+#include <string>
 #include <iostream>
 #include <fstream>
 
@@ -40,7 +36,7 @@ public:
     //! @name Operations
     //@{
     int Run();
-    void Send( const ASN1T_MsgsClientToAuthentication& message );
+    void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper );
     //@}
 
 private:
@@ -56,16 +52,16 @@ private:
     virtual void ConnectionFailed   ( const std::string& address, const std::string& error );
     virtual void ConnectionError    ( const std::string& address, const std::string& error );
 
-    void OnReceiveMsgSimToClient           ( const std::string& from, const ASN1T_MsgsSimToClient& message );
-    void OnReceiveMsgAuthenticationToClient( const std::string& from, const ASN1T_MsgsAuthenticationToClient& message );
-    void OnReceiveMsgDispatcherToClient    ( const std::string& from, const ASN1T_MsgsDispatcherToClient& message );
-    void OnReceiveMsgMessengerToClient     ( const std::string& from, const ASN1T_MsgsMessengerToClient& message );
+    void OnReceiveMsgSimToClient           ( const std::string& from, const MsgsSimToClient::MsgSimToClient& wrapper );
+    void OnReceiveMsgAuthenticationToClient( const std::string& from, const MsgsAuthenticationToClient::MsgAuthenticationToClient& wrapper );
+    void OnReceiveMsgDispatcherToClient    ( const std::string& from, const MsgsDispatcherToClient::MsgDispatcherToClient& wrapper );
+    void OnReceiveMsgMessengerToClient     ( const std::string& from, const MsgsMessengerToClient::MsgMessengerToClient& wrapper );
 
-    void OnReceiveMsgReplayToClient        ( const std::string& from, const ASN1T_MsgsReplayToClient& message );
-    void OnReceiveMsgAarToClient           ( const std::string& from, const ASN1T_MsgsAarToClient& message );
+    void OnReceiveMsgReplayToClient        ( const std::string& from, const MsgsReplayToClient::MsgReplayToClient& wrapper );
+    void OnReceiveMsgAarToClient           ( const std::string& from, const MsgsAarToClient::MsgAarToClient& wrapper );
     
     void OnReceiveMsgControlBeginTick( int tick );
-    void LogMessage( int type );
+    void LogMessage( const MsgsSimToClient::MsgSimToClient& wrapper );
     void DumpTime();
     //@}
 
@@ -73,9 +69,9 @@ private:
     //! @name Member data
     //@{
     std::ofstream file_;
-    std::string   login_;
-    std::string   password_;
-    std::string   endpoint_;
+    const std::string login_;
+    std::string  password_;
+    std::string  endpoint_;
     bool          bConnectionLost_;
     bool          bVerbose_;
     //@}

@@ -21,7 +21,10 @@ class DEC_KnowledgeBlackBoard_Army;
 class MIL_KnowledgeGroup;
 class MIL_Formation;
 
-struct ASN1T_MsgChangeDiplomacy;
+namespace Common
+{
+    class MsgChangeDiplomacy;
+}
 
 namespace xml
 {
@@ -54,7 +57,7 @@ public:
 
     //! @name CheckPoints / Interface
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     virtual void WriteODB         ( xml::xostream& xos ) const = 0;
     virtual void WriteDiplomacyODB( xml::xostream& xos ) const = 0;
     //@}
@@ -78,7 +81,6 @@ public:
     virtual void SendKnowledge              () const = 0;
     //@}
 
-
     //! @name Operations
     //@{    
     virtual bool       IsPerceived( const DEC_Knowledge_Object& knowledge ) const = 0;
@@ -87,19 +89,17 @@ public:
     virtual E_Tristate IsAnEnemy( const MIL_Army_ABC& army ) const = 0;
     virtual E_Tristate IsNeutral( const MIL_Army_ABC& army ) const = 0;
 
-    virtual MIL_KnowledgeGroup* FindKnowledgeGroup( uint nID ) const = 0;
+    virtual MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const = 0;
     virtual void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup ) = 0;
     virtual void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup ) = 0;
 
     virtual void InitializeDiplomacy( xml::xistream& xis ) = 0;
-    virtual void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& msg ) = 0;
-
+    virtual void OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& msg ) = 0;
     //@}
-
 
     //! @name Accessors
     //@{
-    virtual uint                          GetID() const = 0;
+    virtual unsigned int                          GetID() const = 0;
     virtual const std::string&            GetName() const = 0;
     virtual DEC_KnowledgeBlackBoard_Army& GetKnowledge() const = 0;
     //@}

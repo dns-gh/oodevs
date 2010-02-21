@@ -24,7 +24,6 @@ class MIL_StringParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_StringParameter( const ASN1VisibleString& asn );
     explicit MIL_StringParameter( const std::string& message );
     virtual ~MIL_StringParameter();
     //@}
@@ -36,7 +35,6 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToString( ASN1VisibleString& asn ) const;
     virtual bool ToString( std::string& ) const;
     //@}
 

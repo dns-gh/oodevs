@@ -10,13 +10,19 @@
 #ifndef __TacticalLineFactory_h_
 #define __TacticalLineFactory_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {
     class Controllers;
     class CoordinateConverter_ABC;
     class Entity_ABC;
+}
+
+namespace MsgsMessengerToClient
+{
+    class MsgLimaCreation;
+    class MsgLimitCreation;
 }
 
 class TacticalLine_ABC;
@@ -40,8 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    TacticalLine_ABC* Create( const ASN1T_MsgLimaCreation&  asnMsg );
-    TacticalLine_ABC* Create( const ASN1T_MsgLimitCreation& asnMsg );
+    TacticalLine_ABC* Create( const MsgsMessengerToClient::MsgLimaCreation&  message );
+    TacticalLine_ABC* Create( const MsgsMessengerToClient::MsgLimitCreation& message );
 
     void CreateLimit( const T_PointVector& points, const kernel::Entity_ABC& superior );
     void CreateLima ( const T_PointVector& points, const kernel::Entity_ABC& superior );

@@ -10,6 +10,7 @@
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_Enumeration.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Enumeration constructor
@@ -18,6 +19,7 @@
 MIL_ParameterType_Enumeration::MIL_ParameterType_Enumeration()
     : MIL_ParameterType_ABC( "enumeration" )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -26,28 +28,21 @@ MIL_ParameterType_Enumeration::MIL_ParameterType_Enumeration()
 //-----------------------------------------------------------------------------
 MIL_ParameterType_Enumeration::~MIL_ParameterType_Enumeration()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Enumeration::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     int id;
     if( !from.ToId( id ) )
         return false;
-
-    to.null_value = false;
-    to.value.t    = T_MissionParameter_value_enumeration;
-    
-    to.value.u.enumeration = id;
-
+    to.set_null_value( false );
+    to.mutable_value()->set_enumeration( id );
     return true;    
 }
 
@@ -55,7 +50,7 @@ bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, 
 // Name: MIL_ParameterType_Enumeration::CleanAfterSerialization
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_Enumeration::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_Enumeration::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_enumeration );
+    assert( to.value().has_enumeration() );
 }

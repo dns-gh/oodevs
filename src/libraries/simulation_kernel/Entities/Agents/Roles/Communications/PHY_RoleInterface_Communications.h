@@ -14,6 +14,11 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class MIL_Object_ABC;
 
 // =============================================================================
@@ -45,6 +50,13 @@ public:
     //@{
     virtual void Update    ( bool bIsDead ) = 0;
     virtual void Clean     () = 0;
+    //@}
+
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
     //@}
 
 private:

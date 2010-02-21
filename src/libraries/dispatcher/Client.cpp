@@ -11,16 +11,9 @@
 
 #include "Client.h"
 
-#include "game_asn/Simulation.h"
 #include "Profile.h"
 #include "tools/MessageSender_ABC.h"
-#include "game_asn/ClientSenders.h"
-#include "game_asn/AuthenticationSenders.h"
-#include "game_asn/ReplaySenders.h"
-#include "game_asn/AarSenders.h"
-#include "game_asn/PluginSenders.h"
-#include "game_asn/MessengerSenders.h"
-#include "game_asn/DispatcherSenders.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 using namespace tools;
@@ -49,7 +42,7 @@ Client::~Client()
 // Name: Client::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
+void Client::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& asnMsg )
 {
     sender_.Send( endpoint_, asnMsg );
 }
@@ -58,7 +51,7 @@ void Client::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 // Name: Client::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsSimToClient& asnMsg )
+void Client::Send( const MsgsSimToClient::MsgSimToClient& asnMsg )
 {
     sender_.Send( endpoint_, asnMsg );
 }
@@ -67,7 +60,7 @@ void Client::Send( const ASN1T_MsgsSimToClient& asnMsg )
 // Name: Client::Send
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsReplayToClient& msg )
+void Client::Send( const MsgsReplayToClient::MsgReplayToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -76,7 +69,7 @@ void Client::Send( const ASN1T_MsgsReplayToClient& msg )
 // Name: Client::Send
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsAarToClient& msg )
+void Client::Send( const MsgsAarToClient::MsgAarToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -85,7 +78,7 @@ void Client::Send( const ASN1T_MsgsAarToClient& msg )
 // Name: Client::Send
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsMessengerToClient& msg )
+void Client::Send( const MsgsMessengerToClient::MsgMessengerToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -94,7 +87,7 @@ void Client::Send( const ASN1T_MsgsMessengerToClient& msg )
 // Name: Client::Send
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsDispatcherToClient& msg )
+void Client::Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }
@@ -103,7 +96,7 @@ void Client::Send( const ASN1T_MsgsDispatcherToClient& msg )
 // Name: Client::Send
 // Created: RPD 2009-08-13
 // -----------------------------------------------------------------------------
-void Client::Send( const ASN1T_MsgsPluginToClient& msg )
+void Client::Send( const MsgsPluginToClient::MsgPluginToClient& msg )
 {
     sender_.Send( endpoint_, msg );
 }

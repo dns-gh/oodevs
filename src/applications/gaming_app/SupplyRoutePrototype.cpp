@@ -9,15 +9,17 @@
 
 #include "gaming_app_pch.h"
 #include "SupplyRoutePrototype.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/ClientSenders.h"
+#include "protocol/Protocol.h"
 
+using namespace MsgsClientToSim;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRoutePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-SupplyRoutePrototype::SupplyRoutePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg )
+SupplyRoutePrototype::SupplyRoutePrototype( QWidget* parent, MsgMagicActionCreateObject& msg )
     : SupplyRoutePrototype_ABC( parent )
     , msg_  ( msg )
     , attr_ ( 0 )
@@ -40,12 +42,11 @@ SupplyRoutePrototype::~SupplyRoutePrototype()
 // -----------------------------------------------------------------------------
 void SupplyRoutePrototype::Commit()
 {
-    msg_.attributes.m.supply_routePresent = 1;
-    msg_.attributes.supply_route.flow_rate = flow_->value();
-    msg_.attributes.supply_route.width = width_->value();
-    msg_.attributes.supply_route.length = length_->value();
-    msg_.attributes.supply_route.max_weight = maxWeight_->value();
-    msg_.attributes.supply_route.equipped = equipped_->isOn();
+    msg_.mutable_attributes()->mutable_supply_route()->set_flow_rate( flow_->value() );
+    msg_.mutable_attributes()->mutable_supply_route()->set_width( width_->value() );
+    msg_.mutable_attributes()->mutable_supply_route()->set_length( length_->value() );
+    msg_.mutable_attributes()->mutable_supply_route()->set_max_weight( maxWeight_->value() );
+    msg_.mutable_attributes()->mutable_supply_route()->set_equipped( equipped_->isOn() );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,5 +55,4 @@ void SupplyRoutePrototype::Commit()
 // -----------------------------------------------------------------------------
 void SupplyRoutePrototype::Clean()
 {
-    msg_.attributes.m.supply_routePresent = 0;
 }

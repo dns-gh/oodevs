@@ -60,11 +60,11 @@ private:
 
 private:
     const std::string strName_;
-    const uint        nID_;
+    const unsigned int        nID_;
 
 private:
     static T_DotationNatureMap natures_;
-    static uint                nNextID_;
+    static unsigned int                nNextID_;
 };
 
 #endif // __PHY_DotationNature_h_

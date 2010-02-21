@@ -7,7 +7,11 @@
 
 #include "MIL.h"
 
-#include "game_asn/Simulation.h"
+namespace MsgsClientToSim
+{
+    class MsgControlGlobalMeteo;
+    class MsgControlLocalMeteo;
+}
 
 namespace xml
 {
@@ -30,7 +34,7 @@ class PHY_MeteoDataManager : private boost::noncopyable
     friend class PHY_Meteo; // For UnregisterMeteo
 
 public:
-     PHY_MeteoDataManager( MIL_Config& config );
+    explicit PHY_MeteoDataManager( MIL_Config& config );
     virtual ~PHY_MeteoDataManager();
     
     //! @name Raw Data management
@@ -48,8 +52,8 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgGlobalMeteo( const ASN1T_MsgControlGlobalMeteo& asnMsg );
-    void OnReceiveMsgLocalMeteo ( const ASN1T_MsgControlLocalMeteo&  asnMsg );
+    void OnReceiveMsgGlobalMeteo( const MsgsClientToSim::MsgControlGlobalMeteo& asnMsg );
+    void OnReceiveMsgLocalMeteo ( const MsgsClientToSim::MsgControlLocalMeteo&  asnMsg );
     //@}
 
 private:

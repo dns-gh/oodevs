@@ -148,19 +148,19 @@ void LocationPositions::Draw( const kernel::GlTools_ABC& tools ) const
 
 namespace
 {
-    std::auto_ptr< kernel::Location_ABC > BuildLocation( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
+    std::auto_ptr< kernel::Location_ABC > BuildLocation( const kernel::CoordinateConverter_ABC& converter, const Common::MsgLocation& message )
     {
         std::auto_ptr< kernel::Location_ABC > location;
-        switch( asn.type )
+        switch( message.type() )
         {
-        case EnumLocationType::point:   location.reset( new kernel::Point() ); break;
-        case EnumLocationType::line:    location.reset( new kernel::Lines() ); break;
-        case EnumLocationType::polygon: location.reset( new kernel::Polygon() ); break;
-        case EnumLocationType::circle:  location.reset( new kernel::Circle() ); break;
+        case MsgLocation_Geometry_point:   location.reset( new kernel::Point() ); break;
+        case MsgLocation_Geometry_line:    location.reset( new kernel::Lines() ); break;
+        case MsgLocation_Geometry_polygon: location.reset( new kernel::Polygon() ); break;
+        case MsgLocation_Geometry_circle:  location.reset( new kernel::Circle() ); break;
         default: throw std::runtime_error( __FUNCTION__ " unsupported location type." ); break;
         }
-        for( unsigned int i = 0; i < asn.coordinates.n; ++i )
-            location->AddPoint( converter.ConvertToXY( asn.coordinates.elem[i] ) );
+        for( int i = 0; i < message.coordinates().elem_size(); ++i )
+            location->AddPoint( converter.ConvertToXY( message.coordinates().elem(i) ) );
         return location;
     }
 }
@@ -169,36 +169,36 @@ namespace
 // Name: LocationPositions::Update
 // Created: AGE 2006-05-18
 // -----------------------------------------------------------------------------
-void LocationPositions::Update( const ASN1T_Location& asn )
+void LocationPositions::Update( const Common::MsgLocation& message )
 {
-    points_.clear(); points_.reserve( asn.coordinates.n );
+    points_.clear(); points_.reserve( message.coordinates().elem_size());
     center_ = geometry::Point2f( 0, 0 );
     boundingBox_.Set( 0, 0, 0, 0 );
-    AddLocation( asn );
-    location_ = BuildLocation( converter_, asn );
+    AddLocation( message );
+    location_ = BuildLocation( converter_, message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LocationPositions::Update
 // Created: SBO 2007-04-20
 // -----------------------------------------------------------------------------
-void LocationPositions::Update( const ASN1T_Location& asn, const geometry::Point2f& startPoint )
+void LocationPositions::Update( const Common::MsgLocation& message, const geometry::Point2f& startPoint )
 {
-    points_.clear(); points_.reserve( asn.coordinates.n + 1 );
+    points_.clear(); points_.reserve( message.coordinates().elem_size()+ 1 );
     center_ = geometry::Point2f( 0, 0 );
     boundingBox_.Set( 0, 0, 0, 0 );
     AddPoint( startPoint );
-    AddLocation( asn );
+    AddLocation( message );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LocationPositions::AddLocation
 // Created: SBO 2007-04-20
 // -----------------------------------------------------------------------------
-void LocationPositions::AddLocation( const ASN1T_Location& asn )
+void LocationPositions::AddLocation( const Common::MsgLocation& message )
 {
-    for( uint i = 0; i < asn.coordinates.n; ++i )
-        AddPoint( converter_.ConvertToXY( asn.coordinates.elem[i] ) );
+    for( int i = 0; i < message.coordinates().elem_size(); ++i )
+        AddPoint( converter_.ConvertToXY( message.coordinates().elem(i) ) );
     if( !points_.empty() )
         center_.Set( center_.X() / points_.size(), center_.Y() / points_.size() );
 }

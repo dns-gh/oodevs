@@ -37,30 +37,25 @@ MissionParameterPhaseLines::~MissionParameterPhaseLines()
 // Name: MissionParameterPhaseLines::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLines::Serialize( ASN1T_MissionParameter& parameter ) const
+void MissionParameterPhaseLines::Serialize( MsgMissionParameter& parameter ) const
 {
-    parameter.null_value = 0;
-    parameter.value.t = T_MissionParameter_value_limasOrder;
-    parameter.value.u.limasOrder = new ASN1T_LimasOrder();
-    parameter.value.u.limasOrder->n = phaseLines_.size();
-    if( parameter.value.u.limasOrder->n > 0 )
-        parameter.value.u.limasOrder->elem = new ASN1T_LimaOrder[parameter.value.u.limasOrder->n];
+    parameter.set_null_value( 0 );
     unsigned int i = 0;
     for( T_PhaseLines::const_iterator it = phaseLines_.begin(); it != phaseLines_.end(); ++it, ++i )
-        (*it)->Serialize( parameter.value.u.limasOrder->elem[i] );
+        (*it)->Serialize( *parameter.mutable_value()->mutable_limasorder()->mutable_elem( i ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLines::Clean
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLines::Clean( ASN1T_MissionParameter& parameter ) const
+void MissionParameterPhaseLines::Clean( MsgMissionParameter& parameter ) const
 {
     unsigned int i = 0;
     for( T_PhaseLines::const_iterator it = phaseLines_.begin(); it != phaseLines_.end(); ++it, ++i )
-        (*it)->Clean( parameter.value.u.limasOrder->elem[i] );
-    delete[] parameter.value.u.limasOrder->elem;
-    delete parameter.value.u.limasOrder;
+        (*it)->Clean( *parameter.mutable_value()->mutable_limasorder()->mutable_elem( i ) );
+    delete[] parameter.mutable_value()->mutable_limasorder()->mutable_elem();
+    delete parameter.mutable_value()->mutable_limasorder();
 }
 
 // -----------------------------------------------------------------------------

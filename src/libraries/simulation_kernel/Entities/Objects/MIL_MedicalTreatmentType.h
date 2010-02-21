@@ -41,7 +41,7 @@ public:
     static void Terminate();
 
     static const MIL_MedicalTreatmentType* Find( const std::string& strName );
-    static const MIL_MedicalTreatmentType* Find( uint nID );
+    static const MIL_MedicalTreatmentType* Find( unsigned int nID );
     //@}
 
 private:

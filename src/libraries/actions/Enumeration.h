@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     //@}
 
 private:

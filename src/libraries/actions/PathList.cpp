@@ -12,6 +12,7 @@
 #include "Path.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -33,11 +34,11 @@ PathList::PathList( const OrderParameter& parameter )
 // Name: PathList constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-PathList::PathList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_PathList& asn )
+PathList::PathList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgPathList& message )
     : Parameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Path( OrderParameter( tools::translate( "Parameter", "Route %1" ).arg( i ).ascii(), "path", false ), converter, asn.elem[i] ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddParameter( *new Path( OrderParameter( tools::translate( "Parameter", "Route %1" ).arg( i ).ascii(), "path", false ), converter, message.elem(i).location() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,17 +71,14 @@ void PathList::ReadPath( xml::xistream& xis, const CoordinateConverter_ABC& conv
 
 namespace
 {
-    struct AsnSerializer : public ParameterVisitor_ABC
+    struct MessageSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_PathList& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit MessageSerializer( Common::MsgPathList& message ) : message_( &message ) {}
         virtual void Visit( const Path& param )
         {
-            if( current_ < asn_->n )
-                param.CommitTo( asn_->elem[current_++] );
+            param.CommitTo( *message_->add_elem()->mutable_location() );
         }
-
-        ASN1T_PathList* asn_;
-        unsigned int current_;
+        Common::MsgPathList* message_;
     };
 }
 
@@ -88,48 +86,25 @@ namespace
 // Name: PathList::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void PathList::CommitTo( ASN1T_MissionParameter& asn ) const
+void PathList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_pathList;
-    ASN1T_PathList*& list = asn.value.u.pathList = new ASN1T_PathList();
-    list->n = Count();
+    message.set_null_value( !IsSet() );
+    Common::MsgPathList* list = message.mutable_value()->mutable_pathlist();
     if( IsSet() )
     {
-        list->elem = new ASN1T_Path[list->n];
-        AsnSerializer serializer( *list );
+        MessageSerializer serializer( *list );
         Accept( serializer );
     }
-}
-
-namespace
-{
-    struct AsnCleaner : public ParameterVisitor_ABC
-    {
-        explicit AsnCleaner( ASN1T_PathList& asn ) : asn_( &asn ), current_( 0 ) {}
-        virtual void Visit( const Path& param )
-        {
-            if( current_ < asn_->n )
-                param.Clean( asn_->elem[current_++] );
-        }
-
-        ASN1T_PathList* asn_;
-        unsigned int current_;
-    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: PathList::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void PathList::Clean( ASN1T_MissionParameter& asn ) const
+void PathList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.pathList )
-    {
-        AsnCleaner cleaner( *asn.value.u.pathList );
-        Accept( cleaner );
-        delete[] asn.value.u.pathList;
-    }
+    if( message.value().has_pathlist() )
+        message.mutable_value()->clear_pathlist();
 }
 
 // -----------------------------------------------------------------------------

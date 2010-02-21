@@ -58,7 +58,7 @@ BuildableCapacity::BuildableCapacity( const PHY_ConsumptionType& consumption, Co
     xis >> xml::optional()
         >> xml::start( "resources" )
             // $$$$ _RC_ SBO 2009-06-11: Not a real list, only one dotation
-            >> list( "dotation", *this, &BuildableCapacity::ReadDotation )
+            >> xml::list( "dotation", *this, &BuildableCapacity::ReadDotation )
         >> xml::end();
 }
 
@@ -91,7 +91,7 @@ void BuildableCapacity::ReadDotation( xml::xistream& xis )
 // Name: BuildableCapacity::load
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const uint )
+void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     unsigned int consumptionId, dotationId;
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
@@ -111,11 +111,11 @@ void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: BuildableCapacity::save
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
-void BuildableCapacity::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void BuildableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {    
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    ar << (const uint&)default_->GetID()
-       << (const uint&)( dotation_ ? dotation_->GetMosID() : 0 )
+    ar << (const unsigned int&)default_->GetID()
+       << (const unsigned int&)( dotation_ ? dotation_->GetMosID() : 0 )
        << nFullNbrDotation_
        << unitType_;
 }
@@ -141,7 +141,7 @@ void BuildableCapacity::Instanciate( Object& object ) const
     else if ( unitType_ == ConstructionCapacity::eDensity && dotation_ )
     {
         const TER_Localisation& location = object.GetLocalisation();
-        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, uint( nFullNbrDotation_ * location.GetArea() ) );
+        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, unsigned int( nFullNbrDotation_ * location.GetArea() ) );
     }
 }
 
@@ -177,7 +177,7 @@ ConstructionCapacity::E_UnitType BuildableCapacity::GetUnit() const
 // Name: BuildableCapacity::GetMaxDotation
 // Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-uint BuildableCapacity::GetMaxDotation() const
+unsigned int BuildableCapacity::GetMaxDotation() const
 {
     return nFullNbrDotation_;
 }

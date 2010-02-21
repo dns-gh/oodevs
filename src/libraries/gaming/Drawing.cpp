@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "Drawing.h"
-#include "game_asn/MessengerSenders.h"
 #include "clients_gui/DrawingTypes.h"
 #include "clients_gui/DrawingCategory.h"
 #include "clients_gui/DrawingTemplate.h"
@@ -17,18 +16,19 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/LocationProxy.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: Drawing constructor
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-Drawing::Drawing( kernel::Controller& controller, const ASN1T_MsgShapeCreation& asn, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
-    : gui::DrawerShape( controller, asn.oid, types.Get( asn.shape.category ).Get( asn.shape.template_ ), QColor( asn.shape.color ), proxy )
+Drawing::Drawing( kernel::Controller& controller, const MsgsMessengerToClient::MsgShapeCreation& message, const gui::DrawingTypes& types, kernel::LocationProxy& proxy, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter )
+    : gui::DrawerShape( controller, message.oid(), types.Get( QString( message.shape().category().c_str() ) ).Get( QString( message.shape().template_().c_str() ) ), QColor( QString( message.shape().color().c_str() ) ), proxy )
     , publisher_( publisher )
     , converter_( converter )
     , publishUpdate_( true )
 {
-    SetLocation( asn.shape.points );
+    SetLocation( message.shape().points() );
     DrawerShape::Create();
 }
 
@@ -71,13 +71,13 @@ Drawing::~Drawing()
 // Name: Drawing::SetLocation
 // Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void Drawing::SetLocation( const ASN1T_CoordLatLongList& list )
+void Drawing::SetLocation( const Common::MsgCoordLatLongList& list )
 {
     std::auto_ptr< kernel::Location_ABC > location( style_.CreateLocation() );
     location_.SetLocation( location );
     location.release();
-    for( unsigned int i = 0; i < list.n; ++i )
-        location_.AddPoint( converter_.ConvertToXY( list.elem[i] ) );
+    for( int i = 0; i < list.elem_size(); ++i )
+        location_.AddPoint( converter_.ConvertToXY( list.elem( i ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,14 +86,14 @@ void Drawing::SetLocation( const ASN1T_CoordLatLongList& list )
 // -----------------------------------------------------------------------------
 void Drawing::Create()
 {
-    plugins::messenger::ShapeCreationRequest asn;
-    asn().shape.category = style_.GetCategory().ascii();
+    plugins::messenger::ShapeCreationRequest message;
+    message().mutable_shape()->set_category( style_.GetCategory().ascii() );
     std::string color = color_.name().ascii();
-    asn().shape.color = color.c_str();
-    asn().shape.template_ = style_.GetName().ascii();
-    SerializeLocation( asn().shape.points );
-    asn.Send( publisher_ );
-    CleanLocation( asn().shape.points );
+    message().mutable_shape()->set_color( color.c_str() );
+    message().mutable_shape()->set_template_( style_.GetName().ascii() );
+    SerializeLocation( *message().mutable_shape()->mutable_points() );
+    message.Send( publisher_ );
+    CleanLocation( *message().mutable_shape()->mutable_points() );
     delete this;
 }
 
@@ -106,16 +106,15 @@ void Drawing::Update()
     DrawerShape::Update();
     if( publishUpdate_ )
     {
-        plugins::messenger::ShapeUpdateRequest asn;
-        asn().oid = GetId();
-        asn().m.categoryPresent  = 1; asn().category  = style_.GetCategory().ascii();
-        asn().m.colorPresent     = 1;
+        plugins::messenger::ShapeUpdateRequest message;
+        message().set_oid( GetId() );
+        message().set_category( style_.GetCategory().ascii() );
         std::string color = color_.name().ascii();
-        asn().color = color.c_str();
-        asn().m.template_Present = 1; asn().template_ = style_.GetName().ascii();
-        asn().m.pointsPresent    = 1; SerializeLocation( asn().points );
-        asn.Send( publisher_ );
-        CleanLocation( asn().points );
+        message().set_color( color.c_str() );
+        message().set_template_( style_.GetName().ascii() );
+        SerializeLocation( *message().mutable_points() );
+        message.Send( publisher_ );
+        CleanLocation( *message().mutable_points() );
     }
 }
 
@@ -123,14 +122,14 @@ void Drawing::Update()
 // Name: Drawing::DoUpdate
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void Drawing::DoUpdate( const ASN1T_MsgShapeUpdate& message )
+void Drawing::DoUpdate( const MsgsMessengerToClient::MsgShapeUpdate& message )
 {
     publishUpdate_ = false;
      // $$$$ SBO 2008-06-09: can only change color and shape
-    if( message.m.colorPresent )
-        ChangeColor( message.color );
-    if( message.m.pointsPresent )
-        SetLocation( message.points );
+    if( message.has_color()  )
+        ChangeColor( QString( message.color().c_str() ) );
+    if( message.has_points()  )
+        SetLocation( message.points() );
     publishUpdate_ = true;
 }
 
@@ -143,7 +142,7 @@ namespace
         {
             for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
             {
-                ASN1T_CoordLatLong latlong;
+                Common::MsgCoordLatLong latlong;
                 converter_->ConvertToGeo( *it, latlong );
                 points_.push_back( latlong );
             }
@@ -153,7 +152,7 @@ namespace
             VisitLines( points );
             points_.pop_back();
         }
-        virtual void VisitCircle( const geometry::Point2f& center, float radius )
+        virtual void VisitCircle( const geometry::Point2f& /*center*/, float /*radius*/ )
         {
             // $$$$ SBO 2008-06-05: TODO
         }
@@ -165,7 +164,7 @@ namespace
         {
             VisitLines( points );
         }
-        std::vector< ASN1T_CoordLatLong > points_;
+        std::vector< Common::MsgCoordLatLong > points_;
         const kernel::CoordinateConverter_ABC* converter_;
     };
 }
@@ -174,15 +173,15 @@ namespace
 // Name: Drawing::SerializeLocation
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void Drawing::SerializeLocation( ASN1T_CoordLatLongList& list ) const
+void Drawing::SerializeLocation( Common::MsgCoordLatLongList& list ) const
 {
     Serializer serializer( converter_ );
     location_.Accept( serializer );
-    list.n = serializer.points_.size();
-    if( list.n )
+    if( serializer.points_.size() )
     {
-        list.elem = new ASN1T_CoordLatLong[ list.n ];
-        std::memcpy( list.elem, &serializer.points_.front(), list.n * sizeof( ASN1T_CoordLatLong ) );
+        for( unsigned int i = 0; i < serializer.points_.size(); ++i )
+            list.add_elem();
+		std::memcpy( list.mutable_elem(), &serializer.points_.front(), list.elem_size() * sizeof( Common::MsgCoordLatLong ) );
     }
 }
 
@@ -190,10 +189,10 @@ void Drawing::SerializeLocation( ASN1T_CoordLatLongList& list ) const
 // Name: Drawing::CleanLocation
 // Created: SBO 2008-06-05
 // -----------------------------------------------------------------------------
-void Drawing::CleanLocation( ASN1T_CoordLatLongList& list ) const
+void Drawing::CleanLocation( Common::MsgCoordLatLongList& list ) const
 {
-    if( list.n )
-        delete[] list.elem;
+    if( list.elem_size() )
+        delete[] list.mutable_elem();
 }
 
 // -----------------------------------------------------------------------------

@@ -10,9 +10,17 @@
 #ifndef __Explosions_h_
 #define __Explosions_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+
+namespace MsgsSimToClient
+{
+    class MsgExplosion;
+    class MsgStopUnitFire;
+    class MsgStopPopulationFire;
+    class MsgUnitFireDamages;
+    class MsgPopulationFireDamages;
+}
 
 #include <deque>
 
@@ -33,9 +41,9 @@ class PopulationFireResult;
 // Created: AGE 2006-03-10
 // =============================================================================
 class Explosions : public kernel::Extension_ABC
-                 , public kernel::Updatable_ABC< ASN1T_MsgExplosion >
-                 , public kernel::Updatable_ABC< ASN1T_MsgStopUnitFire >
-                 , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgExplosion >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopPopulationFire >
 {
 
 public:
@@ -69,12 +77,12 @@ private:
     //@{
     template< typename T >
     void UpdateData( const T& message );
-    virtual void DoUpdate( const ASN1T_MsgExplosion& message );
-    virtual void DoUpdate( const ASN1T_MsgStopUnitFire& message );
-    virtual void DoUpdate( const ASN1T_MsgStopPopulationFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgExplosion& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message );
 
-    void Update( const ASN1T_UnitFireDamages& message );
-    void Update( const ASN1T_PopulationFireDamages& message );
+    void Update( const MsgsSimToClient::MsgUnitFireDamages& message );
+    void Update( const MsgsSimToClient::MsgPopulationFireDamages& message );
     //@}
 
 public:

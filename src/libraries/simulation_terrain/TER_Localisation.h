@@ -64,9 +64,9 @@ public:
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
     template<class Archive>
-    void load( Archive&, const uint );
+    void load( Archive&, const unsigned int );
     template<class Archive>
-    void save( Archive&, const uint ) const;
+    void save( Archive&, const unsigned int ) const;
     //@}
 
     //-------------------------------------------------------------------------
@@ -117,7 +117,7 @@ public:
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, const MT_Vector2D& vDroitesIntersection, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedBetweenTwoLines( const MT_Droite& leftDroite, const MT_Droite& rightDroite, T_PointVector& clippedPointVector ) const;
 
-    void Split    ( uint nNbrParts, T_LocalisationPtrVector& locVector ) const;
+    void Split    ( unsigned int nNbrParts, T_LocalisationPtrVector& locVector ) const;
     void Scale    ( MT_Float rDist );
     void Convexify();
 

@@ -273,13 +273,13 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
         result.push_back( point );
     }
 
-    uint nNbrPointsPerSide = pions.size() / 2;
+    unsigned int nNbrPointsPerSide = pions.size() / 2;
 
     // Left side
     MT_Vector2D vDir( vLeftPoint - vBarycenter );
     MT_Float rIncr = std::min( vDir.Magnitude() / ( nNbrPointsPerSide + 1 ), rDistMaxBtwPoints );
     vDir.Normalize();
-    for( uint i = 1; i <= nNbrPointsPerSide; ++i )
+    for( unsigned int i = 1; i <= nNbrPointsPerSide; ++i )
     {   
         boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter + vDir * ( rIncr * i ) ) );
         result.push_back( point );
@@ -289,7 +289,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeLo
     vDir = MT_Vector2D( vRightPoint - vBarycenter );
     rIncr = std::min( vDir.Magnitude() / ( nNbrPointsPerSide + 1 ), rDistMaxBtwPoints );
     vDir.Normalize();
-    for( uint j = 1; j <= nNbrPointsPerSide; ++j )
+    for( unsigned int j = 1; j <= nNbrPointsPerSide; ++j )
     {
         boost::shared_ptr< MT_Vector2D > point( new MT_Vector2D( vBarycenter + vDir * ( rIncr * j ) ) );
         result.push_back( point );
@@ -491,7 +491,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
 // Created: SBO 2005-12-16
 // Modified: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation( const MIL_AgentPion& callerAgent, uint nPopulationKnowledgeID, MT_Float rMinDistance )
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation( const MIL_AgentPion& callerAgent, unsigned int nPopulationKnowledgeID, MT_Float rMinDistance )
 {
     boost::shared_ptr< MT_Vector2D > pResult;
     DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( nPopulationKnowledgeID );
@@ -660,7 +660,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePo
 // Created: NLD 2004-05-25
 // Modified: RPD 2009-08-04
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePointsBeforeLima( const MIL_Automate& callerAutomate, uint nLimaID, MT_Float rDistBeforeLima, uint nNbrPoints )
+std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputePointsBeforeLima( const MIL_Automate& callerAutomate, unsigned int nLimaID, MT_Float rDistBeforeLima, unsigned int nNbrPoints )
 {
     MIL_LimaOrder* pLima = callerAutomate.GetOrderManager().FindLima( nLimaID );
 
@@ -835,7 +835,7 @@ bool DEC_GeometryFunctions::ClipLocalisationInFuseau( const TER_Localisation& lo
 // Name: DEC_GeometryFunctions::SplitLocalisation
 // Created: JVT 2004-11-03
 // -----------------------------------------------------------------------------
-unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, uint nNbrParts, std::vector< boost::shared_ptr< TER_Localisation > >& result )
+unsigned int DEC_GeometryFunctions::SplitLocalisation( const TER_Localisation& localisation, unsigned int nNbrParts, std::vector< boost::shared_ptr< TER_Localisation > >& result )
 {
     assert( nNbrParts > 0 );
 
@@ -1375,7 +1375,7 @@ float DEC_GeometryFunctions::ComputeAutomatDelayFromSchedule( const MIL_Fuseau* 
 {   
     // Calcul distance entre barycentre automates et element schedulé
     MT_Float rDistanceFromScheduled = std::numeric_limits< MT_Float >::max();
-    uint     nSchedule              = 0;
+    unsigned int     nSchedule              = 0;
     if( pLima ) 
     {
         rDistanceFromScheduled = pFuseau->ComputeAverageDistanceFromLima( *pLima, _ComputeAutomatesBarycenter( automates ) );

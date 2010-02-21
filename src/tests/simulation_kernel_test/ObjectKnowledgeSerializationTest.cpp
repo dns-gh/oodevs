@@ -10,9 +10,9 @@
 #include "simulation_kernel_test_pch.h"
 
 // ASN
-//struct ASN1T_MagicActionCreateObject;
-//struct ASN1T_ObjectAttributes;
-//struct ASN1T_Location;
+//struct MagicActionCreateObject;
+//struct MsgObjectAttributes;
+//struct Location;
 
 #include "simulation_kernel/Checkpoints/MIL_CheckPointInArchive.h"
 #include "simulation_kernel/Checkpoints/MIL_CheckPointOutArchive.h"

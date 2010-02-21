@@ -137,7 +137,7 @@ void MIL_AgentTypePion::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AgentTypePion::ReadUnit( xml::xistream& xis )
 {   
-    std::set< uint > ids_;
+    std::set< unsigned int > ids_;
     std::string strName;
     std::string strType;
 

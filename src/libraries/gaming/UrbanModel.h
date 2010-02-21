@@ -10,9 +10,12 @@
 #ifndef __UrbanModel_h_
 #define __UrbanModel_h_
 
-#include "game_asn/Simulation.h"
 #include "tools/Resolver.h"
-#include "clients_kernel/Entity_ABC.h"
+
+namespace MsgsSimToClient
+{
+    class MsgUrbanCreation;
+}
 
 namespace urban
 {
@@ -28,6 +31,7 @@ namespace kernel
 // =============================================================================
 /** @class  UrbanModel
     @brief  UrbanModel
+    // $$$ FDS 2009-01-11: inherit urban::Model to remove private aggregated model
 */
 // Created: SLG 2009-02-10
 // =============================================================================
@@ -37,14 +41,14 @@ class UrbanModel : public tools::Resolver< kernel::Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanModel( kernel::Controller& controller, urban::StaticModel& staticModel ); 
+             UrbanModel( kernel::Controller& controller, const urban::StaticModel& staticModel ); 
     virtual ~UrbanModel();
     //@}
 
     //! @name Operations
     //@{
+    void Create( const MsgsSimToClient::MsgUrbanCreation& message );
     void Purge();
-    void Create( const ASN1T_MsgUrbanCreation& asnMsg );
     //@}
 
 private:
@@ -57,9 +61,8 @@ private:
 public:
     //! @name Member data
     //@{
-    urban::StaticModel& staticModel_;
-    urban::Model&       model_;
     kernel::Controller& controller_;
+    std::auto_ptr< urban::Model > model_;
     //@}
 };
 

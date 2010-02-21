@@ -37,17 +37,17 @@ PerceptionMap::~PerceptionMap()
 // Name: PerceptionMap::DoUpdate
 // Created: AGE 2006-02-22
 // -----------------------------------------------------------------------------
-void PerceptionMap::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
+void PerceptionMap::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    if( message.m.perception_par_compagniePresent )
+    if( message.has_perception_par_compagnie()  )
     {
         perceptions_.clear();
-        perceptions_.reserve( message.perception_par_compagnie.n );
-        for( uint i = 0; i < message.perception_par_compagnie.n; ++i )
+        perceptions_.reserve( message.perception_par_compagnie().elem_size() );
+        for( int i = 0; i < message.perception_par_compagnie().elem_size(); ++i )
         {
-            const Automat_ABC& agent = resolver_.Get( message.perception_par_compagnie.elem[i].oid_compagnie );
+            const Automat_ABC& agent = resolver_.Get( message.perception_par_compagnie().elem( i ).oid_compagnie() );
             // $$$$ AGE 2006-02-22: 
-            perceptions_.push_back( Perception( agent, (E_PerceptionResult)( 3 - message.perception_par_compagnie.elem[i].identification_level ) ) );
+            perceptions_.push_back( Perception( agent, (E_PerceptionResult)( 3 - message.perception_par_compagnie().elem( i ).identification_level() ) ) );
         }
         controller_.Update( *this );
     }

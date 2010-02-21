@@ -53,7 +53,7 @@ void MIL_MedicalTreatmentType::ReadMedicalTreatment( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_MedicalTreatmentType::Initialize( xml::xistream& xis )
 {
-    std::set< uint > ids;
+    std::set< unsigned int > ids;
     MT_LOG_INFO_MSG( "Initializing Medical Treatment Types" );
     
     xis >> xml::start( "medical-treatments" )
@@ -162,7 +162,7 @@ const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( const std::strin
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( uint nID )
+const MIL_MedicalTreatmentType* MIL_MedicalTreatmentType::Find( unsigned int nID )
 {
     for( CIT_MedicalTreatmentTypeMap it = types_.begin(); it != types_.end(); ++it )
         if( it->second->GetID() == nID )
@@ -185,7 +185,7 @@ MIL_MedicalTreatmentType::~MIL_MedicalTreatmentType()
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-uint MIL_MedicalTreatmentType::GetID() const
+unsigned int MIL_MedicalTreatmentType::GetID() const
 {
     return nID_;
 }

@@ -24,7 +24,7 @@ class MIL_PointParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_PointParameter( const ASN1T_Point& );
+    explicit MIL_PointParameter( const Common::MsgPoint& );
     explicit MIL_PointParameter( const MT_Vector2D& point );
     virtual ~MIL_PointParameter();
     //@}
@@ -36,7 +36,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToPoint( ASN1T_Point& ) const;
+    virtual bool ToPoint( Common::MsgPoint& ) const;
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const;
     //@}
 

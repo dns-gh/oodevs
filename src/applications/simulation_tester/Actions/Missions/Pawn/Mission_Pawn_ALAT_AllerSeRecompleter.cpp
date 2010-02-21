@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_AllerSeRecompleter::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_AllerSeRecompleter& asnMission = *new ASN1T_Mission_Pion_ALAT_AllerSeRecompleter();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_aller_se_recompleter;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_aller_se_recompleter = &asnMission;
+    Mission_Pion_ALAT_AllerSeRecompleter& asnMission = *new Mission_Pion_ALAT_AllerSeRecompleter();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_aller_se_recompleter = &asnMission;
 
     const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ALAT_AllerSeRecompleter::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_AllerSeRecompleter::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_aller_se_recompleter );
-    ASN1T_Mission_Pion_ALAT_AllerSeRecompleter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_aller_se_recompleter;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_aller_se_recompleter ());
+    Mission_Pion_ALAT_AllerSeRecompleter& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_aller_se_recompleter;
 
     ASN_Tools::Delete( asnMission.plots_ravitaillement );
 

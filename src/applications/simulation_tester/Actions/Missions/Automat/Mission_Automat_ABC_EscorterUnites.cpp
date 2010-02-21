@@ -43,9 +43,9 @@ void Mission_Automat_ABC_EscorterUnites::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_EscorterUnites& asnMission = *new ASN1T_Mission_Automate_ABC_EscorterUnites();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_escorter_unites;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_escorter_unites = &asnMission;
+    Mission_Automate_ABC_EscorterUnites& asnMission = *new Mission_Automate_ABC_EscorterUnites();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_escorter_unites = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.automate_a_escorter );
@@ -59,8 +59,8 @@ void Mission_Automat_ABC_EscorterUnites::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_EscorterUnites::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_escorter_unites );
-    ASN1T_Mission_Automate_ABC_EscorterUnites& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_escorter_unites;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_escorter_unites ());
+    Mission_Automate_ABC_EscorterUnites& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_escorter_unites;
 
 
     delete &asnMission;

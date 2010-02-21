@@ -84,18 +84,17 @@ MissionParameterHeading::~MissionParameterHeading()
 // Name: MissionParameterHeading::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterHeading::Serialize( ASN1T_MissionParameter& parameter ) const
+void MissionParameterHeading::Serialize( MsgMissionParameter& parameter ) const
 {
-    parameter.null_value = 0;
-    parameter.value.t = T_MissionParameter_value_heading;
-    parameter.value.u.heading = angle_;
+    parameter.set_null_value( 0 );
+    parameter.mutable_value()->mutable_heading()->set_heading( angle_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterHeading::Clean
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterHeading::Clean( ASN1T_MissionParameter& ) const
+void MissionParameterHeading::Clean( MsgMissionParameter& ) const
 {
     // NOTHING
 }

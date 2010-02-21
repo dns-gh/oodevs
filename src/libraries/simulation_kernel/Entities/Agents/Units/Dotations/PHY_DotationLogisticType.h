@@ -43,14 +43,14 @@ public:
     static void Terminate ();
 
     static const PHY_DotationLogisticType*  Find                    ( const std::string& strName );
-    static const PHY_DotationLogisticType*  Find                    ( uint nID );
+    static const PHY_DotationLogisticType*  Find                    ( unsigned int nID );
     static const T_DotationLogisticTypeMap& GetDotationLogisticTypes();
     //@}
 
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-          uint         GetID  () const;
+          unsigned int         GetID  () const;
     //@}
 
 private:

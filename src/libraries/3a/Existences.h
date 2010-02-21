@@ -28,7 +28,7 @@ namespace existences
 
         explicit Existence( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
-        void Receive( const ASN1T_MsgsSimToClient& message )
+        void Receive( const MsgSimToClient& message )
         {
             if( extractor_.IsCreation( message ) )
                 Set( extractor_.Extract( message ) );

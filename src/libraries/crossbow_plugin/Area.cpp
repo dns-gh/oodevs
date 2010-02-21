@@ -10,6 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "Area.h"
 #include "Point.h"
+#include "protocol/protocol.h"
 
 using namespace plugins;
 
@@ -26,8 +27,8 @@ crossbow::Area::Area()
 // Name: Area constructor
 // Created: JCR 2008-04-25
 // -----------------------------------------------------------------------------
-crossbow::Area::Area( const ASN1T_CoordLatLongList& asn )
-    : PointCollection( asn )
+crossbow::Area::Area( const Common::MsgCoordLatLongList& message )
+    : PointCollection( message )
 {
     // NOTHING
 }
@@ -80,8 +81,8 @@ void crossbow::Area::Serialize( std::ostream& geometry ) const
 // Name: Area::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Area::Serialize( ASN1T_Location& asn ) const
+void crossbow::Area::Serialize( Common::MsgLocation& message ) const
 {
-    asn.type = EnumLocationType::polygon;
-    PointCollection::Serialize( asn );
+    message.set_type( Common::MsgLocation_Geometry_polygon );
+    PointCollection::Serialize( message );
 }

@@ -6,22 +6,15 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-02-23 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_PathFinderThread.h $
-// $Author: Age $
-// $Modtime: 25/03/05 15:29 $
-// $Revision: 4 $
-// $Workfile: TER_PathFinderThread.h $
-//
-// *****************************************************************************
 
 #ifndef __TER_PathFinderThread_h_
 #define __TER_PathFinderThread_h_
 
 #include "tools/thread/RequestProcessor_ABC.h"
-#pragma warning( disable : 4275 )
-#include "boost/thread/mutex.hpp"
+#pragma warning( push, 1 )
+#pragma warning( disable : 4244 4275 )
+#include <boost/thread/mutex.hpp>
+#pragma warning( pop )
 
 class TerrainPathfinder;
 class TerrainRetractationHandle;

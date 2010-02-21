@@ -13,9 +13,7 @@
 #include "DEC_Knowledge_ObjectAttributeBypass.h"
 #include "DEC_Knowledge_Object.h"
 #include "Entities/Objects/BypassAttribute.h"
-
-
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeBypass )
 
@@ -59,7 +57,7 @@ DEC_Knowledge_ObjectAttributeBypass::~DEC_Knowledge_ObjectAttributeBypass()
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeBypass::serialize( Archive& file, const uint )
+void DEC_Knowledge_ObjectAttributeBypass::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file & const_cast< BypassAttribute*& >( attr_ )
@@ -89,15 +87,15 @@ bool DEC_Knowledge_ObjectAttributeBypass::IsBypassed() const
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeBypass::UpdateSpecificAttributes
-// Created: NLD 2004-10-29
+// Name: DEC_Knowledge_ObjectAttributeBypass::UpdateAttributes
+// Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeBypass::UpdateAttributes()
 {
     if( ! attr_ )
         return;
     
-    const uint nNewBypassPercentage = (uint)( attr_->GetState() * 100. );
+    const unsigned int nNewBypassPercentage = (unsigned int)( attr_->GetState() * 100. );
     if( nNewBypassPercentage != nBypassPercentage_ )
     {
         nBypassPercentage_ = nNewBypassPercentage;
@@ -106,8 +104,8 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeBypass::UpdateSpecificAttributes
-// Created: NLD 2004-05-04
+// Name: DEC_Knowledge_ObjectAttributeBypass::UpdateOnPerceptionLevel
+// Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeBypass::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& /*currentPerceptionLevel*/ )
 {
@@ -115,8 +113,8 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateOnPerceptionLevel( const PHY_Per
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeBypass::UpdateSpecificAttributes
-// Created: NLD 2004-05-04
+// Name: DEC_Knowledge_ObjectAttributeBypass::UpdateOnPerception
+// Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeBypass::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& /*perception*/ )
 {
@@ -124,8 +122,8 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateOnPerception( const DEC_Knowledg
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeBypass::UpdateSpecificAttributes
-// Created: NLD 2004-05-04
+// Name: DEC_Knowledge_ObjectAttributeBypass::UpdateOnCollision
+// Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeBypass::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
 {
@@ -133,16 +131,15 @@ void DEC_Knowledge_ObjectAttributeBypass::UpdateOnCollision( const DEC_Knowledge
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeBypass::BuildMsgSpecificAttributes
-// Created: NLD 2004-05-04
+// Name: DEC_Knowledge_ObjectAttributeBypass::Send
+// Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeBypass::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeBypass::Send( Common::MsgObjectAttributes& asn ) const
 {    
     if ( NeedUpdate() )
     {
-        asn.m.bypassPresent = 1;
-        asn.bypass.m.percentagePresent = 1;
-        asn.bypass.percentage = nBypassPercentage_;
+//        asn.set_bypassPresent( 1 );
+        asn.mutable_bypass()->set_percentage( nBypassPercentage_ );
         Reset();
     }
 }

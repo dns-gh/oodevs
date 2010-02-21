@@ -60,7 +60,7 @@ InputPropagationCapacity::~InputPropagationCapacity()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void InputPropagationCapacity::serialize( Archive& file, const uint )
+void InputPropagationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
     file & model_;
@@ -102,7 +102,7 @@ namespace
 // Name: InputPropagationCapacity::Update
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-void InputPropagationCapacity::Update( Object& object, uint time )
+void InputPropagationCapacity::Update( Object& object, unsigned int time )
 {    
     ToxicAttribute_ABC* pAttr = object.RetrieveAttribute< ToxicAttribute_ABC >();
     if( pAttr )

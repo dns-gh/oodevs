@@ -22,7 +22,7 @@ using namespace TEST;
 // Name: NetworkManager constructor
 // Created: SBO 2005-05-09
 //-----------------------------------------------------------------------------
-NetworkManager::NetworkManager( Workspace& workspace, const std::string& strHostName, uint nPort )
+NetworkManager::NetworkManager( Workspace& workspace, const std::string& strHostName, unsigned int nPort )
     : dinEngine_     ()
     , pLink_         ( 0 )
     , strServerHost_ ( strHostName )

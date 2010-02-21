@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_DecontaminerBlesses::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_DecontaminerBlesses& asnMission = *new ASN1T_Mission_Pion_LOG_DecontaminerBlesses();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_decontaminer_blesses;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_decontaminer_blesses = &asnMission;
+    Mission_Pion_LOG_DecontaminerBlesses& asnMission = *new Mission_Pion_LOG_DecontaminerBlesses();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_decontaminer_blesses = &asnMission;
 
     const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_LOG_DecontaminerBlesses::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_DecontaminerBlesses::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_decontaminer_blesses );
-    ASN1T_Mission_Pion_LOG_DecontaminerBlesses& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_decontaminer_blesses;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_decontaminer_blesses ());
+    Mission_Pion_LOG_DecontaminerBlesses& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_decontaminer_blesses;
 
     ASN_Tools::Delete( asnMission.position_deploiement );
 

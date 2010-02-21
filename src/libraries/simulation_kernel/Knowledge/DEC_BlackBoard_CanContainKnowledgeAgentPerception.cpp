@@ -44,15 +44,15 @@ namespace boost
     namespace serialization
     {
         template< typename Archive >
-        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const uint nVersion )
+        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const uint )
+        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const unsigned int )
         {
-            uint size = map.size();
+            unsigned int size = map.size();
             file << size;
             for ( DEC_BlackBoard_CanContainKnowledgeAgentPerception::CIT_KnowledgeAgentPerceptionMap it = map.begin(); it != map.end(); ++it )
             {
@@ -62,9 +62,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const uint )
+        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeAgentPerception::T_KnowledgeAgentPerceptionMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -81,7 +81,7 @@ namespace boost
 // Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> unitKnowledgePerceptionMap_;
 }
@@ -90,7 +90,7 @@ void DEC_BlackBoard_CanContainKnowledgeAgentPerception::load( MIL_CheckPointInAr
 // Name: DEC_BlackBoard_CanContainKnowledgeAgentPerception::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeAgentPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_BlackBoard_CanContainKnowledgeAgentPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << unitKnowledgePerceptionMap_;
 }

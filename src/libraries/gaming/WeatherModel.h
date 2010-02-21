@@ -10,8 +10,13 @@
 #ifndef __WeatherModel_h_
 #define __WeatherModel_h_
 
-#include "game_asn/Simulation.h"
 #include "tools/Resolver.h"
+
+namespace MsgsSimToClient
+{
+	class MsgStartFireEffect;
+	class MsgStopFireEffect;
+}
 
 namespace kernel
 {
@@ -41,8 +46,8 @@ public:
     //@{
     void Purge();
 
-    void CreateAmmoEffect( const ASN1T_MsgStartFireEffect& message );
-    void DeleteAmmoEffect( const ASN1T_MsgStopFireEffect& message );
+    void CreateAmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message );
+    void DeleteAmmoEffect( const MsgsSimToClient::MsgStopFireEffect& message );
     //@}
 
 private:

@@ -10,6 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "Line.h"
 #include "Point.h"
+#include "protocol/simulationsenders.h"
 
 using namespace plugins;
 
@@ -26,8 +27,8 @@ crossbow::Line::Line()
 // Name: Line constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Line::Line( const ASN1T_CoordLatLongList& asn )
-    : PointCollection( asn )
+crossbow::Line::Line( const Common::MsgCoordLatLongList& message )
+    : PointCollection( message )
 {
     // NOTHING
 }
@@ -80,8 +81,8 @@ void crossbow::Line::Serialize( std::ostream& geometry ) const
 // Name: Line::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void crossbow::Line::Serialize( ASN1T_Location& asn ) const
+void crossbow::Line::Serialize( Common::MsgLocation& message ) const
 {
-    asn.type = EnumLocationType::line;
-    PointCollection::Serialize( asn );
+    message.set_type( Common::MsgLocation_Geometry_line );
+    PointCollection::Serialize( message );
 }

@@ -46,10 +46,10 @@ public:
 
     //! @name Test Parameters
     //@{
-    virtual uint               GetTestParam_Direction          () const;
+    virtual unsigned int               GetTestParam_Direction          () const;
     virtual bool               GetTestParam_Bool               () const;
     virtual int                GetTestParam_Numeric            ( int  nMin = 0, int  nMax = std::numeric_limits< int >::max() ) const;
-    virtual uint               GetTestParam_Enumeration        ( uint nMin    , uint nMax ) const;
+    virtual unsigned int               GetTestParam_Enumeration        ( unsigned int nMin    , unsigned int nMax ) const;
     virtual Position&          GetTestParam_Point              () const;
     virtual T_PositionVector&  GetTestParam_PointList          () const;
     virtual Path&              GetTestParam_Path               () const;
@@ -69,10 +69,10 @@ public:
     virtual T_LocationVector&  GetTestParam_LocationList       () const;
     virtual Location&          GetTestParam_Polygon            () const;
     virtual T_LocationVector&  GetTestParam_PolygonList        () const;
-    virtual uint               GetTestParam_NatureAtlas        () const;
-    virtual uint               GetTestParam_GDH                () const;
+    virtual unsigned int               GetTestParam_NatureAtlas        () const;
+    virtual unsigned int               GetTestParam_GDH                () const;
     virtual T_IdVector&        GetTestParam_MedicalPriorities  () const;
-    virtual uint               GetTestParam_DotationDType      () const;
+    virtual unsigned int               GetTestParam_DotationDType      () const;
 
     virtual T_IdVector&        GetTestParam_Limas              () const;
     virtual T_EntityId         GetTestParam_LeftLimit          ();

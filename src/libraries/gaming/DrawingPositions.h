@@ -11,7 +11,10 @@
 #define __DrawingPositions_h_
 
 #include "clients_gui/DrawingPositions.h"
-#include "game_asn/Messenger.h"
+#include "protocol/messengersenders.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -31,7 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DrawingPositions();
-             DrawingPositions( const kernel::CoordinateConverter_ABC& converter, const ASN1T_MsgShapeCreation& asn );
+             DrawingPositions( const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgShapeCreation& message );
     virtual ~DrawingPositions();
     //@}
 

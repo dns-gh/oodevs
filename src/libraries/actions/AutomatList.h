@@ -10,9 +10,13 @@
 #ifndef __ActionParameterAutomatList_h_
 #define __ActionParameterAutomatList_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
+
+namespace Common
+{
+    class MsgAutomatList;
+}
 
 namespace kernel
 {
@@ -36,15 +40,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit AutomatList( const kernel::OrderParameter& parameter );
-             AutomatList( const kernel::OrderParameter& parameter, const ASN1T_AutomatList& asn, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
+             AutomatList( const kernel::OrderParameter& parameter, const Common::MsgAutomatList& message, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
              AutomatList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller );
     virtual ~AutomatList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     virtual bool IsSet() const;
     //@}
 

@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_OrganiserAccueilColonneRefugies::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies& asnMission = *new ASN1T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_organiser_accueil_colonne_refugies = &asnMission;
+    Mission_Pion_ABC_OrganiserAccueilColonneRefugies& asnMission = *new Mission_Pion_ABC_OrganiserAccueilColonneRefugies();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_organiser_accueil_colonne_refugies = &asnMission;
 
     const Position& positionInstallation_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ABC_OrganiserAccueilColonneRefugies::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_OrganiserAccueilColonneRefugies::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_organiser_accueil_colonne_refugies );
-    ASN1T_Mission_Pion_ABC_OrganiserAccueilColonneRefugies& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_organiser_accueil_colonne_refugies;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_organiser_accueil_colonne_refugies ());
+    Mission_Pion_ABC_OrganiserAccueilColonneRefugies& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_organiser_accueil_colonne_refugies;
 
     ASN_Tools::Delete( asnMission.position_installation );
 

@@ -91,15 +91,15 @@ void Simulation::ChangeSpeed( int timeFactor )
 // Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgControlInformation& message )
+void Simulation::Update( const MsgsSimToClient::MsgControlInformation& message )
 {
     tickCount_    = unsigned( -1 );
-    tickDuration_ = message.tick_duration;
-    paused_       = message.status == EnumSimulationState::paused;
-    timeFactor_   = message.time_factor;
-    time_         = message.current_tick * tickDuration_;
-    initialDate_  = std::string( (const char*)message.initial_date_time.data, 15 );
-    date_         = std::string( (const char*)message.date_time.data, 15 );
+    tickDuration_ = message.tick_duration();
+    paused_       = message.status() == Common::EnumSimulationState::paused;
+    timeFactor_   = message.time_factor();
+    time_         = message.current_tick() * tickDuration_;
+    initialDate_  = std::string( (const char*)message.initial_date_time().data().c_str(), 15 );
+    date_         = std::string( (const char*)message.date_time().data().c_str(), 15 );
     controller_.Update( *this );
 }
 
@@ -107,15 +107,15 @@ void Simulation::Update( const ASN1T_MsgControlInformation& message )
 // Name: Simulation::Update
 // Created: AGE 2007-04-11
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgControlReplayInformation& message )
+void Simulation::Update( const MsgsReplayToClient::MsgControlReplayInformation& message )
 {
-    tickDuration_ = message.tick_duration;
-    tickCount_    = message.tick_count;
-    paused_       = message.status == EnumSimulationState::paused;
-    timeFactor_   = message.time_factor;
-    time_         = message.current_tick * tickDuration_;
-    initialDate_  = std::string( (const char*)message.initial_date_time.data, 15 );
-    date_         = std::string( (const char*)message.date_time.data, 15 );
+    tickDuration_ = message.tick_duration();
+    tickCount_    = message.tick_count();
+    paused_       = message.status() == Common::EnumSimulationState::paused;
+    timeFactor_   = message.time_factor();
+    time_         = message.current_tick() * tickDuration_;
+    initialDate_  = message.initial_date_time().data();
+    date_         = message.date_time().data();
     controller_.Update( *this );
 }
 
@@ -123,7 +123,7 @@ void Simulation::Update( const ASN1T_MsgControlReplayInformation& message )
 // Name: Simulation::Update
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgControlProfilingInformation& message )
+void Simulation::Update( const MsgsSimToClient::MsgControlProfilingInformation& message )
 {
     profiling_.Update( message );
 }
@@ -132,10 +132,10 @@ void Simulation::Update( const ASN1T_MsgControlProfilingInformation& message )
 // Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgControlBeginTick& message )
+void Simulation::Update( const MsgsSimToClient::MsgControlBeginTick& message )
 {
-    int tick = message.current_tick;
-    date_ = std::string( (const char*)message.date_time.data, 15 );
+    int tick = message.current_tick();
+    date_ = message.date_time().data();
     profiling_.Tick();
     currentTick_ = tick;
     time_ = tick * tickDuration_;
@@ -147,7 +147,7 @@ void Simulation::Update( const ASN1T_MsgControlBeginTick& message )
 // Name: Simulation::Update
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgControlEndTick& message )
+void Simulation::Update( const MsgsSimToClient::MsgControlEndTick& message )
 {
     profiling_.Update( message );
     controller_.Update( endTick_ );

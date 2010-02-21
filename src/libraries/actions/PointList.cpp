@@ -9,7 +9,8 @@
 
 #include "actions_pch.h"
 #include "PointList.h"
-#include "game_asn/Simulation.h"
+#include "Point.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 using namespace actions;
@@ -29,8 +30,8 @@ PointList::PointList( const OrderParameter& parameter )
 // Name: PointList constructor
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-PointList::PointList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_PointList& asn )
-    : LocationList( parameter, converter, (const ASN1T_LocationList&)asn )
+PointList::PointList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgPointList& message )
+    : LocationList( parameter, converter, message )
 {
     // NOTHING
 }
@@ -58,22 +59,20 @@ PointList::~PointList()
 // Name: PointList::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void PointList::CommitTo( ASN1T_MissionParameter& asn ) const
+void PointList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_pointList;
-    asn.value.u.pointList = new ASN1T_PointList();
+    message.set_null_value( !IsSet() );
+    message.mutable_value()->mutable_pointlist();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        LocationList::CommitTo( *(ASN1T_LocationList*)asn.value.u.pointList );
+        LocationList::CommitTo< Common::MsgPointList >( *message.mutable_value()->mutable_pointlist() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PointList::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void PointList::Clean( ASN1T_MissionParameter& asn ) const
+void PointList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.pointList )
-        LocationList::Clean( *(ASN1T_LocationList*)asn.value.u.pointList );
-    delete asn.value.u.pointList;
+    if( message.value().has_pointlist() )
+        message.mutable_value()->clear_pointlist();
 }

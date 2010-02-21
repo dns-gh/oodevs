@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
+#include "protocol/protocol.h"
 #include "Equipment.h"
 
 using namespace dispatcher;
@@ -17,13 +17,13 @@ using namespace dispatcher;
 // Name: Equipment constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Equipment::Equipment( const Model& /*model*/, const ASN1T_EquipmentDotations& asnMsg )
-   : nEquipmentType_   ( asnMsg.type_equipement )
-   , nNbrAvailable_    ( asnMsg.nb_disponibles )
-   , nNbrUnavailable_  ( asnMsg.nb_indisponibles )
-   , nNbrRepairable_   ( asnMsg.nb_reparables )
-   , nNbrInMaintenance_( asnMsg.nb_dans_chaine_maintenance )
-   , nNbrPrisoner_     ( asnMsg.nb_prisonniers )
+Equipment::Equipment( const Model& /*model*/, const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
+   : nEquipmentType_   ( message.type_equipement() )
+   , nNbrAvailable_    ( message.nb_disponibles() )
+   , nNbrUnavailable_  ( message.nb_indisponibles() )
+   , nNbrRepairable_   ( message.nb_reparables() )
+   , nNbrInMaintenance_( message.nb_dans_chaine_maintenance() )
+   , nNbrPrisoner_     ( message.nb_prisonniers() )
 {
 }
 
@@ -40,25 +40,25 @@ Equipment::~Equipment()
 // Name: Equipment::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void Equipment::Update( const ASN1T_EquipmentDotations& asnMsg )
+void Equipment::Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
 {
-   nNbrAvailable_     = asnMsg.nb_disponibles;
-   nNbrUnavailable_   = asnMsg.nb_indisponibles;
-   nNbrRepairable_    = asnMsg.nb_reparables;
-   nNbrInMaintenance_ = asnMsg.nb_dans_chaine_maintenance;
-   nNbrPrisoner_      = asnMsg.nb_prisonniers;
+   nNbrAvailable_     = message.nb_disponibles();
+   nNbrUnavailable_   = message.nb_indisponibles();
+   nNbrRepairable_    = message.nb_reparables();
+   nNbrInMaintenance_ = message.nb_dans_chaine_maintenance();
+   nNbrPrisoner_      = message.nb_prisonniers();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Equipment::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Equipment::Send( ASN1T_EquipmentDotations& asnMsg ) const
+void Equipment::Send( MsgsSimToClient::EquipmentDotations_EquipmentDotation& message ) const
 {
-    asnMsg.type_equipement            = nEquipmentType_;
-    asnMsg.nb_disponibles             = nNbrAvailable_;
-    asnMsg.nb_indisponibles           = nNbrUnavailable_;
-    asnMsg.nb_reparables              = nNbrRepairable_;
-    asnMsg.nb_dans_chaine_maintenance = nNbrInMaintenance_;
-    asnMsg.nb_prisonniers             = nNbrPrisoner_;
+    message.set_type_equipement            ( nEquipmentType_ );
+    message.set_nb_disponibles             ( nNbrAvailable_ );
+    message.set_nb_indisponibles           ( nNbrUnavailable_ );
+    message.set_nb_reparables              ( nNbrRepairable_ );
+    message.set_nb_dans_chaine_maintenance ( nNbrInMaintenance_ );
+    message.set_nb_prisonniers             ( nNbrPrisoner_ );
 }

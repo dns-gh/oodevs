@@ -9,8 +9,12 @@
 
 #include "score_plugin_pch.h"
 #include "Score.h"
-#include "game_asn/AarSenders.h"
 #include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/aarsenders.h"       //from_game_asn
+
+using namespace MsgsClientToSim;
+using namespace MsgsSimToClient;
+using namespace MsgsAarToClient;
 
 using namespace plugins::score;
 
@@ -36,9 +40,9 @@ Score::~Score()
 // Name: Score::Update
 // Created: SBO 2009-04-29
 // -----------------------------------------------------------------------------
-void Score::Update( const ASN1T_MsgIndicator& message )
+void Score::Update( const MsgIndicator& message )
 {
-    values_.push_back( message.value );
+    values_.push_back( message.value() );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,9 +55,10 @@ void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) cons
     std::copy( values_.begin(), values_.end(), std::back_inserter( values ) );
 
     aar::PlotResult result;
-    result().identifier = context;
-    result().error      = "";
-    result().values.n    = values.size();
-    result().values.elem = &values.front();
+    result().set_identifier ( context );
+    result().set_error    ( "" );
+    for( std::vector< double >::const_iterator it = values_.begin(); it != values_.end(); ++it )
+        result().mutable_values()->Add( float( *it ) );
+
     result.Send( publisher );
 }

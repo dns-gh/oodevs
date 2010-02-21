@@ -10,8 +10,15 @@
 #ifndef __FolkModel_h_
 #define __FolkModel_h_
 
-#include "game_asn/Simulation.h"
+
 #include "SimpleEntity.h"
+
+
+////using namespace Common;
+namespace MsgsSimToClient
+{
+    class MsgFolkCreation;
+}
 
 namespace dispatcher
 {
@@ -35,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgFolkCreation& message );
+    void Update( const MsgsSimToClient::MsgFolkCreation& message );
 
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;

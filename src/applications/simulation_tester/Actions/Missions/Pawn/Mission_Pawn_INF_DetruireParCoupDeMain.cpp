@@ -43,9 +43,9 @@ void Mission_Pawn_INF_DetruireParCoupDeMain::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_DetruireParCoupDeMain& asnMission = *new ASN1T_Mission_Pion_INF_DetruireParCoupDeMain();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_detruire_par_coup_de_main;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_detruire_par_coup_de_main = &asnMission;
+    Mission_Pion_INF_DetruireParCoupDeMain& asnMission = *new Mission_Pion_INF_DetruireParCoupDeMain();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_detruire_par_coup_de_main = &asnMission;
 
     const Position& objectif_ = pTarget_->GetTestParam_Point();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -66,8 +66,8 @@ void Mission_Pawn_INF_DetruireParCoupDeMain::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_DetruireParCoupDeMain::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_detruire_par_coup_de_main );
-    ASN1T_Mission_Pion_INF_DetruireParCoupDeMain& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_detruire_par_coup_de_main;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_detruire_par_coup_de_main ());
+    Mission_Pion_INF_DetruireParCoupDeMain& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_detruire_par_coup_de_main;
 
     ASN_Tools::Delete( asnMission.objectif );
     ASN_Tools::Delete( asnMission.point_regroupement );

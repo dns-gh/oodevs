@@ -76,7 +76,7 @@ PHY_RawVisionData::PHY_RawVisionData( PHY_Meteo& globalMeteo, MIL_Config& config
 //-----------------------------------------------------------------------------
 PHY_RawVisionData::~PHY_RawVisionData()
 {
-    for ( uint i = nNbrCol_; i; )
+    for ( unsigned int i = nNbrCol_; i; )
         delete [] ppCells_[--i];
     delete [] ppCells_;
     ppCells_ = 0;
@@ -91,10 +91,10 @@ PHY_RawVisionData::~PHY_RawVisionData()
 void PHY_RawVisionData::RegisterMeteoPatch( const MT_Vector2D& upLeft, const MT_Vector2D& downRight, PHY_Meteo* pMeteo )
 {
     assert( ppCells_ );
-    uint nXEnd = std::min( GetCol( downRight.rX_ ), nNbrCol_ - 1 );
-    uint nYEnd = std::min( GetRow( upLeft.rY_ ),    nNbrRow_ - 1 );
-    uint nXBeg = std::min( GetCol( upLeft.rX_ ),    nNbrCol_ - 1 );
-    uint nYBeg = std::min( GetRow( downRight.rY_ ), nNbrRow_ - 1 );
+    unsigned int nXEnd = std::min( GetCol( downRight.rX_ ), nNbrCol_ - 1 );
+    unsigned int nYEnd = std::min( GetRow( upLeft.rY_ ),    nNbrRow_ - 1 );
+    unsigned int nXBeg = std::min( GetCol( upLeft.rX_ ),    nNbrCol_ - 1 );
+    unsigned int nYBeg = std::min( GetRow( downRight.rY_ ), nNbrRow_ - 1 );
     
     // On remet éventuellement dans le bon sens
     if ( nXEnd < nXBeg )
@@ -108,7 +108,7 @@ void PHY_RawVisionData::RegisterMeteoPatch( const MT_Vector2D& upLeft, const MT_
 
     while ( nXBeg <= nXEnd )
     {
-        for ( uint y = nYBeg; y <= nYEnd; ++y )
+        for ( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
             if ( cell.pMeteo )
@@ -211,12 +211,12 @@ bool PHY_RawVisionData::Read( const std::string& strFile )
     assert( !ppCells_ );
     ppCells_ = new sCell*[ nNbrCol_ ];
 
-    for ( uint x = 0; x < nNbrCol_; ++x )
+    for ( unsigned int x = 0; x < nNbrCol_; ++x )
     {
         sCell* pTmp = new sCell[ nNbrRow_ ];
         ppCells_[ x ] = pTmp;
 
-        for ( uint i = 0; i < nNbrRow_; ++i )
+        for ( unsigned int i = 0; i < nNbrRow_; ++i )
         {
             pTmp->pMeteo   = 0;
             pTmp->pEffects = 0;
@@ -240,9 +240,9 @@ void PHY_RawVisionData::CalcMinMaxAltitude()
     short nMaxAltitude = std::numeric_limits<short>::min();
     short nMinAltitude = std::numeric_limits<short>::max();
 
-   for ( uint nX = 0; nX < nNbrCol_ ; ++nX  )
+   for ( unsigned int nX = 0; nX < nNbrCol_ ; ++nX  )
     {
-        for ( uint nY = 0; nY < nNbrRow_ ; ++nY )
+        for ( unsigned int nY = 0; nY < nNbrRow_ ; ++nY )
         {
             short nAltitude = ppCells_[nX][nY].h;
             if ( nAltitude < nMinAltitude )

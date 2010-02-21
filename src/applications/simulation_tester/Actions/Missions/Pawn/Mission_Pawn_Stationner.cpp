@@ -43,9 +43,9 @@ void Mission_Pawn_Stationner::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Stationner& asnMission = *new ASN1T_Mission_Pion_Stationner();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_stationner;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_stationner = &asnMission;
+    Mission_Pion_Stationner& asnMission = *new Mission_Pion_Stationner();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_stationner = &asnMission;
 
     const Position& pointAttente_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_Stationner::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Stationner::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_stationner );
-    ASN1T_Mission_Pion_Stationner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_stationner;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_stationner ());
+    Mission_Pion_Stationner& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_stationner;
 
     ASN_Tools::Delete( asnMission.point_attente );
 

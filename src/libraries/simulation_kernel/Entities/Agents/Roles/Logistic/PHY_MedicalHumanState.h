@@ -29,16 +29,19 @@ class PHY_MedicalHumanState : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& humann, bool bEvacuatedByThirdParty = false );
      PHY_MedicalHumanState();
     virtual ~PHY_MedicalHumanState();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Accessors
@@ -64,7 +67,7 @@ public:
     void NotifyHandledByMedical();
     bool GoBackToWar           ();
     void Cancel                ();
-    uint Heal                  ( const PHY_ComposantePion& doctor );
+    unsigned int Heal                  ( const PHY_ComposantePion& doctor );
     //@}
 
     //! @name Consign
@@ -87,19 +90,22 @@ private:
     //@}
 
 private:
-    const uint                    nID_;
-    const uint                    nCreationTick_;
-          MIL_AgentPion*          pPion_;
-          PHY_Human*              pHuman_;
-          PHY_MedicalConsign_ABC* pConsign_;
-          MT_Vector2D             vHumanPosition_; // Position de l'humain lors de son traitement dans la chaine medical
-          bool                    bShouldGoBackToWar_;
-          bool                    bHasChanged_;
-          bool                    bHumanStateHasChanged_;
-          bool                    bDiagnosed_;
-          bool                    bSorted_;
-          bool                    bHandledByMedical_;
-          bool                    bEvacuatedByThirdParty_;
+    //! @name Member data
+    //@{
+    const unsigned int nID_;
+    const unsigned int nCreationTick_;
+    MIL_AgentPion* pPion_;
+    PHY_Human* pHuman_;
+    PHY_MedicalConsign_ABC* pConsign_;
+    MT_Vector2D vHumanPosition_; // Position de l'humain lors de son traitement dans la chaine medical
+    bool bShouldGoBackToWar_;
+    bool bHasChanged_;
+    bool bHumanStateHasChanged_;
+    bool bDiagnosed_;
+    bool bSorted_;
+    bool bHandledByMedical_;
+    bool bEvacuatedByThirdParty_;
+    //@}
 
     static MIL_IDManager idManager_;
 };

@@ -58,24 +58,24 @@ void Contaminations::CreateDictionary( PropertiesDictionary& dico ) const
 // Name: Contaminations::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Contaminations::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Contaminations::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.etat_contaminationPresent )
+    if( message.has_etat_contamination()  )
     {
-        nContamination_ = message.etat_contamination.percentage;
-        quantity_ = message.etat_contamination.quantity;
+        nContamination_ = message.etat_contamination().percentage();
+        quantity_ = message.etat_contamination().quantity();
     }
 
-    if( message.m.contamine_par_agents_nbcPresent )
+    if( message.has_contamine_par_agents_nbc()  )
     {
         contaminatingNbcAgents_.clear();
-        contaminatingNbcAgents_.reserve( message.contamine_par_agents_nbc.n );
-        for( uint i = 0; i < message.contamine_par_agents_nbc.n; ++i )
-            contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamine_par_agents_nbc.elem[i] ) );
+        contaminatingNbcAgents_.reserve( message.contamine_par_agents_nbc().elem_size() );
+        for( int i = 0; i < message.contamine_par_agents_nbc().elem_size(); ++i )
+            contaminatingNbcAgents_.push_back( &resolver_.Get( message.contamine_par_agents_nbc().elem( i ) ) );
     }
 
-    if( message.m.en_tenue_de_protection_nbcPresent )
-        bNbcProtectionSuitWorn_ = message.en_tenue_de_protection_nbc != 0;
+    if( message.has_en_tenue_de_protection_nbc()  )
+        bNbcProtectionSuitWorn_ = message.en_tenue_de_protection_nbc() != 0;
 
     controller_.Update( *this );
 }

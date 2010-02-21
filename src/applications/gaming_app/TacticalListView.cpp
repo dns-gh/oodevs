@@ -8,15 +8,17 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
+#include "icons.h"
 #include "TacticalListView.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
-#include "icons.h"
+#include "protocol/SimulationSenders.h"
+
+//using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView constructor
@@ -117,10 +119,10 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
-    simulation::UnitChangeSuperior asnMsg;
-    asnMsg().oid = item.GetId();
-    asnMsg().oid_automate = target.GetId();
-    asnMsg.Send( publisher_ );
+    simulation::UnitChangeSuperior message;
+    message().set_oid( item.GetId() );
+    message().set_oid_automate( target.GetId() );
+    message.Send( publisher_ );
     return true;
 }
 
@@ -132,11 +134,11 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Auto
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target || &item == &target )
         return false;
-    simulation::AutomatChangeSuperior asnMsg;
-    asnMsg().oid                     = item.GetId();
-    asnMsg().oid_superior.t          = T_MsgAutomatChangeSuperior_oid_superior_automate;
-    asnMsg().oid_superior.u.automate = target.GetId();
-    asnMsg.Send( publisher_ );
+    simulation::AutomatChangeSuperior message;
+    message().set_oid( item.GetId() );
+    //message().oid_superior.t          = T_MsgAutomatChangeSuperior_oid_superior_automate;
+    message().mutable_oid_superior()->mutable_automate()->set_oid( target.GetId() );
+    message.Send( publisher_ );
     return true;
 }
 
@@ -148,10 +150,10 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Form
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
-    simulation::AutomatChangeSuperior asnMsg;
-    asnMsg().oid                      = item.GetId();
-    asnMsg().oid_superior.t           = T_MsgAutomatChangeSuperior_oid_superior_formation;
-    asnMsg().oid_superior.u.formation = target.GetId();
-    asnMsg.Send( publisher_ );
+    simulation::AutomatChangeSuperior message;
+    message().set_oid( item.GetId() );
+    //message().oid_superior.t           = T_MsgAutomatChangeSuperior_oid_superior_formation;
+    message().mutable_oid_superior()->mutable_formation()->set_oid( target.GetId() );
+    message.Send( publisher_ );
     return true;
 }

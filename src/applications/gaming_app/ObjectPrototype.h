@@ -10,10 +10,14 @@
 #ifndef __ObjectPrototype_h_
 #define __ObjectPrototype_h_
 
-#include "clients_gui/ObjectPrototype_ABC.h"
-#include "game_asn/SimulationSenders.h"
 #include "LocationSerializer.h"
+#include "clients_gui/ObjectPrototype_ABC.h"
+#include "protocol/SimulationSenders.h"
 
+namespace MsgsClientToSim
+{
+    class MsgMagicActionCreateObject;
+}
 class StaticModel;
 class Publisher_ABC;
 
@@ -49,7 +53,7 @@ private:
     //! @name Member data
     //@{
     simulation::ObjectMagicAction msg_;
-    ASN1T_MagicActionCreateObject creation_;
+    MsgsClientToSim::MsgMagicActionCreateObject creation_;
     LocationSerializer serializer_;
     //@}
 };

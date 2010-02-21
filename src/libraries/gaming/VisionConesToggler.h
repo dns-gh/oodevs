@@ -12,6 +12,7 @@
 
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "protocol/publisher_ABC.h"
 
 namespace kernel
 {
@@ -19,6 +20,7 @@ namespace kernel
     class Profile_ABC;
     class OptionVariant;
 }
+
 class Publisher_ABC;
 class Services;
 

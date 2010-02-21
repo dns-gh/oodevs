@@ -28,14 +28,14 @@ class MissionParameter_IntelligenceList : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionParameter_IntelligenceList( const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_IntelligenceList( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_IntelligenceList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( ASN1T_MissionParameter& asn ) const;
-    virtual void AsnDelete( ASN1T_MissionParameter& asn ) const;
+    virtual void Send  ( Common::MsgMissionParameter& asn ) const;
+    virtual void Delete( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-            MT_Float ConvertToInterventionType( uint nNbr ) const;
+            MT_Float ConvertToInterventionType( unsigned int nNbr ) const;
             MT_Float ConvertToNbrAmmo         ( MT_Float rNbrIT ) const;
     virtual void     ApplyEffect              ( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
     virtual void     ApplyEffect              ( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
@@ -52,7 +52,7 @@ public:
 protected:
     const PHY_IndirectFireDotationClass& category_;
     const PHY_DotationCategory&          dotationCategory_;
-          uint                           nInterventionType_;
+          unsigned int                           nInterventionType_;
           MT_Float                       rDispersionX_;
           MT_Float                       rDispersionY_;
 };

@@ -10,8 +10,14 @@
 #ifndef __TeamsModel_h_
 #define __TeamsModel_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+namespace Common
+{
+    class MsgTeamCreation;
+    class MsgFormationCreation;
+}
 
 namespace kernel
 {
@@ -44,8 +50,8 @@ public:
     //@{
     void Purge();
 
-    void CreateTeam( const ASN1T_MsgTeamCreation& asnMsg );
-    void CreateFormation( const ASN1T_MsgFormationCreation& asnMsg );
+    void CreateTeam( const MsgsSimToClient::MsgTeamCreation& message );
+    void CreateFormation( const Common::MsgFormationCreation& message );
 
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );

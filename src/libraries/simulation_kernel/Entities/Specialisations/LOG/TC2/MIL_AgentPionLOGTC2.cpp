@@ -24,7 +24,7 @@ void save_construct_data( Archive& archive, const MIL_AgentPionLOGTC2* pion, con
     unsigned int nTypeID = pion->GetType().GetID();
     const MIL_Automate* const pAutomate = &pion->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
-    archive << nTypeID
+    archive << nTypeID 
         << pAutomate
         << algorithmFactories;
 }
@@ -74,7 +74,7 @@ MIL_AgentPionLOGTC2::~MIL_AgentPionLOGTC2()
 // Name: MIL_AgentPionLOGTC2::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_AgentPionLOGTC2::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_AgentPionLOGTC2::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
     
@@ -87,7 +87,7 @@ void MIL_AgentPionLOGTC2::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_AgentPionLOGTC2::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_AgentPionLOGTC2::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_AgentPionLOGTC2::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
     const PHY_RolePionLOG_Maintenance* const maintenance = &GetRole< PHY_RolePionLOG_Maintenance >();

@@ -24,7 +24,7 @@ MT_Vector2D MT_ComputeBarycenter( const T_PointVector& points )
         return points.front();
 
     CIT_PointVector itEnd      = points.end();
-    uint            nNbrPoints = points.size();
+    unsigned int            nNbrPoints = points.size();
     if( points.front() == points.back() )
     {
         itEnd --; 

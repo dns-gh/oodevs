@@ -13,11 +13,15 @@
 #define __PHY_RolePionLOG_Medical_h_
 
 #include "MIL.h"
-
 #include "PHY_RoleInterface_Medical.h"
 #include "ComponentsChangedNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
+
+namespace client
+{
+    class UnitAttributes;
+}
 
 class ComposanteUsePredicate_ABC;
 class MIL_AgentPionLOG_ABC;
@@ -48,8 +52,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -107,8 +111,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnUnit ) const;
+    virtual void SendChangedState( client::UnitAttributes& asnUnit ) const;
+    virtual void SendFullState   ( client::UnitAttributes& asnUnit ) const;
     //@}
 
     //! @name Types

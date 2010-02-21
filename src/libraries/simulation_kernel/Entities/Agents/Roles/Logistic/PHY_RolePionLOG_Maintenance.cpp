@@ -23,8 +23,8 @@
 #include "Entities/Agents/Roles/Composantes/PHY_ComposantePredicates.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
@@ -33,7 +33,6 @@
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/DotationComputer_ABC.h"
 #include "simulation_kernel/DotationComputerFactory_ABC.h"
-
 #include "simulation_kernel/ConsumeDotationNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Maintenance )
@@ -52,8 +51,6 @@ void load_construct_data( Archive& archive, PHY_RolePionLOG_Maintenance* role, c
     archive >> pion;
     ::new( role )PHY_RolePionLOG_Maintenance( *pion );
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance constructor
@@ -95,33 +92,36 @@ namespace boost
         // =============================================================================
         template< typename Archive > 
         inline
-        void serialize( Archive& file, T_MaintenancePriorityVector& vector, const uint nVersion )
+        void serialize( Archive& file, T_MaintenancePriorityVector& vector, const unsigned int nVersion )
         {
             split_free( file, vector, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const T_MaintenancePriorityVector& vector, const uint )
+        void save( Archive& file, const T_MaintenancePriorityVector& vector, const unsigned int )
         {
             unsigned size = vector.size();
             file << size;
             for ( CIT_MaintenancePriorityVector it = vector.begin(); it != vector.end(); ++it )
             {
-                ASN1T_EquipmentType id = (*it)->GetMosID();
-                file << id;
+                Common::MsgEquipmentType id = (*it)->GetMosID();
+                int equipment_type = id.equipment();
+                file << equipment_type;
             }
         }
         
         template< typename Archive >
-        void load( Archive& file, T_MaintenancePriorityVector& vector, const uint )
+        void load( Archive& file, T_MaintenancePriorityVector& vector, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
             while ( nNbr-- )
             {
-                ASN1T_EquipmentType nID;
-                file >> nID;
+                Common::MsgEquipmentType nID;
+                int equipment_type;
+                file >> equipment_type; 
+                nID.set_equipment( equipment_type );
                 vector.push_back( PHY_ComposanteTypePion::Find( nID ) );
             }
         }
@@ -131,13 +131,13 @@ namespace boost
         // =============================================================================
         template< typename Archive >
         inline
-        void serialize( Archive& file, T_AutomateVector& vector, const uint nVersion )
+        void serialize( Archive& file, T_AutomateVector& vector, const unsigned int nVersion )
         {
             split_free( file, vector, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const T_AutomateVector& vector, const uint )
+        void save( Archive& file, const T_AutomateVector& vector, const unsigned int )
         {
             unsigned size = vector.size();
             file << size;
@@ -146,9 +146,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, T_AutomateVector& vector, const uint )
+        void load( Archive& file, T_AutomateVector& vector, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             vector.reserve( nNbr );
             while ( nNbr-- )
@@ -165,19 +165,19 @@ namespace boost
 // Name: PHY_RolePionLOG_Maintenance::load
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
          >> bSystemEnabled_
          >> priorities_
          >> tacticalPriorities_;
          
-    ASN1T_EnumLogMaintenanceRegimeTravail nID;
+    Common::EnumLogMaintenanceRegimeTravail nID;
     file >> nID;
     pWorkRate_ = PHY_MaintenanceWorkRate::Find( nID );
     file >> nWorkRateWarningRCTick_;
 
-    uint nNbr;
+    unsigned int nNbr;
     file >> nNbr;
     consigns_.reserve( nNbr );
     while ( nNbr-- )
@@ -195,9 +195,9 @@ void PHY_RolePionLOG_Maintenance::load( MIL_CheckPointInArchive& file, const uin
 // Name: PHY_RolePionLOG_Maintenance::save
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    ASN1T_EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
+    Common::EnumLogMaintenanceRegimeTravail workRate = pWorkRate_->GetAsnID();
 
     file << boost::serialization::base_object< PHY_RoleInterface_Maintenance >( *this )
          << bSystemEnabled_
@@ -224,6 +224,10 @@ void PHY_RolePionLOG_Maintenance::save( MIL_CheckPointOutArchive& file, const ui
 MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate ) const
 {
 
+
+    unsigned int nNbrTotal                  = 0;
+    unsigned int nNbrAvailableAllowedToWork = 0;
+
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     GetComponentUseFunctor functorOnComponent( predicate, composanteUse );
     std::auto_ptr< OnComponentComputer_ABC > componentComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functorOnComponent ) );
@@ -232,14 +236,12 @@ MT_Float PHY_RolePionLOG_Maintenance::GetAvailabilityRatio( PHY_ComposanteUsePre
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComponent( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     pion_.Execute( *lendedComponent );
 
-    uint nNbrTotal                  = 0;
-    uint nNbrAvailableAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal                  += it->second.nNbrTotal_;
         if( pWorkRate )
         {
-            const uint nNbrAllowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ );
+            const unsigned int nNbrAllowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ );
             if( nNbrAllowedToWork > it->second.nNbrUsed_ )
                 nNbrAvailableAllowedToWork += ( nNbrAllowedToWork - it->second.nNbrUsed_ );
         }
@@ -343,7 +345,7 @@ bool PHY_RolePionLOG_Maintenance::HasUsableHauler( const PHY_ComposanteTypePion&
 // Name: PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork
 // Created: NLD 2006-03-28
 // -----------------------------------------------------------------------------
-uint PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const
+unsigned int PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const
 {
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
@@ -355,11 +357,11 @@ uint PHY_RolePionLOG_Maintenance::GetNbrAvailableRepairersAllowedToWork( const P
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     pion_.Execute( *lendedComputer );   
 
-    uint nNbrAvailableAllowedToWork = 0;
+    unsigned int nNbrAvailableAllowedToWork = 0;
     assert( pWorkRate_ );
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
-        const uint nNbrAllowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ );
+        const unsigned int nNbrAllowedToWork = pWorkRate_->GetNbrWorkerAllowedToWork( it->second.nNbrAvailable_ );
         if( nNbrAllowedToWork > it->second.nNbrUsed_ )
             nNbrAvailableAllowedToWork += ( nNbrAllowedToWork - it->second.nNbrUsed_ );
     }
@@ -415,6 +417,8 @@ bool PHY_RolePionLOG_Maintenance::ConsumePartsForBreakdown( const PHY_Breakdown&
 
     for( PHY_BreakdownType::CIT_PartMap it = parts.begin(); it != parts.end(); ++it )
     {
+//        unsigned int nOut = (unsigned int)roleDotations.ConsumeDotation( *it->first, it->second );
+//        assert( nOut == it->second );
         pion_.Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, *it->first, it->second );
     }
     return true;
@@ -443,7 +447,7 @@ void PHY_RolePionLOG_Maintenance::ChangeWorkRate( const PHY_MaintenanceWorkRate&
     pWorkRate_   = &workRate;
     bHasChanged_ = true;
 
-    if( pWorkRate_->GetDelayBeforeWarningRC() == std::numeric_limits< uint >::max() )
+    if( pWorkRate_->GetDelayBeforeWarningRC() == std::numeric_limits< unsigned int >::max() )
         nWorkRateWarningRCTick_ = 0; 
     else
         nWorkRateWarningRCTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() + pWorkRate_->GetDelayBeforeWarningRC();
@@ -591,7 +595,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForTransport( const PHY_Com
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
     pion_.Execute( *lendedComputer );
 
-    uint nNbrHaulersAvailable = 0;
+    unsigned int nNbrHaulersAvailable = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
         nNbrHaulersAvailable += ( it->second.nNbrAvailable_ - it->second.nNbrUsed_ );
 
@@ -643,7 +647,7 @@ int PHY_RolePionLOG_Maintenance::GetAvailabilityScoreForRepair( PHY_MaintenanceC
         rRatioPartsAvailable /= parts.size();
 
     // Repairers score
-    return (uint)( GetNbrAvailableRepairersAllowedToWork( composanteState.GetComposanteBreakdown() ) * rRatioPartsAvailable );
+    return (unsigned int)( GetNbrAvailableRepairersAllowedToWork( composanteState.GetComposanteBreakdown() ) * rRatioPartsAvailable );
 }
 
 // =============================================================================
@@ -700,79 +704,51 @@ void PHY_RolePionLOG_Maintenance::Clean()
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, ASN1T__SeqOfLogMaintenanceEquipmentAvailability& asn, const PHY_MaintenanceWorkRate* pWorkRate )
+void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, MsgsSimToClient::SeqOfLogMaintenanceEquipmentAvailability& asn, const PHY_MaintenanceWorkRate* pWorkRate )
 {
-    asn.n = data.size();
     if( data.empty() )
         return;
 
-    ASN1T_LogMaintenanceEquipmentAvailability* pData = new ASN1T_LogMaintenanceEquipmentAvailability[ data.size() ];
-    uint i = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        ASN1T_LogMaintenanceEquipmentAvailability& data = pData[ i++ ];
-        data.type_equipement = itData->first->GetMosID();
+        MsgsSimToClient::MsgLogMaintenanceEquipmentAvailability& data = *asn.add_elem();
+        data.set_type_equipement( itData->first->GetMosID().equipment() );
         assert( itData->second.nNbrTotal_ );
 
-        data.nbr_total       = itData->second.nNbrTotal_;
-        data.nbr_au_travail  = itData->second.nNbrUsed_;
-        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_; // nNbrAvailableAllowedToWork
-        data.nbr_pretes      = itData->second.nNbrLent_;
+        data.set_nbr_total       ( itData->second.nNbrTotal_ );
+        data.set_nbr_au_travail  ( itData->second.nNbrUsed_ );
+        data.set_nbr_disponibles ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+        data.set_nbr_pretes      ( itData->second.nNbrLent_ );
 
         if( pWorkRate )
         {
-            const uint nNbrAllowedToWork          = pWorkRate->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ );
-            const uint nNbrAvailableAllowedToWork = nNbrAllowedToWork > itData->second.nNbrUsed_ ? nNbrAllowedToWork - itData->second.nNbrUsed_ : 0;
+            const unsigned int nNbrAllowedToWork          = pWorkRate->GetNbrWorkerAllowedToWork( itData->second.nNbrAvailable_ );
+            const unsigned int nNbrAvailableAllowedToWork = nNbrAllowedToWork > itData->second.nNbrUsed_ ? nNbrAllowedToWork - itData->second.nNbrUsed_ : 0;
 
-            data.m.nbr_au_reposPresent = 1;
-            data.nbr_disponibles = nNbrAvailableAllowedToWork;
-            data.nbr_au_repos    = itData->second.nNbrAvailable_ - nNbrAvailableAllowedToWork - itData->second.nNbrUsed_;
+            data.set_nbr_disponibles( nNbrAvailableAllowedToWork );
+            data.set_nbr_au_repos( itData->second.nNbrAvailable_ - nNbrAvailableAllowedToWork - itData->second.nNbrUsed_ );
         }
     }
-    asn.elem = pData;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Maintenance::SendFullState( client::UnitAttributes& asnUnit ) const
 {
-    UNREFERENCED_PARAMETER( asnUnit );
+    client::LogMaintenanceState asn;
+    asn().set_oid_pion( pion_.GetID() );
+    asn().set_chaine_activee( bSystemEnabled_ );
+    asn().set_regime_travail( pWorkRate_->GetAsnID() );
 
-    NET_ASN_MsgLogMaintenanceState asn;
-
-    asn().m.chaine_activeePresent             = 1;
-    asn().m.regime_travailPresent             = 1;
-    asn().m.prioritesPresent                  = 1;
-    asn().m.priorites_tactiquesPresent        = 1;
-    asn().m.disponibilites_remorqueursPresent = 1; 
-    asn().m.disponibilites_reparateursPresent = 1;
-
-
-    asn().oid_pion        = pion_.GetID();
-    asn().chaine_activee  = bSystemEnabled_;
-    asn().regime_travail  = pWorkRate_->GetAsnID();
-
-    asn().priorites.n = priorities_.size();
     if( !priorities_.empty() )
-    {
-        ASN1T_EquipmentType* pAsnPriorities = new ASN1T_EquipmentType[ priorities_.size() ];
-        uint i = 0 ;
         for( CIT_MaintenancePriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
-            pAsnPriorities[ i++ ] = (**itPriority).GetMosID();
-        asn().priorites.elem = pAsnPriorities;
-    }
+            asn().mutable_priorites()->add_elem()->set_equipment( (**itPriority).GetMosID().equipment() );
 
-    asn().priorites_tactiques.n = tacticalPriorities_.size();
     if( !tacticalPriorities_.empty() )
-    {
-        ASN1T_Automat* pAsnPriorities = new ASN1T_Automat[ tacticalPriorities_.size() ];
-        uint i = 0 ;
-        for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
-            pAsnPriorities[ i++ ] = (**itPriority).GetID();
-        asn().priorites_tactiques.elem = pAsnPriorities;
-    }
+        for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )            
+            asn().mutable_priorites_tactiques()->add_elem()->set_oid( (**itPriority).GetID() );
 
     {
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
@@ -784,7 +760,7 @@ void PHY_RolePionLOG_Maintenance::SendFullState( NET_ASN_MsgUnitAttributes& asnU
         std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
         pion_.Execute( *lendedComputer );
 
-        SendComposanteUse( composanteUse, asn().disponibilites_remorqueurs, 0 );
+        SendComposanteUse( composanteUse, *asn().mutable_disponibilites_remorqueurs(), 0 );
     }
 
     {
@@ -797,26 +773,17 @@ void PHY_RolePionLOG_Maintenance::SendFullState( NET_ASN_MsgUnitAttributes& asnU
         std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functorOnLendedComponent ) );
         pion_.Execute( *lendedComputer );
 
-        SendComposanteUse( composanteUse, asn().disponibilites_reparateurs, pWorkRate_ );
+        SendComposanteUse( composanteUse, *asn().mutable_disponibilites_reparateurs(), pWorkRate_ );
     }
 
-    asn.Send();
-
-    if( asn().priorites.n > 0 )
-        delete [] asn().priorites.elem;
-    if( asn().priorites_tactiques.n > 0 )
-        delete [] asn().priorites_tactiques.elem;
-    if( asn().disponibilites_remorqueurs.n > 0 )
-        delete [] asn().disponibilites_remorqueurs.elem;
-    if( asn().disponibilites_reparateurs.n > 0 )
-        delete [] asn().disponibilites_reparateurs.elem;
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Maintenance::SendChangedState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Maintenance::SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Maintenance::SendChangedState( client::UnitAttributes& asnUnit ) const
 {
     if( bHasChanged_ || bExternalMustChangeState_ )
         SendFullState( asnUnit );

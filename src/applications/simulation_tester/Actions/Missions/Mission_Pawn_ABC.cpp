@@ -55,22 +55,21 @@ void Mission_Pawn_ABC::Serialize()
 {
     const T_IdVector& oid_limas = pTarget_->GetTestParam_Limas();
 
-    ASN_Tools::CopyID       ( pTarget_->GetId()                  , asnMsg_.GetAsnMsg().oid_unite_executante );
-    ASN_Tools::CopyID       ( idManager_.GetFreeIdentifier()     , asnMsg_.GetAsnMsg().order_id             );
-    uint nLimit = pTarget_->GetTestParam_LeftLimit();
+    ASN_Tools::CopyID       ( pTarget_->GetId()                  , asnMsg_.GetAsnMsg().oid_unite_executant() );
+    ASN_Tools::CopyID       ( idManager_.GetFreeIdentifier()     , asnMsg_.GetAsnMsg().order_id()             );
+    unsigned int nLimit = pTarget_->GetTestParam_LeftLimit();
     if( nLimit > 0 )
     {
-        asnMsg_.GetAsnMsg().m.oid_limite_gauchePresent = 1;
-        ASN_Tools::CopyID   ( pTarget_->GetTestParam_LeftLimit() , asnMsg_.GetAsnMsg().oid_limite_gauche    );
+        ASN_Tools::CopyID   ( pTarget_->GetTestParam_LeftLimit() , asnMsg_.GetAsnMsg().oid_limite_gauche()    );
     }
     nLimit = pTarget_->GetTestParam_RightLimit();
     if( nLimit > 0 )
     {
-        asnMsg_.GetAsnMsg().m.oid_limite_droitePresent = 1;
-        ASN_Tools::CopyID   ( pTarget_->GetTestParam_RightLimit(), asnMsg_.GetAsnMsg().oid_limite_droite    );
+
+        ASN_Tools::CopyID   ( pTarget_->GetTestParam_RightLimit(), asnMsg_.GetAsnMsg().oid_limite_droite()    );
     }
-    ASN_Tools::CopyIDList   ( oid_limas                          , asnMsg_.GetAsnMsg().oid_limas            );
-    ASN_Tools::CopyDirection( pTarget_->GetTestParam_Direction() , asnMsg_.GetAsnMsg().direction_dangereuse );
+    ASN_Tools::CopyIDList   ( oid_limas                          , asnMsg_.GetAsnMsg().oid_limas()            );
+    ASN_Tools::CopyDirection( pTarget_->GetTestParam_Direction() , asnMsg_.GetAsnMsg().direction_dangereuse() );
 
     delete &oid_limas;
 }

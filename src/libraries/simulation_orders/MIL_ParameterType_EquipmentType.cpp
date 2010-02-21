@@ -10,6 +10,7 @@
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_EquipmentType.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_EquipmentType constructor
@@ -34,23 +35,20 @@ MIL_ParameterType_EquipmentType::~MIL_ParameterType_EquipmentType()
 // Name: MIL_ParameterType_EquipmentType::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_EquipmentType::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_EquipmentType::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value = false;
-    to.value.t    = T_MissionParameter_value_equipmentType;
-    
-    return from.ToEquipmentType( to.value.u.equipmentType );
+    to.set_null_value( false );
+    return from.ToEquipmentType( *to.mutable_value()->mutable_equipmenttype() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_EquipmentType::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_EquipmentType::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_EquipmentType::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_equipmentType );
+    assert( to.value().has_equipmenttype() );
 }

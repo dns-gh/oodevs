@@ -10,10 +10,27 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/Population_ABC.h"
 #include "DecisionalState.h"
+
+namespace Common
+{
+    class MsgPopulationOrder;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgDecisionalState;
+    class MsgPopulationFlowCreation;
+    class MsgPopulationFlowUpdate;
+    class MsgPopulationFlowDestruction;
+    class MsgPopulationCreation;
+    class MsgPopulationUpdate;
+    class MsgPopulationConcentrationCreation;
+    class MsgPopulationConcentrationUpdate;  
+    class MsgPopulationConcentrationDestruction;
+}
 
 namespace kernel
 {
@@ -39,22 +56,22 @@ class Population : public SimpleEntity< kernel::Population_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Population( Model& model, const ASN1T_MsgPopulationCreation& msg );
+             Population( Model& model, const MsgsSimToClient::MsgPopulationCreation& msg );
     virtual ~Population();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgPopulationCreation&                 msg );
-    void Update( const ASN1T_MsgPopulationUpdate&                   msg );
-    void Update( const ASN1T_MsgPopulationConcentrationCreation&    msg );
-    void Update( const ASN1T_MsgPopulationConcentrationUpdate&      msg );
-    void Update( const ASN1T_MsgPopulationConcentrationDestruction& msg );
-    void Update( const ASN1T_MsgPopulationFlowCreation&             msg );
-    void Update( const ASN1T_MsgPopulationFlowUpdate&               msg );
-    void Update( const ASN1T_MsgPopulationFlowDestruction&          msg );
-    void Update( const ASN1T_MsgPopulationOrder&                    msg );
-    void Update( const ASN1T_MsgDecisionalState&                    msg );
+    void Update( const MsgsSimToClient::MsgPopulationCreation&                 msg );
+    void Update( const MsgsSimToClient::MsgPopulationUpdate&                   msg );
+    void Update( const MsgsSimToClient::MsgPopulationConcentrationCreation&    msg );
+    void Update( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      msg );
+    void Update( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg );
+    void Update( const MsgsSimToClient::MsgPopulationFlowCreation&             msg );
+    void Update( const MsgsSimToClient::MsgPopulationFlowUpdate&               msg );
+    void Update( const MsgsSimToClient::MsgPopulationFlowDestruction&          msg );
+    void Update( const Common::MsgPopulationOrder&                    msg );
+    void Update( const MsgsSimToClient::MsgDecisionalState&                    msg );
 
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;

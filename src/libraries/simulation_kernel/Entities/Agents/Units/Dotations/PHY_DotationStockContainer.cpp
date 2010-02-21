@@ -20,13 +20,12 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Network/NET_ASN_Messages.h"
-#include <xeumeuleu/xml.h>
-
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
+#include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStockContainer )
 
@@ -70,13 +69,13 @@ namespace boost
     namespace serialization
     {
         template< typename Archive >
-        void serialize( Archive& file, PHY_DotationStockContainer::T_StockMap& map, const uint nVersion )
+        void serialize( Archive& file, PHY_DotationStockContainer::T_StockMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_DotationStockContainer::T_StockMap& map, const uint )
+        void save( Archive& file, const PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -89,13 +88,13 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_DotationStockContainer::T_StockMap& map, const uint )
+        void load( Archive& file, PHY_DotationStockContainer::T_StockMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
-                uint nID;
+                unsigned int nID;
                 
                 file >> nID;
                 const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( nID );
@@ -108,13 +107,13 @@ namespace boost
         }
         
         template< typename Archive >
-        void serialize( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const uint nVersion )
+        void serialize( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const unsigned int nVersion )
         {
             split_free( file, set, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_DotationStockContainer::T_StockSet& set, const uint )
+        void save( Archive& file, const PHY_DotationStockContainer::T_StockSet& set, const unsigned int )
         {
             unsigned size= set.size();
             file << size;
@@ -123,9 +122,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const uint )
+        void load( Archive& file, PHY_DotationStockContainer::T_StockSet& set, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -142,7 +141,7 @@ namespace boost
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_DotationStockContainer::serialize( Archive& file, const uint )
+void PHY_DotationStockContainer::serialize( Archive& file, const unsigned int )
 {
     file & pRoleSupply_
          & stocks_
@@ -397,50 +396,36 @@ void PHY_DotationStockContainer::FillSupplyRequest( PHY_SupplyStockRequestContai
 // Name: PHY_DotationStockContainer::SendChangedState
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::SendChangedState( NET_ASN_MsgLogSupplyState& asn ) const
+void PHY_DotationStockContainer::SendChangedState( client::LogSupplyState& asn ) const
 {
-    asn().stocks.n = stocksChanged_.size();
     if( stocksChanged_.empty() )
         return;
 
-    ASN1T_DotationStock* pResources = new ASN1T_DotationStock[ stocksChanged_.size() ];
-    uint i = 0;
-    for( CIT_StockSet itStock = stocksChanged_.begin(); itStock != stocksChanged_.end(); ++itStock, ++i )
+    for( CIT_StockSet itStock = stocksChanged_.begin(); itStock != stocksChanged_.end(); ++itStock )
     {
         const PHY_DotationStock& dotation = **itStock;
-        ASN1T_DotationStock& asnRessource = pResources[i];
-        asnRessource.ressource_id         = dotation.GetCategory().GetMosID();
-        asnRessource.quantite_disponible  = (uint)dotation.GetValue();
+        Common::MsgDotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
+        asnRessource.set_ressource_id( dotation.GetCategory().GetMosID() );
+        asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
     }
-    
-    asn().stocks.elem     = pResources;
-    asn().m.stocksPresent = 1;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStockContainer::SendFullState
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-void PHY_DotationStockContainer::SendFullState( NET_ASN_MsgLogSupplyState& asn ) const
+void PHY_DotationStockContainer::SendFullState( client::LogSupplyState& asn ) const
 {
-    asn().stocks.n = stocks_.size();
-
     if( stocks_.empty() )
         return;
-
-    ASN1T_DotationStock* pResources = new ASN1T_DotationStock[ stocks_.size() ];
-    uint i = 0;
 
     for( CIT_StockMap itStock = stocks_.begin(); itStock != stocks_.end(); ++itStock )
     {
         const PHY_DotationStock& dotationStock = *itStock->second;
-        ASN1T_DotationStock& asnRessource      = pResources[ i++ ];
-        asnRessource.ressource_id              = dotationStock.GetCategory().GetMosID();
-        asnRessource.quantite_disponible       = (uint)dotationStock.GetValue();
+        Common::MsgDotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
+        asnRessource.set_ressource_id( dotationStock.GetCategory().GetMosID() );
+        asnRessource.set_quantite_disponible( (unsigned int)dotationStock.GetValue() );
     }
-
-    asn().stocks.elem     = pResources;
-    asn().m.stocksPresent = 1;
 }
 
 // -----------------------------------------------------------------------------

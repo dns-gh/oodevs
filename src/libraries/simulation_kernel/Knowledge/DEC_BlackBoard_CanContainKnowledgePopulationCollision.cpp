@@ -40,9 +40,9 @@ DEC_BlackBoard_CanContainKnowledgePopulationCollision::~DEC_BlackBoard_CanContai
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nNbr;
+    unsigned int nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -56,9 +56,9 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::load( MIL_CheckPoint
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    uint size = knowledgePopulationCollisionMap_.size();
+    unsigned int size = knowledgePopulationCollisionMap_.size();
     file << size;
     for ( CIT_KnowledgePopulationCollisionMap it = knowledgePopulationCollisionMap_.begin(); it != knowledgePopulationCollisionMap_.end(); ++it )
     {

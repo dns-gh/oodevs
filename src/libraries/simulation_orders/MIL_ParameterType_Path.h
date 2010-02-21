@@ -30,8 +30,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Copy                   ( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const;
-    virtual void CleanAfterSerialization( ASN1T_MissionParameter& to ) const;
+    virtual bool Copy                   ( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const;
+    virtual void CleanAfterSerialization( Common::MsgMissionParameter& to ) const;
     //@}
 };
 

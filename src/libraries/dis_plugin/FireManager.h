@@ -10,8 +10,11 @@
 #ifndef __FireManager_h_
 #define __FireManager_h_
 
-#include "game_asn/simulation.h"
 #include "hla_plugin/EntityIdentifier.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace plugins
 {
@@ -38,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update       ( const ASN1T_MsgsSimToClient& message );
+    void Update       ( const MsgSimToClient& message );
     //@}
 
 private:
@@ -50,16 +53,16 @@ private:
 
     //! @name Helpers
     //@{
-    void ReceiveFire( const ASN1T_MsgStartUnitFire& fire );
-    void ReceiveFire( const ASN1T_MsgStopUnitFire& fire );
-    void UpdateFireEffect( const ASN1T_MsgStartFireEffect& fire );
+    void ReceiveFire( const MsgStartUnitFire& fire );
+    void ReceiveFire( const MsgStopUnitFire& fire );
+    void UpdateFireEffect( const MsgStartFireEffect& fire );
     void UpdateDetonations();
-    void CreateFire( const ASN1T_CoordLatLong& position );
+    void CreateFire( const MsgCoordLatLong& position );
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< unsigned int, ASN1T_CoordLatLong >  T_Fires;
+    typedef std::map< unsigned int, MsgCoordLatLong >  T_Fires;
     typedef T_Fires::const_iterator                     CIT_Fires;
     //@}
 

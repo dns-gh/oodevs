@@ -10,15 +10,16 @@
 #include "gaming_pch.h"
 
 #include "Surface.h"
-#include "clients_kernel/SensorType.h"
-#include "clients_kernel/DetectionMap.h"
 #include "VisionLine.h"
 #include "VisionMap.h"
+#include "clients_kernel/SensorType.h"
+#include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -27,17 +28,17 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const ASN1T_VisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation )
+Surface::Surface( const Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation )
     : map_( map )
-    , origin_( converter.ConvertToXY( message.origin ) )
-    , height_( message.height + agent.Get< Positions >().GetHeight() )
-    , sensorType_( resolver.Get( message.sensor ) )
+    , origin_( converter.ConvertToXY( message.origin() ) )
+    , height_( message.height() + agent.Get< Positions >().GetHeight() )
+    , sensorType_( resolver.Get( message.sensor() ) )
     , elongation_( elongation )
     , distanceModificator_( 1 )
 {
-    sectors_.reserve( message.directions.n );
-    for( uint i = 0; i < message.directions.n; ++i )
-        sectors_.push_back( Sector( origin_, message.directions.elem[i], sensorType_.GetAngle() ) );
+    sectors_.reserve( message.directions().elem_size() );
+    for( int i = 0; i < message.directions().elem_size(); ++i )
+        sectors_.push_back( Sector( origin_, message.directions().elem( i ).heading(), sensorType_.GetAngle() ) );
     distanceModificator_ = elongation_ * sensorType_.GetDistanceModificator( agent );
     maxRadius_ = sensorType_.GetMaxDistance( distanceModificator_ );
 }

@@ -12,6 +12,8 @@
 #include "Lima.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
+#include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
 using namespace actions;
@@ -31,11 +33,11 @@ LimaList::LimaList( const OrderParameter& parameter )
 // Name: LimaList constructor
 // Created: SBO 2007-04-16
 // -----------------------------------------------------------------------------
-LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimasOrder& asn )
+LimaList::LimaList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgLimasOrder& message )
     : Parameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Lima( OrderParameter( tools::translate( "Parameter", "Phase line %1" ).arg( i ).ascii(), "lima", true ), converter, asn.elem[i] ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddParameter( *new Lima( OrderParameter( tools::translate( "Parameter", "Phase line %1" ).arg( i ).ascii(), "lima", true ), converter, message.elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,13 +72,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_LimasOrder& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( Common::MsgLimasOrder& message ) : message_( &message ) {}
         virtual void Visit( const Lima& param )
         {
-            param.CommitTo( asn_->elem[current_++] );
+            param.CommitTo( *message_->add_elem() );
         }
-        ASN1T_LimasOrder* asn_;
-        unsigned int current_;
+        Common::MsgLimasOrder* message_;
     };
 }
 
@@ -84,46 +85,25 @@ namespace
 // Name: LimaList::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LimaList::CommitTo( ASN1T_MissionParameter& asn ) const
+void LimaList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_limasOrder;
-    ASN1T_LimasOrder*& list = asn.value.u.limasOrder = new ASN1T_LimasOrder();
-    list->n = Count();
+    message.set_null_value( !IsSet() );
+    Common::MsgLimasOrder* list = message.mutable_value()->mutable_limasorder();
     if( IsSet() )
     {
-        list->elem = new ASN1T_LimaOrder[list->n];
         AsnSerializer serializer( *list );
         Accept( serializer );
     }
-}
-
-namespace
-{
-    struct AsnCleaner : public ParameterVisitor_ABC
-    {
-        explicit AsnCleaner( ASN1T_LimasOrder& asn ) : asn_( &asn ), current_( 0 ) {}
-        virtual void Visit( const Lima& param )
-        {
-            param.Clean( asn_->elem[current_++] );
-        }
-        ASN1T_LimasOrder* asn_;
-        unsigned int current_;
-    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: LimaList::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LimaList::Clean( ASN1T_MissionParameter& asn ) const
+void LimaList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.limasOrder )
-    {
-        AsnCleaner cleaner( *asn.value.u.limasOrder );
-        Accept( cleaner );
-        delete[] asn.value.u.limasOrder;
-    }
+    if( message.value().has_limasorder() )
+        message.mutable_value()->clear_limasorder();
 }
 
 // -----------------------------------------------------------------------------

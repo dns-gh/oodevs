@@ -16,7 +16,7 @@
 #include <xeumeuleu/xml.h>
 
 PHY_Protection::T_ProtectionMap PHY_Protection::protections_;
-uint                            PHY_Protection::nNextID_ = 0;
+unsigned int                    PHY_Protection::nNextID_ = 0;
 MT_Random                       PHY_Protection::random_;
 
 // -----------------------------------------------------------------------------
@@ -241,7 +241,7 @@ const std::string& PHY_Protection::GetName() const
 // Name: PHY_Protection::GetID
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-uint PHY_Protection::GetID() const
+unsigned int PHY_Protection::GetID() const
 {
     return nID_;
 }
@@ -250,9 +250,9 @@ uint PHY_Protection::GetID() const
 // Name: PHY_Protection::GetNeutralizationTime
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-uint PHY_Protection::GetNeutralizationTime() const
+unsigned int PHY_Protection::GetNeutralizationTime() const
 {
-    return (uint)( neutralizationTime_.rand() );
+    return (unsigned int)( neutralizationTime_.rand() );
 }
 
 // -----------------------------------------------------------------------------

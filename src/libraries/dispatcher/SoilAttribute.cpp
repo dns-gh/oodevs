@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "SoilAttribute.h"
+#include "protocol/Simulation.h"
 
 using namespace dispatcher;
 
@@ -17,14 +18,14 @@ using namespace dispatcher;
 // Name: SoilAttribute constructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-SoilAttribute::SoilAttribute( const Model& model, const ASN1T_UrbanAttributes& asnMsg )
-: UrbanObjectAttribute_ABC( model, asnMsg )
+SoilAttribute::SoilAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message )
+: UrbanObjectAttribute_ABC( model, message )
 , occupation_       ( 0. )
 , trafficability_   ( 0. )
 , isMultiple_       ( false )
 , compoundClearing_ ("")
 {
-    Update( asnMsg );
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,14 +41,18 @@ SoilAttribute::~SoilAttribute()
 // Name: SoilAttribute::Update
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void SoilAttribute::Update( const ASN1T_UrbanAttributes& asnMsg )
+void SoilAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message )
 {
-    if( asnMsg.m.soilPresent )
+    if( message.has_soil() )
     {
-        occupation_ = asnMsg.soil.occupation;
-        trafficability_ = asnMsg.soil.trafficability;
-        isMultiple_ = asnMsg.soil.multiple;
-        compoundClearing_ = asnMsg.soil.compoundClearing;  
+        if ( message.soil().has_occupation() )
+            occupation_ = message.soil().occupation();
+        if ( message.soil().has_trafficability() )
+            trafficability_ = message.soil().trafficability();
+        if ( message.soil().has_multiple() )
+            isMultiple_ = message.soil().multiple();
+        if ( message.soil().has_compound_clearing() )
+            compoundClearing_ = message.soil().compound_clearing();  
     }
 }
 
@@ -55,21 +60,20 @@ void SoilAttribute::Update( const ASN1T_UrbanAttributes& asnMsg )
 // Name: SoilAttribute::Send
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void SoilAttribute::Send( ASN1T_UrbanAttributes& asnMsg ) const
+void SoilAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message ) const
 {
-    asnMsg.m.soilPresent = 1;
-
-    asnMsg.soil.occupation = occupation_;
-    asnMsg.soil.trafficability = trafficability_;
-    asnMsg.soil.multiple = isMultiple_;
-    asnMsg.soil.compoundClearing = compoundClearing_.c_str();
+ 
+    message.mutable_soil()->set_occupation( occupation_ );
+    message.mutable_soil()->set_trafficability( trafficability_ );
+    message.mutable_soil()->set_multiple( isMultiple_ );
+    message.mutable_soil()->set_compound_clearing( compoundClearing_.c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SoilAttribute::AsnDelete
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void SoilAttribute::AsnDelete( ASN1T_UrbanAttributes& /*asnMsg*/ ) const
+void SoilAttribute::AsnDelete( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
 {
     //NOTHING
 }

@@ -43,9 +43,9 @@ void Mission_Automat_ABC_Controler::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_Controler& asnMission = *new ASN1T_Mission_Automate_ABC_Controler();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_controler;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_controler = &asnMission;
+    Mission_Automate_ABC_Controler& asnMission = *new Mission_Automate_ABC_Controler();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_controler = &asnMission;
 
     const Location& zoneAControler_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_ABC_Controler::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_Controler::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_controler );
-    ASN1T_Mission_Automate_ABC_Controler& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_controler;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_controler ());
+    Mission_Automate_ABC_Controler& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_controler;
 
     ASN_Tools::Delete( asnMission.zone_a_controler );
 

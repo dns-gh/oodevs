@@ -15,6 +15,12 @@
 
 class MIL_AutomateLOG;
 
+// =============================================================================
+/** @class  FireAttribute
+    @brief  FireAttribute
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
 class LogisticAttribute : public ObjectAttribute_ABC    
 {
 public:
@@ -22,21 +28,21 @@ public:
     //@{
              LogisticAttribute();
     explicit LogisticAttribute( xml::xistream& xis );
-    explicit LogisticAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit LogisticAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~LogisticAttribute();
     //@}
 
     //! @name Knowledge
     //@{
-    void Instanciate( DEC_Knowledge_Object& object ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void WriteODB( xml::xostream& xos ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const uint );
+    template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name virtual
@@ -58,7 +64,7 @@ private:
 private:
     //! @name 
     //@{
-    MIL_AutomateLOG*    pTC2_;
+    MIL_AutomateLOG* pTC2_;
     //@}
 };
 

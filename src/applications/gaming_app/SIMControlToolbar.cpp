@@ -11,17 +11,19 @@
 
 #include "SIMControlToolbar.h"
 #include "moc_SIMControlToolbar.cpp"
-
 #include "ConnectDialog.h"
 #include "DisconnectDialog.h"
-#include "game_asn/SimulationSenders.h"
-#include "game_asn/ReplaySenders.h"
 #include "gaming/Simulation.h"
 #include "gaming/Services.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/resources.h"
 #include "gaming/statusicons.h"
+#include "protocol/publisher_ABC.h"
+#include "protocol/simulationsenders.h"
+
+
+using namespace Common;
 
 using namespace kernel;
 
@@ -194,26 +196,26 @@ void SIMControlToolbar::SlotPlayPause()
     {
         if( hasReplay_ )
         {
-            replay::ControlResume asnMsg;
-            asnMsg.Send( publisher_ );
+            replay::ControlResume message;
+            message.Send( publisher_ );
         }
         if( hasSimulation_ )
         {
-            simulation::ControlResume  asnMsg;
-            asnMsg.Send( publisher_ );
+            simulation::ControlResume  message;
+            message.Send( publisher_ );
         }
     }
     else
     {
         if( hasReplay_ )
         {
-            replay::ControlPause asnMsg;
-            asnMsg.Send( publisher_ );
+            replay::ControlPause message;
+            message.Send( publisher_ );
         }
         if( hasSimulation_ )
         {
-            simulation::ControlPause asnMsg;
-            asnMsg.Send( publisher_ );
+            simulation::ControlPause message;
+            message.Send( publisher_ );
         }
     }
 }
@@ -228,15 +230,15 @@ void SIMControlToolbar::SlotSpeedChange()
     {
         if( hasReplay_ )
         {
-            replay::ControlChangeTimeFactor asnMsg;
-            asnMsg() = pSpeedSpinBox_->value();
-            asnMsg.Send( publisher_ );
+            replay::ControlChangeTimeFactor message;
+            message().set_time_factor( pSpeedSpinBox_->value() );
+            message.Send( publisher_ );
         }
         if( hasSimulation_ )
         {
-            simulation::ControlChangeTimeFactor asnMsg;
-            asnMsg() = pSpeedSpinBox_->value();
-            asnMsg.Send( publisher_ );
+            simulation::ControlChangeTimeFactor message;
+            message().set_time_factor( pSpeedSpinBox_->value() );
+            message.Send( publisher_ );
         }
     }
 }
@@ -363,10 +365,9 @@ void SIMControlToolbar::SlotNamedCheckPoint()
 // -----------------------------------------------------------------------------
 void SIMControlToolbar::RequestCheckpoint( const std::string& name )
 {
-    simulation::ControlCheckPointSaveNow asn;
-    asn().m.namePresent = ! name.empty();
-    if( asn().m.namePresent )
-        asn().name = name.c_str();
-    asn.Send( publisher_ );
+    simulation::ControlCheckPointSaveNow message;
+    if( message().has_name() )
+        message().set_name ( name.c_str() );
+    message.Send( publisher_ );
     pCheckpointButton_->popup()->hide();
 }

@@ -10,7 +10,9 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
 #include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
 #include "urban/TerrainObject_ABC.h"
 
@@ -128,11 +130,11 @@ void DEC_Knowledge_UrbanPerception::UpdateOnNetwork()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_UrbanPerception::SendStateToNewClient()
 {
-    NET_ASN_MsgUrbanDetection asn;
-    asn().oid        = perceiver_.GetID();
-    asn().urban_oid  = object_.GetId();
-    asn().visibility = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
-    asn.Send();
+    client::UrbanDetection message;
+    message().set_oid( perceiver_.GetID() );
+    message().set_urban_oid( object_.GetId() );
+    message().set_visibility( Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
+    message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

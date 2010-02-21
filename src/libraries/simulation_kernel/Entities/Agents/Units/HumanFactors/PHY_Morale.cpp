@@ -11,13 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Morale.h"
+#include "protocol/protocol.h"
 
 PHY_Morale::T_MoraleMap PHY_Morale::morales_;
 
-const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , EnumUnitMorale::mauvais  , 0.5  );
-const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , EnumUnitMorale::moyen    , 0.75 );
-const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , EnumUnitMorale::bon      , 1    );
-const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, EnumUnitMorale::fanatique, 1.25 );
+const PHY_Morale PHY_Morale::mauvais_  ( "Mauvais"  , eMauvais  , Common::EnumUnitMorale::mauvais  , 0.5  );
+const PHY_Morale PHY_Morale::moyen_    ( "Moyen"    , eMoyen    , Common::EnumUnitMorale::moyen    , 0.75 );
+const PHY_Morale PHY_Morale::bon_      ( "Bon"      , eBon      , Common::EnumUnitMorale::bon      , 1    );
+const PHY_Morale PHY_Morale::fanatique_( "Fanatique", eFanatique, Common::EnumUnitMorale::fanatique, 1.25 );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Morale::Initialize
@@ -45,7 +46,7 @@ void PHY_Morale::Terminate()
 // Name: PHY_Morale constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, ASN1T_EnumUnitMorale nAsnID, MT_Float rDIAWeight )
+PHY_Morale::PHY_Morale( const std::string& strName, E_MoraleType nType, Common::EnumUnitMorale nAsnID, MT_Float rDIAWeight )
     : strName_   ( strName )
     , nType_     ( nType   )
     , nAsnID_    ( nAsnID  )
@@ -67,9 +68,9 @@ PHY_Morale::~PHY_Morale()
 // Name: PHY_Morale::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Morale* PHY_Morale::Find( ASN1T_EnumUnitMorale nAsnID )
+const PHY_Morale* PHY_Morale::Find( Common::EnumUnitMorale nAsnID )
 {
-    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumUnitMorale >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Morale::GetAsnID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
+    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< Common::EnumUnitMorale >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Morale::GetAsnID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
 
     return it == morales_.end() ? 0 : it->second;
 }
@@ -78,9 +79,9 @@ const PHY_Morale* PHY_Morale::Find( ASN1T_EnumUnitMorale nAsnID )
 // Name: PHY_Morale::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Morale* PHY_Morale::Find( uint nID )
+const PHY_Morale* PHY_Morale::Find( unsigned int nID )
 {
-    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_Morale::GetID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
+    CIT_MoraleMap it = std::find_if( morales_.begin(), morales_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Morale::GetID ), std::select2nd< T_MoraleMap::value_type >() ) ) );
 
     return it == morales_.end() ? 0 : it->second;
 }
@@ -109,7 +110,7 @@ const std::string& PHY_Morale::GetName() const
 // Name: PHY_Morale::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitMorale PHY_Morale::GetAsnID() const
+Common::EnumUnitMorale PHY_Morale::GetAsnID() const
 {
     return nAsnID_;
 }
@@ -136,9 +137,9 @@ bool PHY_Morale::operator!=( const PHY_Morale& rhs ) const
 // Name: PHY_Morale::GetID
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
-uint PHY_Morale::GetID() const
+unsigned int PHY_Morale::GetID() const
 {
-    return (uint)nType_;
+    return (unsigned int)nType_;
 }
 
 // -----------------------------------------------------------------------------

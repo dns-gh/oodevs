@@ -19,15 +19,16 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionPrepareObject constructor
 // Prepared: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation )
-    : PHY_DecisionCallbackAction_ABC     ( pion )
-    , role_              ( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_           ( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, EnumDemolitionTargetType::reserved ) )
+    : PHY_DecisionCallbackAction_ABC( pion )
+    , role_( pion.GetRole< PHY_RoleAction_Objects >() )
+    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_reserved ) )
 {    
     Callback( role_.GetInitialReturnCode() );
 }

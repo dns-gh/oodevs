@@ -70,7 +70,7 @@ const PHY_IndirectFireDotationClass& PHY_DotationCategory_IndirectFire_ABC::GetI
 // Name: PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType( uint nNbr ) const
+MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToInterventionType( unsigned int nNbr ) const
 {
     return (float)nNbr / (float)nInterventionType_;
 }

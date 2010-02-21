@@ -14,7 +14,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "hla/HLA_UpdateFunctor.h"
 #include "MIL_NbcAgentType.h"
-
+#include "protocol/protocol.h"
 #include <hla/Deserializer.h>
 #include <boost/lexical_cast.hpp>
 #include <xeumeuleu/xml.h>
@@ -54,14 +54,13 @@ NBCAttribute::NBCAttribute()
 // Name: NBCAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( const ASN1T_ObjectAttributes& asn )
+NBCAttribute::NBCAttribute( const Common::MsgObjectAttributes& asn )
     : nForm_ ( eGas )
-    , danger_( asn.nbc.danger_level )
+    , danger_( asn.nbc().danger_level() )
 {
-    //NOTHING
-    for ( unsigned i = 0; i < asn.nbc.nbc_agents.n; ++i )
-    {                
-        const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( asn.nbc.nbc_agents.elem[ i ] );
+    for( int i = 0; i < asn.nbc().nbc_agents().elem_size(); ++i )
+    {
+        const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( asn.nbc().nbc_agents().elem( i ) );
         if( !pType )
             throw std::runtime_error( "Unknown agent type for NBC attribute" );
         agents_.push_back( pType );
@@ -105,16 +104,16 @@ void NBCAttribute::ReadNBCAgent( xml::xistream& xis )
 // Name: NBCAttribute::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void NBCAttribute::load( MIL_CheckPointInArchive& file , const uint )
+void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
 {
     file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
          
-    uint nNbrNbcAgents;
+    unsigned int nNbrNbcAgents;
     file >> danger_;
     file >> nNbrNbcAgents;
     while ( nNbrNbcAgents-- )
     {
-        uint nID;
+        unsigned int nID;
         file >> nID;
         if ( !Insert( nID ) )
             throw std::runtime_error( "Unknown 'AgentNBC' '" + boost::lexical_cast<std::string>( nID ) + "' for NBC object" );
@@ -125,7 +124,7 @@ void NBCAttribute::load( MIL_CheckPointInArchive& file , const uint )
 // Name: NBCAttribute::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void NBCAttribute::save( MIL_CheckPointOutArchive& file, const uint ) const
+void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< ObjectAttribute_ABC >( *this );    
     
@@ -152,25 +151,22 @@ void NBCAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: NBCAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void NBCAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.m.nbcPresent = 1;
-    asn.nbc.nbc_agents.n = agents_.size();
-    if ( asn.nbc.nbc_agents.n > 0 )
+    if ( asn.nbc().nbc_agents().elem_size() > 0 )
     {
-        asn.nbc.nbc_agents.elem = new ASN1T_OID[ asn.nbc.nbc_agents.n ];
         int i = 0;
         for ( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
-            asn.nbc.nbc_agents.elem[ i++ ] = (*it)->GetID();
+            asn.mutable_nbc()->mutable_nbc_agents()->set_elem( i++ ,(*it)->GetID() );
     }
-    asn.nbc.danger_level = danger_;
+    asn.mutable_nbc()->set_danger_level( danger_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void NBCAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if ( NeedUpdate() )
     {

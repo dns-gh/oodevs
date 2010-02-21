@@ -10,7 +10,21 @@
 #ifndef __MessageFilter_h_
 #define __MessageFilter_h_
 
-#include "game_asn/Simulation.h"
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+    class MsgUnitAttributes;
+    class MsgUnitKnowledgeUpdate;
+    class MsgObjectUpdate;
+    class MsgObjectKnowledgeUpdate;
+    class MsgPopulationUpdate;
+    class MsgPopulationConcentrationUpdate;
+    class MsgPopulationFlowUpdate;
+    class MsgPopulationKnowledgeUpdate;
+    class MsgPopulationConcentrationKnowledgeUpdate;
+    class MsgPopulationFlowKnowledgeUpdate;
+}
 
 namespace dispatcher
 {
@@ -33,22 +47,22 @@ public:
 
     //! @name Operations
     //@{
-    bool IsRelevant( const ASN1T_MsgsSimToClient& message );
+    bool IsRelevant( const MsgsSimToClient::MsgSimToClient& message );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    bool IsRelevant( const ASN1T_MsgUnitAttributes& message );
-    bool IsRelevant( const ASN1T_MsgUnitKnowledgeUpdate& message );
-    bool IsRelevant( const ASN1T_MsgObjectUpdate& message );
-    bool IsRelevant( const ASN1T_MsgObjectKnowledgeUpdate& message );
-    bool IsRelevant( const ASN1T_MsgPopulationUpdate& message );
-    bool IsRelevant( const ASN1T_MsgPopulationConcentrationUpdate& message );
-    bool IsRelevant( const ASN1T_MsgPopulationFlowUpdate& message );
-    bool IsRelevant( const ASN1T_MsgPopulationKnowledgeUpdate& message );
-    bool IsRelevant( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message );
-    bool IsRelevant( const ASN1T_MsgPopulationFlowKnowledgeUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgUnitAttributes& message );
+    bool IsRelevant( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgObjectUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgPopulationUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgPopulationFlowUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message );
+    bool IsRelevant( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message );
     //@}
 
 private:

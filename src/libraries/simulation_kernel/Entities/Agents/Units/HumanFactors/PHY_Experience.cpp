@@ -11,13 +11,14 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Experience.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 PHY_Experience::T_ExperienceMap PHY_Experience::experiences_;
 
-const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , EnumUnitExperience::conscrit   , 1.);
-const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, EnumUnitExperience::experimente, 1.);
-const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , EnumUnitExperience::veteran    , 1. );
+const PHY_Experience PHY_Experience::conscrit_   ( "Conscrit"   , eConscrit   , Common::EnumUnitExperience::conscrit   , 1.);
+const PHY_Experience PHY_Experience::experimente_( "Experimente", eExperimente, Common::EnumUnitExperience::experimente, 1.);
+const PHY_Experience PHY_Experience::veteran_    ( "Veteran"    , eVeteran    , Common::EnumUnitExperience::veteran    , 1. );
 
 struct PHY_Experience::LoadingWrapper
 {
@@ -74,7 +75,7 @@ void PHY_Experience::Terminate()
 // Name: PHY_Experience constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nType, ASN1T_EnumUnitExperience nAsnID, MT_Float rDIAWeight )
+PHY_Experience::PHY_Experience( const std::string& strName, E_ExperienceType nType, Common::EnumUnitExperience nAsnID, MT_Float rDIAWeight )
     : strName_                       ( strName )
     , nType_                         ( nType   )
     , nAsnID_                        ( nAsnID  )
@@ -125,9 +126,9 @@ void PHY_Experience::Read( xml::xistream& xis )
 // Name: PHY_Experience::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Experience* PHY_Experience::Find( ASN1T_EnumUnitExperience nAsnID )
+const PHY_Experience* PHY_Experience::Find( Common::EnumUnitExperience nAsnID )
 {
-    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< ASN1T_EnumUnitExperience >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Experience::GetAsnID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
+    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< Common::EnumUnitExperience >(), nAsnID ), std::compose1( std::mem_fun( &PHY_Experience::GetAsnID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
 
     return it == experiences_.end() ? 0 : it->second;
 }
@@ -136,9 +137,9 @@ const PHY_Experience* PHY_Experience::Find( ASN1T_EnumUnitExperience nAsnID )
 // Name: PHY_Experience::Find
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Experience* PHY_Experience::Find( uint nID )
+const PHY_Experience* PHY_Experience::Find( unsigned int nID )
 {
-    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_Experience::GetID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
+    CIT_ExperienceMap it = std::find_if( experiences_.begin(), experiences_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Experience::GetID ), std::select2nd< T_ExperienceMap::value_type >() ) ) );
 
     return it == experiences_.end() ? 0 : it->second;
 }
@@ -168,7 +169,7 @@ const std::string& PHY_Experience::GetName() const
 // Name: PHY_Experience::GetAsnID
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-ASN1T_EnumUnitExperience PHY_Experience::GetAsnID() const
+Common::EnumUnitExperience PHY_Experience::GetAsnID() const
 {
     return nAsnID_;
 }
@@ -240,9 +241,9 @@ bool PHY_Experience::operator!=( const PHY_Experience& rhs ) const
 // Name: PHY_Experience::GetID
 // Created: JVT 2004-11-30
 // -----------------------------------------------------------------------------
-uint PHY_Experience::GetID() const
+unsigned int PHY_Experience::GetID() const
 {
-    return (uint)nType_;
+    return (unsigned int)nType_;
 }
 
 // -----------------------------------------------------------------------------

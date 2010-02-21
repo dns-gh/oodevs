@@ -45,13 +45,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const uint nVersion )
+        void serialize( Archive& file, DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const uint )
+        void save( Archive& file, const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int )
         {
             const DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap::size_type size = map.size();
             file << size;
@@ -63,9 +63,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const uint )
+        void load( Archive& file, DEC_BlackBoard_CanContainKnowledgeObjectCollision::T_KnowledgeObjectCollisionMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -82,7 +82,7 @@ namespace boost
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObjectCollision::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_BlackBoard_CanContainKnowledgeObjectCollision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> knowledgeObjectCollisionMap_;
 }
@@ -91,7 +91,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::load( MIL_CheckPointInAr
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << knowledgeObjectCollisionMap_;
 }

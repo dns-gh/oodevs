@@ -32,7 +32,7 @@ DEC_Path_ABC::E_State DEC_Path_ABC::GetState() const
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
 inline
-uint DEC_Path_ABC::GetID() const
+unsigned int DEC_Path_ABC::GetID() const
 {
     return nID_;
 }

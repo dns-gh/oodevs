@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "UrbanKnowledgeFactory.h"
+#include "protocol/Simulation.h"
 
 using namespace kernel;
 
@@ -42,10 +43,10 @@ UrbanKnowledges::~UrbanKnowledges()
 // Name: UrbanKnowledges::DoUpdate
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanKnowledges::DoUpdate( const ASN1T_MsgUrbanKnowledgeCreation& message )
+void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
-    if( ! Find( message.oid ) )
-        Register( message.oid, * factory_.Create( team_, message ) );
+    if( ! Find( message.oid() ) )
+        Register( message.oid(), * factory_.Create( team_, message ) );
     controller_.Update( *this );
 }
 
@@ -53,9 +54,9 @@ void UrbanKnowledges::DoUpdate( const ASN1T_MsgUrbanKnowledgeCreation& message )
 // Name: UrbanKnowledges::DoUpdate
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanKnowledges::DoUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& message )
+void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {
-    Get( message.oid ).Update( message );
+    Get( message.oid() ).Update( message );
     controller_.Update( *this );
 }
 
@@ -63,9 +64,9 @@ void UrbanKnowledges::DoUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& message )
 // Name: UrbanKnowledges::DoUpdate
 // Created: MGD 2009-12-09
 // -----------------------------------------------------------------------------
-void UrbanKnowledges::DoUpdate( const ASN1T_MsgUrbanKnowledgeDestruction& message )
+void UrbanKnowledges::DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeDestruction& message )
 {
-    delete Find( message.oid );
-    Remove( message.oid );
+    delete Find( message.oid() );
+    Remove( message.oid() );
     controller_.Update( *this );
 }

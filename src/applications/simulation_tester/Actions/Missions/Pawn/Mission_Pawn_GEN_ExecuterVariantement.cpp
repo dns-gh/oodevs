@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_ExecuterVariantement::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_ExecuterVariantement& asnMission = *new ASN1T_Mission_Pion_GEN_ExecuterVariantement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_executer_variantement;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_executer_variantement = &asnMission;
+    Mission_Pion_GEN_ExecuterVariantement& asnMission = *new Mission_Pion_GEN_ExecuterVariantement();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_executer_variantement = &asnMission;
 
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
 
@@ -63,8 +63,8 @@ void Mission_Pawn_GEN_ExecuterVariantement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_ExecuterVariantement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_executer_variantement );
-    ASN1T_Mission_Pion_GEN_ExecuterVariantement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_executer_variantement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_executer_variantement ());
+    Mission_Pion_GEN_ExecuterVariantement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_executer_variantement;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
 

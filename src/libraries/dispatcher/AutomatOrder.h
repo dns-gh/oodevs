@@ -11,15 +11,17 @@
 #define __AutomatOrder_h_
 
 #include "Order_ABC.h"
-#include "game_asn/Simulation.h"
 
-struct ASN1T_MsgAutomatOrder;
+
+namespace Common
+{
+    class MsgAutomatOrder;
+}
 
 namespace dispatcher
 {
      class Automat;
      class ClientPublisher_ABC;
-
 
 // =============================================================================
 /** @class  AutomatOrder
@@ -33,7 +35,7 @@ class AutomatOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatOrder( Model_ABC& model, Automat& automat, const ASN1T_MsgAutomatOrder& asn );
+             AutomatOrder( Model_ABC& model, Automat& automat, const Common::MsgAutomatOrder& asn );
     virtual ~AutomatOrder();
     //@}
 

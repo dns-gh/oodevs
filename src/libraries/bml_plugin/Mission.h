@@ -10,7 +10,10 @@
 #ifndef __Mission_h_
 #define __Mission_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace xml
 {
@@ -77,11 +80,11 @@ private:
     void SendAutomatMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
     void SendAgentMission( dispatcher::SimulationPublisher_ABC& publisher ) const;
 
-    void Serialize( ASN1T_MissionParameters& asn ) const;
-    void Clean( ASN1T_MissionParameters& asn ) const;
-    void SerializeDummyParameters( ASN1T_MissionParameters& asn ) const;
-    void FillEmptyParameters( ASN1T_MissionParameters& asn ) const;
-    void CleanDummyParameters( ASN1T_MissionParameters& asn ) const;
+    void Serialize( MsgMissionParameters& asn ) const;
+    void Clean( MsgMissionParameters& asn ) const;
+    void SerializeDummyParameters( MsgMissionParameters& asn ) const;
+    void FillEmptyParameters( MsgMissionParameters& asn ) const;
+    void CleanDummyParameters( MsgMissionParameters& asn ) const;
     
     const kernel::MissionType& ResolveMission( xml::xistream& xis );
     void AddParameter( MissionParameter_ABC& parameter );

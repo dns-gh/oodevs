@@ -10,14 +10,26 @@
 #ifndef __PopulationConcentration_h_
 #define __PopulationConcentration_h_
 
-#include "game_asn/Simulation.h"
+
 #include "SimpleEntity.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
+#include "protocol/SimulationSenders.h"
 
 namespace kernel
 {
     class ModelVisitor_ABC;
 }
+namespace Common
+{
+    class MsgCoordLatLong;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgPopulationConcentrationCreation;
+    class MsgPopulationConcentrationUpdate;
+}
+
 namespace dispatcher
 {
     class Population;
@@ -34,13 +46,13 @@ class PopulationConcentration : public SimpleEntity< kernel::PopulationConcentra
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentration( const Population& population, const ASN1T_MsgPopulationConcentrationCreation& msg );
+    PopulationConcentration( const Population& population, const MsgsSimToClient::MsgPopulationConcentrationCreation& msg );
     virtual ~PopulationConcentration();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgPopulationConcentrationUpdate& msg );
+    void Update( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg );
 
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -64,11 +76,11 @@ private:
 public:
     const Population&   population_;
     const unsigned long nID_;
-    const ASN1T_CoordLatLong position_;
+    const Common::MsgCoordLatLong position_;
 
     unsigned long                nNbrAliveHumans_;
     unsigned long                nNbrDeadHumans_;
-    ASN1T_EnumPopulationAttitude nAttitude_;    
+    Common::EnumPopulationAttitude nAttitude_;    
 };
 
 }

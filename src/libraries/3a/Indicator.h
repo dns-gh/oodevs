@@ -41,8 +41,8 @@ public:
     virtual void Apply( const T& arg )
     {
         aar::Indicator result;
-        result().name = name_.c_str();
-        result().value = double( arg );
+        result().set_name( name_.c_str() );
+        result().set_value( double( arg ) );
         result.Send( publisher_ );
     }
     virtual void EndTick() {};

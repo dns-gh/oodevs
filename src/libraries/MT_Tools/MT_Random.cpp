@@ -20,11 +20,11 @@ using namespace MT_RandomConsts;
 // Name: MT_Random constructor
 // Created: JVT 03-10-15
 //-----------------------------------------------------------------------------
-MT_Random::MT_Random( uint32 nSeed )
+MT_Random::MT_Random( unsigned long nSeed )
     : left_ ( 1 )
 {
     state_[0] = nSeed & 0xffffffffUL;
-    for ( uint j = 1; j < N; ++j )
+    for ( unsigned int j = 1; j < N; ++j )
     {
         state_[j] = ( 1812433253UL * ( state_[j - 1] ^ ( state_[j - 1] >> 30 ) ) + j ); 
         state_[j] &= 0xffffffffUL;  /* for >32 bit machines */
@@ -38,10 +38,8 @@ MT_Random::MT_Random( uint32 nSeed )
 MT_Random::MT_Random()
     : left_ ( 1 )
 {
-    this->MT_Random::MT_Random( time(0) );
+    MT_Random::MT_Random( unsigned long( time(0) ) );
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: MT_Random constructor
@@ -50,11 +48,11 @@ MT_Random::MT_Random()
 MT_Random::MT_Random( const std::vector< unsigned long >& init_key )
     : left_ ( 1 )
 {
-    this->MT_Random::MT_Random( 19650218UL );
+    MT_Random::MT_Random( 19650218UL );
 
-    uint i = 1;
-    uint j = 0;
-    uint k = __max(  N, init_key.size() );
+    unsigned int i = 1;
+    unsigned int j = 0;
+    unsigned int k = __max(  N, init_key.size() );
     
     for (; k; --k) 
     {

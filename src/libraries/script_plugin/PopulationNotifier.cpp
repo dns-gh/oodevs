@@ -16,6 +16,8 @@
 using namespace plugins::script;
 using namespace events;
 
+using namespace MsgsSimToClient;
+
 // -----------------------------------------------------------------------------
 // Name: PopulationNotifier constructor
 // Created: SBO 2008-11-18
@@ -40,8 +42,8 @@ PopulationNotifier::~PopulationNotifier()
 // Name: PopulationNotifier::DoUpdate
 // Created: SBO 2008-11-18
 // -----------------------------------------------------------------------------
-void PopulationNotifier::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& message )
+void PopulationNotifier::DoUpdate( const MsgPopulationFlowUpdate& message )
 {
-    if( (unsigned int)message.oid_population == population_.GetId() && message.m.fluxPresent )
+    if( (unsigned int)message.oid_population() == population_.GetId() && message.has_flux() )
         controller_.Update( events::PopulationMoved( population_ ) );
 }

@@ -13,6 +13,10 @@
 #include "UdpNetwork.h"
 #include "Time_ABC.h"
 
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 using namespace plugins::dis;
 using namespace plugins::hla;
 
@@ -41,31 +45,28 @@ FireManager::~FireManager()
 // Name: FireManager::Update
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::Update( const ASN1T_MsgsSimToClient& message )
+void FireManager::Update( const MsgSimToClient& wrapper )
 {
-    switch( message.msg.t )
-    {
-    case T_MsgsSimToClient_msg_msg_start_unit_fire:
-        ReceiveFire( *message.msg.u.msg_start_unit_fire ); break;
-    case T_MsgsSimToClient_msg_msg_stop_unit_fire:
-        ReceiveFire( *message.msg.u.msg_stop_unit_fire ); break;
-    case T_MsgsSimToClient_msg_msg_start_fire_effect:
-        UpdateFireEffect( *message.msg.u.msg_start_fire_effect ); break;
-    case T_MsgsSimToClient_msg_msg_control_end_tick:
-        UpdateDetonations(); break;
-    };
+    if ( wrapper.message().has_start_unit_fire() )
+        ReceiveFire( wrapper.message().start_unit_fire() ); 
+    if ( wrapper.message().has_stop_unit_fire() )
+        ReceiveFire( wrapper.message().stop_unit_fire() ); 
+    if ( wrapper.message().has_start_fire_effect() )
+        UpdateFireEffect( wrapper.message().start_fire_effect() ); 
+    if ( wrapper.message().has_control_end_tick() )
+        UpdateDetonations(); 
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::ReceiveFire( const ASN1T_MsgStartUnitFire& fire )
+void FireManager::ReceiveFire( const MsgStartUnitFire& fire )
 {
-    if( fire.target.t == T_MsgStartUnitFire_target_position )
+    if( fire.target().has_position() )
     {
-        activeFires_[ fire.fire_oid ] = *fire.target.u.position;
-        CreateFire( *fire.target.u.position );
+        activeFires_[ fire.fire_oid() ] = fire.target().position();
+        CreateFire( fire.target().position() );
     }
 }
 
@@ -73,11 +74,11 @@ void FireManager::ReceiveFire( const ASN1T_MsgStartUnitFire& fire )
 // Name: FireManager::UpdateFireEffect
 // Created: AGE 2008-05-05
 // -----------------------------------------------------------------------------
-void FireManager::UpdateFireEffect( const ASN1T_MsgStartFireEffect& fire )
+void FireManager::UpdateFireEffect( const MsgStartFireEffect& fire )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
-    pdu.SetBurst( 1, 1, fire.type == EnumFireEffectType::fumigene ? BurstDescriptor::smoke : BurstDescriptor::illumination );
-    pdu.SetPosition( fire.location.coordinates.elem->latitude, fire.location.coordinates.elem->longitude, 0 );  // $$$$ AGE 2008-05-05: altitude
+    pdu.SetBurst( 1, 1, fire.type() == EnumFireEffectType::fumigene ? BurstDescriptor::smoke : BurstDescriptor::illumination );
+    pdu.SetPosition( fire.location().coordinates().elem(0).latitude(), fire.location().coordinates().elem(0).longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 }
 
@@ -85,13 +86,13 @@ void FireManager::UpdateFireEffect( const ASN1T_MsgStartFireEffect& fire )
 // Name: FireManager::ReceiveFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::ReceiveFire( const ASN1T_MsgStopUnitFire& fire )
+void FireManager::ReceiveFire( const MsgStopUnitFire& fire )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
-    pdu.SetPosition( activeFires_[ fire.fire_oid ].latitude, activeFires_[ fire.fire_oid ].longitude, 0 );  // $$$$ AGE 2008-05-05: altitude
+    pdu.SetPosition( activeFires_[ fire.fire_oid() ].latitude(), activeFires_[ fire.fire_oid() ].longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 
-    activeFires_.erase( fire.fire_oid );
+    activeFires_.erase( fire.fire_oid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -107,7 +108,7 @@ void FireManager::UpdateDetonations()
 // Name: FireManager::CreateFire
 // Created: AGE 2008-04-08
 // -----------------------------------------------------------------------------
-void FireManager::CreateFire( const ASN1T_CoordLatLong& /*position*/ )
+void FireManager::CreateFire( const MsgCoordLatLong& /*position*/ )
 {
     // $$$$ AGE 2008-05-05:  ?
 }

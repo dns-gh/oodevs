@@ -10,6 +10,11 @@
 #ifndef __MIL_LimaOrder_h_
 #define __MIL_LimaOrder_h_
 
+namespace Common
+{
+    class MsgLimaOrder;
+}
+
 class MIL_LimaFunction;
 struct ASN1T_LimaOrder;
 
@@ -31,7 +36,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LimaOrder( const ASN1T_LimaOrder& asn );
+    explicit MIL_LimaOrder( const Common::MsgLimaOrder& asn );
     virtual ~MIL_LimaOrder();
     //@}
 
@@ -46,10 +51,10 @@ public:
 
     //! @name Accessors
     //@{
-          uint             GetID       () const;
+          unsigned int             GetID       () const;
     const T_PointVector&   GetPoints   () const;
     const T_LimaFunctions& GetFunctions() const;
-          uint             GetSchedule () const;
+          unsigned int             GetSchedule () const;
     //@}
 
     //! @name Geometry $$$ BULLSHIT
@@ -60,19 +65,19 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( ASN1T_LimaOrder& asn ) const;
+    void Serialize( Common::MsgLimaOrder& asn ) const;
     //@}
 
 private:
-    uint            nID_;
+    unsigned int            nID_;
     T_PointVector   points_;
     T_LimaFunctions functions_;
     bool            bFlag_;
     bool            bScheduleFlag_;
-    uint            nSchedule_;
+    unsigned int            nSchedule_;
 
 private:
-    static uint nNextID_;
+    static unsigned int nNextID_;
 };
 
 typedef std::vector< MIL_LimaOrder  > T_LimaVector;

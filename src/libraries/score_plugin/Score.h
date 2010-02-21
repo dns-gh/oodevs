@@ -10,8 +10,10 @@
 #ifndef __Score_h_
 #define __Score_h_
 
-#include "game_asn/Aar.h"
 #include <vector>
+#include "protocol/protocol.h"
+
+using namespace MsgsAarToClient;
 
 namespace xml
 {
@@ -46,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgIndicator& message );
+    void Update( const MsgIndicator& message );
     void Send( dispatcher::ClientPublisher_ABC& publisher, int context ) const;
     //@}
 

@@ -9,9 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
-
 #include "BlockPhFirerModifier.h"
 #include "BlockPhTargetModifier.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "Tools/MIL_Config.h"
+#include <boost/bind.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/path.hpp>
 #include <Urban/Model.h>
 #include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
@@ -26,10 +32,6 @@
 #include <Urban/Vegetation.h>
 #include "Tools/MIL_Config.h"
 #include <xeumeuleu/xml.h>
-#include <boost/filesystem/path.hpp>
-#include "boost/filesystem/operations.hpp"
-#include "Network/NET_ASN_Messages.h"
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( UrbanModel )
 
@@ -80,7 +82,7 @@ void UrbanModel::ReadUrbanModel( const MIL_Config& config )
     }
     catch( std::exception& e )
     {
-        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() ); 
+        MT_LOG_ERROR_MSG( "Exception in loading Urban Model caught : " << e.what() );
     }
 }
 
@@ -126,65 +128,55 @@ void UrbanModel::WriteUrbanModel( xml::xostream& /*xos*/ ) const
 // -----------------------------------------------------------------------------
 void UrbanModel::SendCreation( urban::Block& object )
 {
-    NET_ASN_MsgUrbanCreation asn;
-    geometry::Polygon2f::T_Vertices points = object.GetFootprint()->Vertices();
-    asn().oid                       = object.GetId();
-    asn().name                      = object.GetName().c_str();
-    asn().location.type             = EnumLocationType::polygon;
-    asn().location.coordinates.n    = points.size();
-
-    asn().location.coordinates.elem = new ASN1T_CoordLatLong[ points.size() ];
-
-    int i ( 0 );
-    for ( geometry::Polygon2f::IT_Vertices it = points.begin(); it != points.end(); ++it )
+    client::UrbanCreation message;
+    message().set_oid( object.GetId() );
+    message().set_name( object.GetName() );
+    message().mutable_location()->set_type( Common::MsgLocation_Geometry_polygon );
+    const geometry::Polygon2f::T_Vertices& points = object.GetFootprint()->Vertices();
+    for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
     {
-        asn().location.coordinates.elem[ i ].latitude = (*it).X();
-        asn().location.coordinates.elem[ i ].longitude = (*it).Y();
-        ++i;
+        const MT_Vector2D point( it->X(), it->Y() );
+        NET_ASN_Tools::WritePoint( point, *message().mutable_location()->mutable_coordinates()->add_elem() );
     }
 
     const ColorRGBA* color = object.GetColor();
     if ( color != 0 )
     {
-        asn().attributes.m.colorPresent = 1;
-        asn().attributes.color.red = color->Red();
-        asn().attributes.color.green = color->Green();
-        asn().attributes.color.blue = color->Blue();
-        asn().attributes.color.alpha = color->Alpha();
+        message().mutable_attributes()->mutable_color()->set_red( color->Red() );
+        message().mutable_attributes()->mutable_color()->set_green( color->Green() );
+        message().mutable_attributes()->mutable_color()->set_blue( color->Blue() );
+        message().mutable_attributes()->mutable_color()->set_alpha( color->Alpha() );
     }
 
     const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
     if ( architecture != 0 )
     {       
-        asn().attributes.m.architecturePresent              = 1;
-        asn().attributes.architecture.height                = architecture->GetHeight();
-        asn().attributes.architecture.floorNumber           = architecture->GetFloorNumber();
-        asn().attributes.architecture.basementLevelNumber   = architecture->GetBasement();
-        asn().attributes.architecture.roofShape             = architecture->GetRoofShape().c_str();
-        asn().attributes.architecture.material              = architecture->GetMaterial().c_str();
-        asn().attributes.architecture.innerCluttering       = architecture->GetInnerCluttering();
-        asn().attributes.architecture.facadeOpacity         = architecture->GetFacadeOpacity();
+        message().mutable_attributes()->mutable_architecture()->set_height( architecture->GetHeight() );
+        message().mutable_attributes()->mutable_architecture()->set_floor_number( architecture->GetFloorNumber() );
+        message().mutable_attributes()->mutable_architecture()->set_basement_level_number( architecture->GetBasement() );
+        message().mutable_attributes()->mutable_architecture()->set_roof_shape( architecture->GetRoofShape().c_str() );
+        message().mutable_attributes()->mutable_architecture()->set_material( architecture->GetMaterial().c_str() );
+        message().mutable_attributes()->mutable_architecture()->set_inner_cluttering( architecture->GetInnerCluttering() );
+        message().mutable_attributes()->mutable_architecture()->set_facade_opacity( architecture->GetFacadeOpacity() );
     }
 
     const urban::Soil* soil = object.RetrievePhysicalFeature< urban::Soil >();
     if ( soil != 0 )
     {
-        asn().attributes.m.soilPresent          = 1;
-        asn().attributes.soil.occupation        = soil->GetOccupation();
-        asn().attributes.soil.trafficability    = soil->GetTrafficability();
-        asn().attributes.soil.multiple          = soil->GetMultiplicity();
-        asn().attributes.soil.compoundClearing  = soil->GetCompoundClearing().c_str();
+        message().mutable_attributes()->mutable_soil()->set_occupation( soil->GetOccupation() );
+        message().mutable_attributes()->mutable_soil()->set_trafficability( soil->GetTrafficability() );
+        message().mutable_attributes()->mutable_soil()->set_multiple( soil->GetMultiplicity() );
+        message().mutable_attributes()->mutable_soil()->set_compound_clearing( soil->GetCompoundClearing().c_str() );
     }
 
     const urban::Vegetation* vegetation = object.RetrievePhysicalFeature< urban::Vegetation >();
     if ( vegetation != 0 )
     {
-        asn().attributes.m.vegetationPresent    = 1;
-        asn().attributes.vegetation.type        = vegetation->GetType().c_str();
-        asn().attributes.vegetation.height      = vegetation->GetHeight();
-        asn().attributes.vegetation.density     = vegetation->GetDensity();
+        message().mutable_attributes()->mutable_vegetation()->set_type( vegetation->GetType().c_str() );
+        message().mutable_attributes()->mutable_vegetation()->set_height( vegetation->GetHeight() );
+        message().mutable_attributes()->mutable_vegetation()->set_density( vegetation->GetDensity() );
     }
-    asn.Send();
+    message.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

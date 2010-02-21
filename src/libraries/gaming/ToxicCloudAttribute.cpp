@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
+#include "Tools.h"
 #include "ToxicCloudAttribute.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -15,7 +16,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "graphics/extensions.h"
-#include "Tools.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -79,18 +80,18 @@ void ToxicCloudAttribute::UpdateTexture() const
 // Name: ToxicCloudAttribute::UpdateToxicCloud
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::UpdateToxicCloud( const ASN1T_LocatedQuantityList& cloud )
+void ToxicCloudAttribute::UpdateToxicCloud( const Common::MsgLocatedQuantityList& cloud )
 {
-    cloud_.resize( cloud.n );
+    cloud_.resize( cloud.elem_size() );
     boundaries_ = QuantityBoundaries();
     boundingBox_ = geometry::Rectangle2f();
-    for( unsigned int i = 0; i < cloud.n; ++i )
+    for( int i = 0; i < cloud.elem_size(); ++i )
     {
-        ASN1T_LocatedQuantity& quantity = cloud.elem[ i ];        
-        const geometry::Point2f position( float( quantity.coordinate.longitude ), float( quantity.coordinate.latitude ) );
+        const Common::MsgLocatedQuantity& quantity = cloud.elem( i );
+        const geometry::Point2f position( float( quantity.coordinate().longitude() ), float( quantity.coordinate().latitude() ) );
         boundingBox_.Incorporate( position );
-        boundaries_.Incorporate( quantity.quantity );
-        cloud_[ i ] = std::make_pair( position, quantity.quantity );
+        boundaries_.Incorporate( quantity.quantity() );
+        cloud_[ i ] = std::make_pair( position, quantity.quantity() );
     }
 }
 
@@ -101,9 +102,9 @@ void ToxicCloudAttribute::UpdateToxicCloud( const ASN1T_LocatedQuantityList& clo
 template< typename T >
 void ToxicCloudAttribute::UpdateData( const T& message )
 {
-    if ( message.m.toxic_cloudPresent )    
+    if ( message.has_toxic_cloud()  )    
     {
-        UpdateToxicCloud( message.toxic_cloud.quantities );
+        UpdateToxicCloud( message.toxic_cloud().quantities() );
         controller_.Update( *(ToxicCloudAttribute_ABC*)this );        
     }
 }
@@ -112,18 +113,18 @@ void ToxicCloudAttribute::UpdateData( const T& message )
 // Name: ToxicCloudAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void ToxicCloudAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ToxicCloudAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void ToxicCloudAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void ToxicCloudAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

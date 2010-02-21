@@ -12,6 +12,12 @@
 
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
+#include <boost/function.hpp>
+
+namespace Common
+{
+    enum EnumNatureLevel;
+}
 
 namespace kernel
 {
@@ -30,19 +36,24 @@ namespace actions {
 // =============================================================================
 class Level : public Parameter< QString >
 {
+public:
+    //! @name Functors
+    //@{
+    typedef boost::function< void ( const Common::EnumNatureLevel& ) > T_Setter;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
              Level( const kernel::OrderParameter& parameter, const kernel::HierarchyLevel_ABC& level );
-             Level( const kernel::OrderParameter& parameter, const ASN1T_EnumNatureLevel& asn, const kernel::FormationLevels& levels );
+             Level( const kernel::OrderParameter& parameter, const Common::EnumNatureLevel& message, const kernel::FormationLevels& levels );
              Level( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::FormationLevels& levels );
     virtual ~Level();
     //@}
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_EnumNatureLevel& asn ) const;
+    void CommitTo( T_Setter setter ) const;
     //@}
 
 private:

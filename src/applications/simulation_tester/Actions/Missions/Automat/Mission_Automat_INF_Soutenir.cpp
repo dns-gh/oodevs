@@ -43,9 +43,9 @@ void Mission_Automat_INF_Soutenir::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Soutenir& asnMission = *new ASN1T_Mission_Automate_INF_Soutenir();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_soutenir;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_soutenir = &asnMission;
+    Mission_Automate_INF_Soutenir& asnMission = *new Mission_Automate_INF_Soutenir();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_soutenir = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
@@ -59,8 +59,8 @@ void Mission_Automat_INF_Soutenir::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Soutenir::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_soutenir );
-    ASN1T_Mission_Automate_INF_Soutenir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_soutenir;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_soutenir ());
+    Mission_Automate_INF_Soutenir& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_soutenir;
 
 
     delete &asnMission;

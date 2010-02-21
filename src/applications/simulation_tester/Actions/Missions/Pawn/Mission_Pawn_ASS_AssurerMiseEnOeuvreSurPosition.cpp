@@ -43,9 +43,9 @@ void Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition& asnMission = *new ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre_sur_position;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position = &asnMission;
+    Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition& asnMission = *new Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_ass_assurer_mise_en_oeuvre_sur_position = &asnMission;
 
     const Position& positionImplantation_ = pTarget_->GetTestParam_Point();
 
@@ -62,8 +62,8 @@ void Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASS_AssurerMiseEnOeuvreSurPosition::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre_sur_position );
-    ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_assurer_mise_en_oeuvre_sur_position;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_ass_assurer_mise_en_oeuvre_sur_position ());
+    Mission_Pion_ASS_AssurerMiseEnOeuvreSurPosition& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_ass_assurer_mise_en_oeuvre_sur_position;
 
     ASN_Tools::Delete( asnMission.position_implantation );
 

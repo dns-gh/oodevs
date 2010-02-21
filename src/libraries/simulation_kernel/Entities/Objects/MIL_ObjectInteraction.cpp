@@ -39,7 +39,7 @@ MIL_ObjectInteraction::~MIL_ObjectInteraction()
 // Name: MIL_Object_ABC::load
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> agentInsideSet_
          >> agentEnteringSet_
@@ -51,7 +51,7 @@ void MIL_ObjectInteraction::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_Object_ABC::save
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_ObjectInteraction::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << agentInsideSet_
          << agentEnteringSet_

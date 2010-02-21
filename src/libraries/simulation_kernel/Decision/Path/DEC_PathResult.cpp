@@ -11,10 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathResult.h"
-
 #include "DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult constructor
@@ -24,6 +24,7 @@ DEC_PathResult::DEC_PathResult()
     : DEC_Path_ABC      ()
     , bSectionJustEnded_( false )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -231,19 +232,12 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
 // Name: DEC_PathResult::Serialize
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void DEC_PathResult::Serialize( ASN1T_Path& asn ) const
+void DEC_PathResult::Serialize( Common::MsgPath& asn ) const
 {
     assert( !resultList_.empty() );
-
-    ASN1T_CoordLatLong* pASNCoordUTMSeq = new ASN1T_CoordLatLong[ resultList_.size() ]; //$$ RAM
-
-    asn.type             = EnumLocationType::line;
-    asn.coordinates.n    = resultList_.size();
-    asn.coordinates.elem = pASNCoordUTMSeq;
-
-    uint i = 0;
-    for( CIT_PathPointList itPathPoint = resultList_.begin(); itPathPoint != resultList_.end(); ++itPathPoint )
-        NET_ASN_Tools::WritePoint( (*itPathPoint)->GetPos(), asn.coordinates.elem[i++] );
+    asn.mutable_location()->set_type( Common::MsgLocation::line );
+    for( CIT_PathPointList it = resultList_.begin(); it != resultList_.end(); ++it )
+        NET_ASN_Tools::WritePoint( (*it)->GetPos(), *asn.mutable_location()->mutable_coordinates()->add_elem() );
 }
 
 // =============================================================================
@@ -263,7 +257,6 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
         resultList_.pop_back();
         bSectionJustEnded_ = false;
     }
-    
     resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
 }
 
@@ -275,5 +268,3 @@ void DEC_PathResult::NotifySectionEnded()
 {
     bSectionJustEnded_ = true;
 }
-
-

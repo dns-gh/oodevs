@@ -14,7 +14,6 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 // LTO begin
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -31,7 +30,7 @@ namespace kernel
 // =============================================================================
 class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >
                      , public kernel::Extension_ABC // LTO
-                     , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupUpdate > // LTO
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate > // LTO
 {
 public:
     //! @name Constructors/Destructor
@@ -48,6 +47,7 @@ public:
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup );
     virtual void Register( kernel::Automat_ABC& knowledgeGroup );
     virtual void Remove( kernel::Automat_ABC& knowledgeGroup );
+    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message );
     //@}
 
     //! @name Accessors
@@ -64,17 +64,10 @@ private:
     KnowledgeGroup& operator=( const KnowledgeGroup& );
     //@}
 
-    // LTO begin
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message );
-    //@}
-
-private:
     //! @name Member data
     //@{
     const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types_;
-    std::string type_;
+    std::string type_;    
     bool activated_;
     //@}
     // LTO end

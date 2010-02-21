@@ -40,7 +40,7 @@
 #include "IntelligencesModel.h"
 #include "DrawingFactory.h"
 #include "DrawingsModel.h"
-#include "NotesModel.h"
+#include "NotesModel.h" // LTO
 #include "ScoreModel.h"
 #include "UrbanModel.h"
 #include "clients_kernel/AgentTypes.h"
@@ -61,7 +61,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , static_( staticModel )
     , agentsKnowledgeFactory_( *new AgentKnowledgeFactory( controllers, *this, staticModel.coordinateConverter_ ) )
     , objectKnowledgeFactory_( *new ObjectKnowledgeFactory( controllers, *this, staticModel ) )
-    , urbanKnowledgeFactory_( *new UrbanKnowledgeFactory( controllers, *this, staticModel ) )
+    , urbanKnowledgeFactory_( *new UrbanKnowledgeFactory( controllers, *this ) )
     , agentKnowledgeConverter_( *new AgentKnowledgeConverter( controllers ) )
     , objectKnowledgeConverter_( *new ObjectKnowledgeConverter( controllers ) )
     , teamFactory_( *new TeamFactory( controllers, *this ) )
@@ -92,7 +92,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
     , scores_( *new ScoreModel( controllers, publisher, staticModel.scores_ ) )
     , urbanObjects_( *new UrbanModel( controllers.controller_, staticModel.urbanTypes_ ) )
-    , notes_( *new NotesModel(controllers.controller_) )
+    , notes_( *new NotesModel(controllers.controller_) )  // LTO
 {
     // NOTHING
 }
@@ -103,6 +103,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &urbanObjects_;
     delete &scores_;
     delete &drawings_;
     delete &intelligences_;
@@ -117,7 +118,6 @@ Model::~Model()
     delete &knowledgeGroups_;
     delete &teams_;
     delete &objects_;
-    delete &urbanObjects_;
     delete &agents_;
     delete &drawingFactory_;
     delete &intelligenceFactory_;
@@ -143,6 +143,7 @@ Model::~Model()
 // -----------------------------------------------------------------------------
 void Model::Purge()
 {
+    urbanObjects_.Purge();
     scores_.Purge();
     drawings_.Purge();
     intelligences_.Purge();
@@ -157,5 +158,4 @@ void Model::Purge()
     objects_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
-    urbanObjects_.Purge();
 }

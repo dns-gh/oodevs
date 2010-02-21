@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeNBCType_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "game_asn/Simulation.h"
 #include <boost/serialization/export.hpp>
 
 class NBCTypeAttribute;
@@ -54,7 +53,7 @@ public:
     virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );    
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision );
-    virtual void Send( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Send( Common::MsgObjectAttributes& message ) const;
     //@}
     
 private:

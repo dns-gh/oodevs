@@ -12,6 +12,10 @@
 #ifndef __PHY_NatureLevel_h_
 #define __PHY_NatureLevel_h_
 
+namespace Common
+{
+    enum EnumNatureLevel;
+}
 
 // =============================================================================
 // @class  PHY_NatureLevel
@@ -27,14 +31,14 @@ public:
     static void Terminate ();
 
     static const PHY_NatureLevel* Find( const std::string& strName );
-    static const PHY_NatureLevel* Find( uint nID );
+    static const PHY_NatureLevel* Find( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&          GetName () const;
-          uint                  GetID   () const;
-          ASN1T_EnumNatureLevel GetAsnID() const;
+    const std::string&            GetName () const;
+          unsigned int            GetID   () const;
+          Common::EnumNatureLevel GetAsnID() const;
     //@}
 
 private:
@@ -61,13 +65,13 @@ private:
     //@}
 
 private:
-     PHY_NatureLevel( const std::string& strName, E_Type nType, ASN1T_EnumNatureLevel nAsnID );
+     PHY_NatureLevel( const std::string& strName, E_Type nType, Common::EnumNatureLevel nAsnID );
     virtual ~PHY_NatureLevel();
 
 private:
     const std::string     strName_;
     const E_Type          nType_;
-    const ASN1T_EnumNatureLevel nAsnID_;
+    const Common::EnumNatureLevel nAsnID_;
 
 private:
     static T_NatureLevelMap natureLevels_;

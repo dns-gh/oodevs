@@ -16,7 +16,10 @@ namespace kernel
     class Logger_ABC;
 }
 
-struct ASN1T_MsgServicesDescription;
+namespace MsgsDispatcherToClient
+{
+	class MsgServicesDescription;
+}
 
 // =============================================================================
 /** @class  Services
@@ -36,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgServicesDescription& message );
+    void Update( const MsgsDispatcherToClient::MsgServicesDescription& message );
 
     template< typename T >
     bool HasService() const

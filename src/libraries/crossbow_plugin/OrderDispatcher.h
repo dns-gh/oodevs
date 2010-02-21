@@ -10,7 +10,12 @@
 #ifndef __OrderDispatcher_h_
 #define __OrderDispatcher_h_
 
-#include "game_asn/Simulation.h"
+
+namespace Common
+{
+    class MsgMissionParameters;
+    class MsgMissionParameter;
+}
 
 namespace kernel
 {
@@ -80,8 +85,8 @@ private:
     unsigned long GetTargetId( const Row_ABC& row ) const;
     const kernel::OrderType* GetAgentMission( const Row_ABC& row ) const;
     const kernel::OrderType* GetAutomatMission( const Row_ABC& row ) const;
-    void SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
-    void SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
+    void SetParameters( Common::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type );
+    void SetParameter( Common::MsgMissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type );
     //@}
 
 private:

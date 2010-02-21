@@ -439,12 +439,12 @@ namespace
 {
     struct OrderParameterValueVisitor : public kernel::OrderParameterValueVisitor_ABC
     {
-        OrderParameterValueVisitor( actions::gui::ParamComboBox< ASN1INT >& param ) : param_( &param ) {}
+        OrderParameterValueVisitor( actions::gui::ParamComboBox< int >& param ) : param_( &param ) {}
         virtual void Visit( const OrderParameterValue& value )
         {
             param_->AddItem( value.GetName().c_str(), value.GetId() );
         }
-        actions::gui::ParamComboBox< ASN1INT >* param_;
+        actions::gui::ParamComboBox< int >* param_;
     };
 }
 
@@ -454,7 +454,7 @@ namespace
 // -----------------------------------------------------------------------------
 actions::gui::Param_ABC* MissionInterfaceBuilder::BuildEnumeration( const OrderParameter& parameter ) const
 {
-    actions::gui::ParamComboBox< ASN1INT >& param = BuildVarList< ASN1INT >( parameter );
+    actions::gui::ParamComboBox< int >& param = BuildVarList< int >( parameter );
     OrderParameterValueVisitor visitor( param );
     parameter.Accept( visitor );
     return &param;

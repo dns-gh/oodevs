@@ -21,19 +21,19 @@ using namespace kernel;
 // Name: DirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-DirectFire::DirectFire( const ASN1T_MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< Population_ABC >& populationResolver )
-    : Fire_ABC( agentResolver.Get( message.firer_oid ) )
-    , id_( message.fire_oid )
+DirectFire::DirectFire( const MsgsSimToClient::MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< Population_ABC >& populationResolver )
+    : Fire_ABC( agentResolver.Get( message.firer_oid() ) )
+    , id_( message.fire_oid() )
 {
-    if( message.target.t == T_MsgStartUnitFire_target_unit )
-        target_ = & agentResolver.Get( message.target.u.unit );
-    else if( message.target.t == T_MsgStartUnitFire_target_population )
-        target_ = & populationResolver.Get( message.target.u.population );
+    if( message.target().has_unit() )
+        target_ = & agentResolver.Get( message.target().unit() );
+    else if( message.target().has_population() )
+        target_ = & populationResolver.Get( message.target().population() );
     else
         throw std::runtime_error( "DirectFire on position..." );
 
-    if( message.m.ammunitionPresent )
-        ; // $$$$ AGE 2006-03-10: 
+//    if( message.has_ammunition()  )
+//        ; // $$$$ AGE 2006-03-10: 
     targetPosition_ = target_->Retrieve< Positions >();
 }
 

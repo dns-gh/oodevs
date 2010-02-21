@@ -11,11 +11,7 @@
 #define __ActionParameterAgent_h_
 
 #include "Entity.h"
-
-namespace kernel
-{
-    class Agent_ABC;
-}
+#include "clients_kernel/Agent_ABC.h"
 
 namespace actions {
     namespace parameters {
@@ -42,9 +38,8 @@ public:
     //! @name Operations
     //@{
     using Entity< kernel::Agent_ABC >::CommitTo;
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    void CommitTo( ASN1T_Unit& asn ) const;
     //@}
 
 private:

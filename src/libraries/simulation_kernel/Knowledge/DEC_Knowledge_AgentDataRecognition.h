@@ -15,12 +15,16 @@
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 
+namespace MsgsSimToClient
+{
+    class MsgUnitKnowledgeUpdate;
+}
+
 class DEC_Knowledge_AgentPerceptionDataRecognition;
 class MIL_AgentType_ABC;
 class MIL_Army_ABC;
 class MIL_Agent_ABC;
 class PHY_NatureAtlas;
-struct ASN1T_MsgUnitKnowledgeUpdate;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -30,15 +34,18 @@ class DEC_Knowledge_AgentDataRecognition : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      DEC_Knowledge_AgentDataRecognition();
     virtual ~DEC_Knowledge_AgentDataRecognition();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -52,13 +59,13 @@ public:
     //! @name Network
     //@{
     bool HasChanged      () const;
-    void SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState   ( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendFullState   ( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
     //! @name Accessors
     //@{
-          uint                         GetTimeLastUpdate       () const;
+          unsigned int                         GetTimeLastUpdate       () const;
           MT_Float                     GetOperationalState     () const;
           MT_Float                     GetMajorOperationalState() const;
     const T_KnowledgeComposanteVector& GetComposantes          () const;
@@ -76,7 +83,7 @@ private:
     //@}
 
 private:
-          uint                         nTimeLastUpdate_;
+          unsigned int                         nTimeLastUpdate_;
           MT_Float                     rOperationalState_;
           MT_Float                     rMajorOperationalState_;
           T_KnowledgeComposanteVector  composantes_;

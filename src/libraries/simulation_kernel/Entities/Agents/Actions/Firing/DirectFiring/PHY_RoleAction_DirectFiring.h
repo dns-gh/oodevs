@@ -49,7 +49,7 @@ public:
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -60,8 +60,8 @@ public:
 
     //! @name Operations
     //@{
-    int  FirePopulation         ( uint nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult );
-    void FirePopulationSuspended( uint nTargetKnowledgeID );
+    int  FirePopulation         ( unsigned int nTargetKnowledgeID, PHY_FireResults_Pion*& pFireResult );
+    void FirePopulationSuspended( unsigned int nTargetKnowledgeID );
 
     int  FirePion               ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent, PHY_DirectFireData::E_FiringMode nFiringMode, MT_Float rPercentageComposantesToUse, PHY_DirectFireData::E_ComposanteFiringType nComposanteFiringType, PHY_DirectFireData::E_ComposanteFiredType nComposanteFiredType, PHY_FireResults_Pion*& pFireResult, const PHY_AmmoDotationClass* pAmmoDotationClass = 0 );
     void FirePionSuspended      ( boost::shared_ptr< DEC_Knowledge_Agent > pAgent );
@@ -94,7 +94,7 @@ private:
 private:
     //! @name Tools
     //@{
-    MIL_Population* GetPopulationTarget( uint nTargetKnowledgeID );
+    MIL_Population* GetPopulationTarget( unsigned int nTargetKnowledgeID );
     void            FirePion           ( PHY_DirectFireData& firerWeapons, MIL_Agent_ABC& target, const PHY_Composante_ABC::T_ComposanteVector& compTargets, PHY_FireResults_Pion& fireResult );
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_DirectFiring* role, const unsigned int /*version*/ );

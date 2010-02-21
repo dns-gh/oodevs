@@ -23,7 +23,7 @@ class PHY_Breakdown : private boost::noncopyable
 {
 
 public:
-    //! @name Contruction
+    //! @name Contructors/Destructor
     //@{
     explicit PHY_Breakdown( const PHY_BreakdownType& type );
              PHY_Breakdown();
@@ -34,15 +34,15 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name accessors
     //@{
-          uint                          GetTheoricRepairTime() const;
-          uint                          GetRepairTime       () const;
-          uint                          GetID               () const;
+          unsigned int                          GetTheoricRepairTime() const;
+          unsigned int                          GetRepairTime       () const;
+          unsigned int                          GetID               () const;
           bool                          AffectMobility      () const;
           bool                          AffectElectronic    () const;
     const PHY_MaintenanceLevel&         GetMaintenanceLevel () const;
@@ -51,8 +51,11 @@ public:
 
 
 private:
+    //! @name Member data
+    //@{
     const PHY_BreakdownType* pType_;
-    const uint               nRepairTime_;
+    const unsigned int nRepairTime_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_Breakdown )

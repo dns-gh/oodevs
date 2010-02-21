@@ -11,7 +11,6 @@
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
 #include "gaming/AgentsModel.h"
-#include "game_asn/SimulationSenders.h"
 #include "gaming/Dotation.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/Model.h"
@@ -24,6 +23,8 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/publisher_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -137,31 +138,30 @@ void LogisticSupplyChangeQuotasDialog::Validate()
 
     simulation::LogSupplyChangeQuotas message;
 
-    message().oid_donneur  = selected_->GetId();
-    message().oid_receveur = target->GetId();
+    message().set_oid_donneur( selected_->GetId() );
+    message().set_oid_receveur( target->GetId() );
 
     unsigned int rows = 0;
     for( int i = 0; i < table_->numRows(); ++i )
         if( !table_->item( i, 0 )->text().isEmpty() )
             ++rows;
 
-    message().quotas.n = rows;
+//    message.mutable_quotas()->set_n( rows );
     if( rows > 0 )
     {
-        ASN1T_DotationQuota* quota = new ASN1T_DotationQuota[rows];
+        //DotationQuota* quota = new DotationQuota[rows];
         for( int i = 0; i < table_->numRows(); ++i )
         {
             const QString text = table_->text( i, 0 );
             if( text.isEmpty() )
                 continue;
-            quota[i].ressource_id     = supplies_[ text ].type_->GetId();
-            quota[i].quota_disponible = table_->text( i, 1 ).toInt();
+            message().mutable_quotas()->add_elem()->set_ressource_id( supplies_[ text ].type_->GetId() );
+            message().mutable_quotas()->mutable_elem( i )->set_quota_disponible( table_->text( i, 1 ).toInt() );
         }
-        message().quotas.elem = quota;
+//        message().mutable_quotas()->set_elem( quota );
     }
     message.Send( publisher_ );
-    if( message().quotas.n > 0 )
-        delete [] message().quotas.elem;
+    message().mutable_quotas()->mutable_elem()->Clear();
     hide();
 }
 

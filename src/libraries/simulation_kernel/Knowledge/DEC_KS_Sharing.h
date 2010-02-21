@@ -40,13 +40,13 @@ public:
     virtual void Clean();
     virtual void Talk   ( int currentTimeStep );
 
-    void ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep );
-    void ShareFromSource( const MIL_KnowledgeGroup& source, uint nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius );
+    void ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep );
+    void ShareFromSource( const MIL_KnowledgeGroup& source, unsigned int nShareTimeStep, const MT_Vector2D& vSharedCircleCenter, MT_Float rSharedCircleRadius );
     //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 public:
@@ -63,7 +63,7 @@ public:
               MT_Float            rSharedCircleRadius_;
     };
 
-    typedef std::multimap< uint /*nShareTimeStep*/, sShareSource > T_ShareSourceMMap;
+    typedef std::multimap< unsigned int /*nShareTimeStep*/, sShareSource > T_ShareSourceMMap;
     typedef T_ShareSourceMMap::iterator                            IT_ShareSourceMMap;
     //@}
     
@@ -79,7 +79,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_Sharing )
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DEC_KS_Sharing::serialize( Archive& archive, const uint )
+void DEC_KS_Sharing::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
             & pBlackBoard_;

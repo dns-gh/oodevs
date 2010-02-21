@@ -13,6 +13,7 @@
 #include "ClientPublisher_ABC.h"
 #include "MessageLoader.h"
 #include "MessageHandler_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -58,9 +59,9 @@ void Loader::Start()
     loader_->LoadKeyFrame( 0, handler_ );
 
     // simulation the end of the initialization
-    ASN1T_MsgsSimToClient message;
-    message.msg.t = T_MsgsSimToClient_msg_msg_control_send_current_state_end;
-    handler_.Receive( message );
+    MsgsSimToClient::MsgSimToClient wrapper;
+    wrapper.mutable_message()->mutable_control_send_current_state_end();
+    handler_.Receive( wrapper );
 }
 
 // -----------------------------------------------------------------------------

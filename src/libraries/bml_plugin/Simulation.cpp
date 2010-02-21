@@ -12,6 +12,9 @@
 
 using namespace plugins::bml;
 
+
+using namespace MsgsSimToClient;
+
 // -----------------------------------------------------------------------------
 // Name: Simulation constructor
 // Created: SBO 2008-06-09
@@ -36,10 +39,10 @@ Simulation::~Simulation()
 // Name: Simulation::Update
 // Created: SBO 2008-06-09
 // -----------------------------------------------------------------------------
-void Simulation::Update( const ASN1T_MsgControlEndTick& message )
+void Simulation::Update( const MsgControlEndTick& message )
 {
-    currentTick_  = message.current_tick;
-    tickDuration_ = message.tick_duration;
+    currentTick_  = message.current_tick();
+    tickDuration_ = message.tick_duration();
 }
 
 // -----------------------------------------------------------------------------

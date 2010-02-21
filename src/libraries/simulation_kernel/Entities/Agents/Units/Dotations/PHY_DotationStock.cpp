@@ -59,11 +59,11 @@ PHY_DotationStock::~PHY_DotationStock()
 // Name: PHY_DotationStock::load
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> pStockContainer_;
     
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pCategory_ = PHY_DotationType::FindDotationCategory( nID );
 
@@ -76,7 +76,7 @@ void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_DotationStock::save
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
-void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned category = pCategory_->GetMosID();
     file << pStockContainer_
@@ -94,7 +94,7 @@ void PHY_DotationStock::SetValue( MT_Float rValue )
 {
     assert( pStockContainer_ );
     
-    if ( (uint)rValue_ != (uint)rValue )
+    if ( (unsigned int)rValue_ != (unsigned int)rValue )
         pStockContainer_->NotifyDotationChanged( *this, rValue - rValue_ );
 
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();

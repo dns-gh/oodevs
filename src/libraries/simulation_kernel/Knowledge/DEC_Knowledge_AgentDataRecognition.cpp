@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/MIL_AgentTypePion.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataRecognition )
 
@@ -52,7 +53,7 @@ DEC_Knowledge_AgentDataRecognition::~DEC_Knowledge_AgentDataRecognition()
 // Name: DEC_Knowledge_AgentDataRecognition::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> nTimeLastUpdate_
          >> rOperationalState_
@@ -61,7 +62,7 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
          >> const_cast< MIL_Army_ABC*& >( pArmy_ )
          >> bIsPC_;
          
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
     
@@ -73,9 +74,9 @@ void DEC_Knowledge_AgentDataRecognition::load( MIL_CheckPointInArchive& file, co
 // Name: DEC_Knowledge_AgentDataRecognition::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_AgentDataRecognition::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 );
+    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (unsigned int)-1 );
     file << nTimeLastUpdate_
          << rOperationalState_
          << rMajorOperationalState_
@@ -153,12 +154,11 @@ void DEC_Knowledge_AgentDataRecognition::Update( const DEC_Knowledge_AgentDataRe
 // Name: DEC_Knowledge_AgentDataRecognition::SendChangedState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataRecognition::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
 {
     if( bOperationalStateChanged_ )
     {
-        asnMsg.m.etat_opPresent = 1;
-        asnMsg.etat_op = std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) );
+        asnMsg.set_etat_op( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ));
     }
 
     if( bAgentTypeUpdated_ )
@@ -166,11 +166,8 @@ void DEC_Knowledge_AgentDataRecognition::SendChangedState( ASN1T_MsgUnitKnowledg
         assert( pArmy_ );
         assert( pAgentType_ );
 
-        asnMsg.m.campPresent      = 1;
-        asnMsg.m.nature_pcPresent = 1;
-
-        asnMsg.camp      = pArmy_->GetID();
-        asnMsg.nature_pc = bIsPC_;
+        asnMsg.set_camp( pArmy_->GetID() );
+        asnMsg.set_nature_pc( bIsPC_ );
     }
 }
 
@@ -178,22 +175,18 @@ void DEC_Knowledge_AgentDataRecognition::SendChangedState( ASN1T_MsgUnitKnowledg
 // Name: DEC_Knowledge_AgentDataRecognition::SendFullState
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataRecognition::SendFullState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataRecognition::SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
 {
     if( nTimeLastUpdate_ == 0 )
         return;
 
-    asnMsg.m.etat_opPresent = 1;
-    asnMsg.etat_op = std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) );
+    asnMsg.set_etat_op( std::max( 0, std::min( 100, (int)( rOperationalState_ * 100. ) ) ) );
 
     assert( pArmy_ );
     assert( pAgentType_ );
-
-    asnMsg.m.campPresent      = 1;
-    asnMsg.m.nature_pcPresent = 1;
     
-    asnMsg.camp      = pArmy_->GetID();
-    asnMsg.nature_pc = bIsPC_;
+    asnMsg.set_camp      ( pArmy_->GetID() );
+    asnMsg.set_nature_pc ( bIsPC_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -267,7 +260,7 @@ const MIL_Army_ABC* DEC_Knowledge_AgentDataRecognition::GetArmy() const
 // Name: DEC_Knowledge_AgentDataRecognition::GetTimeLastUpdate
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_AgentDataRecognition::GetTimeLastUpdate() const
+unsigned int DEC_Knowledge_AgentDataRecognition::GetTimeLastUpdate() const
 {
     return nTimeLastUpdate_;
 }

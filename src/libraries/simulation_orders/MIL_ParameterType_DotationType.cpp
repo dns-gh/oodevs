@@ -10,6 +10,7 @@
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_DotationType.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_DotationType constructor
@@ -34,23 +35,20 @@ MIL_ParameterType_DotationType::~MIL_ParameterType_DotationType()
 // Name: MIL_ParameterType_DotationType::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_DotationType::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_DotationType::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value = false;
-    to.value.t    = T_MissionParameter_value_dotationType;
-    
-    return from.ToDotationType( to.value.u.dotationType );
+    to.set_null_value( false );
+    return from.ToDotationType( *to.mutable_value()->mutable_dotationtype() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_DotationType::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_DotationType::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_DotationType::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_dotationType );
+    assert( to.value().has_dotationtype() );
 }

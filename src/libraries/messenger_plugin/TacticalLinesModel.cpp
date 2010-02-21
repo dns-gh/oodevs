@@ -19,8 +19,12 @@
 #include "tools/Iterator.h"
 #include <xeumeuleu/xml.h>
 
-using namespace plugins::messenger;
+#include "protocol/protocol.h"
+#include "protocol/messengersenders.h"
 
+using namespace plugins::messenger;
+using namespace Common;
+using namespace MsgsClientToMessenger;
 // -----------------------------------------------------------------------------
 // Name: TacticalLinesModel constructor
 // Created: NLD 2006-11-13
@@ -47,7 +51,7 @@ TacticalLinesModel::~TacticalLinesModel()
 // Name: TacticalLinesModel::CreateLimit
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::ReadLimit( xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion)
+void TacticalLinesModel::ReadLimit( xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion)
 {
     std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), xis, diffusion, converter_ ) );
     limits_.Register( limit->GetID(), *limit );
@@ -58,7 +62,7 @@ void TacticalLinesModel::ReadLimit( xml::xistream& xis, const ASN1T_TacticalLine
 // Name: TacticalLinesModel::CreateLima
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::ReadLima( xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion)
+void TacticalLinesModel::ReadLima( xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion)
 {
     std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), xis, diffusion, converter_ ) );
     limas_.Register( lima->GetID(), *lima );
@@ -89,10 +93,10 @@ void TacticalLinesModel::Write( xml::xostream& xos ) const
 // Name: TacticalLinesModel::HandleLimitRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitCreationRequest& asn )
+void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimitCreationRequest& asn )
 {
-    LimitCreationRequestAck ack ;
-    ack() = EnumInfoContextErrorCode::no_error;
+    plugins::messenger::LimitCreationRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
     std::auto_ptr< Limit > limit( new Limit( idManager_.NextId(), asn ) );
     limits_.Register( limit->GetID(), *limit );
     limit->SendCreation( clients_ );
@@ -104,19 +108,19 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // Name: TacticalLinesModel::HandleLimitRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitUpdateRequest& asn )
+void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgLimitUpdateRequest& asn )
 {
-    LimitUpdateRequestAck ack ;
-    ack() = EnumInfoContextErrorCode::no_error;
+    plugins::messenger::LimitUpdateRequestAck ack;
+    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
 
-    Limit* limit = limits_.Find( asn.oid );
+    Limit* limit = limits_.Find( asn.oid() );
     if( limit )
     {
         limit->Update( asn );
         limit->SendUpdate( clients_ );
     }
     else
-        ack() = EnumInfoContextErrorCode::error_invalid_id;
+        ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -124,20 +128,20 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // Name: TacticalLinesModel::HandleLimitRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimitDestructionRequest& asn )
+void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgLimitDestructionRequest& asn )
 {
-    LimitDestructionRequestAck ack ;
-    ack() = EnumInfoContextErrorCode::no_error;
+    plugins::messenger::LimitDestructionRequestAck ack;
+    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
 
-    Limit* limit = limits_.Find( asn );
+    Limit* limit = limits_.Find( asn.oid() );
     if( limit )
     {
         limit->SendDestruction( clients_ );
         delete limit;
-        limits_.Remove( asn );
+        limits_.Remove( asn.oid() );
     }
     else
-        ack() = EnumInfoContextErrorCode::error_invalid_id;
+        ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -145,10 +149,10 @@ void TacticalLinesModel::HandleLimitRequest( dispatcher::ClientPublisher_ABC& pu
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaCreationRequest& asn )
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgsClientToMessenger::MsgLimaCreationRequest& asn )
 {
-    LimaCreationRequestAck ack ;
-    ack() = EnumInfoContextErrorCode::no_error;
+    plugins::messenger::LimaCreationRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
     std::auto_ptr< Lima > lima( new Lima( idManager_.NextId(), asn ) );
     limas_.Register( lima->GetID(), *lima );
     lima->SendCreation( clients_ );
@@ -160,19 +164,19 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaUpdateRequest& asn )
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgLimaUpdateRequest& asn )
 {
-    LimaUpdateRequestAck ack ;
-    ack() = EnumInfoContextErrorCode::no_error;
+    plugins::messenger::LimaUpdateRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
 
-    Lima* lima = limas_.Find( asn.oid );
+    Lima* lima = limas_.Find( asn.oid() );
     if( lima )
     {
         lima->Update( asn );
         lima->SendUpdate( clients_ );
     }
     else
-        ack() = EnumInfoContextErrorCode::error_invalid_id;
+        ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -180,20 +184,20 @@ void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& pub
 // Name: TacticalLinesModel::HandleLimaRequest
 // Created: NLD 2006-11-13
 // -----------------------------------------------------------------------------
-void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgLimaDestructionRequest& asn)
+void TacticalLinesModel::HandleLimaRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgLimaDestructionRequest& asn)
 {
-    LimaDestructionRequestAck ack ;
-    ack() = EnumInfoContextErrorCode::no_error;
+    plugins::messenger::LimaDestructionRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_no_error );
 
-    Lima* lima = limas_.Find( asn );
+    Lima* lima = limas_.Find( asn.oid() );
     if( lima )
     {
         lima->SendDestruction( clients_ );
         delete lima;
-        limas_.Remove( asn );
+        limas_.Remove( asn.oid() );
     }
     else
-        ack() = EnumInfoContextErrorCode::error_invalid_id;
+        ack().set_error_code( MsgsMessengerToClient::TacticalLineAck_ErrorCode_error_invalid_id );
     ack.Send( publisher );
 }
 
@@ -226,8 +230,8 @@ void TacticalLinesModel::CollectFormations( T_FormationMap& formations )
         while( it.HasMoreElements() )
         {
             const Limit& limit = it.NextElement();
-            if( limit.GetDiffusion().t == T_TacticalLinesDiffusion_formation )
-                formations[ limit.GetDiffusion().u.formation ].insert( &limit );
+            if( limit.GetDiffusion().has_formation() )
+                formations[ limit.GetDiffusion().formation() ].insert( &limit );
         }
     }
     {
@@ -235,8 +239,8 @@ void TacticalLinesModel::CollectFormations( T_FormationMap& formations )
         while( it.HasMoreElements() )
         {
             const Lima& lima = it.NextElement();
-            if( lima.GetDiffusion().t == T_TacticalLinesDiffusion_formation )
-                formations[ lima.GetDiffusion().u.formation ].insert( &lima );
+            if( lima.GetDiffusion().has_formation() )
+                formations[ lima.GetDiffusion().formation() ].insert( &lima );
         }
     }
 }
@@ -252,8 +256,8 @@ void TacticalLinesModel::CollectAutomats( T_AutomatMap& automats )
         while( it.HasMoreElements() )
         {
             const Limit& limit = it.NextElement();
-            if( limit.GetDiffusion().t == T_TacticalLinesDiffusion_automat )
-                automats[ limit.GetDiffusion().u.automat ].insert( &limit );
+            if( limit.GetDiffusion().has_automat() )
+                automats[ limit.GetDiffusion().automat() ].insert( &limit );
         }
     }
     {
@@ -261,8 +265,8 @@ void TacticalLinesModel::CollectAutomats( T_AutomatMap& automats )
         while( it.HasMoreElements() )
         {
             const Lima& lima = it.NextElement();
-            if( lima.GetDiffusion().t == T_TacticalLinesDiffusion_automat )
-                automats[ lima.GetDiffusion().u.automat ].insert( &lima );
+            if( lima.GetDiffusion().has_automat() )
+                automats[ lima.GetDiffusion().automat() ].insert( &lima );
         }
     }
 }

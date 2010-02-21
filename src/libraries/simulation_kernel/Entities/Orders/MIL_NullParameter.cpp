@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_NullParameter.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_NullParameter constructor
@@ -42,9 +43,8 @@ bool MIL_NullParameter::IsOfType( const MIL_ParameterType_ABC& ) const
 // Name: MIL_NullParameter::ToPointList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToPointList( ASN1T_PointList& asn ) const
+bool MIL_NullParameter::ToPointList( Common::MsgPointList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -52,9 +52,8 @@ bool MIL_NullParameter::ToPointList( ASN1T_PointList& asn ) const
 // Name: MIL_NullParameter::ToPolygonList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToPolygonList( ASN1T_PolygonList& asn ) const
+bool MIL_NullParameter::ToPolygonList( Common::MsgPolygonList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -62,9 +61,8 @@ bool MIL_NullParameter::ToPolygonList( ASN1T_PolygonList& asn ) const
 // Name: MIL_NullParameter::ToAgentKnowledgeList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAgentKnowledgeList( ASN1T_UnitKnowledgeList& asn ) const
+bool MIL_NullParameter::ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -72,9 +70,8 @@ bool MIL_NullParameter::ToAgentKnowledgeList( ASN1T_UnitKnowledgeList& asn ) con
 // Name: MIL_NullParameter::ToAgentList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAgentList( ASN1T_UnitList& asn ) const
+bool MIL_NullParameter::ToAgentList( Common::MsgUnitList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -82,9 +79,8 @@ bool MIL_NullParameter::ToAgentList( ASN1T_UnitList& asn ) const
 // Name: MIL_NullParameter::ToAutomatList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToAutomatList( ASN1T_AutomatList& asn ) const
+bool MIL_NullParameter::ToAutomatList( Common::MsgAutomatList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -92,9 +88,8 @@ bool MIL_NullParameter::ToAutomatList( ASN1T_AutomatList& asn ) const
 // Name: MIL_NullParameter::ToGenObjectList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToGenObjectList( ASN1T_PlannedWorkList& asn ) const
+bool MIL_NullParameter::ToGenObjectList( Common::MsgPlannedWorkList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -102,9 +97,8 @@ bool MIL_NullParameter::ToGenObjectList( ASN1T_PlannedWorkList& asn ) const
 // Name: MIL_NullParameter::ToLocationList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToLocationList( ASN1T_LocationList& asn ) const
+bool MIL_NullParameter::ToLocationList( Common::MsgLocationList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -112,9 +106,8 @@ bool MIL_NullParameter::ToLocationList( ASN1T_LocationList& asn ) const
 // Name: MIL_NullParameter::ToObjectiveList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToObjectiveList( ASN1T_MissionObjectiveList& asn ) const
+bool MIL_NullParameter::ToObjectiveList( Common::MsgMissionObjectiveList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -122,9 +115,8 @@ bool MIL_NullParameter::ToObjectiveList( ASN1T_MissionObjectiveList& asn ) const
 // Name: MIL_NullParameter::ToObjectKnowledgeList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToObjectKnowledgeList( ASN1T_ObjectKnowledgeList& asn ) const
+bool MIL_NullParameter::ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -132,9 +124,8 @@ bool MIL_NullParameter::ToObjectKnowledgeList( ASN1T_ObjectKnowledgeList& asn ) 
 // Name: MIL_NullParameter::ToPathList
 // Created: LDC 2009-05-25
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToPathList( ASN1T_PathList& asn ) const
+bool MIL_NullParameter::ToPathList( Common::MsgPathList& /*asn*/ ) const
 {
-    asn.n = 0;
     return true;
 }
 
@@ -142,7 +133,7 @@ bool MIL_NullParameter::ToPathList( ASN1T_PathList& asn ) const
 // Name: MIL_NullParameter::ToNatureAtlas
 // Created: LDC 2009-11-03
 // -----------------------------------------------------------------------------
-bool MIL_NullParameter::ToNatureAtlas( ASN1T_AtlasNature& asn ) const
+bool MIL_NullParameter::ToNatureAtlas( Common::MsgAtlasNature& asn ) const
 {
     return NET_ASN_Tools::CopyNatureAtlas( 0, asn );
 }

@@ -12,6 +12,7 @@
 #include "Location.h"
 #include "DateTime.h"
 #include "ParameterVisitor_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -53,11 +54,11 @@ Objective::Objective( const OrderParameter& parameter, xml::xistream& xis, const
 // Name: Objective constructor
 // Created: SBO 2007-05-14
 // -----------------------------------------------------------------------------
-Objective::Objective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_MissionObjective& asn )
+Objective::Objective( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgMissionObjective& message )
     : Parameter< QString >( parameter )
 {
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, asn.localisation ) );
-    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), asn.horaire ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.localisation() ) );
+    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.horaire() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,39 +88,36 @@ void Objective::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC
 // Name: Objective::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Objective::CommitTo( ASN1T_MissionParameter& asn ) const
+void Objective::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_missionObjective;
-    asn.value.u.missionObjective = new ASN1T_MissionObjective();
+    message.set_null_value( !IsSet() );
+    message.mutable_value()->mutable_missionobjective();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        CommitTo( *asn.value.u.missionObjective );
+        CommitTo( *message.mutable_value()->mutable_missionobjective() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Objective::Clean
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Objective::Clean( ASN1T_MissionParameter& asn ) const
+void Objective::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.missionObjective )
-        Clean( *asn.value.u.missionObjective );
-    delete asn.value.u.missionObjective;
+    message.mutable_value()->clear_missionobjective();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Objective::CommitTo
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Objective::CommitTo( ASN1T_MissionObjective& asn ) const
+void Objective::CommitTo( Common::MsgMissionObjective& message ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();
         if( type == "location" )
-            static_cast< const Location* >( it->second )->CommitTo( asn.localisation );
+            static_cast< const Location* >( it->second )->CommitTo( *message.mutable_localisation() );
         else if( type == "datetime" )
-            static_cast< const DateTime* >( it->second )->CommitTo( asn.horaire );
+            static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_horaire() );
     }
 }
 
@@ -127,14 +125,9 @@ void Objective::CommitTo( ASN1T_MissionObjective& asn ) const
 // Name: Objective::Clean
 // Created: SBO 2007-06-25
 // -----------------------------------------------------------------------------
-void Objective::Clean( ASN1T_MissionObjective& asn ) const
+void Objective::Clean( Common::MsgMissionObjective& message ) const
 {
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        const std::string type = it->second->GetType();
-        if( type == "location" )
-            static_cast< const Location* >( it->second )->Clean( asn.localisation );
-    }
+    message.clear_localisation();
 }
 
 // -----------------------------------------------------------------------------

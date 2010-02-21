@@ -10,7 +10,6 @@
 #ifndef __Weapons_h_
 #define __Weapons_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
@@ -20,6 +19,10 @@ namespace kernel
 {
     class EquipmentType;
     class WeaponSystemType;
+}
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
 }
 
 class Equipment;
@@ -32,7 +35,7 @@ class Equipment;
 // =============================================================================
 class Weapons : public kernel::Extension_ABC
               , public kernel::Drawable_ABC
-              , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
               , public tools::Resolver< Equipment >
 {
 
@@ -58,7 +61,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     void UpdateRange();
     void AddEquipmentRange( const kernel::EquipmentType& type );
     //@}

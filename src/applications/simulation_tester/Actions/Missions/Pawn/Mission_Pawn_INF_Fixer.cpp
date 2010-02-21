@@ -43,9 +43,9 @@ void Mission_Pawn_INF_Fixer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_Fixer& asnMission = *new ASN1T_Mission_Pion_INF_Fixer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_fixer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_fixer = &asnMission;
+    Mission_Pion_INF_Fixer& asnMission = *new Mission_Pion_INF_Fixer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_fixer = &asnMission;
 
 
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.ennemi );
@@ -59,8 +59,8 @@ void Mission_Pawn_INF_Fixer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_Fixer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_fixer );
-    ASN1T_Mission_Pion_INF_Fixer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_fixer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_fixer ());
+    Mission_Pion_INF_Fixer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_fixer;
 
 
     delete &asnMission;

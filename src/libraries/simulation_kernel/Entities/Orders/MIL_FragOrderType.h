@@ -29,7 +29,7 @@ public:
     //! @name Factory
     //@{
     static void                      Initialize( xml::xistream& xis );
-    static const MIL_FragOrderType*  Find      ( uint nID );
+    static const MIL_FragOrderType*  Find      ( unsigned int nID );
     static const MIL_FragOrderType*  Find      ( const std::string& strName );
     //@}
 
@@ -42,7 +42,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-             MIL_FragOrderType( uint nID, xml::xistream& xis );
+             MIL_FragOrderType( unsigned int nID, xml::xistream& xis );
     virtual ~MIL_FragOrderType();
     //@}
 
@@ -59,7 +59,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, const MIL_FragOrderType* > T_MissionIDMap;
+    typedef std::map< unsigned int, const MIL_FragOrderType* > T_MissionIDMap;
     typedef T_MissionIDMap::const_iterator             CIT_MissionIDMap;
 
     typedef std::map< std::string, const MIL_FragOrderType*, sCaseInsensitiveLess > T_MissionNameMap;

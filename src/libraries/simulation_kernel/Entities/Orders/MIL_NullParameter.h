@@ -36,17 +36,17 @@ public:
     //! @name Conversions
     //@{
     // Conversions to empty lists are allowed.
-    virtual bool ToPointList( ASN1T_PointList& ) const;
-    virtual bool ToPolygonList( ASN1T_PolygonList& ) const;
-    virtual bool ToAgentKnowledgeList( ASN1T_UnitKnowledgeList& asn ) const;
-    virtual bool ToAgentList( ASN1T_UnitList& asn ) const;
-    virtual bool ToAutomatList( ASN1T_AutomatList& ) const;
-    virtual bool ToGenObjectList( ASN1T_PlannedWorkList& ) const;
-    virtual bool ToLocationList( ASN1T_LocationList& ) const;
-    virtual bool ToObjectiveList( ASN1T_MissionObjectiveList& asn ) const;
-    virtual bool ToObjectKnowledgeList( ASN1T_ObjectKnowledgeList& asn ) const;
-    virtual bool ToPathList( ASN1T_PathList& asn ) const;
-    virtual bool ToNatureAtlas( ASN1T_AtlasNature& asn ) const;
+    virtual bool ToPointList( Common::MsgPointList& ) const;
+    virtual bool ToPolygonList( Common::MsgPolygonList& ) const;
+    virtual bool ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& asn ) const;
+    virtual bool ToAgentList( Common::MsgUnitList& asn ) const;
+    virtual bool ToAutomatList( Common::MsgAutomatList& ) const;
+    virtual bool ToGenObjectList( Common::MsgPlannedWorkList& ) const;
+    virtual bool ToLocationList( Common::MsgLocationList& ) const;
+    virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& asn ) const;
+    virtual bool ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& asn ) const;
+    virtual bool ToPathList( Common::MsgPathList& asn ) const;
+    virtual bool ToNatureAtlas( Common::MsgAtlasNature& asn ) const;
     //@}
 
 private:

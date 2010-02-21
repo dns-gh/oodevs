@@ -21,8 +21,9 @@ class MIL_NbcAgentType;
 
 namespace hla 
 {
-    class Deserializer;    
+    class Deserializer;
 }
+
 class HLA_UpdateFunctor;
 
 // =============================================================================
@@ -31,9 +32,8 @@ class HLA_UpdateFunctor;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class NBCAttribute 
-    : public ObjectAttribute_ABC
-    , public UpdatableAttribute_ABC
+class NBCAttribute : public ObjectAttribute_ABC
+                   , public UpdatableAttribute_ABC
 {   
 public:
     //! @name Types
@@ -52,24 +52,24 @@ public:
     //@{
              NBCAttribute();
     explicit NBCAttribute( xml::xistream& xis );
-    explicit NBCAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit NBCAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~NBCAttribute();
     //@}
 
     //! @name Knowledge
     //@{    
-    void Instanciate( DEC_Knowledge_Object& object ) const;      
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;      
     //@}
 
     //! @name Network update
     //@{
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;  
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;  
     //@}
 
     //! @name ODB
     //@{
-    void WriteODB( xml::xostream& xos ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name HLA
@@ -81,8 +81,8 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()    
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Accessors

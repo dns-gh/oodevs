@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_ReconnaitreAxe::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_ReconnaitreAxe& asnMission = *new ASN1T_Mission_Pion_ABC_ReconnaitreAxe();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_reconnaitre_axe;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_reconnaitre_axe = &asnMission;
+    Mission_Pion_ABC_ReconnaitreAxe& asnMission = *new Mission_Pion_ABC_ReconnaitreAxe();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_reconnaitre_axe = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ABC_ReconnaitreAxe::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_ReconnaitreAxe::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_reconnaitre_axe );
-    ASN1T_Mission_Pion_ABC_ReconnaitreAxe& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_reconnaitre_axe;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_reconnaitre_axe ());
+    Mission_Pion_ABC_ReconnaitreAxe& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_reconnaitre_axe;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

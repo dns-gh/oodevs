@@ -10,13 +10,18 @@
 #ifndef __Attributes_h_
 #define __Attributes_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Types.h"
 #include "tools/Resolver_ABC.h"
+#include "protocol/simulationsenders.h"
+
+namespace MsgsSimToClient
+{
+	class MsgUnitAttributes;
+}
 
 namespace kernel
 {
@@ -34,7 +39,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Attributes : public kernel::Attributes_ABC
-                 , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                  , public kernel::Drawable_ABC
                  , public kernel::Aggregatable_ABC
 {
@@ -67,7 +72,7 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     virtual void Aggregate( const bool& );
     //@}
 

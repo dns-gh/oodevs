@@ -10,13 +10,14 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_TirIndirectParameter.h"
 #include "simulation_orders/MIL_ParameterType_IndirectFire.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TirIndirectParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_TirIndirectParameter::MIL_TirIndirectParameter( const ASN1T_UnitFire & asn )
-    : data_( asn )
+MIL_TirIndirectParameter::MIL_TirIndirectParameter( const Common::MsgUnitFire & asn )
+    : data_( asn.oid() )
 {
     // NOTHING
 }
@@ -43,8 +44,8 @@ bool MIL_TirIndirectParameter::IsOfType( const MIL_ParameterType_ABC& type ) con
 // Name: MIL_TirIndirectParameter::ToIndirectFire
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_TirIndirectParameter::ToIndirectFire( ASN1T_UnitFire& asn ) const
+bool MIL_TirIndirectParameter::ToIndirectFire( Common::MsgUnitFire& asn ) const
 {
-    asn = data_;
+    asn.set_oid( data_ );
     return true;
 }

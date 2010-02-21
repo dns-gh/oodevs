@@ -12,9 +12,11 @@
 
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -31,7 +33,7 @@ namespace kernel
 // Created: SBO 2007-10-18
 // =============================================================================
 class EntityIntelligences : public kernel::EntityHierarchies< kernel::IntelligenceHierarchies >
-                          , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceCreation >
+                          , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceCreation >
 {
 
 public:
@@ -56,7 +58,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgIntelligenceCreation& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgIntelligenceCreation& message );
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
     virtual void UpdateSymbol( bool up = true );

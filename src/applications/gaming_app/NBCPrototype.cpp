@@ -12,8 +12,12 @@
 #include "clients_kernel/NBCAgent.h"
 #include "tools/Iterator.h"
 #include "clients_gui/ValuedListItem.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/ClientSenders.h"
 
+namespace MsgsClientToSim 
+{
+    class MsgMagicActionCreateObject;
+}
 
 using namespace kernel;
 using namespace gui;
@@ -22,12 +26,12 @@ using namespace gui;
 // Name: NBCPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-NBCPrototype::NBCPrototype( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic, ASN1T_MagicActionCreateObject& msg )
+NBCPrototype::NBCPrototype( QWidget* parent, const tools::Resolver_ABC< NBCAgent >& resolver, int maxToxic, MsgsClientToSim::MsgMagicActionCreateObject& msg )
     : NBCPrototype_ABC( parent, resolver, maxToxic )
     , msg_      ( msg ) 
 {
-    msg_.attributes.nbc.danger_level = 0;
-    msg_.attributes.nbc.nbc_agents.n = 0;
+    msg_.mutable_attributes()->mutable_nbc()->set_danger_level( 0 );
+    msg_.mutable_attributes()->mutable_nbc()->mutable_nbc_agents(); //->set_n( 0 );
 }
     
 // -----------------------------------------------------------------------------
@@ -45,14 +49,9 @@ NBCPrototype::~NBCPrototype()
 // -----------------------------------------------------------------------------
 void NBCPrototype::Commit()
 {
-    msg_.attributes.m.nbcPresent = 1;
-    msg_.attributes.nbc.nbc_agents.n = GetAgentCount();
-    msg_.attributes.nbc.nbc_agents.elem = new ASN1T_OID[ msg_.attributes.nbc.nbc_agents.n ];
-    
-    unsigned i = 0;
     for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )
-            msg_.attributes.nbc.nbc_agents.elem[ i++ ] = static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId();
+            msg_.mutable_attributes()->mutable_nbc()->mutable_nbc_agents()->add_elem( static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,8 +60,6 @@ void NBCPrototype::Commit()
 // -----------------------------------------------------------------------------
 void NBCPrototype::Clean()
 {
-    msg_.attributes.m.nbcPresent = 0;
-    if ( msg_.attributes.nbc.nbc_agents.n > 0 )
-        delete [] msg_.attributes.nbc.nbc_agents.elem;
-    msg_.attributes.nbc.nbc_agents.n = 0;
+    if ( msg_.attributes().nbc().nbc_agents().elem_size() > 0 )
+        delete [] msg_.mutable_attributes()->mutable_nbc()->mutable_nbc_agents()->mutable_elem();
 }

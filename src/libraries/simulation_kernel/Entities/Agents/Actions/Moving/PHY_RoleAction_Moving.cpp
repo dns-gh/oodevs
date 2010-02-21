@@ -24,7 +24,8 @@
 #include "Decision/DEC_Representations.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/clientsenders.h"
 
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
@@ -90,7 +91,7 @@ PHY_RoleAction_Moving::~PHY_RoleAction_Moving()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RoleAction_Moving::serialize( Archive& file, const uint )
+void PHY_RoleAction_Moving::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< tools::Role_ABC >( *this );
 }
@@ -227,11 +228,10 @@ MT_Vector2D PHY_RoleAction_Moving::ExtrapolatePosition( const double rTime, cons
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendEnvironmentType() const
 {
-
-    NET_ASN_MsgUnitEnvironmentType asn;
-    asn().oid = pion_.GetID();
+    client::UnitEnvironmentType asn;
+    asn().set_oid( pion_.GetID() );
     SerializeEnvironmentType( asn() );
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,22 +240,20 @@ void PHY_RoleAction_Moving::SendEnvironmentType() const
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendCurrentPath() const
 {  
-    NET_ASN_MsgUnitPathFind asnMsg;
-    
-
-    asnMsg().oid = pion_.GetID();   
-    if( !SerializeCurrentPath( asnMsg().itineraire ) )
+    client::UnitPathFind asnMsg;
+    asnMsg().set_oid( pion_.GetID() );   
+    if( !SerializeCurrentPath( *asnMsg().mutable_itineraire() ) )
         return;
 
-    asnMsg.Send();
-    delete [] asnMsg().itineraire.coordinates.elem;
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    asnMsg().mutable_itineraire()->Clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::SendFullState
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendFullState( NET_ASN_MsgUnitAttributes& asnMsg ) const
+void PHY_RoleAction_Moving::SendFullState( client::UnitAttributes& asnMsg ) const
 {
     UNREFERENCED_PARAMETER( asnMsg );
 
@@ -267,7 +265,7 @@ void PHY_RoleAction_Moving::SendFullState( NET_ASN_MsgUnitAttributes& asnMsg ) c
 // Name: PHY_RoleAction_Moving::SendChangedState
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const
+void PHY_RoleAction_Moving::SendChangedState( client::UnitAttributes& asnMsg ) const
 {
     UNREFERENCED_PARAMETER( asnMsg );
 

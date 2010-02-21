@@ -16,6 +16,7 @@
 #include "SoilAttribute.h"
 #include "VegetationAttribute.h"
 #include "UrbanObject.h"
+#include "protocol/ClientSenders.h"
 
 #include <boost/bind.hpp>
 
@@ -25,13 +26,13 @@ using namespace dispatcher;
 // Name: UrbanObject constructor
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
-UrbanObject::UrbanObject( Model& model, const ASN1T_MsgUrbanCreation& msg )
-: SimpleEntity<>( msg.oid, msg.name )
-, model_                       ( model )
-, strName_                     ( msg.name  )
-, localisation_                ( msg.location )
+UrbanObject::UrbanObject( Model& model, const MsgsSimToClient::MsgUrbanCreation& msg )
+    : SimpleEntity<>( msg.oid(), msg.name().c_str() )
+    , model_        ( model )
+    , strName_      ( msg.name()  )
+    , localisation_ ( msg.location() )
 {
-    Initialize( model, msg.attributes );
+    Initialize( model, msg.attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,16 +45,16 @@ UrbanObject::~UrbanObject()
 
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \
-    if ( attributes.m.##ASN##Present ) \
+    if ( attributes.has_##ASN##() ) \
     AddAttribute( new CLASS( model, attributes ) )
 
 // -----------------------------------------------------------------------------
 // Name: UrbanObject::Initialize
 // Created: SLG 2009-09-26
 // -----------------------------------------------------------------------------
-void UrbanObject::Initialize( Model& model, const ASN1T_UrbanAttributes& attributes )
+void UrbanObject::Initialize( Model& model, const MsgsSimToClient::MsgUrbanAttributes& attributes )
 {
-    MSG_ASN_CREATION( color    , ColorAttribute );
+    MSG_ASN_CREATION( color         , ColorAttribute );
     MSG_ASN_CREATION( vegetation    , VegetationAttribute );
     MSG_ASN_CREATION( soil          , SoilAttribute );
     MSG_ASN_CREATION( architecture  , ArchitectureAttribute );
@@ -76,12 +77,12 @@ void UrbanObject::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::UrbanCreation asn;
 
-    asn().oid  = GetId(); 
-    asn().name = strName_.c_str();
-    localisation_.Send( asn().location );
+    asn().set_oid( GetId() );
+    asn().set_name( strName_ );
+    localisation_.Send( *asn().mutable_location() );
 
     std::for_each( attributes_.begin(), attributes_.end(),
-        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( asn().attributes ) ) );
+        boost::bind( &UrbanObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
     asn.Send( publisher );
 }
@@ -108,7 +109,7 @@ void UrbanObject::SendDestruction( ClientPublisher_ABC& /*publisher*/ ) const
 // Name: Agent::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void UrbanObject::Update( const ASN1T_MsgUrbanCreation& /*msg*/ )
+void UrbanObject::Update( const MsgsSimToClient::MsgUrbanCreation& msg )
 {
     //ApplyUpdate( msg );
 }

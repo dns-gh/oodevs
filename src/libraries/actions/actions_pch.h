@@ -21,8 +21,6 @@
 #include <set>
 
 #include <geometry/types.h>
-
-#include "game_asn/Simulation.h"
 #include <xeumeuleu/xml.h>
 
 

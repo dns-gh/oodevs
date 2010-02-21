@@ -28,10 +28,9 @@ using namespace kernel;
 // Name: UrbanKnowledgeFactory constructor
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-UrbanKnowledgeFactory::UrbanKnowledgeFactory( Controllers& controllers, Model& model, const StaticModel& staticModel )
+UrbanKnowledgeFactory::UrbanKnowledgeFactory( Controllers& controllers, Model& model )
     : controllers_( controllers )
     , model_( model )
-    , static_( staticModel )
 {
     // NOTHING
 }
@@ -49,9 +48,10 @@ UrbanKnowledgeFactory::~UrbanKnowledgeFactory()
 // Name: UrbanKnowledgeFactory::Create
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
-UrbanKnowledge_ABC* UrbanKnowledgeFactory::Create( const Team_ABC& owner, const ASN1T_MsgUrbanKnowledgeCreation& message )
+UrbanKnowledge_ABC* UrbanKnowledgeFactory::Create( const Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
-    UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controllers_.controller_, model_.urbanObjects_.model_.blocks_ );
+    // $$$ FDS 2009-01-11: remove public blocks, use knowledgeConverter if possible
+    UrbanKnowledge* knowledge = new UrbanKnowledge( owner, message, controllers_.controller_, model_.urbanObjects_.model_->blocks_ );
     knowledge->Attach( *new UrbanPerceptions( controllers_.controller_, model_.agents_ ) );
     knowledge->Polish();
     return knowledge;

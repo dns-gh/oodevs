@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_RealiserTravauxContreMobilite::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_RealiserTravauxContreMobilite& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserTravauxContreMobilite();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_contre_mobilite;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_contre_mobilite = &asnMission;
+    Mission_Pion_GEN_RealiserTravauxContreMobilite& asnMission = *new Mission_Pion_GEN_RealiserTravauxContreMobilite();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_realiser_travaux_contre_mobilite = &asnMission;
 
     const T_GenObjectVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_GEN_RealiserTravauxContreMobilite::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_RealiserTravauxContreMobilite::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_realiser_travaux_contre_mobilite );
-    ASN1T_Mission_Pion_GEN_RealiserTravauxContreMobilite& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_contre_mobilite;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_realiser_travaux_contre_mobilite ());
+    Mission_Pion_GEN_RealiserTravauxContreMobilite& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_realiser_travaux_contre_mobilite;
 
     ASN_Tools::Delete( asnMission.travaux );
 

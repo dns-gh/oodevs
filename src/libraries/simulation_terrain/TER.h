@@ -12,7 +12,6 @@
 #ifndef __TER_h_
 #define __TER_h_
 
-#include "MT/MT_Tools/MT_Types.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "MT_Tools/MT_Vector3D.h"
 #include "pathfind/TerrainData.h"

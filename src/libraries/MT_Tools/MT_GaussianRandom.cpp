@@ -30,7 +30,7 @@ MT_GaussianRandom::MT_GaussianRandom()
 // Name: MT_GaussianRandom constructor
 // Created: JVT 04-03-04
 //-----------------------------------------------------------------------------
-MT_GaussianRandom::MT_GaussianRandom( uint32 nSeed )
+MT_GaussianRandom::MT_GaussianRandom( unsigned long nSeed )
     : rMean_            ( 0. )
     , rVariance_        ( 1. )
     , linearRandom_     ( nSeed )
@@ -57,7 +57,7 @@ MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance )
 // Name: MT_GaussianRandom constructor
 // Created: JVT 04-03-04
 //-----------------------------------------------------------------------------
-MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance, uint32 nSeed )
+MT_GaussianRandom::MT_GaussianRandom( double rMean, double rVariance, unsigned long nSeed )
     : rMean_            ( rMean )
     , rVariance_        ( rVariance )
     , linearRandom_     ( nSeed )

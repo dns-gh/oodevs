@@ -21,10 +21,10 @@ MIL_PopulationAttitude::T_AttitudeMap MIL_PopulationAttitude::attitudes_;
 void MIL_PopulationAttitude::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing population attitudes" );
-    attitudes_[ "calme"     ] = new MIL_PopulationAttitude( "calme"    , eCalme    , EnumPopulationAttitude::calme     );
-    attitudes_[ "agitee"    ] = new MIL_PopulationAttitude( "agitee"   , eAgitee   , EnumPopulationAttitude::agitee    );
-    attitudes_[ "excitee"   ] = new MIL_PopulationAttitude( "excitee"  , eExcitee  , EnumPopulationAttitude::excitee   );
-    attitudes_[ "agressive" ] = new MIL_PopulationAttitude( "agressive", eAgressive, EnumPopulationAttitude::agressive );
+    attitudes_[ "calme"     ] = new MIL_PopulationAttitude( "calme"    , eCalme    , Common::EnumPopulationAttitude::calme     );
+    attitudes_[ "agitee"    ] = new MIL_PopulationAttitude( "agitee"   , eAgitee   , Common::EnumPopulationAttitude::agitee    );
+    attitudes_[ "excitee"   ] = new MIL_PopulationAttitude( "excitee"  , eExcitee  , Common::EnumPopulationAttitude::excitee   );
+    attitudes_[ "agressive" ] = new MIL_PopulationAttitude( "agressive", eAgressive, Common::EnumPopulationAttitude::agressive );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +42,7 @@ void MIL_PopulationAttitude::Terminate()
 // Name: MIL_PopulationAttitude constructor
 // Created: NLD 2005-09-28
 // -----------------------------------------------------------------------------
-MIL_PopulationAttitude::MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, ASN1T_EnumPopulationAttitude nAsnID )
+MIL_PopulationAttitude::MIL_PopulationAttitude( const std::string& strName, E_Attitude nAttitude, Common::EnumPopulationAttitude nAsnID )
     : strName_  ( strName   )
     , nAttitude_( nAttitude )
     , nAsnID_   ( nAsnID    )
@@ -82,9 +82,9 @@ const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( const std::string& s
 // Name: MIL_PopulationAttitude::Find
 // Created: NLD 2005-08-16
 // -----------------------------------------------------------------------------
-const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( ASN1T_EnumPopulationAttitude nAsnID )
+const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( Common::EnumPopulationAttitude nAsnID )
 {
-    CIT_AttitudeMap it = std::find_if( attitudes_.begin(), attitudes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nAsnID ), std::compose1( std::mem_fun( &MIL_PopulationAttitude::GetAsnID ), std::select2nd< T_AttitudeMap::value_type >() ) ) );
+    CIT_AttitudeMap it = std::find_if( attitudes_.begin(), attitudes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nAsnID ), std::compose1( std::mem_fun( &MIL_PopulationAttitude::GetAsnID ), std::select2nd< T_AttitudeMap::value_type >() ) ) );
     return it == attitudes_.end() ? 0 : it->second;
 }
 
@@ -92,9 +92,9 @@ const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( ASN1T_EnumPopulation
 // Name: MIL_PopulationAttitude::Find
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( uint nID )
+const MIL_PopulationAttitude* MIL_PopulationAttitude::Find( unsigned int nID )
 {
-    CIT_AttitudeMap it = std::find_if( attitudes_.begin(), attitudes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &MIL_PopulationAttitude::GetID ), std::select2nd< T_AttitudeMap::value_type >() ) ) );
+    CIT_AttitudeMap it = std::find_if( attitudes_.begin(), attitudes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &MIL_PopulationAttitude::GetID ), std::select2nd< T_AttitudeMap::value_type >() ) ) );
     return it == attitudes_.end() ? 0 : it->second;
 }
 
@@ -111,7 +111,7 @@ const std::string& MIL_PopulationAttitude::GetName() const
 // Name: MIL_PopulationAttitude::GetAsnID
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
-ASN1T_EnumPopulationAttitude MIL_PopulationAttitude::GetAsnID() const
+Common::EnumPopulationAttitude MIL_PopulationAttitude::GetAsnID() const
 {
     return nAsnID_;
 }
@@ -120,9 +120,9 @@ ASN1T_EnumPopulationAttitude MIL_PopulationAttitude::GetAsnID() const
 // Name: MIL_PopulationAttitude::GetID
 // Created: NLD 2004-08-13
 // -----------------------------------------------------------------------------
-uint MIL_PopulationAttitude::GetID() const
+unsigned int MIL_PopulationAttitude::GetID() const
 {
-    return (uint)nAttitude_;
+    return (unsigned int)nAttitude_;
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,10 @@
 #ifndef __Equipment_h_
 #define __Equipment_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -36,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_EquipmentDotations& message );
+    void Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message );
     QString GetName() const;
     unsigned Total() const;
     //@}

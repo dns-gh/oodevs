@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
           bool                  CanAcquire             ( const MIL_AgentPion& perceiver, const MIL_Agent_ABC& target ) const;
-    const PHY_PerceptionLevel&  ComputeAcquisitionLevel( const MIL_Agent_ABC& target   , uint nFirstAcquisitionTimeStep ) const;
+    const PHY_PerceptionLevel&  ComputeAcquisitionLevel( const MIL_Agent_ABC& target   , unsigned int nFirstAcquisitionTimeStep ) const;
     //@}
 
     //! @name Accessors
@@ -86,7 +86,7 @@ private:
     const std::string     strName_;
     const PHY_RadarClass& class_;
     const MIL_Time_ABC&   time_;
-    const uint            nID_;
+    const unsigned int            nID_;
 
     // Range
     MT_Float rRadius_;
@@ -105,7 +105,7 @@ private:
 
 private:
     static T_RadarTypeMap radarTypes_;
-    static uint           nNextID_;
+    static unsigned int           nNextID_;
 };
 
 #endif // __PHY_RadarType_h_

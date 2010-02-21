@@ -10,16 +10,18 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_AgentKnowledge.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
+
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_AgentKnowledge constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_AgentKnowledge::MissionParameter_AgentKnowledge( const ASN1T_MissionParameter& asn )
+MissionParameter_AgentKnowledge::MissionParameter_AgentKnowledge( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , agentKnowledge_     ( asn.value.u.unitKnowledge )
+    , agentKnowledge_     ( asn.value().unitknowledge().oid() )
 {
     // NOTHING
 }
@@ -41,18 +43,18 @@ MissionParameter_AgentKnowledge::~MissionParameter_AgentKnowledge()
 // Name: MissionParameter_AgentKnowledge::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_AgentKnowledge::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_AgentKnowledge::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value             = bNullValue_;
-    asn.value.t                = T_MissionParameter_value_unitKnowledge;
-    asn.value.u.unitKnowledge = agentKnowledge_;
+    asn.set_null_value( bNullValue_ );
+//    asn.value.t                = T_MissionParameter_value_unitKnowledge;
+    asn.mutable_value()->mutable_unitknowledge()->set_oid( agentKnowledge_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_AgentKnowledge::AsnDelete
+// Name: MissionParameter_AgentKnowledge::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_AgentKnowledge::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_AgentKnowledge::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

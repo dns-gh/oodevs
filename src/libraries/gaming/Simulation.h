@@ -10,7 +10,8 @@
 #ifndef __Simulation_h_
 #define __Simulation_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/replaysenders.h"
 #include "Profiling.h"
 
 namespace kernel
@@ -41,11 +42,11 @@ public:
 
     //! @name Updates
     //@{
-    void Update( const ASN1T_MsgControlInformation& asnMsg );
-    void Update( const ASN1T_MsgControlReplayInformation& asnMsg );
-    void Update( const ASN1T_MsgControlProfilingInformation& message );
-    void Update( const ASN1T_MsgControlBeginTick& message );
-    void Update( const ASN1T_MsgControlEndTick& asnMsg );
+    void Update( const MsgsSimToClient::MsgControlInformation& message );
+    void Update( const MsgsReplayToClient::MsgControlReplayInformation& message );
+    void Update( const MsgsSimToClient::MsgControlProfilingInformation& message );
+    void Update( const MsgsSimToClient::MsgControlBeginTick& message );
+    void Update( const MsgsSimToClient::MsgControlEndTick& message );
     //@}
 
     //! @name Operations

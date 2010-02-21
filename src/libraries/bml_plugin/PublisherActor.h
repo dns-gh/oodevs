@@ -11,7 +11,10 @@
 #define __PublisherActor_h_
 
 #include "Publisher_ABC.h"
+#pragma warning( push, 0 )
+#pragma warning( disable : 4244 )
 #include <boost/thread/recursive_mutex.hpp>
+#pragma warning( pop )
 
 namespace tools
 {

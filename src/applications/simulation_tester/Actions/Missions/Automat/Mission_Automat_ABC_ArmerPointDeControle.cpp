@@ -43,9 +43,9 @@ void Mission_Automat_ABC_ArmerPointDeControle::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_ArmerPointDeControle& asnMission = *new ASN1T_Mission_Automate_ABC_ArmerPointDeControle();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_armer_point_de_controle;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_armer_point_de_controle = &asnMission;
+    Mission_Automate_ABC_ArmerPointDeControle& asnMission = *new Mission_Automate_ABC_ArmerPointDeControle();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_armer_point_de_controle = &asnMission;
 
     const Location& zoneDeControle_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_ABC_ArmerPointDeControle::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_ArmerPointDeControle::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_armer_point_de_controle );
-    ASN1T_Mission_Automate_ABC_ArmerPointDeControle& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_armer_point_de_controle;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_armer_point_de_controle ());
+    Mission_Automate_ABC_ArmerPointDeControle& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_armer_point_de_controle;
 
     ASN_Tools::Delete( asnMission.zone_de_controle );
 

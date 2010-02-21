@@ -49,8 +49,8 @@ public:
 
     //! @name Accessors
     //@{
-    void ScheduleAllMissions( Pawn& pawn, Scheduler& scheduler, uint nIteration = 1 ) const;
-    void ScheduleMission    ( Pawn& pawn, Scheduler& scheduler, const std::string& strMissionName, uint nIteration = 1 ) const;
+    void ScheduleAllMissions( Pawn& pawn, Scheduler& scheduler, unsigned int nIteration = 1 ) const;
+    void ScheduleMission    ( Pawn& pawn, Scheduler& scheduler, const std::string& strMissionName, unsigned int nIteration = 1 ) const;
     //@}
 
 private:

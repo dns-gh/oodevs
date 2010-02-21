@@ -40,25 +40,20 @@ FireFactory::~FireFactory()
 // Name: FireFactory::CreateFire
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-Fire_ABC* FireFactory::CreateFire( const ASN1T_MsgStartUnitFire& message )
+Fire_ABC* FireFactory::CreateFire( const MsgsSimToClient::MsgStartUnitFire& message )
 {
-    switch( message.target.t )
-    {
-    case T_MsgStartUnitFire_target_unit:
-    case T_MsgStartUnitFire_target_population:
+    if( message.target().has_unit() || message.target().has_population() )
         return new DirectFire( message, model_.agents_, model_.agents_ );
-    case T_MsgStartUnitFire_target_position:
+    if( message.target().has_position() )
         return new IndirectFire( message, model_.agents_, model_.static_.coordinateConverter_ );
-    default: 
-        throw std::runtime_error( "Invalid target type" );
-    };
+    throw std::runtime_error( "Invalid target type" );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FireFactory::CreateFire
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-Fire_ABC* FireFactory::CreateFire( const ASN1T_MsgStartPopulationFire& message )
+Fire_ABC* FireFactory::CreateFire( const MsgsSimToClient::MsgStartPopulationFire& message )
 {
     return new PopulationFire( message, model_.agents_ );
 }

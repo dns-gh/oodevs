@@ -36,19 +36,19 @@ ObjectPositions::~ObjectPositions()
 // Name: ObjectPositions::DoUpdate
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void ObjectPositions::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void ObjectPositions::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    if( message.m.locationPresent )
-        Update( message.location );
+    if( message.has_location()  )
+        Update( message.location() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::DoUpdate
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-void ObjectPositions::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void ObjectPositions::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    Update( message.location );
+    Update( message.location() );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,9 +10,13 @@
 #ifndef __ActionParameter_EngineerConstruction_h_
 #define __ActionParameter_EngineerConstruction_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
+
+namespace Common
+{
+    class MsgPlannedWork;
+}
 
 namespace kernel
 {
@@ -37,7 +41,7 @@ class EngineerConstruction : public Parameter< std::string >
     //! @name Constructors/Destructor
     //@{
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::ObjectType& type );
-             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const ASN1T_PlannedWork& asn, kernel::Controller& controller );
+             EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const Common::MsgPlannedWork& message, kernel::Controller& controller );
              EngineerConstruction( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
              EngineerConstruction( const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, xml::xistream& xis, kernel::Controller& controller );
     virtual ~EngineerConstruction();
@@ -47,16 +51,16 @@ class EngineerConstruction : public Parameter< std::string >
     //@{
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual bool IsSet() const;
     //@}
 
     //! @name Commiters
     //@{
-    void CommitTo( ASN1T_PlannedWork& asn ) const;
-    void Clean( ASN1T_PlannedWork& asn ) const;
+    void CommitTo( Common::MsgPlannedWork& message ) const;
+    void Clean( Common::MsgPlannedWork& message ) const;
     //@}
 
 private:
@@ -70,7 +74,7 @@ private:
     //@{
     void ReadParameter( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     virtual void Serialize( xml::xostream& xos ) const;
-    void SetParameters( const ASN1T_PlannedWork& asn, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
+    void SetParameters( const Common::MsgPlannedWork& message, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, kernel::Controller& controller );
     //@}
 
 private:

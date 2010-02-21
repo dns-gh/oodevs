@@ -66,7 +66,7 @@ PHY_MedicalEvacuationAmbulance::~PHY_MedicalEvacuationAmbulance()
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_MedicalEvacuationAmbulance::serialize( Archive& file, const uint )
+void PHY_MedicalEvacuationAmbulance::serialize( Archive& file, const unsigned int )
 {
     file & pMedical_
          & pCompAmbulance_

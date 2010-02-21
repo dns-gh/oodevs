@@ -10,12 +10,15 @@
 #include "gaming_app_pch.h"
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
-#include "game_asn/SimulationSenders.h"
 #include "gaming/LogisticLinks.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
+//#include "protocol/clientsenders.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/publisher_ABC.h"
+
 
 #include <qgrid.h>
 
@@ -178,12 +181,7 @@ void ChangeLogisticLinksDialog::Validate()
     if( selected_ )
     {
         simulation::AutomatChangeLogisticLinks message;
-        message().oid = selected_->GetId();
-
-        message().m.oid_tc2Present            = SetId( *tc2Combo_, message().oid_tc2 );
-        message().m.oid_maintenancePresent    = SetId( *maintenanceCombo_, message().oid_maintenance );
-        message().m.oid_santePresent          = SetId( *medicalCombo_, message().oid_sante );
-        message().m.oid_ravitaillementPresent = SetId( *supplyCombo_, message().oid_ravitaillement );
+        message().set_oid( selected_->GetId() );
 	    message.Send( publisher_ );
     }
     Reject();

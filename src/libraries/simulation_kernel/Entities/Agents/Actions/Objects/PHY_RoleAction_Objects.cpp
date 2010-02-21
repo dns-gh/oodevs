@@ -86,7 +86,7 @@ PHY_RoleAction_Objects::~PHY_RoleAction_Objects()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RoleAction_Objects::serialize( Archive& file, const uint )
+void PHY_RoleAction_Objects::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< tools::Role_ABC >( *this );
 }
@@ -136,7 +136,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
 
     // $$$$ TODO: refactor to handle more than a single resource
     const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
-    const uint                  nDotationNeeded   = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
+	const unsigned int                  nDotationNeeded   = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
     const PHY_DotationCategory* pDotationCategory = object.Get< BuildableCapacity >().GetDotationCategory();
     if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
         return eNoMoreDotation;
@@ -210,7 +210,7 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
 
         // $$$$ TODO: refactor to handle more than a single resource
         const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
-        const uint                  nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
+        const unsigned int                  nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
         const PHY_DotationCategory* pDotationCategory  = object.Get< BuildableCapacity >().GetDotationCategory();
 
         object().Destroy( rDeltaPercentage );

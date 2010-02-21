@@ -1,0 +1,19 @@
+package MsgsClientToReplay;
+
+import "Common.proto"; 
+
+message MsgControlSkipToTick {
+   required int32 tick = 1;
+}
+
+message MsgClientToReplay {
+    message Content {
+       optional MsgControlSkipToTick              control_skip_to_tick       = 1;
+       optional Common.MsgControlChangeTimeFactor control_change_time_factor = 2;
+       optional Common.MsgControlStop             control_stop               = 3;
+       optional Common.MsgControlPause            control_pause              = 4;
+       optional Common.MsgControlResume           control_resume             = 5;
+    }
+    optional int32   context = 1 [default = 0];
+    required Content message = 2;
+}

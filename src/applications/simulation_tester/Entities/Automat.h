@@ -47,7 +47,7 @@ class Automat : public Testable_Entity
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg );
+             Automat( const Workspace& workspace, const MsgAutomatCreation& asnMsg );
     virtual ~Automat();
     //@}
 
@@ -77,8 +77,8 @@ public:
 
     //! @name Mission Scheduling
     //@{
-    void ScheduleAllMissions ( Scheduler& scheduler, uint nIteration = 1 );
-    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName, uint nIteration = 1 );
+    void ScheduleAllMissions ( Scheduler& scheduler, unsigned int nIteration = 1 );
+    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName, unsigned int nIteration = 1 );
     //@}
 
 private:

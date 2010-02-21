@@ -14,6 +14,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 #include <windows.h>
@@ -27,16 +28,17 @@ using namespace parameters;
 // Name: LocationBase constructor
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------
-LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
+LocationBase::LocationBase( const kernel::CoordinateConverter_ABC& converter, const Common::MsgLocation& message )
     : converter_( converter )
-    , type_     ( E_LocationType( asn.type ) )
+    , type_     ( E_LocationType( message.type() ) )
     , valid_    ( true )
 {
-    if( asn.coordinates.n > 0 )
+    const unsigned int count = message.coordinates().elem_size();
+    if( count )
     {
-        points_.reserve( asn.coordinates.n );
-        for( unsigned int i = 0; i < asn.coordinates.n; ++i )
-            PushBack( converter_.ConvertToXY( asn.coordinates.elem[i] ) );
+        points_.reserve( count );
+        for( unsigned int i = 0; i < count; ++i )
+            PushBack( converter_.ConvertToXY( message.coordinates().elem(i) ) );
     }
 }
 
@@ -230,15 +232,11 @@ void LocationBase::Draw( const kernel::GlTools_ABC& tools ) const
 // Name: LocationBase::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LocationBase::CommitTo( ASN1T_Location& asn ) const
+void LocationBase::CommitTo( Common::MsgLocation& message ) const
 {
-    asn.type = ASN1T_EnumLocationType( type_ );
-    asn.coordinates.n = valid_ ? points_.size() : 0;
-    if( !asn.coordinates.n )
-        return;
-    asn.coordinates.elem = new ASN1T_CoordLatLong[asn.coordinates.n];
-    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
-        converter_.ConvertToGeo( points_[i], asn.coordinates.elem[i] );
+    message.set_type( Common::MsgLocation::Geometry( type_ ) );
+    for( unsigned int i = 0; i < points_.size(); ++i )
+        converter_.ConvertToGeo( points_[i], *message.mutable_coordinates()->add_elem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -247,9 +245,9 @@ void LocationBase::CommitTo( ASN1T_Location& asn ) const
 // -----------------------------------------------------------------------------
 void LocationBase::CommitTo( std::string& content ) const
 {
-    if( type_ == EnumLocationType::circle )
+    if( type_ == Common::MsgLocation::circle )
         content += "circle(";
-    else if( type_ == EnumLocationType::polygon )
+    else if( type_ == Common::MsgLocation::polygon )
         content += "polygon(";
     else
         return;  // $$$$ AGE 2007-10-10:
@@ -265,10 +263,9 @@ void LocationBase::CommitTo( std::string& content ) const
 // Name: LocationBase::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void LocationBase::Clean( ASN1T_Location& asn ) const
+void LocationBase::Clean( Common::MsgLocation& message ) const
 {
-    if( asn.coordinates.n )
-        delete[] asn.coordinates.elem;
+    message.Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -279,13 +276,13 @@ bool LocationBase::CheckValidity() const
 {
     switch( type_ )
     {
-    case EnumLocationType::polygon:
+    case Common::MsgLocation::polygon:
         return points_.size() > 2;
-    case EnumLocationType::line:
+    case Common::MsgLocation::line:
         return points_.size() > 1;
-    case EnumLocationType::circle:
+    case Common::MsgLocation::circle:
         return points_.size() == 2;
-    case EnumLocationType::point:
+    case Common::MsgLocation::point:
         return points_.size() == 1;
     }
     return false;

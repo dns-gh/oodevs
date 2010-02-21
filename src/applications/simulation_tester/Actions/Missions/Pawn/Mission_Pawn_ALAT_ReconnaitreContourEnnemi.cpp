@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_ReconnaitreContourEnnemi::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi& asnMission = *new ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_reconnaitre_contour_ennemi;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_contour_ennemi = &asnMission;
+    Mission_Pion_ALAT_ReconnaitreContourEnnemi& asnMission = *new Mission_Pion_ALAT_ReconnaitreContourEnnemi();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_reconnaitre_contour_ennemi = &asnMission;
 
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
     const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
@@ -64,8 +64,8 @@ void Mission_Pawn_ALAT_ReconnaitreContourEnnemi::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_ReconnaitreContourEnnemi::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_reconnaitre_contour_ennemi );
-    ASN1T_Mission_Pion_ALAT_ReconnaitreContourEnnemi& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_contour_ennemi;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_reconnaitre_contour_ennemi ());
+    Mission_Pion_ALAT_ReconnaitreContourEnnemi& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_reconnaitre_contour_ennemi;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
     ASN_Tools::Delete( asnMission.plots_ravitaillement );

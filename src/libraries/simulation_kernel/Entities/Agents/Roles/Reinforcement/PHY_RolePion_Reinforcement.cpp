@@ -12,8 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Reinforcement.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
@@ -66,7 +65,7 @@ PHY_RolePion_Reinforcement::~PHY_RolePion_Reinforcement()
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_Reinforcement::serialize( Archive& file, const uint )
+void PHY_RolePion_Reinforcement::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Reinforcement >( *this );
 }
@@ -175,21 +174,14 @@ void PHY_RolePion_Reinforcement::Clean()
 // Name: PHY_RolePion_Reinforcement::SendFullState
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Reinforcement::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Reinforcement::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.pion_renforcePresent = 1;
-    msg().pion_renforce          = pPionReinforced_ ? pPionReinforced_->GetID() : 0;
-
-    msg().m.pions_renforcantPresent = 1;
-    msg().pions_renforcant.n        = reinforcements_.size();
+    msg().set_pion_renforce( pPionReinforced_ ? pPionReinforced_->GetID() : 0 );
     if( !reinforcements_.empty() )
     {   
-        ASN1T_OID* pAgents = new ASN1T_OID[ reinforcements_.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it, ++i )
-            pAgents[ i ] = (**it).GetID();
-
-        msg().pions_renforcant.elem = pAgents;
+            msg().mutable_pions_renforcant()->add_elem()->set_oid( (**it).GetID() );
     }
 }
 
@@ -197,7 +189,7 @@ void PHY_RolePion_Reinforcement::SendFullState( NET_ASN_MsgUnitAttributes& msg )
 // Name: PHY_RolePion_Reinforcement::SendChangedState
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Reinforcement::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

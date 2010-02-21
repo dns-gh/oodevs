@@ -10,9 +10,13 @@
 #ifndef __AutomatTacticalHierarchies_h_
 #define __AutomatTacticalHierarchies_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/MergingTacticalHierarchies.h"
 #include "tools/Resolver_ABC.h"
+
+namespace Common
+{
+    class MsgAutomatChangeSuperior;
+}
 
 namespace kernel
 {
@@ -28,7 +32,7 @@ namespace kernel
 // Created: AGE 2006-10-19
 // =============================================================================
 class AutomatTacticalHierarchies : public kernel::MergingTacticalHierarchies
-                                 , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeSuperior >
+                                 , public kernel::Updatable_ABC< Common::MsgAutomatChangeSuperior >
 {
 
 public:
@@ -56,7 +60,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatChangeSuperior& message );
+    virtual void DoUpdate( const Common::MsgAutomatChangeSuperior& message );
     virtual void DoUpdate( const kernel::InstanciationComplete& message );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
     static std::string Max( const std::string& lhs, const std::string& rhs );

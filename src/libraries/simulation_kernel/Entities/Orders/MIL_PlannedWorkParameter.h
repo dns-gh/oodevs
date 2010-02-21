@@ -11,6 +11,7 @@
 #define __MIL_PlannedWorkParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_Gen_Object;
 class MIL_EntityManager_ABC;
 
@@ -26,7 +27,7 @@ class MIL_PlannedWorkParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PlannedWorkParameter( const ASN1T_PlannedWork & asn, const MIL_EntityManager_ABC& entityManager );
+             MIL_PlannedWorkParameter( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
     virtual ~MIL_PlannedWorkParameter();
     //@}
 
@@ -37,7 +38,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToGenObject( ASN1T_PlannedWork& ) const;
+    virtual bool ToGenObject( Common::MsgPlannedWork& ) const;
     virtual bool ToGenObject( boost::shared_ptr< DEC_Gen_Object >& ) const;
     //@}
 

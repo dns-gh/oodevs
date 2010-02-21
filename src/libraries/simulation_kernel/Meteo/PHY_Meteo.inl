@@ -59,7 +59,7 @@ void PHY_Meteo::IncRef()
 // Created: JVT 03-08-06
 //-----------------------------------------------------------------------------
 inline
-void PHY_Meteo::IncRef( uint nNbrRef )
+void PHY_Meteo::IncRef( unsigned int nNbrRef )
 {
     nRefCount_ += nNbrRef;
 }
@@ -83,7 +83,7 @@ void PHY_Meteo::DecRef()
 // Created: JVT 03-08-06
 //-----------------------------------------------------------------------------
 inline
-void PHY_Meteo::DecRef( uint nNbrRef )
+void PHY_Meteo::DecRef( unsigned int nNbrRef )
 {
     assert( nRefCount_ >= nNbrRef );
     if ( !( nRefCount_ -= nNbrRef ) )

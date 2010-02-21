@@ -59,7 +59,7 @@ public:
     typedef T_ComposantePionVector::const_iterator   CIT_ComposantePionVector;
     typedef T_ComposantePionVector::reverse_iterator RIT_ComposantePionVector;
 
-             PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, uint nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy );
+             PHY_ComposantePion( const MIL_Time_ABC& time, const PHY_ComposanteTypePion& type, PHY_RolePion_Composantes& role, unsigned int nNbrHumanInCrew, bool bMajor, bool bLoadable, bool bCanBePartOfConvoy );
              PHY_ComposantePion();
     virtual ~PHY_ComposantePion();
 
@@ -67,8 +67,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Main
@@ -93,9 +93,9 @@ public:
           void           NotifyHandledByMaintenance ();
           void           NotifyRepairedByMaintenance();
 
-          void           PreprocessRandomBreakdowns ( uint nEndDayTimeStep );
+          void           PreprocessRandomBreakdowns ( unsigned int nEndDayTimeStep );
 
-          uint           ApproximateTravelTime     ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
+          unsigned int           ApproximateTravelTime     ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
     //@}
 
     //! @name Logistic - Medical
@@ -109,8 +109,8 @@ public:
     bool                   CanDiagnoseHumans               () const;
     bool                   CanSortHumans                   () const;
     bool                   CanHealHuman                    ( const PHY_Human& human ) const;
-    uint                   GetHealingTime                  ( const PHY_Human& human ) const;
-    uint                   Heal                            (       PHY_Human& human ) const;
+    unsigned int                   GetHealingTime                  ( const PHY_Human& human ) const;
+    unsigned int                   Heal                            (       PHY_Human& human ) const;
     //@}
 
     //! @name Logistic - Supply
@@ -123,10 +123,10 @@ public:
 
     //! @name Humans
     //@{
-    uint GetNbrUsableHumans() const;
+    unsigned int GetNbrUsableHumans() const;
     void HealAllHumans     ();
-    uint HealHumans        ( const PHY_HumanRank& rank, uint nNbrToChange );
-    uint WoundHumans       ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& wound );
+    unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange );
+    unsigned int WoundHumans       ( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& wound );
     bool ChangeHumanRank   ( const PHY_HumanRank& oldRank, const PHY_HumanRank&  newRank , const PHY_HumanWound& wound );
     //@}
 
@@ -139,7 +139,7 @@ public:
     void     ApplyContamination             ( const MIL_ToxicEffectManipulator& contamination );
     void     ApplyPoisonous                 ( const MIL_ToxicEffectManipulator& contamination );
     void     ApplyInjury                    ( MIL_Injury_ABC& injury );
-    uint     GetNeutralizationTime          () const;
+    unsigned int GetNeutralizationTime      () const;
     void     ApplyHumansWounds              ( const PHY_ComposanteState& composanteNewState, PHY_FireDamages_Agent& fireDamages );
     double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, double rDistBtwFirerAndTarget ) const;
     double GetOnlyLoadableMaxRangeToFireOn  ( const DEC_Knowledge_AgentComposante& compTarget, double rWantedPH              ) const;
@@ -168,7 +168,7 @@ public:
     virtual bool                            CanFireWhenUnloaded() const;            
             
     virtual const PHY_ComposanteTypePion&   GetType        () const;
-    virtual uint                            GetMajorScore  () const;
+    virtual unsigned int                            GetMajorScore  () const;
     //@}
 
     //! @name Dotations
@@ -261,12 +261,12 @@ private:
           PHY_HumansComposante*     pHumans_;
 
     // Breakdowns
-          uint                            nAutoRepairTimeStep_;
+          unsigned int                            nAutoRepairTimeStep_;
     const PHY_Breakdown*                  pBreakdown_;             
           PHY_MaintenanceComposanteState* pMaintenanceState_;
 
     // Random breakdowns
-          uint                 nRandomBreakdownNextTimeStep_;
+          unsigned int                 nRandomBreakdownNextTimeStep_;
     const PHY_ComposanteState* pRandomBreakdownState_;
 
 private:

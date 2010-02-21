@@ -56,7 +56,7 @@ TicPlugin::~TicPlugin()
 // Name: TicPlugin::Receive
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicPlugin::Receive( const ASN1T_MsgsSimToClient& )
+void TicPlugin::Receive( const MsgSimToClient& )
 {
     // NOTHING
 }

@@ -27,10 +27,10 @@ using namespace TEST;
 // Name: ObjectKnowledge constructor
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const EntityManager& entityManager, const ASN1T_MsgObjectKnowledgeCreation& asnMsg, const Team& team )
+ObjectKnowledge::ObjectKnowledge( const EntityManager& entityManager, const MsgObjectKnowledgeCreation& asnMsg, const Team& team )
     : owner_       ( team )
-    , nId_         ( asnMsg.oid_connaissance ) 
-    , pRealObject_ ( asnMsg.oid_objet_reel == 0 ? 0 : entityManager.FindObject( asnMsg.oid_objet_reel ) )
+    , nId_         ( asnMsg.oid_connaissance() ) 
+    , pRealObject_ ( asnMsg.oid_objet_reel() == 0 ? 0 : entityManager.FindObject( asnMsg.oid_objet_reel() ) )
 {
     // NOTHING
 }

@@ -32,7 +32,7 @@ class PHY_BreakdownType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, uint > T_PartMap;
+    typedef std::map< const PHY_DotationCategory*, unsigned int > T_PartMap;
     typedef T_PartMap::const_iterator                     CIT_PartMap;
     //@}
 
@@ -41,21 +41,21 @@ public:
     //@{
     static void                     Initialize       ( xml::xistream& xis );
     static void                     Terminate        ();
-    static uint                     GetDiagnosticTime();
+    static unsigned int                     GetDiagnosticTime();
     static const PHY_BreakdownType* Find             ( const std::string& strName );
-    static const PHY_BreakdownType* Find             ( uint nID );
+    static const PHY_BreakdownType* Find             ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&          GetName             () const;
-          uint                  GetID               () const;
+          unsigned int                  GetID               () const;
           bool                  AffectMobility      () const;
           bool                  AffectElectronic    () const;
     const PHY_MaintenanceLevel& GetMaintenanceLevel () const;
     const T_PartMap&            GetParts            () const;
-          uint                  GetTheoricRepairTime() const;
-          uint                  ChooseARepairTime   () const;
+          unsigned int                  GetTheoricRepairTime() const;
+          unsigned int                  ChooseARepairTime   () const;
     //@}
 
 private:
@@ -92,15 +92,15 @@ private:
     const std::string           strName_;
     const PHY_MaintenanceLevel& maintenanceLevel_;
     const E_Type                nType_;
-          uint                  nID_;
+          unsigned int                  nID_;
           T_PartMap             parts_;
-          uint                  nTheoricRepairTime_;
+          unsigned int                  nTheoricRepairTime_;
 
     mutable MT_GaussianRandom repairTime_;
 
 private:
     static T_BreakdownMap breakdowns_;
-    static uint           nDiagnosticTime_;
+    static unsigned int           nDiagnosticTime_;
 };
 
 #endif // __PHY_BreakdownType_h_

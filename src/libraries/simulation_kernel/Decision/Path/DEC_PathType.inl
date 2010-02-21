@@ -27,7 +27,7 @@ const DEC_PathType* DEC_PathType::Find( const std::string& strName )
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-const DEC_PathType* DEC_PathType::Find( uint nID )
+const DEC_PathType* DEC_PathType::Find( unsigned int nID )
 {
     assert( pathTypesFromID_.size() > nID );
     return pathTypesFromID_[ nID ];
@@ -38,7 +38,7 @@ const DEC_PathType* DEC_PathType::Find( uint nID )
 // Created: NLD 2006-01-30
 // -----------------------------------------------------------------------------
 inline
-uint DEC_PathType::GetID() const
+unsigned int DEC_PathType::GetID() const
 {
     return nPathType_;
 }

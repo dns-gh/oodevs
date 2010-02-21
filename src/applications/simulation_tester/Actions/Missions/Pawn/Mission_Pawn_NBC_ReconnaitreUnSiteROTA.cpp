@@ -43,9 +43,9 @@ void Mission_Pawn_NBC_ReconnaitreUnSiteROTA::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_NBC_ReconnaitreUnSiteROTA& asnMission = *new ASN1T_Mission_Pion_NBC_ReconnaitreUnSiteROTA();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_nbc_reconnaitre_un_site_rota;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_un_site_rota = &asnMission;
+    Mission_Pion_NBC_ReconnaitreUnSiteROTA& asnMission = *new Mission_Pion_NBC_ReconnaitreUnSiteROTA();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_nbc_reconnaitre_un_site_rota = &asnMission;
 
 
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.site_ROTA );
@@ -59,8 +59,8 @@ void Mission_Pawn_NBC_ReconnaitreUnSiteROTA::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_NBC_ReconnaitreUnSiteROTA::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_nbc_reconnaitre_un_site_rota );
-    ASN1T_Mission_Pion_NBC_ReconnaitreUnSiteROTA& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_un_site_rota;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_nbc_reconnaitre_un_site_rota ());
+    Mission_Pion_NBC_ReconnaitreUnSiteROTA& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_nbc_reconnaitre_un_site_rota;
 
 
     delete &asnMission;

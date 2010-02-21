@@ -43,9 +43,9 @@ void Mission_Automat_FiltrerPopulations::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_FiltrerPopulations& asnMission = *new ASN1T_Mission_Automate_FiltrerPopulations();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_filtrer_populations;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_filtrer_populations = &asnMission;
+    Mission_Automate_FiltrerPopulations& asnMission = *new Mission_Automate_FiltrerPopulations();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_filtrer_populations = &asnMission;
 
     const T_PositionVector& points_ = pTarget_->GetTestParam_PointList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_FiltrerPopulations::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_FiltrerPopulations::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_filtrer_populations );
-    ASN1T_Mission_Automate_FiltrerPopulations& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_filtrer_populations;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_filtrer_populations ());
+    Mission_Automate_FiltrerPopulations& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_filtrer_populations;
 
     ASN_Tools::Delete( asnMission.points );
 

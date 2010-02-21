@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "MedicalTreatmentAttribute.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
 
@@ -17,14 +18,14 @@ using namespace dispatcher;
 // Name: MedicalTreatmentAttribute constructor
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
-    : ObjectAttribute_ABC( model, asnMsg )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Model& model, const Common::MsgObjectAttributes& message )
+    : ObjectAttribute_ABC( model, message )
     , beds_              ( 0 )
     , availableBeds_     ( 0 )
     , doctors_           ( 0 )
     , availableDoctors_  ( 0 )
 {
-    Update( asnMsg );
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,16 +41,16 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // Name: MedicalTreatmentAttribute::Update
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void MedicalTreatmentAttribute::Update( const Common::MsgObjectAttributes& message )
 {
-    if( asnMsg.m.medical_treatmentPresent )
+    if ( message.has_medical_treatment() )
     {
-        beds_ = asnMsg.medical_treatment.beds;
-        availableBeds_ = asnMsg.medical_treatment.available_beds;
-        doctors_ = asnMsg.medical_treatment.doctors;
-        availableDoctors_ = asnMsg.medical_treatment.available_doctors;
-        for( asn::ASN1UINT i = 0 ; i < asnMsg.medical_treatment.type_id.n ; i++ )
-            medicalTreatmentList_.push_back( asnMsg.medical_treatment.type_id.elem[ i ] );
+        beds_               = message.medical_treatment().beds();
+        availableBeds_      = message.medical_treatment().available_beds();
+        doctors_            = message.medical_treatment().doctors();
+        availableDoctors_   = message.medical_treatment().available_doctors();
+        for( unsigned int i = 0 ; i < message.medical_treatment().type_id().elem_size() ; i++ )
+            medicalTreatmentList_.push_back( message.medical_treatment().type_id().elem( i ) );
     }
 }
 
@@ -57,29 +58,23 @@ void MedicalTreatmentAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
 // Name: MedicalTreatmentAttribute::Send
 // Created: RFT 2006-09-27
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void MedicalTreatmentAttribute::Send( Common::MsgObjectAttributes& message ) const
 {
-    int i = 0; //i is used to fill elem
-    asnMsg.m.medical_treatmentPresent = 1;
-    asnMsg.medical_treatment.available_beds    = availableBeds_;
-    asnMsg.medical_treatment.available_doctors = availableDoctors_;
-    asnMsg.medical_treatment.beds              = beds_;
-    asnMsg.medical_treatment.doctors           = doctors_;
-    asnMsg.medical_treatment.type_id.n         = medicalTreatmentList_.size();
-    asnMsg.medical_treatment.type_id.elem      = new ASN1T_OID[ asnMsg.medical_treatment.type_id.n ];
+    message.mutable_medical_treatment()->set_available_beds    ( availableBeds_ );
+    message.mutable_medical_treatment()->set_available_doctors ( availableDoctors_ );
+    message.mutable_medical_treatment()->set_beds              ( beds_ );
+    message.mutable_medical_treatment()->set_doctors           ( doctors_ );
     //Get the list of the ID of each medical treatment
     for( CIT_MedicalTreatmentTypeList iter = medicalTreatmentList_.begin() ; iter != medicalTreatmentList_.end() ; ++iter )
-    {
-        asnMsg.medical_treatment.type_id.elem[ i ] = *iter;
-        i++;
-    }
+        message.mutable_medical_treatment()->mutable_type_id()->add_elem( *iter );
+
 }
 
 // -----------------------------------------------------------------------------
-// Name: MedicalTreatmentAttribute::AsnDelete
+// Name: MedicalTreatmentAttribute::Delete
 // Created: RFT 2006-09-28
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void MedicalTreatmentAttribute::Delete( Common::MsgObjectAttributes& /*message*/ ) const
 {
     // NOTHING
 }

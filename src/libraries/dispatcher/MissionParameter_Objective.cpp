@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_Objective.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_Objective constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_Objective::MissionParameter_Objective( const ASN1T_MissionParameter& asn )
+MissionParameter_Objective::MissionParameter_Objective( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , data_               ( *asn.value.u.missionObjective )
+    , data_               ( asn.value().missionobjective() )
 {
     // NOTHING
 }
@@ -41,19 +42,19 @@ MissionParameter_Objective::~MissionParameter_Objective()
 // Name: MissionParameter_Objective::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Objective::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Objective::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value               = bNullValue_;
-    asn.value.t                  = T_MissionParameter_value_missionObjective;
-    asn.value.u.missionObjective = new ASN1T_MissionObjective();
-    data_.Send( *asn.value.u.missionObjective );
+    asn.set_null_value               ( bNullValue_ );
+    //asn.value.t                  = T_MissionParameter_value_missionObjective;
+//    asn.mutable_value()->mutable_missionobjective() = new MsgMissionObjective();
+    data_.Send( *asn.mutable_value()->mutable_missionobjective() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Objective::AsnDelete
+// Name: MissionParameter_Objective::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Objective::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Objective::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.missionObjective;
+    delete asn.mutable_value()->mutable_missionobjective();
 }

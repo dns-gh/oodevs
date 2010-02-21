@@ -12,10 +12,8 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_TacticalLineManager.h"
-
 #include "TER_LimitData.h"
 #include "Network/NET_AsnException.h"
-#include "Network/NET_ASN_Messages.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_TacticalLineManager constructor
@@ -24,6 +22,7 @@
 MIL_TacticalLineManager::MIL_TacticalLineManager()
     : limitsData_()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -58,5 +57,3 @@ void MIL_TacticalLineManager::DestroyLimitData( const TER_LimitData& data )
     assert( nOut == 1 );
     delete &data;
 }
-
-        

@@ -13,15 +13,16 @@
 #include "DEC_Knowledge_PopulationConcentration.h"
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationConcentrationPerception.h"
+#include "MIL_AgentServer.h"
 #include "MIL_KnowledgeGroup.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-#include "MIL_AgentServer.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationConcentration )
 
@@ -93,11 +94,11 @@ DEC_Knowledge_PopulationConcentration::~DEC_Knowledge_PopulationConcentration()
 // Name: DEC_Knowledge_PopulationConcentration::load
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> const_cast< DEC_Knowledge_Population*&    >( pPopulationKnowledge_ )
          >> const_cast< MIL_PopulationConcentration*& >( pConcentrationKnown_  )
-         >> const_cast< uint&                         >( nID_                  )
+         >> const_cast< unsigned int&                         >( nID_                  )
          >> nTimeLastUpdate_
          >> position_
          >> rNbrAliveHumans_
@@ -106,7 +107,7 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
 
     idManager_.Lock( nID_ );
 
-    uint nTmpID;
+    unsigned int nTmpID;
     bool bAttitudeValid;
     file >> bAttitudeValid;
     if( bAttitudeValid )
@@ -131,7 +132,7 @@ void DEC_Knowledge_PopulationConcentration::load( MIL_CheckPointInArchive& file,
 // Name: DEC_Knowledge_PopulationConcentration::save
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     bool attitude = ( pAttitude_ != 0 );
     file << pPopulationKnowledge_
@@ -260,16 +261,16 @@ void DEC_Knowledge_PopulationConcentration::SendMsgCreation() const
 {
     assert( pPopulationKnowledge_ );
 
-    NET_ASN_MsgPopulationConcentrationKnowledgeCreation asnMsg;
+    client::PopulationConcentrationKnowledgeCreation asnMsg;
 
-    asnMsg().oid_connaissance_concentration = nID_;
-    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
-    asnMsg().oid_concentration_reelle       = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
+    asnMsg().set_oid_connaissance_concentration( nID_ );
+    asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
+    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
+    asnMsg().set_oid_concentration_reelle      ( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
 
-    NET_ASN_Tools::WritePoint( position_, asnMsg().position );
+    NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() );
 
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,12 +281,12 @@ void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
 {
     assert( pPopulationKnowledge_ );
 
-    NET_ASN_MsgPopulationConcentrationKnowledgeDestruction asnMsg;
+    client::PopulationConcentrationKnowledgeDestruction asnMsg;
 
-    asnMsg().oid_connaissance_concentration = nID_;
-    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
-    asnMsg.Send();
+    asnMsg().set_oid_connaissance_concentration( nID_ );
+    asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
+    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() ); 
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -296,34 +297,27 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
 {
     assert( pPopulationKnowledge_ );
 
-    NET_ASN_MsgPopulationConcentrationKnowledgeUpdate asnMsg;
+    client::PopulationConcentrationKnowledgeUpdate asnMsg;
 
-    asnMsg().oid_connaissance_concentration = nID_;
-    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().set_oid_connaissance_concentration( nID_ );
+    asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );   
+    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
     
-    asnMsg().m.est_percuPresent                = 1;
-    asnMsg().m.oid_concentration_reellePresent = 1;
-    asnMsg().m.pertinencePresent               = 1;
-
-    asnMsg().est_percu                = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
-    asnMsg().oid_concentration_reelle = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
-    asnMsg().pertinence               = (uint)( rRelevance_ * 100. );
+    asnMsg().set_est_percu                ( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    asnMsg().set_oid_concentration_reelle ( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
+    asnMsg().set_pertinence               ( (unsigned int)( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
 
     if( bReconAttributesValid_ )
     {
         assert( pAttitude_ );
-        asnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg().m.nb_humains_vivantsPresent = 1;
-        asnMsg().m.attitudePresent           = 1;
     
-        asnMsg().nb_humains_morts         = uint( floor( rNbrDeadHumans_  + 0.5f ) );
-        asnMsg().nb_humains_vivants       = uint( floor( rNbrAliveHumans_ + 0.5f ) );
-        asnMsg().attitude                 = pAttitude_->GetAsnID();
+        asnMsg().set_nb_humains_morts  ( unsigned int( floor( rNbrDeadHumans_  + 0.5f ) ) );
+        asnMsg().set_nb_humains_vivants( unsigned int( floor( rNbrAliveHumans_ + 0.5f ) ) );
+        asnMsg().set_attitude          ( pAttitude_->GetAsnID() );
     }
 
-    asnMsg.Send();    
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );    
 }
 
 // -----------------------------------------------------------------------------
@@ -338,28 +332,25 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
     if( *pPreviousPerceptionLevel_ == *pCurrentPerceptionLevel_ && !bHumansUpdated_ && !bAttitudeUpdated_ && !bRealConcentrationUpdated_ && !bRelevanceUpdated_ )
         return;
 
-    NET_ASN_MsgPopulationConcentrationKnowledgeUpdate asnMsg;
+    client::PopulationConcentrationKnowledgeUpdate asnMsg;
 
-    asnMsg().oid_connaissance_concentration = nID_;
-    asnMsg().oid_connaissance_population    = pPopulationKnowledge_->GetID();
-    asnMsg().oid_groupe_possesseur          = pPopulationKnowledge_->GetKnowledgeGroup().GetID();
+    asnMsg().set_oid_connaissance_concentration( nID_ );
+    asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
+    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
 
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
     {
-        asnMsg().m.est_percuPresent = 1;
-        asnMsg().est_percu          = ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ );
+        asnMsg().set_est_percu( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     }
 
     if( bRealConcentrationUpdated_ )
     {
-        asnMsg().m.oid_concentration_reellePresent = 1;
-        asnMsg().oid_concentration_reelle = pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0;
+        asnMsg().set_oid_concentration_reelle( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
     }
 
     if( bRelevanceUpdated_ )
     {
-        asnMsg().m.pertinencePresent = 1;
-        asnMsg().pertinence          = (uint)( rRelevance_ * 100. );
+        asnMsg().set_pertinence( (unsigned int)( rRelevance_ * 100. ) );
         rLastRelevanceSent_                    = rRelevance_;
     }
 
@@ -368,20 +359,17 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
         assert( pAttitude_ );
         if( bHumansUpdated_ )
         {
-            asnMsg().m.nb_humains_mortsPresent   = 1;
-            asnMsg().m.nb_humains_vivantsPresent = 1;
-            asnMsg().nb_humains_morts            = uint( floor( rNbrDeadHumans_  + 0.5f ) );
-            asnMsg().nb_humains_vivants          = uint( floor( rNbrAliveHumans_ + 0.5f ) );
+            asnMsg().set_nb_humains_morts  ( unsigned int( floor( rNbrDeadHumans_  + 0.5f ) ) );
+            asnMsg().set_nb_humains_vivants( unsigned int( floor( rNbrAliveHumans_ + 0.5f ) ) );
         }
 
         if( bAttitudeUpdated_ )
         {
-            asnMsg().m.attitudePresent = 1;
-            asnMsg().attitude          = pAttitude_->GetAsnID();
+            asnMsg().set_attitude( pAttitude_->GetAsnID() );
         }
     }
 
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

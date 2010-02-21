@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_FireDamages_Agent.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteType_ABC.h"
@@ -19,6 +18,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Agent constructor
@@ -27,7 +27,7 @@
 PHY_FireDamages_Agent::PHY_FireDamages_Agent()
     : humanResults_( PHY_HumanRank::GetHumanRanks().size() )
 {
-    const uint nNbrWounds = PHY_HumanWound::GetHumanWounds().size();
+    const unsigned int nNbrWounds = PHY_HumanWound::GetHumanWounds().size();
     for( IT_HumansPerRankVector it = humanResults_.begin(); it != humanResults_.end(); ++it )
         it->resize( nNbrWounds, 0 );
 }
@@ -38,7 +38,7 @@ PHY_FireDamages_Agent::PHY_FireDamages_Agent()
 // -----------------------------------------------------------------------------
 PHY_FireDamages_Agent::~PHY_FireDamages_Agent()
 {
-
+    // NOTHING
 }
 
 // =============================================================================
@@ -77,49 +77,41 @@ void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const PHY_Human& human, con
 // Name: PHY_FireDamages_Agent::Serialize
 // Created: JVT 04-03-29
 //-----------------------------------------------------------------------------
-void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, ASN1T_UnitFireDamages& asn ) const
+void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToClient::MsgUnitFireDamages& asn ) const
 {
-    asn.target = target.GetID();
+    asn.set_target( target.GetID() );
 
     // Composantes
-    asn.equipments.n = composanteResults_.size();
-    if( asn.equipments.n )
+    if( asn.equipments().elem_size() )
     {
-        asn.equipments.elem = new ASN1T_UnitEquipmentFireDamage[ composanteResults_.size() ]; 
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult, ++i )
         {
             const PHY_ComposanteType_ABC& type   = *itResult->first;
             const T_ComposanteStates&      states =  itResult->second;
 
-            ASN1T_UnitEquipmentFireDamage& asnEquipement = asn.equipments.elem[i];
-            asnEquipement.equipement_type = type.GetMosID();
-            asnEquipement.available_nbr   = states[ PHY_ComposanteState::undamaged_.GetID() ];
-            asnEquipement.repairable_nbr  = states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ];
-            asnEquipement.unavailable_nbr = states[ PHY_ComposanteState::dead_.GetID() ];
+            MsgsSimToClient::MsgUnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->mutable_elem(i);
+            asnEquipement.set_equipement_type( type.GetMosID().equipment() );
+            asnEquipement.set_available_nbr( states[ PHY_ComposanteState::undamaged_.GetID() ] );
+            asnEquipement.set_repairable_nbr( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
+            asnEquipement.set_unavailable_nbr( states[ PHY_ComposanteState::dead_.GetID() ] );
         }
     }
 
     // Humans
-    asn.humans.n    = PHY_HumanRank::GetHumanRanks().size();
-    asn.humans.elem = new ASN1T_UnitHumanFireDamage[ asn.humans.n ]; 
-
-    uint i = 0;
-    for( PHY_HumanRank::CIT_HumanRankMap it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it, ++i )
+    for( PHY_HumanRank::CIT_HumanRankMap it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it )
     {
         const PHY_HumanRank& rank = *it->second;
-
-        ASN1T_UnitHumanFireDamage& personnel = asn.humans.elem[ i ];
-
+        MsgsSimToClient::UnitHumanFireDamage& personnel = *asn.mutable_humans()->add_elem();
         const T_HumansPerWoundVector& wounds = humanResults_[ rank.GetID() ];
 
-        personnel.rank           = rank.GetAsnID();
-        personnel.alive_nbr      = wounds[ PHY_HumanWound::notWounded_.GetID() ];
-        personnel.wounded_u1_nbr = wounds[ PHY_HumanWound::woundedU1_ .GetID() ];
-        personnel.wounded_u2_nbr = wounds[ PHY_HumanWound::woundedU2_ .GetID() ];
-        personnel.wounded_u3_nbr = wounds[ PHY_HumanWound::woundedU3_ .GetID() ];
-        personnel.wounded_ue_nbr = wounds[ PHY_HumanWound::woundedUE_ .GetID() ];
-        personnel.dead_nbr       = wounds[ PHY_HumanWound::killed_    .GetID() ];
+        personnel.set_rank           ( rank.GetAsnID() );
+        personnel.set_alive_nbr      ( wounds[ PHY_HumanWound::notWounded_.GetID() ] );
+        personnel.set_wounded_u1_nbr ( wounds[ PHY_HumanWound::woundedU1_ .GetID() ] );
+        personnel.set_wounded_u2_nbr ( wounds[ PHY_HumanWound::woundedU2_ .GetID() ] );
+        personnel.set_wounded_u3_nbr ( wounds[ PHY_HumanWound::woundedU3_ .GetID() ] );
+        personnel.set_wounded_ue_nbr ( wounds[ PHY_HumanWound::woundedUE_ .GetID() ] );
+        personnel.set_dead_nbr       ( wounds[ PHY_HumanWound::killed_    .GetID() ] );
     }
 }
 
@@ -127,11 +119,11 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, ASN1T_UnitFi
 // Name: PHY_FireDamages_Agent::CleanAfterSerialization
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-void PHY_FireDamages_Agent::CleanAfterSerialization( ASN1T_UnitFireDamages& asn )
+void PHY_FireDamages_Agent::CleanAfterSerialization( MsgsSimToClient::MsgUnitFireDamages& asn )
 {
-    if( asn.equipments.n > 0 )    
-        delete [] asn.equipments.elem;
+    if( asn.equipments().elem_size() > 0 )    
+        asn.mutable_equipments()->Clear();
 
-    if( asn.humans.n > 0 )
-        delete [] asn.humans.elem;
+    if( asn.humans().elem_size() > 0 )
+        asn.mutable_humans()->Clear();
 }

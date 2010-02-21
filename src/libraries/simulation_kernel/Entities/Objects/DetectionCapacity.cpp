@@ -136,7 +136,7 @@ DetectionCapacity::~DetectionCapacity()
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DetectionCapacity::serialize( Archive& file, const uint )
+void DetectionCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );

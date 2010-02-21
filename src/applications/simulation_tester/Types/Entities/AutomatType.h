@@ -51,7 +51,7 @@ public:
     //! @name Accessors
     //@{
     const std::string&  GetName  () const;
-          uint          GetId    () const;
+          unsigned int          GetId    () const;
     const PawnType&     GetPcType() const;
     const AutomatModel& GetModel () const;
     //@}
@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     std::string             strName_;
-	uint                    nId_;
+	unsigned int                    nId_;
     const PawnType*         pPcPawnType_;
     const AutomatModel*     pModel_;
     //@}

@@ -59,7 +59,7 @@ bool MIL_BaseParameter::ToId( int& ) const
 // Name: MIL_BaseParameter::ToPoint
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPoint( ASN1T_Point& ) const
+bool MIL_BaseParameter::ToPoint( Common::MsgPoint& ) const
 {
     return false;
 }
@@ -68,7 +68,7 @@ bool MIL_BaseParameter::ToPoint( ASN1T_Point& ) const
 // Name: MIL_BaseParameter::ToPointList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPointList( ASN1T_PointList& ) const
+bool MIL_BaseParameter::ToPointList( Common::MsgPointList& ) const
 {
     return false;
 }
@@ -77,7 +77,7 @@ bool MIL_BaseParameter::ToPointList( ASN1T_PointList& ) const
 // Name: MIL_BaseParameter::ToPolygon
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPolygon( ASN1T_Polygon& ) const
+bool MIL_BaseParameter::ToPolygon( Common::MsgPolygon& ) const
 {
     return false;
 }
@@ -86,7 +86,7 @@ bool MIL_BaseParameter::ToPolygon( ASN1T_Polygon& ) const
 // Name: MIL_BaseParameter::ToPolygonList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPolygonList( ASN1T_PolygonList& ) const
+bool MIL_BaseParameter::ToPolygonList( Common::MsgPolygonList& ) const
 {
     return false;
 }
@@ -95,7 +95,7 @@ bool MIL_BaseParameter::ToPolygonList( ASN1T_PolygonList& ) const
 // Name: MIL_BaseParameter::ToAgent
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgent( ASN1T_Unit& ) const
+bool MIL_BaseParameter::ToAgent( Common::MsgUnit& ) const
 {
     return false;
 }
@@ -104,7 +104,7 @@ bool MIL_BaseParameter::ToAgent( ASN1T_Unit& ) const
 // Name: MIL_BaseParameter::ToAgentKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentKnowledge( ASN1T_UnitKnowledge& ) const
+bool MIL_BaseParameter::ToAgentKnowledge( Common::MsgUnitKnowledge& ) const
 {
     return false;
 }
@@ -113,7 +113,7 @@ bool MIL_BaseParameter::ToAgentKnowledge( ASN1T_UnitKnowledge& ) const
 // Name: MIL_BaseParameter::ToAgentKnowledgeList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentKnowledgeList( ASN1T_UnitKnowledgeList& ) const
+bool MIL_BaseParameter::ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& ) const
 {
     return false;
 }
@@ -122,7 +122,7 @@ bool MIL_BaseParameter::ToAgentKnowledgeList( ASN1T_UnitKnowledgeList& ) const
 // Name: MIL_BaseParameter::ToAgentList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAgentList( ASN1T_UnitList& ) const
+bool MIL_BaseParameter::ToAgentList( Common::MsgUnitList& ) const
 {
     return false;
 }
@@ -131,7 +131,7 @@ bool MIL_BaseParameter::ToAgentList( ASN1T_UnitList& ) const
 // Name: MIL_BaseParameter::ToAutomat
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAutomat( ASN1T_Automat& ) const
+bool MIL_BaseParameter::ToAutomat( Common::MsgAutomat& ) const
 {
     return false;
 }
@@ -140,7 +140,7 @@ bool MIL_BaseParameter::ToAutomat( ASN1T_Automat& ) const
 // Name: MIL_BaseParameter::ToAutomatList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToAutomatList( ASN1T_AutomatList& ) const
+bool MIL_BaseParameter::ToAutomatList( Common::MsgAutomatList& ) const
 {
     return false;
 }
@@ -149,7 +149,7 @@ bool MIL_BaseParameter::ToAutomatList( ASN1T_AutomatList& ) const
 // Name: MIL_BaseParameter::ToDirection
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToDirection( ASN1T_Heading& ) const
+bool MIL_BaseParameter::ToDirection( Common::MsgHeading& ) const
 {
     return false;
 }
@@ -158,7 +158,7 @@ bool MIL_BaseParameter::ToDirection( ASN1T_Heading& ) const
 // Name: MIL_BaseParameter::ToDotationType
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToDotationType( ASN1T_DotationType& ) const
+bool MIL_BaseParameter::ToDotationType( Common::MsgDotationType& ) const
 {
     return false;
 }
@@ -167,7 +167,7 @@ bool MIL_BaseParameter::ToDotationType( ASN1T_DotationType& ) const
 // Name: MIL_BaseParameter::ToEquipmentType
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToEquipmentType( ASN1T_EquipmentType& ) const
+bool MIL_BaseParameter::ToEquipmentType( Common::MsgEquipmentType& ) const
 {
     return false;
 }
@@ -176,7 +176,7 @@ bool MIL_BaseParameter::ToEquipmentType( ASN1T_EquipmentType& ) const
 // Name: MIL_BaseParameter::ToGDH
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToGDH( ASN1T_DateTime& ) const
+bool MIL_BaseParameter::ToGDH( Common::MsgDateTime& ) const
 {
     return false;
 }
@@ -185,7 +185,7 @@ bool MIL_BaseParameter::ToGDH( ASN1T_DateTime& ) const
 // Name: MIL_BaseParameter::ToGenObject
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToGenObject( ASN1T_PlannedWork& ) const
+bool MIL_BaseParameter::ToGenObject( Common::MsgPlannedWork& ) const
 {
     return false;
 }
@@ -194,7 +194,7 @@ bool MIL_BaseParameter::ToGenObject( ASN1T_PlannedWork& ) const
 // Name: MIL_BaseParameter::ToGenObjectList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToGenObjectList( ASN1T_PlannedWorkList& ) const
+bool MIL_BaseParameter::ToGenObjectList( Common::MsgPlannedWorkList& ) const
 {
     return false;
 }
@@ -203,7 +203,7 @@ bool MIL_BaseParameter::ToGenObjectList( ASN1T_PlannedWorkList& ) const
 // Name: MIL_BaseParameter::ToIndirectFire
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToIndirectFire( ASN1T_UnitFire& ) const
+bool MIL_BaseParameter::ToIndirectFire( Common::MsgUnitFire& ) const
 {
     return false;
 }
@@ -212,7 +212,7 @@ bool MIL_BaseParameter::ToIndirectFire( ASN1T_UnitFire& ) const
 // Name: MIL_BaseParameter::ToLocation
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToLocation( ASN1T_Location& ) const
+bool MIL_BaseParameter::ToLocation( Common::MsgLocation& ) const
 {
     return false;
 }
@@ -221,7 +221,7 @@ bool MIL_BaseParameter::ToLocation( ASN1T_Location& ) const
 // Name: MIL_BaseParameter::ToLocationList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToLocationList( ASN1T_LocationList& ) const
+bool MIL_BaseParameter::ToLocationList( Common::MsgLocationList& ) const
 {
     return false;
 }
@@ -230,7 +230,7 @@ bool MIL_BaseParameter::ToLocationList( ASN1T_LocationList& ) const
 // Name: MIL_BaseParameter::ToMaintenancePriorities
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToMaintenancePriorities( ASN1T_LogMaintenancePriorities& ) const
+bool MIL_BaseParameter::ToMaintenancePriorities( Common::MsgLogMaintenancePriorities& ) const
 {
     return false;
 }
@@ -239,7 +239,7 @@ bool MIL_BaseParameter::ToMaintenancePriorities( ASN1T_LogMaintenancePriorities&
 // Name: MIL_BaseParameter::ToMedicalPriorities
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToMedicalPriorities( ASN1T_LogMedicalPriorities& ) const
+bool MIL_BaseParameter::ToMedicalPriorities( Common::MsgLogMedicalPriorities& ) const
 {
     return false;
 }
@@ -248,7 +248,7 @@ bool MIL_BaseParameter::ToMedicalPriorities( ASN1T_LogMedicalPriorities& ) const
 // Name: MIL_BaseParameter::ToNatureAtlas
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToNatureAtlas( ASN1T_AtlasNature& ) const
+bool MIL_BaseParameter::ToNatureAtlas( Common::MsgAtlasNature& ) const
 {
     return false;
 }
@@ -257,7 +257,7 @@ bool MIL_BaseParameter::ToNatureAtlas( ASN1T_AtlasNature& ) const
 // Name: MIL_BaseParameter::ToNumeric
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToNumeric( ASN1REAL& ) const
+bool MIL_BaseParameter::ToNumeric( float& ) const
 {
     return false;
 }
@@ -266,7 +266,7 @@ bool MIL_BaseParameter::ToNumeric( ASN1REAL& ) const
 // Name: MIL_BaseParameter::ToObjectiveList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToObjectiveList( ASN1T_MissionObjectiveList& ) const
+bool MIL_BaseParameter::ToObjectiveList( Common::MsgMissionObjectiveList& ) const
 {
     return false;
 }
@@ -275,7 +275,7 @@ bool MIL_BaseParameter::ToObjectiveList( ASN1T_MissionObjectiveList& ) const
 // Name: MIL_BaseParameter::ToObjectKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToObjectKnowledge( ASN1T_ObjectKnowledge& ) const
+bool MIL_BaseParameter::ToObjectKnowledge( Common::MsgObjectKnowledge& ) const
 {
     return false;
 }
@@ -284,7 +284,7 @@ bool MIL_BaseParameter::ToObjectKnowledge( ASN1T_ObjectKnowledge& ) const
 // Name: MIL_BaseParameter::ToObjectKnowledgeList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToObjectKnowledgeList( ASN1T_ObjectKnowledgeList& ) const
+bool MIL_BaseParameter::ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& ) const
 {
     return false;
 }
@@ -293,7 +293,7 @@ bool MIL_BaseParameter::ToObjectKnowledgeList( ASN1T_ObjectKnowledgeList& ) cons
 // Name: MIL_BaseParameter::ToPath
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPath( ASN1T_Path& ) const
+bool MIL_BaseParameter::ToPath( Common::MsgPath& ) const
 {
     return false;
 }
@@ -302,7 +302,7 @@ bool MIL_BaseParameter::ToPath( ASN1T_Path& ) const
 // Name: MIL_BaseParameter::ToPathList
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPathList( ASN1T_PathList& ) const
+bool MIL_BaseParameter::ToPathList( Common::MsgPathList& ) const
 {
     return false;
 }
@@ -311,16 +311,7 @@ bool MIL_BaseParameter::ToPathList( ASN1T_PathList& ) const
 // Name: MIL_BaseParameter::ToPopulationKnowledge
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToPopulationKnowledge( ASN1T_PopulationKnowledge& ) const
-{
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_BaseParameter::ToString
-// Created: LDC 2009-05-20
-// -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToString( ASN1VisibleString& ) const
+bool MIL_BaseParameter::ToPopulationKnowledge( Common::MsgPopulationKnowledge& ) const
 {
     return false;
 }
@@ -523,14 +514,6 @@ bool MIL_BaseParameter::ToGDH( float& ) const
     return false;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_BaseParameter::ToNumeric
-// Created: LDC 2009-05-20
-// -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToNumeric( float& ) const
-{
-    return false;
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToGenObject
@@ -581,7 +564,7 @@ bool MIL_BaseParameter::ToObjectiveList( std::vector< boost::shared_ptr< DEC_Obj
 // Name: MIL_BaseParameter::ToUrbanBlock
 // Created: MGD 2009-11-04
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToUrbanBlock( ASN1T_UrbanBlock& ) const
+bool MIL_BaseParameter::ToUrbanBlock( Common::MsgUrbanBlock& ) const
 {
     return false;
 }

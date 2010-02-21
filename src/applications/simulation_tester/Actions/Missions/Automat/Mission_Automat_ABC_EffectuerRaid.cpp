@@ -43,9 +43,9 @@ void Mission_Automat_ABC_EffectuerRaid::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_EffectuerRaid& asnMission = *new ASN1T_Mission_Automate_ABC_EffectuerRaid();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_effectuer_raid;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_effectuer_raid = &asnMission;
+    Mission_Automate_ABC_EffectuerRaid& asnMission = *new Mission_Automate_ABC_EffectuerRaid();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_effectuer_raid = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_ABC_EffectuerRaid::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_EffectuerRaid::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_effectuer_raid );
-    ASN1T_Mission_Automate_ABC_EffectuerRaid& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_effectuer_raid;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_effectuer_raid ());
+    Mission_Automate_ABC_EffectuerRaid& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_effectuer_raid;
 
 
     delete &asnMission;

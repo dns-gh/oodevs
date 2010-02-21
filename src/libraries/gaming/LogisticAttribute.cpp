@@ -43,9 +43,9 @@ LogisticAttribute::~LogisticAttribute()
 template< typename T >
 void LogisticAttribute::UpdateData( const T& message )
 {
-    if ( message.m.logisticPresent )
+    if ( message.has_logistic()  )
     {
-        tc2_ = resolver_.Find( message.logistic.tc2 );
+        tc2_ = resolver_.Find( message.logistic().tc2() );
         controller_.Update( *(LogisticAttribute_ABC*)this );
     }
 }
@@ -54,27 +54,27 @@ void LogisticAttribute::UpdateData( const T& message )
 // Name: LogisticAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void LogisticAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void LogisticAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LogisticAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void LogisticAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LogisticAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void LogisticAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

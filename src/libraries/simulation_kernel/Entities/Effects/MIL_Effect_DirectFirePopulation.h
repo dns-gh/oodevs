@@ -25,7 +25,7 @@ class MIL_Effect_DirectFirePopulation : public MIL_Effect_ABC
 {
 
 public:
-             MIL_Effect_DirectFirePopulation( MIL_PopulationElement_ABC& target, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
+             MIL_Effect_DirectFirePopulation( MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult );
     virtual ~MIL_Effect_DirectFirePopulation();
 
     //! @name Operations
@@ -35,7 +35,7 @@ public:
 
 private:
           MIL_PopulationElement_ABC& target_; 
-    const uint                       nNbrAmmoFired_;
+    const unsigned int                       nNbrAmmoFired_;
           PHY_FireResults_ABC&       fireResult_;
 };
 

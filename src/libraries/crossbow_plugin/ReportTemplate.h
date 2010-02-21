@@ -10,12 +10,16 @@
 #ifndef __ReportTemplate_h_
 #define __ReportTemplate_h_
 
+
 namespace xml
 {
     class xistream;
 }
 
-struct ASN1T_MissionParameters;
+namespace Common
+{
+    class MsgMissionParameters;
+}
 
 namespace plugins
 {
@@ -42,7 +46,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    std::string RenderMessage( const ASN1T_MissionParameters& asn ) const;
+    std::string RenderMessage( const Common::MsgMissionParameters& message ) const;
     //@}
 
 private:

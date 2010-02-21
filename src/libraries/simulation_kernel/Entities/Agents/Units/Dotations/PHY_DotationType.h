@@ -12,16 +12,18 @@
 #ifndef __PHY_DotationType_h_
 #define __PHY_DotationType_h_
 
-#include "game_asn/Simulation.h"
-
-class MIL_EntityManager_ABC;
-class PHY_DotationCategory;
-class PHY_DotationLogisticType;
+namespace Common
+{
+    enum EnumDotationFamily;
+}
 
 namespace xml
 {
     class xistream;
 }
+
+class PHY_DotationCategory;
+class PHY_DotationLogisticType;
 
 // =============================================================================
 // @class  PHY_DotationType
@@ -49,17 +51,17 @@ public:
     static void Terminate ();
 
     static const PHY_DotationType*     FindDotationType    ( const std::string& strName );
-    static const PHY_DotationType*     FindDotationType    ( ASN1T_EnumDotationFamily nAsnID );
-    static const PHY_DotationType*     FindDotationType    ( uint nID );
-    static const PHY_DotationCategory* FindDotationCategory( uint nID );
+    static const PHY_DotationType*     FindDotationType    ( Common::EnumDotationFamily nAsnID );
+    static const PHY_DotationType*     FindDotationType    ( unsigned int nID );
+    static const PHY_DotationCategory* FindDotationCategory( unsigned int nID );
     static const PHY_DotationCategory* FindDotationCategory( const std::string& strName );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&              GetName               () const;
-          ASN1T_EnumDotationFamily  GetAsnID              () const;
-          uint                      GetID                 () const;
+          Common::EnumDotationFamily GetAsnID              () const;
+          unsigned int                      GetID                 () const;
     const PHY_DotationLogisticType& GetDefaultLogisticType() const;
     //@}
 
@@ -88,17 +90,17 @@ private:
     typedef std::map< std::string, const PHY_DotationCategory*, sCaseInsensitiveLess > T_DotationCategoryMap;
     typedef T_DotationCategoryMap::const_iterator                                      CIT_DotationCategoryMap;
 
-    typedef std::map< uint, const PHY_DotationCategory* > T_DotationCategoryIDMap;
+    typedef std::map< unsigned int, const PHY_DotationCategory* > T_DotationCategoryIDMap;
     typedef T_DotationCategoryIDMap::const_iterator       CIT_DotationCategoryIDMap;
     //@}
 
 private:
-     PHY_DotationType( const std::string& strName, E_DotationType nType, ASN1T_EnumDotationFamily nAsnID, const PHY_DotationLogisticType& defaultLogisticType );
+     PHY_DotationType( const std::string& strName, E_DotationType nType, Common::EnumDotationFamily nAsnID, const PHY_DotationLogisticType& defaultLogisticType );
     ~PHY_DotationType();
 
     //! @name Initialisation
     //@{
-    const PHY_DotationCategory* InternalFindDotationCategory( uint nID ) const;
+    const PHY_DotationCategory* InternalFindDotationCategory( unsigned int nID ) const;
     const PHY_DotationCategory* InternalFindDotationCategory( const std::string& strName ) const;
 
     void RegisterDotationCategory( const std::string& strCategoryName, xml::xistream& xis );
@@ -112,7 +114,7 @@ private:
 private:
     const std::string               strName_;
     const E_DotationType            nType_;
-    const ASN1T_EnumDotationFamily nAsnID_;
+    const Common::EnumDotationFamily nAsnID_;
     const PHY_DotationLogisticType& defaultLogisticType_;
           T_DotationCategoryMap     dotationCategories_;
 

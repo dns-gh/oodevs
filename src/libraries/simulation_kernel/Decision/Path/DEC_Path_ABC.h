@@ -54,7 +54,7 @@ public:
 
     //! @name Accessors
     //@{
-    uint    GetID   () const;
+    unsigned int    GetID   () const;
     E_State GetState() const;
     //@}
 
@@ -88,15 +88,15 @@ private:
     //@}
 
 private:
-    const uint                nID_;
+    const unsigned int                nID_;
           T_PathSectionVector pathSections_;
-          uint                nNbrRefs_;              // nb of references on path
-          uint                nNbrDIARefs_;           // nb of references by DIA on path
+          unsigned int                nNbrRefs_;              // nb of references on path
+          unsigned int                nNbrDIARefs_;           // nb of references by DIA on path
           E_State             nState_;            
           bool                bJobCanceled_;
 
 private:
-    static uint nIDIdx_;
+    static unsigned int nIDIdx_;
 };
 
 #include "DEC_Path_ABC.inl"

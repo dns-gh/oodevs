@@ -11,6 +11,7 @@
 #define __MIL_AgentKnowledgeParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_Knowledge_Agent;
 class DEC_KnowledgeResolver_ABC;
 
@@ -27,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
-             MIL_AgentKnowledgeParameter( const ASN1T_UnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_AgentKnowledgeParameter( const Common::MsgUnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_AgentKnowledgeParameter();
     //@}
 
@@ -38,7 +39,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToAgentKnowledge( ASN1T_UnitKnowledge& asn ) const;
+    virtual bool ToAgentKnowledge( Common::MsgUnitKnowledge& asn ) const;
     virtual bool ToAgentKnowledge( boost::shared_ptr< DEC_Knowledge_Agent >& value ) const;
     //@}
 

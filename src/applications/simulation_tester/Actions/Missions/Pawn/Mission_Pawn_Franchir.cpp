@@ -43,9 +43,9 @@ void Mission_Pawn_Franchir::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Franchir& asnMission = *new ASN1T_Mission_Pion_Franchir();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_franchir;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_franchir = &asnMission;
+    Mission_Pion_Franchir& asnMission = *new Mission_Pion_Franchir();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_franchir = &asnMission;
 
     const Position& pointArrivee_ = pTarget_->GetTestParam_Point();
 
@@ -62,8 +62,8 @@ void Mission_Pawn_Franchir::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Franchir::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_franchir );
-    ASN1T_Mission_Pion_Franchir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_franchir;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_franchir ());
+    Mission_Pion_Franchir& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_franchir;
 
     ASN_Tools::Delete( asnMission.point_arrivee );
 

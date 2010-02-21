@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "PathPoint.h"
 #include "ParameterVisitor_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -49,11 +50,11 @@ PathPoint::~PathPoint()
 // Name: PathPoint::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void PathPoint::CommitTo( ASN1T_CoordLatLong& asn ) const
+void PathPoint::CommitTo( Common::MsgCoordLatLong& message ) const
 {
-    ASN1T_Location loc;
+    Common::MsgLocation loc;
     Location::CommitTo( loc );
-    asn = loc.coordinates.elem[0];
+    message = loc.coordinates().elem( 0 );
     Location::Clean( loc );
 }
 

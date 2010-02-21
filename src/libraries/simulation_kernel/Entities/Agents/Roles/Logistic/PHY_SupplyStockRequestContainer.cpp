@@ -17,6 +17,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationStock.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockRequestContainer constructor
@@ -32,21 +33,15 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
 {
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
     for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-    {
-        PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >();
-        if( stockPion )
-        {
-            stockPion->FillSupplyRequest( *this );    
-        }
-    }
-        
+        if( PHY_RoleInterface_Supply* stockPion = (**itPion).RetrieveRole< PHY_RoleInterface_Supply >() )
+            stockPion->FillSupplyRequest( *this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_SupplyStockRequestContainer constructor
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const ASN1T__SeqOfDotationStock& asnStocks )
+PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::SeqOfDotationStock& asnStocks )
     : suppliedAutomate_                  ( suppliedAutomate )
     , requests_                          ()
     , bAtLeastOneExplicitSupplySatisfied_( false )
@@ -55,14 +50,14 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
     , bPushedFlow_                       ( true )
 {
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
-    for( uint i = 0; i < asnStocks.n; ++i )
+    for( int i = 0; i < asnStocks.elem_size(); ++i )
     {
-        const ASN1T_DotationStock& asnStock = asnStocks.elem[i];
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id );
+        const Common::MsgDotationStock& asnStock = asnStocks.elem(i);
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id() );
         if( !pDotationCategory )
             continue;
 
-        MT_Float rTotalValue = asnStock.quantite_disponible;
+        MT_Float rTotalValue = asnStock.quantite_disponible();
 
         typedef std::vector< std::pair< PHY_DotationStock*, MT_Float > > T_PionStockVector;
         typedef T_PionStockVector::iterator                              IT_PionStockVector;

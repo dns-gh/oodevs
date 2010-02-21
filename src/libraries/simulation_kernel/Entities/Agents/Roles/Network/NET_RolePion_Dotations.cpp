@@ -11,10 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "NET_RolePion_Dotations.h"
-
 #include "NetworkUnitMessageNotificationHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( network::NET_RolePion_Dotations )
 
@@ -63,7 +63,7 @@ NET_RolePion_Dotations::~NET_RolePion_Dotations()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void NET_RolePion_Dotations::serialize( Archive& file, const uint )
+void NET_RolePion_Dotations::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< NET_RoleInterface_Dotations >( *this )
          & bLastStateDead_
@@ -89,33 +89,33 @@ bool NET_RolePion_Dotations::DataUpdated() const
 // Name: NET_RolePion_Dotations::SendMsg
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void NET_RolePion_Dotations::SendMsg( NET_ASN_MsgUnitAttributes& asnMsg ) const
+void NET_RolePion_Dotations::SendMsg( client::UnitAttributes& asnMsg ) const
 {
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asnMsg().m.pions_renforcantPresent && asnMsg().pions_renforcant.n > 0 )
-        delete [] asnMsg().pions_renforcant.elem;
+    if( asnMsg().has_pions_renforcant()  && asnMsg().pions_renforcant().elem_size() > 0 )
+        asnMsg().mutable_pions_renforcant()->Clear();
 
-    if( asnMsg().m.contamine_par_agents_nbcPresent && asnMsg().contamine_par_agents_nbc.n > 0 )
-        delete [] asnMsg().contamine_par_agents_nbc.elem;
+    if( asnMsg().has_contamine_par_agents_nbc()  && asnMsg().contamine_par_agents_nbc().elem_size() > 0 )
+        asnMsg().mutable_contamine_par_agents_nbc()->Clear();
 
-    if( asnMsg().m.pions_transportesPresent && asnMsg().pions_transportes.n > 0 )
-        delete [] asnMsg().pions_transportes.elem;
+    if( asnMsg().has_pions_transportes()  && asnMsg().pions_transportes().elem_size() > 0 )
+        asnMsg().mutable_pions_transportes()->Clear();
 
-    if( asnMsg().m.dotation_eff_ressourcePresent && asnMsg().dotation_eff_ressource.n > 0 )
-        delete [] asnMsg().dotation_eff_ressource.elem;
+    if( asnMsg().has_dotation_eff_ressource()  && asnMsg().dotation_eff_ressource().elem_size() > 0 )
+        asnMsg().mutable_dotation_eff_ressource()->Clear();
 
-    if( asnMsg().m.dotation_eff_materielPresent && asnMsg().dotation_eff_materiel.n > 0 )
-        delete [] asnMsg().dotation_eff_materiel.elem;
+    if( asnMsg().has_dotation_eff_materiel()  && asnMsg().dotation_eff_materiel().elem_size() > 0 )
+        asnMsg().mutable_dotation_eff_materiel()->Clear();
 
-    if( asnMsg().m.dotation_eff_personnelPresent && asnMsg().dotation_eff_personnel.n > 0 )
-        delete [] asnMsg().dotation_eff_personnel.elem;
+    if( asnMsg().has_dotation_eff_personnel()  && asnMsg().dotation_eff_personnel().elem_size() > 0 )
+        asnMsg().mutable_dotation_eff_personnel()->Clear();
 
-    if( asnMsg().m.equipements_pretesPresent && asnMsg().equipements_pretes.n > 0 )
-        delete [] asnMsg().equipements_pretes.elem;
+    if( asnMsg().has_equipements_pretes()  && asnMsg().equipements_pretes().elem_size() > 0 )
+        asnMsg().mutable_equipements_pretes()->Clear();
 
-    if( asnMsg().m.equipements_empruntesPresent && asnMsg().equipements_empruntes.n > 0 )
-        delete [] asnMsg().equipements_empruntes.elem;
+    if( asnMsg().has_equipements_empruntes()  && asnMsg().equipements_empruntes().elem_size() > 0 )
+        asnMsg().mutable_equipements_empruntes()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -127,25 +127,21 @@ void NET_RolePion_Dotations::SendChangedState() const
     if( !DataUpdated() )
         return;
 
-    NET_ASN_MsgUnitAttributes msg;
-
-    msg().oid = pion_.GetID();
-
+    client::UnitAttributes msg;
+    msg().set_oid( pion_.GetID() );
     pion_.Apply( &network::NetworkUnitMessageNotificationHandler_ABC::SendChangedState, msg );
  
     bool bIsDead = pion_.IsDead();
     if( bLastStateDead_ != bIsDead )
     {
-        msg().m.mortPresent = 1;
-        msg().mort          = bIsDead;
-        bLastStateDead_               = bIsDead;        
+        msg().set_mort( bIsDead );
+        bLastStateDead_ = bIsDead;        
     }
 
     bool bIsNeutralized = pion_.IsNeutralized();
     if( bLastStateNeutralized_ != bIsNeutralized )
     {
-        msg().m.neutralisePresent = 1;
-        msg().neutralise          = bIsNeutralized;
+        msg().set_neutralise( bIsNeutralized );
         bLastStateNeutralized_              = bIsNeutralized;        
     }       
 
@@ -159,14 +155,31 @@ void NET_RolePion_Dotations::SendChangedState() const
 void NET_RolePion_Dotations::SendFullState() const
 {
     // MsgUnitAttributes
-    NET_ASN_MsgUnitAttributes msg;
-    msg().oid                 = pion_.GetID();
-    msg().m.mortPresent       = 1;
-    msg().mort                = bLastStateDead_ = pion_.IsDead();
-    msg().m.neutralisePresent = 1;
-    msg().neutralise          = bLastStateNeutralized_ = pion_.IsNeutralized();
+
+    client::UnitAttributes msg;
+    msg().set_oid       ( pion_.GetID() );
+    msg().set_mort      ( bLastStateDead_ = pion_.IsDead() );
+    msg().set_neutralise( bLastStateNeutralized_ = pion_.IsNeutralized() );
+
+//    pPion_->GetRole< PHY_RoleInterface_Humans           >().SendFullState( msg );
+//    pPion_->GetRole< PHY_RoleInterface_Dotations        >().SendFullState( msg );
+//    pPion_->GetRole< PHY_RoleInterface_Posture          >().SendFullState( msg ); // Current, old, pourcentage
+//    pPion_->GetRole< PHY_RoleInterface_Location         >().SendFullState( msg ); // Direction, speed, altitude, position
+//    pPion_->GetRole< PHY_RoleInterface_Composantes      >().SendFullState( msg ); // Etat ops
+//    pPion_->GetRole< PHY_RoleInterface_Reinforcement    >().SendFullState( msg ); // Reinforcement
+//    pPion_->GetRole< PHY_RoleAction_Loading             >().SendFullState( msg ); // Loading state
+//    pPion_->GetRole< DEC_RolePion_Decision              >().SendFullState( msg ); // Dec states
+//    pPion_->GetRole< PHY_RoleInterface_NBC              >().SendFullState( msg ); // NBC state
+//    pPion_->GetRole< PHY_RoleInterface_Communications   >().SendFullState( msg ); // Brouillage
+//    pPion_->GetRole< PHY_RoleInterface_HumanFactors     >().SendFullState( msg );
+//    pPion_->GetRole< PHY_RoleInterface_Transported      >().SendFullState( msg );
+//    pPion_->GetRole< PHY_RoleAction_Transport           >().SendFullState( msg );
+//    pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendFullState( msg );
+//    pPion_->GetRole< PHY_RoleInterface_Surrender        >().SendFullState( msg );
+//    pPion_->GetRole< PHY_RoleInterface_Refugee          >().SendFullState( msg );
 
     pion_.Apply( &network::NetworkUnitMessageNotificationHandler_ABC::SendFullState, msg );
+
     SendMsg( msg );
 }
 

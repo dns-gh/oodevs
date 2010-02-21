@@ -14,6 +14,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeConstruction.h"
 #include "HLA/HLA_UpdateFunctor.h"
+#include "protocol/protocol.h"
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.h>
 
@@ -36,7 +37,7 @@ ConstructionAttribute::ConstructionAttribute()
 // Name: ConstructionAttribute constructor
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, uint nFullNbrDotation )
+ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation )
     : nFullNbrDotation_( nFullNbrDotation )
     , nCurrentNbrDotation_( 0 )
     , rConstructionPercentage_( 1. )
@@ -49,9 +50,9 @@ ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotati
 // Name: ConstructionAttribute constructor
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, const ASN1T_ObjectAttributes& asn )
-    : nFullNbrDotation_ ( asn.construction.dotation_nbr )
-    , nCurrentNbrDotation_ ( asn.construction.dotation_nbr )
+ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, const Common::MsgObjectAttributes& asn )
+    : nFullNbrDotation_ ( asn.construction().dotation_nbr() )
+    , nCurrentNbrDotation_ ( asn.construction().dotation_nbr() )
     , rConstructionPercentage_ ( 1. )
     , dotation_  ( &dotation )
 {
@@ -77,7 +78,7 @@ void ConstructionAttribute::Load( xml::xistream& xis )
     const MT_Float completion = xml::attribute< MT_Float >( xis, "completion", 1.f );
     if( completion > 0. && completion <= 1. )
         rConstructionPercentage_ = completion;
-    nCurrentNbrDotation_ = uint( rConstructionPercentage_ * nFullNbrDotation_ );
+    nCurrentNbrDotation_ = unsigned int( rConstructionPercentage_ * nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +107,7 @@ ConstructionAttribute& ConstructionAttribute::operator=( const ConstructionAttri
 // Name: ConstructionAttribute::load
 // Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const uint )
+void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     std::string dotation;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this )
@@ -123,7 +124,7 @@ void ConstructionAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: ConstructionAttribute::save
 // Created: JCR 2008-09-15
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     if ( dotation_ )
@@ -150,17 +151,13 @@ void ConstructionAttribute::WriteODB( xml::xostream& xos ) const
 // Name: ConstructionAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void ConstructionAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
     if( dotation_ )
     {
-        asn.m.constructionPresent = 1;        
-        asn.construction.m.dotation_typePresent = 1;
-        asn.construction.dotation_type = dotation_->GetMosID();
-        asn.construction.m.dotation_nbrPresent = 1;
-        asn.construction.dotation_nbr = nCurrentNbrDotation_;
-        asn.construction.m.percentagePresent = 1;
-        asn.construction.percentage = uint( rConstructionPercentage_ * 100. );
+        asn.mutable_construction()->set_dotation_type( dotation_->GetMosID() );
+        asn.mutable_construction()->set_dotation_nbr( nCurrentNbrDotation_ );
+        asn.mutable_construction()->set_percentage( unsigned int( rConstructionPercentage_ * 100. ) );
     }
 }
 
@@ -168,15 +165,12 @@ void ConstructionAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
 // Name: ConstructionAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void ConstructionAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate ) )
     {
-        asn.m.constructionPresent = 1;
-        asn.construction.m.dotation_nbrPresent = 1;
-        asn.construction.dotation_nbr = nCurrentNbrDotation_;
-        asn.construction.m.percentagePresent = 1;
-        asn.construction.percentage = uint( rConstructionPercentage_ * 100. );
+        asn.mutable_construction()->set_dotation_nbr( nCurrentNbrDotation_ );
+        asn.mutable_construction()->set_percentage( unsigned int( rConstructionPercentage_ * 100. ) );
         Reset( eOnUpdate );
     }
 }
@@ -185,12 +179,12 @@ void ConstructionAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 // Name: ConstructionAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
+void ConstructionAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
 {
-    if( asn.m.constructionPresent )
+    if( asn.has_construction() )
     {
-        if( asn.construction.m.percentagePresent )
-            Set( asn.construction.percentage / 100. );
+        if( asn.construction().has_percentage()  )
+            Set( asn.construction().percentage() / 100. );
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }
@@ -202,7 +196,7 @@ void ConstructionAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
 void ConstructionAttribute::Set( MT_Float percentage )
 {
     rConstructionPercentage_ = std::max( 0., std::min( 1., percentage ) );
-    nCurrentNbrDotation_ = (uint)( rConstructionPercentage_ * nFullNbrDotation_ );
+    nCurrentNbrDotation_ = (unsigned int)( rConstructionPercentage_ * nFullNbrDotation_ );
     NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
 }
 
@@ -228,7 +222,7 @@ bool ConstructionAttribute::HasDotation( const PHY_DotationCategory& dotation ) 
 // Name: ConstructionAttribute::UpdateConstruction
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
-uint ConstructionAttribute::GetMaxDotation() const
+unsigned int ConstructionAttribute::GetMaxDotation() const
 {
     return nFullNbrDotation_;
 }
@@ -237,20 +231,20 @@ uint ConstructionAttribute::GetMaxDotation() const
 // Name: ConstructionAttribute::GetDotationNeededForConstruction
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-uint ConstructionAttribute::GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const
+unsigned int ConstructionAttribute::GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const
 {
     const MT_Float rNewPercentage = std::max( 0., std::min( 1., rConstructionPercentage_ + rDeltaPercentage ) );
-    return (uint)( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
+    return (unsigned int)( rNewPercentage * nFullNbrDotation_ ) - nCurrentNbrDotation_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::GetDotationRecoveredWhenDestroying
 // Created: JCR 2008-06-05
 // -----------------------------------------------------------------------------
-uint ConstructionAttribute::GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const
+unsigned int ConstructionAttribute::GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const
 {
     const MT_Float rNewPercentage = std::max( 0., std::min( 1., rConstructionPercentage_ - rDeltaPercentage ) );
-    return nCurrentNbrDotation_ - (uint)( rNewPercentage * nFullNbrDotation_ );
+    return nCurrentNbrDotation_ - (unsigned int)( rNewPercentage * nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------

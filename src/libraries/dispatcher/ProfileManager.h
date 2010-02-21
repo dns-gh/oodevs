@@ -10,9 +10,26 @@
 #ifndef __ProfileManager_h_
 #define __ProfileManager_h_
 
-#include "game_asn/Simulation.h"
 #include "MessageHandler_ABC.h"
 #include "Registrable_ABC.h"
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+namespace MsgsAuthenticationToClient
+{
+    enum MsgProfileCreationRequestAck_ErrorCode;
+    enum MsgProfileUpdateRequestAck_ErrorCode;
+    enum MsgProfileDestructionRequestAck_ErrorCode;
+}
+
+namespace MsgsClientToAuthentication
+{
+    class MsgProfileCreationRequest;
+    class MsgProfileDestructionRequest;
+    class MsgProfileUpdateRequest;
+}
 
 namespace xml{ class xistream; };
 
@@ -46,11 +63,11 @@ public:
     Profile* Authenticate( const std::string& strName, const std::string& strPassword ) const;
 
     void Send( ClientPublisher_ABC& publisher ) const;
-    virtual void Receive( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
 
-    ASN1T_MsgProfileCreationRequestAck_error_code    Create ( const ASN1T_MsgProfileCreationRequest&    message );
-    ASN1T_MsgProfileUpdateRequestAck_error_code      Update ( const ASN1T_MsgProfileUpdateRequest&      message );
-    ASN1T_MsgProfileDestructionRequestAck_error_code Destroy( const ASN1T_MsgProfileDestructionRequest& message );
+    MsgsAuthenticationToClient::MsgProfileCreationRequestAck_ErrorCode    Create ( const MsgsClientToAuthentication::MsgProfileCreationRequest&    message );
+    MsgsAuthenticationToClient::MsgProfileUpdateRequestAck_ErrorCode      Update ( const MsgsClientToAuthentication::MsgProfileUpdateRequest&      message );
+    MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode Destroy( const MsgsClientToAuthentication::MsgProfileDestructionRequest& message );
     //@}
 
 private:

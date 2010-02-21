@@ -377,7 +377,7 @@ public:
     //! @name Factory
     //@{
     static       void        Initialize( xml::xistream& xis );
-    static const MIL_Report* Find      ( uint nID );
+    static const MIL_Report* Find      ( unsigned int nID );
     //@}
 
     //! @name Operations
@@ -399,7 +399,7 @@ public:
 private:
     //! @name Constructors/Destructor
     //@{
-    MIL_Report( uint nID, xml::xistream& xis );
+    MIL_Report( unsigned int nID, xml::xistream& xis );
     ~MIL_Report();
     //@}
 
@@ -408,12 +408,12 @@ private:
     template< typename T > 
     static void PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters );
 
-    bool DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
+    bool DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int reportId, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const;
     //@}
 
     //! @name Types
     //@{
-    typedef std::map< uint, const MIL_Report* > T_ReportMap;
+    typedef std::map< unsigned int, const MIL_Report* > T_ReportMap;
     typedef T_ReportMap::const_iterator         CIT_ReportMap;
 
     typedef std::vector< const MIL_ParameterType_ABC* > T_ParameterVector;
@@ -423,7 +423,7 @@ private:
     //@}
 
 private:
-    uint              nID_;
+    unsigned int              nID_;
     std::string       strMessage_;
     T_ParameterVector parameters_;
 

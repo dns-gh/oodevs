@@ -12,6 +12,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: HierarchicExtension_ABC constructor
@@ -41,54 +42,54 @@ HierarchicExtension_ABC::~HierarchicExtension_ABC()
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
 {
-    superior_ = &automatResolver_.Get( message.oid_automate );
+    superior_ = &automatResolver_.Get( message.oid_automate() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgAutomatCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message )
 {
-    if( message.oid_parent.t == T_MsgAutomatCreation_oid_parent_automate )
-        superior_ = &automatResolver_.Get( message.oid_parent.u.automate );
-    else if( message.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation )
-        superior_ = &formationResolver_.Get( message.oid_parent.u.formation );
+    if( message.has_oid_parent() && message.oid_parent().has_automate() )
+        superior_ = &automatResolver_.Get( message.oid_parent().automate().oid() );
+    else if( message.has_oid_parent() && message.oid_parent().has_formation() )
+        superior_ = &formationResolver_.Get( message.oid_parent().formation().oid() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgFormationCreation& message )
+void HierarchicExtension_ABC::DoUpdate( const Common::MsgFormationCreation& message )
 {
-    if( message.m.oid_formation_parentePresent )
-        superior_ = &formationResolver_.Get( message.oid_formation_parente );
+    if( message.has_oid_formation_parente()  )
+        superior_ = &formationResolver_.Get( message.oid_formation_parente() );
     else
-        superior_ = &teamResolver_.Get( message.oid_camp );
+        superior_ = &teamResolver_.Get( message.oid_camp() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: SBO 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgUnitChangeSuperior& message )
+void HierarchicExtension_ABC::DoUpdate( const Common::MsgUnitChangeSuperior& message )
 {
-    UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
+    UpdateSuperior( automatResolver_.Get( message.oid_automate() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: HierarchicExtension_ABC::DoUpdate
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
-void HierarchicExtension_ABC::DoUpdate( const ASN1T_MsgAutomatChangeSuperior& message )
+void HierarchicExtension_ABC::DoUpdate( const Common::MsgAutomatChangeSuperior& message )
 {
-    if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
-        UpdateSuperior( automatResolver_.Get( message.oid_superior.u.automate ) );
-    else if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
-        UpdateSuperior( formationResolver_.Get( message.oid_superior.u.formation ) );
+    if( message.has_oid_superior() && message.oid_superior().has_automate() )
+        UpdateSuperior( automatResolver_.Get( message.oid_superior().automate().oid() ) );
+    else if( message.has_oid_superior() && message.oid_superior().has_formation() )
+        UpdateSuperior( formationResolver_.Get( message.oid_superior().formation().oid() ) );
 }
 
 // -----------------------------------------------------------------------------

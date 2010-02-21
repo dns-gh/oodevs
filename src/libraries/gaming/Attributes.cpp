@@ -97,85 +97,85 @@ void Attributes::CreateDictionary( PropertiesDictionary& dictionary ) const
 // Name: Attributes::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Attributes::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.positionPresent )
-        vPos_ = converter_.ConvertToXY( message.position );
+    if( message.has_position()  )
+        vPos_ = converter_.ConvertToXY( message.position() );
 
-    if( message.m.etat_operationnel_brutPresent )
-        nRawOpState_ = message.etat_operationnel_brut;
+    if( message.has_etat_operationnel_brut()  )
+        nRawOpState_ = message.etat_operationnel_brut();
 
-    if( message.m.etat_operationnelPresent )
-        nOpState_ = (E_OperationalStatus)message.etat_operationnel;
+    if( message.has_etat_operationnel()  )
+        nOpState_ = (E_OperationalStatus)message.etat_operationnel();
 
-    if( message.m.disponibilite_au_tir_indirectPresent )
-        nIndirectFireAvailability_  = (E_FireAvailability)message.disponibilite_au_tir_indirect;
+    if( message.has_disponibilite_au_tir_indirect()  )
+        nIndirectFireAvailability_  = (E_FireAvailability)message.disponibilite_au_tir_indirect();
     
-    if( message.m.posture_newPresent )
-        nCurrentPosture_ = (E_UnitPosture)message.posture_new;
+    if( message.has_posture_new()  )
+        nCurrentPosture_ = (E_UnitPosture)message.posture_new();
 
-    if( message.m.posture_oldPresent )
-        nOldPosture_ = (E_UnitPosture)message.posture_old;
+    if( message.has_posture_old()  )
+        nOldPosture_ = (E_UnitPosture)message.posture_old();
 
-    if( message.m.posture_pourcentagePresent )
-        nPostureCompletionPourcentage_ = message.posture_pourcentage;
+    if( message.has_posture_pourcentage()  )
+        nPostureCompletionPourcentage_ = message.posture_pourcentage();
 
-    if( message.m.etat_installationPresent )
-        nInstallationState_ = message.etat_installation;
+    if( message.has_etat_installation()  )
+        nInstallationState_ = message.etat_installation();
 
-    if( message.m.mortPresent ) 
-        bDead_ = message.mort != 0;
+    if( message.has_mort()  ) 
+        bDead_ = message.mort() != 0;
 
-    if( message.m.neutralisePresent )
-        bNeutralized_ = message.neutralise != 0;
+    if( message.has_neutralise()  )
+        bNeutralized_ = message.neutralise() != 0;
 
-    if( message.m.rapport_de_forcePresent )
-        nFightRateState_ = (E_ForceRatioStatus)message.rapport_de_force;
+    if( message.has_rapport_de_force()  )
+        nFightRateState_ = (E_ForceRatioStatus)message.rapport_de_force();
 
-    if( message.m.roePresent )
-        nRulesOfEngagementState_ = (E_Roe)message.roe;
+    if( message.has_roe()  )
+        nRulesOfEngagementState_ = (E_Roe)message.roe();
 
-    if( message.m.roe_populationPresent )
-        nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_population;
+    if( message.has_roe_population()  )
+        nRulesOfEngagementPopulationState_ = (E_PopulationRoe)message.roe_population();
 
-    if( message.m.combat_de_rencontrePresent )
-        nCloseCombatState_ = (E_MeetingEngagementStatus)message.combat_de_rencontre;
+    if( message.has_combat_de_rencontre()  )
+        nCloseCombatState_ = (E_MeetingEngagementStatus)message.combat_de_rencontre();
 
-    if( message.m.embarquePresent )
-        bLoadingState_ = message.embarque != 0;
+    if( message.has_embarque()  )
+        bLoadingState_ = message.embarque() != 0;
 
-    if( message.m.transporteurs_disponiblesPresent )
-        bHumanTransportersReady_ = message.transporteurs_disponibles != 0;
+    if( message.has_transporteurs_disponibles()  )
+        bHumanTransportersReady_ = message.transporteurs_disponibles() != 0;
 
-    if( message.m.mode_furtif_actifPresent )
-        bStealthModeEnabled_ = message.mode_furtif_actif != 0;
+    if( message.has_mode_furtif_actif()  )
+        bStealthModeEnabled_ = message.mode_furtif_actif() != 0;
 
-    if( message.m.vitessePresent )
-        nSpeed_ = message.vitesse;
+    if( message.has_vitesse()  )
+        nSpeed_ = message.vitesse();
 
-    if( message.m.hauteurPresent )
-        nAltitude_ = message.hauteur;
+    if( message.has_hauteur()  )
+        nAltitude_ = message.hauteur();
 
-    if( message.m.directionPresent )
-        nDirection_ = message.direction;
+    if( message.has_direction()  )
+        nDirection_ = message.direction().heading();
 
-    if( message.m.communications_brouilleesPresent )
-        bCommJammed_ = message.communications_brouillees != 0;
+    if( message.has_communications_brouillees()  )
+        bCommJammed_ = message.communications_brouillees() != 0;
 
-    if( message.m.silence_radioPresent )
-        bRadioSilence_ = message.silence_radio != 0;
+    if( message.has_silence_radio()  )
+        bRadioSilence_ = message.silence_radio() != 0;
 
-    if( message.m.radar_actifPresent  )
-        bRadarEnabled_ = message.radar_actif != 0;
+    if( message.has_radar_actif()   )
+        bRadarEnabled_ = message.radar_actif() != 0;
 
-    if( message.m.prisonnierPresent )
-        bPrisoner_ = message.prisonnier != 0;
+    if( message.has_prisonnier()  )
+        bPrisoner_ = message.prisonnier() != 0;
 
-    if( message.m.renduPresent )
-        surrenderedTo_ = teamResolver_.Find( message.rendu );
+    if( message.has_rendu()  )
+        surrenderedTo_ = teamResolver_.Find( message.rendu() );
 
-    if( message.m.refugie_pris_en_comptePresent )
-        bRefugeesManaged_ = message.refugie_pris_en_compte != 0;
+    if( message.has_refugie_pris_en_compte()  )
+        bRefugeesManaged_ = message.refugie_pris_en_compte() != 0;
 
     controller_.Update( *(Attributes_ABC*)this );
 }

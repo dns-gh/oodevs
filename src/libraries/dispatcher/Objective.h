@@ -10,8 +10,14 @@
 #ifndef __Objective_h_
 #define __Objective_h_
 
-#include "game_asn/Simulation.h"
+
 #include "Localisation.h"
+
+
+namespace Common
+{
+    class MsgMissionObjective;
+}
 
 namespace dispatcher
 {
@@ -27,14 +33,14 @@ class Objective
 public:
     //! @name Constructors/Destructor
     //@{
-    Objective( const ASN1T_MissionObjective& asn );
+    Objective( const Common::MsgMissionObjective& asn );
     Objective();
    virtual ~Objective();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_MissionObjective& asn ) const;
+    void Send( Common::MsgMissionObjective& asn ) const;
     //@}
 
 private:

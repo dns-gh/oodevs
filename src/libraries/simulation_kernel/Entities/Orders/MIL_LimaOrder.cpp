@@ -12,30 +12,31 @@
 #include "MIL_LimaFunction.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
+#include "protocol/protocol.h"
 
-uint MIL_LimaOrder::nNextID_ = 0;
+unsigned int MIL_LimaOrder::nNextID_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LimaOrder constructor
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-MIL_LimaOrder::MIL_LimaOrder( const ASN1T_LimaOrder& asn )
+MIL_LimaOrder::MIL_LimaOrder( const Common::MsgLimaOrder& asn )
     : nID_          ( ++nNextID_ )
     , points_       ()
     , functions_    ()
     , bFlag_        ( false )
     , bScheduleFlag_( false )
 {
-    NET_ASN_Tools::ReadTick( asn.horaire, nSchedule_);
+    NET_ASN_Tools::ReadTick( asn.horaire(), nSchedule_);
 
-    if( !NET_ASN_Tools::ReadLine( asn.lima, points_ ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_lima );
+    if( !NET_ASN_Tools::ReadLine( asn.lima(), points_ ) )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_lima );
 
-    for( uint i = 0; i < asn.fonctions.n; ++i )
+    for( int i = 0; i < asn.fonctions_size(); ++i )
     {
-        const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( asn.fonctions.elem[ i ] );
+        const MIL_LimaFunction* pFunction = MIL_LimaFunction::Find( asn.fonctions(i) );
         if( !pFunction )
-            throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_lima_function );
+            throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_lima_function );
         functions_.insert( pFunction );
     }
 }
@@ -98,18 +99,16 @@ bool MIL_LimaOrder::Intersect2D( const T_PointVector& polyline, T_PointSet& inte
 // Name: MIL_LimaOrder::Serialize
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-void MIL_LimaOrder::Serialize( ASN1T_LimaOrder& asn ) const
+void MIL_LimaOrder::Serialize( Common::MsgLimaOrder& asn ) const
 {
-    NET_ASN_Tools::WriteLine( points_, asn.lima );
-    NET_ASN_Tools::WriteTick( nSchedule_, asn.horaire );
+    NET_ASN_Tools::WriteLine( points_, *asn.mutable_lima() );
+    NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_horaire() );
 
-    asn.fonctions.n = functions_.size();
     if( !functions_.empty() )
     {
-        asn.fonctions.elem = new ASN1T_EnumLimaType[ functions_.size() ];
-        uint i = 0;
+        // $$$$ _RC_ FDS 2010-01-26:  unsigned int i = 0; 
         for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )
-            asn.fonctions.elem[ i++ ] = (**it).GetAsnID();
+            asn.add_fonctions( (**it).GetAsnID() );  // $$$$ _RC_ FDS 2010-01-26: Validation needed
     }
 }
 
@@ -135,7 +134,7 @@ const T_PointVector& MIL_LimaOrder::GetPoints() const
 // Name: MIL_LimaOrder::GetSchedule
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-uint MIL_LimaOrder::GetSchedule() const
+unsigned int MIL_LimaOrder::GetSchedule() const
 {
     return nSchedule_;
 }
@@ -180,7 +179,7 @@ bool MIL_LimaOrder::IsFlagged() const
 // Name: MIL_LimaOrder::GetID
 // Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------
-uint MIL_LimaOrder::GetID() const
+unsigned int MIL_LimaOrder::GetID() const
 {
     return nID_;
 }

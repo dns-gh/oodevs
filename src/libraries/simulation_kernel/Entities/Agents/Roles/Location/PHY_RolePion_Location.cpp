@@ -11,18 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Location.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KS_ObjectInteraction.h"
 #include "Knowledge/DEC_KS_PopulationInteraction.h"
-#include "Network/NET_ASN_Messages.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Tools/MIL_Tools.h"
-#include "simulation_terrain/TER_World.h"
 #include "Hla/HLA_UpdateFunctor.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-
+#include "Network/NET_ASN_Tools.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/LocationComputer_ABC.h"
 #include "simulation_kernel/LocationComputerFactory_ABC.h"
@@ -30,6 +27,8 @@
 #include "simulation_kernel/MoveComputerFactory_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
+#include "simulation_terrain/TER_World.h"
+#include "Tools/MIL_Tools.h"
 
 using namespace location;
 
@@ -87,7 +86,7 @@ PHY_RolePion_Location::~PHY_RolePion_Location()
 // Name: PHY_RolePion_Location::load
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     MT_Vector2D vPosition;
     file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
@@ -104,7 +103,7 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_RolePion_Location::save
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
          << vDirection_
@@ -344,55 +343,30 @@ void PHY_RolePion_Location::NotifyPutOutsideObject( MIL_Object_ABC& object )
 // Name: PHY_RolePion_Location::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Location::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bPositionHasChanged_ )
-    {
-        msg().m.positionPresent = 1;
-        NET_ASN_Tools::WritePoint( *pvPosition_, msg().position );
-    }
-
+        NET_ASN_Tools::WritePoint( *pvPosition_, *msg().mutable_position() );
     if( bDirectionHasChanged_ )
-    {
-        msg().m.directionPresent = 1;
-        NET_ASN_Tools::WriteDirection( vDirection_, msg().direction );
-    }
-
+        NET_ASN_Tools::WriteDirection( vDirection_, *msg().mutable_direction() );
     if( bHeightHasChanged_ )
-    {
-        msg().m.hauteurPresent = 1;
-        msg().hauteur          = (uint)rHeight_;
-    }
+        msg().set_hauteur( (unsigned int)rHeight_ );
     if( bHeightHasChanged_ || bPositionHasChanged_ )
-    {
-        msg().m.altitudePresent = 1;
-        msg().altitude          = (uint)( rHeight_ + MIL_Tools::GetAltitude( *pvPosition_ ) );
-    }
-
+        msg().set_altitude( (unsigned int)( rHeight_ + MIL_Tools::GetAltitude( *pvPosition_ ) ) );
     if( bCurrentSpeedHasChanged_ )
-    {
-        msg().m.vitessePresent = 1;
-        msg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ );
-    }
+        msg().set_vitesse( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Location::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Location::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Location::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.positionPresent = 1;
-    NET_ASN_Tools::WritePoint( *pvPosition_, msg().position );
-
-    msg().m.directionPresent = 1;
-    NET_ASN_Tools::WriteDirection( vDirection_, msg().direction );
-
-    msg().m.hauteurPresent = 1;
-    msg().hauteur          = (uint)rHeight_;
-
-    msg().m.vitessePresent = 1;
-    msg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ );
+    NET_ASN_Tools::WritePoint( *pvPosition_, *msg().mutable_position() );
+    NET_ASN_Tools::WriteDirection( vDirection_, *msg().mutable_direction() );
+    msg().set_hauteur( (unsigned int)rHeight_ );
+    msg().set_vitesse( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ ) );
 }
 
 // -----------------------------------------------------------------------------

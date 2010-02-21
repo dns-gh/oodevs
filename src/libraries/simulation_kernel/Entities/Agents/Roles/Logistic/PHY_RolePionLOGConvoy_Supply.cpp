@@ -62,7 +62,7 @@ PHY_RolePionLOGConvoy_Supply::~PHY_RolePionLOGConvoy_Supply()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const uint )
+void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this )
          & pConvoy_;

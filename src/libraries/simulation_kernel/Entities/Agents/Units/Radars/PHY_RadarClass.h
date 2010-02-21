@@ -36,14 +36,14 @@ public:
     static       void             Initialize     ();
     static       void             Terminate      ();
     static const PHY_RadarClass*  Find           ( const std::string& strName );
-    static const PHY_RadarClass*  Find           ( uint nID );
+    static const PHY_RadarClass*  Find           ( unsigned int nID );
     static const T_RadarClassMap& GetRadarClasses();
-    static       uint             GetNbrClasses  ();
+    static       unsigned int             GetNbrClasses  ();
     //@}
 
     //! @name Accessors
     //@{
-          uint         GetID   () const;
+          unsigned int         GetID   () const;
     const std::string& GetName () const;
           bool         IsActive() const;
     //@}

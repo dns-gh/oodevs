@@ -17,6 +17,7 @@
 #include "Simulation.h"
 #include "clients_kernel/ObjectTypes.h"
 
+
 // -----------------------------------------------------------------------------
 // Name: FireResultFactory constructor
 // Created: AGE 2006-03-10
@@ -41,7 +42,7 @@ FireResultFactory::~FireResultFactory()
 // Name: FireResultFactory::CreateFireResult
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-AgentFireResult* FireResultFactory::CreateFireResult( const ASN1T_UnitFireDamages& message )
+AgentFireResult* FireResultFactory::CreateFireResult( const MsgsSimToClient::MsgUnitFireDamages& message )
 {
     return new AgentFireResult( message, model_.agents_, model_.static_.objectTypes_, simulation_.GetDateTime() );
 }
@@ -50,7 +51,7 @@ AgentFireResult* FireResultFactory::CreateFireResult( const ASN1T_UnitFireDamage
 // Name: FireResultFactory::CreateFireResult
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-PopulationFireResult* FireResultFactory::CreateFireResult( const ASN1T_PopulationFireDamages& message )
+PopulationFireResult* FireResultFactory::CreateFireResult( const MsgsSimToClient::MsgPopulationFireDamages& message )
 {
     return new PopulationFireResult( message, model_.agents_, simulation_.GetDateTime() );
 }

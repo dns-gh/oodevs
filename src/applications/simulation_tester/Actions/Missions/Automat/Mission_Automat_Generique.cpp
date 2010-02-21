@@ -43,9 +43,9 @@ void Mission_Automat_Generique::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_Generique& asnMission = *new ASN1T_Mission_Automate_Generique();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_generique;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_generique = &asnMission;
+    Mission_Automate_Generique& asnMission = *new Mission_Automate_Generique();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_generique = &asnMission;
 
     const T_LocationVector& zones_ = pTarget_->GetTestParam_PolygonList();
     const T_PositionVector& points_ = pTarget_->GetTestParam_PointList();
@@ -79,8 +79,8 @@ void Mission_Automat_Generique::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_Generique::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_generique );
-    ASN1T_Mission_Automate_Generique& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_generique;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_generique ());
+    Mission_Automate_Generique& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_generique;
 
     ASN_Tools::Delete( asnMission.zones );
     ASN_Tools::Delete( asnMission.points );

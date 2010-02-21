@@ -10,10 +10,12 @@
 #ifndef __AgentFireResult_h_
 #define __AgentFireResult_h_
 
-#include "game_asn/Simulation.h"
-#include "clients_kernel/Types.h"
-#include "tools/Resolver.h"
 #include "Casualties.h"
+#include "clients_kernel/Types.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -35,7 +37,7 @@ class AgentFireResult : public tools::Resolver< Equipment >
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentFireResult( const ASN1T_UnitFireDamages& message, 
+             AgentFireResult( const MsgsSimToClient::MsgUnitFireDamages& message, 
                               const tools::Resolver_ABC< kernel::Agent_ABC >& resolver,
                               const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver,
                               const QDateTime& time );

@@ -43,9 +43,9 @@ void Mission_Automat_INF_DonnerCoupArret::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_DonnerCoupArret& asnMission = *new ASN1T_Mission_Automate_INF_DonnerCoupArret();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_donner_coup_arret;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_donner_coup_arret = &asnMission;
+    Mission_Automate_INF_DonnerCoupArret& asnMission = *new Mission_Automate_INF_DonnerCoupArret();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_donner_coup_arret = &asnMission;
 
     const Location& zoneRegroupement_ = pTarget_->GetTestParam_Polygon();
 
@@ -62,8 +62,8 @@ void Mission_Automat_INF_DonnerCoupArret::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_DonnerCoupArret::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_donner_coup_arret );
-    ASN1T_Mission_Automate_INF_DonnerCoupArret& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_donner_coup_arret;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_donner_coup_arret ());
+    Mission_Automate_INF_DonnerCoupArret& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_donner_coup_arret;
 
     ASN_Tools::Delete( asnMission.zone_regroupement );
 

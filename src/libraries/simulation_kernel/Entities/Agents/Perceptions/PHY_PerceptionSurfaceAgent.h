@@ -8,6 +8,11 @@
 #include "MIL.h"
 #include "MT_Tools/MT_Sector.h"
 
+namespace MsgsSimToClient
+{
+    class MsgVisionCone;
+}
+
 class PHY_SensorTypeAgent;
 class PHY_PerceptionLevel;
 class PHY_RoleInterface_Perceiver;
@@ -28,16 +33,19 @@ namespace urban
 class PHY_PerceptionSurfaceAgent
 {
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_PerceptionSurfaceAgent();
      PHY_PerceptionSurfaceAgent( const PHY_SensorTypeAgent& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight );
     virtual ~PHY_PerceptionSurfaceAgent();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -65,7 +73,7 @@ public:
 
     //! @name Network
     //@{
-    void SendFullState( ASN1T_VisionCone& msg ) const;
+    void SendFullState( MsgsSimToClient::MsgVisionCone& msg ) const;
     //@}
 
 private:
@@ -81,10 +89,13 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const PHY_SensorTypeAgent* pSensorType_;
           MT_Vector2D          vOrigin_;
           MT_Float             rHeight_;
           T_SectorVector       sectors_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_PerceptionSurfaceAgent )

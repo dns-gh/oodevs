@@ -28,8 +28,6 @@ NET_AgentServer::NET_AgentServer( const MIL_Config& config, const MIL_Time_ABC& 
     , nUnitVisionConesChangeTimeStep_( 0 )
     , bSendUnitVisionCones_          ( false )
 {
-    ASN1OCTET buffer[128];
-    ASN1PERDecodeBuffer decodeBuffer( buffer, 128, TRUE );
     AllowConnections();
 }
 

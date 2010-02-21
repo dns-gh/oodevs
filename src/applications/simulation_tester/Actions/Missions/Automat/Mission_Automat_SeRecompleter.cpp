@@ -43,9 +43,9 @@ void Mission_Automat_SeRecompleter::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_SeRecompleter& asnMission = *new ASN1T_Mission_Automate_SeRecompleter();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_se_recompleter;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_se_recompleter = &asnMission;
+    Mission_Automate_SeRecompleter& asnMission = *new Mission_Automate_SeRecompleter();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_se_recompleter = &asnMission;
 
     const Location& zoneRavitaillement_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_SeRecompleter::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_SeRecompleter::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_se_recompleter );
-    ASN1T_Mission_Automate_SeRecompleter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_se_recompleter;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_se_recompleter ());
+    Mission_Automate_SeRecompleter& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_se_recompleter;
 
     ASN_Tools::Delete( asnMission.zone_ravitaillement );
 

@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_HeliporterHelitransporterPlotRavitaillement::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement& asnMission = *new ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_heliporter_helitransporter_plot_ravitaillement;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_heliporter_helitransporter_plot_ravitaillement = &asnMission;
+    Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement& asnMission = *new Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_heliporter_helitransporter_plot_ravitaillement = &asnMission;
 
     const Position& pointDebarquement_ = pTarget_->GetTestParam_Point();
     const Position& positionRegroupement_ = pTarget_->GetTestParam_Point();
@@ -67,8 +67,8 @@ void Mission_Pawn_ALAT_HeliporterHelitransporterPlotRavitaillement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_HeliporterHelitransporterPlotRavitaillement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_heliporter_helitransporter_plot_ravitaillement );
-    ASN1T_Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_heliporter_helitransporter_plot_ravitaillement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_heliporter_helitransporter_plot_ravitaillement ());
+    Mission_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_heliporter_helitransporter_plot_ravitaillement;
 
     ASN_Tools::Delete( asnMission.point_debarquement );
     ASN_Tools::Delete( asnMission.position_regroupement );

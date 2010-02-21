@@ -10,9 +10,15 @@
 #ifndef __ObjectMagicOrdersInterface_h_
 #define __ObjectMagicOrdersInterface_h_
 
-#include "game_asn/Simulation.h"
+
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "protocol/publisher_ABC.h"
+
+namespace MsgsClientToSim 
+{
+    class MsgMagicActionUpdateObject;
+}
 
 namespace kernel
 {
@@ -69,7 +75,7 @@ private:
     //! @name Helpers
     //@{
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
-    void SendObjectMagic( ASN1T_MagicActionUpdateObject& asn );
+    void SendObjectMagic( MsgsClientToSim::MsgMagicActionUpdateObject& message );
     //@}
 
 private:

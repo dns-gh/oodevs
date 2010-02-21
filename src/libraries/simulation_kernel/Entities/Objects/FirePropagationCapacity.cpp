@@ -74,7 +74,7 @@ FirePropagationCapacity::~FirePropagationCapacity()
 // Created: RFT 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void FirePropagationCapacity::serialize( Archive& file, const uint )
+void FirePropagationCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );        
     file //& pManager_
@@ -107,7 +107,7 @@ void FirePropagationCapacity::Instanciate( Object& object ) const
 // Name: FirePropagationCapacity::Update
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
-void FirePropagationCapacity::Update( Object& object, uint time )
+void FirePropagationCapacity::Update( Object& object, unsigned int time )
 {
     FireAttribute& attr = object.GetAttribute< FireAttribute >();
     const unsigned int timeSinceCreation = time - timeOfCreation_;

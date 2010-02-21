@@ -10,8 +10,29 @@
 #ifndef __Profile_h_
 #define __Profile_h_
 
-#include "game_asn/Simulation.h"
 #include "Profile_ABC.h"
+
+namespace MsgsAuthenticationToClient
+{
+    class MsgProfile;
+}
+namespace MsgsClientToSim
+{
+    class MsgClientToSim;
+}
+namespace MsgsClientToAuthentication
+{
+    class MsgProfileUpdateRequest;
+    class MsgProfileCreationRequest;
+    class MsgProfileUpdateRequest;
+}
+
+namespace MsgsClientToReplay
+{
+    class MsgClientToReplay;
+}
+
+
 
 namespace xml{ class xistream; }
 
@@ -41,17 +62,17 @@ public:
     //! @name Constructors/Destructor
     //@{
              Profile( const Model& model, ClientPublisher_ABC& clients, const std::string& strLogin, xml::xistream& xis );
-             Profile( const Model& model, ClientPublisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message );
+             Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsClientToAuthentication::MsgProfileCreationRequest& message );
     virtual ~Profile();
     //@}
 
     //! @name Main
     //@{
     bool CheckPassword( const std::string& strPassword ) const;
-    bool CheckRights  ( const ASN1T_MsgsClientToSim&            msg ) const;
-    bool CheckRights  ( const ASN1T_MsgsClientToAuthentication& msg ) const;
-    bool CheckRights  ( const ASN1T_MsgsClientToReplay&         msg ) const;
-    bool CheckRights  ( const ASN1T_ChatTarget& source, const ASN1T_ChatTarget& target ) const;
+    bool CheckRights  ( const MsgsClientToSim::MsgClientToSim& msg ) const;
+    bool CheckRights  ( const MsgsClientToAuthentication::MsgClientToAuthentication& msg ) const;
+    bool CheckRights  ( const MsgsClientToReplay::MsgClientToReplay&         msg ) const;
+    bool CheckRights  ( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const;
     //@}
 
     //! @name Accessors
@@ -61,14 +82,14 @@ public:
 
     //! @name Network
     //@{
-           void Send        ( ASN1T_Profile& asn ) const;
+    void Send        ( MsgsAuthenticationToClient::MsgProfile& asn ) const;
            void SendCreation( ClientPublisher_ABC& publisher ) const;
-    static void AsnDelete   ( ASN1T_Profile& asn );
+    static void Delete   ( MsgsAuthenticationToClient::MsgProfile& asn );
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgProfileUpdateRequest& message );
+    void Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest& message );
     void SetRight( const kernel::Automat_ABC& entity, bool readonly, bool readwrite );
     //@}
 
@@ -93,7 +114,7 @@ private:
     void ReadSideRights      ( xml::xistream& xis, T_SideSet&       container );
     void ReadFormationRights ( xml::xistream& xis, T_FormationSet&  container );
     void ReadPopulationRights( xml::xistream& xis, T_PopulationSet& container );
-    void ReadRights          ( const ASN1T_Profile& message );
+    void ReadRights          ( const MsgsAuthenticationToClient::MsgProfile& message );
     //@}
 
 private:

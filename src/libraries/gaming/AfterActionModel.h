@@ -10,8 +10,13 @@
 #ifndef __AfterActionModel_h_
 #define __AfterActionModel_h_
 
-#include "game_asn/Aar.h"
 #include "tools/Resolver.h"
+
+namespace MsgsAarToClient
+{
+	class MsgAarInformation;
+	class MsgPlotResult;
+}
 
 namespace kernel
 {
@@ -45,8 +50,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgAarInformation& asnMsg );
-    void Update( const ASN1T_MsgPlotResult& asnMsg );
+    void Update( const MsgsAarToClient::MsgAarInformation& message );
+    void Update( const MsgsAarToClient::MsgPlotResult& message );
     void Purge();
     IndicatorRequest& CreateRequest( const AfterActionFunction& function );
     //@}

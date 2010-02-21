@@ -34,7 +34,7 @@ public:
     static unsigned int  GetAttitude    ( const MIL_Population& callerPopulation );
 
     // Knowledge agents
-    static int GetKnowledgeAgentRoePopulation ( uint agentId );
+    static int GetKnowledgeAgentRoePopulation ( unsigned int agentId );
 
     // Knowledge objects
     static boost::shared_ptr<MT_Vector2D> GetKnowledgeObjectLocalisation     ( int knowledgeId);

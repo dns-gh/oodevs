@@ -14,8 +14,15 @@
 #include "dispatcher/Registrable_ABC.h"
 #include "dispatcher/Position.h"
 #include <boost/ptr_container/ptr_vector.hpp>
-#include "game_asn/Messenger.h"
 #include "directia/ScriptRef.h"
+
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsClientToMessenger;
+using namespace MsgsSimToClient;
+using namespace MsgsAarToClient;
+
 
 namespace dispatcher
 {
@@ -67,8 +74,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const ASN1T_MsgsSimToClient& message );
-    virtual void Receive                  ( const ASN1T_MsgsAarToClient& message );
+    virtual void Receive                  ( const MsgSimToClient& message );
+    virtual void Receive                  ( const MsgAarToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual void Update();
@@ -85,7 +92,7 @@ private:
     //@{
     void LoadScripts();
     void LoadScript( const std::string& file );
-    void OnReceiveClientToMessenger( const std::string&, const ASN1T_MsgsClientToMessenger& );
+    void OnReceiveClientToMessenger( const std::string&, const MsgClientToMessenger& );
     virtual void RegisterIn( directia::Brain& brain );
 
     void Reset();

@@ -17,7 +17,7 @@
 #include "PHY_DotationCategory.h"
 #include "PHY_Dotation.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Network/NET_ASN_Messages.h"
+#include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroupContainer )
@@ -59,13 +59,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const uint nVersion )
+        void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_DotationGroupContainer::T_DotationGroupMap& map, const uint )
+        void save( Archive& file, const PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -78,13 +78,13 @@ namespace boost
         }
 
         template< typename Archive >
-        void load( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const uint )
+        void load( Archive& file, PHY_DotationGroupContainer::T_DotationGroupMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
-                uint nID;
+                unsigned int nID;
                 
                 file >> nID;
                 file >> map[ PHY_DotationType::FindDotationType( nID ) ];
@@ -93,13 +93,13 @@ namespace boost
         
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const uint nVersion )
+        void serialize( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int nVersion )
         {
             split_free( file, set, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const PHY_DotationGroupContainer::T_DotationSet& set, const uint )
+        void save( Archive& file, const PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
         {
             unsigned size = set.size();
             file << size;
@@ -108,9 +108,9 @@ namespace boost
         }
                 
         template< typename Archive >
-        void load( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const uint )
+        void load( Archive& file, PHY_DotationGroupContainer::T_DotationSet& set, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -127,7 +127,7 @@ namespace boost
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_DotationGroupContainer::serialize( Archive& file, const uint )
+void PHY_DotationGroupContainer::serialize( Archive& file, const unsigned int )
 {
     file & pRoleDotation_
          & dotationGroups_
@@ -409,33 +409,27 @@ void PHY_DotationGroupContainer::NotifyReleased()
 // Name: PHY_DotationGroupContainer::SendChangedState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const
+void PHY_DotationGroupContainer::SendChangedState( client::UnitAttributes& asn ) const
 {
     if( dotationsChanged_.empty() )
         return;
 
-    ASN1T_ResourceDotations* pResources = new ASN1T_ResourceDotations[ dotationsChanged_.size() ];
-    uint i = 0;
-    for( CIT_DotationSet itDotation = dotationsChanged_.begin(); itDotation != dotationsChanged_.end(); ++itDotation, ++i )
+    for( CIT_DotationSet itDotation = dotationsChanged_.begin(); itDotation != dotationsChanged_.end(); ++itDotation )
     {
-        const PHY_Dotation& dotation          = **itDotation;
-        ASN1T_ResourceDotations& asnRessource = pResources[i];
-        asnRessource.ressource_id             = dotation.GetCategory().GetMosID();
-        asnRessource.quantite_disponible      = (uint)dotation.GetValue();
-    }
-    
-    asn().dotation_eff_ressource.n        = dotationsChanged_.size();
-    asn().dotation_eff_ressource.elem     = pResources;
-    asn().m.dotation_eff_ressourcePresent = 1;
+        const PHY_Dotation& dotation = **itDotation;
+        MsgsSimToClient::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
+        asnRessource.set_ressource_id( dotation.GetCategory().GetMosID() );
+        asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
+    }    
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationGroupContainer::SendFullState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
+void PHY_DotationGroupContainer::SendFullState( client::UnitAttributes& asn ) const
 {
-    uint nNbrDotations = 0;
+    unsigned int nNbrDotations = 0;
     for( CIT_DotationGroupMap itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
@@ -445,24 +439,17 @@ void PHY_DotationGroupContainer::SendFullState( NET_ASN_MsgUnitAttributes& asn )
     if( nNbrDotations == 0 )
         return;
 
-    ASN1T_ResourceDotations* pResources = new ASN1T_ResourceDotations[ nNbrDotations ];
-    uint i = 0;
-
     for( CIT_DotationGroupMap itDotationGroup = dotationGroups_.begin(); itDotationGroup != dotationGroups_.end(); ++itDotationGroup )
     {
         const PHY_DotationGroup::T_DotationMap& dotations = itDotationGroup->second->GetDotations();
         for( PHY_DotationGroup::CIT_DotationMap itDotation = dotations.begin(); itDotation != dotations.end(); ++itDotation )
         {
-            const PHY_Dotation& dotation          = *itDotation->second;
-            ASN1T_ResourceDotations& asnRessource = pResources[ i++ ];
-            asnRessource.ressource_id             = dotation.GetCategory().GetMosID();
-            asnRessource.quantite_disponible      = (uint)dotation.GetValue();
+            const PHY_Dotation& dotation = *itDotation->second;
+            MsgsSimToClient::ResourceDotations_ResourceDotation& asnRessource = *asn().mutable_dotation_eff_ressource()->add_elem();
+            asnRessource.set_ressource_id( dotation.GetCategory().GetMosID() );
+            asnRessource.set_quantite_disponible( (unsigned int)dotation.GetValue() );
         }
     }
-
-    asn().dotation_eff_ressource.n        = nNbrDotations;
-    asn().dotation_eff_ressource.elem     = pResources;
-    asn().m.dotation_eff_ressourcePresent = 1;
 }
 
 // -----------------------------------------------------------------------------

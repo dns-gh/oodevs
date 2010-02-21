@@ -1,0 +1,26 @@
+package MsgsAarToClient;
+
+message MsgAarInformation {
+    required string information = 1;
+}
+
+message MsgPlotResult {
+    required uint32 identifier = 1;
+    repeated float  values     = 2;
+    required string error      = 3;
+}
+
+message MsgIndicator {
+    required string name  = 1;
+    required float  value = 2;
+}
+
+message MsgAarToClient {
+    message Content {
+        optional MsgAarInformation aar_information = 1;
+        optional MsgPlotResult     plot_result     = 2;
+        optional MsgIndicator      indicator       = 3;
+    }
+    optional int32   context = 1 [default = 0];
+    optional Content message = 2;
+}

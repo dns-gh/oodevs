@@ -30,14 +30,14 @@ class DEC_KnowledgeSource_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, uint nPriority );
+    explicit DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, unsigned int nPriority );
              DEC_KnowledgeSource_ABC();
     virtual ~DEC_KnowledgeSource_ABC();
     //@}
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -49,11 +49,11 @@ public:
 
     //! @name Accessors
     //@{
-    uint GetPriority() const;
+    unsigned int GetPriority() const;
     //@}
 
 private:
-    uint                         nPriority_;
+    unsigned int                         nPriority_;
     DEC_KnowledgeBlackBoard_ABC* pBlackBoard_;
 };
 
@@ -62,7 +62,7 @@ private:
 // Created: NLD 2006-04-13
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DEC_KnowledgeSource_ABC::serialize( Archive& archive, const uint )
+void DEC_KnowledgeSource_ABC::serialize( Archive& archive, const unsigned int )
 {
     archive & nPriority_
             & pBlackBoard_;

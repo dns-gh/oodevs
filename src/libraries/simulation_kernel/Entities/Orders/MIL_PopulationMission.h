@@ -11,7 +11,11 @@
 #define __MIL_PopulationMission_h_
 
 #include "MIL_Mission_ABC.h"
-#include "MIL_MissionType_ABC.h"
+
+namespace Common
+{
+    class MsgPopulationOrder;
+}
 
 class MIL_Population;
 
@@ -26,31 +30,30 @@ class MIL_PopulationMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const ASN1T_MsgPopulationOrder& asn );
+             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const Common::MsgPopulationOrder& asn );
     virtual ~MIL_PopulationMission();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Start               ();
+    virtual void Start();
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
     //@}
 
 private:
-    //! @name Tools
+    //! @name Helpers
     //@{
     void Stop();
-    //@}
-
-    //! @name Network
-    //@{
-           void Send         () const;
+    void Send() const;
     static void SendNoMission( const MIL_Population& population );
     //@}
 
 private:
+    //! @name Member data
+    //@{
     MIL_Population& population_;
     bool            bDIABehaviorActivated_;
+    //@}
 };
 
 #endif // __MIL_PopulationMission_h_

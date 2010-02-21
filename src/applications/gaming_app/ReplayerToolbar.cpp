@@ -11,9 +11,12 @@
 #include "ReplayerToolbar.h"
 #include "moc_ReplayerToolbar.cpp"
 #include "gaming/Simulation.h"
-#include "game_asn/ReplaySenders.h"
 #include "clients_kernel/Controllers.h"
 #include "icons.h"
+#include "protocol/replaysenders.h"
+#include "protocol/publisher_ABC.h"
+
+using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: ReplayerToolbar constructor
@@ -98,7 +101,7 @@ void ReplayerToolbar::OnSliderReleased()
     if( userMove_ )
     {
         replay::ControlSkipToTick skip;
-        skip() = slider_->value();
+        skip().set_tick( slider_->value() );
         skip.Send( network_ );
     }
 }

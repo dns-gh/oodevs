@@ -10,8 +10,13 @@
 #ifndef __ActionParameter_ABC_h_
 #define __ActionParameter_ABC_h_
 
-#include "game_asn/Simulation.h"
 #include "ParameterContainer_ABC.h"
+#include <qstring.h>
+
+namespace Common
+{
+    class MsgMissionParameter;
+}
 
 namespace kernel
 {
@@ -65,8 +70,8 @@ public:
 
     virtual void AddParameter( Parameter_ABC& parameter );
     virtual void CommitTo( std::string& content ) const;
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
 
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     void Set( bool isSet );

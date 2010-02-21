@@ -59,7 +59,7 @@ InterferenceCapacity::~InterferenceCapacity()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void InterferenceCapacity::serialize( Archive& file, const uint )
+void InterferenceCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }

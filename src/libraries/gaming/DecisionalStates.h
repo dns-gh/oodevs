@@ -10,12 +10,16 @@
 #ifndef __DecisionalStates_h_
 #define __DecisionalStates_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
+
+namespace MsgsSimToClient
+{
+    class MsgDecisionalState;
+}
 
 // =============================================================================
 /** @class  DecisionalStates
@@ -24,7 +28,7 @@
 // Created: AGE 2007-05-31
 // =============================================================================
 class DecisionalStates : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgDecisionalState >
+                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgDecisionalState >
                        , public kernel::Drawable_ABC
                        , public kernel::Displayable_ABC
                        , public kernel::Aggregatable_ABC
@@ -39,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgDecisionalState& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgDecisionalState& message );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     //@}

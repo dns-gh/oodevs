@@ -47,7 +47,7 @@ Logistics::~Logistics()
 // Name: Logistics::DoUpdate
 // Created: AGE 2006-03-01
 // -----------------------------------------------------------------------------
-void Logistics::DoUpdate( const ASN1T_MsgLogMaintenanceState& message )
+void Logistics::DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& message )
 {
     if( ! holder_.Retrieve< MaintenanceStates >() )
     {
@@ -61,7 +61,7 @@ void Logistics::DoUpdate( const ASN1T_MsgLogMaintenanceState& message )
 // Name: Logistics::DoUpdate
 // Created: AGE 2006-03-01
 // -----------------------------------------------------------------------------
-void Logistics::DoUpdate( const ASN1T_MsgLogMedicalState& message )
+void Logistics::DoUpdate( const MsgsSimToClient::MsgLogMedicalState& message )
 {
     if( ! holder_.Retrieve< MedicalStates >() )
     {
@@ -75,7 +75,7 @@ void Logistics::DoUpdate( const ASN1T_MsgLogMedicalState& message )
 // Name: Logistics::DoUpdate
 // Created: AGE 2006-03-01
 // -----------------------------------------------------------------------------
-void Logistics::DoUpdate( const ASN1T_MsgLogSupplyState& message )
+void Logistics::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message )
 {
     if( ! holder_.Retrieve< SupplyStates >() )
     {

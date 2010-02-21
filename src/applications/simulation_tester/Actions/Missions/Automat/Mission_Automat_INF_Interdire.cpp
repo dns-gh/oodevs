@@ -43,9 +43,9 @@ void Mission_Automat_INF_Interdire::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Interdire& asnMission = *new ASN1T_Mission_Automate_INF_Interdire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_interdire;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_interdire = &asnMission;
+    Mission_Automate_INF_Interdire& asnMission = *new Mission_Automate_INF_Interdire();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_interdire = &asnMission;
 
     const T_PositionVector& pointsAInterdire_ = pTarget_->GetTestParam_PointList();
 
@@ -62,8 +62,8 @@ void Mission_Automat_INF_Interdire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Interdire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_interdire );
-    ASN1T_Mission_Automate_INF_Interdire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_interdire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_interdire ());
+    Mission_Automate_INF_Interdire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_interdire;
 
     ASN_Tools::Delete( asnMission.points_a_interdire );
 

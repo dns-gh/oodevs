@@ -427,7 +427,7 @@ const AutomatType* TypeManager::FindAutomatType( const std::string& strName ) co
 // Name: TypeManager::Find
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
-const AutomatType* TypeManager::FindAutomatType( ASN1T_TypeAutomate asnId ) const
+const AutomatType* TypeManager::FindAutomatType( TypeAutomate asnId ) const
 {
     for( CIT_AutomatTypeMap it = automatTypes_.begin(); it != automatTypes_.end(); ++it )
         if( int( it->second->GetId() ) == asnId )
@@ -449,7 +449,7 @@ const PawnType* TypeManager::FindPawnType( const std::string& strName ) const
 // Name: TypeManager::Find
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
-const PawnType* TypeManager::FindPawnType( ASN1T_UnitType asnId ) const
+const PawnType* TypeManager::FindPawnType( UnitType asnId ) const
 {
     for( CIT_PawnTypeMap it = pawnTypes_.begin(); it != pawnTypes_.end(); ++it )
         if( int( it->second->GetId() )== asnId )
@@ -471,7 +471,7 @@ const PopulationType* TypeManager::FindPopulationType( const std::string& strNam
 // Name: TypeManager::Find
 // Created: SBO 2005-08-11
 // -----------------------------------------------------------------------------
-const PopulationType* TypeManager::FindPopulationType( ASN1T_UnitType asnId ) const
+const PopulationType* TypeManager::FindPopulationType( UnitType asnId ) const
 {
     for( CIT_PopulationTypeMap it = populationTypes_.begin(); it != populationTypes_.end(); ++it )
         if( int( it->second->GetId() ) == asnId )

@@ -14,7 +14,7 @@
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
 inline
-uint DEC_PathFind_Manager::GetMaxComputationDuration() const
+unsigned int DEC_PathFind_Manager::GetMaxComputationDuration() const
 {
     return nMaxComputationDuration_;
 }

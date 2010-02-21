@@ -44,10 +44,10 @@ ObjectKnowledges::~ObjectKnowledges()
 // Name: ObjectKnowledges::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeCreation& message )
+void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
-    if( ! Find( message.oid ) )
-        Register( message.oid, * factory_.Create( team_, message ) );
+    if( ! Find( message.oid() ) )
+        Register( message.oid(), * factory_.Create( team_, message ) );
     controller_.Update( *this );
 }
 
@@ -55,9 +55,9 @@ void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeCreation& message
 // Name: ObjectKnowledges::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    Get( message.oid ).Update( message );
+    Get( message.oid() ).Update( message );
     controller_.Update( *this );
 }
 
@@ -65,9 +65,9 @@ void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
 // Name: ObjectKnowledges::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void ObjectKnowledges::DoUpdate( const ASN1T_MsgObjectKnowledgeDestruction& message )
+void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message )
 {
-    delete Find( message.oid );
-    Remove( message.oid );
+    delete Find( message.oid() );
+    Remove( message.oid() );
     controller_.Update( *this );
 }

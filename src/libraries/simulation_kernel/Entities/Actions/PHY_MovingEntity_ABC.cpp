@@ -69,7 +69,7 @@ void PHY_MovingEntity_ABC::MoveCanceled( boost::shared_ptr< DEC_PathResult > pPa
 // Name: PHY_MovingEntity_ABC::SerializeEnvironmentType
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void PHY_MovingEntity_ABC::SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg ) const
+void PHY_MovingEntity_ABC::SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnvironmentType& msg ) const
 {
     pathWalker_.SerializeEnvironmentType( msg );
 }
@@ -78,7 +78,7 @@ void PHY_MovingEntity_ABC::SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentTyp
 // Name: PHY_MovingEntity_ABC::SerializeCurrentPath
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool PHY_MovingEntity_ABC::SerializeCurrentPath( ASN1T_Path& asn ) const
+bool PHY_MovingEntity_ABC::SerializeCurrentPath( Common::MsgPath& asn ) const
 {
     return pathWalker_.SerializeCurrentPath( asn );
 }

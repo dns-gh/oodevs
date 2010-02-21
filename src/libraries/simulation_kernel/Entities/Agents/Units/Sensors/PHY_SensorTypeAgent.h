@@ -85,8 +85,8 @@ private:
 
     //! @name Tools
     //@{
-    PHY_RawVisionData::E_VisionObject ConvertObjectIdxToEnvironnement( uint val );
-    uint                              ConvertEnvironementToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
+    PHY_RawVisionData::E_VisionObject ConvertObjectIdxToEnvironnement( unsigned int val );
+    unsigned int                              ConvertEnvironementToObjectIdx ( PHY_RawVisionData::E_VisionObject obj );
 
     const PHY_PerceptionLevel& RayTrace                 ( const MT_Vector2D& vSource, MT_Float rSourceAltitude, const MT_Vector2D& vTarget, MT_Float rTargetAltitude, MT_Float rDistanceMaxModificator ) const;
     MT_Float                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;

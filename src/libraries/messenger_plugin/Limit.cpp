@@ -10,6 +10,7 @@
 #include "messenger_plugin_pch.h"
 #include "Limit.h"
 #include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/MessengerSenders.h"
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::messenger;
@@ -18,8 +19,8 @@ using namespace plugins::messenger;
 // Name: Limit constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-Limit::Limit( unsigned int id, const ASN1T_MsgLimitCreationRequest& message )
-    : TacticalLine_ABC( id, message )
+Limit::Limit( unsigned int id, const MsgsClientToMessenger::MsgLimitCreationRequest& message )
+    : TacticalLine_ABC( id, message.tacticalline() )
 {
     // NOTHING
 }
@@ -28,7 +29,7 @@ Limit::Limit( unsigned int id, const ASN1T_MsgLimitCreationRequest& message )
 // Name: Limit constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-Limit::Limit( unsigned int id, xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
+Limit::Limit( unsigned int id, xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( id, xis, diffusion, converter )
 {
     // NOTHING
@@ -47,9 +48,9 @@ Limit::~Limit()
 // Name: Limit::Update
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void Limit::Update( const ASN1T_MsgLimitUpdateRequest& message )
+void Limit::Update( const MsgsClientToMessenger::MsgLimitUpdateRequest& message )
 {
-    TacticalLine_ABC::Update( message.tactical_line );
+    TacticalLine_ABC::Update( message.tactical_line() );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +59,10 @@ void Limit::Update( const ASN1T_MsgLimitUpdateRequest& message )
 // -----------------------------------------------------------------------------
 void Limit::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
-    ASN1T_MsgLimitCreation creation;
-    creation.oid = GetID();
-    TacticalLine_ABC::Send( creation.tactical_line );
-    LimitCreation message( creation );
+    MsgsMessengerToClient::MsgLimitCreation creation ;
+    creation.set_oid( GetID() );
+    TacticalLine_ABC::Send( *creation.mutable_tactical_line() );
+    plugins::messenger::LimitCreation message( creation );
     message.Send( client );
 }
 
@@ -71,10 +72,10 @@ void Limit::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 {
-    ASN1T_MsgLimitUpdate update;
-    update.oid = GetID();
-    TacticalLine_ABC::Send( update.tactical_line );
-    LimitUpdate message( update );
+    MsgsMessengerToClient::MsgLimitUpdate update;
+    update.set_oid( GetID() );
+    TacticalLine_ABC::Send( *update.mutable_tactical_line() );
+    plugins::messenger::LimitUpdate message( update );
     message.Send( client );
 }
 
@@ -85,8 +86,9 @@ void Limit::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Limit::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
-    ASN1T_MsgLimitDestruction destruction = GetID() ;
-    LimitDestruction message( destruction );
+    MsgsMessengerToClient::MsgLimitDestruction destruction;
+    destruction.set_oid( GetID() );
+    plugins::messenger::LimitDestruction message( destruction );
     message.Send( client );
 }
 

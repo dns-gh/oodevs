@@ -11,9 +11,12 @@
 #define __Platform_h_
 
 #include "dispatcher/SimpleEntity.h"
-#include "game_asn/Simulation.h"
 #include "Movable_ABC.h"
 #include "Platform_ABC.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace kernel
 {
@@ -46,8 +49,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgUnitAttributes& updateMessage );
-    void Spread( ASN1T_EquipmentDotations& updateMessage );
+    void Update( const MsgUnitAttributes& updateMessage );
+    void Spread( EquipmentDotations_EquipmentDotation& updateMessage );
     virtual void Move( const geometry::Point2f& to );
     virtual void Stop();
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
@@ -73,7 +76,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Apply( ASN1T_EquipmentDotations& updateMessage );
+    void Apply( EquipmentDotations_EquipmentDotation& updateMessage );
     bool SetStatus( int& number, E_State state );
     void ComputeHeading( const geometry::Point2f& to ); 
     //@}

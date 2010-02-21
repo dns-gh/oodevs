@@ -59,7 +59,7 @@ PHY_MedicalSortingConsign::~PHY_MedicalSortingConsign()
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_MedicalSortingConsign::serialize( Archive& file, const uint )
+void PHY_MedicalSortingConsign::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_MedicalConsign_ABC >( *this )
          & pDoctor_;
@@ -103,7 +103,7 @@ void PHY_MedicalSortingConsign::EnterStateSorting()
     assert( pHumanState_ );
     assert( pDoctor_ );
     SetState( eSorting );
-    nTimer_ = (uint)( PHY_HumanWound::GetSortingTime() );
+    nTimer_ = (unsigned int)( PHY_HumanWound::GetSortingTime() );
 }
     
 // -----------------------------------------------------------------------------

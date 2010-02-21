@@ -14,15 +14,19 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
+namespace Common
+{
+    enum ObstacleType_DemolitionTargetType;
+}
+
 // =============================================================================
 /** @class  ObstacleAttribute
     @brief  ObstacleAttribute
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class ObstacleAttribute 
-    : public ObjectAttribute_ABC
-    , public UpdatableAttribute_ABC
+class ObstacleAttribute : public ObjectAttribute_ABC
+                        , public UpdatableAttribute_ABC
 { 
 public:
     //! @name Constructors/Destructor
@@ -30,23 +34,23 @@ public:
              ObstacleAttribute();
     explicit ObstacleAttribute( bool reserved );
     explicit ObstacleAttribute( xml::xistream& xis );
-    explicit ObstacleAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit ObstacleAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~ObstacleAttribute();
     //@}
 
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive& file, const uint );
+    template < typename Archive > void serialize( Archive& file, const unsigned int );
     //@}
 
 
-    //! @name 
+    //! @name Operations
     //@{
-    void SetType( ASN1T_EnumDemolitionTargetType obstacleType );
-    void Instanciate( DEC_Knowledge_Object& object ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void WriteODB( xml::xostream& xos ) const;
+    void SetType( Common::ObstacleType_DemolitionTargetType obstacleType );
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name 
@@ -58,14 +62,15 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnUpdate( const ASN1T_ObjectAttributes& asn ); //<! Update from ASN msg
+    virtual void OnUpdate( const Common::MsgObjectAttributes& asn ); //<! Update from asn msg
     ObstacleAttribute& operator=( const ObstacleAttribute& ); //!< Assignment operator
     //@}
 
 private:
     //! @name Type
     //@{
-    typedef EnumDemolitionTargetType::Root E_DemolitionTargetType;
+    // $$$$ _RC_ FDS 2010-01-22: Necessaire ???
+    typedef Common::ObstacleType_DemolitionTargetType E_DemolitionTargetType;
     //@}
 
 private:

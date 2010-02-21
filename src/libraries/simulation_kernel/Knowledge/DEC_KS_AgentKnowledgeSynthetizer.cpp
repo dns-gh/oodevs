@@ -23,6 +23,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "simulation_kernel/MIL_AgentServer.h" // LTO
 #include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h" // LTO
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
  
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_AgentKnowledgeSynthetizer )
 

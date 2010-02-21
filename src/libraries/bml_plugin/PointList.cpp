@@ -70,23 +70,23 @@ void PointList::Serialize( xml::xostream& xos ) const
 // Name: PointList::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void PointList::Serialize( ASN1T_CoordLatLongList& asn ) const
+void PointList::Serialize( MsgCoordLatLongList& asn ) const
 {
-    asn.n = points_.size();
-    if( asn.n > 0 )
-        asn.elem = new ASN1T_CoordLatLong[asn.n];
+    if( asn.elem_size() > 0 )
+        for( int i = 0; i < asn.elem_size(); ++i )
+            asn.add_elem();
     else 
-        asn.elem = 0;
+        asn.mutable_elem();
     unsigned int i = 0;
     for( T_Points::const_iterator it = points_.begin(); it != points_.end(); ++it, ++i )
-        it->Serialize( asn.elem[i] );
+        it->Serialize( *asn.mutable_elem( i ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PointList::Clean
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void PointList::Clean( ASN1T_CoordLatLongList& asn ) const
+void PointList::Clean( MsgCoordLatLongList& asn ) const
 {
-    delete[] asn.elem;
+    delete[] asn.mutable_elem();
 }

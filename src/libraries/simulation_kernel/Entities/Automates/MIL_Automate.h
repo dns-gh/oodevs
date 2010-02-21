@@ -15,9 +15,25 @@
 #include "MIL.h"
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
-#include "Network/NET_ASN_Messages.h"
-
 #include "tools/Resolver.h"
+
+namespace Common
+{
+    class MsgAutomatOrder;
+    class MsgAutomatChangeKnowledgeGroup;
+    class MsgAutomatChangeSuperior;
+    class MsgAutomatChangeLogisticLinks;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgFragOrder;
+    class MsgLogSupplyChangeQuotas;
+    class MsgLogSupplyPushFlow;
+    class MsgSetAutomatMode;
+    class MsgUnitCreationRequest;
+    class MsgUnitMagicAction;
+}
 
 namespace xml
 {
@@ -40,6 +56,7 @@ class MIL_Object_ABC;
 class MIL_AgentTypePion;
 class PHY_SupplyDotationState;
 class PHY_DotationCategory;
+class DEC_KnowledgeBlackBoard_Automate;
 
 // =============================================================================
 // @class  MIL_Automate
@@ -74,8 +91,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
             void WriteODB             ( xml::xostream& xos ) const;
     virtual void WriteLogisticLinksODB( xml::xostream& xos ) const;
@@ -89,7 +106,7 @@ public:
 
     //! @name Accessors
     //@{
-          uint                              GetID            () const;
+          unsigned int                              GetID            () const;
     const MIL_AutomateType&                 GetType          () const;
           MIL_Army_ABC&                     GetArmy          () const;
           MIL_KnowledgeGroup&               GetKnowledgeGroup() const;
@@ -131,11 +148,11 @@ public:
 
     //! @name Prisoners
     //@{
-          bool          IsSurrendered       () const;
+          bool      IsSurrendered       () const;
     const MIL_Army_ABC* GetArmySurrenderedTo() const;
-          bool          NotifyCaptured      ( const MIL_AgentPion& pionTakingPrisoner );
-          bool          NotifyReleased      ();
-          bool          NotifyImprisoned    ( const MIL_Object_ABC& camp );
+          bool      NotifyCaptured      ( const MIL_AgentPion& pionTakingPrisoner );
+          bool      NotifyReleased      ();
+          bool      NotifyImprisoned    ( const MIL_Object_ABC& camp );
     //@}
 
     //! @name Refugees $$$$ A revoir
@@ -151,16 +168,16 @@ public:
     virtual void SendFullState                    () const;
             void SendKnowledge                    () const;
 
-            void OnReceiveMsgOrder                ( const ASN1T_MsgAutomatOrder&                msg );
-            void OnReceiveMsgFragOrder            ( const ASN1T_MsgFragOrder&                   msg );
-            void OnReceiveMsgSetAutomateMode      ( const ASN1T_MsgSetAutomatMode&              msg );
-            void OnReceiveMsgUnitCreationRequest  ( const ASN1T_MsgUnitCreationRequest&         msg );
-            void OnReceiveMsgUnitMagicAction      ( const ASN1T_MsgUnitMagicAction&             msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgChangeKnowledgeGroup ( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgChangeSuperior       ( const ASN1T_MsgAutomatChangeSuperior&       msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const ASN1T_MsgAutomatChangeLogisticLinks&  msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas&       msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const ASN1T_MsgLogSupplyPushFlow&           msg );
+            void OnReceiveMsgOrder                ( const Common::MsgAutomatOrder&                   msg );
+            void OnReceiveMsgFragOrder            ( const MsgsClientToSim::MsgFragOrder&             msg );
+            void OnReceiveMsgSetAutomateMode      ( const MsgsClientToSim::MsgSetAutomatMode&        msg );
+            void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitCreationRequest&   msg );
+            void OnReceiveMsgUnitMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction&       msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMsgChangeKnowledgeGroup ( const Common::MsgAutomatChangeKnowledgeGroup&    msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMsgChangeSuperior       ( const Common::MsgAutomatChangeSuperior&          msg, const tools::Resolver< MIL_Formation >& formations );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( const Common::MsgAutomatChangeLogisticLinks&     msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( const MsgsClientToSim::MsgLogSupplyPushFlow&     msg );
     //@}
 
     //! @name Misc
@@ -221,7 +238,7 @@ protected:
     
 private:
     const MIL_AutomateType* pType_;
-    const uint              nID_;
+    const unsigned int              nID_;
           MIL_Formation*    pParentFormation_;
           MIL_Automate*     pParentAutomate_;
           bool              bEngaged_;
@@ -240,7 +257,7 @@ private:
     bool                     bDotationSupplyExplicitlyRequested_;
     T_SupplyDotationStateMap dotationSupplyStates_;
 
-    uint                     nTickRcDotationSupplyQuerySent_;
+    unsigned int                     nTickRcDotationSupplyQuerySent_;
 
     // Knowledge
     DEC_KnowledgeBlackBoard_Automate* pKnowledgeBlackBoard_;

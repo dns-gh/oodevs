@@ -14,39 +14,49 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
-class CrossingSiteAttribute 
-    : public ObjectAttribute_ABC
-    , public UpdatableAttribute_ABC
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
+// =============================================================================
+/** @class  CrossingSiteAttribute
+    @brief  CrossingSiteAttribute
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
+class CrossingSiteAttribute : public ObjectAttribute_ABC
+                            , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              CrossingSiteAttribute();
     explicit CrossingSiteAttribute( xml::xistream& xis );
-    explicit CrossingSiteAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit CrossingSiteAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~CrossingSiteAttribute();
     //@}
 
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const uint );
+    template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name ODB
     //@{
-    /*final*/ void WriteODB( xml::xostream& /*xos*/ ) const;    
+    virtual void WriteODB( xml::xostream& /*xos*/ ) const;    
     //@}
 
     //! @name Network
     //@{
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void OnUpdate( const ASN1T_ObjectAttributes& asn );    
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void OnUpdate( const Common::MsgObjectAttributes& asn );    
     //@}
 
     //! @name Knowledge
     //@{
-    void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
     //! @name Accessors

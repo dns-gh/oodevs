@@ -43,9 +43,9 @@ void Mission_Automat_Decrocher::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_Decrocher& asnMission = *new ASN1T_Mission_Automate_Decrocher();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_decrocher;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_decrocher = &asnMission;
+    Mission_Automate_Decrocher& asnMission = *new Mission_Automate_Decrocher();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_decrocher = &asnMission;
 
     const Location& pointRegroupement_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_Decrocher::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_Decrocher::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_decrocher );
-    ASN1T_Mission_Automate_Decrocher& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_decrocher;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_decrocher ());
+    Mission_Automate_Decrocher& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_decrocher;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
 

@@ -9,10 +9,13 @@
 
 #include "actions_pch.h"
 #include "PopulationMission.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/OrderType.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "clients_kernel/OrderType.h"
+#include "protocol/SimulationSenders.h"
+#include "protocol/Publisher_ABC.h"
+
+using namespace Common;
 
 using namespace kernel;
 using namespace actions;
@@ -52,12 +55,12 @@ PopulationMission::~PopulationMission()
 // -----------------------------------------------------------------------------
 void PopulationMission::Publish( Publisher_ABC& publisher ) const
 {
-    simulation::PopulationOrder asn;
-    asn().oid = GetEntity().GetId();
-    asn().mission = GetType().GetId();
-    CommitTo( asn().parametres );
-    asn.Send( publisher );
-    Clean( asn().parametres );
+    simulation::PopulationOrder message;
+    message().set_oid ( GetEntity().GetId() );
+    message().set_mission ( GetType().GetId() );
+    CommitTo( *message().mutable_parametres() );
+    message.Send( publisher, 0 );
+    Clean( *message().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------

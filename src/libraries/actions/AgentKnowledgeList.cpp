@@ -12,6 +12,7 @@
 #include "AgentKnowledge.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -33,11 +34,11 @@ AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter )
 // Name: AgentKnowledgeList constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const ASN1T_UnitKnowledgeList& asn, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
+AgentKnowledgeList::AgentKnowledgeList( const OrderParameter& parameter, const Common::MsgUnitKnowledgeList& message, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledeg", false ), asn.elem[i], converter, owner, controller ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddParameter( *new AgentKnowledge( OrderParameter( tools::translate( "Parameter", "Agent knowledge %1" ).arg( i + 1 ).ascii(), "agentknowledeg", false ), message.elem(i).oid(), converter, owner, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,14 +73,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_UnitKnowledgeList& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( Common::MsgUnitKnowledgeList& message ) : message_( &message ) {}
         virtual void Visit( const AgentKnowledge& param )
         {
-            param.CommitTo( asn_->elem[current_++] );
+            param.CommitTo( *message_->add_elem() );
         }
-
-        ASN1T_UnitKnowledgeList* asn_;
-        unsigned int current_;
+        Common::MsgUnitKnowledgeList* message_;
     };
 }
 
@@ -87,15 +86,12 @@ namespace
 // Name: AgentKnowledgeList::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledgeList::CommitTo( ASN1T_MissionParameter& asn ) const
+void AgentKnowledgeList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_unitKnowledgeList;
-    ASN1T_UnitKnowledgeList*& list = asn.value.u.unitKnowledgeList = new ASN1T_UnitKnowledgeList();
-    list->n = Count();
+    message.set_null_value( !IsSet() );
+    Common::MsgUnitKnowledgeList* list = message.mutable_value()->mutable_unitknowledgelist();
     if( IsSet() )
     {
-        list->elem = new ASN1T_UnitKnowledge[list->n];
         AsnSerializer serializer( *list );
         Accept( serializer );
     }
@@ -105,11 +101,10 @@ void AgentKnowledgeList::CommitTo( ASN1T_MissionParameter& asn ) const
 // Name: AgentKnowledgeList::Clean
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledgeList::Clean( ASN1T_MissionParameter& asn ) const
+void AgentKnowledgeList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.unitKnowledgeList )
-        delete[] asn.value.u.unitKnowledgeList->elem;
-    delete asn.value.u.unitKnowledgeList;
+    if( message.value().has_unitknowledgelist() )
+        message.mutable_value()->clear_unitknowledgelist();
 }
 
 // -----------------------------------------------------------------------------

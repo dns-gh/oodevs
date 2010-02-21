@@ -43,9 +43,9 @@ void Mission_Automat_INF_RompreContact::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_RompreContact& asnMission = *new ASN1T_Mission_Automate_INF_RompreContact();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_rompre_contact;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_rompre_contact = &asnMission;
+    Mission_Automate_INF_RompreContact& asnMission = *new Mission_Automate_INF_RompreContact();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_rompre_contact = &asnMission;
 
     const Location& zoneRegroupement_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_INF_RompreContact::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_RompreContact::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_rompre_contact );
-    ASN1T_Mission_Automate_INF_RompreContact& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_rompre_contact;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_rompre_contact ());
+    Mission_Automate_INF_RompreContact& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_rompre_contact;
 
     ASN_Tools::Delete( asnMission.zone_regroupement );
 

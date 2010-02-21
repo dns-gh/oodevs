@@ -47,7 +47,7 @@ const std::string& PHY_Lighting::GetName() const
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 inline
-uint PHY_Lighting::GetID() const
+unsigned int PHY_Lighting::GetID() const
 {
-    return (uint)nType_;
+    return (unsigned int)nType_;
 }

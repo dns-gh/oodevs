@@ -14,14 +14,13 @@
 
 #include "PHY_RoleInterface_Surrender.h"
 
+namespace surrender
+{
+
 // =============================================================================
 // @class  PHY_RoleHLA_Surrender
 // Created: JVT 2004-08-03
 // =============================================================================
-
-namespace surrender
-{
-
 class PHY_RoleHLA_Surrender : public PHY_RoleInterface_Surrender
 {
 
@@ -59,6 +58,13 @@ public:
     virtual void Update    ( bool /*bIsDead*/ ) {};
     virtual void Clean     () {};
     virtual bool HasChanged() const { return true; };
+    //@}
+
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( client::UnitAttributes& /*msg*/ ) const {};
+    virtual void SendFullState   ( client::UnitAttributes& /*msg*/ ) const {};
     //@}
 
 private:

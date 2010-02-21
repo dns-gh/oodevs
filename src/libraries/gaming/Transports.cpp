@@ -51,18 +51,18 @@ void Transports::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: Transports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Transports::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Transports::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.pions_transportesPresent )
+    if( message.has_pions_transportes()  )
     {
         transported_.clear();
-        transported_.resize( message.pions_transportes.n );
-        for( unsigned i = 0; i < message.pions_transportes.n; ++i )
-            transported_.push_back( resolver_.Find( message.pions_transportes.elem[i] ) );
+        transported_.resize( message.pions_transportes().elem_size() );
+        for( int i = 0; i < message.pions_transportes().elem_size(); ++i )
+            transported_.push_back( resolver_.Find( message.pions_transportes().elem( i ).oid() ) );
     }
 
-    if( message.m.pion_transporteurPresent )
-        transporter_ = resolver_.Find( message.pion_transporteur );
+    if( message.has_pion_transporteur()  )
+        transporter_ = resolver_.Find( message.pion_transporteur() );
 
     controller_.Update( *this );
 }

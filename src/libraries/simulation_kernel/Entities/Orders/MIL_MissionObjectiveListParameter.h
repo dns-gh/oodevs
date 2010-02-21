@@ -24,7 +24,7 @@ class MIL_MissionObjectiveListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_MissionObjectiveListParameter( const ASN1T_MissionObjectiveList& asn );
+    explicit MIL_MissionObjectiveListParameter( const Common::MsgMissionObjectiveList& asn );
     virtual ~MIL_MissionObjectiveListParameter();
     //@}
 
@@ -35,7 +35,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToObjectiveList( ASN1T_MissionObjectiveList& asn ) const;
+    virtual bool ToObjectiveList( Common::MsgMissionObjectiveList& asn ) const;
     virtual bool ToObjectiveList( std::vector< boost::shared_ptr< DEC_Objective > >& ) const;
     //@}
 

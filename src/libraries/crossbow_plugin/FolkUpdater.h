@@ -10,7 +10,10 @@
 #ifndef __crossbow_FolkUpdater_h_
 #define __crossbow_FolkUpdater_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace plugins
 {
@@ -44,8 +47,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgFolkCreation& msg );
-    void Update( const ASN1T_MsgFolkGraphUpdate& msg );    
+    void Update( const MsgFolkCreation& msg );
+    void Update( const MsgFolkGraphUpdate& msg );    
     void Drop();
     //@}
 
@@ -73,8 +76,8 @@ private:
     //@{
     void Commit( Table_ABC& table );
     void CommitEdge( Row_ABC& row, const Edge& edge );
-    void Update( const ASN1T_MsgFolkGraphEdgeUpdate& msg );
-    void Update( Edge& edge, const ASN1T_MsgFolkGraphEdgeUpdate& msg ) const;
+    void Update( const MsgFolkGraphEdgeUpdate& msg );
+    void Update( Edge& edge, const MsgFolkGraphEdgeUpdate& msg ) const;
     //@}
 
 private:

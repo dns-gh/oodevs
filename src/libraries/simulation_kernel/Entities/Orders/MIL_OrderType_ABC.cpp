@@ -13,18 +13,19 @@
 #include "MIL_OrderContext.h"
 #include "Decision/DEC_Tools.h"
 #include "Network/NET_AsnException.h"
-#include <xeumeuleu/xml.h>
+#include "protocol/protocol.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include <boost/shared_ptr.hpp>
+#include <xeumeuleu/xml.h>
 
 //-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_OrderType_ABC::MIL_OrderType_ABC( uint nID, xml::xistream& xis )
-    : nID_       ( nID )
-    , strName_   ( xml::attribute< std::string >( xis, "name" ) )
-    , diaType_  ( xml::attribute< std::string >( xis, "dia-type" ) )
+MIL_OrderType_ABC::MIL_OrderType_ABC( unsigned int nID, xml::xistream& xis )
+    : nID_    ( nID )
+    , strName_( xml::attribute< std::string >( xis, "name" ) )
+    , diaType_( xml::attribute< std::string >( xis, "dia-type" ) )
 {
     xis >> xml::list( "parameter", *this, &MIL_OrderType_ABC::ReadParameter );
 }
@@ -34,7 +35,7 @@ MIL_OrderType_ABC::MIL_OrderType_ABC( uint nID, xml::xistream& xis )
 // Created: LDC 2009-04-27
 // -----------------------------------------------------------------------------
 MIL_OrderType_ABC::MIL_OrderType_ABC()
-    : nID_     ( 0 )
+    : nID_( 0 )
 {
     // NOTHING
 }
@@ -61,25 +62,22 @@ MIL_OrderType_ABC::~MIL_OrderType_ABC()
 // Name: MIL_OrderType_ABC::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, ASN1T_MissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const
+bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& from, Common::MsgMissionParameters& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_OrderContext& context ) const
 {
     if( from.size() < (int)parameters_.size()  )//|| from.GetType() != *pDIAType_ )
         return false;
 
     unsigned int index = context.Length();
-    to.n    = parameters_.size() + index;
-    to.elem = new ASN1T_MissionParameter[ parameters_.size() + index ];
+    for( unsigned int i = 0; i < parameters_.size() + index; ++i )
+        to.add_elem();
     std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >::const_iterator fromIt = from.begin();
     for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index, ++fromIt )
-    {
-        if( !(**it).Copy( **fromIt, to.elem[index], knowledgeResolver ) )
+        if( !(**it).Copy( **fromIt, *to.mutable_elem( index ), knowledgeResolver ) )
         {   
             assert( false );
-            delete[] to.elem;
-            to.n = 0;
+            delete[] to.mutable_elem();
             return false;
         }
-    }
     return true;
 }
 
@@ -87,17 +85,18 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
 // Name: MIL_OrderType_ABC::CleanAfterSerialization
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_OrderType_ABC::CleanAfterSerialization( ASN1T_MissionParameters& to, const MIL_OrderContext& context ) const
+void MIL_OrderType_ABC::CleanAfterSerialization( Common::MsgMissionParameters& to, const MIL_OrderContext& context ) const
 {
-    unsigned int index = context.Length();
-    if( index + parameters_.size() != to.n )
-        return;
-
-    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index )
-        (**it).CleanAfterSerialization( to.elem[index] );
-
-    if( to.n > 0 )
-        delete [] to.elem;
+    // $$$$ _RC_ FDS 2010-02-08: No clean mandatory in protobuf
+//    int index = context.Length();
+//    if( index + parameters_.size() != to.elem_size() )
+//        return;
+//
+//    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index )
+//        (**it).CleanAfterSerialization( *to.mutable_elem( index ) );
+//
+//    if( to.elem_size() > 0 )
+//        to.Clear();
 }
 
 //-----------------------------------------------------------------------------
@@ -113,7 +112,7 @@ const std::string& MIL_OrderType_ABC::GetDIAType() const
 // Name: MIL_OrderType_ABC::GetID
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-uint MIL_OrderType_ABC::GetID() const
+unsigned int MIL_OrderType_ABC::GetID() const
 {
     return nID_;
 }

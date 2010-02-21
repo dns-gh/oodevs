@@ -43,9 +43,9 @@ void Mission_Automat_INF_Harceler::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Harceler& asnMission = *new ASN1T_Mission_Automate_INF_Harceler();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_harceler;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_harceler = &asnMission;
+    Mission_Automate_INF_Harceler& asnMission = *new Mission_Automate_INF_Harceler();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_harceler = &asnMission;
 
     const Location& zoneSurveillance_ = pTarget_->GetTestParam_Polygon();
     const Location& pointRegroupement_ = pTarget_->GetTestParam_Polygon();
@@ -64,8 +64,8 @@ void Mission_Automat_INF_Harceler::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Harceler::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_harceler );
-    ASN1T_Mission_Automate_INF_Harceler& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_harceler;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_harceler ());
+    Mission_Automate_INF_Harceler& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_harceler;
 
     ASN_Tools::Delete( asnMission.zone_surveillance );
     ASN_Tools::Delete( asnMission.point_regroupement );

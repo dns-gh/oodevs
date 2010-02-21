@@ -10,12 +10,24 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-#include "game_asn/Simulation.h"
+
 #include "Localisation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "SimpleEntity.h"
+//#include "protocol/protocol.h"
 
 #include <boost/ptr_container/ptr_vector.hpp>
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgObjectCreation;
+    class MsgObjectUpdate;
+}
 
 namespace kernel
 {
@@ -41,14 +53,14 @@ class Object : public SimpleEntity< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( Model& model, const ASN1T_MsgObjectCreation& msg );
+             Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg );
     virtual ~Object();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const ASN1T_MsgObjectUpdate&   msg );
+    void Update( const MsgsSimToClient::MsgObjectUpdate&   msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -67,7 +79,7 @@ private:
 
     //! @name Attributes
     //@{
-    void Initialize( Model& model, const ASN1T_ObjectAttributes& attribute );
+    void Initialize( Model& model, const Common::MsgObjectAttributes& attribute );
     void AddAttribute( ObjectAttribute_ABC* attribute );
     //@}
 

@@ -16,6 +16,13 @@
 
 class IntelligenceFactory;
 
+namespace MsgsMessengerToClient
+{
+    class MsgIntelligenceCreation;
+    class MsgIntelligenceDestruction;
+}
+
+
 // =============================================================================
 /** @class  IntelligencesModel
     @brief  IntelligencesModel
@@ -35,8 +42,8 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Create( const ASN1T_MsgIntelligenceCreation& message );
-    void Delete( const ASN1T_MsgIntelligenceDestruction& message );
+    void Create( const MsgsMessengerToClient::MsgIntelligenceCreation& message );
+    void Delete( const MsgsMessengerToClient::MsgIntelligenceDestruction& message );
     //@}
 
 private:

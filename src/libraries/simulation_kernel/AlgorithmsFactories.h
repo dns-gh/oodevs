@@ -70,7 +70,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -102,11 +102,20 @@ public:
 
 BOOST_CLASS_EXPORT_KEY( AlgorithmsFactories )
 
+// -----------------------------------------------------------------------------
+// Name: AlgorithmsFactories::save_construct_data
+// Created: MGD 2009-09-30
+// -----------------------------------------------------------------------------
 template< typename Archive >
 void save_construct_data( Archive& /*archive*/, const AlgorithmsFactories* /*role*/, const unsigned int /*version*/ )
 {
     //NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: AlgorithmsFactories::load_construct_data
+// Created: MGD 2009-09-30
+// -----------------------------------------------------------------------------
 template< typename Archive >
 void load_construct_data( Archive& /*archive*/, AlgorithmsFactories* factories, const unsigned int /*version*/ )
 {
@@ -114,13 +123,12 @@ void load_construct_data( Archive& /*archive*/, AlgorithmsFactories* factories, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: AlgorithmsFactories serialize
+// Name: AlgorithmsFactories::serialize
 // Created: MGD 2009-09-30
 // -----------------------------------------------------------------------------
-template< typename Archive > void AlgorithmsFactories::serialize( Archive&, const uint )
+template< typename Archive > void AlgorithmsFactories::serialize( Archive&, const unsigned int )
 {
     //NOTHING
 }
-
 
 #endif // __AlgorithmsFactories_h_

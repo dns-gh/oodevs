@@ -12,7 +12,10 @@
 
 #include "clients_gui/ObstaclePrototype_ABC.h"
 
-struct ASN1T_MagicActionCreateObject;
+namespace MsgsClientToSim
+{
+    class MsgMagicActionCreateObject;
+}
 
 // =============================================================================
 /** @class  ObstaclePrototype
@@ -26,7 +29,7 @@ class ObstaclePrototype : public gui::ObstaclePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObstaclePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg );
+    ObstaclePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg );
     virtual ~ObstaclePrototype();
     //@}
 
@@ -46,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;
+    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
     //@}
 };
 

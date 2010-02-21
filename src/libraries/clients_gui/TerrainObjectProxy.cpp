@@ -9,22 +9,24 @@
 
 #include "clients_gui_pch.h"
 #include "TerrainObjectProxy.h"
+#include "Tools.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "Tools.h"
-#include <urban/TerrainObject_ABC.h>
+#include "protocol/SimulationSenders.h"
 #include <urban/Architecture.h>
 #include <urban/Soil.h>
+#include <urban/TerrainObject_ABC.h>
 #include <urban/Vegetation.h>
-#include <urban/Block.h>
+
 
 using namespace gui;
+
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-TerrainObjectProxy::TerrainObjectProxy(const ASN1T_MsgUrbanCreation& message, kernel::Controller& controller, urban::TerrainObject_ABC& object )
-    : EntityImplementation< kernel::Entity_ABC >( controller, message.oid, message.name )
+TerrainObjectProxy::TerrainObjectProxy(const MsgsSimToClient::MsgUrbanCreation& message, kernel::Controller& controller, urban::TerrainObject_ABC& object )
+    : EntityImplementation< kernel::Entity_ABC >( controller, message.oid(), QString( message.name().c_str() ) )
     , object_( &object )
 {
     RegisterSelf( *this );
@@ -46,7 +48,7 @@ TerrainObjectProxy::~TerrainObjectProxy()
 // -----------------------------------------------------------------------------
 bool TerrainObjectProxy::operator==( const TerrainObjectProxy& object ) const
 {
-    return object_ == object.object_;
+        return object_ == object.object_;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +59,7 @@ QString TerrainObjectProxy::GetName() const
 { 
     return QString( object_->GetName().c_str() ); 
 }
+
 // -----------------------------------------------------------------------------
 // Name: TerrainObjectProxy GetId
 // Created: SLG 2009-11-2
@@ -73,9 +76,9 @@ unsigned long TerrainObjectProxy::GetId() const
 void TerrainObjectProxy::CreateDictionary( kernel::Controller& controller )
 {
     kernel::PropertiesDictionary& dictionary = *new kernel::PropertiesDictionary( controller );
-    Attach( dictionary );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Identifier" ), id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Name" ), name_ );
+    EntityImplementation< kernel::Entity_ABC >::Attach( dictionary );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Identifier" ), EntityImplementation< kernel::Entity_ABC >::id_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "Info/Name" ), EntityImplementation< kernel::Entity_ABC >::name_ );
 
     AddDictionaryForArchitecture( dictionary );
     AddDictionaryForVegetation( dictionary );
@@ -110,8 +113,8 @@ void TerrainObjectProxy::AddDictionaryForVegetation( kernel::PropertiesDictionar
     urban::Vegetation* vegetation = object_->RetrievePhysicalFeature< urban::Vegetation >();
     if ( vegetation )
     {
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/type" ), vegetation->GetType() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/height" ), vegetation->GetHeight() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/type" )   , vegetation->GetType() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/height" ) , vegetation->GetHeight() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Vegetation/density" ), vegetation->GetDensity() );
     }
 }
@@ -125,9 +128,9 @@ void TerrainObjectProxy::AddDictionaryForSoil( kernel::PropertiesDictionary& dic
     urban::Soil* soil = object_->RetrievePhysicalFeature< urban::Soil >();
     if ( soil )
     {
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/occupation" ), soil->GetOccupation() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/trafficability" ), soil->GetTrafficability() );
-        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/isMultiple" ), soil->GetMultiplicity() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/occupation" )      , soil->GetOccupation() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/trafficability" )  , soil->GetTrafficability() );
+        dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/isMultiple" )      , soil->GetMultiplicity() );
         dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Block", "PhysicalFeatures/Soil/compoundClearing" ), soil->GetCompoundClearing() );
     }
 }
@@ -139,4 +142,39 @@ void TerrainObjectProxy::AddDictionaryForSoil( kernel::PropertiesDictionary& dic
 void TerrainObjectProxy::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::SetSelected
+///** @param  selected 
+//*/
+// Created: FDS 2010-01-15
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::SetSelected( bool selected ) const
+{
+    object_->SetSelected( selected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::Draw
+///** @param  drawer 
+//*/
+// Created: FDS 2010-01-15
+// -----------------------------------------------------------------------------
+void TerrainObjectProxy::Draw( urban::Drawer_ABC& drawer ) const
+{
+    object_->Draw( drawer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::IsInside
+///** @param  point 
+//    @return 
+//*/
+// Created: FDS 2010-01-15
+// -----------------------------------------------------------------------------
+bool TerrainObjectProxy::IsInside ( const geometry::Point2f& point ) const
+{
+    return object_->GetFootprint()->IsInside( point );
 }

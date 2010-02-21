@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_ActiverObstacle::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_ActiverObstacle& asnMission = *new ASN1T_Mission_Pion_GEN_ActiverObstacle();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_activer_obstacle;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_activer_obstacle = &asnMission;
+    Mission_Pion_GEN_ActiverObstacle& asnMission = *new Mission_Pion_GEN_ActiverObstacle();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_activer_obstacle = &asnMission;
 
 
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.obstacle );
@@ -59,8 +59,8 @@ void Mission_Pawn_GEN_ActiverObstacle::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_ActiverObstacle::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_activer_obstacle );
-    ASN1T_Mission_Pion_GEN_ActiverObstacle& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_activer_obstacle;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_activer_obstacle ());
+    Mission_Pion_GEN_ActiverObstacle& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_activer_obstacle;
 
 
     delete &asnMission;

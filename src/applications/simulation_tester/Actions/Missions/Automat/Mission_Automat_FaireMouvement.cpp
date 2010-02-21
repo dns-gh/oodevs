@@ -43,9 +43,9 @@ void Mission_Automat_FaireMouvement::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_FaireMouvement& asnMission = *new ASN1T_Mission_Automate_FaireMouvement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_faire_mouvement;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_faire_mouvement = &asnMission;
+    Mission_Automate_FaireMouvement& asnMission = *new Mission_Automate_FaireMouvement();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_faire_mouvement = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Automat_FaireMouvement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_FaireMouvement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_faire_mouvement );
-    ASN1T_Mission_Automate_FaireMouvement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_faire_mouvement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_faire_mouvement ());
+    Mission_Automate_FaireMouvement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_faire_mouvement;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

@@ -10,13 +10,28 @@
 #ifndef __Fire_h_
 #define __Fire_h_
 
-#include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
+#include "protocol/SimulationSenders.h"
 
 namespace kernel
 {
     class ModelVisitor_ABC;
 }
+
+namespace Common
+{
+    class MsgUnitFire;
+    class MsgUnit;
+    enum MsgStartUnitFire_type;
+    class MsgDotationType;
+    class MsgCoordLatLong;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgStartUnitFire;
+}
+
 namespace dispatcher
 {
     class Model;
@@ -34,7 +49,7 @@ class Fire : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             Fire( Model& model, const ASN1T_MsgStartUnitFire& msg );
+             Fire( Model& model, const MsgsSimToClient::MsgStartUnitFire& msg );
     virtual ~Fire();
     //@}
 
@@ -56,14 +71,14 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_UnitFire              oid_tir;
-    ASN1T_Unit                  tireur;
-    ASN1T_MsgStartUnitFire_type type;
+    Common::MsgUnitFire              oid_tir;
+    Common::MsgUnit                  tireur;
+    Common::MsgStartUnitFire_type type;
     bool                        munitionPresent_;
-    ASN1T_DotationType          munition;
+    Common::MsgDotationType          munition;
     int                         typeCible_;
-    ASN1T_OID                   oid_cible_;
-    ASN1T_CoordLatLong          positionCible_;
+    /*OID*/ int                   oid_cible_;
+    Common::MsgCoordLatLong          positionCible_;
     //@}
 };
 

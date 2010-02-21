@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_Surveiller::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_Surveiller& asnMission = *new ASN1T_Mission_Pion_LOG_Surveiller();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_surveiller;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_surveiller = &asnMission;
+    Mission_Pion_LOG_Surveiller& asnMission = *new Mission_Pion_LOG_Surveiller();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_surveiller = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_LOG_Surveiller::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_Surveiller::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_surveiller );
-    ASN1T_Mission_Pion_LOG_Surveiller& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_surveiller;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_surveiller ());
+    Mission_Pion_LOG_Surveiller& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_surveiller;
 
     ASN_Tools::Delete( asnMission.zone );
 

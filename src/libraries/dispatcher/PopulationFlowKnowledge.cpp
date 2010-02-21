@@ -16,6 +16,7 @@
 #include "EntityPublisher.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -23,15 +24,15 @@ using namespace dispatcher;
 // Name: PopulationFlowKnowledge constructor
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const ASN1T_MsgPopulationFlowKnowledgeCreation& msg )
-    : SimpleEntity< >     ( msg.oid_connaissance_flux )
+PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& msg )
+    : SimpleEntity< >     ( msg.oid_connaissance_flux() )
     , populationKnowledge_( populationKnowledge )
-    , pFlow_              ( msg.oid_flux_reel == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->flows_.Get( msg.oid_flux_reel ) ) // $$$$ SBO 2008-07-11: 
+    , pFlow_              ( msg.oid_flux_reel() == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->flows_.Get( msg.oid_flux_reel() ) ) // $$$$ SBO 2008-07-11: 
     , nDirection_         ( 0 )
     , nSpeed_             ( 0 )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
-    , nAttitude_          ( EnumPopulationAttitude::agressive ) 
+    , nAttitude_          ( Common::EnumPopulationAttitude::agressive ) 
     , bPerceived_         ( false )
 {
     optionals_.vitessePresent            = 0;
@@ -57,47 +58,47 @@ PopulationFlowKnowledge::~PopulationFlowKnowledge()
 // Name: PopulationFlowKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlowKnowledge::Update( const ASN1T_MsgPopulationFlowKnowledgeUpdate& msg )
+void PopulationFlowKnowledge::Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& msg )
 {
-    if( msg.m.oid_flux_reelPresent )
-        pFlow_ = msg.oid_flux_reel == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->flows_.Get( msg.oid_flux_reel ); // $$$$ SBO 2008-07-11: 
+    if( msg.has_oid_flux_reel()  )
+        pFlow_ = msg.oid_flux_reel() == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->flows_.Get( msg.oid_flux_reel() ); // $$$$ SBO 2008-07-11: 
 
-    if( msg.m.portions_fluxPresent )
+    if( msg.has_portions_flux()  )
     {
         flowParts_.clear();
-        for( unsigned int i = 0; i < msg.portions_flux.n; ++i )
-            flowParts_.push_back( PopulationFlowPart( msg.portions_flux.elem[ i ] ) );
-        optionals_.portions_fluxPresent = 1;
+        for( int i = 0; i < msg.portions_flux().elem_size(); ++i )
+            flowParts_.push_back( PopulationFlowPart( msg.portions_flux().elem( i ) ) );
+//        optionals_.portions_fluxPresent = 1;
     }
-    if( msg.m.directionPresent )
+    if( msg.has_direction()  )
     {
-        nDirection_ = msg.direction;
-        optionals_.directionPresent = 1;
+        nDirection_ = msg.direction().heading();
+//        optionals_.directionPresent = 1;
     }
-    if( msg.m.vitessePresent )
+    if( msg.has_vitesse()  )
     {
-        nSpeed_ = msg.vitesse;
-        optionals_.vitessePresent = 1;
+        nSpeed_ = msg.vitesse();
+//        optionals_.vitessePresent = 1;
     }
-    if( msg.m.attitudePresent )
+    if( msg.has_attitude()  )
     {
-        nAttitude_ = msg.attitude;
-        optionals_.attitudePresent = 1;
+        nAttitude_ = msg.attitude();
+//        optionals_.attitudePresent = 1;
     }
-    if( msg.m.nb_humains_mortsPresent )
+    if( msg.has_nb_humains_morts()  )
     {
-        nNbrDeadHumans_ = msg.nb_humains_morts;
-        optionals_.nb_humains_mortsPresent = 1;
+        nNbrDeadHumans_ = msg.nb_humains_morts();
+//        optionals_.nb_humains_mortsPresent = 1;
     }
-    if( msg.m.nb_humains_vivantsPresent )
+    if( msg.has_nb_humains_vivants()  )
     {
-        nNbrAliveHumans_ = msg.nb_humains_vivants;
-        optionals_.nb_humains_vivantsPresent = 1;
+        nNbrAliveHumans_ = msg.nb_humains_vivants();
+//        optionals_.nb_humains_vivantsPresent = 1;
     }
-    if( msg.m.est_percuPresent )
+    if( msg.has_est_percu()  )
     {
-        bPerceived_ = msg.est_percu != 0;
-        optionals_.est_percuPresent = 1;
+        bPerceived_ = msg.est_percu() != 0;
+//        optionals_.est_percuPresent = 1;
     }
 }
 
@@ -109,10 +110,10 @@ void PopulationFlowKnowledge::SendCreation( ClientPublisher_ABC& publisher ) con
 {
     client::PopulationFlowKnowledgeCreation asn;
 
-    asn().oid_connaissance_flux       = GetId();
-    asn().oid_connaissance_population = populationKnowledge_.GetId();
-    asn().oid_flux_reel               = pFlow_ ? pFlow_->GetId() : 0;
-    asn().oid_groupe_possesseur       = populationKnowledge_.GetOwner().GetId();
+    asn().set_oid_connaissance_flux( GetId() );
+    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
+    asn().set_oid_flux_reel( pFlow_ ? pFlow_->GetId() : 0 );
+    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
 
     asn.Send( publisher );
 }
@@ -125,57 +126,48 @@ void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 {
     client::PopulationFlowKnowledgeUpdate asn;
 
-    asn().oid_connaissance_flux       = GetId();
-    asn().oid_connaissance_population = populationKnowledge_.GetId();
-    asn().oid_groupe_possesseur       = populationKnowledge_.GetOwner().GetId();
+    asn().set_oid_connaissance_flux( GetId() );
+    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
+    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
 
-    asn().m.oid_flux_reelPresent = 1;
-    asn().oid_flux_reel          = pFlow_ ? pFlow_->GetId() : 0;
+    asn().set_oid_flux_reel( pFlow_ ? pFlow_->GetId() : 0 );
 
     {
-        asn().m.portions_fluxPresent = 1;
-        asn().portions_flux.n = flowParts_.size();
-        asn().portions_flux.elem = asn().portions_flux.n > 0 ? new ASN1T_FlowPart[ asn().portions_flux.n ] : 0;
-        unsigned int i = 0;
-        for( std::vector< PopulationFlowPart >::const_iterator it = flowParts_.begin(); it != flowParts_.end(); ++it, ++i )
-            it->Send( asn().portions_flux.elem[i] );
+        for( std::vector< PopulationFlowPart >::const_iterator it = flowParts_.begin(); it != flowParts_.end(); ++it )
+            it->Send( *asn().mutable_portions_flux()->add_elem() );
     }
 
     if( optionals_.directionPresent )
     {
-        asn().m.directionPresent = 1;
-        asn().direction = nDirection_;
+        asn().mutable_direction()->set_heading( nDirection_ );
     }
     if( optionals_.vitessePresent )
     {
-        asn().m.vitessePresent = 1;
-        asn().vitesse = nSpeed_;
+        asn().set_vitesse( nSpeed_ );
     }
     if( optionals_.nb_humains_mortsPresent )
     {
-        asn().m.nb_humains_mortsPresent = 1;
-        asn().nb_humains_morts = nNbrDeadHumans_;
+        asn().set_nb_humains_morts( nNbrDeadHumans_ );
     }
     if( optionals_.nb_humains_vivantsPresent )
     {
-        asn().m.nb_humains_vivantsPresent = 1;
-        asn().nb_humains_vivants = nNbrAliveHumans_;
+        asn().set_nb_humains_vivants( nNbrAliveHumans_ );
     }
     if( optionals_.attitudePresent )
     {
-        asn().m.attitudePresent = 1;
-        asn().attitude = nAttitude_;
+//        asn().set_attitudePresent( 1 );
+        asn().set_attitude( nAttitude_ );
     }
     if( optionals_.est_percuPresent )
     {
-        asn().m.est_percuPresent = 1;
-        asn().est_percu = bPerceived_;
+//        asn().set_est_percuPresent( 1 );
+        asn().set_est_percu( bPerceived_ );
     }
 
     asn.Send( publisher );
 
-    if( asn().m.portions_fluxPresent && asn().portions_flux.n > 0 )
-        delete [] asn().portions_flux.elem;
+    if( asn().has_portions_flux() && asn().portions_flux().elem_size() > 0 )
+        asn().mutable_portions_flux()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -185,9 +177,9 @@ void PopulationFlowKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) c
 void PopulationFlowKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowKnowledgeDestruction asn;
-    asn().oid_connaissance_flux       = GetId();
-    asn().oid_connaissance_population = populationKnowledge_.GetId();
-    asn().oid_groupe_possesseur       = populationKnowledge_.GetOwner().GetId();
+    asn().set_oid_connaissance_flux( GetId() );
+    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
+    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
     asn.Send( publisher );
 }
 

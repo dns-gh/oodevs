@@ -18,6 +18,16 @@ namespace kernel
     class Controllers;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgTeamCreation;
+    class MsgKnowledgeGroupCreation;
+}
+namespace Common
+{
+    class MsgFormationCreation;
+}
+
 class Model;
 
 // =============================================================================
@@ -39,9 +49,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Team_ABC* CreateTeam( const ASN1T_MsgTeamCreation& asnMsg );
-    virtual kernel::Formation_ABC* CreateFormation( const ASN1T_MsgFormationCreation& asnMsg );
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const ASN1T_MsgKnowledgeGroupCreation& asnMsg, kernel::Team_ABC& team ); // LTO
+    virtual kernel::Team_ABC* CreateTeam( const MsgsSimToClient::MsgTeamCreation& message );
+    virtual kernel::Formation_ABC* CreateFormation( const Common::MsgFormationCreation& message );
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, kernel::Team_ABC& team ); // LTO
     //@}
 
 private:

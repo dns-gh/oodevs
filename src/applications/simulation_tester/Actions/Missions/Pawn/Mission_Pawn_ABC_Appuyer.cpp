@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_Appuyer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_Appuyer& asnMission = *new ASN1T_Mission_Pion_ABC_Appuyer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_appuyer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_appuyer = &asnMission;
+    Mission_Pion_ABC_Appuyer& asnMission = *new Mission_Pion_ABC_Appuyer();
+    asnMsg_.GetAsnMsg().mission//$T_Mission_Pion_mission_pion_abc_appuyer;
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_appuyer = &asnMission;
 
 
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.unite_a_appuyer );
@@ -59,8 +59,8 @@ void Mission_Pawn_ABC_Appuyer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_Appuyer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_appuyer );
-    ASN1T_Mission_Pion_ABC_Appuyer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_appuyer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_appuyer ();
+    Mission_Pion_ABC_Appuyer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_appuyer;
 
 
     delete &asnMission;

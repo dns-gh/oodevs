@@ -18,7 +18,7 @@ void MT_Random::nextState()
 {
     assert( left_ == 0 );
 
-    uint32 *p = state_;
+    unsigned long *p = state_;
 
     left_ = MT_RandomConsts::N;
     next_ = state_;
@@ -40,12 +40,12 @@ void MT_Random::nextState()
 // Created: JVT 03-10-15
 //-----------------------------------------------------------------------------
 __forceinline
-uint32 MT_Random::rand32()
+unsigned long MT_Random::rand32()
 {
     if ( !--left_ )
         nextState();
 
-    uint32 y = *next_++;
+    unsigned long y = *next_++;
 
     y ^= ( y >> 11 );
     y ^= ( y << 7  ) & 0x9d2c5680UL;
@@ -167,9 +167,9 @@ double MT_Random::rand_oi( double min, double max )
 // Created: JVT 03-10-15
 //-----------------------------------------------------------------------------
 inline
-uint32 MT_Random::rand32_ii( uint32 min, uint32 max )
+unsigned long MT_Random::rand32_ii( unsigned long min, unsigned long max )
 {
-    return (uint32)rand_io( min, max + 1 );
+    return (unsigned long)rand_io( min, max + 1 );
 }
 
 
@@ -178,10 +178,10 @@ uint32 MT_Random::rand32_ii( uint32 min, uint32 max )
 // Created: JVT 03-10-15
 //-----------------------------------------------------------------------------
 inline
-uint32 MT_Random::rand32_io( uint32 min, uint32 max )
+unsigned long MT_Random::rand32_io( unsigned long min, unsigned long max )
 {
     assert( max >= min );
-    return (uint32)rand_io( min, max );
+    return (unsigned long)rand_io( min, max );
 }
 
 
@@ -190,10 +190,10 @@ uint32 MT_Random::rand32_io( uint32 min, uint32 max )
 // Created: JVT 03-10-15
 //-----------------------------------------------------------------------------
 inline
-uint32 MT_Random::rand32_oo( uint32 min, uint32 max )
+unsigned long MT_Random::rand32_oo( unsigned long min, unsigned long max )
 {
     assert( max > ( min + 1 ) );
-    return (uint32)rand_io( min + 1, max );
+    return (unsigned long)rand_io( min + 1, max );
 }
 
 
@@ -202,9 +202,9 @@ uint32 MT_Random::rand32_oo( uint32 min, uint32 max )
 // Created: JVT 03-10-15
 //-----------------------------------------------------------------------------
 inline
-uint32 MT_Random::rand32_oi( uint32 min, uint32 max )
+unsigned long MT_Random::rand32_oi( unsigned long min, unsigned long max )
 {
     assert( max >= ( min + 1 ) );
-    return (uint32)rand_io( min + 1, max + 1 );
+    return (unsigned long)rand_io( min + 1, max + 1 );
 }
 

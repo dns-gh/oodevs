@@ -9,17 +9,17 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectKnowledgeParameter.h"
-
 #include "simulation_orders/MIL_ParameterType_ObjectKnowledge.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectKnowledgeParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-: pKnowledgeObject_( pKnowledge )
+    : pKnowledgeObject_( pKnowledge )
 {
     // NOTHING
 }
@@ -28,8 +28,8 @@ MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( boost::shared_ptr< D
 // Name: MIL_ObjectKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const ASN1T_ObjectKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
-: pKnowledgeObject_( resolver.ResolveKnowledgeObject( asn ) )
+MIL_ObjectKnowledgeParameter::MIL_ObjectKnowledgeParameter( const Common::MsgObjectKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
+    : pKnowledgeObject_( resolver.ResolveKnowledgeObject( asn ) )
 {
     // NOTHING
 }
@@ -49,16 +49,16 @@ MIL_ObjectKnowledgeParameter::~MIL_ObjectKnowledgeParameter()
 // -----------------------------------------------------------------------------
 bool MIL_ObjectKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_ObjectKnowledge*>( &type ) != 0 );
+    return dynamic_cast< const MIL_ParameterType_ObjectKnowledge* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectKnowledgeParameter::ToObjectKnowledge
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( ASN1T_ObjectKnowledge& asn ) const
+bool MIL_ObjectKnowledgeParameter::ToObjectKnowledge( Common::MsgObjectKnowledge& asn ) const
 {
-    asn = pKnowledgeObject_->GetID();
+    asn.set_oid( pKnowledgeObject_->GetID() );
     return true;
 }
 

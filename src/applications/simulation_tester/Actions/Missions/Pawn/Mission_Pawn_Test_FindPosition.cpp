@@ -43,9 +43,9 @@ void Mission_Pawn_Test_FindPosition::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_FindPosition& asnMission = *new ASN1T_Mission_Pion_Test_FindPosition();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_find_position;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_find_position = &asnMission;
+    Mission_Pion_Test_FindPosition& asnMission = *new Mission_Pion_Test_FindPosition();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_find_position = &asnMission;
 
     const Position& point_ = pTarget_->GetTestParam_Point();
     const Position& retreat_ = pTarget_->GetTestParam_Point();
@@ -76,8 +76,8 @@ void Mission_Pawn_Test_FindPosition::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_FindPosition::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_find_position );
-    ASN1T_Mission_Pion_Test_FindPosition& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_find_position;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_find_position ());
+    Mission_Pion_Test_FindPosition& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_find_position;
 
     ASN_Tools::Delete( asnMission.point );
     ASN_Tools::Delete( asnMission.retreat );

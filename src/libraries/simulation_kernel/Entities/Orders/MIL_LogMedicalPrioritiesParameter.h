@@ -24,7 +24,7 @@ class MIL_LogMedicalPrioritiesParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_LogMedicalPrioritiesParameter( const ASN1T_LogMedicalPriorities& asn );
+    explicit MIL_LogMedicalPrioritiesParameter( const Common::MsgLogMedicalPriorities& asn );
     virtual ~MIL_LogMedicalPrioritiesParameter();
     //@}
 
@@ -35,7 +35,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToMedicalPriorities( ASN1T_LogMedicalPriorities& ) const;
+    virtual bool ToMedicalPriorities( Common::MsgLogMedicalPriorities& ) const;
     virtual bool ToMedicalPriorities( T_MedicalPriorityVector& ) const;
     //@}
 

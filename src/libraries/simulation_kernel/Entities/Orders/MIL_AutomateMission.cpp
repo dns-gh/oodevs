@@ -9,22 +9,24 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateMission.h"
+#include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
-#include "Decision/DEC_Tools.h"
-#include "Decision/DEC_Model_ABC.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres, automate.GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const Common::MsgAutomatOrder& asn )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parametres(), automate.GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )
@@ -151,12 +153,12 @@ void MIL_AutomateMission::GoToCdt()
 // static
 void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 {
-    NET_ASN_MsgAutomatOrder asn;
+    client::AutomatOrder asn;
 
-    asn().oid          = automate.GetID();
-    asn().mission      = 0;
-    asn().parametres.n = 0;
-    asn.Send();
+    asn().set_oid( automate.GetID() );
+    asn().set_mission( 0 );
+    asn().mutable_parametres(); //->set_n( 0 );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -165,16 +167,16 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 void MIL_AutomateMission::Send() const
 {
-    NET_ASN_MsgAutomatOrder asn;
+    client::AutomatOrder asn;
 
-    asn().oid       = automate_.GetID();
-    asn().mission   = GetType().GetID();
+    asn().set_oid( automate_.GetID() );
+    asn().set_mission( GetType().GetID() );
 
-    MIL_Mission_ABC::Serialize( asn().parametres );
+    MIL_Mission_ABC::Serialize( *asn().mutable_parametres() );
 
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
-    MIL_Mission_ABC::CleanAfterSerialization( asn().parametres );
+    MIL_Mission_ABC::CleanAfterSerialization( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------

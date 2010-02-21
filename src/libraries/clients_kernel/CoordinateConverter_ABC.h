@@ -42,15 +42,15 @@ public:
     template< typename T >
     geometry::Point2f ConvertToXY( const T& latlong ) const
     {
-        return ConvertFromGeo( geometry::Point2d( latlong.longitude , latlong.latitude ) );
+        return ConvertFromGeo( geometry::Point2d( latlong.longitude() , latlong.latitude() ) );
     }
 
     template< typename T >
     void ConvertToGeo( const geometry::Point2f& pos, T& latlong ) const
     {
         const geometry::Point2d geo = ConvertToGeo( pos );
-        latlong.longitude = geo.X();
-        latlong.latitude  = geo.Y();
+        latlong.set_longitude( geo.X() );
+        latlong.set_latitude ( geo.Y() );
     }
     //@}
 

@@ -68,15 +68,15 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const uint nVersion )
+        void serialize( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const uint )
+        void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const unsigned int )
         {
-            uint size = map.size();
+            unsigned int size = map.size();
             file << size;
             for ( DEC_Knowledge_PopulationPerception::CIT_ConcentrationMap it = map.begin(); it != map.end(); ++it )
             {
@@ -86,9 +86,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const uint )
+        void load( Archive& file, DEC_Knowledge_PopulationPerception::T_ConcentrationMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -100,15 +100,15 @@ namespace boost
 
         template< typename Archive >
         inline
-        void serialize( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const uint nVersion )
+        void serialize( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_FlowMap& map, const uint )
+        void save( Archive& file, const DEC_Knowledge_PopulationPerception::T_FlowMap& map, const unsigned int )
         {
-            uint size = map.size();
+            unsigned int size = map.size();
             file << size;
             for ( DEC_Knowledge_PopulationPerception::CIT_FlowMap it = map.begin(); it != map.end(); ++it )
             {
@@ -118,9 +118,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const uint )
+        void load( Archive& file, DEC_Knowledge_PopulationPerception::T_FlowMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -136,7 +136,7 @@ namespace boost
 // Name: DEC_Knowledge_PopulationPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
 
@@ -151,7 +151,7 @@ void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, co
 // Name: DEC_Knowledge_PopulationPerception::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_PopulationPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << pAgentPerceiving_

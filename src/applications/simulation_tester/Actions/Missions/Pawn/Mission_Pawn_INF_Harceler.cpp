@@ -43,9 +43,9 @@ void Mission_Pawn_INF_Harceler::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_Harceler& asnMission = *new ASN1T_Mission_Pion_INF_Harceler();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_harceler;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_harceler = &asnMission;
+    Mission_Pion_INF_Harceler& asnMission = *new Mission_Pion_INF_Harceler();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_harceler = &asnMission;
 
     const Location& secteur_ = pTarget_->GetTestParam_Polygon();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -65,8 +65,8 @@ void Mission_Pawn_INF_Harceler::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_Harceler::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_harceler );
-    ASN1T_Mission_Pion_INF_Harceler& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_harceler;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_harceler ());
+    Mission_Pion_INF_Harceler& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_harceler;
 
     ASN_Tools::Delete( asnMission.secteur );
     ASN_Tools::Delete( asnMission.point_regroupement );

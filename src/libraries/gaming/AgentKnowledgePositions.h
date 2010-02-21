@@ -10,9 +10,11 @@
 #ifndef __AgentKnowledgePositions_h_
 #define __AgentKnowledgePositions_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -26,7 +28,7 @@ namespace kernel
 // Created: AGE 2006-05-17
 // =============================================================================
 class AgentKnowledgePositions : public kernel::Positions
-                              , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+                              , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
 {
 
 public:
@@ -55,7 +57,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
     //@}
 
 private:

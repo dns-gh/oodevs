@@ -32,7 +32,7 @@ public:
 
      //! @name Operations
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     virtual void ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent );

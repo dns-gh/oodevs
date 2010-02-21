@@ -10,7 +10,12 @@
 #ifndef __DecisionalState_h_
 #define __DecisionalState_h_
 
-#include "game_asn/Simulation.h"
+
+
+namespace MsgsSimToClient
+{
+    class MsgDecisionalState;
+}
 
 namespace dispatcher
 {
@@ -35,7 +40,7 @@ public:
     //! @name Operations
     //@{
     void Clear();
-    void Update( const ASN1T_MsgDecisionalState& asnMsg );
+    void Update( const MsgsSimToClient::MsgDecisionalState& asnMsg );
     void Send( unsigned id, ClientPublisher_ABC& publisher ) const;
     //@}
 

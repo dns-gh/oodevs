@@ -53,7 +53,7 @@ void MIL_FireClass::ReadClass( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_FireClass::Initialize( xml::xistream& xis )
 {
-    std::set< uint > ids;
+    std::set< unsigned int > ids;
     MT_LOG_INFO_MSG( "Initializing fire classes" );
     
     xis >> xml::start( "fire-classes" )
@@ -170,7 +170,7 @@ const MIL_FireClass* MIL_FireClass::Find( const std::string& strName )
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-const MIL_FireClass* MIL_FireClass::Find( uint nID )
+const MIL_FireClass* MIL_FireClass::Find( unsigned int nID )
 {
     for( CIT_FireClassMap it = classes_.begin(); it != classes_.end(); ++it )
     {        
@@ -195,7 +195,7 @@ MIL_FireClass::~MIL_FireClass()
 // Created: RFT 19/05/2008
 // Modified: none
 // -----------------------------------------------------------------------------
-uint MIL_FireClass::GetID() const
+unsigned int MIL_FireClass::GetID() const
 {
     return nID_;
 }

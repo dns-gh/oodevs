@@ -10,11 +10,13 @@
 #ifndef __ChangeHumanFactorsDialog_h_
 #define __ChangeHumanFactorsDialog_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_gui/ValuedComboBox.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/NullDisplayer.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -80,8 +82,8 @@ private:
     //! @name Helpers
     //@{
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    void SendMessage( uint id, ASN1T_EnumUnitTiredness, ASN1T_EnumUnitMorale, ASN1T_EnumUnitExperience );
-    void SendMessage( const kernel::Entity_ABC& entity, ASN1T_EnumUnitTiredness, ASN1T_EnumUnitMorale, ASN1T_EnumUnitExperience );
+    void SendMessage( unsigned int id, EnumUnitTiredness, EnumUnitMorale, EnumUnitExperience );
+    void SendMessage( const kernel::Entity_ABC& entity, EnumUnitTiredness, EnumUnitMorale, EnumUnitExperience );
     virtual void Call( const E_UnitTiredness& fatigue );
     virtual void Call( const E_UnitMorale& morale );
     virtual void Call( const E_UnitExperience& experience );

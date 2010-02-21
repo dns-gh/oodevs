@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_ObjectAttributeConstruction.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "DEC_Knowledge_Object.h"
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeConstruction )
 
@@ -59,7 +59,7 @@ DEC_Knowledge_ObjectAttributeConstruction::~DEC_Knowledge_ObjectAttributeConstru
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeConstruction::serialize( Archive& file, const uint )
+void DEC_Knowledge_ObjectAttributeConstruction::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
 //    file & boost::serialization::base_object< DEC_Knowledge_ObjectAttributeUpdatable_ABC >( *this );
@@ -108,15 +108,12 @@ void DEC_Knowledge_ObjectAttributeConstruction::UpdateOnCollision( const DEC_Kno
 // Name: DEC_Knowledge_ObjectAttributeConstruction::BuildMsgAttribute
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeConstruction::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeConstruction::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
-        asn.m.constructionPresent = 1;
-        asn.construction.m.percentagePresent = 1;
-        asn.construction.percentage = rConstructionPercentage_;
-        asn.construction.m.dotation_nbrPresent = 1;
-        asn.construction.dotation_nbr = nNbrDotation_;
+        asn.mutable_construction()->set_percentage( rConstructionPercentage_ );
+        asn.mutable_construction()->set_dotation_nbr( nNbrDotation_ );
         Reset();
     }
 }

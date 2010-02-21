@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_OuvrirItineraire::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_OuvrirItineraire& asnMission = *new ASN1T_Mission_Pion_GEN_OuvrirItineraire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_ouvrir_itineraire;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_ouvrir_itineraire = &asnMission;
+    Mission_Pion_GEN_OuvrirItineraire& asnMission = *new Mission_Pion_GEN_OuvrirItineraire();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_ouvrir_itineraire = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_GEN_OuvrirItineraire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_OuvrirItineraire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_ouvrir_itineraire );
-    ASN1T_Mission_Pion_GEN_OuvrirItineraire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_ouvrir_itineraire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_ouvrir_itineraire ());
+    Mission_Pion_GEN_OuvrirItineraire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_ouvrir_itineraire;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

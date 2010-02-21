@@ -2,7 +2,7 @@
 #include "DEC_Knowledge_ObjectAttributeInputToxicCloud.h"
 #include "Entities/Objects/InputToxicCloudAttribute.h"
 #include "DEC_Knowledge_Object.h"
-
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeInputToxicCloud constructor
@@ -38,7 +38,7 @@ DEC_Knowledge_ObjectAttributeInputToxicCloud::~DEC_Knowledge_ObjectAttributeInpu
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeInputToxicCloud::serialize( Archive&, const uint )
+void DEC_Knowledge_ObjectAttributeInputToxicCloud::serialize( Archive&, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     //
@@ -84,7 +84,7 @@ void DEC_Knowledge_ObjectAttributeInputToxicCloud::UpdateOnCollision( const DEC_
 // Name: DEC_Knowledge_ObjectAttributeInputToxicCloud::Send
 // Created: JCR 2008-08-18
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeInputToxicCloud::Send( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void DEC_Knowledge_ObjectAttributeInputToxicCloud::Send( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
     // NOTHING
 }

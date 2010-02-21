@@ -6,24 +6,24 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: NLD 2005-09-30 $
-// $Archive: $
-// $Author: $
-// $Modtime: $
-// $Revision: $
-// $Workfile: $
-//
-// *****************************************************************************
 
 #ifndef __DEC_PathWalker_h_
 #define __DEC_PathWalker_h_
 
 #include "MIL.h"
-
 #include "DEC_PathResult.h"
 #include "Entities/Effects/MIL_Effect_Move.h"
 #include <boost/shared_ptr.hpp>
+
+namespace Common
+{
+    class MsgPath;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUnitEnvironmentType;
+}
 
 class MIL_Object_ABC;
 class TerrainData;
@@ -52,7 +52,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity );
+    explicit DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity );
     virtual ~DEC_PathWalker();
     //@}
 
@@ -76,8 +76,8 @@ public:
 
     //! @name Network
     //@{
-    void SerializeEnvironmentType( ASN1T_MsgUnitEnvironmentType& msg ) const;
-    bool SerializeCurrentPath    ( ASN1T_Path& asn                   ) const;
+    void SerializeEnvironmentType( MsgsSimToClient::MsgUnitEnvironmentType& msg ) const;
+    bool SerializeCurrentPath( Common::MsgPath& asn ) const;
     //@}
 
 private:

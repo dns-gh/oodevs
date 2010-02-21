@@ -10,7 +10,11 @@
 #include "dispatcher_pch.h"
 #include "SimulationModel.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/clientsenders.h"
+#include "protocol/replaysenders.h"
 
+//using namespace Common;
+//using namespace MsgsSimToClient;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -22,7 +26,7 @@ SimulationModel::SimulationModel()
     , nTickDuration_       ( 0 )
     , nTimeFactor_         ( 0 )
     , nCheckpointFrequency_( 0 )
-    , nSimState_           ( EnumSimulationState::stopped )
+    , nSimState_           ( Common::stopped )
     , bSendVisionCones_    ( false )
     , bProfilingEnabled_   ( false )
 {
@@ -51,67 +55,67 @@ void SimulationModel::Reset()
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update( const ASN1T_MsgControlInformation& msg )
+void SimulationModel::Update( const MsgsSimToClient::MsgControlInformation& msg )
 {
-    initialDate_          = std::string( (const char*)msg.initial_date_time.data, 15 );
+    initialDate_          = msg.initial_date_time().data();
     date_                 = initialDate_;
-    nCurrentTick_         = msg.current_tick;
-    nTickDuration_        = msg.tick_duration;
-    nTimeFactor_          = msg.time_factor;
-    nCheckpointFrequency_ = msg.checkpoint_frequency;
-    nSimState_            = msg.status;
-    bSendVisionCones_     = msg.send_vision_cones != 0;
-    bProfilingEnabled_    = msg.profiling_enabled != 0;
+    nCurrentTick_         = msg.current_tick();
+    nTickDuration_        = msg.tick_duration();
+    nTimeFactor_          = msg.time_factor();
+    nCheckpointFrequency_ = msg.checkpoint_frequency();
+    nSimState_            = msg.status();
+    bSendVisionCones_     = msg.send_vision_cones() != 0;
+    bProfilingEnabled_    = msg.profiling_enabled() != 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel::Update_Stop
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Stop( const ASN1T_MsgControlStopAck& msg )
+void SimulationModel::Update_Stop( const MsgsSimToClient::MsgControlStopAck& msg )
 {
-    if( msg == EnumControlErrorCode::no_error )
-        nSimState_ = EnumSimulationState::stopped;
+    if( msg.error_code() == MsgsSimToClient::ControlAck_ErrorCode_no_error )
+        nSimState_ = Common::stopped;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel::Update_Pause
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Pause( const ASN1T_MsgControlPauseAck& msg )
+void SimulationModel::Update_Pause( const MsgsSimToClient::MsgControlPauseAck& msg )
 {
-    if( msg == EnumControlErrorCode::no_error )
-        nSimState_ = EnumSimulationState::paused;
+    if( msg.error_code() == MsgsSimToClient::ControlAck_ErrorCode_no_error )
+        nSimState_ = Common::paused;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel::Update_Resume
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update_Resume( const ASN1T_MsgControlResumeAck& msg )
+void SimulationModel::Update_Resume( const MsgsSimToClient::MsgControlResumeAck& msg )
 {
-    if( msg == EnumControlErrorCode::no_error )
-        nSimState_ = EnumSimulationState::running;
+    if( msg.error_code() == MsgsSimToClient::ControlAck_ErrorCode_no_error )
+        nSimState_ = Common::running;
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void SimulationModel::Update( const ASN1T_MsgControlChangeTimeFactorAck& msg )
+void SimulationModel::Update( const MsgsSimToClient::MsgControlChangeTimeFactorAck& msg )
 {
-    if( msg.error_code == EnumControlErrorCode::no_error )
-        nTimeFactor_ = msg.time_factor;
+    if( msg.error_code() == MsgsSimToClient::ControlAck_ErrorCode_no_error )
+        nTimeFactor_ = msg.time_factor();
 }
 
 // -----------------------------------------------------------------------------
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------
-void SimulationModel::Update( const ASN1T_MsgControlBeginTick& msg )
+void SimulationModel::Update( const MsgsSimToClient::MsgControlBeginTick& msg )
 {
-    nCurrentTick_ = msg.current_tick;
-    date_ = std::string( (const char*)msg.date_time.data, 15 );
+    nCurrentTick_ = msg.current_tick();
+    date_ = msg.date_time().data();
     if( initialDate_.empty() )
         initialDate_ = date_;
 }
@@ -120,9 +124,9 @@ void SimulationModel::Update( const ASN1T_MsgControlBeginTick& msg )
 // Name: SimulationModel::Update
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------
-void SimulationModel::Update( const ASN1T_MsgControlEndTick& msg )
+void SimulationModel::Update( const MsgsSimToClient::MsgControlEndTick& msg )
 {
-    nCurrentTick_ = msg.current_tick;
+    nCurrentTick_ = msg.current_tick();
     //$$$$ 
     /*
     tick-duration       INTEGER,    -- En millisecondes
@@ -135,7 +139,7 @@ void SimulationModel::Update( const ASN1T_MsgControlEndTick& msg )
 // Name: SimulationModel::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-//void SimulationModel::Update( const ASN1T_MsgControlCheckPointSetFrequencyAck& msg )
+//void SimulationModel::Update( const MsgControlCheckPointSetFrequencyAck& msg )
 //{
 //    nCheckpointFrequency_ = msg;
 //}
@@ -147,15 +151,15 @@ void SimulationModel::Update( const ASN1T_MsgControlEndTick& msg )
 void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 {
     client::ControlInformation asn;
-    asn().current_tick         = nCurrentTick_;
-    asn().initial_date_time    = initialDate_.c_str();
-    asn().date_time            = date_.c_str();
-    asn().tick_duration        = nTickDuration_;
-    asn().time_factor          = nTimeFactor_;
-    asn().checkpoint_frequency = nCheckpointFrequency_;
-    asn().status               = nSimState_;
-    asn().send_vision_cones    = bSendVisionCones_;
-    asn().profiling_enabled    = bProfilingEnabled_;
+    asn().set_current_tick         ( nCurrentTick_);
+    asn().mutable_initial_date_time()->set_data( initialDate_.c_str() );
+    asn().mutable_date_time()->set_data( date_.c_str() );
+    asn().set_tick_duration        ( nTickDuration_);
+    asn().set_time_factor          ( nTimeFactor_);
+    asn().set_checkpoint_frequency ( nCheckpointFrequency_);
+    asn().set_status               ( nSimState_);
+    asn().set_send_vision_cones    (bSendVisionCones_);
+    asn().set_profiling_enabled    ( bProfilingEnabled_);
     asn.Send( publisher );
 }
 
@@ -163,16 +167,16 @@ void SimulationModel::Send( ClientPublisher_ABC& publisher ) const
 // Name: SimulationModel::SendReplayInfo
 // Created: AGE 2007-10-15
 // -----------------------------------------------------------------------------
-void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, ASN1T_EnumSimulationState status, unsigned factor ) const
+void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks, Common::EnumSimulationState status, unsigned factor ) const
 {
     replay::ControlReplayInformation asn;
-    asn().current_tick      = nCurrentTick_;
-    asn().initial_date_time = initialDate_.c_str();
-    asn().date_time         = date_.c_str();
-    asn().tick_duration     = nTickDuration_;
-    asn().time_factor       = factor;
-    asn().status            = status;
-    asn().tick_count        = totalTicks;
+    asn().set_current_tick      ( nCurrentTick_ );
+    asn().mutable_initial_date_time()->set_data( initialDate_.c_str() );
+    asn().mutable_date_time()->set_data( date_.c_str() );
+    asn().set_tick_duration     ( nTickDuration_ );
+    asn().set_time_factor       ( factor );
+    asn().set_status            ( status );
+    asn().set_tick_count        ( totalTicks );
     asn.Send( publisher );
 }
 
@@ -183,7 +187,7 @@ void SimulationModel::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned t
 void SimulationModel::SendFirstTick( ClientPublisher_ABC& publisher ) const
 {
     client::ControlBeginTick asn;
-    asn().current_tick = 0;
-    asn().date_time    = date_.c_str();
+    asn().set_current_tick ( 0 );
+    asn().mutable_date_time()->set_data( date_.c_str() );
     asn.Send( publisher );
 }

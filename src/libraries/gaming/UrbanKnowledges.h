@@ -10,17 +10,24 @@
 #ifndef __UrbanKnowledges_h_
 #define __UrbanKnowledges_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver.h"
 #include "clients_kernel/Creatable.h"
+
 
 namespace kernel
 {
     class Controller;
     class Team_ABC;
     class UrbanKnowledge_ABC;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUrbanKnowledgeCreation;
+    class MsgUrbanKnowledgeUpdate;
+    class MsgUrbanKnowledgeDestruction;
 }
 
 class UrbanKnowledgeFactory;
@@ -32,11 +39,11 @@ class UrbanKnowledgeFactory;
 // Created: MGD 2009-12-09
 // =============================================================================
 class UrbanKnowledges : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgUrbanKnowledgeCreation >
-                       , public kernel::Updatable_ABC< ASN1T_MsgUrbanKnowledgeUpdate >
-                       , public kernel::Updatable_ABC< ASN1T_MsgUrbanKnowledgeDestruction >
-                       , public tools::Resolver< kernel::UrbanKnowledge_ABC >
-                       , public kernel::Creatable< UrbanKnowledges >
+    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeCreation >
+    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
+    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeDestruction >
+    , public tools::Resolver< kernel::UrbanKnowledge_ABC >
+    , public kernel::Creatable< UrbanKnowledges >
 {
 
 public:
@@ -59,9 +66,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUrbanKnowledgeCreation&    message );
-    virtual void DoUpdate( const ASN1T_MsgUrbanKnowledgeUpdate&      message );
-    virtual void DoUpdate( const ASN1T_MsgUrbanKnowledgeDestruction& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeCreation&    message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate&      message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeDestruction& message );
     //@}
 
 private:

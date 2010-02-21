@@ -69,7 +69,7 @@ DEC_Knowledge_PopulationCollision::~DEC_Knowledge_PopulationCollision()
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const uint )
+void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          & const_cast< MIL_AgentPion*& >( pAgentColliding_ )

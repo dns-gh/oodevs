@@ -36,8 +36,8 @@ public:
     //! @name Check points
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( MIL_CheckPointInArchive& file, const uint );
-    void save( MIL_CheckPointOutArchive& file, const uint ) const;
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
     //@}
 
     //! @name Operations

@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "Automat.h"
 #include "ParameterVisitor_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 using namespace xml;
@@ -69,12 +70,12 @@ Automat::~Automat()
 // Name: Automat::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Automat::CommitTo( ASN1T_MissionParameter& asn ) const
+void Automat::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_automat;
+    message.set_null_value ( !IsSet() );
+    message.mutable_value()->mutable_automat();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< Automat_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.automat );
+        Entity< Automat_ABC >::CommitTo< Common::MsgAutomat >( *message.mutable_value()->mutable_automat() );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,13 +85,4 @@ void Automat::CommitTo( ASN1T_MissionParameter& asn ) const
 void Automat::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Automat::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void Automat::CommitTo( ASN1T_Automat& asn ) const
-{
-    Entity< Automat_ABC >::CommitTo( (ASN1T_OID&)asn );
 }

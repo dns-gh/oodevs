@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "IntelligencesModel.h"
 #include "clients_kernel/Intelligence_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -45,7 +46,7 @@ void IntelligencesModel::Purge()
 // Name: IntelligencesModel::Create
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-void IntelligencesModel::Create( const ASN1T_MsgIntelligenceCreation& message )
+void IntelligencesModel::Create( const MsgsMessengerToClient::MsgIntelligenceCreation& message )
 {
     std::auto_ptr< Intelligence_ABC > intelligence( factory_.Create( message ) );
     Register( intelligence->GetId(), *intelligence );
@@ -56,11 +57,11 @@ void IntelligencesModel::Create( const ASN1T_MsgIntelligenceCreation& message )
 // Name: IntelligencesModel::Delete
 // Created: SBO 2007-10-18
 // -----------------------------------------------------------------------------
-void IntelligencesModel::Delete( const ASN1T_MsgIntelligenceDestruction& message )
+void IntelligencesModel::Delete( const MsgsMessengerToClient::MsgIntelligenceDestruction& message )
 {
-    if( Intelligence_ABC* element = Find( message.oid ) )
+    if( Intelligence_ABC* element = Find( message.oid() ) )
     {
         delete element;
-        Remove( message.oid );
+        Remove( message.oid() );
     }
 }

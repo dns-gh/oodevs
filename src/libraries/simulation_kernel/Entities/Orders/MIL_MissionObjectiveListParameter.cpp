@@ -12,18 +12,19 @@
 #include "simulation_orders/MIL_ParameterType_ObjectiveList.h"
 #include "Decision/DEC_Objective.h"
 #include "Network/NET_AsnException.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionObjectiveListParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_MissionObjectiveListParameter::MIL_MissionObjectiveListParameter( const ASN1T_MissionObjectiveList& asn )
+MIL_MissionObjectiveListParameter::MIL_MissionObjectiveListParameter( const Common::MsgMissionObjectiveList& asn )
 {
-    unsigned int size = asn.n;
+    unsigned int size = asn.elem_size();
     objectives_.reserve( size );
-    for( uint i = 0; i < size; ++i )
+    for( unsigned int i = 0; i < size; ++i )
     {
-        boost::shared_ptr< DEC_Objective > pObjective( new DEC_Objective( asn.elem[i] ) );
+        boost::shared_ptr< DEC_Objective > pObjective( new DEC_Objective( asn.elem(i) ) );
         objectives_.push_back( pObjective );
     }
 }
@@ -43,23 +44,17 @@ MIL_MissionObjectiveListParameter::~MIL_MissionObjectiveListParameter()
 // -----------------------------------------------------------------------------
 bool MIL_MissionObjectiveListParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_ObjectiveList*>( &type ) != 0 );
+    return dynamic_cast<const MIL_ParameterType_ObjectiveList*>( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionObjectiveListParameter::ToObjectiveList
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_MissionObjectiveListParameter::ToObjectiveList( ASN1T_MissionObjectiveList& asn ) const
+bool MIL_MissionObjectiveListParameter::ToObjectiveList( Common::MsgMissionObjectiveList& asn ) const
 {
-    unsigned int size = objectives_.size();
-    asn.n = size;
-    if( size )
-    {
-        asn.elem = new ASN1T_MissionObjective[ size ];
-        for( unsigned int i = 0; i < size; ++i )
-            objectives_[ i ]->Serialize( asn.elem[ i ] );
-    }
+    for( unsigned int i = 0; i < objectives_.size(); ++i )
+        objectives_[ i ]->Serialize( *asn.add_elem( ) );
     return true;
 }
 

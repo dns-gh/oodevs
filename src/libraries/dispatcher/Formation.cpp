@@ -18,20 +18,23 @@
 #include "Model_ABC.h"
 
 #include <boost/bind.hpp>
+#include "protocol/simulationsenders.h"
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
+////using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: Formation constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Formation::Formation( const Model_ABC& model, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels, const ASN1T_MsgFormationCreation& msg )
-    : SimpleEntity< kernel::Formation_ABC >( msg.oid, msg.nom )
+Formation::Formation( const Model_ABC& model, const Common::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels )
+    : SimpleEntity< kernel::Formation_ABC >( msg.oid(), QString(msg.nom().c_str()) )
     , model_ ( model )
-    , name_  ( msg.nom )
-    , team_  ( model.Sides().Get( msg.oid_camp ) )
-    , level_ ( levels.Get( msg.niveau ) )
-    , parent_( msg.m.oid_formation_parentePresent ? &model.Formations().Get( msg.oid_formation_parente ) : 0 )
+    , name_  ( msg.nom() )
+    , team_  ( model.Sides().Get( msg.oid_camp() ) )
+    , level_ ( levels.Get( msg.niveau() ) )
+    , parent_( msg.has_oid_formation_parente() ? &model.Formations().Get( msg.oid_formation_parente() ) : 0 )
 {
     if( parent_ )
         parent_->Register( *this );
@@ -58,20 +61,17 @@ Formation::~Formation()
 // -----------------------------------------------------------------------------
 void Formation::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::FormationCreation asn;
+    client::FormationCreation message;
 
-    asn().oid      = GetId();
-    asn().oid_camp = team_.GetId();
-    asn().nom      = name_.c_str();
-    asn().niveau   = static_cast< ASN1T_EnumNatureLevel >( level_.GetId() );
+    message().set_oid( GetId() );
+    message().set_oid_camp( team_.GetId() );
+    message().set_nom( name_ );
+    message().set_niveau( Common::EnumNatureLevel( level_.GetId() ) );
 
     if( parent_ )
-    {
-        asn().m.oid_formation_parentePresent = 1;
-        asn().oid_formation_parente = parent_->GetId();
-    }
+        message().set_oid_formation_parente( parent_->GetId() );
 
-    asn.Send( publisher );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

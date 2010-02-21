@@ -10,8 +10,11 @@
 #ifndef __DrawingFactory_h_
 #define __DrawingFactory_h_
 
-#include "game_asn/Messenger.h"
+
 #include "clients_gui/DrawingFactory_ABC.h"
+#include "protocol/messengersenders.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -50,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    gui::Drawing_ABC* CreateShape( const ASN1T_MsgShapeCreation& asn ) const;
+    gui::Drawing_ABC* CreateShape( const MsgsMessengerToClient::MsgShapeCreation& asn ) const;
     //@}
 
 private:

@@ -13,6 +13,7 @@
 #include "IndicatorRequests.h"
 #include "clients_kernel/Controller.h"
 #include <xeumeuleu/xml.h>
+#include "protocol/AarSenders.h"
 
 using namespace kernel;
 
@@ -40,7 +41,7 @@ AfterActionModel::~AfterActionModel()
 // Name: AfterActionModel::Update
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const ASN1T_MsgAarInformation& /*asn*/ )
+void AfterActionModel::Update( const MsgsAarToClient::MsgAarInformation& /*message*/ )
 {
     // $$$$ AGE 2007-10-10: 
     controller_.Update( *this );
@@ -50,9 +51,9 @@ void AfterActionModel::Update( const ASN1T_MsgAarInformation& /*asn*/ )
 // Name: AfterActionModel::Update
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
-void AfterActionModel::Update( const ASN1T_MsgPlotResult& asn )
+void AfterActionModel::Update( const MsgsAarToClient::MsgPlotResult& message )
 {
-    requests_->Update( asn );
+    requests_->Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +73,7 @@ void AfterActionModel::Load( const std::string& functions )
 {
     xml::xifstream xis( functions );
     xis >> xml::start( "functions" )
-            >> xml::list( "function", *this, &AfterActionModel::ReadFunction )
+        >> xml::list( "function", *this, &AfterActionModel::ReadFunction )
         >> xml::end();
 }
 

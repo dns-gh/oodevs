@@ -10,7 +10,7 @@
 #include "actions_pch.h"
 #include "Agent.h"
 #include "ParameterVisitor_ABC.h"
-#include "clients_kernel/Agent_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 using namespace xml;
@@ -70,12 +70,12 @@ Agent::~Agent()
 // Name: Agent::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Agent::CommitTo( ASN1T_MissionParameter& asn ) const
+void Agent::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_unit;
+    message.set_null_value( !IsSet() );
+    message.mutable_value()->mutable_unit();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< Agent_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.unit );
+        Entity< Agent_ABC >::CommitTo( *message.mutable_value()->mutable_unit() );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,13 +85,4 @@ void Agent::CommitTo( ASN1T_MissionParameter& asn ) const
 void Agent::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::CommitTo
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-void Agent::CommitTo( ASN1T_Unit& asn ) const
-{
-    Entity< Agent_ABC >::CommitTo( (ASN1T_OID&)asn );
 }

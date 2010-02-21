@@ -11,18 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Meteo.h"
-
+#include "PHY_Ephemeride.h"
+#include "MIL_AgentServer.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Meteo/PHY_Lighting.h"
 #include "Meteo/PHY_Precipitation.h"
-#include "PHY_Ephemeride.h"
-#include "MIL_AgentServer.h"
-
-#include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/SimulationSenders.h"
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
-
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo constructor
@@ -33,15 +30,16 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
 {
-    uint nVal;
+    unsigned int nVal;
     xis >> xml::start( "cloud-cover" )
             >> xml::attribute( "floor", nPlancherCouvertureNuageuse_ )
             >> xml::attribute( "ceiling", nPlafondCouvertureNuageuse_ )
             >> xml::attribute( "density", nVal )
         >> xml::end();
-    rDensiteCouvertureNuageuse_ = std::min( nVal, (uint)100 ) / 100.;
+    rDensiteCouvertureNuageuse_ = std::min( nVal, (unsigned int)100 ) / 100.;
 
-    uint nAngle;
+    unsigned int nAngle;
+    Common::MsgHeading heading;
     xis >> xml::start( "wind" )
             >> xml::attribute( "speed", wind_.rWindSpeed_ )
             >> xml::attribute( "speed", nAngle )
@@ -51,7 +49,7 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
     wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( wind_.rWindSpeed_ );
     if( nAngle < 0 || nAngle > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
-    NET_ASN_Tools::ReadDirection( nAngle, wind_.vWindDirection_ );
+    NET_ASN_Tools::ReadDirection( heading, wind_.vWindDirection_ );
 
     std::string strVal;
     xis >> xml::start( "precipitation" )
@@ -67,7 +65,7 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( const ASN1T_MeteoAttributes& asnMsg )
+PHY_Meteo::PHY_Meteo( const MsgsClientToSim::MsgMeteoAttributes& asnMsg )
     : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
@@ -89,25 +87,25 @@ PHY_Meteo::~PHY_Meteo()
 // Name: PHY_Meteo::Update
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::Update( const ASN1T_MeteoAttributes& asnMsg )
+void PHY_Meteo::Update( const MsgsClientToSim::MsgMeteoAttributes& asnMsg )
 {
     // Plancher de couverture nuageuse
-    nPlancherCouvertureNuageuse_ = asnMsg.cloud_floor;
+    nPlancherCouvertureNuageuse_ = asnMsg.cloud_floor();
 
     // Plafond de couverture nuageuse
-    nPlafondCouvertureNuageuse_ = asnMsg.cloud_ceiling;
+    nPlafondCouvertureNuageuse_ = asnMsg.cloud_ceiling();
 
     // Densite moyenne de couverture nuageuse
-    rDensiteCouvertureNuageuse_ = std::min( std::max( asnMsg.cloud_density, 0 ), 100 ) / 100.;
+    rDensiteCouvertureNuageuse_ = std::min( std::max( asnMsg.cloud_density(), 0 ), 100 ) / 100.;
 
     // Vitesse du vent
-    wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( asnMsg.wind_speed );
+    wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( asnMsg.wind_speed() );
 
     // Direction du vent
-    NET_ASN_Tools::ReadDirection( asnMsg.wind_direction, wind_.vWindDirection_ );
+    NET_ASN_Tools::ReadDirection( asnMsg.wind_direction(), wind_.vWindDirection_ );
 
     // Précipitation
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( asnMsg.precipitation );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( asnMsg.precipitation() );
     if( !pPrecipitation_ )
     {
         assert( false );
@@ -123,5 +121,5 @@ void PHY_Meteo::Update( const ASN1T_MeteoAttributes& asnMsg )
 //-----------------------------------------------------------------------------
 void PHY_Meteo::Update( const PHY_Ephemeride& ephemeride )
 {
-    pLighting_ = &ephemeride.GetLightingBase().GetDegradedLighting( (uint)( rDensiteCouvertureNuageuse_ * ( nPlafondCouvertureNuageuse_ - nPlancherCouvertureNuageuse_ ) / 2000 ) );
+    pLighting_ = &ephemeride.GetLightingBase().GetDegradedLighting( (unsigned int)( rDensiteCouvertureNuageuse_ * ( nPlafondCouvertureNuageuse_ - nPlancherCouvertureNuageuse_ ) / 2000 ) );
 }

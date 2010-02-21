@@ -11,10 +11,13 @@
 #define __LocationSerializer_h_
 
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "protocol/clientsenders.h"
 
-struct ASN1T_CoordLatLong;
-struct ASN1T_Location;
-
+namespace Common
+{
+    //struct MsgCoordLatLong;
+    class MsgLocation;
+}
 namespace kernel
 {
     class CoordinateConverter_ABC;
@@ -34,14 +37,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LocationSerializer( const kernel::CoordinateConverter_ABC& converter );
-             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, ASN1T_Location& localisation );
+    LocationSerializer( const kernel::CoordinateConverter_ABC& converter, Common::MsgLocation& localisation );
     virtual ~LocationSerializer();
     //@}
 
     //! @name Operations
     //@{
     void Serialize( const kernel::Location_ABC& location );
-    void Serialize( const kernel::Location_ABC& location, ASN1T_Location& localisation );
+    void Serialize( const kernel::Location_ABC& location, Common::MsgLocation& localisation );
     //@}
 
     //! @name Operations
@@ -69,8 +72,8 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    ASN1T_Location* localisation_;
-    ASN1T_CoordLatLong* pCoords_;
+    Common::MsgLocation* localisation_;
+    //MsgCoordLatLong* pCoords_;
     bool ownsCoords_;
     //@}
 };

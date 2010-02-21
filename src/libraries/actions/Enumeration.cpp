@@ -11,6 +11,7 @@
 #include "Enumeration.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/OrderParameterValue.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -63,10 +64,10 @@ void Enumeration::Serialize( xml::xostream& xos ) const
 // Name: Enumeration::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Enumeration::CommitTo( ASN1T_MissionParameter& asn ) const
+void Enumeration::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_enumeration;
+    message.set_null_value ( !IsSet() );
+    message.mutable_value();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        asn.value.u.enumeration = value_.GetId();
+        message.mutable_value()->set_enumeration( value_.GetId() );
 }

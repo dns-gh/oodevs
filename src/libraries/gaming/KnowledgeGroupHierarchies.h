@@ -13,7 +13,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/simulationSenders.h"
 
 namespace kernel
 {
@@ -28,7 +28,7 @@ namespace kernel
 // Created: AGE 2006-09-20
 // =============================================================================
 class KnowledgeGroupHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                                , public kernel::Updatable_ABC< ASN1T_MsgKnowledgeGroupChangeSuperior >
+                                , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate >
 {
 
 public:
@@ -41,7 +41,7 @@ public:
 
     //! @name Operations 
     //@{
-    virtual void DoUpdate( const ASN1T_MsgKnowledgeGroupChangeSuperior& message ); // LTO
+    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& updateMessage );
     //@}
 
 private:

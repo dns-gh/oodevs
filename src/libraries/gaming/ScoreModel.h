@@ -12,7 +12,10 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
-#include "game_asn/Aar.h"
+#include "protocol/Protocol.h"
+#include "protocol/AarSenders.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -47,8 +50,8 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Update( const ASN1T_MsgIndicator& message );
-    void Update( const ASN1T_MsgPlotResult& message );
+    void Update( const MsgsAarToClient::MsgIndicator& message );
+    void Update( const MsgsAarToClient::MsgPlotResult& message );
     IndicatorRequest& CreateRequest( Score& score );
     //@}
 

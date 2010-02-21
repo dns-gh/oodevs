@@ -11,6 +11,7 @@
 #include "AgentOrder.h"
 #include "ClientPublisher_ABC.h"
 #include "Agent.h"
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -18,8 +19,8 @@ using namespace dispatcher;
 // Name: AgentOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-AgentOrder::AgentOrder( Model_ABC& model, Agent& agent, const ASN1T_MsgUnitOrder& asn )
-    : Order_ABC( model, asn.mission, asn.parametres )
+AgentOrder::AgentOrder( Model_ABC& model, Agent& agent, const Common::MsgUnitOrder& asn )
+    : Order_ABC( model, asn.mission(), asn.parametres() )
     , agent_   ( agent )
 {
     // NOTHING
@@ -45,11 +46,11 @@ AgentOrder::~AgentOrder()
 void AgentOrder::Send( ClientPublisher_ABC& publisher )
 {
     client::UnitOrder asn;
-    asn().oid     = agent_.GetId();
-    asn().mission = missionID_;
-    Order_ABC::Send( asn().parametres );
+    asn().set_oid    ( agent_.GetId() );
+    asn().set_mission( missionID_ );
+    Order_ABC::Send( *asn().mutable_parametres() );
     asn.Send( publisher );
-    AsnDelete( asn().parametres );
+    Delete( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,8 +60,7 @@ void AgentOrder::Send( ClientPublisher_ABC& publisher )
 void AgentOrder::SendNoMission( const Agent& agent, ClientPublisher_ABC& publisher )
 {
     client::UnitOrder asn;
-    asn().oid          = agent.GetId();
-    asn().mission      = 0;
-    asn().parametres.n = 0;
+    asn().set_oid          ( agent.GetId() );
+    asn().set_mission      ( 0 );
     asn.Send( publisher );
 }

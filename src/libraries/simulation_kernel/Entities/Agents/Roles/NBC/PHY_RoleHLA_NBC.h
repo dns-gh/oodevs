@@ -57,6 +57,12 @@ public:
     virtual MT_Float ModifyMaxSpeed( MT_Float /*rSpeed*/    ) const { return 0; }
     //@}
 
+    //! @name Network
+    //@{
+//    virtual void SendChangedState( client::UnitAttributes& msg ) const {};
+//    virtual void SendFullState   ( client::UnitAttributes& msg ) const {};
+    //@}
+
 private:
     //! @name Member data
     //@{

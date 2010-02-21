@@ -11,7 +11,11 @@
 #define __MIL_AutomateMission_h_
 
 #include "MIL_Mission_ABC.h"
-#include "MIL_MissionType_ABC.h"
+
+namespace Common
+{
+    class MsgAutomatOrder;
+}
 
 class MIL_Automate;
 
@@ -23,10 +27,11 @@ class MIL_Automate;
 // =============================================================================
 class MIL_AutomateMission : public MIL_Mission_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const ASN1T_MsgAutomatOrder& asn );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const Common::MsgAutomatOrder& asn );
              MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const MIL_AutomateMission& parent );
              MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate );
     virtual ~MIL_AutomateMission();
@@ -64,14 +69,17 @@ private:
 
     //! @name Network
     //@{
-           void Send         () const;
+    void Send() const;
     static void SendNoMission( const MIL_Automate& automate );
     //@}
 
 private:
-          MIL_Automate&        automate_;
-          bool                 bDIAMrtBehaviorActivated_;
-          bool                 bDIACdtBehaviorActivated_;
+    //! @name Member data
+    //@{
+    MIL_Automate& automate_;
+    bool          bDIAMrtBehaviorActivated_;
+    bool          bDIACdtBehaviorActivated_;
+    //@}
 };
 
 #endif // __MIL_AutomateMission_h_

@@ -43,9 +43,9 @@ void Mission_Automat_INF_Relever::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Relever& asnMission = *new ASN1T_Mission_Automate_INF_Relever();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_relever;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_relever = &asnMission;
+    Mission_Automate_INF_Relever& asnMission = *new Mission_Automate_INF_Relever();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_relever = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
@@ -59,8 +59,8 @@ void Mission_Automat_INF_Relever::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Relever::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_relever );
-    ASN1T_Mission_Automate_INF_Relever& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_relever;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_relever ());
+    Mission_Automate_INF_Relever& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_relever;
 
 
     delete &asnMission;

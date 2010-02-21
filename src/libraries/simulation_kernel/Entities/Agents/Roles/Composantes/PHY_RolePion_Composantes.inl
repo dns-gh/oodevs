@@ -43,9 +43,9 @@ inline void PHY_RolePion_Composantes::ApplyOnWeapons( T& t ) const
 // Created: NLD 2006-04-03
 // -----------------------------------------------------------------------------
 template < typename T >
-uint PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate )
+unsigned int PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate )
 {
-    uint nNbrDone = 0;
+    unsigned int nNbrDone = 0;
     for( PHY_ComposantePion::RIT_ComposantePionVector it = composantes_.rbegin(); it != composantes_.rend() && nNbrDone < nNbr ; )
     {
         PHY_ComposantePion& composante = **it;
@@ -63,13 +63,13 @@ uint PHY_RolePion_Composantes::LendComposantes( PHY_RolePion_Composantes& borrow
 }
 
 // -----------------------------------------------------------------------------
-// Name: template < typename T > uint PHY_RolePion_Composantes::RetrieveLentComposantes
+// Name: template < typename T > unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
 template < typename T > 
-uint PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate )
+unsigned int PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate )
 {
-    uint nNbrDone = 0;
+    unsigned int nNbrDone = 0;
     while( nNbrDone < nNbr )
     {
         IT_LoanMap it = lentComposantes_.find( &borrower );
@@ -94,14 +94,14 @@ uint PHY_RolePion_Composantes::RetrieveLentComposantes( PHY_RolePion_Composantes
 }
    
 // -----------------------------------------------------------------------------
-// Name: template < typename T > uint PHY_RolePion_Composantes::GetLentComposantesTravelTime
+// Name: template < typename T > unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
 template < typename T > 
-uint PHY_RolePion_Composantes::GetLentComposantesTravelTime( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate )
+unsigned int PHY_RolePion_Composantes::GetLentComposantesTravelTime( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate )
 {
-    uint nNbrDone = 0;
-    uint nTime    = 0;
+    unsigned int nNbrDone = 0;
+    unsigned int nTime    = 0;
 
     const MT_Vector2D& srcPos  =          pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     const MT_Vector2D& destPos = borrower.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();   //@@Hmm...

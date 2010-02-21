@@ -12,7 +12,11 @@
 
 #include "TicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
+
 #include <geometry/types.h>
 #pragma warning (disable : 4511 4512 4127 )
 #include <boost/ptr_container/ptr_vector.hpp>
@@ -40,9 +44,9 @@ namespace tic
 // Created: AGE 2008-03-31
 // =============================================================================
 class TicExtension : public TicExtension_ABC
-                   , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                   , public kernel::Updatable_ABC< ASN1T_MsgUnitEnvironmentType >
-                   , public kernel::Updatable_ABC< ASN1T_MsgUnitPathFind >
+                   , public kernel::Updatable_ABC< MsgUnitAttributes >
+                   , public kernel::Updatable_ABC< MsgUnitEnvironmentType >
+                   , public kernel::Updatable_ABC< MsgUnitPathFind >
 {
 
 public:
@@ -54,9 +58,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitPathFind& updateMessage );
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& updateMessage );
-    virtual void DoUpdate( const ASN1T_MsgUnitEnvironmentType& updateMessage );
+    virtual void DoUpdate( const MsgUnitPathFind& updateMessage );
+    virtual void DoUpdate( const MsgUnitAttributes& updateMessage );
+    virtual void DoUpdate( const MsgUnitEnvironmentType& updateMessage );
 
     virtual void Accept( PlatformVisitor_ABC& visitor ) const;
     //@}
@@ -71,8 +75,8 @@ private:
     //! @name Helpers
     //@{
     void CreatePlatforms( float timeStep );
-    void UpdatePlatforms( const ASN1T_MsgUnitAttributes& updateMessage );
-    void UpdatePlatforms( const ASN1T_EquipmentDotations& updateMessage );
+    void UpdatePlatforms( const MsgUnitAttributes& updateMessage );
+    void UpdatePlatforms( const EquipmentDotations_EquipmentDotation& updateMessage );
     void SortPlatforms();
     void UpdateFormation();
     //@}

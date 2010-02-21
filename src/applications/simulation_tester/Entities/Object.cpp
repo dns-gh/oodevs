@@ -27,17 +27,17 @@ using namespace TEST;
 // Name: Object::Object
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Object::Object( const Workspace& workspace, const ASN1T_MsgObjectCreation& asnMsg )
-    : nId_               ( asnMsg.oid  )
-    , nType_             ( asnMsg.type )
-    , pTeam_             ( workspace.GetEntityManager().FindTeam( asnMsg.camp ) )
-    , nTypeLocalisation_ ( asnMsg.localisation.type  )
+Object::Object( const Workspace& workspace, const MsgObjectCreation& asnMsg )
+    : nId_               ( asnMsg.oid()  )
+    , nType_             ( asnMsg.type() )
+    , pTeam_             ( workspace.GetEntityManager().FindTeam( asnMsg.camp() ) )
+    , nTypeLocalisation_ ( asnMsg.localisation().type()  )
 {
     assert( pTeam_ );
 
-    for( uint i = 0; i < asnMsg.localisation.vecteur_point.n; ++i )
+    for( unsigned int i = 0; i < asnMsg.localisation().vecteur_point().elem_size(); ++i )
     {
-        Position* pos = new Position( std::string( (const char*)asnMsg.localisation.vecteur_point.elem[i].data, 15 ) );
+        Position* pos = new Position( std::string( (const char*)asnMsg.localisation.mutable_vecteur_point()->mutable_elem()[i].data,() 15 ) );
         positionVector_.push_back( pos );
     }
 }

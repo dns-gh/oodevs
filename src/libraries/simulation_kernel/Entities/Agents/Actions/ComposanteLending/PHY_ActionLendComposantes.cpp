@@ -59,7 +59,7 @@ void PHY_ActionLendComposantes::Execute()
     if ( !bLoanDone_ && !nTimer_-- )
     {
         assert( pTarget_ );
-        const uint nNbrLent = role_.LendComposantes( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
+        const unsigned int nNbrLent = role_.LendComposantes( *pTarget_, nNbrToLend_, std::mem_fun_ref( predicate_ ) );
 
         if( nNbrLent == 0 )
             MIL_Report::PostEvent( role_.GetPion(), MIL_Report::eReport_EquipmentLoanImpossible );

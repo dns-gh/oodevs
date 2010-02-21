@@ -28,20 +28,20 @@ public:
     //! @name Constructors/Destructor
     //@{
              AnimatorAttribute();    
-    explicit AnimatorAttribute( uint maxAnimator ); 
+    explicit AnimatorAttribute( unsigned int maxAnimator ); 
     explicit AnimatorAttribute( xml::xistream& xis );
     virtual ~AnimatorAttribute();
     //@}
 
     //! @name CheckPoint
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
     //@{
-    uint GetMaxAnimators() const;
-    uint GetCurrent() const;
+    unsigned int GetMaxAnimators() const;
+    unsigned int GetCurrent() const;
     bool AddAnimator( const MIL_Agent_ABC& agent );
     void ReleaseAnimator( const MIL_Agent_ABC& agent );
     //@}
@@ -68,7 +68,7 @@ private:
     //! @name Member data
     //@{
     T_AgentSet  animators_;
-    uint        maxAnimators_;
+    unsigned int        maxAnimators_;
     //@}
 };
 

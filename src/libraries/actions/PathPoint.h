@@ -12,6 +12,11 @@
 
 #include "Location.h"
 
+namespace Common
+{
+    class MsgCoordLatLong;
+}
+
 namespace actions {
     namespace parameters {
 
@@ -34,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_CoordLatLong& asn ) const;
+    void CommitTo( Common::MsgCoordLatLong& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

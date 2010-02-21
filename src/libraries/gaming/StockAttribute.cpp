@@ -9,10 +9,11 @@
 
 #include "gaming_pch.h"
 #include "StockAttribute.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
-#include "Tools.h"
+#include "protocol/Simulation.h"
 
 using namespace kernel;
 
@@ -40,15 +41,15 @@ StockAttribute::~StockAttribute()
 // Name: StockAttribute::Update
 // Created: JCR 2009-06-05
 // -----------------------------------------------------------------------------
-void StockAttribute::Update( const DotationType& type, const ASN1T_StockResource& resource )
+void StockAttribute::Update( const DotationType& type, const Common::StockResource& resource )
 {
     typedef T_StockDotation::iterator IT_StockDotation;
     typedef std::pair< T_DotationState, T_DotationState > T_StockResourceValue;
 
     T_StockResourceValue value = stock_[ &type ];
-    value.first = resource.current;
-    if( resource.m.maxPresent )
-        value.second = resource.max;
+    value.first = resource.current();
+    if( resource.has_max() )
+        value.second = resource.max();
     stock_[ &type ] = value;
 }
 
@@ -59,44 +60,42 @@ void StockAttribute::Update( const DotationType& type, const ASN1T_StockResource
 template< typename T >
 void StockAttribute::UpdateData( const T& message )
 {
-    if ( message.m.stockPresent )
-    {
-        for( unsigned i = 0; i < message.stock.resources.n; ++i )
+    if( message.has_stock() )
+        for( int i = 0; i < message.stock().resources_size(); ++i )
         {
-            ASN1T_StockResource* resource = message.stock.resources.elem + i;
-            const DotationType* type = resolver_.Find( resource->dotation_type );
+            const Common::StockResource& resource = message.stock().resources( i );
+            const DotationType* type = resolver_.Find( resource.dotation_type().oid() );
             if( type )
-                Update( *type, *resource );
+                Update( *type, resource );
             controller_.Update( *(StockAttribute_ABC*)this );
         }
-    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void StockAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void StockAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void StockAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void StockAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

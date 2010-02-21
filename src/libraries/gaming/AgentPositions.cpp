@@ -16,6 +16,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -69,14 +70,14 @@ float AgentPositions::GetHeight() const
 // Name: AgentPositions::DoUpdate
 // Created: AGE 2006-03-16
 // -----------------------------------------------------------------------------
-void AgentPositions::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void AgentPositions::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.positionPresent )
-        position_ = converter_.ConvertToXY( message.position );
-    if( message.m.hauteurPresent )
-        height_ = float( message.hauteur );
-    if( message.m.mortPresent )
-        dead_ = message.mort != 0;
+    if( message.has_position()  )
+        position_ = converter_.ConvertToXY( message.position() );
+    if( message.has_hauteur()  )
+        height_ = float( message.hauteur() );
+    if( message.has_mort()  )
+        dead_ = message.mort() != 0;
 }
 
 // -----------------------------------------------------------------------------

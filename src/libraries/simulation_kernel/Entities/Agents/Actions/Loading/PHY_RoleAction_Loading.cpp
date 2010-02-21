@@ -12,8 +12,8 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Loading.h"
 #include "MIL_AgentServer.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "protocol/clientsenders.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
@@ -74,7 +74,7 @@ PHY_RoleAction_Loading::~PHY_RoleAction_Loading()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void PHY_RoleAction_Loading::serialize( Archive& file, const uint )
+void PHY_RoleAction_Loading::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< tools::Role_ABC >( *this )
          & nState_
@@ -155,7 +155,7 @@ int PHY_RoleAction_Loading::Load()
             return eErrorNoCarriers;
         else if( rLoadingTime == 0. )
             return eErrorNoCarried;
-        nEndTimeStep_ = (uint)rLoadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        nEndTimeStep_ = (unsigned int)rLoadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eLoading;
     }
 
@@ -190,7 +190,7 @@ int PHY_RoleAction_Loading::Unload()
             return eErrorNoCarriers;
         else if( rUnloadingTime == 0. )
             return eErrorNoCarried;
-        nEndTimeStep_ = (uint)rUnloadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+        nEndTimeStep_ = (unsigned int)rUnloadingTime + MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
         nState_       = eUnloading;
     }
 
@@ -232,17 +232,16 @@ void PHY_RoleAction_Loading::CheckConsistency()
 // Name: PHY_RoleAction_Loading::SendFullState
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RoleAction_Loading::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.embarquePresent = 1;
-    msg().embarque = bIsLoaded_;
+    msg().set_embarque( bIsLoaded_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Loading::SendChangedState
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Loading::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RoleAction_Loading::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

@@ -29,8 +29,8 @@ using namespace TEST;
 // -----------------------------------------------------------------------------
 GenObject::GenObject()
     : pLocation_         ( 0 )
-    , eType_             ( ( ASN1T_EnumObjectType )-1 )
-    , eObstacleSubType_  ( ( ASN1T_EnumMissionGenSousTypeObstacle )-1 )
+    , eType_             ( ( EnumObjectType )-1 )
+    , eObstacleSubType_  ( ( EnumMissionGenSousTypeObstacle )-1 )
 {
 
 }
@@ -53,9 +53,9 @@ GenObject& GenObject::GetTestParam_GenObject( const Testable_Entity& target )
 {
     GenObject& obj = *new GenObject();
 
-    obj.pLocation_        = &Location::GetTestParam_Location( target.GetPosition(), ( ASN1T_EnumLocationType )target.GetTestParam_Enumeration( 0, 5 ) );
-    obj.eType_            = ( ASN1T_EnumObjectType )target.GetTestParam_Enumeration( 0, 38 );
-    obj.eObstacleSubType_ = ( ASN1T_EnumMissionGenSousTypeObstacle )target.GetTestParam_Enumeration( 0, 1 );
+    obj.pLocation_        = &Location::GetTestParam_Location( target.GetPosition(), ( EnumLocationType )target.GetTestParam_Enumeration( 0, 5 ) );
+    obj.eType_            = ( EnumObjectType )target.GetTestParam_Enumeration( 0, 38 );
+    obj.eObstacleSubType_ = ( EnumMissionGenSousTypeObstacle )target.GetTestParam_Enumeration( 0, 1 );
     obj.nDensity_         = target.GetTestParam_Numeric( 0, 5 );
     return obj;
 }
@@ -64,10 +64,10 @@ GenObject& GenObject::GetTestParam_GenObject( const Testable_Entity& target )
 // Name: GenObject::GetTestParam_GenObjectList
 // Created: SBO 2005-08-26
 // -----------------------------------------------------------------------------
-T_GenObjectVector& GenObject::GetTestParam_GenObjectList( const Testable_Entity& target, uint nGenObject )
+T_GenObjectVector& GenObject::GetTestParam_GenObjectList( const Testable_Entity& target, unsigned int nGenObject )
 {
     T_GenObjectVector& objVect = *new T_GenObjectVector();
-    for( uint i = 0; i < nGenObject; ++i )
+    for( unsigned int i = 0; i < nGenObject; ++i )
         objVect.push_back( &GetTestParam_GenObject( target ) );
     return objVect;
 }

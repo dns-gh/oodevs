@@ -10,7 +10,6 @@
 #ifndef __NBCTypeAttribute_h_
 #define __NBCTypeAttribute_h_
 
-
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
 #include "MIL_NBCType.h"
@@ -23,16 +22,15 @@
 */
 // Created: RFT 2008-05-30
 // =============================================================================
-class NBCTypeAttribute 
-    : public ObjectAttribute_ABC
-    , public UpdatableAttribute_ABC
+class NBCTypeAttribute : public ObjectAttribute_ABC
+	                   , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              NBCTypeAttribute();    
     explicit NBCTypeAttribute( xml::xistream& xis );
-    explicit NBCTypeAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit NBCTypeAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~NBCTypeAttribute();       
     //@}
 
@@ -47,8 +45,8 @@ public:
     //! @name Knowledge
     //@{    
     void Instanciate( DEC_Knowledge_Object& object ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
+    void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    void SendUpdate( Common::MsgObjectAttributes& asn ) const;
     void WriteODB( xml::xostream& xos ) const;
     //@}
 

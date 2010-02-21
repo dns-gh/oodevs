@@ -21,6 +21,8 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Positions.h"
+#include "protocol/Protocol.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -52,10 +54,10 @@ Intelligence::Intelligence( const CoordinateConverter_ABC& converter, xml::xistr
 
 namespace
 {
-    kernel::Point MakePoint( const CoordinateConverter_ABC& converter, const ASN1T_CoordLatLong& asn )
+    kernel::Point MakePoint( const CoordinateConverter_ABC& converter, const Common::MsgCoordLatLong& message )
     {
         kernel::Point point;
-        point.AddPoint( converter.ConvertToXY( asn ) );
+        point.AddPoint( converter.ConvertToXY( message ) );
         return point;
     }
 }
@@ -64,17 +66,18 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, const ASN1T_Intelligence& asn, kernel::Controller& controller )
+
+Intelligence::Intelligence( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, const Common::MsgIntelligence& message, kernel::Controller& controller )
     : Entity< Intelligence_ABC >( parameter, 0, controller )
     , converter_( converter )
 {
-    AddParameter( *new String   ( OrderParameter( tools::translate( "Parameter", "Name" ).ascii()     , "name"     , false ), asn.name ) );
-    AddParameter( *new String   ( OrderParameter( tools::translate( "Parameter", "Nature" ).ascii()   , "nature"   , false ), asn.nature ) );
-    AddParameter( *new Karma    ( OrderParameter( tools::translate( "Parameter", "Karma" ).ascii()    , "karma"    , false ), asn.diplomacy ) );
-    AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), asn.level, levels ) );
-    AddParameter( *new Bool     ( OrderParameter( tools::translate( "Parameter", "Mounted" ).ascii()  , "bool"     , false ), asn.embarked != 0 ) );
-    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), asn.formation, resolver, controller_ ) );
-    AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Point" ).ascii()    , "point"    , false ), converter, MakePoint( converter, asn.location ) ) );
+    AddParameter( *new String   ( OrderParameter( tools::translate( "Parameter", "Name" ).ascii()     , "name"     , false ), message.name() ) );
+    AddParameter( *new String   ( OrderParameter( tools::translate( "Parameter", "Nature" ).ascii()   , "nature"   , false ), message.nature() ) );
+    AddParameter( *new Karma    ( OrderParameter( tools::translate( "Parameter", "Karma" ).ascii()    , "karma"    , false ), message.diplomacy() ) );
+    AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), message.level(), levels ) );
+    AddParameter( *new Bool     ( OrderParameter( tools::translate( "Parameter", "Mounted" ).ascii()  , "bool"     , false ), message.embarked() != 0 ) );
+    AddParameter( *new Formation( OrderParameter( tools::translate( "Parameter", "Formation" ).ascii(), "formation", false ), message.formation().oid(), resolver, controller_ ) );
+    AddParameter( *new Point    ( OrderParameter( tools::translate( "Parameter", "Point" ).ascii()    , "point"    , false ), converter, MakePoint( converter, message.location() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,25 +116,25 @@ void Intelligence::ReadParameter( xml::xistream& xis, const tools::Resolver_ABC<
 // Name: Intelligence::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::CommitTo( ASN1T_Intelligence& asn ) const
+void Intelligence::CommitTo( Common::MsgIntelligence& message ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();
         if( type == "name" )
-            static_cast< const String* >( it->second )->CommitTo( asn.name );
+            static_cast< const String* >( it->second )->CommitTo( *message.mutable_name() );
         else if( type == "nature" )
-            static_cast< const String* >( it->second )->CommitTo( asn.nature );
+            static_cast< const String* >( it->second )->CommitTo( *message.mutable_nature() );
         else if( type == "level" )
-            static_cast< const Level* >( it->second )->CommitTo( asn.level );
+            static_cast< const Level* >( it->second )->CommitTo( boost::bind( &Common::MsgIntelligence::set_level, message, _1 ) );
         else if( type == "karma" )
-            static_cast< const Karma* >( it->second )->CommitTo( asn.diplomacy );
+            static_cast< const Karma* >( it->second )->CommitTo( boost::bind( &Common::MsgIntelligence::set_diplomacy, message, _1 ) );
         else if( type == "bool" )
-            static_cast< const Bool* >( it->second )->CommitTo( asn.embarked );
+            static_cast< const Bool* >( it->second )->CommitTo( boost::bind( &Common::MsgIntelligence::set_embarked, message, _1 ) );
         else if( type == "formation" )
-            static_cast< const Formation* >( it->second )->CommitTo( asn.formation );
+            static_cast< const Formation* >( it->second )->CommitTo( *message.mutable_formation() );
         else if( type == "point" )
-            static_cast< const Point* >( it->second )->CommitTo( asn.location );
+            static_cast< const Point* >( it->second )->CommitTo( *message.mutable_location() );
     }
 }
 
@@ -139,9 +142,9 @@ void Intelligence::CommitTo( ASN1T_Intelligence& asn ) const
 // Name: Intelligence::Clean
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::Clean( ASN1T_Intelligence& /*asn*/ ) const
+void Intelligence::Clean( Common::MsgIntelligence& message ) const
 {
-    // NOTHING
+    message.Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +167,7 @@ void Intelligence::CommitToChildren()
     kernel::Point position;
     position.AddPoint( entity.Get< kernel::Positions >().GetPosition() );
 
-    AddParameter( *new String   ( OrderParameter( tools::translate( "Parameter", "Name" ).ascii()     , "name"     , false ), entity.GetName() ) );
+    AddParameter( *new String   ( OrderParameter( tools::translate( "Parameter", "Name" ).ascii()     , "name"     , false ), entity.GetName().ascii() ) );
     AddParameter( *new String   ( OrderParameter( tools::translate( "Parameter", "Nature" ).ascii()   , "nature"   , false ), entity.GetSymbol() ) );
     AddParameter( *new Karma    ( OrderParameter( tools::translate( "Parameter", "Karma" ).ascii()    , "karma"    , false ), entity.GetKarma(), *formation ) );
     AddParameter( *new Level    ( OrderParameter( tools::translate( "Parameter", "Level" ).ascii()    , "level"    , false ), entity.GetLevel() ) );

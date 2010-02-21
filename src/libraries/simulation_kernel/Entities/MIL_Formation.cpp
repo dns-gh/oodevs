@@ -8,21 +8,17 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_Formation.h"
-
 #include "Entities/Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
-
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
-
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Formation constructor
@@ -109,13 +105,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const uint version )
+        void serialize( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const unsigned int version )
         {
             split_free( file, map, version );
         }
         
         template< typename Archive >
-        void save( Archive& file, const std::map< unsigned int, MIL_Intelligence* >& map, const uint )
+        void save( Archive& file, const std::map< unsigned int, MIL_Intelligence* >& map, const unsigned int )
         {
             unsigned int size = map.size();
             file << size;
@@ -124,9 +120,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const uint )
+        void load( Archive& file, std::map< unsigned int, MIL_Intelligence* >& map, const unsigned int )
         {
-            uint count;
+            unsigned int count;
             file >> count;
             while( count-- )
             {
@@ -142,13 +138,13 @@ namespace boost
 // Name: MIL_Formation::load
 // Created: NLD 2006-10-18
 // -----------------------------------------------------------------------------
-void MIL_Formation::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_Formation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-   file >> const_cast< uint& >( nID_ )
+   file >> const_cast< unsigned int& >( nID_ )
         >> pArmy_
         >> pParent_;
 
-   uint nLevel;
+   unsigned int nLevel;
    file >> nLevel;
    pLevel_ = PHY_NatureLevel::Find( nLevel );
    assert( pLevel_ );
@@ -162,7 +158,7 @@ void MIL_Formation::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_Formation::save
 // Created: NLD 2006-10-18
 // -----------------------------------------------------------------------------
-void MIL_Formation::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_Formation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pLevel_ );
     unsigned level = pLevel_->GetID();
@@ -217,17 +213,14 @@ void MIL_Formation::SendCreation() const
     assert( pLevel_ );
     assert( pArmy_ );
 
-    NET_ASN_MsgFormationCreation asn;
-    asn().oid      = nID_;
-    asn().oid_camp = pArmy_->GetID();
-    asn().nom      = strName_.c_str();
-    asn().niveau   = pLevel_->GetAsnID();
+    client::FormationCreation asn;
+    asn().set_oid( nID_ );
+    asn().set_oid_camp( pArmy_->GetID() );
+    asn().set_nom( strName_.c_str() );
+    asn().set_niveau( pLevel_->GetAsnID() );
     if( pParent_ )
-    {
-        asn().m.oid_formation_parentePresent = 1;
-        asn().oid_formation_parente = pParent_->GetID();
-    }
-    asn.Send();
+        asn().set_oid_formation_parente( pParent_->GetID() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendCreation, _1 ) );//@TODO MGD Move to factory
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendCreation, _1 ) );
@@ -257,7 +250,7 @@ MIL_Army_ABC& MIL_Formation::GetArmy() const
 // Name: MIL_Formation::GetID
 // Created: NLD 2006-10-13
 // -----------------------------------------------------------------------------
-uint MIL_Formation::GetID() const
+unsigned int MIL_Formation::GetID() const
 {
     return nID_;
 }

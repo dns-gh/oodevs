@@ -35,7 +35,6 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToNumeric( ASN1REAL& ) const;
     virtual bool ToNumeric( float& ) const;
     //@}
 

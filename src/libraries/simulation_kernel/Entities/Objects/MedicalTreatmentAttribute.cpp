@@ -14,9 +14,8 @@
 #include "MIL.h"
 #include "MIL_AgentServer.h"
 #include "MT_Tools/MT_Random.h"
-
 #include "MIL_MedicalTreatmentType.h"
-
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MedicalTreatmentAttribute )
@@ -58,17 +57,17 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
 // Name: MedicalTreatmentAttribute::MedicalTreatmentAttribute
 // Created: RFT 2008-06-05
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const ASN1T_ObjectAttributes& asn )
-    : beds_             ( asn.medical_treatment.beds )
-    , availableBeds_    ( asn.medical_treatment.available_beds )
-    , doctors_          ( asn.medical_treatment.doctors )
-    , availableDoctors_ ( asn.medical_treatment.available_doctors )
-    , initialBeds_      ( asn.medical_treatment.beds )
-    , initialDoctors_   ( asn.medical_treatment.doctors )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::MsgObjectAttributes& asn )
+    : beds_             ( asn.medical_treatment().beds() )
+    , availableBeds_    ( asn.medical_treatment().available_beds() )
+    , doctors_          ( asn.medical_treatment().doctors() )
+    , availableDoctors_ ( asn.medical_treatment().available_doctors() )
+    , initialBeds_      ( asn.medical_treatment().beds() )
+    , initialDoctors_   ( asn.medical_treatment().doctors() )
 {
-    for ( unsigned i = 0; i < asn.medical_treatment.type_id.n; ++i )
+    for( int i = 0; i < asn.medical_treatment().type_id().elem_size(); ++i )
     {                
-        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( asn.medical_treatment.type_id.elem[ i ] );
+        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( asn.medical_treatment().type_id().elem( i ) );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
         medicalTreatmentMap_.insert( std::make_pair( pType->GetID(), new T_PatientDiagnosisList() ) );
@@ -127,7 +126,7 @@ MedicalTreatmentAttribute& MedicalTreatmentAttribute::operator=( const MedicalTr
 // Name: MedicalTreatmentAttribute::load
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const uint )
+void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     int typeID;
     int sizeOfList, injuryCategory, sizeOfMap;
@@ -158,7 +157,7 @@ void MedicalTreatmentAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: MedicalTreatmentAttribute::save
 // Created: RFT 2008-07-03
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     int sizeOfMap  = medicalTreatmentMap_.size();
     int sizeOfList = 0;
@@ -190,20 +189,17 @@ void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) cons
 // Name: MedicalTreatmentAttribute::SendFullState
 // Created: RFT 2008-06-18
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void MedicalTreatmentAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
     int i = 0; //i is used to fill elem
-    asn.m.medical_treatmentPresent = 1;
-    asn.medical_treatment.available_beds    = availableBeds_;
-    asn.medical_treatment.available_doctors = availableDoctors_;
-    asn.medical_treatment.beds              = beds_;
-    asn.medical_treatment.doctors           = doctors_;
-    asn.medical_treatment.type_id.n         = medicalTreatmentMap_.size();
-    asn.medical_treatment.type_id.elem      = new ASN1T_OID[ asn.medical_treatment.type_id.n ];
+    asn.mutable_medical_treatment()->set_available_beds    ( availableBeds_ );
+    asn.mutable_medical_treatment()->set_available_doctors ( availableDoctors_ );
+    asn.mutable_medical_treatment()->set_beds              ( beds_ );
+    asn.mutable_medical_treatment()->set_doctors           ( doctors_ );
     //Get the list of the ID of each medical treatment
     for( CIT_MedicalTreatmentMap iter = medicalTreatmentMap_.begin() ; iter != medicalTreatmentMap_.end() ; ++iter )
     {
-        asn.medical_treatment.type_id.elem[ i ] = MIL_MedicalTreatmentType::Find( iter->first )->GetID();
+        asn.mutable_medical_treatment()->mutable_type_id()->set_elem( i,  MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
         i++;
     }
 }            
@@ -212,7 +208,7 @@ void MedicalTreatmentAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) con
 // Name: MedicalTreatmentAttribute::Send
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void MedicalTreatmentAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void MedicalTreatmentAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if ( NeedUpdate() )
     {

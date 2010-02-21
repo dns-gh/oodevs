@@ -37,17 +37,17 @@ public:
     const std::string& GetRandomSeedFile    () const;
     const std::string& GetTacticalLinesFile () const;
     bool               MustRecover          () const;
-    uint               GetRecoveryTick      () const;
+    unsigned int               GetRecoveryTick      () const;
     const std::string& GetRecoveryFile      () const;
-    uint               GetPort              () const;
-    uint               GetTimeFactor        () const;
+    unsigned int               GetPort              () const;
+    unsigned int               GetTimeFactor        () const;
     bool               MustTestAutomats     () const;
     bool               MustTestPopulations  () const;
-    uint               GetPeriod            () const;
-    uint               GetIterationNumber   () const;
-    uint               GetIterationInterval () const;
-    uint               GetMaxMissionPerTick () const;
-    uint               GetRecompletionPeriod() const;
+    unsigned int               GetPeriod            () const;
+    unsigned int               GetIterationNumber   () const;
+    unsigned int               GetIterationInterval () const;
+    unsigned int               GetMaxMissionPerTick () const;
+    unsigned int               GetRecompletionPeriod() const;
     const std::string& GetLogFile           () const;
     //@}
 
@@ -83,15 +83,15 @@ private:
     std::string        strRandomSeedFile_;
     std::string        strTacticalLinesFile_;
     bool               bRecover_;
-    uint               nRecoveryTick_;
+    unsigned int               nRecoveryTick_;
     std::string        strRecoveryFile_;
-    uint               nPort_;
-    uint               nTimeFactor_;
-    uint               nPeriod_;
-    uint               nItNumber_;
-    uint               nItInterval_;
-    uint               nMaxMissionPerTick_;
-    uint               nRecompletionPeriod_;
+    unsigned int               nPort_;
+    unsigned int               nTimeFactor_;
+    unsigned int               nPeriod_;
+    unsigned int               nItNumber_;
+    unsigned int               nItInterval_;
+    unsigned int               nMaxMissionPerTick_;
+    unsigned int               nRecompletionPeriod_;
     std::string        strLogFile_;
     E_TestableEntities eTestedEntities_;
     //@}

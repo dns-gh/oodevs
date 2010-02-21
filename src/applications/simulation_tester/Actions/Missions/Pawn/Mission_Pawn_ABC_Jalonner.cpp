@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_Jalonner::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_Jalonner& asnMission = *new ASN1T_Mission_Pion_ABC_Jalonner();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_jalonner;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_jalonner = &asnMission;
+    Mission_Pion_ABC_Jalonner& asnMission = *new Mission_Pion_ABC_Jalonner();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_jalonner = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ABC_Jalonner::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_Jalonner::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_jalonner );
-    ASN1T_Mission_Pion_ABC_Jalonner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_jalonner;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_jalonner ());
+    Mission_Pion_ABC_Jalonner& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_jalonner;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

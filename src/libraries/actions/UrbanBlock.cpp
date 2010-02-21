@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "UrbanBlock.h"
+#include "protocol/Protocol.h"
 #include "urban/TerrainObject_ABC.h"
 #include "urban/Block.h"
 #include <xeumeuleu/xml.h>
@@ -32,8 +33,8 @@ UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, unsigned long i
 // Name: UrbanBlock constructor
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& /*asn*/ )
-: Parameter< unsigned long >( parameter )
+UrbanBlock::UrbanBlock( const kernel::OrderParameter& parameter, const Common::MsgUrbanBlock& /*message*/ )
+    : Parameter< unsigned long >( parameter )
 {
     // NOTHING
 }
@@ -61,12 +62,11 @@ UrbanBlock::~UrbanBlock()
 // Name: UrbanBlock::CommitTo
 // Created: MGD 2009-11-05
 // -----------------------------------------------------------------------------
-void UrbanBlock::CommitTo(  ASN1T_MissionParameter& asn ) const
+void UrbanBlock::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_urbanBlock;
+    message.set_null_value( !IsSet() );
     if( IsSet() )
-        asn.value.u.urbanBlock = GetValue();
+        message.mutable_value()->mutable_urbanblock()->set_oid( GetValue() );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_Direction.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_Direction constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_Direction::MissionParameter_Direction( const ASN1T_MissionParameter& asn )
+MissionParameter_Direction::MissionParameter_Direction( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , direction_          ( asn.value.u.heading )
+    , direction_          ( asn.value().heading().heading() )
 {
     // NOTHING
 }
@@ -41,18 +42,18 @@ MissionParameter_Direction::~MissionParameter_Direction()
 // Name: MissionParameter_Direction::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Direction::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Direction::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value      = bNullValue_;
-    asn.value.t         = T_MissionParameter_value_heading;
-    asn.value.u.heading = direction_;
+    asn.set_null_value( bNullValue_ );
+//    asn.value.t         = T_MissionParameter_value_heading;
+    asn.mutable_value()->mutable_heading()->set_heading( direction_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Direction::AsnDelete
+// Name: MissionParameter_Direction::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Direction::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_Direction::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

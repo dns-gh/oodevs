@@ -14,8 +14,7 @@
 #include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "DEC_Knowledge_Object.h"
-
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeLogistic )
 
@@ -59,7 +58,7 @@ DEC_Knowledge_ObjectAttributeLogistic::~DEC_Knowledge_ObjectAttributeLogistic()
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeLogistic::serialize( Archive& file, const uint )
+void DEC_Knowledge_ObjectAttributeLogistic::serialize( Archive& file, const unsigned int )
 {   
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file & const_cast< LogisticAttribute*& >( attr_ )
@@ -75,13 +74,12 @@ void DEC_Knowledge_ObjectAttributeLogistic::Register( DEC_Knowledge_Object& knOb
     knObject.AttachExtension( *this );
 }
 
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeLogistic::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeLogistic::UpdateAttributes
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeLogistic::UpdateAttributes()
@@ -94,7 +92,7 @@ void DEC_Knowledge_ObjectAttributeLogistic::UpdateAttributes()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeLogistic::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeLogistic::UpdateOnPerceptionLevel
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeLogistic::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& /*currentPerceptionLevel*/ )
@@ -103,7 +101,7 @@ void DEC_Knowledge_ObjectAttributeLogistic::UpdateOnPerceptionLevel( const PHY_P
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeLogistic::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeLogistic::UpdateOnPerception
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeLogistic::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& /*perception*/ )
@@ -112,7 +110,7 @@ void DEC_Knowledge_ObjectAttributeLogistic::UpdateOnPerception( const DEC_Knowle
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeLogistic::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeLogistic::UpdateOnCollision
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeLogistic::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
@@ -121,15 +119,14 @@ void DEC_Knowledge_ObjectAttributeLogistic::UpdateOnCollision( const DEC_Knowled
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeLogistic::BuildMsgSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeLogistic::Send
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeLogistic::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeLogistic::Send( Common::MsgObjectAttributes& asn ) const
 {
     if ( NeedUpdate() )
     {
-        asn.m.logisticPresent = 1;
-        asn.logistic.tc2 = pTC2_->GetID();
+        asn.mutable_logistic()->set_tc2( pTC2_->GetID() );
         Reset();
     }
 }

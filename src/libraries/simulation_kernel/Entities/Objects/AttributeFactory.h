@@ -12,6 +12,11 @@
 
 #include "ObjectComponentRegistry_ABC.h"
 
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
 class Object;
 
 // =============================================================================
@@ -32,7 +37,7 @@ public:
     //! @name Operations
     //@{    
     void Create( Object& object, const std::string& attribute, xml::xistream& xis ) const;
-    void Create( Object& object, const ASN1T_ObjectAttributes& asn ) const;
+    void Create( Object& object, const Common::MsgObjectAttributes& asn ) const;
     //@}
 
 private:

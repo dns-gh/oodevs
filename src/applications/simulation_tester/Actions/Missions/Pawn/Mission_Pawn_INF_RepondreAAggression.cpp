@@ -43,9 +43,9 @@ void Mission_Pawn_INF_RepondreAAggression::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_RepondreAAggression& asnMission = *new ASN1T_Mission_Pion_INF_RepondreAAggression();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_repondre_a_aggression;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_repondre_a_aggression = &asnMission;
+    Mission_Pion_INF_RepondreAAggression& asnMission = *new Mission_Pion_INF_RepondreAAggression();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_repondre_a_aggression = &asnMission;
 
 
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.aggresseur );
@@ -59,8 +59,8 @@ void Mission_Pawn_INF_RepondreAAggression::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_RepondreAAggression::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_repondre_a_aggression );
-    ASN1T_Mission_Pion_INF_RepondreAAggression& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_repondre_a_aggression;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_repondre_a_aggression ());
+    Mission_Pion_INF_RepondreAAggression& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_repondre_a_aggression;
 
 
     delete &asnMission;

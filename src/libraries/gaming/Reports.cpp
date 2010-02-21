@@ -46,11 +46,11 @@ Reports::~Reports()
 // Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const ASN1T_MsgReport& message )
+void Reports::DoUpdate( const MsgsSimToClient::MsgReport& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de reports ?
     Report* report = reportFactory_.CreateReport( agent_, message );
-    Register( message.cr_oid, *report );
+    Register( message.cr_oid(), *report );
     controller_.Create( *report );
 }
 
@@ -58,10 +58,10 @@ void Reports::DoUpdate( const ASN1T_MsgReport& message )
 // Name: Reports::DoUpdate
 // Created: AGE 2007-10-22
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const ASN1T_MsgInvalidateReport& message )
+void Reports::DoUpdate( const MsgsSimToClient::MsgInvalidateReport& message )
 {
-    delete Find( message.cr_oid );
-    Remove( message.cr_oid );
+    delete Find( message.cr_oid() );
+    Remove( message.cr_oid() );
     controller_.Update( *this );
 }
 
@@ -69,7 +69,7 @@ void Reports::DoUpdate( const ASN1T_MsgInvalidateReport& message )
 // Name: Reports::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reports::DoUpdate( const ASN1T_MsgTrace& message )
+void Reports::DoUpdate( const MsgsSimToClient::MsgTrace& message )
 {
     // $$$$ AGE 2007-04-20: limiter le nombre de traces ?
     Report* trace = reportFactory_.CreateTrace( agent_, message );

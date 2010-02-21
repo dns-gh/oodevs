@@ -70,14 +70,14 @@ public:
 
     //! @name Modifiers
     //@{
-    void SetRelation( Team& otherTeam, ASN1T_EnumDiplomacy diplomacy );
+    void SetRelation( Team& otherTeam, EnumDiplomacy diplomacy );
     //@}
 
     //! @name Message handlers
     //@{
-    void OnReceiveMsgObjectKnowledgeCreation   ( const ASN1T_MsgObjectKnowledgeCreation&    asnMsg );
-    void OnReceiveMsgObjectKnowledgeUpdate     ( const ASN1T_MsgObjectKnowledgeUpdate&      asnMsg );
-    void OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg );
+    void OnReceiveMsgObjectKnowledgeCreation   ( const MsgObjectKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgObjectKnowledgeUpdate     ( const MsgObjectKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgObjectKnowledgeDestruction( const MsgObjectKnowledgeDestruction& asnMsg );
     //@}
 
     //! @name Test Parameters

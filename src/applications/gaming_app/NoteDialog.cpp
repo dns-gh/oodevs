@@ -12,9 +12,8 @@
 #include "moc_NoteDialog.cpp"
 #include "gaming/Tools.h"
 #include "gaming/Note.h"
-#include "game_asn/Messenger.h"
-#include "game_asn/Publisher_ABC.h"
-#include "game_asn/MessengerSenders.h"
+#include "protocol/Publisher_ABC.h"
+#include "protocol/MessengerSenders.h"
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qtextview.h>
@@ -86,28 +85,24 @@ void NoteDialog::OnAccept()
 {
     if (update_)
     {
-        plugins::messenger::NoteUpdateRequest asn;
-        asn().name = textName_->text().ascii();
-        asn().id = noteId_;
-        asn().number = textId_->text().ascii();
+        plugins::messenger::NoteUpdateRequest message;
+        message().set_name( textName_->text().ascii() );
+        message().set_id( noteId_ );
+        message().set_number( textId_->text().ascii() );
         QString text = textDesc_->text();
-        asn().m.namePresent = 1;
-        asn().m.numberPresent = 1;
-        asn().m.descriptionPresent = 1;
-        asn().m.parentPresent = 1;
-        asn().description = text.ascii();
-        asn().parent = note_;
-        asn.Send(publisher_);
+        message().set_description( text.ascii() );
+        message().set_parent( note_ );
+        message.Send(publisher_);
     }
     else
     {
-        plugins::messenger::NoteCreationRequest asn;
-        asn().note.name = textName_->text().ascii();
-        asn().note.number = textId_->text().ascii();
+        plugins::messenger::NoteCreationRequest message;
+        message().mutable_note()->set_name( textName_->text().ascii() );
+        message().mutable_note()->set_number( textId_->text().ascii() );
         QString text = textDesc_->text();
-        asn().note.description = text.ascii();
-        asn().note.parent = note_;
-        asn.Send(publisher_);
+        message().mutable_note()->set_description( text.ascii() );
+        message().mutable_note()->set_parent( note_ );
+        message.Send(publisher_);
     }
     
     // $$$$ _RC_ HBD 2010-02-04: Add control for id in number

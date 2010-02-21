@@ -43,9 +43,9 @@ void Mission_Automat_SeRendre::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_SeRendre& asnMission = *new ASN1T_Mission_Automate_SeRendre();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_se_rendre;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_se_rendre = &asnMission;
+    Mission_Automate_SeRendre& asnMission = *new Mission_Automate_SeRendre();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_se_rendre = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_SeRendre::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_SeRendre::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_se_rendre );
-    ASN1T_Mission_Automate_SeRendre& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_se_rendre;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_se_rendre ());
+    Mission_Automate_SeRendre& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_se_rendre;
 
 
     delete &asnMission;

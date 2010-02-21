@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_RealiserTravauxProtection::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserTravauxProtection();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_travaux_protection;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection = &asnMission;
+    Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *new Mission_Pion_GEN_RealiserTravauxProtection();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_realiser_travaux_protection = &asnMission;
 
     const T_GenObjectVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_GEN_RealiserTravauxProtection::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_RealiserTravauxProtection::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_realiser_travaux_protection );
-    ASN1T_Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_travaux_protection;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_realiser_travaux_protection ());
+    Mission_Pion_GEN_RealiserTravauxProtection& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_realiser_travaux_protection;
 
     ASN_Tools::Delete( asnMission.travaux );
 

@@ -11,13 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_NBC.h"
-#include "Network/NET_ASN_Messages.h"
+#include "ToxicEffectHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
-#include "ToxicEffectHandler_ABC.h"
-
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
@@ -33,13 +32,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint nVersion )
+        void serialize( Archive& file, nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int nVersion )
         {
             split_free( file, set, nVersion );
         }
 
         template< typename Archive >
-        void save( Archive& file, const nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint )
+        void save( Archive& file, const nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int )
         {
             unsigned size = set.size();
             file << size;
@@ -51,13 +50,13 @@ namespace boost
         }
 
         template< typename Archive >
-        void load( Archive& file, nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const uint )
+        void load( Archive& file, nbc::PHY_RolePion_NBC::T_NbcAgentTypeSet& set, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
-                uint nID;
+                unsigned int nID;
                 file >> nID;
                 set.insert( MIL_NbcAgentType::Find( nID ) );
             }
@@ -112,7 +111,7 @@ PHY_RolePion_NBC::~PHY_RolePion_NBC()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_NBC::serialize( Archive& file, const uint )
+void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
 {
     file & ::boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
          & nbcAgentTypesContaminating_
@@ -186,7 +185,7 @@ void PHY_RolePion_NBC::Decontaminate( MT_Float rRatioAgentsWorking )
     MT_Float rNewContaminationState = rContaminationState_ - ( pion_.GetType().GetUnitType().GetCoefDecontaminationPerTimeStep() * rRatioAgentsWorking );
     rNewContaminationState = std::max( rNewContaminationState, 0. );
 
-    if( (uint)( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
+    if( (unsigned int)( rNewContaminationState * 100. ) != ( rContaminationState_ * 100. ) )
         bHasChanged_ = true;
     
     rContaminationState_ = rNewContaminationState;
@@ -223,33 +222,26 @@ void PHY_RolePion_NBC::Execute( firing::WeaponReloadingComputer_ABC& algorithm )
 // Name: PHY_RolePion_NBC::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_NBC::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.contamine_par_agents_nbcPresent = 1;
-    msg().contamine_par_agents_nbc.n = nbcAgentTypesContaminating_.size();
     if( !nbcAgentTypesContaminating_.empty() )
     {
-        ASN1T_OID* pNbcAgents = new ASN1T_OID[ nbcAgentTypesContaminating_.size() ];
-        msg().contamine_par_agents_nbc.elem = pNbcAgents;
-
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_NbcAgentTypeSet itNbcAgent = nbcAgentTypesContaminating_.begin(); itNbcAgent != nbcAgentTypesContaminating_.end(); ++itNbcAgent )
-            pNbcAgents[ i++ ] = (**itNbcAgent).GetID();
+            msg().mutable_contamine_par_agents_nbc()->set_elem( i++ , (**itNbcAgent).GetID() );
     }
 
-    msg().m.en_tenue_de_protection_nbcPresent = 1;
-    msg().en_tenue_de_protection_nbc          = bNbcProtectionSuitWorn_;
 
-    msg().m.etat_contaminationPresent = 1;
-    msg().etat_contamination.percentage = (uint)( rContaminationState_ * 100. );
-    msg().etat_contamination.quantity = rContaminationQuantity_;
+    msg().set_en_tenue_de_protection_nbc( bNbcProtectionSuitWorn_ );
+    msg().mutable_etat_contamination()->set_percentage( (unsigned int)( rContaminationState_ * 100. ) );
+    msg().mutable_etat_contamination()->set_quantity( rContaminationQuantity_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_NBC::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_NBC::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

@@ -12,7 +12,10 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace kernel
 {
@@ -36,9 +39,9 @@ namespace script
 // Created: AGE 2008-06-13
 // =============================================================================
 class AgentNotifier : public kernel::Extension_ABC
-                    , public kernel::Updatable_ABC< ASN1T_MsgUnitCreation >
-                    , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                    , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
+                    , public kernel::Updatable_ABC< MsgUnitCreation >
+                    , public kernel::Updatable_ABC< MsgUnitAttributes >
+                    , public kernel::Updatable_ABC< MsgUnitOrder >
 {
 
 public:
@@ -57,9 +60,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitCreation&   message );
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
-    virtual void DoUpdate( const ASN1T_MsgUnitOrder&      message );
+    virtual void DoUpdate( const MsgUnitCreation&   message );
+    virtual void DoUpdate( const MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgUnitOrder&      message );
     //@}
 
 private:

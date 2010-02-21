@@ -14,7 +14,7 @@
 // Name: PHY_ComposanteHLA constructor
 // Created: AGE 2004-11-22
 // -----------------------------------------------------------------------------
-PHY_ComposanteHLA::PHY_ComposanteHLA( const PHY_ComposanteType_ABC& type, uint nElements )
+PHY_ComposanteHLA::PHY_ComposanteHLA( const PHY_ComposanteType_ABC& type, unsigned int nElements )
     : type_        ( type )
     , nCurrentElements_   ( nElements )
     , nMaxElements_( nElements )
@@ -35,7 +35,7 @@ PHY_ComposanteHLA::~PHY_ComposanteHLA()
 // Name: PHY_ComposanteHLA::Update
 // Created: AGE 2004-11-22
 // -----------------------------------------------------------------------------
-void PHY_ComposanteHLA::Update( uint nElements )
+void PHY_ComposanteHLA::Update( unsigned int nElements )
 {
     nCurrentElements_ = nElements;
     if( nElements > nMaxElements_ )
@@ -73,7 +73,7 @@ bool PHY_ComposanteHLA::CanFireWhenUnloaded() const
 // Name: PHY_ComposanteHLA::GetMajorScore
 // Created: AGE 2004-11-22
 // -----------------------------------------------------------------------------
-uint PHY_ComposanteHLA::GetMajorScore() const
+unsigned int PHY_ComposanteHLA::GetMajorScore() const
 {
     return 0;
 }
@@ -91,7 +91,7 @@ bool PHY_ComposanteHLA::IsActive() const
 // Name: PHY_ComposanteHLA::CurrentElements
 // Created: AGE 2004-12-13
 // -----------------------------------------------------------------------------
-uint PHY_ComposanteHLA::CurrentElements() const
+unsigned int PHY_ComposanteHLA::CurrentElements() const
 {
     return nCurrentElements_;
 }
@@ -100,7 +100,7 @@ uint PHY_ComposanteHLA::CurrentElements() const
 // Name: PHY_ComposanteHLA::MaxElements
 // Created: AGE 2004-12-13
 // -----------------------------------------------------------------------------
-uint PHY_ComposanteHLA::MaxElements()
+unsigned int PHY_ComposanteHLA::MaxElements()
 {
     return nMaxElements_;
 }

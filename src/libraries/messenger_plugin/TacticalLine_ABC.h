@@ -11,7 +11,9 @@
 #define __TacticalLine_ABC_h_
 
 #include "Entity_ABC.h"
-#include "game_asn/Messenger.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -41,42 +43,42 @@ class TacticalLine_ABC : public Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLine_ABC( unsigned int id, const ASN1T_TacticalLine& asn );
-             TacticalLine_ABC( unsigned int id, xml::xistream&, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
+             TacticalLine_ABC( unsigned int id, const MsgTacticalLine& asn );
+             TacticalLine_ABC( unsigned int id, xml::xistream&, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter );
     virtual ~TacticalLine_ABC();
     //@}
 
     //! @name Network
     //@{
-    void Send( ASN1T_TacticalLine& asn ) const;
-    void Send( ASN1T_Line& asn ) const;
+    void Send( MsgTacticalLine& asn ) const;
+    void Send( MsgLocation& asn ) const;
     //@}
 
     //! @name Accessors
     //@{
     unsigned int                         GetID() const;
-    const ASN1T_TacticalLinesDiffusion&  GetDiffusion() const { return diffusion_; }
+    const MsgTacticalLine_Diffusion&  GetDiffusion() const { return diffusion_; }
     //@}
 
 protected:
 
     //! @name types
     //@{
-    typedef std::vector< ASN1T_CoordLatLong > T_PositionVector;
+    typedef std::vector< MsgCoordLatLong > T_PositionVector;
     typedef T_PositionVector::const_iterator  CIT_PositionVector;
     //@}
 
     //! @name Network
     //@{
-    void Update        ( const ASN1T_TacticalLine& asn );
-    void UpdateGeometry( const ASN1T_Location& asn );
+    void Update        ( const MsgTacticalLine& asn );
+    void UpdateGeometry( const MsgLocation& asn );
     //@}
 
     //! @name xml read / write
     //@{
             void ReadPoint ( xml::xistream& xis, T_PositionVector& points, const kernel::CoordinateConverter_ABC& converter ) const;
     virtual void Write     ( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const;
-            void WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const ASN1T_CoordLatLong& point ) const;
+            void WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const MsgCoordLatLong& point ) const;
     //@}
 
 private:
@@ -92,7 +94,7 @@ private:
     const unsigned int                   id_;
           std::string                    strName_;
           T_PositionVector               geometry_;
-          ASN1T_TacticalLinesDiffusion   diffusion_ ;
+          MsgTacticalLine_Diffusion   diffusion_ ;
     //@}
 
 

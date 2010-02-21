@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_ReprendreTravaux::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_ReprendreTravaux& asnMission = *new ASN1T_Mission_Pion_GEN_ReprendreTravaux();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reprendre_travaux;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_reprendre_travaux = &asnMission;
+    Mission_Pion_GEN_ReprendreTravaux& asnMission = *new Mission_Pion_GEN_ReprendreTravaux();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_reprendre_travaux = &asnMission;
 
 
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.travaux );
@@ -59,8 +59,8 @@ void Mission_Pawn_GEN_ReprendreTravaux::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_ReprendreTravaux::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_reprendre_travaux );
-    ASN1T_Mission_Pion_GEN_ReprendreTravaux& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_reprendre_travaux;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_reprendre_travaux ());
+    Mission_Pion_GEN_ReprendreTravaux& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_reprendre_travaux;
 
 
     delete &asnMission;

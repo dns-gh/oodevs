@@ -11,10 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectPerception.h"
-#include "Network/NET_AgentServer.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Network/NET_AgentServer.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectPerception )
 
@@ -59,14 +60,14 @@ DEC_Knowledge_ObjectPerception::~DEC_Knowledge_ObjectPerception()
 // Name: DEC_Knowledge_ObjectPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
 
     file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
          >> pObjectPerceived_;
     
-    uint nTmp;
+    unsigned int nTmp;
     file >> nTmp;
     pCurrentPerceptionLevel_  = &PHY_PerceptionLevel::FindPerceptionLevel( nTmp );
     
@@ -79,7 +80,7 @@ void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const 
 // Name: DEC_Knowledge_ObjectPerception::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_ObjectPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned current  = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID();
@@ -128,11 +129,11 @@ void DEC_Knowledge_ObjectPerception::UpdateOnNetwork() const
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectPerception::SendStateToNewClient() const
 {
-    NET_ASN_MsgObjectDetection asn;
-    asn().oid        = pAgentPerceiving_->GetID();
-    asn().object_oid = pObjectPerceived_->GetID();
-    asn().visibility = ASN1T_EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() );
-    asn.Send();
+    client::ObjectDetection asn;
+    asn().set_oid( pAgentPerceiving_->GetID() );
+    asn().set_object_oid( pObjectPerceived_->GetID() );
+    asn().set_visibility( Common::EnumUnitVisibility( pCurrentPerceptionLevel_->GetID() ) );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

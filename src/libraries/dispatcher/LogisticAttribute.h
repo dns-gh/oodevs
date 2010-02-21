@@ -10,8 +10,15 @@
 #ifndef __LogisticAttribute_h_
 #define __LogisticAttribute_h_
 
-#include "game_asn/Simulation.h"
+
 #include "ObjectAttribute_ABC.h"
+
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
 
 namespace dispatcher
 {
@@ -29,15 +36,15 @@ class LogisticAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     LogisticAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
+     LogisticAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~LogisticAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_ObjectAttributes& asnMsg );
-    virtual void Send     ( ASN1T_ObjectAttributes& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

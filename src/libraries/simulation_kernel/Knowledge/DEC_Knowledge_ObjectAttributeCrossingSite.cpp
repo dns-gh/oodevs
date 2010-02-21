@@ -15,8 +15,7 @@
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "Entities/Objects/CrossingSiteAttribute.h"
 #include "DEC_Knowledge_Object.h"
-
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeCrossingSite )
 
@@ -65,7 +64,7 @@ DEC_Knowledge_ObjectAttributeCrossingSite::~DEC_Knowledge_ObjectAttributeCrossin
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeCrossingSite::serialize( Archive& file, const uint )
+void DEC_Knowledge_ObjectAttributeCrossingSite::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file & const_cast< CrossingSiteAttribute*& >( attr_ )
@@ -139,18 +138,17 @@ void DEC_Knowledge_ObjectAttributeCrossingSite::UpdateOnCollision( const DEC_Kno
 // Name: DEC_Knowledge_ObjectAttributeCrossingSite::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeCrossingSite::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeCrossingSite::Send( Common::MsgObjectAttributes& asn ) const
 {
 //    if( !IsAttributeUpdated( eAttr_Specific ) || !bSpecificAttributesValid_ )
 //        return;
 //    
     if ( NeedUpdate() )
     {
-        asn.m.crossing_sitePresent = 1;
-        asn.crossing_site.width                 = (int)rWidth_;
-        asn.crossing_site.depth                 = (int)rDepth_;
-        asn.crossing_site.flow_rate             = (int)rCurrentSpeed_;
-        asn.crossing_site.banks_require_fitting = bBanksToFitOut_;
+        asn.mutable_crossing_site()->set_width                ( (int)rWidth_ );
+        asn.mutable_crossing_site()->set_depth                ( (int)rDepth_ );
+        asn.mutable_crossing_site()->set_flow_rate            ( (int)rCurrentSpeed_ );
+        asn.mutable_crossing_site()->set_banks_require_fitting( bBanksToFitOut_ );
     }
 }
 

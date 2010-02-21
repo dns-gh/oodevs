@@ -12,11 +12,21 @@
 #include "Simulation.h"
 
 #include "ClientPublisher_ABC.h"
-#include "game_asn/DispatcherSenders.h"
 #include "tools/MessageSender_ABC.h"
 #include "MessageHandler_ABC.h"
-#include "game_asn/SimulationSenders.h"
-#include "game_asn/DispatcherSenders.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/dispatchersenders.h"
+
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+namespace MsgsDispatcherToSim
+{
+    class MsgDispatcherToSim;
+}
+
 
 using namespace dispatcher;
 using namespace tools;
@@ -30,7 +40,9 @@ Simulation::Simulation( MessageHandler_ABC& handler, MessageSender_ABC& messageS
     , messageService_( messageService )
     , endpoint_      ( endpoint )
 {
-    dispatcher::CtrlClientAnnouncement().Send( *this );    
+    dispatcher::CtrlClientAnnouncement msg;
+    msg().set_announce( true );
+    msg.Send( *this );
 }
 
 //-----------------------------------------------------------------------------
@@ -46,7 +58,7 @@ Simulation::~Simulation()
 // Name: Simulation::OnReceive
 // Created: NLD 2006-09-22
 // -----------------------------------------------------------------------------
-void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
+void Simulation::OnReceive( const MsgsSimToClient::MsgSimToClient& asnMsg )
 {
     handler_.Receive( asnMsg );
 }
@@ -55,7 +67,7 @@ void Simulation::OnReceive( const ASN1T_MsgsSimToClient& asnMsg )
 // Name: Simulation::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void Simulation::Send( const ASN1T_MsgsDispatcherToSim& asnMsg )
+void Simulation::Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg )
 {
     messageService_.Send( endpoint_, asnMsg );
 }
@@ -64,7 +76,7 @@ void Simulation::Send( const ASN1T_MsgsDispatcherToSim& asnMsg )
 // Name: Simulation::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void Simulation::Send( const ASN1T_MsgsClientToSim& asnMsg )
+void Simulation::Send( const MsgsClientToSim::MsgClientToSim& asnMsg )
 {
     messageService_.Send( endpoint_, asnMsg );
 }

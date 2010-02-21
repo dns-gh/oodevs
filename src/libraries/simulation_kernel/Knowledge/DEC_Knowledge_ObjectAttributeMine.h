@@ -38,12 +38,12 @@ public:
     virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );    
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision );
-    virtual void Send( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     void Register( DEC_Knowledge_Object& knObject );
     //@}
     
@@ -57,8 +57,8 @@ private:
     //! @name Data members
     //@{
     const MineAttribute* attr_;
-    uint    nNbrDotationForMining_;    
-    uint    nMinesActivityTime_;
+    unsigned int    nNbrDotationForMining_;    
+    unsigned int    nMinesActivityTime_;
     float   rMiningPercentage_;
     float   rMinesDensity_;
     //@}

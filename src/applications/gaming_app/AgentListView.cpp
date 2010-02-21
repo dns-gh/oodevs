@@ -16,8 +16,9 @@
 #include "clients_kernel/CommandPostAttributes.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/KnowledgeGroupHierarchies.h" // LTO
-#include "game_asn/SimulationSenders.h"
 #include "icons.h"
+#include "protocol/SimulationSenders.h"
+#include "protocol/publisher_ABC.h"
 
 using namespace kernel;
 
@@ -167,10 +168,10 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
     if( & item.Get< CommunicationHierarchies >().GetUp() == &target )
         return false;
 
-    simulation::UnitChangeSuperior asnMsg;
-    asnMsg().oid = item.GetId();
-    asnMsg().oid_automate = target.GetId();
-    asnMsg.Send( publisher_ );
+    simulation::UnitChangeSuperior message;
+    message().set_oid( item.GetId() );
+    message().set_oid_automate( target.GetId() );
+    message.Send( publisher_ );
     return true;
 }
 
@@ -180,11 +181,11 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& target )
 {
-    simulation::AutomatChangeKnowledgeGroup asnMsg;
-    asnMsg().oid                     = item.GetId();
-    asnMsg().oid_camp                = target.Get< CommunicationHierarchies >().GetTop().GetId();
-    asnMsg().oid_groupe_connaissance = target.GetId();
-    asnMsg.Send( publisher_ );
+    simulation::AutomatChangeKnowledgeGroup message;
+    message().set_oid( item.GetId() );
+    message().set_oid_camp( target.Get< CommunicationHierarchies >().GetTop().GetId() );
+    message().set_oid_groupe_connaissance( target.GetId() );
+    message.Send( publisher_ );
     return true;
 }
 
@@ -195,11 +196,11 @@ bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& tar
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target )
 {
-    simulation::KnowledgeGroupChangeSuperior asnMsg;
-    asnMsg().oid                     = item.GetId();
-    asnMsg().oid_camp                = target.Get< CommunicationHierarchies >().GetTop().GetId();
-    asnMsg().oid_knowledgegroup_parent = 0;
-    asnMsg.Send( publisher_ );
+    simulation::KnowledgeGroupUpdateRequest message;
+    message().set_oid( item.GetId() );
+    message().set_oid_camp( target.Get< CommunicationHierarchies >().GetTop().GetId() );
+    message().set_oid_parent( 0 );
+    message.Send( publisher_ );
     return true;
 }
 
@@ -210,10 +211,10 @@ bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const KnowledgeGroup_ABC& target )
 {
-    simulation::KnowledgeGroupChangeSuperior asnMsg;
-    asnMsg().oid                     = item.GetId();
-    asnMsg().oid_camp                = target.Get< CommunicationHierarchies >().GetTop().GetId();
-    asnMsg().oid_knowledgegroup_parent = target.GetId();
-    asnMsg.Send( publisher_ );
+    simulation::KnowledgeGroupUpdateRequest message;
+    message().set_oid( item.GetId() );
+    message().set_oid_camp( target.Get< CommunicationHierarchies >().GetTop().GetId() );
+    message().set_oid_parent( target.GetId() );
+    message.Send( publisher_ );
     return true;
 }

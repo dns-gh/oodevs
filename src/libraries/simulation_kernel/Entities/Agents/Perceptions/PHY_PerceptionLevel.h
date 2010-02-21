@@ -12,7 +12,10 @@
 #ifndef __PHY_PerceptionLevel_h_
 #define __PHY_PerceptionLevel_h_
 
-#include "game_asn/Simulation.h"
+namespace MsgsSimToClient
+{
+    enum EnumUnitIdentificationLevel;
+}
 
 // =============================================================================
 // @class  PHY_PerceptionLevel
@@ -37,13 +40,13 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-    uint GetID() const;
+    unsigned int GetID() const;
     bool IsBestLevel() const;
     //@}
 
     //! @name Operators
     //@{
-    void Serialize( ASN1T_EnumUnitIdentificationLevel& level ) const;
+    void Serialize( MsgsSimToClient::EnumUnitIdentificationLevel& level ) const;
     bool operator ==( const PHY_PerceptionLevel& rhs ) const;
     bool operator !=( const PHY_PerceptionLevel& rhs ) const;
     bool operator < ( const PHY_PerceptionLevel& rhs ) const;
@@ -53,7 +56,7 @@ public:
     //@}
 
 public:
-    static const PHY_PerceptionLevel& FindPerceptionLevel( uint nID );
+    static const PHY_PerceptionLevel& FindPerceptionLevel( unsigned int nID );
 
 private:
     //! @name Types
@@ -68,20 +71,20 @@ private:
     //@}
 
 private:
-     PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const ASN1T_EnumUnitIdentificationLevel& nAsnID );
+     PHY_PerceptionLevel( const std::string& strName, E_Level nLevel, const MsgsSimToClient::EnumUnitIdentificationLevel& nAsnID );
     virtual ~PHY_PerceptionLevel();
 
 private:
     //! @name types
     //@{
-    typedef std::map< uint, const PHY_PerceptionLevel* > T_LevelMap;
+    typedef std::map< unsigned int, const PHY_PerceptionLevel* > T_LevelMap;
     typedef T_LevelMap::const_iterator                   CIT_LevelMap;
     //@}
 
 private:
     const std::string                       strName_;
     const E_Level                           nLevel_;
-    const ASN1T_EnumUnitIdentificationLevel nAsnID_;
+    const MsgsSimToClient::EnumUnitIdentificationLevel nAsnID_;
     
 private:
     static T_LevelMap levels_;

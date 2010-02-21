@@ -43,9 +43,9 @@ void Mission_Automat_ABC_Freiner::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_Freiner& asnMission = *new ASN1T_Mission_Automate_ABC_Freiner();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_freiner;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_freiner = &asnMission;
+    Mission_Automate_ABC_Freiner& asnMission = *new Mission_Automate_ABC_Freiner();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_freiner = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_ABC_Freiner::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_Freiner::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_freiner );
-    ASN1T_Mission_Automate_ABC_Freiner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_freiner;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_freiner ());
+    Mission_Automate_ABC_Freiner& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_freiner;
 
 
     delete &asnMission;

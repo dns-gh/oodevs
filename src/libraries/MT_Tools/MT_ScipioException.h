@@ -24,13 +24,13 @@ class MT_ScipioException : public MT_Exception
 public:
      MT_ScipioException( const std::string& strContext, 
                          const std::string& strFile, 
-                         uint nLine, 
+                         unsigned int nLine, 
                          const std::string& strMessage, 
                          const std::string& strDescription );
 
      MT_ScipioException( const std::string& strContext, 
                          const std::string& strFile, 
-                         uint nLine, 
+                         unsigned int nLine, 
                          const std::string& strMessage );
 
     MT_ScipioException( const MT_ScipioException& );
@@ -46,7 +46,7 @@ public:
     const std::string& GetFile       () const;
     const std::string& GetMsg        () const; 
     const std::string& GetDescription() const; 
-    uint               GetLine       () const;
+    unsigned int               GetLine       () const;
 
     void               SendToLogger() const;
     //@}
@@ -54,7 +54,7 @@ public:
 private:
     std::string strContext_; 
     std::string strFile_;
-    uint        nLine_;
+    unsigned int        nLine_;
     std::string strMessage_; 
     std::string strDescription_;
 };

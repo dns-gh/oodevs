@@ -12,6 +12,7 @@
 #include "dispatcher/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "directia/Brain.h"
+#include "protocol/MessengerSenders.h"
 
 using namespace plugins::script;
 
@@ -70,15 +71,11 @@ void ClientCommands::SendCommand( const std::string& client, const std::string& 
 // -----------------------------------------------------------------------------
 void ClientCommands::Send( const std::string& profile, const std::string& command, dispatcher::ClientPublisher_ABC& target )
 {
-    // $$$$ AGE 2008-06-24: Faire un sender
-    ASN1T_MsgsMessengerToClient answer;
-    answer.t = T_MsgsMessengerToClient_msg_text_message;
-    ASN1T_MsgTextMessage message;
-    answer.u.msg_text_message = &message;
-
-    message.source.profile = "script";
-    message.target.profile = profile.c_str();
-    message.message = command.c_str();
+    MsgsMessengerToClient::MsgMessengerToClient answer;
+    
+    answer.mutable_message()->mutable_text_message()->mutable_source()->set_profile("script");
+    answer.mutable_message()->mutable_text_message()->mutable_target()->set_profile(profile.c_str());
+    answer.mutable_message()->mutable_text_message()->set_message(command.c_str());
 
     target.Send( answer );
 }

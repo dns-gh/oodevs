@@ -55,9 +55,9 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     template<class Archive>
-    void load( Archive&, const uint );
+    void load( Archive&, const unsigned int );
     template<class Archive>
-    void save( Archive&, const uint ) const;
+    void save( Archive&, const unsigned int ) const;
     //@}
 
     //! @name Operations

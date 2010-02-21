@@ -43,9 +43,9 @@ void Mission_Pawn_INF_ControlerSecteur::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_ControlerSecteur& asnMission = *new ASN1T_Mission_Pion_INF_ControlerSecteur();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_controler_secteur;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_controler_secteur = &asnMission;
+    Mission_Pion_INF_ControlerSecteur& asnMission = *new Mission_Pion_INF_ControlerSecteur();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_controler_secteur = &asnMission;
 
     const Location& secteur_ = pTarget_->GetTestParam_Polygon();
 
@@ -62,8 +62,8 @@ void Mission_Pawn_INF_ControlerSecteur::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_ControlerSecteur::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_controler_secteur );
-    ASN1T_Mission_Pion_INF_ControlerSecteur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_controler_secteur;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_controler_secteur ());
+    Mission_Pion_INF_ControlerSecteur& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_controler_secteur;
 
     ASN_Tools::Delete( asnMission.secteur );
 

@@ -18,7 +18,11 @@
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_Agent_ABC;
-class NET_ASN_MsgUnitAttributes;
+
+namespace client
+{
+    class UnitAttributes;
+}
 
 namespace posture
 {
@@ -26,6 +30,7 @@ namespace posture
 }
 namespace transport
 {
+
 // =============================================================================
 // @class  PHY_RoleAction_Loading
 // Created: JVT 2004-08-03
@@ -49,7 +54,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -83,8 +88,9 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+
+    void SendChangedState( client::UnitAttributes& msg ) const;
+    void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
     //! @name Accessors
@@ -132,7 +138,7 @@ private:
     MIL_Agent_ABC& pion_;
     E_State nState_;
     bool    bIsLoaded_;
-    uint    nEndTimeStep_; // Load or unload
+    unsigned int    nEndTimeStep_; // Load or unload
     bool    bHasChanged_;
     bool    bHasBeenUpdated_; // Le trigger Load / Unload ou RecoverCarriers a été appelé durant le pas de temps
     //@}

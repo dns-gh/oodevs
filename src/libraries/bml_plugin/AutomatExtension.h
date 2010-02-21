@@ -12,7 +12,10 @@
 
 #include "BmlExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace dispatcher
 {
@@ -33,7 +36,7 @@ namespace bml
 // Created: SBO 2008-05-22
 // =============================================================================
 class AutomatExtension : public BmlExtension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
+                       , public kernel::Updatable_ABC< MsgAutomatOrder >
 {
 
 public:
@@ -45,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
+    virtual void DoUpdate( const MsgAutomatOrder& message );
     //@}
 
 private:

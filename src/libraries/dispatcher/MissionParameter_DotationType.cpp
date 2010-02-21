@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_DotationType.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_DotationType constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_DotationType::MissionParameter_DotationType( const ASN1T_MissionParameter& asn )
+MissionParameter_DotationType::MissionParameter_DotationType( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , dotationType_       ( asn.value.u.dotationType )
+    , dotationType_       ( asn.value().dotationtype().oid() )
 {
     // NOTHING
 }
@@ -41,18 +42,18 @@ MissionParameter_DotationType::~MissionParameter_DotationType()
 // Name: MissionParameter_DotationType::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_DotationType::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_DotationType::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value          = bNullValue_;
-    asn.value.t              = T_MissionParameter_value_dotationType;
-    asn.value.u.dotationType = dotationType_;
+    asn.set_null_value( bNullValue_ );
+//    asn.value.t              = T_MissionParameter_value_dotationType;
+    asn.mutable_value()->mutable_dotationtype()->set_oid( dotationType_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_DotationType::AsnDelete
+// Name: MissionParameter_DotationType::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_DotationType::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_DotationType::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

@@ -38,12 +38,12 @@ public:
     }
     //@}
     
-    virtual void Send( ASN1T_MsgsSimToClient& msg )
+    virtual void Send( MsgsSimToClient::MsgSimToClient& msg )
     {
         Send_mocker.forward( &msg );
     }
 
-    mockpp::ChainableMockMethod< void, ASN1T_MsgsSimToClient* > Send_mocker;
+    mockpp::ChainableMockMethod< void, MsgsSimToClient::MsgSimToClient* > Send_mocker;
     
 };
 

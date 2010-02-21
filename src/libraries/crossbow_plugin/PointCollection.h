@@ -10,9 +10,15 @@
 #ifndef __PointCollection_h_
 #define __PointCollection_h_
 
-#include "game_asn/Simulation.h"
+
 #include "Shape_ABC.h"
 #include "ESRI.h"
+
+namespace Common
+{
+    class MsgLocation;
+    class MsgCoordLatLongList;
+}
 
 namespace plugins
 {
@@ -35,7 +41,7 @@ public:
     
     //! @name Operations
     //@{
-    virtual void Serialize( ASN1T_Location& asn ) const;
+    virtual void Serialize( Common::MsgLocation& message ) const;
     virtual void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     //@}
 
@@ -43,7 +49,7 @@ protected:
     //! @name Constructors/Destructor
     //@{
              PointCollection();
-    explicit PointCollection( const ASN1T_CoordLatLongList& asn );
+    explicit PointCollection( const Common::MsgCoordLatLongList& message );
     explicit PointCollection( IGeometryPtr geometry );    
     //@}
     

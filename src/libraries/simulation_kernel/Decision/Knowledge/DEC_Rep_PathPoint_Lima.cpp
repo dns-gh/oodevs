@@ -18,7 +18,7 @@
 // Name: DEC_Rep_PathPoint_Lima constructor
 // Created: JVT 02-12-10
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, uint nLimaID, const MIL_LimaFunction& function )
+DEC_Rep_PathPoint_Lima::DEC_Rep_PathPoint_Lima( const MT_Vector2D& vPos, const TerrainData& nTypeTerrain, unsigned int nLimaID, const MIL_LimaFunction& function )
     : DEC_Rep_PathPoint( vPos, DEC_Rep_PathPoint::eTypePointLima, nTypeTerrain, "Rep_PointLima" )
     , typeLima_( (int)function.GetID() )
     , limaID_  ( nLimaID )
@@ -42,7 +42,7 @@ void DEC_Rep_PathPoint_Lima::Dump() const
     std::cout << "    DEC_Rep_PathPoint_Lima " << vPos_ 
               << " - Type : " << nObjectTypes_.DumpToString() 
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
-              << " - nTypePoint_ " << (uint)GetTypePoint()
+              << " - nTypePoint_ " << (unsigned int)GetTypePoint()
               << std::endl;
 }
 

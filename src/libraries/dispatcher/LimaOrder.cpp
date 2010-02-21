@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "LimaOrder.h"
 #include "ClientPublisher_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -18,11 +18,12 @@ using namespace dispatcher;
 // Name: LimaOrder constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-LimaOrder::LimaOrder( const ASN1T_LimaOrder& asn )
-    : location_ ( asn.lima )
-    , schedule_ ( (const char*)asn.horaire.data, 15 )
+LimaOrder::LimaOrder( const Common::MsgLimaOrder& message )
+: location_ ( message.lima().location() )
+    , schedule_ ( message.horaire().data(), 15 )
 {
-    std::copy( asn.fonctions.elem, asn.fonctions.elem + asn.fonctions.n, std::back_inserter( functions_ ) );
+    for (int i = 0; i < message.fonctions_size(); ++i)
+        functions_.push_back( message.fonctions( i ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -38,10 +39,11 @@ LimaOrder::~LimaOrder()
 // Name: LimaOrder::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void LimaOrder::Send( ASN1T_LimaOrder& asn ) const
+void LimaOrder::Send( Common::MsgLimaOrder& message ) const
 {
-    location_.Send( asn.lima );
-    asn.horaire = schedule_.c_str();
-    asn.fonctions.n = functions_.size();
-    asn.fonctions.elem = (ASN1T_EnumLimaType*)( functions_.empty() ? 0 : &functions_.front() );
+    location_.Send( *message.mutable_lima()->mutable_location() );
+    message.mutable_horaire()->set_data( schedule_.c_str() );
+
+    for( std::vector< int >::const_iterator it = functions_.begin(); it !=  functions_.end(); ++it )
+        message.add_fonctions( Common::MsgLimaOrder_Function( *it ) );   // $$$$ _RC_ FDS 2010-01-22: Vérification nécessaire sur la traduction!!!
 }

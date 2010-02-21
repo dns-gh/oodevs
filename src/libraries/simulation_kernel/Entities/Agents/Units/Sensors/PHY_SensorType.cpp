@@ -17,7 +17,7 @@
 #include <xeumeuleu/xml.h>
 
 PHY_SensorType::T_SensorTypeMap PHY_SensorType::sensorTypes_;
-uint                            PHY_SensorType::nNextID_ = 0;
+unsigned int                            PHY_SensorType::nNextID_ = 0;
 
 struct PHY_SensorType::LoadingWrapper
 {
@@ -135,10 +135,10 @@ const PHY_SensorType* PHY_SensorType::FindSensorType( const std::string& strType
 // Name: PHY_SensorType::FindSensorType
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_SensorType* PHY_SensorType::FindSensorType( const uint nID )
+const PHY_SensorType* PHY_SensorType::FindSensorType( const unsigned int nID )
 { 
     // $$$$ JVT : Recherche linéaire, mais n'est utilisé que lors de la reprise de la sim depuis un checkpoint
-    CIT_SensorTypeMap it = std::find_if( sensorTypes_.begin(), sensorTypes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_SensorType::GetID ), std::select2nd< T_SensorTypeMap::value_type >() ) ) );
+    CIT_SensorTypeMap it = std::find_if( sensorTypes_.begin(), sensorTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_SensorType::GetID ), std::select2nd< T_SensorTypeMap::value_type >() ) ) );
 
     return it == sensorTypes_.end() ? 0 : it->second;
 }
@@ -174,7 +174,7 @@ const std::string& PHY_SensorType::GetName() const
 // Name: PHY_SensorType::GetID
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-uint PHY_SensorType::GetID() const
+unsigned int PHY_SensorType::GetID() const
 {
     return nID_;
 }

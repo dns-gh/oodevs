@@ -14,6 +14,11 @@
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 
+namespace Common
+{
+    class MsgObjectKnowledge;
+}
+
 namespace kernel
 {
     class Object_ABC;
@@ -45,9 +50,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    void CommitTo( ASN1T_ObjectKnowledge& asn ) const;
+    void CommitTo( Common::MsgObjectKnowledge& message ) const;
     //@}
 
 private:

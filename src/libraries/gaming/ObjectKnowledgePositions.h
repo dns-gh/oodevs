@@ -25,7 +25,7 @@ namespace kernel
 // Created: AGE 2006-05-18
 // =============================================================================
 class ObjectKnowledgePositions : public LocationPositions
-                               , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                               , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
 {
 
 public:
@@ -49,7 +49,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
     //@}
 
 private:

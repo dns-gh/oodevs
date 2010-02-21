@@ -58,7 +58,7 @@ BridgingCapacity::~BridgingCapacity()
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void BridgingCapacity::serialize( Archive& file, const uint )
+void BridgingCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }

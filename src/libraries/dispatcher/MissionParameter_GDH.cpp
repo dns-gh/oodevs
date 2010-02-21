@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_GDH.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_GDH constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_GDH::MissionParameter_GDH( const ASN1T_MissionParameter& asn )
+MissionParameter_GDH::MissionParameter_GDH( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , datation_           ( *asn.value.u.dateTime )
+    , datation_           ( asn.value().datetime() )
 {
     // NOTHING
 }
@@ -41,18 +42,17 @@ MissionParameter_GDH::~MissionParameter_GDH()
 // Name: MissionParameter_GDH::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_GDH::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_GDH::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value                  = bNullValue_;
-    asn.value.t                     = T_MissionParameter_value_dateTime;
-    asn.value.u.dateTime            = const_cast< ASN1T_DateTime* >( &datation_ );
+    asn.set_null_value( bNullValue_ );
+    asn.mutable_value()->mutable_datetime()->set_data( datation_.data() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_GDH::AsnDelete
+// Name: MissionParameter_GDH::Delete
 // Created: AGE 2007-06-18
 // -----------------------------------------------------------------------------
-void MissionParameter_GDH::AsnDelete( ASN1T_MissionParameter& ) const
+void MissionParameter_GDH::Delete( Common::MsgMissionParameter& ) const
 {
     // NOTHING
 }

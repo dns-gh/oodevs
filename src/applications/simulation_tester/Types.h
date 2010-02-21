@@ -17,7 +17,7 @@
 
 typedef uint32      T_EntityId;
 
-typedef std::vector< uint >        T_IdVector;
+typedef std::vector< unsigned int >        T_IdVector;
 typedef T_IdVector::iterator       IT_IdVector;
 typedef T_IdVector::const_iterator CIT_IdVector;
 

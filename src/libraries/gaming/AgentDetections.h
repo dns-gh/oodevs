@@ -10,11 +10,18 @@
 #ifndef __AgentDetections_h_
 #define __AgentDetections_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
+
+namespace MsgsSimToClient
+{
+	class MsgUnitDetection;
+}
 
 namespace kernel
 {
@@ -30,7 +37,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class AgentDetections : public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< ASN1T_MsgUnitDetection >
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitDetection >
                       , public kernel::Drawable_ABC
 {
 
@@ -55,13 +62,13 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const kernel::Agent_ABC*, ASN1T_EnumUnitVisibility > T_AgentDetections;
+    typedef std::map< const kernel::Agent_ABC*, EnumUnitVisibility > T_AgentDetections;
     typedef T_AgentDetections::const_iterator                            CIT_AgentDetections;
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitDetection& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitDetection& message );
     bool IsSameTeam( const kernel::Entity_ABC& entity ) const;
     //@}
 

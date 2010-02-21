@@ -9,8 +9,10 @@
 
 #include "gaming_app_pch.h"
 #include "ActivityTimePrototype.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Units.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 using namespace kernel;
 using namespace gui;
@@ -19,7 +21,7 @@ using namespace gui;
 // Name: ActivityTimePrototype constructor
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-ActivityTimePrototype::ActivityTimePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg )
+ActivityTimePrototype::ActivityTimePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg )
     : ActivityTimePrototype_ABC ( parent )
     , msg_ ( msg )
 {
@@ -41,11 +43,10 @@ ActivityTimePrototype::~ActivityTimePrototype()
 // -----------------------------------------------------------------------------
 void ActivityTimePrototype::Commit()
 {
-    msg_.attributes.m.activity_timePresent = 1;
-    msg_.attributes.activity_time.value = 
+    msg_.mutable_attributes()->mutable_activity_time()->set_value( 
         3600 * activityTime_->time().hour() + 
         60 * activityTime_->time().minute() +
-        activityTime_->time().second();
+        activityTime_->time().second() );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,5 +55,4 @@ void ActivityTimePrototype::Commit()
 // -----------------------------------------------------------------------------
 void ActivityTimePrototype::Clean()
 {
-    msg_.attributes.m.activity_timePresent = 0;
 }

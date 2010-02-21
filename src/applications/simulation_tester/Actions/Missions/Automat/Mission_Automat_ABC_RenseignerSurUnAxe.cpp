@@ -43,9 +43,9 @@ void Mission_Automat_ABC_RenseignerSurUnAxe::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_RenseignerSurUnAxe& asnMission = *new ASN1T_Mission_Automate_ABC_RenseignerSurUnAxe();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_renseigner_sur_un_axe;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_renseigner_sur_un_axe = &asnMission;
+    Mission_Automate_ABC_RenseignerSurUnAxe& asnMission = *new Mission_Automate_ABC_RenseignerSurUnAxe();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_renseigner_sur_un_axe = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_ABC_RenseignerSurUnAxe::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_RenseignerSurUnAxe::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_renseigner_sur_un_axe );
-    ASN1T_Mission_Automate_ABC_RenseignerSurUnAxe& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_renseigner_sur_un_axe;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_renseigner_sur_un_axe ());
+    Mission_Automate_ABC_RenseignerSurUnAxe& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_renseigner_sur_un_axe;
 
 
     delete &asnMission;

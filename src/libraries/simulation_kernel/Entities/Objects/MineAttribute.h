@@ -15,7 +15,7 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
-namespace hla 
+namespace hla
 {
     class Deserializer;
 }
@@ -28,16 +28,15 @@ class PHY_DotationCategory;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class MineAttribute 
-    : public ObjectAttribute_ABC
-    , private UpdatableAttribute_ABC
+class MineAttribute : public ObjectAttribute_ABC
+                    , private UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              MineAttribute();    
-    explicit MineAttribute( const PHY_DotationCategory& category, uint nFullNbrDotation );
-    explicit MineAttribute( const ASN1T_ObjectAttributes& asn );
+             MineAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
+    explicit MineAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~MineAttribute();
     //@}
 
@@ -49,19 +48,19 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()    
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Knowledge
     //@{
-    void Instanciate( DEC_Knowledge_Object& object ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void OnUpdate( const ASN1T_ObjectAttributes& asn );
-    void Serialize( HLA_UpdateFunctor& functor ) const;
-    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );    
-    void WriteODB( xml::xostream& xos ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void OnUpdate( const Common::MsgObjectAttributes& asn );
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );    
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Operations
@@ -71,10 +70,10 @@ public:
 
     //! @name Accessors
     //@{    
-    uint        GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
-    uint        GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
+    unsigned int        GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
+    unsigned int        GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
     MT_Float    GetState() const;
-    uint        GetCurrentDotations() const;
+    unsigned int        GetCurrentDotations() const;
     //@}
 
     //! @name Copy
@@ -92,11 +91,11 @@ private:
     //! @name Member data
     //@{
     const PHY_DotationCategory* dotation_;
-    uint     nFullNbrDotation_;
-    uint     nCurrentNbrDotation_;
+    unsigned int     nFullNbrDotation_;
+    unsigned int     nCurrentNbrDotation_;
     MT_Float rMiningPercentage_;
-    uint     nMinesActivityTime_;
-    uint     nDeathTimeStep_;
+    unsigned int     nMinesActivityTime_;
+    unsigned int     nDeathTimeStep_;
     //@}
 };
 

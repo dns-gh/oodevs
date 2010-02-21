@@ -77,10 +77,10 @@ bool AgentKnowledgePositions::IsIn( const geometry::Rectangle2f& rectangle ) con
 // Name: AgentKnowledgePositions::DoUpdate
 // Created: AGE 2006-05-17
 // -----------------------------------------------------------------------------
-void AgentKnowledgePositions::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
+void AgentKnowledgePositions::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    if( message.m.positionPresent )
-        position_ = converter_.ConvertToXY( message.position );
+    if( message.has_position()  )
+        position_ = converter_.ConvertToXY( message.position() );
 }
 
 // -----------------------------------------------------------------------------

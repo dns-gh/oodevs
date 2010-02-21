@@ -10,7 +10,11 @@
 #ifndef __Loan_h_
 #define __Loan_h_
 
-#include "game_asn/Simulation.h"
+namespace MsgsSimToClient
+{
+    class BorrowedEquipments_BorrowedEquipment;
+    class LentEquipments_LentEquipment;
+}
 
 namespace kernel
 {
@@ -32,15 +36,15 @@ class Loan
 public:
     //! @name Constructors/Destructor
     //@{
-     Loan( const Model& model, const ASN1T_BorrowedEquipment& asnMsg );
-     Loan( const Model& model, const ASN1T_LentEquipment&    asnMsg );
+     Loan( const Model& model, const MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message );
+     Loan( const Model& model, const MsgsSimToClient::LentEquipments_LentEquipment&         message );
     virtual ~Loan();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_BorrowedEquipment& asnMsg ) const;
-    void Send( ASN1T_LentEquipment&    asnMsg ) const;
+    void Send( MsgsSimToClient::BorrowedEquipments_BorrowedEquipment&   message ) const;
+    void Send( MsgsSimToClient::LentEquipments_LentEquipment&           message ) const;
     //@}
 
 private:

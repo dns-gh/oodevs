@@ -49,10 +49,10 @@ Decisions::~Decisions()
 // Name: Decisions::DoUpdate
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void Decisions::DoUpdate( const ASN1T_MsgUnitOrder& message )
+void Decisions::DoUpdate( const Common::MsgUnitOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
-    current_ = resolver.Find( message.mission );
+    current_ = resolver.Find( message.mission() );
     controller_.Update( *this );
 }
 

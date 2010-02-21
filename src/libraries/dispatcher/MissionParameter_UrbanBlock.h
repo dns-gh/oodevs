@@ -27,14 +27,14 @@ class MissionParameter_UrbanBlock : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MissionParameter_UrbanBlock( const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_UrbanBlock( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_UrbanBlock();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( ASN1T_MissionParameter& asn ) const;
-    virtual void AsnDelete( ASN1T_MissionParameter& asn ) const;
+    virtual void Send  ( Common::MsgMissionParameter& asn ) const;
+    virtual void Delete( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

@@ -16,8 +16,7 @@
 #include "DEC_Knowledge_Object.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeSupplyRoute )
 
@@ -69,7 +68,7 @@ DEC_Knowledge_ObjectAttributeSupplyRoute::~DEC_Knowledge_ObjectAttributeSupplyRo
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeSupplyRoute::serialize( Archive& file, const uint )
+void DEC_Knowledge_ObjectAttributeSupplyRoute::serialize( Archive& file, const unsigned int )
 {    
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file & const_cast< SupplyRouteAttribute*& >( attr_ ) 
@@ -94,7 +93,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::Register( DEC_Knowledge_Object& k
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateAttributes
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateAttributes( bool bRecognized )
@@ -134,7 +133,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateAttributes( bool bRecognize
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerceptionLevel
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& /*currentPerceptionLevel*/ )
@@ -143,7 +142,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerceptionLevel( const PH
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerception
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& /*perception*/ )
@@ -152,7 +151,7 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnPerception( const DEC_Kno
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
@@ -161,20 +160,18 @@ void DEC_Knowledge_ObjectAttributeSupplyRoute::UpdateOnCollision( const DEC_Know
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::BuildMsgSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeSupplyRoute::Send
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeSupplyRoute::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeSupplyRoute::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
-        // attr_->Send( asn );
-        asn.m.supply_routePresent = 1;
-        asn.supply_route.equipped   = bEquipped_;
-        asn.supply_route.max_weight = (int)rWeightSupported_;
-        asn.supply_route.width      = (int)rWidth_;
-        asn.supply_route.length     = (int)rLength_;
-        asn.supply_route.flow_rate  = (int)rFlow_;
+        asn.mutable_supply_route()->set_equipped  ( bEquipped_ );
+        asn.mutable_supply_route()->set_max_weight( (int)rWeightSupported_ );
+        asn.mutable_supply_route()->set_width     ( (int)rWidth_ );
+        asn.mutable_supply_route()->set_length    ( (int)rLength_ );
+        asn.mutable_supply_route()->set_flow_rate ( (int)rFlow_ );
     }
 }
 

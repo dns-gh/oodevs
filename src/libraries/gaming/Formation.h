@@ -12,8 +12,11 @@
 
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
-#include "game_asn/Simulation.h"
+
+using namespace Common;
+
 
 // =============================================================================
 /** @class  Formation
@@ -27,7 +30,7 @@ class Formation : public kernel::EntityImplementation< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Formation( const ASN1T_MsgFormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
+             Formation( const Common::MsgFormationCreation& message, kernel::Controller& controller, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& resolver );
     virtual ~Formation();
     //@}
 

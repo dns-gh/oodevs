@@ -43,9 +43,9 @@ void Mission_Automat_LOG_ReconnaitreItineraire::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_LOG_ReconnaitreItineraire& asnMission = *new ASN1T_Mission_Automate_LOG_ReconnaitreItineraire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_reconnaitre_itineraire;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_log_reconnaitre_itineraire = &asnMission;
+    Mission_Automate_LOG_ReconnaitreItineraire& asnMission = *new Mission_Automate_LOG_ReconnaitreItineraire();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_log_reconnaitre_itineraire = &asnMission;
 
     const Path& itineraireLog_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Automat_LOG_ReconnaitreItineraire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_LOG_ReconnaitreItineraire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_log_reconnaitre_itineraire );
-    ASN1T_Mission_Automate_LOG_ReconnaitreItineraire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_log_reconnaitre_itineraire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_log_reconnaitre_itineraire ());
+    Mission_Automate_LOG_ReconnaitreItineraire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_log_reconnaitre_itineraire;
 
     ASN_Tools::Delete( asnMission.itineraire_log );
 

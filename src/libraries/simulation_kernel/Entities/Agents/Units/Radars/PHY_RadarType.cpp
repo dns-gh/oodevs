@@ -24,7 +24,7 @@
 #include <xeumeuleu/xml.h>
 
 PHY_RadarType::T_RadarTypeMap PHY_RadarType::radarTypes_;
-uint                          PHY_RadarType::nNextID_ = 0;
+unsigned int                          PHY_RadarType::nNextID_ = 0;
 
 struct PHY_RadarType::LoadingWrapper
 {
@@ -324,9 +324,9 @@ bool PHY_RadarType::CanAcquire( const MIL_AgentPion& perceiver, const MIL_Agent_
 // Name: PHY_RadarType::ComputeAcquisitionLevel
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& PHY_RadarType::ComputeAcquisitionLevel( const MIL_Agent_ABC& target, uint nFirstAcquisitionTimeStep ) const
+const PHY_PerceptionLevel& PHY_RadarType::ComputeAcquisitionLevel( const MIL_Agent_ABC& target, unsigned int nFirstAcquisitionTimeStep ) const
 {
-    const uint nTimePerceived = time_.GetCurrentTick() - nFirstAcquisitionTimeStep;
+    const unsigned int nTimePerceived = time_.GetCurrentTick() - nFirstAcquisitionTimeStep;
     if( target.IsPC() )
     {
         if( nTimePerceived >= rPcIdentificationTime_ )

@@ -20,12 +20,12 @@ using namespace kernel;
 // Name: IndirectFire constructor
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-IndirectFire::IndirectFire( const ASN1T_MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const CoordinateConverter_ABC& converter )
-    : Fire_ABC( resolver.Get( message.firer_oid ) )
-    , id_( message.fire_oid )
-    , target_( converter.ConvertToXY( *message.target.u.position ) )
+IndirectFire::IndirectFire( const MsgsSimToClient::MsgStartUnitFire& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const CoordinateConverter_ABC& converter )
+    : Fire_ABC( resolver.Get( message.firer_oid() ) )
+    , id_( message.fire_oid() )
+    , target_( converter.ConvertToXY( message.target().position() ) )
 {
-    if( message.target.t != T_MsgStartUnitFire_target_position )
+    if( message.target().has_position() )
         throw std::runtime_error( "Indirect fire on an agent..." );
 }
 

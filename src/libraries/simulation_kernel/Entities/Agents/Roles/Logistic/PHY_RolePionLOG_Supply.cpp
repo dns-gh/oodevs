@@ -18,15 +18,14 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentLendedFunctorComputerFactory.h"
-
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePionLOG_Supply )
@@ -78,7 +77,7 @@ PHY_RolePionLOG_Supply::~PHY_RolePionLOG_Supply()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePionLOG_Supply::serialize( Archive& file, const uint )
+void PHY_RolePionLOG_Supply::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Supply >( *this )
          & bSystemEnabled_
@@ -245,7 +244,8 @@ public:
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
 {
-
+    unsigned int nNbrTotal                  = 0;
+    unsigned int nNbrAvailableAllowedToWork = 0;
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
 
     ConvoyTransportersUseFunctor functor( composanteUse );
@@ -255,8 +255,6 @@ MT_Float PHY_RolePionLOG_Supply::GetConvoyTransportersAvailabilityRatio() const
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
     pion_.Execute( *lendedComputer );
 
-    uint nNbrTotal                  = 0;
-    uint nNbrAvailableAllowedToWork = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal                  += it->second.nNbrTotal_;
@@ -426,43 +424,34 @@ void PHY_RolePionLOG_Supply::Clean()
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, ASN1T__SeqOfLogSupplyEquimentAvailability& asn )
+void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, MsgsSimToClient::SeqOfLogSupplyEquimentAvailability& asn )
 {
-    asn.n = data.size();
     if( data.empty() )
         return;
-
-    ASN1T_LogSupplyEquimentAvailability* pData = new ASN1T_LogSupplyEquimentAvailability[ data.size() ];
-    uint i = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        ASN1T_LogSupplyEquimentAvailability& data = pData[ i++ ];
-        data.type_equipement = itData->first->GetMosID();
+        MsgsSimToClient::MsgLogSupplyEquimentAvailability& data = *asn.add_elem();
+        data.set_type_equipement( itData->first->GetMosID().equipment() );
         assert( itData->second.nNbrTotal_ );
 
-        data.nbr_total       = itData->second.nNbrTotal_;
-        data.nbr_au_travail  = itData->second.nNbrUsed_;
-        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_; // nNbrAvailableAllowedToWork
-        data.nbr_pretes      = itData->second.nNbrLent_;
+        data.set_nbr_total       ( itData->second.nNbrTotal_ );
+        data.set_nbr_au_travail  ( itData->second.nNbrUsed_ );
+        data.set_nbr_disponibles ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+        data.set_nbr_pretes      ( itData->second.nNbrLent_ );
     }
-    asn.elem = pData;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Supply::SendFullState( client::UnitAttributes& asnUnit ) const
 {
     UNREFERENCED_PARAMETER( asnUnit );
 
-    NET_ASN_MsgLogSupplyState asn;
-
-    asn().m.chaine_activeePresent                       = 1;
-    asn().m.disponibilites_transporteurs_convoisPresent = 1;
-
-    asn().oid_pion        = pion_.GetID();
-    asn().chaine_activee  = bSystemEnabled_;
+    client::LogSupplyState asn;
+    asn().set_oid_pion( pion_.GetID() );
+    asn().set_chaine_activee( bSystemEnabled_ );
   
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     ConvoyTransportersUseFunctor functor( composanteUse );
@@ -472,24 +461,24 @@ void PHY_RolePionLOG_Supply::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit )
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
     pion_.Execute( lendedComputer );
 
-    SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois  );
+    SendComposanteUse( composanteUse, *asn().mutable_disponibilites_transporteurs_convois()  );
 
     assert( pStocks_ );
     pStocks_->SendFullState( asn );
 
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asn().disponibilites_transporteurs_convois.n > 0 )
-        delete [] asn().disponibilites_transporteurs_convois.elem;
-    if( asn().stocks.n > 0 )
-        delete [] asn().stocks.elem;
+    if( asn().disponibilites_transporteurs_convois().elem_size() > 0 )
+        asn().mutable_disponibilites_transporteurs_convois()->Clear();
+    if( asn().stocks().elem_size() > 0 )
+        asn().mutable_stocks()->Clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Supply::SendChangedState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Supply::SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Supply::SendChangedState( client::UnitAttributes& asnUnit ) const
 {
     UNREFERENCED_PARAMETER( asnUnit );
 
@@ -497,16 +486,11 @@ void PHY_RolePionLOG_Supply::SendChangedState( NET_ASN_MsgUnitAttributes& asnUni
     if( !( bHasChanged_ || bExternalMustChangeState_ || pStocks_->HasChanged() ) )
         return;
 
-    NET_ASN_MsgLogSupplyState asn;
-
-    asn().oid_pion = pion_.GetID();
-
+    client::LogSupplyState asn;
+    asn().set_oid_pion( pion_.GetID() );
     if( bHasChanged_ || bExternalMustChangeState_ )
     {
-        asn().m.chaine_activeePresent                       = 1;
-        asn().m.disponibilites_transporteurs_convoisPresent = 1;
-
-        asn().chaine_activee  = bSystemEnabled_;
+        asn().set_chaine_activee( bSystemEnabled_ );
       
         PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
         ConvoyTransportersUseFunctor functor( composanteUse );
@@ -516,17 +500,17 @@ void PHY_RolePionLOG_Supply::SendChangedState( NET_ASN_MsgUnitAttributes& asnUni
         std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
         pion_.Execute( *lendedComputer );
 
-        SendComposanteUse( composanteUse, asn().disponibilites_transporteurs_convois );
+        SendComposanteUse( composanteUse, *asn().mutable_disponibilites_transporteurs_convois() );
     }
 
     pStocks_->SendChangedState( asn );    
 
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asn().m.disponibilites_transporteurs_convoisPresent && asn().disponibilites_transporteurs_convois.n > 0 )
-        delete [] asn().disponibilites_transporteurs_convois.elem;
-    if( asn().m.stocksPresent && asn().stocks.n > 0 )
-        delete [] asn().stocks.elem;
+    if( asn().has_disponibilites_transporteurs_convois() && asn().disponibilites_transporteurs_convois().elem_size() > 0 )
+        asn().mutable_disponibilites_transporteurs_convois()->Clear();
+    if( asn().has_stocks() && asn().stocks().elem_size() > 0 )
+        asn().mutable_stocks()->Clear();
 }
 
 // -----------------------------------------------------------------------------

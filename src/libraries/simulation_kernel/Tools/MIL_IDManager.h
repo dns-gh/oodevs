@@ -32,7 +32,7 @@ public:
     void Lock( unsigned long id );
 
     template< typename Archive >
-    void serialize( Archive& archive, uint version );
+    void serialize( Archive& archive, unsigned int version );
     //@}
 
 private:
@@ -55,7 +55,7 @@ private:
 // Created: SBO 2009-05-26
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void MIL_IDManager::serialize( Archive& archive, uint /*version*/ )
+void MIL_IDManager::serialize( Archive& archive, unsigned int /*version*/ )
 {
     archive & last_;
 }

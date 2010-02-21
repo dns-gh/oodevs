@@ -10,11 +10,13 @@
 #ifndef __ObjectDetections_h_
 #define __ObjectDetections_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -29,7 +31,7 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class ObjectDetections : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgObjectDetection >
+                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectDetection >
                        , public kernel::Drawable_ABC
 {
 
@@ -54,7 +56,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectDetection& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectDetection& message );
     //@}
 
     //! @name Types

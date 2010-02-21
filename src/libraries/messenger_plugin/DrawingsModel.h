@@ -11,9 +11,13 @@
 #define __DrawingsModel_h_
 
 #include "tools/Resolver.h"
-#include "game_asn/Messenger.h"
+
 #include "dispatcher/Registrable_ABC.h"
 #include "dispatcher/Position.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsClientToMessenger;
 
 namespace kernel
 {
@@ -63,9 +67,9 @@ public:
 
     //! @name Requests
     //@{
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeCreationRequest&    message );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeDestructionRequest& message );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgShapeUpdateRequest&      message );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeCreationRequest&    message );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeDestructionRequest& message );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgShapeUpdateRequest&      message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
 
     void Publish( const Drawing& drawing );

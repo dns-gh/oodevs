@@ -13,8 +13,7 @@
 #define __PHY_Precipitation_h_
 
 #include "MIL.h"
-
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
 
 // =============================================================================
 // @class  PHY_Precipitation
@@ -27,7 +26,7 @@ public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_Precipitation*, sCaseInsensitiveLess > T_PrecipitationMap;
-    typedef T_PrecipitationMap::const_iterator                                       CIT_PrecipitationMap;
+    typedef T_PrecipitationMap::const_iterator                                    CIT_PrecipitationMap;
     //@}
 
 public:
@@ -38,14 +37,14 @@ public:
 
     static const T_PrecipitationMap& GetPrecipitations();
     static const PHY_Precipitation* FindPrecipitation( const std::string& strName );
-    static const PHY_Precipitation* FindPrecipitation( ASN1T_EnumPrecipitationType nAsnID );
+    static const PHY_Precipitation* FindPrecipitation( Common::EnumPrecipitationType nAsnID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&          GetName () const;
-    uint                        GetID   () const;
-    ASN1T_EnumPrecipitationType GetAsnID() const;
+    unsigned int                        GetID   () const;
+    Common::EnumPrecipitationType GetAsnID() const;
     //@}
 
 public:
@@ -73,13 +72,13 @@ private:
     //@}
 
 private:
-     PHY_Precipitation( const std::string& strName, E_Precipitation nType, ASN1T_EnumPrecipitationType nAsnID );
+     PHY_Precipitation( const std::string& strName, E_Precipitation nType, Common::EnumPrecipitationType nAsnID );
     ~PHY_Precipitation();
 
 private:
     const std::string                 strName_;
     const E_Precipitation             nType_;
-    const ASN1T_EnumPrecipitationType nAsnID_;
+    const Common::EnumPrecipitationType nAsnID_;
 
 private:
     static T_PrecipitationMap precipitations_;

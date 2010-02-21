@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeInputToxicCloud_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "game_asn/Simulation.h"
 #include "simulation_terrain/TER_Polygon.h"
 
 class InputToxicCloudAttribute;
@@ -35,7 +34,7 @@ public:
 
     //! @name CheckPoints
     //@{    
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     void Register( DEC_Knowledge_Object& knObject );
     //@}
 
@@ -44,7 +43,7 @@ public:
     virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );    
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision );
-    virtual void Send( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

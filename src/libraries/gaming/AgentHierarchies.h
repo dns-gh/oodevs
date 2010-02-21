@@ -17,8 +17,15 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
 
+namespace MsgsSimToClient
+{
+    class MsgUnitCreation;
+}
+namespace Common
+{
+    class MsgUnitChangeSuperior;
+}
 namespace kernel
 {
     class Controller;
@@ -34,8 +41,8 @@ namespace kernel
 // =============================================================================
 template< typename I >
 class AgentHierarchies : public kernel::EntityHierarchies< I  >
-                       , public kernel::Updatable_ABC< ASN1T_MsgUnitCreation >
-                       , public kernel::Updatable_ABC< ASN1T_MsgUnitChangeSuperior >
+                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitCreation >
+                       , public kernel::Updatable_ABC< Common::MsgUnitChangeSuperior >
 {
 
 public:
@@ -61,8 +68,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgUnitChangeSuperior& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
+    virtual void DoUpdate( const Common::MsgUnitChangeSuperior& message );
 
     void UpdateSuperior( kernel::Entity_ABC& superior );
     //@}
@@ -107,9 +114,9 @@ AgentHierarchies< I >::~AgentHierarchies()
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgUnitCreation& message )
+void AgentHierarchies< I >::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
 {
-    kernel::Automat_ABC& superior = automatResolver_.Get( message.oid_automate );
+    kernel::Automat_ABC& superior = automatResolver_.Get( message.oid_automate() );
     const Diplomacies_ABC* diplo = superior.Get< I >().GetTop().Retrieve< Diplomacies_ABC >();
     if( diplo )
         App6Symbol::SetKarma( symbol_, diplo->GetKarma() );
@@ -121,9 +128,9 @@ void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgUnitCreation& message )
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
 template< typename I >
-void AgentHierarchies< I >::DoUpdate( const ASN1T_MsgUnitChangeSuperior& message )
+void AgentHierarchies< I >::DoUpdate( const Common::MsgUnitChangeSuperior& message )
 {
-    UpdateSuperior( automatResolver_.Get( message.oid_automate ) );
+    UpdateSuperior( automatResolver_.Get( message.oid_automate() ) );
 }
 
 // -----------------------------------------------------------------------------

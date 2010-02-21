@@ -43,9 +43,9 @@ void Mission_Pawn_ASA_DefendreSite::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASA_DefendreSite& asnMission = *new ASN1T_Mission_Pion_ASA_DefendreSite();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asa_defendre_site;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_asa_defendre_site = &asnMission;
+    Mission_Pion_ASA_DefendreSite& asnMission = *new Mission_Pion_ASA_DefendreSite();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_asa_defendre_site = &asnMission;
 
     const Location& site_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ASA_DefendreSite::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASA_DefendreSite::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_asa_defendre_site );
-    ASN1T_Mission_Pion_ASA_DefendreSite& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_asa_defendre_site;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_asa_defendre_site ());
+    Mission_Pion_ASA_DefendreSite& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_asa_defendre_site;
 
     ASN_Tools::Delete( asnMission.site );
 

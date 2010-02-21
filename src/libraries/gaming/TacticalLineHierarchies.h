@@ -13,8 +13,11 @@
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
-#include "game_asn/Simulation.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -30,14 +33,14 @@ namespace kernel
 // Created: SBO 2006-11-14
 // =============================================================================
 class TacticalLineHierarchies : public kernel::SimpleHierarchies< kernel::TacticalHierarchies >
-                              , public kernel::Updatable_ABC< ASN1T_MsgLimaUpdate >
-                              , public kernel::Updatable_ABC< ASN1T_MsgLimitUpdate >
+                              , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimaUpdate >
+                              , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgLimitUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const ASN1T_TacticalLinesDiffusion& asnMsg
+    TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const Common::MsgTacticalLine::Diffusion& message
                                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
              TacticalLineHierarchies( kernel::Controller& controller, kernel::Entity_ABC& holder, const kernel::Entity_ABC& superior
                                     , const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const tools::Resolver_ABC< kernel::Formation_ABC >& formations );
@@ -46,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    void WriteTo( ASN1T_TacticalLinesDiffusion& message ) const;
+    void WriteTo( Common::MsgTacticalLine::Diffusion& message ) const;
     //@}
 
 private:
@@ -58,9 +61,9 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( const ASN1T_TacticalLinesDiffusion& message );
-    virtual void DoUpdate( const ASN1T_MsgLimaUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgLimitUpdate& message );
+    void Update( const Common::MsgTacticalLine::Diffusion& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message );
     //@}
 
 private:

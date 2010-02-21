@@ -51,24 +51,24 @@ TicExtension::~TicExtension()
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const ASN1T_MsgUnitAttributes& asnMsg )
+void TicExtension::DoUpdate( const MsgUnitAttributes& message )
 {
-    if( asnMsg.m.dotation_eff_materielPresent )
-        UpdatePlatforms( asnMsg );
+    if( message.has_dotation_eff_materiel()  )
+        UpdatePlatforms( message );
 
-    if( asnMsg.m.altitudePresent )
-        std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Update, _1, asnMsg ) );
+    if( message.has_altitude()  )
+        std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Update, _1, message ) );
 
-    if( asnMsg.m.directionPresent )
+    if( message.has_direction()  )
     {
-        const float angle = float( asnMsg.direction ) * std::acos( -1.f ) / 180.f;
+        const float angle = float( message.direction().heading() ) * std::acos( -1.f ) / 180.f;
         direction_ = geometry::Vector2f( std::sin( angle ), std::cos( angle ) );
         if( !onRoad_ )
             SortPlatforms();
     }
 
-    if( asnMsg.m.positionPresent )
-        position_ = converter_.ConvertToXY( asnMsg.position );
+    if( message.has_position()  )
+        position_ = converter_.ConvertToXY( message.position() );
     
     UpdateFormation();
 }
@@ -77,22 +77,22 @@ void TicExtension::DoUpdate( const ASN1T_MsgUnitAttributes& asnMsg )
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-04-01
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const ASN1T_MsgUnitPathFind& message )
+void TicExtension::DoUpdate( const MsgUnitPathFind& message )
 {
     path_.resize( 0 );
-    for( unsigned i = 0; i < message.itineraire.coordinates.n; ++i )
-        path_.push_back( converter_.ConvertToXY( message.itineraire.coordinates.elem[i] ) );
+    for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
+        path_.push_back( converter_.ConvertToXY( message.itineraire().location().coordinates().elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TicExtension::DoUpdate
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::DoUpdate( const ASN1T_MsgUnitEnvironmentType& message )
+void TicExtension::DoUpdate( const MsgUnitEnvironmentType& message )
 {
     const unsigned int mask = TerrainData::motorway_  | TerrainData::largeroad_  | TerrainData::mediumroad_
                             | TerrainData::smallroad_ | TerrainData::bridge_;
-    const bool nowOnRoad = ( message.linear & mask ) != 0;
+    const bool nowOnRoad = ( message.linear() & mask ) != 0;
     if( onRoad_ != nowOnRoad )
     {
         SortPlatforms();
@@ -124,19 +124,19 @@ void TicExtension::CreatePlatforms( float timeStep )
 // Name: TicExtension::UpdatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::UpdatePlatforms( const ASN1T_MsgUnitAttributes& asnMsg )
+void TicExtension::UpdatePlatforms( const MsgUnitAttributes& message )
 {
-    for( unsigned i = 0; i < asnMsg.dotation_eff_materiel.n; ++i )
-        UpdatePlatforms( asnMsg.dotation_eff_materiel.elem[i] );
+    for( int i = 0; i < message.dotation_eff_materiel().elem_size(); ++i )
+        UpdatePlatforms( message.dotation_eff_materiel().elem(i) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TicExtension::UpdatePlatforms
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void TicExtension::UpdatePlatforms( const ASN1T_EquipmentDotations& asnMsg )
+void TicExtension::UpdatePlatforms( const EquipmentDotations_EquipmentDotation& message )
 {
-    ASN1T_EquipmentDotations copy( asnMsg );
+    EquipmentDotations_EquipmentDotation copy( message );
     std::for_each( platforms_.begin(), platforms_.end(), boost::bind( &Platform::Spread, _1, boost::ref( copy ) ) );
 }
 

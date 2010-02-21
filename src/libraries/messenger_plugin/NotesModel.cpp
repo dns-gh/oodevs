@@ -5,6 +5,8 @@
 //
 // Copyright (c) 2010 MASA Group
 //
+// LTO
+//
 // *****************************************************************************
 
 
@@ -50,7 +52,7 @@ NotesModel::~NotesModel()
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const ASN1T_MsgNoteCreationRequest& message )
+void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequest& message )
 {
    std::auto_ptr< Note > note( new Note( idManager_.NextId(), message ) );
    Register( note->GetId(), *note );
@@ -70,12 +72,12 @@ void NotesModel::HandleRequest( const ASN1T_MsgNoteCreationRequest& message )
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const ASN1T_MsgNoteDestructionRequest& message )
+void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionRequest& message )
 {
-   Note* note = Find( message.id );
+   Note* note = Find( message.id() );
    if( note )
     {
-        if ( message.deleteAll )
+        if ( message.delete_all() )
             HandleRequestDestructCascade( note );
         else
             HandleRequestDestructSingle( note );
@@ -89,9 +91,9 @@ void NotesModel::HandleRequest( const ASN1T_MsgNoteDestructionRequest& message )
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void NotesModel::HandleRequest( const ASN1T_MsgNoteUpdateRequest& message )
+void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateRequest& message )
 {
-    Note* note = Find( message.id );
+    Note* note = Find( message.id() );
     if( note )
     {
         note->Update( message );

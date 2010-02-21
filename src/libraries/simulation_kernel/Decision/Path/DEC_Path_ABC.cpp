@@ -18,7 +18,7 @@
 #include "MIL_AgentServer.h"
 #include "MT_Tools/MT_CrashHandler.h"
 
-uint DEC_Path_ABC::nIDIdx_ = 0;
+unsigned int DEC_Path_ABC::nIDIdx_ = 0;
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Path_ABC constructor
@@ -84,11 +84,11 @@ MT_Float DEC_Path_ABC::GetLength() const
 // -----------------------------------------------------------------------------
 void DEC_Path_ABC::DoExecute( TerrainPathfinder& pathfind )
 {
-    uint nComputationEndTime = 0;
+    unsigned int nComputationEndTime = 0;
     
-    const uint nMaxComputationDuration = MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
-    if( nMaxComputationDuration == std::numeric_limits< uint >::max() )
-        nComputationEndTime = std::numeric_limits< uint >::max();
+    const unsigned int nMaxComputationDuration = MIL_AgentServer::GetWorkspace().GetPathFindManager().GetMaxComputationDuration();
+    if( nMaxComputationDuration == std::numeric_limits< unsigned int >::max() )
+        nComputationEndTime = std::numeric_limits< unsigned int >::max();
     else
         nComputationEndTime = time( 0 ) + nMaxComputationDuration;
 

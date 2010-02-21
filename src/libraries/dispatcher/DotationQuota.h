@@ -10,7 +10,10 @@
 #ifndef __DotationQuota_h_
 #define __DotationQuota_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    class MsgDotationQuota;
+}
 
 namespace dispatcher
 {
@@ -27,14 +30,14 @@ class DotationQuota
 public:
     //! @name Constructors/Destructor
     //@{
-     DotationQuota( const Model_ABC& model, const ASN1T_DotationQuota& asnMsg );
+    DotationQuota( const Model_ABC& model, const Common::MsgDotationQuota& message );
     virtual ~DotationQuota();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_DotationQuota& asnMsg );
-    void Send  ( ASN1T_DotationQuota& asnMsg ) const ;
+    void Update( const Common::MsgDotationQuota& message );
+    void Send  ( Common::MsgDotationQuota& message ) const ;
     //@}
 
 private:

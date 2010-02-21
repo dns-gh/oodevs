@@ -39,6 +39,8 @@ namespace bfs = boost::filesystem;
 using namespace plugins::script;
 using namespace dispatcher;
 
+using namespace MsgsClientToMessenger;
+
 // -----------------------------------------------------------------------------
 // Name: ScriptPlugin constructor
 // Created: AGE 2008-06-12
@@ -80,20 +82,20 @@ ScriptPlugin::~ScriptPlugin()
 // Name: ScriptPlugin::Receive
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Receive( const ASN1T_MsgsSimToClient& message )
+void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
 {
-    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_begin_tick )
-        controller_->Update( events::TickEnded( message.msg.u.msg_control_end_tick->current_tick ) );
+    if( wrapper.message().has_control_begin_tick())
+        controller_->Update( events::TickEnded( wrapper.message().control_end_tick().current_tick() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ScriptPlugin::Receive
 // Created: SBO 2009-06-03
 // -----------------------------------------------------------------------------
-void ScriptPlugin::Receive( const ASN1T_MsgsAarToClient& message )
+void ScriptPlugin::Receive( const MsgAarToClient& wrapper )
 {
-    if( message.msg.t == T_MsgsAarToClient_msg_msg_indicator )
-        controller_->Update( events::IndicatorChanged( message.msg.u.msg_indicator->name, message.msg.u.msg_indicator->value ) );
+    if  ( wrapper.message().has_indicator() )
+        controller_->Update( events::IndicatorChanged( wrapper.message().indicator().name(), wrapper.message().indicator().value() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,15 +120,12 @@ void ScriptPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: ScriptPlugin::OnReceiveClientToMessenger
 // Created: SBO 2008-06-27
 // -----------------------------------------------------------------------------
-void ScriptPlugin::OnReceiveClientToMessenger( const std::string&, const ASN1T_MsgsClientToMessenger& message )
+void ScriptPlugin::OnReceiveClientToMessenger( const std::string&, const MsgClientToMessenger& wrapper )
 {
-    switch( message.t )
+    if ( wrapper.message().has_text_message() )
     {
-        case T_MsgsClientToMessenger_msg_text_message:
-            MT_LOG_INFO_MSG( message.u.msg_text_message->message );
-            controller_->Update( *message.u.msg_text_message ); break;
-        default:
-            break;
+        MT_LOG_INFO_MSG( wrapper.message().text_message().message() );
+        controller_->Update( wrapper.message().text_message() );
     }
 }
 

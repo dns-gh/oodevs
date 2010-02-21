@@ -10,7 +10,11 @@
 #include "gaming_app_pch.h"
 #include "ObjectsLayer.h"
 #include "clients_kernel/Object_ABC.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/clientsenders.h"
+
+using namespace Common;
+
 
 // -----------------------------------------------------------------------------
 // Name: ObjectsLayer constructor
@@ -41,10 +45,10 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
 {
     if( selected_ && key->key() == Qt::Key_Delete )
     {
-        simulation::ObjectMagicAction asn;
-        asn().action.t = T_MsgObjectMagicAction_action_destroy_object;
-        asn().action.u.destroy_object = selected_->GetId();
-        asn.Send( publisher_ );
+        simulation::ObjectMagicAction message;
+
+        message().mutable_action()->set_destroy_object ( selected_->GetId() );
+        message.Send( publisher_ );
         return true;
     }
     return false;

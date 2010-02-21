@@ -11,9 +11,17 @@
 #define __MIL_PopulationOrderManager_h_
 
 #include "MIL.h"
-
 #include "MIL_OrderManager_ABC.h"
-#include "Network/NET_ASN_Messages.h"
+
+namespace Common
+{
+    class MsgPopulationOrder;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgFragOrder;
+}
 
 class MIL_Population;
 class MIL_MissionType_ABC;
@@ -25,13 +33,13 @@ class MIL_PopulationOrderManager : public MIL_OrderManager_ABC
 {
 
 public:
-    MIL_PopulationOrderManager( MIL_Population& population );
+    explicit MIL_PopulationOrderManager( MIL_Population& population );
     virtual ~MIL_PopulationOrderManager();
 
     // @name Events 
     //@{
-    virtual void OnReceiveFragOrder( const ASN1T_MsgFragOrder&       asn );
-            void OnReceiveMission  ( const ASN1T_MsgPopulationOrder& asn );
+    virtual void OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn );
+            void OnReceiveMission  ( const Common::MsgPopulationOrder& asn );
     //@}
 
     //! @name Operations

@@ -40,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
     virtual void CommitTo( std::string& content ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}

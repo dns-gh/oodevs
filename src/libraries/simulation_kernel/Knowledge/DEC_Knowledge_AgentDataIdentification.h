@@ -15,11 +15,15 @@
 #include "MIL.h"
 #include "DEC_Knowledge_Def.h"
 
+namespace MsgsSimToClient
+{
+    class MsgUnitKnowledgeUpdate;
+}
+
 class DEC_Knowledge_AgentPerceptionDataIdentification;
 class MIL_AgentType_ABC;
 class MIL_Army;
 class MIL_Agent_ABC;
-struct ASN1T_MsgUnitKnowledgeUpdate;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -28,15 +32,18 @@ class DEC_Knowledge_AgentDataIdentification : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      DEC_Knowledge_AgentDataIdentification();
     virtual ~DEC_Knowledge_AgentDataIdentification();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -49,16 +56,16 @@ public:
 
     //! @name Accessors
     //@{
-          uint               GetTimeLastUpdate() const;
-    const MIL_AgentType_ABC* GetAgentType     () const;
+    unsigned int GetTimeLastUpdate() const;
+    const MIL_AgentType_ABC* GetAgentType() const;
     //@}
 
 
     //! @name Network
     //@{
     bool HasChanged      () const;
-    void SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const;
-    void SendFullState   ( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
+    void SendFullState   ( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const;
     //@}
 
 private:
@@ -68,11 +75,12 @@ private:
     //@}
 
 private:
-          uint               nTimeLastUpdate_;
+    //! @name Member data
+    //@{
+    unsigned int nTimeLastUpdate_;
     const MIL_AgentType_ABC* pAgentType_; // For 'natures'
-
-    // Network
     bool bAgentTypeUpdated_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_AgentDataIdentification )

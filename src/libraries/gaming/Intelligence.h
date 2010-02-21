@@ -10,13 +10,19 @@
 #ifndef __Intelligence_h_
 #define __Intelligence_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include "protocol/publisher_ABC.h"
+
+namespace MsgsMessengerToClient
+{
+    class MsgIntelligenceCreation;
+    class MsgIntelligenceUpdate;
+}
 
 namespace kernel
 {
@@ -36,13 +42,13 @@ class Intelligence : public kernel::EntityImplementation< kernel::Intelligence_A
                    , public kernel::Extension_ABC
                    , public kernel::Drawable_ABC
                    , public kernel::Displayable_ABC
-                   , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceUpdate >
+                   , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceUpdate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Intelligence( const ASN1T_MsgIntelligenceCreation& message, kernel::Controller& controller
+             Intelligence( const MsgsMessengerToClient::MsgIntelligenceCreation& message, kernel::Controller& controller
                          , const tools::Resolver_ABC< kernel::Formation_ABC >& formations
                          , const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels
                          , Publisher_ABC& publisher);
@@ -73,7 +79,7 @@ private:
     virtual bool IsMounted() const;
     virtual void Delete();
     virtual void Rename( const QString& name );
-    virtual void DoUpdate( const ASN1T_MsgIntelligenceUpdate& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgIntelligenceUpdate& message );
     //@}
 
 private:

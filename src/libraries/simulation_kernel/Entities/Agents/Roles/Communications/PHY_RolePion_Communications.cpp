@@ -11,14 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Communications.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
-
 #include <xeumeuleu/xml.h>
 
 MT_Float PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
@@ -94,7 +92,7 @@ namespace boost
     namespace serialization
     {        
         template< typename Archive >
-        void save( Archive& file, const PHY_RolePion_Communications::T_JammerSet& set, const uint )
+        void save( Archive& file, const PHY_RolePion_Communications::T_JammerSet& set, const unsigned int )
         {
             unsigned size = set.size();
             file << size;
@@ -103,9 +101,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const uint )
+        void load( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -116,7 +114,7 @@ namespace boost
         }
 
         template< typename Archive >
-        inline void serialize( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const uint nVersion )
+        inline void serialize( Archive& file, PHY_RolePion_Communications::T_JammerSet& set, const unsigned int nVersion )
         {
             split_free( file, set, nVersion );
         }
@@ -129,7 +127,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 template< typename Archive >
 inline
-void PHY_RolePion_Communications::serialize( Archive& file, const uint )
+void PHY_RolePion_Communications::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Communications >( *this )
          & jammers_
@@ -162,20 +160,17 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
 // Name: PHY_RolePion_Communications::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Communications::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.communications_brouilleesPresent = 1;
-    msg().communications_brouillees = !jammers_.empty();
-
-    msg().m.silence_radioPresent  = 1;
-    msg().silence_radio           = bBlackoutActivated_;
+    msg().set_communications_brouillees( !jammers_.empty() );
+    msg().set_silence_radio( bBlackoutActivated_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Communications::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Communications::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

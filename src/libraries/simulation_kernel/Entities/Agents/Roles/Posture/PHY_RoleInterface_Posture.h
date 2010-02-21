@@ -14,6 +14,11 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class PHY_Posture;
 class HLA_UpdateFunctor;
 
@@ -75,6 +80,12 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsStealth() const = 0;
+    //@}
+
+    //! @name Network
+    //@{
+//    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const = 0;
+//    virtual void SendFullState   ( client::UnitAttributes& asnMsg ) const = 0;
     //@}
 
     //! @name HLA

@@ -32,13 +32,13 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-            UpdatableAttribute_ABC() : xToUpdate_ ( 0 ) {}
+             UpdatableAttribute_ABC() : xToUpdate_ ( 0 ) {}
     virtual ~UpdatableAttribute_ABC() {}
     //@}
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 
 protected:
@@ -73,7 +73,7 @@ protected:
 private:
     //! @name 
     //@{    
-    mutable uint8 xToUpdate_;
+    mutable unsigned char xToUpdate_;
     //@}
 };
 

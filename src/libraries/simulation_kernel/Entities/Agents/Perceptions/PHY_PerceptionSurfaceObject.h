@@ -19,17 +19,21 @@ class DEC_Knowledge_Object;
 //*****************************************************************************
 class PHY_PerceptionSurfaceObject
 {
+
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_PerceptionSurfaceObject();
      PHY_PerceptionSurfaceObject( const PHY_SensorTypeObject& sensorType, const MT_Vector2D& vOrigin, MT_Float rHeight );
     virtual ~PHY_PerceptionSurfaceObject();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -49,9 +53,12 @@ public:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     const PHY_SensorTypeObject* pSensorType_;
           MT_Vector2D           vOrigin_;
           MT_Float              rHeight_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_PerceptionSurfaceObject )

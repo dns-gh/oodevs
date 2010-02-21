@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Position.h"
+#include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 
 namespace dispatcher
@@ -43,11 +44,11 @@ namespace dispatcher
         return result;
     }
 
-    Zone ToZone( const std::vector< ASN1T_CoordLatLong >& coordinates, const kernel::CoordinateConverter_ABC& converter )
+    Zone ToZone( const std::vector< Common::MsgCoordLatLong >& coordinates, const kernel::CoordinateConverter_ABC& converter )
     {
         Zone result( coordinates.size() );
         std::transform( coordinates.begin(), coordinates.end(), result.begin(), 
-            boost::bind( &ToPosition, boost::bind( &kernel::CoordinateConverter_ABC::ConvertToXY< ASN1T_CoordLatLong >, &converter, _1 ) ) );
+            boost::bind( &ToPosition, boost::bind( &kernel::CoordinateConverter_ABC::ConvertToXY< Common::MsgCoordLatLong >, &converter, _1 ) ) );
         return result;
     }
 

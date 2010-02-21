@@ -29,11 +29,15 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.h>
 
+
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateLOG )
+using namespace MsgsSimToClient;
+using namespace MsgsClientToSim;
 
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AutomateLOG* automat, const unsigned int /*version*/ )
@@ -57,7 +61,7 @@ void load_construct_data( Archive& archive, MIL_AutomateLOG* automat, const unsi
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database )
     : MIL_Automate                ( type, nID, parent, xis, database )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
@@ -78,7 +82,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL
 // Name: MIL_AutomateLOG constructor
 // Created: NLD 2007-03-29
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database )
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database )
     : MIL_Automate                ( type, nID, parent, xis, database )
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
@@ -95,7 +99,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID, MIL
     // NOTHING
 }
 
-MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID)
+MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, unsigned int nID)
     : MIL_Automate(type, nID)
     , pMaintenanceSuperior_       ( 0 )
     , pMedicalSuperior_           ( 0 )
@@ -109,7 +113,9 @@ MIL_AutomateLOG::MIL_AutomateLOG( const MIL_AutomateTypeLOG& type, uint nID)
     , nTickRcStockSupplyQuerySent_( 0 )
     , pLogisticAction_            ( new PHY_ActionLogistic< MIL_AutomateLOG >( *this ) )
 {
+    // NOTHING
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG destructor
 // Created: NLD 2004-12-21
@@ -127,19 +133,19 @@ namespace boost
     namespace serialization
     {
         template< typename Archive >
-        inline void serialize( Archive& file, std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const uint nVersion )
+        inline void serialize( Archive& file, std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion);
         }
 
         template < typename Archive >
-        void save( Archive& file, const std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const uint )
+        void save( Archive& file, const std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
             for( std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >::const_iterator it = map.begin(); it != map.end(); ++it )
             {
-                uint id = it->first->GetMosID();
+                unsigned int id = it->first->GetMosID();
                 file << id
                      << it->second.rQuota_
                      << it->second.rQuotaThreshold_;
@@ -147,13 +153,13 @@ namespace boost
         }
 
         template < typename Archive >
-        void load( Archive& file, std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const uint )
+        void load( Archive& file, std::map< const PHY_DotationCategory*, MIL_AutomateLOG::sDotationQuota >& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
-                uint nCategory;
+                unsigned int nCategory;
                 file >> nCategory;
                 const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( nCategory );
 
@@ -172,7 +178,7 @@ namespace boost
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template < typename Archive >
-void MIL_AutomateLOG::serialize( Archive& file, const uint )
+void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< MIL_Automate >( *this );
     file & pMaintenanceSuperior_
@@ -231,7 +237,7 @@ void MIL_AutomateLOG::ReadDotation( xml::xistream& xis )
     if( stockQuotas_.find( pDotationCategory ) != stockQuotas_.end() )
         xis.error( "Quota already defined" );
 
-    uint        nQuantity;
+    unsigned int        nQuantity;
     xis >> xml::attribute( "quantity", nQuantity );
     if( nQuantity < 0 )
         xis.error( "nQuantity is not greater or equal to 0" );
@@ -755,7 +761,7 @@ void MIL_AutomateLOG::NotifyStockSupplyNeeded( const PHY_DotationCategory& dotat
     bStockSupplyNeeded_ = true;
 
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( GetTC2() && ( nCurrentTick > ( nTickRcStockSupplyQuerySent_ + 1 ) || nTickRcStockSupplyQuerySent_ == 0 ) )
         MIL_Report::PostEvent( *this, MIL_Report::eReport_StockSupplyRequest );
     nTickRcStockSupplyQuerySent_ = nCurrentTick;
@@ -807,7 +813,7 @@ void MIL_AutomateLOG::NotifyStockSupplyCanceled( const PHY_SupplyStockState& sup
 // Name: MIL_AutomateLOG::GetLogisticAutomate
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-MIL_AutomateLOG* MIL_AutomateLOG::GetLogisticAutomate( uint nID )
+MIL_AutomateLOG* MIL_AutomateLOG::GetLogisticAutomate( unsigned int nID )
 {
     MIL_Automate* pAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( nID );
     if( !pAutomate || !pAutomate->GetType().IsLogistic() )
@@ -837,25 +843,24 @@ void MIL_AutomateLOG::UpdateNetwork() const
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::SendQuotas() const
 {
-    NET_ASN_MsgLogSupplyQuotas asn;
-    asn().oid_automate = GetID();
-    asn().quotas.n     = stockQuotas_.size();
+    client::LogSupplyQuotas asn;
+    asn().set_oid_automate( GetID() );
     if( !stockQuotas_.empty() )
     {
-        ASN1T_DotationQuota* pDotationQuota = new ASN1T_DotationQuota[ stockQuotas_.size() ];
-        uint i = 0;
+        unsigned int i = 0;
         for( CIT_DotationQuotaMap it = stockQuotas_.begin(); it != stockQuotas_.end(); ++it, ++i )
         {
-            ASN1T_DotationQuota& dotQuota = pDotationQuota[ i ];
-            dotQuota.ressource_id     = it->first->GetMosID();
-            dotQuota.quota_disponible = (uint)it->second.rQuota_;
+            Common::MsgDotationQuota& dotQuota = *asn().mutable_quotas()->add_elem();
+            dotQuota.set_ressource_id( it->first->GetMosID() );
+            dotQuota.set_quota_disponible( (unsigned int)it->second.rQuota_ );
         }
-        asn().quotas.elem = pDotationQuota;
     }
-    asn.Send();
+    else
+        asn().mutable_quotas();                    
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asn().quotas.n > 0 )
-        delete [] asn().quotas.elem;
+    if( asn().quotas().elem_size() > 0 )
+        asn().mutable_quotas()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -876,7 +881,7 @@ void MIL_AutomateLOG::SendFullState() const
 // Name: MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomatChangeLogisticLinks& msg )
+void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const Common::MsgAutomatChangeLogisticLinks& msg )
 {
     bool bNewTC2                 = false;
     bool bNewMaintenanceSuperior = false;
@@ -888,44 +893,44 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomatCha
     MIL_AutomateLOG* pNewMedicalSuperior     = 0;
     MIL_AutomateLOG* pNewSupplySuperior      = 0;
 
-    if( msg.m.oid_tc2Present )
+    if( msg.has_oid_tc2()  )
     {
         bNewTC2 = true;
-        if( msg.oid_tc2 != 0 )
+        if( msg.oid_tc2() != 0 )
         {
-            pNewTC2 = GetLogisticAutomate( msg.oid_tc2 );
+            pNewTC2 = GetLogisticAutomate( msg.oid_tc2() );
             if( !pNewTC2 )
-                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_tc2 );
+                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_tc2 );
         }
     }
-    if( msg.m.oid_maintenancePresent )
+    if( msg.has_oid_maintenance()  )
     {
         bNewMaintenanceSuperior = true;
-        if( msg.oid_maintenance != 0 )
+        if( msg.oid_maintenance() != 0 )
         {
-            pNewMaintenanceSuperior = GetLogisticAutomate( msg.oid_maintenance );
+            pNewMaintenanceSuperior = GetLogisticAutomate( msg.oid_maintenance() );
             if( !pNewMaintenanceSuperior )
-                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_maintenance );
+                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_maintenance );
         }
     }
-    if( msg.m.oid_santePresent )
+    if( msg.has_oid_sante()  )
     {
         bNewMedicalSuperior = true;
-        if( msg.oid_sante != 0 )
+        if( msg.oid_sante() != 0 )
         {
-            pNewMedicalSuperior = GetLogisticAutomate( msg.oid_sante );
+            pNewMedicalSuperior = GetLogisticAutomate( msg.oid_sante() );
             if( !pNewMedicalSuperior )
-                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_sante );
+                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_sante );
         }
     }
-    if( msg.m.oid_ravitaillementPresent )
+    if( msg.has_oid_ravitaillement()  )
     {
         bNewSupplySuperior = true;
-        if( msg.oid_ravitaillement != 0 )
+        if( msg.oid_ravitaillement() != 0 )
         {
-            pNewSupplySuperior = GetLogisticAutomate( msg.oid_ravitaillement );
+            pNewSupplySuperior = GetLogisticAutomate( msg.oid_ravitaillement() );
             if( !pNewSupplySuperior )
-                throw NET_AsnException< ASN1T_EnumChangeHierarchyErrorCode >( EnumChangeHierarchyErrorCode::error_invalid_automate_ravitaillement );
+                throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_ravitaillement );
         }
     }
 
@@ -943,23 +948,18 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const ASN1T_MsgAutomatCha
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSupplyChangeQuotas& asnMsg )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& asnMsg )
 {
-    if( !pSupplySuperior_ || GetLogisticAutomate( asnMsg.oid_donneur ) != pSupplySuperior_ )
-        throw NET_AsnException< ASN1T_MsgLogSupplyChangeQuotasAck >( MsgLogSupplyChangeQuotasAck::error_invalid_donneur );
+    if( !pSupplySuperior_ || GetLogisticAutomate( asnMsg.oid_donneur() ) != pSupplySuperior_ )
+        throw NET_AsnException< MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas);
 
-    for( uint i = 0; i < asnMsg.quotas.n; ++i )
-    {
-        ASN1T_DotationQuota& asnQuota = asnMsg.quotas.elem[ i ];
-
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnQuota.ressource_id );
-        if( pDotationCategory )
+    for( int i = 0; i < asnMsg.quotas().elem_size(); ++i )
+        if( const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnMsg.quotas().elem( i ).ressource_id() ) )
         {
             sDotationQuota& dotationQuota = stockQuotas_[ pDotationCategory ];
-            dotationQuota.rQuota_          = asnQuota.quota_disponible;
-            dotationQuota.rQuotaThreshold_ = asnQuota.quota_disponible * 0.1; //$$ fichier de conf cpp ;)
+            dotationQuota.rQuota_          = asnMsg.quotas().elem( i ).quota_disponible();
+            dotationQuota.rQuotaThreshold_ = asnMsg.quotas().elem( i ).quota_disponible() * 0.1; //$$ fichier de conf cpp ;)
         }
-    }
     bQuotasHaveChanged_ = true;
 }
 
@@ -967,13 +967,13 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const ASN1T_MsgLogSuppl
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyPushFlow& asnMsg )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::MsgLogSupplyPushFlow& asnMsg )
 {
-    MIL_AutomateLOG* pSupplier = GetLogisticAutomate( asnMsg.oid_donneur );
+    MIL_AutomateLOG* pSupplier = GetLogisticAutomate( asnMsg.oid_donneur() );
     if( !pSupplier )
-        throw NET_AsnException< ASN1T_MsgLogSupplyPushFlowAck >( MsgLogSupplyPushFlowAck::error_invalid_donneur );
+        throw NET_AsnException< MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
 
-    PHY_SupplyStockRequestContainer supplyRequests( *this, asnMsg.stocks );
+    PHY_SupplyStockRequestContainer supplyRequests( *this, asnMsg.stocks() );
 
     PHY_SupplyStockState* pSupplyState = 0;
     supplyRequests.Execute( *pSupplier, pSupplyState );
@@ -987,33 +987,33 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const ASN1T_MsgLogSupplyPus
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::SendLogisticLinks() const
 {
-    NET_ASN_MsgAutomatChangeLogisticLinks asn;
+    client::AutomatChangeLogisticLinks asn;
 
-    asn().oid = GetID();
+    asn().set_oid( GetID() );
 
     if( GetTC2() )
     {
-        asn().m.oid_tc2Present = 1;
-        asn().oid_tc2          = GetTC2()->GetID();
+//        asn().set_oid_tc2Present( 1 );
+        asn().set_oid_tc2( GetTC2()->GetID() );
     }
 
     if( pMaintenanceSuperior_ )
     {
-        asn().m.oid_maintenancePresent = 1;
-        asn().oid_maintenance          = pMaintenanceSuperior_->GetID();
+//        asn().set_oid_maintenancePresent( 1 );
+        asn().set_oid_maintenance( pMaintenanceSuperior_->GetID() );
     }
     if( pMedicalSuperior_ )
     {
-        asn().m.oid_santePresent = 1;
-        asn().oid_sante          = pMedicalSuperior_->GetID();
+//        asn().set_oid_santePresent( 1 );
+        asn().set_oid_sante( pMedicalSuperior_->GetID() );
     }
     if( pSupplySuperior_ )
     {
-        asn().m.oid_ravitaillementPresent = 1;
-        asn().oid_ravitaillement          = pSupplySuperior_->GetID();
+//        asn().set_oid_ravitaillementPresent( 1 );
+        asn().set_oid_ravitaillement( pSupplySuperior_->GetID() );
     }
 
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

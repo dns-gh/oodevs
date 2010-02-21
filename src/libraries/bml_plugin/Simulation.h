@@ -10,7 +10,10 @@
 #ifndef __Simulation_h_
 #define __Simulation_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace plugins
 {
@@ -35,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgControlEndTick& message );
+    void Update( const MsgControlEndTick& message );
     //@}
 
     //! @name Accessors

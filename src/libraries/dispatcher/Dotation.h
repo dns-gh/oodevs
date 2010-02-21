@@ -10,7 +10,15 @@
 #ifndef __Dotation_h_
 #define __Dotation_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    class MsgDotationStock;
+}
+
+namespace MsgsSimToClient
+{
+    class ResourceDotations_ResourceDotation;
+}
 
 namespace dispatcher
 {
@@ -26,17 +34,17 @@ class Dotation
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Dotation( const ASN1T_ResourceDotations& asnMsg );
-    explicit Dotation( const ASN1T_DotationStock    & asnMsg );
+    explicit Dotation( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg );
+    explicit Dotation( const Common::MsgDotationStock    & asnMsg );
     virtual ~Dotation();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_ResourceDotations& asnMsg );
-    void Update( const ASN1T_DotationStock& asnMsg );
-    void Send  ( ASN1T_ResourceDotations& asnMsg ) const ;
-    void Send  ( ASN1T_DotationStock& asnMsg ) const ;
+    void Update( const MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg );
+    void Update( const Common::MsgDotationStock& asnMsg );
+    void Send  ( MsgsSimToClient::ResourceDotations_ResourceDotation& asnMsg ) const ;
+    void Send  ( Common::MsgDotationStock& asnMsg ) const ;
     //@}
 
 private:

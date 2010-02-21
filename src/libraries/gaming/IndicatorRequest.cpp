@@ -10,8 +10,12 @@
 #include "gaming_pch.h"
 #include "IndicatorRequest.h"
 #include "IndicatorDefinition_ABC.h"
-#include "game_asn/AarSenders.h"
+
 #include "clients_kernel/Controller.h"
+#include "protocol/AarSenders.h"
+#include "protocol/Protocol.h"
+
+using namespace MsgsClientToAar;
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorRequest constructor
@@ -52,23 +56,24 @@ void IndicatorRequest::Commit() const
 {
     aar::PlotRequest message;
     const std::string request = definition_.Commit( parameters_ );
-    message().identifier = reinterpret_cast< int >( this );
-    message().request = request.c_str();
-    message.Send( publisher_ );
+    message().set_identifier( reinterpret_cast< int >( this ) );
+    message().set_request( request.c_str() );
+    message.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: IndicatorRequest::Update
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void IndicatorRequest::Update( const ASN1T_MsgPlotResult& message )
+void IndicatorRequest::Update( const MsgsAarToClient::MsgPlotResult& message )
 {
-    if( message.identifier == reinterpret_cast< int >( this ) )
+    if( message.identifier() == reinterpret_cast< int >( this ) )
     {
         done_ = true;
-        result_.resize( message.values.n );
-        std::copy( message.values.elem, message.values.elem + message.values.n, result_.begin() );
-        error_ = message.error;
+        result_.resize( message.values_size() );
+        for ( int i = 0; i < message.values_size(); ++i )
+            result_.push_back( message.values(i) );
+        error_ = message.error();
         controller_.Update( *this );
     }
 }
@@ -77,13 +82,14 @@ void IndicatorRequest::Update( const ASN1T_MsgPlotResult& message )
 // Name: IndicatorRequest::Update
 // Created: SBO 2009-06-11
 // -----------------------------------------------------------------------------
-void IndicatorRequest::Update( const ASN1T_MsgIndicator& message )
+void IndicatorRequest::Update( const MsgsAarToClient::MsgIndicator& message )
 {
     if( !IsFailed() )
-        newValues_.push_back( message.value );
+        newValues_.push_back( message.value() );
     if( IsDone() )
     {
-        std::copy( newValues_.begin(), newValues_.end(), std::back_inserter( result_ ) );
+        for (std::vector< double>::iterator iter = newValues_.begin(); iter != newValues_.end(); ++iter )
+            result_.push_back( *iter );
         newValues_.clear();
     }
     controller_.Update( *this );

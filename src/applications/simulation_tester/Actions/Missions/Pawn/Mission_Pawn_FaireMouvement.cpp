@@ -43,9 +43,9 @@ void Mission_Pawn_FaireMouvement::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_FaireMouvement& asnMission = *new ASN1T_Mission_Pion_FaireMouvement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_faire_mouvement;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_faire_mouvement = &asnMission;
+    Mission_Pion_FaireMouvement& asnMission = *new Mission_Pion_FaireMouvement();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_faire_mouvement = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_FaireMouvement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_FaireMouvement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_faire_mouvement );
-    ASN1T_Mission_Pion_FaireMouvement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_faire_mouvement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_faire_mouvement ());
+    Mission_Pion_FaireMouvement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_faire_mouvement;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

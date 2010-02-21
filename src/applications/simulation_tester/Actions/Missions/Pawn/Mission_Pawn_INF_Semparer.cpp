@@ -43,9 +43,9 @@ void Mission_Pawn_INF_Semparer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_Semparer& asnMission = *new ASN1T_Mission_Pion_INF_Semparer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_semparer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_semparer = &asnMission;
+    Mission_Pion_INF_Semparer& asnMission = *new Mission_Pion_INF_Semparer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_semparer = &asnMission;
 
     const Position& objectif_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_INF_Semparer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_Semparer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_semparer );
-    ASN1T_Mission_Pion_INF_Semparer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_semparer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_semparer ());
+    Mission_Pion_INF_Semparer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_semparer;
 
     ASN_Tools::Delete( asnMission.objectif );
 

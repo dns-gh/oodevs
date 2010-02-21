@@ -93,9 +93,9 @@ void ScoresModel::ReadIndicator( xml::xistream& xis )
 // Name: ScoresModel::Update
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-void ScoresModel::Update( const ASN1T_MsgIndicator& message )
+void ScoresModel::Update( const MsgIndicator& message )
 {
-    T_Scores::const_iterator it = scores_.find( message.name );
+    T_Scores::const_iterator it = scores_.find( message.name() );
     if( it != scores_.end() )
         it->second->Update( message );
 }
@@ -104,7 +104,7 @@ void ScoresModel::Update( const ASN1T_MsgIndicator& message )
 // Name: ScoresModel::Update
 // Created: SBO 2009-08-21
 // -----------------------------------------------------------------------------
-void ScoresModel::Update( const ASN1T_MsgsSimToClient& message )
+void ScoresModel::Update( const MsgSimToClient& message )
 {
     BOOST_FOREACH( const std::vector< boost::shared_ptr< Task > >::value_type& task, tasks_ )
         task->Receive( message );
@@ -114,14 +114,14 @@ void ScoresModel::Update( const ASN1T_MsgsSimToClient& message )
 // Name: ScoresModel::RequestPlot
 // Created: SBO 2009-08-20
 // -----------------------------------------------------------------------------
-void ScoresModel::RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgPlotRequest& request )
+void ScoresModel::RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const MsgPlotRequest& request )
 {
-    if( boost::starts_with( request.request, "indicator://" ) )
+    if( boost::starts_with( request.request(), "indicator://" ) )
     {
-        const std::string name = boost::erase_head_copy< std::string >( request.request, 12 );
+        const std::string name = boost::erase_head_copy< std::string >( request.request(), 12 );
         T_Scores::const_iterator it = scores_.find( name );
         if( it != scores_.end() )
-            it->second->Send( publisher, request.identifier );
+            it->second->Send( publisher, request.identifier() );
     }
 }
 

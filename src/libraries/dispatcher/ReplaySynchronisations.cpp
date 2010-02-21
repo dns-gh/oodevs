@@ -12,7 +12,9 @@
 #include "Synchroniser.h"
 #include "ReplayModel_ABC.h"
 #include "clients_kernel/Entity_ABC.h"
+//#include "protocol/protocol.h"
 
+//using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -100,37 +102,37 @@ void ReplaySynchronisations::DoUpdate()
         DoUpdate();\
     }
 
-DO_UPDATE( ASN1T_MsgUnitCreation );
-DO_UPDATE( ASN1T_MsgAutomatCreation );
-DO_UPDATE( ASN1T_MsgFormationCreation );
-DO_UPDATE( ASN1T_MsgKnowledgeGroupCreation );
-DO_UPDATE( ASN1T_MsgReport );
-DO_UPDATE( ASN1T_MsgTeamCreation );
-DO_UPDATE( ASN1T_MsgObjectCreation );
-DO_UPDATE( ASN1T_MsgLimaCreation );
-DO_UPDATE( ASN1T_MsgLimitCreation );
-DO_UPDATE( ASN1T_MsgPopulationCreation );
-DO_UPDATE( ASN1T_MsgPopulationConcentrationCreation );
-DO_UPDATE( ASN1T_MsgPopulationFlowCreation );
-DO_UPDATE( ASN1T_MsgIntelligenceCreation );
-DO_UPDATE( ASN1T_MsgUnitKnowledgeCreation );
-DO_UPDATE( ASN1T_MsgObjectKnowledgeCreation );
-DO_UPDATE( ASN1T_MsgPopulationKnowledgeCreation );
-DO_UPDATE( ASN1T_MsgPopulationConcentrationKnowledgeCreation );
-DO_UPDATE( ASN1T_MsgPopulationFlowKnowledgeCreation );
-DO_UPDATE( ASN1T_MsgLogMaintenanceHandlingCreation );
-DO_UPDATE( ASN1T_MsgLogMedicalHandlingCreation );
-DO_UPDATE( ASN1T_MsgLogSupplyHandlingCreation );
-DO_UPDATE( ASN1T_MsgStartUnitFire );
-DO_UPDATE( ASN1T_MsgStartFireEffect );
-DO_UPDATE( ASN1T_MsgStartPopulationFire );
-DO_UPDATE( ASN1T_MsgUrbanKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgUnitCreation );
+DO_UPDATE( MsgsSimToClient::MsgAutomatCreation );
+DO_UPDATE( Common::MsgFormationCreation );
+DO_UPDATE( MsgsSimToClient::MsgKnowledgeGroupCreation );
+DO_UPDATE( MsgsSimToClient::MsgReport );
+DO_UPDATE( MsgsSimToClient::MsgTeamCreation );
+DO_UPDATE( MsgsSimToClient::MsgObjectCreation );
+DO_UPDATE( MsgsMessengerToClient::MsgLimaCreation );
+DO_UPDATE( MsgsMessengerToClient::MsgLimitCreation );
+DO_UPDATE( MsgsSimToClient::MsgPopulationCreation );
+DO_UPDATE( MsgsSimToClient::MsgPopulationConcentrationCreation );
+DO_UPDATE( MsgsSimToClient::MsgPopulationFlowCreation );
+DO_UPDATE( Common::MsgIntelligenceCreation );
+DO_UPDATE( MsgsSimToClient::MsgUnitKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgObjectKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgPopulationKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgPopulationFlowKnowledgeCreation );
+DO_UPDATE( MsgsSimToClient::MsgLogMaintenanceHandlingCreation );
+DO_UPDATE( MsgsSimToClient::MsgLogMedicalHandlingCreation );
+DO_UPDATE( MsgsSimToClient::MsgLogSupplyHandlingCreation );
+DO_UPDATE( MsgsSimToClient::MsgStartUnitFire );
+DO_UPDATE( MsgsSimToClient::MsgStartFireEffect );
+DO_UPDATE( MsgsSimToClient::MsgStartPopulationFire );
+DO_UPDATE( MsgsSimToClient::MsgUrbanKnowledgeCreation );
 
 // -----------------------------------------------------------------------------
 // Name: ReplaySynchronisations::DoUpdate
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-void ReplaySynchronisations::DoUpdate( const ASN1T_MsgChangeDiplomacy& )
+void ReplaySynchronisations::DoUpdate( const Common::MsgChangeDiplomacy& )
 {
     FlagUpdate();
 }
@@ -139,7 +141,7 @@ void ReplaySynchronisations::DoUpdate( const ASN1T_MsgChangeDiplomacy& )
 // Name: ReplaySynchronisations::DoUpdate
 // Created: SBO 2008-02-14
 // -----------------------------------------------------------------------------
-void ReplaySynchronisations::DoUpdate( const ASN1T_MsgChangeDiplomacyAck& )
+void ReplaySynchronisations::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& )
 {
     FlagUpdate();
 }

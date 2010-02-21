@@ -25,11 +25,11 @@
 
 struct PHY_Convoy_ABC::LoadingWrapper
 {
-    void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< uint, MT_Float >& upperBound )
+    void ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< unsigned int, MT_Float >& upperBound )
     {
         PHY_Convoy_ABC::ReadInterpolatedTime( xis, data, upperBound );
     }
-    void ReadSpeedModifier( xml::xistream& xis, std::pair< uint, MT_Float >& upperBound )
+    void ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, MT_Float >& upperBound )
     {
         PHY_Convoy_ABC::ReadSpeedModifier( xis, upperBound );
     }
@@ -112,7 +112,7 @@ void PHY_Convoy_ABC::InitializeInterpolatedTime( xml::xistream& xis, const std::
     data.AddNewPoint( 0., 0. );
     LoadingWrapper loader;
 
-    std::pair< uint, MT_Float > upperBound( 0, 0.f );
+    std::pair< unsigned int, MT_Float > upperBound( 0, 0.f );
     xis >> xml::start( strTagName )
             >> xml::list( "unit-time", loader, &LoadingWrapper::ReadInterpolatedTime, data, upperBound )
         >> xml::end();
@@ -124,9 +124,9 @@ void PHY_Convoy_ABC::InitializeInterpolatedTime( xml::xistream& xis, const std::
 // Name: PHY_Convoy_ABC::ReadTime
 // Created: ABL 2007-07-24
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< uint, MT_Float >& upperBound )
+void PHY_Convoy_ABC::ReadInterpolatedTime( xml::xistream& xis, MT_InterpolatedFunction< MT_Float >& data, std::pair< unsigned int, MT_Float >& upperBound )
 {
-    uint     nNbrCamions;
+    unsigned int     nNbrCamions;
     MT_Float rTime;
 
     xis >> xml::attribute( "truck-count", nNbrCamions );
@@ -156,7 +156,7 @@ void PHY_Convoy_ABC::InitializeSpeedModificators( xml::xistream& xis )
     coefSpeedModificator_.AddNewPoint( 0., 0. );
     LoadingWrapper loader;
 
-    std::pair< uint, MT_Float > upperBound( 0, 0.f );
+    std::pair< unsigned int, MT_Float > upperBound( 0, 0.f );
 
     xis >> xml::start( "speed-modifiers" )
             >> xml::list( "speed-modifier", loader, &LoadingWrapper::ReadSpeedModifier, upperBound )
@@ -169,9 +169,9 @@ void PHY_Convoy_ABC::InitializeSpeedModificators( xml::xistream& xis )
 // Name: PHY_Convoy_ABC::ReadSpeedModifier
 // Created: ABL 2007-07-24
 // -----------------------------------------------------------------------------
-void PHY_Convoy_ABC::ReadSpeedModifier( xml::xistream& xis, std::pair< uint, MT_Float >& upperBound )
+void PHY_Convoy_ABC::ReadSpeedModifier( xml::xistream& xis, std::pair< unsigned int, MT_Float >& upperBound )
 {
-    uint     nNbrCamions;
+    unsigned int     nNbrCamions;
     MT_Float rValue;
 
     xis >> xml::attribute( "truck-count", nNbrCamions )
@@ -351,27 +351,27 @@ void PHY_Convoy_ABC::NotifyConveyorDestroyed( PHY_ComposantePion& composante )
 // Name: PHY_Convoy_ABC::GetFormingTime
 // Created: NLD 2005-12-14
 // -----------------------------------------------------------------------------
-uint PHY_Convoy_ABC::GetFormingTime() const
+unsigned int PHY_Convoy_ABC::GetFormingTime() const
 {
-    return (uint)( formingTime_( conveyors_.size() ) );
+    return (unsigned int)( formingTime_( conveyors_.size() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::GetLoadingTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-uint PHY_Convoy_ABC::GetLoadingTime() const
+unsigned int PHY_Convoy_ABC::GetLoadingTime() const
 {
-    return (uint)( loadingTime_( conveyors_.size() ) );
+    return (unsigned int)( loadingTime_( conveyors_.size() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Convoy_ABC::GetUnloadingTime
 // Created: NLD 2005-01-27
 // -----------------------------------------------------------------------------
-uint PHY_Convoy_ABC::GetUnloadingTime() const
+unsigned int PHY_Convoy_ABC::GetUnloadingTime() const
 {
-    return (uint)( unloadingTime_( conveyors_.size() ) );
+    return (unsigned int)( unloadingTime_( conveyors_.size() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -390,7 +390,7 @@ MT_Float PHY_Convoy_ABC::ModifySpeed( MT_Float rSpeed ) const
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_Convoy_ABC::serialize( Archive& file, const uint )
+void PHY_Convoy_ABC::serialize( Archive& file, const unsigned int )
 {
     file & const_cast< PHY_SupplyConsign_ABC*& >( pConsign_ )
          & conveyors_;

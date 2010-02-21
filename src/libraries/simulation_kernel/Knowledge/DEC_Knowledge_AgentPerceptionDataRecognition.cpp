@@ -48,7 +48,7 @@ DEC_Knowledge_AgentPerceptionDataRecognition::~DEC_Knowledge_AgentPerceptionData
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> nTimeLastUpdate_
          >> rOperationalState_
@@ -57,7 +57,7 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive
          >> bIsPC_
          >> composantes_;
     
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pAgentType_ = MIL_AgentTypePion::Find( nID );
 }
@@ -66,9 +66,9 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::load( MIL_CheckPointInArchive
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerceptionDataRecognition::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_AgentPerceptionDataRecognition::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (uint)-1 );
+    unsigned agentType = ( pAgentType_ ? pAgentType_->GetID() : (unsigned int)-1 );
     file << nTimeLastUpdate_
          << rOperationalState_
          << rMajorOperationalState_
@@ -87,7 +87,7 @@ void DEC_Knowledge_AgentPerceptionDataRecognition::Update( const MIL_Agent_ABC& 
     if( perceptionLevel < PHY_PerceptionLevel::recognized_ )
         return;
 
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nTimeLastUpdate_ >= nCurrentTimeStep )
         return;
     nTimeLastUpdate_ = nCurrentTimeStep;
@@ -116,7 +116,7 @@ const MIL_Army_ABC* DEC_Knowledge_AgentPerceptionDataRecognition::GetArmy() cons
 // Name: DEC_Knowledge_AgentPerceptionDataRecognition::GetTimeLastUpdate
 // Created: NLD 2004-11-10
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_AgentPerceptionDataRecognition::GetTimeLastUpdate() const
+unsigned int DEC_Knowledge_AgentPerceptionDataRecognition::GetTimeLastUpdate() const
 {
     return nTimeLastUpdate_;
 }

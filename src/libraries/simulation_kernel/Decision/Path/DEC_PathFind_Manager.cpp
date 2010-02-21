@@ -31,7 +31,7 @@
 // Created: NLD 2003-08-14
 // -----------------------------------------------------------------------------
 DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
-    : nMaxComputationDuration_( std::numeric_limits< uint >::max() )
+    : nMaxComputationDuration_( std::numeric_limits< unsigned int >::max() )
     , rDistanceThreshold_     ( 0. )
     , treatedRequests_        ( 0 )
 {
@@ -95,7 +95,7 @@ void DEC_PathFind_Manager::StartCompute( boost::shared_ptr< DEC_Path_ABC > path 
 // Name: DEC_PathFind_Manager::GetNbrShortRequests
 // Created: NLD 2005-04-01
 // -----------------------------------------------------------------------------
-uint DEC_PathFind_Manager::GetNbrShortRequests() const
+unsigned int DEC_PathFind_Manager::GetNbrShortRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
     return shortRequests_.size();
@@ -105,7 +105,7 @@ uint DEC_PathFind_Manager::GetNbrShortRequests() const
 // Name: DEC_PathFind_Manager::GetNbrLongRequests
 // Created: NLD 2005-04-01
 // -----------------------------------------------------------------------------
-uint DEC_PathFind_Manager::GetNbrLongRequests() const
+unsigned int DEC_PathFind_Manager::GetNbrLongRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
     return longRequests_.size();
@@ -115,7 +115,7 @@ uint DEC_PathFind_Manager::GetNbrLongRequests() const
 // Name: DEC_PathFind_Manager::GetNbrTreatedRequests
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-uint DEC_PathFind_Manager::GetNbrTreatedRequests() const
+unsigned int DEC_PathFind_Manager::GetNbrTreatedRequests() const
 {
     return treatedRequests_;
 }
@@ -124,7 +124,7 @@ uint DEC_PathFind_Manager::GetNbrTreatedRequests() const
 // Name: DEC_PathFind_Manager::GetNbrRequests
 // Created: AGE 2005-05-10
 // -----------------------------------------------------------------------------
-uint DEC_PathFind_Manager::GetNbrRequests() const
+unsigned int DEC_PathFind_Manager::GetNbrRequests() const
 {
     boost::mutex::scoped_lock locker( mutex_ );
     return longRequests_.size() + shortRequests_.size();

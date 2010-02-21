@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "MedicalPriorities.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -30,11 +31,11 @@ MedicalPriorities::MedicalPriorities( const OrderParameter& parameter )
 // Name: MedicalPriorities constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-MedicalPriorities::MedicalPriorities( const OrderParameter& parameter, const ASN1T_LogMedicalPriorities& asn )
+MedicalPriorities::MedicalPriorities( const OrderParameter& parameter, const Common::MsgLogMedicalPriorities& message )
     : Parameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddMedicalPriority( E_HumanWound( asn.elem[i] ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddMedicalPriority( E_HumanWound( message.elem().Get(i) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,29 +78,23 @@ void MedicalPriorities::AddMedicalPriority( E_HumanWound value )
 // Name: MedicalPriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MedicalPriorities::CommitTo( ASN1T_MissionParameter& asn ) const
+void MedicalPriorities::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_logMedicalPriorities;
-    ASN1T_LogMedicalPriorities*& list = asn.value.u.logMedicalPriorities = new ASN1T_LogMedicalPriorities();
-    list->n = priorities_.size();
+    message.set_null_value( !IsSet() );
+    Common::MsgLogMedicalPriorities* list = message.mutable_value()->mutable_logmedicalpriorities();
     if( IsSet() )
-    {
-        list->elem = new ASN1T_EnumHumanWound[ list->n ];
         for( unsigned int i = 0; i < priorities_.size(); ++i )
-            list->elem[i] = ASN1T_EnumHumanWound( priorities_.at( i ) );
-    }
+            list->add_elem( Common::EnumHumanWound( priorities_.at( i ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MedicalPriorities::Clean
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MedicalPriorities::Clean( ASN1T_MissionParameter& asn ) const
+void MedicalPriorities::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.logMedicalPriorities )
-        delete[] asn.value.u.logMedicalPriorities->elem;
-    delete asn.value.u.logMedicalPriorities;
+    if( message.value().has_logmedicalpriorities() )
+        message.mutable_value()->clear_logmedicalpriorities();
 }
 
 // -----------------------------------------------------------------------------

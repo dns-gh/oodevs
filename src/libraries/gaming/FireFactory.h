@@ -10,7 +10,10 @@
 #ifndef __FireFactory_h_
 #define __FireFactory_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 class Fire_ABC;
 class Model;
 
@@ -32,8 +35,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual Fire_ABC* CreateFire( const ASN1T_MsgStartUnitFire& asnMsg );
-    virtual Fire_ABC* CreateFire( const ASN1T_MsgStartPopulationFire& asnMsg );
+    virtual Fire_ABC* CreateFire( const MsgsSimToClient::MsgStartUnitFire& message );
+    virtual Fire_ABC* CreateFire( const MsgsSimToClient::MsgStartPopulationFire& message );
     //@}
 
 private:

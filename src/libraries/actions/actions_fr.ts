@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>Location %1</source>
-        <translation>Position %1</translation>
+        <translation type="unfinished">Position %1</translation>
     </message>
     <message>
         <source>Object knowledge not found.</source>

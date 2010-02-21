@@ -43,9 +43,9 @@ void Mission_Pawn_JOINT_AIR_EffectuerRaid::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_JOINT_AIR_EffectuerRaid& asnMission = *new ASN1T_Mission_Pion_JOINT_AIR_EffectuerRaid();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_joint_air_effectuer_raid;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_joint_air_effectuer_raid = &asnMission;
+    Mission_Pion_JOINT_AIR_EffectuerRaid& asnMission = *new Mission_Pion_JOINT_AIR_EffectuerRaid();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_joint_air_effectuer_raid = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
@@ -64,8 +64,8 @@ void Mission_Pawn_JOINT_AIR_EffectuerRaid::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_JOINT_AIR_EffectuerRaid::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_joint_air_effectuer_raid );
-    ASN1T_Mission_Pion_JOINT_AIR_EffectuerRaid& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_joint_air_effectuer_raid;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_joint_air_effectuer_raid ());
+    Mission_Pion_JOINT_AIR_EffectuerRaid& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_joint_air_effectuer_raid;
 
     ASN_Tools::Delete( asnMission.itineraire );
     ASN_Tools::Delete( asnMission.zone );

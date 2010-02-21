@@ -11,8 +11,12 @@
 #define __ActionParameterMaintenancePriorities_h_
 
 #include "Parameter.h"
-#include "game_asn/Simulation.h"
 #include "tools/Resolver_ABC.h"
+
+namespace Common
+{
+    class MsgLogMaintenancePriorities;
+}
 
 namespace kernel
 {
@@ -35,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MaintenancePriorities( const kernel::OrderParameter& parameter );
-             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const ASN1T_LogMaintenancePriorities& asn );
+             MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Common::MsgLogMaintenancePriorities& message );
              MaintenancePriorities( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, xml::xistream& xis );
     virtual ~MaintenancePriorities();
     //@}
@@ -43,9 +47,9 @@ public:
     //! @name Operations
     //@{
     void AddPriority( const kernel::EquipmentType& value );
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void CommitTo( std::string& content ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     virtual bool IsSet() const;
     //@}
 

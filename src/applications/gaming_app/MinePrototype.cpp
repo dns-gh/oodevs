@@ -9,13 +9,15 @@
 
 #include "gaming_app_pch.h"
 #include "MinePrototype.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: MinePrototype constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MinePrototype::MinePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg )
+MinePrototype::MinePrototype( QWidget* parent, MagicActionCreateObject& msg )
     : MinePrototype_ABC( parent )
     , msg_ ( msg )
 {

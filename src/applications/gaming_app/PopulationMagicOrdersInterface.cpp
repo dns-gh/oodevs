@@ -18,9 +18,11 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "gaming/StaticModel.h"
-#include "game_asn/SimulationSenders.h"
 #include "gaming/tools.h"
+#include "protocol/simulationsenders.h"
 
+
+using namespace Common;
 using namespace kernel;
 using namespace gui;
 
@@ -139,10 +141,10 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
 {
     if( selectedEntity_ )
     {
-        simulation::PopulationMagicAction asn;
-        asn().oid      = selectedEntity_->GetId();
-        asn().action.t = T_MsgPopulationMagicAction_action_destruction_totale;
-        asn.Send( publisher_ );
+        simulation::PopulationMagicAction magicAction;
+        magicAction().set_oid( selectedEntity_->GetId() );
+        //magicAction.action().t ( T_MsgPopulationMagicAction_action_destruction_totale;
+        magicAction.Send( publisher_ );
     }
 }
 
@@ -155,11 +157,10 @@ void PopulationMagicOrdersInterface::KillSomePopulation()
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
-            simulation::PopulationMagicAction asn;
-            asn().oid           = selectedEntity_->GetId();
-            asn().action.t      = T_MsgPopulationMagicAction_action_tuer;
-            asn().action.u.tuer = editor->text().toUInt();
-            asn.Send( publisher_ );
+            simulation::PopulationMagicAction magicAction;
+            magicAction().set_oid( selectedEntity_->GetId() );
+            magicAction().mutable_action()->mutable_tuer()->set_kill( editor->text().toUInt() );
+            magicAction.Send( publisher_ );
         }
 }
 
@@ -172,11 +173,10 @@ void PopulationMagicOrdersInterface::ResurectSomePopulation()
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
-            simulation::PopulationMagicAction asn;
-            asn().oid                  = selectedEntity_->GetId();
-            asn().action.t             = T_MsgPopulationMagicAction_action_ressusciter;
-            asn().action.u.ressusciter = editor->text().toUInt();
-            asn.Send( publisher_ );
+            simulation::PopulationMagicAction magicAction;
+            magicAction().set_oid( selectedEntity_->GetId() );
+            magicAction().mutable_action()->mutable_ressusciter()->set_resurrect( editor->text().toUInt() );
+            magicAction.Send( publisher_ );
         }
 }
 
@@ -188,16 +188,14 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
 {
     if( selectedEntity_ )
     {
-        simulation::PopulationMagicAction asn;
-        asn().oid      = selectedEntity_->GetId();
-        asn().action.t = T_MsgPopulationMagicAction_action_change_attitude;
+        simulation::PopulationMagicAction magicAction;
+        magicAction().set_oid( selectedEntity_->GetId() );
+        MsgMagicActionPopulationChangeAttitude params;
+        params.set_attitude( ( EnumPopulationAttitude )index );
 
-        ASN1T_MagicActionPopulationChangeAttitude params;
-        params.attitude       = (ASN1T_EnumPopulationAttitude)index;
-        params.beneficiaire.t = T_MagicActionPopulationChangeAttitude_beneficiaire_global;
 
-        asn().action.u.change_attitude = &params;
-        asn.Send( publisher_ );
+        *magicAction().mutable_action()->mutable_change_attitude() = params;
+        magicAction.Send( publisher_ );
     }
 }
 
@@ -233,12 +231,12 @@ void PopulationMagicOrdersInterface::VisitPoint( const geometry::Point2f& point 
 {
     if( selectedEntity_ )
     {
-        ASN1T_CoordLatLong utm;
+        MsgCoordLatLong utm;
         static_.coordinateConverter_.ConvertToGeo( point, utm );
         simulation::PopulationMagicAction message;
-        message().oid = selectedEntity_->GetId();
-        message().action.t = T_MsgPopulationMagicAction_action_move_to;
-        message().action.u.move_to = &utm;
+        message().set_oid( selectedEntity_->GetId() );
+
+        *message().mutable_action()->mutable_move_to()->mutable_coord() = utm;
         message.Send( publisher_, 56 );
         const_cast< Entity_ABC& >( *selectedEntity_ ).Update( message() );
     }

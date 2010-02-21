@@ -190,7 +190,7 @@ T_PositionVector& Testable_Entity::GetTestParam_PointList() const
 {
     T_PositionVector& points = *new T_PositionVector();
     // generate 5 points
-    for( uint i = 0; i < 4; ++i )
+    for( unsigned int i = 0; i < 4; ++i )
         points.push_back( &GetTestParam_Point() );
     return points;
 }
@@ -199,7 +199,7 @@ T_PositionVector& Testable_Entity::GetTestParam_PointList() const
 // Name: Testable_Entity::GetTestParam_Direction
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-uint Testable_Entity::GetTestParam_Direction() const
+unsigned int Testable_Entity::GetTestParam_Direction() const
 {
     return GetTestParam_Numeric( 0, 359 );
 }
@@ -235,7 +235,7 @@ bool Testable_Entity::GetTestParam_Bool() const
 // Name: Testable_Entity::GetTestParam_Enumeration
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-uint Testable_Entity::GetTestParam_Enumeration( uint nMin, uint nMax ) const
+unsigned int Testable_Entity::GetTestParam_Enumeration( unsigned int nMin, unsigned int nMax ) const
 {
     return GetTestParam_Numeric( nMin, nMax );
 }
@@ -248,7 +248,7 @@ int Testable_Entity::GetTestParam_Numeric( int nMin /* = 0 */, int nMax /* = std
 {
     if( nMin > nMax )
         return 0;
-    return ( uint )( rand() * ( double )( nMax - nMin ) / RAND_MAX ) + nMin;
+    return ( unsigned int )( rand() * ( double )( nMax - nMin ) / RAND_MAX ) + nMin;
 }
 
 // -----------------------------------------------------------------------------
@@ -293,7 +293,7 @@ T_LocationVector& Testable_Entity::GetTestParam_PolygonList() const
 // Name: Testable_Entity::GetTestParam_NatureAtlas
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
-uint Testable_Entity::GetTestParam_NatureAtlas() const
+unsigned int Testable_Entity::GetTestParam_NatureAtlas() const
 {
     // 12 atlas natures
     static int nAtlasNatures[ 12 ] = { 0x8000, 0x4000, 0x2000, 0x1000, 0x0800, 0x0400, 
@@ -305,7 +305,7 @@ uint Testable_Entity::GetTestParam_NatureAtlas() const
 // Name: Testable_Entity::GetTestParam_GDH
 // Created: SBO 2005-08-16
 // -----------------------------------------------------------------------------
-uint Testable_Entity::GetTestParam_GDH() const
+unsigned int Testable_Entity::GetTestParam_GDH() const
 {
     return time( 0 );
 }
@@ -329,7 +329,7 @@ T_IdVector& Testable_Entity::GetTestParam_MedicalPriorities() const
 // Name: Testable_Entity::GetTestParam_DotationDType
 // Created: NLD 2006-08-08
 // -----------------------------------------------------------------------------
-uint Testable_Entity::GetTestParam_DotationDType() const
+unsigned int Testable_Entity::GetTestParam_DotationDType() const
 {
     std::cerr << "[Testable_Entity::GetTestParam_DotationDType] Parameter type 'DotationDType' not set" << std::endl;
     return 0; //$$$$ TODO
@@ -342,9 +342,9 @@ uint Testable_Entity::GetTestParam_DotationDType() const
 T_IdVector& Testable_Entity::GetTestParam_Limas() const
 {
     T_IdVector& limas = *new T_IdVector();
-    for( uint i = 0; i < 10; ++i )
+    for( unsigned int i = 0; i < 10; ++i )
     {
-        uint nId = workspace_.GetTacticalLineManager().GetLimaByType( ( ASN1T_EnumLimaType )i );
+        unsigned int nId = workspace_.GetTacticalLineManager().GetLimaByType( ( EnumLimaType )i );
         if( nId )
             limas.push_back( nId );
     }

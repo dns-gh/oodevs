@@ -11,8 +11,8 @@
 #define __PHY_RoleHLA_Dotations_h_
 
 #include "PHY_RoleInterface_Dotations.h"
-class MIL_Entity_ABC;
 
+class MIL_Entity_ABC;
 
 namespace dotation
 {
@@ -29,7 +29,7 @@ class PHY_RoleHLA_Dotations : public PHY_RoleInterface_Dotations
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_RoleHLA_Dotations( MIL_Entity_ABC& entity );
+    explicit PHY_RoleHLA_Dotations( MIL_Entity_ABC& entity );
     virtual ~PHY_RoleHLA_Dotations();
     //@}
 
@@ -72,6 +72,12 @@ public:
     //@{
     virtual MT_Float AddFireReservation( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; }
     virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const { return 0; }
+    //@}
+
+    //! @name Network
+    //@{
+//    virtual void SendChangedState( client::UnitAttributes& asn ) const {};
+//    virtual void SendFullState   ( client::UnitAttributes& asn ) const {};
     //@}
 
     //! @name Logistic - Supply

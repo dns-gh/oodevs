@@ -45,7 +45,7 @@ void MIL_FragOrderType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 {
-    uint nID;
+    unsigned int nID;
     xis >> xml::attribute( "id", nID );
 
     const MIL_FragOrderType*& pMission = missionIDs_[ nID ];
@@ -63,7 +63,7 @@ void MIL_FragOrderType::ReadFragorder( xml::xistream& xis )
 // Name: MIL_FragOrderType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_FragOrderType::MIL_FragOrderType( uint nID, xml::xistream& xis )
+MIL_FragOrderType::MIL_FragOrderType( unsigned int nID, xml::xistream& xis )
     : MIL_OrderType_ABC        ( nID, xis )   
     , bAvailableWithoutMission_( false )
     , bAvailableForAllMissions_( false )
@@ -85,7 +85,7 @@ MIL_FragOrderType::~MIL_FragOrderType()
 // Name: MIL_FragOrderType::Find
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-const MIL_FragOrderType* MIL_FragOrderType::Find( uint nID )
+const MIL_FragOrderType* MIL_FragOrderType::Find( unsigned int nID )
 {
     CIT_MissionIDMap it = missionIDs_.find( nID );
     if( it == missionIDs_.end() )

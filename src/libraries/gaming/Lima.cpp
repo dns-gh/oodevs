@@ -9,11 +9,15 @@
 
 #include "gaming_pch.h"
 #include "Lima.h"
+#include "Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "game_asn/MessengerSenders.h"
-#include "Tools.h"
+#include "protocol/MessengerSenders.h"
+#include "protocol/Protocol.h"
+#include "protocol/Publisher_ABC.h"
+
+using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: Lima constructor
@@ -30,8 +34,8 @@ Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kern
 // Name: Lima constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MsgLimaCreation& asnMsg )
-    : TacticalLine_ABC( asnMsg.tactical_line.name, asnMsg.oid, publisher, converter )
+Lima::Lima( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter, const MsgsMessengerToClient::MsgLimaCreation& message )
+    : TacticalLine_ABC( QString( message.tactical_line().name().c_str() ) , message.oid(), publisher, converter )
     , controller_     ( controller )
 {
     controller_.Create( *(kernel::TacticalLine_ABC*)this );
@@ -58,28 +62,28 @@ void Lima::UpdateToSim( E_State state )
     case eStateCreated:
         {
             plugins::messenger::LimaCreationRequest message;
-            message().name = GetName();
-            WriteGeometry ( message().geometry );
-            WriteDiffusion( message().diffusion );
+            message().mutable_tacticalline()->set_name( GetName() );
+            WriteGeometry ( *message().mutable_tacticalline()->mutable_geometry() );
+            WriteDiffusion( *message().mutable_tacticalline()->mutable_diffusion() );
             Send( message );
-            delete[] message().geometry.coordinates.elem;
+            delete[] message().mutable_tacticalline()->mutable_geometry()->mutable_coordinates()->mutable_elem();
         }
         break;
     case eStateModified:
         {
             plugins::messenger::LimaUpdateRequest message;
-            message().oid = GetId();
-            message().tactical_line.name= GetName();
-            WriteGeometry ( message().tactical_line.geometry );
-            WriteDiffusion( message().tactical_line.diffusion );
+            message().set_oid( GetId() );
+            message().mutable_tactical_line()->set_name( GetName() );
+            WriteGeometry ( *message().mutable_tactical_line()->mutable_geometry() );
+            WriteDiffusion( *message().mutable_tactical_line()->mutable_diffusion() );
             Send( message );
-            delete[] message().tactical_line.geometry.coordinates.elem;
+            delete[] message().mutable_tactical_line()->mutable_geometry()->mutable_coordinates()->mutable_elem();
         }
         break;
     case eStateDeleted:
-        plugins::messenger::LimaDestructionRequest asnMsg;
-        asnMsg() = GetId();
-        Send( asnMsg );
+        plugins::messenger::LimaDestructionRequest message;
+        message().set_oid( GetId() );
+        Send( message );
         break;
     }
 }

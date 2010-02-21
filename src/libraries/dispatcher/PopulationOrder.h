@@ -12,8 +12,12 @@
 
 #include "Order_ABC.h"
 
-struct ASN1T_MsgUnitOrder;
-struct ASN1T_MsgPopulationOrder;
+
+namespace Common
+{
+    class MsgUnitOrder;
+    class MsgPopulationOrder; 
+}
 
 namespace dispatcher
 {
@@ -32,7 +36,7 @@ class PopulationOrder : public Order_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationOrder( Model_ABC& model, Population& population, const ASN1T_MsgPopulationOrder& asn );
+             PopulationOrder( Model_ABC& model, Population& population, const Common::MsgPopulationOrder& asn );
     virtual ~PopulationOrder();
     //@}
 

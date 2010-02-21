@@ -62,7 +62,7 @@ class ActionFactory_ABC;
 class ParameterFactory_ABC;
 class UrbanKnowledgeFactory;;
 class UrbanModel;
-class NotesModel;
+class NotesModel; // LTO
 
 // =============================================================================
 /** @class  Model
@@ -126,7 +126,7 @@ public:
     DrawingsModel&        drawings_;
     ScoreModel&           scores_;
     UrbanModel&           urbanObjects_;
-    NotesModel&           notes_;
+    NotesModel&           notes_;   // LTO
     //@}
 
 private:

@@ -12,6 +12,10 @@
 #ifndef __PHY_Experience_h_
 #define __PHY_Experience_h_
 
+namespace Common
+{
+    enum EnumUnitExperience;
+}
 
 namespace xml
 {
@@ -47,15 +51,15 @@ public:
     static       void            Initialize( xml::xistream& xis );
     static       void            Terminate ();
     static const PHY_Experience* Find      ( const std::string& strName );
-    static const PHY_Experience* Find      ( ASN1T_EnumUnitExperience nAsnID );
-    static const PHY_Experience* Find      ( uint nID );
+    static const PHY_Experience* Find      ( Common::EnumUnitExperience nAsnID );
+    static const PHY_Experience* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&             GetName                         () const;
-          uint                     GetID                           () const;
-          ASN1T_EnumUnitExperience GetAsnID                        () const;
+          unsigned int                     GetID                           () const;
+          Common::EnumUnitExperience GetAsnID                        () const;
           MT_Float                 GetWeight                       () const;
           MT_Float                 GetCoefMaxSpeedModificator      () const;
           MT_Float                 GetCoefReloadingTimeModificator () const;
@@ -82,7 +86,7 @@ private:
     //@}
 
 private:
-     PHY_Experience( const std::string& strName, E_ExperienceType nType, ASN1T_EnumUnitExperience nAsnID, MT_Float rDIAWeight );
+     PHY_Experience( const std::string& strName, E_ExperienceType nType, Common::EnumUnitExperience nAsnID, MT_Float rDIAWeight );
     ~PHY_Experience();
 
     //! @name Init
@@ -93,7 +97,7 @@ private:
 private:
     const std::string              strName_;
     const E_ExperienceType         nType_;
-    const ASN1T_EnumUnitExperience nAsnID_;
+    const Common::EnumUnitExperience nAsnID_;
     const MT_Float                 rDIAWeight_;
 
     MT_Float rCoefMaxSpeedModificator_;

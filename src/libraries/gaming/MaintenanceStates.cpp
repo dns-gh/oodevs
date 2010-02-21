@@ -56,36 +56,36 @@ void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) c
 // Name: MaintenanceStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void MaintenanceStates::DoUpdate( const ASN1T_MsgLogMaintenanceState& message )
+void MaintenanceStates::DoUpdate( const MsgsSimToClient::MsgLogMaintenanceState& message )
 {
-    if( message.m.chaine_activeePresent )
-        bChainEnabled_ = message.chaine_activee != 0;
-    if( message.m.regime_travailPresent )
-        nWorkRate_ = message.regime_travail + 1; // $$$$ AGE 2006-06-27: 
+    if( message.has_chaine_activee()  )
+        bChainEnabled_ = message.chaine_activee() != 0;
+    if( message.has_regime_travail()  )
+        nWorkRate_ = message.regime_travail() + 1; // $$$$ AGE 2006-06-27: 
 
-    if( message.m.prioritesPresent )
+    if( message.has_priorites()  )
     {
-        priorities_.resize( message.priorites.n );
-        for( uint i = 0; i < message.priorites.n; ++i )
-            priorities_[i] = & resolver_.Get( message.priorites.elem[i] );
+        priorities_.resize( message.priorites().elem_size() );
+        for( int i = 0; i < message.priorites().elem_size(); ++i )
+            priorities_[i] = & resolver_.Get( message.priorites().elem( i ).equipment() );
     }   
-    if( message.m.priorites_tactiquesPresent )
+    if( message.has_priorites_tactiques()  )
     {
-        tacticalPriorities_.resize( message.priorites_tactiques.n );
-        for( uint i = 0; i < message.priorites_tactiques.n; ++i )
-            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques.elem[i] );
+        tacticalPriorities_.resize( message.priorites_tactiques().elem_size() );
+        for( int i = 0; i < message.priorites_tactiques().elem_size(); ++i )
+            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques().elem( i ).oid() );
     }
-    if( message.m.disponibilites_remorqueursPresent )
+    if( message.has_disponibilites_remorqueurs()  )
     {
-        dispoHaulers_.resize( message.disponibilites_remorqueurs.n );
-        for( uint i = 0; i < message.disponibilites_remorqueurs.n; ++i )
-            dispoHaulers_[i] = Availability( resolver_, message.disponibilites_remorqueurs.elem[i] );
+        dispoHaulers_.resize( message.disponibilites_remorqueurs().elem_size() );
+        for( int i = 0; i < message.disponibilites_remorqueurs().elem_size(); ++i )
+            dispoHaulers_[i] = Availability( resolver_, message.disponibilites_remorqueurs().elem( i ) );
     }
-    if( message.m.disponibilites_reparateursPresent )
+    if( message.has_disponibilites_reparateurs()  )
     {
-        dispoRepairers_.resize( message.disponibilites_reparateurs.n );
-        for( uint i = 0; i < message.disponibilites_reparateurs.n; ++i )
-            dispoRepairers_[i] = Availability( resolver_, message.disponibilites_reparateurs.elem[i] );
+        dispoRepairers_.resize( message.disponibilites_reparateurs().elem_size() );
+        for( int i = 0; i < message.disponibilites_reparateurs().elem_size(); ++i )
+            dispoRepairers_[i] = Availability( resolver_, message.disponibilites_reparateurs().elem( i ) );
     }
 
     controller_.Update( *this );

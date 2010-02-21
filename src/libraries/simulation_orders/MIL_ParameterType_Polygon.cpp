@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_Polygon.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Polygon constructor
@@ -35,27 +35,23 @@ MIL_ParameterType_Polygon::~MIL_ParameterType_Polygon()
 // Name: MIL_ParameterType_Polygon::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_Polygon::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
+bool MIL_ParameterType_Polygon::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.value.t         = T_MissionParameter_value_polygon;
-    to.value.u.polygon = new ASN1T_Polygon();
-    to.null_value      = !from.ToPolygon( *to.value.u.polygon );
-
-    return !to.null_value || bIsOptional;
+    to.set_null_value( !from.ToPolygon( *to.mutable_value()->mutable_polygon() ) );
+    return !to.null_value() || bIsOptional;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Polygon::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_Polygon::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_Polygon::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_polygon );
-    assert( to.value.u.polygon );
-    ASN_Delete::Delete( *to.value.u.polygon );
-    delete to.value.u.polygon;    
+    assert( to.value().has_polygon() );
+    assert( to.mutable_value()->mutable_polygon() );
+    to.mutable_value()->clear_polygon();
+    delete to.mutable_value()->mutable_polygon();    
 }

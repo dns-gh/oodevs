@@ -134,13 +134,13 @@ void PHY_RoleHLA_Composantes::Deserialize( const AttributeIdentifier& attributeI
 {
     if( attributeID == "composantes" )
     {
-        typedef std::pair< std::string, uint32 > T_Composante;
+        typedef std::pair< std::string, unsigned long > T_Composante;
         std::vector< T_Composante > composantes;
         deserializer >> composantes;
         for( std::vector< T_Composante >::const_iterator it = composantes.begin(); it != composantes.end(); ++it )
         {
             const std::string& strComposanteName = it->first;
-            uint nComposantes = it->second;
+            unsigned int nComposantes = it->second;
             UpdateComposante( strComposanteName, nComposantes );
         }
     }
@@ -150,7 +150,7 @@ void PHY_RoleHLA_Composantes::Deserialize( const AttributeIdentifier& attributeI
 // Name: PHY_RoleHLA_Composantes::UpdateComposante
 // Created: AGE 2004-11-22
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::UpdateComposante( const std::string& strComposanteName, uint nComposantes )
+void PHY_RoleHLA_Composantes::UpdateComposante( const std::string& strComposanteName, unsigned int nComposantes )
 {
     for( CIT_Composantes it = composantes_.begin(); it != composantes_.end(); ++it )
     {
@@ -201,7 +201,7 @@ void PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired( PHY_Composante_ABC::T
 // Name: PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired( PHY_Composante_ABC::T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes /*= false*/ ) const
+void PHY_RoleHLA_Composantes::GetComposantesAbleToBeFired( PHY_Composante_ABC::T_ComposanteVector& targets, unsigned int nNbrFirer, bool bFireOnlyOnMajorComposantes /*= false*/ ) const
 {
     targets.clear();
     PHY_Composante_ABC::T_ComposanteVector availableTargets;

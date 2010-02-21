@@ -10,6 +10,7 @@
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_NatureAtlas.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_NatureAtlas constructor
@@ -34,26 +35,22 @@ MIL_ParameterType_NatureAtlas::~MIL_ParameterType_NatureAtlas()
 // Name: MIL_ParameterType_NatureAtlas::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_NatureAtlas::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_NatureAtlas::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value          = false;
-    to.value.t             = T_MissionParameter_value_atlasNature;
-    to.value.u.atlasNature = new ASN1T_AtlasNature();
-    
-    return from.ToNatureAtlas( *to.value.u.atlasNature );
+    to.set_null_value( false );
+    return from.ToNatureAtlas( *to.mutable_value()->mutable_atlasnature() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_NatureAtlas::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_NatureAtlas::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_NatureAtlas::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_atlasNature );
-    assert( to.value.u.atlasNature );
-    delete to.value.u.atlasNature;
+    assert( to.value().has_atlasnature() );
+    assert( to.mutable_value()->mutable_atlasnature() );
+    delete to.mutable_value()->mutable_atlasnature();
 }

@@ -10,7 +10,10 @@
 #ifndef __NET_Publisher_ABC_h_
 #define __NET_Publisher_ABC_h_
 
-#include "game_asn/Simulation.h"
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
 
 // =============================================================================
 /** @class  NET_Publisher_ABC
@@ -30,9 +33,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( ASN1T_MsgsSimToClient& ) = 0;
+    virtual void Send( MsgsSimToClient::MsgSimToClient& ) = 0;
 
-    static void SendAsnMessage( ASN1T_MsgsSimToClient& );
+    static void SendAsnMessage( MsgsSimToClient::MsgSimToClient& );
+    static NET_Publisher_ABC& Publisher();
     //@}
 };
 

@@ -27,7 +27,7 @@
 // Name: SIM_NetworkLogger constructor
 // Created: NLD 2004-02-11
 // -----------------------------------------------------------------------------
-SIM_NetworkLogger::SIM_NetworkLogger( uint nPort, uint nLogLevels, uint nLogLayers )
+SIM_NetworkLogger::SIM_NetworkLogger( unsigned int nPort, unsigned int nLogLevels, unsigned int nLogLayers )
     : MT_Logger_ABC( nLogLevels, nLogLayers )
     , sockets_   ()
     , io_service_() 

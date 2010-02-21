@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
+#include "protocol/SimulationSenders.h"
 #include "MineAttribute.h"
 
 using namespace dispatcher;
@@ -17,7 +17,7 @@ using namespace dispatcher;
 // Name: MineAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
+MineAttribute::MineAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , dotation_ ( 0 )
     , nPercentageMining_     ( 0 )
@@ -39,16 +39,16 @@ MineAttribute::~MineAttribute()
 // Name: MineAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void MineAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void MineAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if( asnMsg.m.minePresent )
+    if( asnMsg.has_mine()  )
     {
-        if ( asnMsg.mine.m.dotation_typePresent )
-            dotation_ = asnMsg.mine.dotation_type;
-        if ( asnMsg.mine.m.dotation_nbrPresent )
-            nNbrDotationForMining_ = asnMsg.mine.dotation_nbr;
-        if ( asnMsg.mine.m.percentagePresent )
-            nPercentageMining_ = asnMsg.mine.percentage;        
+        if ( asnMsg.mine().has_dotation_type()  )
+            dotation_ = asnMsg.mine().dotation_type();
+        if ( asnMsg.mine().has_dotation_nbr()  )
+            nNbrDotationForMining_ = asnMsg.mine().dotation_nbr();
+        if ( asnMsg.mine().has_percentage()  )
+            nPercentageMining_ = asnMsg.mine().percentage();        
     }
 }
 
@@ -56,25 +56,18 @@ void MineAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
 // Name: MineAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void MineAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void MineAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.m.minePresent = 1;
-
-    asnMsg.mine.m.dotation_typePresent = 1;
-    asnMsg.mine.dotation_type = dotation_;
-
-    asnMsg.mine.m.dotation_nbrPresent = 1;
-    asnMsg.mine.dotation_nbr = nNbrDotationForMining_;
-
-    asnMsg.mine.m.percentagePresent = 1;
-    asnMsg.mine.percentage = nPercentageMining_;
+    asnMsg.mutable_mine()->set_dotation_type( dotation_ );
+    asnMsg.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );
+    asnMsg.mutable_mine()->set_percentage( nPercentageMining_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MineAttribute::AsnDelete
+// Name: MineAttribute::Delete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void MineAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void MineAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
-//    delete asnMsg.u.mine_jam;
+
 }

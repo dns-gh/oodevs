@@ -12,6 +12,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -40,13 +41,13 @@ Paths::~Paths()
 // Name: Paths::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Paths::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
     static const float threshold      = 30.f * 30.f;
     static const float magicThreshold = 1000.f * 1000.f;
-    if( message.m.positionPresent )
+    if( message.has_position()  )
     {
-        const Point2f position = converter_.ConvertToXY( message.position );
+        const Point2f position = converter_.ConvertToXY( message.position() );
         if( previousPath_.empty() || previousPath_.back().SquareDistance( position ) > threshold )
         {
             if( pendingMagicMove_ && previousPath_.back().SquareDistance( position ) > magicThreshold )
@@ -66,13 +67,13 @@ void Paths::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // Name: Paths::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
+void Paths::DoUpdate( const MsgsSimToClient::MsgUnitPathFind& message )
 {
-    plannedPath_.clear(); plannedPath_.reserve( message.itineraire.coordinates.n );
+    plannedPath_.clear(); plannedPath_.reserve( message.itineraire().location().coordinates().elem_size() );
     plannedBox_ = Rectangle2f();
-    for( uint i = 0; i < message.itineraire.coordinates.n; ++i )
+    for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
     {
-        plannedPath_.push_back( converter_.ConvertToXY( message.itineraire.coordinates.elem[i] ) );
+        plannedPath_.push_back( converter_.ConvertToXY( message.itineraire().location().coordinates().elem(i) ) );
         plannedBox_.Incorporate( plannedPath_.back() );
     }
     UpdatePathfind();
@@ -82,7 +83,7 @@ void Paths::DoUpdate( const ASN1T_MsgUnitPathFind& message )
 // Name: Paths::DoUpdate
 // Created: AGE 2006-11-20
 // -----------------------------------------------------------------------------
-void Paths::DoUpdate( const ASN1T_MsgUnitMagicAction& /*message*/ )
+void Paths::DoUpdate( const MsgsClientToSim::MsgUnitMagicAction& /*message*/ )
 {
     pendingMagicMove_ = true;
 }

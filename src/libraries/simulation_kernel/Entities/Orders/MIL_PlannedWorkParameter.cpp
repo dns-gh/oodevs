@@ -16,8 +16,8 @@
 // Name: MIL_PlannedWorkParameter constructor
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const ASN1T_PlannedWork & asn, const MIL_EntityManager_ABC& entityManager )
-: pGenObject_( new DEC_Gen_Object( asn, entityManager ) )
+MIL_PlannedWorkParameter::MIL_PlannedWorkParameter( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager )
+    : pGenObject_( new DEC_Gen_Object( asn, entityManager ) )
 {
     // NOTHING
 }
@@ -44,7 +44,7 @@ bool MIL_PlannedWorkParameter::IsOfType( const MIL_ParameterType_ABC& type ) con
 // Name: MIL_PlannedWorkParameter::ToGenObject
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-bool MIL_PlannedWorkParameter::ToGenObject( ASN1T_PlannedWork& asn ) const
+bool MIL_PlannedWorkParameter::ToGenObject( Common::MsgPlannedWork& asn ) const
 {
     pGenObject_->Serialize( asn );
     return true;

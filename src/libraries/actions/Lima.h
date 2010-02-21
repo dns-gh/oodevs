@@ -11,7 +11,11 @@
 #define __ActionParameterLima_h_
 
 #include "Parameter.h"
-#include "game_asn/Simulation.h"
+
+namespace Common
+{
+    class MsgLimaOrder;
+}
 
 namespace kernel
 {
@@ -37,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn );
+             Lima( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLimaOrder& message );
              Lima( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Lima();
     //@}
@@ -48,8 +52,8 @@ public:
     virtual void DisplayTooltip( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DisplayInToolTip( kernel::Displayer_ABC& displayer ) const;
 
-    void CommitTo( ASN1T_LimaOrder& asn ) const;
-    void Clean( ASN1T_LimaOrder& asn ) const;
+    void CommitTo( Common::MsgLimaOrder& message ) const;
+    void Clean( Common::MsgLimaOrder& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

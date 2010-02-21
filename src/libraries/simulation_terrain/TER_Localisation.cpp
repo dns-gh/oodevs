@@ -839,7 +839,7 @@ void TER_Localisation::GetPointsClippedBetweenTwoLines( const MT_Droite& leftDro
 // Name: TER_Localisation::Split
 // Created: NLD 2003-08-22
 // -----------------------------------------------------------------------------
-void TER_Localisation::Split( uint nNbrParts, T_LocalisationPtrVector& locVector ) const
+void TER_Localisation::Split( unsigned int nNbrParts, T_LocalisationPtrVector& locVector ) const
 {
     if( nNbrParts == 0 )
         locVector.clear();
@@ -852,7 +852,7 @@ void TER_Localisation::Split( uint nNbrParts, T_LocalisationPtrVector& locVector
 
     else if( nType_ == ePoint )
     {
-        for( uint i = 0; i < nNbrParts; ++i )
+        for( unsigned int i = 0; i < nNbrParts; ++i )
         {
             boost::shared_ptr< TER_Localisation > pLocalisation( new TER_Localisation() ); //$$$ RAM
             pLocalisation->Reset( *pointVector_.begin() );
@@ -864,7 +864,7 @@ void TER_Localisation::Split( uint nNbrParts, T_LocalisationPtrVector& locVector
     {
         assert( false );
 //        MT_Float rLineLength = polyline_.Magnitude();
-//        for( uint i = 0; i < nNbrParts; ++i )
+//        for( unsigned int i = 0; i < nNbrParts; ++i )
 //        {
 //            TER_Localisation* pLocalisation = new TER_Localisation(); //$$$ RAM
 //            pLocalisation->Reset( *pointVector_.begin() );
@@ -882,7 +882,7 @@ void TER_Localisation::Split( uint nNbrParts, T_LocalisationPtrVector& locVector
         MT_Vector2D vDir( 0, 1 );
         MT_Float rAngle = 2. * MT_PI / nNbrParts;
         droiteVector.push_back( MT_Droite( vBarycenter, vDir + vBarycenter ) );
-        for( uint i = 0; i < nNbrParts; ++i )
+        for( unsigned int i = 0; i < nNbrParts; ++i )
         {
             vDir.Rotate( rAngle );
             droiteVector.push_back( MT_Droite( vBarycenter, vDir + vBarycenter ) );

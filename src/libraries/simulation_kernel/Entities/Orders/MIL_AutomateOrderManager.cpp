@@ -10,9 +10,7 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_AutomateOrderManager.h"
-
 #include "MIL_PionMission.h"
-
 #include "MIL_AutomateMissionType.h"
 #include "MIL_AutomateMission.h"
 #include "MIL_FragOrderType.h"
@@ -24,8 +22,8 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
-
 #include "Network/NET_AsnException.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor
@@ -55,19 +53,19 @@ MIL_AutomateOrderManager::~MIL_AutomateOrderManager()
 // Name: MIL_AutomateOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::OnReceiveMission( const ASN1T_MsgAutomatOrder& asnMsg )
+void MIL_AutomateOrderManager::OnReceiveMission( const Common::MsgAutomatOrder& asnMsg )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( !automate_.IsEngaged() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_cannot_receive_order );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
 
     if( automate_.IsSurrendered() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_surrendered );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
 
     // Instanciate and check the new mission
-    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::Find( asnMsg.mission );
+    const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::Find( asnMsg.mission() );
     if( !pMissionType || !automate_.GetType().GetModel().IsMissionAvailable( *pMissionType ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
 
     MIL_AutomateMission* pMission = new MIL_AutomateMission( *pMissionType, automate_, asnMsg );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
@@ -87,20 +85,20 @@ void MIL_AutomateOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type
 // Name: MIL_AutomateOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn )
+void MIL_AutomateOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn )
 {
     if( automate_.IsSurrendered() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_surrendered );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
 
     if( !automate_.IsEngaged() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_cannot_receive_order );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
 
-    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order );
+    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order() );
     if( !pType )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
 
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
 
     MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, automate_.GetRole<DEC_Representations>(), automate_.GetKnowledge(), asn );
     pFragOrder->Launch();

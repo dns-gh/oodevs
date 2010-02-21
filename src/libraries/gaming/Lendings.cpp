@@ -9,8 +9,9 @@
 
 #include "gaming_pch.h"
 #include "Lendings.h"
-#include "clients_kernel/Controller.h"
 #include "Loan.h"
+#include "clients_kernel/Controller.h"
+#include "protocol/Protocol.h" 
 
 using namespace kernel;
 
@@ -39,19 +40,19 @@ Lendings::~Lendings()
 // Name: Lendings::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Lendings::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Lendings::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( ! message.m.equipements_pretesPresent )
+    if( ! message.has_equipements_pretes()  )
         return;
 
     lendings_.clear();
-    lendings_.reserve( message.equipements_pretes.n );
-    for( unsigned int i = 0; i < message.equipements_pretes.n; ++i )
+    lendings_.reserve( message.equipements_pretes().elem_size() );
+    for( int i = 0; i < message.equipements_pretes().elem_size(); ++i )
     {
-        const ASN1T_LentEquipment& pret = message.equipements_pretes.elem[i];
-        lendings_.push_back( Loan( equipmentResolver_.Get( pret.type_equipement ),
-                                   resolver_.Get( pret.oid_pion_emprunteur ),
-                                   pret.nombre ) );
+        const MsgsSimToClient::LentEquipments_LentEquipment& pret = message.equipements_pretes().elem( i );
+        lendings_.push_back( Loan( equipmentResolver_.Get( pret.type_equipement() ),
+                                   resolver_.Get( pret.oid_pion_emprunteur() ),
+                                   pret.nombre() ) );
     }
     controller_.Update( *this );
 }

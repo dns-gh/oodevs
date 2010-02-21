@@ -27,12 +27,12 @@ const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( const std::string& s
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 inline
-const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( ASN1T_EquipmentType nAsnID )
+const PHY_ComposanteTypePion* PHY_ComposanteTypePion::Find( Common::MsgEquipmentType nAsnID )
 {
     for( CIT_ComposanteTypeMap it = composantesTypes_.begin(); it != composantesTypes_.end(); ++it )
     {
         const PHY_ComposanteTypePion& composanteType = *it->second;
-        if( composanteType.GetMosID() == nAsnID )
+        if( composanteType.GetMosID().equipment() == nAsnID.equipment() )
             return &composanteType;
     }
     return 0;
@@ -205,7 +205,7 @@ PHY_ComposanteTypePion::sNTICapability::sNTICapability()
     : pMaintenanceLevel_( 0 )
     , bMobility_        ( false )
     , bElectronic_      ( false )
-    , nMaxTime_         ( std::numeric_limits< uint >::max() )
+    , nMaxTime_         ( std::numeric_limits< unsigned int >::max() )
 {
 
 }
@@ -219,7 +219,7 @@ PHY_ComposanteTypePion::sNTICapability::sNTICapability( const PHY_MaintenanceLev
     : pMaintenanceLevel_( &maintenanceLevel )
     , bMobility_        ( false  )
     , bElectronic_      ( false )
-    , nMaxTime_         ( std::numeric_limits< uint >::max() )
+    , nMaxTime_         ( std::numeric_limits< unsigned int >::max() )
 {
 
 }
@@ -334,7 +334,7 @@ bool PHY_ComposanteTypePion::CanCollectCasualties() const
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
-uint PHY_ComposanteTypePion::GetAmbulanceCollectionCapacity() const
+unsigned int PHY_ComposanteTypePion::GetAmbulanceCollectionCapacity() const
 {
     return nAmbulanceCollectionCapacity_;
 }
@@ -364,7 +364,7 @@ MT_Float PHY_ComposanteTypePion::GetNbrHumansUnloadedForCollectionPerTimeStep() 
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 inline
-uint PHY_ComposanteTypePion::GetAmbulanceEvacuationCapacity() const
+unsigned int PHY_ComposanteTypePion::GetAmbulanceEvacuationCapacity() const
 {
     return nAmbulanceEvacuationCapacity_;
 }

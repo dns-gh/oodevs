@@ -21,6 +21,7 @@
 #include "clients_kernel/EquipmentType.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.h>
+#include <google/protobuf/Descriptor.h>
 
 using namespace xml;
 using namespace kernel;
@@ -89,9 +90,9 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 namespace
 {
     // $$$$ AGE 2007-10-19: caca et ^c^v
-    QDateTime GetTime( const ASN1T_DateTime& d )
+    QDateTime GetTime( const Common::MsgDateTime& d )
     {
-        const std::string date( (const char*)d.data, d.numocts );
+        const std::string date( (const char*)d.data().c_str() );
         QString extended( date.c_str() );
         extended.insert( 13, ':' ); extended.insert( 11, ':' ); 
         extended.insert(  6, '-' ); extended.insert(  4, '-' );
@@ -103,26 +104,26 @@ namespace
 // Name: ReportFactory::CreateReport
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const ASN1T_MsgReport& asn ) const
+Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgReport& message ) const
 {
-    ReportTemplate* report = Find( asn.cr );
+    ReportTemplate* report = Find( message.cr() );
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
-    if( asn.type == EnumReportType::message )
+    if( message.type() == MsgsSimToClient::EnumReportType::message )
         type = Report::eMessage;
-    else if( asn.type == EnumReportType::evenement_exceptionnel )
+    else if( message.type() == MsgsSimToClient::EnumReportType::evenement_exceptionnel )
         type = Report::eEvent;
-    else if( asn.type == EnumReportType::warning )
+    else if( message.type() == MsgsSimToClient::EnumReportType::warning )
         type = Report::eWarning;
-    return new Report( agent, type, report->RenderMessage( asn.parametres ), GetTime( asn.time ) );
+    return new Report( agent, type, report->RenderMessage( message.parametres() ), GetTime( message.time() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::CreateTrace
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const ASN1T_MsgTrace& message ) const
+Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgTrace& message ) const
 {
     return new Trace( agent, simulation_, message );
 }
@@ -131,30 +132,29 @@ Report* ReportFactory::CreateTrace( const kernel::Entity_ABC& agent, const ASN1T
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportFactory::RenderParameter( const ASN1T_MissionParameter& value ) const
+QString ReportFactory::RenderParameter( const Common::MsgMissionParameter& value ) const
 {
-    switch( value.value.t )
+    if( value.has_value() )
     {
-    case T_MissionParameter_value_aReal:
-        return QString::number( value.value.u.aReal );
-    case T_MissionParameter_value_unit:
-        return rcResolver_.CreateLink( Agent::typeName_, value.value.u.unit );
-    case T_MissionParameter_value_unitKnowledge:
-        return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.value.u.unitKnowledge );
-    case T_MissionParameter_value_objectKnowledge:
-        return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.value.u.objectKnowledge );
-    case T_MissionParameter_value_populationKnowledge:
-        return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value.u.populationKnowledge );
-    case T_MissionParameter_value_equipmentType:
-        return equipmentResolver_.Get( value.value.u.equipmentType ).GetName().c_str();
-    case T_MissionParameter_value_dotationType:
-        return dotationResolver_.Get( value.value.u.dotationType ).GetCategory().c_str();
-    case T_MissionParameter_value_tirIndirect:
-        return QString::number( value.value.u.tirIndirect );
-    case T_MissionParameter_value_aCharStr:
-        return QString( value.value.u.aCharStr );
-    default:
-        throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.value.t ).ascii() );
+        if( value.value().has_areal() )
+            return QString::number( value.value().areal() );
+        if( value.value().has_unit() )
+            return rcResolver_.CreateLink( Agent::typeName_, value.value().unit().oid() );
+        if( value.value().has_unitknowledge() )
+            return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.value().unitknowledge().oid() );
+        if( value.value().has_objectknowledge() )
+            return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.value().objectknowledge().oid() );
+        if( value.value().has_populationknowledge() )
+            return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.value().populationknowledge().oid() );
+        if( value.value().has_equipmenttype() )
+            return equipmentResolver_.Get( value.value().equipmenttype().equipment() ).GetName().c_str();
+        if( value.value().has_dotationtype() )
+            return dotationResolver_.Get( value.value().dotationtype().oid() ).GetCategory().c_str();
+        if( value.value().has_tirindirect() )
+            return QString::number( value.value().tirindirect() );
+        if( value.value().has_acharstr() )
+            return QString( value.value().acharstr().c_str() );
     }
+    throw std::runtime_error( tools::translate( "ReportFactory", "Unhandled report parameter type: '%1'." ).arg( value.GetDescriptor()->full_name().c_str() ).ascii() );
     return "";
 }

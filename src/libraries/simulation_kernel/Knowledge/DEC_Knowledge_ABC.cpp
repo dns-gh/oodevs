@@ -40,7 +40,7 @@ DEC_Knowledge_ABC::~DEC_Knowledge_ABC()
 // Name: DEC_Knowledge_ABC::GetCurrentTimeStep
 // Created: NLD 2004-03-16
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_ABC::GetCurrentTimeStep() const
+unsigned int DEC_Knowledge_ABC::GetCurrentTimeStep() const
 {
     return MIL_Singletons::GetTime().GetCurrentTick();
 }

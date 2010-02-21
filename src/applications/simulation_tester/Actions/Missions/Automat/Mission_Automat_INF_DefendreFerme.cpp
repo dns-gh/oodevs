@@ -43,9 +43,9 @@ void Mission_Automat_INF_DefendreFerme::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_DefendreFerme& asnMission = *new ASN1T_Mission_Automate_INF_DefendreFerme();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_defendre_ferme;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_defendre_ferme = &asnMission;
+    Mission_Automate_INF_DefendreFerme& asnMission = *new Mission_Automate_INF_DefendreFerme();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_defendre_ferme = &asnMission;
 
     const Location& position_ = pTarget_->GetTestParam_Polygon();
 
@@ -62,8 +62,8 @@ void Mission_Automat_INF_DefendreFerme::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_DefendreFerme::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_defendre_ferme );
-    ASN1T_Mission_Automate_INF_DefendreFerme& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_defendre_ferme;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_defendre_ferme ());
+    Mission_Automate_INF_DefendreFerme& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_defendre_ferme;
 
     ASN_Tools::Delete( asnMission.position );
 

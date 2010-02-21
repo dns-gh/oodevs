@@ -63,7 +63,7 @@ ProtectionCapacity::~ProtectionCapacity()
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void ProtectionCapacity::serialize( Archive& file, const uint )
+void ProtectionCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & size_max_
@@ -132,6 +132,6 @@ void ProtectionCapacity::ProcessAgentInside( Object& /*object*/, MIL_Agent_ABC& 
 void ProtectionCapacity::ProcessAgentEntering( Object& /*object*/, MIL_Agent_ABC& agent )
 {
     CIT_AgentContainer it = container_.find( &agent );
-    if ( it == container_.end() && container_.size() < size_max_ )
+    if( it == container_.end() && container_.size() < size_max_ )
         container_.insert( &agent );
 }

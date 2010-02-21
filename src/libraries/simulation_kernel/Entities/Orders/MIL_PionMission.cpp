@@ -10,20 +10,22 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_PionMission.h"
 #include "MIL_AutomateMission.h"
+#include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Model_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-#include "Decision/DEC_Tools.h"
-#include "Decision/DEC_Model_ABC.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const ASN1T_MsgUnitOrder& asn )
-    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres, pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
+MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const Common::MsgUnitOrder& asn )
+    : MIL_Mission_ABC       ( type, pion.GetKnowledge(), asn.parametres(), pion.GetRole< PHY_RoleInterface_Location >().GetPosition() )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
@@ -127,11 +129,11 @@ void MIL_PionMission::Stop()
 // static
 void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 {
-    NET_ASN_MsgUnitOrder asn;
-    asn().oid          = pion.GetID();
-    asn().mission      = 0;
-    asn().parametres.n = 0;
-    asn.Send();
+    client::UnitOrder asn;
+    asn().set_oid( pion.GetID() );
+    asn().set_mission( 0 );
+    asn().mutable_parametres();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,12 +142,12 @@ void MIL_PionMission::SendNoMission( const MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 void MIL_PionMission::Send() const
 {
-    NET_ASN_MsgUnitOrder asn;
-    asn().oid       = pion_.GetID();
-    asn().mission   = GetType().GetID();
-    Serialize( asn().parametres );
-    asn.Send();
-    CleanAfterSerialization( asn().parametres );
+    client::UnitOrder asn;
+    asn().set_oid( pion_.GetID() );
+    asn().set_mission( GetType().GetID() );
+    Serialize( *asn().mutable_parametres() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
+    //asn().Clear();
 }
 
 // -----------------------------------------------------------------------------

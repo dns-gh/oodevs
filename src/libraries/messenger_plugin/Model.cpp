@@ -13,7 +13,7 @@
 #include "IntelligencesModel.h"
 #include "TacticalLinesModel.h"
 #include "DrawingsModel.h"
-#include "NotesModel.h"
+#include "NotesModel.h" // LTO
 #include "Entity_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "dispatcher/Config.h"
@@ -37,7 +37,7 @@ Model::Model( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC&
     , tacticalLines_( *new TacticalLinesModel( clients, *idManager_, *converter_ ) )
     , intelligences_( *new IntelligencesModel( clients, *idManager_, *converter_ ) )
     , drawings_     ( *new DrawingsModel( config, clients, *idManager_, *converter_ ))
-    , notes_        ( *new NotesModel ( config, clients, *idManager_ ))
+    , notes_        ( *new NotesModel ( config, clients, *idManager_ )) // LTO
 {
     registrables.Add( new dispatcher::RegistrableProxy( drawings_ ) );
     Load();
@@ -161,12 +161,14 @@ void Model::ReadFormation( xml::xistream& xis )
     unsigned int id ;
     xis >> xml::attribute( "id", id );
 
-    ASN1T_TacticalLinesDiffusion diffusion;
-    diffusion.t = T_TacticalLinesDiffusion_formation;
-    diffusion.u.formation = id;
+    MsgTacticalLine_Diffusion diffusion;
+    MsgFormation formation;
+    formation.set_oid( id );
+
+    diffusion.set_formation( id ) ;
     xis >> xml::list( "lima"        , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
         >> xml::list( "limit"       , tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion )
-        >> xml::list( "intelligence", intelligences_, &IntelligencesModel::ReadIntelligence, id )
+        >> xml::list( "intelligence", intelligences_, &IntelligencesModel::ReadIntelligence, formation )
         >> xml::list( "automat"     , *this, &Model::ReadAutomat )
         >> xml::list( "formation"   , *this, &Model::ReadFormation );
 }
@@ -179,9 +181,9 @@ void Model::ReadAutomat( xml::xistream& xis )
 {
     unsigned int id ;
     xis >> xml::attribute( "id", id );
-    ASN1T_TacticalLinesDiffusion diffusion;
-    diffusion.t = T_TacticalLinesDiffusion_automat ;
-    diffusion.u.automat = id;
+    MsgTacticalLine_Diffusion diffusion;
+
+    diffusion.set_automat( id );
     xis >> xml::list( "lima" , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
         >> xml::list( "limit", tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion );
 }

@@ -1,0 +1,105 @@
+package MsgsClientToMessenger;
+
+import "Common.proto";
+
+// Phase lines
+message MsgLimaCreationRequest {
+   required Common.MsgTacticalLine tacticalline = 1;
+}
+message MsgLimaDestructionRequest {
+   required uint32 oid = 1;
+}
+message MsgLimaUpdateRequest {
+   required uint32                 oid           = 1;
+   optional Common.MsgTacticalLine tactical_line = 2;
+}
+
+// Limits
+message MsgLimitCreationRequest {
+   required Common.MsgTacticalLine tacticalline = 1;
+}
+message MsgLimitUpdateRequest {
+   required uint32                 oid           = 1;
+   optional Common.MsgTacticalLine tactical_line = 2;
+}
+message MsgLimitDestructionRequest {
+   required uint32 oid = 1;
+}
+
+// Intelligences
+message MsgIntelligenceCreationRequest {
+   required Common.MsgIntelligence intelligence = 1;
+}
+
+message MsgIntelligenceUpdateRequest {
+    required uint32                 oid       = 1;
+    optional uint32                 formation = 2;
+    optional string                 name      = 3;
+    optional string                 nature    = 4;
+    optional Common.EnumNatureLevel level     = 5;
+    optional bool                   embarked  = 6;
+    optional Common.MsgCoordLatLong location  = 7;
+    optional Common.EnumDiplomacy   diplomacy = 8;
+}
+
+message MsgShapeCreationRequest {
+    required Common.MsgShape shape = 1;
+}
+
+message MsgShapeUpdateRequest {
+    required uint32                     oid       = 1;
+    optional string                     category  = 2;
+    optional string                     color     = 3;
+    optional string                     template_ = 4;
+    optional Common.MsgCoordLatLongList points    = 5;
+}
+
+message MsgShapeDestructionRequest {
+    required uint32 oid = 1;
+}
+message MsgIntelligenceDestructionRequest {
+    required uint32 oid = 1;
+}
+
+// LTO begin
+message MsgNoteCreationRequest {
+    required Common.MsgNote            note        = 1;
+}
+
+message MsgNoteUpdateRequest {
+    required uint32                     id          = 1;
+    optional string                     name        = 2;
+    optional string                     number	    = 3;
+    optional string                     description = 4;
+    optional uint32                     parent      = 5;
+}
+
+message MsgNoteDestructionRequest {
+    required uint32                     id          = 1;
+    required bool                       delete_all  = 2;
+}
+// LTO end
+
+message MsgClientToMessenger {
+    message Content {
+        optional MsgLimitCreationRequest           limit_creation_request           = 1;
+        optional MsgLimitDestructionRequest        limit_destruction_request        = 2;
+        optional MsgLimitUpdateRequest             limit_update_request             = 3;
+        optional MsgLimaCreationRequest            lima_creation_request            = 4;
+        optional MsgLimaDestructionRequest         lima_destruction_request         = 5;
+        optional MsgLimaUpdateRequest              lima_update_request              = 6;
+        optional MsgIntelligenceCreationRequest    intelligence_creation_request    = 7;
+        optional MsgIntelligenceUpdateRequest      intelligence_update_request      = 8;
+        optional MsgIntelligenceDestructionRequest intelligence_destruction_request = 9;
+        optional MsgShapeCreationRequest           shape_creation_request           = 10;
+        optional MsgShapeDestructionRequest        shape_destruction_request        = 11;
+        optional MsgShapeUpdateRequest             shape_update_request             = 12;
+        optional Common.MsgTextMessage             text_message                     = 13;
+        optional MsgNoteCreationRequest            note_creation_request            = 14;
+        optional MsgNoteUpdateRequest              note_update_request              = 15;
+        optional MsgNoteDestructionRequest         note_destruction_request         = 16;
+        
+    }
+    optional int32   context = 1 [default = 0];
+    required Content message = 2;
+}

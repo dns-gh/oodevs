@@ -10,10 +10,10 @@
 #ifndef __UrbanKnowledge_h_
 #define __UrbanKnowledge_h_
 
-#include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
-#include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "UrbanObject.h"
+#include "clients_kernel/UrbanKnowledge_ABC.h"
+#include "protocol/Simulation.h"
 
 namespace kernel
 {
@@ -38,14 +38,14 @@ class UrbanKnowledge : public SimpleEntity< kernel::UrbanKnowledge_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanKnowledge( const Model_ABC& model, const ASN1T_MsgUrbanKnowledgeCreation& asnMsg );
+             UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
     virtual ~UrbanKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgUrbanKnowledgeCreation& asnMsg );
-    void Update( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg );
+    void Update( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message );
+    void Update( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -79,7 +79,7 @@ public:
     unsigned int                 nRelevance_;
     unsigned int                 nProgress_;
     bool                         bPerceived_;
-    ASN1T_EnumUnitIdentificationLevel nIdentificationLevel_;
+    MsgsSimToClient::EnumUnitIdentificationLevel nIdentificationLevel_;
     std::vector< const kernel::Automat_ABC* > automatPerceptions_;
 
     T_Optionals                  optionals_;

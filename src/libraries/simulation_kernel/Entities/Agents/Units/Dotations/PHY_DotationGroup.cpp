@@ -64,13 +64,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, PHY_DotationGroup::T_DotationMap& map, const uint nVersion )
+        void serialize( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
 
         template< typename Archive >
-        void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const uint )
+        void save( Archive& file, const PHY_DotationGroup::T_DotationMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -83,13 +83,13 @@ namespace boost
         }
 
         template< typename Archive >
-        void load( Archive& file, PHY_DotationGroup::T_DotationMap& map, const uint )
+        void load( Archive& file, PHY_DotationGroup::T_DotationMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
-                uint nID;
+                unsigned int nID;
                 file >> nID;
                 file >> map[ PHY_DotationType::FindDotationCategory( nID ) ];
             }
@@ -100,9 +100,9 @@ namespace boost
 // Name: PHY_DotationGroup::load
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_DotationGroup::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pType_ = PHY_DotationType::FindDotationType( nID );
 
@@ -114,9 +114,9 @@ void PHY_DotationGroup::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_DotationGroup::save
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
-void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_DotationGroup::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned type = ( pType_ ? pType_->GetID() : (uint)-1 );
+    unsigned type = ( pType_ ? pType_->GetID() : (unsigned int)-1 );
     file << type
          << pGroupContainer_
          << dotations_;

@@ -10,8 +10,19 @@
 #ifndef __AgentLogMedical_h_
 #define __AgentLogMedical_h_
 
-#include "game_asn/Simulation.h"
+
 #include "EquipmentAvailability.h"
+
+namespace Common
+{
+    enum EnumHumanWound;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgLogMedicalState;
+    class MsgLogMedicalEquipmentAvailability;
+}
 
 namespace kernel
 {
@@ -35,13 +46,13 @@ class AgentLogMedical
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentLogMedical( const Model& model, const kernel::Agent_ABC& agent, const ASN1T_MsgLogMedicalState& asnMsg );
+             AgentLogMedical( const Model& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMedicalState& asnMsg );
     virtual ~AgentLogMedical();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const ASN1T_MsgLogMedicalState& asnMsg );
+    void Update(  const MsgsSimToClient::MsgLogMedicalState& asnMsg );
     void Send  ( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -54,7 +65,7 @@ private:
 
     //! @name Types
     //@{
-    typedef EquipmentAvailability< ASN1T_LogMedicalEquipmentAvailability > T_Availability;
+    typedef EquipmentAvailability< MsgsSimToClient::MsgLogMedicalEquipmentAvailability > T_Availability;
     //@}
 
 private:
@@ -64,7 +75,7 @@ private:
     const kernel::Agent_ABC& agent_;
     bool                     bSystemEnabled_;
 
-    std::vector< ASN1T_EnumHumanWound >       priorities_;
+    std::vector< Common::EnumHumanWound >       priorities_;
     std::vector< const kernel::Automat_ABC* > tacticalPriorities_;
 
     std::vector< T_Availability > evacuationAmbulancesAvailability_;

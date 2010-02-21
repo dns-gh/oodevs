@@ -13,10 +13,11 @@
 #include "DateTime.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
-using namespace kernel;
+using namespace kernel; 
 using namespace actions;
 using namespace parameters;
 
@@ -34,15 +35,15 @@ Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 // Name: Lima constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_LimaOrder& asn )
+Lima::Lima( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgLimaOrder& message )
     : Parameter< QString >( parameter )
 {
     QStringList functions;
-    for( unsigned int i = 0; i < asn.fonctions.n; ++i )
-        functions.append( tools::ToShortString( (E_FuncLimaType)asn.fonctions.elem[i] ) );
+    for( int i = 0; i < message.fonctions_size(); ++i )
+        functions.append( tools::ToShortString( (E_FuncLimaType)message.fonctions(i) ) );
     SetValue( functions.join( ", " ) );
-    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, asn.lima ) );
-    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), asn.horaire ) );
+    AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Location" ).ascii(), "location", false ), converter, message.lima().location() ) );
+    AddParameter( *new DateTime( OrderParameter( tools::translate( "Parameter", "Schedule" ).ascii(), "datetime", false ), message.horaire() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,21 +135,19 @@ void Lima::DisplayInToolTip( Displayer_ABC& displayer ) const
 // Name: Lima::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Lima::CommitTo( ASN1T_LimaOrder& asn ) const
+void Lima::CommitTo( Common::MsgLimaOrder& message ) const
 {
     QStringList functions = QStringList::split( ", ", GetValue() );
-    asn.fonctions.n = functions.count();
-    asn.fonctions.elem = new ASN1T_EnumLimaType[asn.fonctions.n];
-    for( unsigned int i = 0; i < asn.fonctions.n; ++i )
-        asn.fonctions.elem[i] = ASN1T_EnumLimaType( tools::LimaTypeFromShortString( functions[i] ) );
+    for( unsigned int i = 0; i < functions.count(); ++i )
+        message.add_fonctions( Common::MsgLimaOrder::Function( tools::LimaTypeFromShortString( functions[i] ) ) );
 
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();
         if( type == "location" )
-            static_cast< const Location* >( it->second )->CommitTo( asn.lima );
+            static_cast< const Location* >( it->second )->CommitTo( *message.mutable_lima()->mutable_location() );
         else if( type == "datetime" )
-            static_cast< const DateTime* >( it->second )->CommitTo( asn.horaire );
+            static_cast< const DateTime* >( it->second )->CommitTo( *message.mutable_horaire() );
     }
 }
 
@@ -156,15 +155,9 @@ void Lima::CommitTo( ASN1T_LimaOrder& asn ) const
 // Name: Lima::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Lima::Clean( ASN1T_LimaOrder& asn ) const
+void Lima::Clean( Common::MsgLimaOrder& message ) const
 {
-    delete[] asn.fonctions.elem;
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        const std::string type = it->second->GetType();
-        if( type == "location" )
-            static_cast< const Location* >( it->second )->Clean( asn.lima );
-    }
+    message.Clear();
 }
 
 // -----------------------------------------------------------------------------

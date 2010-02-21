@@ -11,11 +11,15 @@
 #define __ScoresModel_h_
 
 #include "dispatcher/Registrable_ABC.h"
-#include "game_asn/Aar.h"
-#include "game_asn/Simulation.h"
 #include <vector>
 #include <map>
 #include <boost/shared_ptr.hpp>
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
+using namespace MsgsAarToClient;
+using namespace MsgsClientToAar;
 
 namespace dispatcher
 {
@@ -45,6 +49,7 @@ namespace score
         std::string value_;
     };
 
+    
 // =============================================================================
 /** @class  ScoresModel
     @brief  ScoresModel
@@ -64,9 +69,9 @@ public:
     //! @name Operations
     //@{
     void Load( const std::string& file );
-    void Update( const ASN1T_MsgIndicator& message );
-    void Update( const ASN1T_MsgsSimToClient& message );
-    void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgPlotRequest& request );
+    void Update( const MsgIndicator& message );
+    void Update( const MsgSimToClient& message );
+    void RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const MsgPlotRequest& request );
     //@}
 
 private:

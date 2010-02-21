@@ -40,7 +40,7 @@ public:
         keyHandler_.BeginTick();
         base_->BeginTick();
     }
-    virtual void Receive( const ASN1T_MsgsSimToClient& message )
+    virtual void Receive( const MsgSimToClient& message )
     {
         base_->Receive( message );
     }

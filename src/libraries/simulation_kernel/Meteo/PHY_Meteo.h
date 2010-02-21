@@ -14,6 +14,11 @@
 
 #include "MIL.h"
 
+namespace MsgsClientToSim
+{
+    class MsgMeteoAttributes;
+}
+
 namespace xml
 {
     class xistream;
@@ -22,8 +27,6 @@ namespace xml
 class PHY_Ephemeride;
 class PHY_Precipitation;
 class PHY_Lighting;
-
-struct ASN1T_MeteoAttributes;
 
 //*****************************************************************************
 // Created: JVT 03-08-05
@@ -40,17 +43,17 @@ public:
     };
 
 public:
-    PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride );
-    PHY_Meteo( const ASN1T_MeteoAttributes& );
+             PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride );
+    explicit PHY_Meteo( const MsgsClientToSim::MsgMeteoAttributes& );
 
     //-------------------------------------------------------------------------
     /** @name Creation / destruction */
     //-------------------------------------------------------------------------
     //@{
     void IncRef();
-    void IncRef( uint );
+    void IncRef( unsigned int );
     void DecRef();
-    void DecRef( uint );
+    void DecRef( unsigned int );
     //@}
 
     //-------------------------------------------------------------------------
@@ -65,7 +68,7 @@ public:
     //! @name Operations
     //@{
     void Update( const PHY_Ephemeride& );
-    void Update( const ASN1T_MeteoAttributes& asn );
+    void Update( const MsgsClientToSim::MsgMeteoAttributes& asn );
     //@}
 
 private:
@@ -79,7 +82,7 @@ private:
     const PHY_Lighting*      pLighting_;
     const PHY_Precipitation* pPrecipitation_;
 
-    uint nRefCount_;
+    unsigned int nRefCount_;
 };
 
 #include "PHY_Meteo.inl"

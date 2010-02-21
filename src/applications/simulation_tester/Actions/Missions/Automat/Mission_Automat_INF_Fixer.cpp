@@ -43,9 +43,9 @@ void Mission_Automat_INF_Fixer::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Fixer& asnMission = *new ASN1T_Mission_Automate_INF_Fixer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_fixer;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_fixer = &asnMission;
+    Mission_Automate_INF_Fixer& asnMission = *new Mission_Automate_INF_Fixer();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_fixer = &asnMission;
 
     const T_IdVector& ennemis_ = pTarget_->GetTestParam_AgentKnowledgeList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_INF_Fixer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Fixer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_fixer );
-    ASN1T_Mission_Automate_INF_Fixer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_fixer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_fixer ());
+    Mission_Automate_INF_Fixer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_fixer;
 
     ASN_Tools::Delete( asnMission.ennemis );
 

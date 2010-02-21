@@ -25,7 +25,7 @@ using namespace TEST;
 // Name: IDManager constructor
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-IDManager::IDManager( uint nMOSClassID, uint nStartInstanceID )
+IDManager::IDManager( unsigned int nMOSClassID, unsigned int nStartInstanceID )
     : nMOSClassID_     ( nMOSClassID )
     , nStartInstanceID_( nStartInstanceID )
 {
@@ -50,7 +50,7 @@ IDManager::~IDManager()
 // Name: IDManager::LockIdentifier
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-bool IDManager::LockIdentifier( uint nID )
+bool IDManager::LockIdentifier( unsigned int nID )
 {
     nID &= 0x3FFFFF;
     assert( nID >= nStartInstanceID_ );
@@ -64,9 +64,9 @@ bool IDManager::LockIdentifier( uint nID )
 // Name: IDManager::GetFreeIdentifier
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-uint IDManager::GetFreeIdentifier()
+unsigned int IDManager::GetFreeIdentifier()
 {
-    uint nID = idManager_.GetFreeIdentifier();
+    unsigned int nID = idManager_.GetFreeIdentifier();
 
     nID += nStartInstanceID_;
     nID |= ( nMOSClassID_ << 22 );
@@ -77,7 +77,7 @@ uint IDManager::GetFreeIdentifier()
 // Name: IDManager::ReleaseIdentifier
 // Created: NLD 2003-02-28
 //-----------------------------------------------------------------------------
-void IDManager::ReleaseIdentifier( uint nID )
+void IDManager::ReleaseIdentifier( unsigned int nID )
 {
     nID &= 0x3FFFFF;
     assert( nID >= nStartInstanceID_ );

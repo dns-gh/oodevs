@@ -10,9 +10,13 @@
 #ifndef __SaverFacade_h_
 #define __SaverFacade_h_
 
-#include "game_asn/Simulation.h"
 #include "MessageFilter.h"
 #include "MessageHandler_ABC.h"
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
 
 namespace dispatcher
 {
@@ -38,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
     //@}
 
 private:
@@ -50,9 +54,9 @@ private:
 
     //! @name Helpers
     //@{
-    void SaveUpdate( ASN1T_MsgsSimToClient& asnMsg );
-    void StartFrame( ASN1T_MsgsSimToClient& asnMsg );
-    void EndFrame  ( ASN1T_MsgsSimToClient& asnMsg );
+    void SaveUpdate( const MsgsSimToClient::MsgSimToClient& message );
+    void StartFrame( const MsgsSimToClient::MsgSimToClient& message );
+    void EndFrame  ( const MsgsSimToClient::MsgSimToClient& message );
     //@}
 
 private:
@@ -60,9 +64,8 @@ private:
     //@{
     Model& model_;
     std::auto_ptr< Saver > saver_;
-    ASN1OCTET aASNEncodeBuffer_[100000];
+    std::string encodingBuffer_;
     unsigned frameCount_;
-
     MessageFilter filter_;
     //@}
 };

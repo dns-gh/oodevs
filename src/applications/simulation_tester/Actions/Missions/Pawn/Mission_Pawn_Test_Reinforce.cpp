@@ -43,9 +43,9 @@ void Mission_Pawn_Test_Reinforce::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_Reinforce& asnMission = *new ASN1T_Mission_Pion_Test_Reinforce();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_reinforce;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_reinforce = &asnMission;
+    Mission_Pion_Test_Reinforce& asnMission = *new Mission_Pion_Test_Reinforce();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_reinforce = &asnMission;
 
 
     ASN_Tools::CopyAgent( pTarget_->GetTestParam_Agent(), asnMission.unite );
@@ -60,8 +60,8 @@ void Mission_Pawn_Test_Reinforce::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_Reinforce::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_reinforce );
-    ASN1T_Mission_Pion_Test_Reinforce& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_reinforce;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_reinforce ());
+    Mission_Pion_Test_Reinforce& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_reinforce;
 
 
     delete &asnMission;

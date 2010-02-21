@@ -42,12 +42,12 @@ CrossingSiteAttribute::~CrossingSiteAttribute()
 template< typename T >
 void CrossingSiteAttribute::UpdateData( const T& message )
 {
-    if( message.m.crossing_sitePresent )     
+    if( message.has_crossing_site()  )     
     {
-        width_ = message.crossing_site.width;
-        depth_ = message.crossing_site.depth;
-        speed_ = message.crossing_site.flow_rate;
-        needsConstruction_ = message.crossing_site.banks_require_fitting != 0;
+        width_ = message.crossing_site().width();
+        depth_ = message.crossing_site().depth();
+        speed_ = message.crossing_site().flow_rate();
+        needsConstruction_ = message.crossing_site().banks_require_fitting() != 0;
         controller_.Update( *(CrossingSiteAttribute_ABC*)this );
     }
 }
@@ -56,27 +56,27 @@ void CrossingSiteAttribute::UpdateData( const T& message )
 // Name: CrossingSiteAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void CrossingSiteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void CrossingSiteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void CrossingSiteAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

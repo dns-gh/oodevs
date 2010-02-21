@@ -36,7 +36,7 @@ public:
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Main operations
@@ -77,7 +77,7 @@ private:
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_KnowledgeBlackBoard_ABC::serialize( Archive& file, const uint )
+void DEC_KnowledgeBlackBoard_ABC::serialize( Archive& file, const unsigned int )
 {
     file & talkingKnowledgeSources_;
 }

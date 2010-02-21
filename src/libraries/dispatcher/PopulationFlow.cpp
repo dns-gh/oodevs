@@ -13,6 +13,7 @@
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "EntityPublisher.h"
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -20,17 +21,17 @@ using namespace dispatcher;
 // Name: PopulationFlow constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const Population& population, const ASN1T_MsgPopulationFlowCreation& msg )
-    : SimpleEntity< kernel::PopulationFlow_ABC >( msg.oid ) 
+PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToClient::MsgPopulationFlowCreation& msg )
+    : SimpleEntity< kernel::PopulationFlow_ABC >( msg.oid() ) 
     , population_     ( population )
-    , nID_            ( msg.oid )
+    , nID_            ( msg.oid() )
     , path_           ()
     , flow_           ()
     , nDirection_     ()
     , nSpeed_         ()
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( EnumPopulationAttitude::agressive )    
+    , nAttitude_      ( Common::EnumPopulationAttitude::agressive )    
 {
 //    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlow >( *this ) );
 }
@@ -48,22 +49,22 @@ PopulationFlow::~PopulationFlow()
 // Name: PopulationFlow::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationFlow::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
+void PopulationFlow::Update( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
 {
-    if( msg.m.itinerairePresent )
-        path_.Update( msg.itineraire );
-    if( msg.m.fluxPresent )
-        flow_.Update( msg.flux );
-    if( msg.m.directionPresent ) 
-        nDirection_ = msg.direction;
-    if( msg.m.vitessePresent )
-        nSpeed_ = msg.vitesse;
-    if( msg.m.attitudePresent )
-        nAttitude_ = msg.attitude;
-    if( msg.m.nb_humains_mortsPresent )
-        nNbrDeadHumans_ = msg.nb_humains_morts;
-    if( msg.m.nb_humains_vivantsPresent )
-        nNbrAliveHumans_ = msg.nb_humains_vivants;
+    if( msg.has_itineraire()  )
+        path_.Update( msg.itineraire().location() );
+    if( msg.has_flux()  )
+        flow_.Update( msg.flux().location() );
+    if( msg.has_direction()  ) 
+        nDirection_ = msg.direction().heading();
+    if( msg.has_vitesse()  )
+        nSpeed_ = msg.vitesse();
+    if( msg.has_attitude()  )
+        nAttitude_ = msg.attitude();
+    if( msg.has_nb_humains_morts()  )
+        nNbrDeadHumans_ = msg.nb_humains_morts();
+    if( msg.has_nb_humains_vivants()  )
+        nNbrAliveHumans_ = msg.nb_humains_vivants();
 }
 
 // =============================================================================
@@ -78,8 +79,8 @@ void PopulationFlow::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowCreation asn;
 
-    asn().oid            = nID_;
-    asn().oid_population = population_.GetId();
+    asn().set_oid( nID_ );
+    asn().set_oid_population( population_.GetId() );
 
     asn.Send( publisher );
 }
@@ -92,24 +93,23 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowUpdate asn;
 
-    asn().m.itinerairePresent         = 1;
-    asn().m.fluxPresent               = 1;
-    asn().m.directionPresent          = 1; 
-    asn().m.vitessePresent            = 1;
-    asn().m.attitudePresent           = 1;
-    asn().m.nb_humains_mortsPresent   = 1;
-    asn().m.nb_humains_vivantsPresent = 1;
+//    asn.set_itinerairePresent( 1 );
+//    asn.set_fluxPresent( 1 );
+//    asn.set_directionPresent( 1 ); 
+//    asn.set_vitessePresent( 1 );
+//    asn.set_attitudePresent( 1 );
+//    asn.set_nb_humains_mortsPresent( 1 );
+//    asn.set_nb_humains_vivantsPresent( 1 );
 
-
-    asn().oid                = nID_;
-    asn().oid_population     = population_.GetId();
-    asn().direction          = nDirection_; 
-    asn().vitesse            = nSpeed_;
-    asn().attitude           = nAttitude_;
-    asn().nb_humains_morts   = nNbrDeadHumans_;
-    asn().nb_humains_vivants = nNbrAliveHumans_;
-    path_.Send( asn().itineraire );
-    flow_.Send( asn().flux );
+    asn().set_oid( nID_ );
+    asn().set_oid_population( population_.GetId() );
+    asn().mutable_direction()->set_heading( nDirection_ ); 
+    asn().set_vitesse( nSpeed_ );
+    asn().set_attitude( nAttitude_ );
+    asn().set_nb_humains_morts( nNbrDeadHumans_ );
+    asn().set_nb_humains_vivants( nNbrAliveHumans_ );
+    path_.Send( *asn().mutable_itineraire()->mutable_location() );
+    flow_.Send( *asn().mutable_flux()->mutable_location() );
    
     asn.Send( publisher );
 }
@@ -121,8 +121,8 @@ void PopulationFlow::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 void PopulationFlow::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationFlowDestruction destruction;
-    destruction().oid            = nID_;
-    destruction().oid_population = population_.GetId();
+    destruction().set_oid           ( nID_ );
+    destruction().set_oid_population( population_.GetId() );
     destruction.Send( publisher );
 }
 

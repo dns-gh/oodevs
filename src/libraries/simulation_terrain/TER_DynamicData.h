@@ -6,23 +6,16 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: AGE 2005-02-01 $
-// $Archive: /MVW_v10/Build/SDK/TER/src/TER_DynamicData.h $
-// $Author: Age $
-// $Modtime: 24/03/05 15:38 $
-// $Revision: 3 $
-// $Workfile: TER_DynamicData.h $
-//
-// *****************************************************************************
 
 #ifndef __TER_DynamicData_h_
 #define __TER_DynamicData_h_
 
 #include "TER.h"
 
-#pragma warning( disable : 4275 )
-#include "boost/thread/mutex.hpp"
+#pragma warning( push, 1 )
+#pragma warning( disable : 4244 4275 )
+#include <boost/thread/mutex.hpp>
+#pragma warning( pop )
 
 class TER_PathFinderThread;
 class TerrainRetractationHandle;
@@ -66,7 +59,7 @@ private:
 
 private:
     T_HandleMap     handles_;
-    uint            nNbrRefs_;
+    unsigned int            nNbrRefs_;
 
     const T_PointVector points_;
     const TerrainData   terrainData_;

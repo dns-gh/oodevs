@@ -30,7 +30,7 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Register( Object& object );
     virtual void Instanciate( Object& object ) const;
     MT_Float GetDefaultSpeed() const;

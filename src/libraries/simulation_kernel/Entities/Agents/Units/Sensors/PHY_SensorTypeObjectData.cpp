@@ -138,8 +138,8 @@ MT_Float PHY_SensorTypeObjectData::GetSourceFactor( const MIL_AgentPion& source 
     // Posture
     const PHY_RoleInterface_Posture& sourcePosture = source.GetRole< PHY_RoleInterface_Posture >();
 
-    const uint nOldPostureIdx = sourcePosture.GetLastPosture   ().GetID();
-    const uint nCurPostureIdx = sourcePosture.GetCurrentPosture().GetID();
+    const unsigned int nOldPostureIdx = sourcePosture.GetLastPosture   ().GetID();
+    const unsigned int nCurPostureIdx = sourcePosture.GetCurrentPosture().GetID();
 
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );

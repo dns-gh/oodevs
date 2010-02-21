@@ -37,12 +37,12 @@ public:
     static void Terminate ();
 
     static const MIL_KnowledgeGroupType* FindType( const std::string& strName );
-    static const MIL_KnowledgeGroupType* FindType( uint nID );
+    static const MIL_KnowledgeGroupType* FindType( unsigned int nID );
     //@}
 
     //! @name Instanciation
     //@{
-    MIL_KnowledgeGroup& InstanciateKnowledgeGroup( uint nID, MIL_Army_ABC& army ) const;
+    MIL_KnowledgeGroup& InstanciateKnowledgeGroup( unsigned int nID, MIL_Army_ABC& army ) const;
     //@}
 
     //! @name Accessors
@@ -53,7 +53,7 @@ public:
           double       GetKnowledgePopulationMaxLifeTime              () const;
           double       GetKnowledgeCommunicationDelay                 () const;
     const std::string& GetName                                        () const;
-          uint         GetID                                          () const;
+          unsigned int         GetID                                          () const;
     //@}
 
 private:
@@ -73,18 +73,18 @@ private:
     //@}
 
 private:
-    const std::string strName_;
-    const uint        nID_;
-          double      rKnowledgeAgentMaxLifeTime_;
-          double      rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
-          double      rKnowledgeAgentExtrapolationTime_;
+    const std::string  strName_;
+    const unsigned int nID_;
+          double       rKnowledgeAgentMaxLifeTime_;
+          double       rKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit_;
+          double       rKnowledgeAgentExtrapolationTime_;
 
-          double      rKnowledgePopulationMaxLifeTime_;
-          double      rCommunicationDelay_;
+          double       rKnowledgePopulationMaxLifeTime_;
+          double       rCommunicationDelay_;
 
 private:
     static T_KnowledgeGroupTypeMap knowledgeGroupTypes_;
-    static uint                    nNextID_;
+    static unsigned int                    nNextID_;
 };
 
 #endif // __MIL_KnowledgeGroupType_h_

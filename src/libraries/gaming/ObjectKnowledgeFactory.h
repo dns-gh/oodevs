@@ -10,7 +10,14 @@
 #ifndef __ObjectKnowledgeFactory_h_
 #define __ObjectKnowledgeFactory_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+namespace MsgsSimToClient
+{
+    class MsgObjectKnowledgeCreation;
+}
 
 namespace kernel
 {
@@ -41,7 +48,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::ObjectKnowledge_ABC* Create( const kernel::Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message );
+    virtual kernel::ObjectKnowledge_ABC* Create( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message );
     //@}
 
 private:
@@ -53,7 +60,7 @@ private:
 
     //! @name 
     //@{
-    void Register( kernel::ObjectKnowledge_ABC& knowledge, const ASN1T_ObjectAttributes& attributes ) const;
+    void Register( kernel::ObjectKnowledge_ABC& knowledge, const Common::MsgObjectAttributes& attributes ) const;
     //@}
 
 private:

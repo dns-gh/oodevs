@@ -47,19 +47,19 @@ public:
 
     //! @name Message handlers
     //@{
-    void OnReceiveMsgUnitKnowledgeCreation   ( const ASN1T_MsgUnitKnowledgeCreation&    asnMsg );
-    void OnReceiveMsgUnitKnowledgeUpdate     ( const ASN1T_MsgUnitKnowledgeUpdate&      asnMsg );
-    void OnReceiveMsgUnitKnowledgeDestruction( const ASN1T_MsgUnitKnowledgeDestruction& asnMsg );
+    void OnReceiveMsgUnitKnowledgeCreation   ( const MsgUnitKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgUnitKnowledgeUpdate     ( const MsgUnitKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgUnitKnowledgeDestruction( const MsgUnitKnowledgeDestruction& asnMsg );
 
-    void OnReceiveMsgPopulationKnowledgeCreation   ( const ASN1T_MsgPopulationKnowledgeCreation&    asnMsg );
-    void OnReceiveMsgPopulationKnowledgeUpdate     ( const ASN1T_MsgPopulationKnowledgeUpdate&      asnMsg );
-    void OnReceiveMsgPopulationKnowledgeDestruction( const ASN1T_MsgPopulationKnowledgeDestruction& asnMsg );
+    void OnReceiveMsgPopulationKnowledgeCreation   ( const MsgPopulationKnowledgeCreation&    asnMsg );
+    void OnReceiveMsgPopulationKnowledgeUpdate     ( const MsgPopulationKnowledgeUpdate&      asnMsg );
+    void OnReceiveMsgPopulationKnowledgeDestruction( const MsgPopulationKnowledgeDestruction& asnMsg );
     //@}
 
     //! @name Test Parameters
     //@{
     T_EntityId  GetTestParam_Knowledge          () const;
-    T_IdVector& GetTestParam_Knowledges         ( uint nNbr ) const;
+    T_IdVector& GetTestParam_Knowledges         ( unsigned int nNbr ) const;
     T_EntityId  GetTestParam_KnowledgePopulation() const;
     //@}
 

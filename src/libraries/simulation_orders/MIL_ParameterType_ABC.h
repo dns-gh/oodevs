@@ -10,6 +10,11 @@
 #ifndef __MIL_ParameterType_ABC_h_
 #define __MIL_ParameterType_ABC_h_
 
+namespace Common
+{
+    class MsgMissionParameter;
+}
+
 class MIL_OrderType_ABC;
 class DEC_KnowledgeResolver_ABC;
 class MIL_MissionParameter_ABC;
@@ -37,8 +42,8 @@ public:
     
     //! @name Operations
     //@{
-    virtual bool Copy                   ( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
-    virtual void CleanAfterSerialization( ASN1T_MissionParameter& to ) const = 0;
+    virtual bool Copy                   ( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
+    virtual void CleanAfterSerialization( Common::MsgMissionParameter& to ) const = 0;
     //@}
 
 protected:

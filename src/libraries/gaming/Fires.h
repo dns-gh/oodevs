@@ -10,11 +10,14 @@
 #ifndef __Fires_h_
 #define __Fires_h_
 
-#include "game_asn/Simulation.h"
+
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -32,10 +35,10 @@ class FireFactory;
 // Created: AGE 2006-03-10
 // =============================================================================
 class Fires : public kernel::Extension_ABC 
-            , public kernel::Updatable_ABC< ASN1T_MsgStartUnitFire >
-            , public kernel::Updatable_ABC< ASN1T_MsgStopUnitFire >
-            , public kernel::Updatable_ABC< ASN1T_MsgStartPopulationFire >
-            , public kernel::Updatable_ABC< ASN1T_MsgStopPopulationFire >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartUnitFire >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopUnitFire >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStartPopulationFire >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgStopPopulationFire >
             , public tools::Resolver< Fire_ABC >
             , public kernel::Drawable_ABC
 {
@@ -65,10 +68,10 @@ private:
     void CreateFire( const T& message );
     template< typename T >
     void DestroyFire( const T& message );
-    virtual void DoUpdate( const ASN1T_MsgStartUnitFire& message );
-    virtual void DoUpdate( const ASN1T_MsgStopUnitFire& message );
-    virtual void DoUpdate( const ASN1T_MsgStartPopulationFire& message );
-    virtual void DoUpdate( const ASN1T_MsgStopPopulationFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStartUnitFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStartPopulationFire& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message );
     //@}
 
 private:

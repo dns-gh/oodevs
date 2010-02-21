@@ -43,7 +43,7 @@ PHY_SupplyRequest_ABC< T >::~PHY_SupplyRequest_ABC()
 // -----------------------------------------------------------------------------
 template< typename T > 
 template< typename Archive >
-void PHY_SupplyRequest_ABC< T >::sIndividualRequest::serialize( Archive& file, const uint )
+void PHY_SupplyRequest_ABC< T >::sIndividualRequest::serialize( Archive& file, const unsigned int )
 {
     file & pRequest_
          & rRequestedValue_;
@@ -55,7 +55,7 @@ void PHY_SupplyRequest_ABC< T >::sIndividualRequest::serialize( Archive& file, c
 // -----------------------------------------------------------------------------
 template< typename T > 
 template< typename Archive >
-void PHY_SupplyRequest_ABC< T >::serialize( Archive& file, const uint )
+void PHY_SupplyRequest_ABC< T >::serialize( Archive& file, const unsigned int )
 {
     file & requests_
          & rTotalRequestedValue_
@@ -210,12 +210,12 @@ void PHY_SupplyRequest_ABC< T >::CancelMerchandiseOverheadReservation()
 // Created: NLD 2005-02-02
 // -----------------------------------------------------------------------------
 template< typename T > 
-void PHY_SupplyRequest_ABC< T >::Serialize( ASN1T_DotationQuery& asn ) const
+void PHY_SupplyRequest_ABC< T >::Serialize( MsgsSimToClient::MsgDotationQuery& asn ) const
 {
-    asn.ressource_id        = GetDotationCategory().GetMosID();
-    asn.quantite_demandee   = (uint)rTotalRequestedValue_;
-    asn.quantite_accordee   = (uint)rTotalReservedValue_;
-    asn.quantite_en_transit = (uint)rTotalConvoyedValue_;
+    asn.set_ressource_id       ( GetDotationCategory().GetMosID() );
+    asn.set_quantite_demandee  ( (unsigned int)rTotalRequestedValue_ );
+    asn.set_quantite_accordee  ( (unsigned int)rTotalReservedValue_ );
+    asn.set_quantite_en_transit( (unsigned int)rTotalConvoyedValue_ );
 }
        
 // =============================================================================

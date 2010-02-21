@@ -43,9 +43,9 @@ void Mission_Automat_CanaliserPopulations::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_CanaliserPopulations& asnMission = *new ASN1T_Mission_Automate_CanaliserPopulations();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_canaliser_populations;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_canaliser_populations = &asnMission;
+    Mission_Automate_CanaliserPopulations& asnMission = *new Mission_Automate_CanaliserPopulations();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_canaliser_populations = &asnMission;
 
     const T_LocationVector& zones_ = pTarget_->GetTestParam_LocationList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_CanaliserPopulations::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_CanaliserPopulations::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_canaliser_populations );
-    ASN1T_Mission_Automate_CanaliserPopulations& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_canaliser_populations;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_canaliser_populations ());
+    Mission_Automate_CanaliserPopulations& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_canaliser_populations;
 
     ASN_Tools::Delete( asnMission.zones );
 

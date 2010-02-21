@@ -43,9 +43,9 @@ void Mission_Automat_INF_AppuyerUnFreinage::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_AppuyerUnFreinage& asnMission = *new ASN1T_Mission_Automate_INF_AppuyerUnFreinage();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_appuyer_un_freinage;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_appuyer_un_freinage = &asnMission;
+    Mission_Automate_INF_AppuyerUnFreinage& asnMission = *new Mission_Automate_INF_AppuyerUnFreinage();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_appuyer_un_freinage = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
@@ -59,8 +59,8 @@ void Mission_Automat_INF_AppuyerUnFreinage::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_AppuyerUnFreinage::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_appuyer_un_freinage );
-    ASN1T_Mission_Automate_INF_AppuyerUnFreinage& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_appuyer_un_freinage;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_appuyer_un_freinage ());
+    Mission_Automate_INF_AppuyerUnFreinage& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_appuyer_un_freinage;
 
 
     delete &asnMission;

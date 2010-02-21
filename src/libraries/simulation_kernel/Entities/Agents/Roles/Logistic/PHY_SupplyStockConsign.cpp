@@ -15,7 +15,7 @@
 #include "PHY_SupplyStockState.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Network/NET_ASN_Messages.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_SupplyStockConsign )
 
@@ -61,7 +61,7 @@ PHY_SupplyStockConsign::~PHY_SupplyStockConsign()
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_SupplyStockConsign::serialize( Archive& file, const uint )
+void PHY_SupplyStockConsign::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_SupplyConsign_ABC >( *this )
          & pSupplyState_
@@ -287,13 +287,13 @@ bool PHY_SupplyStockConsign::Update()
 // Name: PHY_SupplyStockConsign::SendFullState
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-void PHY_SupplyStockConsign::SendFullState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const
+void PHY_SupplyStockConsign::SendFullState( client::LogSupplyHandlingUpdate& asn ) const
 {
     PHY_SupplyConsign_ABC::SendFullState( asn );
 
     assert( pConvoy_ );
-    asn().m.oid_pion_convoyantPresent = 1;
-    asn().oid_pion_convoyant          = pConvoy_->GetPionConvoy() ? pConvoy_->GetPionConvoy()->GetID() : 0;
+//    asn().set_oid_pion_convoyantPresent( 1 );
+    asn().set_oid_pion_convoyant( pConvoy_->GetPionConvoy() ? pConvoy_->GetPionConvoy()->GetID() : 0 );
 }
 
 // -----------------------------------------------------------------------------

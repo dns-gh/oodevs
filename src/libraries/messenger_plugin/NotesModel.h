@@ -10,7 +10,7 @@
 #ifndef __NotesModel_h_
 #define __NotesModel_h_
 
-#include "game_asn/Messenger.h"
+#include "protocol/MessengerSenders.h"
 #include "tools/Resolver.h"
 
 namespace dispatcher
@@ -49,9 +49,9 @@ public:
 
     //! @name Requests
     //@{
-    void HandleRequest( const ASN1T_MsgNoteCreationRequest&    message );
-    void HandleRequest( const ASN1T_MsgNoteDestructionRequest& message );
-    void HandleRequest( const ASN1T_MsgNoteUpdateRequest&      message );
+    void HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequest&    message );
+    void HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionRequest& message );
+    void HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateRequest&      message );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
 
     void Publish( const Note& note );

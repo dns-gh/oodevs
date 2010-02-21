@@ -10,10 +10,32 @@
 #ifndef __Automat_h_
 #define __Automat_h_
 
-#include "game_asn/Simulation.h"
+
 #include "clients_kernel/Automat_ABC.h"
 #include "SimpleEntity.h"
 #include "DecisionalState.h"
+
+namespace Common
+{
+    enum EnumAutomatMode;
+    enum EnumMeetingEngagementStatus;
+    enum EnumOperationalStatus;
+    class MsgAutomatChangeLogisticLinks;
+    class MsgAutomatChangeSuperior;
+    class MsgAutomatChangeKnowledgeGroup;
+    class MsgAutomatOrder;
+}
+
+namespace MsgsSimToClient
+{
+    enum ForceRatio_Value;
+    enum RulesOfEngagement_Value;
+
+    class MsgAutomatCreation;
+    class MsgDecisionalState;
+    class MsgLogSupplyQuotas;
+    class MsgAutomatAttributes;
+}
 
 namespace kernel
 {
@@ -39,7 +61,7 @@ class Automat : public SimpleEntity< kernel::Automat_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( Model_ABC& model, const ASN1T_MsgAutomatCreation& msg );
+             Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& msg );
     virtual ~Automat();
     //@}
 
@@ -52,14 +74,14 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgAutomatCreation&             msg );
-    void Update( const ASN1T_MsgDecisionalState&             msg );
-    void Update( const ASN1T_MsgAutomatAttributes&           msg );
-    void Update( const ASN1T_MsgLogSupplyQuotas&             msg );
-    void Update( const ASN1T_MsgAutomatChangeLogisticLinks&  msg );
-    void Update( const ASN1T_MsgAutomatChangeSuperior&       msg );
-    void Update( const ASN1T_MsgAutomatChangeKnowledgeGroup& msg );
-    void Update( const ASN1T_MsgAutomatOrder&                msg );
+    void Update( const MsgsSimToClient::MsgAutomatCreation&             msg );
+    void Update( const MsgsSimToClient::MsgDecisionalState&             msg );
+    void Update( const MsgsSimToClient::MsgAutomatAttributes&           msg );
+    void Update( const MsgsSimToClient::MsgLogSupplyQuotas&             msg );
+    void Update( const Common::MsgAutomatChangeLogisticLinks&  msg );
+    void Update( const Common::MsgAutomatChangeSuperior&       msg );
+    void Update( const Common::MsgAutomatChangeKnowledgeGroup& msg );
+    void Update( const Common::MsgAutomatOrder&                msg );
 
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -103,11 +125,11 @@ private:
     kernel::KnowledgeGroup_ABC* knowledgeGroup_;
     tools::Resolver< DotationQuota > quotas_;
 
-    ASN1T_EnumAutomatMode             nAutomatState_;
-    ASN1T_EnumForceRatioStatus        nForceRatioState_;
-    ASN1T_EnumMeetingEngagementStatus nCloseCombatState_;
-    ASN1T_EnumOperationalStatus       nOperationalState_;
-    ASN1T_EnumRoe                     nRoe_;
+    Common::EnumAutomatMode                     nAutomatState_;
+    MsgsSimToClient::ForceRatio_Value           nForceRatioState_;
+    Common::EnumMeetingEngagementStatus         nCloseCombatState_;
+    Common::EnumOperationalStatus               nOperationalState_;
+    MsgsSimToClient::RulesOfEngagement_Value    nRoe_;
 
     kernel::Automat_ABC* pTC2_;
     kernel::Automat_ABC* pLogMaintenance_;

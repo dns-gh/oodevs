@@ -12,6 +12,13 @@
 #ifndef __PHY_RoePopulation_h_
 #define __PHY_RoePopulation_h_
 
+#include "protocol/protocol.h"
+
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
+}
+
 // =============================================================================
 // @class  PHY_RoePopulation
 // Created: JVT 2004-08-03
@@ -38,15 +45,15 @@ public:
     static void                      Initialize       ();
     static void                      Terminate        ();
     static const PHY_RoePopulation*  Find             ( const std::string& strName );
-    static const PHY_RoePopulation*  Find             ( uint nID );
+    static const PHY_RoePopulation*  Find             ( unsigned int nID );
     static const T_RoePopulationMap& GetRoePopulations();
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&              GetName () const;
-          uint                      GetID   () const;
-          ASN1T_EnumPopulationRoe   GetAsnID() const;
+    const std::string&                                      GetName () const;
+          unsigned int                                      GetID   () const;
+          MsgsSimToClient::MsgUnitAttributes_PopulationRoe  GetAsnID() const;
     //@}
 
     //! @name Operators
@@ -69,13 +76,13 @@ private:
     //@}
 
 private:
-    PHY_RoePopulation( const std::string& strName, E_Type nType, ASN1T_EnumPopulationRoe nAsnID );
+    PHY_RoePopulation( const std::string& strName, E_Type nType, MsgsSimToClient::MsgUnitAttributes_PopulationRoe nAsnID );
     virtual ~PHY_RoePopulation();
 
 private:
     const std::string             strName_;
     const E_Type                  nType_;
-    const ASN1T_EnumPopulationRoe nAsnID_;
+    const MsgsSimToClient::MsgUnitAttributes_PopulationRoe nAsnID_;
 
 private:
     static T_RoePopulationMap roePopulations_;

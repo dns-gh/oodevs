@@ -299,9 +299,9 @@ PHY_RawVisionDataIterator& PHY_RawVisionDataIterator::operator ++ ()
     OffsetToRealSpace( nCellXOffset, nCellYOffset );
     ToRealSpace      ( nRealCellCol, nRealCellRow );
 
-    pCurrentCell_ = &data_( (uint)nRealCellCol, (uint)nRealCellRow );
+    pCurrentCell_ = &data_( (unsigned int)nRealCellCol, (unsigned int)nRealCellRow );
 
-    MT_Float rGroundHeight  = rNextY * data_( (uint)( nRealCellCol + nCellYOffset ), (uint)( nRealCellRow + nCellXOffset ) ).GetAltitude() + pCurrentCell_->GetAltitude() * ( 1. - rNextY );
+    MT_Float rGroundHeight  = rNextY * data_( (unsigned int)( nRealCellCol + nCellYOffset ), (unsigned int)( nRealCellRow + nCellXOffset ) ).GetAltitude() + pCurrentCell_->GetAltitude() * ( 1. - rNextY );
 
     // calcul des coefficients de changement d'environnement
     MT_Float rOldGroundCoeff = rGroundCoeff_;

@@ -11,11 +11,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Refugee.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
-
+#include "protocol/ClientSenders.h"
+#include "simulation_kernel/Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/TransportNotificationHandler_ABC.h"
 
@@ -67,7 +67,7 @@ PHY_RolePion_Refugee::~PHY_RolePion_Refugee()
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_Refugee::serialize( Archive& file, const uint )
+void PHY_RolePion_Refugee::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this )
          & bManaged_
@@ -158,17 +158,16 @@ bool PHY_RolePion_Refugee::IsManaged( const MIL_Object_ABC& camp ) const
 // Name: PHY_RolePion_Refugee::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Refugee::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Refugee::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.refugie_pris_en_comptePresent = 1;
-    msg().refugie_pris_en_compte          = bManaged_;
+    msg().set_refugie_pris_en_compte( bManaged_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Refugee::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Refugee::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Refugee::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

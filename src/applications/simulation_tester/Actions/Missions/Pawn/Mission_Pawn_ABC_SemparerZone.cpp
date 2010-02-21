@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_SemparerZone::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_SemparerZone& asnMission = *new ASN1T_Mission_Pion_ABC_SemparerZone();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_semparer_zone;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_semparer_zone = &asnMission;
+    Mission_Pion_ABC_SemparerZone& asnMission = *new Mission_Pion_ABC_SemparerZone();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_semparer_zone = &asnMission;
 
     const Location& zoneAPrendre_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ABC_SemparerZone::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_SemparerZone::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_semparer_zone );
-    ASN1T_Mission_Pion_ABC_SemparerZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_semparer_zone;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_semparer_zone ());
+    Mission_Pion_ABC_SemparerZone& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_semparer_zone;
 
     ASN_Tools::Delete( asnMission.zone_a_prendre );
 

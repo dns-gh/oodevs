@@ -14,7 +14,8 @@
 #include "clients_kernel/Intelligence_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "game_asn/MessengerSenders.h"
+#include "protocol/MessengerSenders.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -118,19 +119,19 @@ void IntelligencePositions::Draw( const geometry::Point2f& where, const kernel::
 // Name: IntelligencePositions::DoUpdate
 // Created: SBO 2007-10-19
 // -----------------------------------------------------------------------------
-void IntelligencePositions::DoUpdate( const ASN1T_MsgIntelligenceCreation& message )
+void IntelligencePositions::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceCreation& message )
 {
-    position_ = converter_.ConvertToXY( message.intelligence.location );
+    position_ = converter_.ConvertToXY( message.intelligence().location() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: IntelligencePositions::DoUpdate
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void IntelligencePositions::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message )
+void IntelligencePositions::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceUpdate& message )
 {
-    if( message.m.locationPresent )
-        position_ = converter_.ConvertToXY( message.location );
+    if( message.has_location() )
+        position_ = converter_.ConvertToXY( message.location() );
 }
 
 // -----------------------------------------------------------------------------
@@ -140,8 +141,7 @@ void IntelligencePositions::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message
 void IntelligencePositions::Set( const geometry::Point2f& point )
 {
     plugins::messenger::IntelligenceUpdateRequest message;
-    message().oid = holder_.GetId();
-    message().m.locationPresent = 1;
-    converter_.ConvertToGeo( point, message().location );
+    message().set_oid( holder_.GetId() );
+    converter_.ConvertToGeo( point, *message().mutable_location() );
     message.Send( publisher_ );
 }

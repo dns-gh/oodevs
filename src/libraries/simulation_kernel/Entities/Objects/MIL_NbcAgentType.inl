@@ -27,7 +27,7 @@ const MIL_NbcAgentType* MIL_NbcAgentType::Find( const std::string& strName )
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
 inline
-const MIL_NbcAgentType* MIL_NbcAgentType::Find( uint nID )
+const MIL_NbcAgentType* MIL_NbcAgentType::Find( unsigned int nID )
 {
     for( CIT_NbcAgentTypeMap itNbcAgent = nbcAgentTypes_.begin(); itNbcAgent != nbcAgentTypes_.end(); ++itNbcAgent )
     {
@@ -63,7 +63,7 @@ const std::string& MIL_NbcAgentType::GetName() const
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
 inline
-uint MIL_NbcAgentType::GetID() const
+unsigned int MIL_NbcAgentType::GetID() const
 {
     return nID_;
 }
@@ -133,7 +133,7 @@ bool MIL_NbcAgentType::IsLiquidPoisonous() const
 // Created: JVT 2004-10-28
 // -----------------------------------------------------------------------------
 inline
-uint MIL_NbcAgentType::GetGasLifeTime() const
+unsigned int MIL_NbcAgentType::GetGasLifeTime() const
 {
     return nGasLifeTime_;
 }

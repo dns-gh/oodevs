@@ -36,7 +36,7 @@ public:
 
     //! @name BOOST::serialization
     //@{
-//    template< typename Archive > void serialize( Archive&, const uint ) {}
+//    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 
 protected:
@@ -66,7 +66,7 @@ protected:
 private:
     //! @name 
     //@{    
-    mutable uint8 xToUpdate_;
+    mutable unsigned char xToUpdate_;
     //@}
 };
 

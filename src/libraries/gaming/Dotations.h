@@ -10,11 +10,15 @@
 #ifndef __Dotations_h_
 #define __Dotations_h_
 
-#include "game_asn/Simulation.h"
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
+
+namespace MsgsSimToClient
+{
+	class MsgUnitAttributes;
+}
 
 namespace kernel
 {
@@ -33,7 +37,7 @@ class Dotation;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Dotations : public HierarchicExtension_ABC
-                , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                 , public tools::Resolver< Dotation >
                 , public kernel::Drawable_ABC
 {
@@ -60,7 +64,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     void Update( const std::vector< Dotation >& differences );

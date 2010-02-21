@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_LocationList.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_LocationList constructor
@@ -35,27 +35,22 @@ MIL_ParameterType_LocationList::~MIL_ParameterType_LocationList()
 // Name: MIL_ParameterType_LocationList::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_LocationList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_LocationList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value               = false;
-    to.value.t                  = T_MissionParameter_value_locationList;
-    to.value.u.locationList = new ASN1T_LocationList();
-    
-    return from.ToLocationList( *to.value.u.locationList );
+    to.set_null_value( false );
+    return from.ToLocationList( *to.mutable_value()->mutable_locationlist() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_LocationList::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_LocationList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_LocationList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_locationList );
-    assert( to.value.u.locationList );
-    ASN_Delete::Delete( *to.value.u.locationList );
-    delete to.value.u.locationList;    
+    assert( to.value().has_locationlist() );
+    assert( to.mutable_value()->mutable_locationlist() );
+    to.mutable_value()->clear_locationlist();
 }

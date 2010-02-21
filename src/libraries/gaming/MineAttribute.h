@@ -10,11 +10,13 @@
 #ifndef __MineAttribute_h_
 #define __MineAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -30,9 +32,9 @@ namespace kernel
 // Created: SBO 2007-02-08
 // =============================================================================
 class MineAttribute : public kernel::MineAttribute_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
-                     , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
-                     , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
 
 public:
@@ -58,9 +60,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgObjectCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
     template< typename T >
     void UpdateData( const T& message );
     //@}

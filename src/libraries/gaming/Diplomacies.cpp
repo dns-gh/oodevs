@@ -38,15 +38,19 @@ Diplomacies::~Diplomacies()
 
 namespace
 {
-    Karma ResolveDiplomacy( const ASN1T_EnumDiplomacy& diplomacy )
+    Karma ResolveDiplomacy( const Common::EnumDiplomacy& diplomacy )
     {
         switch( diplomacy )
         {
-        case EnumDiplomacy::ami:    return Karma::friend_;
-        case EnumDiplomacy::ennemi: return Karma::enemy_;
-        case EnumDiplomacy::neutre: return Karma::neutral_;
+        case Common::EnumDiplomacy::friend_diplo:    
+            return Karma::friend_;
+        case Common::EnumDiplomacy::enemy_diplo: 
+            return Karma::enemy_;
+        case Common::EnumDiplomacy::neutral_diplo: 
+            return Karma::neutral_;
+        default:
+            return kernel::Karma::unknown_;
         }
-        return kernel::Karma::unknown_;
     }
 }
 
@@ -57,12 +61,12 @@ namespace
 template< typename T >
 void Diplomacies::UpdateData( const T& message )
 {
-    const Team_ABC& team1 = resolver_.Get( message.oid_camp1 );
-    const Team_ABC& team2 = resolver_.Get( message.oid_camp2 );
+    const Team_ABC& team1 = resolver_.Get( message.oid_camp1() );
+    const Team_ABC& team2 = resolver_.Get( message.oid_camp2() );
     if( & team1.Get< Diplomacies_ABC >() != this )
         return;
     if( & team2.Get< Diplomacies_ABC >() != this )
-        diplomacies_[ & team2.Get< Diplomacies_ABC >() ] = ResolveDiplomacy( message.diplomatie );
+        diplomacies_[ & team2.Get< Diplomacies_ABC >() ] = ResolveDiplomacy( message.diplomatie() );
     controller_.Update( *(kernel::Diplomacies_ABC*)this );
 }
 
@@ -70,9 +74,9 @@ void Diplomacies::UpdateData( const T& message )
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomacyAck& message )
+void Diplomacies::DoUpdate( const MsgsSimToClient::MsgChangeDiplomacyAck& message )
 {
-    if( message.error_code == EnumChangeDiplomacyErrorCode::no_error )
+    if( message.error_code() == MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy )
         UpdateData( message );
 }
 
@@ -80,7 +84,7 @@ void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomacyAck& message )
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const ASN1T_MsgChangeDiplomacy& message )
+void Diplomacies::DoUpdate( const Common::MsgChangeDiplomacy& message )
 {
     UpdateData( message );
 }
@@ -104,14 +108,22 @@ const kernel::Karma& Diplomacies::GetDiplomacy( const kernel::Entity_ABC& rhs ) 
 // Name: Diplomacies::DoUpdate
 // Created: AGE 2006-10-25
 // -----------------------------------------------------------------------------
-void Diplomacies::DoUpdate( const ASN1T_MsgTeamCreation& message )
+void Diplomacies::DoUpdate( const MsgsSimToClient::MsgTeamCreation& message )
 {
-    switch( message.type )
+    switch( message.type() )
     {
-    case EnumDiplomacy::inconnu : karma_ = kernel::Karma::unknown_; break;
-    case EnumDiplomacy::ami :     karma_ = kernel::Karma::friend_; break;
-    case EnumDiplomacy::ennemi :  karma_ = kernel::Karma::enemy_; break;
-    case EnumDiplomacy::neutre :  karma_ = kernel::Karma::neutral_; break;
+    case Common::EnumDiplomacy::friend_diplo :     
+        karma_ = kernel::Karma::friend_; 
+        break;
+    case Common::EnumDiplomacy::enemy_diplo :  
+        karma_ = kernel::Karma::enemy_; 
+        break;
+    case Common::EnumDiplomacy::neutral_diplo :  
+        karma_ = kernel::Karma::neutral_; 
+        break;
+    default:
+        karma_ = kernel::Karma::unknown_; 
+        break;
     }
 }
 

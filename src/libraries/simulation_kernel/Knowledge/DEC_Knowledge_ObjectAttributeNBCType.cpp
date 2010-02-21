@@ -1,13 +1,12 @@
 // *****************************************************************************
 //
-// $Created: RFT 2004-05-04 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/DEC_Knowledge_ObjectAttributeNBCType.cpp $
-// $Author: Nld $
-// $Modtime: 27/04/05 15:11 $
-// $Revision: 3 $
-// $Workfile: DEC_Knowledge_ObjectAttributeNBCType.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
+
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectAttributeNBCType.h"
@@ -135,8 +134,9 @@ void DEC_Knowledge_ObjectAttributeNBCType::UpdateOnCollision( const DEC_Knowledg
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeNBCType::BuildMsgSpecificAttributes
 // Created: RFT 2004-05-04
-// -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBCType::Send( ASN1T_ObjectAttributes& asn ) const
+// ----------------------------------------------------------------------------- 
+// $$$$ _RC_ FDS 2010-01-14: this function send nothing, can we remove content or protobuf translation is needed ? 
+void DEC_Knowledge_ObjectAttributeNBCType::Send( Common::MsgObjectAttributes& /*message*/ ) const
 {
     if ( attr_ )
     {

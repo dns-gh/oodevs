@@ -9,9 +9,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "InteractionHeightAttribute.h"
-
 #include "Knowledge/DEC_Knowledge_ObjectAttributeInteractionHeight.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( InteractionHeightAttribute )
@@ -21,7 +21,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InteractionHeightAttribute )
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
 InteractionHeightAttribute::InteractionHeightAttribute()
-: height_( 0 )
+    : height_( 0 )
 {
     // NOTHING
 }
@@ -30,8 +30,8 @@ InteractionHeightAttribute::InteractionHeightAttribute()
 // Name: InteractionHeightAttribute constructor
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-InteractionHeightAttribute::InteractionHeightAttribute( const ASN1T_ObjectAttributes& asn )
-    : height_( asn.interaction_height.height )
+InteractionHeightAttribute::InteractionHeightAttribute( const Common::MsgObjectAttributes& asn )
+    : height_( asn.interaction_height().height() )
 {
     // NOTHING
 }
@@ -41,7 +41,7 @@ InteractionHeightAttribute::InteractionHeightAttribute( const ASN1T_ObjectAttrib
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
 InteractionHeightAttribute::InteractionHeightAttribute( xml::xistream& xis )
-: height_( xml::attribute( xis, "height", 0.f ) )
+    : height_( xml::attribute( xis, "height", 0.f ) )
 {
     // NOTHING
 }
@@ -56,10 +56,11 @@ InteractionHeightAttribute::~InteractionHeightAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void InteractionHeightAttribute::serialize
+// Name: InteractionHeightAttribute::serialize
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-template< typename Archive > void InteractionHeightAttribute::serialize( Archive& file, const uint )
+template< typename Archive >
+void InteractionHeightAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & height_;
@@ -78,10 +79,9 @@ void InteractionHeightAttribute::Instanciate( DEC_Knowledge_Object& object ) con
 // Name: InteractionHeightAttribute::SendFullState
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-void InteractionHeightAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void InteractionHeightAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.m.interaction_heightPresent = 1;
-    asn.interaction_height.height = height_;
+    asn.mutable_interaction_height()->set_height( height_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,7 +10,14 @@
 #ifndef __Profiling_h_
 #define __Profiling_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/simulationsenders.h"
+
+namespace MsgsSimToClient
+{
+    class MsgControlProfilingInformation;
+    class MsgControlEndTick;
+}
+
 #include <ctime>
 
 // =============================================================================
@@ -34,8 +41,8 @@ public:
     void Tick();
     void Clear();
 
-    void Update( const ASN1T_MsgControlProfilingInformation& message );
-    void Update( const ASN1T_MsgControlEndTick& message );
+    void Update( const MsgsSimToClient::MsgControlProfilingInformation& message );
+    void Update( const MsgsSimToClient::MsgControlEndTick& message );
     float EffectiveSpeed() const;
     unsigned long GetMemory() const;
     unsigned long GetVirtualMemory() const;

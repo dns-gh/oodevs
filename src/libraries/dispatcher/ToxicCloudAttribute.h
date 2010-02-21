@@ -10,10 +10,13 @@
 #ifndef __ToxicCloudAttribute_h_
 #define __ToxicCloudAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "ObjectAttribute_ABC.h"
 
-struct ASN1T_LocatedQuantityList;
+namespace Common
+{
+    class LocatedQuantityList;
+    class MsgObjectAttributes;
+}
 
 namespace dispatcher
 {
@@ -30,15 +33,15 @@ class ToxicCloudAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ToxicCloudAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
+     ToxicCloudAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~ToxicCloudAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_ObjectAttributes& asnMsg );
-    virtual void Send     ( ASN1T_ObjectAttributes& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 private:
     //! @name 
@@ -49,7 +52,7 @@ private:
 private:
     //! @name Data member
     //@{
-    ASN1T_LocatedQuantityList  quantities_;
+    Common::MsgLocatedQuantityList  quantities_;
     //@}
 };
 

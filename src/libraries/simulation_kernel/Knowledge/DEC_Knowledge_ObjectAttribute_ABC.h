@@ -1,16 +1,19 @@
 // *****************************************************************************
 //
-// $Created: NLD 2004-05-04 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Knowledge/DEC_Knowledge_ObjectBouchonMines.h $
-// $Author: Nld $
-// $Modtime: 27/04/05 15:10 $
-// $Revision: 3 $
-// $Workfile: DEC_Knowledge_ObjectBouchonMines.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
 #ifndef __DEC_Knowledge_ObjectAttribute_ABC_h_
 #define __DEC_Knowledge_ObjectAttribute_ABC_h_
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
 
 class PHY_PerceptionLevel;
 class DEC_Knowledge_Object;
@@ -32,15 +35,16 @@ public:
 
     //! @name CheckPoints
     //@{
-    virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel ) = 0;    
-    virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception ) = 0;
-    virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision  ) = 0;
-    virtual void Send( ASN1T_ObjectAttributes& asn ) const = 0;
+    virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel )   = 0;    
+    virtual void UpdateOnPerception     ( const DEC_Knowledge_ObjectPerception& perception )    = 0;
+    virtual void UpdateOnCollision      ( const DEC_Knowledge_ObjectCollision& collision  )     = 0;
+
+    virtual void Send                   ( Common::MsgObjectAttributes& asn ) const = 0;
     //@}
 
     //! @name CheckPoint / boost deserialize
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     virtual void Register( DEC_Knowledge_Object& knObject ) = 0;
     //@}
 };

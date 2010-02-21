@@ -12,6 +12,11 @@
 
 #include "Location.h"
 
+namespace Common
+{
+    class MsgLine;
+}
+
 namespace actions {
     namespace parameters {
 
@@ -27,7 +32,7 @@ class Limit : public Location
 public:
     //! @name Constructors/Destructor
     //@{
-             Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line );
+             Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLine& line );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
              Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Limit();
@@ -35,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_MissionParameter& asn ) const;
-    void Clean( ASN1T_MissionParameter& asn ) const;
+    void CommitTo( Common::MsgMissionParameter& message ) const;
+    void Clean( Common::MsgMissionParameter& message ) const;
     //@}
 
 protected:

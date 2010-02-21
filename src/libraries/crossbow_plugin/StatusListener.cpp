@@ -13,6 +13,7 @@
 #include "Table_ABC.h"
 #include "Row_ABC.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
+#include "protocol/simulationsenders.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -68,14 +69,14 @@ void StatusListener::ChangeStatus( const std::string& status )
 {
     if( paused_ && status == "resumed" )
     {
-        simulation::ControlResume asn;
-        asn.Send( publisher_ );
+        simulation::ControlResume message;
+        message.Send( publisher_ );
         paused_ = false;
     }
     else if( !paused_ && status == "paused" )
     {
-        simulation::ControlPause asn;
-        asn.Send( publisher_ );
+        simulation::ControlPause message;
+        message.Send( publisher_ );
         paused_ = true;
     }
 }

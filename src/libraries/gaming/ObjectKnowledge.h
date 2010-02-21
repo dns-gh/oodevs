@@ -10,14 +10,16 @@
 #ifndef __ObjectKnowledge_h_
 #define __ObjectKnowledge_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -36,13 +38,13 @@ namespace kernel
 // =============================================================================
 class ObjectKnowledge : public kernel::EntityImplementation< kernel::ObjectKnowledge_ABC >
                       , public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
                       , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const kernel::Team_ABC& owner, const ASN1T_MsgObjectKnowledgeCreation& message,
+             ObjectKnowledge( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message,
                               kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                               const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver,
                               const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
@@ -73,7 +75,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
     //@}
 
 private:

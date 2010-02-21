@@ -10,7 +10,7 @@
 #ifndef __Formation_h_
 #define __Formation_h_
 
-#include "game_asn/Simulation.h"
+
 #include "SimpleEntity.h"
 #include "clients_kernel/Formation_ABC.h"
 
@@ -20,6 +20,13 @@ namespace kernel
     class ModelVisitor_ABC;
     class Team_ABC;
 }
+//using namespace MsgsSimToClient;
+namespace Common
+{
+    enum EnumNatureLevel;
+    class MsgFormationCreation;
+}
+
 namespace dispatcher
 {
     class Model_ABC;
@@ -37,7 +44,7 @@ class Formation : public SimpleEntity< kernel::Formation_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    Formation( const Model_ABC& model, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels, const ASN1T_MsgFormationCreation& msg );
+             Formation( const Model_ABC& model, const Common::MsgFormationCreation& msg, const tools::Resolver_ABC< kernel::HierarchyLevel_ABC >& levels );
     virtual ~Formation();
     //@}
 
@@ -74,13 +81,13 @@ private:
 private:
     //! @name Member data
     //@{
-    const Model_ABC&                model_;
-    const std::string           name_;
-    kernel::Team_ABC&           team_;
-    const kernel::HierarchyLevel_ABC& level_;
-    kernel::Formation_ABC*      parent_;
-    tools::Resolver< kernel::Formation_ABC > formations_;
-    tools::Resolver< kernel::Automat_ABC > automats_;
+    const Model_ABC&                            model_;
+    const std::string                           name_;
+    kernel::Team_ABC&                           team_;
+    const kernel::HierarchyLevel_ABC&           level_;
+    kernel::Formation_ABC*                      parent_;
+    tools::Resolver< kernel::Formation_ABC >    formations_;
+    tools::Resolver< kernel::Automat_ABC >      automats_;
     //@}
 };
 

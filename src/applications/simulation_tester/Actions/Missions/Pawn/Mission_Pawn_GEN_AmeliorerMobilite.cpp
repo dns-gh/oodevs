@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_AmeliorerMobilite::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_AmeliorerMobilite& asnMission = *new ASN1T_Mission_Pion_GEN_AmeliorerMobilite();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_ameliorer_mobilite;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_ameliorer_mobilite = &asnMission;
+    Mission_Pion_GEN_AmeliorerMobilite& asnMission = *new Mission_Pion_GEN_AmeliorerMobilite();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_ameliorer_mobilite = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_GEN_AmeliorerMobilite::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_AmeliorerMobilite::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_ameliorer_mobilite );
-    ASN1T_Mission_Pion_GEN_AmeliorerMobilite& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_ameliorer_mobilite;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_ameliorer_mobilite ());
+    Mission_Pion_GEN_AmeliorerMobilite& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_ameliorer_mobilite;
 
     ASN_Tools::Delete( asnMission.zone );
 

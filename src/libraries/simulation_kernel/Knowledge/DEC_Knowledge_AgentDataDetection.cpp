@@ -21,6 +21,7 @@
 #include "Tools/MIL_Tools.h"
 #include "Network/NET_ASN_Tools.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentDataDetection )
 
@@ -63,7 +64,7 @@ DEC_Knowledge_AgentDataDetection::~DEC_Knowledge_AgentDataDetection()
 // Name: DEC_Knowledge_AgentDataDetection::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> nTimeLastUpdate_
          >> vPosition_
@@ -75,8 +76,8 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
          >> bRefugeeManaged_
          >> bDead_;
          
-    uint nID;
-    uint nNbr;
+    unsigned int nID;
+    unsigned int nNbr;
     file >> nNbr;
     while ( nNbr-- )
     {
@@ -104,7 +105,7 @@ void DEC_Knowledge_AgentDataDetection::load( MIL_CheckPointInArchive& file, cons
 // Name: DEC_Knowledge_AgentDataDetection::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_AgentDataDetection::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << nTimeLastUpdate_
          << vPosition_
@@ -258,76 +259,72 @@ void DEC_Knowledge_AgentDataDetection::Extrapolate( const MIL_Agent_ABC& agentKn
 // Name: DEC_Knowledge_AgentDataDetection::SendFullState
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::SendFullState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataDetection::SendFullState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
 {
-    asnMsg.m.positionPresent = 1;
-    NET_ASN_Tools::WritePoint( vPosition_, asnMsg.position );
+    NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );
 
-    asnMsg.m.directionPresent = 1;
-    NET_ASN_Tools::WriteDirection( vDirection_, asnMsg.direction );
 
-    asnMsg.m.speedPresent = 1;
-    asnMsg.speed = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+    NET_ASN_Tools::WriteDirection( vDirection_, *asnMsg.mutable_direction() );
 
-    asnMsg.m.renduPresent = 1;
-    asnMsg.rendu          = pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0;
 
-    asnMsg.m.prisonnierPresent = 1;
-    asnMsg.prisonnier          = bPrisoner_;
+    asnMsg.set_speed( (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
 
-    asnMsg.m.refugie_pris_en_comptePresent = 1;
-    asnMsg.refugie_pris_en_compte          = bRefugeeManaged_;
 
-    asnMsg.m.mortPresent = 1;
-    asnMsg.mort          = bDead_;
+    asnMsg.set_rendu( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
+
+
+    asnMsg.set_prisonnier( bPrisoner_ );
+
+
+    asnMsg.set_refugie_pris_en_compte( bRefugeeManaged_ );
+
+
+    asnMsg.set_mort( bDead_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_AgentDataDetection::SendChangedState
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentDataDetection::SendChangedState( ASN1T_MsgUnitKnowledgeUpdate& asnMsg ) const
+void DEC_Knowledge_AgentDataDetection::SendChangedState( MsgsSimToClient::MsgUnitKnowledgeUpdate& asnMsg ) const
 {
     if( bPositionUpdated_ )
     {
-        asnMsg.m.positionPresent = 1;
-        NET_ASN_Tools::WritePoint( vPosition_, asnMsg.position );
+        NET_ASN_Tools::WritePoint( vPosition_, *asnMsg.mutable_position() );
     }
 
     if( bDirectionUpdated_ )
     {
-        asnMsg.m.directionPresent = 1;
-        NET_ASN_Tools::WriteDirection( vDirection_, asnMsg.direction );
+        NET_ASN_Tools::WriteDirection( vDirection_, *asnMsg.mutable_direction() );
     }
 
     if( bSpeedUpdated_ )
     {
-        asnMsg.m.speedPresent = 1;
-        asnMsg.speed = (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+
+        asnMsg.set_speed( (int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     }
 
     if( bSurrenderedUpdated_ )
     {
-        asnMsg.m.renduPresent = 1;
-        asnMsg.rendu          = pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0;
+
+        asnMsg.set_rendu( pArmySurrenderedTo_ ? pArmySurrenderedTo_->GetID() : 0 );
     }
     
     if( bPrisonerUpdated_ )
     {
-        asnMsg.m.prisonnierPresent = 1;
-        asnMsg.prisonnier          = bPrisoner_;
+        
+        asnMsg.set_prisonnier( bPrisoner_ );
     }
     
     if( bRefugeeManagedUpdated_ )
     {
-        asnMsg.m.refugie_pris_en_comptePresent = 1;
-        asnMsg.refugie_pris_en_compte = bRefugeeManaged_;
+        
+        asnMsg.set_refugie_pris_en_compte( bRefugeeManaged_ );
     }
 
     if( bDeadUpdated_ )
     {
-        asnMsg.m.mortPresent = 1;
-        asnMsg.mort          = bDead_;
+        asnMsg.set_mort( bDead_ );
     }
 }
 
@@ -454,7 +451,7 @@ const T_ComposanteVolumeSet& DEC_Knowledge_AgentDataDetection::GetVisionVolumes(
 // Name: DEC_Knowledge_AgentDataDetection::GetTimeLastUpdate
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_AgentDataDetection::GetTimeLastUpdate() const
+unsigned int DEC_Knowledge_AgentDataDetection::GetTimeLastUpdate() const
 {
     return nTimeLastUpdate_;
 }

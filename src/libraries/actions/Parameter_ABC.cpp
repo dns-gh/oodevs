@@ -173,20 +173,20 @@ void Parameter_ABC::CommitTo( std::string& content ) const
 // Name: Parameter_ABC::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Parameter_ABC::CommitTo( ASN1T_MissionParameter& asn ) const
+void Parameter_ABC::CommitTo( Common::MsgMissionParameter& message ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->CommitTo( asn );    
+        it->second->CommitTo( message );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: Parameter_ABC::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Parameter_ABC::Clean( ASN1T_MissionParameter& asn ) const
+void Parameter_ABC::Clean( Common::MsgMissionParameter& message ) const
 {
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        it->second->Clean( asn );
+        it->second->Clean( message );
 }
 
 // -----------------------------------------------------------------------------

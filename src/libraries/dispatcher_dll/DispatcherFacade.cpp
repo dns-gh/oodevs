@@ -10,10 +10,10 @@
 #include "DispatcherFacade.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Dispatcher.h"
+#include "bml_plugin/BmlPluginFactory.h"
 #include "hla_plugin/HlaPluginFactory.h"
 #include "dis_plugin/DisPluginFactory.h"
 #include "tic_plugin/TicPluginFactory.h"
-#include "bml_plugin/BmlPluginFactory.h"
 #ifdef CROSSBOW_PLUGIN
 #   include "crossbow_plugin/CrossbowPluginFactory.h"
 #endif
@@ -39,11 +39,10 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv )
         dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new dis::DisPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new tic::TicPluginFactory() );
-        dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
 #ifdef CROSSBOW_PLUGIN
         dispatcher_->RegisterPluginFactory( *new crossbow::CrossbowPluginFactory() );
 #endif
-
+        dispatcher_->RegisterPluginFactory( *new bml::BmlPluginFactory() );
         dispatcher_->CreatePlugins();
     }
     catch( std::exception& e )

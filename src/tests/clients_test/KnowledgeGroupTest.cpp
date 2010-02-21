@@ -23,8 +23,6 @@
 #include "clients_kernel/KnowledgeGroupType.h"
 #include "clients_kernel/Team_ABC.h"
 
-#include "game_asn/generated/KnowledgeGroup.h"
-
 #include "XmlChecks.h"
 #include "MockResolver.h"
 

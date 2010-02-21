@@ -42,7 +42,7 @@ public:
 
     //! @name Accessors
     //@{
-          uint                      GetMosID            () const;
+          unsigned int                      GetMosID            () const;
     const PHY_DotationType&         GetType             () const;
     const std::string&              GetName             () const;
     const PHY_AmmoDotationClass*    GetAmmoDotationClass() const;
@@ -108,7 +108,7 @@ private:
     const PHY_DotationNature*       pNature_;
 
     std::string strName_;
-    uint        nMosID_;
+    unsigned int        nMosID_;
         
     // Packaging
     MT_Float rWeight_;

@@ -1,0 +1,22 @@
+package MsgsPluginToClient;
+
+import "MessengerToClient.proto";
+
+message MsgPluginTextMessage {
+   required string destinataire = 1;
+   required string message      = 2;
+}
+
+message MsgPluginToClient {
+    message Content {
+        optional MsgPluginTextMessage                               plugin_text_message             = 1;
+        optional MsgsMessengerToClient.MsgIntelligenceCreation      plugin_intelligence_creation    = 2;
+        optional MsgsMessengerToClient.MsgIntelligenceUpdate        plugin_intelligence_update      = 3;
+        optional MsgsMessengerToClient.MsgIntelligenceDestruction   plugin_intelligence_destruction = 4;
+        optional MsgsMessengerToClient.MsgLimitCreation             plugin_limit_creation           = 5;
+        optional MsgsMessengerToClient.MsgLimitUpdate               plugin_limit_update             = 6;
+        optional MsgsMessengerToClient.MsgLimitDestruction          plugin_limit_destruction        = 7;
+    }
+    optional int32   context = 1 [default = 0];
+    required Content message = 2;
+}

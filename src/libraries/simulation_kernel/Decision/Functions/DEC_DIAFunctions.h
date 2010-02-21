@@ -29,7 +29,7 @@ public:
     static std::string PointToString    ( MT_Vector2D* p1 );
     static std::string DirectionToString( MT_Vector2D* p1 );
     static std::string PathToString     ( DEC_Path_ABC* pPath );
-    static void BreakForDebug           ( uint id, const std::string& message );
+    static void BreakForDebug           ( unsigned int id, const std::string& message );
 
     // DIA user types list manipulation
     static boost::shared_ptr< MT_Vector2D > ListPoint_GetAt( std::vector< MT_Vector2D* > list, int nId );

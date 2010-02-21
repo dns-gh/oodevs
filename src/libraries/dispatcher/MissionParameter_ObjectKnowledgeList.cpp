@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_ObjectKnowledgeList.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,11 +18,11 @@ using namespace dispatcher;
 // Name: MissionParameter_ObjectKnowledgeList constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_ObjectKnowledgeList::MissionParameter_ObjectKnowledgeList( const ASN1T_MissionParameter& asn )
+MissionParameter_ObjectKnowledgeList::MissionParameter_ObjectKnowledgeList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    std::copy( asn.value.u.objectKnowledgeList->elem, asn.value.u.objectKnowledgeList->elem + asn.value.u.objectKnowledgeList->n
-             , std::back_inserter( objectKnowledges_ ) );
+    for( int i = 0; i < asn.value().objectknowledgelist().elem_size(); ++i )
+        objectKnowledges_.push_back( asn.value().objectknowledgelist().elem( i ).oid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,22 +38,18 @@ MissionParameter_ObjectKnowledgeList::~MissionParameter_ObjectKnowledgeList()
 // Name: MissionParameter_ObjectKnowledgeList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_ObjectKnowledgeList::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_ObjectKnowledgeList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value = bNullValue_;
-    asn.value.t = T_MissionParameter_value_objectKnowledgeList;
-    asn.value.u.objectKnowledgeList = new ASN1T_ObjectKnowledgeList();
-    {
-        asn.value.u.objectKnowledgeList->n = objectKnowledges_.size();
-        asn.value.u.objectKnowledgeList->elem = (int*)( objectKnowledges_.empty() ? 0 : &objectKnowledges_.front() );
-    }
+    asn.set_null_value ( bNullValue_ );
+    for( std::vector< int >::const_iterator it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
+        asn.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_oid( *it );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_ObjectKnowledgeList::AsnDelete
+// Name: MissionParameter_ObjectKnowledgeList::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_ObjectKnowledgeList::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_ObjectKnowledgeList::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.objectKnowledgeList;
+    asn.mutable_value()->clear_objectknowledgelist();
 }

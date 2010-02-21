@@ -21,7 +21,7 @@ struct MT_Shared
     MT_Shared()        { count_ = 1; }
     void ref()        { count_++; }
     bool deref()    { return !--count_; }
-    uint count_;
+    unsigned int count_;
 };
 
 #endif // __MT_Shared_h_

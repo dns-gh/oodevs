@@ -41,13 +41,13 @@ Action_Magic_Move::~Action_Magic_Move()
 // -----------------------------------------------------------------------------
 void Action_Magic_Move::Serialize()
 {
-    ASN1T_CoordUTM* pCoordUTM = new ASN1T_CoordUTM();
+    CoordUTM* pCoordUTM = new CoordUTM();
     ASN_Tools::CopyPoint( pTarget_->GetTestParam_Point(), *pCoordUTM );
 
     // build din/asn msg
     asnMsg_.GetAsnMsg().oid              = pTarget_->GetId();
     asnMsg_.GetAsnMsg().action.t         = T_MsgUnitMagicAction_action_move_to;
-    asnMsg_.GetAsnMsg().action.u.move_to = pCoordUTM;
+    asnMsg_.GetAsnMsg().action().move_to = pCoordUTM;
 }
 
 // -----------------------------------------------------------------------------
@@ -65,5 +65,5 @@ void Action_Magic_Move::Send( const Scheduler& /*scheduler*/ )
 // -----------------------------------------------------------------------------
 void Action_Magic_Move::Clean()
 {
-    delete asnMsg_.GetAsnMsg().action.u.move_to;
+    delete asnMsg_.GetAsnMsg().action().move_to;
 }

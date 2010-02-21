@@ -13,17 +13,18 @@
 #include "DEC_Knowledge_PopulationFlowPerception.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "MIL_AgentServer.h"
-#include "Network/NET_AgentServer.h"
-#include "Network/NET_ASN_Messages.h"
-#include "Network/NET_ASN_Tools.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-#include "game_asn/ASN_Delete.h"
+#include "Network/NET_AgentServer.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/clientsenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationFlowPerception )
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPerception constructor
@@ -68,14 +69,14 @@ DEC_Knowledge_PopulationFlowPerception::~DEC_Knowledge_PopulationFlowPerception(
 // Name: DEC_Knowledge_PopulationFlowPerception::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> const_cast< DEC_Knowledge_PopulationPerception*& >( pPopulationKnowledge_ )
          >> pPopulationFlowPerceived_
          >> shape_
          >> previousShape_;
 
-    uint nID;
+    unsigned int nID;
     file >> nID;
     pCurrentPerceptionLevel_ = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
 
@@ -87,7 +88,7 @@ void DEC_Knowledge_PopulationFlowPerception::load( MIL_CheckPointInArchive& file
 // Name: DEC_Knowledge_PopulationFlowPerception::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_PopulationFlowPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     unsigned current  = pCurrentPerceptionLevel_->GetID(),
              previous = pPreviousPerceptionLevel_->GetID();
@@ -222,13 +223,14 @@ void DEC_Knowledge_PopulationFlowPerception::SendStateToNewClient() const
 {
     assert( pPopulationKnowledge_ );
     assert( pPopulationFlowPerceived_ );
-    NET_ASN_MsgPopulationFlowDetection asn;
-    asn().oid            = pPopulationKnowledge_->GetAgentPerceiving().GetID();
-    asn().population_oid = pPopulationKnowledge_->GetPopulationPerceived().GetID();
-    asn().flow_oid       = pPopulationFlowPerceived_->GetID();
-    NET_ASN_Tools::WritePath( shape_, asn().visible_flow );
-    asn.Send();
-    ASN_Delete::Delete( asn().visible_flow );
+
+    client::PopulationFlowDetection asn;
+    asn().set_oid( pPopulationKnowledge_->GetAgentPerceiving().GetID() );
+    asn().set_population_oid( pPopulationKnowledge_->GetPopulationPerceived().GetID() );
+    asn().set_flow_oid( pPopulationFlowPerceived_->GetID() );
+    NET_ASN_Tools::WritePath( shape_, *asn().mutable_visible_flow() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn().clear_visible_flow();
 }
 
 // -----------------------------------------------------------------------------

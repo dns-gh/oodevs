@@ -27,9 +27,13 @@
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
-#include "game_asn/SimulationSenders.h"
 #include "gaming/Attributes.h"
+#include "protocol/simulationsenders.h"
+#include <google/protobuf/Message.h>
+#include <google/protobuf/Descriptor.h>
+#include <boost/foreach.hpp>
 
+using namespace Common;
 using namespace kernel;
 using namespace gui;
 
@@ -148,10 +152,13 @@ namespace
         MagicFunctor( Publisher_ABC& publisher, int id ) : publisher_( publisher ), id_( id ) {};
         void operator()( const Agent_ABC& agent ) const
         {
-            simulation::UnitMagicAction asnMsg;
-            asnMsg().oid      = agent.GetId();
-            asnMsg().action.t = id_;
-            asnMsg.Send( publisher_ );
+            simulation::UnitMagicAction magicAction;
+            magicAction().set_oid( agent.GetId() );
+            const google::protobuf::Reflection* reflect = magicAction().mutable_action()->GetReflection();
+            const google::protobuf::Descriptor* descriptor = magicAction().mutable_action()->GetDescriptor();
+            const google::protobuf::FieldDescriptor* field = descriptor->FindFieldByNumber( id_ );
+            reflect->SetInt32(magicAction().mutable_action(), field, 1);
+            magicAction.Send( publisher_ );
         }
     private:
         MagicFunctor& operator=( const MagicFunctor& );
@@ -201,10 +208,10 @@ void UnitMagicOrdersInterface::DestroyComponent()
 {
     if( selectedEntity_ )
     {
-        simulation::UnitMagicAction asnMsg;
-        asnMsg().oid      = selectedEntity_->GetId();
-        asnMsg().action.t = T_MsgUnitMagicAction_action_destruction_composante;
-        asnMsg.Send( publisher_ );
+        simulation::UnitMagicAction magicAction;
+        magicAction().set_oid( selectedEntity_->GetId() );
+        magicAction().mutable_action()->set_destruction_composante( 1 );
+        magicAction.Send( publisher_ );
     }
 }
 
@@ -229,10 +236,10 @@ void UnitMagicOrdersInterface::RecoverHumanTransporters()
 {
     if( selectedEntity_ )
     {
-        simulation::UnitMagicAction asnMsg;
-        asnMsg().oid      = selectedEntity_ ->GetId();
-        asnMsg().action.t = T_MsgUnitMagicAction_action_recuperer_transporteurs;
-        asnMsg.Send( publisher_ );
+        simulation::UnitMagicAction magicAction;
+        magicAction().set_oid( selectedEntity_ ->GetId() );
+        magicAction().mutable_action()->set_recuperer_transporteurs( 1 );
+        magicAction.Send( publisher_ );
     }
 }
 
@@ -244,11 +251,11 @@ void UnitMagicOrdersInterface::SurrenderTo( int id )
 {
     if( selectedEntity_ )
     {
-        simulation::UnitMagicAction asnMsg;
-        asnMsg().oid      = selectedEntity_->GetId();
-        asnMsg().action.t = T_MsgUnitMagicAction_action_se_rendre;
-        asnMsg().action.u.se_rendre = id;
-        asnMsg.Send( publisher_ );
+        simulation::UnitMagicAction magicAction;
+        magicAction().set_oid( selectedEntity_->GetId() );
+
+        magicAction().mutable_action()->set_se_rendre( id );
+        magicAction.Send( publisher_ );
     }
 }
 
@@ -287,11 +294,11 @@ void UnitMagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entit
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
 {
-    AddMagic( tr( "Recover - All" ),        T_MsgUnitMagicAction_action_recompletement_total,      magicMenu );
-    AddMagic( tr( "Recover - Troops" ),     T_MsgUnitMagicAction_action_recompletement_personnel,  magicMenu );
-    AddMagic( tr( "Recover - Equipments" ), T_MsgUnitMagicAction_action_recompletement_equipement, magicMenu );
-    AddMagic( tr( "Recover - Resources" ),  T_MsgUnitMagicAction_action_recompletement_ressources, magicMenu );
-    AddMagic( tr( "Destroy - All" ),        T_MsgUnitMagicAction_action_destruction_totale,        magicMenu );
+    AddMagic( tr( "Recover - All" ),        MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementTotalFieldNumber,      magicMenu );
+    AddMagic( tr( "Recover - Troops" ),     MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementPersonnelFieldNumber,  magicMenu );
+    AddMagic( tr( "Recover - Equipments" ), MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementEquipementFieldNumber, magicMenu );
+    AddMagic( tr( "Recover - Resources" ),  MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementRessourcesFieldNumber, magicMenu );
+    AddMagic( tr( "Destroy - All" ),        MsgsClientToSim::MsgUnitMagicAction_action::kDestructionTotaleFieldNumber,        magicMenu );
 }
 
 // -----------------------------------------------------------------------------
@@ -302,12 +309,11 @@ void UnitMagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
 {
     if( selectedEntity_ )
     {
-        ASN1T_CoordLatLong utm;
+        MsgCoordLatLong utm;
         static_.coordinateConverter_.ConvertToGeo( point, utm );
         simulation::UnitMagicAction message;
-        message().oid = selectedEntity_->GetId();
-        message().action.t = T_MsgUnitMagicAction_action_move_to;
-        message().action.u.move_to = &utm;
+        message().set_oid( selectedEntity_->GetId() );
+        *message().mutable_action()->mutable_move_to()->mutable_move_to() = utm;
         message.Send( publisher_, 56 );
         const_cast< kernel::Entity_ABC& >( *selectedEntity_ ).Update( message() );
     }
@@ -339,7 +345,7 @@ namespace
 void UnitMagicOrdersInterface::AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity )
 {
     if( IsSurrendered( entity ) )
-        AddMagic( tr( "Cancel surrender" ), T_MsgUnitMagicAction_action_annuler_reddition, parent );
+        AddMagic( tr( "Cancel surrender" ), MsgsClientToSim::MsgUnitMagicAction_action::kAnnulerRedditionFieldNumber, parent );
     else
     {
         const kernel::Entity_ABC& team = entity.Get< kernel::TacticalHierarchies >().GetTop();

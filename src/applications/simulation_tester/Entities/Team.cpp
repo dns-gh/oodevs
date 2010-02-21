@@ -107,7 +107,7 @@ E_Tristate Team::IsNeutral( const Team& team ) const
 // Name: Team::SetRelation
 // Created: SBO 2005-05-16
 // -----------------------------------------------------------------------------
-void Team::SetRelation( Team& otherTeam, ASN1T_EnumDiplomacy diplomacy )
+void Team::SetRelation( Team& otherTeam, EnumDiplomacy diplomacy )
 {
     switch( diplomacy )
     {
@@ -132,9 +132,9 @@ void Team::SetRelation( Team& otherTeam, ASN1T_EnumDiplomacy diplomacy )
 // Name: Team::OnReceiveMsgObjectKnowledgeCreation
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
+void Team::OnReceiveMsgObjectKnowledgeCreation( const MsgObjectKnowledgeCreation& asnMsg )
 {
-    if( knownObjects_.find( asnMsg.oid_connaissance ) != knownObjects_.end() )
+    if( knownObjects_.find( asnMsg.oid_connaissance() ) != knownObjects_.end() )
         return;
     ObjectKnowledge* pKnownObject = new ObjectKnowledge( entityManager_, asnMsg, *this );
     bool bOut = knownObjects_.insert( std::make_pair( pKnownObject->GetId(), pKnownObject ) ).second;
@@ -145,7 +145,7 @@ void Team::OnReceiveMsgObjectKnowledgeCreation( const ASN1T_MsgObjectKnowledgeCr
 // Name: Team::OnReceiveMsgObjectKnowledgeUpdate
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Team::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpdate& /*asnMsg*/ )
+void Team::OnReceiveMsgObjectKnowledgeUpdate( const MsgObjectKnowledgeUpdate& /*asnMsg*/ )
 {
     //$$$ TODO
 }
@@ -154,10 +154,10 @@ void Team::OnReceiveMsgObjectKnowledgeUpdate( const ASN1T_MsgObjectKnowledgeUpda
 // Name: Team::OnReceiveMsgObjectKnowledgeDestruction
 // Created: SBO 2005-08-08
 // -----------------------------------------------------------------------------
-void Team::OnReceiveMsgObjectKnowledgeDestruction( const ASN1T_MsgObjectKnowledgeDestruction& asnMsg )
+void Team::OnReceiveMsgObjectKnowledgeDestruction( const MsgObjectKnowledgeDestruction& asnMsg )
 {
-    delete knownObjects_[ asnMsg.oid_connaissance ];
-    knownObjects_.erase( asnMsg.oid_connaissance );
+    delete knownObjects_[ asnMsg.oid_connaissance() ];
+    knownObjects_.erase( asnMsg.oid_connaissance() );
 }
 
 // -----------------------------------------------------------------------------

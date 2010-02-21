@@ -11,6 +11,7 @@
 #include "IntelligenceList.h"
 #include "Intelligence.h"
 #include "ParameterVisitor_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -43,12 +44,13 @@ IntelligenceList::IntelligenceList( const OrderParameter& parameter, const Coord
 // Name: IntelligenceList constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-IntelligenceList::IntelligenceList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_IntelligenceList& asn
-                                                                , const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
+
+IntelligenceList::IntelligenceList( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgIntelligenceList& message
+                                   , const tools::Resolver_ABC< Formation_ABC >& resolver, const FormationLevels& levels, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Intelligence( OrderParameter( tools::translate( "Parameter", "Intelligence %1" ).arg( i ).ascii(), "intelligence", true ), converter, resolver, levels, asn.elem[i], controller ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddParameter( *new Intelligence( OrderParameter( tools::translate( "Parameter", "Intelligence %1" ).arg( i ).ascii(), "intelligence", true ), converter, resolver, levels, message.elem(i), controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -73,13 +75,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_IntelligenceList& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( Common::MsgIntelligenceList& message ) : message_( &message ) {}
         virtual void Visit( const Intelligence& param )
         {
-            param.CommitTo( asn_->elem[current_++] );
+            param.CommitTo( *message_->add_elem() );
         }
-        ASN1T_IntelligenceList* asn_;
-        unsigned int current_;
+        Common::MsgIntelligenceList* message_;
     };
 }
 
@@ -88,46 +89,24 @@ namespace
 // Name: IntelligenceList::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void IntelligenceList::CommitTo( ASN1T_MissionParameter& asn ) const
+void IntelligenceList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_intelligenceList;
-    ASN1T_IntelligenceList*& list = asn.value.u.intelligenceList = new ASN1T_IntelligenceList();
-    list->n = Count();
+    message.set_null_value( !IsSet() );
+    Common::MsgIntelligenceList* list = message.mutable_value()->mutable_intelligencelist();
     if( IsSet() )
     {
-        list->elem = new ASN1T_Intelligence[list->n];
         AsnSerializer serializer( *list );
         Accept( serializer );
     }
-}
-
-namespace
-{
-    struct AsnCleaner : public ParameterVisitor_ABC
-    {
-        explicit AsnCleaner( ASN1T_IntelligenceList& asn ) : asn_( &asn ), current_( 0 ) {}
-        virtual void Visit( const Intelligence& param )
-        {
-            param.Clean( asn_->elem[current_++] );
-        }
-        ASN1T_IntelligenceList* asn_;
-        unsigned int current_;
-    };
 }
 
 // -----------------------------------------------------------------------------
 // Name: IntelligenceList::Clean
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void IntelligenceList::Clean( ASN1T_MissionParameter& asn ) const
+void IntelligenceList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.intelligenceList )
-    {
-        AsnCleaner cleaner( *asn.value.u.intelligenceList );
-        Accept( cleaner );
-        delete[] asn.value.u.intelligenceList;
-    }
+    message.mutable_value()->clear_intelligencelist();
 }
 
 // -----------------------------------------------------------------------------

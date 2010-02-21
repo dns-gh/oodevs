@@ -28,7 +28,7 @@ namespace events
 
         explicit Event( const Extractor& extractor = Extractor() )
             : extractor_( extractor ) {}
-        void Receive( const ASN1T_MsgsSimToClient& message )
+        void Receive( const MsgSimToClient& message )
         {
             if( extractor_.HasValue( message ) )
                 Set( extractor_.Extract( message ) );

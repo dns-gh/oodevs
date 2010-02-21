@@ -10,7 +10,23 @@
 #ifndef __OrderParameterSerializer_h_
 #define __OrderParameterSerializer_h_
 
-#include "game_asn/Simulation.h"
+namespace Common
+{
+    class MsgMissionParameter;
+    class MsgObjectKnowledge;
+    class MsgUnitKnowledge;
+    class MsgIntelligenceList;
+    class MsgHeading;
+    class MsgLimasOrder;
+    class MsgLimaOrder;
+    class MsgMissionObjective;
+    class MsgMissionObjectiveList;
+    class MsgUnit;
+    class MsgLine;
+    class MsgAutomat;
+    class MsgLocation;
+    class MsgPointList;
+}
 
 namespace kernel
 {
@@ -31,7 +47,7 @@ namespace plugins
 {
 namespace crossbow
 {
-        class OrderParameterTypeResolver;
+    class OrderParameterTypeResolver;
     class Database_ABC;
     class Row_ABC;
     class Table_ABC;
@@ -48,14 +64,14 @@ class OrderParameterSerializer
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit OrderParameterSerializer( Database_ABC& database, const dispatcher::Model_ABC& model );
+             OrderParameterSerializer( Database_ABC& database, const dispatcher::Model_ABC& model );
     virtual ~OrderParameterSerializer();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( ASN1T_MissionParameter& asn, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const;
-    void Clean( ASN1T_MissionParameter& asn ) const;
+    void Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const;
+    void Clean( Common::MsgMissionParameter& message ) const;
     //@}
 
 private:
@@ -67,29 +83,35 @@ private:
 
     //! @name Helpers
     //@{
-    void SerializePhaseLines( ASN1T_LimasOrder*& asn, unsigned long parameterId, const std::string& tablename ) const;
-    void SerializePhaseLine( ASN1T_LimaOrder& asn, const std::string& value ) const;
-    void SerializeDirection( ASN1T_Heading& asn, const std::string& value ) const;
-    void SerializeIntelligenceList( ASN1T_IntelligenceList*& asn, const std::string& value ) const;
+    void SerializePhaseLines( Common::MsgLimasOrder& message, unsigned long parameterId, const std::string& tablename ) const;
+    void SerializePhaseLine( Common::MsgLimaOrder& message, const std::string& value ) const;
+    void SerializeDirection( Common::MsgHeading& message, const std::string& value ) const;
+    void SerializeIntelligenceList( Common::MsgIntelligenceList& message, const std::string& value ) const;
 
-    void SerializeUnit( ASN1T_Unit& asn, const std::string& value ) const;
-    void SerializeAutomat( ASN1T_Automat& asn, const std::string& value ) const;
-    void SerializeUnitKnowledge( ASN1T_UnitKnowledge& asn, const std::string& value ) const;
-    void SerializeObjectKnowledge( ASN1T_ObjectKnowledge& asn, const std::string& value ) const;
-    void SerializeBool( ASN1BOOL& asn, const std::string& value ) const;
-    void SerializeMissionObjective( ASN1T_MissionObjective*& asn, const std::string& value ) const;
-    void SerializeMissionObjectiveList( ASN1T_MissionObjectiveList*& asn, const std::string& value ) const;
+    void SerializeUnit( Common::MsgUnit& message, const std::string& value ) const;
+    void SerializeAutomat( Common::MsgAutomat& message, const std::string& value ) const;
+    void SerializeUnitKnowledge( Common::MsgUnitKnowledge& message, const std::string& value ) const;
+    void SerializeObjectKnowledge( Common::MsgObjectKnowledge& message, const std::string& value ) const;
+    void SerializeBool( bool& message, const std::string& value ) const;
+    void SerializeMissionObjective( Common::MsgMissionObjective& message, const std::string& value ) const;
+    void SerializeMissionObjectiveList( Common::MsgMissionObjectiveList& message, const std::string& value ) const;
     template< typename T >
-    void SerializeLocation( T*& asn, unsigned long parameterId, const std::string& value ) const;
+    void SerializeLocation( T& message, unsigned long parameterId, const std::string& value ) const;
     template< typename T >
-    void SerializeLocationList( T*& asn, unsigned long parameterId, const std::string& value ) const;
+    void SerializeLocationList( T& message, unsigned long parameterId, const std::string& value ) const;
+    
     template< typename T >
-    void SerializeLocation( T*& asn, const Row_ABC* row ) const;
+    void SerializeLocList( T& message, unsigned long parameterId, const std::string& tablename ) const;
+
+    template< typename T >
+    void SerializeLocation( T& message, const Row_ABC* row ) const;
+
+    void CleanLocation( Common::MsgLocation*& message ) const;
     //@}
 
     //! @name Helper
     //@{
-    void FillLocationlist( std::vector< ASN1T_Location* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const;
+    void FillLocationlist( std::vector< Common::MsgLocation* >& locations, boost::shared_ptr< Table_ABC > table, unsigned long oid ) const;
     //@}
 
 private:

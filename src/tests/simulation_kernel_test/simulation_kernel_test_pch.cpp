@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
+#include <google/protobuf/message.h>
 #include <string>
 
 namespace
@@ -29,6 +30,7 @@ namespace
 ::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
     set_data_directory( argc, argv );
+    GOOGLE_PROTOBUF_VERIFY_VERSION;
     return 0;
 }
 

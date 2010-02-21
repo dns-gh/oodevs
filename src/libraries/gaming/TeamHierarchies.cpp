@@ -8,11 +8,12 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
+#include "KnowledgeGroupFactory_ABC.h"
 #include "TeamHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "KnowledgeGroupFactory_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -42,9 +43,9 @@ TeamHierarchies::~TeamHierarchies()
 // Name: TeamHierarchies::DoUpdate
 // Created: AGE 2006-10-09
 // -----------------------------------------------------------------------------
-void TeamHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupCreation& message )
+void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
 {
-    if( ! Find( message.oid ) )
+    if( ! Find( message.oid() ) )
         factory_.CreateKnowledgeGroup( message, holder_ ); // LTO
 }
 
@@ -52,6 +53,6 @@ void TeamHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupCreation& message )
 // Name: TeamHierarchies::DoUpdate
 // Created: AGE 2006-10-09
 // -----------------------------------------------------------------------------
-void TeamHierarchies::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
+void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
 }

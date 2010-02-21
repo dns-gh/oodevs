@@ -10,8 +10,13 @@
 #ifndef __IntelligencesModel_h_
 #define __IntelligencesModel_h_
 
-#include "game_asn/Messenger.h"
+
 #include "tools/Resolver.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsClientToMessenger;
+using namespace MsgsMessengerToClient;
 
 namespace dispatcher
 {
@@ -55,15 +60,15 @@ public:
 
     //! @name Network
     //@{
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceCreationRequest&     asn );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceUpdateRequest&       asn );
-    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceDestructionRequest&  asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceCreationRequest&     asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceUpdateRequest&       asn );
+    void HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceDestructionRequest&  asn );
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
     //@}
 
     //! @name xml read / write
     //@{
-    void ReadIntelligence( xml::xistream& xis, const ASN1T_Formation& formation );
+    void ReadIntelligence( xml::xistream& xis, const MsgFormation& formation );
     void Write           ( xml::xostream& xos );
     //@}
 

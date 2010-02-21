@@ -10,8 +10,11 @@
 #include "crossbow_plugin_pch.h"
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
-#include "game_asn/Simulation.h"
+
 #include <xeumeuleu/xml.h>
+#include "protocol/protocol.h"
+
+using namespace Common;
 
 using namespace xml;
 using namespace plugins;
@@ -27,7 +30,7 @@ ReportTemplate::ReportTemplate( xml::xistream& xis, const ReportFactory& factory
     std::string message;
     xis >> attribute( "id", (int&)id_ )
         >> attribute( "message", message )
-        >> list( "parameter", *this, &ReportTemplate::ReadParameter );
+        >> xml::list( "parameter", *this, &ReportTemplate::ReadParameter );
     message_ = message.c_str();
 }
 
@@ -67,16 +70,16 @@ namespace
 // Name: ReportTemplate::RenderMessage
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-std::string ReportTemplate::RenderMessage( const ASN1T_MissionParameters& asn ) const
+std::string ReportTemplate::RenderMessage( const MsgMissionParameters& message ) const
 {
-    std::string message = message_;
+    std::string content = message_;
     unsigned int enums = 0;
-    for( unsigned int i = 0; i < asn.n; ++i )
-        if( asn.elem[i].value.t == T_MissionParameter_value_enumeration )
-            SetParameter( message, i + 1, enumerations_[enums++][asn.elem[i].value.u.enumeration] );
+    for( int i = 0; i < message.elem_size(); ++i )
+        if( message.elem(i).value().has_enumeration() )
+            SetParameter( content, i + 1, enumerations_[enums++][message.elem(i).value().enumeration()] );
         else
-            SetParameter( message, i + 1, factory_.RenderParameter( asn.elem[i] ) );
-    return message;
+            SetParameter( content, i + 1, factory_.RenderParameter( message.elem(i) ) );
+    return content;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +96,7 @@ void ReportTemplate::ReadParameter( xml::xistream& xis )
     if( lstring == "enumeration" )
     {
         enumerations_.push_back( T_EnumerationValues() );
-        xis >> list( "value", *this, &ReportTemplate::ReadEnumeration );
+        xis >> xml::list( "value", *this, &ReportTemplate::ReadEnumeration );
     }
 }
 

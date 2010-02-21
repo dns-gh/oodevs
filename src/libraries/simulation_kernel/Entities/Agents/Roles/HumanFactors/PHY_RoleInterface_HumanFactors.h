@@ -14,6 +14,11 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class PHY_Morale;
 class PHY_Experience;
 class PHY_Tiredness;
@@ -60,6 +65,11 @@ public:
     virtual MT_Float ModifyPH                    ( MT_Float rPH       ) const = 0;
     //@}
 
+    //! @name Network
+    //@{
+    virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
+    //@}
 private:
     //! @name Serialization
     //@{

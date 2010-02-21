@@ -8,9 +8,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_PionOrderManager.h"
-
 #include "MIL_FragOrder.h"
 #include "MIL_PionMissionType.h"
 #include "MIL_PionMission.h"
@@ -23,6 +21,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Network/NET_AsnException.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationOrderManager constructor
@@ -30,8 +29,9 @@
 // -----------------------------------------------------------------------------
 MIL_PionOrderManager::MIL_PionOrderManager( MIL_AgentPion& pion )
     : MIL_OrderManager_ABC()
-    , pion_               ( pion )
+    , pion_( pion )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,25 +40,26 @@ MIL_PionOrderManager::MIL_PionOrderManager( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 MIL_PionOrderManager::~MIL_PionOrderManager()
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::OnReceiveMission
 // Created: NLD 2003-01-10
 //-----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveMission( const ASN1T_MsgUnitOrder& asnMsg )
+void MIL_PionOrderManager::OnReceiveMission( const Common::MsgUnitOrder& asnMsg )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_cannot_receive_order );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
 
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_surrendered );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
 
     // Instanciate and check the new mission
-    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( asnMsg.mission );
+    const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::Find( asnMsg.mission() );
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
 
     MIL_PionMission* pMission = new MIL_PionMission( *pMissionType, pion_, asnMsg );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
@@ -78,28 +79,24 @@ void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 // Name: MIL_PionOrderManager::OnReceiveFragOrder
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PionOrderManager::OnReceiveFragOrder( const ASN1T_MsgFragOrder& asn )
+void MIL_PionOrderManager::OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn )
 {
     if( pion_.GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_surrendered );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_surrendered );
 
     if( pion_.GetAutomate().IsEngaged() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_unit_cannot_receive_order );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_unit_cannot_receive_order );
 
-    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order );
+    const MIL_FragOrderType* pType = MIL_FragOrderType::Find( asn.frag_order() );
     if( !pType )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
 
     if( !pType->IsAvailableWithoutMission() && ( !GetCurrentMission() || !GetCurrentMission()->IsFragOrderAvailable( *pType ) ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_order_conduite );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_order_conduite );
 
     MIL_FragOrder* pFragOrder = new MIL_FragOrder( *pType, pion_.GetRole<DEC_Representations>(), pion_.GetKnowledge(), asn );
     pFragOrder->Launch();
 }
-
-// =============================================================================
-// MISC
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::GetFuseau

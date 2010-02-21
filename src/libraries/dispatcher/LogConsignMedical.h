@@ -10,8 +10,20 @@
 #ifndef __LogConsignMedical_h_
 #define __LogConsignMedical_h_
 
-#include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
+
+namespace Common
+{
+    enum EnumHumanRank;
+    enum EnumHumanWound;
+    enum EnumLogMedicalHandlingStatus;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgLogMedicalHandlingCreation;
+    class MsgLogMedicalHandlingUpdate;
+}
 
 namespace kernel
 {
@@ -35,14 +47,14 @@ class LogConsignMedical : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             LogConsignMedical( const Model& model, const ASN1T_MsgLogMedicalHandlingCreation& msg );
+             LogConsignMedical( const Model& model, const MsgsSimToClient::MsgLogMedicalHandlingCreation& msg );
     virtual ~LogConsignMedical();
     //@}
 
     //! @name Operations
     //@{
     using kernel::Entity_ABC::Update;
-    void Update( const ASN1T_MsgLogMedicalHandlingUpdate& msg );
+    void Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -63,11 +75,11 @@ private:
     const unsigned long      nTickCreation_;
 
     const kernel::Agent_ABC*         pTreatingAgent_;
-    ASN1T_EnumHumanRank              nRank_;
-    ASN1T_EnumHumanWound             nWound_;
+    Common::EnumHumanRank              nRank_;
+    Common::EnumHumanWound             nWound_;
     bool                             bMentalDiseased_;
     bool                             bContaminated_;
-    ASN1T_EnumLogMedicalHandlingStatus nState_;
+    Common::EnumLogMedicalHandlingStatus nState_;
     bool                             bDiagnosed_;
 };
 

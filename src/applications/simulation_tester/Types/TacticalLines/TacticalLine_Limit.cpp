@@ -42,16 +42,16 @@ TacticalLine_Limit::TacticalLine_Limit( XmlInputArchive& archive )
 // Name: TacticalLine_Limit constructor
 // Created: SBO 2005-08-09
 // -----------------------------------------------------------------------------
-TacticalLine_Limit::TacticalLine_Limit( const ASN1T_MsgLimitCreation& asnMsg )
+TacticalLine_Limit::TacticalLine_Limit( const MsgLimitCreation& asnMsg )
     : TacticalLine_ABC ()
 {
     nId_ = asnMsg.oid;
     idManager_.LockIdentifier( nId_ );
 
-    assert( asnMsg.geometrie.type == EnumLocationType::line );
-    for( uint i = 0; i != asnMsg.geometrie.vecteur_point.n ; ++i )
+    assert( asnMsg.geometrie.type() == EnumLocationType::line );
+    for( unsigned int i = 0; i != asnMsg.geometrie.vecteur_point.elem_size() ; ++i )
     {
-        Position* pPos = new Position( std::string( (const char*)asnMsg.geometrie.vecteur_point.elem[i].data, 15 ) );
+        Position* pPos = new Position( std::string( (const char*)asnMsg.geometrie.vecteur_point.elem[i].data,() 15 ) );
         points_.push_back( pPos );
     }
     bIsSyncWithSim_ = true;
@@ -83,9 +83,9 @@ void TacticalLine_Limit::UpdateToSim()
     asnMsg.GetAsnMsg().level                        = EnumNatureLevel::ooo;
     asnMsg.GetAsnMsg().geometrie.type               = EnumLocationType::line;
     asnMsg.GetAsnMsg().geometrie.vecteur_point.n    = points_.size();
-    asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new ASN1T_CoordUTM[ points_.size() ];
+    asnMsg.GetAsnMsg().geometrie.vecteur_point.elem = new CoordUTM[ points_.size() ];
 
-    uint i = 0;
+    unsigned int i = 0;
     for ( CIT_PositionVector it = points_.begin() ; it != points_.end() ; ++it )
     {
         std::string strMGRS = ( *it )->GetMgrsCoordinate();

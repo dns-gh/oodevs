@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Limit.h"
+#include "protocol/Protocol.h"
 
 using namespace actions::parameters;
 
@@ -16,8 +17,8 @@ using namespace actions::parameters;
 // Name: Limit constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Line& line )
-    : Location( parameter, converter, line )
+Limit::Limit( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLine& line )
+    : Location( parameter, converter, line.location() )
 {
     // NOTHING
 }
@@ -55,24 +56,22 @@ Limit::~Limit()
 // Name: Limit::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Limit::CommitTo( ASN1T_MissionParameter& asn ) const
+void Limit::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_line;
-    asn.value.u.line = new ASN1T_Line();
+    message.set_null_value( !IsSet() );    
+    message.mutable_value()->mutable_line()->mutable_location()->set_type( Common::MsgLocation::polygon );    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Location::CommitTo( *asn.value.u.line );
+        Location::CommitTo( *message.mutable_value()->mutable_line()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Limit::Clean( ASN1T_MissionParameter& asn ) const
+void Limit::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.line )
-        Location::Clean( *asn.value.u.line );
-    delete asn.value.u.line;
+    if( message.value().has_line() )
+        message.mutable_value()->clear_line();
 }
 
 // -----------------------------------------------------------------------------

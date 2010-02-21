@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "LogisticAttribute.h"
-
+#include "protocol/protocol.h"
 #include "Model.h"
 #include "Automat.h"
 
@@ -20,7 +20,7 @@ using namespace dispatcher;
 // Name: LogisticAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
+LogisticAttribute::LogisticAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , model_             ( model )
     , pTC2_              ( 0 )
@@ -41,29 +41,27 @@ LogisticAttribute::~LogisticAttribute()
 // Name: LogisticAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogisticAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void LogisticAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if ( asnMsg.m.logisticPresent )
-        pTC2_ = &model_.automats_.Get( asnMsg.logistic.tc2 );    
+    if ( asnMsg.has_logistic()  )
+        pTC2_ = &model_.automats_.Get( asnMsg.logistic().tc2() );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void LogisticAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void LogisticAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
     assert( pTC2_ );
-    
-    asnMsg.m.logisticPresent = 1;
-    asnMsg.logistic.tc2 = pTC2_->GetId();     
+    asnMsg.mutable_logistic()->set_tc2( pTC2_->GetId() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticAttribute::AsnDelete
+// Name: LogisticAttribute::Delete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void LogisticAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void LogisticAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
     // NOTHING
 }

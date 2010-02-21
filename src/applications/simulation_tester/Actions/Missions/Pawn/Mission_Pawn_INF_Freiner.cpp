@@ -43,9 +43,9 @@ void Mission_Pawn_INF_Freiner::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_Freiner& asnMission = *new ASN1T_Mission_Pion_INF_Freiner();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_freiner;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_freiner = &asnMission;
+    Mission_Pion_INF_Freiner& asnMission = *new Mission_Pion_INF_Freiner();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_freiner = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_INF_Freiner::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_Freiner::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_freiner );
-    ASN1T_Mission_Pion_INF_Freiner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_freiner;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_freiner ());
+    Mission_Pion_INF_Freiner& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_freiner;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

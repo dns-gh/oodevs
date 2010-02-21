@@ -20,7 +20,8 @@
 #include "dispatcher/Model.h"
 #include "dispatcher/Agent.h"
 #include "dispatcher/Automat.h"
-
+#include "protocol/simulationsenders.h"
+#include "protocol/clientsenders.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace plugins;
@@ -100,36 +101,6 @@ namespace
                 << " for [" << id << "]" << std::endl;
         return ssError.str();
     }
-
-    template< typename AsnType > 
-    class scoped_asn
-    {
-    public:
-        explicit scoped_asn( OrderParameterSerializer& serializer ) : serializer_ ( serializer ) {}
-        ~scoped_asn()
-        {
-            CleanParameters( asn_().parametres );
-        }
-        typename AsnType::T_AsnMsgType& operator()() 
-        {
-            return asn_();
-        }
-        
-        void Send( dispatcher::SimulationPublisher_ABC& publisher )
-        {
-            asn_.Send( publisher );
-        }
-
-    private:
-        void CleanParameters( ASN1T_MissionParameters& parameters )
-        {
-            for( unsigned int i = 0; i < parameters.n; ++i )
-                serializer_.Clean( parameters.elem[i] );
-        }
-    private:
-        OrderParameterSerializer& serializer_;
-        AsnType asn_;
-    };
 }
 
 // -----------------------------------------------------------------------------
@@ -151,16 +122,15 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         // DispatchFragOrder( publisher, agent.GetId(), row );
         return;
     }
-    
-    scoped_asn< simulation::UnitOrder > asn( *serializer_ );
+
+    simulation::UnitOrder message;
     try  
     {
         const long orderId = GetField< long >( row, "id" );
-        asn().oid = agent.GetId();
-        asn().mission = type->GetId();
-        SetParameters( asn().parametres, orderId, *type );
-        asn1Print_MsgUnitOrder( "DispatchMission", &asn() );
-        asn.Send( publisher );
+        message().set_oid( agent.GetId() );
+        message().set_mission( type->GetId() );
+        SetParameters( *message().mutable_parametres(), orderId, *type );
+        message.Send( publisher );
     }
     catch ( std::exception& e )
     {
@@ -182,15 +152,14 @@ void OrderDispatcher::DispatchMission( dispatcher::SimulationPublisher_ABC& publ
         return;
     }
 
-    scoped_asn< simulation::AutomatOrder > asn( *serializer_ );
+    simulation::AutomatOrder message;
     try
     {
         const long orderId = GetField< long >( row, "id" );
-        asn().oid = automat.GetId();
-        asn().mission = type->GetId();
-        SetParameters( asn().parametres, orderId, *type );
-        asn1Print_MsgAutomatOrder( "DispatchMission", &asn() );
-        asn.Send( publisher );
+        message().set_oid( automat.GetId() );
+        message().set_mission( type->GetId() );
+        SetParameters( *message().mutable_parametres(), orderId, *type );
+        message.Send( publisher );
     }
     catch ( std::exception& e )
     {
@@ -208,11 +177,11 @@ void OrderDispatcher::DispatchFragOrder( dispatcher::SimulationPublisher_ABC& pu
     if( !type )
         return; // $$$$ SBO 2007-06-07:
 
-    simulation::FragOrder asn;
-    asn().oid = targetId;
-    asn().frag_order = type->GetId();
-    asn().parametres.n = 0; // $$$$ SBO 2007-06-07: parameters not supported !
-    asn.Send( publisher );
+    simulation::FragOrder message;
+    message().set_oid( targetId );
+    message().set_frag_order( type->GetId() );
+    message().mutable_parametres(); // $$$$ SBO 2007-06-07: parameters not supported !
+    message.Send( publisher, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,19 +223,17 @@ const kernel::OrderType* OrderDispatcher::GetAutomatMission( const Row_ABC& row 
 // Name: OrderDispatcher::SetParameters
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameters( ASN1T_MissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type )
+void OrderDispatcher::SetParameters( Common::MsgMissionParameters& parameters, unsigned long orderId, const kernel::OrderType& type )
 {
     std::auto_ptr< Table_ABC > params_( database_.OpenTable( "OrderParameters" ) );
 
     Row_ABC* result = params_->Find( "order_id=" + boost::lexical_cast< std::string >( orderId ) );
-    parameters.n = type.Count();
-    parameters.elem = new ASN1T_MissionParameter[ parameters.n ];
-    for( unsigned int i = 0; result != 0 && i < parameters.n; ++i )
+    for( unsigned long i = 0; result != 0 && i < type.Count(); ++i )
     {
-        SetParameter( parameters.elem[i], *result, type );
+        SetParameter( *parameters.add_elem(), *result, type );
         result = params_->GetNextRow();
     }
-    // TODO : if ( i < parameters.n )
+    // TODO : if ( i < parameters.elem_size() )
 }
 
 namespace
@@ -289,14 +256,14 @@ namespace
 // Updated: JCR
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderDispatcher::SetParameter( ASN1T_MissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type )
+void OrderDispatcher::SetParameter( Common::MsgMissionParameter& parameter, const Row_ABC& row, const kernel::OrderType& type )
 {
     const std::string name( GetField< std::string >( row, "name" ) );
     const long parameterId = GetField< long >( row, "id" ); // OBJECTID
     try 
     {
         const kernel::OrderParameter* param = GetParameterByName( type, name );
-        parameter.null_value = param ? 0 : 1;
+        parameter.set_null_value( param ? 0 : 1 );
         if( param )
             serializer_->Serialize( parameter, *param, parameterId, GetField< std::string >( row, "value" ) );
     }

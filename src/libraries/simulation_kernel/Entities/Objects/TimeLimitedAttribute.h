@@ -13,40 +13,43 @@
 #include "ObjectAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
-class Object;
-
-class TimeLimitedAttribute
-    : public ObjectAttribute_ABC
+// =============================================================================
+/** @class  TimeLimitedAttribute
+    @brief  TimeLimitedAttribute
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
+class TimeLimitedAttribute : public ObjectAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              TimeLimitedAttribute();
     explicit TimeLimitedAttribute( xml::xistream& xis );
-    explicit TimeLimitedAttribute( uint nActivityTime );
-    explicit TimeLimitedAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit TimeLimitedAttribute( unsigned int nActivityTime );
+    explicit TimeLimitedAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~TimeLimitedAttribute();
     //@}
 
     //! @name CheckPoints
     //@{    
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name ODB
     //@{
-    void WriteODB( xml::xostream& /*xos*/ ) const;    
+    virtual void WriteODB( xml::xostream& /*xos*/ ) const;    
     //@}
 
     //! @name Network updates
     //@{
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
     //@}
 
     //! @name Accessors
     //@{
-    bool IsTimeOver( uint time ) const;
+    bool IsTimeOver( unsigned int time ) const;
     //@}
 
     //! @name Copy
@@ -63,8 +66,8 @@ private:
 private:
     //! @name 
     //@{
-    uint nActivityTime_;
-    mutable uint nDeathTimeStep_;
+    unsigned int nActivityTime_;
+    mutable unsigned int nDeathTimeStep_;
     //@}
 };
 

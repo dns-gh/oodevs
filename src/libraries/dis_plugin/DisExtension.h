@@ -12,9 +12,13 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+
 #include "hla_plugin/EntityIdentifier.h"
 #include "tic_plugin/PlatformVisitor_ABC.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace kernel
 {
@@ -42,7 +46,7 @@ namespace dis
 // Created: AGE 2008-03-10
 // =============================================================================
 class DisExtension : public kernel::Extension_ABC
-                   , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                   , public kernel::Updatable_ABC< MsgUnitAttributes >
                    , private tic::PlatformVisitor_ABC
 {
 
@@ -55,7 +59,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const MsgUnitAttributes& attributes );
     //@}
 
 private:

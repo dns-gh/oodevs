@@ -51,12 +51,12 @@ void AgentsModel::Purge()
 // Name: AgentsModel::CreateAutomat
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( const ASN1T_MsgAutomatCreation& asnMsg )
+void AgentsModel::CreateAutomat( const MsgsSimToClient::MsgAutomatCreation& message )
 {
-    if( !Resolver< Automat_ABC >::Find( asnMsg.oid ) )
+    if( !Resolver< Automat_ABC >::Find( message.oid() ) )
     {
-        Automat_ABC* pAgent = agentFactory_.Create( asnMsg );
-        tools::Resolver< Automat_ABC >::Register( asnMsg.oid, *pAgent );
+        Automat_ABC* pAgent = agentFactory_.Create( message );
+        tools::Resolver< Automat_ABC >::Register( message.oid(), *pAgent );
     }
 }
 
@@ -82,12 +82,12 @@ kernel::Automat_ABC* AgentsModel::FindAutomat( unsigned long id )
 // Name: AgentsModel::CreateAgent
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( const ASN1T_MsgUnitCreation& asnMsg )
+void AgentsModel::CreateAgent( const MsgsSimToClient::MsgUnitCreation& message )
 {
-    if( !Resolver< Agent_ABC >::Find( asnMsg.oid ) )
+    if( !Resolver< Agent_ABC >::Find( message.oid() ) )
     {
-        Agent_ABC* pAgent = agentFactory_.Create( asnMsg );
-        tools::Resolver< Agent_ABC >::Register( asnMsg.oid, *pAgent );
+        Agent_ABC* pAgent = agentFactory_.Create( message );
+        tools::Resolver< Agent_ABC >::Register( message.oid(), *pAgent );
     }
 }
 
@@ -113,10 +113,10 @@ Agent_ABC* AgentsModel::FindAgent( unsigned long id ) const
 // Name: AgentsModel::DestroyAgent
 // Created: AGE 2007-04-24
 // -----------------------------------------------------------------------------
-void AgentsModel::DestroyAgent( const ASN1T_MsgUnitDestruction& id )
+void AgentsModel::DestroyAgent( const MsgsSimToClient::MsgUnitDestruction& msg )
 {
-    delete tools::Resolver< Agent_ABC >::Find( id );
-    tools::Resolver< Agent_ABC >::Remove( id );
+    delete tools::Resolver< Agent_ABC >::Find( msg.oid() );
+    tools::Resolver< Agent_ABC >::Remove( msg.oid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -138,12 +138,12 @@ Entity_ABC* AgentsModel::FindAllAgent( unsigned long id ) const
 // Name: AgentsModel::CreatePopulation
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void AgentsModel::CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg )
+void AgentsModel::CreatePopulation( const MsgsSimToClient::MsgPopulationCreation& message )
 {
-    if( !Resolver< Population_ABC >::Find( asnMsg.oid ) )
+    if( !Resolver< Population_ABC >::Find( message.oid() ) )
     {
-        Population_ABC* popu = agentFactory_.Create( asnMsg );
-        tools::Resolver< Population_ABC >::Register( asnMsg.oid, *popu );
+        Population_ABC* popu = agentFactory_.Create( message );
+        tools::Resolver< Population_ABC >::Register( message.oid(), *popu );
     }
 }
 

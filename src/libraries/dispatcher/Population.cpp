@@ -17,6 +17,7 @@
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "PopulationOrder.h"
 #include <boost/bind.hpp>
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -24,12 +25,12 @@ using namespace dispatcher;
 // Name: Population constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-Population::Population( Model& model, const ASN1T_MsgPopulationCreation& msg )
-    : SimpleEntity< kernel::Population_ABC >( msg.oid, msg.nom )
+Population::Population( Model& model, const MsgsSimToClient::MsgPopulationCreation& msg )
+    : SimpleEntity< kernel::Population_ABC >( msg.oid(), QString(msg.nom().c_str()) )
     , model_           ( model )
-    , nType_           ( msg.type_population )
-    , strName_         ( msg.nom )
-    , side_            ( model.sides_.Get( msg.oid_camp ) )
+    , nType_           ( msg.type_population() )
+    , strName_         ( msg.nom() )
+    , side_            ( model.sides_.Get( msg.oid_camp() ) )
     , nDominationState_( 0 )
     , order_           ( 0 )
 {
@@ -49,7 +50,7 @@ Population::~Population()
 // Name: Population::Update
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationCreation& message )
+void Population::Update( const MsgsSimToClient::MsgPopulationCreation& message )
 {
     decisionalInfos_.Clear();
     ApplyUpdate( message );
@@ -59,19 +60,19 @@ void Population::Update( const ASN1T_MsgPopulationCreation& message )
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationUpdate& msg )
+void Population::Update( const MsgsSimToClient::MsgPopulationUpdate& msg )
 {
-    if( msg.m.etat_dominationPresent )
-        nDominationState_ = msg.etat_domination;
+    if( msg.has_etat_domination() )
+        nDominationState_ = msg.etat_domination();
 }
 
 // -----------------------------------------------------------------------------
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
+void Population::Update( const MsgsSimToClient::MsgPopulationConcentrationCreation& msg )
 {
-    PopulationConcentration* element = concentrations_.Find( msg.oid );
+    PopulationConcentration* element = concentrations_.Find( msg.oid() );
     if( !element )
     {
         element = new PopulationConcentration( *this, msg );
@@ -85,9 +86,9 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationCreation& msg )
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate& msg )
+void Population::Update( const MsgsSimToClient::MsgPopulationConcentrationUpdate& msg )
 {
-    concentrations_.Get( msg.oid ).Update( msg );
+    concentrations_.Get( msg.oid() ).Update( msg );
     ApplyUpdate( msg );
 }
 
@@ -95,11 +96,11 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationUpdate& msg )
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg )
+void Population::Update( const MsgsSimToClient::MsgPopulationConcentrationDestruction& msg )
 {
-    if( PopulationConcentration* concentration = concentrations_.Find( msg.oid ) )
+    if( PopulationConcentration* concentration = concentrations_.Find( msg.oid() ) )
     {
-        concentrations_.Remove( msg.oid );
+        concentrations_.Remove( msg.oid() );
         delete concentration;
     }
     ApplyUpdate( msg );
@@ -109,9 +110,9 @@ void Population::Update( const ASN1T_MsgPopulationConcentrationDestruction& msg 
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFlowCreation& msg )
+void Population::Update( const MsgsSimToClient::MsgPopulationFlowCreation& msg )
 {
-    PopulationFlow* element = flows_.Find( msg.oid );
+    PopulationFlow* element = flows_.Find( msg.oid() );
     if( !element )
     {
         element = new PopulationFlow( *this, msg );
@@ -125,9 +126,9 @@ void Population::Update( const ASN1T_MsgPopulationFlowCreation& msg )
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
+void Population::Update( const MsgsSimToClient::MsgPopulationFlowUpdate& msg )
 {
-    flows_.Get( msg.oid ).Update( msg );
+    flows_.Get( msg.oid() ).Update( msg );
     ApplyUpdate( msg );
 }
 
@@ -135,11 +136,11 @@ void Population::Update( const ASN1T_MsgPopulationFlowUpdate& msg )
 // Name: Population::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationFlowDestruction& msg )
+void Population::Update( const MsgsSimToClient::MsgPopulationFlowDestruction& msg )
 {
-    if( PopulationFlow* flow = flows_.Find( msg.oid ) )
+    if( PopulationFlow* flow = flows_.Find( msg.oid() ) )
     {
-        flows_.Remove( msg.oid );
+        flows_.Remove( msg.oid() );
         delete flow;
     }
     ApplyUpdate( msg );
@@ -149,10 +150,10 @@ void Population::Update( const ASN1T_MsgPopulationFlowDestruction& msg )
 // Name: Population::Update
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgPopulationOrder& msg )
+void Population::Update( const Common::MsgPopulationOrder& msg )
 {
     order_.release();
-    if( msg.mission != 0 )
+    if( msg.mission() != 0 )
         order_.reset( new PopulationOrder( model_, *this, msg ) );
 }
 
@@ -160,7 +161,7 @@ void Population::Update( const ASN1T_MsgPopulationOrder& msg )
 // Name: Population::Update
 // Created: ZEBRE 2007-06-21
 // -----------------------------------------------------------------------------
-void Population::Update( const ASN1T_MsgDecisionalState& msg )
+void Population::Update( const MsgsSimToClient::MsgDecisionalState& msg )
 {
     decisionalInfos_.Update( msg );
 }
@@ -173,10 +174,10 @@ void Population::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationCreation asn;
 
-    asn().oid             = GetId();
-    asn().oid_camp        = side_.GetId();
-    asn().type_population = nType_;
-    asn().nom             = strName_.c_str();
+    asn().set_oid             ( GetId() );
+    asn().set_oid_camp        ( side_.GetId() );
+    asn().set_type_population ( nType_ );
+    asn().set_nom             ( strName_.c_str() );
 
     asn.Send( publisher );
 }
@@ -190,10 +191,10 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     {
         client::PopulationUpdate asn;
 
-        asn().m.etat_dominationPresent = 1;
+        //asn().set_has_etat_domination()( 1 );
 
-        asn().oid             = GetId();
-        asn().etat_domination = nDominationState_;
+        asn().set_oid             ( GetId() );
+        asn().set_etat_domination ( nDominationState_ );
 
         asn.Send( publisher );
     }

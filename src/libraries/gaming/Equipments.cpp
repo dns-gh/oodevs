@@ -48,18 +48,18 @@ Equipments::~Equipments()
 // Name: Equipments::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Equipments::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Equipments::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if ( message.m.dotation_eff_materielPresent != 1 )
+    if ( message.has_dotation_eff_materiel()  != 1 )
         return;
 
     std::vector< Equipment > differences;
-    uint nSize = message.dotation_eff_materiel.n;
+    uint nSize = message.dotation_eff_materiel().elem_size();
     while ( nSize > 0 )
     {
-        const ASN1T_EquipmentDotations& value = message.dotation_eff_materiel.elem[ --nSize ];
-        Equipment previous( resolver_.Get( value.type_equipement ) );
-        if( Equipment* equipment = Find( value.type_equipement ) )
+        const MsgsSimToClient::EquipmentDotations_EquipmentDotation& value = message.dotation_eff_materiel().elem( --nSize );
+        Equipment previous( resolver_.Get( value.type_equipement() ) );
+        if( Equipment* equipment = Find( value.type_equipement() ) )
             previous = *equipment;
         Equipment current( previous );
         current.Update( value );

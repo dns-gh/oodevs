@@ -43,9 +43,9 @@ void Mission_Automat_INF_FlancGarder::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_FlancGarder& asnMission = *new ASN1T_Mission_Automate_INF_FlancGarder();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_flanc_garder;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_flanc_garder = &asnMission;
+    Mission_Automate_INF_FlancGarder& asnMission = *new Mission_Automate_INF_FlancGarder();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_flanc_garder = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
@@ -59,8 +59,8 @@ void Mission_Automat_INF_FlancGarder::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_FlancGarder::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_flanc_garder );
-    ASN1T_Mission_Automate_INF_FlancGarder& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_flanc_garder;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_flanc_garder ());
+    Mission_Automate_INF_FlancGarder& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_flanc_garder;
 
 
     delete &asnMission;

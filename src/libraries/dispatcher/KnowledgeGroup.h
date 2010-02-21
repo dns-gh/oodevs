@@ -10,11 +10,16 @@
 #ifndef __KnowledgeGroup_h_
 #define __KnowledgeGroup_h_
 
-#include "game_asn/Simulation.h"
+
 #include "SimpleEntity.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "tools/Resolver.h"
+
+namespace MsgsSimToClient
+{
+    class MsgKnowledgeGroupCreation;
+}
 
 namespace kernel
 {
@@ -38,7 +43,7 @@ class KnowledgeGroup : public SimpleEntity< kernel::KnowledgeGroup_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( Model_ABC& model, const ASN1T_MsgKnowledgeGroupCreation& msg );
+             KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& msg );
     virtual ~KnowledgeGroup();
     //@}
 
@@ -65,9 +70,9 @@ private:
 public:
     //! @name Member data
     //@{
-    kernel::Team_ABC&   team_; 
+    kernel::Team_ABC&   team_;
     kernel::KnowledgeGroup_ABC*     parent_;
-    std::string nType_; // LTO
+    std::string type_; // LTO
     tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< kernel::Automat_ABC > automats_;
     //@}

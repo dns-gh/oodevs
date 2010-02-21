@@ -10,7 +10,11 @@
 #ifndef __UserProfilesModel_h_
 #define __UserProfilesModel_h_
 
-#include "game_asn/Simulation.h"
+namespace MsgsAuthenticationToClient
+{
+    class MsgProfileCreation;
+    class MsgProfileDestruction;
+}
 
 class UserProfile;
 class UserProfileFactory_ABC;
@@ -33,8 +37,8 @@ public:
 
     //! @name Operations
     //@{
-    void CreateProfile( const ASN1T_MsgProfileCreation& message );
-    void DeleteProfile( const ASN1T_MsgProfileDestruction& message );
+    void CreateProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message );
+    void DeleteProfile( const MsgsAuthenticationToClient::MsgProfileDestruction& message );
     UserProfile& Get( const QString& login );
     const UserProfile* Find( const QString& login ) const;
     void Purge();

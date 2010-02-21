@@ -12,8 +12,6 @@
 
 #include "MIL.h"
 
-#include "game_asn/Simulation.h"
-
 class MIL_Formation;
 class MIL_Automate;
 class TER_LimitData;
@@ -36,8 +34,8 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()   
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -53,7 +51,6 @@ private:
     MIL_TacticalLineManager& operator=( const MIL_TacticalLineManager& ); //!< Assignement operator
     //@}
 
-private:
     //! @name Types
     //@{    
     typedef std::map< T_PointVector, TER_LimitData* > T_LimitDataMap;
@@ -62,7 +59,10 @@ private:
     //@}
 
 private:
-    T_LimitDataMap  limitsData_;
+    //! @name Member data
+    //@{
+    T_LimitDataMap limitsData_;
+    //@}
 };
 
 #endif // __MIL_TacticalLineManager_h_

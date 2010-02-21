@@ -24,8 +24,9 @@
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/MIL_EntityManager.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::DecisionalState
@@ -33,18 +34,18 @@
 // -----------------------------------------------------------------------------
 void DEC_PopulationFunctions::DecisionalState( const MIL_Population& callerPopulation, const std::string& key, const std::string& value )
 {
-    NET_ASN_MsgDecisionalState msg;
-    msg().oid   = callerPopulation.GetID();
-    msg().key   = key.c_str();
-    msg().value = value.c_str();
-    msg.Send();
+    client::DecisionalState msg;
+    msg().set_oid  ( callerPopulation.GetID() );
+    msg().set_key  ( key.c_str() );
+    msg().set_value( value.c_str() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::SetAttitude
 // Created: SBO 2005-11-23
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::SetAttitude( MIL_Population& callerPopulation, uint attitudeId )
+void DEC_PopulationFunctions::SetAttitude( MIL_Population& callerPopulation, unsigned int attitudeId )
 {
     const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( attitudeId );
     assert( pAttitude );

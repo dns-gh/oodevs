@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Composantes.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/PHY_UnitType.h"
@@ -23,9 +24,8 @@
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Knowledge/DEC_Knowledge_AgentComposante.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
-#include "MIL_AgentServer.h"
+#include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.h>
 
 #include "simulation_kernel/TransportCapacityComputer_ABC.h"
@@ -172,8 +172,9 @@ namespace boost
             file << size;
             for(  PHY_RolePion_Composantes::CIT_ComposanteTypeMap it = map.begin(); it != map.end(); ++it )
             {
-                ASN1T_EquipmentType id = it->first->GetMosID();
-                file << id;
+                Common::MsgEquipmentType id = it->first->GetMosID();
+                int equipment_type = id.equipment();
+                file << equipment_type;
                 file << it->second;
             }
         }
@@ -185,9 +186,10 @@ namespace boost
             file >> nNbr;
             while ( nNbr-- )
             {
-                ASN1T_EquipmentType nID;
-
-                file >> nID;
+                Common::MsgEquipmentType nID;
+                int equipment_type;
+                file >> equipment_type;
+                nID.set_equipment( equipment_type );
                 file >> map[ PHY_ComposanteTypePion::Find( nID ) ];
             }
         }
@@ -449,7 +451,57 @@ void PHY_RolePion_Composantes::ChangeComposantesAvailability( const PHY_Composan
         }
     }
 }
+/*
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::WoundHumans
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::WoundHumans( const PHY_HumanRank& rank, unsigned int nNbr )
+{
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
 
+    IT_ComposantePionVector itCurrentComp = composantes.begin();
+    while( nNbr && itCurrentComp != composantes.end() )
+    {
+        unsigned int nNbrChanged = (*itCurrentComp)->WoundHumans( rank, 1, PHY_HumanWound::killed_ );
+        if( nNbrChanged == 0 )
+            itCurrentComp = composantes.erase( itCurrentComp );
+        else
+        {
+            nNbr -= nNbrChanged;
+            ++ itCurrentComp;
+        }
+        if( itCurrentComp == composantes.end() )
+            itCurrentComp = composantes.begin();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::HealHumans
+// Created: NLD 2005-07-28
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Composantes::HealHumans( const PHY_HumanRank& rank, unsigned int nNbr )
+{
+    T_ComposantePionVector composantes = composantes_;
+    std::random_shuffle( composantes.begin(), composantes.end() );
+
+    IT_ComposantePionVector itCurrentComp = composantes.begin();
+    while( nNbr && itCurrentComp != composantes.end() )
+    {
+        unsigned int nNbrChanged = (*itCurrentComp)->HealHumans( rank, 1 );
+        if( nNbrChanged == 0 )
+            itCurrentComp = composantes.erase( itCurrentComp );
+        else
+        {
+            nNbr -= nNbrChanged;
+            ++ itCurrentComp;
+        }
+        if( itCurrentComp == composantes.end() )
+            itCurrentComp = composantes.begin();
+    }
+}
+*/
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Composantes::UpdateOperationalStates
 // Created: NLD 2004-09-08
@@ -1020,7 +1072,7 @@ void PHY_RolePion_Composantes::SendLogisticFullState() const
 // Name: PHY_RolePion_Composantes::SendLoans
 // Created: NLD 2005-01-18
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
+void PHY_RolePion_Composantes::SendLoans( client::UnitAttributes& message ) const
 {
     typedef std::pair< const MIL_Agent_ABC*, const PHY_ComposanteTypePion* > T_Key;
     typedef std::map < T_Key, unsigned int >                                 T_LoanCountMap;
@@ -1036,23 +1088,15 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
-
-        asn().m.equipements_pretesPresent = 1;
-        asn().equipements_pretes.n        = loanData.size();
-
         if( !loanData.empty() )
         {
-            ASN1T_LentEquipment* pLoan = new ASN1T_LentEquipment[ loanData.size() ];
-            unsigned int i = 0;
-            for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it, ++i )
+            for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
             {
-                ASN1T_LentEquipment& loan = pLoan[ i ];
-
-                loan.oid_pion_emprunteur = it->first.first ->GetID();
-                loan.type_equipement     = it->first.second->GetMosID();
-                loan.nombre              = it->second;
+                MsgsSimToClient::LentEquipments_LentEquipment& loan = *message().mutable_equipements_pretes()->add_elem();
+                loan.set_oid_pion_emprunteur ( it->first.first ->GetID() );
+                loan.set_type_equipement     ( it->first.second->GetMosID().equipment() );
+                loan.set_nombre              ( it->second );
             }
-            asn().equipements_pretes.elem = pLoan;
         }
     }
 
@@ -1066,23 +1110,15 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
             for( PHY_ComposantePion::CIT_ComposantePionVector itComp = composantes.begin(); itComp != composantes.end(); ++itComp )
                 ++loanData[ T_Key( &pion, &(**itComp).GetType() ) ];
         }
-
-        asn().m.equipements_empruntesPresent = 1;
-        asn().equipements_empruntes.n        = loanData.size();       
-
         if( !loanData.empty() )
         {
-            ASN1T_BorrowedEquipment* pLoan = new ASN1T_BorrowedEquipment[ loanData.size() ];
-            unsigned int i = 0;
-            for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it, ++i )
+            for( CIT_LoanCountMap it = loanData.begin(); it != loanData.end(); ++it )
             {
-                ASN1T_BorrowedEquipment& loan = pLoan[ i ];
-
-                loan.oid_pion_preteur = it->first.first ->GetID();
-                loan.type_equipement  = it->first.second->GetMosID();
-                loan.nombre           = it->second;
+                MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& loan = *message().mutable_equipements_empruntes()->add_elem();
+                loan.set_oid_pion_preteur ( it->first.first ->GetID() );
+                loan.set_type_equipement  ( it->first.second->GetMosID().equipment() );
+                loan.set_nombre           ( it->second );
             }
-            asn().equipements_empruntes.elem = pLoan;
         }
     }
 }
@@ -1091,33 +1127,27 @@ void PHY_RolePion_Composantes::SendLoans( NET_ASN_MsgUnitAttributes& asn ) const
 // Name: PHY_RolePion_Composantes::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Composantes::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().dotation_eff_materiel.n        = composanteTypes_.size();
-    msg().m.dotation_eff_materielPresent = 1;
-
     if( !composanteTypes_.empty() )
     {
-        ASN1T_EquipmentDotations* pEquipments = new ASN1T_EquipmentDotations[ composanteTypes_.size() ];
-        unsigned int i = 0;
-        for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType, ++i )
+        for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
         {
             const PHY_ComposanteTypePion&    compType   = *itComposanteType->first;
             const T_ComposanteTypeProperties& properties =  itComposanteType->second;
 
-            ASN1T_EquipmentDotations& value  = pEquipments[ i ];
-            value.type_equipement            = compType.GetMosID();
-            value.nb_disponibles             = properties.nbrsPerState_[ PHY_ComposanteState::undamaged_ .GetID() ];
-            value.nb_indisponibles           = properties.nbrsPerState_[ PHY_ComposanteState::dead_      .GetID() ];
-            value.nb_reparables              = properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ];
-            value.nb_dans_chaine_maintenance = properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ];
-            value.nb_prisonniers             = properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ];
+            MsgsSimToClient::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
+            value.set_type_equipement            ( compType.GetMosID().equipment() );
+            value.set_nb_disponibles             ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_ .GetID() ] );
+            value.set_nb_indisponibles           ( properties.nbrsPerState_[ PHY_ComposanteState::dead_      .GetID() ] );
+            value.set_nb_reparables              ( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
+            value.set_nb_dans_chaine_maintenance ( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
+            value.set_nb_prisonniers             ( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ] );
         }
-        msg().dotation_eff_materiel.elem = pEquipments;
     }
 
-    msg().m.etat_operationnel_brutPresent = 1;
-    msg().etat_operationnel_brut          = (unsigned int)( rOperationalState_ * 100. );
+
+    msg().set_etat_operationnel_brut( (unsigned int)( rOperationalState_ * 100. ) );
 
     SendLoans( msg );
 
@@ -1128,12 +1158,10 @@ void PHY_RolePion_Composantes::SendFullState( NET_ASN_MsgUnitAttributes& msg ) c
 // Name: PHY_RolePion_Composantes::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Composantes::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( nNbrComposanteChanged_ > 0 )
     {
-        ASN1T_EquipmentDotations* pEquipments = new ASN1T_EquipmentDotations[ nNbrComposanteChanged_ ];
-        unsigned int i = 0;
         for( CIT_ComposanteTypeMap itComposanteType = composanteTypes_.begin(); itComposanteType != composanteTypes_.end(); ++itComposanteType )
         {
             const PHY_ComposanteTypePion&     compType   = *itComposanteType->first;
@@ -1142,24 +1170,19 @@ void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
             if( !properties.bHasChanged_ )
                 continue;
 
-            ASN1T_EquipmentDotations& value  = pEquipments[ i++ ];
-            value.type_equipement            = compType.GetMosID();
-            value.nb_disponibles             = properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ];
-            value.nb_indisponibles           = properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ];
-            value.nb_reparables              = properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ];
-            value.nb_dans_chaine_maintenance = properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ];
-            value.nb_prisonniers             = properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ];
+            MsgsSimToClient::EquipmentDotations_EquipmentDotation& value  = *msg().mutable_dotation_eff_materiel()->add_elem();
+            value.set_type_equipement           ( compType.GetMosID().equipment() );
+            value.set_nb_disponibles            ( properties.nbrsPerState_[ PHY_ComposanteState::undamaged_  .GetID() ] );
+            value.set_nb_indisponibles          ( properties.nbrsPerState_[ PHY_ComposanteState::dead_       .GetID() ] );
+            value.set_nb_reparables             ( properties.nbrsPerState_[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] + properties.nbrsPerState_[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] );
+            value.set_nb_dans_chaine_maintenance( properties.nbrsPerState_[ PHY_ComposanteState::maintenance_.GetID() ] );
+            value.set_nb_prisonniers            ( properties.nbrsPerState_[ PHY_ComposanteState::prisoner_   .GetID() ] );
         }
-
-        msg().dotation_eff_materiel.n        = nNbrComposanteChanged_;
-        msg().dotation_eff_materiel.elem     = pEquipments;
-        msg().m.dotation_eff_materielPresent = 1;
     }
 
     if( bOperationalStateChanged_ )
     {
-        msg().m.etat_operationnel_brutPresent = 1;
-        msg().etat_operationnel_brut          = (unsigned int)( rOperationalState_ * 100. );
+        msg().set_etat_operationnel_brut( (unsigned int)( rOperationalState_ * 100. ) );
     }
 
     if( bLoansChanged_ )
@@ -1174,7 +1197,7 @@ void PHY_RolePion_Composantes::SendChangedState( NET_ASN_MsgUnitAttributes& msg 
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::Serialize( HLA_UpdateFunctor& functor ) const
 {
-    typedef std::pair< std::string, uint32 > T_Composante;
+    typedef std::pair< std::string, unsigned long > T_Composante;
     std::vector< T_Composante > composantes;
     for( CIT_ComposanteTypeMap it = composanteTypes_.begin(); it != composanteTypes_.end(); ++it )
     {

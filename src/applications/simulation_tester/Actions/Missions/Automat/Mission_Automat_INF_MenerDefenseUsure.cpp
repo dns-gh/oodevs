@@ -43,9 +43,9 @@ void Mission_Automat_INF_MenerDefenseUsure::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_MenerDefenseUsure& asnMission = *new ASN1T_Mission_Automate_INF_MenerDefenseUsure();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_mener_defense_usure;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_mener_defense_usure = &asnMission;
+    Mission_Automate_INF_MenerDefenseUsure& asnMission = *new Mission_Automate_INF_MenerDefenseUsure();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_mener_defense_usure = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_INF_MenerDefenseUsure::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_MenerDefenseUsure::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_mener_defense_usure );
-    ASN1T_Mission_Automate_INF_MenerDefenseUsure& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_mener_defense_usure;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_mener_defense_usure ());
+    Mission_Automate_INF_MenerDefenseUsure& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_mener_defense_usure;
 
 
     delete &asnMission;

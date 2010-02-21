@@ -10,7 +10,7 @@
 #ifndef __Population_h_
 #define __Population_h_
 
-#include "game_asn/Simulation.h"
+
 #include "clients_kernel/Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
@@ -20,6 +20,8 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "protocol/Protocol.h"
+
 
 namespace kernel
 {
@@ -38,13 +40,13 @@ class PopulationFlow;
 // Created: HME 2005-09-29
 // =============================================================================
 class Population : public kernel::EntityImplementation< kernel::Population_ABC >
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowUpdate >
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowDestruction >
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationUpdate >       
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationCreation >
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationUpdate > 
-                 , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationDestruction >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowCreation > // $$$$ AGE 2006-03-13: dégager dans des extensions ?
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowUpdate >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowDestruction >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationUpdate >       
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationCreation >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationUpdate > 
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationDestruction >
                  , public kernel::Drawable_ABC
                  , public kernel::Displayable_ABC
                  , public kernel::Positions
@@ -58,7 +60,7 @@ public:
 public:
     //! @name Constructor/Destructor
     //@{
-             Population( const ASN1T_MsgPopulationCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+             Population( const MsgsSimToClient::MsgPopulationCreation& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                          const tools::Resolver_ABC< kernel::PopulationType >& typeResolver );
     virtual ~Population();
     //@}
@@ -97,13 +99,13 @@ private:
     unsigned int ComputeLivingHumans() const;
     unsigned int ComputeDeadHumans() const;
 
-    void DoUpdate( const ASN1T_MsgPopulationFlowCreation&             message );
-    void DoUpdate( const ASN1T_MsgPopulationFlowUpdate&               message );
-    void DoUpdate( const ASN1T_MsgPopulationFlowDestruction&          message );
-    void DoUpdate( const ASN1T_MsgPopulationUpdate&                   message );
-    void DoUpdate( const ASN1T_MsgPopulationConcentrationCreation&    message );
-	void DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate&      message );
-	void DoUpdate( const ASN1T_MsgPopulationConcentrationDestruction& message );
+    void DoUpdate( const MsgsSimToClient::MsgPopulationFlowCreation&             message );
+    void DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate&               message );
+    void DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction&          message );
+    void DoUpdate( const MsgsSimToClient::MsgPopulationUpdate&                   message );
+    void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation&    message );
+	void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      message );
+	void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message );
 
     void ComputeCenter();
     //@}

@@ -12,6 +12,10 @@
 #ifndef __PHY_Morale_h_
 #define __PHY_Morale_h_
 
+namespace Common
+{
+    enum EnumUnitMorale;
+}
 
 
 // =============================================================================
@@ -43,16 +47,16 @@ public:
     static       void        Initialize();
     static       void        Terminate ();
     static const PHY_Morale* Find      ( const std::string& strName );
-    static const PHY_Morale* Find      ( ASN1T_EnumUnitMorale nAsnID );
-    static const PHY_Morale* Find      ( uint nID );
+    static const PHY_Morale* Find      ( Common::EnumUnitMorale nAsnID );
+    static const PHY_Morale* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&        GetName  () const;
-          uint                GetID    () const;
+          unsigned int                GetID    () const;
           MT_Float            GetWeight() const;
-          ASN1T_EnumUnitMorale GetAsnID () const;
+          Common::EnumUnitMorale GetAsnID () const;
     //@}
 
     //! @name Operators
@@ -74,13 +78,13 @@ private:
     //@}
 
 private:
-     PHY_Morale( const std::string& strName, E_MoraleType nType, ASN1T_EnumUnitMorale nAsnID, MT_Float rDIAWeight );
+     PHY_Morale( const std::string& strName, E_MoraleType nType, Common::EnumUnitMorale nAsnID, MT_Float rDIAWeight );
     ~PHY_Morale();
 
 private:
     const std::string          strName_;
     const E_MoraleType         nType_;
-    const ASN1T_EnumUnitMorale nAsnID_;
+    const Common::EnumUnitMorale nAsnID_;
     const MT_Float             rDIAWeight_;
 
 private:

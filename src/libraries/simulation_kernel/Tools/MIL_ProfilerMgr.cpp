@@ -49,7 +49,7 @@ MIL_ProfilerMgr::~MIL_ProfilerMgr()
 // Name: MIL_ProfilerMgr::NotifyTickEnd
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
-void MIL_ProfilerMgr::NotifyTickEnd( uint nTick )
+void MIL_ProfilerMgr::NotifyTickEnd( unsigned int nTick )
 {
     tickDurationProfiler_.Stop();
 

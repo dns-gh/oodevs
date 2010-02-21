@@ -11,7 +11,11 @@
 #define __ActionParameterMedicalPriorities_h_
 
 #include "Parameter.h"
-#include "game_asn/Simulation.h"
+
+namespace Common
+{
+    class MsgLogMedicalPriorities;
+}
 
 namespace actions {
     namespace parameters {
@@ -29,7 +33,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MedicalPriorities( const kernel::OrderParameter& parameter );
-             MedicalPriorities( const kernel::OrderParameter& parameter, const ASN1T_LogMedicalPriorities& asn );
+             MedicalPriorities( const kernel::OrderParameter& parameter, const Common::MsgLogMedicalPriorities& message );
              MedicalPriorities( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~MedicalPriorities();
     //@}
@@ -37,8 +41,8 @@ public:
     //! @name Operations
     //@{
     void AddMedicalPriority( E_HumanWound value );
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     virtual bool IsSet() const;
     //@}
 

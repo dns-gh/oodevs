@@ -10,14 +10,16 @@
 #ifndef __AgentKnowledge_h_
 #define __AgentKnowledge_h_
 
-#include "game_asn/Simulation.h"
-#include "clients_kernel/Types.h"
-#include "clients_kernel/OptionalValue.h"
-#include "tools/Resolver_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Displayable_ABC.h"
-#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/EntityImplementation.h"
+#include "clients_kernel/OptionalValue.h"
+#include "clients_kernel/Types.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -35,7 +37,7 @@ namespace kernel
 // =============================================================================
 class AgentKnowledge : public kernel::EntityImplementation< kernel::AgentKnowledge_ABC >
                      , public kernel::Extension_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
                      , public kernel::Drawable_ABC
                      , public kernel::Displayable_ABC
 {
@@ -43,7 +45,7 @@ class AgentKnowledge : public kernel::EntityImplementation< kernel::AgentKnowled
 public:
     //! @name Constructor / Destructor
     //@{
-             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message, kernel::Controller& controller, 
+             AgentKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message, kernel::Controller& controller, 
                              const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::Team_ABC >& teamResolver );
     virtual ~AgentKnowledge();
     //@}
@@ -70,7 +72,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
     void UpdateSymbol();
     unsigned int ElementsToKeep( kernel::E_PerceptionResult perception ) const;
     const kernel::Karma& TeamKarma( kernel::E_PerceptionResult perception ) const;

@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Objective.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
 
@@ -16,9 +17,9 @@ using namespace dispatcher;
 // Name: Objective constructor
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-Objective::Objective( const ASN1T_MissionObjective& asn )
-    : location_( asn.localisation )
-    , schedule_( (const char*)asn.horaire.data, 15 )
+Objective::Objective( const Common::MsgMissionObjective& asn )
+    : location_( asn.localisation() )
+    , schedule_( asn.horaire().data(), 15 )
 {
     // NOTHING
 }
@@ -48,8 +49,8 @@ Objective::~Objective()
 // Name: Objective::Send
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-void Objective::Send( ASN1T_MissionObjective& asn ) const
+void Objective::Send( Common::MsgMissionObjective& asn ) const
 {
-    asn.horaire = schedule_.c_str();
-    location_.Send( asn.localisation );
+    asn.mutable_horaire()->set_data( schedule_.c_str() );
+    location_.Send( *asn.mutable_localisation() );
 }

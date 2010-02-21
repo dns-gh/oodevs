@@ -172,7 +172,7 @@ void Workspace::InitializeRandomSeed( const std::string& strConfigFile )
         MT_ChangeDir      ( strDir );
         archive.Open      ( strFile );
         archive.Section   ( "Random" );
-        uint nSeed = 0;
+        unsigned int nSeed = 0;
         archive.ReadField( "Seed", nSeed );
         srand( nSeed );
         MT_LOG_INFO_MSG( "Using random seed from file: " << nSeed );
@@ -184,7 +184,7 @@ void Workspace::InitializeRandomSeed( const std::string& strConfigFile )
     {
         MT_ChangeDir    ( strCurrentDir );
         MT_LOG_WARNING_MSG( exception.what() );
-        uint nSeed = time( 0 );
+        unsigned int nSeed = time( 0 );
         srand( nSeed );
         MT_LOG_INFO_MSG( "Using time as random seed: " << nSeed );
 

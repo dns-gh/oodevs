@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_PolygonList.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_PolygonList constructor
@@ -35,27 +35,23 @@ MIL_ParameterType_PolygonList::~MIL_ParameterType_PolygonList()
 // Name: MIL_ParameterType_PolygonList::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_PolygonList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_PolygonList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value          = false;
-    to.value.t             = T_MissionParameter_value_polygonList;
-    to.value.u.polygonList = new ASN1T_PolygonList();
-    
-    return from.ToPolygonList( *to.value.u.polygonList );
+    to.set_null_value( false );
+    return from.ToPolygonList( *to.mutable_value()->mutable_polygonlist() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_PolygonList::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_PolygonList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_PolygonList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_polygonList );
-    assert( to.value.u.polygonList );
-    ASN_Delete::Delete( *to.value.u.polygonList );
-    delete to.value.u.polygonList;    
+    assert( to.value().has_polygonlist() );
+    assert( to.mutable_value()->mutable_polygonlist() != NULL );
+    to.mutable_value()->mutable_polygonlist()->Clear();
+    to.mutable_value()->Clear();
 }

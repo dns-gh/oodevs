@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_GenObject.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_GenObject constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_GenObject::MissionParameter_GenObject( const ASN1T_MissionParameter& asn )
+MissionParameter_GenObject::MissionParameter_GenObject( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , data_               ( *asn.value.u.plannedWork )
+    , data_               ( asn.value().plannedwork() )
 {
     // NOTHING
 }
@@ -41,19 +42,18 @@ MissionParameter_GenObject::~MissionParameter_GenObject()
 // Name: MissionParameter_GenObject::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_GenObject::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_GenObject::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value               = bNullValue_;
-    asn.value.t                  = T_MissionParameter_value_plannedWork;
-    asn.value.u.plannedWork = new ASN1T_PlannedWork();
-    data_.Send( *asn.value.u.plannedWork );
+    asn.set_null_value               ( bNullValue_ ) ;
+//    asn.mutable_value()->mutable_plannedwork() = new MsgPlannedWork();
+    data_.Send( *asn.mutable_value()->mutable_plannedwork() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_GenObject::AsnDelete
+// Name: MissionParameter_GenObject::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_GenObject::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_GenObject::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.plannedWork;
+    delete asn.mutable_value()->mutable_plannedwork();
 }

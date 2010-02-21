@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "TimeLimitedAttribute.h"
 #include "Tools/MIL_Tools.h"
-
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( TimeLimitedAttribute )
@@ -35,7 +35,7 @@ TimeLimitedAttribute::TimeLimitedAttribute( xml::xistream& xis )
 // Name: TimeLimitedAttributeconstructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( uint nActivityTime )
+TimeLimitedAttribute::TimeLimitedAttribute( unsigned int nActivityTime )
     : nActivityTime_ ( nActivityTime )
     , nDeathTimeStep_ ( 0 )
 {
@@ -57,8 +57,8 @@ TimeLimitedAttribute::TimeLimitedAttribute()
 // Name: TimeLimitedAttribute constructor
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( const ASN1T_ObjectAttributes& asn )
-    : nActivityTime_ ( asn.activity_time.value )
+TimeLimitedAttribute::TimeLimitedAttribute( const Common::MsgObjectAttributes& asn )
+    : nActivityTime_ ( asn.activity_time().value() )
     , nDeathTimeStep_ ( 0 )
 {
     // NOTHING
@@ -101,7 +101,7 @@ TimeLimitedAttribute::~TimeLimitedAttribute()
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void TimeLimitedAttribute::serialize( Archive& file, const uint )
+void TimeLimitedAttribute::serialize( Archive& file, const unsigned int )
 {    
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )         
          & nActivityTime_ 
@@ -125,12 +125,12 @@ void TimeLimitedAttribute::WriteODB( xml::xostream& xos ) const
 // Name: TimeLimitedAttribute::Update
 // Created: JCR 2008-08-19
 // -----------------------------------------------------------------------------
-bool TimeLimitedAttribute::IsTimeOver( uint time ) const
+bool TimeLimitedAttribute::IsTimeOver( unsigned int time ) const
 {
     if ( nActivityTime_ == 0 )
         return false;
     if( nDeathTimeStep_ == 0 )
-        nDeathTimeStep_ = uint( time + MIL_Tools::ConvertSecondsToSim( nActivityTime_ ) );
+        nDeathTimeStep_ = unsigned int( time + MIL_Tools::ConvertSecondsToSim( nActivityTime_ ) );
     return nDeathTimeStep_ <= time;
 }
 
@@ -138,17 +138,16 @@ bool TimeLimitedAttribute::IsTimeOver( uint time ) const
 // Name: TimeLimitedAttribute::SendFullState
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void TimeLimitedAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.m.activity_timePresent = 1;
-    asn.activity_time.value = nActivityTime_;
+    asn.mutable_activity_time()->set_value( nActivityTime_ );
 }
     
 // -----------------------------------------------------------------------------
 // Name: TimeLimitedAttribute::SendUpdate
 // Created: JCR 2008-08-21
 // -----------------------------------------------------------------------------
-void TimeLimitedAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void TimeLimitedAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     SendFullState( asn );
 }

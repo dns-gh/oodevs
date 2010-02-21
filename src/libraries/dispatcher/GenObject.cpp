@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "GenObject.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
 
@@ -16,13 +17,13 @@ using namespace dispatcher;
 // Name: GenObject constructor
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-GenObject::GenObject( const ASN1T_PlannedWork& asn )
-    : type_              ( asn.type )
-    , location_          ( asn.position )
-    , typeObstacle_      ( asn.type_obstacle )
-    , density_           ( asn.densite )
-    , tc2_               ( asn.tc2 )
-    , delaiActiviteMines_( asn.activity_time )
+GenObject::GenObject( const Common::MsgPlannedWork& asn )
+    : type_              ( asn.type() )
+    , location_          ( asn.position() )
+    , typeObstacle_      ( asn.type_obstacle() )
+    , density_           ( asn.densite() )
+    , tc2_               ( asn.tc2() )
+    , delaiActiviteMines_( asn.activity_time() )
 {
     // NOTHING
 }
@@ -34,7 +35,7 @@ GenObject::GenObject( const ASN1T_PlannedWork& asn )
 GenObject::GenObject()
     : type_              ( "" )
     , location_          ()
-    , typeObstacle_      ( EnumDemolitionTargetType::preliminary )
+    , typeObstacle_      ( Common::ObstacleType_DemolitionTargetType_preliminary )
     , density_           ( 0. )
     , tc2_               ( 0 )
     , delaiActiviteMines_( 0 )
@@ -56,12 +57,12 @@ GenObject::~GenObject()
 // Name: GenObject::Send
 // Created: NLD 2007-04-23
 // -----------------------------------------------------------------------------
-void GenObject::Send( ASN1T_PlannedWork& asn ) const
+void GenObject::Send( Common::MsgPlannedWork& message ) const
 {
-    asn.type           = type_.c_str();
-    asn.type_obstacle  = typeObstacle_;
-    asn.densite        = density_;
-    asn.tc2            = tc2_;
-    asn.activity_time = delaiActiviteMines_;
-    location_.Send( asn.position );
+    message.set_type           ( type_.c_str() );
+    message.set_type_obstacle  ( typeObstacle_ );
+    message.set_densite        ( density_ );
+    message.set_tc2            ( tc2_ );
+    message.set_activity_time ( delaiActiviteMines_ );
+    location_.Send( *message.mutable_position() );
 }

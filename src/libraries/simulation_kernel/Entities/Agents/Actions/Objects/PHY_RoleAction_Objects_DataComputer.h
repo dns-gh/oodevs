@@ -33,9 +33,9 @@ public:
 
     //! @name Operations
     //@{  
-    bool     HasDotations                    ( const PHY_DotationCategory& category, uint nNbr ) const;
-    void     ConsumeDotations                ( const PHY_DotationCategory& category, uint nNbr );
-    void     RecoverDotations                ( const PHY_DotationCategory& category, uint nNbr );
+    bool     HasDotations                    ( const PHY_DotationCategory& category, unsigned int nNbr ) const;
+    void     ConsumeDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
+    void     RecoverDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
 
     MT_Float ComputeDeltaPercentage          ();
 

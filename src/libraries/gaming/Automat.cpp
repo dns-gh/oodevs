@@ -28,13 +28,13 @@ using namespace kernel;
 // Name: Automat constructor
 // Created: AGE 2006-10-06
 // -----------------------------------------------------------------------------
-Automat::Automat( const ASN1T_MsgAutomatCreation& message, Controller& controller, 
+Automat::Automat( const MsgsSimToClient::MsgAutomatCreation& message, Controller& controller, 
                   const tools::Resolver_ABC< AutomatType >& resolver )
-    : EntityImplementation< Automat_ABC >( controller, message.oid, message.nom )
-    , type_( resolver.Get( message.type_automate ) )
+    : EntityImplementation< Automat_ABC >( controller, message.oid(), QString( message.nom().c_str() ) )
+    , type_( resolver.Get( message.type_automate() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid );
+        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.oid() );
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );

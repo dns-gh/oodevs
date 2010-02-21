@@ -42,20 +42,20 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ); 
+    template< typename Archive > void serialize( Archive&, const unsigned int ); 
     //@}
 
     //! @name Operations
     //@{    
-    uint GetTravelTimeToLoadingPoint  () const;
-    uint GetTravelTimeToUnloadingPoint() const;
-    uint GetTravelTimeToFormingPoint  () const;
+    unsigned int GetTravelTimeToLoadingPoint  () const;
+    unsigned int GetTravelTimeToUnloadingPoint() const;
+    unsigned int GetTravelTimeToFormingPoint  () const;
     //@}
 
 private:
     //! @name Tools
     //@{
-    uint GetTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
+    unsigned int GetTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
     //@}
 };
 
@@ -66,7 +66,7 @@ BOOST_CLASS_EXPORT_KEY( PHY_DotationConvoy )
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_DotationConvoy::serialize( Archive& file, const uint )
+void PHY_DotationConvoy::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_Convoy_ABC >( *this );
 }

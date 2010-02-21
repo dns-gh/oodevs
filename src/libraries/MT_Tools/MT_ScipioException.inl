@@ -60,7 +60,7 @@ const std::string& MT_ScipioException::GetDescription() const
 // Created: JVT 03-02-04
 //-----------------------------------------------------------------------------
 inline
-uint MT_ScipioException::GetLine() const
+unsigned int MT_ScipioException::GetLine() const
 {
     return nLine_;
 }

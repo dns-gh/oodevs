@@ -11,25 +11,25 @@
 #include "MIL_PathListParameter.h"
 #include "simulation_orders/MIL_ParameterType_PathList.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PathListParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_PathListParameter::MIL_PathListParameter( const ASN1T_PathList& asn )
+MIL_PathListParameter::MIL_PathListParameter( const Common::MsgPathList& asn )
 {
-    pathList_.resize( asn.n );
-    for( unsigned int i = 0; i < asn.n; ++i)
+    pathList_.resize( asn.elem_size() );
+    for( int i = 0; i < asn.elem_size(); ++i)
     {
-        ASN1T_Path& path = asn.elem[i];
-        if( path.type != EnumLocationType::line )
+        if( asn.elem( i ).location().type() != Common::MsgLocation_Geometry_line )
             throw std::runtime_error( "Unexpected type passed for path" );
-        pathList_[i].resize( path.coordinates.n );
-        for( unsigned int j = 0; j < path.coordinates.n; ++j )
+        pathList_[i].resize( asn.elem( i ).location().coordinates().elem_size() );
+        for( int j = 0; j < asn.elem( i ).location().coordinates().elem_size(); ++j )
         {
             pathList_[i][j].reset( new MT_Vector2D() );
-            MIL_Tools::ConvertCoordMosToSim( path.coordinates.elem[j], *pathList_[i][j] );
+            MIL_Tools::ConvertCoordMosToSim( asn.elem( i ).location().coordinates().elem(j), *pathList_[i][j] );
         }
     }
 }
@@ -39,7 +39,7 @@ MIL_PathListParameter::MIL_PathListParameter( const ASN1T_PathList& asn )
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
 MIL_PathListParameter::MIL_PathListParameter( const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& pathList )
-: pathList_( pathList )
+    : pathList_( pathList )
 {
     // NOTHING
 }
@@ -59,32 +59,23 @@ MIL_PathListParameter::~MIL_PathListParameter()
 // -----------------------------------------------------------------------------
 bool MIL_PathListParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_PathList*>( &type ) != 0 );
+    return dynamic_cast< const MIL_ParameterType_PathList* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PathListParameter::ToPathList
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PathListParameter::ToPathList( ASN1T_PathList& asn ) const
+bool MIL_PathListParameter::ToPathList( Common::MsgPathList& asn ) const
 {
-    unsigned int size = pathList_.size();
-    ASN1T_Location* pLcal = new ASN1T_Location[ size ];
-    asn.n = size;
-    asn.elem = pLcal;
-
-    for( unsigned int i = 0; i < size ; i++ )
+    for( unsigned int i = 0; i < pathList_.size(); ++i )
     {
-        ASN1T_Location& location = pLcal[i];
-        location.type = EnumLocationType::line;
-        int size = pathList_[i].size();
-        location.coordinates.n = size; 
+        Common::MsgLocation& location = *asn.add_elem()->mutable_location();
+        location.set_type( Common::MsgLocation::line );
+        const unsigned int size = pathList_[i].size();
         if( !pathList_[i].empty() )
-        {
-            location.coordinates.elem = new ASN1T_CoordLatLong[ size ];
-            for( int j = 0; j < size; ++j )
-                MIL_Tools::ConvertCoordSimToMos( *pathList_[i][j], location.coordinates.elem[j] );
-        }
+            for( unsigned int j = 0; j < size; ++j )
+                MIL_Tools::ConvertCoordSimToMos( *pathList_[i][j], *location.mutable_coordinates()->add_elem() );
     }
     return true;
 }

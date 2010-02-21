@@ -41,18 +41,18 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Accessors
     //@{
                   unsigned int        GetID              () const;
-    virtual       MIL_Army_ABC&       GetArmy            () const = 0;
+    virtual       MIL_Army_ABC&       GetArmy      () const = 0;
     virtual       MIL_KnowledgeGroup& GetKnowledgeGroup  () const = 0;
-    virtual const MIL_AgentType_ABC&  GetType            () const = 0;
-    virtual bool                      IsDead             () const = 0;
-    virtual bool                      IsNeutralized      () const = 0;
-    virtual bool                      IsPC               () const = 0;
+    virtual const MIL_AgentType_ABC&  GetType      () const = 0;
+    virtual bool                      IsDead       () const = 0;
+    virtual bool                      IsNeutralized() const = 0;
+    virtual bool                      IsPC         () const = 0;
     virtual bool                      IsAutonomous       () const = 0;
     
     virtual const MIL_Automate&       GetAutomate        () const = 0;
@@ -96,7 +96,7 @@ private:
 // Created: SBO 2009-07-01
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void MIL_Agent_ABC::serialize( Archive& file, const uint )
+void MIL_Agent_ABC::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< MIL_Entity_ABC >( *this );
     file & nID_;

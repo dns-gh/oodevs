@@ -68,7 +68,7 @@ PHY_MedicalEvacuationConsign::~PHY_MedicalEvacuationConsign()
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_MedicalEvacuationConsign::serialize( Archive& file, const uint )
+void PHY_MedicalEvacuationConsign::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_MedicalConsign_ABC >( *this )
          & pDoctor_

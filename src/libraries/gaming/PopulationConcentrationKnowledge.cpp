@@ -28,12 +28,12 @@ using namespace kernel;
 // Name: PopulationConcentrationKnowledge::PopulationConcentrationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& resolver, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& asnMsg )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( Controller& controller, const CoordinateConverter_ABC& converter, const Population_ABC& resolver, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
     : controller_    ( controller )
     , resolver_      ( resolver )
-    , nID_           ( asnMsg.oid_connaissance_concentration )
-    , pConcentration_( resolver_.FindConcentration( asnMsg.oid_concentration_reelle ) )
-    , position_      ( converter.ConvertToXY( asnMsg.position ) )
+    , nID_           ( message.oid_connaissance_concentration() )
+    , pConcentration_( resolver_.FindConcentration( message.oid_concentration_reelle() ) )
+    , position_      ( converter.ConvertToXY( message.position() ) )
     , radius_        ( 100.f )
     , deadRadius_    ( 0 )
 {
@@ -53,21 +53,21 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 // Name: PopulationConcentrationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& asnMsg )
+void PopulationConcentrationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message )
 {
     static const float oneOnpi = 1.f / std::acos( -1.f );
-    if( asnMsg.m.attitudePresent )
-        eAttitude_ = ( E_PopulationAttitude )asnMsg.attitude;
-    if( asnMsg.m.est_percuPresent )
-        bIsPerceived_ = asnMsg.est_percu != 0;
-    if( asnMsg.m.nb_humains_vivantsPresent )
-        nNbrAliveHumans_ = ( uint )asnMsg.nb_humains_vivants;
-    if( asnMsg.m.nb_humains_mortsPresent )
-        nNbrDeadHumans_ = ( uint )asnMsg.nb_humains_morts;
-    if( asnMsg.m.oid_concentration_reellePresent )
-        pConcentration_ = resolver_.FindConcentration( asnMsg.oid_concentration_reelle );
-    if( asnMsg.m.pertinencePresent )
-        rRelevance_ = float( asnMsg.pertinence );
+    if( message.has_attitude()  )
+        eAttitude_ = ( E_PopulationAttitude )message.attitude();
+    if( message.has_est_percu()  )
+        bIsPerceived_ = message.est_percu() != 0;
+    if( message.has_nb_humains_vivants()  )
+        nNbrAliveHumans_ = ( uint )message.nb_humains_vivants();
+    if( message.has_nb_humains_morts()  )
+        nNbrDeadHumans_ = ( uint )message.nb_humains_morts();
+    if( message.has_oid_concentration_reelle()  )
+        pConcentration_ = resolver_.FindConcentration( message.oid_concentration_reelle() );
+    if( message.has_pertinence()  )
+        rRelevance_ = float( message.pertinence() );
 
     const float density = pConcentration_ ? pConcentration_->GetDensity() : 0.f;
     if( density > 0.f && nNbrAliveHumans_.IsSet() )

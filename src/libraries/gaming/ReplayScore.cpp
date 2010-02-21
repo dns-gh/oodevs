@@ -11,12 +11,13 @@
 #include "ReplayScore.h"
 #include "ScoreDefinition.h"
 #include "ScoreDefinitions.h"
+#include "protocol/aarsenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReplayScore constructor
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-ReplayScore::ReplayScore( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
+ReplayScore::ReplayScore( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher )
     : Score( message, definitions, controller, publisher )
     , definition_( definitions.Get( GetName() ) )
 {
@@ -45,7 +46,7 @@ std::string ReplayScore::Commit( const T_Parameters& parameters ) const
 // Name: ReplayScore::UpdatePlots
 // Created: SBO 2009-06-12
 // -----------------------------------------------------------------------------
-void ReplayScore::UpdatePlots( const ASN1T_MsgIndicator& )
+void ReplayScore::UpdatePlots( const MsgsAarToClient::MsgIndicator& )
 {
     // NOTHING
 }

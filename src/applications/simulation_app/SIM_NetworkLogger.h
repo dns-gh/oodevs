@@ -33,7 +33,7 @@ class SIM_NetworkLogger : public MT_Logger_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit SIM_NetworkLogger( uint nPort, uint nLogLevels = eLogLevel_All, uint nLogLayers = eLogLayer_All );
+    explicit SIM_NetworkLogger( unsigned int nPort, unsigned int nLogLevels = eLogLevel_All, unsigned int nLogLayers = eLogLayer_All );
     virtual ~SIM_NetworkLogger();
     //@}
 

@@ -11,7 +11,8 @@
 #include "IndicatorPlotFactory.h"
 #include "IndicatorPlot.h"
 #include "clients_kernel/Controllers.h"
-#include "game_asn/ReplaySenders.h"
+#include "protocol/Protocol.h"
+#include "protocol/ReplaySenders.h"
 #include "gaming/Services.h"
 #include "gaming/Tools.h"
 

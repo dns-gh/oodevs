@@ -27,7 +27,7 @@
 // Created: AGE 2004-12-06
 // -----------------------------------------------------------------------------
 HLA_ObjectInteraction::HLA_ObjectInteraction()
-    : objectId_( uint( -1 ) )
+    : objectId_( unsigned int( -1 ) )
 {
     //NOTHING
 }

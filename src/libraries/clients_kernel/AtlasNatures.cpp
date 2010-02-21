@@ -10,8 +10,8 @@
 #include "clients_kernel_pch.h"
 #include "AtlasNatures.h"
 #include "AtlasNature.h"
-#include "game_asn/Simulation.h" // $$$$ AGE 2008-06-19:  // $$$$ AGE 2008-06-19:  // $$$$ AGE 2008-06-19:  // $$$$ AGE 2008-06-19: 
 #include "tools.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -21,18 +21,18 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 AtlasNatures::AtlasNatures()
 {
-    AddField( tools::translate( "AtlasNature", "Armored" )        , BytXblinde          , BitMblinde );
-    AddField( tools::translate( "AtlasNature", "SSA" )            , BytXass             , BitMass );
-    AddField( tools::translate( "AtlasNature", "Command post" )   , BytXpc              , BitMpc );
-    AddField( tools::translate( "AtlasNature", "Logistic" )       , BytXlog             , BitMlog );
-    AddField( tools::translate( "AtlasNature", "Mortar" )         , BytXmortier         , BitMmortier );
-    AddField( tools::translate( "AtlasNature", "Rocket launcher" ), BytXlance_roquette  , BitMlance_roquette );
-    AddField( tools::translate( "AtlasNature", "Vehicle" )        , BytXvehicule        , BitMvehicule );
-    AddField( tools::translate( "AtlasNature", "Footman")         , BytXpersonnel_a_pied, BitMpersonnel_a_pied );
-    AddField( tools::translate( "AtlasNature", "Helicopter" )     , BytXhelicoptere     , BitMhelicoptere );
-    AddField( tools::translate( "AtlasNature", "SAA" )            , BytXasa             , BitMasa );
-    AddField( tools::translate( "AtlasNature", "Undefined" )      , BytXindefini        , BitMindefini );
-    AddField( tools::translate( "AtlasNature", "None" )           , BytXnone            , BitMnone );
+    AddField( tools::translate( "AtlasNature", "Armored" )        , Common::MsgAtlasNature::blinde );
+    AddField( tools::translate( "AtlasNature", "SSA" )            , Common::MsgAtlasNature::ass );
+    AddField( tools::translate( "AtlasNature", "Command post" )   , Common::MsgAtlasNature::pc );
+    AddField( tools::translate( "AtlasNature", "Logistic" )       , Common::MsgAtlasNature::log );
+    AddField( tools::translate( "AtlasNature", "Mortar" )         , Common::MsgAtlasNature::mortier );
+    AddField( tools::translate( "AtlasNature", "Rocket launcher" ), Common::MsgAtlasNature::lance_roquette );
+    AddField( tools::translate( "AtlasNature", "Vehicle" )        , Common::MsgAtlasNature::vehicule );
+    AddField( tools::translate( "AtlasNature", "Footman")         , Common::MsgAtlasNature::personnel_a_pied );
+    AddField( tools::translate( "AtlasNature", "Helicopter" )     , Common::MsgAtlasNature::helicoptere );
+    AddField( tools::translate( "AtlasNature", "SAA" )            , Common::MsgAtlasNature::asa );
+    AddField( tools::translate( "AtlasNature", "Undefined" )      , Common::MsgAtlasNature::indefini );
+    AddField( tools::translate( "AtlasNature", "None" )           , Common::MsgAtlasNature::none );
 }
 
 // -----------------------------------------------------------------------------
@@ -48,9 +48,9 @@ AtlasNatures::~AtlasNatures()
 // Name: AtlasNatures::AddField
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AtlasNatures::AddField( const QString& name, unsigned char byte, unsigned char mask )
+void AtlasNatures::AddField( const QString& name, unsigned short value )
 {
-    AtlasNature* nature = new AtlasNature( name, byte ? mask : ( mask << 8 ) );
+    AtlasNature* nature = new AtlasNature( name, value );
     Register( Count(), *nature );
 }
 

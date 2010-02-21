@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_TrierEtTraiterBlesses::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses& asnMission = *new ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_trier_et_traiter_blesses = &asnMission;
+    Mission_Pion_LOG_TrierEtTraiterBlesses& asnMission = *new Mission_Pion_LOG_TrierEtTraiterBlesses();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_trier_et_traiter_blesses = &asnMission;
 
     const T_IdVector& blessuresTraitees_ = pTarget_->GetTestParam_MedicalPriorities();
     const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
@@ -64,8 +64,8 @@ void Mission_Pawn_LOG_TrierEtTraiterBlesses::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_TrierEtTraiterBlesses::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_trier_et_traiter_blesses );
-    ASN1T_Mission_Pion_LOG_TrierEtTraiterBlesses& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_trier_et_traiter_blesses;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_trier_et_traiter_blesses ());
+    Mission_Pion_LOG_TrierEtTraiterBlesses& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_trier_et_traiter_blesses;
 
     ASN_Tools::Delete( asnMission.blessures_traitees );
     ASN_Tools::Delete( asnMission.position_deploiement );

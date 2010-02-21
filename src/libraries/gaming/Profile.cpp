@@ -23,11 +23,10 @@
 #include "gaming/Model.h"
 #include "gaming/TeamsModel.h"
 #include "gaming/AgentsModel.h"
-#include "game_asn/AuthenticationSenders.h"
-#include "game_asn/SimulationSenders.h"
 #include "Simulation.h"
 #include "Services.h"
 #include <boost/bind.hpp>
+#include "protocol/authenticationsenders.h"
 
 using namespace kernel;
 
@@ -64,10 +63,10 @@ void Profile::Login() const
 {
     if( !needLogin_ )
     {
-        authentication::AuthenticationRequest asnMsg;
-        asnMsg().login    = login_.c_str();
-        asnMsg().password = password_.c_str();
-        asnMsg.Send( publisher_ );
+        authentication::AuthenticationRequest message;
+        message().set_login( login_.c_str() );
+        message().set_password( password_.c_str() );
+        message.Send( publisher_ );
     }
     else
         controller_.Update( *this );
@@ -94,9 +93,9 @@ template< typename T >
 void Profile::ReadList( const T& idList, T_Ids& ids )
 {
     ids.clear();
-    ids.reserve( idList.n );
-    for( unsigned i = 0; i < idList.n; ++i )
-        ids.push_back( idList.elem[ i ] );
+    ids.reserve( idList.elem_size() );
+    for( int i = 0; i < idList.elem_size(); ++i )
+        ids.push_back( idList.elem( i ).oid() );
     std::sort( ids.begin(), ids.end() );
 }
 
@@ -104,12 +103,12 @@ void Profile::ReadList( const T& idList, T_Ids& ids )
 // Name: Profile::Update
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void Profile::Update( const ASN1T_MsgAuthenticationResponse& message )
+void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message )
 {
-    loggedIn_ = message.error_code == 0;
-    if( message.m.profilePresent )
+    loggedIn_ = ( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
+    if( message.has_profile()  )
     {
-        Update( message.profile );
+        Update( message.profile() );
         controller_.Update( *(Profile_ABC*)this );
     }
     controller_.Update( *this );
@@ -119,11 +118,11 @@ void Profile::Update( const ASN1T_MsgAuthenticationResponse& message )
 // Name: Profile::Update
 // Created: SBO 2007-01-23
 // -----------------------------------------------------------------------------
-void Profile::Update( const Model& model, const ASN1T_MsgProfileUpdate& message )
+void Profile::Update( const Model& model, const MsgsAuthenticationToClient::MsgProfileUpdate& message )
 {
-    if( message.login == login_ )
+    if( message.login() == login_ )
     {
-        Update( message.profile );
+        Update( message.profile() );
         ResolveEntities( model );
         controller_.Update( *this );
         controller_.Update( *(kernel::Profile_ABC*)this );
@@ -134,33 +133,33 @@ void Profile::Update( const Model& model, const ASN1T_MsgProfileUpdate& message 
 // Name: Profile::Update
 // Created: SBO 2007-01-23
 // -----------------------------------------------------------------------------
-void Profile::Update( const ASN1T_Profile& profile )
+void Profile::Update( const MsgsAuthenticationToClient::MsgProfile& profile )
 {
     needLogin_ = false;
-    login_ = profile.login;
-    if( profile.m.passwordPresent )
-        password_ = profile.password;
-    supervision_ = profile.superviseur != 0;
+    login_ = profile.login();
+    if( profile.has_password()  )
+        password_ = profile.password();
+    supervision_ = profile.superviseur() != 0;
 
-    if( profile.m.read_only_campsPresent )
-        ReadList( profile.read_only_camps, readTeams_ );
-    if( profile.m.read_write_campsPresent )
-        ReadList( profile.read_write_camps, writeTeams_ );
+    if( profile.has_read_only_camps()  )
+        ReadList( profile.read_only_camps(), readTeams_ );
+    if( profile.has_read_write_camps()  )
+        ReadList( profile.read_write_camps(), writeTeams_ );
 
-    if( profile.m.read_only_automatesPresent )
-        ReadList( profile.read_only_automates, readAutomats_ );
-    if( profile.m.read_write_automatesPresent )
-        ReadList( profile.read_write_automates, writeAutomats_ );
+    if( profile.has_read_only_automates()  )
+        ReadList( profile.read_only_automates(), readAutomats_ );
+    if( profile.has_read_write_automates()  )
+        ReadList( profile.read_write_automates(), writeAutomats_ );
 
-    if( profile.m.read_only_populationsPresent )
-        ReadList( profile.read_only_populations, readPopulations_ );
-    if( profile.m.read_write_populationsPresent )
-        ReadList( profile.read_write_populations, writePopulations_ );
+    if( profile.has_read_only_populations()  )
+        ReadList( profile.read_only_populations(), readPopulations_ );
+    if( profile.has_read_write_populations()  )
+        ReadList( profile.read_write_populations(), writePopulations_ );
 
-    if( profile.m.read_only_formationsPresent )
-        ReadList( profile.read_only_formations, readFormations_ );
-    if( profile.m.read_write_formationsPresent )
-        ReadList( profile.read_write_formations, writeFormations_ );
+    if( profile.has_read_only_formations()  )
+        ReadList( profile.read_only_formations(), readFormations_ );
+    if( profile.has_read_write_formations()  )
+        ReadList( profile.read_write_formations(), writeFormations_ );
 }
 
 // -----------------------------------------------------------------------------

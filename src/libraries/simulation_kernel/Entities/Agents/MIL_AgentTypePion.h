@@ -52,7 +52,7 @@ public:
 
     static const MIL_AgentTypePion* Create( const std::string& strName, xml::xistream& xis );
     static const MIL_AgentTypePion* Find  ( const std::string& strName );
-    static const MIL_AgentTypePion* Find  ( uint nID );
+    static const MIL_AgentTypePion* Find  ( unsigned int nID );
     //@}
 
     //! @name Instantiation

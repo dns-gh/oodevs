@@ -10,8 +10,14 @@
 #ifndef __ObjectsModel_h_
 #define __ObjectsModel_h_
 
-#include "game_asn/Simulation.h"
+
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+namespace MsgsSimToClient
+{
+    class MsgObjectCreation;
+}
 
 class ObjectFactory_ABC;
 
@@ -40,7 +46,7 @@ public:
     //@{
     void Purge();
 
-    void CreateObject( const ASN1T_MsgObjectCreation& asnMsg );
+    void CreateObject( const MsgsSimToClient::MsgObjectCreation& message );
     kernel::Object_ABC& GetObject( unsigned long id );
     void DeleteObject( unsigned long id );
     //@}

@@ -43,9 +43,9 @@ void Mission_Pawn_INF_Barrer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_Barrer& asnMission = *new ASN1T_Mission_Pion_INF_Barrer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_barrer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_barrer = &asnMission;
+    Mission_Pion_INF_Barrer& asnMission = *new Mission_Pion_INF_Barrer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_barrer = &asnMission;
 
     const Position& positionABarrer_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_INF_Barrer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_Barrer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_barrer );
-    ASN1T_Mission_Pion_INF_Barrer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_barrer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_barrer ());
+    Mission_Pion_INF_Barrer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_barrer;
 
     ASN_Tools::Delete( asnMission.position_a_barrer );
 

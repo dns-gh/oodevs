@@ -10,10 +10,28 @@
 #ifndef __Profile_ABC_h_
 #define __Profile_ABC_h_
 
-#include "game_asn/Simulation.h"
-#include "game_asn/Authentication.h"
-#include "game_asn/Replay.h"
-#include "game_asn/Messenger.h"
+
+
+//using namespace MsgsSimToClient;
+namespace MsgsClientToSim
+{
+    class MsgClientToSim;
+}
+
+namespace MsgsClientToAuthentication
+{
+    class MsgClientToAuthentication;
+}
+
+namespace Common
+{
+    class MsgChatTarget;
+}
+
+namespace MsgsClientToReplay
+{
+    class MsgClientToReplay;
+}
 
 namespace dispatcher
 {
@@ -36,10 +54,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckRights( const ASN1T_MsgsClientToSim& msg ) const = 0;
-    virtual bool CheckRights( const ASN1T_MsgsClientToAuthentication& msg ) const = 0;
-    virtual bool CheckRights( const ASN1T_MsgsClientToReplay& msg ) const = 0;
-    virtual bool CheckRights( const ASN1T_ChatTarget& source, const ASN1T_ChatTarget& target ) const = 0;
+    virtual bool CheckRights( const MsgsClientToSim::MsgClientToSim& msg ) const = 0;
+    virtual bool CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& msg ) const = 0;
+    virtual bool CheckRights( const MsgsClientToReplay::MsgClientToReplay& msg ) const = 0;
+    virtual bool CheckRights( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const = 0;
     //@}
 
     //! @name Accessors

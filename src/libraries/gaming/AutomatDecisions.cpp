@@ -16,8 +16,9 @@
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "game_asn/SimulationSenders.h"
 #include "Tools.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/publisher_ABC.h"
 
 using namespace kernel;
 
@@ -49,10 +50,10 @@ AutomatDecisions::~AutomatDecisions()
 // Name: AutomatDecisions::DoUpdate
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomatAttributes& message )
+void AutomatDecisions::DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& message )
 {
-    if( message.m.etat_automatePresent )
-        bEmbraye_ = ( message.etat_automate == EnumAutomatMode::embraye );
+    if( message.has_etat_automate()  )
+        bEmbraye_ = ( message.etat_automate() == EnumAutomatMode::embraye );
     controller_.Update( *this );
 }
 
@@ -60,10 +61,10 @@ void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomatAttributes& message )
 // Name: AutomatDecisions::DoUpdate
 // Created: AGE 2006-04-05
 // -----------------------------------------------------------------------------
-void AutomatDecisions::DoUpdate( const ASN1T_MsgAutomatOrder& message )
+void AutomatDecisions::DoUpdate( const Common::MsgAutomatOrder& message )
 {
     const tools::Resolver_ABC< Mission >& resolver = model_;
-    current_ = resolver.Find( message.mission );
+    current_ = resolver.Find( message.mission() );
     controller_.Update( *this );
 }
 
@@ -140,10 +141,10 @@ bool AutomatDecisions::IsEmbraye() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::Engage() const
 {
-    simulation::SetAutomatMode asnMsg;
-    asnMsg().oid  = agent_.GetId();
-    asnMsg().mode = EnumAutomatMode::embraye;
-    asnMsg.Send( publisher_, 0 );
+    simulation::SetAutomatMode message;
+    message().set_oid( agent_.GetId() );
+    message().set_mode( EnumAutomatMode::embraye );
+    message.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,10 +153,10 @@ void AutomatDecisions::Engage() const
 // -----------------------------------------------------------------------------
 void AutomatDecisions::Disengage() const
 {
-    simulation::SetAutomatMode asnMsg;
-    asnMsg().oid  = agent_.GetId();
-    asnMsg().mode = EnumAutomatMode::debraye;
-    asnMsg.Send( publisher_, 0 );
+    simulation::SetAutomatMode message;
+    message().set_oid( agent_.GetId() );
+    message().set_mode( EnumAutomatMode::debraye );
+    message.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------

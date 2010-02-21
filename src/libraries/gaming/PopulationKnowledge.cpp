@@ -29,12 +29,12 @@ using namespace kernel;
 // Name: PopulationKnowledge::PopulationKnowledge
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message )
-    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.oid_connaissance, "" )
+PopulationKnowledge::PopulationKnowledge( const KnowledgeGroup_ABC& group, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Population_ABC >& resolver, const MsgsSimToClient::MsgPopulationKnowledgeCreation& message )
+    : EntityImplementation< PopulationKnowledge_ABC >( controller, message.oid_connaissance(), "" )
     , group_     ( group )
     , controller_( controller )
     , converter_ ( converter )
-    , popu_      ( resolver.Get( message.oid_population_reelle ) )
+    , popu_      ( resolver.Get( message.oid_population_reelle() ) )
     , domination_( 0 )
 {
     RegisterSelf( *this );
@@ -64,11 +64,11 @@ QString PopulationKnowledge::GetName() const
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& message )
 {
-    if( message.m.etat_dominationPresent )
+    if( message.has_etat_domination()  )
     {
-        domination_ = message.etat_domination;
+        domination_ = message.etat_domination();
         Touch();
     }
 }
@@ -81,12 +81,12 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& me
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeCreation& message )
+void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& message )
 {
-    if( ! tools::Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration ) )
+    if( ! tools::Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration() ) )
     {
         PopulationConcentrationKnowledge* pKnowledge = new PopulationConcentrationKnowledge( controller_, converter_, popu_, message );
-        tools::Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration, *pKnowledge );
+        tools::Resolver< PopulationConcentrationKnowledge >::Register( message.oid_connaissance_concentration(), *pKnowledge );
         Touch();
     }
 }
@@ -95,9 +95,9 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowle
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message )
 {
-    tools::Resolver< PopulationConcentrationKnowledge >::Get( message.oid_connaissance_concentration )
+    tools::Resolver< PopulationConcentrationKnowledge >::Get( message.oid_connaissance_concentration() )
         .DoUpdate( message );
 }
     
@@ -105,10 +105,10 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowle
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-17
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message )
+void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& message )
 {
-    delete tools::Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration );
-    tools::Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration );
+    delete tools::Resolver< PopulationConcentrationKnowledge >::Find( message.oid_connaissance_concentration() );
+    tools::Resolver< PopulationConcentrationKnowledge >::Remove( message.oid_connaissance_concentration() );
     Touch();
 }
 
@@ -116,12 +116,12 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationConcentrationKnowle
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeCreation& message )
+void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& message )
 {
-    if( ! tools::Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux ) )
+    if( ! tools::Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux() ) )
     {
         PopulationFlowKnowledge* pKnowledge = new PopulationFlowKnowledge( controller_, converter_, popu_, message );
-        tools::Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux, *pKnowledge );
+        tools::Resolver< PopulationFlowKnowledge >::Register( message.oid_connaissance_flux(), *pKnowledge );
         Touch();
     };
 }
@@ -130,9 +130,9 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeCreati
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate& message )
+void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& message )
 {
-    tools::Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux )
+    tools::Resolver< PopulationFlowKnowledge >::Get( message.oid_connaissance_flux() )
         .DoUpdate( message );
 }
     
@@ -140,10 +140,10 @@ void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate
 // Name: PopulationKnowledge::DoUpdate
 // Created: SBO 2005-10-21
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeDestruction& message )
+void PopulationKnowledge::DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& message )
 {
-    delete tools::Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux );
-    tools::Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux );
+    delete tools::Resolver< PopulationFlowKnowledge >::Find( message.oid_connaissance_flux() );
+    tools::Resolver< PopulationFlowKnowledge >::Remove( message.oid_connaissance_flux() );
     Touch();
 }
 

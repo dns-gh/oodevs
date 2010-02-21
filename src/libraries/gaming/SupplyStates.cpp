@@ -50,31 +50,30 @@ void SupplyStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: SupplyStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void SupplyStates::DoUpdate( const ASN1T_MsgLogSupplyState& message )
+void SupplyStates::DoUpdate( const MsgsSimToClient::MsgLogSupplyState& message )
 {
-    if( message.m.chaine_activeePresent )
-        bChainEnabled_ = message.chaine_activee != 0;
+    if( message.has_chaine_activee()  )
+        bChainEnabled_ = message.chaine_activee() != 0;
 
-    if( message.m.disponibilites_transporteurs_convoisPresent )
+    if( message.has_disponibilites_transporteurs_convois()  )
     {
-        dispoTransporters_.resize( message.disponibilites_transporteurs_convois.n );
-        for( uint i = 0; i < message.disponibilites_transporteurs_convois.n; ++i )
-            dispoTransporters_[i] = Availability( resolver_, message.disponibilites_transporteurs_convois.elem[i] );
+        dispoTransporters_.resize( message.disponibilites_transporteurs_convois().elem_size() );
+        for( int i = 0; i < message.disponibilites_transporteurs_convois().elem_size(); ++i )
+            dispoTransporters_[i] = Availability( resolver_, message.disponibilites_transporteurs_convois().elem( i ) );
     }
 
-    if( message.m.stocksPresent )
+    if( message.has_stocks()  )
     {
-        uint nSize = message.stocks.n;
+        int nSize = message.stocks().elem_size();
         while( nSize > 0 )
         {
-            ASN1T_DotationStock& value = message.stocks.elem[ --nSize ];
-
-            DotationType& type = dotationResolver_.Get( value.ressource_id );
-            Dotation* dotation = Find( value.ressource_id );
+            const Common::MsgDotationStock& value = message.stocks().elem( --nSize );
+            DotationType& type = dotationResolver_.Get( value.ressource_id() );
+            Dotation* dotation = Find( value.ressource_id() );
             if( dotation )
-                dotation->quantity_ = value.quantite_disponible;
+                dotation->quantity_ = value.quantite_disponible();
             else
-                Register( value.ressource_id, *new Dotation( type, value.quantite_disponible ) );
+                Register( value.ressource_id(), *new Dotation( type, value.quantite_disponible() ) );
         }
     }
     controller_.Update( *this );

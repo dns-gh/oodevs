@@ -85,12 +85,12 @@ void KnowledgeGroup::Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup )
 // Name: KnowledgeGroup::DoUpdate
 // Created: FHD 2009-12-21
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::DoUpdate( const ASN1T_MsgKnowledgeGroupUpdate& message )
+void KnowledgeGroup::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
-    if( message.type != type_ )
-        type_ = message.type;
-    if( message.enabled != activated_ )
-        activated_ = message.enabled ? true : false;
+    if( message.type() != type_ )
+        type_ = message.type();
+    if( message.enabled() != activated_ )
+        activated_ = message.enabled();
     Touch();
 }
 

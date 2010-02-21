@@ -21,7 +21,6 @@
 #include "Entities/Orders/MIL_MissionType_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
-#include "Network/NET_ASN_Messages.h"
 
 #include "Decision/Functions/DEC_PopulationFunctions.h"
 #include "Decision/Functions/DEC_ActionFunctions.h"
@@ -67,7 +66,7 @@ DEC_PopulationDecision::~DEC_PopulationDecision()
 // Name: DEC_PopulationDecision::load
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> pEntity_
          >> rDominationState_
@@ -84,7 +83,7 @@ void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const uint )
 // Name: DEC_PopulationDecision::save
 // Created: JVT 2005-04-05
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pEntity_ );
     
@@ -244,17 +243,16 @@ void DEC_PopulationDecision::StopMissionBehavior( MIL_Mission_ABC& mission )
 // Name: DEC_PopulationDecision::SendFullState
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::SendFullState( NET_ASN_MsgPopulationUpdate& msg ) const
+void DEC_PopulationDecision::SendFullState( client::PopulationUpdate& msg ) const
 {
-    msg().m.etat_dominationPresent = 1;
-    msg().etat_domination          = (uint)( rDominationState_ * 100. );
+    msg().set_etat_domination( (unsigned int)( rDominationState_ * 100. ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::SendChangedState
 // Created: NLD 2006-02-22
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::SendChangedState( NET_ASN_MsgPopulationUpdate& msg ) const
+void DEC_PopulationDecision::SendChangedState( client::PopulationUpdate& msg )
 {
     if( bStateHasChanged_ )
         SendFullState( msg );

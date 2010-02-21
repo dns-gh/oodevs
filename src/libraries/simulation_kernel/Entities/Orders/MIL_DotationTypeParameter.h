@@ -11,6 +11,7 @@
 #define __MIL_DotationTypeParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class PHY_DotationCategory;
 
 // =============================================================================
@@ -25,7 +26,7 @@ class MIL_DotationTypeParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_DotationTypeParameter( const ASN1T_DotationType & asn );
+    explicit MIL_DotationTypeParameter( const Common::MsgDotationType & asn );
     explicit MIL_DotationTypeParameter( const PHY_DotationCategory* pCategory );
     virtual ~MIL_DotationTypeParameter();
     //@}
@@ -37,7 +38,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToDotationType( ASN1T_DotationType& ) const;
+    virtual bool ToDotationType( Common::MsgDotationType& ) const;
     virtual bool ToDotationType( const PHY_DotationCategory*& ) const;
     //@}
 

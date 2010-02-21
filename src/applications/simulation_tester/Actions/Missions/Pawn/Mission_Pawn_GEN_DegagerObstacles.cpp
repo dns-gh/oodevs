@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_DegagerObstacles::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_DegagerObstacles& asnMission = *new ASN1T_Mission_Pion_GEN_DegagerObstacles();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_degager_obstacles;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_degager_obstacles = &asnMission;
+    Mission_Pion_GEN_DegagerObstacles& asnMission = *new Mission_Pion_GEN_DegagerObstacles();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_degager_obstacles = &asnMission;
 
     const T_IdVector& obstacles_ = pTarget_->GetTestParam_ObjectKnowledgeList();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_GEN_DegagerObstacles::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_DegagerObstacles::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_degager_obstacles );
-    ASN1T_Mission_Pion_GEN_DegagerObstacles& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_degager_obstacles;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_degager_obstacles ());
+    Mission_Pion_GEN_DegagerObstacles& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_degager_obstacles;
 
     ASN_Tools::Delete( asnMission.obstacles );
 

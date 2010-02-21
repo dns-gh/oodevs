@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_AppuyerDirectAuContact::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact& asnMission = *new ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_appuyer_direct_au_contact;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_appuyer_direct_au_contact = &asnMission;
+    Mission_Pion_ALAT_AppuyerDirectAuContact& asnMission = *new Mission_Pion_ALAT_AppuyerDirectAuContact();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_appuyer_direct_au_contact = &asnMission;
 
     const T_IdVector& unitesAAppuyer_ = pTarget_->GetTestParam_AgentList();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -68,8 +68,8 @@ void Mission_Pawn_ALAT_AppuyerDirectAuContact::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_AppuyerDirectAuContact::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_appuyer_direct_au_contact );
-    ASN1T_Mission_Pion_ALAT_AppuyerDirectAuContact& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_appuyer_direct_au_contact;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_appuyer_direct_au_contact ());
+    Mission_Pion_ALAT_AppuyerDirectAuContact& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_appuyer_direct_au_contact;
 
     ASN_Tools::Delete( asnMission.unites_a_appuyer );
     ASN_Tools::Delete( asnMission.point_regroupement );

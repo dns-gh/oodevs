@@ -10,11 +10,14 @@
 #ifndef __PerceptionMap_h_
 #define __PerceptionMap_h_
 
-#include "game_asn/Simulation.h"
+
+#include "Perception.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
-#include "Perception.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -29,7 +32,7 @@ namespace kernel
 // Created: AGE 2006-02-22
 // =============================================================================
 class PerceptionMap : public kernel::Extension_ABC
-                    , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
+                    , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
 {
 
 public:
@@ -48,7 +51,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
     //@}
 
     //! @name Types

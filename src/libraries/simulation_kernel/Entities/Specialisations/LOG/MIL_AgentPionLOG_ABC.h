@@ -38,7 +38,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const uint );
+    template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Accessors
@@ -70,7 +70,7 @@ namespace serialization {
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template < typename Archive >
-inline void MIL_AgentPionLOG_ABC::serialize( Archive& file, const uint )
+inline void MIL_AgentPionLOG_ABC::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< MIL_AgentPion >( *this );
 }

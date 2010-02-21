@@ -25,12 +25,11 @@ class MIL_NbcAgentType;
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class InputToxicCloudAttribute 
-    : public ToxicAttribute_ABC
-    , public UpdatableAttribute_ABC
+class InputToxicCloudAttribute : public ToxicAttribute_ABC
+                               , public UpdatableAttribute_ABC
 { 
 public:
-    //! @name 
+    //! @name Types
     //@{
     typedef std::pair< MT_Vector2D, double >  T_Quantity; // Lat/Long/quantity
     struct QuantityTraits
@@ -69,15 +68,15 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name 
     //@{
     void Instanciate( DEC_Knowledge_Object& object ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
+    void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    void SendUpdate( Common::MsgObjectAttributes& asn ) const;
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -88,7 +87,7 @@ public:
 
     //! @name 
     //@{    
-    bool Update( uint time, TER_Polygon& shape );
+    bool Update( unsigned int time, TER_Polygon& shape );
     //@}
 
     //! @name Operations
@@ -99,7 +98,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, std::string >           T_Schedule;
+    typedef std::map< unsigned int, std::string >           T_Schedule;
     typedef T_Schedule::const_iterator              CIT_Schedule;
     
     typedef std::vector< T_Quantity >               T_QuantityContainer;

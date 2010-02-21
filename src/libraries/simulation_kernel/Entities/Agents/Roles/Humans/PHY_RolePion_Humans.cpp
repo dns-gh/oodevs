@@ -17,8 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/HealComputer_ABC.h"
 #include "simulation_kernel/HealComputerFactory_ABC.h"
@@ -68,7 +67,7 @@ PHY_RolePion_Humans::T_HumanData::T_HumanData()
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const uint )
+void PHY_RolePion_Humans::T_HumanData::serialize( Archive& file, const unsigned int )
 {
     file & nNbrTotal_                
          & nNbrOperational_
@@ -116,7 +115,7 @@ PHY_RolePion_Humans::~PHY_RolePion_Humans()
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_Humans::serialize( Archive& file, const uint )
+void PHY_RolePion_Humans::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Humans >( *this )
          & humansData_
@@ -133,9 +132,9 @@ namespace
     struct sRankData
     {
         sRankData() : nNbrOfficiers_( 0 ), nNbrSousOfficiers_( 0 ), nNbrMdrs_( 0 ) {}
-        uint nNbrOfficiers_;
-        uint nNbrSousOfficiers_;
-        uint nNbrMdrs_;
+        unsigned int nNbrOfficiers_;
+        unsigned int nNbrSousOfficiers_;
+        unsigned int nNbrMdrs_;
     };
     typedef std::map< const PHY_HumanWound*, sRankData > T_HumanWoundData;
     typedef T_HumanWoundData::const_iterator             CIT_HumanWoundData;
@@ -157,7 +156,7 @@ void PHY_RolePion_Humans::WriteODB( xml::xostream& /*xos*/ ) const
 // Name: PHY_RolePion_Humans::ChangeHumansAvailability
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, uint nNewNbrFullyAliveHumans )
+void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNewNbrFullyAliveHumans )
 {
 
     const T_HumanData& humanData = humansData_[ rank.GetID() ];
@@ -224,7 +223,7 @@ void PHY_RolePion_Humans::Clean()
 // Name: PHY_RolePion_Humans::GetNbrHumans
 // Created: SBO 2005-12-21
 // -----------------------------------------------------------------------------
-uint PHY_RolePion_Humans::GetNbrHumans( const PHY_HumanRank& rank ) const
+unsigned int PHY_RolePion_Humans::GetNbrHumans( const PHY_HumanRank& rank ) const
 {
     const T_HumanData& humanData = humansData_[ rank.GetID() ];
     return humanData.nNbrTotal_;
@@ -234,7 +233,7 @@ uint PHY_RolePion_Humans::GetNbrHumans( const PHY_HumanRank& rank ) const
 // Name: PHY_RolePion_Humans::GetNbrAliveHumans
 // Created: SBO 2005-12-21
 // -----------------------------------------------------------------------------
-uint PHY_RolePion_Humans::GetNbrAliveHumans( const PHY_HumanRank& rank ) const
+unsigned int PHY_RolePion_Humans::GetNbrAliveHumans( const PHY_HumanRank& rank ) const
 {
     const T_HumanData& humanData = humansData_[ rank.GetID() ];
     return humanData.nNbrOperational_;
@@ -445,7 +444,7 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Human& human )
 
 
     // Pas de RC si log non branchée ou si RC envoyé au tick précédent
-    const uint nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTick = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nCurrentTick > ( nTickRcMedicalQuerySent_ + 1 ) || nTickRcMedicalQuerySent_ == 0 )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_MedicalEvacuationRequest );
     nTickRcMedicalQuerySent_ = nCurrentTick;
@@ -481,17 +480,13 @@ void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& hum
 // Name: PHY_RolePion_Humans::SendChangedState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const
+void PHY_RolePion_Humans::SendChangedState( client::UnitAttributes& asn ) const
 {
     if( nNbrHumansDataChanged_ == 0 )
-        return;
-   
+        return;   
     assert( nNbrHumansDataChanged_ <= humansData_.size() );
  
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    ASN1T_HumanDotations* pPersonnel = new ASN1T_HumanDotations[ nNbrHumansDataChanged_ ];
-
-    uint i = 0;
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
         const PHY_HumanRank&           rank      = *itRank->second;
@@ -500,24 +495,19 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) con
         if( !humanData.bHasChanged_ )
             continue;
               
-        ASN1T_HumanDotations& personnel = pPersonnel[ i++ ];
+        MsgsSimToClient::HumanDotations_HumanDotation& personnel = *asn().mutable_dotation_eff_personnel()->add_elem();
 
-        personnel.rang                         = rank.GetAsnID();
-        personnel.nb_total                     = humanData.nNbrTotal_;
-        personnel.nb_operationnels             = humanData.nNbrOperational_;
-        personnel.nb_morts                     = humanData.nNbrDead_;
-        personnel.nb_blesses                   = humanData.nNbrWounded_;
-        personnel.nb_blesses_mentaux           = humanData.nNbrMentalDiseased_;
-        personnel.nb_contamines_nbc            = humanData.nNbrNBC_;
-        personnel.nb_dans_chaine_sante         = humanData.nNbrInLogisticMedical_;
-        personnel.nb_utilises_pour_maintenance = humanData.nNbrInLogisticMaintenance_;
+        personnel.set_rang                         ( rank.GetAsnID() );
+        personnel.set_nb_total                     ( humanData.nNbrTotal_ );
+        personnel.set_nb_operationnels             ( humanData.nNbrOperational_ );
+        personnel.set_nb_morts                     ( humanData.nNbrDead_ );
+        personnel.set_nb_blesses                   ( humanData.nNbrWounded_ );
+        personnel.set_nb_blesses_mentaux           ( humanData.nNbrMentalDiseased_ );
+        personnel.set_nb_contamines_nbc            ( humanData.nNbrNBC_ );
+        personnel.set_nb_dans_chaine_sante         ( humanData.nNbrInLogisticMedical_ );
+        personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
     }
-    assert( i == nNbrHumansDataChanged_ );
-
-    asn().dotation_eff_personnel.n        = nNbrHumansDataChanged_;
-    asn().dotation_eff_personnel.elem     = pPersonnel;
-    asn().m.dotation_eff_personnelPresent = 1;
-
+    assert( unsigned int( asn().dotation_eff_personnel().elem_size() ) == nNbrHumansDataChanged_ );
     SendLogisticChangedState();
 }
 
@@ -525,33 +515,24 @@ void PHY_RolePion_Humans::SendChangedState( NET_ASN_MsgUnitAttributes& asn ) con
 // Name: PHY_RolePion_Humans::SendFullState
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::SendFullState( NET_ASN_MsgUnitAttributes& asn ) const
+void PHY_RolePion_Humans::SendFullState( client::UnitAttributes& asn ) const
 {
     const PHY_HumanRank::T_HumanRankMap& ranks = PHY_HumanRank::GetHumanRanks();
-    ASN1T_HumanDotations* pPersonnel = new ASN1T_HumanDotations[ ranks.size() ];
-
-    uint i = 0;
     for( PHY_HumanRank::CIT_HumanRankMap itRank = ranks.begin(); itRank != ranks.end(); ++itRank )
     {
         const PHY_HumanRank&           rank      = *itRank->second;
         const T_HumanData&             humanData = humansData_[ rank.GetID() ];
-              ASN1T_HumanDotations& personnel = pPersonnel[ i++ ];
-
-        personnel.rang                         = rank.GetAsnID();
-        personnel.nb_total                     = humanData.nNbrTotal_;
-        personnel.nb_operationnels             = humanData.nNbrOperational_;
-        personnel.nb_morts                     = humanData.nNbrDead_;
-        personnel.nb_blesses                   = humanData.nNbrWounded_;
-        personnel.nb_blesses_mentaux           = humanData.nNbrMentalDiseased_;
-        personnel.nb_contamines_nbc            = humanData.nNbrNBC_;
-        personnel.nb_dans_chaine_sante         = humanData.nNbrInLogisticMedical_;
-        personnel.nb_utilises_pour_maintenance = humanData.nNbrInLogisticMaintenance_;
+        MsgsSimToClient::HumanDotations_HumanDotation& personnel = *asn().mutable_dotation_eff_personnel()->add_elem();
+        personnel.set_rang                         ( rank.GetAsnID() );
+        personnel.set_nb_total                     ( humanData.nNbrTotal_ );
+        personnel.set_nb_operationnels             ( humanData.nNbrOperational_ );
+        personnel.set_nb_morts                     ( humanData.nNbrDead_ );
+        personnel.set_nb_blesses                   ( humanData.nNbrWounded_ );
+        personnel.set_nb_blesses_mentaux           ( humanData.nNbrMentalDiseased_ );
+        personnel.set_nb_contamines_nbc            ( humanData.nNbrNBC_ );
+        personnel.set_nb_dans_chaine_sante         ( humanData.nNbrInLogisticMedical_ );
+        personnel.set_nb_utilises_pour_maintenance ( humanData.nNbrInLogisticMaintenance_ );
     }
-
-    asn().dotation_eff_personnel.n        = ranks.size();
-    asn().dotation_eff_personnel.elem     = pPersonnel;
-    asn().m.dotation_eff_personnelPresent = 1;
-
     SendLogisticFullState();
 }
 
@@ -580,7 +561,7 @@ void PHY_RolePion_Humans::SendLogisticFullState() const
 // Name: PHY_RolePion_Humans::GetNbrUsableHumans
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-uint PHY_RolePion_Humans::GetNbrUsableHumans() const
+unsigned int PHY_RolePion_Humans::GetNbrUsableHumans() const
 {
     return nNbrUsableHumans_;
 }

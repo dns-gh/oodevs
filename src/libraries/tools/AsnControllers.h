@@ -26,9 +26,9 @@ namespace tools
 }
 
 #define DECLARE_ASN_CONTROLLER( m )             \
-    struct ASN1T_##m; class ASN1C_##m;          \
+    struct ##m; class ASN1C_##m;          \
     template< >                                 \
-    struct tools::AsnControllers< ASN1T_##m >   \
+    struct tools::AsnControllers< ##m >   \
     {                                           \
         typedef ASN1C_##m C;                    \
     };

@@ -11,6 +11,7 @@
 #define __MIL_ObjectKnowledgeListParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_Knowledge_Object;
 class DEC_KnowledgeResolver_ABC;
 
@@ -26,7 +27,7 @@ class MIL_ObjectKnowledgeListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ObjectKnowledgeListParameter( const ASN1T_ObjectKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_ObjectKnowledgeListParameter( const Common::MsgObjectKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver );
     explicit MIL_ObjectKnowledgeListParameter( const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& knowledgeObjectList );
     virtual ~MIL_ObjectKnowledgeListParameter();
     //@}
@@ -38,7 +39,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToObjectKnowledgeList( ASN1T_ObjectKnowledgeList& asn ) const;
+    virtual bool ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& asn ) const;
     virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const;
     //@}
 

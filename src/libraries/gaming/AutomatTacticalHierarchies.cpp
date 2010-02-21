@@ -12,6 +12,7 @@
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -44,12 +45,12 @@ AutomatTacticalHierarchies::~AutomatTacticalHierarchies()
 // Name: AutomatTacticalHierarchies::DoUpdate
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
-void AutomatTacticalHierarchies::DoUpdate( const ASN1T_MsgAutomatChangeSuperior& message )
+void AutomatTacticalHierarchies::DoUpdate( const Common::MsgAutomatChangeSuperior& message )
 {
-    if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_automate )
-        ChangeSuperior( &automatResolver_.Get( message.oid_superior.u.automate ) );
-    else if( message.oid_superior.t == T_MsgAutomatChangeSuperior_oid_superior_formation )
-        ChangeSuperior( &formationResolver_.Get( message.oid_superior.u.formation ) );
+    if( message.oid_superior().has_automate() )
+        ChangeSuperior( &automatResolver_.Get( message.oid_superior().automate().oid() ) );
+    else if( message.oid_superior().has_formation() )
+        ChangeSuperior( &formationResolver_.Get( message.oid_superior().formation().oid() ) );
 }
 
 // -----------------------------------------------------------------------------

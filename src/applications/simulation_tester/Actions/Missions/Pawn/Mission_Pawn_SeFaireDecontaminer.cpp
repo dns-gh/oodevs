@@ -43,9 +43,9 @@ void Mission_Pawn_SeFaireDecontaminer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_SeFaireDecontaminer& asnMission = *new ASN1T_Mission_Pion_SeFaireDecontaminer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_se_faire_decontaminer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_se_faire_decontaminer = &asnMission;
+    Mission_Pion_SeFaireDecontaminer& asnMission = *new Mission_Pion_SeFaireDecontaminer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_se_faire_decontaminer = &asnMission;
 
     const Position& pointArrivee_ = pTarget_->GetTestParam_Point();
 
@@ -62,8 +62,8 @@ void Mission_Pawn_SeFaireDecontaminer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_SeFaireDecontaminer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_se_faire_decontaminer );
-    ASN1T_Mission_Pion_SeFaireDecontaminer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_se_faire_decontaminer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_se_faire_decontaminer ());
+    Mission_Pion_SeFaireDecontaminer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_se_faire_decontaminer;
 
     ASN_Tools::Delete( asnMission.point_arrivee );
 

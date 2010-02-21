@@ -11,6 +11,7 @@
 #define __MIL_AutomatListParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_AutomateDecision;
 class MIL_EntityManager_ABC;
 
@@ -26,7 +27,7 @@ class MIL_AutomatListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AutomatListParameter( const ASN1T_AutomatList&, MIL_EntityManager_ABC& entityManager );
+             MIL_AutomatListParameter( const Common::MsgAutomatList&, MIL_EntityManager_ABC& entityManager );
     explicit MIL_AutomatListParameter( const std::vector< DEC_AutomateDecision* >& automatList );
     virtual ~MIL_AutomatListParameter();
     //@}
@@ -38,7 +39,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToAutomatList( ASN1T_AutomatList& ) const;
+    virtual bool ToAutomatList( Common::MsgAutomatList& ) const;
     virtual bool ToAutomatList( std::vector< DEC_Decision_ABC* >& ) const;
     //@}
 

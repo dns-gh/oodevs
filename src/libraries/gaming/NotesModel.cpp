@@ -37,23 +37,23 @@ NotesModel::~NotesModel()
 // Name: NotesModel::Create
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Create( const ASN1T_MsgNoteCreation& asn )
+void NotesModel::Create( const MsgsMessengerToClient::MsgNoteCreation& message )
 {
-    Note* note = new Note( controller_, asn.note.parent, asn.id, asn.note.name,
-        asn.note.number, asn.note.description );
-    Register( asn.id, *note );
+    Note* note = new Note( controller_, message.note().parent(), message.id(), message.note().name(),
+        message.note().number(), message.note().description() );
+    Register( message.id(), *note );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NotesModel::Update
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Update( const ASN1T_MsgNoteUpdate& asn )
+void NotesModel::Update( const MsgsMessengerToClient::MsgNoteUpdate& message )
 {
-    Note* note = Find( asn.id );
+    Note* note = Find( message.id() );
     if( note )
     {
-        note->Update( asn );
+        note->Update( message );
     }
 }
 
@@ -61,12 +61,12 @@ void NotesModel::Update( const ASN1T_MsgNoteUpdate& asn )
 // Name: NotesModel::Delete
 // Created: HBD 2010-02-04
 // -----------------------------------------------------------------------------
-void NotesModel::Delete( const ASN1T_MsgNoteDestruction& asn )
+void NotesModel::Delete( const MsgsMessengerToClient::MsgNoteDestruction& message )
 {
-    Note* note = Find( asn.id );
+    Note* note = Find( message.id() );
     if( note )
     {
-        Remove( asn.id );
+        Remove( message.id() );
         note->Delete();
     }
 }

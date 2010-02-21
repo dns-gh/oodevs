@@ -55,13 +55,13 @@ public:
         handlers_.push_back( boost::shared_ptr< MessageHandler_ABC >( handler ) );
     }
 
-    virtual void Receive( const ASN1T_MsgsSimToClient& message )
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message )
     {
         for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );
     }
 
-    virtual void Receive( const ASN1T_MsgsAarToClient& message )
+    virtual void Receive( const MsgsAarToClient::MsgAarToClient& message )
     {
         for( CIT_Handlers it = handlers_.begin(); it != handlers_.end(); ++it )
             (*it)->Receive( message );

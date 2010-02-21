@@ -48,9 +48,9 @@ PHY_PerceptionSurfaceObject::~PHY_PerceptionSurfaceObject()
 // Name: PHY_PerceptionSurfaceObject::load
 // Created: JVT 2005-04-12
 // -----------------------------------------------------------------------------
-void PHY_PerceptionSurfaceObject::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_PerceptionSurfaceObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    uint nID;
+    unsigned int nID;
     
     file >> nID;
     assert( PHY_SensorType::FindSensorType( nID ) );
@@ -64,7 +64,7 @@ void PHY_PerceptionSurfaceObject::load( MIL_CheckPointInArchive& file, const uin
 // Name: PHY_PerceptionSurfaceObject::save
 // Created: JVT 2005-04-12
 // -----------------------------------------------------------------------------
-void PHY_PerceptionSurfaceObject::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_PerceptionSurfaceObject::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pSensorType_ );
     unsigned type = pSensorType_->GetType().GetID();

@@ -10,7 +10,10 @@
 #ifndef __FolkModel_h_
 #define __FolkModel_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 #pragma warning( push )
 #pragma warning( disable : 4100 4996 )
 #include <boost/multi_array.hpp>
@@ -20,6 +23,13 @@
 namespace kernel
 {
     class Controller;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgFolkCreation;
+    class MsgFolkGraphUpdate;
+    class MsgFolkGraphEdgeUpdate;
 }
 
 // =============================================================================
@@ -45,8 +55,8 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgFolkCreation& creation );
-    void Update( const ASN1T_MsgFolkGraphUpdate& update );
+    void Update( const MsgsSimToClient::MsgFolkCreation& creation );
+    void Update( const MsgsSimToClient::MsgFolkGraphUpdate& update );
 
     // $$$$ AGE 2007-09-05: ...
     const T_Names& Containers() const;
@@ -66,7 +76,7 @@ private:
 
     //! @name Helpers
     //@{
-    void Update( const ASN1T_MsgFolkGraphEdgeUpdate& update );
+    void Update( const MsgsSimToClient::MsgFolkGraphEdgeUpdate& update );
     void ComputeRatios(); 
     //@}
 

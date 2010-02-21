@@ -10,8 +10,12 @@
 #ifndef __SoilAttribute_h_
 #define __SoilAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "UrbanObjectAttribute_ABC.h"
+
+namespace MsgsSimToClient
+{
+    class MsgUrbanAttributes;
+}
 
 namespace dispatcher
 {
@@ -28,15 +32,15 @@ class SoilAttribute : public UrbanObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    SoilAttribute( const Model& model, const ASN1T_UrbanAttributes& asnMsg );
+    SoilAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message );
     virtual ~SoilAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_UrbanAttributes& asnMsg );
-    virtual void Send     ( ASN1T_UrbanAttributes& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_UrbanAttributes& asnMsg ) const;
+    virtual void Update   ( const MsgsSimToClient::MsgUrbanAttributes& message );
+    virtual void Send     (       MsgsSimToClient::MsgUrbanAttributes& message ) const;
+    virtual void AsnDelete(       MsgsSimToClient::MsgUrbanAttributes& message ) const;
     //@}
 
 private:

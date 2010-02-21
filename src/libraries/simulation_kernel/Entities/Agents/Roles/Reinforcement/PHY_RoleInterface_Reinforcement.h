@@ -14,6 +14,11 @@
 
 #include "MT_Tools/Role_ABC.h"
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class MIL_AgentPion;
 
 // =============================================================================
@@ -48,6 +53,13 @@ public:
     virtual bool IsReinforcing      () const = 0;
     virtual bool IsReinforced       () const = 0;
     virtual bool IsReinforcedBy     ( MIL_AgentPion& pion ) const = 0;
+    //@}
+
+
+    //! @name Network
+    //@{
+    virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
     //@}
 
     //! @name Accessors

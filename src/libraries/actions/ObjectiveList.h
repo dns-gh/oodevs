@@ -10,8 +10,12 @@
 #ifndef __ActionParameterObjectiveList_h_
 #define __ActionParameterObjectiveList_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
+
+namespace Common
+{
+    class MsgMissionObjectiveList;
+}
 
 namespace kernel
 {
@@ -36,14 +40,14 @@ public:
     //@{
     explicit ObjectiveList( const kernel::OrderParameter& parameter );
              ObjectiveList( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
-             ObjectiveList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_MissionObjectiveList& asn );
+             ObjectiveList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgMissionObjectiveList& asn );
     virtual ~ObjectiveList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
+    virtual void Clean( Common::MsgMissionParameter& asn ) const;
     virtual bool IsSet() const;
     //@}
     

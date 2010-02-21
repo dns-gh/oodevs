@@ -12,11 +12,13 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MaintenanceComposanteState.h"
 #include "PHY_MaintenanceConsign_ABC.h"
+#include "MIL_AgentServer.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MaintenanceComposanteState )
 
@@ -73,10 +75,10 @@ PHY_MaintenanceComposanteState::~PHY_MaintenanceComposanteState()
 // Name: PHY_MaintenanceComposanteState::load
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< uint& >( nID_ )
-         >> const_cast< uint& >( nCreationTick_ )
+    file >> const_cast< unsigned int& >( nID_ )
+         >> const_cast< unsigned int& >( nCreationTick_ )
          >> pPion_
          >> pComposante_
          >> pConsign_
@@ -89,7 +91,7 @@ void PHY_MaintenanceComposanteState::load( MIL_CheckPointInArchive& file, const 
 // Name: PHY_MaintenanceComposanteState::save
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-void PHY_MaintenanceComposanteState::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_MaintenanceComposanteState::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << nID_
          << nCreationTick_
@@ -128,7 +130,7 @@ const PHY_Breakdown& PHY_MaintenanceComposanteState::GetComposanteBreakdown() co
 // Name: PHY_MaintenanceComposanteState::ApproximateTravelTime
 // Created: NLD 2004-12-24
 // -----------------------------------------------------------------------------
-uint PHY_MaintenanceComposanteState::ApproximateTravelTime( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const
+unsigned int PHY_MaintenanceComposanteState::ApproximateTravelTime( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const
 {
     assert( pComposante_ );
     return pComposante_->ApproximateTravelTime( vSourcePos, vTargetPos );
@@ -190,22 +192,21 @@ void PHY_MaintenanceComposanteState::SendFullState() const
     assert( pPion_ );
 
     SendMsgCreation();
-    NET_ASN_MsgLogMaintenanceHandlingUpdate asn;
-    asn().oid_consigne          = nID_;
-    asn().oid_pion              = pPion_->GetID();
+    client::LogMaintenanceHandlingUpdate asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_pion( pPion_->GetID() );
 
-    asn().m.diagnostique_effectuePresent = 1;
-    asn().m.diagnostique_effectuePresent = bDiagnosed_;
+//    asn().set_diagnostique_effectuePresent( 1 );
+//    asn().set_diagnostique_effectuePresent( bDiagnosed_ );
 
     if( pConsign_ )
         pConsign_->SendFullState( asn );
     else
     {
-        asn().oid_pion_log_traitant = 0;
-        asn().m.etatPresent         = 1;
-        asn().etat                  = EnumLogMaintenanceHandlingStatus::termine;        
+        asn().set_oid_pion_log_traitant( 0 );
+        asn().set_etat( Common::EnumLogMaintenanceHandlingStatus::termine_maintenance );        
     }
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -219,22 +220,21 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
 
     assert( pPion_ );
 
-    NET_ASN_MsgLogMaintenanceHandlingUpdate asn;
-    asn().oid_consigne          = nID_;
-    asn().oid_pion              = pPion_->GetID();
+    client::LogMaintenanceHandlingUpdate asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_pion( pPion_->GetID() );
 
-    asn().m.diagnostique_effectuePresent = 1;
-    asn().m.diagnostique_effectuePresent = bDiagnosed_;
+//    asn().set_diagnostique_effectuePresent( 1 );
+//    asn().set_diagnostique_effectuePresent( bDiagnosed_ );
 
     if( pConsign_ )
         pConsign_->SendChangedState( asn );
     else
     {
-        asn().oid_pion_log_traitant = 0;
-        asn().m.etatPresent         = 1;
-        asn().etat                  = EnumLogMaintenanceHandlingStatus::termine;
+        asn().set_oid_pion_log_traitant( 0 );
+        asn().set_etat( Common::EnumLogMaintenanceHandlingStatus::termine_maintenance );
     }
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -257,13 +257,13 @@ void PHY_MaintenanceComposanteState::SendMsgCreation() const
     assert( pPion_ );
     assert( pComposante_ );
 
-    NET_ASN_MsgLogMaintenanceHandlingCreation asn;
-    asn().oid_consigne    = nID_;
-    asn().oid_pion        = pPion_->GetID();
-    asn().tick_creation   = nCreationTick_;
-    asn().type_equipement = pComposante_->GetType().GetMosID();
-    asn().type_panne      = GetComposanteBreakdown().GetID();
-    asn.Send();
+    client::LogMaintenanceHandlingCreation asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_pion( pPion_->GetID() );
+    asn().set_tick_creation( nCreationTick_ );
+    asn().set_type_equipement( pComposante_->GetType().GetMosID().equipment() );
+    asn().set_type_panne( GetComposanteBreakdown().GetID() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
     
 // -----------------------------------------------------------------------------
@@ -274,10 +274,10 @@ void PHY_MaintenanceComposanteState::SendMsgDestruction() const
 {
     assert( pPion_ );
 
-    NET_ASN_MsgLogMaintenanceHandlingDestruction asn;
-    asn().oid_consigne    = nID_;
-    asn().oid_pion        = pPion_->GetID();
-    asn.Send();
+    client::LogMaintenanceHandlingDestruction asn;
+    asn().set_oid_consigne( nID_ );
+    asn().set_oid_pion( pPion_->GetID() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

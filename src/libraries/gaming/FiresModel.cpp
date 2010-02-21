@@ -47,54 +47,54 @@ void FiresModel::Purge()
 // Name: FiresModel::AddFire
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void FiresModel::AddFire( const ASN1T_MsgStartUnitFire& message )
+void FiresModel::AddFire( const MsgsSimToClient::MsgStartUnitFire& message )
 {
-    if( ! Find( message.fire_oid ) )
-        Register( message.fire_oid, agents_.Get( message.firer_oid ) );
+    if( ! Find( message.fire_oid() ) )
+        Register( message.fire_oid(), agents_.Get( message.firer_oid() ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FiresModel::AddFire
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void FiresModel::AddFire( const ASN1T_MsgStartPopulationFire& message )
+void FiresModel::AddFire( const MsgsSimToClient::MsgStartPopulationFire& message )
 {
-    if( ! Find( message.fire_oid ) )
-        Register( message.fire_oid, populations_.Get( message.firer_oid ) );
+    if( ! Find( message.fire_oid() ) )
+        Register( message.fire_oid(), populations_.Get( message.firer_oid() ) );
 }
     
 // -----------------------------------------------------------------------------
 // Name: FiresModel::FindFirer
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopUnitFire& message )
+Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopUnitFire& message )
 {
-    return Find( message.fire_oid );
+    return Find( message.fire_oid() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FiresModel::FindFirer
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-Entity_ABC* FiresModel::FindFirer( const ASN1T_MsgStopPopulationFire& message )
+Entity_ABC* FiresModel::FindFirer( const MsgsSimToClient::MsgStopPopulationFire& message )
 {
-    return Find( message.fire_oid );
+    return Find( message.fire_oid() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FiresModel::RemoveFire
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void FiresModel::RemoveFire( const ASN1T_MsgStopUnitFire& message )
+void FiresModel::RemoveFire( const MsgsSimToClient::MsgStopUnitFire& message )
 {
-    Remove( message.fire_oid );
+    Remove( message.fire_oid() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: FiresModel::RemoveFire
 // Created: AGE 2006-03-13
 // -----------------------------------------------------------------------------
-void FiresModel::RemoveFire( const ASN1T_MsgStopPopulationFire& message )
+void FiresModel::RemoveFire( const MsgsSimToClient::MsgStopPopulationFire& message )
 {
-    Remove( message.fire_oid );
+    Remove( message.fire_oid() );
 }

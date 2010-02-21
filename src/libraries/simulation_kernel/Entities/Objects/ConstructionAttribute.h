@@ -15,7 +15,7 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
-namespace hla 
+namespace hla
 {
     class Deserializer;
 }
@@ -35,8 +35,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              ConstructionAttribute();
-             ConstructionAttribute( const PHY_DotationCategory& category, uint nFullNbrDotation );
-             ConstructionAttribute( const PHY_DotationCategory& dotation, const ASN1T_ObjectAttributes& asn );
+             ConstructionAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
+             ConstructionAttribute( const PHY_DotationCategory& dotation, const Common::MsgObjectAttributes& asn );
     virtual ~ConstructionAttribute();
     //@}
 
@@ -48,25 +48,25 @@ public:
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()    
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Knowledge
     //@{
-    void Instanciate( DEC_Knowledge_Object& object ) const;    
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;    
     //@}
 
     //! @name Network Update
     //@{
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void OnUpdate( const ASN1T_ObjectAttributes& asn );        
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void OnUpdate( const Common::MsgObjectAttributes& asn );        
     //@}
 
     //! @name ODB
     //@{
-    void WriteODB( xml::xostream& xos ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name HLA
@@ -84,10 +84,10 @@ public:
     //! @name Accessors
     //@{    
     bool HasDotation( const PHY_DotationCategory& dotation ) const;
-    uint GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
-    uint GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
+    unsigned int GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
+    unsigned int GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
     MT_Float GetState() const;
-    uint GetMaxDotation() const;
+    unsigned int GetMaxDotation() const;
     //@}
 
     //! @name Copy
@@ -98,7 +98,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< const PHY_DotationCategory*, std::pair< uint, uint > >    T_DotationProgress;
+    typedef std::map< const PHY_DotationCategory*, std::pair< unsigned int, unsigned int > >    T_DotationProgress;
     //@}
 
 private:
@@ -114,8 +114,8 @@ private:
     T_DotationProgress  improvement_;
 
     const PHY_DotationCategory* dotation_;
-    uint        nFullNbrDotation_;
-    uint        nCurrentNbrDotation_;
+    unsigned int        nFullNbrDotation_;
+    unsigned int        nCurrentNbrDotation_;
     MT_Float    rConstructionPercentage_;
     //@}
 };

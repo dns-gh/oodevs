@@ -13,8 +13,12 @@
 #include "HlaExtension_ABC.h"
 #include "Formation.h"
 #include "EntityIdentifier.h"
-#include "game_asn/Simulation.h"
+
 #include "clients_kernel/Updatable_ABC.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace dispatcher
 {
@@ -33,8 +37,8 @@ namespace hla
 // Created: SBO 2008-02-18
 // =============================================================================
 class AgentExtension : public HlaExtension_ABC
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
-                     , public kernel::Updatable_ABC< ASN1T_MsgUnitEnvironmentType >
+                     , public kernel::Updatable_ABC< MsgUnitAttributes >
+                     , public kernel::Updatable_ABC< MsgUnitEnvironmentType >
 {
 
 public:
@@ -47,8 +51,8 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool bUpdateAll ) const;
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
-    virtual void DoUpdate( const ASN1T_MsgUnitEnvironmentType& attributes );
+    virtual void DoUpdate( const MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const MsgUnitEnvironmentType& attributes );
     //@}
 
 private:

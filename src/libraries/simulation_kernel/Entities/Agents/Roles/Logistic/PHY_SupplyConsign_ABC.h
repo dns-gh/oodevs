@@ -14,7 +14,11 @@
 
 #include "MIL.h"
 
-class NET_ASN_MsgLogSupplyHandlingUpdate;
+namespace client
+{
+    class LogSupplyHandlingUpdate;
+}
+
 class MIL_AutomateLOG;
 class MIL_Automate;
 
@@ -32,7 +36,7 @@ public:
 
     //! @name CheckPoints 
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
@@ -58,9 +62,9 @@ public:
 
     //! @name Network
     //@{
-            void SendChangedState( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const;
-    virtual void SendFullState   ( NET_ASN_MsgLogSupplyHandlingUpdate& asn ) const;
-    static  void SendDefaultState( NET_ASN_MsgLogSupplyHandlingUpdate& asn );
+            void SendChangedState( client::LogSupplyHandlingUpdate& asn ) const;
+    virtual void SendFullState   ( client::LogSupplyHandlingUpdate& asn ) const;
+    static  void SendDefaultState( client::LogSupplyHandlingUpdate& asn );
     //@}
 
 protected:
@@ -102,7 +106,7 @@ protected:
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_SupplyConsign_ABC::serialize( Archive& file, const uint )
+void PHY_SupplyConsign_ABC::serialize( Archive& file, const unsigned int )
 {
     file & pSupplyingAutomate_
          & const_cast< MIL_Automate*& >( pSuppliedAutomate_ )

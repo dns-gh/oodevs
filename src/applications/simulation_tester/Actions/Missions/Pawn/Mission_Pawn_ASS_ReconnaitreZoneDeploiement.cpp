@@ -43,9 +43,9 @@ void Mission_Pawn_ASS_ReconnaitreZoneDeploiement::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASS_ReconnaitreZoneDeploiement& asnMission = *new ASN1T_Mission_Pion_ASS_ReconnaitreZoneDeploiement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_reconnaitre_zone_deploiement;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_reconnaitre_zone_deploiement = &asnMission;
+    Mission_Pion_ASS_ReconnaitreZoneDeploiement& asnMission = *new Mission_Pion_ASS_ReconnaitreZoneDeploiement();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_ass_reconnaitre_zone_deploiement = &asnMission;
 
     const Position& positionDeploiement_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ASS_ReconnaitreZoneDeploiement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASS_ReconnaitreZoneDeploiement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_ass_reconnaitre_zone_deploiement );
-    ASN1T_Mission_Pion_ASS_ReconnaitreZoneDeploiement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_reconnaitre_zone_deploiement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_ass_reconnaitre_zone_deploiement ());
+    Mission_Pion_ASS_ReconnaitreZoneDeploiement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_ass_reconnaitre_zone_deploiement;
 
     ASN_Tools::Delete( asnMission.position_deploiement );
 

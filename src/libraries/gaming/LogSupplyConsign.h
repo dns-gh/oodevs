@@ -11,9 +11,11 @@
 #define __LogSupplyConsign_h_
 
 #include "clients_kernel/Types.h"
-#include "game_asn/Simulation.h"
-#include "tools/Resolver.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver.h"
+
+using namespace Common;
 
 class DotationRequest;
 
@@ -24,6 +26,11 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class DotationType;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgLogSupplyHandlingUpdate;
 }
 
 // $$$$ AGE 2006-04-21: factorisations entre types de consignes
@@ -39,7 +46,7 @@ public:
     //@{
              LogSupplyConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, 
                                const tools::Resolver_ABC< kernel::Agent_ABC >&   agentResolver,
-                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const ASN1T_MsgLogSupplyHandlingCreation& asn );
+                               const tools::Resolver_ABC< kernel::DotationType >& dotationResolver, const MsgsSimToClient::MsgLogSupplyHandlingCreation& message );
     virtual ~LogSupplyConsign();
     //@}
 
@@ -51,7 +58,7 @@ public:
 
     //! @name Network events
     //@{
-    void Update( const ASN1T_MsgLogSupplyHandlingUpdate& message );
+    void Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message );
     //@}
 
 private:

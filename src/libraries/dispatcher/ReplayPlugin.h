@@ -13,7 +13,14 @@
 #include "Plugin_ABC.h"
 #include "MT/MT_Time/MT_Timer_ABC.h"
 #include "MT/MT_Time/MT_TimerManager.h"
-#include "game_asn/Replay.h"
+
+
+//using namespace Common;
+namespace MsgsClientToReplay
+{
+    class MsgClientToReplay;
+}
+//using namespace MsgsReplayToClient;
 
 namespace tools
 {
@@ -48,7 +55,7 @@ public:
     //@{
     virtual void Update();
 
-    virtual void Receive( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
     virtual void Register                 ( dispatcher::Services& );
@@ -64,7 +71,7 @@ private:
     //! @name Helpers
     //@{
     virtual void OnTimer();
-    void OnReceive( const std::string& link, const ASN1T_MsgsClientToReplay& asnMsg );
+    void OnReceive( const std::string& link, const MsgsClientToReplay::MsgClientToReplay& asnMsg );
     void ChangeTimeFactor( unsigned factor );
     void Pause();
     void Resume();

@@ -24,7 +24,7 @@ class MIL_DirectionParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MIL_DirectionParameter( const ASN1T_Heading& heading );
+    explicit MIL_DirectionParameter( const Common::MsgHeading& heading );
     virtual ~MIL_DirectionParameter();
     //@}
 
@@ -35,7 +35,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToDirection( ASN1T_Heading& ) const;
+    virtual bool ToDirection( Common::MsgHeading& ) const;
     //@}
 
 private:

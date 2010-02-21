@@ -13,7 +13,17 @@
 #include "clients_kernel/EntityHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+
+namespace Common
+{
+    class MsgAutomatChangeKnowledgeGroup;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgAutomatCreation;
+}
+
 
 namespace kernel
 {
@@ -28,8 +38,8 @@ namespace kernel
 // Created: AGE 2006-10-06
 // =============================================================================
 class AutomatHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
-                         , public kernel::Updatable_ABC< ASN1T_MsgAutomatCreation >
-                         , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeKnowledgeGroup >
+                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatCreation >
+                         , public kernel::Updatable_ABC< Common::MsgAutomatChangeKnowledgeGroup >
 {
 
 public:
@@ -50,8 +60,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomatChangeKnowledgeGroup& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message );
+    virtual void DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& message );
     virtual void AddSuperiorToDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC* const& superior ) const;
     //@}
 

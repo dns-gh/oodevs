@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PopulationKnowledge( const EntityManager&                        entityManager, 
-                                  const ASN1T_MsgPopulationKnowledgeCreation& asnMsg, 
+                                  const MsgPopulationKnowledgeCreation& asnMsg, 
                                   const KnowledgeGroup&                       knowledgeGroup );
     virtual ~PopulationKnowledge();
     //@}

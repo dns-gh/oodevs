@@ -39,10 +39,10 @@ PHY_SupplyState_ABC::~PHY_SupplyState_ABC()
 // Name: PHY_SupplyState_ABC::load
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-void PHY_SupplyState_ABC::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_SupplyState_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file >> const_cast< uint& >( nID_ )
-         >> const_cast< uint& >( nCreationTick_ );
+    file >> const_cast< unsigned int& >( nID_ )
+         >> const_cast< unsigned int& >( nCreationTick_ );
     idManager_.Lock( nID_ );
 }
 
@@ -50,7 +50,7 @@ void PHY_SupplyState_ABC::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_SupplyState_ABC::save
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
-void PHY_SupplyState_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_SupplyState_ABC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << nID_
          << nCreationTick_;

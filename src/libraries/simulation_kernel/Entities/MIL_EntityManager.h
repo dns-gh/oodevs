@@ -16,9 +16,41 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "MIL_EntityManager_ABC.h"
 #include "MIL_EntityManagerStaticMethods.h"
-
-#include "game_asn/Simulation.h"
 #include "tools/Resolver.h"
+
+namespace Common
+{
+    enum ObstacleType_DemolitionTargetType;
+
+    class MsgPopulationOrder;
+    class MsgUnitOrder;
+    class MsgAutomatOrder;
+    class MsgChangeDiplomacy;
+    class MsgAutomatChangeKnowledgeGroup;
+    class MsgAutomatChangeLogisticLinks;
+    class MsgAutomatChangeSuperior;
+    class MsgUnitChangeSuperior;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgKnowledgeGroupCreation;
+    class MsgKnowledgeGroupUpdate;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgFragOrder;
+    class MsgLogSupplyPushFlow;
+    class MsgLogSupplyChangeQuotas;
+    class MsgObjectMagicAction;
+    class MsgPopulationMagicAction;
+    class MsgSetAutomatMode;
+    class MsgUnitCreationRequest;
+    class MsgUnitMagicAction;    
+    class MsgKnowledgeGroupCreationRequest;
+    class MsgKnowledgeGroupUpdateRequest;
+}
 
 namespace xml
 {
@@ -55,23 +87,6 @@ class PopulationFactory_ABC;
 
 
 class HLA_Federate;
-
-struct ASN1T_MsgUnitMagicAction;
-struct ASN1T_MsgUnitOrder;
-struct ASN1T_MsgAutomatOrder;
-struct ASN1T_MsgSetAutomatMode;
-struct ASN1T_MsgOrderConduite;
-struct ASN1T_MsgObjectMagicAction;
-struct ASN1T_MsgPopulationMagicAction;
-struct ASN1T_MsgChangeDiplomacy;
-struct ASN1T_MsgAutomatChangeKnowledgeGroup;
-struct ASN1T_MsgAutomatChangeLogisticLinks;
-struct ASN1T_MsgUnitChangeSuperior;
-struct ASN1T_MsgLogSupplyChangeQuotas;
-struct ASN1T_MsgLogSupplyPushFlow;
-struct ASN1T_MsgKnowledgeGroupEnable; // LTO
-
-
 // =============================================================================
 // @class  MIL_EntityManager
 // Created: JVT 2004-08-03
@@ -94,7 +109,7 @@ public:
     MIL_AgentPion&  CreatePion( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition );
 
     void                        CreateObject( xml::xistream& xis, MIL_Army_ABC& army ); 
-    MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType );    
+    MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType );    
     MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC*             CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder );
     MIL_Object_ABC*             CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, const std::string& strOption, const std::string& strExtra, double rCompletion, double rMining, double rBypass );        
@@ -135,29 +150,25 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgUnitMagicAction             ( const ASN1T_MsgUnitMagicAction&                  msg, uint nCtx );
-    void OnReceiveMsgPopulationOrder             ( const ASN1T_MsgPopulationOrder&                  msg, uint nCtx );     
-    void OnReceiveMsgUnitOrder                   ( const ASN1T_MsgUnitOrder&                        msg, uint nCtx ); 
-    void OnReceiveMsgAutomatOrder                ( const ASN1T_MsgAutomatOrder&                     msg, uint nCtx );
-    void OnReceiveMsgSetAutomateMode             ( const ASN1T_MsgSetAutomatMode&                   msg, uint nCtx );
-    void OnReceiveMsgUnitCreationRequest         ( const ASN1T_MsgUnitCreationRequest&              msg, uint nCtx );
-    void OnReceiveMsgFragOrder                   ( const ASN1T_MsgFragOrder&                        msg, uint nCtx );
-    void OnReceiveMsgObjectMagicAction           ( const ASN1T_MsgObjectMagicAction&                msg, uint nCtx );
-    void OnReceiveMsgPopulationMagicAction       ( const ASN1T_MsgPopulationMagicAction&            msg, uint nCtx );
-    void OnReceiveMsgChangeDiplomacy             ( const ASN1T_MsgChangeDiplomacy&                  msg, uint nCtx );
-    void OnReceiveMsgAutomateChangeKnowledgeGroup( const ASN1T_MsgAutomatChangeKnowledgeGroup&      msg, uint nCtx );
-    void OnReceiveMsgAutomateChangeLogisticLinks ( const ASN1T_MsgAutomatChangeLogisticLinks&       msg, uint nCtx );
-    void OnReceiveMsgAutomateChangeSuperior      ( const ASN1T_MsgAutomatChangeSuperior&            msg, uint nCtx );
-    void OnReceiveMsgUnitChangeSuperior          ( const ASN1T_MsgUnitChangeSuperior&               msg, uint nCtx );
-    void OnReceiveMsgLogSupplyChangeQuotas       ( const ASN1T_MsgLogSupplyChangeQuotas&            msg, uint nCtx );
-    void OnReceiveMsgLogSupplyPushFlow           ( const ASN1T_MsgLogSupplyPushFlow&                msg, uint nCtx );
+    void OnReceiveMsgUnitMagicAction             ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveMsgPopulationOrder             ( const Common::MsgPopulationOrder&                        message, unsigned int nCtx );     
+    void OnReceiveMsgUnitOrder                   ( const Common::MsgUnitOrder&                              message, unsigned int nCtx ); 
+    void OnReceiveMsgAutomatOrder                ( const Common::MsgAutomatOrder&                           message, unsigned int nCtx );
+    void OnReceiveMsgSetAutomateMode             ( const MsgsClientToSim::MsgSetAutomatMode&                message, unsigned int nCtx );
+    void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );
+    void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
+    void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
+    void OnReceiveMsgPopulationMagicAction       ( const MsgsClientToSim::MsgPopulationMagicAction&         message, unsigned int nCtx );
+    void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                        message, unsigned int nCtx );
+    void OnReceiveMsgAutomateChangeKnowledgeGroup( const Common::MsgAutomatChangeKnowledgeGroup&            message, unsigned int nCtx );
+    void OnReceiveMsgAutomateChangeLogisticLinks ( const Common::MsgAutomatChangeLogisticLinks&             message, unsigned int nCtx );
+    void OnReceiveMsgAutomateChangeSuperior      ( const Common::MsgAutomatChangeSuperior&                  message, unsigned int nCtx );
+    void OnReceiveMsgUnitChangeSuperior          ( const Common::MsgUnitChangeSuperior&                     message, unsigned int nCtx );
+    void OnReceiveMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgLogSupplyChangeQuotas&         message, unsigned int nCtx );
+    void OnReceiveMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgLogSupplyPushFlow&             message, unsigned int nCtx );
     // LTO begin
-    void OnReceiveMsgKnowledgeGroupEnable        ( const ASN1T_MsgKnowledgeGroupEnable&             msg, uint nCtx );
-    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior&     msg, uint nCtx );
-
-    void OnReceiveMsgKnowledgeGroupDelete        ( const ASN1T_MsgKnowledgeGroupDelete&             msg, uint nCtx );
-    void OnReceiveMsgKnowledgeGroupSetType       ( const ASN1T_MsgKnowledgeGroupSetType&            msg, uint nCtx );
-    void OnReceiveMsgKnowledgeGroupCreation      ( const ASN1T_MsgKnowledgeGroupCreation&           msg, uint nCtx );
+    void OnReceiveMsgKnowledgeGroupCreation      ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message, unsigned int nCtx );
+    void OnReceiveMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest&   message, unsigned int nCtx );
     // LTO end
     //@}
 
@@ -170,8 +181,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_EntityManager* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_EntityManager* role, const unsigned int /*version*/ );
 
@@ -179,10 +190,9 @@ public:
     //@}
     
 private:
-
     //! @name types
     //@{
-    typedef std::map< uint, MIL_Intelligence* > T_IntelligenceMap;
+    typedef std::map< unsigned int, MIL_Intelligence* > T_IntelligenceMap;
     typedef T_IntelligenceMap::const_iterator   CIT_IntelligenceMap;
     //@}
 
@@ -238,7 +248,7 @@ private:
     MT_Float      rEffectsTime_;
     MT_Float      rStatesTime_;
 
-    uint          nRandomBreakdownsNextTimeStep_;
+    unsigned int          nRandomBreakdownsNextTimeStep_;
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_EntityManager )

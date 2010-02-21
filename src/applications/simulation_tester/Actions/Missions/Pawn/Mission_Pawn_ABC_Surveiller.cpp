@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_Surveiller::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_Surveiller& asnMission = *new ASN1T_Mission_Pion_ABC_Surveiller();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_surveiller;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_surveiller = &asnMission;
+    Mission_Pion_ABC_Surveiller& asnMission = *new Mission_Pion_ABC_Surveiller();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_surveiller = &asnMission;
 
     const Position& position_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ABC_Surveiller::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_Surveiller::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_surveiller );
-    ASN1T_Mission_Pion_ABC_Surveiller& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_surveiller;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_surveiller ());
+    Mission_Pion_ABC_Surveiller& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_surveiller;
 
     ASN_Tools::Delete( asnMission.position );
 

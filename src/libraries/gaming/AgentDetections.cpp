@@ -14,6 +14,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -42,9 +43,9 @@ AgentDetections::~AgentDetections()
 // Name: AgentDetections::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void AgentDetections::DoUpdate( const ASN1T_MsgUnitDetection& message )
+void AgentDetections::DoUpdate( const MsgsSimToClient::MsgUnitDetection& message )
 {
-    detections_[ & resolver_.Get( message.detected_unit_oid ) ] = message.current_visibility;
+    detections_[ & resolver_.Get( message.detected_unit_oid() ) ] = message.current_visibility();
     controller_.Update( *this );
 }
 
@@ -61,7 +62,7 @@ void AgentDetections::Draw( const geometry::Point2f& where, const kernel::Viewpo
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent_ABC& agent = *it->first;
-        if( ! IsSameTeam( agent ) && it->second != EnumUnitVisibility::invisible )
+        if( ! IsSameTeam( agent ) && it->second != Common::EnumUnitVisibility::invisible )
         {
             if( it->second == EnumUnitVisibility::recognized )
                 glColor4f( COLOR_RECO );

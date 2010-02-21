@@ -43,9 +43,9 @@ void Mission_Automat_INF_ReconnaissanceOffensive::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_ReconnaissanceOffensive& asnMission = *new ASN1T_Mission_Automate_INF_ReconnaissanceOffensive();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_reconnaissance_offensive;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_reconnaissance_offensive = &asnMission;
+    Mission_Automate_INF_ReconnaissanceOffensive& asnMission = *new Mission_Automate_INF_ReconnaissanceOffensive();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_reconnaissance_offensive = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_INF_ReconnaissanceOffensive::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_ReconnaissanceOffensive::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_reconnaissance_offensive );
-    ASN1T_Mission_Automate_INF_ReconnaissanceOffensive& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_reconnaissance_offensive;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_reconnaissance_offensive ());
+    Mission_Automate_INF_ReconnaissanceOffensive& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_reconnaissance_offensive;
 
 
     delete &asnMission;

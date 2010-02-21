@@ -44,13 +44,13 @@ public:
 
     static const T_ConsumptionTypeMap& GetConsumptionTypes();
     static const PHY_ConsumptionType*  FindConsumptionType( const std::string& strName );
-    static const PHY_ConsumptionType*  FindConsumptionType( uint nID );
+    static const PHY_ConsumptionType*  FindConsumptionType( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-          uint         GetID  () const;
+          unsigned int         GetID  () const;
     //@}
 
     //! @name Operators

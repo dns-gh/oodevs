@@ -42,7 +42,7 @@ AutomatExtension::~AutomatExtension()
 // Name: AutomatExtension::DoUpdate
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void AutomatExtension::DoUpdate( const ASN1T_MsgAutomatOrder& message )
+void AutomatExtension::DoUpdate( const MsgAutomatOrder& message )
 {
     try
     {

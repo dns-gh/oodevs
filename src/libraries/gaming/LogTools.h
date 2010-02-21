@@ -33,7 +33,7 @@ namespace log_tools
     template< typename T >
     bool CheckAcknowledge( kernel::Logger_ABC& logger, const T& message, const char* logMessage, void(T::*)(void) = 0 )
     {
-        return CheckAcknowledge( logger, message.error_code, logMessage );
+        return CheckAcknowledge( logger, message.error_code(), logMessage );
     }
 
 } // namespace

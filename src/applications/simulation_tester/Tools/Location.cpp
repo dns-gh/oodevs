@@ -47,14 +47,14 @@ Location::~Location()
 // Name: Location::GetTestParam_Location
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumLocationType eType /* = ( ASN1T_EnumLocationType )-1 */ )
+Location& Location::GetTestParam_Location( const Position& pos, EnumLocationType eType /* = ( EnumLocationType )-1 */ )
 {
     Location& loc = *new Location();
     // 6 types of Location
-    if( eType == ( ASN1T_EnumLocationType )-1 )
+    if( eType == ( EnumLocationType )-1 )
     {
-        uint nTypeLoc = ( uint )( rand() * 5.0 / RAND_MAX );
-        loc.eType_ = ( ASN1T_EnumLocationType )nTypeLoc;
+        unsigned int nTypeLoc = ( unsigned int )( rand() * 5.0 / RAND_MAX );
+        loc.eType_ = ( EnumLocationType )nTypeLoc;
     }
     else
         loc.eType_ = eType;        
@@ -120,8 +120,8 @@ Location& Location::GetTestParam_Location( const Position& pos, ASN1T_EnumLocati
 // Name: Location::GetTestParam_LocationList
 // Created: SBO 2005-08-10
 // -----------------------------------------------------------------------------
-T_LocationVector& Location::GetTestParam_LocationList( const Position& pos, uint nLocation, 
-                                                       ASN1T_EnumLocationType eType /*= ( ASN1T_EnumLocationType )-1*/ )
+T_LocationVector& Location::GetTestParam_LocationList( const Position& pos, unsigned int nLocation, 
+                                                       EnumLocationType eType /*= ( EnumLocationType )-1*/ )
 {
     T_LocationVector& locations = *new T_LocationVector();
     Position pt;
@@ -129,7 +129,7 @@ T_LocationVector& Location::GetTestParam_LocationList( const Position& pos, uint
     double rX = pos.GetSimX();
     double rY = pos.GetSimY();
 
-    for( uint i = 0; i < nLocation - 1; ++i )
+    for( unsigned int i = 0; i < nLocation - 1; ++i )
     {
         // +/- 10km from previous point on X and Y axis
         rX += 20000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );

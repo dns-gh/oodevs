@@ -325,7 +325,9 @@ elseif switch_1 == eAttitudePopulation_Calme then
                     end
                 end
 
-            DEC_RC( eRC_AggravationAttitude )
+                if _continue then
+                DEC_RC( eRC_AggravationAttitude )
+            end
         end
     end
 
@@ -416,7 +418,9 @@ elseif switch_1 == eAttitudePopulation_Agressive then
                     end
                 end
 
-            _returnValue = true
+                if _continue then
+                _returnValue = true
+            end
         end
     else
         _returnValue = false

@@ -17,6 +17,7 @@
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Serializable_ABC.h"
 #include "clients_kernel/ActionController.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace actions;
@@ -171,26 +172,20 @@ void Action_ABC::Serialize( xml::xostream& xos ) const
 // Name: Action_ABC::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Action_ABC::CommitTo( ASN1T_MissionParameters& asn ) const
+void Action_ABC::CommitTo( Common::MsgMissionParameters& message ) const
 {
-    asn.n = Count();
-    if( !asn.n )
-        return;
-    asn.elem = new ASN1T_MissionParameter[asn.n];
-    unsigned int i = 0;
-    for( CIT_Elements it = elements_.begin(); it != elements_.end() && i < asn.n; ++it )
-        it->second->CommitTo( asn.elem[i++] );
+    // $$$$ FHD 2009-10-28: potential bug, parameters serialized in "map" order
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        it->second->CommitTo( *message.add_elem() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Action_ABC::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Action_ABC::Clean( ASN1T_MissionParameters& asn ) const
+void Action_ABC::Clean( Common::MsgMissionParameters& message ) const
 {
-    unsigned int i = 0;
-    for( CIT_Elements it = elements_.begin(); it != elements_.end() && i < asn.n; ++it )
-        it->second->Clean( asn.elem[i++] );
+    message.Clear();
 }
 
 // -----------------------------------------------------------------------------

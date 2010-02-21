@@ -27,7 +27,7 @@ public:
 
     //! @name 
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -43,7 +43,7 @@ BOOST_CLASS_EXPORT_KEY( PHY_SupplyDotationRequest )
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_SupplyDotationRequest::serialize( Archive& file, const uint )
+void PHY_SupplyDotationRequest::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_SupplyRequest_ABC< PHY_Dotation > >( *this );
 }

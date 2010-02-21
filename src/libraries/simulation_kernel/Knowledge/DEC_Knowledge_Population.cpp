@@ -23,7 +23,8 @@
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/MIL_Army.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Population )
 
@@ -83,12 +84,12 @@ DEC_Knowledge_Population::~DEC_Knowledge_Population()
 // Name: DEC_Knowledge_Population::load
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
          >> pPopulationKnown_
-         >> const_cast< uint& >( nID_ )
+         >> const_cast< unsigned int& >( nID_ )
          >> concentrations_
          >> flows_
          >> bIsRecon_
@@ -104,7 +105,7 @@ void DEC_Knowledge_Population::load( MIL_CheckPointInArchive& file, const uint )
 // Name: DEC_Knowledge_Population::save
 // Created: SBO 2005-10-19
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_Population::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          << pKnowledgeGroup_
@@ -389,13 +390,13 @@ void DEC_Knowledge_Population::SendMsgCreation() const
     assert( pKnowledgeGroup_ );
     assert( pPopulationKnown_ );
 
-    NET_ASN_MsgPopulationKnowledgeCreation asnMsg;
+    client::PopulationKnowledgeCreation asnMsg;
 
-    asnMsg().oid_connaissance      = nID_;
-    asnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
-    asnMsg().oid_population_reelle = pPopulationKnown_->GetID();    
-    asnMsg().camp                  = GetArmy()         .GetID();
-    asnMsg.Send();
+    asnMsg().set_oid_connaissance     ( nID_ );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetID() );
+    asnMsg().set_oid_population_reelle( pPopulationKnown_->GetID() );
+    asnMsg().set_camp                 ( GetArmy()         .GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -406,11 +407,11 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
 {
     if( pKnowledgeGroup_ )
     {
-        NET_ASN_MsgPopulationKnowledgeDestruction asnMsg;
+        client::PopulationKnowledgeDestruction asnMsg;
 
-        asnMsg().oid_connaissance      = nID_;
-        asnMsg().oid_groupe_possesseur = pKnowledgeGroup_ ->GetID();
-        asnMsg.Send();
+        asnMsg().set_oid_connaissance     ( nID_ );
+        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetID() );
+        asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }
 
@@ -422,12 +423,11 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
 {
     if( bReconAttributesValid_ && bDecStateUpdated_ )
     {
-        NET_ASN_MsgPopulationKnowledgeUpdate asnMsg;
-        asnMsg().oid_connaissance         = nID_;
-        asnMsg().oid_groupe_possesseur    = pKnowledgeGroup_ ->GetID();
-        asnMsg().m.etat_dominationPresent = 1;
-        asnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
-        asnMsg.Send();
+        client::PopulationKnowledgeUpdate asnMsg;
+        asnMsg().set_oid_connaissance     ( nID_ );
+        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetID() );
+        asnMsg().set_etat_domination       ( (unsigned int)( rDominationState_ * 100. ) );
+        asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -447,12 +447,11 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
 
     if( bReconAttributesValid_ )
     {
-        NET_ASN_MsgPopulationKnowledgeUpdate asnMsg;
-        asnMsg().oid_connaissance         = nID_;
-        asnMsg().oid_groupe_possesseur    = pKnowledgeGroup_ ->GetID();
-        asnMsg().m.etat_dominationPresent = 1;
-        asnMsg().etat_domination          = (uint)( rDominationState_ * 100. );
-        asnMsg.Send();
+        client::PopulationKnowledgeUpdate asnMsg;
+        asnMsg().set_oid_connaissance     ( nID_ );
+        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetID() );
+        asnMsg().set_etat_domination      ( (unsigned int)( rDominationState_ * 100. ) );
+        asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 
     for( CIT_ConcentrationMap it = concentrations_.begin(); it != concentrations_.end(); ++it )
@@ -475,7 +474,7 @@ MT_Float DEC_Knowledge_Population::GetDominationState() const
 // Name: DEC_Knowledge_Population::GetID
 // Created: NLD 2005-10-13
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_Population::GetID() const
+unsigned int DEC_Knowledge_Population::GetID() const
 {
     return nID_;
 }

@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_Path.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Path constructor
@@ -35,27 +35,22 @@ MIL_ParameterType_Path::~MIL_ParameterType_Path()
 // Name: MIL_ParameterType_Path::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_Path::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
+bool MIL_ParameterType_Path::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.value.t      = T_MissionParameter_value_path;
-    to.value.u.path = new ASN1T_Path();
-    to.null_value   = !from.ToPath( *to.value.u.path );
-    
-    return !to.null_value || bIsOptional;
+    to.set_null_value( !from.ToPath( (Common::MsgPath&)*to.mutable_value()->mutable_path() ) );
+    return !to.null_value() || bIsOptional;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_Path::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_Path::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_Path::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_path );
-    assert( to.value.u.path );
-    ASN_Delete::Delete( *to.value.u.path );
-    delete to.value.u.path;   
+    assert( to.value().has_path() );
+    assert( to.mutable_value()->mutable_path() );
+    to.mutable_value()->clear_path();
 }

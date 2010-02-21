@@ -10,9 +10,10 @@
 #include "simulation_kernel_test_pch.h"
 
 // ASN
-struct ASN1T_MagicActionCreateObject;
-struct ASN1T_ObjectAttributes;
-struct ASN1T_Location;
+//struct MsgMagicActionCreateObject;
+//struct MsgObjectAttributes;
+//struct MsgLocation;
+#include "protocol/protocol.h"
 
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 
@@ -34,6 +35,7 @@ struct ASN1T_Location;
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
 
 #include <xeumeuleu/xml.h>
+
 
 using namespace mockpp;
 

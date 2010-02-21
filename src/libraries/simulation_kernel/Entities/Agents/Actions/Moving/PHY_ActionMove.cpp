@@ -140,7 +140,7 @@ void PHY_ActionMove::AvoidObstacles()
         return;
 
     assert( pObjectColliding && pObjectColliding->IsValid() );
-    const uint nObjectToAvoidDiaID = pObjectColliding->GetID();
+    const unsigned int nObjectToAvoidDiaID = pObjectColliding->GetID();
     // Le pion à déjà tenté d'éviter l'obstacle
     if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
         return; 

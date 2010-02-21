@@ -16,6 +16,11 @@
 #include <xeumeuleu/xml.h>
 #include <boost/serialization/serialization.hpp>
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class PHY_DotationCategory;
 class PHY_DotationType;
 class PHY_Dotation;
@@ -82,6 +87,12 @@ public:
     virtual double AddFireReservation( const PHY_DotationCategory& category, double rNbr ) = 0;
     virtual double GetDotationNumber( const PHY_DotationCategory& category ) const = 0;
     virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const = 0;
+    //@}
+
+    //! @name Network
+    //@{
+//    virtual void SendChangedState( client::UnitAttributes& asn ) const = 0;
+//    virtual void SendFullState   ( client::UnitAttributes& asn ) const = 0;
     //@}
 
     //! @name Logistic - Supply

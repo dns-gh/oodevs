@@ -41,7 +41,7 @@ PHY_RoleAction_FolkInfluence::~PHY_RoleAction_FolkInfluence()
 // Created: JCR 2007-09-14
 // -----------------------------------------------------------------------------
 //template< typename Archive > 
-//void PHY_RoleAction_FolkInfluence::serialize( Archive&, const uint )
+//void PHY_RoleAction_FolkInfluence::serialize( Archive&, const unsigned int )
 //{
 //     // $$$$ JCR 2007-09-14: TODO
 //}

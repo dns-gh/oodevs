@@ -9,13 +9,13 @@
 
 #include "gaming_app_pch.h"
 #include "ObstaclePrototype.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObstaclePrototype constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstaclePrototype::ObstaclePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg )
+ObstaclePrototype::ObstaclePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg )
     : ObstaclePrototype_ABC( parent )
     , msg_( msg )
 {
@@ -28,7 +28,7 @@ ObstaclePrototype::ObstaclePrototype( QWidget* parent, ASN1T_MagicActionCreateOb
 // -----------------------------------------------------------------------------
 ObstaclePrototype::~ObstaclePrototype()
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -39,9 +39,8 @@ void ObstaclePrototype::Commit()
 {
     if( types_ )
     {
-        msg_.attributes.m.obstaclePresent = 1;
-        msg_.attributes.obstacle.type = ASN1T_EnumDemolitionTargetType( types_->GetValue() );
-        msg_.attributes.obstacle.activated = IsActivated();
+        msg_.mutable_attributes()->mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType( types_->GetValue() ) );
+        msg_.mutable_attributes()->mutable_obstacle()->set_activated( IsActivated() );
     }
 }
 
@@ -51,5 +50,5 @@ void ObstaclePrototype::Commit()
 // -----------------------------------------------------------------------------
 void ObstaclePrototype::Clean()
 {
-
+    msg_.mutable_attributes()->clear_obstacle();
 }

@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MessageFilter.h"
+#include "protocol/Protocol.h"
 
 using namespace dispatcher;
 
@@ -34,175 +35,212 @@ MessageFilter::~MessageFilter()
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-12
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgsSimToClient& message )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    switch( message.msg.t )
-    {
-        case T_MsgsSimToClient_msg_msg_unit_magic_action_ack:
-        case T_MsgsSimToClient_msg_msg_object_magic_action_ack:
-        case T_MsgsSimToClient_msg_msg_population_magic_action_ack:
-        case T_MsgsSimToClient_msg_msg_control_information:
-        case T_MsgsSimToClient_msg_msg_control_begin_tick:
-        case T_MsgsSimToClient_msg_msg_control_end_tick:
-        case T_MsgsSimToClient_msg_msg_control_stop_ack:
-        case T_MsgsSimToClient_msg_msg_control_pause_ack:
-        case T_MsgsSimToClient_msg_msg_control_resume_ack:
-        case T_MsgsSimToClient_msg_msg_control_change_time_factor_ack:
-        case T_MsgsSimToClient_msg_msg_control_global_meteo_ack:
-        case T_MsgsSimToClient_msg_msg_control_local_meteo_ack:
-        case T_MsgsSimToClient_msg_msg_control_checkpoint_save_begin:
-        case T_MsgsSimToClient_msg_msg_control_checkpoint_save_end:
-        case T_MsgsSimToClient_msg_msg_control_checkpoint_set_frequency_ack:
-        case T_MsgsSimToClient_msg_msg_control_checkpoint_save_now_ack:
-        case T_MsgsSimToClient_msg_msg_control_send_current_state_begin:
-        case T_MsgsSimToClient_msg_msg_control_send_current_state_end:
-        case T_MsgsSimToClient_msg_msg_unit_pathfind:    // $$$$ AGE 2007-04-13: 
-            return false;
-        case T_MsgsSimToClient_msg_msg_report:
-        case T_MsgsSimToClient_msg_msg_invalidate_report:
-            return true;
-        case T_MsgsSimToClient_msg_msg_trace:            // $$$$ AGE 2007-04-13: délicat : pas de delete cr !
-            return false;
-        case T_MsgsSimToClient_msg_msg_decisional_state:
-            return true;
-        case T_MsgsSimToClient_msg_msg_debug_points:
-        case T_MsgsSimToClient_msg_msg_unit_vision_cones:
-        case T_MsgsSimToClient_msg_msg_unit_detection:
-        case T_MsgsSimToClient_msg_msg_object_detection:
-        case T_MsgsSimToClient_msg_msg_population_concentration_detection:
-        case T_MsgsSimToClient_msg_msg_population_flow_detection:
-            return false;
-        case T_MsgsSimToClient_msg_msg_unit_order:
-        case T_MsgsSimToClient_msg_msg_automat_order:
-        case T_MsgsSimToClient_msg_msg_population_order:
-            return true;
-        case T_MsgsSimToClient_msg_msg_unit_order_ack:
-        case T_MsgsSimToClient_msg_msg_automat_order_ack:
-        case T_MsgsSimToClient_msg_msg_population_order_ack:
-        case T_MsgsSimToClient_msg_msg_frag_order_ack:
-        case T_MsgsSimToClient_msg_msg_set_automat_mode_ack:
-        case T_MsgsSimToClient_msg_msg_change_diplomacy_ack:
-            return true;
-        case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group_ack:
-        case T_MsgsSimToClient_msg_msg_automat_change_logistic_links_ack:
-        case T_MsgsSimToClient_msg_msg_automat_change_superior_ack:
-            return false;
-        case T_MsgsSimToClient_msg_msg_log_supply_push_flow_ack:
-        case T_MsgsSimToClient_msg_msg_log_supply_change_quotas_ack:
-        case T_MsgsSimToClient_msg_msg_formation_creation:
-        case T_MsgsSimToClient_msg_msg_knowledge_group_creation:
-        case T_MsgsSimToClient_msg_msg_side_creation:
-        case T_MsgsSimToClient_msg_msg_automat_creation:
-        case T_MsgsSimToClient_msg_msg_unit_creation:
-        case T_MsgsSimToClient_msg_msg_change_diplomacy:
-        case T_MsgsSimToClient_msg_msg_unit_change_superior:
-        case T_MsgsSimToClient_msg_msg_automat_change_logistic_links:
-        case T_MsgsSimToClient_msg_msg_automat_change_knowledge_group:
-        case T_MsgsSimToClient_msg_msg_automat_change_superior:
-        case T_MsgsSimToClient_msg_msg_unit_knowledge_creation:
-        case T_MsgsSimToClient_msg_msg_unit_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_start_unit_fire:
-        case T_MsgsSimToClient_msg_msg_stop_unit_fire:
-        case T_MsgsSimToClient_msg_msg_start_population_fire:
-        case T_MsgsSimToClient_msg_msg_stop_population_fire:
-        case T_MsgsSimToClient_msg_msg_explosion:
-        case T_MsgsSimToClient_msg_msg_start_fire_effect:
-        case T_MsgsSimToClient_msg_msg_stop_fire_effect:
-        case T_MsgsSimToClient_msg_msg_object_creation:
-        case T_MsgsSimToClient_msg_msg_object_destruction:
-        case T_MsgsSimToClient_msg_msg_object_knowledge_creation:
-        case T_MsgsSimToClient_msg_msg_object_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_log_medical_handling_creation:
-        case T_MsgsSimToClient_msg_msg_log_medical_handling_update:
-        case T_MsgsSimToClient_msg_msg_log_medical_handling_destruction:
-        case T_MsgsSimToClient_msg_msg_log_medical_state:
-        case T_MsgsSimToClient_msg_msg_log_maintenance_handling_creation:
-        case T_MsgsSimToClient_msg_msg_log_maintenance_handling_update:
-        case T_MsgsSimToClient_msg_msg_log_maintenance_handling_destruction:
-        case T_MsgsSimToClient_msg_msg_log_maintenance_state:
-        case T_MsgsSimToClient_msg_msg_log_supply_handling_creation:
-        case T_MsgsSimToClient_msg_msg_log_supply_handling_update:
-        case T_MsgsSimToClient_msg_msg_log_supply_handling_destruction:
-        case T_MsgsSimToClient_msg_msg_log_supply_state:
-        case T_MsgsSimToClient_msg_msg_log_supply_quotas:
-        case T_MsgsSimToClient_msg_msg_population_creation:
-        case T_MsgsSimToClient_msg_msg_population_concentration_creation:
-        case T_MsgsSimToClient_msg_msg_population_concentration_destruction:
-        case T_MsgsSimToClient_msg_msg_population_flow_creation:
-        case T_MsgsSimToClient_msg_msg_population_flow_destruction:
-        case T_MsgsSimToClient_msg_msg_population_knowledge_creation:
-        case T_MsgsSimToClient_msg_msg_population_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_creation:
-        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_population_flow_knowledge_creation:
-        case T_MsgsSimToClient_msg_msg_population_flow_knowledge_destruction:
-        case T_MsgsSimToClient_msg_msg_automat_attributes:
-            return true;
-        case T_MsgsSimToClient_msg_msg_unit_attributes:
-            return IsRelevant( *message.msg.u.msg_unit_attributes );
-        case T_MsgsSimToClient_msg_msg_unit_knowledge_update:
-            return IsRelevant( *message.msg.u.msg_unit_knowledge_update );
-        case T_MsgsSimToClient_msg_msg_object_update:
-            return IsRelevant( *message.msg.u.msg_object_update );
-        case T_MsgsSimToClient_msg_msg_object_knowledge_update:
-            return IsRelevant( *message.msg.u.msg_object_knowledge_update );
-        case T_MsgsSimToClient_msg_msg_population_update:
-            return IsRelevant( *message.msg.u.msg_population_update );
-        case T_MsgsSimToClient_msg_msg_population_concentration_update:
-            return IsRelevant( *message.msg.u.msg_population_concentration_update );
-        case T_MsgsSimToClient_msg_msg_population_flow_update:
-            return IsRelevant( *message.msg.u.msg_population_flow_update );
-        case T_MsgsSimToClient_msg_msg_population_knowledge_update:
-            return IsRelevant( *message.msg.u.msg_population_knowledge_update );
-        case T_MsgsSimToClient_msg_msg_population_concentration_knowledge_update:
-            return IsRelevant( *message.msg.u.msg_population_concentration_knowledge_update );
-        case T_MsgsSimToClient_msg_msg_population_flow_knowledge_update:
-            return IsRelevant( *message.msg.u.msg_population_flow_knowledge_update );
-        default:
-            return true;
-    }
-}
-
-namespace
-{
-    template< typename T >
-    inline
-    bool IsNotUseless( const T& message, const T& mask )
-    {
-        int lhs = *reinterpret_cast< const int* >( &message );
-        int rhs = *reinterpret_cast< const int* >( &mask    );
-        return ( lhs & rhs ) != lhs;
-    }
+ if( wrapper.message().has_unit_magic_action_ack() 
+    || wrapper.message().has_object_magic_action_ack() 
+    || wrapper.message().has_population_magic_action_ack() 
+    || wrapper.message().has_control_information() 
+    || wrapper.message().has_control_begin_tick() 
+    || wrapper.message().has_control_end_tick() 
+    || wrapper.message().has_control_stop_ack() 
+    || wrapper.message().has_control_pause_ack() 
+    || wrapper.message().has_control_resume_ack() 
+    || wrapper.message().has_control_change_time_factor_ack() 
+    || wrapper.message().has_control_global_meteo_ack() 
+    || wrapper.message().has_control_local_meteo_ack() 
+    || wrapper.message().has_control_checkpoint_save_begin() 
+    || wrapper.message().has_control_checkpoint_save_end() 
+    || wrapper.message().has_control_checkpoint_set_frequency_ack() 
+    || wrapper.message().has_control_checkpoint_save_now_ack() 
+    || wrapper.message().has_control_send_current_state_begin() 
+    || wrapper.message().has_control_send_current_state_end() 
+    || wrapper.message().has_unit_pathfind())
+        return false;
+    if( wrapper.message().has_report() ||
+        wrapper.message().has_invalidate_report() )
+        return true;
+    if( wrapper.message().has_trace() )            // $$$$ AGE 2007-04-13: délicat : pas de delete cr !
+        return false;
+    if( wrapper.message().has_decisional_state() )
+        return true;
+    if( wrapper.message().has_debug_points() ||
+        wrapper.message().has_unit_vision_cones() ||
+        wrapper.message().has_unit_detection() ||
+        wrapper.message().has_object_detection() ||
+        wrapper.message().has_population_concentration_detection() ||
+        wrapper.message().has_population_flow_detection() )
+        return false;
+    if( wrapper.message().has_unit_order() ||
+        wrapper.message().has_automat_order() ||
+        wrapper.message().has_population_order() )
+        return true;
+    if( wrapper.message().has_unit_order_ack() ||
+        wrapper.message().has_automat_order_ack() ||
+        wrapper.message().has_population_order_ack() ||
+        wrapper.message().has_frag_order_ack() ||
+        wrapper.message().has_set_automat_mode_ack() ||
+        wrapper.message().has_change_diplomacy_ack() )
+        return true;
+    if( wrapper.message().has_automat_change_knowledge_group_ack() ||
+        wrapper.message().has_automat_change_logistic_links_ack() ||
+        wrapper.message().has_automat_change_superior_ack() )
+        return false;
+    if( wrapper.message().has_log_supply_push_flow_ack() ||
+        wrapper.message().has_log_supply_change_quotas_ack() ||
+        wrapper.message().has_formation_creation() ||
+        wrapper.message().has_knowledge_group_creation() ||
+        wrapper.message().has_side_creation() ||
+        wrapper.message().has_automat_creation() ||
+        wrapper.message().has_unit_creation() ||
+        wrapper.message().has_change_diplomacy() ||
+        wrapper.message().has_unit_change_superior() ||
+        wrapper.message().has_automat_change_logistic_links() ||
+        wrapper.message().has_automat_change_knowledge_group() ||
+        wrapper.message().has_automat_change_superior() ||
+        wrapper.message().has_unit_knowledge_creation() ||
+        wrapper.message().has_unit_knowledge_destruction() ||
+        wrapper.message().has_start_unit_fire() ||
+        wrapper.message().has_stop_unit_fire() ||
+        wrapper.message().has_start_population_fire() ||
+        wrapper.message().has_stop_population_fire() ||
+        wrapper.message().has_explosion() ||
+        wrapper.message().has_start_fire_effect() ||
+        wrapper.message().has_stop_fire_effect() ||
+        wrapper.message().has_object_creation() ||
+        wrapper.message().has_object_destruction() ||
+        wrapper.message().has_object_knowledge_creation() ||
+        wrapper.message().has_object_knowledge_destruction() ||
+        wrapper.message().has_log_medical_handling_creation() ||
+        wrapper.message().has_log_medical_handling_update() ||
+        wrapper.message().has_log_medical_handling_destruction() ||
+        wrapper.message().has_log_medical_state() ||
+        wrapper.message().has_log_maintenance_handling_creation() ||
+        wrapper.message().has_log_maintenance_handling_update() ||
+        wrapper.message().has_log_maintenance_handling_destruction() ||
+        wrapper.message().has_log_maintenance_state() ||
+        wrapper.message().has_log_supply_handling_creation() ||
+        wrapper.message().has_log_supply_handling_update() ||
+        wrapper.message().has_log_supply_handling_destruction() ||
+        wrapper.message().has_log_supply_state() ||
+        wrapper.message().has_log_supply_quotas() ||
+        wrapper.message().has_population_creation() ||
+        wrapper.message().has_population_concentration_creation() ||
+        wrapper.message().has_population_concentration_destruction() ||
+        wrapper.message().has_population_flow_creation() ||
+        wrapper.message().has_population_flow_destruction() ||
+        wrapper.message().has_population_knowledge_creation() ||
+        wrapper.message().has_population_knowledge_destruction() ||
+        wrapper.message().has_population_concentration_knowledge_creation() ||
+        wrapper.message().has_population_concentration_knowledge_destruction() ||
+        wrapper.message().has_population_flow_knowledge_creation() ||
+        wrapper.message().has_population_flow_knowledge_destruction() ||
+        wrapper.message().has_automat_attributes() )
+        return true;
+    if( wrapper.message().has_unit_attributes() )
+        return IsRelevant( wrapper.message().unit_attributes() );
+    if( wrapper.message().has_unit_knowledge_update() )
+        return IsRelevant( wrapper.message().unit_knowledge_update() );
+    if( wrapper.message().has_object_update() )
+        return IsRelevant( wrapper.message().object_update() );
+    if( wrapper.message().has_object_knowledge_update() )
+        return IsRelevant( wrapper.message().object_knowledge_update() );
+    if( wrapper.message().has_population_update() )
+        return IsRelevant( wrapper.message().population_update() );
+    if( wrapper.message().has_population_concentration_update() )
+        return IsRelevant( wrapper.message().population_concentration_update() );
+    if( wrapper.message().has_population_flow_update() )
+        return IsRelevant( wrapper.message().population_flow_update() );
+    if( wrapper.message().has_population_knowledge_update() )
+        return IsRelevant( wrapper.message().population_knowledge_update() );
+    if( wrapper.message().has_population_concentration_knowledge_update() )
+        return IsRelevant( wrapper.message().population_concentration_knowledge_update() );
+    if( wrapper.message().has_population_flow_knowledge_update() )
+        return IsRelevant( wrapper.message().population_flow_knowledge_update() );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgUnitAttributes& message )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    ASN1T_MsgUnitAttributes useless;
-    useless.m.posture_pourcentagePresent = 1;
-    return IsNotUseless( message.m, useless.m );
+    return message.has_altitude()
+        || message.has_combat_de_rencontre()
+        || message.has_communications_brouillees()
+        || message.has_contamine_par_agents_nbc()
+        || message.has_direction()
+        || message.has_disponibilite_au_tir_indirect()
+        || message.has_dotation_eff_materiel()
+        || message.has_dotation_eff_personnel()
+        || message.has_embarque()
+        || message.has_en_tenue_de_protection_nbc()
+        || message.has_equipements_empruntes()
+        || message.has_equipements_pretes()
+        || message.has_etat_contamination()
+        || message.has_etat_installation()
+        || message.has_etat_operationnel()
+        || message.has_etat_operationnel_brut()
+        || message.has_experience()
+        || message.has_fatigue()
+        || message.has_hauteur()
+        || message.has_mode_furtif_actif()
+        || message.has_moral()
+        || message.has_mort()
+        || message.has_neutralise()
+//        || message.has_oid()
+        || message.has_pion_renforce()
+        || message.has_pion_transporteur()
+        || message.has_pions_renforcant()
+        || message.has_pions_transportes()
+        || message.has_position()
+        || message.has_posture_new()
+        || message.has_posture_old()
+//        || message.has_posture_pourcentage()
+        || message.has_prisonnier()
+        || message.has_radar_actif()
+        || message.has_rapport_de_force()
+        || message.has_refugie_pris_en_compte()
+        || message.has_rendu()
+        || message.has_roe()
+        || message.has_roe_population()
+        || message.has_silence_radio()
+        || message.has_transporteurs_disponibles()
+        || message.has_vitesse()
+    ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgUnitKnowledgeUpdate& message )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    ASN1T_MsgUnitKnowledgeUpdate useless;
-    useless.m.pertinencePresent = 1;
-    useless.m.speedPresent      = 1;
-    return IsNotUseless( message.m, useless.m );
+    return    message.has_camp()
+           || message.has_direction()
+           || message.has_etat_op()
+           || message.has_identification_level()
+           || message.has_max_identification_level()
+           || message.has_mort()
+           || message.has_nature_pc()
+//           || message.has_oid()
+//           || message.has_oid_groupe_possesseur()
+           || message.has_perception_par_compagnie()
+//           || message.has_pertinence()
+           || message.has_position()
+           || message.has_prisonnier()
+           || message.has_refugie_pris_en_compte()
+           || message.has_rendu()
+//           || message.has_speed()
+           ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgObjectUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectUpdate& )
 {
     return true;
 }
@@ -211,27 +249,24 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgObjectUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgObjectKnowledgeUpdate& message )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    ASN1T_MsgObjectKnowledgeUpdate useless;
-    useless.m.relevancePresent = 1;
-    return IsNotUseless( message.m, useless.m );
+    return  message.has_attributes()
+         || message.has_automat_perception()
+         || message.has_location()
+         || message.has_oid()
+         || message.has_perceived()
+         || message.has_real_object()
+//         || message.has_relevance()
+         || message.has_team()
+    ;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationUpdate& )
-{
-    return true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MessageFilter::IsRelevant
-// Created: AGE 2007-04-13
-// -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationConcentrationUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationUpdate& )
 {
     return true;
 }
@@ -240,7 +275,7 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationConcentrationUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationFlowUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationConcentrationUpdate& )
 {
     return true;
 }
@@ -249,7 +284,7 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationFlowUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationKnowledgeUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationFlowUpdate& )
 {
     return true;
 }
@@ -258,18 +293,34 @@ bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationKnowledgeUpdate& )
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& message )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& )
 {
-    ASN1T_MsgPopulationConcentrationKnowledgeUpdate useless;
-    useless.m.pertinencePresent = 1;
-    return IsNotUseless( message.m, useless.m );
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MessageFilter::IsRelevant
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-bool MessageFilter::IsRelevant( const ASN1T_MsgPopulationFlowKnowledgeUpdate& )
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& message )
+{
+    return  message.has_attitude()
+         || message.has_est_percu()
+         || message.has_nb_humains_morts()
+         || message.has_nb_humains_vivants()
+//         || message.has_oid_concentration_reelle()
+//         || message.has_oid_connaissance_concentration()
+//         || message.has_oid_connaissance_population()
+//         || message.has_oid_groupe_possesseur()
+//         || message.has_pertinence()
+    ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MessageFilter::IsRelevant
+// Created: AGE 2007-04-13
+// -----------------------------------------------------------------------------
+bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& )
 {
     return true;
 }

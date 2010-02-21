@@ -12,6 +12,7 @@
 #include "MIL_PopulationConcentration.h"
 #include "MIL_PopulationAttitude.h"
 #include "DEC_PopulationKnowledge.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
@@ -23,13 +24,12 @@
 #include "Decision/Path/Population/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathPoint.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-#include "game_asn/ASN_Delete.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_Tools.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
-#include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationFlow )
 
@@ -611,10 +611,10 @@ MT_Vector2D MIL_PopulationFlow::GetSafetyPosition( const MIL_AgentPion& agent, M
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendCreation() const
 {
-    NET_ASN_MsgPopulationFlowCreation asnMsg;
-    asnMsg().oid            = GetID();
-    asnMsg().oid_population = GetPopulation().GetID();
-    asnMsg.Send();
+    client::PopulationFlowCreation asnMsg;
+    asnMsg().set_oid( GetID() );
+    asnMsg().set_oid_population( GetPopulation().GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -623,10 +623,10 @@ void MIL_PopulationFlow::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendDestruction() const
 {
-    NET_ASN_MsgPopulationFlowDestruction asnMsg;
-    asnMsg().oid            = GetID();
-    asnMsg().oid_population = GetPopulation().GetID();
-    asnMsg.Send();
+    client::PopulationFlowDestruction asnMsg;
+    asnMsg().set_oid( GetID() );
+    asnMsg().set_oid_population( GetPopulation().GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -635,33 +635,26 @@ void MIL_PopulationFlow::SendDestruction() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationFlow::SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
-    NET_ASN_MsgPopulationFlowUpdate asnMsg;
+    client::PopulationFlowUpdate asnMsg;
     
-    asnMsg().oid            = GetID();
-    asnMsg().oid_population = GetPopulation().GetID();
+    asnMsg().set_oid           ( GetID() );
+    asnMsg().set_oid_population( GetPopulation().GetID() );
 
-    if( SerializeCurrentPath( asnMsg().itineraire ) )
-        asnMsg().m.itinerairePresent = 1;
+//    if( SerializeCurrentPath( asnMsg().itineraire ) )
+//        asnMsg()//TOTODEL1;
 
-    asnMsg().m.fluxPresent               = 1;
-    asnMsg().m.attitudePresent           = 1;
-    asnMsg().m.directionPresent          = 1;
-    asnMsg().m.nb_humains_vivantsPresent = 1;
-    asnMsg().m.nb_humains_mortsPresent   = 1;
-    asnMsg().m.vitessePresent            = 1;
+    NET_ASN_Tools::WritePath     ( flowShape_, *asnMsg().mutable_flux()      );
+    NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
+    asnMsg().set_attitude           ( GetAttitude().GetAsnID() );
+    asnMsg().set_vitesse            ( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) ); 
+    asnMsg().set_nb_humains_vivants ( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
+    asnMsg().set_nb_humains_morts   ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
 
-    NET_ASN_Tools::WritePath     ( flowShape_, asnMsg().flux      );
-    NET_ASN_Tools::WriteDirection( direction_, asnMsg().direction );
-    asnMsg().attitude           = GetAttitude().GetAsnID();
-    asnMsg().vitesse            = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
-    asnMsg().nb_humains_vivants = peopleCounter.GetBoundedPeople( GetNbrAliveHumans() );
-    asnMsg().nb_humains_morts   = peopleCounter.GetBoundedPeople( GetNbrDeadHumans () );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    asnMsg.Send();
-
-    ASN_Delete::Delete( asnMsg().flux );
-    if( asnMsg().m.itinerairePresent )
-        ASN_Delete::Delete( asnMsg().itineraire );
+    asnMsg().clear_flux();
+    if( asnMsg().has_itineraire() )
+        asnMsg().clear_itineraire();
 }
 
 // -----------------------------------------------------------------------------
@@ -673,59 +666,57 @@ void MIL_PopulationFlow::SendChangedState( MIL_Population::sPeopleCounter& peopl
     if( !HasChanged() )
         return;
 
-    NET_ASN_MsgPopulationFlowUpdate asnMsg;
+    client::PopulationFlowUpdate asnMsg;
     
-    asnMsg().oid            = GetID();
-    asnMsg().oid_population = GetPopulation().GetID();
+    asnMsg().set_oid( GetID() );
+    asnMsg().set_oid_population( GetPopulation().GetID() );
 
-    if( bPathUpdated_ && SerializeCurrentPath( asnMsg().itineraire ) )
-        asnMsg().m.itinerairePresent = 1;
+//    if( bPathUpdated_ && SerializeCurrentPath( asnMsg().itineraire ) )
+//        asnMsg()//TOTODEL1;
 
     if( bFlowShapeUpdated_ )
     {
-        asnMsg().m.fluxPresent = 1;
-        NET_ASN_Tools::WritePath( flowShape_, asnMsg().flux );
+        NET_ASN_Tools::WritePath( flowShape_, *asnMsg().mutable_flux() );
     }
 
     if( HasAttitudeChanged() )
     {
-        asnMsg().m.attitudePresent = 1;
-        asnMsg().attitude          = GetAttitude().GetAsnID();
+
+        asnMsg().set_attitude( GetAttitude().GetAsnID() );
     }
 
     if( bDirectionUpdated_ )
     {
-        asnMsg().m.directionPresent = 1;
-        NET_ASN_Tools::WriteDirection( direction_, asnMsg().direction );
+        NET_ASN_Tools::WriteDirection( direction_, *asnMsg().mutable_direction() );
     }
 
     if( HasHumansChanged() )
     {
-        asnMsg().m.nb_humains_vivantsPresent = 1; 
-        asnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg().nb_humains_vivants          = peopleCounter.GetBoundedPeople( GetNbrAliveHumans() );
-        asnMsg().nb_humains_morts            = peopleCounter.GetBoundedPeople( GetNbrDeadHumans () );
+        asnMsg().set_nb_humains_vivants( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
+        asnMsg().set_nb_humains_morts  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
     }
 
     if( bSpeedUpdated_ )
     {
-        asnMsg().m.vitessePresent = 1;
-        asnMsg().vitesse          = (uint)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ );
+        asnMsg().set_vitesse( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rSpeed_ ) );
     }
     
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asnMsg().m.fluxPresent )
-        ASN_Delete::Delete( asnMsg().flux );
-    if( asnMsg().m.itinerairePresent )
-        ASN_Delete::Delete( asnMsg().itineraire );
+    if( asnMsg().has_flux()  )
+    {
+        asnMsg().clear_flux();
+        //ASN_Delete::Delete( asnMsg().flux );
+    }
+    if( asnMsg().has_itineraire()  )
+        asnMsg().clear_itineraire();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::load
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< PHY_MovingEntity_ABC      >( *this );
     file >> boost::serialization::base_object< TER_PopulationFlow_ABC    >( *this );
@@ -746,7 +737,7 @@ void MIL_PopulationFlow::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_PopulationFlow::save
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_PopulationFlow::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< PHY_MovingEntity_ABC      >( *this );
     file << boost::serialization::base_object< TER_PopulationFlow_ABC    >( *this );

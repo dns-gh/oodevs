@@ -14,6 +14,11 @@
 
 #include <boost/serialization/export.hpp>
 
+namespace client
+{
+    class LogSupplyState;
+}
+
 namespace xml
 {
     class xistream;
@@ -23,7 +28,6 @@ namespace xml
 class PHY_DotationCategory;
 class PHY_DotationStock;
 class PHY_RoleInterface_Supply;
-class NET_ASN_MsgLogSupplyState;
 class PHY_SupplyStockRequestContainer;
 
 // =============================================================================
@@ -34,13 +38,13 @@ class PHY_DotationStockContainer : private boost::noncopyable
 {
 
 public:
-    explicit PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply );
              PHY_DotationStockContainer();
+    explicit PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply );
     virtual ~PHY_DotationStockContainer();
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     void WriteODB( xml::xostream& xos ) const;
     //@}
     
@@ -74,8 +78,8 @@ public:
     //@{
     void NotifyDotationChanged( const PHY_DotationStock& dotationStock, MT_Float rDelta );
     bool HasChanged           () const;
-    void SendChangedState     ( NET_ASN_MsgLogSupplyState& asn ) const;
-    void SendFullState        ( NET_ASN_MsgLogSupplyState& asn ) const;
+    void SendChangedState     ( client::LogSupplyState& asn ) const;
+    void SendFullState        ( client::LogSupplyState& asn ) const;
     //@}
 
     //! @name Supply

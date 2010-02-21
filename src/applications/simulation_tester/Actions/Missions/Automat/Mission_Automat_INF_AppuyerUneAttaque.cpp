@@ -43,9 +43,9 @@ void Mission_Automat_INF_AppuyerUneAttaque::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_AppuyerUneAttaque& asnMission = *new ASN1T_Mission_Automate_INF_AppuyerUneAttaque();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_appuyer_une_attaque;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_appuyer_une_attaque = &asnMission;
+    Mission_Automate_INF_AppuyerUneAttaque& asnMission = *new Mission_Automate_INF_AppuyerUneAttaque();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_appuyer_une_attaque = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
@@ -59,8 +59,8 @@ void Mission_Automat_INF_AppuyerUneAttaque::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_AppuyerUneAttaque::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_appuyer_une_attaque );
-    ASN1T_Mission_Automate_INF_AppuyerUneAttaque& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_appuyer_une_attaque;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_appuyer_une_attaque ());
+    Mission_Automate_INF_AppuyerUneAttaque& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_appuyer_une_attaque;
 
 
     delete &asnMission;

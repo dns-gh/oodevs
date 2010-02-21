@@ -50,11 +50,11 @@ public:
     void     ReserveConsumptions             ();
     void     RollbackConsumptionsReservations();
 
-    uint     GetDotationValue                ( const PHY_DotationCategory& category ) const;
+    unsigned int     GetDotationValue                ( const PHY_DotationCategory& category ) const;
 
-    void     ConsumeDotations                ( const PHY_DotationCategory& category, uint nNbr );
-    uint     RecoverDotations                ( const PHY_DotationCategory& category, uint nNbr );
-    void     GetTotalOperationTime           ( MT_Float& rOperationTime, uint& nNbrComposantes ) const;
+    void             ConsumeDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
+    unsigned int     RecoverDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
+    void     GetTotalOperationTime           ( MT_Float& rOperationTime, unsigned int& nNbrComposantes ) const;
     //@}
 
 private:

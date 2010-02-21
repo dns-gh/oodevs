@@ -14,8 +14,7 @@
 #include "Entities/Objects/MIL_FireClass.h"
 #include "Entities/Objects/FireAttribute.h"
 #include "DEC_Knowledge_Object.h"
-
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeFire )
 
@@ -60,7 +59,7 @@ DEC_Knowledge_ObjectAttributeFire::~DEC_Knowledge_ObjectAttributeFire()
 // Name: DEC_Knowledge_ObjectFire::load
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeFire::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_ObjectAttributeFire::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
     
@@ -74,9 +73,9 @@ void DEC_Knowledge_ObjectAttributeFire::load( MIL_CheckPointInArchive& file, con
 // Name: DEC_Knowledge_ObjectFire::save
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeFire::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_ObjectAttributeFire::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    unsigned int nID = ( pFireClass_ ? pFireClass_->GetID() : (uint)-1 );
+    unsigned int nID = ( pFireClass_ ? pFireClass_->GetID() : (unsigned int)-1 );
     file << boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file << attr_
          << nID
@@ -141,12 +140,11 @@ void DEC_Knowledge_ObjectAttributeFire::UpdateOnCollision( const DEC_Knowledge_O
 // Name: DEC_Knowledge_ObjectAttributeFire::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeFire::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeFire::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if ( attr_ )
+    if( attr_ )
     {
-        asn.m.firePresent = 1;
-        asn.fire.class_id = pFireClass_->GetID();
-        asn.fire.heat     = heat_;    
+        asn.mutable_fire()->set_class_id( pFireClass_->GetID() );
+        asn.mutable_fire()->set_heat( heat_ );
     }
 }

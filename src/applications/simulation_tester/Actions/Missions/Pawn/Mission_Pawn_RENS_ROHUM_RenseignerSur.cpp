@@ -43,9 +43,9 @@ void Mission_Pawn_RENS_ROHUM_RenseignerSur::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_RENS_ROHUM_RenseignerSur& asnMission = *new ASN1T_Mission_Pion_RENS_ROHUM_RenseignerSur();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_rens_rohum_renseigner_sur;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_rohum_renseigner_sur = &asnMission;
+    Mission_Pion_RENS_ROHUM_RenseignerSur& asnMission = *new Mission_Pion_RENS_ROHUM_RenseignerSur();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_rens_rohum_renseigner_sur = &asnMission;
 
     const Location& zoneAObserver_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_RENS_ROHUM_RenseignerSur::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_RENS_ROHUM_RenseignerSur::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_rens_rohum_renseigner_sur );
-    ASN1T_Mission_Pion_RENS_ROHUM_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_rens_rohum_renseigner_sur;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_rens_rohum_renseigner_sur ());
+    Mission_Pion_RENS_ROHUM_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_rens_rohum_renseigner_sur;
 
     ASN_Tools::Delete( asnMission.zone_a_observer );
 

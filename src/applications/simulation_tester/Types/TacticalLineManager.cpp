@@ -154,9 +154,9 @@ TacticalLine_ABC* TacticalLineManager::Find( T_EntityId nId  )
 // -----------------------------------------------------------------------------
 T_EntityId TacticalLineManager::GetNextLimitId()
 {
-    static uint nStart = 0;
+    static unsigned int nStart = 0;
 
-    uint nCur = 0;
+    unsigned int nCur = 0;
     for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it, ++nCur )
         if( nCur >= nStart && ( *it )->GetLineType() == TacticalLine_ABC::eLimit )
         {
@@ -179,7 +179,7 @@ T_EntityId TacticalLineManager::GetNextLimitId()
 // Name: TacticalLineManager::GetLimaByType
 // Created: SBO 2005-08-24
 // -----------------------------------------------------------------------------
-T_EntityId TacticalLineManager::GetLimaByType( ASN1T_EnumLimaType eLimaType )
+T_EntityId TacticalLineManager::GetLimaByType( EnumLimaType eLimaType )
 {
     for( CIT_TacticalLineSet it = lines_.begin(); it != lines_.end(); ++it )
         if( ( *it )->GetLineType() == TacticalLine_ABC::eLima && 

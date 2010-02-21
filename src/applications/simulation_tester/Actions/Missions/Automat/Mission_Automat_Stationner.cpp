@@ -43,9 +43,9 @@ void Mission_Automat_Stationner::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_Stationner& asnMission = *new ASN1T_Mission_Automate_Stationner();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_stationner;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_stationner = &asnMission;
+    Mission_Automate_Stationner& asnMission = *new Mission_Automate_Stationner();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_stationner = &asnMission;
 
     const Location& zoneAttente_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_Stationner::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_Stationner::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_stationner );
-    ASN1T_Mission_Automate_Stationner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_stationner;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_stationner ());
+    Mission_Automate_Stationner& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_stationner;
 
     ASN_Tools::Delete( asnMission.zone_attente );
 

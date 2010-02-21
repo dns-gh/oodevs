@@ -11,7 +11,7 @@
 #define __Model_ABC_h_
 
 #include "clients_kernel/Team_ABC.h"
-#include "game_asn/Simulation.h"
+
 #include "MessageHandler_ABC.h"
 #include "CompositeFactory.h"
 #include "EntityPublisher.h"

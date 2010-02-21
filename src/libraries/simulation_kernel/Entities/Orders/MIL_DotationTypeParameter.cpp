@@ -12,13 +12,14 @@
 #include "simulation_orders/MIL_ParameterType_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationTypeParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_DotationTypeParameter::MIL_DotationTypeParameter( const ASN1T_DotationType & asn )
-    : pCategory_( PHY_DotationType::FindDotationCategory( asn ) )
+MIL_DotationTypeParameter::MIL_DotationTypeParameter( const Common::MsgDotationType & asn )
+    : pCategory_( PHY_DotationType::FindDotationCategory( asn.oid() ) )
 {
     // NOTHING
 }
@@ -28,7 +29,7 @@ MIL_DotationTypeParameter::MIL_DotationTypeParameter( const ASN1T_DotationType &
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 MIL_DotationTypeParameter::MIL_DotationTypeParameter( const PHY_DotationCategory* pCategory )
-: pCategory_( pCategory )
+    : pCategory_( pCategory )
 {
     // NOTHING
 }
@@ -55,11 +56,11 @@ bool MIL_DotationTypeParameter::IsOfType( const MIL_ParameterType_ABC& type ) co
 // Name: MIL_DotationTypeParameter::ToDotationType
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_DotationTypeParameter::ToDotationType( ASN1T_DotationType& asn ) const
+bool MIL_DotationTypeParameter::ToDotationType( Common::MsgDotationType& asn ) const
 {
     if( !pCategory_ )
         return false;
-    asn = pCategory_->GetMosID();
+    asn.set_oid( pCategory_->GetMosID() );
     return true;
 }
 

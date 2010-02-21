@@ -12,6 +12,7 @@
 #include "simulation_orders/MIL_ParameterType_Path.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PathParameter constructor
@@ -26,15 +27,15 @@ MIL_PathParameter::MIL_PathParameter( boost::shared_ptr< MT_Vector2D > point )
 // Name: MIL_PathParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_PathParameter::MIL_PathParameter( const ASN1T_Path& asn )
+MIL_PathParameter::MIL_PathParameter( const Common::MsgPath& asn )
 {
-    if( asn.type != EnumLocationType::line )
+    if( asn.location().type() != Common::MsgLocation_Geometry_line )
         throw std::runtime_error( "Unexpected type passed for path" );
-    path_.reserve( asn.coordinates.n );
-    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
+    path_.reserve( asn.location().coordinates().elem_size());
+    for( int i = 0; i < asn.location().coordinates().elem_size(); ++i )
     {
         path_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D() ) );
-        MIL_Tools::ConvertCoordMosToSim( asn.coordinates.elem[i], *path_[i] );
+        MIL_Tools::ConvertCoordMosToSim( asn.location().coordinates().elem( i ), *path_[i] );
     }
 }
 
@@ -43,7 +44,7 @@ MIL_PathParameter::MIL_PathParameter( const ASN1T_Path& asn )
 // Created: LDC 2009-07-08
 // -----------------------------------------------------------------------------
 MIL_PathParameter::MIL_PathParameter( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
-: path_( pointList )
+    : path_( pointList )
 {
     // NOTHING
 }
@@ -63,24 +64,19 @@ MIL_PathParameter::~MIL_PathParameter()
 // -----------------------------------------------------------------------------
 bool MIL_PathParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Path*>( &type ) != 0 );
+    return dynamic_cast< const MIL_ParameterType_Path* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PathParameter::ToPath
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PathParameter::ToPath( ASN1T_Path& asn ) const
+bool MIL_PathParameter::ToPath( Common::MsgPath& asn ) const
 {
-    asn.type = EnumLocationType::line;
-    int size = path_.size();
-    asn.coordinates.n = size; 
-    if( !path_.empty() )
-    {
-        asn.coordinates.elem = new ASN1T_CoordLatLong[ size ];
-        for( int i = 0; i < size; ++i )
-            MIL_Tools::ConvertCoordSimToMos( *path_[i], asn.coordinates.elem[i] );
-    }
+    asn.mutable_location()->set_type( Common::MsgLocation_Geometry_line );
+    const unsigned int size = path_.size();
+    for( unsigned int i = 0; i < size; ++i )
+        MIL_Tools::ConvertCoordSimToMos( *path_[i], *asn.mutable_location()->mutable_coordinates()->add_elem() );
     return true;
 }
 

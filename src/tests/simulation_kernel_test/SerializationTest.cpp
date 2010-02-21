@@ -46,14 +46,14 @@ public:
 private:
     friend class boost::serialization::access;
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( InputArchive& archive, const uint )
+    void load( InputArchive& archive, const unsigned int )
     {
         archive >> boost::serialization::base_object< tools::Role_ABC >( *this )
                 >> entity_ 
                 >> id_;
         entity_->Attach( *this );
     }
-    void save( OutputArchive& archive, const uint ) const
+    void save( OutputArchive& archive, const unsigned int ) const
     {
         archive << boost::serialization::base_object< tools::Role_ABC >( *this )
                 << entity_ 
@@ -77,7 +77,7 @@ public:
 private:
     friend class boost::serialization::access;
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( InputArchive& archive, const uint )
+    void load( InputArchive& archive, const unsigned int )
     {
         archive >> boost::serialization::base_object< tools::Role_ABC >( *this )
                 >> entity_ 
@@ -85,7 +85,7 @@ private:
                 >> name_;
         entity_->Attach( *this );
     }
-    void save( OutputArchive& archive, const uint ) const
+    void save( OutputArchive& archive, const unsigned int ) const
     {
         archive << boost::serialization::base_object< tools::Role_ABC >( *this )
                 << entity_ 
@@ -176,14 +176,14 @@ public:
 private:
     friend class boost::serialization::access;
     BOOST_SERIALIZATION_SPLIT_MEMBER()
-    void load( InputArchive& archive, const uint )
+    void load( InputArchive& archive, const unsigned int )
     {
         archive >> boost::serialization::base_object< tools::Role_ABC >( *this )
                 >> value_
                 >> name_;
         entity_.Attach( *this );
     }
-    void save( OutputArchive& archive, const uint ) const
+    void save( OutputArchive& archive, const unsigned int ) const
     {
         archive << boost::serialization::base_object< tools::Role_ABC >( *this )
                 << value_

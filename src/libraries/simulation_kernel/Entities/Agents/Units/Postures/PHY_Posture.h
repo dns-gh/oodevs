@@ -12,6 +12,10 @@
 #ifndef __PHY_Posture_h_
 #define __PHY_Posture_h_
 
+namespace MsgsSimToClient
+{
+    enum MsgUnitAttributes_Posture;
+}
 
 class PHY_ConsumptionType;
 
@@ -49,16 +53,16 @@ public:
 
     static const T_PostureMap& GetPostures();
     static const PHY_Posture*  FindPosture( const std::string& strName );
-    static const PHY_Posture*  FindPosture( uint nID );
+    static const PHY_Posture*  FindPosture( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&          GetName           () const;
-          uint                  GetID             () const;
-          ASN1T_EnumUnitPosture GetAsnID          () const;
-    const PHY_Posture*          GetNextAutoPosture() const;
-    const PHY_ConsumptionType&  GetConsumptionMode() const;
+    const std::string&                                  GetName           () const;
+          unsigned int                                  GetID             () const;
+          MsgsSimToClient::MsgUnitAttributes_Posture    GetAsnID          () const;
+    const PHY_Posture*                                  GetNextAutoPosture() const;
+    const PHY_ConsumptionType&                          GetConsumptionMode() const;
 
     bool CanModifyPH       () const;
     bool CanModifyDetection() const;
@@ -88,19 +92,19 @@ private:
     //@}
 
 private:
-     PHY_Posture( const std::string& strName, E_PostureType nType, ASN1T_EnumUnitPosture nAsnID, const PHY_ConsumptionType& consumptionMode, uint nFlags, const PHY_Posture* pNextAutoPosture = 0 );
+     PHY_Posture( const std::string& strName, E_PostureType nType, MsgsSimToClient::MsgUnitAttributes_Posture nAsnID, const PHY_ConsumptionType& consumptionMode, unsigned int nFlags, const PHY_Posture* pNextAutoPosture = 0 );
     ~PHY_Posture();
 
 private:
-    const std::string           strName_;
-    const E_PostureType         nType_;
-    const ASN1T_EnumUnitPosture nAsnID_;
-    const uint                  nFlags_;
-    const PHY_ConsumptionType&  consumptionMode_;  
-    const PHY_Posture*          pNextAutoPosture_;
+    const std::string                                   strName_;
+    const E_PostureType                                 nType_;
+    const MsgsSimToClient::MsgUnitAttributes_Posture    nAsnID_;
+    const unsigned int                                  nFlags_;
+    const PHY_ConsumptionType&                          consumptionMode_;  
+    const PHY_Posture*                                  pNextAutoPosture_;
 
 private:
-    static T_PostureMap postures_;
+    static T_PostureMap                                 postures_;
 };
 
 #endif // __PHY_Posture_h_

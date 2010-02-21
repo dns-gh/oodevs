@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_Automat.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_Automat constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_Automat::MissionParameter_Automat( const ASN1T_MissionParameter& asn )
+MissionParameter_Automat::MissionParameter_Automat( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , automat_            ( asn.value.u.automat )
+    , automat_            ( asn.value().automat().oid() )
 {
     // NOTHING
 }
@@ -41,18 +42,17 @@ MissionParameter_Automat::~MissionParameter_Automat()
 // Name: MissionParameter_Automat::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Automat::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Automat::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value       = bNullValue_;
-    asn.value.t          = T_MissionParameter_value_automat;
-    asn.value.u.automat = automat_;
+    asn.set_null_value( bNullValue_ );
+    asn.mutable_value()->mutable_automat()->set_oid( automat_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Automat::AsnDelete
+// Name: MissionParameter_Automat::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Automat::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_Automat::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

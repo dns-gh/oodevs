@@ -10,6 +10,8 @@
 #ifndef __MIL_LimaFunction_h_
 #define __MIL_LimaFunction_h_
 
+#include "protocol/protocol.h"
+
 // =============================================================================
 /** @class  MIL_LimaFunction
     @brief  MIL_LimaFunction
@@ -38,20 +40,20 @@ public:
     //@{
     static       void              Initialize();
     static       void              Terminate ();
-    static const MIL_LimaFunction* Find      ( const ASN1T_EnumLimaType& asn );
-    static const MIL_LimaFunction* Find      ( uint nID );
+    static const MIL_LimaFunction* Find      ( const Common::MsgLimaOrder_Function& asn );
+    static const MIL_LimaFunction* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
-    uint               GetID   () const;
-    ASN1T_EnumLimaType GetAsnID() const;
+    unsigned int                  GetID   () const;
+    Common::MsgLimaOrder_Function GetAsnID() const;
     //@}
 
 private:
     //! @name Constructors/Destructor
     //@{
-     MIL_LimaFunction( const ASN1T_EnumLimaType& asn, uint nID, const std::string& strName );
+     MIL_LimaFunction( const Common::MsgLimaOrder_Function& asn, unsigned int nID, const std::string& strName );
     ~MIL_LimaFunction();
 
      MIL_LimaFunction( const MIL_LimaFunction& );            //!< Copy constructor
@@ -61,7 +63,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< ASN1T_EnumLimaType, const MIL_LimaFunction* > T_LimaFunctionMap;
+    typedef std::map< Common::MsgLimaOrder_Function, const MIL_LimaFunction* > T_LimaFunctionMap;
     typedef T_LimaFunctionMap::const_iterator                       CIT_LimaFunctionMap;
     //@}
 
@@ -83,9 +85,9 @@ private:
     //@}
 
 private:
-    const ASN1T_EnumLimaType nAsnID_;
-    const uint               nID_;
-    const std::string        strName_;
+    const Common::MsgLimaOrder_Function nAsnID_;
+    const unsigned int                  nID_;
+    const std::string                   strName_;
 
 private:
     static T_LimaFunctionMap limaFunctions_;

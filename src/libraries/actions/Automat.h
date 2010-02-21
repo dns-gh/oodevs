@@ -12,6 +12,7 @@
 
 #include "Entity.h"
 #include "clients_kernel/Automat_ABC.h"
+#include <boost/function.hpp>
 
 namespace actions {
     namespace parameters {
@@ -24,7 +25,6 @@ namespace actions {
 // =============================================================================
 class Automat : public Entity< kernel::Automat_ABC >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -37,9 +37,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    using Entity< kernel::Automat_ABC >::CommitTo;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
-    void CommitTo( ASN1T_Automat& asn ) const;
     //@}
 
 private:

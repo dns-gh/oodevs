@@ -45,7 +45,7 @@ PopulationAttribute::~PopulationAttribute()
 // Created: SBO 2009-06-10
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PopulationAttribute::serialize( Archive& file, const uint )
+void PopulationAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     // $$$$ _RC_ SBO 2009-06-11: what about density?

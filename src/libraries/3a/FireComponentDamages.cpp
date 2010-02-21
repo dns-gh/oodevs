@@ -34,18 +34,18 @@ FireComponentDamages::FireComponentDamages( xml::xistream& xis )
 // Name: FireComponentDamages::Extract
 // Created: AGE 2007-10-24
 // -----------------------------------------------------------------------------
-float FireComponentDamages::Extract( const ASN1T_MsgsSimToClient& message ) const
+float FireComponentDamages::Extract( const MsgSimToClient& wrapper ) const
 {
-    const ASN1T_MsgStopUnitFire& stop = *message.msg.u.msg_stop_unit_fire;
+    const MsgStopUnitFire& stop = wrapper.message().stop_unit_fire();
     float result = 0;
-    for( unsigned u = 0; u < stop.units_damages.n; ++u )
+    for( unsigned u = 0; u < stop.units_damages().elem_size(); ++u )
     {
-        const ASN1T_UnitFireDamages& damages = stop.units_damages.elem[u];
-        for( unsigned e = 0; e < damages.equipments.n; ++e )
+        const MsgUnitFireDamages& damages = stop.units_damages().elem( u );
+        for( unsigned e = 0; e < damages.equipments().elem_size(); ++e )
         {
-            const ASN1T_UnitEquipmentFireDamage& damage = damages.equipments.elem[e];
-            if( filter_.IsAllowed( damage.equipement_type ) )
-                result += damage.unavailable_nbr;
+            const MsgUnitEquipmentFireDamage& damage = damages.equipments().elem( e );
+            if( filter_.IsAllowed( damage.equipement_type() ) )
+                result += damage.unavailable_nbr();
         }
     }
     return result;

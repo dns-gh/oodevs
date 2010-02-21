@@ -11,12 +11,12 @@
 #include "IndicatorPlot.h"
 #include "moc_IndicatorPlot.cpp"
 #include "IndicatorExportDialog.h"
-#include "game_asn/ReplaySenders.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedDragObject.h"
+#include "protocol/Protocol.h"    
 #include <boost/foreach.hpp>
 
 using namespace kernel;
@@ -188,7 +188,7 @@ void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
         const int offset = YAxis().GetAxisSize().width() + YAxis().GetCaptionSize().width();
         double tick = XAxis().MapFromViewport( e->pos().x() - offset );
         replay::ControlSkipToTick skip;
-        skip() = unsigned( tick );
+        skip().set_tick( unsigned( tick ) );
         skip.Send( publisher_ );
     }
     GQ_Plot::mouseReleaseEvent( e );

@@ -12,18 +12,19 @@
 #include "simulation_orders/MIL_ParameterType_GenObjectList.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Network/NET_AsnException.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PlannedWorkListParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_PlannedWorkListParameter::MIL_PlannedWorkListParameter( const ASN1T_PlannedWorkList& asn, const MIL_EntityManager_ABC& entityManager )
+MIL_PlannedWorkListParameter::MIL_PlannedWorkListParameter( const Common::MsgPlannedWorkList& asn, const MIL_EntityManager_ABC& entityManager )
 {
-    unsigned int size = asn.n;
+    unsigned int size = asn.elem_size();
     plannedWorkList_.reserve( size );
     for( unsigned int i = 0; i < size; ++i )
     {
-        boost::shared_ptr< DEC_Gen_Object > pGenObject( new DEC_Gen_Object( asn.elem[i], entityManager ) );
+        boost::shared_ptr< DEC_Gen_Object > pGenObject( new DEC_Gen_Object( asn.elem(i), entityManager ) );
         plannedWorkList_.push_back( pGenObject );
     }
 }
@@ -60,16 +61,12 @@ bool MIL_PlannedWorkListParameter::IsOfType( const MIL_ParameterType_ABC& type )
 // Name: MIL_PlannedWorkListParameter::ToGenObjectList
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_PlannedWorkListParameter::ToGenObjectList( ASN1T_PlannedWorkList& asn ) const
+bool MIL_PlannedWorkListParameter::ToGenObjectList( Common::MsgPlannedWorkList& asn ) const
 {
     unsigned int size = plannedWorkList_.size();
-    asn.n = size;
     if( size )
-    {
-        asn.elem = new ASN1T_PlannedWork[ size ];
         for( unsigned int i = 0; i < size; ++i )
-            plannedWorkList_[i]->Serialize( asn.elem[ i ] );
-    }
+            plannedWorkList_[i]->Serialize( *asn.add_elem() );
     return true;
 }
 

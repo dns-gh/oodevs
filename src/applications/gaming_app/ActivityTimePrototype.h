@@ -12,7 +12,10 @@
 
 #include "clients_gui/ActivityTimePrototype_ABC.h"
 
-struct ASN1T_MagicActionCreateObject;
+namespace MsgsClientToSim
+{
+    class MsgMagicActionCreateObject;
+}
 
 // =============================================================================
 /** @class  ActivityTimePrototype
@@ -26,7 +29,7 @@ class ActivityTimePrototype : public gui::ActivityTimePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ActivityTimePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg );
+    ActivityTimePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg );
     virtual ~ActivityTimePrototype();
     //@}
 
@@ -46,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;
+    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
     //@}
 };
 

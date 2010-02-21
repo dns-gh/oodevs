@@ -11,9 +11,11 @@
 #define __LogMaintenanceConsign_h_
 
 #include "clients_kernel/Types.h"
-#include "game_asn/Simulation.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -24,6 +26,11 @@ namespace kernel
     class BreakdownType;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgLogMaintenanceHandlingCreation;
+}
+
 // =============================================================================
 // Created: NLD 2004-03-18
 // =============================================================================
@@ -32,7 +39,7 @@ class LogMaintenanceConsign : public kernel::Drawable_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             LogMaintenanceConsign( kernel::Controller& controller, const ASN1T_MsgLogMaintenanceHandlingCreation& asn,
+    LogMaintenanceConsign( kernel::Controller& controller, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message,
                                     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const tools::Resolver_ABC< kernel::ComponentType >& componentResolver,
                                     const tools::Resolver_ABC< kernel::BreakdownType >& breakdownResolver );
     virtual ~LogMaintenanceConsign();
@@ -46,7 +53,7 @@ public:
 
     //! @name Network events
     //@{
-    void Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& asn );
+    void Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& message );
     //@}
 
 private:

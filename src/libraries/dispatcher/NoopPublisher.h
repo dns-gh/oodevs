@@ -13,6 +13,9 @@
 #include "ClientPublisher_ABC.h"
 #include "SimulationPublisher_ABC.h"
 
+//using namespace MsgsClientToSim;
+//using namespace MsgsDispatcherToSim;
+
 namespace dispatcher
 {
 
@@ -34,13 +37,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsSimToClient&               ) {};
-    virtual void Send( const ASN1T_MsgsAuthenticationToClient&    ) {};
-    virtual void Send( const ASN1T_MsgsReplayToClient&            ) {};
-    virtual void Send( const ASN1T_MsgsAarToClient& ) {};
-    virtual void Send( const ASN1T_MsgsMessengerToClient& ) {};
-    virtual void Send( const ASN1T_MsgsDispatcherToClient& ) {};
-    virtual void Send( const ASN1T_MsgsPluginToClient& ) {};
+    virtual void Send( const MsgsSimToClient::MsgSimToClient&               ) {};
+    virtual void Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient&    ) {};
+    virtual void Send( const MsgsReplayToClient::MsgReplayToClient&            ) {};
+    virtual void Send( const MsgsAarToClient::MsgAarToClient& ) {};
+    virtual void Send( const MsgsMessengerToClient::MsgMessengerToClient& ) {};
+    virtual void Send( const MsgsDispatcherToClient::MsgDispatcherToClient& ) {};
+    virtual void Send( const MsgsPluginToClient::MsgPluginToClient& ) {};
     //@}
 
     //! @name Accesors
@@ -67,8 +70,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send( const ASN1T_MsgsClientToSim& ) {};
-    virtual void Send( const ASN1T_MsgsDispatcherToSim& ) {};
+    virtual void Send( const MsgsClientToSim::MsgClientToSim& ) {};
+    virtual void Send( const MsgsDispatcherToSim::MsgDispatcherToSim& ) {};
     //@}
 };
 

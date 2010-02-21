@@ -78,11 +78,11 @@ namespace
             }
             else if( const dispatcher::PopulationFlow* f = dynamic_cast< const dispatcher::PopulationFlow* >( &entity ) )
             {
-                ASN1T_Location location;
+                MsgLocation location;
                 f->flow_.Send( location );
-                for( unsigned int i = 0; i < location.coordinates.n; ++i )
+                for( int i = 0; i < location.coordinates().elem_size(); ++i )
                 {
-                    const geometry::Point2f p = converter_->ConvertToXY( location.coordinates.elem[i] );
+                    const geometry::Point2f p = converter_->ConvertToXY( location.coordinates().elem(i) );
                     points_.push_back( p );
                     box_.Incorporate( p );
                 }

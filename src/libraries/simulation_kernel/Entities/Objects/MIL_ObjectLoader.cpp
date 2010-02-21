@@ -15,6 +15,7 @@
 #include "ObjectPrototype.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 namespace
@@ -46,7 +47,6 @@ MIL_ObjectLoader::MIL_ObjectLoader()
     else
         throw std::runtime_error( "MIL_ObjectLoader already created" );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectLoader destructor
@@ -143,19 +143,19 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const ASN1T_MagicActionCreateObject& asn, MIL_Army_ABC& army, ASN1T_EnumObjectErrorCode& value ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MsgsClientToSim::MsgMagicActionCreateObject& message, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value ) const
 {
-    CIT_Prototypes it = prototypes_.find( asn.type );
+    CIT_Prototypes it = prototypes_.find( message.type() );
     if( it == prototypes_.end() )
     {
-        value = EnumObjectErrorCode::error_invalid_object;
+        value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_object;
         return 0;
     }
     TER_Localisation location;
-    if( ! NET_ASN_Tools::ReadLocation( asn.location, location ) )
+    if( ! NET_ASN_Tools::ReadLocation( message.location(), location ) )
         return 0;
-    Object* pObject = new Object( *it->second, army, &location, asn.name );
-    attributes_->Create( *pObject, asn.attributes );
+    Object* pObject = new Object( *it->second, army, &location, message.name() );
+    attributes_->Create( *pObject, message.attributes() );
     pObject->Finalize();
     return pObject;
 }
@@ -188,11 +188,11 @@ void MIL_ObjectLoader::ReadAttributes( const std::string& attribute, xml::xistre
 // Name: MIL_ObjectLoader::InitializeLocation
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ObjectLoader::InitializeLocation( Object& object, const ASN1T_Location& asn ) const
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectLoader::InitializeLocation( Object& object, const Common::MsgLocation& asn ) const
 {
     TER_Localisation location;
     if( ! NET_ASN_Tools::ReadLocation( asn, location ) )
-        return EnumObjectErrorCode::error_invalid_specific_attributes;
+        return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
     object.Initialize( location );
-    return EnumObjectErrorCode::no_error;
+    return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
 }

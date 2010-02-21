@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "MaintenancePriorities.h"
 #include "clients_kernel/EquipmentType.h"
+#include "protocol/Protocol.h"
 #pragma warning( push )
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
@@ -35,11 +36,11 @@ MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter )
 // Name: MaintenancePriorities constructor
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, const ASN1T_LogMaintenancePriorities& asn )
+MaintenancePriorities::MaintenancePriorities( const OrderParameter& parameter, const tools::Resolver_ABC< EquipmentType >& resolver, const Common::MsgLogMaintenancePriorities& message )
     : Parameter< std::string >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddPriority( resolver.Get( asn.elem[i] ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddPriority( resolver.Get( message.elem(i).equipment() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,18 +83,13 @@ void MaintenancePriorities::AddPriority( const EquipmentType& value )
 // Name: MaintenancePriorities::CommitTo
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MaintenancePriorities::CommitTo( ASN1T_MissionParameter& asn ) const
+void MaintenancePriorities::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_logMaintenancePriorities;
-    ASN1T_LogMaintenancePriorities*& list = asn.value.u.logMaintenancePriorities = new ASN1T_LogMaintenancePriorities();
-    list->n = priorities_.size();
+    message.set_null_value( !IsSet() );
+    Common::MsgLogMaintenancePriorities* list = message.mutable_value()->mutable_logmaintenancepriorities();
     if( IsSet() )
-    {
-        list->elem = new ASN1T_EquipmentType[ list->n ];
         for( unsigned int i = 0; i < priorities_.size(); ++i )
-            list->elem[i] = priorities_.at( i )->GetId();
-    }
+            list->add_elem()->set_equipment( priorities_.at( i )->GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -114,11 +110,10 @@ void MaintenancePriorities::CommitTo( std::string& content ) const
 // Name: MaintenancePriorities::Clean
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
-void MaintenancePriorities::Clean( ASN1T_MissionParameter& asn ) const
+void MaintenancePriorities::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.logMaintenancePriorities )
-        delete[] asn.value.u.logMaintenancePriorities->elem;
-    delete asn.value.u.logMaintenancePriorities;
+    if( message.value().has_logmaintenancepriorities() )
+        message.mutable_value()->clear_logmaintenancepriorities();
 }
 
 // -----------------------------------------------------------------------------

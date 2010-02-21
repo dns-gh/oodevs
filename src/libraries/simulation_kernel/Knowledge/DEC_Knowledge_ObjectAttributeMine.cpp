@@ -14,6 +14,7 @@
 #include "Entities/Objects/MineAttribute.h"
 #include "Entities/MIL_Army.h"
 #include "DEC_Knowledge_Object.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeMine )
 
@@ -63,7 +64,7 @@ DEC_Knowledge_ObjectAttributeMine::~DEC_Knowledge_ObjectAttributeMine()
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeMine::serialize( Archive& file, const uint )
+void DEC_Knowledge_ObjectAttributeMine::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file & const_cast< MineAttribute*& >( attr_ )
@@ -82,9 +83,8 @@ void DEC_Knowledge_ObjectAttributeMine::Register( DEC_Knowledge_Object& knObject
     knObject.AttachExtension( *this );
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeMine::UpdateAttribute
+// Name: DEC_Knowledge_ObjectAttributeMine::UpdateOnPerceptionLevel
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMine::UpdateOnPerceptionLevel( const PHY_PerceptionLevel& /*currentPerceptionLevel*/ )
@@ -93,7 +93,7 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateOnPerceptionLevel( const PHY_Perce
 }
     
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeMine::UpdateAttribute
+// Name: DEC_Knowledge_ObjectAttributeMine::UpdateOnPerception
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMine::UpdateOnPerception( const DEC_Knowledge_ObjectPerception& /*perception*/ )
@@ -102,7 +102,7 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateOnPerception( const DEC_Knowledge_
 }
     
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeMine::UpdateAttribute
+// Name: DEC_Knowledge_ObjectAttributeMine::UpdateOnCollision
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMine::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
@@ -111,19 +111,15 @@ void DEC_Knowledge_ObjectAttributeMine::UpdateOnCollision( const DEC_Knowledge_O
 }
     
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeMine::BuildMsgAttribute
+// Name: DEC_Knowledge_ObjectAttributeMine::MsgObjectAttributes
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeMine::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeMine::Send( Common::MsgObjectAttributes& asn ) const
 {
     if ( NeedUpdate() )
     {
-        asn.m.minePresent = 1;
-        asn.mine.m.percentagePresent = 1;
-        asn.mine.percentage = (uint)( rMiningPercentage_ * 100. ); 
-        asn.mine.m.dotation_nbrPresent = 1;
-        asn.mine.dotation_nbr = nNbrDotationForMining_;      
-        // TODO asn.mine.dotation_type = 
+        asn.mutable_mine()->set_percentage( (unsigned int)( rMiningPercentage_ * 100. ) ); 
+        asn.mutable_mine()->set_dotation_nbr( nNbrDotationForMining_ );      
         Reset();
     }
 }
@@ -133,7 +129,7 @@ void DEC_Knowledge_ObjectAttributeMine::Send( ASN1T_ObjectAttributes& asn ) cons
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeMine::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeMine::UpdateAttributes
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeMine::UpdateAttributes()

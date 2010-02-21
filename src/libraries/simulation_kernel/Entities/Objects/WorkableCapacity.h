@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Instanciate( Object& object ) const;
     virtual void Register( Object& object );
     bool AddAnimator( Object& object, const MIL_Agent_ABC& agent );
@@ -49,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    uint maxAnimators_;
+    unsigned int maxAnimators_;
     //@}
 };
 

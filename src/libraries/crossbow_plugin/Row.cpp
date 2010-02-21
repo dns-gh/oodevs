@@ -68,9 +68,9 @@ namespace
         case VT_NULL:
             return crossbow::FieldVariant( std::string( "null" ) );
         case VT_I2:
-            return crossbow::FieldVariant( (int)value.iVal );
+            return crossbow::FieldVariant( ( int ) value.iVal );
         case VT_I4:
-            return crossbow::FieldVariant( value.lVal );
+            return crossbow::FieldVariant( ( long ) value.lVal );
         case VT_BSTR:
             return crossbow::FieldVariant( std::string( _bstr_t( value.bstrVal ) ) ); // $$$$ SBO 2007-05-31: !!
         case VT_BOOL:

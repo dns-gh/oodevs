@@ -34,7 +34,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_MissionType_ABC( uint nID, xml::xistream& xis );
+             MIL_MissionType_ABC( unsigned int nID, xml::xistream& xis );
     virtual ~MIL_MissionType_ABC();
     //@}
 
@@ -54,7 +54,7 @@ protected:
 
     //! @name Types
     //@{
-    typedef std::map< uint, const MIL_MissionType_ABC* > T_MissionIDMap;
+    typedef std::map< unsigned int, const MIL_MissionType_ABC* > T_MissionIDMap;
     typedef T_MissionIDMap::const_iterator               CIT_MissionIDMap;
     //@}
 
@@ -72,7 +72,7 @@ protected:
 template<typename T>
 void MIL_MissionType_ABC::ReadMission( xml::xistream& xis, MIL_MissionType_ABC::T_MissionIDMap& missionIDs, MIL_MissionType_ABC::T_MissionNameMap* pMissionDiaIDs, MIL_MissionType_ABC::T_MissionNameMap& missionNames )
 {
-    uint nID;
+    unsigned int nID;
     xis >> xml::attribute( "id", nID );
 
     const MIL_MissionType_ABC*& pMission = missionIDs[ nID ];

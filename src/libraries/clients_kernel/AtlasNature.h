@@ -10,6 +10,8 @@
 #ifndef __AtlasNature_h_
 #define __AtlasNature_h_
 
+#include <boost/function.hpp>
+
 namespace kernel
 {
 
@@ -21,6 +23,11 @@ namespace kernel
 // =============================================================================
 class AtlasNature
 {
+public:
+    //! @name Functors
+    //@{
+    typedef boost::function< void ( const std::string& ) > T_Setter;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -35,7 +42,7 @@ public:
     QString GetName() const;
     unsigned short GetValue() const;
     bool IsSet( unsigned short value ) const;
-    void CommitTo( unsigned int& n, unsigned char* bits ) const;
+    void CommitTo( T_Setter setter ) const;
     void Toggle( const AtlasNature& nature );
     //@}
 

@@ -11,6 +11,7 @@
 #define __ActionParameterNumeric_h_
 
 #include "Parameter.h"
+#include <boost/function.hpp>
 
 namespace actions {
     namespace parameters {
@@ -23,6 +24,11 @@ namespace actions {
 // =============================================================================
 class Numeric : public Parameter< float >
 {
+public:
+    //! @name Functors
+    //@{
+    typedef boost::function< void ( const float& ) > T_Setter;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -34,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1REAL& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    void CommitTo( T_Setter message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     //@}
 

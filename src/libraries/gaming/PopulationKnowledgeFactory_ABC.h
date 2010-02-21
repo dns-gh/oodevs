@@ -10,7 +10,10 @@
 #ifndef __PopulationKnowledgeFactory_ABC_h_
 #define __PopulationKnowledgeFactory_ABC_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -37,7 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const ASN1T_MsgPopulationKnowledgeCreation& message ) = 0;
+    virtual kernel::PopulationKnowledge_ABC* CreatePopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgPopulationKnowledgeCreation& message ) = 0;
     //@}
 };
 

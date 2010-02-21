@@ -13,8 +13,13 @@
 #define __PHY_RoleInterface_Transported_h_
 
 #include "MIL.h"
-
 #include "MT_Tools/Role_ABC.h"
+
+namespace client
+{
+    class UnitAttributes;
+}
+
 
 
 namespace transport
@@ -57,6 +62,9 @@ public:
 private:
     //! @name Serialization
     //@{
+    virtual void SendChangedState( client::UnitAttributes& msg ) const = 0;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const = 0;
+
     friend class boost::serialization::access;
     template< typename Archive > void serialize( Archive& ar, const uint )
     {

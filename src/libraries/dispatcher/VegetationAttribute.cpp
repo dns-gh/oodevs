@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "VegetationAttribute.h"
+#include "protocol/Simulation.h"
 
 using namespace dispatcher;
 
@@ -17,13 +18,13 @@ using namespace dispatcher;
 // Name: VegetationAttribute constructor
 // Created: SLG 2009-12-04 
 // -----------------------------------------------------------------------------
-VegetationAttribute::VegetationAttribute( const Model& model, const ASN1T_UrbanAttributes& asnMsg )
-    : UrbanObjectAttribute_ABC( model, asnMsg )
+VegetationAttribute::VegetationAttribute( const Model& model, const MsgsSimToClient::MsgUrbanAttributes& message  )
+    : UrbanObjectAttribute_ABC( model, message )
     , type_     ( "" )
     , height_   ( 0 )
     , density_  ( 0. )
 {
-    Update( asnMsg );
+    Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,16 +40,13 @@ VegetationAttribute::~VegetationAttribute()
 // Name: VegetationAttribute::Update
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void VegetationAttribute::Update( const ASN1T_UrbanAttributes& asnMsg )
+void VegetationAttribute::Update( const MsgsSimToClient::MsgUrbanAttributes& message  )
 {
-    if( asnMsg.m.vegetationPresent )
+    if( message.has_vegetation() )
     {
-        //if ( asnMsg.vegetation.m.typePresent )
-            type_ = asnMsg.vegetation.type;
-        //if ( asnMsg.vegetation.m.heightPresent )
-            height_ = asnMsg.vegetation.height;
-        //if ( asnMsg.vegetation.m.densityPresent )
-            density_ = asnMsg.vegetation.density;        
+        type_       = message.vegetation().type();
+        height_     = message.vegetation().height();
+        density_    = message.vegetation().density();        
     }
 }
 
@@ -56,25 +54,17 @@ void VegetationAttribute::Update( const ASN1T_UrbanAttributes& asnMsg )
 // Name: VegetationAttribute::Send
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void VegetationAttribute::Send( ASN1T_UrbanAttributes& asnMsg ) const
+void VegetationAttribute::Send( MsgsSimToClient::MsgUrbanAttributes& message  ) const
 {
-    asnMsg.m.vegetationPresent = 1;
-
-    //asnMsg.vegetation.m.typePresent = 1;
-    asnMsg.vegetation.type = type_.c_str();
-
-    //asnMsg.vegetation.m.heightPresent = 1;
-    asnMsg.vegetation.height = height_;
-
-    //asnMsg.vegetation.m.densityPresent = 1;
-    asnMsg.vegetation.density = density_;
+    message.mutable_vegetation()->set_type(  type_.c_str() );
+    message.mutable_vegetation()->set_height( height_  );
+    message.mutable_vegetation()->set_density( density_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: VegetationAttribute::AsnDelete
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-void VegetationAttribute::AsnDelete( ASN1T_UrbanAttributes& /*asnMsg*/ ) const
+void VegetationAttribute::AsnDelete( MsgsSimToClient::MsgUrbanAttributes& /*message*/ ) const
 {
-    //    delete asnMsg.u.mine_jam;
 }

@@ -28,16 +28,18 @@ class PHY_MaintenanceComposanteState : private boost::noncopyable
 {
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_MaintenanceComposanteState( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
-     PHY_MaintenanceComposanteState();
-    virtual ~PHY_MaintenanceComposanteState();
+     PHY_MaintenanceComposanteState();    virtual ~PHY_MaintenanceComposanteState();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Accessors
@@ -48,7 +50,7 @@ public:
     const MT_Vector2D&        GetComposantePosition () const;
           void                SetComposantePosition ( const MT_Vector2D& vPosition );
     const MT_Vector2D&        GetPionPosition       () const;          
-          uint                ApproximateTravelTime ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
+          unsigned int                ApproximateTravelTime ( const MT_Vector2D& vSourcePos, const MT_Vector2D& vTargetPos ) const;
           bool                NeedDiagnosis         () const;
           void                NotifyDiagnosed       ();
     //@}
@@ -80,16 +82,18 @@ private:
     //@}
 
 private:
-    const uint                        nID_;
-    const uint                        nCreationTick_;
+    //! @name Member data
+    //@{
+    const unsigned int                        nID_;
+    const unsigned int                        nCreationTick_;
           MIL_Agent_ABC*              pPion_;
           PHY_ComposantePion*         pComposante_;
           PHY_MaintenanceConsign_ABC* pConsign_;
           MT_Vector2D                 vComposantePosition_; // Position de la composante lors de son traitement dans la chaine maintenance
           bool                        bHasChanged_;
           bool                        bDiagnosed_;
-
     static MIL_IDManager idManager_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_MaintenanceComposanteState )

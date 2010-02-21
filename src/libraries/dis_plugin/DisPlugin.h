@@ -13,20 +13,25 @@
 #include "dispatcher/Plugin_ABC.h"
 #include "Time_ABC.h"
 
+namespace dispatcher
+{
+    class Model;
+    class Config;
+}
+
 namespace kernel
 {
     class CoordinateConverter_ABC;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+
 namespace xml
 {
     class xistream;
-}
-
-namespace dispatcher
-{
-    class Model;
-    class Config;
 }
 
 namespace plugins
@@ -56,7 +61,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     virtual unsigned long GetTime() const;

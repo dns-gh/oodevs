@@ -34,7 +34,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const uint );
+    template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Accessors
@@ -59,7 +59,7 @@ protected:
 
 protected:
     MT_Float rRapForValue_;
-    uint     nLastCacheUpdateTick_;
+    unsigned int     nLastCacheUpdateTick_;
 
 private:
     static const MT_Float rRapForBoundMin_;
@@ -72,7 +72,7 @@ private:
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 template < typename Archive > 
-void DEC_Knowledge_RapFor_ABC::serialize( Archive& file, const uint )
+void DEC_Knowledge_RapFor_ABC::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
          & nLastCacheUpdateTick_

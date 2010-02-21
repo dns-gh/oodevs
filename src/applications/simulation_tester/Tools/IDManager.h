@@ -38,22 +38,22 @@ class IDManager
     MT_COPYNOTALLOWED( IDManager )
 
 public:
-     IDManager( uint nMOSClassID, uint nStartInstanceID = 0 );
+     IDManager( unsigned int nMOSClassID, unsigned int nStartInstanceID = 0 );
     virtual ~IDManager();
 
     //-------------------------------------------------------------------------
     /** @name ID management */
     //-------------------------------------------------------------------------
     //@{
-    bool LockIdentifier    ( uint nIdentifier ); //!< Try to lock the given identifier
-    uint GetFreeIdentifier ();
-    void ReleaseIdentifier ( uint nIdentifier );
+    bool LockIdentifier    ( unsigned int nIdentifier ); //!< Try to lock the given identifier
+    unsigned int GetFreeIdentifier ();
+    void ReleaseIdentifier ( unsigned int nIdentifier );
     //@}
 
 private:
     MT_IdentifierManager idManager_; 
-    uint                 nMOSClassID_;
-    uint                 nStartInstanceID_;
+    unsigned int                 nMOSClassID_;
+    unsigned int                 nStartInstanceID_;
 };
 
 } // end namespace TEST

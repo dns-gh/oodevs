@@ -13,6 +13,7 @@
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Point.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -35,11 +36,11 @@ Path::Path( const OrderParameter& parameter, const CoordinateConverter_ABC& conv
 // Name: Path constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-Path::Path( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const ASN1T_Location& asn )
+Path::Path( const OrderParameter& parameter, const CoordinateConverter_ABC& converter, const Common::MsgLocation& message )
     : Parameter< QString >( parameter )
     , converter_( converter )
 {
-    AddPoints( asn );
+    AddPoints( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,10 +78,11 @@ Path::~Path()
 // Name: Path::AddPoints
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
-void Path::AddPoints( const ASN1T_Location& asn )
+void Path::AddPoints( const Common::MsgLocation& message )
 {
-    for( unsigned int i = 0; i < asn.coordinates.n; ++i )
-        AddPoint( converter_.ConvertToXY( asn.coordinates.elem[i] ), i, asn.coordinates.n );
+    const unsigned int count = message.coordinates().elem_size();
+    for( unsigned int i = 0; i < count; ++i )
+        AddPoint( converter_.ConvertToXY( message.coordinates().elem( i ) ), i, count );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,11 +133,10 @@ void Path::ReadPoint( xml::xistream& xis )
 // Name: Path::CommitTo
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Path::CommitTo( ASN1T_MissionParameter& asn ) const
+void Path::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_path;
-    ASN1T_Path*& path = asn.value.u.path = new ASN1T_Path();
+    message.set_null_value( !IsSet() );
+    Common::MsgLocation* path = message.mutable_value()->mutable_path()->mutable_location();
     if( IsSet() )
         CommitTo( *path );
 }
@@ -144,25 +145,21 @@ void Path::CommitTo( ASN1T_MissionParameter& asn ) const
 // Name: Path::Clean
 // Created: SBO 2007-05-21
 // -----------------------------------------------------------------------------
-void Path::Clean( ASN1T_MissionParameter& asn ) const
+void Path::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.path )
-        Clean( *asn.value.u.path );
-    delete asn.value.u.path;
+    message.mutable_value()->clear_path();
 }
 
 namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_Path& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( Common::MsgLocation& message ) : message_( &message ) {}
         virtual void Visit( const PathPoint& param )
         {
-            param.CommitTo( asn_->coordinates.elem[current_++] );
+            param.CommitTo( *message_->mutable_coordinates()->add_elem() );
         }
-
-        ASN1T_Path* asn_;
-        unsigned int current_;
+        Common::MsgLocation* message_;
     };
 }
 
@@ -170,12 +167,10 @@ namespace
 // Name: Path::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Path::CommitTo( ASN1T_Path& asn ) const
+void Path::CommitTo( Common::MsgLocation& message ) const
 {
-    asn.type = EnumLocationType::line;
-    asn.coordinates.n = Count();
-    asn.coordinates.elem = new ASN1T_CoordLatLong[asn.coordinates.n];
-    AsnSerializer serializer( asn );
+    message.set_type( Common::MsgLocation::line );
+    AsnSerializer serializer( message );
     Accept( serializer );
 }
 
@@ -183,10 +178,9 @@ void Path::CommitTo( ASN1T_Path& asn ) const
 // Name: Path::Clean
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Path::Clean( ASN1T_Path& asn ) const
+void Path::Clean( Common::MsgLocation& message ) const
 {
-    if( asn.coordinates.n )
-        delete[] asn.coordinates.elem;
+    message.Clear();
 }
 
 // -----------------------------------------------------------------------------

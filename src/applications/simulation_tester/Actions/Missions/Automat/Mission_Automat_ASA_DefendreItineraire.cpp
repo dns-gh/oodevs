@@ -43,9 +43,9 @@ void Mission_Automat_ASA_DefendreItineraire::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ASA_DefendreItineraire& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreItineraire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_itineraire;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_defendre_itineraire = &asnMission;
+    Mission_Automate_ASA_DefendreItineraire& asnMission = *new Mission_Automate_ASA_DefendreItineraire();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_asa_defendre_itineraire = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Automat_ASA_DefendreItineraire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ASA_DefendreItineraire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_asa_defendre_itineraire );
-    ASN1T_Mission_Automate_ASA_DefendreItineraire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_defendre_itineraire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_asa_defendre_itineraire ());
+    Mission_Automate_ASA_DefendreItineraire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_asa_defendre_itineraire;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

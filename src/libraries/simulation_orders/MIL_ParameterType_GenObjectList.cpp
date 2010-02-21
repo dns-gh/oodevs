@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_GenObjectList.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_GenObjectList constructor
@@ -35,27 +35,22 @@ MIL_ParameterType_GenObjectList::~MIL_ParameterType_GenObjectList()
 // Name: MIL_ParameterType_GenObjectList::Copy
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-bool MIL_ParameterType_GenObjectList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_GenObjectList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
 
-    to.null_value                   = false;
-    to.value.t                      = T_MissionParameter_value_plannedWorkList;
-    to.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
-    
-    return from.ToGenObjectList( *to.value.u.plannedWorkList );
+    to.set_null_value( false);
+    return from.ToGenObjectList( *to.mutable_value()->mutable_plannedworklist() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ParameterType_GenObjectList::CleanAfterSerialization
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-void MIL_ParameterType_GenObjectList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_GenObjectList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_plannedWorkList );
-    assert( to.value.u.plannedWorkList );
-    ASN_Delete::Delete( *to.value.u.plannedWorkList );
-    delete to.value.u.plannedWorkList;
+    to.mutable_value()->mutable_plannedworklist()->Clear();
+    delete to.mutable_value()->mutable_plannedworklist();
 }

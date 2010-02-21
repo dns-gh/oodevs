@@ -47,7 +47,7 @@ void UserProfilesModel::Purge()
 // Name: UserProfilesModel::CreateProfile
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfilesModel::CreateProfile( const ASN1T_MsgProfileCreation& message )
+void UserProfilesModel::CreateProfile( const MsgsAuthenticationToClient::MsgProfileCreation& message )
 {
     std::auto_ptr< UserProfile > profile( factory_.Create( message ) );
     userProfiles_.push_back( profile.release() );
@@ -57,10 +57,10 @@ void UserProfilesModel::CreateProfile( const ASN1T_MsgProfileCreation& message )
 // Name: UserProfilesModel::DeleteProfile
 // Created: SBO 2007-01-19
 // -----------------------------------------------------------------------------
-void UserProfilesModel::DeleteProfile( const ASN1T_MsgProfileDestruction& message )
+void UserProfilesModel::DeleteProfile( const MsgsAuthenticationToClient::MsgProfileDestruction& message )
 {
     for( T_UserProfiles::iterator it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( message == (*it)->GetLogin() )
+        if( message.login().c_str() == (*it)->GetLogin().ascii() )
         {
             const UserProfile* element = *it;
             userProfiles_.erase( it );

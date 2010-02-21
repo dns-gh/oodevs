@@ -12,7 +12,16 @@
 
 #include "dispatcher/Plugin_ABC.h"
 #include "dispatcher/NoopPublisher.h"
-#include "game_asn/Messenger.h"
+
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+
+namespace MsgsMessengerToClient
+{
+    class MsgMessengerToClient;
+}
 
 namespace xml
 {
@@ -59,8 +68,8 @@ public:
 
     //! @name Operations
     //@{    
-    virtual void Receive( const ASN1T_MsgsSimToClient& asnMsg );
-    virtual void Send   ( const ASN1T_MsgsMessengerToClient& msg ); 
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& asnMsg );
+    virtual void Send   ( const MsgsMessengerToClient::MsgMessengerToClient& msg ); 
     virtual void Update();
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
@@ -75,7 +84,7 @@ private:
 
     //! @name Copy/Assignement
     //@{
-    void OnReceiveMessengerToClient( const std::string& /*link*/, const ASN1T_MsgsMessengerToClient& message );
+    void OnReceiveMessengerToClient( const std::string& /*link*/, const MsgsMessengerToClient::MsgMessengerToClient& message );
     //@}
 
 private:

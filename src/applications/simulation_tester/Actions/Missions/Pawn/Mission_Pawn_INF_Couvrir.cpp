@@ -43,9 +43,9 @@ void Mission_Pawn_INF_Couvrir::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_Couvrir& asnMission = *new ASN1T_Mission_Pion_INF_Couvrir();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_couvrir;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_couvrir = &asnMission;
+    Mission_Pion_INF_Couvrir& asnMission = *new Mission_Pion_INF_Couvrir();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_couvrir = &asnMission;
 
     const Position& pointCouverture_ = pTarget_->GetTestParam_Point();
 
@@ -62,8 +62,8 @@ void Mission_Pawn_INF_Couvrir::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_Couvrir::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_couvrir );
-    ASN1T_Mission_Pion_INF_Couvrir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_couvrir;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_couvrir ());
+    Mission_Pion_INF_Couvrir& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_couvrir;
 
     ASN_Tools::Delete( asnMission.point_couverture );
 

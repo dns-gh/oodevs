@@ -58,7 +58,7 @@ DEC_Knowledge_AgentPerceptionDataDetection::~DEC_Knowledge_AgentPerceptionDataDe
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> nTimeLastUpdate_
          >> vPosition_
@@ -72,8 +72,8 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
          >> rPostureCompletionPercentage_;
          
     // Desérialisation des volumes par nom ( données "statiques" )
-    uint nNbr;
-    uint nID;
+    unsigned int nNbr;
+    unsigned int nID;
 
     file >> nNbr;
     while ( nNbr-- )
@@ -93,7 +93,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::load( MIL_CheckPointInArchive& 
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << nTimeLastUpdate_
          << vPosition_
@@ -116,8 +116,8 @@ void DEC_Knowledge_AgentPerceptionDataDetection::save( MIL_CheckPointOutArchive&
     }
 
     // Serialisation des postures ( données statiques )
-    unsigned last    = ( pLastPosture_    ? pLastPosture_->GetID()    : (uint)-1 ),
-             current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : (uint)-1 );
+    unsigned last    = ( pLastPosture_    ? pLastPosture_->GetID()    : (unsigned int)-1 ),
+             current = ( pCurrentPosture_ ? pCurrentPosture_->GetID() : (unsigned int)-1 );
     file << last << current;
 }
 
@@ -149,7 +149,7 @@ void DEC_Knowledge_AgentPerceptionDataDetection::Update( const MIL_Agent_ABC& ag
     if( perceptionLevel < PHY_PerceptionLevel::detected_ )
         return;
 
-    const uint nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTimeStep = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nTimeLastUpdate_ >= nCurrentTimeStep )
         return;
     nTimeLastUpdate_ = nCurrentTimeStep;
@@ -181,7 +181,7 @@ bool DEC_Knowledge_AgentPerceptionDataDetection::IsDead() const
 // Name: DEC_Knowledge_AgentPerceptionDataDetection::GetTimeLastUpdate
 // Created: NLD 2004-11-09
 // -----------------------------------------------------------------------------
-uint DEC_Knowledge_AgentPerceptionDataDetection::GetTimeLastUpdate() const
+unsigned int DEC_Knowledge_AgentPerceptionDataDetection::GetTimeLastUpdate() const
 {
     return nTimeLastUpdate_;
 }

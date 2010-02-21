@@ -51,7 +51,7 @@ ConnectionHandler::~ConnectionHandler()
 // Name: ConnectionHandler::StartServer
 // Created: SBO 2005-05-09
 //-----------------------------------------------------------------------------
-bool ConnectionHandler::ConnectToServer( const std::string& strHostName, uint nPort )
+bool ConnectionHandler::ConnectToServer( const std::string& strHostName, unsigned int nPort )
 {
     if( networkManager_.IsConnected() )
     {

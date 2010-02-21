@@ -13,8 +13,7 @@
 #include "DEC_Knowledge_ObjectAttributeObstacle.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "DEC_Knowledge_Object.h"
-
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeObstacle )
 
@@ -23,8 +22,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeObstacle )
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
-    : attr_      ( 0 )
-    , obstacle_  ( EnumDemolitionTargetType::preliminary )
+    : attr_ ( 0 )
+    , obstacle_ ( E_ObstacleType::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_( true )
 {
     // NOTHING
@@ -36,7 +35,7 @@ DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle( const ObstacleAttribute& attr )
     : attr_ ( &attr )
-    , obstacle_ ( ( attr.IsActivable() ) ? EnumDemolitionTargetType::reserved : EnumDemolitionTargetType::preliminary )
+    , obstacle_ ( ( attr.IsActivable() ) ? E_ObstacleType::ObstacleType_DemolitionTargetType_reserved : E_ObstacleType::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_( attr.IsActivable() ? false : true )
 {
     // NOTHING
@@ -60,7 +59,7 @@ DEC_Knowledge_ObjectAttributeObstacle::~DEC_Knowledge_ObjectAttributeObstacle()
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void DEC_Knowledge_ObjectAttributeObstacle::serialize( Archive& file, const uint )
+void DEC_Knowledge_ObjectAttributeObstacle::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file & const_cast< ObstacleAttribute*& >( attr_ )
@@ -82,7 +81,7 @@ void DEC_Knowledge_ObjectAttributeObstacle::Register( DEC_Knowledge_Object& knOb
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Knowledge_ObjectAttributeObstacle::UpdateSpecificAttributes
+// Name: DEC_Knowledge_ObjectAttributeObstacle::UpdateAttributes
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeObstacle::UpdateAttributes()
@@ -125,13 +124,12 @@ void DEC_Knowledge_ObjectAttributeObstacle::UpdateOnCollision( const DEC_Knowled
 // Name: DEC_Knowledge_ObjectAttributeObstacle::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeObstacle::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeObstacle::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate() )
+    if( NeedUpdate() )
     {
-        asn.m.obstaclePresent = 1;
-        asn.obstacle.type = obstacle_;
-        asn.obstacle.activated = bActivated_;
+        asn.mutable_obstacle()->set_type( obstacle_ );
+        asn.mutable_obstacle()->set_activated( bActivated_ );
         Reset();
     }
 }

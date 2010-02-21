@@ -9,17 +9,17 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentKnowledgeParameter.h"
-
-#include "simulation_orders/MIL_ParameterType_AgentKnowledge.h"
-#include "Network/NET_ASN_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
+#include "simulation_orders/MIL_ParameterType_AgentKnowledge.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentKnowledgeParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
-: pKnowledgeAgent_( pKnowledge )
+    : pKnowledgeAgent_( pKnowledge )
 {
     // NOTHING
 }
@@ -28,8 +28,8 @@ MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( boost::shared_ptr< DEC
 // Name: MIL_AgentKnowledgeParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const ASN1T_UnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
-: pKnowledgeAgent_( NET_ASN_Tools::ReadAgentKnowledge( asn, resolver ) )
+MIL_AgentKnowledgeParameter::MIL_AgentKnowledgeParameter( const Common::MsgUnitKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
+    : pKnowledgeAgent_( NET_ASN_Tools::ReadAgentKnowledge( asn, resolver ) )
 {
     // NOTHING
 }
@@ -56,9 +56,9 @@ bool MIL_AgentKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& type ) 
 // Name: MIL_AgentKnowledgeParameter::ToAgentKnowledge
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( ASN1T_UnitKnowledge& asn ) const
+bool MIL_AgentKnowledgeParameter::ToAgentKnowledge( Common::MsgUnitKnowledge& asn ) const
 {
-    asn = pKnowledgeAgent_->GetID();
+    asn.set_oid( pKnowledgeAgent_->GetID() );
     return true;
 }
 

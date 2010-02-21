@@ -50,7 +50,7 @@ public:
     bool     ComputeFurthestExtremityPoint      ( MT_Vector2D& vResult ) const;
     bool     ComputeClosestExtremityPoint       ( MT_Vector2D& vResult ) const;
     bool     ComputePointBeforeLima             ( const MIL_LimaOrder& lima, MT_Float rDistBefore, MT_Vector2D&   vResult ) const;
-    bool     ComputePointsBeforeLima            ( const MIL_LimaOrder& lima, MT_Float rDistBefore, uint nNbPoints, T_PointVector& results ) const;
+    bool     ComputePointsBeforeLima            ( const MIL_LimaOrder& lima, MT_Float rDistBefore, unsigned int nNbPoints, T_PointVector& results ) const;
     void     ComputeNearestEntryPoint           ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
     void     ComputeEntryPoint                  ( const MT_Vector2D& vStartPos, MT_Vector2D& vResult ) const;
     MT_Float ComputeAverageDistanceFromLima     ( const MIL_LimaOrder& lima     , const MT_Vector2D& refPoint ) const;
@@ -82,7 +82,7 @@ public:
    
     //! @name Tools
     //@{
-    bool SplitIntoSubFuseaux( uint nNbrSubFuseau, T_FuseauPtrList& container ) const;
+    bool SplitIntoSubFuseaux( unsigned int nNbrSubFuseau, T_FuseauPtrList& container ) const;
     //@}
 
     //! @name Operators
@@ -114,7 +114,7 @@ private:
 
     //! @name Tools
     //@{
-    bool Split( uint nNbrSubFuseau, T_PointVectorVector& limitVector ) const;
+    bool Split( unsigned int nNbrSubFuseau, T_PointVectorVector& limitVector ) const;
     //@}
 
 private:
@@ -132,7 +132,7 @@ private:
     std::vector< boost::shared_ptr< MT_Vector2D > > crossroadsBuffer_;
 
 private:
-    static uint nNbrMeterPerSample_;
+    static unsigned int nNbrMeterPerSample_;
 };
 
 #endif // __MIL_Fuseau_h_

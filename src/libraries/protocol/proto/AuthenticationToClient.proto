@@ -1,0 +1,98 @@
+package MsgsAuthenticationToClient;
+
+import "Common.proto";
+
+message MsgAuthenticationResponse {
+    enum ErrorCode {
+        success       = 0;
+        invalid_login = 1;
+    }
+    required ErrorCode  error_code = 1;
+    optional MsgProfile profile    = 2;
+}
+
+message MsgProfileCreation {
+    optional MsgProfile profile = 1;
+}
+
+message MsgProfileCreationRequestAck {
+    enum ErrorCode {
+        success          = 0;
+        invalid_login    = 1;
+        invalid_password = 2;
+        duplicate_login  = 3;
+    }
+    required string    login      = 1;
+    required ErrorCode error_code = 2;
+}
+
+message MsgProfileUpdateRequestAck {
+    enum ErrorCode {
+        success          = 0;
+        invalid_profile  = 1;
+        invalid_login    = 2;
+        invalid_password = 3;
+        duplicate_login  = 4;
+    }
+    required string    login      = 1;
+    required ErrorCode error_code = 2;
+}
+
+message MsgProfileUpdate {
+    required string     login   = 1;
+    required MsgProfile profile = 2;
+}
+
+message MsgProfileDestruction {
+    optional string login = 1;
+}
+
+message MsgProfileDestructionRequestAck {
+    enum ErrorCode {
+        success         = 0;
+        invalid_profile = 1;
+        failure         = 2;
+    }
+    required ErrorCode error_code = 1;
+    required string    login      = 2;
+}
+
+message FormationList {
+    repeated Common.MsgFormation elem = 1;
+}
+
+message TeamList {
+    repeated Common.MsgTeam elem = 1;
+}
+
+message PopulationList {
+    repeated Common.MsgPopulation elem = 1;
+}
+
+message MsgProfile {
+    required string                login                   = 1;
+    optional string                password                = 2;
+    optional FormationList         read_only_formations    = 3;
+    optional FormationList         read_write_formations   = 4;
+    optional Common.MsgAutomatList read_only_automates     = 5;
+    optional Common.MsgAutomatList read_write_automates    = 6;
+    optional TeamList              read_only_camps         = 7;
+    optional TeamList              read_write_camps        = 8;
+    optional PopulationList        read_only_populations   = 9;
+    optional PopulationList        read_write_populations  = 10;
+    required bool                  superviseur             = 11;
+}
+
+message MsgAuthenticationToClient {
+    message Content {
+        optional MsgAuthenticationResponse       authentication_response         = 1;
+        optional MsgProfileCreation              profile_creation                = 2;
+        optional MsgProfileCreationRequestAck    profile_creation_request_ack    = 3;
+        optional MsgProfileUpdate                profile_update                  = 4;
+        optional MsgProfileUpdateRequestAck      profile_update_request_ack      = 5;
+        optional MsgProfileDestruction           profile_destruction             = 6;
+        optional MsgProfileDestructionRequestAck profile_destruction_request_ack = 7;
+    }
+    optional int32   context = 1 [default = 0];
+    required Content message = 2;
+}

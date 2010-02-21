@@ -12,7 +12,10 @@
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -58,7 +61,7 @@ private:
     //! @name Helpers
     //@{
     void Draw( const kernel::GlTools_ABC& tools ) const;
-    void AddLocation( const ASN1T_Location& asn );
+    void AddLocation( const Common::MsgLocation& message );
     void AddPoint( const geometry::Point2f& point );
     //@}
 
@@ -66,8 +69,8 @@ protected:
     //! @name Helpers
     //@{
     const kernel::Location_ABC* GetLocation() const;
-    void Update( const ASN1T_Location& asn );
-    void Update( const ASN1T_Location& asn, const geometry::Point2f& startPoint );
+	void Update( const Common::MsgLocation& message );
+    void Update( const Common::MsgLocation& message, const geometry::Point2f& startPoint );
     //@}
 
 private:

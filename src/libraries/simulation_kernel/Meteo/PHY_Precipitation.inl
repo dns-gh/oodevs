@@ -37,7 +37,7 @@ const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( const std::string
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
 inline
-const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( ASN1T_EnumPrecipitationType nAsnID ) 
+const PHY_Precipitation* PHY_Precipitation::FindPrecipitation( Common::EnumPrecipitationType nAsnID ) 
 {
     for( CIT_PrecipitationMap it = precipitations_.begin(); it != precipitations_.end(); ++it )
     {
@@ -63,9 +63,9 @@ const std::string& PHY_Precipitation::GetName() const
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 inline
-uint PHY_Precipitation::GetID() const
+unsigned int PHY_Precipitation::GetID() const
 {
-    return (uint)nType_;
+    return (unsigned int)nType_;
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ uint PHY_Precipitation::GetID() const
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
 inline
-ASN1T_EnumPrecipitationType PHY_Precipitation::GetAsnID() const
+Common::EnumPrecipitationType PHY_Precipitation::GetAsnID() const
 {
     return nAsnID_;
 }

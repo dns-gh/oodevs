@@ -43,9 +43,9 @@ void Mission_Pawn_Test_DestroyObject::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_DestroyObject& asnMission = *new ASN1T_Mission_Pion_Test_DestroyObject();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_destroy_object;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_destroy_object = &asnMission;
+    Mission_Pion_Test_DestroyObject& asnMission = *new Mission_Pion_Test_DestroyObject();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_destroy_object = &asnMission;
 
 
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.objet );
@@ -59,8 +59,8 @@ void Mission_Pawn_Test_DestroyObject::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_DestroyObject::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_destroy_object );
-    ASN1T_Mission_Pion_Test_DestroyObject& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_destroy_object;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_destroy_object ());
+    Mission_Pion_Test_DestroyObject& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_destroy_object;
 
 
     delete &asnMission;

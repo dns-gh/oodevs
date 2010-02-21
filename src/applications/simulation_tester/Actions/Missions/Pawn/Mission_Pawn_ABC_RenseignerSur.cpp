@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_RenseignerSur::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_RenseignerSur& asnMission = *new ASN1T_Mission_Pion_ABC_RenseignerSur();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_renseigner_sur;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_renseigner_sur = &asnMission;
+    Mission_Pion_ABC_RenseignerSur& asnMission = *new Mission_Pion_ABC_RenseignerSur();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_renseigner_sur = &asnMission;
 
     const Position& pointARenseigner_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_ABC_RenseignerSur::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_RenseignerSur::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_renseigner_sur );
-    ASN1T_Mission_Pion_ABC_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_renseigner_sur;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_renseigner_sur ());
+    Mission_Pion_ABC_RenseignerSur& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_renseigner_sur;
 
     ASN_Tools::Delete( asnMission.point_a_renseigner );
 

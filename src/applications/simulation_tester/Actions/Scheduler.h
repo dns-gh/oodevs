@@ -33,17 +33,17 @@ public:
 
     //! @name Operations
     //@{
-    void RecoverIfNeeded( uint nCurrentTick );
-    bool Run( uint nCurrentTick );
+    void RecoverIfNeeded( unsigned int nCurrentTick );
+    bool Run( unsigned int nCurrentTick );
     void AddAction( Action_ABC& action );
-    void AddActions( Action_ABC& action, uint nIteration );
+    void AddActions( Action_ABC& action, unsigned int nIteration );
     void ResetExecutionTick();
     //@}
 
     //! @name Accessors
     //@{
-    uint GetNextExecutionTick() const;
-    uint GetCurrentTick() const;
+    unsigned int GetNextExecutionTick() const;
+    unsigned int GetCurrentTick() const;
     bool MustRecomplete( unsigned int& lastRecompletion ) const;
     //@}
 
@@ -57,7 +57,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::multimap< uint, Action_ABC* > T_ActionMap;
+    typedef std::multimap< unsigned int, Action_ABC* > T_ActionMap;
     typedef T_ActionMap::iterator              IT_ActionMap;
     //@}
 
@@ -66,23 +66,23 @@ private:
     //@{
     T_ActionMap  actions_;
     IT_ActionMap itCurrentAction_;
-    uint         nNextExecutionTick_;
-    uint         nExecutionPeriod_;
-    uint         nRecompletionPeriod_;
+    unsigned int         nNextExecutionTick_;
+    unsigned int         nExecutionPeriod_;
+    unsigned int         nRecompletionPeriod_;
     int          nCurrentTick_;
-    uint         nLastExecutionTick_;
-    uint         nSameMissionInterval_;
-    uint         nRecoveryTick_;
+    unsigned int         nLastExecutionTick_;
+    unsigned int         nSameMissionInterval_;
+    unsigned int         nRecoveryTick_;
 
     // mission per period limiters
-    uint         nMissionLimitCounter_;
-    uint         nMissionInPeriod_;
-    uint         nMaxMissionInPeriod_;
+    unsigned int         nMissionLimitCounter_;
+    unsigned int         nMissionInPeriod_;
+    unsigned int         nMaxMissionInPeriod_;
 
     // test statistics
-    uint         nTestRun_;
-    uint         nTestTotal_;
-    uint         nSimTicks_;
+    unsigned int         nTestRun_;
+    unsigned int         nTestTotal_;
+    unsigned int         nSimTicks_;
     //@}
 };
 

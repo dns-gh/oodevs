@@ -18,7 +18,6 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
-
 #include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
@@ -27,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_HumansComposante )
 // Name: PHY_HumansComposante constructor
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, uint nNbrMdr )
+PHY_HumansComposante::PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, unsigned int nNbrMdr )
     : pComposante_     ( &composante )
     , humans_          ()
     , nNbrUsableHumans_( 0 )
@@ -101,11 +100,11 @@ void PHY_HumansComposante::HealAllHumans()
 // Name: PHY_HumansComposante::HealHumans
 // Created: NLD 2005-07-28
 // -----------------------------------------------------------------------------
-uint PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, uint nNbrToChange )
+unsigned int PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange )
 {
     std::random_shuffle( humans_.begin(), humans_.end() );
 
-    uint nNbrChanged = 0;
+    unsigned int nNbrChanged = 0;
 
     for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange; ++it )
     {
@@ -125,12 +124,12 @@ uint PHY_HumansComposante::HealHumans( const PHY_HumanRank& rank, uint nNbrToCha
 // Name: PHY_HumansComposante::WoundHumans
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-uint PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound )
+unsigned int PHY_HumansComposante::WoundHumans( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound )
 {
     if( newWound == PHY_HumanWound::notWounded_ )
         return 0;
 
-    uint nNbrChanged = 0;
+    unsigned int nNbrChanged = 0;
     for( PHY_Human::CIT_HumanVector it = humans_.begin(); it != humans_.end() && nNbrToChange ; ++it )
     {
         PHY_Human& human = **it;
@@ -174,8 +173,8 @@ void PHY_HumansComposante::ApplyWounds( const PHY_ComposanteState& newComposante
 
     const PHY_Protection& protection = pComposante_->GetType().GetProtection();
 
-    uint nNbrDead    = (uint)round( humans_.size() * protection.GetHumanDeadRatio   ( newComposanteState ) );
-    uint nNbrWounded = (uint)round( humans_.size() * protection.GetHumanWoundedRatio( newComposanteState ) );
+    unsigned int nNbrDead    = (unsigned int)round( humans_.size() * protection.GetHumanDeadRatio   ( newComposanteState ) );
+    unsigned int nNbrWounded = (unsigned int)round( humans_.size() * protection.GetHumanWoundedRatio( newComposanteState ) );
 
     PHY_Human::CIT_HumanVector itCur = humans_.begin();
     while( itCur != humans_.end() && nNbrDead != 0 )
@@ -371,7 +370,7 @@ MT_Float PHY_HumansComposante::GetOperationalState() const
 // Name: PHY_HumansComposante::GetNbrUsableHumans
 // Created: NLD 2006-02-09
 // -----------------------------------------------------------------------------
-uint PHY_HumansComposante::GetNbrUsableHumans() const
+unsigned int PHY_HumansComposante::GetNbrUsableHumans() const
 {
     return nNbrUsableHumans_;
 }

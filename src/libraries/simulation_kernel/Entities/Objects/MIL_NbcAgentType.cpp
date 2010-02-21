@@ -78,7 +78,7 @@ void MIL_NbcAgentType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_NbcAgentType::ReadAgent( xml::xistream& xis )
 {
-    std::set< uint > ids_;
+    std::set< unsigned int > ids_;
     std::string strName;
 
     xis >> xml::attribute( "name", strName );
@@ -170,7 +170,7 @@ void MIL_NbcAgentType::ReadGaz( xml::xistream& xis )
     tools::ReadTimeAttribute( xis, "life-time", nGasLifeTime_ );
     if( nGasLifeTime_ <= 0 )
         xis.error( "effects: life-time <= 0" );
-    nGasLifeTime_ = (uint)MIL_Tools::ConvertSecondsToSim( nGasLifeTime_ );
+    nGasLifeTime_ = (unsigned int)MIL_Tools::ConvertSecondsToSim( nGasLifeTime_ );
 
     xis >> xml::attribute( "propagation", rGasPropagationAngle_ );
     if( rGasPropagationAngle_ <= 0 )

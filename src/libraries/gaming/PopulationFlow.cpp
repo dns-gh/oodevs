@@ -22,9 +22,9 @@ using namespace kernel;
 // Name: PopulationFlow constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationFlow::PopulationFlow( const ASN1T_MsgPopulationFlowCreation& asnMsg, const CoordinateConverter_ABC& converter )
+PopulationFlow::PopulationFlow( const MsgsSimToClient::MsgPopulationFlowCreation& message, const CoordinateConverter_ABC& converter )
     : converter_ ( converter )
-    , nID_       ( asnMsg.oid )
+    , nID_       ( message.oid() )
     , itineraire_( )
     , flow_      ( 2, geometry::Point2f( 0, 0 ) )
     , nDirection_( 0 )
@@ -68,31 +68,31 @@ unsigned long PopulationFlow::GetId() const
 // Name: PopulationFlow::DoUpdate
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void PopulationFlow::DoUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg )
+void PopulationFlow::DoUpdate( const MsgsSimToClient::MsgPopulationFlowUpdate& message )
 {
-    if ( asnMsg.m.attitudePresent )
-		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
-	if( asnMsg.m.nb_humains_vivantsPresent )
-		nLivingHumans_ = asnMsg.nb_humains_vivants;
-	if ( asnMsg.m.nb_humains_mortsPresent )
-		nDeadHumans_ = asnMsg.nb_humains_morts;
-	if ( asnMsg.m.vitessePresent )
-		nSpeed_ = asnMsg.vitesse;
-	if ( asnMsg.m.directionPresent )
-		nDirection_	= asnMsg.direction;
-	if ( asnMsg.m.itinerairePresent )
+    if ( message.has_attitude()  )
+		attitude_ = (E_PopulationAttitude)message.attitude();
+	if( message.has_nb_humains_vivants()  )
+		nLivingHumans_ = message.nb_humains_vivants();
+	if ( message.has_nb_humains_morts()  )
+		nDeadHumans_ = message.nb_humains_morts();
+	if ( message.has_vitesse()  )
+		nSpeed_ = message.vitesse();
+	if ( message.has_direction()  )
+		nDirection_	= message.direction().heading();
+	if ( message.has_itineraire()  )
 	{
         itineraire_.clear();
-		for( uint i = 0; i < asnMsg.itineraire.coordinates.n; ++i )
-            itineraire_.push_back( converter_.ConvertToXY( asnMsg.itineraire.coordinates.elem[i] ) );
+		for( int i = 0; i < message.itineraire().location().coordinates().elem_size(); ++i )
+            itineraire_.push_back( converter_.ConvertToXY( message.itineraire().location().coordinates().elem(i) ) );
 	}
-	if ( asnMsg.m.fluxPresent )
+	if ( message.has_flux()  )
 	{
-        flow_.clear(); flow_.reserve( asnMsg.flux.coordinates.n );
+        flow_.clear(); flow_.reserve( message.flux().location().coordinates().elem_size() );
         boundingBox_ = Rectangle2f();
-		for( uint i = 0; i < asnMsg.flux.coordinates.n; ++i )
+		for( int i = 0; i < message.flux().location().coordinates().elem_size(); ++i )
         {
-			flow_.push_back( converter_.ConvertToXY( asnMsg.flux.coordinates.elem[i] ) );
+			flow_.push_back( converter_.ConvertToXY( message.flux().location().coordinates().elem(i) ) );
             boundingBox_.Incorporate( flow_.back() );
         }
 

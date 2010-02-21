@@ -48,19 +48,19 @@ public:
     static void Terminate ();
 
     static const MIL_AutomateType* FindAutomateType( const std::string& strName );
-    static const MIL_AutomateType* FindAutomateType( uint nID );
+    static const MIL_AutomateType* FindAutomateType( unsigned int nID );
     static const MIL_AutomateType* Create          ( const std::string& strName, xml::xistream& xis );
     //@}
 
     //! @name Instanciation
     //@{
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const;
-    virtual MIL_Automate& InstanciateAutomate( uint nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const;
+    virtual MIL_Automate& InstanciateAutomate( unsigned int nID, MIL_Automate&  parent, xml::xistream& xis, DEC_DataBase& database ) const;
     //@}
 
     //! @name Accessors
     //@{
-          uint                               GetID                            () const;
+          unsigned int                       GetID                            () const;
     const MIL_AgentTypePion&                 GetTypePionPC                    () const;
     const DEC_Model_ABC&                     GetModel                         () const;
     const std::string&                       GetName                          () const;
@@ -102,8 +102,8 @@ private:
     {
         sCompositionBounds() : nMin_( 0 ), nMax_( 0 ) {}
     
-        uint nMin_;
-        uint nMax_;
+        unsigned int nMin_;
+        unsigned int nMax_;
     };
     typedef std::map< const MIL_AgentTypePion*, sCompositionBounds > T_CompositionMap;
     typedef T_CompositionMap::const_iterator                         CIT_CompositionMap;
@@ -124,7 +124,7 @@ private:
     //@}
 
 private:
-          uint                nID_;
+          unsigned int                nID_;
     const std::string         strName_;
     const DEC_Model_ABC*      pModel_;
           T_CompositionMap    composition_;

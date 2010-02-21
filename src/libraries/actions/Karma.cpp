@@ -13,6 +13,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace actions;
@@ -20,29 +21,32 @@ using namespace parameters;
 
 namespace
 {
-    const kernel::Karma& ConvertToKarma( const ASN1T_EnumDiplomacy& asn )
+    const kernel::Karma& ConvertToKarma( const Common::EnumDiplomacy& diplomacy )
     {
-        switch( asn )
+        switch( diplomacy )
         {
-        case EnumDiplomacy::ami:
+        case Common::EnumDiplomacy::friend_diplo:
             return kernel::Karma::friend_;
-        case EnumDiplomacy::ennemi:
+        case Common::EnumDiplomacy::enemy_diplo:
             return kernel::Karma::enemy_;
-        case EnumDiplomacy::neutre:
+        case Common::EnumDiplomacy::neutral_diplo:
             return kernel::Karma::neutral_;
+        default:
+            return kernel::Karma::unknown_;
         }
-        return kernel::Karma::unknown_;
     }
 
-    ASN1T_EnumDiplomacy ConvertToDiplomacy( const kernel::Karma& karma )
+    Common::EnumDiplomacy ConvertToDiplomacy( const kernel::Karma& karma )
     {
-        if( karma == kernel::Karma::friend_ )
-            return EnumDiplomacy::ami;
-        if( karma == kernel::Karma::enemy_ )
-            return EnumDiplomacy::ennemi;
-        if( karma == kernel::Karma::neutral_ )
-            return EnumDiplomacy::neutre;
-        return EnumDiplomacy::inconnu;
+        
+        if (karma == kernel::Karma::friend_)
+            return Common::EnumDiplomacy::friend_diplo;
+        else if (karma == kernel::Karma::enemy_)
+            return Common::EnumDiplomacy::enemy_diplo;
+        else if (karma == kernel::Karma::neutral_)
+            return Common::EnumDiplomacy::neutral_diplo;
+        else
+            return Common::EnumDiplomacy::unknown_diplo;
     }
 
     // Reverts diplomacy effect applied on karma => "diplomacy" karma
@@ -68,9 +72,9 @@ Karma::Karma( const kernel::OrderParameter& parameter, const kernel::Karma& karm
 // Name: Karma constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Karma::Karma( const kernel::OrderParameter& parameter, const ASN1T_EnumDiplomacy& asn )
+Karma::Karma( const kernel::OrderParameter& parameter, const Common::EnumDiplomacy& message )
     : Parameter< QString >( parameter )
-    , karma_( ConvertToKarma( asn ) )
+    , karma_( ConvertToKarma( message ) )
 {
     SetValue( karma_.GetName() );
 }
@@ -99,9 +103,9 @@ Karma::~Karma()
 // Name: Karma::CommitTo
 // Created: SBO 2007-10-24
 // -----------------------------------------------------------------------------
-void Karma::CommitTo( ASN1T_EnumDiplomacy& asn ) const
+void Karma::CommitTo( T_Setter setter ) const
 {
-    asn = ConvertToDiplomacy( karma_ );
+    setter( ConvertToDiplomacy( karma_ ) );
 }
 
 // -----------------------------------------------------------------------------

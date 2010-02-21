@@ -11,8 +11,8 @@
 #include "SupplyRouteAttribute.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeSupplyRoute.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "hla/HLA_UpdateFunctor.h"
-
+#include "protocol/protocol.h"
+#include <hla/HLA_UpdateFunctor.h>
 #include <hla/AttributeIdentifier.h>
 #include <xeumeuleu/xml.h>
 
@@ -65,12 +65,12 @@ SupplyRouteAttribute::SupplyRouteAttribute()
 // Name: SupplyRouteAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( const ASN1T_ObjectAttributes& asn )
-    : bEquipped_        ( asn.supply_route.equipped ? true : false )
-    , rWeightSupported_ ( asn.supply_route.max_weight )
-    , rWidth_           ( asn.supply_route.width )
-    , rLength_          ( asn.supply_route.length ) 
-    , rFlow_            ( asn.supply_route.flow_rate )
+SupplyRouteAttribute::SupplyRouteAttribute( const Common::MsgObjectAttributes& asn )
+    : bEquipped_        ( asn.supply_route().equipped() ? true : false )
+    , rWeightSupported_ ( asn.supply_route().max_weight() )
+    , rWidth_           ( asn.supply_route().width() )
+    , rLength_          ( asn.supply_route().length() ) 
+    , rFlow_            ( asn.supply_route().flow_rate() )
 {
     // NOTHING
 }
@@ -98,17 +98,12 @@ SupplyRouteAttribute& SupplyRouteAttribute::operator=( const SupplyRouteAttribut
     return *this;
 }
 
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::serialize
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
 template < typename Archive >
-void SupplyRouteAttribute::serialize( Archive& file, const uint )
+void SupplyRouteAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & bEquipped_
@@ -130,9 +125,8 @@ void SupplyRouteAttribute::WriteODB( xml::xostream& xos ) const
             << xml::content( "length"    , rLength_ )
             << xml::content( "flow"      , rFlow_ )
             << xml::content( "equipped"  , bEquipped_ )
-        << xml::end(); // supply-route
+        << xml::end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::Instanciate
@@ -147,26 +141,24 @@ void SupplyRouteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: SupplyRouteAttribute::SendFullState
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void SupplyRouteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {    
-    asn.m.supply_routePresent = 1;        
-    asn.supply_route.max_weight = (int)rWeightSupported_;
-    asn.supply_route.width      = (int)rWidth_;
-    asn.supply_route.length     = (int)rLength_;
-    asn.supply_route.flow_rate  = (int)rFlow_;        
-    asn.supply_route.equipped = bEquipped_;
+    asn.mutable_supply_route()->set_max_weight( (int)rWeightSupported_ );
+    asn.mutable_supply_route()->set_width( (int)rWidth_ );
+    asn.mutable_supply_route()->set_length( (int)rLength_ );
+    asn.mutable_supply_route()->set_flow_rate( (int)rFlow_ );        
+    asn.mutable_supply_route()->set_equipped( bEquipped_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: SupplyRouteAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void SupplyRouteAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void SupplyRouteAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if ( NeedUpdate() )
     {
-        asn.m.supply_routePresent = 1;
-        asn.supply_route.equipped = bEquipped_;
+        asn.mutable_supply_route()->set_equipped( bEquipped_ );
         Reset( eOnUpdate );
     }
 }

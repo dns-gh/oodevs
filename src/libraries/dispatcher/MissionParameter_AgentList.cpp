@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_AgentList.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,10 +17,12 @@ using namespace dispatcher;
 // Name: MissionParameter_AgentList constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_AgentList::MissionParameter_AgentList( const ASN1T_MissionParameter& asn )
+MissionParameter_AgentList::MissionParameter_AgentList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    std::copy( asn.value.u.unitList->elem, asn.value.u.unitList->elem + asn.value.u.unitList->n, std::back_inserter( agents_ ) );
+    for (int i = 0; i < asn.value().unitlist().elem_size(); ++i)
+        agents_.push_back( asn.value().unitlist().elem( i ).oid() );
+//    std::copy( asn.value().unitlist().elem().begin(), asn.value().unitlist().elem().end(), std::back_inserter( agents_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,20 +38,18 @@ MissionParameter_AgentList::~MissionParameter_AgentList()
 // Name: MissionParameter_AgentList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_AgentList::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_AgentList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value = bNullValue_;
-    asn.value.t = T_MissionParameter_value_unitList;
-    asn.value.u.unitList = new ASN1T_UnitList();
-    asn.value.u.unitList->n = agents_.size();
-    asn.value.u.unitList->elem = agents_.empty() ? 0 : (int*)&agents_.front();
+    asn.set_null_value ( bNullValue_ );
+    for (std::vector< int >::const_iterator iter(agents_.begin()); iter != agents_.end(); ++iter )
+        asn.mutable_value()->mutable_unitlist()->add_elem()->set_oid( *iter );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_AgentList::AsnDelete
+// Name: MissionParameter_AgentList::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_AgentList::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_AgentList::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.unitList;
+    delete asn.mutable_value()->mutable_unitlist();
 }

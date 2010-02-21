@@ -13,6 +13,8 @@
 #include "dispatcher/ClientPublisher_ABC.h"
 #include "Functions.h"
 #include "Result_ABC.h"
+#include "protocol/AarSenders.h"
+
 
 // =============================================================================
 /** @class  Plotter
@@ -46,15 +48,12 @@ public:
 
     virtual void Commit() const
     {
-        std::vector< double > values; values.reserve( values_.size() );
-        std::copy( values_.begin(), values_.end(), std::back_inserter( values ) );
-
         aar::PlotResult result;
-        result().identifier = context_;
-        result().error      = "";
-        result().values.n    = values.size();
-        result().values.elem = &values.front();
-        result.Send( publisher_ );
+        result().set_identifier( context_ );
+        result().set_error     ( "" );
+        for( T_Values::const_iterator it = values_.begin(); it != values_.end(); ++it )
+            result().mutable_values()->Add( float( *it ) );
+        result.Send( publisher_, 0 );
     }
     //@}
 

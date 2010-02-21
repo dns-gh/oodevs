@@ -13,6 +13,7 @@
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -25,8 +26,10 @@ PHY_ComposanteType_ABC::PHY_ComposanteType_ABC( const std::string& strName, xml:
     , pVolume_           ( 0 )
 {
     std::string strVal;
-    xis >> xml::attribute( "id", nMosID_ )
+    int equipmenttype_val;
+    xis >> xml::attribute( "id", equipmenttype_val )
         >> xml::attribute( "protection", strVal );
+    nMosID_.set_equipment( equipmenttype_val );
     pProtection_ = PHY_Protection::Find( strVal );
     if ( !pProtection_ )
         xis.error( "Unknown protection '" + strVal + "'" );
@@ -50,7 +53,7 @@ PHY_ComposanteType_ABC::~PHY_ComposanteType_ABC()
 // Name: PHY_ComposanteType_ABC::GetMosID
 // Created: NLD 2004-08-16
 // -----------------------------------------------------------------------------
-ASN1T_EquipmentType PHY_ComposanteType_ABC::GetMosID() const
+Common::MsgEquipmentType PHY_ComposanteType_ABC::GetMosID() const
 {
     return nMosID_;
 }

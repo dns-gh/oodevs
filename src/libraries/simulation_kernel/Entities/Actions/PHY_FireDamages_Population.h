@@ -12,8 +12,14 @@
 #ifndef __PHY_FireDamages_Population_h_
 #define __PHY_FireDamages_Population_h_
 
+
+namespace MsgsSimToClient
+{
+    class MsgPopulationFireDamages;
+}
+
 class MIL_Population;
-struct ASN1T_FireResult;
+struct FireResult;
 
 // =============================================================================
 // @class  PHY_FireDamages_Population
@@ -27,24 +33,24 @@ public:
 
     //! @name Notifications
     //@{
-    void NotifyHumansKilled( uint nNbrHumans );
+    void NotifyHumansKilled( unsigned int nNbrHumans );
     //@}
 
     //! @name Accessors
     //@{
-    uint GetNbrKilledHumans() const;
+    unsigned int GetNbrKilledHumans() const;
     //@}
 
     //! @name Network
     //@{
-           void Serialize              ( const MIL_Population& target, ASN1T_PopulationFireDamages& asn ) const;
-    static void CleanAfterSerialization( ASN1T_PopulationFireDamages& asn );
+    void Serialize( const MIL_Population& target, MsgsSimToClient::MsgPopulationFireDamages& asn ) const;
+    static void CleanAfterSerialization( MsgsSimToClient::MsgPopulationFireDamages& asn );
     //@}
 
 private:
     //! @name Member data
     //@{
-    uint nNbrKilledHumans_;
+    unsigned int nNbrKilledHumans_;
     //@}
 };
 

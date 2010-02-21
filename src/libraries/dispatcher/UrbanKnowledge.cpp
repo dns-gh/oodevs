@@ -9,27 +9,25 @@
 
 #include "dispatcher_pch.h"
 #include "UrbanKnowledge.h"
-
 #include "Automat.h"
 #include "ClientPublisher_ABC.h"
 #include "Model_ABC.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "Side.h"
 #include "UrbanObject.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientSenders.h"
 
-
-namespace dispatcher
-{
+using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: UrbanKnowledge constructor
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const ASN1T_MsgUrbanKnowledgeCreation& asnMsg )
-    : SimpleEntity< kernel::UrbanKnowledge_ABC >( asnMsg.oid )
+UrbanKnowledge::UrbanKnowledge( const Model_ABC& model, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
+    : SimpleEntity< kernel::UrbanKnowledge_ABC >( message.oid() )
     , model_                        ( model )
-    , team_                         ( model.Sides().Get( asnMsg.team ) )
-    , pUrban_                       ( model.UrbanBlocks().Find( asnMsg.real_urban ) )
+    , team_                         ( model.Sides().Get( message.team() ) )
+    , pUrban_                       ( model.UrbanBlocks().Find( message.real_urban() ) )
     , bPerceived_                   ( false )
     , automatPerceptions_           ()    
 {
@@ -44,20 +42,16 @@ UrbanKnowledge::~UrbanKnowledge()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: UrbanKnowledge::Update
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::Update( const ASN1T_MsgUrbanKnowledgeCreation& message )
+void UrbanKnowledge::Update( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
-    bool realUrbanChanged = ( message.real_urban && ! pUrban_ )
-                          || ( pUrban_ && pUrban_->GetId() != message.real_urban );
+    bool realUrbanChanged = ( message.real_urban() && ! pUrban_ )
+                          || ( pUrban_ && pUrban_->GetId() != message.real_urban() );
     if( realUrbanChanged )
-        pUrban_ = model_.UrbanBlocks().Find( message.real_urban );
+        pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
 
     ApplyUpdate( message );
 }
@@ -66,40 +60,30 @@ void UrbanKnowledge::Update( const ASN1T_MsgUrbanKnowledgeCreation& message )
 // Name: UrbanKnowledge::Update
 // Created: MGD 2009-12-11
 // -----------------------------------------------------------------------------
-void UrbanKnowledge::Update( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg )
+void UrbanKnowledge::Update( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message )
 {  
-    if( asnMsg.m.automat_perceptionPresent )
+    if( message.has_automat_perception() )
     {
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
-        for( unsigned int i = 0; i < asnMsg.automat_perception.n; ++i )
-            automatPerceptions_.push_back( &model_.Automats().Get( asnMsg.automat_perception.elem[ i ]) );
+        for( int i = 0; i < message.automat_perception().elem_size(); ++i )
+            automatPerceptions_.push_back( &model_.Automats().Get( message.automat_perception().elem( i ) ) );
     }
 
-    if( asnMsg.m.real_urbanPresent )
-        pUrban_ = model_.UrbanBlocks().Find( asnMsg.real_urban );
+    if( message.has_real_urban() )
+        pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
 
-    if( asnMsg.m.perceivedPresent )
-    {
-        optionals_.perceivedPresent = 1;
-        bPerceived_ = asnMsg.perceived;
-    }
-    if( asnMsg.m.identification_levelPresent)
-    {
-        optionals_.identification_levelPresent = 1;
-        nIdentificationLevel_ = asnMsg.identification_level;
-    }
-    if( asnMsg.m.relevancePresent )
-    {
-        optionals_.relevancePresent = 1;
-        nRelevance_ = asnMsg.relevance;
-    }
-    if( asnMsg.m.progressPresent )
-    {
-        optionals_.progressPresent = 1;
-        nProgress_ = asnMsg.progress; 
-    }
+    if( message.has_perceived() )
+        bPerceived_ = message.perceived();
+    
+    if( message.has_identification_level())
+        nIdentificationLevel_ = message.identification_level();
+    
+    if( message.has_relevance() )
+        nRelevance_ = message.relevance();
 
+    if( message.has_progress() )
+        nProgress_ = message.progress(); 
 }
 
 // -----------------------------------------------------------------------------
@@ -108,13 +92,13 @@ void UrbanKnowledge::Update( const ASN1T_MsgUrbanKnowledgeUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::UrbanKnowledgeCreation asn;
+    client::UrbanKnowledgeCreation message;
 
-    asn().oid         = GetId();
-    asn().team        = team_.GetId();
-    asn().real_urban  = pUrban_ ? pUrban_->GetId() : 0;
+    message().set_oid( GetId() );
+    message().set_team( team_.GetId() );
+    message().set_real_urban( pUrban_ ? pUrban_->GetId() : 0 );
 
-    asn.Send( publisher );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -123,48 +107,26 @@ void UrbanKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::UrbanKnowledgeUpdate asn;
+    client::UrbanKnowledgeUpdate message;
 
-    asn().oid  = GetId();
-    asn().team = team_.GetId();
+    message().set_oid( GetId() );
+    message().set_team( team_.GetId() );
 
-    asn().m.real_urbanPresent = 1;
-    asn().real_urban          = pUrban_ ? pUrban_->GetId() : 0;
+    message().set_real_urban( pUrban_ ? pUrban_->GetId() : 0 );
 
     if( optionals_.automat_perceptionPresent )
-    {
-        asn().m.automat_perceptionPresent = 1;
-        asn().automat_perception.n = automatPerceptions_.size();
-        asn().automat_perception.elem = asn().automat_perception.n > 0 ? new ASN1T_OID[ asn().automat_perception.n ] : 0;
-        unsigned int i = 0;
-        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it, ++i )
-            asn().automat_perception.elem[i] = (*it)->GetId();
-    }
+        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
+            message().mutable_automat_perception()->add_elem( (*it)->GetId() );
     if( optionals_.perceivedPresent )
-    {
-        asn().m.perceivedPresent = 1;
-        asn().perceived = 1;
-    }
+        message().set_perceived( 1 );
     if( optionals_.relevancePresent )
-    {
-        asn().m.relevancePresent = 1; 
-        asn().relevance = nRelevance_;
-    }
+        message().set_relevance( nRelevance_ );
     if( optionals_.identification_levelPresent )
-    {
-        asn().m.identification_levelPresent = 1;
-        asn().identification_level = nIdentificationLevel_;
-    }
+        message().set_identification_level( nIdentificationLevel_ );
     if( optionals_.progressPresent )
-    {
-        asn().m.progressPresent = 1;
-        asn().progress = nProgress_;
-    }
+        message().set_progress( nProgress_ );
 
-    asn.Send( publisher );
-
-    if( asn().m.automat_perceptionPresent && asn().automat_perception.n > 0 )
-        delete [] asn().automat_perception.elem;
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,10 +135,10 @@ void UrbanKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::UrbanKnowledgeDestruction asn;
-    asn().oid  = GetId();
-    asn().team = team_.GetId();
-    asn.Send( publisher );
+    client::UrbanKnowledgeDestruction message;
+    message().set_oid( GetId() );
+    message().set_team( team_.GetId() );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -232,5 +194,3 @@ void UrbanKnowledge::DisplayInList( kernel::Displayer_ABC& ) const
 {
     // NOTHING
 }
-
-} // namespace dispatcher

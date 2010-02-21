@@ -13,6 +13,11 @@
 #include "Parameter.h"
 #include "clients_kernel/AtlasNature.h"
 
+namespace Common
+{
+    class MsgAtlasNature;
+}
+
 namespace kernel
 {
     class AtlasNatures;
@@ -34,7 +39,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AtlasNature( const kernel::OrderParameter& parameter, const kernel::AtlasNature& nature );
-             AtlasNature( const kernel::OrderParameter& parameter, const ASN1T_AtlasNature& asn, const kernel::AtlasNatures& natures );
+             AtlasNature( const kernel::OrderParameter& parameter, const Common::MsgAtlasNature& asn, const kernel::AtlasNatures& natures );
              AtlasNature( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::AtlasNatures& natures );
     virtual ~AtlasNature();
     //@}
@@ -42,8 +47,8 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
+    virtual void Clean( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

@@ -24,7 +24,11 @@ class StaticModel;
 class Equipment;
 class Dotation;
 class Publisher_ABC;
-struct ASN1T_MagicActionPartialRecovery;
+
+namespace MsgsClientToSim
+{
+    class MsgMagicActionPartialRecovery;
+}
 
 //=============================================================================
 // Created:  SBO 2005-07-27 
@@ -80,11 +84,11 @@ private:
     void AddPersonal( unsigned pos, const QString& label, unsigned max );
     void AddAmmunition( unsigned pos, const QString& label );
 
-    void FillPersonal   ( ASN1T_MagicActionPartialRecovery& action );
-    void FillEquipments ( ASN1T_MagicActionPartialRecovery& action );
-    void FillDotations  ( ASN1T_MagicActionPartialRecovery& action );
-    void FillAmmunitions( ASN1T_MagicActionPartialRecovery& action );
-    void FillSupplies   ( ASN1T_MagicActionPartialRecovery& action );
+    void FillPersonal   ( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
+    void FillEquipments ( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
+    void FillDotations  ( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
+    void FillAmmunitions( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
+    void FillSupplies   ( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
 
     QStringList FilterEquipmentList() const;
     //@}

@@ -27,14 +27,14 @@ class MissionParameter_PopulationKnowledge : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_PopulationKnowledge( const ASN1T_MissionParameter& asn );
+    explicit MissionParameter_PopulationKnowledge( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_PopulationKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( ASN1T_MissionParameter& asn ) const;
-    virtual void AsnDelete( ASN1T_MissionParameter& asn ) const;
+    virtual void Send  ( Common::MsgMissionParameter& asn ) const;
+    virtual void Delete( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

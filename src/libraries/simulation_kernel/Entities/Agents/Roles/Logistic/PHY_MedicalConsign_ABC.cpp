@@ -16,7 +16,7 @@
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "Network/NET_ASN_Messages.h"
+#include "protocol/clientsenders.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC constructor
@@ -103,22 +103,19 @@ void PHY_MedicalConsign_ABC::EnterStateFinished()
 // Name: PHY_MedicalConsign_ABC::SendFullState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MedicalConsign_ABC::SendFullState( NET_ASN_MsgLogMedicalHandlingUpdate& asn ) const
+void PHY_MedicalConsign_ABC::SendFullState( client::LogMedicalHandlingUpdate& asn ) const
 {
     assert( pHumanState_ );
     assert( pMedical_ );
-    
-    asn().m.oid_pion_log_traitantPresent = 1;
-    asn().m.etatPresent                  = 1;
-    asn().oid_pion_log_traitant          = pMedical_->GetPion().GetID();
-    asn().etat                           = (ASN1T_EnumLogMedicalHandlingStatus)nState_;
+    asn().set_oid_pion_log_traitant( pMedical_->GetPion().GetID() );
+    asn().set_etat( Common::EnumLogMedicalHandlingStatus( nState_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalConsign_ABC::SendChangedState
 // Created: NLD 2005-01-04
 // -----------------------------------------------------------------------------
-void PHY_MedicalConsign_ABC::SendChangedState( NET_ASN_MsgLogMedicalHandlingUpdate& asn ) const
+void PHY_MedicalConsign_ABC::SendChangedState( client::LogMedicalHandlingUpdate& asn ) const
 {
     assert( pHumanState_ );
     if( bHasChanged_ )

@@ -52,7 +52,7 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName () const;
-          uint         GetId   () const;
+          unsigned int         GetId   () const;
     const PawnModel&   GetModel() const;
     //@}
 
@@ -60,7 +60,7 @@ private:
     //! @name Member data
     //@{
     std::string          strName_;
-	uint                 nId_;
+	unsigned int                 nId_;
     const PawnModel*     pModel_;
     //@}
 };

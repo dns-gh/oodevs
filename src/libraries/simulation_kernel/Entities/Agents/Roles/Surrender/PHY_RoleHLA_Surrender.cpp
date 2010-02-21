@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleHLA_Surrender.h"
-#include "Network/NET_ASN_Messages.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( surrender::PHY_RoleHLA_Surrender )
 

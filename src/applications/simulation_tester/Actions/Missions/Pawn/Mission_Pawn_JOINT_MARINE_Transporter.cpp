@@ -43,9 +43,9 @@ void Mission_Pawn_JOINT_MARINE_Transporter::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_JOINT_MARINE_Transporter& asnMission = *new ASN1T_Mission_Pion_JOINT_MARINE_Transporter();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_joint_marine_transporter;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_joint_marine_transporter = &asnMission;
+    Mission_Pion_JOINT_MARINE_Transporter& asnMission = *new Mission_Pion_JOINT_MARINE_Transporter();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_joint_marine_transporter = &asnMission;
 
     const T_IdVector& unitesATransporter_ = pTarget_->GetTestParam_AgentList();
     const Position& pointDebarquement_ = pTarget_->GetTestParam_Point();
@@ -68,8 +68,8 @@ void Mission_Pawn_JOINT_MARINE_Transporter::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_JOINT_MARINE_Transporter::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_joint_marine_transporter );
-    ASN1T_Mission_Pion_JOINT_MARINE_Transporter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_joint_marine_transporter;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_joint_marine_transporter ());
+    Mission_Pion_JOINT_MARINE_Transporter& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_joint_marine_transporter;
 
     ASN_Tools::Delete( asnMission.unites_a_transporter );
     ASN_Tools::Delete( asnMission.point_debarquement );

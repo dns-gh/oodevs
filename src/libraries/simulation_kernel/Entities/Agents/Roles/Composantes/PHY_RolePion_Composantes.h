@@ -78,7 +78,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -110,9 +110,17 @@ public:
     virtual void Clean ();
     //@}
 
+
+    //! @name Humans management
+    //@{
+//    virtual void WoundHumans  ( const PHY_HumanRank& rank, unsigned int nNbr );
+//    virtual void HealHumans   ( const PHY_HumanRank& rank, unsigned int nNbr );    
+//    virtual void HealAllHumans();
+    //@}
+
     //! @name Composantes management
     //@{
-    virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, uint nNbrAvailable );
+    virtual void ChangeComposantesAvailability( const PHY_ComposanteTypePion& composanteType, unsigned int nNbrAvailable );
     virtual void RepairAllComposantes         ();
     virtual void DestroyRandomComposante      ();
     virtual void DestroyAllComposantes        ();
@@ -120,9 +128,9 @@ public:
 
     //! @name Pret de composantes
     //@{
-    template < typename T > uint LendComposantes             ( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate );
-    template < typename T > uint GetLentComposantesTravelTime( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate );
-    template < typename T > uint RetrieveLentComposantes     ( PHY_RolePion_Composantes& borrower, uint nNbr, T funcPredicate );
+    template < typename T > unsigned int LendComposantes             ( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate );
+    template < typename T > unsigned int GetLentComposantesTravelTime( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate );
+    template < typename T > unsigned int RetrieveLentComposantes     ( PHY_RolePion_Composantes& borrower, unsigned int nNbr, T funcPredicate );
 
     // Actions on the composante owner
     virtual void LendComposante        ( PHY_RoleInterface_Composantes& borrower, PHY_ComposantePion& composante );
@@ -137,7 +145,7 @@ public:
 
     //! @name Logistic - maintenance
     //@{
-    virtual void                            PreprocessRandomBreakdowns           ( uint nEndDayTimeStep ) const;
+    virtual void                            PreprocessRandomBreakdowns           ( unsigned int nEndDayTimeStep ) const;
 
     virtual PHY_MaintenanceComposanteState* NotifyComposanteWaitingForMaintenance( PHY_ComposantePion& composante );
     virtual void                            NotifyComposanteBackFromMaintenance  ( PHY_MaintenanceComposanteState& composanteState );
@@ -154,7 +162,7 @@ public:
     //! @name Fire / Dangerosity
     //@{
     virtual bool     IsNeutralized                   () const;
-    virtual void     GetComposantesAbleToBeFired     ( PHY_Composante_ABC::T_ComposanteVector& targets, uint nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
+    virtual void     GetComposantesAbleToBeFired     ( PHY_Composante_ABC::T_ComposanteVector& targets, unsigned int nNbrFirer, bool bFireOnlyOnMajorComposantes = false ) const;
     virtual void     GetComposantesAbleToBeFired     ( PHY_Composante_ABC::T_ComposanteVector& targets, bool bFireOnlyOnMajorComposantes = false ) const;
     virtual void     Neutralize                      ();
     virtual void     ApplyPopulationFire             ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
@@ -208,8 +216,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
+    virtual void SendChangedState( client::UnitAttributes& message ) const;
+    virtual void SendFullState   ( client::UnitAttributes& message ) const;
     //@}
 
     //! @name HLA
@@ -238,9 +246,9 @@ private:
         T_ComposanteTypeProperties();
 
         bool HasUsableComposantes() const;
-        template< typename Archive > void serialize( Archive&, const uint );
+        template< typename Archive > void serialize( Archive&, const unsigned int );
 
-        std::vector< uint > nbrsPerState_;
+        std::vector< unsigned int > nbrsPerState_;
         bool                bHasChanged_;
     };
     //@}
@@ -265,7 +273,7 @@ private:
     //! @name Init
     //@{
     void DistributeCommanders      ();
-    void DistributeHumanWounds     ( const PHY_HumanRank& rank, const PHY_HumanWound& wound, uint nNbr, PHY_ComposantePion::CIT_ComposantePionVector& itCurrentComp );
+    void DistributeHumanWounds     ( const PHY_HumanRank& rank, const PHY_HumanWound& wound, unsigned int nNbr, PHY_ComposantePion::CIT_ComposantePionVector& itCurrentComp );
     void ReadHumansOverloading     ( xml::xistream& xis );
     void ReadComposantesOverloading( xml::xistream& xis );
     //@}
@@ -279,7 +287,7 @@ private:
     void UpdateDataWhenComposanteRemoved( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
     void UpdateDataWhenComposanteAdded  ( const PHY_ComposanteState& state, T_ComposanteTypeProperties& properties );
 
-    void SendLoans( NET_ASN_MsgUnitAttributes& asn ) const;
+    void SendLoans( client::UnitAttributes& message ) const;
 
     void SendLogisticChangedState() const;
     void SendLogisticFullState   () const;
@@ -297,13 +305,13 @@ private:
     MIL_Agent_ABC&         pion_;
     PHY_ComposantePion::T_ComposantePionVector composantes_;
     T_ComposanteTypeMap    composanteTypes_;
-    uint                   nNbrComposanteChanged_;
+    unsigned int                   nNbrComposanteChanged_;
     double               rMajorOperationalState_;
     double               rOperationalState_;
     bool                   bOperationalStateChanged_;    
     PHY_ComposantePion*    pMajorComposante_;
-    uint                   nNeutralizationEndTimeStep_;
-    uint                   nNbrUsableComposantes_;
+    unsigned int                   nNeutralizationEndTimeStep_;
+    unsigned int                   nNbrUsableComposantes_;
 
     T_LoanMap              lentComposantes_;
     T_LoanMap              borrowedComposantes_;
@@ -316,7 +324,7 @@ private:
 
     // Maintenance
     T_MaintenanceComposanteStateSet maintenanceComposanteStates_;
-    uint                            nTickRcMaintenanceQuerySent_;
+    unsigned int                            nTickRcMaintenanceQuerySent_;
 
 
 private:

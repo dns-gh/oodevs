@@ -17,10 +17,13 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Automate.h"
 #include "MT_Tools/MT_Scipio_enum.h"
 
-class MIL_Mission_ABC;
+namespace client
+{
+    class AutomatAttributes;
+}
 
+class MIL_Mission_ABC;
 class DEC_Decision_ABC;
-class NET_ASN_MsgAutomatAttributes;
 
 enum E_ForceRatioState;
 enum E_RulesOfEngagementState;
@@ -66,8 +69,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgAutomatAttributes& msg ) const;
-    void SendFullState   ( NET_ASN_MsgAutomatAttributes& msg ) const;
+    void SendChangedState( client::AutomatAttributes& msg ) const;
+    void SendFullState   ( client::AutomatAttributes& msg ) const;
     //@}
 
     //! @name Accessors

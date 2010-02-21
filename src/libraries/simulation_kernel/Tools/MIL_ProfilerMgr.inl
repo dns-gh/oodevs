@@ -16,7 +16,7 @@
 // Created: AML 03-05-21
 //-----------------------------------------------------------------------------
 inline
-void MIL_ProfilerMgr::NotifyTickBegin( uint /*nTick*/ )
+void MIL_ProfilerMgr::NotifyTickBegin( unsigned int /*nTick*/ )
 {
     tickDurationProfiler_.Start();
 }

@@ -10,10 +10,12 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 // =============================================================================
 /** @class  Team
@@ -27,7 +29,7 @@ class Team : public kernel::EntityImplementation< kernel::Team_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Team( const ASN1T_MsgTeamCreation& asnMsg, kernel::Controller& controller );
+             Team( const MsgsSimToClient::MsgTeamCreation& message, kernel::Controller& controller );
     virtual ~Team();
     //@}
 

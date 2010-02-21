@@ -29,7 +29,7 @@ using namespace hla;
 // Created: AGE 2004-11-29
 // -----------------------------------------------------------------------------
 HLA_TargetedInteraction::HLA_TargetedInteraction()
-    : target_( uint(-1) )
+    : target_( unsigned int(-1) )
 {
     //NOTHING
 }

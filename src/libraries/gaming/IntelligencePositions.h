@@ -10,15 +10,21 @@
 #ifndef __IntelligencePositions_h_
 #define __IntelligencePositions_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/publisher_ABC.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
     class Intelligence_ABC;
+}
+
+namespace MsgsMessengerToClient
+{
+    class MsgIntelligenceUpdate;
+    class MsgIntelligenceCreation;
 }
 
 class Publisher_ABC;
@@ -30,8 +36,8 @@ class Publisher_ABC;
 // Created: SBO 2007-10-15
 // =============================================================================
 class IntelligencePositions : public kernel::Positions
-                            , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceCreation >
-                            , public kernel::Updatable_ABC< ASN1T_MsgIntelligenceUpdate >
+                            , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceCreation >
+                            , public kernel::Updatable_ABC< MsgsMessengerToClient::MsgIntelligenceUpdate >
                             , public kernel::Drawable_ABC
 {
 
@@ -67,8 +73,8 @@ private:
     //! @name Helpers
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void DoUpdate( const ASN1T_MsgIntelligenceCreation& message );
-    virtual void DoUpdate( const ASN1T_MsgIntelligenceUpdate& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgIntelligenceCreation& message );
+    virtual void DoUpdate( const MsgsMessengerToClient::MsgIntelligenceUpdate& message );
     //@}
 
 private:

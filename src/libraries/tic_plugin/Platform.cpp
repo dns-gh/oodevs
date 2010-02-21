@@ -12,6 +12,9 @@
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 
+using namespace Common;
+using namespace MsgsSimToClient;
+
 using namespace plugins::tic;
 
 // -----------------------------------------------------------------------------
@@ -43,19 +46,19 @@ Platform::~Platform()
 // Name: Platform::Update
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Update( const ASN1T_MsgUnitAttributes& asnMsg )
+void Platform::Update( const MsgUnitAttributes& asnMsg )
 {
-    if( asnMsg.m.altitudePresent )
-        altitude_ = float( asnMsg.altitude );
+    if( asnMsg.has_altitude() )
+        altitude_ = float( asnMsg.altitude() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Platform::Spread
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Spread( ASN1T_EquipmentDotations& updateMessage )
+void Platform::Spread( EquipmentDotations_EquipmentDotation& updateMessage )
 {
-    if( type_.GetId() == (unsigned)updateMessage.type_equipement )
+    if( type_.GetId() == (unsigned)updateMessage.type_equipement() )
         Apply( updateMessage );
 }
 
@@ -63,13 +66,44 @@ void Platform::Spread( ASN1T_EquipmentDotations& updateMessage )
 // Name: Platform::Apply
 // Created: AGE 2008-03-31
 // -----------------------------------------------------------------------------
-void Platform::Apply( ASN1T_EquipmentDotations& updateMessage )
+void Platform::Apply( EquipmentDotations_EquipmentDotation& updateMessage )
 {
-       SetStatus( updateMessage.nb_dans_chaine_maintenance, destroyed )
-    || SetStatus( updateMessage.nb_indisponibles,           destroyed )
-    || SetStatus( updateMessage.nb_prisonniers,             destroyed )
-    || SetStatus( updateMessage.nb_reparables,              broken )
-    || SetStatus( updateMessage.nb_disponibles,             okay );
+    int nVal = updateMessage.nb_dans_chaine_maintenance();
+    if (nVal)
+    {
+        updateMessage.set_nb_dans_chaine_maintenance(--nVal);
+        state_ = destroyed;
+    }
+    nVal = updateMessage.nb_indisponibles();
+    if (nVal)
+    {
+        updateMessage.set_nb_indisponibles(--nVal);
+        state_ = destroyed;
+    }
+    nVal = updateMessage.nb_prisonniers();
+    if (nVal)
+    {
+        updateMessage.set_nb_prisonniers(--nVal);
+        state_ = destroyed;
+    }
+    nVal = updateMessage.nb_reparables();
+    if (nVal)
+    {
+        updateMessage.set_nb_reparables(--nVal);
+        state_ = broken;
+    }
+    nVal = updateMessage.nb_disponibles();
+    if (nVal)
+    {
+        updateMessage.set_nb_disponibles(--nVal);
+        state_ = okay;
+    }
+
+//       SetStatus( updateMessage.nb_dans_chaine_maintenance(), destroyed )
+//    || SetStatus( updateMessage.nb_indisponibles(),           destroyed )
+//    || SetStatus( updateMessage.nb_prisonniers(),             destroyed )
+//    || SetStatus( updateMessage.nb_reparables(),              broken )
+//    || SetStatus( updateMessage.nb_disponibles(),             okay );
 }
 
 // -----------------------------------------------------------------------------

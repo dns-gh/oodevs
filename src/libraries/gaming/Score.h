@@ -12,7 +12,9 @@
 
 #include "IndicatorDefinition_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "game_asn/Aar.h"
+#include "protocol/AarSenders.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -44,7 +46,7 @@ class Score : public IndicatorDefinition_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Score( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
+    Score( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
     virtual ~Score();
     //@}
 
@@ -57,7 +59,7 @@ public:
     //! @name Operations
     //@{
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
-    void Update( const ASN1T_MsgIndicator& message );
+    void Update( const MsgsAarToClient::MsgIndicator& message );
     void ConnectTo( IndicatorRequest& request );
     //@}
 
@@ -70,7 +72,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void UpdatePlots( const ASN1T_MsgIndicator& message );
+    virtual void UpdatePlots( const MsgsAarToClient::MsgIndicator& message );
     //@}
 
 private:

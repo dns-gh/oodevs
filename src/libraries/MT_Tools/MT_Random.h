@@ -16,8 +16,8 @@
 
 namespace MT_RandomConsts
 {
-    static const uint N = 624;
-    static const uint M = 397;
+    static const unsigned int N = 624;
+    static const unsigned int M = 397;
 }
 
 //*****************************************************************************
@@ -30,15 +30,15 @@ class MT_Random
 
 public:
              MT_Random();
-    explicit MT_Random( uint32 nSeed );
-    explicit MT_Random( const std::vector< uint32 >& key );
+    explicit MT_Random( unsigned long nSeed );
+    explicit MT_Random( const std::vector< unsigned long >& key );
     virtual ~MT_Random() {}
 
-    uint32 rand32();                            // [ 0  , 0xffffffff ]
-    uint32 rand32_ii( uint32 min, uint32 max ); // [ min, max ]
-    uint32 rand32_io( uint32 min, uint32 max ); // [ min, max [
-    uint32 rand32_oo( uint32 min, uint32 max ); // ] min, max [
-    uint32 rand32_oi( uint32 min, uint32 max ); // ] min, max ]
+    unsigned long rand32();                            // [ 0  , 0xffffffff ]
+    unsigned long rand32_ii( unsigned long min, unsigned long max ); // [ min, max ]
+    unsigned long rand32_io( unsigned long min, unsigned long max ); // [ min, max [
+    unsigned long rand32_oo( unsigned long min, unsigned long max ); // ] min, max [
+    unsigned long rand32_oi( unsigned long min, unsigned long max ); // ] min, max ]
     
     double rand53();                            // [ 0., 1. [ ( 53-bit resolution )
 
@@ -52,7 +52,7 @@ public:
     double rand_oi( double min, double max );   // ] min., max. ]
 
 private:
-    inline static unsigned long twist( uint32 u, uint32 v )
+    inline static unsigned long twist( unsigned long u, unsigned long v )
     {
         return ( ( ( ( ( (u) & 0x80000000UL ) | ( (v) & 0x7fffffffUL ) ) ) >> 1 ) ^ ( (v) & 1UL ? 0x9908b0dfUL : 0UL ) );
     }
@@ -60,9 +60,9 @@ private:
     inline void nextState();
 
 private:    
-    uint32   state_[ MT_RandomConsts::N ];
-    uint32 * next_;
-    uint     left_;
+    unsigned long   state_[ MT_RandomConsts::N ];
+    unsigned long * next_;
+    unsigned int     left_;
 };
 
 #include "MT_Random.inl"

@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_EffectuerRechercheEtSauvetage::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage& asnMission = *new ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_effectuer_recherche_et_sauvetage;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_effectuer_recherche_et_sauvetage = &asnMission;
+    Mission_Pion_ALAT_EffectuerRechercheEtSauvetage& asnMission = *new Mission_Pion_ALAT_EffectuerRechercheEtSauvetage();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_effectuer_recherche_et_sauvetage = &asnMission;
 
     const T_IdVector& unitesASecourir_ = pTarget_->GetTestParam_AgentList();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -68,8 +68,8 @@ void Mission_Pawn_ALAT_EffectuerRechercheEtSauvetage::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_EffectuerRechercheEtSauvetage::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_effectuer_recherche_et_sauvetage );
-    ASN1T_Mission_Pion_ALAT_EffectuerRechercheEtSauvetage& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_effectuer_recherche_et_sauvetage;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_effectuer_recherche_et_sauvetage ());
+    Mission_Pion_ALAT_EffectuerRechercheEtSauvetage& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_effectuer_recherche_et_sauvetage;
 
     ASN_Tools::Delete( asnMission.unites_a_secourir );
     ASN_Tools::Delete( asnMission.point_regroupement );

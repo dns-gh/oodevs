@@ -17,28 +17,32 @@
 #include "clients_kernel/PopulationKnowledge_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 
+#include "protocol/clientsenders.h"
+
 using namespace dispatcher;
+//using namespace Common;
+//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationConcentrationKnowledge constructor
 // Created: NLD 2006-10-03
 // -----------------------------------------------------------------------------
-PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg )
-    : SimpleEntity< >     ( msg.oid_connaissance_concentration )
+PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg )
+    : SimpleEntity< >     ( msg.oid_connaissance_concentration() )
     , populationKnowledge_( populationKnowledge )
-    , pConcentration_     ( msg.oid_concentration_reelle == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->concentrations_.Get( msg.oid_concentration_reelle ) ) // $$$$ SBO 2008-07-11: 
-    , position_           ( msg.position )
+    , pConcentration_     ( msg.oid_concentration_reelle() == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->concentrations_.Get( msg.oid_concentration_reelle() ) ) // $$$$ SBO 2008-07-11: 
+    , position_           ( msg.position() )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
-    , nAttitude_          ( EnumPopulationAttitude::agressive ) 
+    , nAttitude_          ( Common::EnumPopulationAttitude::agressive ) 
     , nRelevance_         ( 0 )
     , bPerceived_         ( false )
 {
-    optionals_.nb_humains_vivantsPresent = 0;
-    optionals_.nb_humains_mortsPresent   = 0;
-    optionals_.attitudePresent           = 0;
-    optionals_.pertinencePresent         = 0;
-    optionals_.est_percuPresent          = 0;
+//    optionals_.nb_humains_vivantsPresent = 0;
+//    optionals_.nb_humains_mortsPresent   = 0;
+//    optionals_.attitudePresent           = 0;
+//    optionals_.pertinencePresent         = 0;
+//    optionals_.est_percuPresent          = 0;
 //    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationConcentrationKnowledge >( *this ) );
 }
 
@@ -55,35 +59,35 @@ PopulationConcentrationKnowledge::~PopulationConcentrationKnowledge()
 // Name: PopulationConcentrationKnowledge::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void PopulationConcentrationKnowledge::Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& msg )
+void PopulationConcentrationKnowledge::Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& msg )
 {
-    if( msg.m.oid_concentration_reellePresent )
-        pConcentration_ = msg.oid_concentration_reelle == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->concentrations_.Get( msg.oid_concentration_reelle ); // $$$$ SBO 2008-07-11: 
+    if( msg.has_oid_concentration_reelle()  )
+        pConcentration_ = msg.oid_concentration_reelle() == 0 ? 0 : &static_cast< const Population* >( populationKnowledge_.GetEntity() )->concentrations_.Get( msg.oid_concentration_reelle() ); // $$$$ SBO 2008-07-11: 
 
-    if( msg.m.attitudePresent )
+    if( msg.has_attitude()  )
     {
-        nAttitude_ = msg.attitude;
-        optionals_.attitudePresent = 1;
+        nAttitude_ = msg.attitude();
+//        optionals_.attitudePresent = 1;
     }
-    if( msg.m.nb_humains_mortsPresent )
+    if( msg.has_nb_humains_morts()  )
     {
-        nNbrDeadHumans_ = msg.nb_humains_morts;
-        optionals_.nb_humains_mortsPresent = 1;
+        nNbrDeadHumans_ = msg.nb_humains_morts();
+//        optionals_.nb_humains_mortsPresent() = 1;
     }
-    if( msg.m.nb_humains_vivantsPresent )
+    if( msg.has_nb_humains_vivants()  )
     {
-        nNbrAliveHumans_ = msg.nb_humains_vivants;
-        optionals_.nb_humains_vivantsPresent = 1;
+        nNbrAliveHumans_ = msg.nb_humains_vivants();
+//        optionals_.nb_humains_vivantsPresent( 1 );
     }
-    if( msg.m.pertinencePresent )
+    if( msg.has_pertinence()  )
     {
-        nRelevance_ = msg.pertinence;
-        optionals_.pertinencePresent = 1;
+        nRelevance_ = msg.pertinence();
+//        optionals_.pertinencePresent = 1;
     }
-    if( msg.m.est_percuPresent )
+    if( msg.has_est_percu()  )
     {
-        bPerceived_ = msg.est_percu != 0;
-        optionals_.est_percuPresent = 1;
+        bPerceived_ = msg.est_percu() != 0;
+//        optionals_.est_percuPresent = 1;
     }
 }
 
@@ -95,11 +99,11 @@ void PopulationConcentrationKnowledge::SendCreation( ClientPublisher_ABC& publis
 {
     client::PopulationConcentrationKnowledgeCreation asn;
 
-    asn().oid_connaissance_concentration = GetId();
-    asn().oid_connaissance_population    = populationKnowledge_.GetId();
-    asn().oid_concentration_reelle       = pConcentration_ ? pConcentration_->GetId() : 0;
-    asn().oid_groupe_possesseur          = populationKnowledge_.GetOwner().GetId();
-    asn().position = position_;
+    asn().set_oid_connaissance_concentration( GetId() );
+    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
+    asn().set_oid_concentration_reelle( pConcentration_ ? pConcentration_->GetId() : 0 );
+    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
+    *asn().mutable_position() = position_;
 
     asn.Send( publisher );
 }
@@ -112,41 +116,41 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
 {
     client::PopulationConcentrationKnowledgeUpdate asn;
 
-    asn().oid_connaissance_concentration = GetId();
-    asn().oid_connaissance_population    = populationKnowledge_.GetId();
-    asn().oid_groupe_possesseur          = populationKnowledge_.GetOwner().GetId();
+    asn().set_oid_connaissance_concentration( GetId() );
+    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
+    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
 
-    asn().m.oid_concentration_reellePresent = 1;
-    asn().oid_concentration_reelle          = pConcentration_ ? pConcentration_->GetId() : 0;
+//    asn().set_oid_concentration_reellePresent( 1 );
+    asn().set_oid_concentration_reelle( pConcentration_ ? pConcentration_->GetId() : 0 );
 
     if( optionals_.nb_humains_mortsPresent )
     {
-        asn().m.nb_humains_mortsPresent = 1;
-        asn().nb_humains_morts = nNbrDeadHumans_;
+//        asn().set_nb_humains_mortsPresent( 1 );
+        asn().set_nb_humains_morts( nNbrDeadHumans_ );
     }
 
     if( optionals_.nb_humains_vivantsPresent )
     {
-        asn().m.nb_humains_vivantsPresent = 1;
-        asn().nb_humains_vivants = nNbrAliveHumans_;
+//        asn().set_nb_humains_vivantsPresent( 1 );
+        asn().set_nb_humains_vivants( nNbrAliveHumans_ );
     }
 
     if( optionals_.attitudePresent )
     {
-        asn().m.attitudePresent = 1;
-        asn().attitude = nAttitude_;
+//        asn().set_attitudePresent( 1 );
+        asn().set_attitude( nAttitude_ );
     }
 
     if( optionals_.pertinencePresent )
     {
-        asn().m.pertinencePresent = 1;
-        asn().pertinence = nRelevance_;
+//        asn().set_pertinencePresent( 1 );
+        asn().set_pertinence( nRelevance_ );
     }
 
-    if( optionals_.est_percuPresent )
+    if( asn().has_est_percu() )
     {
-        asn().m.est_percuPresent = 1;
-        asn().est_percu = bPerceived_;
+//        asn().set_est_percuPresent( 1 );
+        asn().set_est_percu( bPerceived_ );
     }
 
     asn.Send( publisher );
@@ -159,9 +163,9 @@ void PopulationConcentrationKnowledge::SendFullUpdate( ClientPublisher_ABC& publ
 void PopulationConcentrationKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::PopulationConcentrationKnowledgeDestruction asn;
-    asn().oid_connaissance_concentration = GetId();
-    asn().oid_connaissance_population    = populationKnowledge_.GetId();
-    asn().oid_groupe_possesseur          = populationKnowledge_.GetOwner().GetId();
+    asn().set_oid_connaissance_concentration( GetId() );
+    asn().set_oid_connaissance_population( populationKnowledge_.GetId() );
+    asn().set_oid_groupe_possesseur( populationKnowledge_.GetOwner().GetId() );
     asn.Send( publisher );
 }
 

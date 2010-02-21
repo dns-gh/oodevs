@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              TacticalLine_Lima( const T_PositionVector& points );
-             TacticalLine_Lima( const ASN1T_MsgLimaCreation& asnMsg );
+             TacticalLine_Lima( const MsgLimaCreation& asnMsg );
              TacticalLine_Lima( XmlInputArchive& points );
     virtual ~TacticalLine_Lima();
     //@}
@@ -45,7 +45,7 @@ public:
     //! @name Accessors
     //@{
     virtual TacticalLine_ABC::E_LineType GetLineType() const;
-            ASN1T_EnumLimaType           GetLimaType() const;
+            EnumLimaType           GetLimaType() const;
     //@}
 
     //! @name Operations
@@ -63,7 +63,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_EnumLimaType eLimaType_;
+    EnumLimaType eLimaType_;
     //@}
 
 };

@@ -9,8 +9,9 @@
 
 #include "gaming_pch.h"
 #include "AgentKnowledge.h"
+#include "Diplomacies.h"
+#include "Tools.h"
 
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -25,8 +26,7 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/App6Symbol.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "Tools.h"
-#include "Diplomacies.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -34,13 +34,13 @@ using namespace kernel;
 // Name: AgentKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const ASN1T_MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< Team_ABC >& teamResolver )
-    : EntityImplementation< AgentKnowledge_ABC >( controller, message.oid, "" )
+AgentKnowledge::AgentKnowledge( const KnowledgeGroup_ABC& group, const MsgsSimToClient::MsgUnitKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< Team_ABC >& teamResolver )
+    : EntityImplementation< AgentKnowledge_ABC >( controller, message.oid(), "" )
     , converter_   ( converter )
     , resolver_    ( resolver )
     , teamResolver_( teamResolver )
     , group_       ( group )
-    , realAgent_   ( resolver_.Get( message.oid_unite_reelle ) )
+    , realAgent_   ( resolver_.Get( message.oid_unite_reelle() ) )
     , team_        ( 0 )
     , nLevel_      ( eNatureLevel_None )
 {
@@ -62,45 +62,45 @@ AgentKnowledge::~AgentKnowledge()
 // Name: AgentKnowledge::DoUpdate
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-void AgentKnowledge::DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate& message )
+void AgentKnowledge::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    if( message.m.identification_levelPresent )
-        // $$$$ AGE 2005-03-23: !! Les enums asn et sim ne correspondent pas...
-        nCurrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level );
+    if( message.has_identification_level()  )
+        // $$$$ AGE 2005-03-23: !! Les enums message et sim ne correspondent pas...
+        nCurrentPerceptionLevel_ = (E_PerceptionResult)( 3 - message.identification_level() );
 
-    if( message.m.max_identification_levelPresent )
-        nMaxPerceptionLevel_ = (E_PerceptionResult)( 3 - message.max_identification_level );
+    if( message.has_max_identification_level()  )
+        nMaxPerceptionLevel_ = (E_PerceptionResult)( 3 - message.max_identification_level() );
 
-    if( message.m.etat_opPresent )
-        nEtatOps_ = message.etat_op;
+    if( message.has_etat_op()  )
+        nEtatOps_ = message.etat_op();
 
     // $$$$ AGE 2008-04-03: 
-//    if( message.m.positionPresent )
+//    if( message.has_position()  )
 //        strPosition_ = std::string( (const char*)message.position.data, 15 );
 
-    if( message.m.directionPresent )
-        nDirection_ = message.direction;
+    if( message.has_direction()  )
+        nDirection_ = message.direction().heading();
 
-    if( message.m.speedPresent )
-        nSpeed_ = message.speed;
+    if( message.has_speed()  )
+        nSpeed_ = message.speed();
 
-    if( message.m.campPresent )
-        team_ = & teamResolver_.Get( message.camp );
+    if( message.has_camp()  )
+        team_ = & teamResolver_.Get( message.camp() );
 
-    if( message.m.nature_pcPresent )
-        bIsPC_ = message.nature_pc != 0;
+    if( message.has_nature_pc()  )
+        bIsPC_ = message.nature_pc() != 0;
 
-    if( message.m.pertinencePresent )
-        nRelevance_ = message.pertinence;
+    if( message.has_pertinence()  )
+        nRelevance_ = message.pertinence();
 
-    if( message.m.prisonnierPresent )
-        bPrisonner_ = message.prisonnier != 0;
+    if( message.has_prisonnier()  )
+        bPrisonner_ = message.prisonnier() != 0;
 
-    if( message.m.renduPresent )
-        surrenderedTo_ = teamResolver_.Find( message.rendu );
+    if( message.has_rendu()  )
+        surrenderedTo_ = teamResolver_.Find( message.rendu() );
 
-    if( message.m.refugie_pris_en_comptePresent )
-        bRefugies_ = message.refugie_pris_en_compte != 0;
+    if( message.has_refugie_pris_en_compte()  )
+        bRefugies_ = message.refugie_pris_en_compte() != 0;
 
     UpdateSymbol();
 

@@ -10,6 +10,11 @@
 #ifndef __MIL_OrderTypeParameter_h_
 #define __MIL_OrderTypeParameter_h_
 
+namespace Common
+{
+    class MsgMissionParameter;
+}
+
 namespace xml
 {
     class xistream;
@@ -38,8 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    bool Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
-    void CleanAfterSerialization( ASN1T_MissionParameter& to ) const;
+    bool Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const;
+    void CleanAfterSerialization( Common::MsgMissionParameter& to ) const;
     //@}
 
     //! @name Accessors

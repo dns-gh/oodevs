@@ -10,6 +10,8 @@
 #include "actions_pch.h"
 #include "AtlasNature.h"
 #include "clients_kernel/AtlasNatures.h"
+#include "protocol/Protocol.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -26,20 +28,12 @@ AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const kernel:
     // NOTHING
 }
 
-namespace
-{
-    unsigned short Shortify( const unsigned char data[2] )
-    {
-        return ( data[0] << 8 ) + data[1];
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: AtlasNature constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const ASN1T_AtlasNature& asn, const kernel::AtlasNatures& natures )
-    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( Shortify( asn.data ) ) )
+AtlasNature::AtlasNature( const kernel::OrderParameter& parameter, const Common::MsgAtlasNature& message, const kernel::AtlasNatures& natures )
+    : Parameter< kernel::AtlasNature >( parameter, natures.MakeNature( message.nature() ) )
 {
     // NOTHING
 }
@@ -77,25 +71,22 @@ void AtlasNature::Serialize( xml::xostream& xos ) const
 // Name: AtlasNature::CommitTo
 // Created: SBO 2008-06-16
 // -----------------------------------------------------------------------------
-void AtlasNature::CommitTo( ASN1T_MissionParameter& asn ) const
+void AtlasNature::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_atlasNature;
-    asn.value.u.atlasNature = new ASN1T_AtlasNature();
-    asn.value.u.atlasNature->numbits = 11;
-    asn.value.u.atlasNature->data[0] = 0;
-    asn.value.u.atlasNature->data[1] = 0;
+    message.set_null_value ( !IsSet() );
+    message.mutable_value()->mutable_atlasnature(); // enforce initialisation of parameter to force his type
     if( IsSet() )
-        GetValue().CommitTo( asn.value.u.atlasNature->numbits, asn.value.u.atlasNature->data );
+        message.mutable_value()->mutable_atlasnature()->set_nature( GetValue().GetValue() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: AtlasNature::Clean
 // Created: SBO 2008-06-16
 // -----------------------------------------------------------------------------
-void AtlasNature::Clean( ASN1T_MissionParameter& asn ) const
+void AtlasNature::Clean( Common::MsgMissionParameter& message ) const
 {
-    delete asn.value.u.atlasNature;
+    if( message.value().has_atlasnature() )
+        message.mutable_value()->clear_atlasnature();
 }
 
 // -----------------------------------------------------------------------------

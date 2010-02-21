@@ -10,6 +10,7 @@
 #include "messenger_plugin_pch.h"
 #include "Lima.h"
 #include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/MessengerSenders.h"
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::messenger;
@@ -18,8 +19,8 @@ using namespace plugins::messenger;
 // Name: Lima constructor
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-Lima::Lima( unsigned int id, const ASN1T_MsgLimaCreationRequest& message )
-    : TacticalLine_ABC( id, message )
+Lima::Lima( unsigned int id, const MsgsClientToMessenger::MsgLimaCreationRequest& message )
+    : TacticalLine_ABC( id, message.tacticalline() )
 {
     // NOTHING
 }
@@ -28,7 +29,7 @@ Lima::Lima( unsigned int id, const ASN1T_MsgLimaCreationRequest& message )
 // Name: Lima constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-Lima::Lima( unsigned int id, xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
+Lima::Lima( unsigned int id, xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter )
     : TacticalLine_ABC( id, xis, diffusion, converter)
 {
     // NOTHING
@@ -47,9 +48,9 @@ Lima::~Lima()
 // Name: Lima::Update
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void Lima::Update( const ASN1T_MsgLimaUpdateRequest& message )
+void Lima::Update( const MsgsClientToMessenger::MsgLimaUpdateRequest& message )
 {
-    TacticalLine_ABC::Update( message.tactical_line );
+    TacticalLine_ABC::Update( message.tactical_line() );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +59,11 @@ void Lima::Update( const ASN1T_MsgLimaUpdateRequest& message )
 // -----------------------------------------------------------------------------
 void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 {
-    ASN1T_MsgLimaCreation creation ;
-    creation.oid = GetID();
-    TacticalLine_ABC::Send( creation.tactical_line );
-    LimaCreation message( creation );
+    MsgsMessengerToClient::MsgLimaCreation creation ;
+    creation.set_oid( GetID() );
+    TacticalLine_ABC::Send( *creation.mutable_tactical_line() );
+    plugins::messenger::LimaCreation message;
+    message() = creation;
     message.Send( client );
 }
 
@@ -71,10 +73,10 @@ void Lima::SendCreation( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 {
-    ASN1T_MsgLimaUpdate update;
-    update.oid = GetID();
-    TacticalLine_ABC::Send( update.tactical_line );
-    LimaUpdate message( update );
+    MsgsMessengerToClient::MsgLimaUpdate update;
+    update.set_oid( GetID() );
+    TacticalLine_ABC::Send( *update.mutable_tactical_line() );
+    plugins::messenger::LimaUpdate message( update );
     message.Send( client );
 }
 
@@ -84,8 +86,9 @@ void Lima::SendUpdate( dispatcher::ClientPublisher_ABC& client ) const
 // -----------------------------------------------------------------------------
 void Lima::SendDestruction( dispatcher::ClientPublisher_ABC& client ) const
 {
-    ASN1T_MsgLimaDestruction destruction = GetID();
-    LimaDestruction message( destruction );
+    MsgsMessengerToClient::MsgLimaDestruction destruction;
+    destruction.set_oid( GetID() );
+    plugins::messenger::LimaDestruction message( destruction );
     message.Send( client );
 }
 

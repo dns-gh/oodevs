@@ -9,11 +9,11 @@
 
 #include "gaming_app_pch.h"
 #include "ChangeDiplomacyDialog.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
-
+#include "protocol/simulationsenders.h"
+#include "protocol/publisher_ABC.h"
 // -----------------------------------------------------------------------------
 // Name: ChangeDiplomacyDialog constructor
 // Created: SBO 2008-12-09
@@ -36,15 +36,15 @@ ChangeDiplomacyDialog::~ChangeDiplomacyDialog()
 
 namespace
 {
-    ASN1T_EnumDiplomacy ResolveDiplomacy( const kernel::Karma& karma )
+    Common::EnumDiplomacy ResolveDiplomacy( const kernel::Karma& karma )
     {
         if( karma == kernel::Karma::friend_ )
-            return EnumDiplomacy::ami;
+            return Common::EnumDiplomacy::friend_diplo;
         if( karma == kernel::Karma::enemy_ )
-            return EnumDiplomacy::ennemi;
+            return Common::EnumDiplomacy::enemy_diplo;
         if( karma == kernel::Karma::neutral_ )
-            return EnumDiplomacy::neutre;
-        return EnumDiplomacy::inconnu;
+            return Common::EnumDiplomacy::neutral_diplo;
+        return Common::EnumDiplomacy::unknown_diplo;
     }
 }
 
@@ -57,8 +57,8 @@ void ChangeDiplomacyDialog::SetDiplomacy( const kernel::Team_ABC& team1, const k
     if( team1.Get< kernel::Diplomacies_ABC >().GetDiplomacy( team2 ) == diplomacy )
         return;
     simulation::ChangeDiplomacy message;
-    message().oid_camp1  = team1.GetId();
-    message().oid_camp2  = team2.GetId();
-    message().diplomatie = ResolveDiplomacy( diplomacy );
+    message().set_oid_camp1( team1.GetId() );
+    message().set_oid_camp2( team2.GetId() );
+    message().set_diplomatie( ResolveDiplomacy( diplomacy ) );
     message.Send( publisher_ );
 }

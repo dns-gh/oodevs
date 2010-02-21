@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "IntelligenceOrder.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -16,14 +17,14 @@ using namespace dispatcher;
 // Name: IntelligenceOrder constructor
 // Created: SBO 2007-10-30
 // -----------------------------------------------------------------------------
-IntelligenceOrder::IntelligenceOrder( const ASN1T_Intelligence& asn )
-    : name_     ( asn.name )
-    , nature_   ( asn.nature )
-    , level_    ( asn.level )
-    , embarked_ ( asn.embarked ? true : false )
-    , position_ ( asn.location )
-    , diplomacy_( asn.diplomacy )
-    , formation_( asn.formation )
+IntelligenceOrder::IntelligenceOrder( const Common::MsgIntelligence& asn )
+    : name_     ( asn.name() )
+    , nature_   ( asn.nature() )
+    , level_    ( asn.level() )
+    , embarked_ ( asn.embarked() )
+    , position_ ( asn.location() )
+    , diplomacy_( asn.diplomacy() )
+    , formation_( asn.formation().oid() )
 {
     // NOTHING
 }
@@ -41,13 +42,13 @@ IntelligenceOrder::~IntelligenceOrder()
 // Name: IntelligenceOrder::Send
 // Created: SBO 2007-10-30
 // -----------------------------------------------------------------------------
-void IntelligenceOrder::Send( ASN1T_Intelligence& asn ) const
+void IntelligenceOrder::Send( Common::MsgIntelligence& message ) const
 {
-    asn.name      = name_.c_str();
-    asn.nature    = nature_.c_str();
-    asn.level     = level_;
-    asn.embarked  = embarked_ ? 1 : 0;
-    asn.location  = position_;
-    asn.diplomacy = diplomacy_;
-    asn.formation = formation_;
+    message.set_diplomacy( diplomacy_ );
+    message.set_embarked( embarked_ );
+    message.set_level( level_ );
+    message.mutable_formation()->set_oid( formation_ );
+    message.set_name( name_ );
+    message.set_nature( nature_ );
+    *message.mutable_location() = position_;
 }

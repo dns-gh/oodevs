@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "ActivityTimeAttribute.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,7 +18,7 @@ using namespace dispatcher;
 // Name: ActivityTimeAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ActivityTimeAttribute::ActivityTimeAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
+ActivityTimeAttribute::ActivityTimeAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )    
     , nActivityTime_  ( 0 )
 {
@@ -37,11 +38,11 @@ ActivityTimeAttribute::~ActivityTimeAttribute()
 // Name: ActivityTimeAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void ActivityTimeAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {    
-    if( asnMsg.m.activity_timePresent )
+    if( asnMsg.has_activity_time()  )
     {        
-        nActivityTime_ = asnMsg.activity_time.value;    
+        nActivityTime_ = asnMsg.activity_time().value();
     }
 }
 
@@ -49,17 +50,16 @@ void ActivityTimeAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
 // Name: ActivityTimeAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void ActivityTimeAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.m.activity_timePresent = 1;
-    asnMsg.activity_time.value = nActivityTime_;
+    asnMsg.mutable_activity_time()->set_value( nActivityTime_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActivityTimeAttribute::AsnDelete
+// Name: ActivityTimeAttribute::Delete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ActivityTimeAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void ActivityTimeAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
-//    delete asnMsg.u.mine_jam;
+//    delete asnMsg().mine_jam;
 }

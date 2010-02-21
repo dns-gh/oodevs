@@ -10,8 +10,10 @@
 #ifndef __Availability_h_
 #define __Availability_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -34,11 +36,11 @@ public:
              Availability();
              template< typename Message >
                  Availability( const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const Message& message )
-                : type_     ( & resolver.Get( message.type_equipement ) )
-                , total_    ( message.nbr_total )
-                , available_( message.nbr_disponibles ) 
-                , atWork_   ( message.nbr_au_travail )
-                , atRest_   ( message.m.nbr_au_reposPresent ? message.nbr_au_repos : 0 )
+                : type_     ( & resolver.Get( message.type_equipement() ) )
+                , total_    ( message.nbr_total() )
+                , available_( message.nbr_disponibles() ) 
+                , atWork_   ( message.nbr_au_travail() )
+                , atRest_   ( message.has_nbr_au_repos() ? message.nbr_au_repos() : 0 )
              {};
     virtual ~Availability();
     //@}

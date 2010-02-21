@@ -39,7 +39,7 @@ class TestSet_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TestSet_ABC( uint nIteration = 1 );
+             TestSet_ABC( unsigned int nIteration = 1 );
     virtual ~TestSet_ABC();
     //@}
 
@@ -51,7 +51,7 @@ public:
 protected:
     //! @name Member data
     //@{
-    uint nIteration_;
+    unsigned int nIteration_;
     //@}
 };
 

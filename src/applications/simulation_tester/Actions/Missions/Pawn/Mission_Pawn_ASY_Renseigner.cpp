@@ -43,9 +43,9 @@ void Mission_Pawn_ASY_Renseigner::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASY_Renseigner& asnMission = *new ASN1T_Mission_Pion_ASY_Renseigner();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_renseigner;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_renseigner = &asnMission;
+    Mission_Pion_ASY_Renseigner& asnMission = *new Mission_Pion_ASY_Renseigner();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_asy_renseigner = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.destinataire );
@@ -59,8 +59,8 @@ void Mission_Pawn_ASY_Renseigner::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASY_Renseigner::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_asy_renseigner );
-    ASN1T_Mission_Pion_ASY_Renseigner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_renseigner;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_asy_renseigner ());
+    Mission_Pion_ASY_Renseigner& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_asy_renseigner;
 
 
     delete &asnMission;

@@ -9,18 +9,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomatParameter.h"
-
 #include "simulation_orders/MIL_ParameterType_Automat.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomatParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 MIL_AutomatParameter::MIL_AutomatParameter( DEC_AutomateDecision* pDecision )
-: pDecision_( pDecision )
+    : pDecision_( pDecision )
 {
     // NOTHING
 }
@@ -29,10 +29,10 @@ MIL_AutomatParameter::MIL_AutomatParameter( DEC_AutomateDecision* pDecision )
 // Name: MIL_AutomatParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AutomatParameter::MIL_AutomatParameter( const ASN1T_Automat& asn, MIL_EntityManager_ABC& entityManager )
-: pDecision_( 0 )
+MIL_AutomatParameter::MIL_AutomatParameter( const Common::MsgAutomat& asn, MIL_EntityManager_ABC& entityManager )
+    : pDecision_( 0 )
 {
-    MIL_Automate* pAutomate = entityManager.FindAutomate( asn );
+    MIL_Automate* pAutomate = entityManager.FindAutomate( asn.oid() );
     if( pAutomate )
         pDecision_ = &pAutomate->GetDecision();
 }
@@ -59,7 +59,7 @@ bool MIL_AutomatParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_AutomatParameter::ToAutomat
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AutomatParameter::ToAutomat( ASN1T_Automat& asn ) const
+bool MIL_AutomatParameter::ToAutomat( Common::MsgAutomat& asn ) const
 {
     if( !pDecision_ )
         return false;

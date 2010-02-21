@@ -34,9 +34,9 @@ private:
 
 private:
     const TER_Localisation localisation_;
-    const uint             nForestDetectionTimeStep_;
-    const uint             nUrbanDetectionTimeStep_;
-    const uint             nEmptyDetectionTimeStep_;
+    const unsigned int             nForestDetectionTimeStep_;
+    const unsigned int             nUrbanDetectionTimeStep_;
+    const unsigned int             nEmptyDetectionTimeStep_;
 };
 
 // =============================================================================

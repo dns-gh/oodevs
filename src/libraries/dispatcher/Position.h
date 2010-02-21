@@ -12,8 +12,12 @@
 
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "geometry/Types.h"
-#include "game_asn/generated/base.h"
 #include <vector>
+
+namespace Common
+{
+    class MsgCoordLatLong;
+}
 
 namespace dispatcher
 {
@@ -28,7 +32,7 @@ namespace dispatcher
     Position ToPosition( const geometry::Point2f& point );
     Zone ToZone( const std::vector< geometry::Point2f >& points );
 
-    Zone ToZone( const std::vector< ASN1T_CoordLatLong >& coordinates, const kernel::CoordinateConverter_ABC& converter );
+    Zone ToZone( const std::vector< Common::MsgCoordLatLong >& coordinates, const kernel::CoordinateConverter_ABC& converter );
 }
 
 #endif // __Position_h_

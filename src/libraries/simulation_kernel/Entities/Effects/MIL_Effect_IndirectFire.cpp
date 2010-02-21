@@ -32,7 +32,7 @@
 // Name: MIL_Effect_IndirectFire constructor
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, uint nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
+MIL_Effect_IndirectFire::MIL_Effect_IndirectFire( const MIL_Agent_ABC& firer, unsigned int nTargetKnowledgeID, const PHY_DotationCategory_IndirectFire_ABC& indirectDotationCategory, MT_Float rInterventionTypeToFire )
     : nNbrRefs_                ( 0 )
     , firer_                   ( firer )
     , rInterventionTypeToFire_ ( rInterventionTypeToFire )
@@ -123,7 +123,7 @@ bool MIL_Effect_IndirectFire::CanWeaponBeUsed( const PHY_Weapon& weapon ) const
 // Name: MIL_Effect_IndirectFire::NotifyAmmoFired
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
-void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, uint nNbrAmmoReserved )
+void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_IndirectFire& weaponType, unsigned int nNbrAmmoReserved )
 {
     assert( !bIsFlying_ );
       
@@ -224,7 +224,7 @@ void MIL_Effect_IndirectFire::StopFlying()
 // Name: MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-uint MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType() const
+unsigned int MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType() const
 {
     if( bFired_ )
         return 0;
@@ -232,7 +232,7 @@ uint MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType() const
     MT_Float rTmp = indirectDotationCategory_.ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_;
     if( rTmp <= 0. )
         return 0;
-    return std::max( (uint)1, (uint)rTmp );
+    return std::max( (unsigned int)1, (unsigned int)rTmp );
 }
 
 // -----------------------------------------------------------------------------
@@ -252,7 +252,7 @@ bool MIL_Effect_IndirectFire::IsFlyingThroughLocalisation( const TER_Localisatio
 // Name: MIL_Effect_IndirectFire::GetFireID
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-uint MIL_Effect_IndirectFire::GetFireID() const
+unsigned int MIL_Effect_IndirectFire::GetFireID() const
 {
     assert( pFireResult_ );
     return pFireResult_->GetID();
@@ -344,7 +344,7 @@ void MIL_Effect_IndirectFire::ForceFlying()
 // Name: MIL_Effect_IndirectFire::GetNbrAmmoFired
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-uint MIL_Effect_IndirectFire::GetNbrAmmoFired() const
+unsigned int MIL_Effect_IndirectFire::GetNbrAmmoFired() const
 {
     return nNbrAmmoFired_;
 }

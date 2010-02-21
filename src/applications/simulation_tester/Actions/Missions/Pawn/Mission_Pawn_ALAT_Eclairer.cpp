@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_Eclairer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_Eclairer& asnMission = *new ASN1T_Mission_Pion_ALAT_Eclairer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_eclairer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_eclairer = &asnMission;
+    Mission_Pion_ALAT_Eclairer& asnMission = *new Mission_Pion_ALAT_Eclairer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_eclairer = &asnMission;
 
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
     const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
@@ -64,8 +64,8 @@ void Mission_Pawn_ALAT_Eclairer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_Eclairer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_eclairer );
-    ASN1T_Mission_Pion_ALAT_Eclairer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_eclairer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_eclairer ());
+    Mission_Pion_ALAT_Eclairer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_eclairer;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
     ASN_Tools::Delete( asnMission.plots_ravitaillement );

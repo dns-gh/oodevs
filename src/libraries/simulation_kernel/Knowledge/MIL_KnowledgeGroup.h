@@ -13,8 +13,8 @@
 #define __MIL_KnowledgeGroup_h_
 
 #include "MIL.h"
+#include "MIL_KnowledgeGroupType.h"
 #include "tools/Resolver.h"
-#include "Network/NET_ASN_Messages.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -25,14 +25,25 @@ namespace xml
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
-
+class KnowledgeGroupFactory_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
 
-class KnowledgeGroupFactory_ABC; // LTO
-class MIL_KnowledgeGroup; // LTO
+// LTO begin
+class KnowledgeGroupFactory_ABC;
+class MIL_KnowledgeGroup;
+namespace MsgsSimToClient
+{
+    class MsgKnowledgeGroupCreation;
+    class MsgKnowledgeGroupUpdate;
+}
 
-#include "MIL_KnowledgeGroupType.h"
+namespace MsgsClientToSim
+{ 
+    class MsgKnowledgeGroupCreationRequest;
+    class MsgKnowledgeGroupUpdateRequest;
+}
+// LTO end
 
 // =============================================================================
 // @class  MIL_KnowledgeGroup
@@ -54,17 +65,18 @@ public:
     //@}
 
 public:
-    MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, uint nID, MIL_Army_ABC& army ); // LTO
+    MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int nID, MIL_Army_ABC& army ); // LTO
     MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
-    MIL_KnowledgeGroup();
+     MIL_KnowledgeGroup();
     virtual ~MIL_KnowledgeGroup();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     
     void WriteODB( xml::xostream& xos ) const;
     //@}
@@ -94,18 +106,15 @@ public:
     //! @name Operations
     //@{
     // LTO begin
-    void OnReceiveMsgKnowledgeGroupEnable( const ASN1T_MsgKnowledgeGroupEnable& asnMsg );
-    void OnReceiveMsgKnowledgeGroupCreation( const ASN1T_MsgKnowledgeGroupCreation& msg );
-    void OnReceiveMsgKnowledgeGroupChangeSuperior( const ASN1T_MsgKnowledgeGroupChangeSuperior& msg, const tools::Resolver< MIL_Army_ABC >& armies );
-    void OnReceiveMsgKnowledgeGroupDelete( const ASN1T_MsgKnowledgeGroupDelete& msg );
-    void OnReceiveMsgKnowledgeGroupSetType( const ASN1T_MsgKnowledgeGroupSetType& msg );
+    void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message );
+    void OnReceiveMsgKnowledgeGroupUpdate     ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
     // LTO end
     //@}
 
 
     //! @name Accessors
     //@{
-          uint                                    GetID       () const;
+          unsigned int                            GetID       () const;
     const MIL_KnowledgeGroupType&                 GetType     () const;
           MIL_Army_ABC&                           GetArmy     () const;
     const T_AutomateVector&                       GetAutomates() const;
@@ -127,7 +136,6 @@ public:
     // LTO begin
     void UpdateKnowledgeGroup() const;
     
-    void DeleteKnowledgeGroup();
     void MoveKnowledgeGroup( MIL_KnowledgeGroup *pNewParent );
     // LTO end
 
@@ -135,19 +143,24 @@ public:
     
 private:
     const MIL_KnowledgeGroupType* pType_;
-          uint                    nID_;
-          MIL_Army_ABC*           pArmy_;
-          MIL_KnowledgeGroup*     pParent_; // LTO
+    uint                    nID_;
+    MIL_Army_ABC*           pArmy_;
+    MIL_KnowledgeGroup*     pParent_; // LTO
 
     DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
-
     T_AutomateVector        automates_;
     T_KnowledgeGroupVector  knowledgeGroups_; // LTO
     MT_Float                timeToDiffuse_; // LTO
     bool                    isActivated_; // LTO
 
+    bool OnReceiveMsgKnowledgeGroupEnable        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
+    bool OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
+    bool OnReceiveMsgKnowledgeGroupSetType       ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
+
+    //@}
+    
 private:
-    static std::set< uint > ids_;
+    static std::set< unsigned int > ids_;
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_KnowledgeGroup )

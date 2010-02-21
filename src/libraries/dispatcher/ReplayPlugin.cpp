@@ -13,12 +13,19 @@
 #include "ClientPublisher_ABC.h"
 #include "Model.h"
 #include "ReplayExtensionFactory.h"
-#include "game_asn/ReplaySenders.h"
+
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "Services.h"
 
+//#include "protocol/protocol.h"
+#include "protocol/ReplaySenders.h"
+#include "protocol/ClientSenders.h"
+#include "protocol/Simulation.h"
+
+
 using namespace dispatcher;
+
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPlugin constructor
@@ -75,7 +82,7 @@ void ReplayPlugin::Update()
 // Name: ReplayPlugin::Receive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ReplayPlugin::Receive( const ASN1T_MsgsSimToClient& )
+void ReplayPlugin::Receive( const MsgsSimToClient::MsgSimToClient& )
 {
     // NOTHING
 }
@@ -118,30 +125,23 @@ void ReplayPlugin::OnTimer()
 // -----------------------------------------------------------------------------
 void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
 {
-    model_.SendReplayInfo( client, loader_.GetTickNumber(), running_ ? EnumSimulationState::running : EnumSimulationState::paused, factor_ );
+    model_.SendReplayInfo( client, loader_.GetTickNumber(), running_ ? Common::running : Common::paused, factor_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReplayPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void ReplayPlugin::OnReceive( const std::string& , const ASN1T_MsgsClientToReplay& asnMsg )
+void ReplayPlugin::OnReceive( const std::string& , const MsgsClientToReplay::MsgClientToReplay& wrapper )
 {
-    switch( asnMsg.msg.t )
-    {
-        case T_MsgsClientToReplay_msg_msg_control_pause:
-            Pause();
-            break;
-        case T_MsgsClientToReplay_msg_msg_control_resume:
-            Resume();
-            break;
-        case T_MsgsClientToReplay_msg_msg_control_change_time_factor:
-            ChangeTimeFactor( asnMsg.msg.u.msg_control_change_time_factor );
-            break;
-        case T_MsgsClientToReplay_msg_msg_control_skip_to_tick:
-            skipToFrame_ = asnMsg.msg.u.msg_control_skip_to_tick;
-            break;
-    };
+    if( wrapper.message().has_control_pause() )
+	    Pause();
+    else if( wrapper.message().has_control_resume() )
+	    Resume();
+    else if( wrapper.message().has_control_change_time_factor() )
+        ChangeTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
+    else if( wrapper.message().has_control_skip_to_tick() )
+        skipToFrame_ = wrapper.message().control_skip_to_tick().tick();
 }
 
 // -----------------------------------------------------------------------------
@@ -150,18 +150,18 @@ void ReplayPlugin::OnReceive( const std::string& , const ASN1T_MsgsClientToRepla
 // -----------------------------------------------------------------------------
 void ReplayPlugin::ChangeTimeFactor( unsigned factor )
 {
-    replay::ControlChangeTimeFactorAck asn;
+    replay::ControlChangeTimeFactorAck message;
     if( factor )
     {
         factor_ = factor;
         MT_Timer_ABC::Start( MT_TimeSpan( (int)( 10000 / factor ) ) );
-        asn().error_code = EnumControlErrorCode::no_error;
+        message().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error);
     }
     else
-        asn().error_code = EnumControlErrorCode::error_invalid_time_factor;
+        message().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_invalid_time_factor );
 
-    asn().time_factor = factor_;
-    asn.Send( clients_ );
+    message().set_time_factor( factor_ );
+    message.Send( clients_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ void ReplayPlugin::ChangeTimeFactor( unsigned factor )
 void ReplayPlugin::Pause()
 {
     replay::ControlPauseAck asn;
-    asn() = running_ ? EnumControlErrorCode::no_error : EnumControlErrorCode::error_already_paused;
+    asn().set_error_code( running_ ? MsgsSimToClient::ControlAck_ErrorCode_no_error: MsgsSimToClient::ControlAck_ErrorCode_error_already_paused );
     asn.Send( clients_ );
     running_ = false;
 }
@@ -183,7 +183,7 @@ void ReplayPlugin::Pause()
 void ReplayPlugin::Resume()
 {
     replay::ControlResumeAck asn;
-    asn() = running_ ? EnumControlErrorCode::error_not_paused :  EnumControlErrorCode::no_error;
+    asn().set_error_code( running_ ? MsgsSimToClient::ControlAck_ErrorCode_error_not_paused :  MsgsSimToClient::ControlAck_ErrorCode_no_error );
     asn.Send( clients_ );
     running_ = true;
 }
@@ -195,15 +195,15 @@ void ReplayPlugin::Resume()
 void ReplayPlugin::SkipToFrame( unsigned frame )
 {
     replay::ControlSkipToTickAck asn;
-    asn().tick = loader_.GetCurrentTick();
+    asn().set_tick( loader_.GetCurrentTick() );
     if( frame < loader_.GetTickNumber() )
     {
-        asn().tick = frame;    
-        asn().error_code = EnumControlErrorCode::no_error;
+        asn().set_tick( frame );    
+        asn().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_no_error );
         MT_LOG_INFO_MSG( "Skipping to frame " << frame );
     }
     else
-        asn().error_code = EnumControlErrorCode::error_invalid_time_factor;
+        asn().set_error_code( MsgsSimToClient::ControlAck_ErrorCode_error_invalid_time_factor );
     asn.Send( clients_ );
     if( frame < loader_.GetTickNumber() )
         loader_.SkipToFrame( frame );

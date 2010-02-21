@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_DetruireNeutraliserDansZone::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone& asnMission = *new ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_detruire_neutraliser_dans_zone;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_detruire_neutraliser_dans_zone = &asnMission;
+    Mission_Pion_ALAT_DetruireNeutraliserDansZone& asnMission = *new Mission_Pion_ALAT_DetruireNeutraliserDansZone();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_detruire_neutraliser_dans_zone = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
     const Position& pointDislocation_ = pTarget_->GetTestParam_Point();
@@ -72,8 +72,8 @@ void Mission_Pawn_ALAT_DetruireNeutraliserDansZone::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_DetruireNeutraliserDansZone::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_detruire_neutraliser_dans_zone );
-    ASN1T_Mission_Pion_ALAT_DetruireNeutraliserDansZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_detruire_neutraliser_dans_zone;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_detruire_neutraliser_dans_zone ());
+    Mission_Pion_ALAT_DetruireNeutraliserDansZone& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_detruire_neutraliser_dans_zone;
 
     ASN_Tools::Delete( asnMission.zone );
     ASN_Tools::Delete( asnMission.point_dislocation );

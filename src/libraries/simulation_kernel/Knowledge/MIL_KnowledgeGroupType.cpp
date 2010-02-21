@@ -17,7 +17,7 @@
 #include <xeumeuleu/xml.h>
 
 MIL_KnowledgeGroupType::T_KnowledgeGroupTypeMap MIL_KnowledgeGroupType::knowledgeGroupTypes_;
-uint                                            MIL_KnowledgeGroupType::nNextID_ = 0;
+unsigned int                                            MIL_KnowledgeGroupType::nNextID_ = 0;
 
 struct MIL_KnowledgeGroupType::LoadingWrapper
 {
@@ -106,7 +106,7 @@ MIL_KnowledgeGroupType::MIL_KnowledgeGroupType( const std::string& strName, xml:
         xis.error( "unit-knowledge: max-lifetime <= 0" );
     rKnowledgeAgentMaxLifeTime_ = timeFactor * rKnowledgeAgentMaxLifeTime_; // LTO
 
-    uint nTmp = std::numeric_limits< unsigned int >::max();
+    unsigned int nTmp = std::numeric_limits< unsigned int >::max();
     xis >> xml::optional() >> xml::attribute( "max-unit-to-knowledge-distance", nTmp );
     if( nTmp <= 0 )
         xis.error( "unit-knowledge: max-unit-to-knowledge-distance <= 0" );
@@ -145,7 +145,7 @@ MIL_KnowledgeGroupType::~MIL_KnowledgeGroupType()
 // Name: MIL_KnowledgeGroupType::InstanciateKnowledgeGroup
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup& MIL_KnowledgeGroupType::InstanciateKnowledgeGroup( uint nID, MIL_Army_ABC& army ) const
+MIL_KnowledgeGroup& MIL_KnowledgeGroupType::InstanciateKnowledgeGroup( unsigned int nID, MIL_Army_ABC& army ) const
 {
     return *new MIL_KnowledgeGroup( const_cast< MIL_KnowledgeGroupType& >( *this ), nID, army );
 }
@@ -164,9 +164,9 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( const std::strin
 // Name: MIL_KnowledgeGroupType::FindType
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( uint nID )
+const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( unsigned int nID )
 {
-    CIT_KnowledgeGroupTypeMap it = std::find_if( knowledgeGroupTypes_.begin(), knowledgeGroupTypes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &MIL_KnowledgeGroupType::GetID ), std::select2nd< T_KnowledgeGroupTypeMap::value_type >() ) ) );
+    CIT_KnowledgeGroupTypeMap it = std::find_if( knowledgeGroupTypes_.begin(), knowledgeGroupTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &MIL_KnowledgeGroupType::GetID ), std::select2nd< T_KnowledgeGroupTypeMap::value_type >() ) ) );
     return it == knowledgeGroupTypes_.end() ? 0 : it->second;
 }
 
@@ -174,7 +174,7 @@ const MIL_KnowledgeGroupType* MIL_KnowledgeGroupType::FindType( uint nID )
 // Name: MIL_KnowledgeGroupType::GetID
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-uint MIL_KnowledgeGroupType::GetID() const
+unsigned int MIL_KnowledgeGroupType::GetID() const
 {
     return nID_;
 }

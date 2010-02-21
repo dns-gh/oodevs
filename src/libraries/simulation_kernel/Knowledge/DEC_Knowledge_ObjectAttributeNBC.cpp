@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_ObjectAttributeNBC.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
 #include "Entities/Objects/NBCAttribute.h"
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeNBC )
 
@@ -56,9 +56,9 @@ DEC_Knowledge_ObjectAttributeNBC::~DEC_Knowledge_ObjectAttributeNBC()
 // Name: DEC_Knowledge_ObjectZoneNBC::load
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBC::load( MIL_CheckPointInArchive& /*file*/, const uint )
+void DEC_Knowledge_ObjectAttributeNBC::load( MIL_CheckPointInArchive& /*file*/, const unsigned int )
 {
-//    uint nID;
+//    unsigned int nID;
 //    file >> nID;
 //    pNbcAgentType_ = MIL_NbcAgentType::Find( nID );
 }
@@ -67,10 +67,10 @@ void DEC_Knowledge_ObjectAttributeNBC::load( MIL_CheckPointInArchive& /*file*/, 
 // Name: DEC_Knowledge_ObjectZoneNBC::save
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBC::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_ObjectAttributeNBC::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file & boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
-//    unsigned nbc = ( pNbcAgentType_ ? pNbcAgentType_->GetID() : (uint)-1 );
+//    unsigned nbc = ( pNbcAgentType_ ? pNbcAgentType_->GetID() : (unsigned int)-1 );
 //    file << nbc;
 }
 
@@ -127,11 +127,12 @@ void DEC_Knowledge_ObjectAttributeNBC::UpdateOnCollision( const DEC_Knowledge_Ob
 // Name: DEC_Knowledge_ObjectAttributeNBC::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeNBC::Send( ASN1T_ObjectAttributes& /*asn*/ ) const
+void DEC_Knowledge_ObjectAttributeNBC::Send( Common::MsgObjectAttributes& /*message*/ ) const
 {
     if ( attr_ )
     {
-//    asn.m.nbcPresent = 1;
+        // $$$$ SBO 2009-10-27: huu?
+//    asn.set_nbcPresent( 1 );
 //    asn.nbc.nbc_agent = pNbcAgentType_->GetID();    
     }
 }

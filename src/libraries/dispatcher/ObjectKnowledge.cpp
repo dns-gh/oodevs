@@ -25,7 +25,7 @@
 #include "Side.h"
 #include "Automat.h"
 #include "Object.h"
-
+#include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
 
 using namespace dispatcher;
@@ -34,17 +34,17 @@ using namespace dispatcher;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Model& model, const ASN1T_MsgObjectKnowledgeCreation& asnMsg )
-    : SimpleEntity< kernel::ObjectKnowledge_ABC >( asnMsg.oid )
+ObjectKnowledge::ObjectKnowledge( const Model& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg )
+    : SimpleEntity< kernel::ObjectKnowledge_ABC >( asnMsg.oid() )
     , model_                        ( model )
-    , team_                         ( model.sides_.Get( asnMsg.team ) )
-    , pObject_                      ( model.objects_.Find( asnMsg.real_object ) )
-    , nType_                        ( asnMsg.type )
+    , team_                         ( model.sides_.Get( asnMsg.team() ) )
+    , pObject_                      ( model.objects_.Find( asnMsg.real_object() ) )
+    , nType_                        ( asnMsg.type() )
     , localisation_                 ( )
     , bPerceived_                   ( false )
     , automatPerceptions_           ()    
 {
-    Initialize( model, asnMsg.attributes );
+    Initialize( model, asnMsg.attributes() );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,14 +58,14 @@ ObjectKnowledge::~ObjectKnowledge()
 
 
 #define CHECK_ASN_ATTRIBUTE_CREATION( ASN, CLASS ) \
-    if ( attributes.m.##ASN##Present ) \
+    if ( attributes.has_##ASN##()  ) \
         AddAttribute( new CLASS( model, attributes ) )
 
 // -----------------------------------------------------------------------------
 // Name: Object::Initialize
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Initialize( const Model& model, const ASN1T_ObjectAttributes& attributes )
+void ObjectKnowledge::Initialize( const Model& model, const Common::MsgObjectAttributes& attributes )
 {
     CHECK_ASN_ATTRIBUTE_CREATION( construction      , ConstructionAttribute );
     CHECK_ASN_ATTRIBUTE_CREATION( obstacle          , ObstacleAttribute );
@@ -92,12 +92,12 @@ void ObjectKnowledge::AddAttribute( ObjectAttribute_ABC* attribute )
 // Name: ObjectKnowledge::Update
 // Created: AGE 2007-04-13
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
+void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
-    bool realObjectChanged = ( message.real_object && ! pObject_ )
-                          || ( pObject_ && pObject_->GetId() != message.real_object );
+    bool realObjectChanged = ( message.real_object() && ! pObject_ )
+                          || ( pObject_ && pObject_->GetId() != ( unsigned int )message.real_object() );
     if( realObjectChanged )
-        pObject_ = model_.objects_.Find( message.real_object );
+        pObject_ = model_.objects_.Find( message.real_object() );
 
     ApplyUpdate( message );
 }
@@ -110,27 +110,27 @@ void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeCreation& message )
 // Name: ObjectKnowledge::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::Update( const ASN1T_MsgObjectKnowledgeUpdate& asnMsg )
+void ObjectKnowledge::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg )
 {  
-    if( asnMsg.m.locationPresent )
+    if( asnMsg.has_location()  )
     {
-        localisation_.Update( asnMsg.location );
+        localisation_.Update( asnMsg.location() );
         optionals_.locationPresent = 1;
     }
 
-    if( asnMsg.m.automat_perceptionPresent )
+    if( asnMsg.has_automat_perception()  )
     {
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
-        for( unsigned int i = 0; i < asnMsg.automat_perception.n; ++i )
-            automatPerceptions_.push_back( &model_.automats_.Get( asnMsg.automat_perception.elem[ i ]) );
+        for( int i = 0; i < asnMsg.automat_perception().elem_size(); ++i )
+            automatPerceptions_.push_back( &model_.automats_.Get( asnMsg.automat_perception().elem( i )) );
     }
 
-    if( asnMsg.m.real_objectPresent )
-        pObject_ = model_.objects_.Find( asnMsg.real_object );
+    if( asnMsg.has_real_object()  )
+        pObject_ = model_.objects_.Find( asnMsg.real_object() );
 
     std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( asnMsg.attributes ) ) );
+                   boost::bind( &ObjectAttribute_ABC::Update, _1, boost::cref( asnMsg.attributes() ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,24 +141,24 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeCreation asn;
 
-    asn().oid         = GetId();
-    asn().team        = team_.GetId();
-    asn().real_object = pObject_ ? pObject_->GetId() : 0;
-    asn().type        = nType_.c_str();
+    asn().set_oid( GetId() );
+    asn().set_team( team_.GetId() );
+    asn().set_real_object( pObject_ ? pObject_->GetId() : 0 );
+    asn().set_type( nType_.c_str() );
 
     std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( asn().attributes ) ) );
+                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
 //    if( nTypeDotationForConstruction_ != std::numeric_limits< unsigned int >::max() )
 //    {
-//        asn().m.construction_dotation_typePresent = 1;
-//        asn().construction_dotation_type = nTypeDotationForConstruction_;
+//        asn().set_construction_dotation_typePresent( 1 );
+//        asn().set_construction_dotation_type( nTypeDotationForConstruction_ );
 //    }
 //
 //    if( nTypeDotationForMining_ != std::numeric_limits< unsigned int >::max() )
 //    {
-//        asn().m.mining_dotation_typePresent = 1;
-//        asn().mining_dotation_type = nTypeDotationForMining_;
+//        asn().set_mining_dotation_typePresent( 1 );
+//        asn.set_mining_dotation_type( nTypeDotationForMining_ );
 //    }
 //
 //    SEND_ASN_ATTRIBUTE( obstacle_type              , nObstacleType_              );
@@ -174,39 +174,30 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     client::ObjectKnowledgeUpdate asn;
+    asn().set_oid( GetId() );
+    asn().set_team( team_.GetId() );
+    asn().set_real_object( pObject_ ? pObject_->GetId() : 0 );
 
-    asn().oid  = GetId();
-    asn().team = team_.GetId();
+    if( asn().has_location() )
+        localisation_.Send( *asn().mutable_location() );
 
-    asn().m.real_objectPresent = 1;
-    asn().real_object          = pObject_ ? pObject_->GetId() : 0;
-
-    if( optionals_.locationPresent )
+    if( asn().has_automat_perception() )
     {
-        asn().m.locationPresent = 1;
-        localisation_.Send( asn().location );
-    }
-
-    if( optionals_.automat_perceptionPresent )
-    {
-        asn().m.automat_perceptionPresent = 1;
-        asn().automat_perception.n = automatPerceptions_.size();
-        asn().automat_perception.elem = asn().automat_perception.n > 0 ? new ASN1T_OID[ asn().automat_perception.n ] : 0;
         unsigned int i = 0;
         for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it, ++i )
-            asn().automat_perception.elem[i] = (*it)->GetId();
+            asn().mutable_automat_perception()->set_elem( i, (*it)->GetId() );
     }
 
     std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( asn().attributes ) ) );
+                   boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
     asn.Send( publisher );
 
-//    if( asn().m.specific_attributesPresent && pAttributes_ )
-//        pAttributes_->AsnDelete( asn().specific_attributes );
+//    if( asn().has_specific_attributes() && pAttributes_ )
+//        pAttributes_->Delete( asn().specific_attributes );
 
-    if( asn().m.automat_perceptionPresent && asn().automat_perception.n > 0 )
-        delete [] asn().automat_perception.elem;
+    if( asn().has_automat_perception() && asn().automat_perception().elem_size() > 0 )
+        asn().mutable_automat_perception()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -215,9 +206,10 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
+    //MsgObjectKnowledgeDestruction asn;
     client::ObjectKnowledgeDestruction asn;
-    asn().oid  = GetId();
-    asn().team = team_.GetId();
+    asn().set_oid  ( GetId() );
+    asn().set_team ( team_.GetId());
     asn.Send( publisher );
 }
 

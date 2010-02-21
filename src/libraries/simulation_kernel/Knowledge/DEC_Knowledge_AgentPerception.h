@@ -43,8 +43,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -68,7 +68,7 @@ public:
 
     //! @name Accessors
     //@{
-          uint                 GetCreationTimeStep       () const;
+          unsigned int                 GetCreationTimeStep       () const;
           MIL_Agent_ABC&       GetAgentPerceived         () const;
     const MIL_AgentPion&       GetAgentPerceiving        () const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel () const;
@@ -77,7 +77,7 @@ public:
           bool                 IsPerceived               () const; // Perception au tick courant
           
           bool                 IsAvailable               () const;
-          void                 MakeAvailable             ( uint nDelay );
+          void                 MakeAvailable             ( unsigned int nDelay );
 
     const DEC_Knowledge_AgentPerceptionDataDetection&      GetDetectionData     () const;
     const DEC_Knowledge_AgentPerceptionDataRecognition&    GetRecognitionData   () const;
@@ -85,7 +85,7 @@ public:
     //@}
 
 private:
-          uint                                            nCreationTimeStep_;
+          unsigned int                                            nCreationTimeStep_;
 
           DEC_Knowledge_AgentPerceptionDataDetection      dataDetection_;
           DEC_Knowledge_AgentPerceptionDataRecognition    dataRecognition_;
@@ -99,7 +99,7 @@ private:
 
           bool                                            bRecordModeEnabled_;
           bool                                            bPreviousRecordModeEnabled_;
-          uint                                            nRecordModeDisablingDelay_;
+          unsigned int                                            nRecordModeDisablingDelay_;
 
           bool                                            bAttacker_;
 };

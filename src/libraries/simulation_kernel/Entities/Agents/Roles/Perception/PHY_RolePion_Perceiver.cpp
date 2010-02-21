@@ -37,13 +37,17 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KS_Perception.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "Network/NET_AgentServer.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 #include "simulation_terrain/TER_PopulationConcentration_ABC.h"
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
+
+
+const unsigned int PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
 
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
@@ -62,8 +66,6 @@
 #include "urban/TerrainObject_ABC.h"
 
 using namespace detection;
-
-const unsigned int PHY_RolePion_Perceiver::nNbrStepsBetweenPeriphericalVision_ = 12; //$$$ En dur ...
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Perceiver )
 
@@ -1054,7 +1056,7 @@ const PHY_PerceptionLevel& PHY_RolePion_Perceiver::ComputePerception( const MT_V
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::UpdatePeriphericalVisionState()
 {
-    const uint nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    const unsigned int nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nNextPeriphericalVisionStep_ <= nCurrentTime )
     {
         while ( nNextPeriphericalVisionStep_ <= nCurrentTime )
@@ -1276,37 +1278,33 @@ bool PHY_RolePion_Perceiver::HasDelayedPerceptions() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::SendDebugState() const
 {
-    NET_ASN_MsgUnitVisionCones asn;
-    asn().oid = pion_.GetID();
-    std::auto_ptr< PerceptionDistanceComputer_ABC > computer( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() );
-    asn().elongation = pion_.Execute( *computer ).GetElongationFactor(); //@TODO MGD share
-    asn().cones.n = surfacesAgent_.size();
-    asn().cones.elem = asn().cones.n ? new ASN1T_VisionCone[ asn().cones.n ] : 0;
-    unsigned i = 0;
-    for( CIT_SurfaceAgentMap it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
-        it->second.SendFullState( asn().cones.elem[ i++ ] );
-    asn.Send();
+    client::UnitVisionCones message;
+    message().set_oid( pion_.GetID() );
+    message().set_elongation( pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() )->GetElongationFactor() ); //@TODO MGD share
 
-    for( unsigned i = 0; i < asn().cones.n; ++i )
-        delete[] asn().cones.elem[i].directions.elem;
-    delete[] asn().cones.elem;
+    for( CIT_SurfaceAgentMap it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
+        it->second.SendFullState( *message().mutable_cones()->add_elem() );
+    message.Send( NET_Publisher_ABC::Publisher() );
+
+    for( int i = 0; i < message().cones().elem_size(); ++i )
+        message().mutable_cones()->mutable_elem(i)->mutable_directions()->Clear();
+    message().mutable_cones()->Clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Perceiver::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.radar_actifPresent = 1;
-    msg().radar_actif          = IsUsingActiveRadar();
+    msg().set_radar_actif( IsUsingActiveRadar() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Perceiver::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bRadarStateHasChanged_ )
         SendFullState( msg );

@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "Simulation.h"
+#include "protocol/publisher_ABC.h"
 
 namespace kernel
 {

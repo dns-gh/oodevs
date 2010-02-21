@@ -12,6 +12,7 @@
 #include "simulation_orders/MIL_ParameterType_PopulationKnowledge.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationKnowledgeParameter constructor
@@ -27,7 +28,7 @@ MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( DEC_Knowledg
 // Name: MIL_PopulationKnowledgeParameter constructor
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const ASN1T_PopulationKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_PopulationKnowledgeParameter::MIL_PopulationKnowledgeParameter( const Common::MsgPopulationKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver )
 : pKnowledgePopulation_( resolver.ResolveKnowledgePopulation( asn ) )
 {
     // NOTHING
@@ -55,9 +56,9 @@ bool MIL_PopulationKnowledgeParameter::IsOfType( const MIL_ParameterType_ABC& ty
 // Name: MIL_PopulationKnowledgeParameter::ToPopulationKnowledge
 // Created: LDC 2009-06-04
 // -----------------------------------------------------------------------------
-bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( ASN1T_PopulationKnowledge& asn ) const
+bool MIL_PopulationKnowledgeParameter::ToPopulationKnowledge( Common::MsgPopulationKnowledge& asn ) const
 {
-    asn = pKnowledgePopulation_->GetID();
+    asn.set_oid( pKnowledgePopulation_->GetID() );
     return true;
 }
 

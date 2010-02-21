@@ -21,18 +21,22 @@
 using namespace geometry;
 using namespace kernel;
 
+namespace MsgsSimToClient
+{
+    class MsgLogMaintenanceHandlingCreation;
+}
 // -----------------------------------------------------------------------------
 // Name: LogMaintenanceConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const ASN1T_MsgLogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< BreakdownType >& breakdownResolver )
+LogMaintenanceConsign::LogMaintenanceConsign( Controller& controller, const MsgsSimToClient::MsgLogMaintenanceHandlingCreation& message, const tools::Resolver_ABC< Agent_ABC >& resolver, const tools::Resolver_ABC< ComponentType >& componentResolver, const tools::Resolver_ABC< BreakdownType >& breakdownResolver )
     : controller_      ( controller )
     , resolver_        ( resolver )
-    , nID_             ( message.oid_consigne )
-    , pion_            ( resolver_.Get( message.oid_pion ) )
+    , nID_             ( message.oid_consigne() )
+    , pion_            ( resolver_.Get( message.oid_pion() ) )
     , pPionLogHandling_( 0 )
-    , equipmentType_   ( & componentResolver.Get( message.type_equipement ) )
-    , breakdownType_   ( & breakdownResolver.Get( message.type_panne ) )
+    , equipmentType_   ( & componentResolver.Get( message.type_equipement() ) )
+    , breakdownType_   ( & breakdownResolver.Get( message.type_panne() ) )
     , diagnosed_       ( false )
     , nState_          ( eLogMaintenanceHandlingStatus_Termine )
 {
@@ -62,16 +66,16 @@ LogMaintenanceConsign::~LogMaintenanceConsign()
 // Name: LogMaintenanceConsign::Update
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogMaintenanceConsign::Update( const ASN1T_MsgLogMaintenanceHandlingUpdate& message )
+void LogMaintenanceConsign::Update( const MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& message )
 {
-    if( message.m.etatPresent )
-        nState_ = E_LogMaintenanceHandlingStatus( message.etat );
-    if( message.m.diagnostique_effectuePresent )
-        diagnosed_ = message.diagnostique_effectue != 0;
+    if( message.has_etat()  )
+        nState_ = E_LogMaintenanceHandlingStatus( message.etat() );
+    if( message.has_diagnostique_effectue()  )
+        diagnosed_ = message.diagnostique_effectue() != 0;
 
     if( pPionLogHandling_ )
         pPionLogHandling_->Get< LogMaintenanceConsigns >().TerminateConsign( *this );
-    pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant );
+    pPionLogHandling_ = resolver_.Find( message.oid_pion_log_traitant() );
     if( pPionLogHandling_ )
         pPionLogHandling_->Get< LogMaintenanceConsigns >().HandleConsign( *this );
     

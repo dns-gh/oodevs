@@ -67,7 +67,7 @@ const MIL_Army_ABC* MIL_Automate::GetArmySurrenderedTo() const
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------
 inline
-uint MIL_Automate::GetID() const
+unsigned int MIL_Automate::GetID() const
 {
     return nID_;
 }

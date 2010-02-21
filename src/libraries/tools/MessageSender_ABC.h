@@ -11,7 +11,7 @@
 #define __MessageSender_ABC_h_
 
 #include "MessageIdentifierFactory.h"
-#include "AsnMessageEncoder.h"
+#include "MessageEncoder.h"
 
 namespace tools
 {
@@ -53,8 +53,8 @@ template< typename T >
 void MessageSender_ABC::Send( const std::string& link, const T& message )
 {
     static const unsigned long id = MessageIdentifierFactory::GetIdentifier< T >();
-    AsnMessageEncoder< T > asnEncoder( message );
-    Send( link, id, asnEncoder );
+    MessageEncoder< T > encoder( message );
+    Send( link, id, encoder );
 }
 
 // -----------------------------------------------------------------------------

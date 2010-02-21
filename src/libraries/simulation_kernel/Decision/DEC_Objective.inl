@@ -22,7 +22,7 @@ MT_Vector2D DEC_Objective::ComputerBarycenter() const
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
 inline
-uint DEC_Objective::GetSchedule() const
+unsigned int DEC_Objective::GetSchedule() const
 {
     return nSchedule_;
 }

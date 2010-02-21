@@ -43,14 +43,14 @@ NBCAttribute::~NBCAttribute()
 template< typename T >
 void NBCAttribute::UpdateData( const T& message )
 {
-    if ( message.m.nbcPresent )    
+    if ( message.has_nbc()  )    
     {
-        agents_.resize( message.nbc.nbc_agents.n );
+        agents_.resize( message.nbc().nbc_agents().elem_size() );
 
-        for( uint i = 0; i < message.nbc.nbc_agents.n; ++i )
-            agents_[ i ] = & resolver_.Get( message.nbc.nbc_agents.elem[ i ] );
+        for( int i = 0; i < message.nbc().nbc_agents().elem_size(); ++i )
+            agents_[ i ] = & resolver_.Get( message.nbc().nbc_agents().elem( i ) );
         controller_.Update( *(NBCAttribute_ABC*)this );
-        danger_ = message.nbc.danger_level;
+        danger_ = message.nbc().danger_level();
     }
 }
 
@@ -58,27 +58,27 @@ void NBCAttribute::UpdateData( const T& message )
 // Name: NBCAttribute::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void NBCAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void NBCAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute::DoUpdate
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void NBCAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void NBCAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------

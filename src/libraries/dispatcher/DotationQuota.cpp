@@ -8,18 +8,19 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
+#include "protocol/SimulationSenders.h"
 #include "DotationQuota.h"
 
 using namespace dispatcher;
+//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: DotationQuota constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-DotationQuota::DotationQuota( const Model_ABC& /*model*/, const ASN1T_DotationQuota& asnMsg )
-   : nDotationType_( asnMsg.ressource_id )
-   , nQuota_       ( asnMsg.quota_disponible )
+DotationQuota::DotationQuota( const Model_ABC& /*model*/, const Common::MsgDotationQuota& message )
+   : nDotationType_( message.ressource_id() )
+   , nQuota_       ( message.quota_disponible() )
 {
     // NOTHING
 }
@@ -37,18 +38,18 @@ DotationQuota::~DotationQuota()
 // Name: DotationQuota::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void DotationQuota::Update( const ASN1T_DotationQuota& asnMsg )
+void DotationQuota::Update( const Common::MsgDotationQuota& message )
 {
-    nQuota_ = asnMsg.quota_disponible;
+    nQuota_ = message.quota_disponible();
 }
 
 // -----------------------------------------------------------------------------
 // Name: DotationQuota::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void DotationQuota::Send( ASN1T_DotationQuota& asnMsg ) const
+void DotationQuota::Send( Common::MsgDotationQuota& message ) const
 {
-    asnMsg.ressource_id     = nDotationType_;
-    asnMsg.quota_disponible = nQuota_;
+    message.set_ressource_id( nDotationType_ );
+    message.set_quota_disponible( nQuota_ );
 }
 

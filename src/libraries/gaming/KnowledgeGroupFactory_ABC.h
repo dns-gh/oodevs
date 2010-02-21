@@ -16,6 +16,12 @@ namespace kernel
     class Team_ABC;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgKnowledgeGroupCreation;
+}
+
+
 // =============================================================================
 /** @class  KnowledgeGroupFactory_ABC
     @brief  KnowledgeGroupFactory_ABC
@@ -32,9 +38,9 @@ public:
     virtual ~KnowledgeGroupFactory_ABC() {};
     //@}
 
-    //! @name Operations
+    //! @name Operations 
     //@{
-    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const ASN1T_MsgKnowledgeGroupCreation& asnMsg, kernel::Team_ABC& team ) = 0; // LTO
+    virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, kernel::Team_ABC& team ) = 0; // LTO
     //@}
 };
 

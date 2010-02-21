@@ -11,12 +11,17 @@
 #include "PopulationKnowledge.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/AgentKnowledgeConverter_ABC.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
 using namespace xml;
 using namespace actions;
 using namespace parameters;
+
+
+using namespace Common;
+//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: PopulationKnowledge constructor
@@ -63,12 +68,12 @@ PopulationKnowledge::~PopulationKnowledge()
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
+void PopulationKnowledge::CommitTo( MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_populationKnowledge;
+    message.set_null_value ( !IsSet() );
+    message.mutable_value()->mutable_populationknowledge();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.populationKnowledge );
+        Entity< PopulationKnowledge_ABC >::CommitTo< MsgPopulationKnowledge >( *message.mutable_value()->mutable_populationknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,9 +89,9 @@ void PopulationKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: PopulationKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void PopulationKnowledge::CommitTo( ASN1T_PopulationKnowledge& asn ) const
+void PopulationKnowledge::CommitTo( MsgPopulationKnowledge& message ) const
 {
-    Entity< PopulationKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
+    Entity< PopulationKnowledge_ABC >::CommitTo< MsgPopulationKnowledge >( message );
 }
 
 // -----------------------------------------------------------------------------

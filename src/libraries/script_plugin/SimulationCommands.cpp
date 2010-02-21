@@ -14,6 +14,8 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
+#include "protocol/simulationsenders.h"
+
 using namespace plugins::script;
 using namespace dispatcher;
 
@@ -67,7 +69,7 @@ void SimulationCommands::RegisterIn( directia::Brain& brain )
 void SimulationCommands::Pause()
 {
     simulation::ControlPause pause;
-    pause.Send( publisher_ );
+    pause.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +79,7 @@ void SimulationCommands::Pause()
 void SimulationCommands::Resume()
 {
     simulation::ControlResume resume;
-    resume.Send( publisher_ );
+    resume.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,8 +89,8 @@ void SimulationCommands::Resume()
 void SimulationCommands::ChangeTimeFactor( unsigned int factor )
 {
     simulation::ControlChangeTimeFactor changeFactor;
-    changeFactor() = factor;
-    changeFactor.Send( publisher_ );
+    changeFactor().set_time_factor( factor );
+    changeFactor.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,10 +100,10 @@ void SimulationCommands::ChangeTimeFactor( unsigned int factor )
 void SimulationCommands::CreateUnit( const Position& position, unsigned int type, unsigned int parent )
 {
     simulation::UnitCreationRequest request;
-    request().type_pion = type;
-    request().oid_automate = parent;
-    converter_.ConvertToGeo( ToPoint( position ), request().position );
-    request.Send( publisher_ );
+    request().set_type_pion( type );
+    request().set_oid_automate( parent );
+    converter_.ConvertToGeo( ToPoint( position ), *request().mutable_position() );
+    request.Send( publisher_, 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +113,7 @@ void SimulationCommands::CreateUnit( const Position& position, unsigned int type
 void SimulationCommands::Engage( unsigned automat, bool engage )
 {
     simulation::SetAutomatMode mode;
-    mode().oid = automat;
-    mode().mode = engage ? EnumAutomatMode::embraye : EnumAutomatMode::debraye;
-    mode.Send( publisher_ );
+    mode().set_oid( automat );
+    mode().set_mode( engage ? EnumAutomatMode::embraye : EnumAutomatMode::debraye );
+    mode.Send( publisher_,0 );
 }

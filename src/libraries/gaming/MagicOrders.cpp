@@ -8,10 +8,11 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
+#include "Decisions.h"
 #include "MagicOrders.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "Decisions.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -39,10 +40,10 @@ MagicOrders::~MagicOrders()
 // Name: MagicOrders::DoUpdate
 // Created: AGE 2006-04-28
 // -----------------------------------------------------------------------------
-void MagicOrders::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void MagicOrders::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.transporteurs_disponiblesPresent )
-        transportersReady_ = message.transporteurs_disponibles != 0;
+    if( message.has_transporteurs_disponibles()  )
+        transportersReady_ = message.transporteurs_disponibles() != 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -10,9 +10,13 @@
 #ifndef __ActionParameterPath_h_
 #define __ActionParameterPath_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+
+namespace Common
+{
+    class MsgLocation;
+}
 
 namespace kernel
 {
@@ -38,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const kernel::Location_ABC& location );
-             Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_Location& asn );
+             Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgLocation& message );
              Path( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
              Path( const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~Path();
@@ -46,10 +50,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
-    void CommitTo( ASN1T_Path& asn ) const;
-    void Clean( ASN1T_Path& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
+    void CommitTo( Common::MsgLocation& message ) const;
+    void Clean( Common::MsgLocation& message ) const;
     virtual void Accept( ParameterVisitor_ABC& visitor ) const;
     virtual bool IsSet() const;
     //@}
@@ -74,7 +78,7 @@ private:
     virtual void VisitCircle ( const geometry::Point2f&, float ) {}
     virtual void VisitPoint  ( const geometry::Point2f& ) {}
     virtual void VisitPath   ( const geometry::Point2f& first, const T_PointVector& points );
-    void AddPoints( const ASN1T_Location& asn );
+    void AddPoints( const Common::MsgLocation& message );
     void ReadPoint( xml::xistream& xis );
     void AddPoint( const geometry::Point2f& p, unsigned i, unsigned count );
     //@}

@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_AutomatList.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,10 +18,12 @@ using namespace dispatcher;
 // Name: MissionParameter_AutomatList constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_AutomatList::MissionParameter_AutomatList( const ASN1T_MissionParameter& asn )
+MissionParameter_AutomatList::MissionParameter_AutomatList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    std::copy( asn.value.u.automatList->elem, asn.value.u.automatList->elem + asn.value.u.automatList->n, std::back_inserter( automats_ ) );
+    for( int i = 0; i < asn.value().automatlist().elem_size(); ++i )
+        automats_.push_back( asn.value().automatlist().elem( i ).oid() );
+    //std::copy( asn.value().automatlist().elem().begin(), asn.value().automatlist().elem().end(), std::back_inserter( automats_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -36,20 +39,18 @@ MissionParameter_AutomatList::~MissionParameter_AutomatList()
 // Name: MissionParameter_AutomatList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_AutomatList::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_AutomatList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value = bNullValue_;
-    asn.value.t = T_MissionParameter_value_automatList;
-    asn.value.u.automatList = new ASN1T_AutomatList();
-    asn.value.u.automatList->n = automats_.size();
-    asn.value.u.automatList->elem = automats_.empty() ? 0 : (int*)&automats_.front();
+    asn.set_null_value ( bNullValue_ );
+    for (std::vector< int >::const_iterator iter(automats_.begin()); iter != automats_.end(); ++iter )
+        asn.mutable_value()->mutable_automatlist()->add_elem()->set_oid( *iter );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_AutomatList::AsnDelete
+// Name: MissionParameter_AutomatList::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_AutomatList::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_AutomatList::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.automatList;
+    delete asn.mutable_value()->mutable_automatlist();
 }

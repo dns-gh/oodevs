@@ -10,13 +10,15 @@
 #include "gaming_app_pch.h"
 #include "UnitMissionInterface.h"
 #include "MissionInterfaceBuilder.h"
-#include "game_asn/SimulationSenders.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/AutomatDecisions.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 using namespace kernel;
 using namespace actions;

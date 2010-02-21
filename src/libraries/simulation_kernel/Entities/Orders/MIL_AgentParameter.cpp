@@ -9,18 +9,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentParameter.h"
-
 #include "simulation_orders/MIL_ParameterType_Agent.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentParameter constructor
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 MIL_AgentParameter::MIL_AgentParameter( DEC_RolePion_Decision* pAgent )
-: pDecision_( pAgent )
+    : pDecision_( pAgent )
 {
     // NOTHING
 }
@@ -29,10 +29,10 @@ MIL_AgentParameter::MIL_AgentParameter( DEC_RolePion_Decision* pAgent )
 // Name: MIL_AgentParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentParameter::MIL_AgentParameter( const ASN1T_Unit& asn, MIL_EntityManager_ABC& entityManager )
-: pDecision_( 0 )
+MIL_AgentParameter::MIL_AgentParameter( const Common::MsgUnit& asn, MIL_EntityManager_ABC& entityManager )
+    : pDecision_( 0 )
 {
-    MIL_AgentPion* pPion = entityManager.FindAgentPion( asn );
+    MIL_AgentPion* pPion = entityManager.FindAgentPion( asn.oid() );
     if( pPion )
         pDecision_ = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
 }
@@ -59,7 +59,7 @@ bool MIL_AgentParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_AgentParameter::ToAgent
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentParameter::ToAgent( ASN1T_Unit& asn ) const
+bool MIL_AgentParameter::ToAgent( Common::MsgUnit& asn ) const
 {
     if( !pDecision_ )
         return false;

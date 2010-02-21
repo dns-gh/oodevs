@@ -71,7 +71,7 @@ PopulationModel::~PopulationModel()
 // Name: PopulationModel::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void PopulationModel::ScheduleAllMissions( Population& population, Scheduler& scheduler, uint nIteration /* = 1 */ ) const
+void PopulationModel::ScheduleAllMissions( Population& population, Scheduler& scheduler, unsigned int nIteration /* = 1 */ ) const
 {
     for( CIT_MissionPopulationTypeVector it = missionTypes_.begin(); it != missionTypes_.end(); ++it )
         scheduler.AddActions( Mission_Population_Type::CreateMission( **it, population ), nIteration );
@@ -81,7 +81,7 @@ void PopulationModel::ScheduleAllMissions( Population& population, Scheduler& sc
 // Name: PopulationModel::ScheduleMission
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void PopulationModel::ScheduleMission( Population& population, Scheduler& scheduler, const std::string& strMissionName, uint nIteration /* = 1 */ ) const
+void PopulationModel::ScheduleMission( Population& population, Scheduler& scheduler, const std::string& strMissionName, unsigned int nIteration /* = 1 */ ) const
 {
     scheduler.AddActions( Mission_Population_Type::CreateMission( strMissionName, population ), nIteration );
 }

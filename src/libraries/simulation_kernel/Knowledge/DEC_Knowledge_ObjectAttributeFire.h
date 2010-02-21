@@ -13,7 +13,6 @@
 #define __DEC_Knowledge_ObjectAttributeFire_h_
 
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
-#include "game_asn/Simulation.h"
 #include <boost/serialization/export.hpp>
 
 class FireAttribute;
@@ -39,8 +38,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     void Register( DEC_Knowledge_Object& knObject );
     //@}
 
@@ -49,7 +48,7 @@ public:
     virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );    
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision );
-    virtual void Send( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

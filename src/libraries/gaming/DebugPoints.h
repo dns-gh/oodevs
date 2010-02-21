@@ -10,10 +10,12 @@
 #ifndef __DebugPoints_h_
 #define __DebugPoints_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -27,7 +29,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class DebugPoints : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< ASN1T_MsgDebugPoints >
+                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgDebugPoints >
                   , public kernel::Drawable_ABC
 {
 
@@ -52,7 +54,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgDebugPoints& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgDebugPoints& message );
     //@}
 
 private:

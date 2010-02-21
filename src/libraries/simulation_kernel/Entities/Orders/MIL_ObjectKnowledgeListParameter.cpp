@@ -9,21 +9,21 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectKnowledgeListParameter.h"
-
 #include "simulation_orders/MIL_ParameterType_ObjectKnowledgeList.h"
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectKnowledgeListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const ASN1T_ObjectKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const Common::MsgObjectKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    knowledgeObjectList_.reserve( asn.n );
-    for( unsigned int i = 0; i < asn.n; ++i )
+    knowledgeObjectList_.reserve( asn.elem_size() );
+    for( int i = 0; i < asn.elem_size(); ++i )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject = resolver.ResolveKnowledgeObject( asn.elem[i] );
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject = resolver.ResolveKnowledgeObject( asn.elem(i) );
         if( !pKnowledgeObject || !pKnowledgeObject->IsValid() )
             throw std::runtime_error( "Object Knowledge does not exist" );
         knowledgeObjectList_.push_back( pKnowledgeObject );
@@ -35,7 +35,7 @@ MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const ASN1T_
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
 MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& knowledgeObjectList )
-: knowledgeObjectList_( knowledgeObjectList )
+    : knowledgeObjectList_( knowledgeObjectList )
 {
     // NOTHING
 }
@@ -62,18 +62,11 @@ bool MIL_ObjectKnowledgeListParameter::IsOfType( const MIL_ParameterType_ABC& ty
 // Name: MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList( ASN1T_ObjectKnowledgeList& asn ) const
+bool MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& asn ) const
 {
     unsigned int size = knowledgeObjectList_.size();
-    asn.n = size;
-    if( size != 0 )
-    {    
-        ASN1T_OID* pOID = new ASN1T_OID[ size ]; //$$$ RAM
-        asn.elem = pOID;
-
-        for( unsigned int i = 0; i < size; ++i )
-            pOID[i] = knowledgeObjectList_[i]->GetID();
-    }
+    for( unsigned int i = 0; i < size; ++i )
+        asn.add_elem()->set_oid( knowledgeObjectList_[i]->GetID() );
     return true;
 }
 

@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_Location.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_Location constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_Location::MissionParameter_Location( const ASN1T_MissionParameter& asn )
+MissionParameter_Location::MissionParameter_Location( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , location_           ( *asn.value.u.location )
+    , location_           ( asn.value().location() )
 {
     // NOTHING
 }
@@ -41,19 +42,18 @@ MissionParameter_Location::~MissionParameter_Location()
 // Name: MissionParameter_Location::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Location::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Location::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value           = bNullValue_;
-    asn.value.t              = T_MissionParameter_value_location;
-    asn.value.u.location = new ASN1T_Location();
-    location_.Send( *asn.value.u.location );
+    asn.set_null_value           ( bNullValue_ );
+    //asn.mutable_value()->mutable_location() = new MsgLocation();
+    location_.Send( *asn.mutable_value()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Location::AsnDelete
+// Name: MissionParameter_Location::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Location::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Location::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.location;
+    delete asn.mutable_value()->mutable_location();
 }

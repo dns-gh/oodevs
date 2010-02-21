@@ -10,9 +10,13 @@
 #ifndef __Action_ABC_h_
 #define __Action_ABC_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "ParameterContainer_ABC.h"
+
+namespace Common
+{
+    class MsgMissionParameters;
+}
 
 namespace kernel
 {
@@ -84,8 +88,8 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void CommitTo( ASN1T_MissionParameters& asn ) const;
-    void Clean( ASN1T_MissionParameters& asn ) const;
+    void CommitTo( Common::MsgMissionParameters& message ) const;
+    void Clean( Common::MsgMissionParameters& message ) const;
     //@}
 
 private:

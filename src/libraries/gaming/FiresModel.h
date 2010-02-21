@@ -10,8 +10,11 @@
 #ifndef __FiresModel_h_
 #define __FiresModel_h_
 
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
-#include "game_asn/Simulation.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -40,12 +43,12 @@ public:
     //@{
     void Purge();
 
-    void AddFire        ( const ASN1T_MsgStartUnitFire& message );
-    void AddFire        ( const ASN1T_MsgStartPopulationFire& message );
-    kernel::Entity_ABC* FindFirer( const ASN1T_MsgStopUnitFire& message );
-    kernel::Entity_ABC* FindFirer( const ASN1T_MsgStopPopulationFire& message );
-    void RemoveFire     ( const ASN1T_MsgStopUnitFire& message );
-    void RemoveFire     ( const ASN1T_MsgStopPopulationFire& message );
+    void AddFire        ( const MsgsSimToClient::MsgStartUnitFire& message );
+    void AddFire        ( const MsgsSimToClient::MsgStartPopulationFire& message );
+    kernel::Entity_ABC* FindFirer( const MsgsSimToClient::MsgStopUnitFire& message );
+    kernel::Entity_ABC* FindFirer( const MsgsSimToClient::MsgStopPopulationFire& message );
+    void RemoveFire     ( const MsgsSimToClient::MsgStopUnitFire& message );
+    void RemoveFire     ( const MsgsSimToClient::MsgStopPopulationFire& message );
     //@}
 
 private:

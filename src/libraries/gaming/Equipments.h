@@ -10,10 +10,13 @@
 #ifndef __Equipments_h_
 #define __Equipments_h_
 
-#include "game_asn/Simulation.h"
+
 #include "HierarchicExtension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -22,6 +25,11 @@ namespace kernel
     class PropertiesDictionary;
     class Entity_ABC;
     class Automat_ABC;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
 }
 
 class Equipment;
@@ -33,7 +41,7 @@ class Equipment;
 // Created: AGE 2006-02-13
 // =============================================================================
 class Equipments : public HierarchicExtension_ABC
-                 , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                 , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                  , public tools::Resolver< Equipment >
 {
 
@@ -54,7 +62,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void Update( const std::vector< Equipment >& differences );
     void AddToDictionary( const Equipment& equipment );

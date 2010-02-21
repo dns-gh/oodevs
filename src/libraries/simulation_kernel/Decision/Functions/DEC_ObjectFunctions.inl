@@ -27,5 +27,5 @@ template< typename T >
 void DEC_ObjectFunctions::MagicCreateObject( const T& caller, const std::string& type, const TER_Localisation* pLocalisation )
 {
     //$$$ A réencapsuler    
-    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), type, pLocalisation, EnumDemolitionTargetType::preliminary );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( caller.GetArmy(), type, pLocalisation, Common::ObstacleType_DemolitionTargetType_preliminary );
 }

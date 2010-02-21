@@ -10,7 +10,6 @@
 #ifndef __ToxicCloudAttribute_h_
 #define __ToxicCloudAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/OptionalValue.h"
@@ -18,6 +17,16 @@
 #include "clients_kernel/Drawable_ABC.h"
 #include "geometry/Types.h"
 #include <limits>
+
+namespace MsgsSimToClient
+{
+    class MsgObjectUpdate;
+    class MsgObjectCreation;
+}
+namespace Common
+{
+    class MsgLocatedQuantityList;
+}
 
 namespace kernel
 {
@@ -33,8 +42,8 @@ namespace kernel
 // Created: AGE 2006-02-14
 // =============================================================================
 class ToxicCloudAttribute : public kernel::ToxicCloudAttribute_ABC                        
-                         , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
-                         , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >
+                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
+                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
                          , public kernel::Drawable_ABC
 {
 
@@ -59,11 +68,11 @@ private:
 
     //! @name Helpers
     //@{    
-    virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgObjectCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
     template< typename T >
     void UpdateData( const T& message );
-    void UpdateToxicCloud( const ASN1T_LocatedQuantityList& cloud );
+    void UpdateToxicCloud( const Common::MsgLocatedQuantityList& cloud );
     void CreateTexture();
     void UpdateTexture() const;
     //@}

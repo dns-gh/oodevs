@@ -53,41 +53,41 @@ void MedicalStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 // Name: MedicalStates::DoUpdate
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-void MedicalStates::DoUpdate( const ASN1T_MsgLogMedicalState& message )
+void MedicalStates::DoUpdate( const MsgsSimToClient::MsgLogMedicalState& message )
 {
-    if( message.m.chaine_activeePresent )
-        bChainEnabled_ = message.chaine_activee != 0;
+    if( message.has_chaine_activee()  )
+        bChainEnabled_ = message.chaine_activee() != 0;
 
-    if( message.m.prioritesPresent )
+    if( message.has_priorites()  )
     {
-        priorities_.resize( message.priorites.n );
-        for( uint i = 0; i < message.priorites.n; ++i )
-            priorities_[i] = E_HumanWound( message.priorites.elem[i] );
+        priorities_.resize( message.priorites().elem_size() );
+        for( int i = 0; i < message.priorites().elem_size(); ++i )
+            priorities_[i] = E_HumanWound( message.priorites().elem( i ) );
     }
-    if( message.m.priorites_tactiquesPresent )
+    if( message.has_priorites_tactiques()  )
     {
-        tacticalPriorities_.resize( message.priorites_tactiques.n );
-        for( uint i = 0; i < message.priorites_tactiques.n; ++i )
-            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques.elem[i] );
+        tacticalPriorities_.resize( message.priorites_tactiques().elem_size() );
+        for( int i = 0; i < message.priorites_tactiques().elem_size(); ++i )
+            tacticalPriorities_[i] = & automatResolver_.Get( message.priorites_tactiques().elem( i ).oid() );
     }
 
-    if( message.m.disponibilites_ambulances_ramassagePresent )
+    if( message.has_disponibilites_ambulances_ramassage()  )
     {
-        dispoRamassageAmbulances_.resize( message.disponibilites_ambulances_ramassage.n );
-        for( uint i = 0; i < message.disponibilites_ambulances_ramassage.n; ++i )
-            dispoRamassageAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_ramassage.elem[i] );
+        dispoRamassageAmbulances_.resize( message.disponibilites_ambulances_ramassage().elem_size() );
+        for( int i = 0; i < message.disponibilites_ambulances_ramassage().elem_size(); ++i )
+            dispoRamassageAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_ramassage().elem( i ) );
     }
-    if( message.m.disponibilites_ambulances_relevePresent )
+    if( message.has_disponibilites_ambulances_releve()  )
     {
-        dispoReleveAmbulances_.resize( message.disponibilites_ambulances_releve.n );
-        for( uint i = 0; i < message.disponibilites_ambulances_releve.n; ++i )
-            dispoReleveAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_releve.elem[i] );
+        dispoReleveAmbulances_.resize( message.disponibilites_ambulances_releve().elem_size() );
+        for( int i = 0; i < message.disponibilites_ambulances_releve().elem_size(); ++i )
+            dispoReleveAmbulances_[i] = Availability( resolver_, message.disponibilites_ambulances_releve().elem( i ) );
     }
-    if( message.m.disponibilites_medecinsPresent )
+    if( message.has_disponibilites_medecins()  )
     {
-        dispoDoctors_.resize( message.disponibilites_medecins.n );
-        for( uint i = 0; i < message.disponibilites_medecins.n; ++i )
-            dispoDoctors_[i] = Availability( resolver_, message.disponibilites_medecins.elem[i] );
+        dispoDoctors_.resize( message.disponibilites_medecins().elem_size() );
+        for( int i = 0; i < message.disponibilites_medecins().elem_size(); ++i )
+            dispoDoctors_[i] = Availability( resolver_, message.disponibilites_medecins().elem( i ) );
     }
     controller_.Update( *this );
 }

@@ -49,199 +49,101 @@
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_MissionParameterFactory::Create
 // Created: LDC 2009-04-29
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const ASN1T_MissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
     MIL_MissionParameter_ABC* ptr = 0;
-    if( asn.null_value )
+    if( asn.null_value() )
         ptr = new MIL_NullParameter();
     else
     {
         MIL_EntityManager_ABC& entityManager = MIL_AgentServer::GetWorkspace().GetEntityManager();
-        switch( asn.value.t )
+        if( asn.value().has_abool() )
+            ptr = new MIL_BoolParameter( asn.value().abool() ? true : false );
+        else if( asn.value().has_areal() )
+            ptr = new MIL_RealParameter( asn.value().areal() );
+        else if( asn.value().has_enumeration() )
+            ptr = new MIL_EnumerationParameter( asn.value().enumeration() );
+        else if( asn.value().has_path() )
+            ptr = new MIL_PathParameter( asn.value().path() );
+        else if( asn.value().has_pathlist() )
+            ptr = new MIL_PathListParameter( asn.value().pathlist() );
+        else if( asn.value().has_point() )
+            ptr = new MIL_PointParameter( asn.value().point() );
+        else if( asn.value().has_pointlist() )
+            ptr = new MIL_PointListParameter( asn.value().pointlist() );
+        else if( asn.value().has_polygon() )
+            ptr = new MIL_PolygonParameter( asn.value().polygon() );
+        else if ( asn.value().has_polygonlist() )
+            ptr = new MIL_PolygonListParameter( asn.value().polygonlist() );
+        else if ( asn.value().has_location() )
+            ptr = new MIL_LocationParameter( asn.value().location() );
+        else if ( asn.value().has_locationlist() )
+            ptr = new MIL_LocationListParameter( asn.value().locationlist() );
+        else if ( asn.value().has_heading() )
+            ptr = new MIL_DirectionParameter( asn.value().heading() );
+        else if ( asn.value().has_atlasnature() )
+            ptr = new MIL_AtlasNatureParameter( asn.value().atlasnature() );
+        else if ( asn.value().has_unit() )
+            ptr = new MIL_AgentParameter( asn.value().unit(), entityManager );
+        else if ( asn.value().has_unitlist() )
+            ptr = new MIL_AgentListParameter( asn.value().unitlist(), entityManager );
+        else if ( asn.value().has_automat() )
+            ptr = new MIL_AutomatParameter( asn.value().automat(), entityManager );
+        else if ( asn.value().has_automatlist() )
+            ptr = new MIL_AutomatListParameter( asn.value().automatlist(), entityManager );
+        else if ( asn.value().has_unitknowledge() )
+            ptr = new MIL_AgentKnowledgeParameter( asn.value().unitknowledge(), resolver );
+        else if ( asn.value().has_unitknowledgelist() )
+            ptr = new MIL_AgentKnowledgeListParameter( asn.value().unitknowledgelist(), resolver );
+        else if ( asn.value().has_objectknowledge() )
+            ptr = new MIL_ObjectKnowledgeParameter( asn.value().objectknowledge(), resolver );
+        else if ( asn.value().has_objectknowledgelist() )
+            ptr = new MIL_ObjectKnowledgeListParameter( asn.value().objectknowledgelist(), resolver );
+        else if ( asn.value().has_populationknowledge() )
+            ptr = new MIL_PopulationKnowledgeParameter( asn.value().populationknowledge(), resolver );
+        else if ( asn.value().has_plannedwork() )
+            ptr = new MIL_PlannedWorkParameter( asn.value().plannedwork(), entityManager );
+        else if ( asn.value().has_plannedworklist() )
+            ptr = new MIL_PlannedWorkListParameter( asn.value().plannedworklist(), entityManager );
+        else if ( asn.value().has_dotationtype() )
+            ptr = new MIL_DotationTypeParameter( asn.value().dotationtype() );
+        else if ( asn.value().has_equipmenttype() )
+            ptr = new MIL_EquipmentTypeParameter( asn.value().equipmenttype() );
+        else if ( asn.value().has_tirindirect() )
         {
-            case T_MissionParameter_value_aBool:
-            {
-                ptr = new MIL_BoolParameter( asn.value.u.aBool ? true : false );
-                break;
-            }
-            case T_MissionParameter_value_aReal:
-            {
-                ptr = new MIL_RealParameter( asn.value.u.aReal );
-                break;
-            }
-            case T_MissionParameter_value_enumeration:
-            {
-                ptr = new MIL_EnumerationParameter( asn.value.u.enumeration );
-                break;
-            }
-            case T_MissionParameter_value_path:
-            {
-                ptr = new MIL_PathParameter( *asn.value.u.path );
-                break;
-            }
-            case T_MissionParameter_value_pathList:
-            {
-                ptr = new MIL_PathListParameter( *asn.value.u.pathList );
-                break;
-            }
-            case T_MissionParameter_value_point:
-            {
-                ptr = new MIL_PointParameter( *asn.value.u.point );
-                break;
-            }
-            case T_MissionParameter_value_pointList:
-            {
-                ptr = new MIL_PointListParameter( *asn.value.u.pointList );
-                break;
-            }
-            case T_MissionParameter_value_polygon:
-            {
-                ptr = new MIL_PolygonParameter( *asn.value.u.polygon );
-                break;
-            }
-            case T_MissionParameter_value_polygonList:
-            {
-                ptr = new MIL_PolygonListParameter( *asn.value.u.polygonList );
-                break;
-            }
-            case T_MissionParameter_value_location:
-            {
-                ptr = new MIL_LocationParameter( *asn.value.u.location );
-                break;
-            }
-            case T_MissionParameter_value_locationList:
-            {
-                ptr = new MIL_LocationListParameter( *asn.value.u.locationList );
-                break;
-            }
-            case T_MissionParameter_value_heading:
-            {
-                ptr = new MIL_DirectionParameter( asn.value.u.heading );
-                break;
-            }
-            case T_MissionParameter_value_atlasNature:
-            {
-                ptr = new MIL_AtlasNatureParameter( *asn.value.u.atlasNature );
-                break;
-            }
-            case T_MissionParameter_value_unit:
-            {
-                ptr = new MIL_AgentParameter( asn.value.u.unit, entityManager );
-                break;
-            }
-            case T_MissionParameter_value_unitList:
-            {
-                ptr = new MIL_AgentListParameter( *asn.value.u.unitList, entityManager );
-                break;
-            }
-            case T_MissionParameter_value_automat:
-            {
-                ptr = new MIL_AutomatParameter( asn.value.u.automat, entityManager );
-                break;
-            }
-            case T_MissionParameter_value_automatList:
-            {
-                ptr = new MIL_AutomatListParameter( *asn.value.u.automatList, entityManager );
-                break;
-            }
-            case T_MissionParameter_value_unitKnowledge:
-            {
-                ptr = new MIL_AgentKnowledgeParameter( asn.value.u.unitKnowledge, resolver );
-                break;
-            }
-            case T_MissionParameter_value_unitKnowledgeList:
-            {
-                ptr = new MIL_AgentKnowledgeListParameter( *asn.value.u.unitKnowledgeList, resolver );
-                break;
-            }
-            case T_MissionParameter_value_objectKnowledge:
-            {
-                ptr = new MIL_ObjectKnowledgeParameter( asn.value.u.objectKnowledge, resolver );
-                break;
-            }
-            case T_MissionParameter_value_objectKnowledgeList:
-            {
-                ptr = new MIL_ObjectKnowledgeListParameter( *asn.value.u.objectKnowledgeList, resolver );
-                break;
-            }
-            case T_MissionParameter_value_populationKnowledge:
-            {
-                ptr = new MIL_PopulationKnowledgeParameter( asn.value.u.populationKnowledge, resolver );
-                break;
-            }
-            case T_MissionParameter_value_plannedWork:
-            {
-                ptr = new MIL_PlannedWorkParameter( *asn.value.u.plannedWork, entityManager );
-                break;
-            }
-            case T_MissionParameter_value_plannedWorkList:
-            {
-                ptr = new MIL_PlannedWorkListParameter( *asn.value.u.plannedWorkList, entityManager );
-                break;
-            }
-            case T_MissionParameter_value_dotationType:
-            {
-                ptr = new MIL_DotationTypeParameter( asn.value.u.dotationType );
-                break;
-            }
-            case T_MissionParameter_value_equipmentType:
-            {
-                ptr = new MIL_EquipmentTypeParameter( asn.value.u.equipmentType );
-                break;
-            }
-            case T_MissionParameter_value_tirIndirect:
-            {
-                ptr = new MIL_TirIndirectParameter( asn.value.u.tirIndirect );
-                break;
-            }
-            case T_MissionParameter_value_dateTime:
-            {
-                ptr = new MIL_DateTimeParameter( *asn.value.u.dateTime );
-                break;
-            }
-            case T_MissionParameter_value_logMaintenancePriorities:
-            {
-                ptr = new MIL_LogMaintenancePrioritiesParameter( *asn.value.u.logMaintenancePriorities );
-                break;
-            }
-            case T_MissionParameter_value_logMedicalPriorities:
-            {
-                ptr = new MIL_LogMedicalPrioritiesParameter( *asn.value.u.logMedicalPriorities );
-                break;
-            }
-            case T_MissionParameter_value_aCharStr:
-            {
-                ptr = new MIL_StringParameter( asn.value.u.aCharStr );
-                break;
-            }
-            case T_MissionParameter_value_missionObjective:
-            {
-                // $$$$ LDC : This type doesn't seem to ever be converted to/from. Only lists of objectives exist.
-                ptr = new MIL_NullParameter();
-                break;
-            }
-            case T_MissionParameter_value_missionObjectiveList:
-            {
-                ptr = new MIL_MissionObjectiveListParameter( *asn.value.u.missionObjectiveList );
-                break;
-            }
-            case T_MissionParameter_value_urbanBlock:
-            {
-                ptr = new MIL_UrbanBlockParameter( asn.value.u.urbanBlock, resolver );
-                break;
-            }
-            case T_MissionParameter_value_line:
-            case T_MissionParameter_value_limasOrder:
-            case T_MissionParameter_value_intelligenceList:
-                // $$$$ LDC : These types are exclusively managed by the OrderContext.
-            default:
-                ptr = new MIL_NullParameter();
+            Common::MsgUnitFire msg;
+            msg.set_oid( asn.value().tirindirect() );
+            ptr = new MIL_TirIndirectParameter( msg );
         }
+        else if ( asn.value().has_urbanblock() )
+            ptr = new MIL_UrbanBlockParameter( asn.value().urbanblock(), resolver );
+        else if ( asn.value().has_datetime() )
+            ptr = new MIL_DateTimeParameter( asn.value().datetime() );
+        else if ( asn.value().has_logmaintenancepriorities() )
+            ptr = new MIL_LogMaintenancePrioritiesParameter( asn.value().logmaintenancepriorities() );
+        else if ( asn.value().has_logmedicalpriorities() )
+            ptr = new MIL_LogMedicalPrioritiesParameter( asn.value().logmedicalpriorities() );
+        else if ( asn.value().has_acharstr() )
+            ptr = new MIL_StringParameter( asn.value().acharstr() );
+        else if ( asn.value().has_missionobjective() )              // $$$$ LDC : This type doesn't seem to ever be converted to/from. Only lists of objectives exist.
+            ptr = new MIL_NullParameter();
+        else if( asn.value().has_missionobjectivelist() )
+            ptr = new MIL_MissionObjectiveListParameter( asn.value().missionobjectivelist() );
+        else if( asn.value().has_urbanblock() )
+            ptr = new MIL_UrbanBlockParameter( asn.value().urbanblock(), resolver );
+//        else if ( asn.value().has_value_line() ||
+//            asn.value().has_value_limasOrder() ||
+//            asn.value().has_value_intelligenceList() )
+            // $$$$ LDC : These types are exclusively managed by the OrderContext.
+        else
+            ptr = new MIL_NullParameter();
+    
     }
     boost::shared_ptr<MIL_MissionParameter_ABC> result( ptr );
     return result;
@@ -362,7 +264,9 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateTir( int id )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_TirIndirectParameter( id ) );
+    Common::MsgUnitFire msg;
+    msg.set_oid( id );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_TirIndirectParameter( msg ) );
     return result; 
 }
 
@@ -400,12 +304,12 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 // Name: MIL_MissionParameterFactory::Copy
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::Copy( const ASN1T_MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
+void MIL_MissionParameterFactory::Copy( const Common::MsgMissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver )
 {
     parameters.clear();
-    int size = asn.n;
+    int size = asn.elem_size();
     for ( int i = 0; i < size; ++i )
-        parameters.push_back( Create( asn.elem[i], resolver ) );
+        parameters.push_back( Create( asn.elem(i), resolver ) );
 }
 
 // -----------------------------------------------------------------------------

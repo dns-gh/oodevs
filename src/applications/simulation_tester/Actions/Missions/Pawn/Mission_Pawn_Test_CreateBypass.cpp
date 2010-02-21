@@ -43,9 +43,9 @@ void Mission_Pawn_Test_CreateBypass::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_CreateBypass& asnMission = *new ASN1T_Mission_Pion_Test_CreateBypass();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_create_bypass;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_bypass = &asnMission;
+    Mission_Pion_Test_CreateBypass& asnMission = *new Mission_Pion_Test_CreateBypass();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_create_bypass = &asnMission;
 
 
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.objet );
@@ -59,8 +59,8 @@ void Mission_Pawn_Test_CreateBypass::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_CreateBypass::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_create_bypass );
-    ASN1T_Mission_Pion_Test_CreateBypass& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_create_bypass;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_create_bypass ());
+    Mission_Pion_Test_CreateBypass& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_create_bypass;
 
 
     delete &asnMission;

@@ -43,9 +43,9 @@ void Mission_Automat_ABC_ProtegerPC::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_ProtegerPC& asnMission = *new ASN1T_Mission_Automate_ABC_ProtegerPC();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_proteger_pc;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_proteger_pc = &asnMission;
+    Mission_Automate_ABC_ProtegerPC& asnMission = *new Mission_Automate_ABC_ProtegerPC();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_proteger_pc = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.pc );
@@ -59,8 +59,8 @@ void Mission_Automat_ABC_ProtegerPC::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_ProtegerPC::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_proteger_pc );
-    ASN1T_Mission_Automate_ABC_ProtegerPC& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_proteger_pc;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_proteger_pc ());
+    Mission_Automate_ABC_ProtegerPC& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_proteger_pc;
 
 
     delete &asnMission;

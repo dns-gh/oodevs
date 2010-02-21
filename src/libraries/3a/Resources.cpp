@@ -34,14 +34,14 @@ Resources::Resources( xml::xistream& xis )
 // Name: Resources::Extract
 // Created: AGE 2007-10-23
 // -----------------------------------------------------------------------------
-int Resources::Extract( const ASN1T_MsgUnitAttributes& attributes )
+int Resources::Extract( const MsgUnitAttributes& attributes )
 {
-    unsigned size = attributes.dotation_eff_ressource.n;
+    unsigned size = attributes.dotation_eff_ressource().elem_size();
     while( size > 0 )
     {
         --size;
-        const int dotation = attributes.dotation_eff_ressource.elem[ size ].ressource_id;
-        const int quantity = attributes.dotation_eff_ressource.elem[ size ].quantite_disponible;
+        const int dotation = attributes.dotation_eff_ressource().elem( size ).ressource_id();
+        const int quantity = attributes.dotation_eff_ressource().elem( size ).quantite_disponible();
         if( filter_.IsAllowed( dotation ) )
             resources_[ dotation ] = quantity;
     }

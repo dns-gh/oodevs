@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_MettreEnOeuvreZoneStationnement::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement& asnMission = *new ASN1T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_mettre_en_oeuvre_zone_stationnement;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_mettre_en_oeuvre_zone_stationnement = &asnMission;
+    Mission_Pion_LOG_MettreEnOeuvreZoneStationnement& asnMission = *new Mission_Pion_LOG_MettreEnOeuvreZoneStationnement();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_mettre_en_oeuvre_zone_stationnement = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_LOG_MettreEnOeuvreZoneStationnement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_MettreEnOeuvreZoneStationnement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_mettre_en_oeuvre_zone_stationnement );
-    ASN1T_Mission_Pion_LOG_MettreEnOeuvreZoneStationnement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_mettre_en_oeuvre_zone_stationnement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_mettre_en_oeuvre_zone_stationnement ());
+    Mission_Pion_LOG_MettreEnOeuvreZoneStationnement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_mettre_en_oeuvre_zone_stationnement;
 
     ASN_Tools::Delete( asnMission.zone );
 

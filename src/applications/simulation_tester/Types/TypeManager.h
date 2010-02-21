@@ -47,13 +47,13 @@ public:
     //! @name Operations
     //@{
     const AutomatType*     FindAutomatType    ( const std::string&   strName  ) const;
-    const AutomatType*     FindAutomatType    ( ASN1T_TypeAutomate   asnId    ) const;
+    const AutomatType*     FindAutomatType    ( TypeAutomate   asnId    ) const;
     const AutomatModel*    FindAutomatModel   ( const std::string&   strModel ) const;
     const PawnType*        FindPawnType       ( const std::string&   strName  ) const;
-    const PawnType*        FindPawnType       ( ASN1T_UnitType       asnId    ) const;
+    const PawnType*        FindPawnType       ( UnitType       asnId    ) const;
     const PawnModel*       FindPawnModel      ( const std::string&   strModel ) const;
     const PopulationType*  FindPopulationType ( const std::string&   strName  ) const;
-    const PopulationType*  FindPopulationType ( ASN1T_TypePopulation asnId    ) const;
+    const PopulationType*  FindPopulationType ( TypePopulation asnId    ) const;
     const PopulationModel* FindPopulationModel( const std::string&   strModel ) const;
     //@}
 

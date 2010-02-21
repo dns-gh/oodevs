@@ -12,23 +12,23 @@
 #include "simulation_orders/MIL_ParameterType_PointList.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PointListParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_PointListParameter::MIL_PointListParameter( const ASN1T_PointList& asn )
+MIL_PointListParameter::MIL_PointListParameter( const Common::MsgPointList& asn )
 {
-    pointList_.resize( asn.n );
-    for( unsigned int i = 0; i < asn.n; ++i )
+    pointList_.resize( asn.elem_size() );
+    for( int i = 0; i < asn.elem_size(); ++i )
     {
-        ASN1T_Point& point = asn.elem[i];
-        if( point.type != EnumLocationType::point )
+        if( asn.elem( i ).location().type() != Common::MsgLocation_Geometry_point )
             throw std::runtime_error( "Unexpected type passed for point" );
-        if( point.coordinates.n != 1 )
+        if( asn.elem( i ).location().coordinates().elem_size() != 1 )
             throw std::runtime_error( "Too many points" );
         pointList_[i].reset( new MT_Vector2D() );
-        MIL_Tools::ConvertCoordMosToSim( point.coordinates.elem[0], *pointList_[i] );
+        MIL_Tools::ConvertCoordMosToSim( asn.elem( i ).location().coordinates().elem(0), *pointList_[i] );
     }
 }
 
@@ -37,7 +37,7 @@ MIL_PointListParameter::MIL_PointListParameter( const ASN1T_PointList& asn )
 // Created: LDC 2009-07-08
 // -----------------------------------------------------------------------------
 MIL_PointListParameter::MIL_PointListParameter( const std::vector< boost::shared_ptr< MT_Vector2D > >& pointList )
-: pointList_( pointList )
+    : pointList_( pointList )
 {
     // NOTHING
 }
@@ -57,24 +57,17 @@ MIL_PointListParameter::~MIL_PointListParameter()
 // -----------------------------------------------------------------------------
 bool MIL_PointListParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_PointList*>( &type ) != 0 );
+    return dynamic_cast< const MIL_ParameterType_PointList* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PointListParameter::ToPointList
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PointListParameter::ToPointList( ASN1T_PointList& asn ) const
+bool MIL_PointListParameter::ToPointList( Common::MsgPointList& asn ) const
 {
-    asn.n = pointList_.size();
-    if( !pointList_.empty() )
-    {
-        ASN1T_Location* pCoord = new ASN1T_Location[ pointList_.size() ]; //$$$ RAM
-        asn.elem = pCoord;
-
-        for( unsigned int i = 0; i < pointList_.size(); ++i )
-            NET_ASN_Tools::WritePoint( *pointList_[i], pCoord[i] );
-    }
+    for( unsigned int i = 0; i < pointList_.size(); ++i )
+        NET_ASN_Tools::WritePoint( *pointList_[i], *asn.add_elem() );
     return true;
 }
 

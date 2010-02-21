@@ -13,6 +13,11 @@
 #include "Parameter.h"
 #include "tools/Resolver_ABC.h"
 
+namespace Common
+{
+    class MsgObjectKnowledgeList;
+}
+
 namespace kernel
 {
     class Object_ABC;
@@ -37,15 +42,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ObjectKnowledgeList( const kernel::OrderParameter& parameter );
-             ObjectKnowledgeList( const kernel::OrderParameter& parameter, const ASN1T_ObjectKnowledgeList& asn, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
+             ObjectKnowledgeList( const kernel::OrderParameter& parameter, const Common::MsgObjectKnowledgeList& asn, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
              ObjectKnowledgeList( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Object_ABC >& resolver, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
     virtual ~ObjectKnowledgeList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& asn ) const;
+    virtual void Clean( Common::MsgMissionParameter& asn ) const;
     virtual bool IsSet() const;
     //@}
 

@@ -224,7 +224,7 @@ void EntityManager::Register( Population& population )
 // Name: EntityManager::ScheduleAllPawnMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void EntityManager::ScheduleAllPawnMissions( Scheduler& scheduler, bool bParallel /* = false */, uint nIteration /* = 1 */ ) const
+void EntityManager::ScheduleAllPawnMissions( Scheduler& scheduler, bool bParallel /* = false */, unsigned int nIteration /* = 1 */ ) const
 {
     for( CIT_PawnMap it = pawns_.begin(); it != pawns_.end(); ++it )
     {
@@ -238,7 +238,7 @@ void EntityManager::ScheduleAllPawnMissions( Scheduler& scheduler, bool bParalle
 // Name: EntityManager::ScheduleAllAutomatMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void EntityManager::ScheduleAllAutomatMissions( Scheduler& scheduler, bool bParallel /* = false */, uint nIteration /* = 1 */ ) const
+void EntityManager::ScheduleAllAutomatMissions( Scheduler& scheduler, bool bParallel /* = false */, unsigned int nIteration /* = 1 */ ) const
 {
     for( CIT_AutomatMap it = automats_.begin(); it != automats_.end(); ++it )
     {
@@ -252,7 +252,7 @@ void EntityManager::ScheduleAllAutomatMissions( Scheduler& scheduler, bool bPara
 // Name: EntityManager::ScheduleAllPopulationMissions
 // Created: SBO 2005-11-24
 // -----------------------------------------------------------------------------
-void EntityManager::ScheduleAllPopulationMissions( Scheduler& scheduler, bool bParallel /*= false*/, uint nIteration /*= 1*/ ) const
+void EntityManager::ScheduleAllPopulationMissions( Scheduler& scheduler, bool bParallel /*= false*/, unsigned int nIteration /*= 1*/ ) const
 {
     for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
     {
@@ -266,7 +266,7 @@ void EntityManager::ScheduleAllPopulationMissions( Scheduler& scheduler, bool bP
 // Name: EntityManager::GetTestParam_AgentList
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-T_IdVector& EntityManager::GetTestParam_AgentList( uint nNbr, const Testable_Entity& target ) const
+T_IdVector& EntityManager::GetTestParam_AgentList( unsigned int nNbr, const Testable_Entity& target ) const
 {
     T_IdVector& agents = *new T_IdVector();
     for( CIT_PawnMap it = pawns_.begin(); nNbr > 0 && it != pawns_.end(); ++it )
@@ -283,7 +283,7 @@ T_IdVector& EntityManager::GetTestParam_AgentList( uint nNbr, const Testable_Ent
 // Name: EntityManager::GetTestParam_AutomateList
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-T_IdVector& EntityManager::GetTestParam_AutomateList( uint nNbr, const Testable_Entity& target ) const
+T_IdVector& EntityManager::GetTestParam_AutomateList( unsigned int nNbr, const Testable_Entity& target ) const
 {
     T_IdVector& automats = *new T_IdVector();
     for( CIT_AutomatMap it = automats_.begin(); nNbr > 0 && it != automats_.end(); ++it )

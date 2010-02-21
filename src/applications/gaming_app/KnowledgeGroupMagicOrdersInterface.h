@@ -12,7 +12,6 @@
 #ifndef __KnowledgeGroupMagicOrdersInterface_h_
 #define __KnowledgeGroupMagicOrdersInterface_h_
 
-#include "game_asn/Simulation.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/KnowledgeGroupType.h"
@@ -59,7 +58,6 @@ private slots:
     void OnActivateKnowledgeGroup();
     void OnDesactivateKnowledgeGroup();
     void OnSetType( int );
-    void OnDeleteKnowledgeGroup();
     //@}
 
 private:

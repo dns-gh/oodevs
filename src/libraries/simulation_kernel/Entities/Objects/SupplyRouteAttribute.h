@@ -14,36 +14,41 @@
 #include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
-class SupplyRouteAttribute 
-    : public ObjectAttribute_ABC
-    , public UpdatableAttribute_ABC
+// =============================================================================
+/** @class  SupplyRouteAttribute
+    @brief  SupplyRouteAttribute
+*/
+// Created: JCR 2008-05-30
+// =============================================================================
+class SupplyRouteAttribute : public ObjectAttribute_ABC
+                           , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              SupplyRouteAttribute();
     explicit SupplyRouteAttribute( xml::xistream& xis );
-    explicit SupplyRouteAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit SupplyRouteAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~SupplyRouteAttribute();
     //@}
 
     //! @name CheckPoints
     //@{
-    template < typename Archive > void serialize( Archive&, const uint );
+    template < typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name ODB
     //@{
-    void WriteODB( xml::xostream& /*xos*/ ) const;    
+    virtual void WriteODB( xml::xostream& /*xos*/ ) const;    
     //@}
 
     //! @name Network
     //@{
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     void Serialize ( HLA_UpdateFunctor& functor ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
     //! @name Accessors

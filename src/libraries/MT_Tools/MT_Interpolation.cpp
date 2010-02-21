@@ -22,7 +22,7 @@
     template < class coeffType, class valuesType >
     std::ostream& operator << ( std::ostream& out, const MT_Polynome< coeffType, valuesType >& poly )
     {
-        for ( uint i = poly.GetOrder(); i; --i )
+        for ( unsigned int i = poly.GetOrder(); i; --i )
         {
             coeffType coef = poly.GetCoeff( i );
 

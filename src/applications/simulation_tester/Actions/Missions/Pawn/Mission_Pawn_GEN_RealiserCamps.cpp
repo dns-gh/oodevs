@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_RealiserCamps::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_RealiserCamps& asnMission = *new ASN1T_Mission_Pion_GEN_RealiserCamps();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_realiser_camps;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_camps = &asnMission;
+    Mission_Pion_GEN_RealiserCamps& asnMission = *new Mission_Pion_GEN_RealiserCamps();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_realiser_camps = &asnMission;
 
     const T_GenObjectVector& travaux_ = pTarget_->GetTestParam_GenObjectList();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_GEN_RealiserCamps::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_RealiserCamps::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_realiser_camps );
-    ASN1T_Mission_Pion_GEN_RealiserCamps& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_realiser_camps;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_realiser_camps ());
+    Mission_Pion_GEN_RealiserCamps& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_realiser_camps;
 
     ASN_Tools::Delete( asnMission.travaux );
 

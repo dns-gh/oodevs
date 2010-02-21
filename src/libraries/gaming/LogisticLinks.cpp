@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "LogisticLinks.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -17,7 +18,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "Tools.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 
@@ -98,16 +99,16 @@ Automat_ABC* LogisticLinks::GetSupply() const
 // Name: LogisticLinks::DoUpdate
 // Created: SBO 2006-11-29
 // -----------------------------------------------------------------------------
-void LogisticLinks::DoUpdate( const ASN1T_MsgAutomatChangeLogisticLinks& message )
+void LogisticLinks::DoUpdate( const Common::MsgAutomatChangeLogisticLinks& message )
 {
-    if( message.m.oid_tc2Present )
-        tc2_ = resolver_.Find( message.oid_tc2 );
-    if( message.m.oid_maintenancePresent )
-        maintenanceSuperior_ = resolver_.Find( message.oid_maintenance );
-    if( message.m.oid_santePresent )
-         medicalSuperior_ = resolver_.Find( message.oid_sante );
-    if( message.m.oid_ravitaillementPresent )
-        supplySuperior_ = resolver_.Find( message.oid_ravitaillement );
+    if( message.has_oid_tc2()  )
+        tc2_ = resolver_.Find( message.oid_tc2() );
+    if( message.has_oid_maintenance()  )
+        maintenanceSuperior_ = resolver_.Find( message.oid_maintenance() );
+    if( message.has_oid_sante()  )
+         medicalSuperior_ = resolver_.Find( message.oid_sante() );
+    if( message.has_oid_ravitaillement()  )
+        supplySuperior_ = resolver_.Find( message.oid_ravitaillement() );
 
     controller_.Update( *(LogisticLinks_ABC*)this );
 }

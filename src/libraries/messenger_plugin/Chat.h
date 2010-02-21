@@ -10,7 +10,10 @@
 #ifndef __Chat_h_
 #define __Chat_h_
 
-#include "game_asn/Messenger.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+
 
 namespace dispatcher
 {
@@ -49,7 +52,7 @@ public:
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
 
-    void OnReceive( const ASN1T_MsgTextMessage& );
+    void OnReceive( const MsgTextMessage& );
     //@}
 
 private:

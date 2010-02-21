@@ -12,6 +12,10 @@
 #ifndef __PHY_Tiredness_h_
 #define __PHY_Tiredness_h_
 
+namespace Common
+{
+    enum EnumUnitTiredness;
+}
 
 namespace xml
 {
@@ -47,15 +51,15 @@ public:
     static       void           Initialize( xml::xistream& xis );
     static       void           Terminate ();
     static const PHY_Tiredness* Find      ( const std::string& strName );
-    static const PHY_Tiredness* Find      ( ASN1T_EnumUnitTiredness nAsnID );
-    static const PHY_Tiredness* Find      ( uint nID );
+    static const PHY_Tiredness* Find      ( Common::EnumUnitTiredness nAsnID );
+    static const PHY_Tiredness* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&          GetName                         () const;
-          uint                  GetID                           () const;
-          ASN1T_EnumUnitTiredness GetAsnID                        () const;
+          unsigned int                  GetID                           () const;
+          Common::EnumUnitTiredness GetAsnID                        () const;
           MT_Float              GetWeight                       () const;
           MT_Float              GetCoefMaxSpeedModificator      () const;
           MT_Float              GetCoefReloadingTimeModificator () const;
@@ -82,7 +86,7 @@ private:
     //@}
 
 private:
-     PHY_Tiredness( const std::string& strName, E_TirednessType nType, ASN1T_EnumUnitTiredness nAsnID, MT_Float rWeight );
+     PHY_Tiredness( const std::string& strName, E_TirednessType nType, Common::EnumUnitTiredness nAsnID, MT_Float rWeight );
     ~PHY_Tiredness();
 
     //! @name Init
@@ -93,7 +97,7 @@ private:
 private:
     const std::string           strName_;
     const E_TirednessType       nType_;
-    const ASN1T_EnumUnitTiredness nAsnID_;
+    const Common::EnumUnitTiredness nAsnID_;
     const MT_Float              rDIAWeight_;
 
     MT_Float rCoefMaxSpeedModificator_;

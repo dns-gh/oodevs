@@ -17,6 +17,7 @@
 #pragma warning( disable : 4702 )
 #include <boost/lexical_cast.hpp>
 #pragma warning( pop )
+#include <boost/function.hpp>
 #include <xeumeuleu/xml.h>
 
 namespace actions {
@@ -33,6 +34,11 @@ class Entity : public Parameter< const ConcreteEntity* >
              , public tools::Observer_ABC
              , public tools::ElementObserver_ABC< ConcreteEntity >
 {
+public:
+    //! @name Functors
+    //@{
+    typedef boost::function< void ( const int& ) > T_Setter;
+    //@}
 
 public:
     //! @name Constructors/Destructor
@@ -45,7 +51,14 @@ public:
     //! @name Operations
     //@{
     virtual void CommitTo( std::string& content ) const;
-    virtual void CommitTo( ASN1T_OID& oid ) const;
+    template< typename M >
+    void CommitTo( M& message ) const
+    {
+        // $$$$ FHD 2009-10-13: qt moc issues syntax error if not in class declaration
+        if( GetValue() )
+            message.set_oid( GetValue()->GetId() );
+    }
+    void CommitTo( T_Setter setter ) const;
     virtual bool IsSet() const;
     //@}
 
@@ -105,13 +118,12 @@ Entity< ConcreteEntity >::~Entity()
 
 // -----------------------------------------------------------------------------
 // Name: Entity::CommitTo
-// Created: SBO 2007-05-22
+// Created: FHD 2009-09-30
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void Entity< ConcreteEntity >::CommitTo( ASN1T_OID& oid ) const
+void Entity< ConcreteEntity >::CommitTo( T_Setter setter ) const
 {
-    if( GetValue() )
-        oid = GetValue()->GetId();
+    setter( GetValue()->GetId() );
 }
 
 // -----------------------------------------------------------------------------

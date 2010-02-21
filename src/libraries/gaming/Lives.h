@@ -13,7 +13,11 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "game_asn/Simulation.h"
+
+namespace MsgsSimToClient
+{
+	class MsgUnitAttributes;
+}
 
 namespace kernel
 {
@@ -27,7 +31,7 @@ namespace kernel
 // Created: AGE 2006-04-10
 // =============================================================================
 class Lives : public kernel::Extension_ABC
-            , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
             , public kernel::Drawable_ABC
 {
 
@@ -41,7 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
 
     float GetLife() const;
     //@}

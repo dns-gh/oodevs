@@ -11,7 +11,13 @@
 #define __ActionFactory_ABC_h_
 
 #include "actions/ActionFactory_ABC.h"
-#include "game_asn/Simulation.h"
+
+namespace Common
+{
+	class MsgUnitOrder;
+	class MsgAutomatOrder;
+	class MsgPopulationOrder;
+}
 
 // =============================================================================
 /** @class  ActionFactory_ABC
@@ -35,9 +41,9 @@ public:
     virtual actions::Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder ) const = 0;
     virtual actions::Action_ABC* CreateAction( xml::xistream& xis ) const = 0;
 
-    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgUnitOrder& message ) const = 0;
-    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgAutomatOrder& message ) const = 0;
-    virtual actions::Action_ABC* CreateAction( const ASN1T_MsgPopulationOrder& message ) const = 0;
+	virtual actions::Action_ABC* CreateAction( const Common::MsgUnitOrder& message ) const = 0;
+    virtual actions::Action_ABC* CreateAction( const Common::MsgAutomatOrder& message ) const = 0;
+    virtual actions::Action_ABC* CreateAction( const Common::MsgPopulationOrder& message ) const = 0;
     //@}
 };
 

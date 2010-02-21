@@ -15,6 +15,7 @@
 #include "3a/Types.h"
 #include "MockValueHandler.h"
 
+using namespace MsgsSimToClient;
 using namespace mockpp;
 
 namespace
@@ -47,16 +48,15 @@ BOOST_AUTO_TEST_CASE( Model_TestInstanciation )
 
 namespace
 {
-    ASN1T_MsgsSimToClient MakeMessage( ASN1T_MsgUnitAttributes& attributes, unsigned long id = 0 )
+    MsgSimToClient MakeMessage( MsgUnitAttributes& attributes, unsigned long id = 0 )
     {
-        ASN1T_MsgsSimToClient result;
-        result.msg.t = T_MsgsSimToClient_msg_msg_unit_attributes;
-        result.msg.u.msg_unit_attributes = &attributes;
-        attributes.oid = id;
+        MsgSimToClient result;
+        attributes.set_oid( id );
+        *result.mutable_message()->mutable_unit_attributes() = attributes;
         return result;
     }
 
-    void Evaluate( ModelFunction_ABC& function, const ASN1T_MsgsSimToClient& message )
+    void Evaluate( ModelFunction_ABC& function, const MsgSimToClient& message )
     {
         function.BeginTick();
         function.Receive( message );
@@ -80,20 +80,14 @@ BOOST_AUTO_TEST_CASE( Model_TestValueExtraction )
     handler.EndTick_mocker.expects( exactly( 4 ) );
 
 
-    ASN1T_MsgUnitAttributes attributes;
-    attributes.etat_operationnel_brut = 25;
+    MsgUnitAttributes attributes;
+    attributes.set_etat_operationnel_brut( 25 );
     {
-        attributes.m.etat_operationnel_brutPresent = 1;
         Evaluate( *function, MakeMessage( attributes ) );
-
-        attributes.m.etat_operationnel_brutPresent = 0;
         Evaluate( *function, MakeMessage( attributes ) );
-    
-        attributes.etat_operationnel_brut = 30;
-        attributes.m.etat_operationnel_brutPresent = 1;
+   
+        attributes.set_etat_operationnel_brut( 30 );
         Evaluate( *function, MakeMessage( attributes ) );
-
-        attributes.m.etat_operationnel_brutPresent = 0;
         Evaluate( *function, MakeMessage( attributes ) );
     }
 
@@ -125,16 +119,15 @@ BOOST_AUTO_TEST_CASE( Model_TestDispatchedValueExtraction )
     keyHandler.EndTick_mocker.expects( exactly( 4 ) );
 
 
-    ASN1T_MsgUnitAttributes attributes;
-    attributes.etat_operationnel_brut = 25;
-    attributes.m.etat_operationnel_brutPresent = 1;
+    MsgUnitAttributes attributes;
+    attributes.set_etat_operationnel_brut( 25 );
     {
         function->BeginTick();
         function->Receive( MakeMessage( attributes, 1 ) );
         function->Receive( MakeMessage( attributes, 2 ) );
         function->EndTick();
     
-        attributes.etat_operationnel_brut = 30;
+        attributes.set_etat_operationnel_brut( 30 );
         function->BeginTick();
         function->Receive( MakeMessage( attributes, 1 ) );
         function->Receive( MakeMessage( attributes, 2 ) );

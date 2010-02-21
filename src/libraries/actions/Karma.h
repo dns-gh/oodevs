@@ -11,6 +11,12 @@
 #define __ActionParameterKarma_h_
 
 #include "Parameter.h"
+#include <boost/function.hpp>
+
+namespace Common
+{
+    enum EnumDiplomacy;
+}
 
 namespace kernel
 {
@@ -29,19 +35,24 @@ namespace actions {
 // =============================================================================
 class Karma : public Parameter< QString >
 {
+public:
+    //! @name Functors
+    //@{
+    typedef boost::function< void ( const Common::EnumDiplomacy& ) > T_Setter;
+    //@}
 
 public:
     //! @name Constructors/Destructor
     //@{
              Karma( const kernel::OrderParameter& parameter, const kernel::Karma& karma, const kernel::Entity_ABC& parent );
-             Karma( const kernel::OrderParameter& parameter, const ASN1T_EnumDiplomacy& asn );
+             Karma( const kernel::OrderParameter& parameter, const Common::EnumDiplomacy& message );
              Karma( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~Karma();
     //@}
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1T_EnumDiplomacy& asn ) const;
+    void CommitTo( T_Setter setter ) const;
     //@}
 
 private:

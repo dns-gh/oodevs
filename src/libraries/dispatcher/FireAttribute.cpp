@@ -10,17 +10,19 @@
 #include "dispatcher_pch.h"
 
 #include "FireAttribute.h"
+#include "protocol/SimulationSenders.h"
 
+////using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: FireAttribute constructor
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
+FireAttribute::FireAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC   ( model, asnMsg )
-    , heat_                 ( asnMsg.fire.heat )
-    , nFireClass_           ( asnMsg.fire.class_id )
+    , heat_                 ( asnMsg.fire().heat() )
+    , nFireClass_           ( asnMsg.fire().class_id() )
 {
     // NOTHING
 }
@@ -38,12 +40,12 @@ FireAttribute::~FireAttribute()
 // Name: FireAttribute::Update
 // Created: RFT 2006-09-26
 // -----------------------------------------------------------------------------
-void FireAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void FireAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if ( asnMsg.m.firePresent )
+    if ( asnMsg.has_fire() )
     {
-        heat_       = asnMsg.fire.heat;
-        nFireClass_ = asnMsg.fire.class_id;
+        heat_       = asnMsg.fire().heat();
+        nFireClass_ = asnMsg.fire().class_id();
     }  
 }
 
@@ -51,18 +53,18 @@ void FireAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
 // Name: FireAttribute::Send
 // Created: RFT 2006-09-27
 // -----------------------------------------------------------------------------
-void FireAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void FireAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.m.firePresent = 1;
-    asnMsg.fire.heat     = heat_;
-    asnMsg.fire.class_id = nFireClass_;
+
+    asnMsg.mutable_fire()->set_heat( heat_ );
+    asnMsg.mutable_fire()->set_class_id( nFireClass_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: FireAttribute::AsnDelete
+// Name: FireAttribute::Delete
 // Created: RFT 2006-09-28
 // -----------------------------------------------------------------------------
-void FireAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void FireAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
     // NOTHING
 }

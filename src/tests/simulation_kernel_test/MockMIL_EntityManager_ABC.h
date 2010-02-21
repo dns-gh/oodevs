@@ -18,9 +18,8 @@
 */
 // Created: LDC 2009-06-09
 // =============================================================================
-class MockMIL_EntityManager_ABC
-    : public MIL_EntityManager_ABC
-    , public mockpp::ChainableMockObject
+class MockMIL_EntityManager_ABC : public MIL_EntityManager_ABC
+                                , public mockpp::ChainableMockObject
 {
 
 public:
@@ -34,11 +33,11 @@ public:
              {}
     virtual ~MockMIL_EntityManager_ABC() {}
     
-    virtual       MIL_AgentPion*      FindAgentPion ( unsigned int nID ) const
+    virtual MIL_AgentPion* FindAgentPion( unsigned int nID ) const
     {
         return FindAgentPion_mocker.forward( nID );
     }
-    virtual       MIL_Automate*       FindAutomate  ( unsigned int nID ) const
+    virtual MIL_Automate* FindAutomate( unsigned int nID ) const
     {
         return FindAutomate_mocker.forward( nID );
     }

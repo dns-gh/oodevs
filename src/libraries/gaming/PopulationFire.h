@@ -10,9 +10,11 @@
 #ifndef __PopulationFire_h_
 #define __PopulationFire_h_
 
-#include "game_asn/Simulation.h"
 #include "Fire_ABC.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -31,7 +33,7 @@ class PopulationFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFire( const ASN1T_MsgStartPopulationFire& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver );
+             PopulationFire( const MsgsSimToClient::MsgStartPopulationFire& message, const tools::Resolver_ABC< kernel::Population_ABC >& resolver );
     virtual ~PopulationFire();
     //@}
 

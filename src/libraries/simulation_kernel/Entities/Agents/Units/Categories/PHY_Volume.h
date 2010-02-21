@@ -39,13 +39,13 @@ public:
 
     static const T_VolumeMap& GetVolumes();
     static const PHY_Volume* FindVolume( const std::string& strName );
-    static const PHY_Volume* FindVolume( uint nID );
+    static const PHY_Volume* FindVolume( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-          uint         GetID  () const;
+          unsigned int         GetID  () const;
     //@}
 
 private:
@@ -54,11 +54,11 @@ private:
 
 private:
     const std::string strName_;
-          uint        nID_;
+          unsigned int        nID_;
 
 private:
     static T_VolumeMap volumes_;
-    static uint        nNextID_;
+    static unsigned int        nNextID_;
 
 private:
     struct LoadingWrapper;

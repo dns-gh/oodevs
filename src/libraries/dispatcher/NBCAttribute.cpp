@@ -11,18 +11,18 @@
 
 #include "NBCAttribute.h"
 
+//using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
+NBCAttribute::NBCAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )    
 {
-    nbc_.nbc_agents.n = 0;
-    nbc_.nbc_agents.elem = 0;
-    nbc_.danger_level = 0;
+    nbc_.mutable_nbc_agents()->mutable_elem();
+    nbc_.set_danger_level ( 0 );
     Update( asnMsg );    
 }
 
@@ -39,15 +39,21 @@ NBCAttribute::~NBCAttribute()
 // Name: NBCAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void NBCAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void NBCAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {
-    if ( asnMsg.m.nbcPresent )
+    if ( asnMsg.has_nbc() )
     {
         Clear();
-        nbc_.nbc_agents.n = asnMsg.nbc.nbc_agents.n;
-        nbc_.nbc_agents.elem = new ASN1T_OID[ nbc_.nbc_agents.n ];        
-        memcpy( nbc_.nbc_agents.elem, asnMsg.nbc.nbc_agents.elem, sizeof( ASN1T_OID ) * nbc_.nbc_agents.n );
-        nbc_.danger_level = asnMsg.nbc.danger_level;
+//        nbc_.mutable_nbc_agents()->set_n ( asnMsg.nbc().nbc_agents().elem_size() );
+//        for( unsigned int i = 0; i < nbc_.nbc_agents().elem_size(); ++i)
+//            nbc_.mutable_nbc_agents()->add_elem( nbc_.nbc_agents().elem( i ) );
+
+        for( int i = 0; i < nbc_.nbc_agents().elem_size(); ++i)
+            nbc_.mutable_nbc_agents()->add_elem( asnMsg.nbc().nbc_agents().elem( i ) );
+        
+
+//        memcpy( nbc_.nbc_agents().elem().begin(), asnMsg.nbc().nbc_agents().elem().begin(), sizeof( int ) * nbc_.nbc_agents().elem_size() );
+        nbc_.set_danger_level ( asnMsg.nbc().danger_level() );
     }
 }
 
@@ -55,12 +61,11 @@ void NBCAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
 // Name: NBCAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void NBCAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void NBCAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.m.nbcPresent = 1;
-    asnMsg.nbc.nbc_agents.n = nbc_.nbc_agents.n;
-    asnMsg.nbc.nbc_agents.elem = nbc_.nbc_agents.elem;
-    asnMsg.nbc.danger_level = nbc_.danger_level;
+    for( int i = 0; i < nbc_.nbc_agents().elem_size(); ++i )
+        asnMsg.mutable_nbc()->mutable_nbc_agents()->set_elem( i, nbc_.nbc_agents().elem( i ) ); 
+    asnMsg.mutable_nbc()->set_danger_level ( nbc_.danger_level() );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,18 +74,17 @@ void NBCAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
 // -----------------------------------------------------------------------------
 void NBCAttribute::Clear()
 {
-    if ( nbc_.nbc_agents.n > 0 )
+    if ( nbc_.nbc_agents().elem_size() > 0 )
     {
-        delete [] nbc_.nbc_agents.elem;
-        nbc_.nbc_agents.n = 0;
+        nbc_.mutable_nbc_agents()->Clear();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: NBCAttribute::AsnDelete
+// Name: NBCAttribute::Delete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void NBCAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void NBCAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
     // NOTHING
 }

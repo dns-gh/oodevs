@@ -43,9 +43,9 @@ void Mission_Pawn_Decrocher::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Decrocher& asnMission = *new ASN1T_Mission_Pion_Decrocher();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_decrocher;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_decrocher = &asnMission;
+    Mission_Pion_Decrocher& asnMission = *new Mission_Pion_Decrocher();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_decrocher = &asnMission;
 
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_Decrocher::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Decrocher::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_decrocher );
-    ASN1T_Mission_Pion_Decrocher& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_decrocher;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_decrocher ());
+    Mission_Pion_Decrocher& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_decrocher;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
 

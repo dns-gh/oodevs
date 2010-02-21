@@ -34,7 +34,7 @@ ReportFactory::ReportFactory( const dispatcher::Config& config, const dispatcher
             >> attribute( "file", reports );
     xifstream xis( config.BuildPhysicalChildFile( reports ) );
     xis >> start( "reports" )
-            >> list( "report", *this, &ReportFactory::ReadReport )
+        >> xml::list( "report", *this, &ReportFactory::ReadReport )
         >> end();
 }
     
@@ -62,56 +62,47 @@ void ReportFactory::ReadReport( xml::xistream& xis )
 // Name: ReportFactory::CreateMessage
 // Created: SBO 2007-08-27
 // -----------------------------------------------------------------------------
-std::string ReportFactory::CreateMessage( const ASN1T_MsgReport& asn ) const
+std::string ReportFactory::CreateMessage( const MsgReport& message ) const
 {
-    CIT_Templates it = templates_.find( asn.cr );
+    CIT_Templates it = templates_.find( message.cr() );
     if( it == templates_.end() )
         return "Unknown report";
-    return it->second->RenderMessage( asn.parametres );
+    return it->second->RenderMessage( message.parametres() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ReportFactory::RenderParameter
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-std::string ReportFactory::RenderParameter( const ASN1T_MissionParameter& value ) const
+std::string ReportFactory::RenderParameter( const MsgMissionParameter& value ) const
 {
     std::stringstream ss;
-    switch( value.value.t )
+
+    if (value.value().has_areal() )
+        ss << value.value().areal();
+    else if (value.value().has_unit() )
     {
-    case T_MissionParameter_value_aReal:
-        ss << value.value.u.aReal;
-        break;
-    case T_MissionParameter_value_unit:
-        {
-            if( const dispatcher::Agent* agent = model_.agents_.Find( value.value.u.unit ) )
-                ss << agent->GetName().ascii() << " [" << agent->GetId() << "]";
-            break;
-        }
-    case T_MissionParameter_value_unitKnowledge:
-        {
-            if( const dispatcher::AgentKnowledge* knowledge = model_.agentKnowledges_.Find( value.value.u.unitKnowledge ) )
-                ss << knowledge->GetName().ascii() << " [" << knowledge->GetId() << "]";
-            break;
-        }
-    case T_MissionParameter_value_objectKnowledge:
-        ss << value.value.u.objectKnowledge; // $$$$ SBO 2007-08-27: resolve...
-        break;
-    case T_MissionParameter_value_populationKnowledge:
-        ss << value.value.u.populationKnowledge; // $$$$ SBO 2007-08-27: resolve...
-        break;
-    case T_MissionParameter_value_equipmentType:
-        ss << value.value.u.equipmentType; // $$$$ SBO 2007-08-27: resolve...
-        break;
-    case T_MissionParameter_value_dotationType:
-        ss << value.value.u.dotationType; // $$$$ SBO 2007-08-27: resolve...
-        break;
-    case T_MissionParameter_value_tirIndirect:
-        ss << value.value.u.tirIndirect;
-    case T_MissionParameter_value_aCharStr:
-        ss << value.value.u.aCharStr;
-    default:
-        return "[unhandled]";
+        if( const dispatcher::Agent* agent = model_.agents_.Find( value.value().unit().oid() ) )
+            ss << agent->GetName().ascii() << " [" << agent->GetId() << "]";
     }
+    else if (value.value().has_unitknowledge() )
+    {
+        if( const dispatcher::AgentKnowledge* knowledge = model_.agentKnowledges_.Find( value.value().unitknowledge().oid() ) )
+            ss << knowledge->GetName().ascii() << " [" << knowledge->GetId() << "]";
+    }
+//    else if( value.value().has_objectknowledge() )
+//        ss << value.value().objectknowledge(); // $$$$ SBO 2007-08-27: resolve...
+//    else if( value.value().has_populationknowledge() )
+//        ss << value.value().populationknowledge(); // $$$$ SBO 2007-08-27: resolve...
+//    else if( value.value().has_equipmenttype() )
+//        ss << value.value().equipmenttype(); // $$$$ SBO 2007-08-27: resolve...
+//    else if( value.value().has_dotationtype() )
+//        ss << value.value().dotationtype(); // $$$$ SBO 2007-08-27: resolve...
+//    else if( value.value().has_tirindirect() )
+//        ss << value.value().tirindirect();
+//    else if( value.value().has_acharstr() )
+//        ss << value.value().acharstr();
+    else 
+        return "[unhandled]";
     return ss.str();
 }

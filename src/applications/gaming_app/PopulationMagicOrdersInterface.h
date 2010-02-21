@@ -14,6 +14,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "protocol/publisher_ABC.h"
 
 namespace kernel
 {

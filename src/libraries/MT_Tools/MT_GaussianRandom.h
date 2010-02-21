@@ -21,9 +21,9 @@ class MT_GaussianRandom
 {
 public:
     explicit MT_GaussianRandom();
-    explicit MT_GaussianRandom( uint32 nSeed );
+    explicit MT_GaussianRandom( unsigned long nSeed );
              MT_GaussianRandom( double rMean, double rVariance );
-             MT_GaussianRandom( double rMean, double rVariance, uint32 nSeed );
+             MT_GaussianRandom( double rMean, double rVariance, unsigned long nSeed );
     explicit MT_GaussianRandom( const MT_GaussianRandom& );
     virtual ~MT_GaussianRandom() {}
 

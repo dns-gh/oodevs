@@ -10,8 +10,12 @@
 #ifndef __Shape_ABC_h_
 #define __Shape_ABC_h_
 
-#include "game_asn/Simulation.h"
 #include "ESRI.h"
+
+namespace Common
+{
+    class MsgLocation;
+}
 
 namespace plugins
 {
@@ -38,7 +42,7 @@ public:
     //@{
     virtual void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const = 0;
     virtual void Serialize( std::ostream& geometry ) const = 0;
-    virtual void Serialize( ASN1T_Location& asn ) const = 0;
+    virtual void Serialize( Common::MsgLocation& message ) const = 0;
     //@}
 };
 

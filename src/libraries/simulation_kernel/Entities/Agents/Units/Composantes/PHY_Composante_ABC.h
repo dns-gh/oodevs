@@ -46,7 +46,7 @@ public:
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
     
     //! @name Accessors
@@ -54,7 +54,7 @@ public:
     virtual const PHY_ComposanteType_ABC& GetType            () const = 0;
     virtual bool                          CanFire            () const = 0;
     virtual bool                          CanFireWhenUnloaded() const = 0;
-    virtual uint                          GetMajorScore      () const = 0;
+    virtual unsigned int                          GetMajorScore      () const = 0;
     //@}
 };
 

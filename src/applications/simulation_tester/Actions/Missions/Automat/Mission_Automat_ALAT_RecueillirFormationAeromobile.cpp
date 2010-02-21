@@ -43,9 +43,9 @@ void Mission_Automat_ALAT_RecueillirFormationAeromobile::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile& asnMission = *new ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_recueillir_formation_aeromobile = &asnMission;
+    Mission_Automate_ALAT_RecueillirFormationAeromobile& asnMission = *new Mission_Automate_ALAT_RecueillirFormationAeromobile();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_alat_recueillir_formation_aeromobile = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -68,8 +68,8 @@ void Mission_Automat_ALAT_RecueillirFormationAeromobile::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ALAT_RecueillirFormationAeromobile::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_alat_recueillir_formation_aeromobile );
-    ASN1T_Mission_Automate_ALAT_RecueillirFormationAeromobile& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_recueillir_formation_aeromobile;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_alat_recueillir_formation_aeromobile ());
+    Mission_Automate_ALAT_RecueillirFormationAeromobile& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_alat_recueillir_formation_aeromobile;
 
     ASN_Tools::Delete( asnMission.zone );
     ASN_Tools::Delete( asnMission.point_regroupement );

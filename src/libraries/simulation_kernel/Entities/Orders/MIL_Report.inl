@@ -19,7 +19,7 @@
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
 inline
-const MIL_Report* MIL_Report::Find( uint nID )
+const MIL_Report* MIL_Report::Find( unsigned int nID )
 {
     CIT_ReportMap it = reports_.find( nID );
     if( it == reports_.end() )
@@ -54,7 +54,7 @@ void MIL_Report::SendReportWithTypeAsArgument( const T& sender, E_Type nType, in
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters )
 {
-    if( diaEvents_.size() <= (uint)nReport )
+    if( diaEvents_.size() <= (unsigned int)nReport )
         return;
     
     const MIL_Report* pReport = MIL_Report::Find( diaEvents_[ nReport ] );

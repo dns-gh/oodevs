@@ -3,22 +3,18 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_MeteoDataManager.h"
-
 #include "PHY_Ephemeride.h"
 #include "PHY_Meteo.h"
 #include "PHY_Precipitation.h"
 #include "PHY_Lighting.h"
 #include "RawVisionData/PHY_RawVisionData.h"
-
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_ASN_Tools.h"
-
+#include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
+#include "protocol/ClientSenders.h"
+#include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.h>
-
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
@@ -116,13 +112,13 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo( const ASN1T_MsgControlGlobalMeteo& asnMsg )
+void PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo( const MsgsClientToSim::MsgControlGlobalMeteo& asnMsg )
 {
     assert( pGlobalMeteo_ );
-    pGlobalMeteo_->Update( asnMsg.attributes );
+    pGlobalMeteo_->Update( asnMsg.attributes() );
     
-    NET_ASN_MsgControlGlobalMeteoAck asnReplyMsg;
-    asnReplyMsg.Send();
+    client::ControlGlobalMeteoAck asnReplyMsg;
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,26 +126,26 @@ void PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo( const ASN1T_MsgControlGlobal
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const ASN1T_MsgControlLocalMeteo& asnMsg )
+void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const MsgsClientToSim::MsgControlLocalMeteo& asnMsg )
 {
     MT_Vector2D vUpLeft;
     MT_Vector2D vDownRight;
 
-    NET_ASN_Tools::ReadPoint( asnMsg.top_left_coordinate,      vUpLeft    );
-    NET_ASN_Tools::ReadPoint( asnMsg.bottom_right_coordinate , vDownRight );
+    NET_ASN_Tools::ReadPoint( asnMsg.top_left_coordinate(),      vUpLeft    );
+    NET_ASN_Tools::ReadPoint( asnMsg.bottom_right_coordinate() , vDownRight );
 
     PHY_Meteo* pTmp = 0;
-    if( asnMsg.meteo.t == T_MsgControlLocalMeteo_meteo_attributes )
+    if( asnMsg.has_attributes() )
     {
-        pTmp = new PHY_Meteo( *asnMsg.meteo.u.attributes );
+        pTmp = new PHY_Meteo( asnMsg.attributes() );
         RegisterMeteo( *pTmp );
     }
 
     assert( pRawData_ );
     pRawData_->RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
 
-    NET_ASN_MsgControlLocalMeteoAck asnReplyMsg;
-    asnReplyMsg.Send();
+    client::ControlLocalMeteoAck asnReplyMsg;
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 
@@ -192,4 +188,3 @@ void PHY_MeteoDataManager::Update( unsigned int date )
             (*it)->Update( *pEphemeride_ );
     }
 }
-

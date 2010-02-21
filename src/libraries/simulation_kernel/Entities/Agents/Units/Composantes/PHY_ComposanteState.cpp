@@ -116,7 +116,7 @@ bool PHY_ComposanteState::IsDamaged() const
 // Name: PHY_ComposanteState::GetID
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-uint PHY_ComposanteState::GetID() const
+unsigned int PHY_ComposanteState::GetID() const
 {
     return nState_;
 }
@@ -125,7 +125,7 @@ uint PHY_ComposanteState::GetID() const
 // Name: PHY_ComposanteState::GetNbrStates
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-uint PHY_ComposanteState::GetNbrStates()
+unsigned int PHY_ComposanteState::GetNbrStates()
 {
     return eNbrStates;
 }
@@ -134,7 +134,7 @@ uint PHY_ComposanteState::GetNbrStates()
 // Name: PHY_ComposanteState::Find
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
-const PHY_ComposanteState& PHY_ComposanteState::Find( uint nID )
+const PHY_ComposanteState& PHY_ComposanteState::Find( unsigned int nID )
 {
     assert( composanteStates_.size() > nID );
     return *composanteStates_[ nID ];

@@ -25,11 +25,12 @@ namespace transport
 // =============================================================================
 class TransportNotificationHandler_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             TransportNotificationHandler_ABC();
-    virtual ~TransportNotificationHandler_ABC();
+              TransportNotificationHandler_ABC();
+    virtual  ~TransportNotificationHandler_ABC();
     //@}
 
     //! @name Operations

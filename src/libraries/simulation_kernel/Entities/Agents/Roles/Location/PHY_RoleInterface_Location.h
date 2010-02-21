@@ -15,12 +15,16 @@
 #include "MT_Tools/Role_ABC.h"
 #include "simulation_terrain/TER_Agent_ABC.h"
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
 class MIL_Object_ABC;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
-class NET_ASN_MsgUnitAttributes;
 class HLA_UpdateFunctor;
 
 // =============================================================================
@@ -66,6 +70,10 @@ public:
     virtual bool                HasSpeedChanged     () const = 0; // Position or direction or height has changed 
     virtual bool                HasLocationChanged  () const = 0;
     //@}
+
+//    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const = 0;
+//    virtual void SendFullState   ( client::UnitAttributes& asnMsg ) const = 0;
+
     virtual void Serialize( HLA_UpdateFunctor& functor ) const = 0;
 private:
     //! @name Serialization

@@ -47,11 +47,11 @@ BmlPlugin::~BmlPlugin()
 // Name: BmlPlugin::Receive
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-void BmlPlugin::Receive( const ASN1T_MsgsSimToClient& message )
+void BmlPlugin::Receive( const MsgSimToClient& wrapper )
 {
-    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_end_tick )
+    if ( wrapper.message().has_control_end_tick() )
     {
-        simulation_->Update( *message.msg.u.msg_control_end_tick );
+        simulation_->Update( wrapper.message().control_end_tick() );
         publisher_->CommitOrders();
         listener_->PullOrders();
         publisher_->PushReports();

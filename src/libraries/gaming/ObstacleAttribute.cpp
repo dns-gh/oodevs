@@ -71,27 +71,27 @@ void ObstacleAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer ) con
 // Name: ObstacleAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void ObstacleAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
    
 // -----------------------------------------------------------------------------
@@ -101,10 +101,10 @@ void ObstacleAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
 template< typename T >
 void ObstacleAttribute::UpdateData( const T& message )
 {
-     if( message.m.obstaclePresent )
+     if( message.has_obstacle()  )
      {
-        obstacleType_ = (E_DemolitionTargetType)message.obstacle.type;
-        reservedObstacleActivated_= (message.obstacle.activated != 0);
+        obstacleType_ = (E_DemolitionTargetType)message.obstacle().type();
+        reservedObstacleActivated_= (message.obstacle().activated() != 0);
         controller_.Update( *(ObstacleAttribute_ABC*)this );
      }
 }

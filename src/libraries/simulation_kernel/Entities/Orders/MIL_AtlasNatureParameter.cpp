@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AtlasNatureParameter.h"
-
 #include "simulation_orders/MIL_ParameterType_NatureAtlas.h"
 #include "Network/NET_ASN_Tools.h"
 
@@ -17,7 +16,7 @@
 // Name: MIL_AtlasNatureParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AtlasNatureParameter::MIL_AtlasNatureParameter( const ASN1T_AtlasNature& asn )
+MIL_AtlasNatureParameter::MIL_AtlasNatureParameter( const Common::MsgAtlasNature& asn )
 {
     NET_ASN_Tools::CopyNatureAtlas( asn, nature_ );
 }
@@ -27,7 +26,7 @@ MIL_AtlasNatureParameter::MIL_AtlasNatureParameter( const ASN1T_AtlasNature& asn
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
 MIL_AtlasNatureParameter::MIL_AtlasNatureParameter( int nature )
-: nature_( nature )
+    : nature_( nature )
 {
     // NOTHING
 }
@@ -54,7 +53,7 @@ bool MIL_AtlasNatureParameter::IsOfType( const MIL_ParameterType_ABC& type ) con
 // Name: MIL_AtlasNatureParameter::ToNatureAtlas
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AtlasNatureParameter::ToNatureAtlas( ASN1T_AtlasNature& asn ) const
+bool MIL_AtlasNatureParameter::ToNatureAtlas( Common::MsgAtlasNature& asn ) const
 {
     return NET_ASN_Tools::CopyNatureAtlas( nature_, asn );
 }

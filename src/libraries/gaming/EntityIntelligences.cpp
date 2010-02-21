@@ -86,9 +86,9 @@ std::string EntityIntelligences::GetLevel() const
 // Name: EntityIntelligences::DoUpdate
 // Created: SBO 2007-10-19
 // -----------------------------------------------------------------------------
-void EntityIntelligences::DoUpdate( const ASN1T_MsgIntelligenceCreation& message )
+void EntityIntelligences::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceCreation& message )
 {
-    SetSuperior( &resolver_.Get( message.intelligence.formation ) );
+    SetSuperior( &resolver_.Get( message.intelligence().formation().oid() ) );
 }
 
 // -----------------------------------------------------------------------------

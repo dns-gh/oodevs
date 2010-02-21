@@ -16,8 +16,8 @@ using namespace dispatcher;
 // Name: UrbanObjectAttribute_ABC constructor
 // Created: SLG 2009-12-04
 // -----------------------------------------------------------------------------
-UrbanObjectAttribute_ABC::UrbanObjectAttribute_ABC( const Model& /*model*/, const ASN1T_UrbanAttributes& /*asnMsg*/ )
-    : nType_( 0 )
+UrbanObjectAttribute_ABC::UrbanObjectAttribute_ABC( const Model& /*model*/, const MsgsSimToClient::MsgUrbanAttributes& /*message*/  )
+: nType_ ( 0 )
 {
     // NOTHING
 }

@@ -11,10 +11,18 @@
 #define __MIL_AutomateOrderManager_h_
 
 #include "MIL.h"
-
 #include "MIL_OrderManager_ABC.h"
 #include "MIL_AutomateMRT.h"
-#include "Network/NET_ASN_Messages.h"
+
+namespace Common
+{
+    class MsgAutomatOrder;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgFragOrder;
+}
 
 class MIL_AutomateMission;
 class MIL_MissionType_ABC;
@@ -35,8 +43,8 @@ public:
 
     // @name Events 
     //@{
-    virtual void OnReceiveFragOrder( const ASN1T_MsgFragOrder&     asn );
-            void OnReceiveMission  ( const ASN1T_MsgAutomatOrder& asn );
+    virtual void OnReceiveFragOrder( const MsgsClientToSim::MsgFragOrder& asn );
+            void OnReceiveMission  ( const Common::MsgAutomatOrder& asn );
             void OnReceiveMission  ( const MIL_MissionType_ABC& type );
     //@}
 

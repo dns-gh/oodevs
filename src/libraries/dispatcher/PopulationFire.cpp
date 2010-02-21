@@ -11,6 +11,7 @@
 #include "PopulationFire.h"
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -18,8 +19,8 @@ using namespace dispatcher;
 // Name: PopulationFire constructor
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
-PopulationFire::PopulationFire( Model& , const ASN1T_MsgStartPopulationFire& msg )
-    : SimpleEntity < >( msg.fire_oid )
+PopulationFire::PopulationFire( Model& , const MsgsSimToClient::MsgStartPopulationFire& msg )
+    : SimpleEntity < >( msg.fire_oid() )
     , msg_( msg )
 {
     // NOTHING
@@ -49,9 +50,9 @@ void PopulationFire::SendFullUpdate( ClientPublisher_ABC& ) const
 // -----------------------------------------------------------------------------
 void PopulationFire::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::StartPopulationFire asn;
-    asn() = msg_;
-    asn.Send( publisher );
+    client::StartPopulationFire message;
+    message() = msg_;
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,11 +61,10 @@ void PopulationFire::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void PopulationFire::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::StopPopulationFire asn;
-    asn().fire_oid = msg_.fire_oid;
-    asn().units_damages.n    = 0;
-    asn().units_damages.elem = 0;
-    asn.Send( publisher );
+    client::StopPopulationFire message;
+    message().set_fire_oid( msg_.fire_oid() );
+    message().mutable_units_damages()->Clear();
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

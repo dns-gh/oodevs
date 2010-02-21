@@ -43,9 +43,9 @@ void Mission_Pawn_ASY_CommettreAttentatContreInstallation::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation& asnMission = *new ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreInstallation = &asnMission;
+    Mission_Pion_ASY_CommettreAttentatContreInstallation& asnMission = *new Mission_Pion_ASY_CommettreAttentatContreInstallation();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_asy_commettre_attentatContreInstallation = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
     const Position& pointRepli_ = pTarget_->GetTestParam_Point();
@@ -65,8 +65,8 @@ void Mission_Pawn_ASY_CommettreAttentatContreInstallation::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASY_CommettreAttentatContreInstallation::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_asy_commettre_attentatContreInstallation );
-    ASN1T_Mission_Pion_ASY_CommettreAttentatContreInstallation& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_asy_commettre_attentatContreInstallation;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_asy_commettre_attentatContreInstallation ());
+    Mission_Pion_ASY_CommettreAttentatContreInstallation& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_asy_commettre_attentatContreInstallation;
 
     ASN_Tools::Delete( asnMission.itineraire );
     ASN_Tools::Delete( asnMission.point_repli );

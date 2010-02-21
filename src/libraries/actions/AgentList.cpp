@@ -12,6 +12,8 @@
 #include "Agent.h"
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "protocol/Protocol.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -33,11 +35,11 @@ AgentList::AgentList( const kernel::OrderParameter& parameter )
 // Name: AgentList constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-AgentList::AgentList( const OrderParameter& parameter, const ASN1T_UnitList& asn, const tools::Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
+AgentList::AgentList( const OrderParameter& parameter, const Common::MsgUnitList& message, const Resolver_ABC< Agent_ABC >& resolver, kernel::Controller& controller )
     : Parameter< QString >( parameter )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        AddParameter( *new Agent( OrderParameter( tools::translate( "Parameter", "Agent %1" ).arg( i + 1 ).ascii(), "agent", false ), asn.elem[i], resolver, controller ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        AddParameter( *new Agent( OrderParameter( tools::translate( "Parameter", "Agent %1" ).arg( i + 1 ).ascii(), "agent", false ), message.elem(i).oid(),  resolver, controller ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,14 +99,12 @@ namespace
 {
     struct AsnSerializer : public ParameterVisitor_ABC
     {
-        explicit AsnSerializer( ASN1T_UnitList& asn ) : asn_( &asn ), current_( 0 ) {}
+        explicit AsnSerializer( Common::MsgUnitList& message ) : message_( &message ) {}
         virtual void Visit( const Agent& param )
         {
-            param.CommitTo( asn_->elem[current_++] );
+            param.CommitTo( *message_->add_elem() );
         }
-
-        ASN1T_UnitList* asn_;
-        unsigned int current_;
+        Common::MsgUnitList* message_;
     };
 }
 
@@ -112,15 +112,12 @@ namespace
 // Name: AgentList::CommitTo
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AgentList::CommitTo( ASN1T_MissionParameter& asn ) const
+void AgentList::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_unitList;
-    ASN1T_UnitList*& list = asn.value.u.unitList = new ASN1T_UnitList();
-    list->n = Count();
+    message.set_null_value ( !IsSet() );
+    Common::MsgUnitList* list = message.mutable_value()->mutable_unitlist();
     if( IsSet() )
     {
-        list->elem = new ASN1T_Unit[list->n];
         AsnSerializer serializer( *list );
         Accept( serializer );
     }
@@ -130,11 +127,10 @@ void AgentList::CommitTo( ASN1T_MissionParameter& asn ) const
 // Name: AgentList::Clean
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
-void AgentList::Clean( ASN1T_MissionParameter& asn ) const
+void AgentList::Clean( Common::MsgMissionParameter& message ) const
 {
-    if( asn.value.u.unitList )
-        delete[] asn.value.u.unitList->elem;
-    delete asn.value.u.unitList;
+    if( message.value().has_unitlist() )
+        message.mutable_value()->clear_unitlist();
 }
 
 // -----------------------------------------------------------------------------

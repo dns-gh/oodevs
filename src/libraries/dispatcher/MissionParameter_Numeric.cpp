@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_Numeric.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_Numeric constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_Numeric::MissionParameter_Numeric( const ASN1T_MissionParameter& asn )
+MissionParameter_Numeric::MissionParameter_Numeric( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , value_              ( asn.value.u.aReal )
+    , value_              ( asn.value().areal() )
 {
     // NOTHING
 }
@@ -41,18 +42,18 @@ MissionParameter_Numeric::~MissionParameter_Numeric()
 // Name: MissionParameter_Numeric::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Numeric::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Numeric::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value    = bNullValue_;
-    asn.value.t       = T_MissionParameter_value_aReal;
-    asn.value.u.aReal = value_;
+    asn.set_null_value ( bNullValue_ );
+    //asn.value.t       = T_MissionParameter_value_aReal;
+    asn.mutable_value()->set_areal ( value_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Numeric::AsnDelete
+// Name: MissionParameter_Numeric::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Numeric::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_Numeric::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

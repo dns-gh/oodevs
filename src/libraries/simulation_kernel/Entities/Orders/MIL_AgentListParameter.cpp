@@ -9,22 +9,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentListParameter.h"
-
 #include "MIL_AgentServer.h"
-#include "simulation_orders/MIL_ParameterType_AgentList.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
+#include "simulation_orders/MIL_ParameterType_AgentList.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentListParameter::MIL_AgentListParameter( const ASN1T_UnitList& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AgentListParameter::MIL_AgentListParameter( const Common::MsgUnitList& asn, MIL_EntityManager_ABC& entityManager )
 {
-    unitList_.reserve( asn.n );
-    for( unsigned int i = 0; i < asn.n; ++i )
+    unitList_.reserve( asn.elem_size() );
+    for( int i = 0; i < asn.elem_size(); ++i )
     {
-        MIL_AgentPion* pPion = entityManager.FindAgentPion( asn .elem[i]);
+        MIL_AgentPion* pPion = entityManager.FindAgentPion( asn .elem( i ).oid() );
         if( !pPion )
             throw std::runtime_error( "Agent does not exist" );
         DEC_RolePion_Decision* pAgent = dynamic_cast< DEC_RolePion_Decision* >( &pPion->GetDecision() );
@@ -64,18 +64,11 @@ bool MIL_AgentListParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_AgentListParameter::ToAgentList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentListParameter::ToAgentList( ASN1T_UnitList& asn ) const
+bool MIL_AgentListParameter::ToAgentList( Common::MsgUnitList& asn ) const
 {
     unsigned int size = unitList_.size();
-    asn.n = size;
-    if( size != 0 )
-    {    
-        ASN1T_OID* pOID = new ASN1T_OID[ size ]; //$$$ RAM
-        asn.elem = pOID;
-
-        for( unsigned int i = 0; i < size; ++i )
-            pOID[i] = unitList_[i]->GetPion().GetID();
-    }
+    for( unsigned int i = 0; i < size; ++i )
+        asn.add_elem()->set_oid( unitList_[i]->GetPion().GetID() );
     return true;
 }
 

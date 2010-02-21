@@ -10,16 +10,24 @@
 #ifndef __VisionCones_h_
 #define __VisionCones_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
     class SensorType;
     class Agent_ABC;
     class Workers;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgUnitVisionCones;
+    class MsgUnitAttributes;
 }
 
 class Surface;
@@ -33,8 +41,8 @@ class VisionMap;
 // Created: AGE 2006-02-14
 // =============================================================================
 class VisionCones : public kernel::Extension_ABC
-                  , public kernel::Updatable_ABC< ASN1T_MsgUnitVisionCones >
-                  , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitVisionCones >
+                  , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                   , public kernel::Drawable_ABC
 {
 
@@ -67,8 +75,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitVisionCones& message );
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     void Invalidate();
     void Update() const;
     void CancelCurrent();

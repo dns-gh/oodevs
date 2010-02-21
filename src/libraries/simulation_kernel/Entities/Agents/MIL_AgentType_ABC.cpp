@@ -72,7 +72,7 @@ void MIL_AgentType_ABC::InitializeNature( xml::xistream& xis )
 // Name: MIL_AgentType_ABC::GetID
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-uint MIL_AgentType_ABC::GetID() const
+unsigned int MIL_AgentType_ABC::GetID() const
 {
     return nID_;
 }

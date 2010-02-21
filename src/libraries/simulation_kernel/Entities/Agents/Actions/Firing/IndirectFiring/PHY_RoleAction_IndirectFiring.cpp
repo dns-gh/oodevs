@@ -70,7 +70,7 @@ PHY_RoleAction_IndirectFiring::~PHY_RoleAction_IndirectFiring()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void PHY_RoleAction_IndirectFiring::serialize( Archive& archive , const uint )
+void PHY_RoleAction_IndirectFiring::serialize( Archive& archive , const unsigned int )
 {
     archive & boost::serialization::base_object< tools::Role_ABC >( *this );
 }
@@ -141,7 +141,7 @@ void PHY_RoleAction_IndirectFiring::FireSuspended()
 // Name: PHY_RoleAction_IndirectFiring::ThrowSmoke
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
-int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosition, uint nNbrAmmo )
+int PHY_RoleAction_IndirectFiring::ThrowSmoke( const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmo )
 {
 
     

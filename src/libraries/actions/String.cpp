@@ -11,8 +11,6 @@
 #include "String.h"
 #include <xeumeuleu/xml.h>
 
-using namespace kernel;
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -28,20 +26,10 @@ String::String( const kernel::OrderParameter& parameter, const std::string& valu
 
 // -----------------------------------------------------------------------------
 // Name: String constructor
-// Created: SBO 2007-10-29
-// -----------------------------------------------------------------------------
-String::String( const kernel::OrderParameter& parameter, const ASN1VisibleString& asn )
-    : Parameter< QString >( parameter, asn )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: String constructor
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-String::String( const OrderParameter& parameter, xml::xistream& xis )
-    : Parameter< QString >( parameter, attribute< std::string >( xis, "value" ).c_str() )
+String::String( const kernel::OrderParameter& parameter, xml::xistream& xis )
+    : Parameter< QString >( parameter, xml::attribute< std::string >( xis, "value" ).c_str() )
 {
     // NOTHING
 }
@@ -59,10 +47,10 @@ String::~String()
 // Name: String::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void String::CommitTo( ASN1VisibleString& asn ) const
+void String::CommitTo( std::string& message ) const
 {
     const QString value = GetValue();
-    asn = value.isNull() ? "" : value.ascii();
+    message = value.isNull() ? "" : value.ascii();
 }
 
 // -----------------------------------------------------------------------------
@@ -72,5 +60,5 @@ void String::CommitTo( ASN1VisibleString& asn ) const
 void String::Serialize( xml::xostream& xos ) const
 {
     Parameter< QString >::Serialize( xos );
-    xos << attribute( "value", GetValue().ascii() );
+    xos << xml::attribute( "value", GetValue().ascii() );
 }

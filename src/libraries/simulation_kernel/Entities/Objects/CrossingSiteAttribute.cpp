@@ -11,7 +11,7 @@
 #include "CrossingSiteAttribute.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( CrossingSiteAttribute )
@@ -58,11 +58,10 @@ CrossingSiteAttribute::CrossingSiteAttribute()
 // Name: CrossingSiteAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( const ASN1T_ObjectAttributes& asn )
+CrossingSiteAttribute::CrossingSiteAttribute( const Common::MsgObjectAttributes& asn )
 {
     OnUpdate( asn );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute destructor
@@ -82,7 +81,7 @@ CrossingSiteAttribute::~CrossingSiteAttribute()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 template < typename Archive >
-void CrossingSiteAttribute::serialize( Archive& file, const uint )
+void CrossingSiteAttribute::serialize( Archive& file, const unsigned int )
 {   
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & rWidth_
@@ -119,22 +118,21 @@ void CrossingSiteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: CrossingSiteAttribute::SendFullState
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::SendFullState( ASN1T_ObjectAttributes& asn ) const
+void CrossingSiteAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    asn.m.crossing_sitePresent = 1;
-    asn.crossing_site.width                 = (int)rWidth_;
-    asn.crossing_site.depth                 = (int)rDepth_;
-    asn.crossing_site.flow_rate             = (int)rCurrentSpeed_;
-    asn.crossing_site.banks_require_fitting = bBanksToFitOut_;
+    asn.mutable_crossing_site()->set_width( rWidth_ );
+    asn.mutable_crossing_site()->set_depth( rDepth_ );
+    asn.mutable_crossing_site()->set_flow_rate( rCurrentSpeed_ );
+    asn.mutable_crossing_site()->set_banks_require_fitting( bBanksToFitOut_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: CrossingSiteAttribute::Send
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void CrossingSiteAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if ( NeedUpdate( eOnCreation ) )
+    if( NeedUpdate( eOnCreation ) )
     {
         SendFullState( asn );
         Reset();
@@ -145,12 +143,12 @@ void CrossingSiteAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
 // Name: CrossingSiteAttribute::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::OnUpdate( const ASN1T_ObjectAttributes& asn )
+void CrossingSiteAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
 {
-    rWidth_         = asn.crossing_site.width;
-    rDepth_         = asn.crossing_site.depth;
-    rCurrentSpeed_  = asn.crossing_site.flow_rate;
-    bBanksToFitOut_ = asn.crossing_site.banks_require_fitting != false;
+    rWidth_         = asn.crossing_site().width();
+    rDepth_         = asn.crossing_site().depth();
+    rCurrentSpeed_  = asn.crossing_site().flow_rate();
+    bBanksToFitOut_ = asn.crossing_site().banks_require_fitting();
 }
 
 // -----------------------------------------------------------------------------

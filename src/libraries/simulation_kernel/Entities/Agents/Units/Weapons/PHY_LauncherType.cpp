@@ -178,11 +178,11 @@ void PHY_LauncherType::RegisterPHModificator( const PHY_Posture& postureSource, 
 // -----------------------------------------------------------------------------
 MT_Float PHY_LauncherType::GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const
 {
-    const uint     nFirerCurrentPosture      = firerPosture.GetCurrentPosture              ().GetID();
-    const uint     nFirerLastPosture         = firerPosture.GetLastPosture                 ().GetID();
+    const unsigned int     nFirerCurrentPosture      = firerPosture.GetCurrentPosture              ().GetID();
+    const unsigned int     nFirerLastPosture         = firerPosture.GetLastPosture                 ().GetID();
     const MT_Float rFirerPostureCompletion   = firerPosture.GetPostureCompletionPercentage ();
-    const uint     nTargetCurrentPosture     = targetPosture.GetCurrentPosture             ().GetID();
-    const uint     nTargetLastPosture        = targetPosture.GetLastPosture                ().GetID();
+    const unsigned int     nTargetCurrentPosture     = targetPosture.GetCurrentPosture             ().GetID();
+    const unsigned int     nTargetLastPosture        = targetPosture.GetLastPosture                ().GetID();
     const MT_Float rTargetPostureCompletion  = targetPosture.GetPostureCompletionPercentage();
       
     const T_PhModificatorValueVector& firerCurrentModificator = phModificators_[ nFirerCurrentPosture ];

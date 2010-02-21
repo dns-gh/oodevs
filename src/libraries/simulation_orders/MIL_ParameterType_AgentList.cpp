@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_AgentList.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_AgentList constructor
@@ -19,6 +19,7 @@
 MIL_ParameterType_AgentList::MIL_ParameterType_AgentList( const std::string& name )
     : MIL_ParameterType_ABC( name )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -27,37 +28,30 @@ MIL_ParameterType_AgentList::MIL_ParameterType_AgentList( const std::string& nam
 //-----------------------------------------------------------------------------
 MIL_ParameterType_AgentList::~MIL_ParameterType_AgentList()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_AgentList::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_AgentList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_AgentList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value        = false;
-    to.value.t           = T_MissionParameter_value_unitList;
-    to.value.u.unitList = new ASN1T_UnitList();
-    
-    return from.ToAgentList( *to.value.u.unitList );
+    to.set_null_value( false );
+    return from.ToAgentList( *to.mutable_value()->mutable_unitlist() );
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_AgentList::CleanAfterSerialization
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_AgentList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_AgentList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_unitList );
-    assert( to.value.u.unitList );
-    ASN_Delete::Delete( *to.value.u.unitList );
-    delete to.value.u.unitList;
+    assert( to.value().has_unitlist() );
+    assert( to.mutable_value()->mutable_unitlist() );
+    to.mutable_value()->mutable_unitlist()->Clear();
+    delete to.mutable_value()->mutable_unitlist();
 }

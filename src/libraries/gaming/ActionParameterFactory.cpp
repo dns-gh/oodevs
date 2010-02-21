@@ -48,13 +48,14 @@
 #include "AgentsModel.h"
 #include "TeamsModel.h"
 #include "ObjectsModel.h"
+#include "Tools.h"
 #include "UrbanModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "Tools.h"
+#include "protocol/Protocol.h"
 #include <urban/model.h>
 #include <urban/blockmodel.h>
 #include <xeumeuleu/xml.h>
@@ -95,88 +96,85 @@ ActionParameterFactory::~ActionParameterFactory()
 // Name: ActionParameterFactory::CreateParameter
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const ASN1T_MissionParameter& asn, const Entity_ABC& entity ) const
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderParameter& parameter, const Common::MsgMissionParameter& message, const Entity_ABC& entity ) const
 {
     // $$$$ SBO 2007-10-11: we should create a parameter of the real type in order to be able (later) to edit parameters
-    if( asn.null_value )
+    if( message.null_value() )
         return new actions::parameters::Parameter< QString >( parameter, tools::translate( "ActionParameterFactory", "not set" ) );
-    switch( asn.value.t )
-    {
-    case T_MissionParameter_value_aBool:
-        return new actions::parameters::Bool( parameter, asn.value.u.aBool != 0 );
-    case T_MissionParameter_value_aCharStr:
-        return new actions::parameters::Parameter< QString >( parameter, asn.value.u.aCharStr );
-    case T_MissionParameter_value_unit:
-        return new actions::parameters::Agent( parameter, asn.value.u.unit, model_.agents_, controller_ );
-    case T_MissionParameter_value_aReal:
-        return new actions::parameters::Numeric( parameter, asn.value.u.aReal );
-    case T_MissionParameter_value_automat:
-        return new actions::parameters::Automat( parameter, asn.value.u.automat, model_.agents_, controller_ );
-    case T_MissionParameter_value_heading:
-        return new actions::parameters::Parameter< float >( parameter, asn.value.u.heading );
-    case T_MissionParameter_value_enumeration:
-        return new actions::parameters::Enumeration( parameter, asn.value.u.enumeration );
-    case T_MissionParameter_value_path:
-        return new actions::parameters::Path( parameter, converter_, *asn.value.u.path );
-    case T_MissionParameter_value_unitKnowledge:
-        return new actions::parameters::AgentKnowledge( parameter, asn.value.u.unitKnowledge, agentKnowledgeConverter_, entity, controller_ );
-    case T_MissionParameter_value_objectKnowledge:
-        return new actions::parameters::ObjectKnowledge( parameter, asn.value.u.objectKnowledge, objectKnowledgeConverter_, entity, controller_ );
-    case T_MissionParameter_value_populationKnowledge:
-        return new actions::parameters::PopulationKnowledge( parameter, asn.value.u.populationKnowledge, agentKnowledgeConverter_, entity, controller_ );
-    case T_MissionParameter_value_unitList:
-        return new actions::parameters::AgentList( parameter, *asn.value.u.unitList, model_.agents_, controller_ );
-    case T_MissionParameter_value_automatList:
-        return new actions::parameters::AutomatList( parameter, *asn.value.u.automatList, model_.agents_, controller_ );
-    case T_MissionParameter_value_pathList:
-        return new actions::parameters::PathList( parameter, converter_, *asn.value.u.pathList );
-    case T_MissionParameter_value_unitKnowledgeList:
-        return new actions::parameters::AgentKnowledgeList( parameter, *asn.value.u.unitKnowledgeList, agentKnowledgeConverter_, entity, controller_ );
-    case T_MissionParameter_value_objectKnowledgeList:
-        return new actions::parameters::ObjectKnowledgeList( parameter, *asn.value.u.objectKnowledgeList, objectKnowledgeConverter_, entity, controller_ );
-    case T_MissionParameter_value_locationList:
-        return new actions::parameters::LocationList( parameter, converter_, *asn.value.u.locationList );
-    case T_MissionParameter_value_plannedWorkList:
-        return new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWorkList, controller_ );
-    case T_MissionParameter_value_pointList:
-        return new actions::parameters::PointList( parameter, converter_, *asn.value.u.pointList );
-    case T_MissionParameter_value_polygonList:
-        return new actions::parameters::PolygonList( parameter, converter_, *asn.value.u.polygonList );
-    case T_MissionParameter_value_location:
-        return new actions::parameters::Location( parameter, converter_, *asn.value.u.location );
-    case T_MissionParameter_value_plannedWork:
-        return new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, model_.agents_, *asn.value.u.plannedWork, controller_ );
-    case T_MissionParameter_value_atlasNature:
-        return new actions::parameters::AtlasNature( parameter, *asn.value.u.atlasNature, staticModel_.atlasNatures_ );
-    case T_MissionParameter_value_missionObjective:
-        return new actions::parameters::Objective( parameter, converter_, *asn.value.u.missionObjective );
-    case T_MissionParameter_value_missionObjectiveList:
-        return new actions::parameters::ObjectiveList( parameter, converter_, *asn.value.u.missionObjectiveList );
-    case T_MissionParameter_value_point:
-        return new actions::parameters::Point( parameter, converter_, *asn.value.u.point );
-    case T_MissionParameter_value_polygon:
-        return new actions::parameters::Polygon( parameter, converter_, *asn.value.u.polygon );
-    case T_MissionParameter_value_dotationType:
-        return new actions::parameters::DotationType( parameter, asn.value.u.dotationType, staticModel_.objectTypes_ );
-    case T_MissionParameter_value_equipmentType:
-        break;
-    case T_MissionParameter_value_logMaintenancePriorities:
-        return new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, *asn.value.u.logMaintenancePriorities );
-    case T_MissionParameter_value_logMedicalPriorities:
-        return new actions::parameters::MedicalPriorities( parameter, *asn.value.u.logMedicalPriorities );
-    case T_MissionParameter_value_tirIndirect: // $$$$ SBO 2007-05-21: reports only, not to be used!
-        break;
-    case T_MissionParameter_value_line:
-        return new actions::parameters::Limit( parameter, converter_, *asn.value.u.line );
-    case T_MissionParameter_value_limasOrder:
-        return new actions::parameters::LimaList( parameter, converter_, *asn.value.u.limasOrder );
-    case T_MissionParameter_value_intelligenceList:
-        return new actions::parameters::IntelligenceList( parameter, converter_, *asn.value.u.intelligenceList, model_.teams_, staticModel_.levels_, controller_ );
-    case T_MissionParameter_value_dateTime:
-        return new actions::parameters::DateTime( parameter, *asn.value.u.dateTime );
-    case T_MissionParameter_value_urbanBlock:
-        return new actions::parameters::UrbanBlock( parameter, asn.value.u.urbanBlock );
-    }
+    if( message.value().has_abool() )
+        return new actions::parameters::Bool( parameter, message.value().abool() != 0 );
+    if( message.value().has_acharstr() )
+        return new actions::parameters::Parameter< QString >( parameter, QString( message.value().acharstr().c_str() ) );
+    if( message.value().has_unit() )
+        return new actions::parameters::Agent( parameter, message.value().unit().oid(), model_.agents_, controller_ );
+    if( message.value().has_areal() )
+        return new actions::parameters::Numeric( parameter, message.value().areal() );
+    if( message.value().has_automat() )
+        return new actions::parameters::Automat( parameter, message.value().automat().oid(), model_.agents_, controller_ );
+    if( message.value().has_heading() )
+        return new actions::parameters::Parameter< int >( parameter, message.value().heading().heading() );
+    if( message.value().has_enumeration() )
+        return new actions::parameters::Enumeration( parameter, message.value().enumeration() );
+    if( message.value().has_path() )
+        return new actions::parameters::Path( parameter, converter_, message.value().path().location() );
+    if( message.value().has_unitknowledge() )
+        return new actions::parameters::AgentKnowledge( parameter, message.value().unitknowledge().oid(), agentKnowledgeConverter_, entity, controller_ );
+    if( message.value().has_objectknowledge() )
+        return new actions::parameters::ObjectKnowledge( parameter, message.value().objectknowledge().oid(), objectKnowledgeConverter_, entity, controller_ );
+    if( message.value().has_populationknowledge() )
+        return new actions::parameters::PopulationKnowledge( parameter, message.value().populationknowledge().oid(), agentKnowledgeConverter_, entity, controller_ );
+    if( message.value().has_unitlist() )
+        return new actions::parameters::AgentList( parameter, message.value().unitlist(), model_.agents_, controller_ );
+    if( message.value().has_automatlist() )
+        return new actions::parameters::AutomatList( parameter, message.value().automatlist(), model_.agents_, controller_ );
+    if( message.value().has_pathlist() )
+        return new actions::parameters::PathList( parameter, converter_, message.value().pathlist() );
+    if( message.value().has_unitknowledgelist() )
+        return new actions::parameters::AgentKnowledgeList( parameter, message.value().unitknowledgelist(), agentKnowledgeConverter_, entity, controller_ );
+    if( message.value().has_objectknowledgelist() )
+        return new actions::parameters::ObjectKnowledgeList( parameter, message.value().objectknowledgelist(), objectKnowledgeConverter_, entity, controller_ );
+    if( message.value().has_locationlist() )
+        return new actions::parameters::LocationList( parameter, converter_, message.value().locationlist() );
+    if( message.value().has_plannedworklist() )
+        return new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, message.value().plannedworklist(), controller_ );
+    if( message.value().has_pointlist() )
+        return new actions::parameters::PointList( parameter, converter_, message.value().pointlist() );
+    if( message.value().has_polygonlist() )
+        return new actions::parameters::PolygonList( parameter, converter_, message.value().polygonlist() );
+    if( message.value().has_location() )
+        return new actions::parameters::Location( parameter, converter_, message.value().location() );
+    if( message.value().has_plannedwork() )
+        return new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, model_.agents_, message.value().plannedwork(), controller_ );
+    if( message.value().has_atlasnature() )
+        return new actions::parameters::AtlasNature( parameter, message.value().atlasnature(), staticModel_.atlasNatures_ );
+    if( message.value().has_missionobjective() )
+        return new actions::parameters::Objective( parameter, converter_, message.value().missionobjective() );
+    if( message.value().has_missionobjectivelist() )
+        return new actions::parameters::ObjectiveList( parameter, converter_, message.value().missionobjectivelist() );
+    if( message.value().has_point() )
+        return new actions::parameters::Point( parameter, converter_, message.value().point() );
+    if( message.value().has_polygon() )
+        return new actions::parameters::Polygon( parameter, converter_, message.value().polygon().location() );
+    if( message.value().has_dotationtype() )
+        return new actions::parameters::DotationType( parameter, message.value().dotationtype().oid(), staticModel_.objectTypes_ );
+    if( message.value().has_equipmenttype() )
+        return 0;
+    if( message.value().has_logmaintenancepriorities() )
+        return new actions::parameters::MaintenancePriorities( parameter, staticModel_.objectTypes_, message.value().logmaintenancepriorities() );
+    if( message.value().has_logmedicalpriorities() )
+        return new actions::parameters::MedicalPriorities( parameter, message.value().logmedicalpriorities() );
+    if( message.value().has_tirindirect() ) // $$$$ SBO 2007-05-21: reports only, not to be used!
+        return 0;
+    if( message.value().has_line() )
+        return new actions::parameters::Limit( parameter, converter_, message.value().line() );
+    if( message.value().has_limasorder() )
+        return new actions::parameters::LimaList( parameter, converter_, message.value().limasorder() );
+    if( message.value().has_intelligencelist() )
+        return new actions::parameters::IntelligenceList( parameter, converter_, message.value().intelligencelist(), model_.teams_, staticModel_.levels_, controller_ );
+    if( message.value().has_datetime() )
+        return new actions::parameters::DateTime( parameter, message.value().datetime() );
+    if( message.value().has_urbanblock() )
+        return new actions::parameters::UrbanBlock( parameter, message.value().urbanblock() );
     return 0;
 }
 

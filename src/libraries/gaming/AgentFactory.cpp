@@ -112,17 +112,18 @@ AgentFactory::~AgentFactory()
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomatCreation& asnMsg )
+Automat_ABC* AgentFactory::Create( const MsgsSimToClient::MsgAutomatCreation& message )
 {
-    Automat* result = new Automat( asnMsg, controllers_.controller_, static_.types_ );
+    Automat* result = new Automat( message, controllers_.controller_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach< CommunicationHierarchies >( *new AutomatHierarchies        ( controllers_.controller_, *result, model_.knowledgeGroups_, dico ) );
     Entity_ABC* superior = 0;
-    if( asnMsg.oid_parent.t == T_MsgAutomatCreation_oid_parent_formation )
-        superior = & (( tools::Resolver< Formation_ABC >&)( model_.teams_ )) .Get( asnMsg.oid_parent.u.formation );
+
+    if( message.oid_parent().has_formation() )
+        superior = & (( tools::Resolver< Formation_ABC >&)( model_.teams_ )) .Get( message.oid_parent().formation().oid() );
     else
-        superior = & (( tools::Resolver< Automat_ABC >&)  ( model_.agents_ )).Get( asnMsg.oid_parent.u.automate );
+        superior = & (( tools::Resolver< Automat_ABC >&)  ( model_.agents_ )).Get( message.oid_parent().automate().oid() );
     result->Attach< TacticalHierarchies >     ( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach( *new AutomatLives( *result ) );
     result->Attach< LogisticLinks_ABC >( *new LogisticLinks( controllers_.controller_, model_.agents_, result->GetType(), dico ) );
@@ -142,7 +143,7 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomatCreation& asnMsg )
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach( *new DecisionalStates() );
 
-    result->Update( asnMsg );
+    result->Update( message );
     result->Polish();
     
     return result;
@@ -152,9 +153,9 @@ Automat_ABC* AgentFactory::Create( const ASN1T_MsgAutomatCreation& asnMsg )
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Agent_ABC* AgentFactory::Create( const ASN1T_MsgUnitCreation& asnMsg )
+Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation& message )
 {
-    Agent* result = new Agent( asnMsg, controllers_.controller_, static_.types_ );
+    Agent* result = new Agent( message, controllers_.controller_, static_.types_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
 
     result->Attach( *new Lives( controllers_.controller_ ) );
@@ -171,7 +172,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgUnitCreation& asnMsg )
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
     result->Attach< CommunicationHierarchies >( *new AgentHierarchies< CommunicationHierarchies >( controllers_.controller_, *result, model_.agents_ ) );
     result->Attach< TacticalHierarchies >     ( *new AgentHierarchies< TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
-    if( asnMsg.pc )
+    if( message.pc() )
         result->Attach( *new PcAttributes( *result ) );
 
     result->Attach< HumanFactors_ABC >( *new HumanFactors( controllers_.controller_, dico ) );
@@ -189,7 +190,7 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgUnitCreation& asnMsg )
     result->Attach( *new Weapons( static_.objectTypes_, static_.objectTypes_ ) );
     AttachExtensions( *result );
 
-    result->Update( asnMsg );
+    result->Update( message );
     result->Polish();
 
     return result;
@@ -199,12 +200,12 @@ Agent_ABC* AgentFactory::Create( const ASN1T_MsgUnitCreation& asnMsg )
 // Name: AgentFactory::Create
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg )
+Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreation& message )
 {
-    Population* result = new Population( asnMsg, controllers_.controller_, static_.coordinateConverter_, static_.types_ );
+    Population* result = new Population( message, controllers_.controller_, static_.coordinateConverter_, static_.types_ );
 
     result->Attach< Positions >( *new PopulationPositions( *result ) );
-    result->Attach< TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( asnMsg.oid_camp ) ) );
+    result->Attach< TacticalHierarchies >( *new PopulationHierarchies( *result, model_.teams_.GetTeam( message.oid_camp() ) ) );
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     result->Attach( *new DecisionalStates() );
     AttachExtensions( *result );
@@ -219,7 +220,7 @@ Population_ABC* AgentFactory::Create( const ASN1T_MsgPopulationCreation& asnMsg 
 void AgentFactory::AttachExtensions( Entity_ABC& agent )
 {
     agent.Attach( *new DebugPoints( static_.coordinateConverter_ ) );
-    agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
+	agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );

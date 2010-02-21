@@ -10,8 +10,11 @@
 #ifndef __AmmoEffect_h_
 #define __AmmoEffect_h_
 
-#include "game_asn/Simulation.h"
+
 #include "MSEllipse.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -32,7 +35,7 @@ class AmmoEffect
 public:
     //! @name Constructors/Destructor
     //@{
-             AmmoEffect( const ASN1T_MsgStartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+    AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AmmoEffect();
     //@}
 
@@ -53,7 +56,7 @@ private:
     //@{
     kernel::Controller& controller_;
     unsigned long id_;
-    ASN1T_EnumFireEffectType type_;
+    EnumFireEffectType type_;
     MSEllipse ellipse_;
     //@}
 };

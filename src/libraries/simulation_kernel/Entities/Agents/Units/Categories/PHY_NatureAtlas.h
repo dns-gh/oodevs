@@ -36,8 +36,8 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName () const;
-          uint         GetID   () const;
-          uint         GetAsnID() const;
+          unsigned int         GetID   () const;
+          unsigned int         GetAsnID() const;
     //@}
 
 private:
@@ -45,18 +45,18 @@ private:
     //@{
     enum E_Type
     {
-        eNatureAtlas_Blinde         = 0x8000, // NB : valeurs imposés par l'ASN
-        eNatureAtlas_ASS            = 0x4000,
-        eNatureAtlas_PC             = 0x2000,
-        eNatureAtlas_Log            = 0x1000,
-        eNatureAtlas_Mortier        = 0x0800,
-        eNatureAtlas_LanceRoquette  = 0x0400,
-        eNatureAtlas_Vehicule       = 0x0200,
-        eNatureAtlas_PersonnelAPied = 0x0100,
-        eNatureAtlas_Helicoptere    = 0x0080,
-        eNatureAtlas_Indefini       = 0x0040,
-        eNatureAtlas_ASA            = 0x0020,
-        eNatureAtlas_None           = 0x0010
+        eNatureAtlas_Blinde         = 1, // NB : valeurs imposés par l'ASN
+        eNatureAtlas_ASS            = 2,
+        eNatureAtlas_PC             = 4,
+        eNatureAtlas_Log            = 8,
+        eNatureAtlas_Mortier        = 16,
+        eNatureAtlas_LanceRoquette  = 32,
+        eNatureAtlas_Vehicule       = 64,
+        eNatureAtlas_PersonnelAPied = 128,
+        eNatureAtlas_Helicoptere    = 256,
+        eNatureAtlas_Indefini       = 512,
+        eNatureAtlas_ASA            = 1024,
+        eNatureAtlas_None           = 2048
     };
 
     typedef std::map< std::string, const PHY_NatureAtlas*, sCaseInsensitiveLess > T_NatureAtlasMap;
@@ -64,13 +64,13 @@ private:
     //@}
 
 private:
-     PHY_NatureAtlas( const std::string& strName, E_Type nType, uint nAsnID );
+     PHY_NatureAtlas( const std::string& strName, E_Type nType, unsigned int nAsnID );
     virtual ~PHY_NatureAtlas();
 
 private:
     const std::string  strName_;
     const E_Type       nType_;
-    const uint         nAsnID_;
+    const unsigned int         nAsnID_;
 
 private:
     static T_NatureAtlasMap natureAtlas_;

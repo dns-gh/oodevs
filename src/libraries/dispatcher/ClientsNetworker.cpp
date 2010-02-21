@@ -15,12 +15,7 @@
 #include "Plugin_ABC.h"
 #include "Services.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
-#include "game_asn/ClientSenders.h"
-#include "game_asn/AuthenticationSenders.h"
-#include "game_asn/ReplaySenders.h"
-#include "game_asn/AarSenders.h"
-#include "game_asn/MessengerSenders.h"
-#include "game_asn/DispatcherSenders.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -52,11 +47,11 @@ ClientsNetworker::~ClientsNetworker()
 // Name: ClientsNetworker::Receive
 // Created: AGE 2007-07-09
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Receive( const ASN1T_MsgsSimToClient& message )
+void ClientsNetworker::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
-    if( message.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_begin )
+    if( wrapper.message().has_control_send_current_state_begin() )
         DenyConnections();
-    else if( message.msg.t == T_MsgsSimToClient_msg_msg_control_send_current_state_end )
+    else if( wrapper.message().has_control_send_current_state_end() )
         AllowConnections();
 }
 
@@ -112,7 +107,7 @@ void ClientsNetworker::ConnectionError( const std::string& link , const std::str
 // Name: ClientsNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsSimToClient::MsgSimToClient& asnMsg )
 {
     try
     {
@@ -129,7 +124,7 @@ void ClientsNetworker::Send( const ASN1T_MsgsSimToClient& asnMsg )
 // Name: ClientsNetworker::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsAuthenticationToClient::MsgAuthenticationToClient& asnMsg )
 {
     try
     {
@@ -146,7 +141,7 @@ void ClientsNetworker::Send( const ASN1T_MsgsAuthenticationToClient& asnMsg )
 // Name: ClientsNetworker::Send
 // Created: AGE 2007-08-27
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsReplayToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsReplayToClient::MsgReplayToClient& asnMsg )
 {
     try
     {
@@ -163,7 +158,7 @@ void ClientsNetworker::Send( const ASN1T_MsgsReplayToClient& asnMsg )
 // Name: ClientsNetworker::Send
 // Created: AGE 2007-09-12
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsAarToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsAarToClient::MsgAarToClient& asnMsg )
 {
     try
     {
@@ -181,7 +176,7 @@ void ClientsNetworker::Send( const ASN1T_MsgsAarToClient& asnMsg )
 // Name: ClientsNetworker::Send
 // Created: RDS 2008-04-04
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsMessengerToClient& asnMsg )
+void ClientsNetworker::Send( const MsgsMessengerToClient::MsgMessengerToClient& asnMsg )
 {
     try
     {
@@ -198,7 +193,7 @@ void ClientsNetworker::Send( const ASN1T_MsgsMessengerToClient& asnMsg )
 // Name: ClientsNetworker::Send
 // Created: AGE 2008-08-13
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsDispatcherToClient& msg )
+void ClientsNetworker::Send( const MsgsDispatcherToClient::MsgDispatcherToClient& msg )
 {
     try
     {
@@ -215,7 +210,7 @@ void ClientsNetworker::Send( const ASN1T_MsgsDispatcherToClient& msg )
 // Name: ClientsNetworker::Send
 // Created: RPD 2009-08-13
 // -----------------------------------------------------------------------------
-void ClientsNetworker::Send( const ASN1T_MsgsPluginToClient& msg )
+void ClientsNetworker::Send( const MsgsPluginToClient::MsgPluginToClient& msg )
 {
     try
     {

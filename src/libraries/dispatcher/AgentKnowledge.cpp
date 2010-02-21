@@ -8,13 +8,14 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
+#include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Model.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
 #include "ClientPublisher_ABC.h"
-#include "Agent.h"
 #include "KnowledgeGroup.h"
 #include "Side.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientSenders.h"
 
 using namespace dispatcher;
 
@@ -22,15 +23,15 @@ using namespace dispatcher;
 // Name: AgentKnowledge constructor
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreation& asnMsg )
-    : SimpleEntity< kernel::AgentKnowledge_ABC >( asnMsg.oid )
+AgentKnowledge::AgentKnowledge( Model& model, const MsgsSimToClient::MsgUnitKnowledgeCreation& message )
+    : SimpleEntity< kernel::AgentKnowledge_ABC >( message.oid() )
     , model_                ( model )
-    , knowledgeGroup_       ( model.knowledgeGroups_.Get( asnMsg.oid_groupe_possesseur ) )
-    , agent_                ( model.agents_.Get( asnMsg.oid_unite_reelle ) )
-    , type_                 ( asnMsg.type_unite )
+    , knowledgeGroup_       ( model.knowledgeGroups_.Get( message.oid_groupe_possesseur() ) )
+    , agent_                ( model.agents_.Get( message.oid_unite_reelle() ) )
+    , type_                 ( message.type_unite() )
     , nRelevance_           ( 0 )
-    , nPerceptionLevel_     ( EnumUnitIdentificationLevel::signale )
-    , nMaxPerceptionLevel_  ( EnumUnitIdentificationLevel::signale )
+    , nPerceptionLevel_     ( MsgsSimToClient::EnumUnitIdentificationLevel::signale )
+    , nMaxPerceptionLevel_  ( MsgsSimToClient::EnumUnitIdentificationLevel::signale )
     , nOperationalState_    ( 0 )
     , bDead_                ( false )
     , nDirection_           ( 0 )
@@ -41,21 +42,7 @@ AgentKnowledge::AgentKnowledge( Model& model, const ASN1T_MsgUnitKnowledgeCreati
     , bPrisoner_            ( false )
     , bRefugeeManaged_      ( false )
 {
-    //$$ BULLSHIT
-    optionals_.pertinencePresent               = 0;
-    optionals_.identification_levelPresent     = 0;
-    optionals_.max_identification_levelPresent = 0;
-    optionals_.etat_opPresent                  = 0;
-    optionals_.mortPresent                     = 0;
-    optionals_.positionPresent                 = 0;
-    optionals_.directionPresent                = 0;
-    optionals_.speedPresent                    = 0;
-    optionals_.campPresent                     = 0;
-    optionals_.nature_pcPresent                = 0;
-    optionals_.perception_par_compagniePresent = 0;
-    optionals_.renduPresent                    = 0;
-    optionals_.prisonnierPresent               = 0;
-    optionals_.refugie_pris_en_comptePresent   = 0;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -67,53 +54,55 @@ AgentKnowledge::~AgentKnowledge()
     // NOTHING
 }
 
-#define UPDATE_ASN_ATTRIBUTE( ASN, CPP ) \
-    if( asnMsg.m.##ASN##Present )        \
-    {                                    \
-        CPP = asnMsg.##ASN;              \
-        optionals_.##ASN##Present = 1;   \
+#define UPDATE_ASN_ATTRIBUTE(MESSAGE, ASN, CPP ) \
+    if( ##MESSAGE##.has_##ASN##() )              \
+    {                                            \
+        CPP = ##MESSAGE##.##ASN();               \
     }
+
+#define SEND_ASN_ATTRIBUTE( MESSAGE, ASN, CPP )  \
+    if ( ##MESSAGE##.has_##ASN##() )    \
+    {                                   \
+        ##MESSAGE##.set_##ASN ( CPP );  \
+    }   
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::Update
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
+void AgentKnowledge::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
 {
-    UPDATE_ASN_ATTRIBUTE( pertinence               , nRelevance_            );
-    UPDATE_ASN_ATTRIBUTE( identification_level     , nPerceptionLevel_      );
-    UPDATE_ASN_ATTRIBUTE( max_identification_level , nMaxPerceptionLevel_   );
-    UPDATE_ASN_ATTRIBUTE( etat_op                  , nOperationalState_     );
-    UPDATE_ASN_ATTRIBUTE( mort                     , bDead_                 );
-    if( asnMsg.m.positionPresent )
-    {
-        position_.Set( asnMsg.position.latitude, asnMsg.position.longitude );
-        optionals_.positionPresent = 1;
-    }
-    UPDATE_ASN_ATTRIBUTE( direction                , nDirection_            );
-    UPDATE_ASN_ATTRIBUTE( speed                    , nSpeed_                );
+    UPDATE_ASN_ATTRIBUTE( message ,  pertinence               , nRelevance_            );
+    UPDATE_ASN_ATTRIBUTE( message ,  identification_level     , nPerceptionLevel_      );
+    UPDATE_ASN_ATTRIBUTE( message ,  max_identification_level , nMaxPerceptionLevel_   );
+    UPDATE_ASN_ATTRIBUTE( message ,  etat_op                  , nOperationalState_     );
+    UPDATE_ASN_ATTRIBUTE( message ,  mort                     , bDead_                 );
 
-    if( asnMsg.m.campPresent )
-    {
-        optionals_.campPresent = 1;
-        team_ = &model_.sides_.Get( asnMsg.camp );
-    }
+    if( message.has_position() )
+        position_.Set( message.position().latitude(), message.position().longitude() );
+   
+    UPDATE_ASN_ATTRIBUTE( message ,  speed                    , nSpeed_                );
 
-    UPDATE_ASN_ATTRIBUTE( nature_pc, bPC_ );
+    if( message.has_direction() )
+        nDirection_ = message.direction().heading();
 
-    if( asnMsg.m.perception_par_compagniePresent )
+    if( message.has_camp() )
+        team_ = &model_.sides_.Get( message.camp() );
+
+    UPDATE_ASN_ATTRIBUTE( message ,  nature_pc, bPC_ );
+
+    if( message.has_perception_par_compagnie() )
     {
-        optionals_.perception_par_compagniePresent = 1;
         automatePerceptions_.clear();
-        for( unsigned int i = 0; i < asnMsg.perception_par_compagnie.n; ++i )
-            automatePerceptions_.push_back( asnMsg.perception_par_compagnie.elem[ i ] );
+        for( int i = 0; i < message.perception_par_compagnie().elem_size(); ++i )
+            automatePerceptions_.push_back( message.perception_par_compagnie().elem().Get(i) );
     }
 
-    UPDATE_ASN_ATTRIBUTE( rendu                    , bDead_                 );
-    UPDATE_ASN_ATTRIBUTE( prisonnier               , bPrisoner_             );
-    UPDATE_ASN_ATTRIBUTE( refugie_pris_en_compte   , bRefugeeManaged_       );
+    UPDATE_ASN_ATTRIBUTE( message ,  rendu                    , bSurrendered_          );
+    UPDATE_ASN_ATTRIBUTE( message ,  prisonnier               , bPrisoner_             );
+    UPDATE_ASN_ATTRIBUTE( message ,  refugie_pris_en_compte   , bRefugeeManaged_       );
 
-    ApplyUpdate( asnMsg );
+    ApplyUpdate( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,22 +111,15 @@ void AgentKnowledge::Update( const ASN1T_MsgUnitKnowledgeUpdate& asnMsg )
 // -----------------------------------------------------------------------------
 void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 {
-    client::UnitKnowledgeCreation asn;
+    client::UnitKnowledgeCreation message;
+    
+    message().set_oid                       ( GetId() );
+    message().set_oid_groupe_possesseur     ( knowledgeGroup_.GetId() );
+    message().set_oid_unite_reelle          ( agent_.GetId() );
+    message().mutable_type_unite()->set_type( type_.type() );
 
-    asn().oid                   = GetId();
-    asn().oid_groupe_possesseur = knowledgeGroup_.GetId();
-    asn().oid_unite_reelle      = agent_.GetId();
-    asn().type_unite            = type_;
-
-    asn.Send( publisher );
+    message.Send( publisher );
 }
-
-#define SEND_ASN_ATTRIBUTE( ASN, CPP )  \
-    if( optionals_.##ASN##Present )     \
-    {                                   \
-        asn().m.##ASN##Present = 1;     \
-        asn().##ASN = CPP;              \
-    }
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge::SendFullUpdate
@@ -145,57 +127,51 @@ void AgentKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    client::UnitKnowledgeUpdate asn;
+    client::UnitKnowledgeUpdate message;
+    
+    message().set_oid                   ( GetId() );
+    message().set_oid_groupe_possesseur ( knowledgeGroup_.GetId() );
 
-    asn().oid                   = GetId();
-    asn().oid_groupe_possesseur = knowledgeGroup_.GetId();
-
-    SEND_ASN_ATTRIBUTE( pertinence               , nRelevance_            );
-    SEND_ASN_ATTRIBUTE( identification_level     , nPerceptionLevel_      );
-    SEND_ASN_ATTRIBUTE( max_identification_level , nMaxPerceptionLevel_   );
-    SEND_ASN_ATTRIBUTE( etat_op                  , nOperationalState_     );
-    SEND_ASN_ATTRIBUTE( mort                     , bDead_                 );
+    SEND_ASN_ATTRIBUTE( message() ,  pertinence               , nRelevance_            );
+    SEND_ASN_ATTRIBUTE( message() ,  identification_level     , nPerceptionLevel_      );
+    SEND_ASN_ATTRIBUTE( message() ,  max_identification_level , nMaxPerceptionLevel_   );
+    SEND_ASN_ATTRIBUTE( message() ,  etat_op                  , nOperationalState_     );
+    SEND_ASN_ATTRIBUTE( message() ,  mort                     , bDead_                 );
 
     if( optionals_.positionPresent )
     {
-        asn().m.positionPresent = 1;
-        asn().position.latitude = position_.X();
-        asn().position.longitude = position_.Y();
-    }
+        message().mutable_position()->set_latitude( position_.X() );
+        message().mutable_position()->set_longitude( position_.Y() );    
+    }   
+    message().mutable_direction()->set_heading( nDirection_ );
+    SEND_ASN_ATTRIBUTE( message() ,  speed    , nSpeed_     );
 
-    SEND_ASN_ATTRIBUTE( direction, nDirection_ );
-    SEND_ASN_ATTRIBUTE( speed    , nSpeed_     );
-
-    if( optionals_.campPresent )
+    if( message().has_camp() )
     {
         assert( team_ );
-        asn().m.campPresent = 1;
-        asn().camp = team_->GetId();
+        message().set_camp( team_->GetId() );
     }
 
-    SEND_ASN_ATTRIBUTE( nature_pc, bPC_ );
+    SEND_ASN_ATTRIBUTE( message() ,  nature_pc, bPC_ );
 
     if( optionals_.perception_par_compagniePresent )
     {
-        asn().m.perception_par_compagniePresent = 1;
-        asn().perception_par_compagnie.n = automatePerceptions_.size();
-        if( !automatePerceptions_.empty() )
+        for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
         {
-            asn().perception_par_compagnie.elem = new ASN1T_AutomatPerception[ automatePerceptions_.size() ];
-            for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
-                asn().perception_par_compagnie.elem[ i ] = automatePerceptions_[ i ];
+            MsgsSimToClient::AutomatPerception& perception = *message().mutable_perception_par_compagnie()->add_elem();
+            perception.set_oid_compagnie( automatePerceptions_[ i ].oid_compagnie() );
+            perception.set_identification_level( MsgsSimToClient::EnumUnitIdentificationLevel::signale );
         }
     }
 
-    SEND_ASN_ATTRIBUTE( rendu                    , bDead_                 );
-    SEND_ASN_ATTRIBUTE( prisonnier               , bPrisoner_             );
-    SEND_ASN_ATTRIBUTE( refugie_pris_en_compte   , bRefugeeManaged_       );
+    SEND_ASN_ATTRIBUTE( message() ,  rendu                    , bSurrendered_          );
+    SEND_ASN_ATTRIBUTE( message() ,  prisonnier               , bPrisoner_             );
+    SEND_ASN_ATTRIBUTE( message() ,  refugie_pris_en_compte   , bRefugeeManaged_       );
 
+    message.Send( publisher );
 
-    asn.Send( publisher );
-
-    if( asn().m.perception_par_compagniePresent && asn().perception_par_compagnie.n > 0 )
-        delete [] asn().perception_par_compagnie.elem;
+    if( message().has_perception_par_compagnie() && message().perception_par_compagnie().elem_size() > 0 )
+        message().mutable_perception_par_compagnie()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -204,10 +180,10 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // -----------------------------------------------------------------------------
 void AgentKnowledge::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    client::UnitKnowledgeDestruction asn;
-    asn().oid                   = GetId();
-    asn().oid_groupe_possesseur = knowledgeGroup_.GetId();
-    asn.Send( publisher );
+    client::UnitKnowledgeDestruction message;
+    message().set_oid                  ( GetId() );
+    message().set_oid_groupe_possesseur( knowledgeGroup_.GetId() );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

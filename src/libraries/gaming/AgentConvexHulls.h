@@ -12,7 +12,11 @@
 
 #include "ConvexHulls.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "game_asn/Simulation.h"
+
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
+}
 
 namespace kernel
 {
@@ -26,7 +30,7 @@ namespace kernel
 // Created: AGE 2007-05-30
 // =============================================================================
 class AgentConvexHulls : public ConvexHulls
-                       , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
 
 public:
@@ -50,7 +54,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& attributes );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes );
     //@}
 
 private:

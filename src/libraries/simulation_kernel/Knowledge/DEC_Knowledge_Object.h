@@ -16,10 +16,14 @@
 #include "DEC_Knowledge_ABC.h"
 #include "DEC_Knowledge_ObjectAttribute_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
-#include "game_asn/Simulation.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "tools/Extendable.h"
 #include "Tools/MIL_IDManager.h"
+
+namespace MsgsSimToClient
+{
+    class MsgObjectKnowledgeUpdate;
+}
 
 class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_ObjectPerception;
@@ -52,8 +56,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Collision
@@ -97,7 +101,7 @@ public:
           bool                IsConstructed              () const;
           bool                IsReservedObstacle         () const;
           bool                IsReservedObstacleActivated() const;
-          uint                GetID                      () const;
+          unsigned int                GetID                      () const;
           MIL_Object_ABC*     GetObjectKnown             () const;
     const MIL_ObjectType_ABC& GetType                    () const;
     const TER_Localisation&   GetLocalisation            () const;
@@ -158,12 +162,12 @@ private:
     
     //! @name Internal network senders
     //@{
-    void BuildMsgRealObject            ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgPerceptionSources     ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgRelevance             ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgLocalisations         ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgCurrentPerceptionLevel( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
-    void BuildMsgAttributes            ( ASN1T_MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgRealObject            ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgPerceptionSources     ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgRelevance             ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgLocalisations         ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
+    void BuildMsgAttributes            ( MsgsSimToClient::MsgObjectKnowledgeUpdate& asnMsg ) const;
 
     void SendMsgCreation   () const;
     void SendMsgDestruction() const;
@@ -192,7 +196,7 @@ private:
     const MIL_Army_ABC*       pArmyKnowing_;
           MIL_Object_ABC*     pObjectKnown_; // Objet réel (peut ne plus exister...)
     const MIL_ObjectType_ABC* pObjectType_; 
-    const uint                nID_;
+    const unsigned int                nID_;
 
     T_ObjectAttributeVector   attributes_;
 
@@ -212,7 +216,7 @@ private:
 
     T_PerceptionAgentSourceMap  perceptionLevelPerAgentMap_;
 
-    uint     nTimeLastUpdate_;
+    unsigned int     nTimeLastUpdate_;
     MT_Float rRelevance_;
     bool     bValid_;
 

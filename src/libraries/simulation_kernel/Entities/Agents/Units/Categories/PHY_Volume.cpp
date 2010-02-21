@@ -14,7 +14,7 @@
 #include <xeumeuleu/xml.h>
 
 PHY_Volume::T_VolumeMap PHY_Volume::volumes_;
-uint                    PHY_Volume::nNextID_ = 0;
+unsigned int                    PHY_Volume::nNextID_ = 0;
 
 struct PHY_Volume::LoadingWrapper
 {
@@ -101,9 +101,9 @@ const PHY_Volume* PHY_Volume::FindVolume( const std::string& strName )
 // Name: PHY_Volume::FindVolume
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const PHY_Volume* PHY_Volume::FindVolume( uint nID )
+const PHY_Volume* PHY_Volume::FindVolume( unsigned int nID )
 {
-    CIT_VolumeMap it = std::find_if( volumes_.begin(), volumes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &PHY_Volume::GetID ), std::select2nd< T_VolumeMap::value_type >() ) ) );
+    CIT_VolumeMap it = std::find_if( volumes_.begin(), volumes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &PHY_Volume::GetID ), std::select2nd< T_VolumeMap::value_type >() ) ) );
 
     return it == volumes_.end() ? 0 : it->second;
 }
@@ -131,7 +131,7 @@ const std::string& PHY_Volume::GetName() const
 // Name: PHY_Volume::GetID
 // Created: NLD 2004-08-06
 // -----------------------------------------------------------------------------
-uint PHY_Volume::GetID() const
+unsigned int PHY_Volume::GetID() const
 {
     return nID_;
 }

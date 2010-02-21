@@ -14,9 +14,18 @@
 
 #include "Entities/MIL_Army_ABC.h"
 #include "MT_Tools/MT_Converter.h"
-
 #include "tools/Resolver.h"
 
+namespace Common
+{
+    class MsgChangeDiplomacy;
+}
+
+namespace xml
+{
+    class xostream;
+    class xistream;
+}
 
 class ArmyFactory_ABC;
 class AutomateFactory_ABC;
@@ -25,14 +34,13 @@ class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_Population;
 class FormationFactory_ABC;
+class KnowledgeGroupFactory_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Formation;
 class MIL_Population;
 class MIL_Object_ABC;
 class MIL_ObjectManager;
 class PopulationFactory_ABC;
-class KnowledgeGroupFactory_ABC; // LTO
-struct ASN1T_MsgChangeDiplomacy;
 
 // =============================================================================
 // @class  MIL_Army
@@ -48,7 +56,7 @@ class MIL_Army : public MIL_Army_ABC
 public:
     //! @name Types
     //@{
-    typedef std::map< uint, MIL_KnowledgeGroup* > T_KnowledgeGroupMap;
+    typedef std::map< unsigned int, MIL_KnowledgeGroup* > T_KnowledgeGroupMap;
     typedef T_KnowledgeGroupMap::const_iterator   CIT_KnowledgeGroupMap;
     typedef T_KnowledgeGroupMap::iterator         IT_KnowledgeGroupMap;
 
@@ -66,7 +74,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void WriteODB         ( xml::xostream& xos ) const;
     virtual void WriteDiplomacyODB( xml::xostream& xos ) const;
     //@}
@@ -92,9 +100,9 @@ public:
     void RegisterPopulation  ( MIL_Population& population );
     void UnregisterPopulation( MIL_Population& population );
 
-    virtual MIL_KnowledgeGroup* FindKnowledgeGroup      ( uint nID ) const;
-    virtual void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup );
-    virtual void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
+    MIL_KnowledgeGroup* FindKnowledgeGroup      ( unsigned int nID ) const;
+    void                RegisterKnowledgeGroup  ( MIL_KnowledgeGroup& knowledgeGroup );
+    void                UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     //@}
 
     //! @name Operations
@@ -109,7 +117,7 @@ public:
 
     //! @name Accessors
     //@{
-          uint                          GetID             () const;
+          unsigned int                          GetID             () const;
     const std::string&                  GetName           () const;
     const T_KnowledgeGroupMap&          GetKnowledgeGroups() const;
           DEC_KnowledgeBlackBoard_Army& GetKnowledge      () const;
@@ -121,7 +129,7 @@ public:
     virtual void SendFullState              () const;
     virtual void SendKnowledge              () const;
 
-    virtual void OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& msg );
+    virtual void OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& msg );
     //@}
 
 private:
@@ -145,7 +153,7 @@ private:
     //@}
 
 private:
-    const uint          nID_;
+    const unsigned int          nID_;
           std::string   strName_;
           E_Diplomacy   nType_;
     T_DiplomacyMap      diplomacies_;

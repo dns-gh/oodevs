@@ -10,11 +10,15 @@
 #ifndef __LogisticLinks_h_
 #define __LogisticLinks_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+
+namespace Common
+{
+    class MsgAutomatChangeLogisticLinks;   
+}
 
 namespace kernel
 {
@@ -32,7 +36,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class LogisticLinks : public kernel::LogisticLinks_ABC
-                    , public kernel::Updatable_ABC< ASN1T_MsgAutomatChangeLogisticLinks >
+                    , public kernel::Updatable_ABC< Common::MsgAutomatChangeLogisticLinks >
                     , public kernel::Drawable_ABC
 {
 
@@ -64,7 +68,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatChangeLogisticLinks& message );
+    virtual void DoUpdate( const Common::MsgAutomatChangeLogisticLinks& message );
     void DrawLink( const geometry::Point2f& from, kernel::Automat_ABC* to, const kernel::GlTools_ABC& tools, float curve, bool link, bool missing ) const;
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
     //@}

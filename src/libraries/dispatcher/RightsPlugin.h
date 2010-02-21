@@ -12,7 +12,18 @@
 
 #include "Plugin_ABC.h"
 #include "LinkResolver_ABC.h"
-#include "game_asn/Authentication.h"
+
+
+
+//using namespace Common;
+namespace MsgsClientToAuthentication
+{
+    class MsgClientToAuthentication;
+    class MsgAuthenticationRequest;
+    class MsgProfileUpdateRequest;
+    class MsgProfileDestructionRequest;
+    class MsgProfileCreationRequest;
+}
 
 namespace tools
 {
@@ -45,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
     virtual void Register                 ( dispatcher::Services& );
@@ -63,11 +74,11 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( const std::string& link, const ASN1T_MsgsClientToAuthentication& message );
-    void OnReceiveMsgAuthenticationRequest    ( const std::string& link, const ASN1T_MsgAuthenticationRequest& message );
-    void OnReceiveMsgProfileCreationRequest   ( ClientPublisher_ABC& client, const ASN1T_MsgProfileCreationRequest&    message );
-    void OnReceiveMsgProfileUpdateRequest     ( ClientPublisher_ABC& client, const ASN1T_MsgProfileUpdateRequest&      message );
-    void OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& client, const ASN1T_MsgProfileDestructionRequest& message );
+    void OnReceive( const std::string& link, const MsgsClientToAuthentication::MsgClientToAuthentication& message );
+    void OnReceiveMsgAuthenticationRequest    ( const std::string& link, const MsgsClientToAuthentication::MsgAuthenticationRequest& message );
+    void OnReceiveMsgProfileCreationRequest   ( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileCreationRequest&    message );
+    void OnReceiveMsgProfileUpdateRequest     ( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileUpdateRequest&      message );
+    void OnReceiveMsgProfileDestructionRequest( ClientPublisher_ABC& client, const MsgsClientToAuthentication::MsgProfileDestructionRequest& message );
     //@}
 
     //! @name Types

@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "ObstacleType.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace actions;
@@ -20,7 +21,7 @@ using namespace parameters;
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned int value )
     : Parameter< QString >( parameter )
-    , value_ ( ASN1T_EnumDemolitionTargetType( value ) )
+    , value_ ( Common::ObstacleType_DemolitionTargetType( value ) )
 {
     SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
 }
@@ -31,7 +32,7 @@ ObstacleType::ObstacleType( const kernel::OrderParameter& parameter, unsigned in
 // -----------------------------------------------------------------------------
 ObstacleType::ObstacleType( xml::xistream& xis )
     : Parameter< QString >( kernel::OrderParameter( xml::attribute< std::string >( xis, "name" ).c_str(), xml::attribute< std::string >( xis, "type" ), false ) )    
-    , value_( ASN1T_EnumDemolitionTargetType( xml::attribute< unsigned int >( xis, "value" ) ) )
+    , value_( Common::ObstacleType_DemolitionTargetType( xml::attribute< unsigned int >( xis, "value" ) ) )
 {
     SetValue( tools::ToString( E_DemolitionTargetType( value_ ) ) );
 }
@@ -59,7 +60,7 @@ void ObstacleType::Serialize( xml::xostream& xos ) const
 // Name: ObstacleType::CommitTo
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------
-void ObstacleType::CommitTo( ASN1T_EnumDemolitionTargetType& asn ) const
+void ObstacleType::CommitTo( T_Setter setter ) const
 {
-    asn = ASN1T_EnumDemolitionTargetType( value_ );
+    setter( Common::ObstacleType_DemolitionTargetType( value_ ) );
 }

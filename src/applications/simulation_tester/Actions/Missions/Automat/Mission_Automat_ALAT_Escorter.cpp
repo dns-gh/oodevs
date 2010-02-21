@@ -43,9 +43,9 @@ void Mission_Automat_ALAT_Escorter::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ALAT_Escorter& asnMission = *new ASN1T_Mission_Automate_ALAT_Escorter();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_escorter;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_escorter = &asnMission;
+    Mission_Automate_ALAT_Escorter& asnMission = *new Mission_Automate_ALAT_Escorter();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_alat_escorter = &asnMission;
 
     const T_IdVector& unitesAEscorter_ = pTarget_->GetTestParam_AgentList();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -68,8 +68,8 @@ void Mission_Automat_ALAT_Escorter::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ALAT_Escorter::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_alat_escorter );
-    ASN1T_Mission_Automate_ALAT_Escorter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_escorter;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_alat_escorter ());
+    Mission_Automate_ALAT_Escorter& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_alat_escorter;
 
     ASN_Tools::Delete( asnMission.unites_a_escorter );
     ASN_Tools::Delete( asnMission.point_regroupement );

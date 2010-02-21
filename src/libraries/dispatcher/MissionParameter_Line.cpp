@@ -9,6 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "MissionParameter_Line.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -16,9 +17,9 @@ using namespace dispatcher;
 // Name: MissionParameter_Line constructor
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-MissionParameter_Line::MissionParameter_Line( const ASN1T_MissionParameter& asn )
+MissionParameter_Line::MissionParameter_Line( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , location_( *asn.value.u.line )
+    , location_( asn.value().line().location() )
 {
     // NOTHING
 }
@@ -36,19 +37,18 @@ MissionParameter_Line::~MissionParameter_Line()
 // Name: MissionParameter_Line::Send
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MissionParameter_Line::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Line::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value   = bNullValue_;
-    asn.value.t      = T_MissionParameter_value_line;
-    asn.value.u.line = new ASN1T_Line();
-    location_.Send( *asn.value.u.line );
+    asn.set_null_value   ( bNullValue_ );
+//    asn.mutable_value()->mutable_line() = new MsgLine();
+    location_.Send( *asn.mutable_value()->mutable_line()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Line::AsnDelete
+// Name: MissionParameter_Line::Delete
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MissionParameter_Line::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Line::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.line;
+    delete asn.mutable_value()->mutable_line();
 }

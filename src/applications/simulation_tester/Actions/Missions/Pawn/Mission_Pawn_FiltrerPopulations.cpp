@@ -43,9 +43,9 @@ void Mission_Pawn_FiltrerPopulations::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_FiltrerPopulations& asnMission = *new ASN1T_Mission_Pion_FiltrerPopulations();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_filtrer_populations;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_filtrer_populations = &asnMission;
+    Mission_Pion_FiltrerPopulations& asnMission = *new Mission_Pion_FiltrerPopulations();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_filtrer_populations = &asnMission;
 
     const Position& point_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_FiltrerPopulations::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_FiltrerPopulations::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_filtrer_populations );
-    ASN1T_Mission_Pion_FiltrerPopulations& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_filtrer_populations;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_filtrer_populations ());
+    Mission_Pion_FiltrerPopulations& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_filtrer_populations;
 
     ASN_Tools::Delete( asnMission.point );
 

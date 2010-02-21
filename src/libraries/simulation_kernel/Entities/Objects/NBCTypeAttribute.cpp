@@ -11,7 +11,7 @@
 #include "NBCTypeAttribute.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeNBCType.h"
-
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( NBCTypeAttribute )
@@ -53,7 +53,7 @@ NBCTypeAttribute::NBCTypeAttribute()
 // Name: NBCTypeAttribute constructor
 // Created: RFT 2008-07-21
 // -----------------------------------------------------------------------------
-NBCTypeAttribute::NBCTypeAttribute( const ASN1T_ObjectAttributes& /*asn*/ )
+NBCTypeAttribute::NBCTypeAttribute( const Common::MsgObjectAttributes& /*asn*/ )
     : pAgent_            ( 0 )
     , concentration_     ( 0 )
     , width_             ( 0 )
@@ -149,7 +149,7 @@ void NBCTypeAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // Name: NBCTypeAttribute::SendFullState
 // Created: RFT 2008-06-18
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::SendFullState( ASN1T_ObjectAttributes& /*asn*/ ) const
+void NBCTypeAttribute::SendFullState( Common::MsgObjectAttributes& /*message*/ ) const
 {
 //    asn.m.nbc_agentPresent      = 1;
 //    asn.nbc_agent.concentration = concentration_;
@@ -160,7 +160,7 @@ void NBCTypeAttribute::SendFullState( ASN1T_ObjectAttributes& /*asn*/ ) const
 // Name: NBCTypeAttribute::Send
 // Created: RFT 2008-06-09
 // -----------------------------------------------------------------------------
-void NBCTypeAttribute::SendUpdate( ASN1T_ObjectAttributes& asn ) const
+void NBCTypeAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if ( NeedUpdate() )
     {

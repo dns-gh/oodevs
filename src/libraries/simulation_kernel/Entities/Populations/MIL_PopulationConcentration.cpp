@@ -13,17 +13,20 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
+#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
-#include "Tools/MIL_Tools.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Tools/MIL_IDManager.h"
 #include "Network/NET_ASN_Tools.h"
-#include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
+#include "Tools/MIL_Tools.h"
+#include "Tools/MIL_IDManager.h"
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationConcentration )
@@ -265,11 +268,11 @@ void MIL_PopulationConcentration::SetPullingFlowsDensity( const MIL_Object_ABC& 
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendCreation() const
 {
-    NET_ASN_MsgPopulationConcentrationCreation asnMsg;
-    asnMsg().oid = GetID();
-    asnMsg().oid_population    = GetPopulation().GetID();
-    NET_ASN_Tools::WritePoint( position_, asnMsg().position ); 
-    asnMsg.Send();
+    client::PopulationConcentrationCreation asnMsg;
+    asnMsg().set_oid( GetID() );
+    asnMsg().set_oid_population( GetPopulation().GetID() );
+    NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() ); 
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -278,10 +281,10 @@ void MIL_PopulationConcentration::SendCreation() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendDestruction() const
 {
-    NET_ASN_MsgPopulationConcentrationDestruction asnMsg;
-    asnMsg().oid = GetID();
-    asnMsg().oid_population    = GetPopulation().GetID();
-    asnMsg.Send();
+    client::PopulationConcentrationDestruction asnMsg;
+    asnMsg().set_oid( GetID() );
+    asnMsg().set_oid_population( GetPopulation().GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -290,19 +293,14 @@ void MIL_PopulationConcentration::SendDestruction() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::SendFullState( MIL_Population::sPeopleCounter& peopleCounter ) const
 {
-    NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
-    asnMsg().oid = GetID();
-    asnMsg().oid_population    = GetPopulation().GetID();
+    client::PopulationConcentrationUpdate asnMsg;
+    asnMsg().set_oid( GetID() );
+    asnMsg().set_oid_population    ( GetPopulation().GetID() );
+    asnMsg().set_attitude          ( GetAttitude().GetAsnID() );
+    asnMsg().set_nb_humains_morts  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
+    asnMsg().set_nb_humains_vivants( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
 
-    asnMsg().m.attitudePresent           = 1;
-    asnMsg().m.nb_humains_mortsPresent   = 1;
-    asnMsg().m.nb_humains_vivantsPresent = 1;
-    
-    asnMsg().attitude           = GetAttitude().GetAsnID();
-    asnMsg().nb_humains_morts   = peopleCounter.GetBoundedPeople( GetNbrDeadHumans () );
-    asnMsg().nb_humains_vivants = peopleCounter.GetBoundedPeople( GetNbrAliveHumans() );
-
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,33 +312,29 @@ void MIL_PopulationConcentration::SendChangedState( MIL_Population::sPeopleCount
     if( !HasChanged() )
         return;
 
-    NET_ASN_MsgPopulationConcentrationUpdate asnMsg;
-    asnMsg().oid = GetID();
-    asnMsg().oid_population    = GetPopulation().GetID();
+    client::PopulationConcentrationUpdate asnMsg;
+    asnMsg().set_oid( GetID() );
+    asnMsg().set_oid_population( GetPopulation().GetID() );
 
     if( HasAttitudeChanged() )
     {
-        asnMsg().m.attitudePresent = 1;
-        asnMsg().attitude          = GetAttitude().GetAsnID();
+        asnMsg().set_attitude( GetAttitude().GetAsnID() );
     }
 
     if( HasHumansChanged() )
     {
-        asnMsg().m.nb_humains_mortsPresent   = 1;
-        asnMsg().m.nb_humains_vivantsPresent = 1;
-    
-        asnMsg().nb_humains_morts   = peopleCounter.GetBoundedPeople( GetNbrDeadHumans () );
-        asnMsg().nb_humains_vivants = peopleCounter.GetBoundedPeople( GetNbrAliveHumans() );
+        asnMsg().set_nb_humains_morts  ( peopleCounter.GetBoundedPeople( GetNbrDeadHumans () ) );
+        asnMsg().set_nb_humains_vivants( peopleCounter.GetBoundedPeople( GetNbrAliveHumans() ) );
     }
 
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationConcentration::load
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file >> boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );
@@ -358,7 +352,7 @@ void MIL_PopulationConcentration::load( MIL_CheckPointInArchive& file, const uin
 // Name: MIL_PopulationConcentration::save
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_PopulationConcentration::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< TER_PopulationConcentration_ABC >( *this );
     file << boost::serialization::base_object< MIL_PopulationElement_ABC       >( *this );

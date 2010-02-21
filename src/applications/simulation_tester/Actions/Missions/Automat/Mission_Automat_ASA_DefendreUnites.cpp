@@ -43,9 +43,9 @@ void Mission_Automat_ASA_DefendreUnites::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ASA_DefendreUnites& asnMission = *new ASN1T_Mission_Automate_ASA_DefendreUnites();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_asa_defendre_unites;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_defendre_unites = &asnMission;
+    Mission_Automate_ASA_DefendreUnites& asnMission = *new Mission_Automate_ASA_DefendreUnites();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_asa_defendre_unites = &asnMission;
 
     const T_IdVector& unites_ = pTarget_->GetTestParam_AgentList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_ASA_DefendreUnites::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ASA_DefendreUnites::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_asa_defendre_unites );
-    ASN1T_Mission_Automate_ASA_DefendreUnites& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_asa_defendre_unites;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_asa_defendre_unites ());
+    Mission_Automate_ASA_DefendreUnites& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_asa_defendre_unites;
 
     ASN_Tools::Delete( asnMission.unites );
 

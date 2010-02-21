@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PopulationKnowledge.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationKnowledge )
 
@@ -47,13 +48,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, DEC_PopulationKnowledge::T_AgentSet& set, const uint nVersion )
+        void serialize( Archive& file, DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int nVersion )
         {
             split_free( file, set, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const DEC_PopulationKnowledge::T_AgentSet& set, const uint )
+        void save( Archive& file, const DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int )
         {
             unsigned size = set.size();
             file << size;
@@ -62,9 +63,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, DEC_PopulationKnowledge::T_AgentSet& set, const uint )
+        void load( Archive& file, DEC_PopulationKnowledge::T_AgentSet& set, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -81,7 +82,7 @@ namespace boost
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DEC_PopulationKnowledge::serialize( Archive& file, const uint )
+void DEC_PopulationKnowledge::serialize( Archive& file, const unsigned int )
 {
     file & attackers_
          & newAttackers_
@@ -120,7 +121,7 @@ void DEC_PopulationKnowledge::Clean()
 // Name: DEC_PopulationKnowledge::GetPionsAttacking
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
-std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsAttacking( ) const
+std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsAttacking() const
 {
     std::vector< unsigned int > container;
     container.reserve( attackers_.size() );
@@ -133,7 +134,7 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsAttacking( ) const
 // Name: DEC_PopulationKnowledge::GetPionsSecuring
 // Created: NLD 2005-12-02
 // -----------------------------------------------------------------------------
-std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring( ) const
+std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring() const
 {
     std::vector< unsigned int > container;
     container.reserve( securers_.size() );
@@ -146,7 +147,7 @@ std::vector< unsigned int > DEC_PopulationKnowledge::GetPionsSecuring( ) const
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const ASN1T_UnitKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( const Common::MsgUnitKnowledge& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
@@ -155,7 +156,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowled
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeAgent
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowledgeAgent( unsigned int /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Agent >();
 }
@@ -164,7 +165,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_PopulationKnowledge::ResolveKnowled
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( const Common::MsgObjectKnowledge& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
@@ -173,7 +174,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeObject
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( uint /*nID*/ ) const
+boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowledgeObject( unsigned int /*nID*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Object >();
 }
@@ -182,7 +183,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_PopulationKnowledge::ResolveKnowle
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& /*asn*/ ) const
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& /*asn*/ ) const
 {
     return 0;
 }
@@ -191,7 +192,7 @@ DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( c
 // Name: DEC_PopulationKnowledge::ResolveKnowledgePopulation
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( uint /*nID*/ ) const
+DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( unsigned int /*nID*/ ) const
 {
     return 0;
 }
@@ -200,7 +201,7 @@ DEC_Knowledge_Population* DEC_PopulationKnowledge::ResolveKnowledgePopulation( u
 // Name: DEC_PopulationKnowledge::ResolveKnowledgeUrban
 // Created: SLG 2010-02-01
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowledgeUrban( const ASN1T_UrbanKnowledge& /*asn*/ ) const
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_PopulationKnowledge::ResolveKnowledgeUrban( const Common::MsgUrbanKnowledge& /*asn*/ ) const
 {
     return boost::shared_ptr< DEC_Knowledge_Urban >();
 }

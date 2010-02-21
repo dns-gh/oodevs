@@ -10,8 +10,14 @@
 #ifndef __ActivityTimeAttribute_h_
 #define __ActivityTimeAttribute_h_
 
-#include "game_asn/Simulation.h"
+
 #include "ObjectAttribute_ABC.h"
+
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
 
 namespace dispatcher
 {
@@ -28,15 +34,15 @@ class ActivityTimeAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     ActivityTimeAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg );
+     ActivityTimeAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~ActivityTimeAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const ASN1T_ObjectAttributes& asnMsg );
-    virtual void Send     ( ASN1T_ObjectAttributes& asnMsg ) const;
-    virtual void AsnDelete( ASN1T_ObjectAttributes& asnMsg ) const;
+    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
 
 private:

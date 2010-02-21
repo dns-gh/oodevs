@@ -12,6 +12,12 @@
 
 #include "PointCollection.h"
 
+namespace Common
+{
+    class MsgCoordLatLongList;
+    class MsgLocation;
+}
+
 namespace plugins
 {
 namespace crossbow
@@ -30,7 +36,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Line();
-    explicit Line( const ASN1T_CoordLatLongList& asn );
+    explicit Line( const Common::MsgCoordLatLongList& message );
     explicit Line( IGeometryPtr geometry );
     virtual ~Line();
     //@}
@@ -39,7 +45,7 @@ public:
     //@{
     void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     void Serialize( std::ostream& geometry ) const;
-    void Serialize( ASN1T_Location& asn ) const;
+    void Serialize( Common::MsgLocation& message ) const;
     //@}
 
 private:

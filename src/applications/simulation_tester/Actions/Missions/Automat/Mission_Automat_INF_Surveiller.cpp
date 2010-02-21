@@ -43,9 +43,9 @@ void Mission_Automat_INF_Surveiller::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_Surveiller& asnMission = *new ASN1T_Mission_Automate_INF_Surveiller();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_surveiller;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_surveiller = &asnMission;
+    Mission_Automate_INF_Surveiller& asnMission = *new Mission_Automate_INF_Surveiller();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_surveiller = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
     const Location& zoneRegroupement_ = pTarget_->GetTestParam_Polygon();
@@ -64,8 +64,8 @@ void Mission_Automat_INF_Surveiller::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_Surveiller::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_surveiller );
-    ASN1T_Mission_Automate_INF_Surveiller& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_surveiller;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_surveiller ());
+    Mission_Automate_INF_Surveiller& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_surveiller;
 
     ASN_Tools::Delete( asnMission.zone );
     ASN_Tools::Delete( asnMission.zone_regroupement );

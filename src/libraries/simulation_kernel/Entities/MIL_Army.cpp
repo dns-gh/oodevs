@@ -22,13 +22,16 @@
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "MIL_Formation.h"
 #include "MIL_EntityManager.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_AsnException.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+
 #include "simulation_kernel/ArmyFactory_ABC.h"
 #include "simulation_kernel/AutomateFactory_ABC.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
 #include "simulation_kernel/PopulationFactory_ABC.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h" // LTO
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_Army )
@@ -103,7 +106,7 @@ MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::strin
     , armyFactory_( armyFactory )
     , diplomacyConverter_( diplomacyConverter )
 {
-    // NOTHING    
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -128,13 +131,13 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, MIL_Army::T_DiplomacyMap& map, const uint nVersion )
+        void serialize( Archive& file, MIL_Army::T_DiplomacyMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const MIL_Army::T_DiplomacyMap& map, const uint )
+        void save( Archive& file, const MIL_Army::T_DiplomacyMap& map, const unsigned int )
         {
             unsigned size = map.size();
             file << size;
@@ -146,9 +149,9 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, MIL_Army::T_DiplomacyMap& map, const uint )
+        void load( Archive& file, MIL_Army::T_DiplomacyMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
@@ -165,11 +168,11 @@ namespace boost
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void MIL_Army::serialize( Archive& file, const uint )
+void MIL_Army::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< MIL_Army_ABC >( *this );
     file & const_cast< std::string& >( strName_ )
-         & const_cast< uint& >( nID_ )
+         & const_cast< unsigned int& >( nID_ )
          & nType_
          & diplomacies_
          & knowledgeGroups_
@@ -278,7 +281,7 @@ void MIL_Army::ReadPopulation( xml::xistream& xis, PopulationFactory_ABC& popula
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadDiplomacy( xml::xistream& xis )
 {
-    uint        nTeam;
+    unsigned int        nTeam;
     std::string strDiplomacy;
 
     xis >> xml::attribute( "side", nTeam )
@@ -316,7 +319,7 @@ void MIL_Army::ReadLogistic( xml::xistream& xis, KnowledgeGroupFactory_ABC& know
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFactory )
 {
-    uint id;
+    unsigned int id;
     xis >> xml::attribute( "id", id );
 
     MIL_Automate* pSuperior = automateFactory.Find( id );
@@ -336,7 +339,7 @@ void MIL_Army::ReadAutomat( xml::xistream& xis, AutomateFactory_ABC& automateFac
 // -----------------------------------------------------------------------------
 void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automateFactory, MIL_Automate* pSuperior )
 {
-    uint        nSubordinateID;
+    unsigned int        nSubordinateID;
     std::string strLink;
     xis >> xml::attribute( "id", nSubordinateID );
 
@@ -498,13 +501,11 @@ E_Tristate MIL_Army::IsNeutral( const MIL_Army_ABC& army ) const
 // -----------------------------------------------------------------------------
 void MIL_Army::SendCreation() const
 {
-    ASN1T_MsgTeamCreation;
-
-    NET_ASN_MsgTeamCreation asn;
-    asn().oid  = nID_;
-    asn().nom  = strName_.c_str();
-    asn().type = (ASN1T_EnumDiplomacy)( nType_ );
-    asn.Send();
+    client::TeamCreation asn;
+    asn().set_oid( nID_ );
+    asn().set_nom( strName_.c_str() );
+    asn().set_type( Common::EnumDiplomacy( nType_ ) );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         it->second->SendCreation();
@@ -522,11 +523,11 @@ void MIL_Army::SendFullState() const
 {
     for( CIT_DiplomacyMap it = diplomacies_.begin(); it != diplomacies_.end(); ++it )
     {
-        NET_ASN_MsgChangeDiplomacy asn;
-        asn().oid_camp1  = nID_;
-        asn().oid_camp2  = it->first->GetID();
-        asn().diplomatie = (ASN1T_EnumDiplomacy)( it->second );
-        asn.Send();
+        client::ChangeDiplomacy asn;
+        asn().set_oid_camp1( nID_ );
+        asn().set_oid_camp2( it->first->GetID() );
+        asn().set_diplomatie( Common::EnumDiplomacy( it->second ) );
+        asn.Send( NET_Publisher_ABC::Publisher() );
     }
 
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
@@ -553,20 +554,21 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveMsgChangeDiplomacy( const ASN1T_MsgChangeDiplomacy& asnMsg )
+void MIL_Army::OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& asnMsg )
 {
-    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.oid_camp2 );
+    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.oid_camp2() );
     if( !pArmy2 || *pArmy2 == *this )
-        throw NET_AsnException< ASN1T_EnumChangeDiplomacyErrorCode >( EnumChangeDiplomacyErrorCode::error_invalid_camp );
+        throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
 
     E_Diplomacy nDiplomacy = eUnknown;
-    switch( asnMsg.diplomatie )
-    {
-        case EnumDiplomacy::inconnu: nDiplomacy = eUnknown; break;
-        case EnumDiplomacy::ami    : nDiplomacy = eFriend;  break;
-        case EnumDiplomacy::ennemi : nDiplomacy = eEnemy;   break;
-        case EnumDiplomacy::neutre : nDiplomacy = eNeutral; break;
-    }
+    if( asnMsg.diplomatie() == Common::EnumDiplomacy::unknown_diplo )
+        nDiplomacy = eUnknown;
+    else if( asnMsg.diplomatie() == Common::EnumDiplomacy::friend_diplo )
+        nDiplomacy = eFriend;
+    else if( asnMsg.diplomatie() == Common::EnumDiplomacy::enemy_diplo )
+        nDiplomacy = eEnemy;
+    else if( asnMsg.diplomatie() == Common::EnumDiplomacy::neutral_diplo )
+        nDiplomacy = eNeutral;
     diplomacies_[ pArmy2 ] = nDiplomacy;
 }
 
@@ -629,7 +631,7 @@ void MIL_Army::UnregisterPopulation( MIL_Population& population )
 // Name: MIL_Army::FindKnowledgeGroup
 // Created: NLD 2004-08-30
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( uint nID ) const
+MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( unsigned int nID ) const
 {
     CIT_KnowledgeGroupMap it = knowledgeGroups_.find( nID );
     // LTO begin
@@ -651,7 +653,7 @@ MIL_KnowledgeGroup* MIL_Army::FindKnowledgeGroup( uint nID ) const
 // Name: MIL_Army::GetID
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-uint MIL_Army::GetID() const
+unsigned int MIL_Army::GetID() const
 {
     return nID_;
 }

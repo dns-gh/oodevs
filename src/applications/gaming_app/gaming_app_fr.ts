@@ -13,6 +13,34 @@
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Recover - All</source>
+        <translation type="obsolete">Recompléter - Tout</translation>
+    </message>
+    <message>
+        <source>Recover - Troops</source>
+        <translation type="obsolete">Recompléter - Troupes</translation>
+    </message>
+    <message>
+        <source>Recover - Equipments</source>
+        <translation type="obsolete">Recompléter - Composantes</translation>
+    </message>
+    <message>
+        <source>Recover - Resources</source>
+        <translation type="obsolete">Recompléter - Ressources</translation>
+    </message>
+    <message>
+        <source>Destroy - All</source>
+        <translation type="obsolete">Détruire - Entièrement</translation>
+    </message>
+    <message>
+        <source>Cancel surrender</source>
+        <translation type="obsolete">Annuler la rédition</translation>
+    </message>
+    <message>
+        <source>Surrender to</source>
+        <translation type="obsolete">Rédition</translation>
+    </message>
 </context>
 <context>
     <name>AboutDialog</name>
@@ -987,7 +1015,7 @@
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation type="obsolete">Supprimer</translation>
     </message>
     <message>
         <source>Desactivate</source>
@@ -2891,31 +2919,31 @@
     </message>
     <message>
         <source>Recover - All</source>
-        <translation>Recompléter - Tout</translation>
+        <translation type="unfinished">Recompléter - Tout</translation>
     </message>
     <message>
         <source>Recover - Troops</source>
-        <translation>Recompléter - Troupes</translation>
+        <translation type="unfinished">Recompléter - Troupes</translation>
     </message>
     <message>
         <source>Recover - Equipments</source>
-        <translation>Recompléter - Composantes</translation>
+        <translation type="unfinished">Recompléter - Composantes</translation>
     </message>
     <message>
         <source>Recover - Resources</source>
-        <translation>Recompléter - Ressources</translation>
+        <translation type="unfinished">Recompléter - Ressources</translation>
     </message>
     <message>
         <source>Destroy - All</source>
-        <translation>Détruire - Entièrement</translation>
+        <translation type="unfinished">Détruire - Entièrement</translation>
     </message>
     <message>
         <source>Cancel surrender</source>
-        <translation>Annuler la rédition</translation>
+        <translation type="unfinished">Annuler la rédition</translation>
     </message>
     <message>
         <source>Surrender to</source>
-        <translation>Rédition</translation>
+        <translation type="unfinished">Rédition</translation>
     </message>
 </context>
 <context>

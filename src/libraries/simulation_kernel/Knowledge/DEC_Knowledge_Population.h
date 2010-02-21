@@ -50,8 +50,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive& , const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive& , const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -77,7 +77,7 @@ public:
 
     //! @name Accessors
     //@{
-          uint                    GetID             () const;
+          unsigned int                    GetID             () const;
     const MIL_Army_ABC&           GetArmy           () const;
     const MIL_KnowledgeGroup&     GetKnowledgeGroup () const;
           MIL_Population&         GetPopulationKnown() const;
@@ -116,11 +116,11 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< uint /*ID*/, DEC_Knowledge_PopulationConcentration* > T_ConcentrationMap;
+    typedef std::map< unsigned int /*ID*/, DEC_Knowledge_PopulationConcentration* > T_ConcentrationMap;
     typedef T_ConcentrationMap::iterator                                    IT_ConcentrationMap;
     typedef T_ConcentrationMap::const_iterator                              CIT_ConcentrationMap;
 
-    typedef std::map< uint /*ID*/, DEC_Knowledge_PopulationFlow* > T_FlowMap;
+    typedef std::map< unsigned int /*ID*/, DEC_Knowledge_PopulationFlow* > T_FlowMap;
     typedef T_FlowMap::iterator                                    IT_FlowMap;
     typedef T_FlowMap::const_iterator                              CIT_FlowMap;
     //@}
@@ -128,7 +128,7 @@ private:
 private:
     const MIL_KnowledgeGroup* pKnowledgeGroup_;
           MIL_Population*     pPopulationKnown_;
-    const uint                nID_;
+    const unsigned int                nID_;
           T_ConcentrationMap  concentrations_;
           T_FlowMap           flows_;
           bool                bIsRecon_;

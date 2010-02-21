@@ -43,9 +43,9 @@ void Mission_Population_CommettreExactions::Serialize()
     // build din/asn msg
     Mission_Population_ABC::Serialize();
 
-    ASN1T_Mission_Population_CommettreExactions& asnMission = *new ASN1T_Mission_Population_CommettreExactions();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Population_mission_population_commettre_exactions;
-    asnMsg_.GetAsnMsg().mission.u.mission_population_commettre_exactions = &asnMission;
+    Mission_Population_CommettreExactions& asnMission = *new Mission_Population_CommettreExactions();
+
+    asnMsg_.GetAsnMsg().mission().mission_population_commettre_exactions = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Population_CommettreExactions::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Population_CommettreExactions::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Population_mission_population_commettre_exactions );
-    ASN1T_Mission_Population_CommettreExactions& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_population_commettre_exactions;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_population_commettre_exactions ());
+    Mission_Population_CommettreExactions& asnMission = *asnMsg_.GetAsnMsg().mission().mission_population_commettre_exactions;
 
     ASN_Tools::Delete( asnMission.zone );
 

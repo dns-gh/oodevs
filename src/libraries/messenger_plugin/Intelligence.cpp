@@ -9,78 +9,77 @@
 
 #include "messenger_plugin_pch.h"
 #include "Intelligence.h"
-
-#include "dispatcher/ClientPublisher_ABC.h"
 #include "clients_kernel/CoordinateConverter.h"
-
+#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/MessengerSenders.h"
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::messenger;
 
 namespace
 {
-    ASN1T_EnumNatureLevel ResolveLevel( const std::string& level )
+    Common::EnumNatureLevel ResolveLevel( const std::string& level )
     {
       if( level == "o" )
-          return EnumNatureLevel::o ;
+          return Common::EnumNatureLevel::o ;
       if( level == "oo" )
-          return EnumNatureLevel::oo ;
+          return Common::EnumNatureLevel::oo ;
       if( level == "ooo" )
-          return EnumNatureLevel::ooo ;
+          return Common::EnumNatureLevel::ooo ;
       if( level == "i" )
-          return EnumNatureLevel::i ;
+          return Common::EnumNatureLevel::i ;
       if( level == "ii" )
-          return EnumNatureLevel::ii ;
+          return Common::EnumNatureLevel::ii ;
       if( level == "iii" )
-          return EnumNatureLevel::iii ;
+          return Common::EnumNatureLevel::iii ;
       if( level == "x" )
-          return EnumNatureLevel::x ;
+          return Common::EnumNatureLevel::x ;
       if( level == "xx" )
-          return EnumNatureLevel::xx ;
+          return Common::EnumNatureLevel::xx ;
       if( level == "xxx" )
-          return EnumNatureLevel::xxx ;
+          return Common::EnumNatureLevel::xxx ;
       if( level == "xxxx" )
-          return EnumNatureLevel::xxxx ;
-      return EnumNatureLevel::none;
+          return Common::EnumNatureLevel::xxxx ;
+      return Common::EnumNatureLevel::none_naturelevel;
     }
 
-    std::string ResolveLevel(ASN1T_EnumNatureLevel level)
+    std::string ResolveLevel( Common::EnumNatureLevel level )
     {
-        switch (level)
+        switch( level )
         {
-        case EnumNatureLevel::o: return "o";
-        case EnumNatureLevel::oo: return "oo";
-        case EnumNatureLevel::ooo: return "ooo";
-        case EnumNatureLevel::i: return "i";
-        case EnumNatureLevel::ii: return "ii";
-        case EnumNatureLevel::iii: return "iii";
-        case EnumNatureLevel::x: return "x";
-        case EnumNatureLevel::xx: return "xx";
-        case EnumNatureLevel::xxx: return "xxx";
-        case EnumNatureLevel::xxxx: return "xxxx";
+        case Common::EnumNatureLevel::o: return "o";
+        case Common::EnumNatureLevel::oo: return "oo";
+        case Common::EnumNatureLevel::ooo: return "ooo";
+        case Common::EnumNatureLevel::i: return "i";
+        case Common::EnumNatureLevel::ii: return "ii";
+        case Common::EnumNatureLevel::iii: return "iii";
+        case Common::EnumNatureLevel::x: return "x";
+        case Common::EnumNatureLevel::xx: return "xx";
+        case Common::EnumNatureLevel::xxx: return "xxx";
+        case Common::EnumNatureLevel::xxxx: return "xxxx";
         default: return "";
         }
     }
 
-    ASN1T_EnumDiplomacy ResolveKarma( const std::string& karma )
+    Common::EnumDiplomacy ResolveKarma( const std::string& karma )
     {
         if( karma == "friend" )
-            return EnumDiplomacy::ami;
+            return Common::EnumDiplomacy::friend_diplo;
         if( karma == "enemy" )
-            return EnumDiplomacy::ennemi;
+            return Common::EnumDiplomacy::enemy_diplo;
         if( karma == "neutral" )
-            return EnumDiplomacy::neutre;
-        return EnumDiplomacy::inconnu;
+            return Common::EnumDiplomacy::neutral_diplo;
+        return Common::EnumDiplomacy::unknown_diplo;
     }
 
-    std::string ResolveKarma(ASN1T_EnumDiplomacy karma)
+    std::string ResolveKarma( Common::EnumDiplomacy karma )
     {
-        switch(karma)
+        switch( karma )
         {
-        case EnumDiplomacy::ami: return "friend";
-        case EnumDiplomacy::ennemi: return "enemy";
-        case EnumDiplomacy::neutre: return "neutral";
-        case EnumDiplomacy::inconnu:
+        case Common::EnumDiplomacy::friend_diplo: return "friend";
+        case Common::EnumDiplomacy::enemy_diplo: return "enemy";
+        case Common::EnumDiplomacy::neutral_diplo: return "neutral";
+        case Common::EnumDiplomacy::unknown_diplo:
         default: return "unknown";
         }
     }
@@ -91,15 +90,15 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-22
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( unsigned int id, const ASN1T_MsgIntelligenceCreationRequest& message )
+Intelligence::Intelligence( unsigned int id, const MsgsClientToMessenger::MsgIntelligenceCreationRequest& message )
     : id_       ( id )
-    , formation_( message.intelligence.formation )
-    , name_     ( message.intelligence.name )
-    , nature_   ( message.intelligence.nature )
-    , embarked_ ( message.intelligence.embarked ? true : false )
-    , level_    ( message.intelligence.level )
-    , diplomacy_( message.intelligence.diplomacy )
-    , position_ ( message.intelligence.location )
+    , formation_( message.intelligence().formation() )
+    , name_     ( message.intelligence().name() )
+    , nature_   ( message.intelligence().nature() )
+    , embarked_ ( message.intelligence().embarked() ? true : false )
+    , level_    ( message.intelligence().level() )
+    , diplomacy_( message.intelligence().diplomacy() )
+    , position_ ( message.intelligence().location() )
 {
     // NOTHING
 }
@@ -108,7 +107,7 @@ Intelligence::Intelligence( unsigned int id, const ASN1T_MsgIntelligenceCreation
 // Name: Intelligence constructor
 // Created: RDS 2008-04-08
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const ASN1T_Formation& formation, const kernel::CoordinateConverter_ABC& converter )
+Intelligence::Intelligence( unsigned int id, xml::xistream& xis, const Common::MsgFormation& formation, const kernel::CoordinateConverter_ABC& converter )
     : id_       ( id )
     , name_     ( xml::attribute< std::string > ( xis, "name" ) )
     , nature_   ( xml::attribute< std::string > ( xis, "nature" ) )
@@ -133,20 +132,20 @@ Intelligence::~Intelligence()
 // Name: Intelligence::Update
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::Update( const ASN1T_MsgIntelligenceUpdateRequest& message )
+void Intelligence::Update( const MsgsClientToMessenger::MsgIntelligenceUpdateRequest& message )
 {
-    if( message.m.namePresent )
-        name_ = message.name;
-    if( message.m.naturePresent )
-        nature_ = message.nature;
-    if( message.m.embarkedPresent )
-        embarked_ = message.embarked ? true : false;
-    if( message.m.levelPresent )
-        level_ = message.level;
-    if( message.m.diplomacyPresent )
-        diplomacy_ = message.diplomacy;
-    if( message.m.locationPresent )
-        position_ = message.location;
+    if( message.has_name())
+        name_ = message.name();
+    if( message.has_nature() )
+        nature_ = message.nature();
+    if( message.has_embarked() )
+        embarked_ = message.embarked() ? true : false;
+    if( message.has_level() )
+        level_ = message.level();
+    if( message.has_diplomacy() )
+        diplomacy_ = message.diplomacy();
+    if( message.has_location() )
+        position_ = message.location();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,15 +154,15 @@ void Intelligence::Update( const ASN1T_MsgIntelligenceUpdateRequest& message )
 // -----------------------------------------------------------------------------
 void Intelligence::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    IntelligenceUpdate message;
-    message().oid       = id_;
-    message().formation = formation_ ;
-    message().m.namePresent      = 1; message().name      = name_.c_str();
-    message().m.naturePresent    = 1; message().nature    = nature_.c_str();
-    message().m.embarkedPresent  = 1; message().embarked  = embarked_ ? 1 : 0;
-    message().m.levelPresent     = 1; message().level     = level_;
-    message().m.diplomacyPresent = 1; message().diplomacy = diplomacy_;
-    message().m.locationPresent  = 1; message().location  = position_;
+    plugins::messenger::IntelligenceUpdate message;
+    message().set_oid       ( id_ );
+    message().set_formation ( formation_.oid() );
+    message().set_name(name_.c_str());
+    message().set_nature(nature_.c_str());
+    message().set_embarked(embarked_ ? 1 : 0);
+    message().set_level(level_);
+    message().set_diplomacy(diplomacy_);
+    *message().mutable_location() = position_;
     message.Send( publisher );
 }
 
@@ -173,15 +172,15 @@ void Intelligence::SendUpdate( dispatcher::ClientPublisher_ABC& publisher ) cons
 // -----------------------------------------------------------------------------
 void Intelligence::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    IntelligenceCreation message;
-    message().oid = id_;
-    message().intelligence.name      = name_.c_str();
-    message().intelligence.nature    = nature_.c_str();
-    message().intelligence.embarked  = embarked_ ? 1 : 0;
-    message().intelligence.level     = level_;
-    message().intelligence.diplomacy = diplomacy_;
-    message().intelligence.formation = formation_ ;
-    message().intelligence.location  = position_;
+    plugins::messenger::IntelligenceCreation message;
+    message().set_oid ( id_ );
+    message().mutable_intelligence()->set_name( name_ );
+    message().mutable_intelligence()->set_nature( nature_ );
+    message().mutable_intelligence()->set_embarked( embarked_ );
+    message().mutable_intelligence()->set_level( level_ );
+    message().mutable_intelligence()->set_diplomacy( diplomacy_ );
+    *message().mutable_intelligence()->mutable_formation() = formation_;
+    *message().mutable_intelligence()->mutable_location() = position_;
     message.Send( publisher );
 }
 
@@ -191,8 +190,8 @@ void Intelligence::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) co
 // -----------------------------------------------------------------------------
 void Intelligence::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
 {
-    IntelligenceDestruction message;
-    message().oid = id_;
+    plugins::messenger::IntelligenceDestruction message;
+    message().set_oid ( id_ );
     message.Send( publisher );
 }
 
@@ -212,10 +211,10 @@ void Intelligence::SendFullState( dispatcher::ClientPublisher_ABC& publisher ) c
 void Intelligence::ReadPosition( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
 {
     std::string mgrs ;
-    xis >> xml::attribute("position", mgrs);
-    geometry::Point2d pos = converter.ConvertToGeo(converter.ConvertToXY(mgrs));
-    position_.latitude = pos.Y();
-    position_.longitude = pos.X();
+    xis >> xml::attribute( "position", mgrs );
+    geometry::Point2d pos = converter.ConvertToGeo( converter.ConvertToXY( mgrs ) );
+    position_.set_latitude( pos.Y() );
+    position_.set_longitude( pos.X() );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,15 +223,15 @@ void Intelligence::ReadPosition( xml::xistream& xis, const kernel::CoordinateCon
 // -----------------------------------------------------------------------------
 void Intelligence::Write( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    xos << xml::start("intelligence")
-            << xml::attribute("id",id_)
-            << xml::attribute("name",name_)
-            << xml::attribute("embarked",embarked_)
-            << xml::attribute("level",ResolveLevel(level_))
-            << xml::attribute("karma",ResolveKarma(diplomacy_))
-            << xml::attribute("nature",nature_);
+    xos << xml::start( "intelligence" )
+            << xml::attribute( "id", id_ )
+            << xml::attribute( "name", name_ )
+            << xml::attribute( "embarked", embarked_ )
+            << xml::attribute( "level", ResolveLevel( level_ ) )
+            << xml::attribute( "karma", ResolveKarma( diplomacy_ ) )
+            << xml::attribute( "nature", nature_ );
 
-    WritePosition(xos,converter);
+    WritePosition( xos, converter );
 
     xos << xml::end();
 }
@@ -243,6 +242,6 @@ void Intelligence::Write( xml::xostream& xos, const kernel::CoordinateConverter_
 // -----------------------------------------------------------------------------
 void Intelligence::WritePosition( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter ) const
 {
-    geometry::Point2d pos(position_.longitude,position_.latitude);
-    xos << xml::attribute("position",converter.ConvertToMgrs(converter.ConvertFromGeo(pos)));
+    geometry::Point2d pos( position_.longitude(), position_.latitude() );
+    xos << xml::attribute( "position", converter.ConvertToMgrs( converter.ConvertFromGeo( pos ) ) );
 }

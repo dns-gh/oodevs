@@ -11,17 +11,18 @@
 #include "MIL_LogMaintenancePrioritiesParameter.h"
 #include "simulation_orders/MIL_ParameterType_MaintenancePriorities.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LogMaintenancePrioritiesParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter( const ASN1T_LogMaintenancePriorities & asn )
+MIL_LogMaintenancePrioritiesParameter::MIL_LogMaintenancePrioritiesParameter( const Common::MsgLogMaintenancePriorities & asn )
 {
-    priorities_.reserve( asn.n );
-    for( unsigned int i = 0; i < asn.n; ++i )
+    priorities_.reserve( asn.elem_size() );
+    for( int i = 0; i < asn.elem_size(); ++i )
     {
-        unsigned int nCompTypeMosID = asn.elem[i];
+        Common::MsgEquipmentType nCompTypeMosID = asn.elem(i);
         const PHY_ComposanteTypePion* pType = PHY_ComposanteTypePion::Find( nCompTypeMosID );
         if( !pType )
         {
@@ -54,16 +55,12 @@ bool MIL_LogMaintenancePrioritiesParameter::IsOfType( const MIL_ParameterType_AB
 // Name: MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( ASN1T_LogMaintenancePriorities& asn ) const
+bool MIL_LogMaintenancePrioritiesParameter::ToMaintenancePriorities( Common::MsgLogMaintenancePriorities& asn ) const
 {
     unsigned int size = priorities_.size();
-    asn.n = size;
     if( size )
-    {
-        asn.elem = new ASN1T_EquipmentType[ size ];
         for( unsigned int i = 0; i < size; ++i )
-            asn.elem[ i ] = priorities_[ i ]->GetMosID();
-    }
+            asn.add_elem()->set_equipment( priorities_[ i ]->GetMosID().equipment() );
     return true;
 }
 

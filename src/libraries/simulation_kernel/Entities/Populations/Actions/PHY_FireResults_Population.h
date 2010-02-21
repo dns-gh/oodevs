@@ -31,7 +31,7 @@ public:
 
 private:
     const MIL_Population& firer_;
-    const uint            nID_;
+    const unsigned int            nID_;
     static MIL_IDManager idManager_;
 };
 

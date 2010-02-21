@@ -9,15 +9,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_DirectionParameter.h"
-
 #include "simulation_orders/MIL_ParameterType_Direction.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DirectionParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_DirectionParameter::MIL_DirectionParameter( const ASN1T_Heading& heading )
-: heading_( heading )
+MIL_DirectionParameter::MIL_DirectionParameter( const Common::MsgHeading& heading )
+    : heading_( heading.heading() )
 {
     // NOTHING
 }
@@ -44,8 +44,8 @@ bool MIL_DirectionParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 // Name: MIL_DirectionParameter::ToDirection
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_DirectionParameter::ToDirection( ASN1T_Heading& asn ) const
+bool MIL_DirectionParameter::ToDirection( Common::MsgHeading& asn ) const
 {
-    asn = heading_;
+    asn.set_heading( heading_ );
     return true;
 }

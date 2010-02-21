@@ -10,11 +10,12 @@
 #ifndef __Troops_h_
 #define __Troops_h_
 
-#include "game_asn/Simulation.h"
+
 #include "HierarchicExtension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "Humans.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
+#include "protocol/Protocol.h"
 
 namespace kernel
 {
@@ -23,6 +24,10 @@ namespace kernel
     class Automat_ABC;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgUnitAttributes;
+}
 // =============================================================================
 /** @class  Troops
     @brief  Troops
@@ -30,7 +35,7 @@ namespace kernel
 // Created: AGE 2006-02-13
 // =============================================================================
 class Troops : public HierarchicExtension_ABC
-             , public kernel::Updatable_ABC< ASN1T_MsgUnitAttributes >
+             , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
 {
 
 public:
@@ -49,16 +54,16 @@ private:
 
     //! @name Types
     //@{
-    typedef std::pair< kernel::E_TroopHealthState, ASN1T_EnumHumanRank > T_HumanState;
+    typedef std::pair< kernel::E_TroopHealthState, Common::EnumHumanRank > T_HumanState;
     typedef std::map< T_HumanState, int > T_Differences;
     //@}
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitAttributes& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     virtual void SetSuperior( const kernel::Entity_ABC& superior );
     void Update( const T_Differences& differences );
-    void AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, ASN1T_EnumHumanRank rank, int value );
+    void AddDifference( T_Differences& differences, kernel::E_TroopHealthState state, Common::EnumHumanRank rank, int value );
     //@}
 
 public: // $$$$ AGE 2006-04-28: 

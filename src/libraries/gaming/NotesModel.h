@@ -14,7 +14,7 @@
 #include "tools/Resolver.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "game_asn/Messenger.h"
+#include "protocol/MessengerSenders.h"
 
 class Note;
 class Services;
@@ -22,6 +22,13 @@ class Services;
 namespace kernel
 {
     class Controller;
+}
+
+namespace MsgsMessengerToClient
+{
+    class MsgNoteCreation;
+    class MsgNoteUpdate;
+    class MsgNoteDestruction;
 }
 
 // =============================================================================
@@ -44,9 +51,9 @@ public:
 
     //! @name Operations
     //@{
-    void Create( const ASN1T_MsgNoteCreation& asn );
-    void Update( const ASN1T_MsgNoteUpdate& asn );
-    void Delete( const ASN1T_MsgNoteDestruction& asn );
+    void Create( const MsgsMessengerToClient::MsgNoteCreation&    message );
+    void Update( const MsgsMessengerToClient::MsgNoteUpdate&      message );
+    void Delete( const MsgsMessengerToClient::MsgNoteDestruction& message );
     //@}
 
 private:

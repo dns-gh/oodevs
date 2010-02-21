@@ -19,28 +19,30 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "Entities/Orders/MIL_MissionParameterVisitor_ABC.h"
-#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
+#include "protocol/protocol.h"
+#include "Urban/Block.h"
 #include "geometry/Point2.h"
 
 #include <boost/bind.hpp>
+#include <directia/ScriptRef.h>
 
 // -----------------------------------------------------------------------------
 // Name: ScriptRefs
 // Created: LDC 2009-04-08
 // -----------------------------------------------------------------------------
 ScriptRefs::ScriptRefs( directia::Brain& brain  )
-: sendEvent_       ( brain.GetScriptFunction( "SendEvent" ) )
+    : sendEvent_       ( brain.GetScriptFunction( "SendEvent" ) )
 , startEvent_      ( brain.GetScriptFunction( "StartEvent" ) )
 , stopEvents_      ( brain.GetScriptFunction( "StopEvents" ) )
-, setStateVariable_( brain.GetScriptFunction( "SetStateVariable" ) )
-, collectgarbage_  ( brain.GetScriptFunction( "collectgarbage" ) )
-, step_            ( brain.RegisterObject( std::string( "step" ) ) )
+    , setStateVariable_( brain.GetScriptFunction( "SetStateVariable" ) )
+    , collectgarbage_  ( brain.GetScriptFunction( "collectgarbage" ) )
+    , step_            ( brain.RegisterObject( std::string( "step" ) ) )
 {
+    // NOTHING
 }
-
-#include< directia/ScriptRef.h>
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterCommonUserFunctions
@@ -507,9 +509,10 @@ void MedicalPrioritiesFunction( const directia::ScriptRef& refMission, const std
 }
 void IndirectFireFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
-    int value = 0;
-    if( element.ToIndirectFire( value ) && value )
-        refMission.RegisterObject( name, value );
+    Common::MsgUnitFire fire;
+    fire.set_oid( 0 );    
+    if( element.ToIndirectFire( fire ) && fire.oid() )
+        refMission.RegisterObject( name, fire.oid() );
 }
 void StringFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {

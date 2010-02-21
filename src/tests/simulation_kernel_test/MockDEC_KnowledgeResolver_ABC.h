@@ -11,6 +11,7 @@
 #define __MockDEC_KnowledgeResolver_ABC_h_
 
 #include "Knowledge/DEC_KnowledgeResolver_ABC.h"
+#include "protocol/protocol.h"
 
 // =============================================================================
 /** @class  MockDEC_KnowledgeResolver_ABC
@@ -18,9 +19,8 @@
 */
 // Created: LDC 2009-06-09
 // =============================================================================
-class MockDEC_KnowledgeResolver_ABC
-    : public DEC_KnowledgeResolver_ABC
-    , public mockpp::ChainableMockObject
+class MockDEC_KnowledgeResolver_ABC : public DEC_KnowledgeResolver_ABC
+                                    , public mockpp::ChainableMockObject
 {
 
 public:
@@ -33,37 +33,37 @@ public:
              {}
     virtual ~MockDEC_KnowledgeResolver_ABC() {}
     
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const ASN1T_UnitKnowledge&  asn ) const
+    virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent ( const Common::MsgUnitKnowledge&  asn ) const
     { 
         return ResolveKnowledgeAgent_mocker.forward( &asn );
     }
     virtual boost::shared_ptr< DEC_Knowledge_Agent > ResolveKnowledgeAgent (       uint                   nID ) const
     { throw; }
 
-    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const ASN1T_ObjectKnowledge& asn ) const
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const
     { 
         return ResolveKnowledgeObject_mocker.forward( &asn );
     }
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       uint                   nID ) const
     { throw; }
 
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const ASN1T_PopulationKnowledge& asn ) const
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const
     { 
         return ResolveKnowledgePopulation_mocker.forward( &asn );
     }
-    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       uint                       nID ) const
+    virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       unsigned int                       nID ) const
     { throw; }
-    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban ( const ASN1T_UrbanKnowledge&  asn ) const
+    virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban ( const Common::MsgUrbanKnowledge&  asn ) const
     { 
         return ResolveKnowledgeUrban_mocker.forward( &asn );
     }
     virtual boost::shared_ptr< DEC_Knowledge_Urban > ResolveKnowledgeUrban (       uint                   nID ) const
     { throw; }
 
-    mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Agent >, const ASN1T_UnitKnowledge* > ResolveKnowledgeAgent_mocker;
-    mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Object >, const ASN1T_ObjectKnowledge* > ResolveKnowledgeObject_mocker;
-    mockpp::ChainableMockMethod< DEC_Knowledge_Population*, const ASN1T_PopulationKnowledge* > ResolveKnowledgePopulation_mocker;
-    mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Urban >, const ASN1T_UrbanKnowledge* > ResolveKnowledgeUrban_mocker;
+    mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Agent >, const Common::MsgUnitKnowledge* > ResolveKnowledgeAgent_mocker;
+    mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Object >, const Common::MsgObjectKnowledge* > ResolveKnowledgeObject_mocker;
+    mockpp::ChainableMockMethod< DEC_Knowledge_Population*, const Common::MsgPopulationKnowledge* > ResolveKnowledgePopulation_mocker;
+    mockpp::ChainableMockMethod< boost::shared_ptr< DEC_Knowledge_Urban >, const Common::MsgUrbanKnowledge* > ResolveKnowledgeUrban_mocker;
 };
 
 #endif // __MockDEC_KnowledgeResolver_ABC_h_

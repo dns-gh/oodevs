@@ -26,13 +26,13 @@ class MIL_InteractiveContainer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-            MIL_InteractiveContainer_ABC() {}
+             MIL_InteractiveContainer_ABC() {}
     virtual ~MIL_InteractiveContainer_ABC() {}
     //@}
 
     //! @name Serialization
     //@{
-    template< typename Archive > void serialize( Archive&, const uint ) {}
+    template< typename Archive > void serialize( Archive&, const unsigned int ) {}
     //@}
 
     //! @name Operations on agent
@@ -52,7 +52,6 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    MIL_InteractiveContainer_ABC( const MIL_InteractiveContainer_ABC& );            //!< Copy constructor
     MIL_InteractiveContainer_ABC& operator=( const MIL_InteractiveContainer_ABC& ); //!< Assignment operator
     //@}
 };

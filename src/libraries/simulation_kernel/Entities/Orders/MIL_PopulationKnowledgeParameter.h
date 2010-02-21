@@ -11,6 +11,7 @@
 #define __MIL_PopulationKnowledgeParameter_h_
 
 #include "MIL_BaseParameter.h"
+
 class DEC_Knowledge_Object;
 class DEC_KnowledgeResolver_ABC;
 
@@ -27,7 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_PopulationKnowledgeParameter( DEC_Knowledge_Population* pKnowledge );
-             MIL_PopulationKnowledgeParameter( const ASN1T_PopulationKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
+             MIL_PopulationKnowledgeParameter( const Common::MsgPopulationKnowledge& asn, const DEC_KnowledgeResolver_ABC& resolver );
     virtual ~MIL_PopulationKnowledgeParameter();
     //@}
 
@@ -38,7 +39,7 @@ public:
     
     //! @name Conversions
     //@{
-    virtual bool ToPopulationKnowledge( ASN1T_PopulationKnowledge& asn ) const;
+    virtual bool ToPopulationKnowledge( Common::MsgPopulationKnowledge& asn ) const;
     virtual bool ToPopulationKnowledge( DEC_Knowledge_Population*& ) const;
     //@}
 

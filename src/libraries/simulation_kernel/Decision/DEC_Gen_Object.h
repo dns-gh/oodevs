@@ -13,9 +13,14 @@
 #define __DEC_Gen_Object_h_
 
 #include "MIL.h"
-
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "simulation_terrain/TER_Localisation.h"
+
+namespace Common
+{
+    class MsgPlannedWork;
+    enum ObstacleType_DemolitionTargetType;
+}
 
 class DEC_AutomateDecision;
 class MIL_ObjectType_ABC;
@@ -29,11 +34,12 @@ class DEC_Gen_Object
 public:
     //! @name Type
     //@{
-    typedef EnumDemolitionTargetType::Root E_DemolitionTargetType;
+// $$$$ _RC_ FDS 2010-01-22: Test de suppression à voir si possible ou non
+    typedef Common::ObstacleType_DemolitionTargetType E_DemolitionTargetType;
     //@}
 
 public:
-             DEC_Gen_Object( const ASN1T_PlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
+             DEC_Gen_Object( const Common::MsgPlannedWork& asn, const MIL_EntityManager_ABC& entityManager );
              DEC_Gen_Object( const DEC_Gen_Object& rhs );
     virtual ~DEC_Gen_Object();
 
@@ -50,7 +56,7 @@ public:
     //! @name Operations
     //@{
     void operator=( const DEC_Gen_Object& rhs );
-    void Serialize( ASN1T_PlannedWork& asn ) const;
+    void Serialize( Common::MsgPlannedWork& asn ) const;
     //@}
 
 private:
@@ -60,7 +66,7 @@ private:
           TER_Localisation          localisation_;
           E_DemolitionTargetType    pObstacleType_;
           MT_Float                  rDensity_;
-          uint                      nMinesActivityTime_;
+          unsigned int              nMinesActivityTime_;
     const MIL_Automate*             pTC2_;
     //@}
 };

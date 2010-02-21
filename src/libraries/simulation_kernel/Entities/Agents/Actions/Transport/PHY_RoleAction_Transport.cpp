@@ -10,40 +10,45 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "Network/NET_ASN_Messages.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "TransportCapacityComputerFactory_ABC.h"
 #include "TransportCapacityComputer_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
 #include "TransportPermissionComputer_ABC.h"
 #include "TransportWeightComputer_ABC.h"
-#include "TransportNotificationHandler_ABC.h"
-
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "protocol/ClientSenders.h"
+#include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Transport )
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RoleAction_Transport::sTransportData )
 
+using namespace transport;
+
 namespace transport
 {
+    template< typename Archive >
+    void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ )
+    {
+        const MIL_AgentPion* const pion = &role->transporter_;
+        archive << pion;
+    }
 
-template< typename Archive >
-void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ )
-{
-    const MIL_AgentPion* const pion = &role->transporter_;
-    archive << pion;
-}
-
-template< typename Archive >
-void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ )
-{
-    MIL_AgentPion* pion;
-    archive >> pion;
-    ::new( role )PHY_RoleAction_Transport( *pion );
+    template< typename Archive >
+    void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ )
+    {
+        MIL_AgentPion* pion;
+        archive >> pion;
+        ::new( role )PHY_RoleAction_Transport( *pion );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -56,6 +61,7 @@ PHY_RoleAction_Transport::sTransportData::sTransportData()
     , rRemainingWeight_      ( 0. )
     , rTransportedWeight_    ( 0. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -68,6 +74,7 @@ PHY_RoleAction_Transport::sTransportData::sTransportData( const sTransportData& 
     , rRemainingWeight_      ( rhs.rRemainingWeight_       )
     , rTransportedWeight_    ( rhs.rTransportedWeight_     )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -80,6 +87,7 @@ PHY_RoleAction_Transport::sTransportData::sTransportData( MT_Float rTotalWeight,
     , rRemainingWeight_      ( rTotalWeight )
     , rTransportedWeight_    ( 0. )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -87,7 +95,7 @@ PHY_RoleAction_Transport::sTransportData::sTransportData( MT_Float rTotalWeight,
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RoleAction_Transport::sTransportData::serialize( Archive& file, const uint )
+void PHY_RoleAction_Transport::sTransportData::serialize( Archive& file, const unsigned int )
 {
     file & const_cast< bool& >    ( bTransportOnlyLoadable_ )
          & const_cast< MT_Float& >( rTotalWeight_ )
@@ -109,6 +117,7 @@ PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion )
     , bHasChanged_              ( true )
     , transportedPions_         ()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +138,7 @@ PHY_RoleAction_Transport::~PHY_RoleAction_Transport()
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RoleAction_Transport::serialize( Archive& file, const uint )
+void PHY_RoleAction_Transport::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< tools::Role_ABC >( *this )
          & rWeightTransported_
@@ -485,35 +494,29 @@ bool PHY_RoleAction_Transport::IsLoaded( const MIL_Agent_ABC& transported ) cons
 // Name: PHY_RoleAction_Transport::SendFullState
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RoleAction_Transport::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.pions_transportesPresent = 1;
-
     if( transportedPions_.empty() )
     {
-        msg().pions_transportes.n = 0;
         return;
     }
 
-    ASN1T_OID* pTransports = new ASN1T_OID[ transportedPions_.size() ];
-    uint nNbrTransported = 0;
+    unsigned int nNbrTransported = 0;
     for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
     {
         if( it->second.rTransportedWeight_ > 0. )
         {            
-            pTransports[ nNbrTransported ] = (*it->first).GetID();
+            msg().mutable_pions_transportes()->mutable_elem( nNbrTransported )->set_oid( (*it->first).GetID() );
             ++nNbrTransported;
         }
     }
-    msg().pions_transportes.n    = nNbrTransported;
-    msg().pions_transportes.elem = pTransports;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Transport::SendChangedState
 // Created: NLD 2004-11-19
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Transport::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RoleAction_Transport::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );
@@ -606,5 +609,3 @@ bool PHY_RoleAction_Transport::IsTransporting() const
 {
     return rWeightTransported_ > 0.;
 }
-
-} //namespace transport

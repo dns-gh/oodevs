@@ -43,9 +43,9 @@ void Mission_Pawn_ASS_AssurerMiseEnOeuvre::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvre& asnMission = *new ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvre();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_assurer_mise_en_oeuvre = &asnMission;
+    Mission_Pion_ASS_AssurerMiseEnOeuvre& asnMission = *new Mission_Pion_ASS_AssurerMiseEnOeuvre();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_ass_assurer_mise_en_oeuvre = &asnMission;
 
 
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.zone_implantation );
@@ -60,8 +60,8 @@ void Mission_Pawn_ASS_AssurerMiseEnOeuvre::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ASS_AssurerMiseEnOeuvre::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_ass_assurer_mise_en_oeuvre );
-    ASN1T_Mission_Pion_ASS_AssurerMiseEnOeuvre& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_ass_assurer_mise_en_oeuvre;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_ass_assurer_mise_en_oeuvre ());
+    Mission_Pion_ASS_AssurerMiseEnOeuvre& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_ass_assurer_mise_en_oeuvre;
 
 
     delete &asnMission;

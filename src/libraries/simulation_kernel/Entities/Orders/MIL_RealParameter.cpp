@@ -16,7 +16,7 @@
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
 MIL_RealParameter::MIL_RealParameter( double value )
-: value_( value )
+    : value_( value )
 {
     // NOTHING
 }
@@ -36,17 +36,7 @@ MIL_RealParameter::~MIL_RealParameter()
 // -----------------------------------------------------------------------------
 bool MIL_RealParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Numeric*>( &type ) != 0 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_RealParameter::ToNumeric
-// Created: LDC 2009-05-22
-// -----------------------------------------------------------------------------
-bool MIL_RealParameter::ToNumeric( ASN1REAL& value ) const
-{
-    value = value_;
-    return true;
+    return dynamic_cast< const MIL_ParameterType_Numeric* >( &type ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -55,6 +45,6 @@ bool MIL_RealParameter::ToNumeric( ASN1REAL& value ) const
 // -----------------------------------------------------------------------------
 bool MIL_RealParameter::ToNumeric( float& value ) const
 {
-    value = static_cast< float >( value_ );
+    value = value_;
     return true;
 }

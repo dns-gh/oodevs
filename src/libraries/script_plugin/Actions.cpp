@@ -9,16 +9,17 @@
 
 #include "script_plugin_pch.h"
 #include "Actions.h"
-#include "clients_kernel/CoordinateConverter.h"
-#include "dispatcher/SimulationPublisher_ABC.h"
-#include "actions/ActionsModel.h"
-#include "actions/Action_ABC.h"
-#include "tools/ExerciseConfig.h"
 #include "ActionParameterFactory.h"
 #include "ActionFactory.h"
+#include "actions/Action_ABC.h"
+#include "actions/ActionsModel.h"
+#include "clients_kernel/CoordinateConverter.h"
 #include "directia/Brain.h"
-#include "game_asn/Publisher_ABC.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
+#include "protocol/protocol.h"
+#include "protocol/Publisher_ABC.h"
+#include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::script;
@@ -31,14 +32,14 @@ struct Actions::Publisher : public Publisher_ABC
 {
     explicit Publisher( dispatcher::SimulationPublisher_ABC& sim ) : sim_( &sim ) {}
 
-    virtual void Send( const ASN1T_MsgsClientToSim& message )
+    virtual void Send( const MsgsClientToSim::MsgClientToSim& message )
     {
         sim_->Send( message );
     }
-    virtual void Send( const ASN1T_MsgsClientToAuthentication&  ) {}
-    virtual void Send( const ASN1T_MsgsClientToReplay& ){}
-    virtual void Send( const ASN1T_MsgsClientToAar& ) {}
-    virtual void Send( const ASN1T_MsgsClientToMessenger& ) {}
+    virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication&  ) {}
+    virtual void Send( const MsgsClientToReplay::MsgClientToReplay& ){}
+    virtual void Send( const MsgsClientToAar::MsgClientToAar& ) {}
+    virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger& ) {}
     dispatcher::SimulationPublisher_ABC* sim_;
 };
 

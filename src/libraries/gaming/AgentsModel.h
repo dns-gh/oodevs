@@ -10,8 +10,21 @@
 #ifndef __AgentsModel_h_
 #define __AgentsModel_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+namespace Common
+{
+    class MsgPopulationCreation;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgAutomatCreation;
+    class MsgUnitCreation;
+    class MsgUnitDestruction;
+}
+
 
 namespace kernel
 {
@@ -49,18 +62,18 @@ public:
 
     //! @name Operations
     //@{
-    void CreateAutomat( const ASN1T_MsgAutomatCreation& asnMsg );
+    void CreateAutomat( const MsgsSimToClient::MsgAutomatCreation& message );
     kernel::Automat_ABC& GetAutomat( unsigned long id );
     kernel::Automat_ABC* FindAutomat( unsigned long id );
 
-    void CreateAgent( const ASN1T_MsgUnitCreation& asnMsg );
+    void CreateAgent( const MsgsSimToClient::MsgUnitCreation& message );
     kernel::Agent_ABC& GetAgent( unsigned long id ) const;
     kernel::Agent_ABC* FindAgent( unsigned long id ) const;
-    void DestroyAgent( const ASN1T_MsgUnitDestruction& asnMsg );
+    void DestroyAgent( const MsgsSimToClient::MsgUnitDestruction& message );
 
     kernel::Entity_ABC* FindAllAgent( unsigned long id ) const;
 
-    void CreatePopulation( const ASN1T_MsgPopulationCreation& asnMsg );
+    void CreatePopulation( const MsgsSimToClient::MsgPopulationCreation& message );
     kernel::Population_ABC& GetPopulation( unsigned long id );
     kernel::Population_ABC* FindPopulation( unsigned long id );
 

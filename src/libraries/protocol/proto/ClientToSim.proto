@@ -1,0 +1,226 @@
+package MsgsClientToSim;
+
+import "Common.proto"; 
+
+message MsgControlDatetimeChange {
+   required Common.MsgDateTime date_time = 1;
+}
+
+// meteo
+message MsgMeteoAttributes {
+   required int32                        temperature     = 1;
+   required int32                        wind_speed      = 2;
+   required Common.MsgHeading            wind_direction  = 3;
+   required int32                        cloud_floor     = 4;
+   required int32                        cloud_ceiling   = 5;
+   required int32                        cloud_density   = 6;
+   required Common.EnumPrecipitationType precipitation   = 7;
+}
+
+message MsgControlGlobalMeteo {
+   required MsgMeteoAttributes attributes = 1;
+}
+
+message MsgControlLocalMeteo {
+   optional Common.MsgCoordLatLong top_left_coordinate     = 1;
+   optional Common.MsgCoordLatLong bottom_right_coordinate = 2;
+   optional MsgMeteoAttributes     attributes              = 3;
+}
+
+message MsgControlCheckPointSaveNow {
+   optional string name = 1;
+}
+
+message MsgFragOrder {
+   required uint32                      oid        = 1;
+   required uint32                      frag_order = 2;
+   optional Common.MsgMissionParameters parametres = 3;
+}
+
+message MsgSetAutomatMode {
+   required int32                  oid  = 1;
+   required Common.EnumAutomatMode mode = 2;
+}
+
+message MsgUnitCreationRequest {
+   required uint32                 type_pion    = 1;
+   required uint32                 oid_automate = 2;
+   required Common.MsgCoordLatLong position     = 3;
+}
+
+// Magic Action
+message MagicActionChangeHumanFactors {
+   optional Common.EnumUnitTiredness    fatigue    = 1;
+   optional Common.EnumUnitMorale       moral      = 2;
+   optional Common.EnumUnitExperience   experience = 3;
+}
+
+message MsgMagicActionPartialRecovery {
+    message SeqOfEquipmentRecovery {
+        message EquipmentRecovery {
+           required Common.MsgEquipmentType type_equipement   = 1;
+           required int32                   nombre_disponible = 2;
+        }
+        repeated EquipmentRecovery elem = 1;
+    }
+    message SeqOfHumanRecovery {
+        message HumanRecovery {
+           required Common.EnumHumanRank rang              = 1;
+           required int32                nombre_disponible = 2;
+        }
+        repeated HumanRecovery elem = 1;
+    }
+    message SeqOfDotationRecovery {
+        message DotationRecovery {
+           required Common.EnumDotationFamily   famille_dotation    = 1;
+           required int32                       pourcentage         = 2;
+        }
+        repeated DotationRecovery elem = 1;
+    }
+    message SeqOfAmmunitionDotationRecovery {
+        message AmmunitionDotationRecovery {
+           required Common.EnumAmmunitionFamily famille_munition = 1;
+           required uint32                      pourcentage      = 2;
+        }
+        repeated AmmunitionDotationRecovery elem = 1;
+    }
+    message SeqOfStockRecovery {
+        message StockRecovery {
+           required uint32 ressource_id        = 1;
+           required int32  quantite_disponible = 2;
+        }
+        repeated StockRecovery elem = 1;
+    }
+    optional SeqOfEquipmentRecovery          equipements = 1;
+    optional SeqOfHumanRecovery              personnels  = 2;
+    optional SeqOfDotationRecovery           dotations   = 3;
+    optional SeqOfAmmunitionDotationRecovery munitions   = 4;
+    optional SeqOfStockRecovery              stocks      = 5;
+}
+
+message MsgUnitMagicAction_action {
+   optional Common.MsgMagicActionMoveTo                 move_to                     = 1;
+   optional MsgMagicActionPartialRecovery               recompletement_partiel      = 2;
+   optional Common.MsgMagicActionChangeHumanFactors     change_facteurs_humains     = 3;
+   optional int32                                       se_rendre                   = 4;
+   optional int32                                       destruction_totale          = 5;
+   optional int32                                       destruction_composante      = 6;
+   optional int32                                       annuler_reddition           = 7;
+   optional int32                                       recuperer_transporteurs     = 8;
+   optional int32                                       recompletement_total        = 9;
+   optional int32                                       recompletement_personnel    = 10;
+   optional int32                                       recompletement_equipement   = 11;
+   optional int32                                       recompletement_ressources   = 12;
+}
+
+message MsgUnitMagicAction {
+   required uint32                    oid    = 1;
+   required MsgUnitMagicAction_action action = 2;
+}
+
+message MsgMagicActionCreateObject {
+   required string                     type       = 1;
+   required Common.MsgLocation         location   = 2;
+   required string                     name       = 3;
+   required int32                      team       = 4;
+   required Common.MsgObjectAttributes attributes = 5;
+}
+
+message MsgMagicActionUpdateObject {
+   required int32                      oid        = 1;
+   required Common.MsgObjectAttributes attributes = 2;
+}
+
+message MsgObjectMagicAction_action {
+   optional MsgMagicActionCreateObject create_object  = 1;
+   optional MsgMagicActionUpdateObject update_object  = 2;
+   optional int32                      destroy_object = 3;
+}
+
+message MsgObjectMagicAction {
+   required MsgObjectMagicAction_action  action             = 1;
+}
+
+message MsgPopulationMagicAction_action {
+   optional Common.MsgMagicActionPopulationChangeAttitude   change_attitude     = 1;
+   optional Common.MsgMagicActionPopulationMoveTo           move_to             = 2;
+   optional bool                                            destruction_totale  = 3;
+   optional Common.MsgMagicActionPopulationKill             tuer                = 4;
+   optional Common.MsgMagicActionPopulationResurrect        ressusciter         = 5;
+}
+
+message MsgPopulationMagicAction {
+   required uint32                          oid    = 1;
+   required MsgPopulationMagicAction_action action = 2;
+}
+
+message MsgLogSupplyPushFlow {
+   required uint32                    oid_donneur  = 1;
+   required uint32                    oid_receveur = 2;
+   required Common.SeqOfDotationStock stocks       = 3;
+}
+
+message MsgLogSupplyChangeQuotas {
+   required uint32                    oid_donneur  = 1;
+   required uint32                    oid_receveur = 2;
+   required Common.SeqOfDotationQuota quotas       = 3;
+}
+
+message MsgControlCheckPointSetFrequency {
+   required int32 frequency = 1;
+}
+
+message MsgControlToggleVisionCones {
+   required bool vision_cones = 1;
+}
+
+message MsgKnowledgeGroupCreationRequest {
+   required uint32 oid         = 1;
+   required uint32 oid_camp    = 2;
+   optional uint32 oid_parent  = 3;
+   required string type        = 4;
+}
+
+message MsgKnowledgeGroupUpdateRequest {
+   required uint32 oid        = 1;
+   optional uint32 oid_camp   = 2;
+   optional uint32 oid_parent = 3;
+   optional bool   enabled    = 4;
+   optional string type       = 5;
+}
+
+
+message MsgClientToSim {
+    message Content {
+       optional Common.MsgControlStop                  control_stop                         = 1;
+       optional Common.MsgControlPause                 control_pause                        = 2;
+       optional Common.MsgControlResume                control_resume                       = 3;
+       optional Common.MsgControlChangeTimeFactor      control_change_time_factor           = 4;
+       optional MsgControlDatetimeChange               control_date_time_change             = 5;
+       optional MsgControlGlobalMeteo                  control_global_meteo                 = 6;
+       optional MsgControlLocalMeteo                   control_local_meteo                  = 7;
+       optional MsgControlCheckPointSaveNow            control_checkpoint_save_now          = 8;
+       optional MsgControlCheckPointSetFrequency       control_checkpoint_set_frequency     = 9;
+       optional MsgControlToggleVisionCones            control_toggle_vision_cones          = 10;
+       optional Common.MsgUnitOrder                    unit_order                           = 11;
+       optional Common.MsgAutomatOrder                 automat_order                        = 12;
+       optional Common.MsgPopulationOrder              population_order                     = 13;
+       optional MsgFragOrder                           frag_order                           = 14;
+       optional MsgSetAutomatMode                      set_automat_mode                     = 15;
+       optional MsgUnitCreationRequest                 unit_creation_request                = 16;
+       optional MsgUnitMagicAction                     unit_magic_action                    = 17;
+       optional MsgObjectMagicAction                   object_magic_action                  = 18;
+       optional MsgPopulationMagicAction               population_magic_action              = 19;
+       optional Common.MsgChangeDiplomacy              change_diplomacy                     = 20;
+       optional Common.MsgAutomatChangeKnowledgeGroup  automat_change_knowledge_group       = 21;
+       optional Common.MsgAutomatChangeLogisticLinks   automat_change_logistic_links        = 22;
+       optional Common.MsgAutomatChangeSuperior        automat_change_superior              = 23;
+       optional Common.MsgUnitChangeSuperior           unit_change_superior                 = 24;
+       optional MsgLogSupplyPushFlow                   log_supply_push_flow                 = 25;
+       optional MsgLogSupplyChangeQuotas               log_supply_change_quotas             = 26;   
+       optional MsgKnowledgeGroupCreationRequest       knowledge_group_creation_request     = 27;   
+       optional MsgKnowledgeGroupUpdateRequest         knowledge_group_update_request       = 28;   
+    }
+    optional int32   context = 1 [default = 0];
+    required Content message = 2;
+}

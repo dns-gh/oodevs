@@ -10,9 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RolePionLOG_Medical.h"
-
 #include "PHY_MedicalConsign_ABC.h"
 #include "PHY_MedicalHumanState.h"
 #include "PHY_MedicalCollectionAmbulance.h"
@@ -27,8 +25,8 @@
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Roles/Composantes/PHY_ComposantePredicates.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
-#include "Network/NET_ASN_Messages.h"
-
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
@@ -811,11 +809,13 @@ void PHY_RolePionLOG_Medical::Clean()
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePionLOG_Medical::GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const
 {
-    PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
-    ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
 
     unsigned int nNbrTotal                  = 0;
     unsigned int nNbrAvailableAllowedToWork = 0;
+
+    PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
+    ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
+
     for( PHY_Composante_ABC::CIT_ComposanteUseMap it = composanteUse.begin(); it != composanteUse.end(); ++it )
     {
         nNbrTotal                  += it->second.nNbrTotal_;
@@ -871,105 +871,79 @@ void PHY_RolePionLOG_Medical::StopUsingForLogistic( PHY_ComposantePion& composan
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
 static
-void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, ASN1T__SeqOfLogMedicalEquipmentAvailability& asn )
+void SendComposanteUse( const PHY_Composante_ABC::T_ComposanteUseMap& data, MsgsSimToClient::SeqOfLogMedicalEquipmentAvailability& asn )
 {
-    asn.n = data.size();
     if( data.empty() )
         return;
 
-    ASN1T_LogMedicalEquipmentAvailability* pData = new ASN1T_LogMedicalEquipmentAvailability[ data.size() ];
-    unsigned int i = 0;
     for( PHY_Composante_ABC::CIT_ComposanteUseMap itData = data.begin(); itData != data.end(); ++itData )
     {
-        ASN1T_LogMedicalEquipmentAvailability& data = pData[ i++ ];
-        data.type_equipement = itData->first->GetMosID();
+        MsgsSimToClient::MsgLogMedicalEquipmentAvailability& data = *asn.add_elem();
+        data.set_type_equipement( itData->first->GetMosID().equipment() );
         assert( itData->second.nNbrTotal_ );
 
-        data.nbr_total       = itData->second.nNbrTotal_;
-        data.nbr_au_travail  = itData->second.nNbrUsed_;
-        data.nbr_disponibles = itData->second.nNbrAvailable_ - itData->second.nNbrUsed_; // nNbrAvailableAllowedToWork
-        data.nbr_pretes      = itData->second.nNbrLent_;
-    }
-    asn.elem = pData;
+        data.set_nbr_total       ( itData->second.nNbrTotal_ );
+        data.set_nbr_au_travail  ( itData->second.nNbrUsed_ );
+        data.set_nbr_disponibles ( itData->second.nNbrAvailable_ - itData->second.nNbrUsed_ ); // nNbrAvailableAllowedToWork
+        data.set_nbr_pretes      ( itData->second.nNbrLent_ );
+    }    
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::SendFullState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::SendFullState( NET_ASN_MsgUnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Medical::SendFullState( client::UnitAttributes& asnUnit ) const
 {
-    UNREFERENCED_PARAMETER( asnUnit );
+    client::LogMedicalState asn;
+    asn().set_oid_pion( pion_.GetID() );
+    asn().set_chaine_activee( bSystemEnabled_ );
 
-    NET_ASN_MsgLogMedicalState asn;
-
-    asn().m.chaine_activeePresent                      = 1;
-    asn().m.prioritesPresent                           = 1;
-    asn().m.priorites_tactiquesPresent                 = 1;
-    asn().m.disponibilites_ambulances_ramassagePresent = 1;
-    asn().m.disponibilites_ambulances_relevePresent    = 1;
-    asn().m.disponibilites_medecinsPresent             = 1;
-
-    asn().oid_pion        = pion_.GetID();
-    asn().chaine_activee  = bSystemEnabled_;
-
-    asn().priorites.n = priorities_.size();
     if( !priorities_.empty() )
-    {
-        ASN1T_EnumHumanWound* pAsnPriorities = new ASN1T_EnumHumanWound[ priorities_.size() ];
-        unsigned int i = 0 ;
         for( CIT_MedicalPriorityVector itPriority = priorities_.begin(); itPriority != priorities_.end(); ++itPriority )
-            pAsnPriorities[ i++ ] = (**itPriority).GetAsnID();
-        asn().priorites.elem = pAsnPriorities;
-    }
+            asn().mutable_priorites()->add_elem( (**itPriority).GetAsnID() );
 
-    asn().priorites_tactiques.n = tacticalPriorities_.size();
     if( !tacticalPriorities_.empty() )
-    {
-        ASN1T_Automat* pAsnPriorities = new ASN1T_Automat[ tacticalPriorities_.size() ];
-        unsigned int i = 0 ;
         for( CIT_AutomateVector itPriority = tacticalPriorities_.begin(); itPriority != tacticalPriorities_.end(); ++itPriority )
-            pAsnPriorities[ i++ ] = (**itPriority).GetID();
-        asn().priorites_tactiques.elem = pAsnPriorities;
-    }
+            asn().mutable_priorites_tactiques()->add_elem()->set_oid( (**itPriority).GetID() );
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
     PHY_ComposanteUsePredicate predicate1( &PHY_ComposantePion::CanEvacuateCasualties, &PHY_ComposanteTypePion::CanEvacuateCasualties );
         ExecuteOnComponentsAndLendedComponents( predicate1, composanteUse );
 
-    SendComposanteUse( composanteUse, asn().disponibilites_ambulances_releve );
+    SendComposanteUse( composanteUse, *asn().mutable_disponibilites_ambulances_releve() );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate2( &PHY_ComposantePion::CanCollectCasualties, &PHY_ComposanteTypePion::CanCollectCasualties );
     ExecuteOnComponentsAndLendedComponents( predicate2, composanteUse );
 
-    SendComposanteUse( composanteUse, asn().disponibilites_ambulances_ramassage );
+    SendComposanteUse( composanteUse, *asn().mutable_disponibilites_ambulances_ramassage() );
 
     composanteUse.clear();
     PHY_ComposanteUsePredicate predicate3( &PHY_ComposantePion::CanDiagnoseHumans, &PHY_ComposanteTypePion::CanDiagnoseHumans );
     ExecuteOnComponentsAndLendedComponents( predicate3, composanteUse );
 
-    SendComposanteUse( composanteUse, asn().disponibilites_medecins );
+    SendComposanteUse( composanteUse, *asn().mutable_disponibilites_medecins() );
 
-    asn.Send();
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
-    if( asn().priorites.n > 0 )
-        delete [] asn().priorites.elem;
-    if( asn().priorites_tactiques.n > 0 )
-        delete [] asn().priorites_tactiques.elem;
-    if( asn().disponibilites_ambulances_ramassage.n > 0 )
-        delete [] asn().disponibilites_ambulances_ramassage.elem;
-    if( asn().disponibilites_ambulances_releve.n > 0 )
-        delete [] asn().disponibilites_ambulances_releve.elem;
-    if( asn().disponibilites_medecins.n > 0 )
-        delete [] asn().disponibilites_medecins.elem;
+    if( asn().priorites().elem_size() > 0 )
+        asn().mutable_priorites()->Clear();
+    if( asn().priorites_tactiques().elem_size() > 0 )
+        asn().mutable_priorites_tactiques()->Clear();
+    if( asn().disponibilites_ambulances_ramassage().elem_size() > 0 )
+        asn().mutable_disponibilites_ambulances_ramassage()->Clear();
+    if( asn().disponibilites_ambulances_releve().elem_size() > 0 )
+        asn().mutable_disponibilites_ambulances_releve()->Clear();
+    if( asn().disponibilites_medecins().elem_size() > 0 )
+        asn().mutable_disponibilites_medecins()->Clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePionLOG_Medical::SendChangedState
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void PHY_RolePionLOG_Medical::SendChangedState(  NET_ASN_MsgUnitAttributes& asnUnit ) const
+void PHY_RolePionLOG_Medical::SendChangedState( client::UnitAttributes& asnUnit ) const
 {
     if( bHasChanged_ || bExternalMustChangeState_ )
         SendFullState( asnUnit );

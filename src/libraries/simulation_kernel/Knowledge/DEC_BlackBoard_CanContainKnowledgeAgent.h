@@ -45,8 +45,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -57,7 +57,7 @@ public:
 
     //! @name Queries
     //@{
-    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID( uint nID ) const;
+    boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID( unsigned int nID ) const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
     bool                 HasKnowledgeAgent      ( const MIL_Agent_ABC& agentKnown ) const;
 
@@ -103,7 +103,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::map< uint, boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentIDMap;
+    typedef std::map< unsigned int, boost::shared_ptr< DEC_Knowledge_Agent > > T_KnowledgeAgentIDMap;
     typedef T_KnowledgeAgentIDMap::iterator                            IT_KnowledgeAgentIDMap;
     typedef T_KnowledgeAgentIDMap::const_iterator                      CIT_KnowledgeAgentIDMap;
     //@}
@@ -118,7 +118,7 @@ private:
 
     //! @name Queries caches
     //@{
-    uint nLastCacheUpdateTick_;
+    unsigned int nLastCacheUpdateTick_;
 
     T_KnowledgeAgentVector detectedContainer_;
     T_KnowledgeAgentVector friendsContainer_;

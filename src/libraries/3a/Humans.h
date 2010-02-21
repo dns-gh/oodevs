@@ -46,11 +46,11 @@ public:
 
     //! @name Operations
     //@{
-    bool HasFlag( const ASN1T_MsgUnitAttributes& attributes ) const
+    bool HasFlag( const MsgUnitAttributes& attributes ) const
     { 
-        return attributes.m.dotation_eff_personnelPresent;
+        return attributes.has_dotation_eff_personnel();
     }
-    int Extract( const ASN1T_MsgUnitAttributes& attributes );
+    int Extract( const MsgUnitAttributes& attributes );
     //@}
 
 private:

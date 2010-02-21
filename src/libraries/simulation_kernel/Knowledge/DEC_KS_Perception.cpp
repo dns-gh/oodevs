@@ -70,15 +70,15 @@ namespace boost
     {
         template< typename Archive >
         inline
-        void serialize( Archive& file, DEC_KS_Perception::T_AgentPerceptionMap& map, const uint nVersion )
+        void serialize( Archive& file, DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int nVersion )
         {
             split_free( file, map, nVersion );
         }
         
         template< typename Archive >
-        void save( Archive& file, const DEC_KS_Perception::T_AgentPerceptionMap& map, const uint )
+        void save( Archive& file, const DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int )
         {
-            uint size = map.size();
+            unsigned int size = map.size();
             file << size;
             for ( DEC_KS_Perception::CIT_AgentPerceptionMap it = map.begin(); it != map.end(); ++it )
             {
@@ -89,16 +89,16 @@ namespace boost
         }
         
         template< typename Archive >
-        void load( Archive& file, DEC_KS_Perception::T_AgentPerceptionMap& map, const uint )
+        void load( Archive& file, DEC_KS_Perception::T_AgentPerceptionMap& map, const unsigned int )
         {
-            uint nNbr;
+            unsigned int nNbr;
             file >> nNbr;
             while ( nNbr-- )
             {
                 MIL_Agent_ABC* pAgent;
                 file >> pAgent;
                 
-                uint nID;
+                unsigned int nID;
                 file >> nID;
                 
                 map[ pAgent ] = &PHY_PerceptionLevel::FindPerceptionLevel( nID );
@@ -112,7 +112,7 @@ namespace boost
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DEC_KS_Perception::serialize( Archive& archive, const uint )
+void DEC_KS_Perception::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
             & pBlackBoard_
@@ -300,7 +300,7 @@ namespace
     struct sReferenceTimeCalculator
     {
     public:
-        sReferenceTimeCalculator( uint& nReferenceTimeStep )
+        sReferenceTimeCalculator( unsigned int& nReferenceTimeStep )
             : nReferenceTimeStep_( nReferenceTimeStep )
         {
         }
@@ -318,7 +318,7 @@ namespace
             }
         }
 
-        uint& nReferenceTimeStep_;
+        unsigned int& nReferenceTimeStep_;
 
     private:
         sReferenceTimeCalculator& operator=( sReferenceTimeCalculator& rhs );
@@ -327,7 +327,7 @@ namespace
     struct sMakePerceptionAvailableTimedFunctor
     {
     public:
-        sMakePerceptionAvailableTimedFunctor( uint nReferenceTimeStep )
+        sMakePerceptionAvailableTimedFunctor( unsigned int nReferenceTimeStep )
             : nReferenceTimeStep_( nReferenceTimeStep )
         {
         }
@@ -342,7 +342,7 @@ namespace
         }
 
     private:
-        uint nReferenceTimeStep_;
+        unsigned int nReferenceTimeStep_;
     };
 }
 
@@ -368,11 +368,11 @@ void DEC_KS_Perception::Talk( int /*currentTimeStep*/ )
 
     else if( bMakePerceptionsAvailableTimed_ )
     {
-        uint nReferenceTimeStep = std::numeric_limits< uint >::max();
+        unsigned int nReferenceTimeStep = std::numeric_limits< unsigned int >::max();
         sReferenceTimeCalculator functor( nReferenceTimeStep );
         pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
 
-        if ( nReferenceTimeStep != std::numeric_limits< uint >::max() )
+        if ( nReferenceTimeStep != std::numeric_limits< unsigned int >::max() )
         {
             sMakePerceptionAvailableTimedFunctor functor2( nReferenceTimeStep );
             pBlackBoard_->GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor2 );

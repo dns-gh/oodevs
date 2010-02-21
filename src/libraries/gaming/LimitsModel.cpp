@@ -44,20 +44,20 @@ void LimitsModel::Purge()
 // Name: LimitsModel::Create
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LimitsModel::Create( const ASN1T_MsgLimitCreation& asnMsg )
+void LimitsModel::Create( const MsgsMessengerToClient::MsgLimitCreation& message )
 {
-    TacticalLine_ABC* line = factory_.Create( asnMsg );
-    Register( asnMsg.oid, *line );
+    TacticalLine_ABC* line = factory_.Create( message );
+    Register( message.oid(), *line );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LimitsModel::Create
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-void LimitsModel::Create( const ASN1T_MsgLimaCreation& asnMsg )
+void LimitsModel::Create( const MsgsMessengerToClient::MsgLimaCreation& message )
 {
-    TacticalLine_ABC* line = factory_.Create( asnMsg );
-    Register( asnMsg.oid, *line );
+    TacticalLine_ABC* line = factory_.Create( message );
+    Register( message.oid(), *line );
 }
 
 // -----------------------------------------------------------------------------

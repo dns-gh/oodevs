@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_PointList.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,12 +18,12 @@ using namespace dispatcher;
 // Name: MissionParameter_PointList constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_PointList::MissionParameter_PointList( const ASN1T_MissionParameter& asn )
+MissionParameter_PointList::MissionParameter_PointList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    points_.reserve( asn.value.u.pointList->n );
-    for( unsigned i = 0; i != asn.value.u.pointList->n; ++i )
-        points_.push_back( Localisation( asn.value.u.pointList->elem[i] ) );
+    points_.reserve( asn.value().pointlist().elem_size() );
+    for( int i = 0; i != asn.value().pointlist().elem_size(); ++i )
+        points_.push_back( Localisation( asn.value().pointlist().elem(i).location() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,29 +43,23 @@ MissionParameter_PointList::~MissionParameter_PointList()
 // Name: MissionParameter_PointList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_PointList::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_PointList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value        = bNullValue_;
-    asn.value.t           = T_MissionParameter_value_pointList;
-    asn.value.u.pointList = new ASN1T_PointList();
-
-    asn.value.u.pointList->n = points_.size();
+    asn.set_null_value( bNullValue_ );
     if( !points_.empty() )
     {
-        asn.value.u.pointList->elem = new ASN1T_Point[ points_.size() ];
-        unsigned int i = 0;
-        for( T_LocalisationVector::const_iterator it = points_.begin(); it != points_.end(); ++it, ++i )
-            (*it).Send( asn.value.u.pointList->elem[ i ] );
+        for( T_LocalisationVector::const_iterator it = points_.begin(); it != points_.end(); ++it )
+            (*it).Send( *asn.mutable_value()->mutable_pointlist()->add_elem()->mutable_location() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_PointList::AsnDelete
+// Name: MissionParameter_PointList::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_PointList::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_PointList::Delete( Common::MsgMissionParameter& asn ) const
 {
-    if( asn.value.u.pointList->n > 0 )
-        delete [] asn.value.u.pointList->elem;
-    delete asn.value.u.pointList;
+    if( asn.value().pointlist().elem_size() > 0 )
+        asn.mutable_value()->mutable_pointlist()->Clear();
+    delete asn.mutable_value()->mutable_pointlist();
 }

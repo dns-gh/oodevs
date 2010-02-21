@@ -37,12 +37,12 @@ using namespace TEST;
 // Name: Pawn::Pawn
 // Created: SBO 2005-05-11
 //-----------------------------------------------------------------------------
-Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgUnitCreation& asnMsg )
+Pawn::Pawn( const Workspace& workspace, const MsgUnitCreation& asnMsg )
     : Testable_Entity ( workspace )
-    , nId_            ( asnMsg.oid_pion )
-    , strName_        ( asnMsg.nom )
-    , pType_          ( workspace.GetTypeManager().FindPawnType( asnMsg.type_pion ) )
-    , pAutomat_       ( workspace.GetEntityManager().FindAutomat( asnMsg.oid_automate ) )
+    , nId_            ( asnMsg.oid_pion() )
+    , strName_        ( asnMsg.nom() )
+    , pType_          ( workspace.GetTypeManager().FindPawnType( asnMsg.type_pion() ) )
+    , pAutomat_       ( workspace.GetEntityManager().FindAutomat( asnMsg.oid_automate() ) )
     , bIsPc_          ( false )
     , position_       ()
     , nDirection_     ( 0 )
@@ -60,10 +60,10 @@ Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgUnitCreation& asnMsg )
 // Name: Pawn::Pawn
 // Created: SBO 2005-05-17
 //-----------------------------------------------------------------------------
-Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg, Automat& automat )
+Pawn::Pawn( const Workspace& workspace, const MsgAutomatCreation& asnMsg, Automat& automat )
     : Testable_Entity ( workspace )
-    , nId_            ( asnMsg.oid_automate )
-    , strName_        ( asnMsg.nom )
+    , nId_            ( asnMsg.oid_automate() )
+    , strName_        ( asnMsg.nom() )
     , pType_          ( 0 )
     , pAutomat_       ( &automat )
     , bIsPc_          ( true )
@@ -75,7 +75,7 @@ Pawn::Pawn( const Workspace& workspace, const ASN1T_MsgAutomatCreation& asnMsg, 
     , bIsLoaded_      ( false )
 {
     // retrieve PC type for the parent automat
-    const AutomatType* pAutomatType = workspace.GetTypeManager().FindAutomatType( asnMsg.type_automate );
+    const AutomatType* pAutomatType = workspace.GetTypeManager().FindAutomatType( asnMsg.type_automate() );
     assert( pAutomatType );
     pType_ = &pAutomatType->GetPcType();
     assert( pType_ );
@@ -107,21 +107,21 @@ void Pawn::OnAutomatChanged( Automat& automat )
 // Name: Pawn::OnAttributeUpdated
 // Created: SBO 2005-05-16
 //-----------------------------------------------------------------------------
-void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
+void Pawn::OnAttributeUpdated( const MsgUnitAttributes& asnMsg )
 {
-    if( asnMsg.m.embarquePresent )
-        bIsLoaded_ = ( asnMsg.embarque ? true : false );
+    if( asnMsg.has_embarque()  )
+        bIsLoaded_ = ( asnMsg.embarque() ? true : false );
 
-    if( asnMsg.m.vitessePresent )
+    if( asnMsg.has_vitesse()  )
         rSpeed_ = asnMsg.vitesse;
 
-    if( asnMsg.m.directionPresent )
+    if( asnMsg.has_direction()  )
         nDirection_ = asnMsg.direction;
 
-    if( asnMsg.m.positionPresent )
-        position_ = std::string( (const char*)asnMsg.position.data, 15 );
+    if( asnMsg.has_position()  )
+        position_ = std::string( (const char*)asnMsg.position.data,() 15 );
 
-    if( asnMsg.m.hauteurPresent )
+    if( asnMsg.has_hauteur()  )
         nHeight_ = asnMsg.hauteur;
 }
 
@@ -129,15 +129,15 @@ void Pawn::OnAttributeUpdated( const ASN1T_MsgUnitAttributes& asnMsg )
 // Name: Pawn::OnReceivePathfind
 // Created: SBO 2005-06-15
 //-----------------------------------------------------------------------------
-void Pawn::OnReceivePathfind( const ASN1T_MsgUnitPathFind& asnMsg )
+void Pawn::OnReceivePathfind( const MsgUnitPathFind& asnMsg )
 {
     // clear any previous pathfind
     path_.Clear();
 
     // store new pathfind
-    for( uint i = 0; i < asnMsg.itineraire.vecteur_point.n; ++i )
+    for( unsigned int i = 0; i < asnMsg.itineraire().vecteur_point().elem_size(); ++i )
     {
-        Position* pPos = new Position( std::string( (const char*)asnMsg.itineraire.vecteur_point.elem[i].data, 15 ) );
+        Position* pPos = new Position( std::string( (const char*)asnMsg.itineraire.mutable_vecteur_point()->mutable_elem()[i].data,() 15 ) );
         path_.AddNode( *pPos );
     }
 }
@@ -172,7 +172,7 @@ void Pawn::SendMagicAction( int action ) const
 // Name: Pawn::ScheduleAllMissions
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Pawn::ScheduleAllMissions( Scheduler& scheduler, uint nIteration /* = 1 */ )
+void Pawn::ScheduleAllMissions( Scheduler& scheduler, unsigned int nIteration /* = 1 */ )
 {
     assert( pType_ );
     pType_->GetModel().ScheduleAllMissions( *this, scheduler, nIteration );
@@ -182,7 +182,7 @@ void Pawn::ScheduleAllMissions( Scheduler& scheduler, uint nIteration /* = 1 */ 
 // Name: Pawn::ScheduleMission
 // Created: SBO 2005-08-12
 // -----------------------------------------------------------------------------
-void Pawn::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName, uint nIteration /* = 1 */ )
+void Pawn::ScheduleMission( Scheduler& scheduler, const std::string& strMissionName, unsigned int nIteration /* = 1 */ )
 {
     assert( pType_ );
     pType_->GetModel().ScheduleMission( *this, scheduler, strMissionName, nIteration );

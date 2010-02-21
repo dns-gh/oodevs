@@ -11,7 +11,7 @@
 #define __IndicatorRequests_h_
 
 #include "tools/Iterator.h"
-#include "game_asn/Aar.h"
+#include "protocol/aarsenders.h"
 
 namespace kernel
 {
@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    void Update( const ASN1T_MsgPlotResult& asnMsg );
+    void Update( const MsgsAarToClient::MsgPlotResult& message );
 
     IndicatorRequest& CreateRequest( const IndicatorDefinition_ABC& definition );
     tools::Iterator< const IndicatorRequest& > CreateIterator();

@@ -17,12 +17,16 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 class DEC_AutomateDecision;
 class DEC_Knowledge_Agent;
 class DEC_Path_ABC;
 class MIL_Mission_ABC;
 class MT_Vector2D;
-class NET_ASN_MsgUnitAttributes;
 class PHY_RoePopulation;
 
 enum E_CloseCombatState;
@@ -49,8 +53,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
     
     //! @name Operations
@@ -143,8 +147,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    void SendChangedState( client::UnitAttributes& msg ) const;
+    void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
     //! @name Notifications

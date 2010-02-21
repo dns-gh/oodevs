@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_MedicalPriorities.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,10 +18,10 @@ using namespace dispatcher;
 // Name: MissionParameter_MedicalPriorities constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_MedicalPriorities::MissionParameter_MedicalPriorities( const ASN1T_MissionParameter& asn )
+MissionParameter_MedicalPriorities::MissionParameter_MedicalPriorities( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    std::copy( asn.value.u.logMedicalPriorities->elem, asn.value.u.logMedicalPriorities->elem + asn.value.u.logMedicalPriorities->n
+    std::copy( asn.value().logmedicalpriorities().elem().begin(), asn.value().logmedicalpriorities().elem().end()
              , std::back_inserter( medicalPriorities_ ) );
 }
 
@@ -37,22 +38,18 @@ MissionParameter_MedicalPriorities::~MissionParameter_MedicalPriorities()
 // Name: MissionParameter_MedicalPriorities::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_MedicalPriorities::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_MedicalPriorities::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value = bNullValue_;
-    asn.value.t = T_MissionParameter_value_logMedicalPriorities;
-    asn.value.u.logMedicalPriorities = new ASN1T_LogMedicalPriorities();
-    {
-        asn.value.u.logMedicalPriorities->n = medicalPriorities_.size();
-        asn.value.u.logMedicalPriorities->elem = (ASN1T_EnumHumanWound*)( medicalPriorities_.empty() ? 0 : &medicalPriorities_.front() );
-    }
+    asn.set_null_value( bNullValue_ );
+    for (std::vector< int >::const_iterator it(medicalPriorities_.begin()); it != medicalPriorities_.end(); ++it )
+        asn.mutable_value()->mutable_logmedicalpriorities()->add_elem( Common::EnumHumanWound( *it ) );        
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_MedicalPriorities::AsnDelete
+// Name: MissionParameter_MedicalPriorities::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_MedicalPriorities::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_MedicalPriorities::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.logMedicalPriorities;
+    asn.mutable_value()->clear_logmedicalpriorities();
 }

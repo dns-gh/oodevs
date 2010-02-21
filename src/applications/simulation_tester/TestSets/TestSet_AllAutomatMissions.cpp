@@ -30,7 +30,7 @@ using namespace TEST;
 // Name: TestSet_AllAutomatMissions constructor
 // Created: SBO 2005-08-17
 // -----------------------------------------------------------------------------
-TestSet_AllAutomatMissions::TestSet_AllAutomatMissions( uint nIteration /* = 1 */ )
+TestSet_AllAutomatMissions::TestSet_AllAutomatMissions( unsigned int nIteration /* = 1 */ )
     : TestSet_ABC ( nIteration )
 {
     // NOTHING

@@ -43,9 +43,9 @@ void Mission_Pawn_LOG_AppuyerFranchissementSurUnPoint::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint& asnMission = *new ASN1T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_log_appuyer_franchissement_sur_un_point;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_log_appuyer_franchissement_sur_un_point = &asnMission;
+    Mission_Pion_LOG_AppuyerFranchissementSurUnPoint& asnMission = *new Mission_Pion_LOG_AppuyerFranchissementSurUnPoint();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_log_appuyer_franchissement_sur_un_point = &asnMission;
 
 
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.pont_flottant );
@@ -59,8 +59,8 @@ void Mission_Pawn_LOG_AppuyerFranchissementSurUnPoint::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_LOG_AppuyerFranchissementSurUnPoint::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_log_appuyer_franchissement_sur_un_point );
-    ASN1T_Mission_Pion_LOG_AppuyerFranchissementSurUnPoint& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_log_appuyer_franchissement_sur_un_point;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_log_appuyer_franchissement_sur_un_point ());
+    Mission_Pion_LOG_AppuyerFranchissementSurUnPoint& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_log_appuyer_franchissement_sur_un_point;
 
 
     delete &asnMission;

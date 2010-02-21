@@ -25,31 +25,30 @@ namespace hla
 */
 // Created: JCR 2008-05-30
 // =============================================================================
-class BypassAttribute 
-    : public ObjectAttribute_ABC
-    , public UpdatableAttribute_ABC
+class BypassAttribute : public ObjectAttribute_ABC
+                      , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              BypassAttribute();
-    explicit BypassAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit BypassAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~BypassAttribute();
     //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );    
+    template< typename Archive > void serialize( Archive&, const unsigned int );    
     //@}
 
     //! @name From ObjectAttribute_ABC
     //@{
-    void Instanciate( DEC_Knowledge_Object& object ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void OnUpdate( const ASN1T_ObjectAttributes& asn );
-    void Serialize( HLA_UpdateFunctor& functor ) const;
-    void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void OnUpdate( const Common::MsgObjectAttributes& asn );
+    virtual void Serialize( HLA_UpdateFunctor& functor ) const;
+    virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 
     //! @name Accessors

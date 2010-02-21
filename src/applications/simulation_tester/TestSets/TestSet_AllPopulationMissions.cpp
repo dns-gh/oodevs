@@ -31,7 +31,7 @@ using namespace TEST;
 // Name: TestSet_AllPopulationMissions constructor
 // Created: SBO 2005-08-05
 // -----------------------------------------------------------------------------
-TestSet_AllPopulationMissions::TestSet_AllPopulationMissions( uint nIteration /* = 1 */ )
+TestSet_AllPopulationMissions::TestSet_AllPopulationMissions( unsigned int nIteration /* = 1 */ )
     : TestSet_ABC ( nIteration )
 {
     // NOTHING

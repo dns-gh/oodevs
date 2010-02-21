@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_Polygon.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_Polygon constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_Polygon::MissionParameter_Polygon( const ASN1T_MissionParameter& asn )
+MissionParameter_Polygon::MissionParameter_Polygon( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , polygon_           ( *asn.value.u.polygon )
+    , polygon_           ( asn.value().polygon().location() )
 {
     // NOTHING
 }
@@ -41,19 +42,18 @@ MissionParameter_Polygon::~MissionParameter_Polygon()
 // Name: MissionParameter_Polygon::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Polygon::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Polygon::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value      = bNullValue_;
-    asn.value.t         = T_MissionParameter_value_polygon;
-    asn.value.u.polygon = new ASN1T_Polygon();
-    polygon_.Send( *asn.value.u.polygon );
+    asn.set_null_value( bNullValue_ );
+//    asn.mutable_value()->mutable_polygon() = new MsgPolygon();
+    polygon_.Send( *asn.mutable_value()->mutable_polygon()->mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Polygon::AsnDelete
+// Name: MissionParameter_Polygon::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Polygon::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Polygon::Delete( Common::MsgMissionParameter& asn ) const
 {
-    delete asn.value.u.polygon;
+    delete asn.mutable_value()->mutable_polygon();
 }

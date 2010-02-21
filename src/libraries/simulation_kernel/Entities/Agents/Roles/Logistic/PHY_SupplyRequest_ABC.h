@@ -14,9 +14,9 @@
 
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "protocol/simulationsenders.h"
 
 class PHY_DotationCategory;
-struct ASN1T_DotationQuery;
 
 // =============================================================================
 // @class  PHY_SupplyRequest_ABC
@@ -31,21 +31,21 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
     //@{
-    bool     AffectAutomate           ( MIL_AutomateLOG& supplyingAutomate );
-    bool     HasReachedSupplyThreshold() const;
-    void     ReserveStocks            ();
+    bool AffectAutomate( MIL_AutomateLOG& supplyingAutomate );
+    bool HasReachedSupplyThreshold() const;
+    void ReserveStocks();
 
-    MT_Float Supply                   () const;
-    void     Cancel                   ();
+    MT_Float Supply() const;
+    void Cancel();
 
-    void     RemoveConvoyedMerchandise           ( MT_Float rNbr );
-    void     AddConvoyedMerchandise              ( MT_Float rNbr );
-    void     CancelMerchandiseOverheadReservation();
+    void RemoveConvoyedMerchandise( MT_Float rNbr );
+    void AddConvoyedMerchandise( MT_Float rNbr );
+    void CancelMerchandiseOverheadReservation();
     //@}
 
     //! @name Accessors
@@ -59,7 +59,7 @@ public:
 
     //! @name Network
     //@{
-    void Serialize( ASN1T_DotationQuery& asn ) const;
+    void Serialize( MsgsSimToClient::MsgDotationQuery& asn ) const;
     //@}
 
 protected:
@@ -70,7 +70,7 @@ protected:
         T*          pRequest_;       // == le pion demandeur PHY_Dotation / PHY_DotationStock
         MT_Float    rRequestedValue_;
         
-        template< typename Archive > void serialize( Archive&, const uint );
+        template< typename Archive > void serialize( Archive&, const unsigned int );
     };
     typedef typename std::vector< sIndividualRequest >    T_RequestVector;
     typedef typename T_RequestVector::iterator            IT_RequestVector;

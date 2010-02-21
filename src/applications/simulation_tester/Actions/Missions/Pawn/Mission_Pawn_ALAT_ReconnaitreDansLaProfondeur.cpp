@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur& asnMission = *new ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_reconnaitre_dans_la_profondeur;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_dans_la_profondeur = &asnMission;
+    Mission_Pion_ALAT_ReconnaitreDansLaProfondeur& asnMission = *new Mission_Pion_ALAT_ReconnaitreDansLaProfondeur();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_reconnaitre_dans_la_profondeur = &asnMission;
 
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
     const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
@@ -70,8 +70,8 @@ void Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_ReconnaitreDansLaProfondeur::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_reconnaitre_dans_la_profondeur );
-    ASN1T_Mission_Pion_ALAT_ReconnaitreDansLaProfondeur& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_reconnaitre_dans_la_profondeur;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_reconnaitre_dans_la_profondeur ());
+    Mission_Pion_ALAT_ReconnaitreDansLaProfondeur& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_reconnaitre_dans_la_profondeur;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
     ASN_Tools::Delete( asnMission.plots_ravitaillement );

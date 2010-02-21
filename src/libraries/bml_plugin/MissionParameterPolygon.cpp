@@ -43,21 +43,21 @@ MissionParameterPolygon::~MissionParameterPolygon()
 // Name: MissionParameterPolygon::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPolygon::Serialize( ASN1T_MissionParameter& parameter ) const
+void MissionParameterPolygon::Serialize( MsgMissionParameter& parameter ) const
 {
-    parameter.null_value = 0;
-    parameter.value.t = T_MissionParameter_value_polygon;
-    parameter.value.u.polygon = new ASN1T_Polygon();
-    parameter.value.u.polygon->type = EnumLocationType::polygon;
-    points_->Serialize( parameter.value.u.polygon->coordinates );
+    parameter.set_null_value( 0 );
+
+//    parameter.mutable_value()->mutable_polygon() = new MsgPolygon();
+    parameter.mutable_value()->mutable_polygon()->mutable_location()->set_type ( MsgLocation_Geometry_polygon );
+    points_->Serialize( *parameter.mutable_value()->mutable_polygon()->mutable_location()->mutable_coordinates() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPolygon::Clean
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPolygon::Clean( ASN1T_MissionParameter& parameter ) const
+void MissionParameterPolygon::Clean( MsgMissionParameter& parameter ) const
 {
-    points_->Clean( parameter.value.u.polygon->coordinates );
-    delete parameter.value.u.polygon;
+    points_->Clean( *parameter.mutable_value()->mutable_polygon()->mutable_location()->mutable_coordinates() );
+    delete parameter.mutable_value()->mutable_polygon();
 }

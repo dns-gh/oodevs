@@ -43,9 +43,9 @@ void Mission_Pawn_INF_Securiser::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_Securiser& asnMission = *new ASN1T_Mission_Pion_INF_Securiser();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_securiser;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_securiser = &asnMission;
+    Mission_Pion_INF_Securiser& asnMission = *new Mission_Pion_INF_Securiser();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_securiser = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_INF_Securiser::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_Securiser::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_securiser );
-    ASN1T_Mission_Pion_INF_Securiser& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_securiser;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_securiser ());
+    Mission_Pion_INF_Securiser& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_securiser;
 
     ASN_Tools::Delete( asnMission.zone );
 

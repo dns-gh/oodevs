@@ -116,15 +116,15 @@ public:
     //! @name Time management
     //@{
     void SetInitialRealTime( unsigned int time );
-    uint GetSimTime () const; // Durée en secondes depuis le début de la SIM
-    uint GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
-    uint RealTimeToTick( uint rt   ) const;
-    uint TickToRealTime( uint tick ) const;
+    unsigned int GetSimTime () const; // Durée en secondes depuis le début de la SIM
+    unsigned int GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
+    unsigned int RealTimeToTick( unsigned int rt   ) const;
+    unsigned int TickToRealTime( unsigned int tick ) const;
 
     virtual unsigned int GetCurrentTick() const;
     virtual unsigned int GetTickDuration() const;
-    uint GetCurrentTimeStep() const; // $$$$ AGE 2007-08-10: degager
-    uint GetTimeStepDuration() const;  // $$$$ AGE 2007-08-13: degager
+    unsigned int GetCurrentTimeStep() const; // $$$$ AGE 2007-08-10: degager
+    unsigned int GetTimeStepDuration() const;  // $$$$ AGE 2007-08-13: degager
     //@}
 
 private:
@@ -152,12 +152,12 @@ private:
 
     MIL_Config& config_;
 
-    uint nTimeStepDuration_; /* const */
-    uint nTimeFactor_;
-    uint nCurrentTimeStep_;
-    uint nSimTime_;
-    uint nInitialRealTime_;
-    uint nRealTime_;
+    unsigned int nTimeStepDuration_; /* const */
+    unsigned int nTimeFactor_;
+    unsigned int nCurrentTimeStep_;
+    unsigned int nSimTime_;
+    unsigned int nInitialRealTime_;
+    unsigned int nRealTime_;
 
     MIL_EffectManager*           pEffectManager_;
     MIL_EntityManager*           pEntityManager_;

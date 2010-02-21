@@ -43,9 +43,9 @@ void Mission_Automat_ALAT_ExtrairePersonnel::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ALAT_ExtrairePersonnel& asnMission = *new ASN1T_Mission_Automate_ALAT_ExtrairePersonnel();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_extraire_personnel;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_extraire_personnel = &asnMission;
+    Mission_Automate_ALAT_ExtrairePersonnel& asnMission = *new Mission_Automate_ALAT_ExtrairePersonnel();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_alat_extraire_personnel = &asnMission;
 
     const T_IdVector& unitesAHelitransporter_ = pTarget_->GetTestParam_AgentList();
     const Position& pointDebarquement_ = pTarget_->GetTestParam_Point();
@@ -76,8 +76,8 @@ void Mission_Automat_ALAT_ExtrairePersonnel::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ALAT_ExtrairePersonnel::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_alat_extraire_personnel );
-    ASN1T_Mission_Automate_ALAT_ExtrairePersonnel& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_extraire_personnel;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_alat_extraire_personnel ());
+    Mission_Automate_ALAT_ExtrairePersonnel& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_alat_extraire_personnel;
 
     ASN_Tools::Delete( asnMission.unites_a_helitransporter );
     ASN_Tools::Delete( asnMission.point_debarquement );

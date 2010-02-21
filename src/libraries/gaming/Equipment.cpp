@@ -65,13 +65,13 @@ QString Equipment::GetName() const
 // Name: Equipment::Update
 // Created: AGE 2006-02-21
 // -----------------------------------------------------------------------------
-void Equipment::Update( const ASN1T_EquipmentDotations& message )
+void Equipment::Update( const MsgsSimToClient::EquipmentDotations_EquipmentDotation& message )
 {
-    available_     = message.nb_disponibles;
-    unavailable_   = message.nb_indisponibles;
-    repairable_    = message.nb_reparables;
-    inMaintenance_ = message.nb_dans_chaine_maintenance;
-    prisonners_    = message.nb_prisonniers;
+    available_     = message.nb_disponibles();
+    unavailable_   = message.nb_indisponibles();
+    repairable_    = message.nb_reparables();
+    inMaintenance_ = message.nb_dans_chaine_maintenance();
+    prisonners_    = message.nb_prisonniers();
 }
 
 // -----------------------------------------------------------------------------

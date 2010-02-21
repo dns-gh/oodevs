@@ -21,6 +21,11 @@ class PHY_RoleInterface_Location;
 class MIL_AgentPion;
 class MIL_Object_ABC;
 
+namespace client
+{
+    class UnitAttributes;
+}
+
 namespace posture
 {
     class PostureComputer_ABC;
@@ -52,7 +57,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
@@ -75,8 +80,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
-    virtual void SendFullState( NET_ASN_MsgUnitAttributes& asnMsg ) const;
+    virtual void SendChangedState( client::UnitAttributes& asnMsg ) const;
+    virtual void SendFullState( client::UnitAttributes& asnMsg ) const;
     //@}
 
     //! @name Tools

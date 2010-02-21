@@ -43,9 +43,9 @@ void Mission_Automat_ASS_AcquerirObjectifs::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ASS_AcquerirObjectifs& asnMission = *new ASN1T_Mission_Automate_ASS_AcquerirObjectifs();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_ass_acquerir_objectifs;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_ass_acquerir_objectifs = &asnMission;
+    Mission_Automate_ASS_AcquerirObjectifs& asnMission = *new Mission_Automate_ASS_AcquerirObjectifs();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_ass_acquerir_objectifs = &asnMission;
 
     const T_LocationVector& zonesAObserver_ = pTarget_->GetTestParam_PolygonList();
     const T_PositionVector& positionsDeploiement_ = pTarget_->GetTestParam_PointList();
@@ -65,8 +65,8 @@ void Mission_Automat_ASS_AcquerirObjectifs::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ASS_AcquerirObjectifs::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_ass_acquerir_objectifs );
-    ASN1T_Mission_Automate_ASS_AcquerirObjectifs& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_ass_acquerir_objectifs;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_ass_acquerir_objectifs ());
+    Mission_Automate_ASS_AcquerirObjectifs& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_ass_acquerir_objectifs;
 
     ASN_Tools::Delete( asnMission.zones_a_observer );
     ASN_Tools::Delete( asnMission.positions_deploiement );

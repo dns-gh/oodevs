@@ -278,8 +278,8 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) con
     // Posture
     const PHY_RoleInterface_Posture& sourcePosture = source.GetRole< PHY_RoleInterface_Posture >();
 
-    const uint nOldPostureIdx = sourcePosture.GetLastPosture   ().GetID();
-    const uint nCurPostureIdx = sourcePosture.GetCurrentPosture().GetID();
+    const unsigned int nOldPostureIdx = sourcePosture.GetLastPosture   ().GetID();
+    const unsigned int nCurPostureIdx = sourcePosture.GetCurrentPosture().GetID();
 
     assert( postureSourceFactors_.size() > nOldPostureIdx );
     assert( postureSourceFactors_.size() > nCurPostureIdx );
@@ -307,8 +307,8 @@ MT_Float PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) con
 {
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
 
-    const uint nOldPostureIdx = targetPosture.GetLastPosture   ().GetID();
-    const uint nCurPostureIdx = targetPosture.GetCurrentPosture().GetID();
+    const unsigned int nOldPostureIdx = targetPosture.GetLastPosture   ().GetID();
+    const unsigned int nCurPostureIdx = targetPosture.GetCurrentPosture().GetID();
 
     assert( postureTargetFactors_.size() > nOldPostureIdx );
     assert( postureTargetFactors_.size() > nCurPostureIdx );
@@ -321,8 +321,8 @@ MT_Float PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) con
 // -----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target ) const
 {
-    const uint nOldPostureIdx = target.GetLastPosture   ().GetID();
-    const uint nCurPostureIdx = target.GetCurrentPosture().GetID();
+    const unsigned int nOldPostureIdx = target.GetLastPosture   ().GetID();
+    const unsigned int nCurPostureIdx = target.GetCurrentPosture().GetID();
 
     assert( postureTargetFactors_.size() > nOldPostureIdx );
     assert( postureTargetFactors_.size() > nCurPostureIdx );
@@ -338,7 +338,7 @@ MT_Float PHY_SensorTypeAgent::ComputeEnvironementFactor( PHY_RawVisionData::envB
 {
     MT_Float res = nEnv & PHY_RawVisionData::eVisionEmpty ? environmentFactors_[ 0 ] : 1.;
 
-    for( uint mask = 1, idx = 1; idx < PHY_RawVisionData::eNbrVisionObjects; mask <<= 1, ++idx )
+    for( unsigned int mask = 1, idx = 1; idx < PHY_RawVisionData::eNbrVisionObjects; mask <<= 1, ++idx )
         if( mask & nEnv )
             res *= environmentFactors_[ idx ];
     return res;
@@ -589,13 +589,13 @@ bool PHY_SensorTypeAgent::CanScan() const
 // Name: PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx
 // Created: JVT 03-04-28
 //-----------------------------------------------------------------------------
-uint PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx( PHY_RawVisionData::E_VisionObject obj )
+unsigned int PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx( PHY_RawVisionData::E_VisionObject obj )
 {
     if ( obj == PHY_RawVisionData::eVisionEmpty )
         return 0;
 
-    uint res = 1;
-    for ( uint idx = 1; !( idx & obj ); idx <<= 1 )
+    unsigned int res = 1;
+    for ( unsigned int idx = 1; !( idx & obj ); idx <<= 1 )
         ++res;
     return res;
 }
@@ -604,7 +604,7 @@ uint PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx( PHY_RawVisionData::E_V
 // Name: PHY_SensorTypeAgent::ConvertObjectIdxToEnvironnement
 // Created: JVT 03-08-07
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::E_VisionObject PHY_SensorTypeAgent::ConvertObjectIdxToEnvironnement( uint val )
+PHY_RawVisionData::E_VisionObject PHY_SensorTypeAgent::ConvertObjectIdxToEnvironnement( unsigned int val )
 {
     return (PHY_RawVisionData::E_VisionObject)( val ? 1 << ( val - 1 ) : 0 );
 }

@@ -11,15 +11,22 @@
 #define __LogMedicalConsign_h_
 
 #include "clients_kernel/Types.h"
-#include "game_asn/Simulation.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
     class Agent_ABC;
     class Controller;
     class Displayer_ABC;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgLogMedicalHandlingCreation;
 }
 
 // =============================================================================
@@ -30,7 +37,7 @@ class LogMedicalConsign : public kernel::Drawable_ABC
 public:
     //! @name Operations
     //@{
-             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const ASN1T_MsgLogMedicalHandlingCreation& asn );
+    LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const MsgsSimToClient::MsgLogMedicalHandlingCreation& message );
     virtual ~LogMedicalConsign();
     //@}
 
@@ -42,7 +49,7 @@ public:
 
     //! @name Network events
     //@{
-    void Update( const ASN1T_MsgLogMedicalHandlingUpdate& message );
+    void Update( const MsgsSimToClient::MsgLogMedicalHandlingUpdate& message );
     //@}
 
 private:

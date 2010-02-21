@@ -10,7 +10,10 @@
 #ifndef __FireResultFactory_h_
 #define __FireResultFactory_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 class AgentFireResult;
 class PopulationFireResult;
@@ -35,8 +38,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual AgentFireResult*      CreateFireResult( const ASN1T_UnitFireDamages& message );
-    virtual PopulationFireResult* CreateFireResult( const ASN1T_PopulationFireDamages& message );
+    virtual AgentFireResult*      CreateFireResult( const MsgsSimToClient::MsgUnitFireDamages& message );
+    virtual PopulationFireResult* CreateFireResult( const MsgsSimToClient::MsgPopulationFireDamages& message );
     //@}
 
 private:

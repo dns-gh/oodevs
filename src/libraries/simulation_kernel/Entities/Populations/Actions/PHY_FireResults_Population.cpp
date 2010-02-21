@@ -12,7 +12,9 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_FireResults_Population.h"
 #include "Entities/Populations/MIL_Population.h"
-#include "Network/NET_ASN_Messages.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "Tools/MIL_IDManager.h"
 
 MIL_IDManager PHY_FireResults_Population::idManager_;
 
@@ -25,10 +27,10 @@ PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& fi
     , firer_             ( firer )
     , nID_               ( idManager_.GetFreeId() )
 {
-    NET_ASN_MsgStartPopulationFire asnMsg;
-    asnMsg().fire_oid  = nID_;
-    asnMsg().firer_oid = firer_.GetID();
-    asnMsg.Send();
+    client::StartPopulationFire asnMsg;
+    asnMsg().set_fire_oid( nID_ );
+    asnMsg().set_firer_oid( firer_.GetID() );
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -37,13 +39,13 @@ PHY_FireResults_Population::PHY_FireResults_Population( const MIL_Population& fi
 // -----------------------------------------------------------------------------
 PHY_FireResults_Population::~PHY_FireResults_Population()
 {
-    NET_ASN_MsgStopPopulationFire asnMsg;
-    asnMsg().fire_oid = nID_;
+    client::StopPopulationFire asnMsg;
+    asnMsg().set_fire_oid( nID_ );
 
-    Serialize( asnMsg().units_damages );
+    Serialize( *asnMsg().mutable_units_damages() );
 
-    asnMsg.Send();
+    asnMsg.Send( NET_Publisher_ABC::Publisher() );
 
-    CleanAfterSerialization( asnMsg().units_damages );
+    CleanAfterSerialization( *asnMsg().mutable_units_damages() );
 }
 

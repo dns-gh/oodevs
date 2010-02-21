@@ -12,18 +12,19 @@
 #include "simulation_kernel_pch.h"
 
 #include "MIL_ObjectManager.h"
+#include "MIL_AgentServer.h"
 #include "MIL_ObjectFactory.h"
 #include "MIL_Object_ABC.h"
 #include "MIL_ObjectManipulator_ABC.h"
 #include "MIL_Singletons.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_Federate.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Knowledge/DEC_KS_ObjectKnowledgeSynthetizer.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
-
+#include "Network/NET_Publisher_ABC.h"
+#include <protocol/ClientSenders.h>
 #include <xeumeuleu/xml.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
@@ -49,12 +50,11 @@ MIL_ObjectManager::~MIL_ObjectManager()
             delete it->second;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::load
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> objects_;
 }
@@ -63,7 +63,7 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_ObjectManager::save
 // Created: JVT 2005-03-23
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_ObjectManager::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << objects_;
 }
@@ -145,13 +145,13 @@ MIL_Object_ABC& MIL_ObjectManager::CreateObject( xml::xistream& xis, MIL_Army_AB
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActionCreateObject& asn, const tools::Resolver< MIL_Army_ABC >& armies )
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObject( const MsgsClientToSim::MsgMagicActionCreateObject& message, const tools::Resolver< MIL_Army_ABC >& armies )
 {  //@TODO MGD Try to externalize ASN when protobuff will be merged
    //@HBD : Verify later that conversion from MIL_Army to MIL_Army_ABC was right
-    MIL_Army_ABC* pArmy = armies.Find( asn.team );
+    MIL_Army_ABC* pArmy = armies.Find( message.team() );
     if( !pArmy )
-        return EnumObjectErrorCode::error_invalid_camp;
-    return builder_->BuildObject( asn, *pArmy );
+        return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_camp;
+    return builder_->BuildObject( message, *pArmy );
 }
 
 // -----------------------------------------------------------------------------
@@ -160,14 +160,14 @@ ASN1T_EnumObjectErrorCode MIL_ObjectManager::CreateObject( const ASN1T_MagicActi
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation )
 {    
-    return builder_->BuildObject( type, army, localisation, EnumDemolitionTargetType::preliminary );    
+    return builder_->BuildObject( type, army, localisation, Common::ObstacleType_DemolitionTargetType_preliminary );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectManager::CreateObject
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, ASN1T_EnumDemolitionTargetType obstacleType )
+MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation, Common::ObstacleType_DemolitionTargetType obstacleType )
 {
     if ( pLocalisation )
         return builder_->BuildObject( type, army, *pLocalisation, obstacleType );
@@ -191,36 +191,31 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const MIL_O
 // Name: MIL_ObjectManager::OnReceiveMsgObjectMagicAction
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const ASN1T_MsgObjectMagicAction& asnMsg, uint nCtx, const tools::Resolver< MIL_Army_ABC >& armies )
+void MIL_ObjectManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::MsgObjectMagicAction& asnMsg, unsigned int nCtx, const tools::Resolver< MIL_Army_ABC >& armies )
 {
-    ASN1T_EnumObjectErrorCode nErrorCode = EnumObjectErrorCode::no_error;
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
 
-    switch ( asnMsg.action.t )
+    if( asnMsg.action().has_create_object() )
+        nErrorCode = CreateObject( asnMsg.action().create_object(), armies );
+    if( asnMsg.action().has_destroy_object() )
     {
-    case T_MsgObjectMagicAction_action_create_object:
-        nErrorCode = CreateObject( *asnMsg.action.u.create_object, armies );
-        break;
-    case T_MsgObjectMagicAction_action_destroy_object:
-        {
-            MIL_Object_ABC* pObject = Find( asnMsg.action.u.destroy_object );
-            if( !pObject )
-                nErrorCode = EnumObjectErrorCode::error_invalid_object;
-            else
-                (*pObject)().Destroy();
-            break;
-        }
-    case T_MsgObjectMagicAction_action_update_object:
-        {
-            MIL_Object_ABC* pObject = Find( asnMsg.action.u.update_object->oid );
-            if( !pObject )
-                nErrorCode = EnumObjectErrorCode::error_invalid_object;
-            else
-                nErrorCode = pObject->OnUpdate( asnMsg.action.u.update_object->attributes );
-            break;
-        }
+        MIL_Object_ABC* pObject = Find( asnMsg.action().destroy_object() );
+        if( !pObject )
+            nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_object;
+        else
+            (*pObject)().Destroy();
+    }
+
+    if( asnMsg.action().has_update_object())
+    {
+        MIL_Object_ABC* pObject = Find( asnMsg.action().update_object().oid() );
+        if( !pObject )
+            nErrorCode = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_object;
+        else
+            nErrorCode = pObject->OnUpdate( asnMsg.action().update_object().attributes() );
     }
     
-    NET_ASN_MsgObjectMagicActionAck asnReplyMsg;
-    asnReplyMsg().error_code = nErrorCode;
-    asnReplyMsg.Send( nCtx );
+    client::ObjectMagicActionAck asnReplyMsg;
+    asnReplyMsg().set_error_code( nErrorCode );
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }

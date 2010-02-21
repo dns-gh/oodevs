@@ -10,10 +10,15 @@
 #ifndef __ActivityTimeAttribute_h_
 #define __ActivityTimeAttribute_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
+
+namespace MsgsSimToClient
+{
+	class MsgObjectUpdate;
+	class MsgObjectCreation;
+}
 
 namespace kernel
 {
@@ -33,8 +38,8 @@ namespace xml
 // Created: SBO 2007-02-08
 // =============================================================================
 class ActivityTimeAttribute : public kernel::ActivityTimeAttribute_ABC                            
-                            , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
-                            , public kernel::Updatable_ABC< ASN1T_MsgObjectCreation >                            
+                            , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
+                            , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >                            
 {
 
 public:
@@ -60,8 +65,8 @@ private:
 
     //! @name Updateable_ABC
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgObjectCreation& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectCreation& message );
     template< typename T >
     void UpdateData( const T& message );
     //@}

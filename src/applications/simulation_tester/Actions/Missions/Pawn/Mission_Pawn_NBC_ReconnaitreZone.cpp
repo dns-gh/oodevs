@@ -43,9 +43,9 @@ void Mission_Pawn_NBC_ReconnaitreZone::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_NBC_ReconnaitreZone& asnMission = *new ASN1T_Mission_Pion_NBC_ReconnaitreZone();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_nbc_reconnaitre_zone;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_zone = &asnMission;
+    Mission_Pion_NBC_ReconnaitreZone& asnMission = *new Mission_Pion_NBC_ReconnaitreZone();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_nbc_reconnaitre_zone = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_NBC_ReconnaitreZone::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_NBC_ReconnaitreZone::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_nbc_reconnaitre_zone );
-    ASN1T_Mission_Pion_NBC_ReconnaitreZone& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_zone;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_nbc_reconnaitre_zone ());
+    Mission_Pion_NBC_ReconnaitreZone& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_nbc_reconnaitre_zone;
 
     ASN_Tools::Delete( asnMission.zone );
 

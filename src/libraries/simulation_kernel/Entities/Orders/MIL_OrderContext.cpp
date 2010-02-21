@@ -18,7 +18,7 @@
 #include "MIL_IntelligenceOrdersVisitor_ABC.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
-#include "game_asn/ASN_Delete.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext constructor
@@ -38,15 +38,15 @@ MIL_OrderContext::MIL_OrderContext( bool present /*= false */ )
 // Name: MIL_OrderContext constructor
 // Created: SBO 2008-03-03
 // -----------------------------------------------------------------------------
-MIL_OrderContext::MIL_OrderContext( const ASN1T_MissionParameters& asn, const MT_Vector2D& orientationReference )
+MIL_OrderContext::MIL_OrderContext( const Common::MsgMissionParameters& asn, const MT_Vector2D& orientationReference )
     : hasContext_( true )
 {
-    if( asn.n < Length() )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-    ReadDirection( asn.elem[0] );
-    ReadPhaseLines( asn.elem[1] );
-    ReadLimits( asn.elem[2], asn.elem[3], orientationReference );
-    ReadIntelligences( asn.elem[4] );
+    if( unsigned int( asn.elem_size() ) < Length() )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+    ReadDirection( asn.elem(0) );
+    ReadPhaseLines( asn.elem(1) );
+    ReadLimits( asn.elem(2), asn.elem(3), orientationReference );
+    ReadIntelligences( asn.elem(4) );
 }
 
 // -----------------------------------------------------------------------------
@@ -79,48 +79,48 @@ MIL_OrderContext::~MIL_OrderContext()
 // Name: MIL_OrderContext::Serialize
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::Serialize( ASN1T_MissionParameters& asn ) const
+void MIL_OrderContext::Serialize( Common::MsgMissionParameters& asn ) const
 {
     if( hasContext_ )
     {
-        if( asn.n < Length() )
+        if( unsigned int( asn.elem_size() ) < Length() )
             throw std::runtime_error( __FUNCTION__ );
-        WriteDirection( asn.elem[0] );
-        WritePhaseLines( asn.elem[1] );
-        WriteLimits( asn.elem[2], asn.elem[3] );
-        WriteIntelligences( asn.elem[4] );
+        WriteDirection( *asn.mutable_elem(0) );
+        WritePhaseLines( *asn.mutable_elem(1) );
+        WriteLimits( *asn.mutable_elem(2), *asn.mutable_elem(3) );
+        WriteIntelligences( *asn.mutable_elem(4) );
     }
 }
 
 namespace
 {
-    void CleanPhaseLines( ASN1T_MissionParameter& asn )
+    void CleanPhaseLines( Common::MsgMissionParameter& asn )
     {
-        if( asn.value.u.limasOrder )
+        if( asn.value().has_limasorder() )
         {
-            for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
+            for( int i = 0; i < asn.value().limasorder().elem_size(); ++i )
             {
-                ASN_Delete::Delete( asn.value.u.limasOrder->elem[ i ].lima );
-                if( asn.value.u.limasOrder->elem[ i ].fonctions.n > 0 )
-                    delete [] asn.value.u.limasOrder->elem[ i ].fonctions.elem;
+                asn.mutable_value()->mutable_limasorder()->mutable_elem( i )->clear_lima();
+                if( asn.value().limasorder().elem( i ).fonctions_size() > 0 )
+                    asn.mutable_value()->mutable_limasorder()->mutable_elem( i )->Clear();
             }
-            delete [] asn.value.u.limasOrder->elem;
+            asn.mutable_value()->mutable_limasorder()->mutable_elem()->Clear();
         }
-        delete asn.value.u.limasOrder;
+        asn.mutable_value()->mutable_limasorder()->Clear();
     }
 
-    void CleanLimit( ASN1T_MissionParameter& asn )
+    void CleanLimit( Common::MsgMissionParameter& asn )
     {
-        if( asn.value.u.line )
-            ASN_Delete::Delete( asn.value.u.line->coordinates );
-        delete asn.value.u.line;
+        if( asn.value().has_line() )
+            asn.mutable_value()->mutable_line()->mutable_location()->mutable_coordinates()->Clear();
+        asn.mutable_value()->mutable_line()->Clear();
     }
 
-    void CleanIntelligences( ASN1T_MissionParameter& asn )
+    void CleanIntelligences( Common::MsgMissionParameter& asn )
     {
-        if( asn.value.u.intelligenceList )
-            delete[] asn.value.u.intelligenceList->elem;
-        delete asn.value.u.intelligenceList;
+        if( asn.value().has_intelligencelist() )
+            asn.mutable_value()->mutable_intelligencelist()->mutable_elem()->Clear();
+        asn.mutable_value()->mutable_intelligencelist()->Clear();
     }
 }
 
@@ -128,16 +128,16 @@ namespace
 // Name: MIL_OrderContext::CleanAfterSerialization
 // Created: NLD 2006-11-14
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::CleanAfterSerialization( ASN1T_MissionParameters& asn ) const
+void MIL_OrderContext::CleanAfterSerialization( Common::MsgMissionParameters& asn ) const
 {
     if( hasContext_ )
     {
-        if( asn.n < Length() )
+        if( unsigned int( asn.elem_size() ) < Length() )
             throw std::runtime_error( __FUNCTION__ );
-        CleanPhaseLines( asn.elem[1] );
-        CleanLimit( asn.elem[2] );
-        CleanLimit( asn.elem[3] );
-        CleanIntelligences( asn.elem[4] );
+        CleanPhaseLines( *asn.mutable_elem(1) );
+        CleanLimit( *asn.mutable_elem(2) );
+        CleanLimit( *asn.mutable_elem(3) );
+        CleanIntelligences( *asn.mutable_elem(4) );
     }
 }
 
@@ -155,27 +155,27 @@ void MIL_OrderContext::Accept( MIL_IntelligenceOrdersVisitor_ABC& visitor ) cons
 // Name: MIL_OrderContext::ReadLimits
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadLimits( const ASN1T_MissionParameter& limit1, const ASN1T_MissionParameter& limit2, const MT_Vector2D& orientationReference )
+void MIL_OrderContext::ReadLimits( const Common::MsgMissionParameter& limit1, const Common::MsgMissionParameter& limit2, const MT_Vector2D& orientationReference )
 {
-    if( limit1.value.t != T_MissionParameter_value_line || limit2.value.t != T_MissionParameter_value_line )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-    if( limit1.null_value != limit2.null_value )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
-    if( limit1.null_value )
+    if( !limit1.value().has_line() || !limit2.value().has_line() )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+    if( limit1.null_value() != limit2.null_value() )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_limit );
+    if( limit1.null_value() )
         return;
     
     T_PointVector limit1Data, limit2Data;
-    if(    !NET_ASN_Tools::ReadLine( *limit1.value.u.line, limit1Data )
-        || !NET_ASN_Tools::ReadLine( *limit2.value.u.line, limit2Data ) )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+    if(    !NET_ASN_Tools::ReadLine( limit1.value().line(), limit1Data )
+        || !NET_ASN_Tools::ReadLine( limit2.value().line(), limit2Data ) )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_limit );
 
     const bool equal  = limit1Data == limit2Data;
     const bool empty1 = limit1Data.empty();
     const bool empty2 = limit1Data.empty();
     if( ( empty1 || empty2 ) && !equal )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_limit );
     if( !empty1 && equal )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_limit );
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_limit );
     if( !empty1 && !empty2 )
         fuseau_.Reset( orientationReference, limit1Data, limit2Data, FindLima( MIL_LimaFunction::LDM_ ), FindLima( MIL_LimaFunction::LFM_ ) );
 }
@@ -184,73 +184,64 @@ void MIL_OrderContext::ReadLimits( const ASN1T_MissionParameter& limit1, const A
 // Name: MIL_OrderContext::ReadPhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadPhaseLines( const ASN1T_MissionParameter& asn )
+void MIL_OrderContext::ReadPhaseLines( const Common::MsgMissionParameter& asn )
 {
-    if( asn.value.t != T_MissionParameter_value_limasOrder )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-    if( !asn.null_value )
-        for( unsigned int i = 0; i < asn.value.u.limasOrder->n; ++i )
-            limas_.push_back( MIL_LimaOrder( asn.value.u.limasOrder->elem[i] ) );
+    if( !asn.value().has_limasorder() )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+    if( !asn.null_value() )
+        for( int i = 0; i < asn.value().limasorder().elem_size(); ++i )
+            limas_.push_back( MIL_LimaOrder( asn.value().limasorder().elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::ReadDirection
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadDirection( const ASN1T_MissionParameter& asn )
+void MIL_OrderContext::ReadDirection( const Common::MsgMissionParameter& asn )
 {
-    if( asn.value.t != T_MissionParameter_value_heading )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-    if( !asn.null_value )
-        NET_ASN_Tools::ReadDirection( asn.value.u.heading, dirDanger_ );
+    if( !asn.value().has_heading() )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+    if( !asn.null_value() )
+        NET_ASN_Tools::ReadDirection( asn.value().heading(), dirDanger_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::ReadIntelligences
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::ReadIntelligences( const ASN1T_MissionParameter& asn )
+void MIL_OrderContext::ReadIntelligences( const Common::MsgMissionParameter& asn )
 {
-    if( asn.value.t != T_MissionParameter_value_intelligenceList )
-        throw NET_AsnException< ASN1T_EnumOrderErrorCode >( EnumOrderErrorCode::error_invalid_mission_parameters );
-    if( !asn.null_value )
-        for( unsigned int i = 0; i < asn.value.u.intelligenceList->n; ++i )
-            intelligences_.push_back( new MIL_IntelligenceOrder( asn.value.u.intelligenceList->elem[i] ) );
+    if( !asn.value().has_intelligencelist() )
+        throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
+    if( !asn.has_null_value() )
+        for( int i = 0; i < asn.value().intelligencelist().elem_size(); ++i )
+            intelligences_.push_back( new MIL_IntelligenceOrder( asn.value().intelligencelist().elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::WritePhaseLines
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::WritePhaseLines( ASN1T_MissionParameter& asn ) const
+void MIL_OrderContext::WritePhaseLines( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_limasOrder;
-    asn.value.u.limasOrder = new ASN1T_LimasOrder();
-    asn.value.u.limasOrder->n = limas_.size();
-    if( !limas_.empty() )
-    {
-        asn.value.u.limasOrder->elem = new ASN1T_LimaOrder[ limas_.size() ];
-        unsigned int i = 0;
-        for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it, ++i )
-            it->Serialize( asn.value.u.limasOrder->elem[i] );
-    }
+    asn.set_null_value( 0 );
+    asn.mutable_value()->mutable_limasorder(); // force initialization of message parameter
+    for( CIT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
+        it->Serialize( *asn.mutable_value()->mutable_limasorder()->add_elem() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::WriteLimits
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::WriteLimits( ASN1T_MissionParameter& limit1, ASN1T_MissionParameter& limit2 ) const
+void MIL_OrderContext::WriteLimits( Common::MsgMissionParameter& limit1, Common::MsgMissionParameter& limit2 ) const
 {
-    limit1.null_value = limit2.null_value = !fuseau_.GetLeftLimit() || !fuseau_.GetRightLimit();
-    limit1.value.t = limit2.value.t = T_MissionParameter_value_line;
-    limit1.value.u.line = new ASN1T_Line();
-    limit2.value.u.line = new ASN1T_Line();
-    if( !limit1.null_value )
+    limit1.set_null_value( !fuseau_.GetLeftLimit() || !fuseau_.GetRightLimit() );
+    limit2.set_null_value( !fuseau_.GetLeftLimit() || !fuseau_.GetRightLimit() );
+    if( !limit1.null_value() )
     {
-        NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit ()->GetPoints(), *limit1.value.u.line );
-        NET_ASN_Tools::WriteLine( fuseau_.GetRightLimit()->GetPoints(), *limit2.value.u.line );
+        NET_ASN_Tools::WriteLine( fuseau_.GetLeftLimit ()->GetPoints(), *limit1.mutable_value()->mutable_line() );
+        NET_ASN_Tools::WriteLine( fuseau_.GetRightLimit()->GetPoints(), *limit2.mutable_value()->mutable_line() );
     }
 }
 
@@ -258,30 +249,22 @@ void MIL_OrderContext::WriteLimits( ASN1T_MissionParameter& limit1, ASN1T_Missio
 // Name: MIL_OrderContext::WriteDirection
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::WriteDirection( ASN1T_MissionParameter& asn ) const
+void MIL_OrderContext::WriteDirection( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_heading;
-    NET_ASN_Tools::WriteDirection( dirDanger_, asn.value.u.heading );
+    asn.set_null_value( 0 );    
+    NET_ASN_Tools::WriteDirection( dirDanger_, *asn.mutable_value()->mutable_heading() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::WriteIntelligences
 // Created: SBO 2008-03-04
 // -----------------------------------------------------------------------------
-void MIL_OrderContext::WriteIntelligences( ASN1T_MissionParameter& asn ) const
+void MIL_OrderContext::WriteIntelligences( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value = 0;
-    asn.value.t = T_MissionParameter_value_intelligenceList;
-    asn.value.u.intelligenceList = new ASN1T_IntelligenceList();
-    asn.value.u.intelligenceList->n = intelligences_.size();
-    if( !intelligences_.empty() )
-    {
-        asn.value.u.intelligenceList->elem = new ASN1T_Intelligence[ asn.value.u.intelligenceList->n ];
-        unsigned int i = 0;
-        for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it, ++i )
-            (*it)->Serialize( asn.value.u.intelligenceList->elem[i] );
-    }
+    asn.set_null_value( 0 );
+    asn.mutable_value()->mutable_intelligencelist();   // force initialization of message parameter
+    for( CIT_IntelligenceOrders it = intelligences_.begin(); it != intelligences_.end(); ++it )
+        (*it)->Serialize( *asn.mutable_value()->mutable_intelligencelist()->add_elem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +325,7 @@ const T_LimaVector& MIL_OrderContext::GetLimas() const
 // Name: MIL_OrderContext::FindLima
 // Created: NLD 2006-11-16
 // -----------------------------------------------------------------------------
-MIL_LimaOrder* MIL_OrderContext::FindLima( uint nID )
+MIL_LimaOrder* MIL_OrderContext::FindLima( unsigned int nID )
 {
     for( IT_LimaVector it = limas_.begin(); it != limas_.end(); ++it )
         if( it->GetID() == nID )

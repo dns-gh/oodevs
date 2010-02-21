@@ -17,7 +17,7 @@
 // Name: DEC_KnowledgeSource_ABC constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, uint nPriority )
+DEC_KnowledgeSource_ABC::DEC_KnowledgeSource_ABC( DEC_KnowledgeBlackBoard_ABC& blackBoard, unsigned int nPriority )
     : nPriority_  ( nPriority   )
     , pBlackBoard_( &blackBoard )
 {
@@ -49,7 +49,7 @@ DEC_KnowledgeSource_ABC::~DEC_KnowledgeSource_ABC()
 // Name: DEC_KnowledgeSource_ABC::GetPriority
 // Created: NLD 2006-01-19
 // -----------------------------------------------------------------------------
-uint DEC_KnowledgeSource_ABC::GetPriority() const
+unsigned int DEC_KnowledgeSource_ABC::GetPriority() const
 {
     return nPriority_;
 }

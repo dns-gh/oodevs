@@ -10,14 +10,16 @@
 #include "dispatcher_pch.h"
 
 #include "ConstructionAttribute.h"
+#include "protocol/SimulationSenders.h"
 
+////using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-ConstructionAttribute::ConstructionAttribute( const Model& model, const ASN1T_ObjectAttributes& asnMsg )
+ConstructionAttribute::ConstructionAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )
     , dotation_ ( 0 )
     , nNbrDotationForConstruction_  ( 0 )
@@ -39,16 +41,16 @@ ConstructionAttribute::~ConstructionAttribute()
 // Name: ConstructionAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
+void ConstructionAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
 {    
-    if( asnMsg.m.constructionPresent )
+    if( asnMsg.has_construction()  )
     {
-        if ( asnMsg.construction.m.dotation_typePresent )
-            dotation_ = asnMsg.construction.dotation_type;
-        if ( asnMsg.construction.m.dotation_nbrPresent )
-            nNbrDotationForConstruction_ = asnMsg.construction.dotation_nbr;
-        if ( asnMsg.construction.m.percentagePresent )
-            nPercentageConstruction_ = asnMsg.construction.percentage;    
+        if ( asnMsg.construction().has_dotation_type() )
+            dotation_ = asnMsg.construction().dotation_type();
+        if ( asnMsg.construction().has_dotation_nbr() )
+            nNbrDotationForConstruction_ = asnMsg.construction().dotation_nbr();
+        if ( asnMsg.construction().has_percentage() )
+            nPercentageConstruction_ = asnMsg.construction().percentage();    
     }
 }
 
@@ -56,24 +58,18 @@ void ConstructionAttribute::Update( const ASN1T_ObjectAttributes& asnMsg )
 // Name: ConstructionAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::Send( ASN1T_ObjectAttributes& asnMsg ) const
+void ConstructionAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
 {
-    asnMsg.m.constructionPresent = 1;
-    asnMsg.construction.m.dotation_typePresent = 1;
-    asnMsg.construction.dotation_type = dotation_;
-
-    asnMsg.construction.m.dotation_nbrPresent = 1;
-    asnMsg.construction.dotation_nbr = nNbrDotationForConstruction_;
-
-    asnMsg.construction.m.percentagePresent = 1;
-    asnMsg.construction.percentage = nPercentageConstruction_;
+    asnMsg.mutable_construction()->set_dotation_type( dotation_ );
+    asnMsg.mutable_construction()->set_dotation_nbr( nNbrDotationForConstruction_ );
+    asnMsg.mutable_construction()->set_percentage( nPercentageConstruction_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::AsnDelete
+// Name: ConstructionAttribute::Delete
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::AsnDelete( ASN1T_ObjectAttributes& /*asnMsg*/ ) const
+void ConstructionAttribute::Delete( Common::MsgObjectAttributes& /*asnMsg*/ ) const
 {
-//    delete asnMsg.u.mine_jam;
+//    delete asnMsg().mine_jam;
 }

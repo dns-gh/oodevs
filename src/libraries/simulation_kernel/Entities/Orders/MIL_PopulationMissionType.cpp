@@ -43,7 +43,7 @@ void MIL_PopulationMissionType::Initialize( xml::xistream& xis )
 // Name: MIL_PopulationMissionType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_PopulationMissionType::MIL_PopulationMissionType( uint nID, xml::xistream& xis )
+MIL_PopulationMissionType::MIL_PopulationMissionType( unsigned int nID, xml::xistream& xis )
     : MIL_MissionType_ABC( nID, xis )
     , strDIABehavior_    ( xml::attribute< std::string >( xis, "dia-behavior" ) )
 {
@@ -63,7 +63,7 @@ MIL_PopulationMissionType::~MIL_PopulationMissionType()
 // Name: MIL_AutomateMissionType::Find
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-const MIL_MissionType_ABC* MIL_PopulationMissionType::Find( uint nID )
+const MIL_MissionType_ABC* MIL_PopulationMissionType::Find( unsigned int nID )
 {
     CIT_MissionIDMap it = missionIDs_.find( nID );
     if( it == missionIDs_.end() )

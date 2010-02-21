@@ -10,6 +10,7 @@
 #include "crossbow_plugin_pch.h"
 #include "PointCollection.h"
 #include "Point.h"
+#include "protocol/protocol.h"
 
 using namespace plugins::crossbow;
 
@@ -26,10 +27,10 @@ PointCollection::PointCollection()
 // Name: PointCollection constructor
 // Created: JCR 2007-08-30
 // -----------------------------------------------------------------------------
-PointCollection::PointCollection( const ASN1T_CoordLatLongList& asn )
+PointCollection::PointCollection( const Common::MsgCoordLatLongList& message )
 {
-    for( unsigned int i = 0; i < asn.n; ++i )
-        points_.push_back( crossbow::Point( asn.elem[i] ) );
+    for( int i = 0; i < message.elem_size(); ++i )
+        points_.push_back( crossbow::Point( message.elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,11 +105,8 @@ void PointCollection::Serialize( std::ostream& geometry ) const
 // Name: PointCollection::Serialize
 // Created: JCR 2007-09-26
 // -----------------------------------------------------------------------------
-void PointCollection::Serialize( ASN1T_Location& asn ) const
+void PointCollection::Serialize( Common::MsgLocation& message ) const
 {
-    asn.coordinates.n = points_.size();
-    asn.coordinates.elem = new ASN1T_CoordLatLong[asn.coordinates.n];
-    int i = 0;
     for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
-        it->Serialize( asn.coordinates.elem[i++] );
+        it->Serialize( *message.mutable_coordinates()->add_elem() );
 }

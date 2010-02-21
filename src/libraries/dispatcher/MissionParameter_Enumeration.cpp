@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_Enumeration.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_Enumeration constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_Enumeration::MissionParameter_Enumeration( const ASN1T_MissionParameter& asn )
+MissionParameter_Enumeration::MissionParameter_Enumeration( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , enumeration_        ( asn.value.u.enumeration )
+    , enumeration_        ( asn.value().enumeration() )
 {
     // NOTHING
 }
@@ -41,18 +42,18 @@ MissionParameter_Enumeration::~MissionParameter_Enumeration()
 // Name: MissionParameter_Enumeration::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Enumeration::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_Enumeration::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value          = bNullValue_;
-    asn.value.t             = T_MissionParameter_value_enumeration;
-    asn.value.u.enumeration = enumeration_;
+    asn.set_null_value( bNullValue_ );
+    //asn.value.t             = T_MissionParameter_value_enumeration;
+    asn.mutable_value()->set_enumeration( enumeration_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_Enumeration::AsnDelete
+// Name: MissionParameter_Enumeration::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_Enumeration::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_Enumeration::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

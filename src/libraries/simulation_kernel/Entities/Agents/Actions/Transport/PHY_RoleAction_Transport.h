@@ -14,10 +14,14 @@
 
 #include "MT_Tools/Role_ABC.h"
 #include "Entities/Agents/Roles/NBC/ToxicEffectHandler_ABC.h"
-#include "TransportNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
 
-class NET_ASN_MsgUnitAttributes;
+namespace client
+{
+    class UnitAttributes;
+}
+
 class MIL_Agent_ABC;
 class MIL_AgentPion;
 class PHY_ComposantePion;
@@ -31,9 +35,9 @@ namespace transport
 // Created: JVT 2004-08-03
 // =============================================================================
 class PHY_RoleAction_Transport : public tools::Role_ABC
+                               , private boost::noncopyable
                                , public nbc::ToxicEffectHandler_ABC
                                , public transport::TransportNotificationHandler_ABC
-                               , private boost::noncopyable
                                , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
@@ -48,7 +52,7 @@ public:
         sTransportData( const sTransportData& rhs );
         sTransportData( MT_Float rTotalWeight, bool bTransportOnlyLoadable );
 
-        template< typename Archive > void serialize( Archive&, const uint );
+        template< typename Archive > void serialize( Archive&, const unsigned int );
 
         const bool     bTransportOnlyLoadable_;
         const MT_Float rTotalWeight_;
@@ -64,32 +68,35 @@ public:
     //@}
 
 public:
-    PHY_RoleAction_Transport( MIL_AgentPion& pion );
+    //! @name Constructors/Destructor
+    //@{
+    explicit PHY_RoleAction_Transport( MIL_AgentPion& pion );
     virtual ~PHY_RoleAction_Transport();
+    //@}
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name Operations
     //@{
-    void Update    ( bool bIsDead );
-    void Clean     ();
+    void Update( bool bIsDead );
+    void Clean();
     //@}
 
     //! @name Operations
     //@{
-    int  GetInitialReturnCode() const;
-    int  GetFinalReturnCode  () const;
+    int GetInitialReturnCode() const;
+    int GetFinalReturnCode  () const;
     //@}
 
     //! @name Event handler
     //@{
     virtual void NotifyComposanteChanged( const PHY_ComposantePion& composante );
     virtual void CheckConsistency();
-    virtual void MagicLoadPion   ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
-    virtual void MagicUnloadPion ( MIL_Agent_ABC& pion );
+    virtual void MagicLoadPion( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
+    virtual void MagicUnloadPion( MIL_Agent_ABC& pion );
     //@}
 
     //! @name Action
@@ -110,14 +117,14 @@ public:
 
     //! @name Notifications on transporter
     //@{
-    virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination ) ;
-    virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination ) ;
+    virtual void ApplyContamination( const MIL_ToxicEffectManipulator& contamination ) ;
+    virtual void ApplyPoisonous( const MIL_ToxicEffectManipulator& contamination ) ;
     //@}
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    void SendChangedState( client::UnitAttributes& msg ) const;
+    void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 private:
@@ -140,26 +147,28 @@ private:
     //@}
 
 private:
-    //! @name Tools
+    //! @name Helpers
     //@{
     bool HasChanged() const;
     void     ComputeLoadingTime  ( MT_Float& rLoadingTime, MT_Float& rWeightToLoad ) const;
     MT_Float ComputeUnloadingTime() const;
-
     MT_Float DoLoad  ( const MT_Float rWeightToLoad   );
     MT_Float DoUnload( const MT_Float rWeightToUnload );
+
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RoleAction_Transport* role, const unsigned int /*version*/ );
-
     //@}
 
 private:
-          MIL_AgentPion&        transporter_;
-          bool                  bHasChanged_;
-          E_State               nState_;
-          bool                  bLoadUnloadHasBeenUpdated_;
-          T_TransportedPionMap  transportedPions_;
-          MT_Float              rWeightTransported_; 
+    //! @name Member data
+    //@{
+    MIL_AgentPion&        transporter_;
+    bool                  bHasChanged_;
+    E_State               nState_;
+    bool                  bLoadUnloadHasBeenUpdated_;
+    T_TransportedPionMap  transportedPions_;
+    MT_Float              rWeightTransported_; 
+    //@}
 };
 
 } // namespace transport

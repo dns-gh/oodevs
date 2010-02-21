@@ -18,10 +18,10 @@ using namespace dispatcher;
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model& model, const ASN1T_BorrowedEquipment& asnMsg )
-    : agent_        ( &model.agents_.Get( asnMsg.oid_pion_preteur ) )
-    , equipmentType_( asnMsg.type_equipement )
-    , quantity_     ( asnMsg.nombre )
+Loan::Loan( const Model& model, const MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message )
+    : agent_        ( &model.agents_.Get( message.oid_pion_preteur() ) )
+    , equipmentType_( message.type_equipement() )
+    , quantity_     ( message.nombre() )
 {
     // NOTHING
 }
@@ -30,10 +30,10 @@ Loan::Loan( const Model& model, const ASN1T_BorrowedEquipment& asnMsg )
 // Name: Loan constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-Loan::Loan( const Model& model, const ASN1T_LentEquipment& asnMsg )
-    : agent_        ( &model.agents_.Get( asnMsg.oid_pion_emprunteur ) )
-    , equipmentType_( asnMsg.type_equipement )
-    , quantity_     ( asnMsg.nombre )
+Loan::Loan( const Model& model, const MsgsSimToClient::LentEquipments_LentEquipment& message )
+    : agent_        ( &model.agents_.Get( message.oid_pion_emprunteur() ) )
+    , equipmentType_( message.type_equipement() )
+    , quantity_     ( message.nombre() )
 {
     // NOTHING
 }
@@ -51,20 +51,20 @@ Loan::~Loan()
 // Name: Loan::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Loan::Send( ASN1T_BorrowedEquipment& asnMsg ) const
+void Loan::Send( MsgsSimToClient::BorrowedEquipments_BorrowedEquipment& message ) const
 {
-    asnMsg.type_equipement  = equipmentType_;
-    asnMsg.oid_pion_preteur = agent_->GetId();
-    asnMsg.nombre           = quantity_;
+    message.set_type_equipement( equipmentType_ );
+    message.set_oid_pion_preteur( agent_->GetId() );
+    message.set_nombre( quantity_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Loan::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void Loan::Send( ASN1T_LentEquipment& asnMsg ) const
+void Loan::Send( MsgsSimToClient::LentEquipments_LentEquipment& message ) const
 {
-    asnMsg.type_equipement     = equipmentType_;
-    asnMsg.oid_pion_emprunteur = agent_->GetId();
-    asnMsg.nombre              = quantity_;
+    message.set_type_equipement( equipmentType_ );
+    message.set_oid_pion_emprunteur( agent_->GetId() );
+    message.set_nombre( quantity_ );
 }

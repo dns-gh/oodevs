@@ -9,11 +9,12 @@
 
 #include "gaming_pch.h"
 #include "MissionParameters.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Viewport_ABC.h"
-#include "clients_kernel/Controller.h"
 #include "ActionFactory_ABC.h"
 #include "actions/Action_ABC.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Viewport_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace actions;
 
@@ -38,13 +39,13 @@ MissionParameters::~MissionParameters()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameters::UpdateMessage
+// Name: MsgMissionParameters::UpdateMessage
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
 template< typename T >
 void MissionParameters::UpdateMessage( const T& message )
 {
-    if( message.mission == 0 )
+    if( message.mission() == 0 )
         return;
 
     Action_ABC* action = factory_.CreateAction( message );
@@ -53,34 +54,34 @@ void MissionParameters::UpdateMessage( const T& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameters::DoUpdate
+// Name: MsgMissionParameters::DoUpdate
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const ASN1T_MsgUnitOrder& message )
+void MissionParameters::DoUpdate( const Common::MsgUnitOrder& message )
 {
     UpdateMessage( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameters::DoUpdate
+// Name: MsgMissionParameters::DoUpdate
 // Created: SBO 2006-11-20
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const ASN1T_MsgAutomatOrder& message )
+void MissionParameters::DoUpdate( const Common::MsgAutomatOrder& message )
 {
     UpdateMessage( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameters::DoUpdate
+// Name: MsgMissionParameters::DoUpdate
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void MissionParameters::DoUpdate( const ASN1T_MsgPopulationOrder& message )
+void MissionParameters::DoUpdate( const Common::MsgPopulationOrder& message )
 {
     UpdateMessage( message );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameters::Draw
+// Name: MsgMissionParameters::Draw
 // Created: SBO 2006-11-13
 // -----------------------------------------------------------------------------
 void MissionParameters::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const

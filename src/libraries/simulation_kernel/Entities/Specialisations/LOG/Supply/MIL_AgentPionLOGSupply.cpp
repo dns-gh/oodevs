@@ -74,7 +74,7 @@ MIL_AgentPionLOGSupply::~MIL_AgentPionLOGSupply()
 // Name: MIL_AgentPionLOGSupply::load
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_AgentPionLOGSupply::load( MIL_CheckPointInArchive& file, const uint )
+void MIL_AgentPionLOGSupply::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
     
@@ -87,7 +87,7 @@ void MIL_AgentPionLOGSupply::load( MIL_CheckPointInArchive& file, const uint )
 // Name: MIL_AgentPionLOGSupply::save
 // Created: JVT 2005-03-24
 // -----------------------------------------------------------------------------
-void MIL_AgentPionLOGSupply::save( MIL_CheckPointOutArchive& file, const uint ) const
+void MIL_AgentPionLOGSupply::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_AgentPionLOG_ABC >( *this );
     const PHY_RolePionLOG_Supply* const role = &GetRole< PHY_RolePionLOG_Supply >();

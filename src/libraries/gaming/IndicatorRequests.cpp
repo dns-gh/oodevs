@@ -71,8 +71,8 @@ tools::Iterator< const IndicatorRequest& > IndicatorRequests::CreateIterator()
 // Name: IndicatorRequests::Update
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void IndicatorRequests::Update( const ASN1T_MsgPlotResult& asnMsg )
+void IndicatorRequests::Update( const MsgsAarToClient::MsgPlotResult& message )
 {
     BOOST_FOREACH( T_Requests::value_type& request, requests_ )
-        request->Update( asnMsg );
+        request->Update( message );
 }

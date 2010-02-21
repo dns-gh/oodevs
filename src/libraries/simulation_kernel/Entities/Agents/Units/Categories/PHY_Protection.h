@@ -49,8 +49,8 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName              () const;
-          uint         GetID                () const;
-          uint         GetNeutralizationTime() const;
+          unsigned int         GetID                () const;
+          unsigned int         GetNeutralizationTime() const;
           MT_Float     GetHumanDeadRatio    ( const PHY_ComposanteState& composanteState ) const;
           MT_Float     GetHumanWoundedRatio ( const PHY_ComposanteState& composanteState ) const;
           bool         IsHuman              () const;
@@ -100,7 +100,7 @@ private:
     //! @name Member data
     //@{
     const std::string    strName_;
-          uint           nID_;
+          unsigned int           nID_;
           E_Type         nType_;
           T_HumanEffects attritionEffectsOnHumans_;
           MT_Float       rBreakdownProbabilityEva_;
@@ -111,7 +111,7 @@ private:
 
 private:
     static T_ProtectionMap protections_;
-    static uint            nNextID_;
+    static unsigned int            nNextID_;
     static MT_Random       random_;
 };
 

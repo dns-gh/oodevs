@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-	bool ConnectToServer     ( const std::string& strHostName, uint nPort );
+	bool ConnectToServer     ( const std::string& strHostName, unsigned int nPort );
     bool DisconnectFromServer();
     //@}
 

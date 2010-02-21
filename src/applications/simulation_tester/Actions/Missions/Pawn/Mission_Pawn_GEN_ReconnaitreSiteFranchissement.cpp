@@ -43,9 +43,9 @@ void Mission_Pawn_GEN_ReconnaitreSiteFranchissement::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement& asnMission = *new ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_site_franchissement = &asnMission;
+    Mission_Pion_GEN_ReconnaitreSiteFranchissement& asnMission = *new Mission_Pion_GEN_ReconnaitreSiteFranchissement();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_gen_reconnaitre_site_franchissement = &asnMission;
 
 
     ASN_Tools::CopyObjectKnowledge( pTarget_->GetTestParam_ObjectKnowledge(), asnMission.site_franchissement );
@@ -59,8 +59,8 @@ void Mission_Pawn_GEN_ReconnaitreSiteFranchissement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_GEN_ReconnaitreSiteFranchissement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_gen_reconnaitre_site_franchissement );
-    ASN1T_Mission_Pion_GEN_ReconnaitreSiteFranchissement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_gen_reconnaitre_site_franchissement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_gen_reconnaitre_site_franchissement ());
+    Mission_Pion_GEN_ReconnaitreSiteFranchissement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_gen_reconnaitre_site_franchissement;
 
 
     delete &asnMission;

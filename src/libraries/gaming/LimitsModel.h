@@ -10,8 +10,10 @@
 #ifndef __LimitsModel_h_
 #define __LimitsModel_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+using namespace Common;
 
 class TacticalLine_ABC;
 class TacticalLineFactory;
@@ -34,8 +36,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Create( const ASN1T_MsgLimitCreation& asnMsg );
-    virtual void Create( const ASN1T_MsgLimaCreation& asnMsg );
+    virtual void Create( const MsgsMessengerToClient::MsgLimitCreation& message );
+    virtual void Create( const MsgsMessengerToClient::MsgLimaCreation& message );
 
     void DeleteLimit( unsigned long id );
     void DeleteLima( unsigned long id );

@@ -63,7 +63,7 @@ DEC_FrontAndBackLinesComputer::~DEC_FrontAndBackLinesComputer()
 // -----------------------------------------------------------------------------
 void DEC_FrontAndBackLinesComputer::Compute()
 {
-    uint nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
+    unsigned int nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     assert( nLastTimeComputed_ <=  nCurrentTime );
     if( nLastTimeComputed_ == nCurrentTime )
         return;

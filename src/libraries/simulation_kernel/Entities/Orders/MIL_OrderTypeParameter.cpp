@@ -13,6 +13,7 @@
 #include "simulation_orders/MIL_ParameterType_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Network/NET_AsnException.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -57,7 +58,7 @@ MIL_OrderTypeParameter::~MIL_OrderTypeParameter()
 // Name: MIL_OrderTypeParameter::Copy
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
+bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver ) const
 {
     return pParameter_->Copy( from, to, knowledgeResolver, bIsOptional_ );
 }
@@ -66,7 +67,7 @@ bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, ASN1T_M
 // Name: MIL_OrderTypeParameter::CleanAfterSerialization
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-void MIL_OrderTypeParameter::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_OrderTypeParameter::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
     assert( pParameter_ );
     pParameter_->CleanAfterSerialization( to );

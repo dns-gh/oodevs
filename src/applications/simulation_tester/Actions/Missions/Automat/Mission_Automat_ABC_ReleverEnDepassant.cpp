@@ -43,9 +43,9 @@ void Mission_Automat_ABC_ReleverEnDepassant::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_ReleverEnDepassant& asnMission = *new ASN1T_Mission_Automate_ABC_ReleverEnDepassant();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_relever_en_depassant;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_relever_en_depassant = &asnMission;
+    Mission_Automate_ABC_ReleverEnDepassant& asnMission = *new Mission_Automate_ABC_ReleverEnDepassant();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_relever_en_depassant = &asnMission;
 
 
     ASN_Tools::CopyAutomate( pTarget_->GetTestParam_Automate(), asnMission.compagnie );
@@ -59,8 +59,8 @@ void Mission_Automat_ABC_ReleverEnDepassant::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_ReleverEnDepassant::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_relever_en_depassant );
-    ASN1T_Mission_Automate_ABC_ReleverEnDepassant& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_relever_en_depassant;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_relever_en_depassant ());
+    Mission_Automate_ABC_ReleverEnDepassant& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_relever_en_depassant;
 
 
     delete &asnMission;

@@ -21,25 +21,26 @@
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/Styles.h"
-#include "game_asn/MessengerSenders.h"
 #include "Tools.h"
+#include "protocol/messengersenders.h"
 
 using namespace kernel;
 
 namespace
 {
-    const Karma& ConvertToKarma( const ASN1T_EnumDiplomacy& diplomacy )
+    const Karma& ConvertToKarma( const EnumDiplomacy& diplomacy )
     {
         switch( diplomacy )
         {
-        case EnumDiplomacy::ami:
+        case Common::EnumDiplomacy::friend_diplo:
             return Karma::friend_;
-        case EnumDiplomacy::ennemi:
+        case Common::EnumDiplomacy::enemy_diplo:
             return Karma::enemy_;
-        case EnumDiplomacy::neutre:
+        case Common::EnumDiplomacy::neutral_diplo:
             return Karma::neutral_;
+        default:         
+            return Karma::unknown_;
         }
-        return Karma::unknown_;
     }
 }
 
@@ -47,14 +48,14 @@ namespace
 // Name: Intelligence constructor
 // Created: SBO 2007-10-17
 // -----------------------------------------------------------------------------
-Intelligence::Intelligence( const ASN1T_MsgIntelligenceCreation& message, Controller& controller, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
-    : EntityImplementation< Intelligence_ABC >( controller, message.oid, message.intelligence.name )
+Intelligence::Intelligence( const MsgsMessengerToClient::MsgIntelligenceCreation& message, Controller& controller, const tools::Resolver_ABC< Formation_ABC >& formations, const tools::Resolver_ABC< HierarchyLevel_ABC >& levels, Publisher_ABC& publisher )
+    : EntityImplementation< Intelligence_ABC >( controller, message.oid(), QString( message.intelligence().name().c_str() ) )
     , levels_   ( levels )
-    , formation_( formations.Get( message.intelligence.formation ) )
-    , symbol_   ( message.intelligence.nature )
-    , level_    ( &levels_.Get( message.intelligence.level ) )
-    , karma_    ( &ConvertToKarma( message.intelligence.diplomacy ) )
-    , mounted_  ( message.intelligence.embarked != 0 )
+    , formation_( formations.Get( message.intelligence().formation().oid() ) )
+    , symbol_   ( message.intelligence().nature() )
+    , level_    ( &levels_.Get( message.intelligence().level() ) )
+    , karma_    ( &ConvertToKarma( message.intelligence().diplomacy() ) )
+    , mounted_  ( message.intelligence().embarked() != 0 )
     , publisher_( publisher )
 {
     RegisterSelf( *this );
@@ -179,7 +180,7 @@ void Intelligence::CreateDictionary( Controller& controller )
 void Intelligence::Delete()
 {
     plugins::messenger::IntelligenceDestructionRequest message;
-    message().oid = id_;
+    message().set_oid( id_ );
     message.Send( publisher_ );
 }
 
@@ -190,9 +191,8 @@ void Intelligence::Delete()
 void Intelligence::Rename( const QString& name )
 {
     plugins::messenger::IntelligenceUpdateRequest message;
-    message().oid = id_;
-    message().m.namePresent = 1;
-    message().name = name.ascii();
+    message().set_oid( id_ );
+    message().set_name( name.ascii() );
     message.Send( publisher_ );
 }
 
@@ -200,19 +200,19 @@ void Intelligence::Rename( const QString& name )
 // Name: Intelligence::DoUpdate
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Intelligence::DoUpdate( const ASN1T_MsgIntelligenceUpdate& message )
+void Intelligence::DoUpdate( const MsgsMessengerToClient::MsgIntelligenceUpdate& message )
 {
-    if( message.m.namePresent )
-        name_ = message.name;
-    if( message.m.naturePresent )
-        symbol_ = message.nature;
-    if( message.m.levelPresent )
-        level_ = &levels_.Get( message.level );
-    if( message.m.diplomacyPresent )
-        karma_ = &ConvertToKarma( message.diplomacy );
-    if( message.m.embarkedPresent )
-        mounted_ = message.embarked ? true : false;
-//    if( message.m.formationPresent ) // $$$$ SBO 2007-10-23: someday if needed maybe...
+    if( message.has_name()  )
+        name_ = message.name().c_str();
+    if( message.has_nature()  )
+        symbol_ = message.nature();
+    if( message.has_level()  )
+        level_ = &levels_.Get( message.level() );
+    if( message.has_diplomacy()  )
+        karma_ = &ConvertToKarma( message.diplomacy() );
+    if( message.has_embarked()  )
+        mounted_ = message.embarked() ? true : false;
+//    if( message.has_formation()  ) // $$$$ SBO 2007-10-23: someday if needed maybe...
 //        formation_ = formations_.Find( message.formation );
 }
 

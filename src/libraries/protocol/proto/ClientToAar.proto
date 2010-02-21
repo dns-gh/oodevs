@@ -1,0 +1,15 @@
+package MsgsClientToAar;
+
+message MsgPlotRequest {
+   required uint32 identifier = 1;
+   required string request    = 2;
+}
+
+message MsgClientToAar {
+    message Content {
+        optional MsgPlotRequest plot_request = 1;
+    }
+    optional int32   context = 1 [default = 0];
+    required Content message = 2;
+}
+

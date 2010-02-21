@@ -10,8 +10,12 @@
 #ifndef __ActionParameterPathList_h_
 #define __ActionParameterPathList_h_
 
-#include "game_asn/Simulation.h"
 #include "Parameter.h"
+
+namespace Common
+{
+    class MsgPathList;
+}
 
 namespace kernel
 {
@@ -34,15 +38,15 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit PathList( const kernel::OrderParameter& parameter );
-             PathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const ASN1T_PathList& asn );
+             PathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const Common::MsgPathList& message );
              PathList( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, xml::xistream& xis );
     virtual ~PathList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
-    virtual void Clean( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    virtual void Clean( Common::MsgMissionParameter& message ) const;
     virtual bool IsSet() const;
     //@}
 

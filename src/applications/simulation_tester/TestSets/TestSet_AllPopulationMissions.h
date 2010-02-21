@@ -34,7 +34,7 @@ class TestSet_AllPopulationMissions : public TestSet_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TestSet_AllPopulationMissions( uint nIteration = 1 );
+             TestSet_AllPopulationMissions( unsigned int nIteration = 1 );
     virtual ~TestSet_AllPopulationMissions();
     //@}
 

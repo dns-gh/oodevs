@@ -13,28 +13,21 @@
 #include "ObjectCapacity_ABC.h"
 #include "ObjectAttribute_ABC.h"
 #include "MIL_ObjectBuilder_ABC.h"
-
 #include "MIL_InteractiveContainer_ABC.h"
 #include "MIL_ObjectManipulator.h"
-
-#include "Entities/MIL_Army.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Network/NET_ASN_Messages.h"
-
-#include "game_asn/ASN_Delete.h"
-
 #include "ConstructionAttribute.h"
 #include "MineAttribute.h"
 #include "BypassAttribute.h"
 #include "ObstacleAttribute.h"
 #include "CrossingSiteAttribute.h"
 #include "SupplyRouteAttribute.h"
-
+#include "Entities/MIL_Army.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "DetectionCapacity.h"
 
 #include "Knowledge/DEC_Knowledge_Object.h"
-
-#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 // HLA
@@ -46,9 +39,14 @@
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
+#include "protocol/clientsenders.h"
+
 BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 
+
 using namespace hla;
+
+using namespace Common;
 
 MIL_IDManager Object::idManager_;
 
@@ -69,7 +67,7 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
     builder.Build( *this );
     ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
     if( pObstacle )
-        pObstacle->SetType( reserved ? EnumDemolitionTargetType::reserved : EnumDemolitionTargetType::preliminary );
+        pObstacle->SetType( reserved ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary );
     idManager_.Lock( id_ );
 }
 
@@ -90,7 +88,7 @@ Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army, const 
     builder.Build( *this );
     ObstacleAttribute* pObstacle = RetrieveAttribute< ObstacleAttribute >();
     if( pObstacle )
-        pObstacle->SetType( reserved ? EnumDemolitionTargetType::reserved : EnumDemolitionTargetType::preliminary );
+        pObstacle->SetType( reserved? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +130,7 @@ void Object::CreateChildObject( *this, const DetectionCapacity& capacity )
 // Name: Object::GetID
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-uint Object::GetID() const
+unsigned int Object::GetID() const
 {
     return id_;
 }
@@ -141,7 +139,7 @@ uint Object::GetID() const
 // Name: Object::load
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void Object::load( MIL_CheckPointInArchive& file, const uint )
+void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Object_ABC >( *this );
     file >> name_
@@ -160,7 +158,7 @@ void Object::load( MIL_CheckPointInArchive& file, const uint )
 // Name: Object::save
 // Created: JCR 2008-06-09
 // -----------------------------------------------------------------------------
-void Object::save( MIL_CheckPointOutArchive& file, const uint ) const
+void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Object_ABC >( *this );
     file << name_
@@ -243,7 +241,7 @@ void Object::Finalize()
 // Name: Object::Update
 // Created: JCR 2008-04-21
 // -----------------------------------------------------------------------------
-void Object::Update( uint time )
+void Object::Update( unsigned int time )
 {
     // TODO can be updated
     std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Update, _1, boost::ref( *this ), time ) );
@@ -337,16 +335,16 @@ const MIL_ObjectManipulator_ABC& Object::operator()() const
 // Name: Object::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-ASN1T_EnumObjectErrorCode Object::OnUpdate( const ASN1T_ObjectAttributes& asn )
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const MsgObjectAttributes& asn )
 {
-    if( asn.m.minePresent ) GetAttribute< MineAttribute >().OnUpdate( asn );
-    if( asn.m.bypassPresent ) GetAttribute< BypassAttribute >().OnUpdate( asn );
-    if( asn.m.constructionPresent ) GetAttribute< ConstructionAttribute >().OnUpdate( asn );
-    if( asn.m.obstaclePresent ) GetAttribute< ObstacleAttribute >().OnUpdate( asn );
-    if( asn.m.crossing_sitePresent ) GetAttribute< CrossingSiteAttribute >().OnUpdate( asn );
-    if( asn.m.supply_routePresent ) GetAttribute< SupplyRouteAttribute >().OnUpdate( asn );
+    if( asn.has_mine() ) GetAttribute< MineAttribute >().OnUpdate( asn );
+    if( asn.has_bypass() ) GetAttribute< BypassAttribute >().OnUpdate( asn );
+    if( asn.has_construction() ) GetAttribute< ConstructionAttribute >().OnUpdate( asn );
+    if( asn.has_obstacle() ) GetAttribute< ObstacleAttribute >().OnUpdate( asn );
+    if( asn.has_crossing_site()) GetAttribute< CrossingSiteAttribute >().OnUpdate( asn );
+    if( asn.has_supply_route()) GetAttribute< SupplyRouteAttribute >().OnUpdate( asn );
 
-    return EnumObjectErrorCode::no_error;
+    return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
 }
 
 // -----------------------------------------------------------------------------
@@ -358,18 +356,19 @@ void Object::SendCreation() const
     if( pView_ && pView_->HideObject() )
         return;
 
-    NET_ASN_MsgObjectCreation asn;
+    client::ObjectCreation asn;
 
-    asn().oid  = GetID();
-    asn().name = name_.c_str();
-    asn().type = GetType().GetName().c_str();
-    asn().team = GetArmy().GetID();
+    asn().set_oid( GetID() );
+    asn().set_name( name_.c_str() );
+    asn().set_type( GetType().GetName().c_str() );
+    asn().set_team( GetArmy().GetID() );
 
-    NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().location );
+    NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
     std::for_each( attributes_.begin(), attributes_.end(), 
-                    boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( asn().attributes ) ) );
-    asn.Send();
-    ASN_Delete::Delete( asn().location );
+                    boost::bind( &ObjectAttribute_ABC::SendFullState, _1, boost::ref( *asn().mutable_attributes() ) ) );
+    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn().mutable_location()->mutable_coordinates()->Clear();
+    asn().mutable_location()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -381,9 +380,9 @@ void Object::SendDestruction() const
     if( pView_ && pView_->HideObject() )
         return;
 
-    NET_ASN_MsgObjectDestruction asn;
-    asn() = GetID();
-    asn.Send();
+    client::ObjectDestruction asn;
+    asn().set_oid( GetID() );
+    asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -416,28 +415,31 @@ void Object::SendMsgUpdate() const
     if( pView_ && pView_->HideObject() )
         return;
 
-    NET_ASN_MsgObjectUpdate asn;
-    asn().oid = id_;
+    client::ObjectUpdate asn;
+    asn().set_oid( id_ );
 
     std::for_each( attributes_.begin(), attributes_.end(),
-                   boost::bind( &ObjectAttribute_ABC::SendUpdate, _1, boost::ref( asn().attributes ) ) );
+                   boost::bind( &ObjectAttribute_ABC::SendUpdate, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
     if( xAttrToUpdate_ & eAttrUpdate_Localisation )
     {
-        asn().m.locationPresent = 1;
-        NET_ASN_Tools::WriteLocation( GetLocalisation(), asn().location );
+//        asn.set_locationPresent( 1 );
+        NET_ASN_Tools::WriteLocation( GetLocalisation(), *asn().mutable_location() );
     }
         
-    unsigned int xAttr = *reinterpret_cast< unsigned int * >( &asn().attributes.m );
+    unsigned int xAttr = *reinterpret_cast< unsigned int * >( asn().mutable_attributes() );
              xAttr <<= 20; // $$$$ 32bits - 1bit / attribute 
 
-    if ( xAttr != 0 || asn().m.locationPresent )
-        asn.Send();
+    if ( xAttr != 0 || asn().has_location() )
+        asn.Send( NET_Publisher_ABC::Publisher() );
     
     xAttrToUpdate_ = 0;
 
-    if( asn().m.locationPresent )
-        ASN_Delete::Delete( asn().location );
+    if( asn().has_location() )
+    {
+        asn().mutable_location()->mutable_coordinates()->Clear();
+        asn().mutable_location()->Clear();
+    }
 }
 
 // -----------------------------------------------------------------------------

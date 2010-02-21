@@ -12,6 +12,12 @@
 
 #include "ObjectFactory_ABC.h"
 
+
+namespace Common
+{
+    class MsgObjectAttributes;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -38,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Object_ABC* Create( const ASN1T_MsgObjectCreation& message );
+    virtual kernel::Object_ABC* Create( const MsgsSimToClient::MsgObjectCreation& message );
     //@}
 
 private:
@@ -50,7 +56,7 @@ private:
 
     //! @name 
     //@{
-    void Register( kernel::Object_ABC& result, const ASN1T_ObjectAttributes& attributes ) const;
+    void Register( kernel::Object_ABC& result, const Common::MsgObjectAttributes& attributes ) const;
     //@}
 
 private:

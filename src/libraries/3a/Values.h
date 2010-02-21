@@ -11,7 +11,10 @@
 #define __Values_h_
 
 #include "ValueHandler_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 // =============================================================================
 /** @class  Value
@@ -67,7 +70,7 @@ struct ConstantValue : public ContinuousValue< T >
     {
         Set( value );
     }
-    void Receive( const ASN1T_MsgsSimToClient& )
+    void Receive( const MsgSimToClient& )
     {
         // NOTHING
     }
@@ -133,7 +136,7 @@ struct PulsedValue : public Value< T >
 // =============================================================================
 template< typename Value >
 inline
-void EvaluateValue( Value& value, const ASN1T_MsgsSimToClient& message, ValueHandler_ABC< typename Value::Type >& handler )
+void EvaluateValue( Value& value, const MsgSimToClient& message, ValueHandler_ABC< typename Value::Type >& handler )
 {
     value.Prepare();
     value.Receive( message );

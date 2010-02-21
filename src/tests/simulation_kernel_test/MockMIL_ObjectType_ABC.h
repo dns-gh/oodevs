@@ -19,7 +19,7 @@
 // Created: LDC 2009-06-11
 // =============================================================================
 class MockMIL_ObjectType_ABC : public MIL_ObjectType_ABC
-    , public mockpp::ChainableMockObject
+                             , public mockpp::ChainableMockObject
 {
 
 public:
@@ -31,7 +31,7 @@ public:
              {}
     virtual ~MockMIL_ObjectType_ABC() {}
     //@}
-    virtual uint GetID() const
+    virtual unsigned int GetID() const
     {
         throw;
     }

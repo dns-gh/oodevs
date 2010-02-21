@@ -12,8 +12,8 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FourStateOption.h"
-#include "game_asn/SimulationSenders.h"
 #include "Services.h"
+#include "protocol/simulationsenders.h"
 
 using namespace kernel;
 
@@ -95,7 +95,7 @@ void VisionConesToggler::ToggleVisionCones()
     if( simulation_ )
     {
         simulation::ControlToggleVisionCones msg;
-        msg() = displayCones_ || displaySurfaces_ || displayFog_;
+        msg().set_vision_cones( displayCones_ || displaySurfaces_ || displayFog_ );
         msg.Send( publisher_ );
     }
 }

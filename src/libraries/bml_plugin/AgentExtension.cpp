@@ -22,6 +22,8 @@
 #pragma warning( pop )
 #include <iostream>
 
+
+using namespace Common;
 namespace bpt = boost::posix_time;
 using namespace plugins::bml;
 
@@ -53,10 +55,10 @@ AgentExtension::~AgentExtension()
 // Name: AgentExtension::DoUpdate
 // Created: SBO 2008-02-29
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
+void AgentExtension::DoUpdate( const MsgUnitAttributes& attributes )
 {
-    const bool reportPosition = ( attributes.m.positionPresent || attributes.m.hauteurPresent ) && simulation_.MustReportPosition( lastUpdate_ );
-    const bool reportStatus   = ( attributes.m.etat_operationnelPresent || attributes.m.dotation_eff_materielPresent || attributes.m.dotation_eff_personnelPresent ) && simulation_.MustReportStatus( lastUpdate_ );
+    const bool reportPosition = ( attributes.has_position()  || attributes.has_hauteur()  ) && simulation_.MustReportPosition( lastUpdate_ );
+    const bool reportStatus   = ( attributes.has_etat_operationnel()  || attributes.has_dotation_eff_materiel()  || attributes.has_dotation_eff_personnel()  ) && simulation_.MustReportStatus( lastUpdate_ );
     if( reportPosition || reportStatus )
         try
         {
@@ -73,7 +75,7 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
 // Name: AgentExtension::DoUpdate
 // Created: SBO 2008-05-16
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
+void AgentExtension::DoUpdate( const MsgUnitOrder& message )
 {
     try
     {
@@ -90,11 +92,11 @@ void AgentExtension::DoUpdate( const ASN1T_MsgUnitOrder& message )
 // Name: AgentExtension::DoUpdate
 // Created: SBO 2008-07-22
 // -----------------------------------------------------------------------------
-void AgentExtension::DoUpdate( const ASN1T_MsgUnitDetection& message )
+void AgentExtension::DoUpdate( const MsgUnitDetection& message )
 {
     try
     {
-        DetectionReport report( holder_, model_.agents_.Get( message.detected_unit_oid ), message.current_visibility );
+        DetectionReport report( holder_, model_.agents_.Get( message.detected_unit_oid() ), message.current_visibility() );
         report.Send( publisher_ );
     }
     catch( std::exception& e )

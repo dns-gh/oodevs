@@ -43,11 +43,11 @@ private:
     //@}
 
 private:
-    const uint                           nID_;
+    const unsigned int                   nID_;
     const MT_Ellipse                     surface_;
     const PHY_IndirectFireDotationClass& ammoCategory_;
-    const uint                           nDeploymentTimeStep_;
-    const uint                           nLifeLastTimeStep_;
+    const unsigned int                   nDeploymentTimeStep_;
+    const unsigned int                   nLifeLastTimeStep_;
           bool                           bIsDeployed_;
 
     static MIL_IDManager idManager_;

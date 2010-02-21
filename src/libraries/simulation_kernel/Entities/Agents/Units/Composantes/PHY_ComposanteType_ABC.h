@@ -12,6 +12,9 @@
 #ifndef __PHY_ComposanteType_ABC_h_
 #define __PHY_ComposanteType_ABC_h_
 
+#include "protocol/protocol.h"
+
+
 namespace xml
 {
     class xistream;
@@ -34,7 +37,7 @@ public:
 
     //! @name Accessors
     //@{
-          ASN1T_EquipmentType GetMosID     () const;
+          Common::MsgEquipmentType GetMosID     () const;
     const PHY_Protection&      GetProtection() const;
     const PHY_Volume&          GetVolume    () const;
     const std::string&         GetName      () const;
@@ -51,7 +54,7 @@ private:
     const std::string          strName_;
     const PHY_Protection*      pProtection_;
     const PHY_Volume*          pVolume_;
-          ASN1T_EquipmentType nMosID_;
+          Common::MsgEquipmentType nMosID_;
 };
 
 #endif // __PHY_ComposanteType_ABC_h_

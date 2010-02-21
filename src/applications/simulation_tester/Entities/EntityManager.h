@@ -65,15 +65,15 @@ public:
 
     //! @name Scheduling
     //@{
-    void ScheduleAllPawnMissions      ( Scheduler& scheduler, bool bParallel = false, uint nIteration = 1 ) const;
-    void ScheduleAllAutomatMissions   ( Scheduler& scheduler, bool bParallel = false, uint nIteration = 1 ) const;
-    void ScheduleAllPopulationMissions( Scheduler& scheduler, bool bParallel = false, uint nIteration = 1 ) const;
+    void ScheduleAllPawnMissions      ( Scheduler& scheduler, bool bParallel = false, unsigned int nIteration = 1 ) const;
+    void ScheduleAllAutomatMissions   ( Scheduler& scheduler, bool bParallel = false, unsigned int nIteration = 1 ) const;
+    void ScheduleAllPopulationMissions( Scheduler& scheduler, bool bParallel = false, unsigned int nIteration = 1 ) const;
     //@}
 
     //! @name Test parameters
     //@{
-    T_IdVector& GetTestParam_AgentList   ( uint nNbr, const Testable_Entity& target ) const;
-    T_IdVector& GetTestParam_AutomateList( uint nNbr, const Testable_Entity& target ) const;
+    T_IdVector& GetTestParam_AgentList   ( unsigned int nNbr, const Testable_Entity& target ) const;
+    T_IdVector& GetTestParam_AutomateList( unsigned int nNbr, const Testable_Entity& target ) const;
     //@}
 
 private:

@@ -43,9 +43,9 @@ void Mission_Pawn_NBC_ReconnaitreItineraire::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_NBC_ReconnaitreItineraire& asnMission = *new ASN1T_Mission_Pion_NBC_ReconnaitreItineraire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_nbc_reconnaitre_itineraire;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_itineraire = &asnMission;
+    Mission_Pion_NBC_ReconnaitreItineraire& asnMission = *new Mission_Pion_NBC_ReconnaitreItineraire();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_nbc_reconnaitre_itineraire = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_NBC_ReconnaitreItineraire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_NBC_ReconnaitreItineraire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_nbc_reconnaitre_itineraire );
-    ASN1T_Mission_Pion_NBC_ReconnaitreItineraire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_nbc_reconnaitre_itineraire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_nbc_reconnaitre_itineraire ());
+    Mission_Pion_NBC_ReconnaitreItineraire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_nbc_reconnaitre_itineraire;
 
     ASN_Tools::Delete( asnMission.itineraire );
 

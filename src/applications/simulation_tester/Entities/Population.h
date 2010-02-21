@@ -46,13 +46,13 @@ private:
     public:
         //! @name Constructor/Destructor
         //@{
-         Concentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg );
+         Concentration( const MsgPopulationConcentrationCreation& asnMsg );
         ~Concentration();
         //@}
 
         //! @name Operations
         //@{
-        void OnUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg );
+        void OnUpdate( const MsgPopulationConcentrationUpdate& asnMsg );
         //@} 
 
     public:
@@ -67,13 +67,13 @@ private:
     public:
         //! @name Constructor/Destructor
         //@{
-         Flow( const ASN1T_MsgPopulationFlowCreation& asnMsg );
+         Flow( const MsgPopulationFlowCreation& asnMsg );
         ~Flow();
         //@}
 
         //! @name Operations
         //@{
-        void OnUpdate( const ASN1T_MsgPopulationFlowUpdate& asnMsg );
+        void OnUpdate( const MsgPopulationFlowUpdate& asnMsg );
         //@} 
 
     public:
@@ -86,7 +86,7 @@ private:
 public:
     //! @name Constructors/Destructor
     //@{
-             Population( const Workspace& workspace, const ASN1T_MsgPopulationCreation& asnMsg );
+             Population( const Workspace& workspace, const MsgPopulationCreation& asnMsg );
     virtual ~Population();
     //@}
 
@@ -99,15 +99,15 @@ public:
 
     //! @name Messages handlers
     //@{
-    void OnUpdate                ( const ASN1T_MsgPopulationUpdate&                   asnMsg );
+    void OnUpdate                ( const MsgPopulationUpdate&                   asnMsg );
     
-    void OnConcentrationCreated  ( const ASN1T_MsgPopulationConcentrationCreation&    asnMsg );
-    void OnConcentrationUpdated  ( const ASN1T_MsgPopulationConcentrationUpdate&      asnMsg );
-    void OnConcentrationDestroyed( const ASN1T_MsgPopulationConcentrationDestruction& asnMsg );
+    void OnConcentrationCreated  ( const MsgPopulationConcentrationCreation&    asnMsg );
+    void OnConcentrationUpdated  ( const MsgPopulationConcentrationUpdate&      asnMsg );
+    void OnConcentrationDestroyed( const MsgPopulationConcentrationDestruction& asnMsg );
 
-    void OnFlowCreated           ( const ASN1T_MsgPopulationFlowCreation&             asnMsg );
-    void OnFlowUpdated           ( const ASN1T_MsgPopulationFlowUpdate&               asnMsg );
-    void OnFlowDestroyed         ( const ASN1T_MsgPopulationFlowDestruction&          asnMsg );
+    void OnFlowCreated           ( const MsgPopulationFlowCreation&             asnMsg );
+    void OnFlowUpdated           ( const MsgPopulationFlowUpdate&               asnMsg );
+    void OnFlowDestroyed         ( const MsgPopulationFlowDestruction&          asnMsg );
     //@}
 
     //! @name Operations
@@ -117,8 +117,8 @@ public:
 
     //! @name Mission Scheduling
     //@{
-    void ScheduleAllMissions ( Scheduler& scheduler, uint nIteration = 1 );
-    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName, uint nIteration = 1 );
+    void ScheduleAllMissions ( Scheduler& scheduler, unsigned int nIteration = 1 );
+    void ScheduleMission     ( Scheduler& scheduler, const std::string& strMissionName, unsigned int nIteration = 1 );
     //@}
 
 private:

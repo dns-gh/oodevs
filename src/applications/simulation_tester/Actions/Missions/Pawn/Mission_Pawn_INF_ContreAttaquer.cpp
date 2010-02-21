@@ -43,9 +43,9 @@ void Mission_Pawn_INF_ContreAttaquer::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_ContreAttaquer& asnMission = *new ASN1T_Mission_Pion_INF_ContreAttaquer();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_contre_attaquer;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_contre_attaquer = &asnMission;
+    Mission_Pion_INF_ContreAttaquer& asnMission = *new Mission_Pion_INF_ContreAttaquer();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_contre_attaquer = &asnMission;
 
 
     ASN_Tools::CopyAgentKnowledge( pTarget_->GetTestParam_AgentKnowledge(), asnMission.ennemi );
@@ -59,8 +59,8 @@ void Mission_Pawn_INF_ContreAttaquer::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_ContreAttaquer::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_contre_attaquer );
-    ASN1T_Mission_Pion_INF_ContreAttaquer& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_contre_attaquer;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_contre_attaquer ());
+    Mission_Pion_INF_ContreAttaquer& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_contre_attaquer;
 
 
     delete &asnMission;

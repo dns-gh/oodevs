@@ -15,17 +15,15 @@
 #include "Entities/Agents/Units/PHY_UnitType.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
-#include "Network/NET_ASN_Messages.h"
 #include "Hla/HLA_UpdateFunctor.h"
-
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/PostureComputer_ABC.h"
 #include "simulation_kernel/PostureComputerFactory_ABC.h"
 #include "simulation_kernel/ConsumptionComputer_ABC.h"
 #include "simulation_kernel/DetectionComputer_ABC.h"
-#include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
-
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
+#include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
 
 using namespace posture;
 
@@ -88,11 +86,10 @@ PHY_RolePion_Posture::~PHY_RolePion_Posture()
 // Name: PHY_RolePion_Posture::load
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
+void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    unsigned int nID;
 	file >> boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
-
-    uint nID;
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
 
@@ -115,7 +112,7 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const uint )
 // Name: PHY_RolePion_Posture::save
 // Created: JVT 2005-03-30
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const uint ) const
+void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
 	file << boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
 
@@ -266,33 +263,28 @@ void PHY_RolePion_Posture::Uninstall()
 // Name: PHY_RolePion_Posture::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Posture::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bPostureHasChanged_ )
     {
-        msg().m.posture_oldPresent = 1;
-        msg().m.posture_newPresent = 1;
-        msg().posture_old = pLastPosture_   ->GetAsnID();
-        msg().posture_new = pCurrentPosture_->GetAsnID();
+        msg().set_posture_old( pLastPosture_   ->GetAsnID() );
+        msg().set_posture_new( pCurrentPosture_->GetAsnID() );
     }
 
     if( bPercentageHasChanged_ )
     {
-        msg().m.posture_pourcentagePresent = 1;
-        msg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
-        rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
+        msg().set_posture_pourcentage( (unsigned int)( rPostureCompletionPercentage_ * 100. ) );
+        rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_ ;
     }
 
     if( bStealthFactorHasChanged_ )
     {
-        msg().m.mode_furtif_actifPresent = 1;
-        msg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
+        msg().set_mode_furtif_actif( ( rStealthFactor_ < 1. ) );
     }
 
     if( bInstallationStateHasChanged_ )
     {
-        msg().m.etat_installationPresent = 1;
-        msg().etat_installation          = (uint)( rInstallationState_ * 100. );
+        msg().set_etat_installation( (unsigned int)( rInstallationState_ * 100. ) );
         rLastInstallationStateSent_                = rInstallationState_;
     }
 }
@@ -301,22 +293,17 @@ void PHY_RolePion_Posture::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) co
 // Name: PHY_RolePion_Posture::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Posture::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Posture::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().m.posture_oldPresent = 1;
-    msg().m.posture_newPresent = 1;
-    msg().posture_old = pLastPosture_   ->GetAsnID();
-    msg().posture_new = pCurrentPosture_->GetAsnID();
+    msg().set_posture_old( pLastPosture_   ->GetAsnID() );
+    msg().set_posture_new( pCurrentPosture_->GetAsnID() );
 
-    msg().m.posture_pourcentagePresent = 1;
-    msg().posture_pourcentage          = (uint)( rPostureCompletionPercentage_ * 100. );
+
+    msg().set_posture_pourcentage( (unsigned int)( rPostureCompletionPercentage_ * 100. ) );
     rLastPostureCompletionPercentageSent_        = rPostureCompletionPercentage_;
 
-    msg().m.mode_furtif_actifPresent = 1;
-    msg().mode_furtif_actif          = ( rStealthFactor_ < 1. );
-
-    msg().m.etat_installationPresent = 1;
-    msg().etat_installation          = (uint)( rInstallationState_ * 100. );
+    msg().set_mode_furtif_actif( ( rStealthFactor_ < 1. ) );
+    msg().set_etat_installation( (unsigned int)( rInstallationState_ * 100. ) );
     rLastInstallationStateSent_                = rInstallationState_;
 }
 

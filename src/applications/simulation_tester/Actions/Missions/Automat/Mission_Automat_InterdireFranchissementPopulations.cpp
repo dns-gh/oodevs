@@ -43,9 +43,9 @@ void Mission_Automat_InterdireFranchissementPopulations::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_InterdireFranchissementPopulations& asnMission = *new ASN1T_Mission_Automate_InterdireFranchissementPopulations();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_interdire_franchissement_populations;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_interdire_franchissement_populations = &asnMission;
+    Mission_Automate_InterdireFranchissementPopulations& asnMission = *new Mission_Automate_InterdireFranchissementPopulations();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_interdire_franchissement_populations = &asnMission;
 
     const T_PositionVector& points_ = pTarget_->GetTestParam_PointList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_InterdireFranchissementPopulations::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_InterdireFranchissementPopulations::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_interdire_franchissement_populations );
-    ASN1T_Mission_Automate_InterdireFranchissementPopulations& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_interdire_franchissement_populations;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_interdire_franchissement_populations ());
+    Mission_Automate_InterdireFranchissementPopulations& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_interdire_franchissement_populations;
 
     ASN_Tools::Delete( asnMission.points );
 

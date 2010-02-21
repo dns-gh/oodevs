@@ -18,7 +18,7 @@
 // Name: MIL_Effect_DirectFirePopulation constructor
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-MIL_Effect_DirectFirePopulation::MIL_Effect_DirectFirePopulation( MIL_PopulationElement_ABC& target, uint nNbrAmmoFired, PHY_FireResults_ABC& fireResult )
+MIL_Effect_DirectFirePopulation::MIL_Effect_DirectFirePopulation( MIL_PopulationElement_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult )
     : target_       ( target )
     , nNbrAmmoFired_( nNbrAmmoFired )
     , fireResult_   ( fireResult )

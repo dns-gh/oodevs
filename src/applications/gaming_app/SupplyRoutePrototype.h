@@ -11,9 +11,10 @@
 #define __SupplyRoutePrototype_h_
 
 #include "clients_gui/SupplyRoutePrototype_ABC.h"
+#include "protocol/clientsenders.h"
 
-struct ASN1T_ObjectAttributesLogisticRoute;
-struct ASN1T_MagicActionCreateObject;
+struct MsgObjectAttributesLogisticRoute;
+struct MagicActionCreateObject;
 
 // =============================================================================
 /** @class  SupplyRoutePrototype
@@ -27,7 +28,7 @@ class SupplyRoutePrototype : public gui::SupplyRoutePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SupplyRoutePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg );
+    SupplyRoutePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg );
     virtual ~SupplyRoutePrototype();
     //@}
 
@@ -47,8 +48,8 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;
-    ASN1T_ObjectAttributesLogisticRoute* attr_;
+    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
+    MsgObjectAttributesLogisticRoute* attr_;
     //@}
 };
 

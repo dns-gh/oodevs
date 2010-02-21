@@ -21,19 +21,19 @@ using namespace plugins::messenger;
 // Name: TacticalLine_ABC constructor
 // Created: SBO 2006-11-15
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( unsigned int id, const ASN1T_TacticalLine& asn ) :
+TacticalLine_ABC::TacticalLine_ABC( unsigned int id, const MsgTacticalLine& asn ) :
       id_       ( id )
-    , strName_  ( asn.name )
-    , diffusion_( asn.diffusion)
+    , strName_  ( asn.name() )
+    , diffusion_( asn.diffusion())
 {
-    UpdateGeometry(asn.geometry);
+    UpdateGeometry(asn.geometry());
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC constructor
 // Created: RDS 2008-04-03
 // -----------------------------------------------------------------------------
-TacticalLine_ABC::TacticalLine_ABC( unsigned int id, xml::xistream& xis, const ASN1T_TacticalLinesDiffusion& diffusion, const kernel::CoordinateConverter_ABC& converter) :
+TacticalLine_ABC::TacticalLine_ABC( unsigned int id, xml::xistream& xis, const MsgTacticalLine_Diffusion& diffusion, const kernel::CoordinateConverter_ABC& converter) :
       id_       ( id ),
       diffusion_( diffusion)
 {
@@ -58,10 +58,10 @@ void TacticalLine_ABC::ReadPoint( xml::xistream& xis, T_PositionVector& points, 
 {
     std::string mgrs;
     xis >> mgrs;
-    ASN1T_CoordLatLong geo ;
+    MsgCoordLatLong geo ;
     geometry::Point2d pos = converter.ConvertToGeo(converter.ConvertToXY(mgrs));
-    geo.latitude = pos.Y();
-    geo.longitude = pos.X();
+    geo.set_latitude( pos.Y() );
+    geo.set_longitude( pos.X() );
     points.push_back( geo );
 }
 
@@ -69,33 +69,33 @@ void TacticalLine_ABC::ReadPoint( xml::xistream& xis, T_PositionVector& points, 
 // Name: TacticalLine_ABC::Update
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Update( const ASN1T_TacticalLine& asn )
+void TacticalLine_ABC::Update( const MsgTacticalLine& asn )
 {
-    strName_ = asn.name;
-    diffusion_ = asn.diffusion;
-    UpdateGeometry( asn.geometry );
+    strName_ = asn.name();
+    diffusion_ = asn.diffusion();
+    UpdateGeometry( asn.geometry() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::Send
 // Created: NLD 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Send( ASN1T_Line& asn) const
+void TacticalLine_ABC::Send( MsgLocation& asn ) const
 {
-    asn.type             = EnumLocationType::line ;
-    asn.coordinates.n    = geometry_.size();
-    asn.coordinates.elem = geometry_.size() ? const_cast< ASN1T_CoordLatLong* >( & geometry_.front() ) : 0;
+    asn.set_type( MsgLocation::line );
+    for( T_PositionVector::const_iterator it = geometry_.begin(); it != geometry_.end(); ++it )
+        *asn.mutable_coordinates()->add_elem() = *it;
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLine_ABC::Send
 // Created: SBO 2007-07-24
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::Send( ASN1T_TacticalLine& asn ) const
+void TacticalLine_ABC::Send( MsgTacticalLine& asn ) const
 {
-    asn.name = strName_.c_str();
-    asn.diffusion = diffusion_ ;
-    Send( asn.geometry );
+    asn.set_name ( strName_.c_str());
+    *asn.mutable_diffusion() = diffusion_;
+    Send( *asn.mutable_geometry() );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,10 +111,10 @@ unsigned int TacticalLine_ABC::GetID() const
 // Name: TacticalLine_ABC::UpdateGeometry
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::UpdateGeometry(const ASN1T_Location& asn )
+void TacticalLine_ABC::UpdateGeometry( const MsgLocation& asn )
 {
     geometry_.resize( 0 );
-    std::copy( asn.coordinates.elem, asn.coordinates.elem + asn.coordinates.n, std::back_inserter( geometry_ ) );
+    std::copy( asn.coordinates().elem().begin(), asn.coordinates().elem().end(), std::back_inserter( geometry_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -132,9 +132,9 @@ void TacticalLine_ABC::Write( xml::xostream& xos, const kernel::CoordinateConver
 // Name: TacticalLine_ABC::WritePoint
 // Created: RDS 2008-04-09
 // -----------------------------------------------------------------------------
-void TacticalLine_ABC::WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const ASN1T_CoordLatLong& point ) const
+void TacticalLine_ABC::WritePoint( xml::xostream& xos, const kernel::CoordinateConverter_ABC& converter, const MsgCoordLatLong& point ) const
 {
-    geometry::Point2d pos( point.longitude, point.latitude );
+    geometry::Point2d pos( point.longitude(), point.latitude() );
     xos << xml::start( "point" )
             << converter.ConvertToMgrs( converter.ConvertFromGeo( pos ) )
         << xml::end();

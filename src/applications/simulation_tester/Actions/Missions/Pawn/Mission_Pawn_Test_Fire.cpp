@@ -43,9 +43,9 @@ void Mission_Pawn_Test_Fire::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_Test_Fire& asnMission = *new ASN1T_Mission_Pion_Test_Fire();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_test_fire;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_test_fire = &asnMission;
+    Mission_Pion_Test_Fire& asnMission = *new Mission_Pion_Test_Fire();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_test_fire = &asnMission;
 
     const Position& point_ = pTarget_->GetTestParam_Point();
     const T_IdVector& targets_ = pTarget_->GetTestParam_AgentKnowledgeList();
@@ -67,8 +67,8 @@ void Mission_Pawn_Test_Fire::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_Test_Fire::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_test_fire );
-    ASN1T_Mission_Pion_Test_Fire& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_test_fire;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_test_fire ());
+    Mission_Pion_Test_Fire& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_test_fire;
 
     ASN_Tools::Delete( asnMission.point );
     ASN_Tools::Delete( asnMission.targets );

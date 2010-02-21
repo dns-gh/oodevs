@@ -43,9 +43,9 @@ void Mission_Pawn_INF_ReconnaitrePoint::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_INF_ReconnaitrePoint& asnMission = *new ASN1T_Mission_Pion_INF_ReconnaitrePoint();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_inf_reconnaitre_point;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_reconnaitre_point = &asnMission;
+    Mission_Pion_INF_ReconnaitrePoint& asnMission = *new Mission_Pion_INF_ReconnaitrePoint();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_inf_reconnaitre_point = &asnMission;
 
     const Path& itineraire_ = pTarget_->GetTestParam_Path();
     const Position& pointAReconnaitre_ = pTarget_->GetTestParam_Point();
@@ -64,8 +64,8 @@ void Mission_Pawn_INF_ReconnaitrePoint::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_INF_ReconnaitrePoint::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_inf_reconnaitre_point );
-    ASN1T_Mission_Pion_INF_ReconnaitrePoint& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_inf_reconnaitre_point;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_inf_reconnaitre_point ());
+    Mission_Pion_INF_ReconnaitrePoint& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_inf_reconnaitre_point;
 
     ASN_Tools::Delete( asnMission.itineraire );
     ASN_Tools::Delete( asnMission.point_a_reconnaitre );

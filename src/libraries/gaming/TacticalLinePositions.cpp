@@ -32,14 +32,14 @@ TacticalLinePositions::TacticalLinePositions( const T_PointVector& pointList, co
 // Name: TacticalLinePositions constructor
 // Created: SBO 2006-11-06
 // -----------------------------------------------------------------------------
-TacticalLinePositions::TacticalLinePositions( const ASN1T_Line& asnMsg, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
+TacticalLinePositions::TacticalLinePositions( const Common::MsgLocation& message, const kernel::CoordinateConverter_ABC& converter, const TacticalLine_ABC& owner )
     : converter_( converter )
     , owner_    ( owner )
 {
-    pointList_.reserve( asnMsg.coordinates.n );
-    for( uint i = 0; i != asnMsg.coordinates.n; ++i )
+    pointList_.reserve( message.coordinates().elem_size() );
+    for( int i = 0; i != message.coordinates().elem_size(); ++i )
     {
-        pointList_.push_back( converter.ConvertToXY( asnMsg.coordinates.elem[i] ) );
+        pointList_.push_back( converter.ConvertToXY( message.coordinates().elem(i) ) );
         boundingBox_.Incorporate( pointList_.back() );
     }
 }
@@ -145,32 +145,32 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
 // Name: TacticalLinePositions::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::DoUpdate( const ASN1T_MsgLimaUpdate& message )
+void TacticalLinePositions::DoUpdate( const MsgsMessengerToClient::MsgLimaUpdate& message )
 {
-    Update( message.tactical_line );
+    Update( message.tactical_line() );
 }
     
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::DoUpdate
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::DoUpdate( const ASN1T_MsgLimitUpdate& message )
+void TacticalLinePositions::DoUpdate( const MsgsMessengerToClient::MsgLimitUpdate& message )
 {
-    Update( message.tactical_line );
+    Update( message.tactical_line() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TacticalLinePositions::Update
 // Created: SBO 2006-11-17
 // -----------------------------------------------------------------------------
-void TacticalLinePositions::Update( const ASN1T_TacticalLine& message )
+void TacticalLinePositions::Update( const Common::MsgTacticalLine& message )
 {
     pointList_.clear();
-    pointList_.reserve( message.geometry.coordinates.n );
+    pointList_.reserve( message.geometry().coordinates().elem_size() );
     boundingBox_ = geometry::Rectangle2f();
-    for( unsigned int i = 0; i < message.geometry.coordinates.n; ++i )
+    for( int i = 0; i < message.geometry().coordinates().elem_size(); ++i )
     {
-        pointList_.push_back( converter_.ConvertToXY( message.geometry.coordinates.elem[i] ) );
+        pointList_.push_back( converter_.ConvertToXY( message.geometry().coordinates().elem(i) ) );
         boundingBox_.Incorporate( pointList_.back() );
     }
 }

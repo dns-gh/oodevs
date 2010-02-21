@@ -10,11 +10,13 @@
 #ifndef __ObjectKnowledges_h_
 #define __ObjectKnowledges_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver.h"
 #include "clients_kernel/Creatable.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -32,9 +34,9 @@ class ObjectKnowledgeFactory;
 // Created: AGE 2006-02-14
 // =============================================================================
 class ObjectKnowledges : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeCreation >
-                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
-                       , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeDestruction >
+                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeCreation >
+                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
+                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeDestruction >
                        , public tools::Resolver< kernel::ObjectKnowledge_ABC >
                        , public kernel::Creatable< ObjectKnowledges >
 {
@@ -59,9 +61,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeCreation&    message );
-    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate&      message );
-    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeDestruction& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation&    message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate&      message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeDestruction& message );
     //@}
 
 private:

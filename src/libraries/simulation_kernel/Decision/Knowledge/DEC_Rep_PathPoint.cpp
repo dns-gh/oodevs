@@ -64,7 +64,7 @@ void DEC_Rep_PathPoint::Dump() const
               << " - Type : " << nObjectTypes_.DumpToString() 
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
               << " - Type terrain " << nTypeTerrain_.DumpToString() 
-              << " - nTypePoint_ " << (uint)nTypePoint_
+              << " - nTypePoint_ " << (unsigned int)nTypePoint_
               << std::endl;
 }
 

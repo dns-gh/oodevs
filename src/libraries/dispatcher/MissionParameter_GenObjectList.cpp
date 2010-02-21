@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_GenObjectList.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,12 +18,12 @@ using namespace dispatcher;
 // Name: MissionParameter_GenObjectList constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_GenObjectList::MissionParameter_GenObjectList( const ASN1T_MissionParameter& asn )
+MissionParameter_GenObjectList::MissionParameter_GenObjectList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    objects_.reserve( asn.value.u.plannedWorkList->n );
-    for( unsigned i = 0; i != asn.value.u.plannedWorkList->n; ++i )
-        objects_.push_back( GenObject( asn.value.u.plannedWorkList->elem[i] ) );
+    objects_.reserve( asn.value().plannedworklist().elem_size() );
+    for( int i = 0; i != asn.value().plannedworklist().elem_size(); ++i )
+        objects_.push_back( GenObject( asn.value().plannedworklist().elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,29 +43,23 @@ MissionParameter_GenObjectList::~MissionParameter_GenObjectList()
 // Name: MissionParameter_GenObjectList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_GenObjectList::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_GenObjectList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value                   = bNullValue_;
-    asn.value.t                      = T_MissionParameter_value_plannedWorkList;
-    asn.value.u.plannedWorkList = new ASN1T_PlannedWorkList();
-
-    asn.value.u.plannedWorkList->n = objects_.size();
+    asn.set_null_value                   ( bNullValue_ );
     if( !objects_.empty() )
     {
-        asn.value.u.plannedWorkList->elem = new ASN1T_PlannedWork[ objects_.size() ];
-        unsigned int i = 0;
-        for( T_GenObjectVector::const_iterator it = objects_.begin(); it != objects_.end(); ++it, ++i )
-            (*it).Send( asn.value.u.plannedWorkList->elem[ i ] );
+        for( T_GenObjectVector::const_iterator it = objects_.begin(); it != objects_.end(); ++it )
+            (*it).Send( *asn.mutable_value()->mutable_plannedworklist()->add_elem() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_GenObjectList::AsnDelete
+// Name: MissionParameter_GenObjectList::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_GenObjectList::AsnDelete( ASN1T_MissionParameter& asn ) const
+void MissionParameter_GenObjectList::Delete( Common::MsgMissionParameter& asn ) const
 {
-    if( asn.value.u.plannedWorkList->n > 0 )
-        delete [] asn.value.u.plannedWorkList->elem;
-    delete asn.value.u.plannedWorkList;
+    if( asn.value().plannedworklist().elem_size() > 0 )
+        asn.mutable_value()->mutable_plannedworklist()->Clear();
+    delete asn.mutable_value()->mutable_plannedworklist();
 }

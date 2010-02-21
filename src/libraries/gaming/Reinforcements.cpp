@@ -51,23 +51,23 @@ void Reinforcements::CreateDictionary( kernel::PropertiesDictionary& dico ) cons
 // Name: Reinforcements::DoUpdate
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Reinforcements::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void Reinforcements::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
 {
-    if( message.m.pions_renforcantPresent )
+    if( message.has_pions_renforcant()  )
     {
         reinforcements_.clear();
-        reinforcements_.reserve( message.pions_renforcant.n );
-        for( uint i = 0; i < message.pions_renforcant.n; ++i )
+        reinforcements_.reserve( message.pions_renforcant().elem_size() );
+        for( int i = 0; i < message.pions_renforcant().elem_size(); ++i )
         {
-            Agent_ABC* agent = resolver_.Find( message.pions_renforcant.elem[i] );
+            Agent_ABC* agent = resolver_.Find( message.pions_renforcant().elem( i ).oid() );
             reinforcements_.push_back( agent );
         }
     }
 
-    if( message.m.pion_renforcePresent )
-        reinforced_ = resolver_.Find( message.pion_renforce );
+    if( message.has_pion_renforce()  )
+        reinforced_ = resolver_.Find( message.pion_renforce() );
 
-    if( message.m.pion_renforcePresent || message.m.pions_renforcantPresent )
+    if( message.has_pion_renforce()  || message.has_pions_renforcant()  )
         controller_.Update( *this );
 }
 

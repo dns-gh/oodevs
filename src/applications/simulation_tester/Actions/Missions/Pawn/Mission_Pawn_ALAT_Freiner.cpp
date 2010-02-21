@@ -43,9 +43,9 @@ void Mission_Pawn_ALAT_Freiner::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ALAT_Freiner& asnMission = *new ASN1T_Mission_Pion_ALAT_Freiner();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_alat_freiner;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_freiner = &asnMission;
+    Mission_Pion_ALAT_Freiner& asnMission = *new Mission_Pion_ALAT_Freiner();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_alat_freiner = &asnMission;
 
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
     const T_IdVector& plotsRavitaillement_ = pTarget_->GetTestParam_ObjectKnowledgeList();
@@ -65,8 +65,8 @@ void Mission_Pawn_ALAT_Freiner::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ALAT_Freiner::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_alat_freiner );
-    ASN1T_Mission_Pion_ALAT_Freiner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_alat_freiner;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_alat_freiner ());
+    Mission_Pion_ALAT_Freiner& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_alat_freiner;
 
     ASN_Tools::Delete( asnMission.point_regroupement );
     ASN_Tools::Delete( asnMission.plots_ravitaillement );

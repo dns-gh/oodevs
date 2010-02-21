@@ -31,7 +31,7 @@ public:
     //@{
              FireAttribute();    
     explicit FireAttribute( xml::xistream& xis );
-    explicit FireAttribute( const ASN1T_ObjectAttributes& asn );
+    explicit FireAttribute( const Common::MsgObjectAttributes& asn );
     virtual ~FireAttribute();
     //@}
 
@@ -39,16 +39,16 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name 
     //@{
-    void Instanciate( DEC_Knowledge_Object& object ) const;
-    void SendFullState( ASN1T_ObjectAttributes& asn ) const;
-    void SendUpdate( ASN1T_ObjectAttributes& asn ) const;
-    void WriteODB( xml::xostream& xos ) const;
+    virtual void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
+    virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
+    virtual void WriteODB( xml::xostream& xos ) const;
     //@}
 
     //! @name Operations

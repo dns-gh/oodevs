@@ -63,7 +63,7 @@ private:
     //@{
     const MIL_Time_ABC&             time_;
     NET_AS_MOSServerMsgMgr*         pMsgMgr_;
-    uint                            nUnitVisionConesChangeTimeStep_;
+    unsigned int                            nUnitVisionConesChangeTimeStep_;
     bool                            bSendUnitVisionCones_;
     //@}
 };

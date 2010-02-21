@@ -39,7 +39,7 @@ AgentNotifier::~AgentNotifier()
 // Name: AgentNotifier::DoUpdate
 // Created: SBO 2009-08-19
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const ASN1T_MsgUnitCreation& /*message*/ )
+void AgentNotifier::DoUpdate( const MsgUnitCreation& /*message*/ )
 {
     controller_.Update( AgentCreated( agent_ ) );
 }
@@ -48,11 +48,11 @@ void AgentNotifier::DoUpdate( const ASN1T_MsgUnitCreation& /*message*/ )
 // Name: AgentNotifier::DoUpdate
 // Created: AGE 2008-06-13
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const ASN1T_MsgUnitAttributes& message )
+void AgentNotifier::DoUpdate( const MsgUnitAttributes& message )
 {
-    if( message.m.positionPresent )
+    if( message.has_position()  )
         controller_.Update( AgentMoved( agent_ ) );
-    if( message.m.etat_operationnelPresent )
+    if( message.has_etat_operationnel()  )
         controller_.Update( OperationalStateChanged( agent_ ) );
 }
 
@@ -60,7 +60,7 @@ void AgentNotifier::DoUpdate( const ASN1T_MsgUnitAttributes& message )
 // Name: AgentNotifier::DoUpdate
 // Created: AGE 2008-06-17
 // -----------------------------------------------------------------------------
-void AgentNotifier::DoUpdate( const ASN1T_MsgUnitOrder& )
+void AgentNotifier::DoUpdate( const MsgUnitOrder& )
 {
     controller_.Update( MissionStarted( agent_ ) );
 }

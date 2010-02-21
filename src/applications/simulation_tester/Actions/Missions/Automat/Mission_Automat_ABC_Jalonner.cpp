@@ -43,9 +43,9 @@ void Mission_Automat_ABC_Jalonner::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ABC_Jalonner& asnMission = *new ASN1T_Mission_Automate_ABC_Jalonner();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_abc_jalonner;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_jalonner = &asnMission;
+    Mission_Automate_ABC_Jalonner& asnMission = *new Mission_Automate_ABC_Jalonner();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_abc_jalonner = &asnMission;
 
 
 
@@ -58,8 +58,8 @@ void Mission_Automat_ABC_Jalonner::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ABC_Jalonner::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_abc_jalonner );
-    ASN1T_Mission_Automate_ABC_Jalonner& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_abc_jalonner;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_abc_jalonner ());
+    Mission_Automate_ABC_Jalonner& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_abc_jalonner;
 
 
     delete &asnMission;

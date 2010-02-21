@@ -36,7 +36,7 @@ Fire_ABC::~Fire_ABC()
 // Name: Fire_ABC::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fire_ABC::DoUpdate( const ASN1T_MsgStopUnitFire& message )
+void Fire_ABC::DoUpdate( const MsgsSimToClient::MsgStopUnitFire& message )
 {
     origin_.Update( message );
 }
@@ -45,7 +45,7 @@ void Fire_ABC::DoUpdate( const ASN1T_MsgStopUnitFire& message )
 // Name: Fire_ABC::DoUpdate
 // Created: AGE 2006-03-10
 // -----------------------------------------------------------------------------
-void Fire_ABC::DoUpdate( const ASN1T_MsgStopPopulationFire& message )
+void Fire_ABC::DoUpdate( const MsgsSimToClient::MsgStopPopulationFire& message )
 {
     origin_.Update( message );
 }

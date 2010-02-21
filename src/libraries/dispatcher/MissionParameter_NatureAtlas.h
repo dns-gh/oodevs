@@ -11,7 +11,12 @@
 #define __MissionParameter_NatureAtlas_h_
 
 #include "MissionParameter_ABC.h"
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+namespace Common
+{
+    class MsgAtlasNature;
+}
 
 namespace dispatcher
 {
@@ -28,14 +33,14 @@ class MissionParameter_NatureAtlas : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_NatureAtlas( const ASN1T_MissionParameter& asn );
+             MissionParameter_NatureAtlas( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_NatureAtlas();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( ASN1T_MissionParameter& asn ) const;
-    virtual void AsnDelete( ASN1T_MissionParameter& asn ) const;
+    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
+    virtual void Delete( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:
@@ -48,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_AtlasNature natureAtlas_;
+    Common::MsgAtlasNature natureAtlas_;
     //@}
 };
 

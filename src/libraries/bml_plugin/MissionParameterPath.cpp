@@ -41,21 +41,21 @@ MissionParameterPath::~MissionParameterPath()
 // Name: MissionParameterPath::Serialize
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterPath::Serialize( ASN1T_MissionParameter& parameter ) const
+void MissionParameterPath::Serialize( MsgMissionParameter& parameter ) const
 {
-    parameter.null_value = 0;
-    parameter.value.t = T_MissionParameter_value_path;
-    parameter.value.u.path = new ASN1T_Path();
-    parameter.value.u.path->type = EnumLocationType::line;
-    points_->Serialize( parameter.value.u.path->coordinates );
+    parameter.set_null_value( 0 );
+
+//    parameter.mutable_value()->mutable_path() = new MsgPath();
+    parameter.mutable_value()->mutable_path()->mutable_location()->set_type( MsgLocation_Geometry::MsgLocation_Geometry_line );
+    points_->Serialize( *parameter.mutable_value()->mutable_path()->mutable_location()->mutable_coordinates() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPath::Clean
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------
-void MissionParameterPath::Clean( ASN1T_MissionParameter& parameter ) const
+void MissionParameterPath::Clean( MsgMissionParameter& parameter ) const
 {
-    points_->Clean( parameter.value.u.path->coordinates );
-    delete parameter.value.u.path;
+    points_->Clean( *parameter.mutable_value()->mutable_path()->mutable_location()->mutable_coordinates());
+    delete parameter.mutable_value()->mutable_path()->mutable_location();
 }

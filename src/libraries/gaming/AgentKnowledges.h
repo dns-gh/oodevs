@@ -10,11 +10,13 @@
 #ifndef __AgentKnowledges_h_
 #define __AgentKnowledges_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Creatable.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -32,9 +34,9 @@ class AgentKnowledgeFactory_ABC;
 // Created: AGE 2006-02-15
 // =============================================================================
 class AgentKnowledges : public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeCreation >
-                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeUpdate >
-                      , public kernel::Updatable_ABC< ASN1T_MsgUnitKnowledgeDestruction >
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeCreation >
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeDestruction >
                       , public tools::Resolver< kernel::AgentKnowledge_ABC >
                       , public kernel::Creatable< AgentKnowledges >
 {
@@ -55,9 +57,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeCreation&    message );
-    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeUpdate&      message );
-    virtual void DoUpdate( const ASN1T_MsgUnitKnowledgeDestruction& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeCreation&    message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate&      message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeDestruction& message );
     //@}
 
 private:

@@ -14,8 +14,7 @@
 #include "Entities/Objects/MIL_MedicalTreatmentType.h"
 #include "Entities/Objects/MedicalTreatmentAttribute.h"
 #include "DEC_Knowledge_Object.h"
-
-#include "MIL.h"
+#include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeMedicalTreatment )
 
@@ -66,7 +65,7 @@ DEC_Knowledge_ObjectAttributeMedicalTreatment::~DEC_Knowledge_ObjectAttributeMed
 // Name: DEC_Knowledge_ObjectMedicalTreatment::load
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeMedicalTreatment::load( MIL_CheckPointInArchive& file, const uint )
+void DEC_Knowledge_ObjectAttributeMedicalTreatment::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     int availableBeds, availableDoctors, beds, doctors, listSize, nID;
     file >> availableBeds
@@ -96,7 +95,7 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::load( MIL_CheckPointInArchiv
 // Name: DEC_Knowledge_ObjectMedicalTreatment::save
 // Created: JVT 2005-03-25
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeMedicalTreatment::save( MIL_CheckPointOutArchive& file, const uint ) const
+void DEC_Knowledge_ObjectAttributeMedicalTreatment::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     int nID;
     int listSize = medicalTreatmentList_.size();
@@ -179,22 +178,19 @@ void DEC_Knowledge_ObjectAttributeMedicalTreatment::UpdateOnCollision( const DEC
 // Name: DEC_Knowledge_ObjectAttributeMedicalTreatment::BuildMsgSpecificAttributes
 // Created: NLD 2004-05-04
 // -----------------------------------------------------------------------------
-void DEC_Knowledge_ObjectAttributeMedicalTreatment::Send( ASN1T_ObjectAttributes& asn ) const
+void DEC_Knowledge_ObjectAttributeMedicalTreatment::Send( Common::MsgObjectAttributes& asn ) const
 {
     if ( attr_ )
     {
         int i = 0; //i is used to fill elem
-        asn.m.medical_treatmentPresent = 1;
-        asn.medical_treatment.available_beds    = availableBeds_;
-        asn.medical_treatment.available_doctors = availableDoctors_;
-        asn.medical_treatment.beds              = beds_;
-        asn.medical_treatment.doctors           = doctors_;
-        asn.medical_treatment.type_id.n         = attr_->GetMap().size();
-        asn.medical_treatment.type_id.elem      = new ASN1T_OID[ asn.medical_treatment.type_id.n ];
+        asn.mutable_medical_treatment()->set_available_beds   ( availableBeds_ );
+        asn.mutable_medical_treatment()->set_available_doctors( availableDoctors_ );
+        asn.mutable_medical_treatment()->set_beds             ( beds_ );
+        asn.mutable_medical_treatment()->set_doctors          ( doctors_ );
         //Get the list of the ID of each medical treatment
         for( MedicalTreatmentAttribute::CIT_MedicalTreatmentMap iter = attr_->GetMap().begin() ; iter != attr_->GetMap().end() ; ++iter )
         {
-            asn.medical_treatment.type_id.elem[ i ] = MIL_MedicalTreatmentType::Find( iter->first )->GetID();
+            asn.mutable_medical_treatment()->mutable_type_id()->set_elem( i, MIL_MedicalTreatmentType::Find( iter->first )->GetID() );
             i++;
         }
     }

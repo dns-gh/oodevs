@@ -14,7 +14,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver.h"
-#include "game_asn/Simulation.h"
 
 namespace kernel
 {
@@ -26,6 +25,13 @@ namespace actions
     class Action_ABC;
 }
 
+namespace Common
+{
+    class MsgUnitOrder;
+    class MsgAutomatOrder;
+    class MsgPopulationOrder;
+}
+
 class ActionFactory_ABC;
 
 // =============================================================================
@@ -35,9 +41,9 @@ class ActionFactory_ABC;
 // Created: SBO 2006-11-13
 // =============================================================================
 class MissionParameters : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< ASN1T_MsgUnitOrder >
-                        , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
-                        , public kernel::Updatable_ABC< ASN1T_MsgPopulationOrder >
+                        , public kernel::Updatable_ABC< Common::MsgUnitOrder >
+                        , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
+                        , public kernel::Updatable_ABC< Common::MsgPopulationOrder >
                         , public tools::Resolver< actions::Action_ABC >
                         , public kernel::Drawable_ABC
 {
@@ -64,9 +70,9 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUnitOrder& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationOrder& message );
+    virtual void DoUpdate( const Common::MsgUnitOrder& message );
+	virtual void DoUpdate( const Common::MsgAutomatOrder& message );
+	virtual void DoUpdate( const Common::MsgPopulationOrder& message );
     template< typename T >
     void UpdateMessage( const T& message );
     //@}

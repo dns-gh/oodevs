@@ -12,6 +12,10 @@
 
 #include "Parameter.h"
 
+namespace Common
+{
+    class MsgUrbanBlock;
+}
 
 namespace urban
 {
@@ -36,14 +40,14 @@ public:
     //! @name Constructors/Destructor
     //@{
     UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id );
-    UrbanBlock( const kernel::OrderParameter& parameter, const ASN1T_UrbanBlock& asn );
+    UrbanBlock( const kernel::OrderParameter& parameter, const Common::MsgUrbanBlock& message );
     UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~UrbanBlock();
     //@}
 
     //! @name Operations
     //@{
-    virtual void CommitTo( ASN1T_MissionParameter& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 

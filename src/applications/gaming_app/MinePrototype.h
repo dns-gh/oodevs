@@ -12,7 +12,7 @@
 
 #include "clients_gui/MinePrototype_ABC.h"
 
-struct ASN1T_MagicActionCreateObject;
+struct MagicActionCreateObject;
 
 // =============================================================================
 /** @class  MinePrototype
@@ -26,7 +26,7 @@ class MinePrototype : public gui::MinePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MinePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg );
+             MinePrototype( QWidget* parent, MagicActionCreateObject& msg );
     virtual ~MinePrototype();
     //@}
 
@@ -46,7 +46,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;
+    MagicActionCreateObject& msg_;
     //@}
 };
 

@@ -16,8 +16,22 @@
 #include "MIL_Agent_ABC.h"
 #include "MIL_AgentTypePion.h"
 #include "Entities/Orders/MIL_PionOrderManager.h"
-#include "Network/NET_ASN_Messages.h"
 #include "tools/Resolver.h"
+
+namespace Common
+{
+    class MsgMagicActionChangeHumanFactors;
+    class MsgMagicActionMoveTo;
+    class MsgUnitChangeSuperior;
+    class MsgUnitOrder;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgMagicActionPartialRecovery;
+    class MsgUnitFragOrder;
+    class MsgUnitMagicAction;
+}
 
 namespace xml
 {
@@ -57,8 +71,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
@@ -96,7 +110,7 @@ public:
 
     //! @name Operations
     //@{
-    void PreprocessRandomBreakdowns( uint nEndDayTimeStep ) const;
+    void PreprocessRandomBreakdowns( unsigned int nEndDayTimeStep ) const;
     void UpdateKnowledges          ( int currentTimeStep );
     void CleanKnowledges           ();
     void UpdateDecision            ( float duration );
@@ -122,10 +136,10 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
 
-    void OnReceiveMsgUnitMagicAction  ( const ASN1T_MsgUnitMagicAction&    msg, const tools::Resolver< MIL_Army_ABC>& armies );
-    void OnReceiveMsgOrder            ( const ASN1T_MsgUnitOrder&          msg ); 
-    void OnReceiveMsgFragOrder        ( const ASN1T_MsgFragOrder&          msg );
-    void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const ASN1T_MsgUnitChangeSuperior& msg );
+    void OnReceiveMsgUnitMagicAction  ( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveMsgOrder            ( const Common::MsgUnitOrder& msg ); 
+    void OnReceiveMsgFragOrder        ( const MsgsClientToSim::MsgFragOrder& msg );
+    void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const Common::MsgUnitChangeSuperior& msg );
     void OnReceiveMagicSurrender      ();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMsgMagicMove        ( const MT_Vector2D& vPosition ); // Magic move automate
@@ -154,13 +168,13 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveMsgChangeHumanFactors       ( const ASN1T_MagicActionChangeHumanFactors& asn );
-    void OnReceiveMsgMagicMove                ( const ASN1T_MagicActionMoveTo&                asn );
+    void OnReceiveMsgChangeHumanFactors       ( const Common::MsgMagicActionChangeHumanFactors& asn );
+    void OnReceiveMsgMagicMove                ( const Common::MsgMagicActionMoveTo& asn );
     void OnReceiveMsgResupplyHumans           ();
     void OnReceiveMsgResupplyResources        ();
     void OnReceiveMsgResupplyEquipement       ();
     void OnReceiveMsgResupplyAll              ();
-    void OnReceiveMsgResupply                 ( const ASN1T_MagicActionPartialRecovery& asn );
+    void OnReceiveMsgResupply                 ( const MsgsClientToSim::MsgMagicActionPartialRecovery& asn );
     void OnReceiveMsgDestroyAll               ();
     void OnReceiveMsgDestroyComponent         ();
     void OnReceiveMsgRecoverHumansTransporters();

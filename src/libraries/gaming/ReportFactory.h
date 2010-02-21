@@ -11,7 +11,10 @@
 #define __ReportFactory_h_
 
 #include "tools/Resolver.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace tools
 {
@@ -59,8 +62,8 @@ public:
     void Load( const tools::ExerciseConfig& config );
     void Purge();
 
-    Report* CreateReport( const kernel::Entity_ABC& agent, const ASN1T_MsgReport&  asnMsg ) const;
-    Report* CreateTrace ( const kernel::Entity_ABC& agent, const ASN1T_MsgTrace& asnMsg ) const;
+    Report* CreateReport( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgReport&  message ) const;
+    Report* CreateTrace ( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgTrace& message ) const;
     //@}
 
 private:
@@ -74,7 +77,7 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    QString RenderParameter( const ASN1T_MissionParameter& value ) const;
+    QString RenderParameter( const Common::MsgMissionParameter& value ) const;
     //@}
 
 private:

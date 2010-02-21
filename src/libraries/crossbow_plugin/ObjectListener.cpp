@@ -17,7 +17,8 @@
 #include "Point.h"
 #include "WorkingSession.h"
 #include "dispatcher/SimulationPublisher_ABC.h"
-#include "game_asn/SimulationSenders.h"
+#include "protocol/clientsenders.h"
+#include "protocol/simulationsenders.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -101,12 +102,11 @@ namespace
 // -----------------------------------------------------------------------------
 void ObjectListener::SendCreation( const Row_ABC& row )
 {
-    simulation::ObjectMagicAction asn;
-    asn().action.t = T_MsgObjectMagicAction_action_create_object;
-    ASN1T_MagicActionCreateObject*& creation = asn().action.u.create_object = new ASN1T_MagicActionCreateObject();
-    creation->team = 1; // $$$$ SBO 2007-09-23: Hard coded !!
-    creation->type = (ASN1VisibleString)GetType( boost::get< std::string >( row.GetField( "info" ) ) ).c_str();
-    creation->name = "";
-    row.GetShape().Serialize( creation->location );
-    asn.Send( publisher_ );
+    simulation::ObjectMagicAction message;
+    MsgsClientToSim::MsgMagicActionCreateObject* creation = message().mutable_action()->mutable_create_object();
+    creation->set_team( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
+    creation->set_type( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
+    creation->set_name( "" );
+    row.GetShape().Serialize( *creation->mutable_location() );
+    message.Send( publisher_ );
 }

@@ -30,7 +30,7 @@ class MockPrototype
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MockPrototype( const std::string& type, uint id ) 
+    explicit MockPrototype( const std::string& type, unsigned int id ) 
         : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockPrototype" ), 0 )
         , ObjectPrototype( type, id )
         , Add_mocker                        ( MOCKPP_PCHAR( "AddCapacity" ), this )        
@@ -61,7 +61,7 @@ public:
         capacities_.insert( capacity );
     }
 
-    MOCKPP_CONST_CHAINABLE0          ( MockPrototype, uint, GetID );
+    MOCKPP_CONST_CHAINABLE0          ( MockPrototype, unsigned int, GetID );
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockPrototype, const std::string*, GetNameShadow, std::string, );   
     MOCKPP_CONST_CHAINABLE_EXT0      ( MockPrototype, const MIL_ObjectType_ABC*, GetTypeShadow, MIL_ObjectType_ABC, );   
     MOCKPP_VOID_CONST_CHAINABLE_EXT1 ( MockPrototype, Build, Object&, , Object );

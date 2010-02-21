@@ -22,9 +22,9 @@ using namespace kernel;
 // Name: PopulationConcentration constructor
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-PopulationConcentration::PopulationConcentration( const ASN1T_MsgPopulationConcentrationCreation& asnMsg, const CoordinateConverter_ABC& converter, float density )
-    : position_( converter.ConvertToXY( asnMsg.position ) )
-    , nID_( asnMsg.oid )
+PopulationConcentration::PopulationConcentration( const MsgsSimToClient::MsgPopulationConcentrationCreation& message, const CoordinateConverter_ABC& converter, float density )
+    : position_( converter.ConvertToXY( message.position() ) )
+    , nID_( message.oid() )
     , density_ ( density )
     , nLivingHumans_( 0 )
     , nDeadHumans_( 0 )
@@ -67,16 +67,16 @@ unsigned long PopulationConcentration::GetId() const
 // Name: PopulationConcentration::DoUpdate
 // Created: HME 2005-09-30
 // -----------------------------------------------------------------------------
-void PopulationConcentration::DoUpdate( const ASN1T_MsgPopulationConcentrationUpdate& asnMsg )
+void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message )
 {
-    if ( asnMsg.m.attitudePresent )
-		attitude_ = (E_PopulationAttitude)asnMsg.attitude;
+    if ( message.has_attitude()  )
+		attitude_ = (E_PopulationAttitude)message.attitude();
     static const float oneOnpi = 1.f / std::acos( -1.f );
-    if( asnMsg.m.nb_humains_vivantsPresent )
-        nLivingHumans_ = asnMsg.nb_humains_vivants;
+    if( message.has_nb_humains_vivants()  )
+        nLivingHumans_ = message.nb_humains_vivants();
 
-    if( asnMsg.m.nb_humains_mortsPresent )
-        nDeadHumans_ = asnMsg.nb_humains_morts;
+    if( message.has_nb_humains_morts()  )
+        nDeadHumans_ = message.nb_humains_morts();
 
     if( density_ > 0 )
     {

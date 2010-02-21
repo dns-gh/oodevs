@@ -43,9 +43,9 @@ void Mission_Automat_ALAT_AttaquerFormationAeromobile::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile& asnMission = *new ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_attaquer_formation_aeromobile = &asnMission;
+    Mission_Automate_ALAT_AttaquerFormationAeromobile& asnMission = *new Mission_Automate_ALAT_AttaquerFormationAeromobile();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_alat_attaquer_formation_aeromobile = &asnMission;
 
     const T_IdVector& unitesAAttaquer_ = pTarget_->GetTestParam_AgentKnowledgeList();
     const Position& pointRegroupement_ = pTarget_->GetTestParam_Point();
@@ -67,8 +67,8 @@ void Mission_Automat_ALAT_AttaquerFormationAeromobile::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_ALAT_AttaquerFormationAeromobile::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_alat_attaquer_formation_aeromobile );
-    ASN1T_Mission_Automate_ALAT_AttaquerFormationAeromobile& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_alat_attaquer_formation_aeromobile;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_alat_attaquer_formation_aeromobile ());
+    Mission_Automate_ALAT_AttaquerFormationAeromobile& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_alat_attaquer_formation_aeromobile;
 
     ASN_Tools::Delete( asnMission.unites_a_attaquer );
     ASN_Tools::Delete( asnMission.point_regroupement );

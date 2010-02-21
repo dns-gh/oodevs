@@ -40,11 +40,11 @@ struct UnitAttribute : public ContinuousValue< typename Extractor::Type >
     explicit UnitAttribute( const Extractor& extractor = Extractor() )
         : extractor_( extractor ) {}
 
-    void Receive( const ASN1T_MsgsSimToClient& message )
+    void Receive( const MsgSimToClient& wrapper )
     {
-        if( message.msg.t == T_MsgsSimToClient_msg_msg_unit_attributes )
+        if( wrapper.message().has_unit_attributes() )
         {
-            const ASN1T_MsgUnitAttributes& attributes = *message.msg.u.msg_unit_attributes;
+            const MsgUnitAttributes& attributes = wrapper.message().unit_attributes();
             if( extractor_.HasFlag( attributes ) )
                 Set( extractor_.Extract( attributes ) );
         }

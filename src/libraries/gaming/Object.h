@@ -10,14 +10,16 @@
 #ifndef __Object_h_
 #define __Object_h_
 
-#include "game_asn/Simulation.h"
+#include "Types.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
-#include "Types.h"
+#include "protocol/Protocol.h"
+#include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -33,7 +35,7 @@ namespace kernel
 // =============================================================================
 class Object : public kernel::EntityImplementation< kernel::Object_ABC >
              , public kernel::Extension_ABC
-             , public kernel::Updatable_ABC< ASN1T_MsgObjectUpdate >
+             , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectUpdate >
 {
 public:
     //! @name Static
@@ -44,7 +46,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Object( const ASN1T_MsgObjectCreation& asnMsg, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+             Object( const MsgsSimToClient::MsgObjectCreation& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                      const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~Object();
     //@}
@@ -74,7 +76,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message );
     //@}
 
 private:
@@ -92,7 +94,7 @@ private:
 
     //! @name Member data
     //@{
-    ASN1T_EnumLocationType nTypeLocalisation_;
+    MsgLocation::Geometry nTypeLocalisation_;
     kernel::DotationType* construction_;
     kernel::DotationType* valorization_;
     kernel::OptionalValue< unsigned int > nDotationConstruction_;

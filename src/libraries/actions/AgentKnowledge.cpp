@@ -9,8 +9,10 @@
 
 #include "actions_pch.h"
 #include "AgentKnowledge.h"
-#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
 #include "ParameterVisitor_ABC.h"
+#include "clients_kernel/AgentKnowledgeConverter_ABC.h"
+#include "protocol/Protocol.h"
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -74,12 +76,12 @@ AgentKnowledge::~AgentKnowledge()
 // Name: AgentKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
+void AgentKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_unitKnowledge;
+    message.set_null_value( !IsSet() );
+    message.mutable_value()->mutable_unitknowledge();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< AgentKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.unitKnowledge );
+        Entity< AgentKnowledge_ABC >::CommitTo( boost::bind ( &Common::MsgUnitKnowledge::set_oid, *message.mutable_value()->mutable_unitknowledge(), _1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -95,9 +97,9 @@ void AgentKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: AgentKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void AgentKnowledge::CommitTo( ASN1T_UnitKnowledge& asn ) const
+void AgentKnowledge::CommitTo( Common::MsgUnitKnowledge& message ) const
 {
-    Entity< AgentKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
+    Entity< AgentKnowledge_ABC >::CommitTo( message );
 }
 
 // -----------------------------------------------------------------------------

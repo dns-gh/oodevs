@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_EquipmentType.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,9 +18,9 @@ using namespace dispatcher;
 // Name: MissionParameter_EquipmentType constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_EquipmentType::MissionParameter_EquipmentType( const ASN1T_MissionParameter& asn )
+MissionParameter_EquipmentType::MissionParameter_EquipmentType( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , equipmentType_      ( asn.value.u.equipmentType )
+    , equipmentType_      ( asn.value().equipmenttype().equipment() )
 {
     // NOTHING
 }
@@ -41,18 +42,17 @@ MissionParameter_EquipmentType::~MissionParameter_EquipmentType()
 // Name: MissionParameter_EquipmentType::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_EquipmentType::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_EquipmentType::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value             = bNullValue_;
-    asn.value.t                = T_MissionParameter_value_equipmentType;
-    asn.value.u.equipmentType = equipmentType_;
+    asn.set_null_value( bNullValue_ );
+    asn.mutable_value()->mutable_equipmenttype()->set_equipment( equipmentType_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_EquipmentType::AsnDelete
+// Name: MissionParameter_EquipmentType::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_EquipmentType::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_EquipmentType::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

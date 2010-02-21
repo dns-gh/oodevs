@@ -13,14 +13,17 @@
 #define __MIL_Tools_h_
 
 #include "MIL.h"
-
-#include "game_asn/Simulation.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 
 #pragma warning ( push )
 #pragma warning ( disable : 4244 4245 )
 #include <boost/CRC.hpp>
 #pragma warning ( pop )
+
+namespace Common
+{
+    class MsgCoordLatLong;
+}
 
 enum E_TerrainObjectTypeID;
 
@@ -41,9 +44,9 @@ public:
     static MT_Float    ConvertMeterToSim      ( MT_Float );
     static float       ConvertSimToMeter      ( MT_Float );
     static void        ConvertCoordMosToSim   ( const std::string& strMosPos, MT_Vector2D& vSimPos );
-    static void        ConvertCoordMosToSim   ( const ASN1T_CoordLatLong& asnCoordUTM, MT_Vector2D& vSimPos );
+    static void        ConvertCoordMosToSim   ( const Common::MsgCoordLatLong& asnCoordUTM, MT_Vector2D& vSimPos );
     static std::string ConvertCoordSimToMos   ( const MT_Vector2D& vSimPos );
-    static void        ConvertCoordSimToMos   ( const MT_Vector2D& vSimPos, ASN1T_CoordLatLong& asnCoordUTM );
+    static void        ConvertCoordSimToMos   ( const MT_Vector2D& vSimPos, Common::MsgCoordLatLong& asnCoordUTM );
 
     static MT_Float ConvertSpeedMosToSim( MT_Float ); // km/h         -> pixel/DeltaT
     static MT_Float ConvertSpeedSimToMos( MT_Float ); // pixel/DeltaT -> km/h
@@ -119,7 +122,7 @@ private:
     {
         static T badId = BadId< T >();
 
-        for ( uint i = 0; ; ++i )
+        for ( unsigned int i = 0; ; ++i )
         {
             const std::string& sCurrentName = conv[i].name_;
 
@@ -136,7 +139,7 @@ private:
     //-----------------------------------------------------------------------------
     template < typename T > static const std::string& InverseFindInConverter( const converter<T> conv[], T val )
     {
-        for ( uint i = 0; !conv[i].name_.empty(); ++i )
+        for ( unsigned int i = 0; !conv[i].name_.empty(); ++i )
             if ( conv[i].type_ == val )
                 return conv[i].name_;
 

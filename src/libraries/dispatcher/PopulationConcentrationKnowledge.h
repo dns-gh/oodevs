@@ -10,8 +10,22 @@
 #ifndef __PopulationConcentrationKnowledge_h_
 #define __PopulationConcentrationKnowledge_h_
 
-#include "game_asn/Simulation.h"
 #include "SimpleEntity.h"
+
+
+namespace Common
+{
+    class MsgCoordLatLong;
+    enum EnumPopulationAttitude;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgPopulationConcentrationKnowledgeCreation;
+    class MsgPopulationConcentrationKnowledgeUpdate;
+}
+
+
 
 namespace kernel
 {
@@ -35,13 +49,13 @@ class PopulationConcentrationKnowledge : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const ASN1T_MsgPopulationConcentrationKnowledgeCreation& msg );
+    PopulationConcentrationKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& msg );
     virtual ~PopulationConcentrationKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate& msg );
+    void Update( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -73,10 +87,10 @@ private:
     //@{
     const kernel::PopulationKnowledge_ABC&     populationKnowledge_;
     const kernel::PopulationConcentration_ABC* pConcentration_;
-    const ASN1T_CoordLatLong                   position_;
+    const Common::MsgCoordLatLong&             position_;
     unsigned long                              nNbrAliveHumans_;
     unsigned long                              nNbrDeadHumans_;
-    ASN1T_EnumPopulationAttitude               nAttitude_;    
+    Common::EnumPopulationAttitude               nAttitude_;    
     unsigned int                               nRelevance_;
     bool                                       bPerceived_;
     T_Optionals                                optionals_;

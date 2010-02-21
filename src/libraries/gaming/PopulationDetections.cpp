@@ -46,10 +46,10 @@ PopulationDetections::~PopulationDetections()
 // Name: PopulationDetections::DoUpdate
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const ASN1T_MsgPopulationConcentrationDetection& message )
+void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDetection& message )
 {
-    const PopulationPart_ABC* pConcentration = & resolver_.Get( message.population_oid ).GetConcentration( message.concentration_oid );
-    if( message.visibility == EnumUnitVisibility::invisible )
+    const PopulationPart_ABC* pConcentration = & resolver_.Get( message.population_oid() ).GetConcentration( message.concentration_oid() );
+    if( message.visibility() == EnumUnitVisibility::invisible )
         perceived_.erase( pConcentration );
     else
         perceived_.insert( pConcentration );
@@ -59,10 +59,10 @@ void PopulationDetections::DoUpdate( const ASN1T_MsgPopulationConcentrationDetec
 // Name: PopulationDetections::DoUpdate
 // Created: AGE 2006-02-27
 // -----------------------------------------------------------------------------
-void PopulationDetections::DoUpdate( const ASN1T_MsgPopulationFlowDetection& message )
+void PopulationDetections::DoUpdate( const MsgsSimToClient::MsgPopulationFlowDetection& message )
 {
-    const PopulationPart_ABC* pFlow = & resolver_.Get( message.population_oid ).GetFlow( message.flow_oid );
-    if( message.visible_flow.coordinates.n )
+    const PopulationPart_ABC* pFlow = & resolver_.Get( message.population_oid() ).GetFlow( message.flow_oid() );
+    if( message.visible_flow().location().coordinates().elem_size() )
         perceived_.insert( pFlow );
     else
         perceived_.erase( pFlow );

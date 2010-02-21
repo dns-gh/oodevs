@@ -10,7 +10,10 @@
 #ifndef __ObjectFactory_ABC_h_
 #define __ObjectFactory_ABC_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
+
 
 namespace kernel
 {
@@ -35,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Object_ABC* Create( const ASN1T_MsgObjectCreation& asnMsg ) = 0;
+    virtual kernel::Object_ABC* Create( const MsgsSimToClient::MsgObjectCreation& message ) = 0;
     //@}
 
 private:

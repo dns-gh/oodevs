@@ -28,14 +28,13 @@ public:
     //! @name Constructors/Destructor
     //@{
              String( const kernel::OrderParameter& parameter, const std::string& value );
-             String( const kernel::OrderParameter& parameter, const ASN1VisibleString& asn );
              String( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~String();
     //@}
 
     //! @name Operations
     //@{
-    void CommitTo( ASN1VisibleString& asn ) const;
+    void CommitTo( std::string& asn ) const;
     //@}
 
 private:

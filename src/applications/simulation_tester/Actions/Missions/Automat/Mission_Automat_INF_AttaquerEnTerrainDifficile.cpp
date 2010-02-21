@@ -43,9 +43,9 @@ void Mission_Automat_INF_AttaquerEnTerrainDifficile::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_INF_AttaquerEnTerrainDifficile& asnMission = *new ASN1T_Mission_Automate_INF_AttaquerEnTerrainDifficile();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_inf_attaquer_en_terrain_difficile;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_attaquer_en_terrain_difficile = &asnMission;
+    Mission_Automate_INF_AttaquerEnTerrainDifficile& asnMission = *new Mission_Automate_INF_AttaquerEnTerrainDifficile();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_inf_attaquer_en_terrain_difficile = &asnMission;
 
     const T_PositionVector& objectifs_ = pTarget_->GetTestParam_PointList();
 
@@ -61,8 +61,8 @@ void Mission_Automat_INF_AttaquerEnTerrainDifficile::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_INF_AttaquerEnTerrainDifficile::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_inf_attaquer_en_terrain_difficile );
-    ASN1T_Mission_Automate_INF_AttaquerEnTerrainDifficile& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_inf_attaquer_en_terrain_difficile;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_inf_attaquer_en_terrain_difficile ());
+    Mission_Automate_INF_AttaquerEnTerrainDifficile& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_inf_attaquer_en_terrain_difficile;
 
     ASN_Tools::Delete( asnMission.objectifs );
 

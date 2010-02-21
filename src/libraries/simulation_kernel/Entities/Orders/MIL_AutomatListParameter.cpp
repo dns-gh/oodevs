@@ -9,22 +9,22 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomatListParameter.h"
-
 #include "simulation_orders/MIL_ParameterType_AutomatList.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomatListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AutomatListParameter::MIL_AutomatListParameter( const ASN1T_AutomatList& asn, MIL_EntityManager_ABC& entityManager )
+MIL_AutomatListParameter::MIL_AutomatListParameter( const Common::MsgAutomatList& asn, MIL_EntityManager_ABC& entityManager )
 {
-    automatList_.reserve( asn.n );
-    for( unsigned int i = 0; i < asn.n; ++i )
+    automatList_.reserve( asn.elem_size() );
+    for( int i = 0; i < asn.elem_size(); ++i )
     {
-        MIL_Automate* pAutomate = entityManager.FindAutomate( asn.elem[i] );
+        MIL_Automate* pAutomate = entityManager.FindAutomate( asn.elem(i).oid() );
         if( !pAutomate ) 
             throw std::runtime_error( "Automat does not exist" );
         automatList_.push_back( &pAutomate->GetDecision() );
@@ -63,18 +63,11 @@ bool MIL_AutomatListParameter::IsOfType( const MIL_ParameterType_ABC& type ) con
 // Name: MIL_AutomatListParameter::ToAutomatList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AutomatListParameter::ToAutomatList( ASN1T_AutomatList& asn ) const
+bool MIL_AutomatListParameter::ToAutomatList( Common::MsgAutomatList& asn ) const
 {
     unsigned int size = automatList_.size();
-    asn.n = size;
-    if( size != 0 )
-    {    
-        ASN1T_OID* pOID = new ASN1T_OID[ size ]; //$$$ RAM
-        asn.elem = pOID;
-
-        for( unsigned int i = 0; i < size; ++i )
-            pOID[i] = automatList_[i]->GetAutomate().GetID();
-    }
+    for( unsigned int i = 0; i < size; ++i )
+        asn.add_elem()->set_oid( automatList_[i]->GetAutomate().GetID() );
     return true;
 }
 

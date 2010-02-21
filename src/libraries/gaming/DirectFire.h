@@ -10,9 +10,11 @@
 #ifndef __DirectFire_h_
 #define __DirectFire_h_
 
-#include "game_asn/Simulation.h"
 #include "Fire_ABC.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -34,7 +36,7 @@ class DirectFire : public Fire_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DirectFire( const ASN1T_MsgStartUnitFire& message, 
+             DirectFire( const MsgsSimToClient::MsgStartUnitFire& message, 
                  const tools::Resolver_ABC< kernel::Agent_ABC >& agentResolver, 
                  const tools::Resolver_ABC< kernel::Population_ABC >& populationResolver );
     virtual ~DirectFire();

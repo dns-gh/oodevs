@@ -25,50 +25,47 @@ struct IdentifierValue : public InstantValue< NumericValue >
     enum { has_parameter = false };
 
 #define SET_OID( tag )                                  \
-    case( T_MsgsSimToClient_msg_##tag ):                \
-        Set( message.msg.u.tag->oid ); break;
+    if( wrapper.message().has_##tag() )                 \
+        Set( wrapper.message().tag().oid() );
 #define SET_CONSIGN_OID( tag )                          \
-    case( T_MsgsSimToClient_msg_##tag ):                \
-        Set( message.msg.u.tag->oid_consigne ); break;
+    if( wrapper.message().has_##tag() )                 \
+        Set( wrapper.message().tag().oid_consigne() );
 #define SET_FIRE_OID( tag )                             \
-    case( T_MsgsSimToClient_msg_##tag ):                \
-        Set( message.msg.u.tag->fire_oid ); break;
+    if( wrapper.message().has_##tag() )                 \
+        Set( wrapper.message().tag().fire_oid() ); 
 
     //! @name Operations
     //@{
-    void Receive( const ASN1T_MsgsSimToClient& message )
+    void Receive( const MsgSimToClient& wrapper )
     {
-        switch( message.msg.t )
-        {
-            SET_OID( msg_unit_order_ack );
-            SET_OID( msg_unit_creation );
-            SET_OID( msg_unit_attributes );
-            SET_OID( msg_unit_pathfind );
-            SET_OID( msg_unit_environment_type );
-            SET_OID( msg_unit_change_superior );
-            SET_OID( msg_decisional_state );
-            SET_OID( msg_debug_points );
-            SET_OID( msg_unit_vision_cones );
-            SET_OID( msg_unit_detection );
-            SET_OID( msg_object_detection );
-            SET_OID( msg_population_concentration_detection );
-            SET_OID( msg_population_flow_detection );
-            SET_OID( msg_unit_order );
-            SET_CONSIGN_OID( msg_log_medical_handling_creation );
-            SET_CONSIGN_OID( msg_log_medical_handling_update );
-            SET_CONSIGN_OID( msg_log_medical_handling_destruction );
-            SET_CONSIGN_OID( msg_log_maintenance_handling_creation );
-            SET_CONSIGN_OID( msg_log_maintenance_handling_update );
-            SET_CONSIGN_OID( msg_log_maintenance_handling_destruction );
-            SET_CONSIGN_OID( msg_log_supply_handling_creation );
-            SET_CONSIGN_OID( msg_log_supply_handling_update );
-            SET_CONSIGN_OID( msg_log_supply_handling_destruction );
-            SET_FIRE_OID( msg_start_unit_fire );
-            SET_FIRE_OID( msg_stop_unit_fire );
-            SET_FIRE_OID( msg_start_population_fire );
-            SET_FIRE_OID( msg_stop_population_fire );
+            SET_OID         ( unit_order_ack );
+            SET_OID         ( unit_creation );
+            SET_OID         ( unit_attributes );
+            SET_OID         ( unit_pathfind );
+            SET_OID         ( unit_environment_type );
+            SET_OID         ( unit_change_superior );
+            SET_OID         ( decisional_state );
+            SET_OID         ( debug_points );
+            SET_OID         ( unit_vision_cones );
+            SET_OID         ( unit_detection );
+            SET_OID         ( object_detection );
+            SET_OID         ( population_concentration_detection );
+            SET_OID         ( population_flow_detection );
+            SET_OID         ( unit_order );
+            SET_CONSIGN_OID ( log_medical_handling_creation );
+            SET_CONSIGN_OID ( log_medical_handling_update );
+            SET_CONSIGN_OID ( log_medical_handling_destruction );
+            SET_CONSIGN_OID ( log_maintenance_handling_creation );
+            SET_CONSIGN_OID ( log_maintenance_handling_update );
+            SET_CONSIGN_OID ( log_maintenance_handling_destruction );
+            SET_CONSIGN_OID ( log_supply_handling_creation );
+            SET_CONSIGN_OID ( log_supply_handling_update );
+            SET_CONSIGN_OID ( log_supply_handling_destruction );
+            SET_FIRE_OID    ( start_unit_fire );
+            SET_FIRE_OID    ( stop_unit_fire );
+            SET_FIRE_OID    ( start_population_fire );
+            SET_FIRE_OID    ( stop_population_fire );
             // $$$$ AGE 2007-08-29: objets, ...
-        };
     }
     //@}
 #undef SET_OID

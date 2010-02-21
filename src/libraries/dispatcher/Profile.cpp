@@ -21,6 +21,10 @@
 #include <xeumeuleu/xml.h>
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
+#include "protocol/authenticationsenders.h"
+#include "protocol/clientsenders.h"
+#include "protocol/simulationsenders.h"
+
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -55,14 +59,14 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const std::s
 // Name: Profile constructor
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const ASN1T_MsgProfileCreationRequest& message )
+Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const MsgsClientToAuthentication::MsgProfileCreationRequest& message )
     : model_       ( model )
     , clients_     ( clients )
-    , strLogin_    ( message.login )
-    , strPassword_ ( message.m.passwordPresent ? message.password : "" )
-    , bSupervision_( message.superviseur != 0 )
+    , strLogin_    ( message.profile().login() )
+    , strPassword_ ( message.profile().has_password()  ? message.profile().password() : "" )
+    , bSupervision_( message.profile().superviseur() != 0 )
 {
-    ReadRights( message );
+    ReadRights( message.profile() );
 
     SendCreation( clients_ );
 }
@@ -74,7 +78,7 @@ Profile::Profile( const Model& model, ClientPublisher_ABC& clients, const ASN1T_
 Profile::~Profile()
 {
     authentication::ProfileDestruction asn;
-    asn() = strLogin_.c_str();
+    asn().set_login( strLogin_ );
     asn.Send( clients_ );
 }
 
@@ -149,12 +153,12 @@ void Profile::ReadPopulationRights( xml::xistream& xis, T_PopulationSet& contain
 
 namespace
 {
-    template< typename B, typename C >
-    void SetRights( const ASN1T_ListOID& asn, std::set< const B* >& list, const tools::Resolver_ABC< C >& model )
+    template< typename L, typename B, typename C >
+    void SetRights( const L& source, std::set< const B* >& list, const tools::Resolver_ABC< C >& model )
     {
         list.clear();
-        for( unsigned int i = 0; i < asn.n; ++i )
-            if( const B* entity = model.Find( asn.elem[i] ) )
+        for( int i = 0; i < source.elem_size(); ++i )
+            if( const B* entity = model.Find( source.elem(i).oid() ) )
                 list.insert( entity );
     }
 }
@@ -164,24 +168,24 @@ namespace
 // Name: Profile::ReadRights
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-void Profile::ReadRights( const ASN1T_Profile& message )
+void Profile::ReadRights( const MsgsAuthenticationToClient::MsgProfile& message )
 {
-    if( message.m.read_only_automatesPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_only_automates, readOnlyAutomats_, model_.automats_ );
-    if( message.m.read_only_campsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_only_camps, readOnlySides_, model_.sides_ );
-    if( message.m.read_only_formationsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_only_formations, readOnlyFormations_, model_.formations_ );
-    if( message.m.read_only_populationsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_only_populations, readOnlyPopulations_, model_.populations_ );
-    if( message.m.read_write_automatesPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_write_automates, readWriteAutomats_, model_.automats_ );
-    if( message.m.read_write_campsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_write_camps, readWriteSides_, model_.sides_ );
-    if( message.m.read_write_formationsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_write_formations, readWriteFormations_, model_.formations_ );
-    if( message.m.read_write_populationsPresent )
-        SetRights( (const ASN1T_ListOID&)message.read_write_populations, readWritePopulations_, model_.populations_ );
+    if( message.has_read_only_automates()  )
+        SetRights( message.read_only_automates(), readOnlyAutomats_, model_.automats_ );
+    if( message.has_read_only_camps()  )
+        SetRights( message.read_only_camps(), readOnlySides_, model_.sides_ );
+    if( message.has_read_only_formations()  )
+        SetRights( message.read_only_formations(), readOnlyFormations_, model_.formations_ );
+    if( message.has_read_only_populations()  )
+        SetRights( message.read_only_populations(), readOnlyPopulations_, model_.populations_ );
+    if( message.has_read_write_automates()  )
+        SetRights( message.read_write_automates(), readWriteAutomats_, model_.automats_ );
+    if( message.has_read_write_camps()  )
+        SetRights( message.read_write_camps(), readWriteSides_, model_.sides_ );
+    if( message.has_read_write_formations()  )
+        SetRights( message.read_write_formations(), readWriteFormations_, model_.formations_ );
+    if( message.has_read_write_populations()  )
+        SetRights( message.read_write_populations(), readWritePopulations_, model_.populations_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -197,74 +201,92 @@ bool Profile::CheckPassword( const std::string& strPassword ) const
 // Name: Profile::CheckRights
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const ASN1T_MsgsClientToSim& msg ) const
+bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) const
 {
-    switch( msg.msg.t )
-    {
-        case T_MsgsClientToSim_msg_msg_control_stop                    : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_control_pause                   : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_control_resume                  : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_control_change_time_factor      : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_control_date_time_change        : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_control_global_meteo            : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_control_local_meteo             : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_control_checkpoint_save_now     : return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_control_checkpoint_set_frequency: return bSupervision_;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_enable          : return bSupervision_; // LTO
+    const ::MsgsClientToSim::MsgClientToSim_Content& message = wrapper.message();
+    if( message.has_control_pause() )
+        return bSupervision_;
+    if( message.has_control_resume() )
+        return bSupervision_;
+    if( message.has_control_change_time_factor() )
+        return bSupervision_;
+    if( message.has_control_date_time_change() )
+        return bSupervision_;
+    if( message.has_control_global_meteo() )
+        return bSupervision_;
+    if( message.has_control_local_meteo() )
+        return bSupervision_;
+    if( message.has_control_checkpoint_save_now() )
+        return bSupervision_;
+    if( message.has_control_checkpoint_set_frequency() )
+        return bSupervision_;
+    if( wrapper.message().has_control_checkpoint_set_frequency() )
+        return bSupervision_;
+    if ( wrapper.message().has_knowledge_group_creation_request() )  // $$$$ _RC_ FDS 2010-01-22: To validate
+        return bSupervision_;
+    if ( wrapper.message().has_knowledge_group_update_request() )     // $$$$ _RC_ FDS 2010-01-22: To validate
+        return bSupervision_;
+    if( wrapper.message().has_control_toggle_vision_cones() )
+        return true;
+    if( message.has_unit_order() )
+        return true;
+    if( message.has_automat_order() )
+        return true;
+    if( message.has_population_order() )
+        return true;
+    if( message.has_frag_order() )
+        return true;
+    if( message.has_set_automat_mode() )
+        return true;
+    if( message.has_unit_creation_request() )
+        return true;
+    if( message.has_unit_magic_action() )
+        return true;
+    if( message.has_object_magic_action() )
+        return true;
+    if( message.has_population_magic_action() )
+        return true;
+    if( message.has_change_diplomacy() )
+        return true;
+    if( message.has_automat_change_knowledge_group() )
+        return true;
+    if( message.has_automat_change_logistic_links() )
+        return true;
+    if( message.has_automat_change_superior() )
+        return true;
+    if( message.has_unit_change_superior() )
+        return true;
+    if( message.has_log_supply_push_flow() )
+        return true;
+    if( message.has_log_supply_change_quotas() )
+        return true;
 
-        case T_MsgsClientToSim_msg_msg_control_toggle_vision_cones   : return true;
-        case T_MsgsClientToSim_msg_msg_unit_order                    : return true;
-        case T_MsgsClientToSim_msg_msg_automat_order                 : return true;
-        case T_MsgsClientToSim_msg_msg_population_order              : return true;
-        case T_MsgsClientToSim_msg_msg_frag_order                    : return true;
-        case T_MsgsClientToSim_msg_msg_set_automat_mode              : return true;
-        case T_MsgsClientToSim_msg_msg_unit_creation_request         : return true;
-        case T_MsgsClientToSim_msg_msg_unit_magic_action             : return true;
-        case T_MsgsClientToSim_msg_msg_object_magic_action           : return true;
-        case T_MsgsClientToSim_msg_msg_population_magic_action       : return true;
-
-        case T_MsgsClientToSim_msg_msg_change_diplomacy              : return true;
-        case T_MsgsClientToSim_msg_msg_automat_change_knowledge_group: return true;
-        case T_MsgsClientToSim_msg_msg_automat_change_logistic_links : return true;
-        case T_MsgsClientToSim_msg_msg_automat_change_superior       : return true;
-        case T_MsgsClientToSim_msg_msg_unit_change_superior          : return true;
-        case T_MsgsClientToSim_msg_msg_log_supply_push_flow          : return true;
-        case T_MsgsClientToSim_msg_msg_log_supply_change_quotas      : return true;
-        
-        // LTO begin
-        case T_MsgsClientToSim_msg_msg_knowledge_group_change_superior  : return true;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_delete           : return true;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_set_type         : return true;
-        case T_MsgsClientToSim_msg_msg_knowledge_group_creation         : return true;
-        // LTO end
-
-        default:
-            return false;
-    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Profile::CheckRights
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const ASN1T_MsgsClientToAuthentication& msg ) const
+bool Profile::CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& wrapper ) const
 {
-    switch( msg.msg.t )
-    {
-        case T_MsgsClientToAuthentication_msg_msg_authentication_request     : return true;
-        case T_MsgsClientToAuthentication_msg_msg_profile_creation_request   : return bSupervision_; //$$$ Administration
-        case T_MsgsClientToAuthentication_msg_msg_profile_update_request     : return bSupervision_; //$$$ Administration
-        case T_MsgsClientToAuthentication_msg_msg_profile_destruction_request: return bSupervision_; //$$$ Administration
-        default:
-            return false;
-    }
+    if( wrapper.message().has_authentication_request() )
+        return true;
+    else if( wrapper.message().has_profile_creation_request() )
+        return bSupervision_; //$$$ Administration
+    else if( wrapper.message().has_profile_update_request() )
+        return bSupervision_; //$$$ Administration
+    else if( wrapper.message().has_profile_destruction_request() )
+        return bSupervision_; //$$$ Administration
+    else
+        return false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Profile::CheckRights
 // Created: AGE 2007-08-23
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const ASN1T_MsgsClientToReplay& ) const
+bool Profile::CheckRights( const MsgsClientToReplay::MsgClientToReplay& ) const
 {
     return bSupervision_;
 }
@@ -273,10 +295,10 @@ bool Profile::CheckRights( const ASN1T_MsgsClientToReplay& ) const
 // Name: Profile::CheckRights
 // Created: AGE 2008-06-10
 // -----------------------------------------------------------------------------
-bool Profile::CheckRights( const ASN1T_ChatTarget& source, const ASN1T_ChatTarget& target ) const
+bool Profile::CheckRights( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const
 {
-    const std::string t( target.profile );
-    const std::string s( source.profile );
+    const std::string t( target.profile() );
+    const std::string s( source.profile() );
     return t.empty() || strLogin_ == t || strLogin_ == s;
 }
 
@@ -285,11 +307,8 @@ namespace
     template< typename List, typename Entity >
     void Serialize( List& asn, const std::set< const Entity* >& list )
     {
-        asn.n = list.size();
-        asn.elem = asn.n > 0 ? new ASN1T_OID[ asn.n ] : 0;
-        unsigned int i = 0;
-        for( std::set< const Entity* >::const_iterator it = list.begin(); it != list.end(); ++it, ++i )
-            asn.elem[i] = (*it)->GetId();
+        for( std::set< const Entity* >::const_iterator it = list.begin(); it != list.end(); ++it )
+            asn.add_elem()->set_oid( (*it)->GetId() );
     }
 }
 
@@ -297,55 +316,46 @@ namespace
 // Name: Profile::Send
 // Created: NLD 2006-10-09
 // -----------------------------------------------------------------------------
-void Profile::Send( ASN1T_Profile& asn ) const
+void Profile::Send( MsgsAuthenticationToClient::MsgProfile& asn ) const
 {
-    asn.m.read_only_automatesPresent    = 1;
-    asn.m.read_only_campsPresent        = 1;
-    asn.m.read_only_formationsPresent   = 1;
-    asn.m.read_only_populationsPresent  = 1;
-    asn.m.read_write_automatesPresent   = 1;
-    asn.m.read_write_campsPresent       = 1;
-    asn.m.read_write_formationsPresent  = 1;
-    asn.m.read_write_populationsPresent = 1;
+    asn.set_login( strLogin_.c_str() );
+    asn.set_superviseur( bSupervision_ );
 
-    asn.login = strLogin_.c_str();
-    asn.superviseur = bSupervision_;
-
-    Serialize( asn.read_only_automates, readOnlyAutomats_ );
-    Serialize( asn.read_write_automates, readWriteAutomats_ );
-    Serialize( asn.read_only_camps, readOnlySides_ );
-    Serialize( asn.read_write_camps, readWriteSides_ );
-    Serialize( asn.read_only_formations, readOnlyFormations_ );
-    Serialize( asn.read_write_formations, readWriteFormations_ );
-    Serialize( asn.read_only_populations, readOnlyPopulations_ );
-    Serialize( asn.read_write_populations, readWritePopulations_ );
+    Serialize( *asn.mutable_read_only_automates(), readOnlyAutomats_ );
+    Serialize( *asn.mutable_read_write_automates(), readWriteAutomats_ );
+    Serialize( *asn.mutable_read_only_camps(), readOnlySides_ );
+    Serialize( *asn.mutable_read_write_camps(), readWriteSides_ );
+    Serialize( *asn.mutable_read_only_formations(), readOnlyFormations_ );
+    Serialize( *asn.mutable_read_write_formations(), readWriteFormations_ );
+    Serialize( *asn.mutable_read_only_populations(), readOnlyPopulations_ );
+    Serialize( *asn.mutable_read_write_populations(), readWritePopulations_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Profile::AsnDelete
+// Name: Profile::Delete
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------
-void Profile::AsnDelete( ASN1T_Profile& asn )
+void Profile::Delete( MsgsAuthenticationToClient::MsgProfile& asn )
 {
-    if( asn.m.read_only_automatesPresent && asn.read_only_automates.n > 0 )
-        delete [] asn.read_only_automates.elem;
-    if( asn.m.read_write_automatesPresent && asn.read_write_automates.n > 0 )
-        delete [] asn.read_write_automates.elem;
+    if( asn.has_read_only_automates() && asn.read_only_automates().elem_size() > 0 )
+        asn.mutable_read_only_automates()->Clear();
+    if( asn.has_read_write_automates() && asn.read_write_automates().elem_size() > 0 )
+        asn.mutable_read_write_automates()->Clear();
 
-    if( asn.m.read_only_campsPresent && asn.read_only_camps.n > 0 )
-        delete [] asn.read_only_camps.elem;
-    if( asn.m.read_write_campsPresent && asn.read_write_camps.n > 0 )
-        delete [] asn.read_write_camps.elem;
+    if( asn.has_read_only_camps() && asn.read_only_camps().elem_size() > 0 )
+        asn.mutable_read_only_camps()->Clear();
+    if( asn.has_read_write_camps() && asn.read_write_camps().elem_size() > 0 )
+        asn.mutable_read_write_camps()->Clear();
 
-    if( asn.m.read_only_formationsPresent && asn.read_only_formations.n > 0 )
-        delete [] asn.read_only_formations.elem;
-    if( asn.m.read_write_formationsPresent && asn.read_write_formations.n > 0 )
-        delete [] asn.read_write_formations.elem;
+    if( asn.has_read_only_formations() && asn.read_only_formations().elem_size() > 0 )
+        asn.mutable_read_only_formations()->Clear();
+    if( asn.has_read_write_formations() && asn.read_write_formations().elem_size() > 0 )
+        asn.mutable_read_write_formations()->Clear();
 
-    if( asn.m.read_only_populationsPresent && asn.read_only_populations.n > 0 )
-        delete [] asn.read_only_populations.elem;
-    if( asn.m.read_write_populationsPresent && asn.read_write_populations.n > 0 )
-        delete [] asn.read_write_populations.elem;
+    if( asn.has_read_only_populations() && asn.read_only_populations().elem_size() > 0 )
+        asn.mutable_read_only_populations()->Clear();
+    if( asn.has_read_write_populations() && asn.read_write_populations().elem_size() > 0 )
+        asn.mutable_read_write_populations()->Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -355,33 +365,32 @@ void Profile::AsnDelete( ASN1T_Profile& asn )
 void Profile::SendCreation( ClientPublisher_ABC& publisher ) const
 {
     authentication::ProfileCreation asn;
-    Send( asn() );
-    asn().m.passwordPresent = 1;
-    asn().password = strPassword_.c_str();
+    //Send( *asn().mutable_profile() );
+    Send( *asn().mutable_profile() );
+    asn().mutable_profile()->set_password( strPassword_.c_str() );
     asn.Send( publisher );
-    Profile::AsnDelete( asn() );
+    Profile::Delete( *asn().mutable_profile() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Profile::Update
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------
-void Profile::Update( const ASN1T_MsgProfileUpdateRequest& message )
+void Profile::Update( const MsgsClientToAuthentication::MsgProfileUpdateRequest& message )
 {
-    strLogin_ = message.profile.login;
-    if( message.profile.m.passwordPresent )
-        strPassword_ = message.profile.password;
-    bSupervision_ = message.profile.superviseur != 0;
-    ReadRights( message.profile );
+    strLogin_ = message.profile().login();
+    if( message.profile().has_password()  )
+        strPassword_ = message.profile().password();
+    bSupervision_ = message.profile().superviseur() != 0;
+    ReadRights( message.profile() );
 
     authentication::ProfileUpdate asn;
-    asn().login = message.login;
-    asn().profile.m.passwordPresent = message.profile.m.passwordPresent;
-    if( asn().profile.m.passwordPresent )
-        asn().profile.password = strPassword_.c_str();
-    Send( asn().profile );
+    asn().set_login( message.login() );
+    if( asn().profile().has_password()  )
+        asn().mutable_profile()->set_password( strPassword_.c_str() );
+    Send( *asn().mutable_profile() );
     asn.Send( clients_ );
-    Profile::AsnDelete( asn().profile );
+    Profile::Delete( *asn().mutable_profile() );
 }
 
 // -----------------------------------------------------------------------------
@@ -409,9 +418,8 @@ void Profile::SetRight( const kernel::Automat_ABC& entity, bool readonly, bool r
         readWriteAutomats_.erase( &entity );
 
     authentication::ProfileUpdate asn;
-    asn().login = strLogin_.c_str();
-    asn().profile.m.passwordPresent = 0;
-    Send( asn().profile );
+    asn().set_login( strLogin_.c_str() );
+    Send( *asn().mutable_profile() );
     asn.Send( clients_ );
-    Profile::AsnDelete( asn().profile );
+    Profile::Delete( *asn().mutable_profile() );
 }

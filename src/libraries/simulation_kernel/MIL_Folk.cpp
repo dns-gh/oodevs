@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Folk.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Config.h"
 
 #include "folk/Config.h"
@@ -17,7 +18,8 @@
 #include "folk/ObjectManager_ABC.h"
 #include "folk/Serializer_ABC.h"
 #include "folk/Time.h"
-#include "Network/NET_ASN_Messages.h"
+#include "protocol/SimulationSenders.h"
+#include "protocol/ClientSenders.h"
 
 using namespace population;
 
@@ -102,29 +104,27 @@ namespace
     template< typename T >
     void CopyList( T& list, const std::vector<const std::string*>& value )
     {
-        list.n = value.size();
-        list.elem = new ASN1TDynOctStr[list.n];
-        for( unsigned int i = 0; i < list.n; ++i )
-            list.elem[i] = value[i]->c_str();
+        for( int i = 0; i < list.elem_size(); ++i )
+            *list.mutable_elem( i ) = value[i]->c_str();
     }
 
     struct FolkCreationSerializer : public population::message::Serializer_ABC
     {
-        explicit FolkCreationSerializer( NET_ASN_MsgFolkCreation& asn ) : asn_ ( &asn ) 
+        explicit FolkCreationSerializer( client::FolkCreation& asn ) : asn_ ( &asn ) 
         {
-            (*asn_)().profiles.n = 0;
-            (*asn_)().activities.n = 0;
+//            (*asn_)().mutable_profiles()->set_n( 0 );
+//            (*asn_)().mutable_activities()->set_n( 0 );
         }
 
         virtual population::message::Serializer_ABC& operator <<( const std::vector<const std::string*>& value )
         {
-            if ( (*asn_)().profiles.n == 0 )
-                CopyList( (*asn_)().profiles, value );
+            if ( (*asn_)().profiles().elem_size() == 0 )
+                CopyList( *(*asn_)().mutable_profiles(), value );
             else
-                CopyList( (*asn_)().activities, value );
+                CopyList( *(*asn_)().mutable_activities(), value );
             return *this;
         }
-        NET_ASN_MsgFolkCreation* asn_;
+        client::FolkCreation* asn_;
     };
 
     struct FolkUpdateSerializer : public population::message::Serializer_ABC
@@ -140,9 +140,9 @@ namespace
 
         virtual population::message::Serializer_ABC& operator <<( int value )
         {
-            messages_.push_back( ASN1T_MsgFolkGraphEdgeUpdate() );
-            messages_.back().oid     = value;
-            messages_.back().shp_oid = count_++;
+            messages_.push_back( MsgsSimToClient::MsgFolkGraphEdgeUpdate() );
+            messages_.back().set_oid( value );
+            messages_.back().set_shp_oid( count_++ );
             return *this;
         }
 
@@ -152,8 +152,8 @@ namespace
             if( size + bufferOffset_ > buffer_.size() )
                 Flush();
             memcpy( &buffer_[bufferOffset_], &*value.begin(), size * sizeof( int ) );
-            messages_.back().population_occupation.n    = size;
-            messages_.back().population_occupation.elem = &buffer_[bufferOffset_];
+            for (std::vector < int >::const_iterator iter(buffer_.begin()); iter != buffer_.end(); ++iter)
+                messages_.back().add_population_occupation( *iter );
             bufferOffset_+=size;
             return *this;
         } 
@@ -161,10 +161,10 @@ namespace
         {
             if( ! messages_.empty() )
             {
-                NET_ASN_MsgFolkGraphUpdate message;
-                message().n    = messages_.size();
-                message().elem = &*messages_.begin();
-                message.Send();
+                client::FolkGraphUpdate message;
+                for (std::vector< MsgsSimToClient::MsgFolkGraphEdgeUpdate >::const_iterator iter(messages_.begin()); iter != messages_.end(); ++iter)
+                    *message().add_elem() = *iter ;
+                message.Send( NET_Publisher_ABC::Publisher() );
             }
             bufferOffset_ = 0;
             messages_.resize( 0 );
@@ -173,7 +173,7 @@ namespace
         void Flush()
         {
             if( messages_.empty() ) return;
-            int lastId = messages_.back().oid;
+            int lastId = messages_.back().oid();
             messages_.pop_back();
             --count_;
             
@@ -182,7 +182,7 @@ namespace
             *this << lastId;
         }
         std::vector< int > buffer_;
-        std::vector< ASN1T_MsgFolkGraphEdgeUpdate > messages_;
+        std::vector< MsgsSimToClient::MsgFolkGraphEdgeUpdate > messages_;
         unsigned bufferOffset_;
         unsigned count_;
     };
@@ -209,19 +209,19 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_Folk::SendCreation() const
 {    
-    NET_ASN_MsgFolkCreation asn;
+    client::FolkCreation asn;
     FolkCreationSerializer  serializer( asn );
-    asn().container_size = 5; // $$$$ AGE 2007-09-04: hc
+    asn().set_container_size( 5 ); // $$$$ AGE 2007-09-04: hc
 
     EdgeCounter counter;
     pFlow_->SerializePopulationUpdate( counter );
-    asn().edge_number = counter.count_;
+    asn().set_edge_number( counter.count_ );
 
     MT_LOG_INFO_MSG( "MIL_Folk::SendCreation()" )
     pFlow_->SerializePopulationCreation( serializer );
-    asn.Send();
-    delete [] asn().profiles.elem;
-    delete [] asn().activities.elem;    
+    asn.Send( NET_Publisher_ABC::Publisher() );
+    asn().mutable_profiles()->Clear();
+    asn().mutable_activities()->Clear();    
 }
 
 // -----------------------------------------------------------------------------

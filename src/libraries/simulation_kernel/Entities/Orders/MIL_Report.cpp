@@ -13,15 +13,13 @@
 
 #include "MIL_AgentServer.h"
 #include "MIL_Report.h"
-#include "simulation_orders/MIL_ParameterType_ABC.h"
-#include "Network/NET_ASN_Messages.h"
-#include "Network/NET_ASN_Tools.h"
-#include "Entities/Effects/MIL_Effect_IndirectFire.h"
-#include <xeumeuleu/xml.h>
 #include "MIL_MissionParameterFactory.h"
-
-
-
+#include "Entities/Effects/MIL_Effect_IndirectFire.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
+#include "protocol/ClientSenders.h"
+#include "simulation_orders/MIL_ParameterType_ABC.h"
+#include <xeumeuleu/xml.h>
 
 // =============================================================================
 // FACTORY
@@ -119,7 +117,7 @@ void MIL_Report::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Report::ReadReport( xml::xistream& xis )
 {
-    uint id;
+    unsigned int id;
     xis >> xml::attribute( "id", id );
 
     const MIL_Report*& pReport = reports_[ id ];
@@ -136,7 +134,7 @@ void MIL_Report::ReadReport( xml::xistream& xis )
 // Name: MIL_Report constructor
 // Created: NLD 2006-12-06
 // -----------------------------------------------------------------------------
-MIL_Report::MIL_Report( uint id, xml::xistream& xis )
+MIL_Report::MIL_Report( unsigned int id, xml::xistream& xis )
     : nID_       ( id )
     , strMessage_()
 {
@@ -175,40 +173,31 @@ MIL_Report::~MIL_Report()
 // Name: MIL_Report::DoSend
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-bool MIL_Report::DoSend( uint nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int /*reportId*/, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
+bool MIL_Report::DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int /*reportId*/, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
+    client::Report asn;
     if( params.size() != parameters_.size() )
     {
         MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
         return false;
     }
 
-    NET_ASN_MsgReport asn;
- 
-    asn().oid          = nSenderID;
-    asn().cr           = nID_;
-    asn().cr_oid       = std::numeric_limits<uint>::max() - ids_.GetFreeIdentifier(); // descending order
-    asn().type         = (ASN1T_EnumReportType)nType;
-    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), asn().time );
-    asn().parametres.n = parameters_.size();
+    asn().set_oid( nSenderID );
+    asn().set_cr( nID_ );
+    asn().set_cr_oid( std::numeric_limits< unsigned int >::max() - ids_.GetFreeIdentifier() ); // descending order
+    asn().set_type( MsgsSimToClient::EnumReportType( nType ) );
+    NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_time() );
+    asn().mutable_parametres();  // $$$$ FHD 2009-10-28: should be removed if field is optional in protocol
     if( !parameters_.empty() )
-    {
-        int size = parameters_.size();
-        asn().parametres.elem = new ASN1T_MissionParameter[ size ];
-        for( int i = 0; i < size; ++i )
-        {
-            if( !parameters_[i]->Copy( *params[ i ], asn().parametres.elem[ i ], knowledgeResolver, false /*not optional*/ ) )
+        for( unsigned int i = 0; i < parameters_.size(); ++i )
+            if( !parameters_[i]->Copy( *params[ i ], *asn().mutable_parametres()->add_elem(), knowledgeResolver, false /*not optional*/ ) )
                 return false; //$$$ Memory leak
-        }
-    }
+    asn.Send( NET_Publisher_ABC::Publisher() );
 
-    asn.Send();
-
-    uint nTmp = 0;
-    for( CIT_ParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++nTmp )
-        (**it).CleanAfterSerialization( asn().parametres.elem[ nTmp ] );
-    if( asn().parametres.n > 0 )
-        delete [] asn().parametres.elem;
-
+    unsigned int i = 0;
+    for( CIT_ParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++i )
+        (**it).CleanAfterSerialization( *asn().mutable_parametres()->mutable_elem( i ) );
+    if( asn().parametres().elem_size() > 0 )
+        asn().mutable_parametres()->Clear();
     return true;
 }

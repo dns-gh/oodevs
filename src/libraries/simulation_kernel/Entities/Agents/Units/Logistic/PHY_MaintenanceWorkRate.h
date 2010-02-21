@@ -12,6 +12,10 @@
 #ifndef __PHY_MaintenanceWorkRate_h_
 #define __PHY_MaintenanceWorkRate_h_
 
+namespace Common
+{
+    enum EnumLogMaintenanceRegimeTravail;
+}
 
 namespace xml
 {
@@ -39,15 +43,15 @@ public:
     //@{
     static       void                     Initialize( xml::xistream& xis );
     static       void                     Terminate ();
-    static const PHY_MaintenanceWorkRate* Find      ( ASN1T_EnumLogMaintenanceRegimeTravail nID );
+    static const PHY_MaintenanceWorkRate* Find      ( Common::EnumLogMaintenanceRegimeTravail nID );
     //@}
 
     //! @name Accessors
     //@{
-    const std::string&                          GetName                  () const;
-          ASN1T_EnumLogMaintenanceRegimeTravail GetAsnID                 () const;
-          uint                                  GetNbrWorkerAllowedToWork( uint nNbrAvailable ) const;
-          uint                                  GetDelayBeforeWarningRC  () const;
+    const std::string& GetName() const;
+    Common::EnumLogMaintenanceRegimeTravail GetAsnID() const;
+    unsigned int GetNbrWorkerAllowedToWork( unsigned int nNbrAvailable ) const;
+    unsigned int GetDelayBeforeWarningRC() const;
     //@}
 
 private:
@@ -58,7 +62,7 @@ private:
     //@}
 
 private:
-     PHY_MaintenanceWorkRate( const std::string& strName, ASN1T_EnumLogMaintenanceRegimeTravail asn );
+     PHY_MaintenanceWorkRate( const std::string& strName, Common::EnumLogMaintenanceRegimeTravail asn );
     ~PHY_MaintenanceWorkRate();
 
     //! @name Init
@@ -69,10 +73,10 @@ private:
 
 private:
     const std::string                           strName_;
-    const ASN1T_EnumLogMaintenanceRegimeTravail asn_;
+    const Common::EnumLogMaintenanceRegimeTravail asn_;
           MT_Float                              rWorkerRatio_;
           MT_Float                              rWorkTime_;
-          uint                                  nDelayBeforeWarningRC_;
+          unsigned int                                  nDelayBeforeWarningRC_;
 
 private:
     static T_WorkRateMap workRates_;

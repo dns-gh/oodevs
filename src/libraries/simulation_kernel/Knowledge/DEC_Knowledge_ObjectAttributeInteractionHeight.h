@@ -21,8 +21,7 @@ class InteractionHeightAttribute;
 */
 // Created: LDC 2009-03-09
 // =============================================================================
-class DEC_Knowledge_ObjectAttributeInteractionHeight
-    : public DEC_Knowledge_ObjectAttribute_ABC
+class DEC_Knowledge_ObjectAttributeInteractionHeight : public DEC_Knowledge_ObjectAttribute_ABC
 {
 
 public:
@@ -43,12 +42,12 @@ public:
     virtual void UpdateOnPerceptionLevel( const PHY_PerceptionLevel& currentPerceptionLevel );    
     virtual void UpdateOnPerception( const DEC_Knowledge_ObjectPerception& perception );
     virtual void UpdateOnCollision( const DEC_Knowledge_ObjectCollision& collision  );
-    virtual void Send( ASN1T_ObjectAttributes& asn ) const;
+    virtual void Send( Common::MsgObjectAttributes& asn ) const;
     //@}
 
     //! @name CheckPoint / boost deserialize
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void Register( DEC_Knowledge_Object& knObject );
     //@}
 

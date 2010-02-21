@@ -10,6 +10,7 @@
 #include "dispatcher_pch.h"
 
 #include "LogSupplyDotation.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
 
@@ -17,11 +18,11 @@ using namespace dispatcher;
 // Name: LogSupplyDotation constructor
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const ASN1T_DotationQuery& asn )
-    : nDotationType_( asn.ressource_id        )
-    , nNbrRequested_( asn.quantite_demandee   )
-    , nNbrGranted_  ( asn.quantite_accordee   )
-    , nNbrConvoyed_ ( asn.quantite_en_transit )
+LogSupplyDotation::LogSupplyDotation( const Model& /*model*/, const MsgsSimToClient::MsgDotationQuery& asn )
+    : nDotationType_( asn.ressource_id()        )
+    , nNbrRequested_( asn.quantite_demandee()   )
+    , nNbrGranted_  ( asn.quantite_accordee()   )
+    , nNbrConvoyed_ ( asn.quantite_en_transit() )
 {
 }
 
@@ -38,21 +39,21 @@ LogSupplyDotation::~LogSupplyDotation()
 // Name: LogSupplyDotation::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void LogSupplyDotation::Update( const ASN1T_DotationQuery& asn )
+void LogSupplyDotation::Update( const MsgsSimToClient::MsgDotationQuery& asn )
 {
-    nNbrRequested_ = asn.quantite_demandee;
-    nNbrGranted_   = asn.quantite_accordee;
-    nNbrConvoyed_  = asn.quantite_en_transit;
+    nNbrRequested_ = asn.quantite_demandee();
+    nNbrGranted_   = asn.quantite_accordee();
+    nNbrConvoyed_  = asn.quantite_en_transit();
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogSupplyDotation::Send
 // Created: NLD 2006-09-28
 // -----------------------------------------------------------------------------
-void LogSupplyDotation::Send( ASN1T_DotationQuery& asn ) const
+void LogSupplyDotation::Send( MsgsSimToClient::MsgDotationQuery& asn ) const
 {
-    asn.ressource_id        = nDotationType_;
-    asn.quantite_demandee   = nNbrRequested_;
-    asn.quantite_accordee   = nNbrGranted_;
-    asn.quantite_en_transit = nNbrConvoyed_;
+    asn.set_ressource_id( nDotationType_ );
+    asn.set_quantite_demandee( nNbrRequested_ );
+    asn.set_quantite_accordee( nNbrGranted_ );
+    asn.set_quantite_en_transit( nNbrConvoyed_ );
 }

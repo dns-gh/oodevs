@@ -11,12 +11,14 @@
 #define __KnowledgeGroupsModel_h_
 
 #include "tools/Resolver.h"
-#include "game_asn/Simulation.h"
+
 
 namespace kernel
 {
     class KnowledgeGroup_ABC;
 }
+
+class TeamsModel;
 
 // =============================================================================
 /** @class  KnowledgeGroupsModel
@@ -36,7 +38,6 @@ public:
 
     //! @name Operations
     //@{
-    void Delete( const ASN1T_MsgKnowledgeGroupDelete& asn ); // LTO
     void Purge();
     //@}
 

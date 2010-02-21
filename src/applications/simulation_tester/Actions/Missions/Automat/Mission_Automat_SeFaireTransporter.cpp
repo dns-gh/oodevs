@@ -43,9 +43,9 @@ void Mission_Automat_SeFaireTransporter::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_SeFaireTransporter& asnMission = *new ASN1T_Mission_Automate_SeFaireTransporter();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_se_faire_transporter;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_se_faire_transporter = &asnMission;
+    Mission_Automate_SeFaireTransporter& asnMission = *new Mission_Automate_SeFaireTransporter();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_se_faire_transporter = &asnMission;
 
     const Location& zoneEmbarquement_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_SeFaireTransporter::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_SeFaireTransporter::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_se_faire_transporter );
-    ASN1T_Mission_Automate_SeFaireTransporter& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_se_faire_transporter;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_se_faire_transporter ());
+    Mission_Automate_SeFaireTransporter& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_se_faire_transporter;
 
     ASN_Tools::Delete( asnMission.zone_embarquement );
 

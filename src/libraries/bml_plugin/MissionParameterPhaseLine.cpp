@@ -19,6 +19,8 @@
 namespace bpt = boost::posix_time;
 using namespace plugins::bml;
 
+using namespace Common;
+
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLine constructor
 // Created: SBO 2008-05-22
@@ -46,7 +48,7 @@ MissionParameterPhaseLine::~MissionParameterPhaseLine()
 // Name: MissionParameterPhaseLine::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Serialize( ASN1T_MissionParameter& ) const
+void MissionParameterPhaseLine::Serialize( MsgMissionParameter& ) const
 {
     // NOTHING
 }
@@ -55,64 +57,79 @@ void MissionParameterPhaseLine::Serialize( ASN1T_MissionParameter& ) const
 // Name: MissionParameterPhaseLine::Clean
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Clean( ASN1T_MissionParameter& ) const
+void MissionParameterPhaseLine::Clean( MsgMissionParameter& ) const
 {
     // NOTHING
 }
 
 namespace
 {
-    ASN1T_EnumLimaType ToPhaseLineType( const std::string& function )
+    MsgLimaOrder_Function ToPhaseLineType( const std::string& function )
     {
         if( function == "LD" )
-            return EnumLimaType::ligne_debouche;
+            return MsgLimaOrder_Function_ligne_debouche;
         if( function == "LCA" )
-            return EnumLimaType::ligne_changement_attitude;
+            return MsgLimaOrder_Function_ligne_changement_attitude;
         if( function == "LC" )
-            return EnumLimaType::ligne_coordination;
+            return MsgLimaOrder_Function_ligne_coordination;
         if( function == "LI" )
-            return EnumLimaType::ligne_interdire;
+            return MsgLimaOrder_Function_ligne_interdire;
         if( function == "LO" )
-            return EnumLimaType::ligne_objectif;
+            return MsgLimaOrder_Function_ligne_objectif;
         if( function == "LCAR" )
-            return EnumLimaType::ligne_coup_arret;
+            return MsgLimaOrder_Function_ligne_coup_arret;
         if( function == "LR" )
-            return EnumLimaType::ligne_recueil;
+            return MsgLimaOrder_Function_ligne_recueil;
         if( function == "LDM" )
-            return EnumLimaType::ligne_debut_mission;
+            return MsgLimaOrder_Function_ligne_debut_mission;
         if( function == "LFM" )
-            return EnumLimaType::ligne_fin_mission;
+            return MsgLimaOrder_Function_ligne_fin_mission;
         if( function == "LIA" )
-            return EnumLimaType::ligne_identification_accueil;
-        return ASN1T_EnumLimaType( -1 );
+            return MsgLimaOrder_Function_ligne_identification_accueil;
+        return MsgLimaOrder_Function( -1 );
     }
 
-    void SerializeFunctions( ASN1T__SeqOfEnumLimaType& asn, const std::string& functions )
-    {
-        asn.n = 1;
-        asn.elem = new ASN1T_EnumLimaType[asn.n];
-        asn.elem[0] = ToPhaseLineType( functions );
-    }
+// $$$$ _RC_ FDS 2010-01-22: 
+// $$$$ ***********************************
+// $$$$ *** Architect Validation Needed ***  
+// $$$$ ***********************************
+// $$$$ Refactor after protobuf migration.
+// $$$$ This function is removed else we need to used protobuf::repeated structure
+// $$$$  for only one use is probably not mandatory
+// $$$$ The call in MissionParameterPhaseLine::Serialize is replaced by adapted serailization code
+// $$$$ ***********************************
+//    void SerializeFunctions( SeqOfEnumLimaType& asn, const std::string& functions )
+//    {        
+//        for (int i = 0; i < asn.elem_size(); ++i)
+//            asn.mutable_elem()->Add(0); // = new MsgLimaOrder_Function[asn.elem_size()]; // COULD BE BETTER
+//        asn.set_elem( 0, (MsgLimaOrder_Function) ToPhaseLineType( functions ) );
+//    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLine::Serialize
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Serialize( ASN1T_LimaOrder& asn ) const
+void MissionParameterPhaseLine::Serialize( MsgLimaOrder& message ) const
 {
-    SerializeFunctions( asn.fonctions, functions_ );
-    asn.lima.type = EnumLocationType::line;
-    points_->Serialize( asn.lima.coordinates );
-    asn.horaire = bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str();
+//    SerializeFunctions( *asn.mutable_fonctions(), functions_ );   
+    // $$$$ _RC_ FDS 2010-01-22:  Code to check
+    for (int i = 0; i < message.fonctions_size(); ++i)
+        message.add_fonctions( MsgLimaOrder_Function() ); 
+    message.set_fonctions( 0, (MsgLimaOrder_Function) ToPhaseLineType( functions_ ) );
+
+    message.mutable_lima()->mutable_location()->set_type( MsgLocation_Geometry_line );
+    points_->Serialize( *message.mutable_lima()->mutable_location()->mutable_coordinates() );
+    message.mutable_horaire()->set_data( bpt::to_iso_string( bpt::from_time_t( 0 ) ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameterPhaseLine::Clean
 // Created: SBO 2008-05-22
 // -----------------------------------------------------------------------------
-void MissionParameterPhaseLine::Clean( ASN1T_LimaOrder& asn ) const
+void MissionParameterPhaseLine::Clean( MsgLimaOrder& asn ) const
 {
-    points_->Clean( asn.lima.coordinates );
-    delete[] asn.fonctions.elem;
+    // $$$$ _RC_ FDS 2010-01-22: clean not mandatory in protobuf can be removed ???
+//    points_->Clean( *asn.mutable_lima()->mutable_location()->mutable_coordinates() );
+//    delete[] asn.mutable_fonctions()->mutable_elem();
 }

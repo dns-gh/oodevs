@@ -16,7 +16,7 @@
 #include "AgentManipulator.h"
 #include "AutomatManipulator.h"
 #include "directia/Brain.h"
-#include "game_asn/Messenger.h"
+
 #include "clients_kernel/Entity_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
@@ -60,14 +60,14 @@ void ClientConditions::RegisterIn( directia::Brain& brain )
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
 {
-    struct UserChoice : public SimpleEventCondition< ASN1T_MsgTextMessage >
+    struct UserChoice : public SimpleEventCondition< MsgTextMessage >
     {
         UserChoice( kernel::Controller& controller )
             : SimpleEventCondition( controller ) {}
 
-        virtual void NotifyUpdated( const ASN1T_MsgTextMessage& message )
+        virtual void NotifyUpdated( const MsgTextMessage& message )
         {
-            CommandString command( message.message );
+            CommandString command( message.message() );
             if( command.Command() == "choose" )
                 Trigger( command.Arg( 1 ), command.Arg( 2 ) );
         };
@@ -82,15 +82,15 @@ boost::shared_ptr< Condition_ABC > ClientConditions::UserChose()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
 {
-    struct MissionChoice : public SimpleEventCondition< ASN1T_MsgTextMessage >
+    struct MissionChoice : public SimpleEventCondition< MsgTextMessage >
     {
         MissionChoice( kernel::Controller& controller, const dispatcher::Model& model )
             : SimpleEventCondition( controller )
             , resolver_( new ModelResolver( model ) ){}
 
-        virtual void NotifyUpdated( const ASN1T_MsgTextMessage& message )
+        virtual void NotifyUpdated( const MsgTextMessage& message )
         {
-            CommandString command( message.message );
+            CommandString command( message.message() );
             if( command.Command() == "mission" )
             {
                 const std::string mission = command.Arg( 3 );
@@ -116,14 +116,14 @@ boost::shared_ptr< Condition_ABC > ClientConditions::MissionChosen()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Condition_ABC > ClientConditions::EntitySelected()
 {
-    struct EntitySelected : public SimpleEventCondition< ASN1T_MsgTextMessage >
+    struct EntitySelected : public SimpleEventCondition< MsgTextMessage >
     {
         EntitySelected( kernel::Controller& controller, const dispatcher::Model& model )
             : SimpleEventCondition( controller ), resolver_( new ModelResolver( model ) ) {}
 
-        virtual void NotifyUpdated( const ASN1T_MsgTextMessage& message )
+        virtual void NotifyUpdated( const MsgTextMessage& message )
         {
-            CommandString command( message.message );
+            CommandString command( message.message() );
             if( command.Command() == "select" )
             {
                 const kernel::Entity_ABC* entity = resolver_->Resolve( command );

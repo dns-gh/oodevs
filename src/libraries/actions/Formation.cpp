@@ -31,8 +31,8 @@ Formation::Formation( const OrderParameter& parameter, const Formation_ABC& form
 // Name: Formation constructor
 // Created: SBO 2007-10-29
 // -----------------------------------------------------------------------------
-Formation::Formation( const OrderParameter& parameter, const ASN1T_OID& asn, const tools::Resolver_ABC< Formation_ABC >& resolver, kernel::Controller& controller )
-    : Entity< Formation_ABC >( parameter, &resolver.Get( asn ), controller )
+Formation::Formation( const OrderParameter& parameter, const int& message, const tools::Resolver_ABC< Formation_ABC >& resolver, kernel::Controller& controller )
+    : Entity< Formation_ABC >( parameter, &resolver.Get( message ), controller )
 {
     // NOTHING
 }

@@ -40,8 +40,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( ASN1T_MissionParameter& parameter ) const;
-    virtual void Clean( ASN1T_MissionParameter& parameter ) const;
+    virtual void Serialize( MsgMissionParameter& parameter ) const;
+    virtual void Clean( MsgMissionParameter& parameter ) const;
     //@}
 
 private:

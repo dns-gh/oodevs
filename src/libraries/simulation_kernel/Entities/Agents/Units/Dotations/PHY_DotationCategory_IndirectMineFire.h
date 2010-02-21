@@ -36,7 +36,7 @@ public:
     //@}
 
 private:
-    uint nNbrObjects_;
+    unsigned int nNbrObjects_;
 };
 
 #endif // __PHY_DotationCategory_IndirectMineFire_h_

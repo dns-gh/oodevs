@@ -12,7 +12,10 @@
 
 #include "clients_gui/CrossingSitePrototype_ABC.h"
 
-struct ASN1T_MagicActionCreateObject;
+namespace MsgsClientToSim
+{
+    class MsgMagicActionCreateObject;
+}
 
 // =============================================================================
 /** @class  CrossingSitePrototype
@@ -26,7 +29,7 @@ class CrossingSitePrototype : public gui::CrossingSitePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossingSitePrototype( QWidget* parent, ASN1T_MagicActionCreateObject& msg );
+    CrossingSitePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg );
     virtual ~CrossingSitePrototype();
     //@}
 
@@ -46,7 +49,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;
+    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
     //@}
 };
 

@@ -10,7 +10,10 @@
 #ifndef __Who_h_
 #define __Who_h_
 
-#include "game_asn/Simulation.h"
+#include "protocol/protocol.h"
+
+using namespace Common;
+using namespace MsgsSimToClient;
 
 namespace xml
 {
@@ -42,7 +45,7 @@ public:
     //@{
     explicit Who( const dispatcher::Agent& entity );
     explicit Who( const dispatcher::Automat& entity );
-             Who( const dispatcher::Agent& entity, const ASN1T_MsgUnitAttributes& attributes );
+             Who( const dispatcher::Agent& entity, const MsgUnitAttributes& attributes );
              Who( const dispatcher::Agent& entity, int detectionLevel );
     virtual ~Who();
     //@}
@@ -73,7 +76,7 @@ private:
     //@{
     const dispatcher::Agent* agent_;
     const dispatcher::Automat* automat_;
-    const ASN1T_MsgUnitAttributes* attributes_;
+    const MsgUnitAttributes* attributes_;
     int level_;
     //@}
 };

@@ -9,25 +9,26 @@
 
 #include "gaming_pch.h"
 #include "UrbanModel.h"
+#include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "gaming/UrbanBlockDeserializer.h"
+#include "protocol/Simulation.h"
+#include "protocol/Protocol.h"
+#include "urban/BlockModel.h"
 #include "urban/Model.h"
 #include "urban/StaticModel.h"
 #include "urban/UrbanFactory.h"
-#include "urban/BlockModel.h"
-#include "clients_gui/TerrainObjectProxy.h"
-#include "clients_kernel/Controller.h"
-#include "gaming/UrbanBlockDeserializer.h"
-#include <Urban/UrbanObjectDeserializer_ABC.h>
+#include "urban/UrbanObjectDeserializer_ABC.h"
 
-#include "geometry/Types.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controller& controller, urban::StaticModel& staticModel )
-    : staticModel_( staticModel )
-    , model_( *new urban::Model( staticModel_ ) )
-    , controller_( controller )
+UrbanModel::UrbanModel( kernel::Controller& controller, const urban::StaticModel& staticModel )
+    : controller_( controller )
+    , model_( new urban::Model( staticModel ) )
 {
     // NOTHING
 }
@@ -45,22 +46,21 @@ UrbanModel::~UrbanModel()
 // Name: UrbanModel::Create
 // Created: SLG 2009-10-205
 // -----------------------------------------------------------------------------
-void UrbanModel::Create( const ASN1T_MsgUrbanCreation& asn )
+void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
 {
-    unsigned i= 0;
     geometry::Polygon2f footPrint;
-    std::string name( asn.name );
-    unsigned long id = asn.oid;
-    while ( i < asn.location.coordinates.n )
+    std::string name( message.name() );
+    unsigned long id = message.oid();
+    for( int i = 0; i < message.location().coordinates().elem_size(); ++i )
     {
-        geometry::Point2f point( asn.location.coordinates.elem[i].latitude, asn.location.coordinates.elem[i].longitude );
+        const Common::MsgCoordLatLong& location = message.location().coordinates().elem( i );
+        const geometry::Point2f point( location.latitude(), location.longitude() );
         footPrint.Add( point );
-        ++i;
     }
-    urban::TerrainObject_ABC* object = model_.GetFactory().CreateBlock( id, name, footPrint );
-    urban::UrbanObjectDeserializer_ABC* urbanBlockDeserializer = new UrbanBlockDeserializer( asn );
+    urban::TerrainObject_ABC* object = model_->GetFactory().CreateBlock( id, name, footPrint );
+    urban::UrbanObjectDeserializer_ABC* urbanBlockDeserializer = new UrbanBlockDeserializer( message );
     object->Accept( *urbanBlockDeserializer );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( asn, controller_, *object );
+    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( message, controller_, *object ); 
     object->InstanciateDecoration();
     controller_.Create( *pTerrainObject );
     if( !Resolver< kernel::Entity_ABC >::Find( id ) )
@@ -71,7 +71,7 @@ void UrbanModel::Create( const ASN1T_MsgUrbanCreation& asn )
 // Name: DrawingsModel::Update
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-void DrawingsModel::Update( const ASN1T_MsgUrbanUpdate& asn )
+void DrawingsModel::Update( const ASN1T_MsgUrbanUpdate& message )
 {
     //TODO
 }
@@ -80,7 +80,7 @@ void DrawingsModel::Update( const ASN1T_MsgUrbanUpdate& asn )
 // Name: DrawingsModel::Delete
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-void DrawingsModel::Delete( const ASN1T_MsgUrbanDestruction& asn )
+void DrawingsModel::Delete( const ASN1T_MsgUrbanDestruction& message )
 {
     //TODO
 }
@@ -93,5 +93,5 @@ void DrawingsModel::Delete( const ASN1T_MsgUrbanDestruction& asn )
 void UrbanModel::Purge()
 {
     tools::Resolver< kernel::Entity_ABC >::DeleteAll();
-    model_.blocks_.Purge();
+    model_->blocks_.Purge();
 }

@@ -13,7 +13,6 @@
 #include "MT_Tools/MT_Vector3D.h"
 #include "MT_Tools/MT_Tools_Types.h"
 #include <xeumeuleu/xml.h>
-#include "game_asn/Simulation.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposanteTypePion.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponType.h"
@@ -76,8 +75,6 @@ BOOST_AUTO_TEST_CASE( PhComputerTest )
     MockPHY_RoleInterface_ActiveProtection* targetActiveProtection = new MockPHY_RoleInterface_ActiveProtection();
     target.RegisterRole< PHY_RoleInterface_ActiveProtection >( *targetActiveProtection );
 
-
-
     MockPHY_Composante_ABC compTarget;
     MockPHY_FireResults_ABC fireResult;
 
@@ -88,7 +85,6 @@ BOOST_AUTO_TEST_CASE( PhComputerTest )
     time.GetTickDuration_mocker.expects( mockpp::once() ).will( mockpp::returnValue( tickDuration ) );
   
     PHY_ComposanteTypePion composanteType( time, "composanteTypePion", xisComposanteTypePion );
-
 
     // Test de la fonction GetDangerosity
     MOCKPP_CHAINER_FOR( MockRoleLocation, GetAltitude )( firerLocationRole ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( 0. ) );   

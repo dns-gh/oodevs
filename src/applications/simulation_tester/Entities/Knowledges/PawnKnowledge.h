@@ -44,7 +44,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PawnKnowledge( const EntityManager&                  entityManager, 
-                            const ASN1T_MsgUnitKnowledgeCreation& asnMsg, 
+                            const MsgUnitKnowledgeCreation& asnMsg, 
                             const KnowledgeGroup&                 knowledgeGroup );
     virtual ~PawnKnowledge();
     //@}

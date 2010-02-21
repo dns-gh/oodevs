@@ -11,7 +11,14 @@
 #define __AarPlugin_h_
 
 #include "Plugin_ABC.h"
-#include "game_asn/Aar.h"
+
+
+////using namespace Common;
+namespace MsgsClientToAar
+{
+    class MsgClientToAar;
+    class MsgPlotRequest;
+}
 
 namespace tools
 {
@@ -44,7 +51,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( ClientPublisher_ABC& client, Profile_ABC& profile );
     virtual void NotifyClientLeft         ( ClientPublisher_ABC& client );
     virtual void Register                 ( dispatcher::Services& services );
@@ -59,8 +66,8 @@ private:
 
     //! @name Helpers
     //@{
-    void OnReceive( const std::string&, const ASN1T_MsgsClientToAar& message );
-    void OnReceiveIndicatorRequest( const std::string& client, const ASN1T_MsgPlotRequest& request );
+    void OnReceive( const std::string&, const MsgsClientToAar::MsgClientToAar& message );
+    void OnReceiveIndicatorRequest( const std::string& client, const MsgsClientToAar::MsgPlotRequest& request );
     //@}
 
 private:

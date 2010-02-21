@@ -16,7 +16,9 @@
 #include "ClientPublisher_ABC.h"
 #include "Services.h"
 #include "tools/MessageDispatcher_ABC.h"
+#include "protocol/simulationsenders.h"
 
+//using namespace MsgsClientToSim;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -53,7 +55,7 @@ void DispatcherPlugin::Register( dispatcher::Services& services )
 // Name: DispatcherPlugin::Receive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::Receive( const ASN1T_MsgsSimToClient& message )
+void DispatcherPlugin::Receive( const MsgsSimToClient::MsgSimToClient& message )
 {
     for( std::set< ClientPublisher_ABC* >::const_iterator it = clients_.begin(); it != clients_.end(); ++it )
         (*it)->Send( message );
@@ -82,7 +84,7 @@ void DispatcherPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 // Name: DispatcherPlugin::OnReceive
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-void DispatcherPlugin::OnReceive( const std::string& link, const ASN1T_MsgsClientToSim& asnMsg )
+void DispatcherPlugin::OnReceive( const std::string& link, const MsgsClientToSim::MsgClientToSim& asnMsg )
 {
     if( links_.GetProfile( link ).CheckRights( asnMsg ) )
         simulation_.Send( asnMsg );

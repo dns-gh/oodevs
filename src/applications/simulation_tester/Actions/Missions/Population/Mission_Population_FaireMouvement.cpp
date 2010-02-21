@@ -43,9 +43,9 @@ void Mission_Population_FaireMouvement::Serialize()
     // build din/asn msg
     Mission_Population_ABC::Serialize();
 
-    ASN1T_Mission_Population_FaireMouvement& asnMission = *new ASN1T_Mission_Population_FaireMouvement();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Population_mission_population_faire_mouvement;
-    asnMsg_.GetAsnMsg().mission.u.mission_population_faire_mouvement = &asnMission;
+    Mission_Population_FaireMouvement& asnMission = *new Mission_Population_FaireMouvement();
+
+    asnMsg_.GetAsnMsg().mission().mission_population_faire_mouvement = &asnMission;
 
     const Position& destination_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Population_FaireMouvement::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Population_FaireMouvement::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Population_mission_population_faire_mouvement );
-    ASN1T_Mission_Population_FaireMouvement& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_population_faire_mouvement;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_population_faire_mouvement ());
+    Mission_Population_FaireMouvement& asnMission = *asnMsg_.GetAsnMsg().mission().mission_population_faire_mouvement;
 
     ASN_Tools::Delete( asnMission.destination );
 

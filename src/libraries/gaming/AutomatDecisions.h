@@ -10,11 +10,13 @@
 #ifndef __AutomatDecisions_h_
 #define __AutomatDecisions_h_
 
-#include "game_asn/Simulation.h"
-#include "clients_kernel/Extension_ABC.h"
-#include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Displayable_ABC.h"
 #include "Decisions_ABC.h"
+#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
+
+//using namespace Common;
 
 namespace kernel
 {
@@ -33,8 +35,8 @@ class Publisher_ABC;
 // Created: AGE 2006-03-14
 // =============================================================================
 class AutomatDecisions : public kernel::Extension_ABC
-                       , public kernel::Updatable_ABC< ASN1T_MsgAutomatAttributes >
-                       , public kernel::Updatable_ABC< ASN1T_MsgAutomatOrder >
+                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgAutomatAttributes >
+                       , public kernel::Updatable_ABC< Common::MsgAutomatOrder >
                        , public kernel::Displayable_ABC
                        , public Decisions_ABC
 {
@@ -71,8 +73,8 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgAutomatAttributes& message );
-    virtual void DoUpdate( const ASN1T_MsgAutomatOrder& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& message );
+    virtual void DoUpdate( const Common::MsgAutomatOrder& message );
     bool HasEngagedSuperior() const;
     //@}
 

@@ -11,17 +11,18 @@
 #include "MIL_LogMedicalPrioritiesParameter.h"
 #include "simulation_orders/MIL_ParameterType_MedicalPriorities.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_LogMedicalPrioritiesParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-MIL_LogMedicalPrioritiesParameter::MIL_LogMedicalPrioritiesParameter( const ASN1T_LogMedicalPriorities & asn )
+MIL_LogMedicalPrioritiesParameter::MIL_LogMedicalPrioritiesParameter( const Common::MsgLogMedicalPriorities & asn )
 {
-    priorities_.reserve( asn.n );
-    for( unsigned int i = 0; i < asn.n; ++i )
+    priorities_.reserve( asn.elem_size() );
+    for( int i = 0; i < asn.elem_size(); ++i )
     {
-        ASN1T_EnumHumanWound nWoundID = asn.elem[i];
+        Common::EnumHumanWound nWoundID = asn.elem(i);
         const PHY_HumanWound* pWound = PHY_HumanWound::Find( nWoundID );
         if( !pWound )
         {
@@ -54,16 +55,12 @@ bool MIL_LogMedicalPrioritiesParameter::IsOfType( const MIL_ParameterType_ABC& t
 // Name: MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
-bool MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities( ASN1T_LogMedicalPriorities& asn ) const
+bool MIL_LogMedicalPrioritiesParameter::ToMedicalPriorities( Common::MsgLogMedicalPriorities& asn ) const
 {
     unsigned int size = priorities_.size();
-    asn.n = size;
     if( size )
-    {
-        asn.elem = new ASN1T_EnumHumanWound[ size ];
         for( unsigned int i = 0; i < size; ++i )
-            asn.elem[ i ] = priorities_[ i ]->GetAsnID();
-    }
+            asn.add_elem( priorities_[ i ]->GetAsnID() );
     return true;
 }
 

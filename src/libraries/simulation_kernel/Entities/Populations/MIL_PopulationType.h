@@ -41,13 +41,13 @@ public:
     static void                      Initialize( xml::xistream& xis );
     static void                      Terminate ();
     static const MIL_PopulationType* Find      ( const std::string& strName );
-    static const MIL_PopulationType* Find      ( uint nID );
+    static const MIL_PopulationType* Find      ( unsigned int nID );
     //@}
 
     //! @name Accessors
     //@{
     const std::string&                         GetName                () const;
-          uint                                 GetID                  () const;
+          unsigned int                                 GetID                  () const;
           MT_Float                             GetConcentrationDensity() const;
           MT_Float                             GetDefaultFlowDensity  () const;
           MT_Float                             GetMaxSpeed            () const;
@@ -57,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-          MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army& army, DEC_DataBase& database ) const;
+    MIL_Population& InstanciatePopulation( xml::xistream& xis, MIL_Army& army, DEC_DataBase& database ) const;
     //@}
 
     //! @name Effects
@@ -124,7 +124,7 @@ private:
 
 private:
     const std::string                          strName_;
-          uint                                 nID_;
+          unsigned int                                 nID_;
           MT_Float                             rConcentrationDensity_;
           MT_Float                             rDefaultFlowDensity_;
           MT_Float                             rMaxSpeed_;

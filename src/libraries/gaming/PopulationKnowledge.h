@@ -10,13 +10,15 @@
 #ifndef __PopulationKnowledge_h_
 #define __PopulationKnowledge_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -38,20 +40,20 @@ class PopulationKnowledge : public kernel::EntityImplementation< kernel::Populat
                           , public tools::Resolver< PopulationConcentrationKnowledge >
                           , public kernel::Extension_ABC
                           , public kernel::Drawable_ABC
-                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationKnowledgeUpdate >
-                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeCreation >
-                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeUpdate >
-                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationConcentrationKnowledgeDestruction >
-                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeCreation >
-                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeUpdate >
-                          , public kernel::Updatable_ABC< ASN1T_MsgPopulationFlowKnowledgeDestruction >
+                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationKnowledgeUpdate >
+                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation >
+                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate >
+                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction >
+                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowKnowledgeCreation >
+                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate >
+                          , public kernel::Updatable_ABC< MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction >
                           , public kernel::Displayable_ABC
 {
 
 public:
     //! @name Constructor/Destructor
     //@{
-             PopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const ASN1T_MsgPopulationKnowledgeCreation& message );
+             PopulationKnowledge( const kernel::KnowledgeGroup_ABC& group, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const tools::Resolver_ABC< kernel::Population_ABC >& resolver, const MsgsSimToClient::MsgPopulationKnowledgeCreation& message );
     virtual ~PopulationKnowledge();
     //@}
 
@@ -73,13 +75,13 @@ public:
     //! @name Network
     //@{
     // $$$$ AGE 2006-03-13: hmmm
-    virtual void DoUpdate( const ASN1T_MsgPopulationKnowledgeUpdate& message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeCreation&    message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeUpdate&      message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationConcentrationKnowledgeDestruction& message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeCreation&             message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeUpdate&               message );
-    virtual void DoUpdate( const ASN1T_MsgPopulationFlowKnowledgeDestruction&          message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation&    message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate&      message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation&             message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate&               message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction&          message );
     //@}
 
 private:

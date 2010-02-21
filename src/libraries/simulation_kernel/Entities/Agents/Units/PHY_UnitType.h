@@ -36,7 +36,7 @@ class PHY_UnitType : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef std::map< const PHY_HumanRank*, uint >   T_CommanderRepartitionMap;
+    typedef std::map< const PHY_HumanRank*, unsigned int >   T_CommanderRepartitionMap;
     typedef T_CommanderRepartitionMap::const_iterator CIT_CommanderRepartitionMap;
     //@}
 
@@ -70,16 +70,16 @@ private:
     struct sComposanteTypeData
     {
         sComposanteTypeData();
-        uint nNbr_;
+        unsigned int nNbr_;
         bool bMajor_;
         bool bLoadable_;
         bool bCanBePartOfConvoy_;
-        uint nNbrHumanInCrew_;
+        unsigned int nNbrHumanInCrew_;
     };
     typedef std::map< const PHY_ComposanteTypePion*, sComposanteTypeData > T_ComposanteTypeMap;
     typedef T_ComposanteTypeMap::const_iterator                            CIT_ComposanteTypeMap;
 
-    typedef std::vector< uint > T_PostureTimesVector;
+    typedef std::vector< unsigned int > T_PostureTimesVector;
 
     typedef std::vector< MT_Float >                        T_StockLogisticThresholdRatios;
     typedef T_StockLogisticThresholdRatios::const_iterator CIT_StockLogisticThresholdRatios;

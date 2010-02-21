@@ -97,7 +97,7 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_AutomateType::ReadAutomat( xml::xistream& xis )
 {
-    std::set< uint > ids_;
+    std::set< unsigned int > ids_;
     std::string strName;
     std::string strType;
 
@@ -188,7 +188,7 @@ void MIL_AutomateType::ReadUnit( xml::xistream& xis )
     if( composition_.find( pType ) != composition_.end() )
         xis.error( "Pawn type already defined in composition" );
 
-    composition_[ pType ].nMax_ = std::numeric_limits< uint >::max();
+    composition_[ pType ].nMax_ = std::numeric_limits< unsigned int >::max();
     composition_[ pType ].nMin_ = 0;
 
     xis >> xml::optional() >> xml::attribute( "min-occurs", composition_[ pType ].nMin_ )
@@ -237,7 +237,7 @@ void MIL_AutomateType::InitializeRapFor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
 {
-    typedef std::map< const MIL_AgentTypePion*, uint > T_CounterMap;
+    typedef std::map< const MIL_AgentTypePion*, unsigned int > T_CounterMap;
     typedef T_CounterMap::const_iterator               CIT_CounterMap;
     
     T_CounterMap currentComposition;
@@ -255,7 +255,7 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
     for( CIT_CompositionMap it = composition_.begin(); it != composition_.end(); ++it )
     {
         const sCompositionBounds& bounds   = it->second;
-        const uint&               nRealNbr = currentComposition[ it->first ];
+        const unsigned int&               nRealNbr = currentComposition[ it->first ];
         
         if ( bounds.nMin_ > nRealNbr || bounds.nMax_ < nRealNbr )
             return false;
@@ -281,7 +281,7 @@ void MIL_AutomateType::InitializeDiaFunctions()
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Formation& parent, xml::xistream& xis, DEC_DataBase& database ) const
 {
     return *new MIL_Automate( *this, nID, parent, xis, database );
 }
@@ -290,11 +290,10 @@ MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Formation& pa
 // Name: MIL_AutomateType::InstanciateAutomate
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-MIL_Automate& MIL_AutomateType::InstanciateAutomate( uint nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database ) const
+MIL_Automate& MIL_AutomateType::InstanciateAutomate( unsigned int nID, MIL_Automate& parent, xml::xistream& xis, DEC_DataBase& database ) const
 {
     return *new MIL_Automate( *this, nID, parent, xis, database );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateType::RegisterFunctions
@@ -321,9 +320,9 @@ const MIL_AutomateType* MIL_AutomateType::FindAutomateType( const std::string& s
 // Name: MIL_AutomateType::FindAutomateType
 // Created: JVT 2005-04-14
 // -----------------------------------------------------------------------------
-const MIL_AutomateType* MIL_AutomateType::FindAutomateType( uint nID )
+const MIL_AutomateType* MIL_AutomateType::FindAutomateType( unsigned int nID )
 {
-    CIT_AutomateTypeMap it = std::find_if( automateTypes_.begin(), automateTypes_.end(), std::compose1( std::bind2nd( std::equal_to< uint >(), nID ), std::compose1( std::mem_fun( &MIL_AutomateType::GetID ), std::select2nd< T_AutomateTypeMap::value_type >() ) ) );
+    CIT_AutomateTypeMap it = std::find_if( automateTypes_.begin(), automateTypes_.end(), std::compose1( std::bind2nd( std::equal_to< unsigned int >(), nID ), std::compose1( std::mem_fun( &MIL_AutomateType::GetID ), std::select2nd< T_AutomateTypeMap::value_type >() ) ) );
 
     return it == automateTypes_.end() ? 0 : it->second;
 }
@@ -362,7 +361,7 @@ const DEC_Model_ABC& MIL_AutomateType::GetModel() const
 // Name: MIL_AutomateType::GetMosID
 // Created: NLD 2005-02-11
 // -----------------------------------------------------------------------------
-uint MIL_AutomateType::GetID() const
+unsigned int MIL_AutomateType::GetID() const
 {
     return nID_;
 }

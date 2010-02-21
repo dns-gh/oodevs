@@ -41,7 +41,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     virtual void WriteODB( xml::xostream& xos ) const;
     //@}
     
@@ -89,8 +89,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnUnit ) const;
+    virtual void SendChangedState( client::UnitAttributes& asnUnit ) const;
+    virtual void SendFullState   ( client::UnitAttributes& asnUnit ) const;
     //@}
 
 private:

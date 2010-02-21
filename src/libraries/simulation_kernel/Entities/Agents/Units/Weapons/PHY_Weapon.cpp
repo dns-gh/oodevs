@@ -120,7 +120,7 @@ MT_Float PHY_Weapon::GetDangerosity( const MIL_AgentPion& firer, const MIL_Agent
 // -----------------------------------------------------------------------------
 bool PHY_Weapon::IsReady() const
 {
-    return (uint)rNextTimeStepToFire_ <= time_.GetCurrentTick();
+    return (unsigned int)rNextTimeStepToFire_ <= time_.GetCurrentTick();
 }
 
 // -----------------------------------------------------------------------------
@@ -162,21 +162,23 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_Agent_ABC& target, PHY_Co
     assert( type_.CanDirectFire() && IsReady() );
 
           bool bHasFired        = false;
-    const uint nCurrentTimeStep = time_.GetCurrentTick();
-    const uint nNextTimeStep    = nCurrentTimeStep + 1;
+    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
+    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;
         
-    while( (uint)rNextTimeStepToFire_ < nNextTimeStep )
+    while( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep )
     {
-        uint nNbrAmmoToFire = type_.GetNbrAmmoPerBurst();
+        unsigned int nNbrAmmoToFire = type_.GetNbrAmmoPerBurst();
         
         if( type_.GetNbrAmmoPerLoader() != 0 )
             nNbrAmmoToFire = std::min( nNbrAmmoToFire, type_.GetNbrAmmoPerLoader() - nNbrAmmoFiredFromLoader_ );               
 
         assert( nNbrAmmoToFire > 0 );
        
-        uint nNbrAmmoReserved = (uint)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
+
+        unsigned int nNbrAmmoReserved = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nNbrAmmoToFire );
+
         if( nNbrAmmoReserved )
         {
             nNbrAmmoFiredFromLoader_ += nNbrAmmoReserved;
@@ -206,18 +208,18 @@ bool PHY_Weapon::DirectFire( MIL_AgentPion& firer, MIL_PopulationElement_ABC& ta
 {
     assert( type_.CanDirectFire() && IsReady() );
 
-    const uint nCurrentTimeStep = time_.GetCurrentTick();
-    const uint nNextTimeStep    = nCurrentTimeStep + 1;
+    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
+    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;
         
-    if( (uint)rNextTimeStepToFire_ < nNextTimeStep )
+    if( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep )
     {
         const PHY_RoePopulation& roe  = firer.GetRole< DEC_RolePion_Decision >().GetRoePopulation();
         const MT_Float rDamageSurface = target.GetPopulation().GetType().GetDamageSurface( roe );
-        const uint     nKilledHumans  = (uint)ceil( rDamageSurface * target.GetDensity() );
+        const unsigned int     nKilledHumans  = (unsigned int)ceil( rDamageSurface * target.GetDensity() );
 
-        uint nNbrAmmoToFire = (uint)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nKilledHumans );
+        unsigned int nNbrAmmoToFire = (unsigned int)firer.GetRole< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( type_.GetDotationCategory(), nKilledHumans );
 
         type_.DirectFire( firer, target, nNbrAmmoToFire, fireResult );
 
@@ -236,14 +238,14 @@ bool PHY_Weapon::IndirectFire( MIL_Agent_ABC& firer, MIL_Effect_IndirectFire& ef
     assert( type_.GetDotationCategory() == effect.GetIndirectDotationCategory().GetDotationCategory() );
     
     bool bHasFired = false;
-    const uint nCurrentTimeStep = time_.GetCurrentTick();
-    const uint nNextTimeStep    = nCurrentTimeStep + 1;
+    const unsigned int nCurrentTimeStep = time_.GetCurrentTick();
+    const unsigned int nNextTimeStep    = nCurrentTimeStep + 1;
     if( rNextTimeStepToFire_ < (float)nCurrentTimeStep )
         rNextTimeStepToFire_ = nCurrentTimeStep;
         
-    while( (uint)rNextTimeStepToFire_ < nNextTimeStep && !effect.IsInterventionTypeFired() )
+    while( (unsigned int)rNextTimeStepToFire_ < nNextTimeStep && !effect.IsInterventionTypeFired() )
     {
-        uint nNbrAmmoToFire = type_.GetNbrAmmoPerBurst();
+        unsigned int nNbrAmmoToFire = type_.GetNbrAmmoPerBurst();
         if( type_.GetNbrAmmoPerLoader() != 0 )
             nNbrAmmoToFire = std::min( nNbrAmmoToFire, type_.GetNbrAmmoPerLoader() - nNbrAmmoFiredFromLoader_ );       
         

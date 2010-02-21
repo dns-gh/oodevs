@@ -349,7 +349,7 @@ const std::string& MIL_PopulationType::GetName() const
 // Name: MIL_PopulationType::GetMosID
 // Created: NLD 2004-12-20
 // -----------------------------------------------------------------------------
-uint MIL_PopulationType::GetID() const
+unsigned int MIL_PopulationType::GetID() const
 {
     return nID_;
 }
@@ -395,7 +395,7 @@ const MIL_PopulationType* MIL_PopulationType::Find( const std::string& strName )
 // Name: MIL_PopulationType::Find
 // Created: SBO 2005-10-18
 // -----------------------------------------------------------------------------
-const MIL_PopulationType* MIL_PopulationType::Find( uint nID )
+const MIL_PopulationType* MIL_PopulationType::Find( unsigned int nID )
 {
     for( CIT_PopulationMap it = populations_.begin(); it != populations_.end(); ++it )
         if( it->second->nID_ == nID )

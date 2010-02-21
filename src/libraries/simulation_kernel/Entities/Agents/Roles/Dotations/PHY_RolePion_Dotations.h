@@ -58,8 +58,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
 
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
     void WriteODB( xml::xostream& xos ) const;
     //@}
@@ -110,8 +110,9 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asn ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asn ) const;
+
+    void SendChangedState( client::UnitAttributes& asn ) const;
+    void SendFullState   ( client::UnitAttributes& asn ) const;
     //@}
 
     //! @name Logistic - Supply

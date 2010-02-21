@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Profiling.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: Profiling constructor
@@ -39,24 +39,24 @@ Profiling::~Profiling()
 // Name: Profiling::Update
 // Created: AGE 2006-09-15
 // -----------------------------------------------------------------------------
-void Profiling::Update( const ASN1T_MsgControlProfilingInformation& message )
+void Profiling::Update( const MsgsSimToClient::MsgControlProfilingInformation& message )
 {
-    perception_.push_back( message.perception );
-    decision_  .push_back( message.decision );
-    action_    .push_back( message.action );
-    total_     .push_back( message.main_loop );
+    perception_.push_back( message.perception() );
+    decision_  .push_back( message.decision() );
+    action_    .push_back( message.action() );
+    total_     .push_back( message.main_loop() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Profiling::Update
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-void Profiling::Update( const ASN1T_MsgControlEndTick& message )
+void Profiling::Update( const MsgsSimToClient::MsgControlEndTick& message )
 {
-    memory_ = message.memory;
-    virtualMemory_ = message.virtual_memory;
-    shortPathfinds_ = message.short_pathfinds;
-    longPathfinds_ = message.long_pathfinds;
+    memory_ = message.memory();
+    virtualMemory_ = message.virtual_memory();
+    shortPathfinds_ = message.short_pathfinds();
+    longPathfinds_ = message.long_pathfinds();
 }
 
 namespace

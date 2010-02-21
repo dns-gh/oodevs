@@ -218,7 +218,7 @@ namespace
     class FlagMissionLima
     {   
     public:
-        FlagMissionLima( uint nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
+        FlagMissionLima( unsigned int nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
 
         template< typename T >
         void operator() ( T& entity )
@@ -228,14 +228,14 @@ namespace
                 pLima->Flag( bValue_ );
         }
     private:
-        const uint nLimaID_;
+        const unsigned int nLimaID_;
         const bool bValue_;
     };
 
     class FlagScheduleMissionLima
     {   
     public:
-        FlagScheduleMissionLima( uint nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
+        FlagScheduleMissionLima( unsigned int nLimaID, bool bValue ) : nLimaID_( nLimaID ), bValue_( bValue ) {}
 
         template< typename T >
         void operator() ( T& entity )
@@ -245,7 +245,7 @@ namespace
                 pLima->FlagSchedule( bValue_ );
         }
     private:
-        const uint nLimaID_;
+        const unsigned int nLimaID_;
         const bool bValue_;
     };
 }

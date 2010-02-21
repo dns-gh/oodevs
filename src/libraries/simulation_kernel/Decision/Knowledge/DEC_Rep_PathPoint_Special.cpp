@@ -40,7 +40,7 @@ void DEC_Rep_PathPoint_Special::Dump() const
     std::cout << "    DEC_Rep_PathPoint_Special " << vPos_ 
               << " - Type : " << nObjectTypes_.DumpToString() 
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
-              << " - nTypePoint_ " << (uint)GetTypePoint()
-              << " - Type particulier " << (uint)nTypePointParticulier_
+              << " - nTypePoint_ " << (unsigned int)GetTypePoint()
+              << " - Type particulier " << (unsigned int)nTypePointParticulier_
               << std::endl;
 }

@@ -10,10 +10,12 @@
 #ifndef __ObjectPerceptions_h_
 #define __ObjectPerceptions_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
+#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
+
+using namespace Common;
 
 namespace kernel
 {
@@ -28,7 +30,7 @@ namespace kernel
 // Created: AGE 2006-10-16
 // =============================================================================
 class ObjectPerceptions : public kernel::Extension_ABC
-                        , public kernel::Updatable_ABC< ASN1T_MsgObjectKnowledgeUpdate >
+                        , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectKnowledgeUpdate >
 {
 
 public:
@@ -40,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );
     //@}
 
 private:

@@ -43,9 +43,9 @@ void Mission_Pawn_ABC_AppuyerSurPosition::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_ABC_AppuyerSurPosition& asnMission = *new ASN1T_Mission_Pion_ABC_AppuyerSurPosition();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_abc_appuyer_sur_position;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_appuyer_sur_position = &asnMission;
+    Mission_Pion_ABC_AppuyerSurPosition& asnMission = *new Mission_Pion_ABC_AppuyerSurPosition();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_abc_appuyer_sur_position = &asnMission;
 
     const Position& position_ = pTarget_->GetTestParam_Point();
     const T_IdVector& unitesAAppuyer_ = pTarget_->GetTestParam_AgentList();
@@ -64,8 +64,8 @@ void Mission_Pawn_ABC_AppuyerSurPosition::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_ABC_AppuyerSurPosition::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_abc_appuyer_sur_position );
-    ASN1T_Mission_Pion_ABC_AppuyerSurPosition& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_abc_appuyer_sur_position;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_abc_appuyer_sur_position ());
+    Mission_Pion_ABC_AppuyerSurPosition& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_abc_appuyer_sur_position;
 
     ASN_Tools::Delete( asnMission.position );
     ASN_Tools::Delete( asnMission.unites_a_appuyer );

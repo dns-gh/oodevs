@@ -9,21 +9,21 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentKnowledgeListParameter.h"
-
-#include "simulation_orders/MIL_ParameterType_AgentKnowledgeList.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "simulation_orders/MIL_ParameterType_AgentKnowledgeList.h"
+#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentKnowledgeListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const ASN1T_UnitKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
+MIL_AgentKnowledgeListParameter::MIL_AgentKnowledgeListParameter( const Common::MsgUnitKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
 {
-    knowledgeAgentList_.reserve( asn.n );
-    for( unsigned int i = 0; i < asn.n; ++i )
+    knowledgeAgentList_.reserve( asn.elem_size() );
+    for( int i = 0; i < asn.elem_size(); ++i )
     {
-        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeAgent = NET_ASN_Tools::ReadAgentKnowledge( asn.elem[i], resolver );
+        boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeAgent = NET_ASN_Tools::ReadAgentKnowledge( asn.elem(i), resolver );
         if( !pKnowledgeAgent || !pKnowledgeAgent->IsValid() )
             throw std::runtime_error( "Agent Knowledge does not exist" );
         knowledgeAgentList_.push_back( pKnowledgeAgent );
@@ -62,18 +62,11 @@ bool MIL_AgentKnowledgeListParameter::IsOfType( const MIL_ParameterType_ABC& typ
 // Name: MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
-bool MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList( ASN1T_UnitKnowledgeList& asn ) const
+bool MIL_AgentKnowledgeListParameter::ToAgentKnowledgeList( Common::MsgUnitKnowledgeList& asn ) const
 {
     unsigned int size = knowledgeAgentList_.size();
-    asn.n = size;
-    if( size != 0 )
-    {    
-        ASN1T_OID* pOID = new ASN1T_OID[ size ]; //$$$ RAM
-        asn.elem = pOID;
-
-        for( unsigned int i = 0; i < size; ++i )
-            pOID[i] = knowledgeAgentList_[i]->GetID();
-    }
+    for( unsigned int i = 0; i < size; ++i )
+        asn.add_elem()->set_oid( knowledgeAgentList_[i]->GetID() );
     return true;
 }
 

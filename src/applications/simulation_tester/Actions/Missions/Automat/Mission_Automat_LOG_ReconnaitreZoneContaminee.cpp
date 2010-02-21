@@ -43,9 +43,9 @@ void Mission_Automat_LOG_ReconnaitreZoneContaminee::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_LOG_ReconnaitreZoneContaminee& asnMission = *new ASN1T_Mission_Automate_LOG_ReconnaitreZoneContaminee();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_log_reconnaitre_zone_contaminee;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_contaminee = &asnMission;
+    Mission_Automate_LOG_ReconnaitreZoneContaminee& asnMission = *new Mission_Automate_LOG_ReconnaitreZoneContaminee();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_log_reconnaitre_zone_contaminee = &asnMission;
 
     const Location& zone_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_LOG_ReconnaitreZoneContaminee::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_LOG_ReconnaitreZoneContaminee::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_log_reconnaitre_zone_contaminee );
-    ASN1T_Mission_Automate_LOG_ReconnaitreZoneContaminee& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_log_reconnaitre_zone_contaminee;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_log_reconnaitre_zone_contaminee ());
+    Mission_Automate_LOG_ReconnaitreZoneContaminee& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_log_reconnaitre_zone_contaminee;
 
     ASN_Tools::Delete( asnMission.zone );
 

@@ -10,8 +10,14 @@
 #ifndef __PopulationFlowPart_h_
 #define __PopulationFlowPart_h_
 
-#include "game_asn/Simulation.h"
 #include "Localisation.h"
+
+
+//using namespace Common;
+namespace MsgsSimToClient
+{
+    class MsgFlowPart;
+}
 
 namespace dispatcher
 {
@@ -27,13 +33,13 @@ class PopulationFlowPart
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PopulationFlowPart( const ASN1T_FlowPart& asnMsg );
+    explicit PopulationFlowPart( const MsgsSimToClient::MsgFlowPart& asnMsg );
     virtual ~PopulationFlowPart();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_FlowPart& asnMsg ) const ;
+    void Send( MsgsSimToClient::MsgFlowPart& asnMsg ) const ;
     //@}
 
 private:

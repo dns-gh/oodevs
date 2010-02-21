@@ -38,10 +38,10 @@ DrawingFactory::~DrawingFactory()
 // Name: DrawingFactory::CreateShape
 // Created: SBO 2008-06-04
 // -----------------------------------------------------------------------------
-gui::Drawing_ABC* DrawingFactory::CreateShape( const ASN1T_MsgShapeCreation& asn ) const
+gui::Drawing_ABC* DrawingFactory::CreateShape( const MsgsMessengerToClient::MsgShapeCreation& message ) const
 {
-    DrawingPositions* location = new DrawingPositions( converter_, asn );
-    gui::Drawing_ABC* drawing = new Drawing( controller_, asn, types_, *location, publisher_, converter_ );
+    DrawingPositions* location = new DrawingPositions( converter_, message );
+    gui::Drawing_ABC* drawing = new Drawing( controller_, message, types_, *location, publisher_, converter_ );
     drawing->Attach< kernel::Positions >( *location );
     return drawing;
 }

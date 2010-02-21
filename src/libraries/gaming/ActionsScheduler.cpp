@@ -13,8 +13,8 @@
 #include "actions/Action_ABC.h"
 #include "actions/ActionsModel.h"
 #include "ActionTiming.h"
-#include "game_asn/SimulationSenders.h"
 #include "clients_kernel/Controllers.h"
+#include "protocol/simulationsenders.h"
 
 using namespace kernel;
 
@@ -92,7 +92,7 @@ void ActionsScheduler::Shift( long secs )
     QDateTime newTime = simulation_.GetDateTime().addSecs( secs );
     if( newTime < simulation_.GetInitialDateTime() )
         newTime = simulation_.GetInitialDateTime();
-    simulation::ControlDatetimeChange asn;
-    asn().date_time = MakeGDHString( newTime ).c_str();
-    asn.Send( publisher_ );    
+    simulation::ControlDatetimeChange message;
+    message().mutable_date_time()->set_data( MakeGDHString( newTime ).c_str() );
+    message.Send( publisher_ );    
 }

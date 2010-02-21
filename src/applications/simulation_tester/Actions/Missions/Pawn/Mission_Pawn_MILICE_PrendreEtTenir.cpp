@@ -43,9 +43,9 @@ void Mission_Pawn_MILICE_PrendreEtTenir::Serialize()
     // build din/asn msg
     Mission_Pawn_ABC::Serialize();
 
-    ASN1T_Mission_Pion_MILICE_PrendreEtTenir& asnMission = *new ASN1T_Mission_Pion_MILICE_PrendreEtTenir();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Pion_mission_pion_milice_prendre_et_tenir;
-    asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_prendre_et_tenir = &asnMission;
+    Mission_Pion_MILICE_PrendreEtTenir& asnMission = *new Mission_Pion_MILICE_PrendreEtTenir();
+
+    asnMsg_.GetAsnMsg().mission().mission_pion_milice_prendre_et_tenir = &asnMission;
 
     const Position& pointAPrendre_ = pTarget_->GetTestParam_Point();
 
@@ -61,8 +61,8 @@ void Mission_Pawn_MILICE_PrendreEtTenir::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Pawn_MILICE_PrendreEtTenir::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Pion_mission_pion_milice_prendre_et_tenir );
-    ASN1T_Mission_Pion_MILICE_PrendreEtTenir& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_pion_milice_prendre_et_tenir;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_pion_milice_prendre_et_tenir ());
+    Mission_Pion_MILICE_PrendreEtTenir& asnMission = *asnMsg_.GetAsnMsg().mission().mission_pion_milice_prendre_et_tenir;
 
     ASN_Tools::Delete( asnMission.point_a_prendre );
 

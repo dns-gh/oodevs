@@ -10,9 +10,15 @@
 #ifndef __AgentLogSupply_h_
 #define __AgentLogSupply_h_
 
-#include "game_asn/Simulation.h"
+
 #include "EquipmentAvailability.h"
 #include "tools/Resolver.h"
+
+namespace MsgsSimToClient
+{
+    class MsgLogSupplyEquimentAvailability;
+    class MsgLogSupplyState;
+}
 
 namespace kernel
 {
@@ -35,13 +41,13 @@ class AgentLogSupply
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentLogSupply( const kernel::Agent_ABC& agent, const ASN1T_MsgLogSupplyState& asnMsg );
+             AgentLogSupply( const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogSupplyState& asnMsg );
     virtual ~AgentLogSupply();
     //@}
 
     //! @name Main
     //@{
-    void Update(  const ASN1T_MsgLogSupplyState& asnMsg );
+    void Update(  const MsgsSimToClient::MsgLogSupplyState& asnMsg );
     void Send  ( ClientPublisher_ABC& publisher ) const;
     //@}
 
@@ -54,7 +60,7 @@ private:
 
     //! @name Types
     //@{
-    typedef EquipmentAvailability< ASN1T_LogSupplyEquimentAvailability > T_Availability;
+    typedef EquipmentAvailability< MsgsSimToClient::MsgLogSupplyEquimentAvailability > T_Availability;
     //@}
 
 private:

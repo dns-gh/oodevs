@@ -30,21 +30,21 @@ class MOS_ASN_Msg##ASNMSG                                                       
 public:                                                                             \
     void Send( unsigned long nCtx = 0 )                                             \
     {                                                                               \
-        ASN1T_MsgsClientToSim globalAsnMsg;                                               \
+        MsgsClientToSim globalAsnMsg;                                               \
                                                                                     \
         globalAsnMsg.context            = nCtx;                                     \
         globalAsnMsg.msg.t              = T_MsgsInSim_msg_msg_##ASNVAR;             \
-        globalAsnMsg.msg.u.msg_##ASNVAR = asnMsg_;                                  \
+        globalAsnMsg.msg().msg_##ASNVAR = asnMsg_;                                  \
         Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgInSim( globalAsnMsg ); \
     }                                                                               \
                                                                                     \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
+    Msg##ASNMSG& GetAsnMsg()                                                  \
     {                                                                               \
         return asnMsg_;                                                             \
     }                                                                               \
                                                                                     \
 private:                                                                            \
-    ASN1T_Msg##ASNMSG asnMsg_;                                                      \
+    Msg##ASNMSG asnMsg_;                                                      \
 };
 
 // ASN Message which is a pointer and take any context
@@ -54,21 +54,21 @@ class MOS_ASN_Msg##ASNMSG                                                       
 public:                                                                             \
     void Send( unsigned long nCtx = 0 )                                             \
     {                                                                               \
-        ASN1T_MsgsClientToSim    globalAsnMsg;                                            \
+        MsgsClientToSim    globalAsnMsg;                                            \
                                                                                     \
         globalAsnMsg.context            = nCtx;                                     \
         globalAsnMsg.msg.t              = T_MsgsInSim_msg_msg_##ASNVAR;             \
-        globalAsnMsg.msg.u.msg_##ASNVAR = &asnMsg_;                                 \
+        globalAsnMsg.msg().msg_##ASNVAR = &asnMsg_;                                 \
         Workspace::GetWorkspace().GetNetworkManager().GetMessageMgr().SendMsgInSim( globalAsnMsg ); \
     }                                                                               \
                                                                                     \
-    ASN1T_Msg##ASNMSG& GetAsnMsg()                                                  \
+    Msg##ASNMSG& GetAsnMsg()                                                  \
     {                                                                               \
         return asnMsg_;                                                             \
     }                                                                               \
                                                                                     \
 private:                                                                            \
-    ASN1T_Msg##ASNMSG asnMsg_;                                                      \
+    Msg##ASNMSG asnMsg_;                                                      \
 };    
 
 // ASN Message which isn't a pointer and take any context
@@ -78,7 +78,7 @@ class MOS_ASN_Msg##ASNMSG                                                       
 public:                                                                             \
     void Send( unsigned long nCtx = 0 )                                             \
     {                                                                               \
-        ASN1T_MsgsClientToSim    globalAsnMsg;                                            \
+        MsgsClientToSim    globalAsnMsg;                                            \
                                                                                     \
         globalAsnMsg.context = nCtx;                                                \
         globalAsnMsg.msg.t   = T_MsgsInSim_msg_msg_##ASNVAR;                        \

@@ -13,6 +13,7 @@
 #define __PHY_HumansComposante_h_
 
 #include "simulation_kernel/Entities/Agents/Units/Humans/PHY_Human.h"
+
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_ComposantePion;
@@ -33,13 +34,16 @@ class PHY_HumansComposante : private boost::noncopyable
 {
 
 public:
-     PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, uint nNbrMdr );
+    //! @name Constructors/Destructor
+    //@{
      PHY_HumansComposante();
+     PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, unsigned int nNbrMdr );
     virtual ~PHY_HumansComposante();
+    //@}
 
     //! @name Checkpoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -50,8 +54,8 @@ public:
     void ApplyPoisonous    ( const MIL_ToxicEffectManipulator& contamination );
     void ApplyInjury       ( MIL_Injury_ABC& injury );
     void ApplyWounds       ( const PHY_ComposanteState& newCompState, PHY_FireDamages_Agent& fireDamages );
-    uint WoundHumans       ( const PHY_HumanRank& rank, uint nNbrToChange, const PHY_HumanWound& newWound );
-    uint HealHumans        ( const PHY_HumanRank& rank, uint nNbrToChange );
+    unsigned int WoundHumans       ( const PHY_HumanRank& rank, unsigned int nNbrToChange, const PHY_HumanWound& newWound );
+    unsigned int HealHumans        ( const PHY_HumanRank& rank, unsigned int nNbrToChange );
     void HealAllHumans     ();    
 
     MT_Float GetOperationalState() const;
@@ -74,20 +78,20 @@ public:
 
     //! @name Medical
     //@{
-    bool                   HasWoundedHumansToEvacuate      () const;
-    void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
+    bool HasWoundedHumansToEvacuate() const;
+    void EvacuateWoundedHumans( MIL_AutomateLOG& destinationTC2 ) const;
     //@}
 
     //! @name Accessors
     //@{
-    const PHY_ComposantePion& GetComposante     () const;
-          uint                GetNbrUsableHumans() const;
+    const PHY_ComposantePion& GetComposante() const;
+    unsigned int GetNbrUsableHumans() const;
     //@}
 
 private:
     PHY_ComposantePion* pComposante_;
     PHY_Human::T_HumanVector humans_;
-    uint                nNbrUsableHumans_;
+    unsigned int nNbrUsableHumans_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_HumansComposante )
@@ -97,7 +101,7 @@ BOOST_CLASS_EXPORT_KEY( PHY_HumansComposante )
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_HumansComposante::serialize( Archive& file, const uint )
+void PHY_HumansComposante::serialize( Archive& file, const unsigned int )
 {
     file & pComposante_
          & humans_

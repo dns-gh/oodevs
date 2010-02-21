@@ -9,8 +9,8 @@
 
 #include "simulation_orders_pch.h"
 #include "MIL_ParameterType_ObjectKnowledgeList.h"
-#include "game_asn/ASN_Delete.h"
 #include "MIL_MissionParameter_ABC.h"
+#include "protocol/protocol.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ObjectKnowledgeList constructor
@@ -19,6 +19,7 @@
 MIL_ParameterType_ObjectKnowledgeList::MIL_ParameterType_ObjectKnowledgeList( const std::string& name )
     : MIL_ParameterType_ABC( name )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -27,37 +28,30 @@ MIL_ParameterType_ObjectKnowledgeList::MIL_ParameterType_ObjectKnowledgeList( co
 //-----------------------------------------------------------------------------
 MIL_ParameterType_ObjectKnowledgeList::~MIL_ParameterType_ObjectKnowledgeList()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ObjectKnowledgeList::Copy
 // Created: NLD 2006-11-ObjectList
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_ObjectKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, ASN1T_MissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
+bool MIL_ParameterType_ObjectKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )
         return false;
-
-    to.null_value                  = false;
-    to.value.t                     = T_MissionParameter_value_objectKnowledgeList;
-    to.value.u.objectKnowledgeList = new ASN1T_ObjectKnowledgeList();
-    
-    return from.ToObjectKnowledgeList( *to.value.u.objectKnowledgeList );
+    to.set_null_value( false );
+    return from.ToObjectKnowledgeList( *to.mutable_value()->mutable_objectknowledgelist() );
 }
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_ObjectKnowledgeList::CleanAfterSerialization
 // Created: NLD 2006-11-ObjectList
 //-----------------------------------------------------------------------------
-void MIL_ParameterType_ObjectKnowledgeList::CleanAfterSerialization( ASN1T_MissionParameter& to ) const
+void MIL_ParameterType_ObjectKnowledgeList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
 {
-    assert( to.value.t == T_MissionParameter_value_objectKnowledgeList );
-    assert( to.value.u.objectKnowledgeList );
-    ASN_Delete::Delete( *to.value.u.objectKnowledgeList );
-    delete to.value.u.objectKnowledgeList;
+    assert( to.value().has_objectknowledgelist() );
+    assert( to.mutable_value()->mutable_objectknowledgelist() );
+    to.mutable_value()->mutable_objectknowledgelist()->Clear();
+    delete to.mutable_value()->mutable_objectknowledgelist();
 }

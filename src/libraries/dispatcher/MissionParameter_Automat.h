@@ -11,6 +11,7 @@
 #define __MissionParameter_Automat_h_
 
 #include "MissionParameter_ABC.h"
+////using namespace Common;
 
 namespace dispatcher
 {
@@ -27,14 +28,14 @@ class MissionParameter_Automat : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_Automat( const ASN1T_MissionParameter& asn );
+             MissionParameter_Automat( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_Automat();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( ASN1T_MissionParameter& asn ) const;
-    virtual void AsnDelete( ASN1T_MissionParameter& asn ) const;
+    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
+    virtual void Delete( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

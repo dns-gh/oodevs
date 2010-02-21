@@ -9,9 +9,9 @@
 
 #include "actions_pch.h"
 #include "Bool.h"
-#include <xeumeuleu/xml.h>
+#include "protocol/Protocol.h"
+#include <xeumeuleu/xml.hpp>
 
-using namespace xml;
 using namespace actions;
 using namespace parameters;
 
@@ -51,26 +51,26 @@ Bool::~Bool()
 void Bool::Serialize( xml::xostream& xos ) const
 {
     Parameter< bool >::Serialize( xos );
-    xos << attribute( "value", GetValue() );
+    xos << xml::attribute( "value", GetValue() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Bool::CommitTo
 // Created: SBO 2007-05-22
 // -----------------------------------------------------------------------------
-void Bool::CommitTo( ASN1T_MissionParameter& asn ) const
+void Bool::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_aBool;
+    message.set_null_value ( !IsSet() );
+    message.mutable_value();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        asn.value.u.aBool = GetValue();
+        message.mutable_value()->set_abool( GetValue() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Bool::CommitTo
 // Created: SBO 2007-10-23
 // -----------------------------------------------------------------------------
-void Bool::CommitTo( ASN1BOOL& asn ) const
+void Bool::CommitTo( T_Setter setter ) const
 {
-    asn = GetValue();
+    setter( GetValue() );
 }

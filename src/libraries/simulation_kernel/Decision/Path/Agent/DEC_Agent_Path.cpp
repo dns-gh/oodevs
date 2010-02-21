@@ -14,6 +14,7 @@
 
 #include "DEC_Agent_PathSection.h"
 #include "DEC_Agent_PathClass.h"
+#include "MIL_AgentServer.h"
 #include "Decision/Path/DEC_PathType.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
@@ -32,6 +33,7 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Network/NET_Publisher_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::Initialize

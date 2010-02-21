@@ -13,6 +13,12 @@
 #include "Intelligence.h"
 #include "dispatcher/ClientPublisher_ABC.h"
 #include <boost/bind.hpp>
+//#include "protocol/protocol.h"
+#include "protocol/MessengerSenders.h"
+
+using namespace Common;
+using namespace MsgsClientToMessenger;
+using namespace MsgsMessengerToClient;
 
 using namespace plugins::messenger;
 
@@ -41,7 +47,7 @@ IntelligencesModel::~IntelligencesModel()
 // Name: IntelligencesModel::ReadIntelligence
 // Created: RDS 2008-04-08
 // -----------------------------------------------------------------------------
-void IntelligencesModel::ReadIntelligence( xml::xistream& xis, const ASN1T_Formation& formation )
+void IntelligencesModel::ReadIntelligence( xml::xistream& xis, const MsgFormation& formation )
 {
     std::auto_ptr< Intelligence > intelligence( new Intelligence( idManager_.NextId(), xis, formation, converter_ ) );
     Register( intelligence->GetID(), *intelligence );
@@ -62,10 +68,10 @@ void IntelligencesModel::Write( xml::xostream& xos )
 // Name: IntelligencesModel::HandleRequest
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
-void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceCreationRequest& asn )
+void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceCreationRequest& asn )
 {
-    IntelligenceCreationRequestAck ack ;
-    ack() = EnumIntelligenceErrorCode::no_error;
+    plugins::messenger::IntelligenceCreationRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_no_error );
     try
     {
         std::auto_ptr< Intelligence > intelligence( new Intelligence( idManager_.NextId(), asn ) );
@@ -84,19 +90,19 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
 // Name: IntelligencesModel::HandleRequest
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
-void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceUpdateRequest& asn )
+void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceUpdateRequest& asn )
 {
-    IntelligenceUpdateRequestAck ack ;
-    ack() = EnumIntelligenceErrorCode::no_error;
+    plugins::messenger::IntelligenceUpdateRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_no_error );
 
-    Intelligence* intelligence = Find( asn.oid );
+    Intelligence* intelligence = Find( asn.oid() );
     if( intelligence )
     {
         intelligence->Update( asn );
         intelligence->SendUpdate( clients_ );
     }
     else
-        ack() = EnumIntelligenceErrorCode::error_invalid_oid;
+        ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_error_invalid_oid );
     ack.Send( publisher );
 }
 
@@ -104,20 +110,20 @@ void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publish
 // Name: IntelligencesModel::HandleRequest
 // Created: RDS 2008-04-07
 // -----------------------------------------------------------------------------
-void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const ASN1T_MsgIntelligenceDestructionRequest& asn )
+void IntelligencesModel::HandleRequest( dispatcher::ClientPublisher_ABC& publisher, const MsgIntelligenceDestructionRequest& asn )
 {
-    IntelligenceDestructionRequestAck ack ;
-    ack() = EnumIntelligenceErrorCode::no_error;
+    plugins::messenger::IntelligenceDestructionRequestAck ack ;
+    ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_no_error );
 
-    Intelligence* intelligence = Find( asn.oid );
+    Intelligence* intelligence = Find( asn.oid() );
     if( intelligence )
     {
         intelligence->SendDestruction( clients_ );
         delete intelligence;
-        Remove( asn.oid );
+        Remove( asn.oid() );
     }
     else
-        ack() = EnumIntelligenceErrorCode::error_invalid_oid;
+        ack().set_error_code( MsgsMessengerToClient::IntelligenceRequestAck_ErrorCode_error_invalid_oid );
     ack.Send( publisher );
 }
 
@@ -138,5 +144,5 @@ void IntelligencesModel::SendStateToNewClient( dispatcher::ClientPublisher_ABC& 
 void IntelligencesModel::CollectFormations( T_FormationMap& collection )
 {
     for( T_Elements::const_iterator it = elements_.begin(); it != elements_.end(); ++it )
-        collection[ it->second->GetFormation() ].insert( it->second );
+        collection[ it->second->GetFormation().oid() ].insert( it->second );
 }

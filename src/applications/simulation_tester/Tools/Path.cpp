@@ -67,7 +67,7 @@ Path& Path::GetTestParam_Path( const Position& startPoint )
     double rX = startPoint.GetSimX();
     double rY = startPoint.GetSimY();
 
-    for( uint i = 0; i < 5; ++i )
+    for( unsigned int i = 0; i < 5; ++i )
     {
         rX += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
         rY += 2000.0 * ( rand() * 1.0 / RAND_MAX - 0.5 );
@@ -87,7 +87,7 @@ T_PathVector& Path::GetTestParam_PathList( const Position& startPoint )
     T_PathVector& paths = *new T_PathVector();
 
     // generate 5 pathfinds
-    for( uint i = 0; i < 4; ++i )
+    for( unsigned int i = 0; i < 4; ++i )
         paths.push_back( &GetTestParam_Path( startPoint ) );
     return paths;
 }

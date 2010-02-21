@@ -15,8 +15,9 @@
 #include "ClientsNetworker.h"
 #include "Config.h"
 #include "ClientPublisher_ABC.h"
-#include "tools/AsnMessageDecoder.h"
-#include "tools/AsnMessageEncoder.h"
+//#include "tools/AsnMessageDecoder.h"
+//#include "tools/AsnMessageEncoder.h"
+#include "protocol/Protocol.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 
 using namespace tools;
@@ -87,7 +88,7 @@ void SimulationNetworker::ConnectionError( const std::string& address, const std
 // Name: SimulationNetworker::OnReceiveMsgSimToClient
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom*/, const ASN1T_MsgsSimToClient& message )
+void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom*/, const MsgsSimToClient::MsgSimToClient& message )
 {
     simulation_->OnReceive( message );
 }
@@ -100,7 +101,7 @@ void SimulationNetworker::OnReceiveMsgSimToClient( const std::string& /*linkFrom
 // Name: SimulationNetworker::Send
 // Created: NLD 2006-09-21
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Send( const ASN1T_MsgsClientToSim& asnMsg )
+void SimulationNetworker::Send( const MsgsClientToSim::MsgClientToSim& asnMsg )
 {
     try
     {
@@ -116,7 +117,7 @@ void SimulationNetworker::Send( const ASN1T_MsgsClientToSim& asnMsg )
 // Name: SimulationNetworker::Send
 // Created: NLD 2007-04-24
 // -----------------------------------------------------------------------------
-void SimulationNetworker::Send( const ASN1T_MsgsDispatcherToSim& asnMsg )
+void SimulationNetworker::Send( const MsgsDispatcherToSim::MsgDispatcherToSim& asnMsg )
 {
     try
     {

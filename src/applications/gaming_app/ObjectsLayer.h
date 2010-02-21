@@ -11,6 +11,7 @@
 #define __ObjectsLayer_h_
 
 #include "clients_gui/ObjectsLayer.h"
+#include "protocol/publisher_ABC.h"
 
 class Publisher_ABC;
 

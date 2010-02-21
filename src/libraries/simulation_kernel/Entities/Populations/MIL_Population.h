@@ -14,7 +14,21 @@
 #include "Entities/MIL_Entity_ABC.h"
 #include "Entities/MIL_VisitableEntity_ABC.h"
 #include "Entities/Orders/MIL_PopulationOrderManager.h"
-#include "Network/NET_ASN_Messages.h"
+
+namespace Common
+{
+    class MsgMagicActionPopulationChangeAttitude;
+    class MsgMagicActionPopulationKill;
+    class MsgMagicActionPopulationMoveTo;
+    class MsgMagicActionPopulationResurrect;
+    class MsgPopulationOrder;
+}
+
+namespace MsgsClientToSim
+{
+    class MsgFragOrder;
+    class MsgPopulationMagicAction;
+}
 
 namespace xml
 {
@@ -46,13 +60,13 @@ class MIL_Population : public MIL_Entity_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database );
+             MIL_Population( xml::xistream& xis, const MIL_PopulationType& type, MIL_Army& army, DEC_DataBase& database );
     virtual ~MIL_Population();
     //@}
 
     //! @name Accessors
     //@{
-          uint                        GetID                () const;
+          unsigned int                        GetID                () const;
     const MIL_PopulationType&         GetType              () const;
     const DEC_PopulationDecision&     GetDecision          () const;
           DEC_PopulationDecision&     GetDecision          ();
@@ -127,21 +141,21 @@ public:
 
     //! @name Network 
     //@{
-    void OnReceiveMsgOrder    ( const ASN1T_MsgPopulationOrder& msg );
-    void OnReceiveMsgFragOrder( const ASN1T_MsgFragOrder&       msg );
+    void OnReceiveMsgOrder    ( const Common::MsgPopulationOrder& msg );
+    void OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder&       msg );
     void SendCreation         () const;
     void SendFullState        () const;
     void UpdateNetwork        ();
 
-    void OnReceiveMsgPopulationMagicAction( const ASN1T_MsgPopulationMagicAction& asnMsg );
+    void OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::MsgPopulationMagicAction& asnMsg );
     //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     void WriteODB( xml::xostream& xos ) const;
     //@}
 
@@ -173,11 +187,11 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveMsgMagicMove     ( const ASN1T_MagicActionPopulationMoveTo& asn );
+    void OnReceiveMsgMagicMove     ( const Common::MsgMagicActionPopulationMoveTo& asn );
     void OnReceiveMsgDestroyAll    ();
-    void OnReceiveMsgChangeAttitude( const ASN1T_MagicActionPopulationChangeAttitude& asn );
-    void OnReceiveMsgKill          ( const ASN1T_MagicActionPopulationKill& asn );
-    void OnReceiveMsgResurrect     ( const ASN1T_MagicActionPopulationResurrect& asn );
+    void OnReceiveMsgChangeAttitude( const Common::MsgMagicActionPopulationChangeAttitude& asn );
+    void OnReceiveMsgKill          ( const Common::MsgMagicActionPopulationKill& asn );
+    void OnReceiveMsgResurrect     ( const Common::MsgMagicActionPopulationResurrect& asn );
     //@}
 
     //! @name Network
@@ -204,7 +218,7 @@ private:
 
 private:
     const MIL_PopulationType*        pType_;
-    const uint                       nID_;
+    const unsigned int               nID_;
           MIL_Army*                  pArmy_;
     const MIL_PopulationAttitude*    pDefaultAttitude_;
           MT_Float                   rPeopleCount_;

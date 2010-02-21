@@ -13,14 +13,16 @@
 #include "ClientPublisher_ABC.h"
 #include "Automat.h"
 #include "Agent.h"
+#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
+//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: AgentLogMedical constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-AgentLogMedical::AgentLogMedical( const Model& model, const kernel::Agent_ABC& agent, const ASN1T_MsgLogMedicalState& asnMsg )
+AgentLogMedical::AgentLogMedical( const Model& model, const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgLogMedicalState& asnMsg )
     : model_         ( model )
     , agent_         ( agent )
     , bSystemEnabled_( false )
@@ -41,44 +43,44 @@ AgentLogMedical::~AgentLogMedical()
 // Name: AgentLogMedical::Update
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-void AgentLogMedical::Update( const ASN1T_MsgLogMedicalState& asnMsg )
+void AgentLogMedical::Update( const MsgsSimToClient::MsgLogMedicalState& asnMsg )
 {
-    if( asnMsg.m.chaine_activeePresent )
-        bSystemEnabled_ = asnMsg.chaine_activee != 0;
+    if( asnMsg.has_chaine_activee()  )
+        bSystemEnabled_ = asnMsg.chaine_activee() != 0;
 
-    if( asnMsg.m.disponibilites_ambulances_ramassagePresent )
+    if( asnMsg.has_disponibilites_ambulances_ramassage()  )
     {
         collectionAmbulancesAvailability_.clear();
-        for( unsigned int i = 0; i < asnMsg.disponibilites_ambulances_ramassage.n; ++i )
-            collectionAmbulancesAvailability_.push_back( T_Availability( asnMsg.disponibilites_ambulances_ramassage.elem[ i ] ) );
+        for( int i = 0; i < asnMsg.disponibilites_ambulances_ramassage().elem_size(); ++i )
+            collectionAmbulancesAvailability_.push_back( T_Availability( asnMsg.disponibilites_ambulances_ramassage().elem( i ) ) );
     }
 
-    if( asnMsg.m.disponibilites_ambulances_relevePresent )
+    if( asnMsg.has_disponibilites_ambulances_releve()  )
     {
         evacuationAmbulancesAvailability_.clear();
-        for( unsigned int i = 0; i < asnMsg.disponibilites_ambulances_releve.n; ++i )
-            evacuationAmbulancesAvailability_.push_back( T_Availability( asnMsg.disponibilites_ambulances_releve.elem[ i ] ) );
+        for( int i = 0; i < asnMsg.disponibilites_ambulances_releve().elem_size(); ++i )
+            evacuationAmbulancesAvailability_.push_back( T_Availability( asnMsg.disponibilites_ambulances_releve().elem( i ) ) );
     }
 
-    if( asnMsg.m.disponibilites_medecinsPresent )
+    if( asnMsg.has_disponibilites_medecins()  )
     {
         doctorsAvailability_.clear();
-        for( unsigned int i = 0; i < asnMsg.disponibilites_medecins.n; ++i )
-            doctorsAvailability_.push_back( T_Availability( asnMsg.disponibilites_medecins.elem[ i ] ) );
+        for( int i = 0; i < asnMsg.disponibilites_medecins().elem_size(); ++i )
+            doctorsAvailability_.push_back( T_Availability( asnMsg.disponibilites_medecins().elem( i ) ) );
     }
 
-    if( asnMsg.m.priorites_tactiquesPresent )
+    if( asnMsg.has_priorites_tactiques()  )
     {
         tacticalPriorities_.clear();
-        for( unsigned int i = 0; i < asnMsg.priorites_tactiques.n; ++i )
-            tacticalPriorities_.push_back( &model_.automats_.Get( asnMsg.priorites_tactiques.elem[ i ] ) );
+        for( int i = 0; i < asnMsg.priorites_tactiques().elem_size(); ++i )
+            tacticalPriorities_.push_back( &model_.automats_.Get( asnMsg.priorites_tactiques().elem( i ).oid() ) );
     }
 
-    if( asnMsg.m.prioritesPresent )
+    if( asnMsg.has_priorites()  )
     {
         priorities_.clear();
-        for( unsigned int i = 0; i < asnMsg.priorites.n; ++i )
-            priorities_.push_back( asnMsg.priorites.elem[ i ] );
+        for( int i = 0; i < asnMsg.priorites().elem_size(); ++i )
+            priorities_.push_back( asnMsg.priorites().elem( i ) );
     }
 }
 
@@ -89,64 +91,40 @@ void AgentLogMedical::Update( const ASN1T_MsgLogMedicalState& asnMsg )
 void AgentLogMedical::Send( ClientPublisher_ABC& publisher ) const
 {
     client::LogMedicalState asn;
-
-    asn().oid_pion = agent_.GetId();
-
-    asn().m.chaine_activeePresent                      = 1;
-    asn().m.disponibilites_ambulances_ramassagePresent = 1;
-    asn().m.disponibilites_ambulances_relevePresent    = 1;
-    asn().m.disponibilites_medecinsPresent             = 1;
-    asn().m.priorites_tactiquesPresent                 = 1;
-    asn().m.prioritesPresent                           = 1;
-
-    asn().chaine_activee = bSystemEnabled_;
+    asn().set_oid_pion ( agent_.GetId() );
+    asn().set_chaine_activee ( bSystemEnabled_ );
 
     {
-        asn().disponibilites_ambulances_releve.n = evacuationAmbulancesAvailability_.size();
-        asn().disponibilites_ambulances_releve.elem = asn().disponibilites_ambulances_releve.n > 0 ? new ASN1T_LogMedicalEquipmentAvailability[ asn().disponibilites_ambulances_releve.n ] : 0;
-        unsigned int i = 0;
         for( std::vector< T_Availability >::const_iterator it = evacuationAmbulancesAvailability_.begin(); it != evacuationAmbulancesAvailability_.end(); ++it )
-            it->Send( asn().disponibilites_ambulances_releve.elem[i++] );
+            it->Send( *asn().mutable_disponibilites_ambulances_releve()->add_elem() );
     }
     {
-        asn().disponibilites_ambulances_ramassage.n = collectionAmbulancesAvailability_.size();
-        asn().disponibilites_ambulances_ramassage.elem = asn().disponibilites_ambulances_ramassage.n > 0 ? new ASN1T_LogMedicalEquipmentAvailability[ asn().disponibilites_ambulances_ramassage.n ] : 0;
-        unsigned int i = 0;
         for( std::vector< T_Availability >::const_iterator it = collectionAmbulancesAvailability_.begin(); it != collectionAmbulancesAvailability_.end(); ++it )
-            it->Send( asn().disponibilites_ambulances_ramassage.elem[i++] );
+            it->Send( *asn().mutable_disponibilites_ambulances_ramassage()->add_elem() );
     }
     {
-        asn().disponibilites_medecins.n = doctorsAvailability_.size();
-        asn().disponibilites_medecins.elem = asn().disponibilites_medecins.n > 0 ? new ASN1T_LogMedicalEquipmentAvailability[ asn().disponibilites_medecins.n ] : 0;
-        unsigned int i = 0;
         for( std::vector< T_Availability >::const_iterator it = doctorsAvailability_.begin(); it != doctorsAvailability_.end(); ++it )
-            it->Send( asn().disponibilites_medecins.elem[i++] );
+            it->Send( *asn().mutable_disponibilites_medecins()->add_elem() );
     }
     {
-        asn().priorites_tactiques.n = tacticalPriorities_.size();
-        asn().priorites_tactiques.elem = asn().priorites_tactiques.n > 0 ? new ASN1T_Automat[ asn().priorites_tactiques.n ] : 0;
-        unsigned int i = 0;
-        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it, ++i )
-            asn().priorites_tactiques.elem[i] = (*it)->GetId();
+        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = tacticalPriorities_.begin(); it != tacticalPriorities_.end(); ++it )
+            asn().mutable_priorites_tactiques()->add_elem()->set_oid( (*it)->GetId() );
     }
     {
-        asn().priorites.n = priorities_.size();
-        asn().priorites.elem = asn().priorites.n > 0 ? new ASN1T_EnumHumanWound[ asn().priorites.n ] : 0;
-        unsigned int i = 0;
-        for( std::vector< ASN1T_EnumHumanWound >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
-            asn().priorites.elem[i++] = *it;
+        for( std::vector< Common::EnumHumanWound >::const_iterator it = priorities_.begin(); it != priorities_.end(); ++it )
+            asn().mutable_priorites()->add_elem( *it );
     }
 
     asn.Send( publisher );
 
-    if( asn().disponibilites_ambulances_releve.n > 0 )
-        delete [] asn().disponibilites_ambulances_releve.elem;
-    if( asn().disponibilites_ambulances_ramassage.n > 0 )
-        delete [] asn().disponibilites_ambulances_ramassage.elem;
-    if( asn().disponibilites_medecins.n > 0 )
-        delete [] asn().disponibilites_medecins.elem;
-    if( asn().priorites.n > 0 )
-        delete [] asn().priorites.elem;
-    if( asn().priorites_tactiques.n > 0 )
-        delete [] asn().priorites_tactiques.elem;
+    if( asn().disponibilites_ambulances_releve().elem_size() > 0 )
+        asn().mutable_disponibilites_ambulances_releve()->Clear();
+    if( asn().disponibilites_ambulances_ramassage().elem_size() > 0 )
+        asn().mutable_disponibilites_ambulances_ramassage()->Clear();
+    if( asn().disponibilites_medecins().elem_size() > 0 )
+        asn().mutable_disponibilites_medecins()->Clear();
+    if( asn().priorites().elem_size() > 0 )
+        asn().mutable_priorites()->Clear();
+    if( asn().priorites_tactiques().elem_size() > 0 )
+        asn().mutable_priorites_tactiques()->Clear();
 }

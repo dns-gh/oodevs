@@ -9,15 +9,17 @@
 
 #include "gaming_pch.h"
 #include "Network.h"
-#include "clients_kernel/Types.h"
-#include "clients_kernel/Logger_ABC.h"
 #include "AgentServerMsgMgr.h"
 #include "CommandHandler.h"
-#include "game_asn/SimulationSenders.h"
 #include "Simulation.h"
 #include "Profile.h"
 #include "Tools.h"
 #include "Services.h"
+#include "clients_kernel/Types.h"
+#include "clients_kernel/Logger_ABC.h"
+#include "protocol/Protocol.h"
+
+using namespace Common;
 
 #pragma warning( disable : 4127 4355 4511 4512 )
 #pragma warning( push )

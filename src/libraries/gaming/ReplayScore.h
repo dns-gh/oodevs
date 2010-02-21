@@ -10,6 +10,7 @@
 #ifndef __ReplayScore_h_
 #define __ReplayScore_h_
 
+#include "protocol/aarsenders.h"
 #include "Score.h"
 
 class ScoreDefinition;
@@ -27,7 +28,7 @@ class ReplayScore : public Score
 public:
     //! @name Constructors/Destructor
     //@{
-             ReplayScore( const ASN1T_MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
+    ReplayScore( const MsgsAarToClient::MsgIndicator& message, const ScoreDefinitions& definitions, kernel::Controller& controller, Publisher_ABC& publisher );
     virtual ~ReplayScore();
     //@}
 
@@ -45,7 +46,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void UpdatePlots( const ASN1T_MsgIndicator& message );
+    virtual void UpdatePlots( const MsgsAarToClient::MsgIndicator& message );
     //@}
 
 private:

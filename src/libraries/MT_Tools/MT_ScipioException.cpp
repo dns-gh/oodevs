@@ -20,7 +20,7 @@
 // Name: MT_ScipioException constructor
 // Created: JVT 03-02-04
 //-----------------------------------------------------------------------------
-MT_ScipioException::MT_ScipioException( const std::string& strContext, const std::string& strFile, uint nLine, const std::string& strMessage, const std::string& strDescription )
+MT_ScipioException::MT_ScipioException( const std::string& strContext, const std::string& strFile, unsigned int nLine, const std::string& strMessage, const std::string& strDescription )
     : MT_Exception( strContext, 42, strMessage )
     , strContext_    ( strContext )
     , strFile_       ( strFile )
@@ -34,7 +34,7 @@ MT_ScipioException::MT_ScipioException( const std::string& strContext, const std
 // Name: MT_ScipioException constructor
 // Created: JVT 03-02-04
 //-----------------------------------------------------------------------------
-MT_ScipioException::MT_ScipioException( const std::string& strContext, const std::string& strFile, uint nLine, const std::string& strMessage )
+MT_ScipioException::MT_ScipioException( const std::string& strContext, const std::string& strFile, unsigned int nLine, const std::string& strMessage )
     : MT_Exception( strContext, 42, strMessage )
     , strContext_    ( strContext )
     , strFile_       ( strFile )

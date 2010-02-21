@@ -12,7 +12,14 @@
 
 #include "Localisation.h"
 
-struct ASN1T_LimaOrder;
+namespace Common
+{
+    class MsgLimaOrder;
+}
+
+//using namespace MsgsSimToClient;
+
+//struct LimaOrder;
 
 namespace dispatcher
 {
@@ -27,20 +34,20 @@ class LimaOrder
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit LimaOrder( const ASN1T_LimaOrder& asn );
+    explicit LimaOrder( const Common::MsgLimaOrder& asn );
     virtual ~LimaOrder();
     //@}
 
     //! @name Operations
     //@{
-    void Send( ASN1T_LimaOrder& asn ) const;
+    void Send( Common::MsgLimaOrder& asn ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     Localisation location_;
-    std::vector< ASN1T_EnumLimaType > functions_;
+    std::vector< int > functions_;
     std::string  schedule_;
     //@}
 };

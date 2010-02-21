@@ -12,6 +12,11 @@
 
 #include "dispatcher/Plugin_ABC.h"
 
+namespace MsgsSimToClient
+{
+    class MsgSimToClient;
+}
+
 namespace xml
 {
     class xistream;
@@ -52,7 +57,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Receive                  ( const ASN1T_MsgsSimToClient& message );
+    virtual void Receive                  ( const MsgsSimToClient::MsgSimToClient& message );
     virtual void NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile );
     virtual void NotifyClientLeft         ( dispatcher::ClientPublisher_ABC& client );
     //@}

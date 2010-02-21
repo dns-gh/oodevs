@@ -44,16 +44,19 @@ public:
     //@}
 
 public:
+    //! @name Constructors/Destructor
+    //@{
      PHY_DotationGroup( const PHY_DotationType& type, PHY_DotationGroupContainer& groupContainer );
      PHY_DotationGroup();
     virtual ~PHY_DotationGroup();
+    //@}
 
     //! @name CheckPoints
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
 
     void WriteODB( xml::xostream& xos ) const;
     //@}
@@ -117,10 +120,12 @@ private:
     //@}
 
 private:
-    const PHY_DotationType*           pType_;
-          PHY_DotationGroupContainer* pGroupContainer_;
-
-          T_DotationMap               dotations_;
+    //! @name Member data
+    //@{
+    const PHY_DotationType* pType_;
+    PHY_DotationGroupContainer* pGroupContainer_;
+    T_DotationMap dotations_;
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_DotationGroup )

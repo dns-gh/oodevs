@@ -10,13 +10,12 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
-#include "Tools/MIL_Tools.h"
-
+#include "MIL_AgentServer.h"
 #include "Meteo/RawVisionData/PHY_RawVisionData.h"
 #include "Meteo/PHY_MeteoDataManager.h"
-#include "MIL_AgentServer.h"
+#include "protocol/protocol.h"
 #include "simulation_terrain/TER_World.h"
+#include "Tools/MIL_Tools.h"
 #include <sys/timeb.h>
 
 MIL_Tools::converter< PHY_RawVisionData::E_VisionObject > MIL_Tools::environnementConverter_[] =
@@ -52,7 +51,7 @@ const PHY_Meteo::sWindData& MIL_Tools::GetWind( const MT_Vector2D& vPos )
 // -----------------------------------------------------------------------------
 boost::crc_32_type::value_type MIL_Tools::ComputeCRC( const std::string& fileName )
 {
-    static const uint nBufferSize = 4096;
+    static const unsigned int nBufferSize = 4096;
 
     char               buffer[ nBufferSize ];
     boost::crc_32_type CRC;
@@ -85,9 +84,9 @@ void MIL_Tools::ConvertCoordMosToSim( const std::string& strMosPos, MT_Vector2D&
 // Name: MIL_Tools::ConvertCoordMosToSim
 // Created: NLD 2003-03-31
 //-----------------------------------------------------------------------------
-void MIL_Tools::ConvertCoordMosToSim( const ASN1T_CoordLatLong& asn, MT_Vector2D& vSimPos )
+void MIL_Tools::ConvertCoordMosToSim( const Common::MsgCoordLatLong& asn, MT_Vector2D& vSimPos )
 {
-    TER_World::GetWorld().MosToSimMgrsCoord( asn.latitude, asn.longitude, vSimPos );
+    TER_World::GetWorld().MosToSimMgrsCoord( asn.latitude(), asn.longitude(), vSimPos );
 }
 
 //-----------------------------------------------------------------------------
@@ -106,9 +105,10 @@ std::string MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos )
 // Name: MIL_Tools::ConvertCoordSimToMos
 // Created: AGE 2008-04-02
 // -----------------------------------------------------------------------------
-void MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos, ASN1T_CoordLatLong& asn )
+void MIL_Tools::ConvertCoordSimToMos( const MT_Vector2D& vSimPos, Common::MsgCoordLatLong& asn )
 {
-    TER_World::GetWorld().SimToMosMgrsCoord( vSimPos, asn.latitude, asn.longitude );
-
+    double x, y;
+    TER_World::GetWorld().SimToMosMgrsCoord( vSimPos, x, y );
+    asn.set_latitude( x );
+    asn.set_longitude( y );
 }
-

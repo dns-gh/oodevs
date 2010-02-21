@@ -48,7 +48,7 @@ public:
     //! @name CheckPoints
     //@{
     template< typename Archive >
-    void serialize( Archive&, const uint );
+    void serialize( Archive&, const unsigned int );
     //@}
 
     //! @name ODB
@@ -85,7 +85,7 @@ namespace serialization {
 // Created: RDS 2008-05-09
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void MIL_Entity_ABC::serialize( Archive& archive, const uint )
+void MIL_Entity_ABC::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< tools::RoleContainer >( *this )
         & const_cast< std::string& >( strName_ ) ; 

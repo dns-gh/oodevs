@@ -10,12 +10,17 @@
 #ifndef __Agent_h_
 #define __Agent_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
+#include "protocol/simulationsenders.h"
+
+namespace MsgsSimToClient
+{
+	class MsgUnitCreation;
+}
 
 namespace kernel
 {
@@ -38,7 +43,7 @@ class Agent : public kernel::EntityImplementation< kernel::Agent_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const ASN1T_MsgUnitCreation& message,
+            Agent( const MsgsSimToClient::MsgUnitCreation& message,
                     kernel::Controller& controller, 
                     const tools::Resolver_ABC< kernel::AgentType >& resolver );
     virtual ~Agent();

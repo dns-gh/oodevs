@@ -10,8 +10,11 @@
 #ifndef __SimulationMessages_h_
 #define __SimulationMessages_h_
 
-#include "ASN_Messages.h"
-#include "game_asn/Simulation.h"
+#include "protocol/senders.h"
+#include "protocol/Simulation.h"
+
+using namespace Common;
+using namespace MsgsClientToSim;
 
 namespace simulation
 {

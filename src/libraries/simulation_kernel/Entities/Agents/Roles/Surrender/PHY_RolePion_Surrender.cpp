@@ -11,13 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Surrender.h"
-#include "Network/NET_ASN_Messages.h"
+#include "SurrenderNotificationHandler_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
-#include "SurrenderNotificationHandler_ABC.h"
-
+#include "protocol/ClientSenders.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
@@ -73,7 +72,7 @@ PHY_RolePion_Surrender::~PHY_RolePion_Surrender()
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_RolePion_Surrender::serialize( Archive& file, const uint )
+void PHY_RolePion_Surrender::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
          & bPrisoner_
@@ -204,22 +203,20 @@ const MIL_Army_ABC* PHY_RolePion_Surrender::GetArmySurrenderedTo() const
 // Name: PHY_RolePion_Surrender::SendFullState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Surrender::SendFullState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Surrender::SendFullState( client::UnitAttributes& msg ) const
 {
 
-    msg().m.prisonnierPresent = 1;
-    msg().prisonnier          = IsPrisoner();
+    msg().set_prisonnier( IsPrisoner() );
 
     const MIL_Army_ABC* pArmySurrenderedTo = GetArmySurrenderedTo();
-    msg().m.renduPresent  = 1;
-    msg().rendu           = pArmySurrenderedTo ? pArmySurrenderedTo->GetID() : 0;
+    msg().set_rendu( pArmySurrenderedTo ? pArmySurrenderedTo->GetID() : 0 );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Surrender::SendChangedState
 // Created: NLD 2004-09-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Surrender::SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const
+void PHY_RolePion_Surrender::SendChangedState( client::UnitAttributes& msg ) const
 {
     if( bHasChanged_ )
         SendFullState( msg );

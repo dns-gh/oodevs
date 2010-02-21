@@ -10,16 +10,18 @@
 #include "dispatcher_pch.h"
 #include "MissionParameter_PopulationKnowledge.h"
 #include "ClientPublisher_ABC.h"
+#include "protocol/protocol.h"
 
 using namespace dispatcher;
+
 
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_PopulationKnowledge constructor
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-MissionParameter_PopulationKnowledge::MissionParameter_PopulationKnowledge( const ASN1T_MissionParameter& asn )
+MissionParameter_PopulationKnowledge::MissionParameter_PopulationKnowledge( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , populationKnowledge_( asn.value.u.populationKnowledge )
+    , populationKnowledge_( asn.value().populationknowledge().oid() )
 {
     // NOTHING
 }
@@ -33,26 +35,21 @@ MissionParameter_PopulationKnowledge::~MissionParameter_PopulationKnowledge()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_PopulationKnowledge::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_PopulationKnowledge::Send( ASN1T_MissionParameter& asn ) const
+void MissionParameter_PopulationKnowledge::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.null_value                  = bNullValue_;
-    asn.value.t                     = T_MissionParameter_value_populationKnowledge;
-    asn.value.u.populationKnowledge = populationKnowledge_;
+    asn.set_null_value( bNullValue_ );
+    asn.mutable_value()->mutable_populationknowledge()->set_oid( populationKnowledge_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MissionParameter_PopulationKnowledge::AsnDelete
+// Name: MissionParameter_PopulationKnowledge::Delete
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
-void MissionParameter_PopulationKnowledge::AsnDelete( ASN1T_MissionParameter& /*asn*/ ) const
+void MissionParameter_PopulationKnowledge::Delete( Common::MsgMissionParameter& /*asn*/ ) const
 {
     // NOTHING
 }

@@ -10,7 +10,6 @@
 #ifndef __UrbanKnowledge_h_
 #define __UrbanKnowledge_h_
 
-#include "game_asn/Simulation.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
 #include "tools/Resolver_ABC.h"
 #include "clients_kernel/OptionalValue.h"
@@ -18,6 +17,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
+
 
 namespace kernel
 {
@@ -31,6 +31,12 @@ namespace urban
     class Block;
 }
 
+namespace MsgsSimToClient
+{
+    class MsgUrbanKnowledgeUpdate;
+    class MsgUrbanKnowledgeCreation;
+}
+
 // =============================================================================
 /** @class  UrbanKnowledge
     @brief  UrbanKnowledge
@@ -39,13 +45,13 @@ namespace urban
 // =============================================================================
 class UrbanKnowledge : public kernel::EntityImplementation< kernel::UrbanKnowledge_ABC >
                       , public kernel::Extension_ABC
-                      , public kernel::Updatable_ABC< ASN1T_MsgUrbanKnowledgeUpdate >
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUrbanKnowledgeUpdate >
                       , public kernel::Displayable_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanKnowledge( const kernel::Team_ABC& owner, const ASN1T_MsgUrbanKnowledgeCreation& message,
+             UrbanKnowledge( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgUrbanKnowledgeCreation& message,
                               kernel::Controller& controller,
                               const tools::Resolver_ABC< urban::Block >& terrainObjectResolver );
     virtual ~UrbanKnowledge();
@@ -74,7 +80,7 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void DoUpdate( const ASN1T_MsgUrbanKnowledgeUpdate& message );
+    virtual void DoUpdate( const MsgsSimToClient::MsgUrbanKnowledgeUpdate& message );
     //@}
 
 private:

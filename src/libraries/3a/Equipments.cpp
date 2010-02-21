@@ -11,6 +11,8 @@
 
 using namespace extractors;
 
+using namespace Common;
+
 // -----------------------------------------------------------------------------
 // Name: Equipments constructor
 // Created: AGE 2007-10-29
@@ -23,13 +25,14 @@ Equipments::Equipments()
 namespace
 {
     const unsigned nEquipmentStates = 5;
-    ASN1INT ASN1T_EquipmentDotations::*equipmentData[5] = 
+    typedef int (EquipmentDotations_EquipmentDotation::* EquipmentDotationsMemberFn)() const;
+    EquipmentDotationsMemberFn equipmentData[5] = 
     {
-        &ASN1T_EquipmentDotations::nb_disponibles, 
-        &ASN1T_EquipmentDotations::nb_indisponibles, 
-        &ASN1T_EquipmentDotations::nb_reparables, 
-        &ASN1T_EquipmentDotations::nb_dans_chaine_maintenance, 
-        &ASN1T_EquipmentDotations::nb_prisonniers
+        &EquipmentDotations_EquipmentDotation::nb_disponibles, 
+        &EquipmentDotations_EquipmentDotation::nb_indisponibles, 
+        &EquipmentDotations_EquipmentDotation::nb_reparables, 
+        &EquipmentDotations_EquipmentDotation::nb_dans_chaine_maintenance, 
+        &EquipmentDotations_EquipmentDotation::nb_prisonniers
     };
     const char* equipmentStates[5] = 
     {
@@ -67,21 +70,21 @@ Equipments::Equipments( xml::xistream& xis )
 // Name: Equipments::Extract
 // Created: AGE 2007-10-29
 // -----------------------------------------------------------------------------
-int Equipments::Extract( const ASN1T_MsgUnitAttributes& attributes )
+int Equipments::Extract( const MsgUnitAttributes& attributes )
 {
-    unsigned size = attributes.dotation_eff_materiel.n;
+    unsigned size = attributes.dotation_eff_materiel().elem_size();
     while( size > 0 )
     {
         --size;
-        const ASN1T_EquipmentDotations& equipment = attributes.dotation_eff_materiel.elem[ size ];
-        if( filter_.IsAllowed( equipment.type_equipement ) )
+        const EquipmentDotations_EquipmentDotation& equipment = attributes.dotation_eff_materiel().elem( size );
+        if( filter_.IsAllowed( equipment.type_equipement() ) )
         {
             int quantity = 0;
-            ASN1INT ASN1T_EquipmentDotations::** data = equipmentData;
+            EquipmentDotationsMemberFn* data = equipmentData;
             for( unsigned i = 0; i < nEquipmentStates; ++i, ++data )
                 if( ( stateMask_ & ( 1 << i ) ) != 0 )
-                    quantity += equipment.**data;
-            equipments_[ equipment.type_equipement ] = quantity;
+                    quantity += (equipment.**data)();
+            equipments_[ equipment.type_equipement() ] = quantity;
         }
     }
     int result = 0;

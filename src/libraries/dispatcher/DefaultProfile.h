@@ -12,6 +12,9 @@
 
 #include "Profile_ABC.h"
 
+
+////using namespace Common;
+
 namespace dispatcher
 {
 
@@ -33,10 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool CheckRights( const ASN1T_MsgsClientToSim& msg ) const;
-    virtual bool CheckRights( const ASN1T_MsgsClientToAuthentication& msg ) const;
-    virtual bool CheckRights( const ASN1T_MsgsClientToReplay& msg ) const;
-    virtual bool CheckRights( const ASN1T_ChatTarget& source, const ASN1T_ChatTarget& target ) const;
+    virtual bool CheckRights( const MsgsClientToSim::MsgClientToSim& msg ) const;
+    virtual bool CheckRights( const MsgsClientToAuthentication::MsgClientToAuthentication& msg ) const;
+    virtual bool CheckRights( const MsgsClientToReplay::MsgClientToReplay& msg ) const;
+    virtual bool CheckRights( const Common::MsgChatTarget& source, const Common::MsgChatTarget& target ) const;
     //@}
 
     //! @name Accessors

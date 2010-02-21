@@ -11,8 +11,13 @@
 #define __Point_h_
 
 #include "Shape_ABC.h"
-#include "game_asn/Simulation.h"
 #include "ESRI.h"
+
+namespace Common
+{
+    class MsgLocation;
+    class MsgCoordLatLong;
+}
 
 namespace plugins
 {
@@ -32,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Point();
-    explicit Point( const ASN1T_CoordLatLong& coord );
+    explicit Point( const Common::MsgCoordLatLong& coord );
     explicit Point( IGeometryPtr geometry );
     virtual ~Point();
     //@}
@@ -41,8 +46,8 @@ public:
     //@{
     virtual void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     virtual void Serialize( std::ostream& geometry ) const;
-    virtual void Serialize( ASN1T_Location& asn ) const;
-    virtual void Serialize( ASN1T_CoordLatLong& asn ) const;
+    virtual void Serialize( Common::MsgLocation& message ) const;
+    virtual void Serialize( Common::MsgCoordLatLong& message ) const;
     //@}
 
     //! @name 

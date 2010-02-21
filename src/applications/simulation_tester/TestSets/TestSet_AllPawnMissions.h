@@ -41,7 +41,7 @@ class TestSet_AllPawnMissions : public TestSet_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TestSet_AllPawnMissions( uint nIteration = 1 );
+             TestSet_AllPawnMissions( unsigned int nIteration = 1 );
     virtual ~TestSet_AllPawnMissions();
     //@}
 

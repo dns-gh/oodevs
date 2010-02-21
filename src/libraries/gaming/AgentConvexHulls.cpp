@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "AgentConvexHulls.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentConvexHulls constructor
@@ -35,12 +36,12 @@ AgentConvexHulls::~AgentConvexHulls()
 // Name: AgentConvexHulls::DoUpdate
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-void AgentConvexHulls::DoUpdate( const ASN1T_MsgUnitAttributes& attributes )
+void AgentConvexHulls::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& attributes )
 {
-    if( attributes.m.positionPresent )
-        SetPosition( converter_.ConvertToXY( attributes.position ) );
-    if( attributes.m.mortPresent )
-        SetDead( attributes.mort != 0 );
+    if( attributes.has_position()  )
+        SetPosition( converter_.ConvertToXY( attributes.position() ) );
+    if( attributes.has_mort()  )
+        SetDead( attributes.mort() != 0 );
 }
 
 // -----------------------------------------------------------------------------

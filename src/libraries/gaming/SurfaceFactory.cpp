@@ -14,6 +14,11 @@
 
 using namespace kernel;
 
+namespace MsgsSimToClient
+{
+    class MsgVisionCone;
+}
+
 // -----------------------------------------------------------------------------
 // Name: SurfaceFactory constructor
 // Created: AGE 2006-04-04
@@ -39,7 +44,7 @@ SurfaceFactory::~SurfaceFactory()
 // Name: SurfaceFactory::CreateSurface
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const ASN1T_VisionCone& input, float elongation )
+Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& input, float elongation )
 {
     return new Surface( agent, input, converter_, map_, resolver_, elongation );
 }

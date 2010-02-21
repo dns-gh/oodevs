@@ -48,7 +48,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
 private:
@@ -72,7 +72,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_KS_AgentKnowledgeSynthetizer )
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void DEC_KS_AgentKnowledgeSynthetizer::serialize( Archive& archive, const uint )
+void DEC_KS_AgentKnowledgeSynthetizer::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeSource_ABC >( *this )
             & pBlackBoard_;

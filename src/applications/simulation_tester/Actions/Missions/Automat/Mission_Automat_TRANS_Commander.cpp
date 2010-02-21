@@ -43,9 +43,9 @@ void Mission_Automat_TRANS_Commander::Serialize()
     // build din/asn msg
     Mission_Automat_ABC::Serialize();
 
-    ASN1T_Mission_Automate_TRANS_Commander& asnMission = *new ASN1T_Mission_Automate_TRANS_Commander();
-    asnMsg_.GetAsnMsg().mission.t = T_Mission_Automate_mission_automate_trans_commander;
-    asnMsg_.GetAsnMsg().mission.u.mission_automate_trans_commander = &asnMission;
+    Mission_Automate_TRANS_Commander& asnMission = *new Mission_Automate_TRANS_Commander();
+
+    asnMsg_.GetAsnMsg().mission().mission_automate_trans_commander = &asnMission;
 
     const Location& zoneDeploiement_ = pTarget_->GetTestParam_Polygon();
 
@@ -61,8 +61,8 @@ void Mission_Automat_TRANS_Commander::Serialize()
 // -----------------------------------------------------------------------------
 void Mission_Automat_TRANS_Commander::Clean()
 {
-    assert( asnMsg_.GetAsnMsg().mission.t == T_Mission_Automate_mission_automate_trans_commander );
-    ASN1T_Mission_Automate_TRANS_Commander& asnMission = *asnMsg_.GetAsnMsg().mission.u.mission_automate_trans_commander;
+    assert( asnMsg_.GetAsnMsg().mission.has_mission_automate_trans_commander ());
+    Mission_Automate_TRANS_Commander& asnMission = *asnMsg_.GetAsnMsg().mission().mission_automate_trans_commander;
 
     ASN_Tools::Delete( asnMission.zone_deploiement );
 

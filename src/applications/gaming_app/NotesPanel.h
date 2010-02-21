@@ -12,7 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
-#include "game_asn/Publisher_ABC.h"
+#include "protocol/Publisher_ABC.h"
 #include "NoteDialog.h"
 #include <qpushbutton.h>
 #include <qlayout.h>

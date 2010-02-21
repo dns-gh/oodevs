@@ -13,6 +13,12 @@
 #include "MIL_Fuseau.h"
 #include "MIL_LimaOrder.h"
 
+namespace Common
+{
+    class MsgMissionParameter;
+    class MsgMissionParameters;
+}
+
 class MIL_LimaFunction;
 class MIL_IntelligenceOrder;
 class MIL_IntelligenceOrdersVisitor_ABC;
@@ -29,7 +35,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit MIL_OrderContext( bool present = false );
-             MIL_OrderContext( const ASN1T_MissionParameters& asn, const MT_Vector2D& orientationReference );
+             MIL_OrderContext( const Common::MsgMissionParameters& asn, const MT_Vector2D& orientationReference );
              MIL_OrderContext( const MIL_OrderContext& rhs );
     virtual ~MIL_OrderContext();
     //@}
@@ -40,7 +46,7 @@ public:
     const MT_Vector2D&   GetDirDanger         () const;
     const MIL_Fuseau&    GetFuseau            () const;
     const T_LimaVector&  GetLimas             () const;
-          MIL_LimaOrder* FindLima             ( uint nID );
+          MIL_LimaOrder* FindLima             ( unsigned int nID );
           MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function );
           MIL_LimaOrder* FindNextScheduledLima();
           void           AffectFuseau         ( const MIL_Fuseau& fuseau );
@@ -50,8 +56,8 @@ public:
 
     //! @name Network
     //@{
-    void Serialize              ( ASN1T_MissionParameters& asn ) const;
-    void CleanAfterSerialization( ASN1T_MissionParameters& asn ) const;
+    void Serialize              ( Common::MsgMissionParameters& asn ) const;
+    void CleanAfterSerialization( Common::MsgMissionParameters& asn ) const;
     //@}
  
 private:
@@ -62,15 +68,15 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadDirection( const ASN1T_MissionParameter& asn );
-    void ReadPhaseLines( const ASN1T_MissionParameter& asn );
-    void ReadLimits( const ASN1T_MissionParameter& limit1, const ASN1T_MissionParameter& limit2, const MT_Vector2D& orientationReference );
-    void ReadIntelligences( const ASN1T_MissionParameter& asn );
+    void ReadDirection( const Common::MsgMissionParameter& asn );
+    void ReadPhaseLines( const Common::MsgMissionParameter& asn );
+    void ReadLimits( const Common::MsgMissionParameter& limit1, const Common::MsgMissionParameter& limit2, const MT_Vector2D& orientationReference );
+    void ReadIntelligences( const Common::MsgMissionParameter& asn );
 
-    void WriteDirection( ASN1T_MissionParameter& asn ) const;
-    void WritePhaseLines( ASN1T_MissionParameter& asn ) const;
-    void WriteLimits( ASN1T_MissionParameter& limit1, ASN1T_MissionParameter& limit2 ) const;
-    void WriteIntelligences( ASN1T_MissionParameter& asn ) const;
+    void WriteDirection( Common::MsgMissionParameter& asn ) const;
+    void WritePhaseLines( Common::MsgMissionParameter& asn ) const;
+    void WriteLimits( Common::MsgMissionParameter& limit1, Common::MsgMissionParameter& limit2 ) const;
+    void WriteIntelligences( Common::MsgMissionParameter& asn ) const;
     //@}
 
     //! @name Helpers

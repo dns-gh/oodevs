@@ -16,7 +16,6 @@
 #include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
-class NET_ASN_MsgUnitAttributes;
 class MIL_AgentPion;
 class MIL_Army_ABC;
 
@@ -24,8 +23,10 @@ namespace moving
 {
     class MoveComputer_ABC;
 }
+
 namespace surrender
 {
+
 // =============================================================================
 // @class  PHY_RolePion_Surrender
 // Created: JVT 2004-08-03
@@ -41,7 +42,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Operations
@@ -70,8 +71,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& msg ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 private:

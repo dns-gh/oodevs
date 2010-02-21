@@ -23,4 +23,6 @@
 #include "MT/MT_Logger/MT_Logger_Lib.h"
 #include "ESRI.h"
 
+#undef max
+
 #endif // __crossbow_plugin_pch_h_

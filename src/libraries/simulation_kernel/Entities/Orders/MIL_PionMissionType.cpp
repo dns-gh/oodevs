@@ -48,7 +48,7 @@ void MIL_PionMissionType::Initialize( xml::xistream& xis )
 // Name: MIL_PionMissionType constructor
 // Created: NLD 2006-11-19
 //-----------------------------------------------------------------------------
-MIL_PionMissionType::MIL_PionMissionType( uint nID, xml::xistream& xis )
+MIL_PionMissionType::MIL_PionMissionType( unsigned int nID, xml::xistream& xis )
     : MIL_MissionType_ABC( nID, xis )
     , strDIABehavior_    ()
 {
@@ -68,7 +68,7 @@ MIL_PionMissionType::~MIL_PionMissionType()
 // Name: MIL_PionMissionType::Find
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-const MIL_MissionType_ABC* MIL_PionMissionType::Find( uint nID )
+const MIL_MissionType_ABC* MIL_PionMissionType::Find( unsigned int nID )
 {
     CIT_MissionIDMap it = missionIDs_.find( nID );
     if( it == missionIDs_.end() )

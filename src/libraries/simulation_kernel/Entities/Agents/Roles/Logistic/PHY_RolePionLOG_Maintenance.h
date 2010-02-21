@@ -45,8 +45,8 @@ public:
     //@{
     BOOST_SERIALIZATION_SPLIT_MEMBER()
     
-    void load( MIL_CheckPointInArchive&, const uint );
-    void save( MIL_CheckPointOutArchive&, const uint ) const;
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     
@@ -92,8 +92,8 @@ public:
 
     //! @name Network
     //@{
-    virtual void SendChangedState( NET_ASN_MsgUnitAttributes& asnUnit ) const;
-    virtual void SendFullState   ( NET_ASN_MsgUnitAttributes& asnUnit ) const;
+    virtual void SendChangedState( client::UnitAttributes& asnUnit ) const;
+    virtual void SendFullState   ( client::UnitAttributes& asnUnit ) const;
     //@}
 
 private:
@@ -115,7 +115,7 @@ private:
     void InsertConsigns( const T_MaintenanceConsigns& );
 
     bool     HasUsableHauler                      ( const PHY_ComposanteTypePion& composanteType ) const;
-    uint     GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
+    unsigned int     GetNbrAvailableRepairersAllowedToWork( const PHY_Breakdown& breakdown ) const;
     MT_Float GetAvailabilityRatio                 ( PHY_ComposanteUsePredicate& predicate, const PHY_MaintenanceWorkRate* pWorkRate = 0 ) const;
     //@}    
 
@@ -125,7 +125,7 @@ private:
           bool                        bExternalMustChangeState_;
           bool                        bSystemEnabled_;
     const PHY_MaintenanceWorkRate*    pWorkRate_;
-          uint                        nWorkRateWarningRCTick_;
+          unsigned int                        nWorkRateWarningRCTick_;
           T_MaintenancePriorityVector priorities_;
           T_AutomateVector            tacticalPriorities_;
           T_MaintenanceConsigns       consigns_;

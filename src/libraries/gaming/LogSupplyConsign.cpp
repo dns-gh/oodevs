@@ -28,24 +28,24 @@ using namespace kernel;
 // Name: LogSupplyConsign constructor
 // Created: AGE 2006-02-28
 // -----------------------------------------------------------------------------
-LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< DotationType >& dotationResolver, const ASN1T_MsgLogSupplyHandlingCreation& message )
+LogSupplyConsign::LogSupplyConsign( Controller& controller, const tools::Resolver_ABC< Automat_ABC >& resolver, const tools::Resolver_ABC< Agent_ABC >& agentResolver, const tools::Resolver_ABC< DotationType >& dotationResolver, const MsgsSimToClient::MsgLogSupplyHandlingCreation& message )
     : controller_           ( controller )
     , resolver_             ( resolver )
     , agentResolver_        ( agentResolver )
     , dotationResolver_     ( dotationResolver )
-    , nID_                  ( message.oid_consigne )
-    , pion_                 ( resolver.Get( message.oid_automate ) )
+    , nID_                  ( message.oid_consigne() )
+    , pion_                 ( resolver.Get( message.oid_automate() ) )
     , pAutomateLogHandling_ ( 0 )
     , pPionLogConvoying_    ( 0 )
     , pAutomateLogProvidingConvoyResources_( 0 )
     , nState_( eLogSupplyHandlingStatus_Termine )
 {
-    for( uint i = 0; i < message.dotations.n; ++i )
-        Register( message.dotations.elem[i].ressource_id,
-                  * new DotationRequest( dotationResolver_.Get( message.dotations.elem[i].ressource_id ),
-                                         message.dotations.elem[i].quantite_demandee,
-                                         message.dotations.elem[i].quantite_accordee,
-                                         message.dotations.elem[i].quantite_en_transit ) );
+    for( int i = 0; i < message.dotations().elem_size(); ++i )
+        Register( message.dotations().elem( i ).ressource_id() ,
+                  * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).ressource_id() ),
+                                         message.dotations().elem( i ).quantite_demandee(),
+                                         message.dotations().elem( i ).quantite_accordee(),
+                                         message.dotations().elem( i ).quantite_en_transit() ) );
     pion_.Get< LogSupplyConsigns >().AddConsign( *this );
 }
 
@@ -67,49 +67,49 @@ LogSupplyConsign::~LogSupplyConsign()
 // Name: LogSupplyConsign::OnReceiveMsgUpdate
 // Created: NLD 2004-12-30
 // -----------------------------------------------------------------------------
-void LogSupplyConsign::Update( const ASN1T_MsgLogSupplyHandlingUpdate& message )
+void LogSupplyConsign::Update( const MsgsSimToClient::MsgLogSupplyHandlingUpdate& message )
 {
-    if( message.m.oid_automate_log_traitantPresent )
+    if( message.has_oid_automate_log_traitant()  )
     {
         if( pAutomateLogHandling_ )
             pAutomateLogHandling_->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pAutomateLogHandling_ = resolver_.Find( message.oid_automate_log_traitant );
+        pAutomateLogHandling_ = resolver_.Find( message.oid_automate_log_traitant() );
         if( pAutomateLogHandling_ )
             pAutomateLogHandling_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
 
-    if( message.m.oid_pion_convoyantPresent )
+    if( message.has_oid_pion_convoyant()  )
     {
         if( pPionLogConvoying_ )
             pPionLogConvoying_->Get< LogSupplyConsigns >().TerminateConsign( *this );
-        pPionLogConvoying_ = agentResolver_.Find( message.oid_pion_convoyant );
-        if( message.oid_pion_convoyant )
+        pPionLogConvoying_ = agentResolver_.Find( message.oid_pion_convoyant() );
+        if( message.oid_pion_convoyant() )
             pPionLogConvoying_->Get< LogSupplyConsigns >().HandleConsign( *this );
     }
 
-    if( message.m.oid_automate_log_fournissant_moyens_convoiPresent )
-        pAutomateLogProvidingConvoyResources_ = resolver_.Find( message.oid_automate_log_fournissant_moyens_convoi );
+    if( message.has_oid_automate_log_fournissant_moyens_convoi()  )
+        pAutomateLogProvidingConvoyResources_ = resolver_.Find( message.oid_automate_log_fournissant_moyens_convoi() );
 
-    if( message.m.etatPresent )
-        nState_ = E_LogSupplyHandlingStatus( message.etat );
+    if( message.has_etat()  )
+        nState_ = E_LogSupplyHandlingStatus( message.etat() );
 
-    if( message.m.dotationsPresent )
+    if( message.has_dotations()  )
     {
-        for( uint i = 0; i < message.dotations.n; ++i )
+        for( int i = 0; i < message.dotations().elem_size(); ++i )
         {
-            DotationRequest* request = Find( message.dotations.elem[i].ressource_id );
+            DotationRequest* request = Find( message.dotations().elem( i ).ressource_id() );
             if( request )
             {
-                request->requested_ = message.dotations.elem[i].quantite_demandee;
-                request->granted_   = message.dotations.elem[i].quantite_accordee;
-                request->convoyed_  = message.dotations.elem[i].quantite_en_transit;
+                request->requested_ = message.dotations().elem( i ).quantite_demandee();
+                request->granted_   = message.dotations().elem( i ).quantite_accordee();
+                request->convoyed_  = message.dotations().elem( i ).quantite_en_transit();
             }
             else
-                Register( message.dotations.elem[i].ressource_id,
-                  * new DotationRequest( dotationResolver_.Get( message.dotations.elem[i].ressource_id ),
-                                         message.dotations.elem[i].quantite_demandee,
-                                         message.dotations.elem[i].quantite_accordee,
-                                         message.dotations.elem[i].quantite_en_transit ) );
+                Register( message.dotations().elem( i ).ressource_id(),
+                  * new DotationRequest( dotationResolver_.Get( message.dotations().elem( i ).ressource_id() ),
+                                         message.dotations().elem( i ).quantite_demandee(),
+                                         message.dotations().elem( i ).quantite_accordee(),
+                                         message.dotations().elem( i ).quantite_en_transit() ) );
         }
     }
     controller_.Update( *this );

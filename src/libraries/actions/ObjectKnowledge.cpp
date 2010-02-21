@@ -12,6 +12,7 @@
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -98,12 +99,12 @@ ObjectKnowledge::~ObjectKnowledge()
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( ASN1T_MissionParameter& asn ) const
+void ObjectKnowledge::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    asn.null_value = !IsSet();
-    asn.value.t = T_MissionParameter_value_objectKnowledge;
+    message.set_null_value( !IsSet() );
+    message.mutable_value()->mutable_objectknowledge();    // enforce initialisation of parameter to force his type
     if( IsSet() )
-        Entity< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn.value.u.objectKnowledge );
+        CommitTo( *message.mutable_value()->mutable_objectknowledge() );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,9 +120,9 @@ void ObjectKnowledge::Accept( ParameterVisitor_ABC& visitor ) const
 // Name: ObjectKnowledge::CommitTo
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
-void ObjectKnowledge::CommitTo( ASN1T_ObjectKnowledge& asn ) const
+void ObjectKnowledge::CommitTo( Common::MsgObjectKnowledge& message ) const
 {
-    Entity< ObjectKnowledge_ABC >::CommitTo( (ASN1T_OID&)asn );
+    Entity< ObjectKnowledge_ABC >::CommitTo< Common::MsgObjectKnowledge >( message );
 }
 
 // -----------------------------------------------------------------------------

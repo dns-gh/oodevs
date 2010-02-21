@@ -49,7 +49,7 @@ public:
     virtual bool                      IsPC             () const;
     virtual bool                      IsAutonomous     () const;
     virtual const AlgorithmsFactories& GetAlgorithms() const;
-    
+
     virtual const MIL_Automate&       GetAutomate() const;
     virtual       MIL_Automate&       GetAutomate();
 

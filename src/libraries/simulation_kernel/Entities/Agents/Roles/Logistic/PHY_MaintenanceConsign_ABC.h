@@ -12,12 +12,16 @@
 #ifndef __PHY_MaintenanceConsign_ABC_h_
 #define __PHY_MaintenanceConsign_ABC_h_
 
+namespace client
+{
+    class LogMaintenanceHandlingUpdate;
+}
+
 class PHY_MaintenanceComposanteState;
 class MIL_Agent_ABC;
 class PHY_RoleInterface_Maintenance;
 class PHY_ComposanteTypePion;
 class PHY_Breakdown;
-class NET_ASN_MsgLogMaintenanceHandlingUpdate;
 
 // =============================================================================
 // @class  PHY_MaintenanceConsign_ABC
@@ -33,7 +37,7 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const uint );
+    template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
     
     //! @name Accessors
@@ -55,8 +59,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( NET_ASN_MsgLogMaintenanceHandlingUpdate& asn ) const;
-    void SendFullState   ( NET_ASN_MsgLogMaintenanceHandlingUpdate& asn ) const;
+    void SendChangedState( client::LogMaintenanceHandlingUpdate& asn ) const;
+    void SendFullState   ( client::LogMaintenanceHandlingUpdate& asn ) const;
     //@}
 
 protected:
@@ -112,7 +116,7 @@ protected:
 // Created: JVT 2005-04-11
 // -----------------------------------------------------------------------------
 template< typename Archive >
-void PHY_MaintenanceConsign_ABC::serialize( Archive& file, const uint )
+void PHY_MaintenanceConsign_ABC::serialize( Archive& file, const unsigned int )
 {
     file & pMaintenance_
          & pComposanteState_

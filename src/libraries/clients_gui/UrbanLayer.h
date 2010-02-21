@@ -10,6 +10,7 @@
 #ifndef __UrbanLayer_h_
 #define __UrbanLayer_h_
 
+
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
@@ -48,7 +49,7 @@ class UrbanLayer : public Layer_ABC
 public:
     //! @name Constructors/Destructor
     //@{    
-    UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools );
+             UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools );
     virtual ~UrbanLayer();
     //@}    
 
@@ -63,8 +64,8 @@ protected:
     //! @name Events
     //@{    
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
-    virtual bool HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point );
-    virtual bool HandleKeyPress( QKeyEvent* input );
+    virtual bool HandleMouseMove ( QMouseEvent* event, const geometry::Point2f& point );
+    virtual bool HandleKeyPress  ( QKeyEvent* input );
     //@}
 
     //! @name Helpers
@@ -86,24 +87,24 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::vector< const TerrainObjectProxy* >         T_TerrainObjects;
-    typedef T_TerrainObjects::iterator                      IT_TerrainObjects;
-    typedef T_TerrainObjects::const_iterator                CIT_TerrainObjects;
+    typedef std::vector< const TerrainObjectProxy* >  T_TerrainObjects;
+    typedef T_TerrainObjects::iterator                IT_TerrainObjects;
+    typedef T_TerrainObjects::const_iterator          CIT_TerrainObjects;
     //@}
 
 private:
     //! @name Member data
     //@{
 
-    kernel::Controllers& controllers_;
-    const kernel::GlTools_ABC& tools_;
-    urban::Drawer_ABC* urbanDrawer_;
-    kernel::Location_ABC* selectionArea_;
-    geometry::Point2f lastPoint_;
-    T_TerrainObjects objects_;
-    const TerrainObjectProxy* selectedObject_;
-    unsigned tooltiped_;
-    bool selectionMode_;
+    kernel::Controllers&        controllers_;
+    const kernel::GlTools_ABC&  tools_;
+    urban::Drawer_ABC*          urbanDrawer_;
+    kernel::Location_ABC*       selectionArea_;
+    geometry::Point2f           lastPoint_;
+    T_TerrainObjects            objects_;
+    const TerrainObjectProxy*   selectedObject_;
+    unsigned                    tooltiped_;
+    bool                        selectionMode_;
     //@}
 };
 

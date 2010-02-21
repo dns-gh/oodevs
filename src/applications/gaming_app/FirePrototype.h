@@ -12,8 +12,12 @@
 
 #include "clients_gui/FirePrototype_ABC.h"
 
-struct ASN1T_ObjectAttributeFire;
-struct ASN1T_MagicActionCreateObject;
+struct ObjectAttributeFire;
+
+namespace MsgsClientToSim
+{
+    class MsgMagicActionCreateObject;
+}
 
 // =============================================================================
 /** @class  FirePrototype
@@ -27,7 +31,7 @@ class FirePrototype : public gui::FirePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FirePrototype( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver, ASN1T_MagicActionCreateObject& msg );
+    FirePrototype( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver, MsgsClientToSim::MsgMagicActionCreateObject& msg );
     virtual ~FirePrototype();
     //@}
 
@@ -47,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    ASN1T_MagicActionCreateObject& msg_;    
+    MsgsClientToSim::MsgMagicActionCreateObject& msg_;    
     //@}
 };
 

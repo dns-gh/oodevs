@@ -11,20 +11,23 @@
 #include "MIL_PointParameter.h"
 #include "simulation_orders/MIL_ParameterType_Point.h"
 #include "Network/NET_ASN_Tools.h"
+#include "protocol/protocol.h"
 #include "Tools/MIL_Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PointParameter constructor
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-MIL_PointParameter::MIL_PointParameter( const ASN1T_Point& asn )
-: pPoint_( new MT_Vector2D() )
+MIL_PointParameter::MIL_PointParameter( const Common::MsgPoint& asn )
+    : pPoint_( new MT_Vector2D() )
 {
-    if( asn.type != EnumLocationType::point )
+    if( asn.location().type() != Common::MsgLocation_Geometry_point )
         throw std::runtime_error( "Unexpected type passed for point" );
-    if( asn.coordinates.n != 1 )
+    if( asn.location().coordinates().elem_size() > 1 )
         throw std::runtime_error( "Too many points" );
-    MIL_Tools::ConvertCoordMosToSim( asn.coordinates.elem[0], *pPoint_ );
+    if( asn.location().coordinates().elem_size() == 0 )
+        throw std::runtime_error( "No point" );
+    MIL_Tools::ConvertCoordMosToSim( asn.location().coordinates().elem(0), *pPoint_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,7 +35,7 @@ MIL_PointParameter::MIL_PointParameter( const ASN1T_Point& asn )
 // Created: LDC 2009-07-24
 // -----------------------------------------------------------------------------
 MIL_PointParameter::MIL_PointParameter( const MT_Vector2D& point )
-: pPoint_( new MT_Vector2D( point ) )
+    : pPoint_( new MT_Vector2D( point ) )
 {
     // NOTHING
 }
@@ -52,14 +55,14 @@ MIL_PointParameter::~MIL_PointParameter()
 // -----------------------------------------------------------------------------
 bool MIL_PointParameter::IsOfType( const MIL_ParameterType_ABC& type ) const
 {
-    return( dynamic_cast<const MIL_ParameterType_Point*>( &type ) != 0 );
+    return dynamic_cast< const MIL_ParameterType_Point* >( &type ) != 0;
 }
     
 // -----------------------------------------------------------------------------
 // Name: MIL_PointParameter::ToPoint
 // Created: LDC 2009-05-22
 // -----------------------------------------------------------------------------
-bool MIL_PointParameter::ToPoint( ASN1T_Point& asn ) const
+bool MIL_PointParameter::ToPoint( Common::MsgPoint& asn ) const
 {
     NET_ASN_Tools::WritePoint( *pPoint_, asn );
     return true;

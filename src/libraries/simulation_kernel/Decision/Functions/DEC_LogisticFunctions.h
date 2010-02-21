@@ -101,14 +101,14 @@ public:
     static DEC_Decision_ABC*  PionGetTC2    ( const MIL_AgentPion& );
     static DEC_Decision_ABC* AutomateGetTC2( const MIL_Automate& );
 
-    static void UndoLendCollectionComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack ); 
-    static void UndoLendHaulerComposantes    ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack ); 
+    static void UndoLendCollectionComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack ); 
+    static void UndoLendHaulerComposantes    ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack ); 
     //@}
 
     //! @name Helpers
     //@{
 private:
-    static void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const uint nNbrToGetBack, T_ComposantePredicate funcPredicate );
+    static void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate );
     //@}
 };
 

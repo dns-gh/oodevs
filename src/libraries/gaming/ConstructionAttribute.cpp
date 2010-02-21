@@ -79,27 +79,27 @@ void ConstructionAttribute::DisplayInTooltip( kernel::Displayer_ABC& displayer )
 // Name: ConstructionAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::DoUpdate( const ASN1T_MsgObjectKnowledgeUpdate& message )
+void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::DoUpdate( const ASN1T_MsgObjectUpdate& message )
+void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectUpdate& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::DoUpdate
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
+void ConstructionAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message )
 {
-    UpdateData( message.attributes );
+    UpdateData( message.attributes() );
 }
    
 // -----------------------------------------------------------------------------
@@ -109,14 +109,14 @@ void ConstructionAttribute::DoUpdate( const ASN1T_MsgObjectCreation& message )
 template< typename T >
 void ConstructionAttribute::UpdateData( const T& message )
 {
-    if( message.m.constructionPresent )
+    if( message.has_construction()  )
     {
-        if( ! construction_ && message.construction.m.dotation_typePresent )
-            construction_ = & resolver_.Get( message.construction.dotation_type );
-        if ( message.construction.m.dotation_nbrPresent )
-            nDotationConstruction_ = message.construction.dotation_nbr;
-        if ( message.construction.m.percentagePresent )
-            rConstructionPercentage_ = float( message.construction.percentage );
+        if( ! construction_ && message.construction().has_dotation_type()  )
+            construction_ = & resolver_.Get( message.construction().dotation_type() );
+        if ( message.construction().has_dotation_nbr()  )
+            nDotationConstruction_ = message.construction().dotation_nbr();
+        if ( message.construction().has_percentage()  )
+            rConstructionPercentage_ = float( message.construction().percentage() );
         controller_.Update( *(ConstructionAttribute_ABC*)this );
     }
 }

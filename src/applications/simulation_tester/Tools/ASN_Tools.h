@@ -44,42 +44,42 @@ class ASN_Tools
 public:
     //! @name Copy Operations
     //@{
-    static void CopyID                 ( uint                     nIdValue  , ASN1T_OID&                  asn );
-    static void CopyIDList             ( const T_IdVector&        ids       , ASN1T_ListOID&              asn );
+    static void CopyID                 ( unsigned int                     nIdValue  , OID&                  asn );
+    static void CopyIDList             ( const T_IdVector&        ids       , ListOID&              asn );
 
 
-    static void CopyAgent              ( uint                     nIdValue      , ASN1T_Unit&                asn );
-    static void CopyAgentList          ( const T_IdVector&        ids           , ASN1T_UnitList&            asn );
-    static void CopyAgentKnowledge     ( uint                     nIdAgent      , ASN1T_UnitKnowledge&       asn );
-    static void CopyAgentKnowledgeList ( const T_IdVector&        ids           , ASN1T_UnitKnowledgeList&   asn );
-    static void CopyAutomate           ( uint                     nIdValue      , ASN1T_Automat&             asn );
-    static void CopyAutomateList       ( const T_IdVector&        ids           , ASN1T_AutomatList&         asn );
-    static void CopyObjectKnowledge    ( uint                     nIdObject     , ASN1T_ObjectKnowledge&      asn );
-    static void CopyObjectKnowledgeList( const T_IdVector&        ids           , ASN1T_ObjectKnowledgeList&  asn );
-    static void CopyGenObject          ( const GenObject&         genObject     , ASN1T_PlannedWork&     asn );
-    static void CopyGenObjectList      ( const T_GenObjectVector& genObjects    , ASN1T_PlannedWorkList& asn );
+    static void CopyAgent              ( unsigned int                     nIdValue      , Unit&                asn );
+    static void CopyAgentList          ( const T_IdVector&        ids           , UnitList&            asn );
+    static void CopyAgentKnowledge     ( unsigned int                     nIdAgent      , MsgUnitKnowledge& asn );
+    static void CopyAgentKnowledgeList ( const T_IdVector&        ids           , UnitKnowledgeList&   asn );
+    static void CopyAutomate           ( unsigned int                     nIdValue      , Automat&             asn );
+    static void CopyAutomateList       ( const T_IdVector&        ids           , AutomatList&         asn );
+    static void CopyObjectKnowledge    ( unsigned int                     nIdObject     , MsgObjectKnowledge& asn );
+    static void CopyObjectKnowledgeList( const T_IdVector&        ids           , ObjectKnowledgeList&  asn );
+    static void CopyGenObject          ( const GenObject&         genObject     , MsgPlannedWork&     asn );
+    static void CopyGenObjectList      ( const T_GenObjectVector& genObjects    , PlannedWorkList& asn );
     static void CopyBool               ( bool                     bValue        , ASN1BOOL&                   asn );
     static void CopyNumeric            ( int                      nValue        , ASN1INT&                    asn );
     static void CopyNumeric            ( int                      nValue        , ASN1REAL&                   asn );
-    static void CopyPoint              ( const Position&          position      , ASN1T_CoordUTM&             asn );
-    static void CopyPoint              ( const Position&          position      , ASN1T_Point&                asn );
-    static void CopyPointList          ( const T_PositionVector&  positions     , ASN1T_PointList&            asn );
-    static void CopyPath               ( const Path&              path          , ASN1T_Path&           asn );
-    static void CopyPathList           ( const T_PathVector&      path          , ASN1T_PathList&       asn );
-    static void CopyDirection          ( uint                     nDirection    , ASN1T_Heading&            asn );
-    static void CopyLocation           ( const Location&          location      , ASN1T_Location&         asn );
-    static void CopyLocationList       ( const T_LocationVector&  locations     , ASN1T_LocationList&     asn );
-    static void CopyPolygon            ( const Location&          location      , ASN1T_Polygon&              asn );
-    static void CopyPolygonList        ( const T_LocationVector&  locations     , ASN1T_PolygonList&          asn );
-    static void CopyNatureAtlas        ( uint                     nValue        , ASN1T_AtlasNature&          asn );
-    static void CopyGDH                ( uint                     nTime         , ASN1T_DateTime&                  asn );
-    static void CopyPopulationKnowledge( uint                     nIdPopulation , ASN1T_PopulationKnowledge&  asn );
-    static void CopyMedicalPriorities  ( const T_IdVector&        ids           , ASN1T_LogMedicalPriorities&       asn );
-    static void CopyDotationDType      ( uint                     nIdValue      , ASN1T_DotationType&         asn ); 
+    static void CopyPoint              ( const Position&          position      , CoordUTM&             asn );
+    static void CopyPoint              ( const Position&          position      , Point&                asn );
+    static void CopyPointList          ( const T_PositionVector&  positions     , PointList&            asn );
+    static void CopyPath               ( const Path&              path          , Path&           asn );
+    static void CopyPathList           ( const T_PathVector&      path          , PathList&       asn );
+    static void CopyDirection          ( unsigned int                     nDirection    , Heading&            asn );
+    static void CopyLocation           ( const MsgLocation&          location      , Location&         asn );
+    static void CopyLocationList       ( const T_LocationVector&  locations     , MsgLocationList&     asn );
+    static void CopyPolygon            ( const MsgLocation&          location      , Polygon&              asn );
+    static void CopyPolygonList        ( const T_LocationVector&  locations     , PolygonList&          asn );
+    static void CopyNatureAtlas        ( unsigned int                     nValue        , AtlasNature&          asn );
+    static void CopyGDH                ( unsigned int                     nTime         , DateTime&                  asn );
+    static void CopyPopulationKnowledge( unsigned int                     nIdPopulation , PopulationKnowledge&  asn );
+    static void CopyMedicalPriorities  ( const T_IdVector&        ids           , LogMedicalPriorities&       asn );
+    static void CopyDotationDType      ( unsigned int                     nIdValue      , DotationType&         asn ); 
     //@}
 
     template< typename T >
-    static void CopyEnumeration( uint nEnumValue, T& asn )
+    static void CopyEnumeration( unsigned int nEnumValue, T& asn )
     {
         asn = ( T )nEnumValue;
     }
@@ -87,24 +87,24 @@ public:
 
     //! @name Delete Operations
     //@{
-    static void Delete( ASN1T_UnitList&            asn );
-    static void Delete( ASN1T_AutomatList&         asn );
-    static void Delete( ASN1T_Polygon&              asn );
-    static void Delete( ASN1T_PolygonList&          asn );
-    static void Delete( ASN1T_PointList&            asn );
-    static void Delete( ASN1T_PathList&       asn );
-    static void Delete( ASN1T_LocationList&     asn );
-    static void Delete( ASN1T_UnitKnowledgeList&   asn );
-    static void Delete( ASN1T_ObjectKnowledgeList&  asn );
-    static void Delete( ASN1T_PlannedWork&     asn );
-    static void Delete( ASN1T_PlannedWorkList& asn );
-    static void Delete( ASN1T_LogMedicalPriorities&       asn );
+    static void Delete( UnitList&            asn );
+    static void Delete( AutomatList&         asn );
+    static void Delete( Polygon&              asn );
+    static void Delete( PolygonList&          asn );
+    static void Delete( PointList&            asn );
+    static void Delete( PathList&       asn );
+    static void Delete( MsgLocationList&     asn );
+    static void Delete( UnitKnowledgeList&   asn );
+    static void Delete( ObjectKnowledgeList&  asn );
+    static void Delete( MsgPlannedWork&     asn );
+    static void Delete( PlannedWorkList& asn );
+    static void Delete( LogMedicalPriorities&       asn );
     //@}
 
     //! @name Enumeration translation to/from strings
     //@{
-    static const char* ToString( const ASN1T_EnumOrderErrorCode& nCode );
-    static const char* ToString( const ASN1T_EnumSetAutomatModeErrorCode& nCode );
+    static const char* ToString( const EnumOrderErrorCode& nCode );
+    static const char* ToString( const EnumSetAutomatModeErrorCode& nCode );
     //@}
 
 private:

@@ -10,7 +10,7 @@
 #ifndef __PopulationFlow_h_
 #define __PopulationFlow_h_
 
-#include "game_asn/Simulation.h"
+
 #include "Localisation.h"
 #include "SimpleEntity.h"
 #include "clients_kernel/PopulationFlow_ABC.h"
@@ -19,6 +19,17 @@ namespace kernel
 {
     class ModelVisitor_ABC;
 }
+namespace Common
+{
+    enum EnumPopulationAttitude;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgPopulationFlowCreation;
+    class MsgPopulationFlowUpdate;
+}
+
 namespace dispatcher
 {
     class Population;
@@ -35,13 +46,13 @@ class PopulationFlow : public SimpleEntity< kernel::PopulationFlow_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlow( const Population& population, const ASN1T_MsgPopulationFlowCreation& msg );
+             PopulationFlow( const Population& population, const MsgsSimToClient::MsgPopulationFlowCreation& msg );
     virtual ~PopulationFlow();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgPopulationFlowUpdate& msg );
+    void Update( const MsgsSimToClient::MsgPopulationFlowUpdate& msg );
 
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
@@ -71,7 +82,7 @@ public:
     unsigned int                 nSpeed_;
     unsigned long                nNbrAliveHumans_;
     unsigned long                nNbrDeadHumans_;
-    ASN1T_EnumPopulationAttitude nAttitude_;    
+    Common::EnumPopulationAttitude nAttitude_;    
 };
 
 }

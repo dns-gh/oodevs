@@ -10,9 +10,20 @@
 #ifndef __PopulationFlowKnowledge_h_
 #define __PopulationFlowKnowledge_h_
 
-#include "game_asn/Simulation.h"
+
 #include "SimpleEntity.h"
 #include "PopulationFlowPart.h"
+
+namespace Common
+{
+    enum EnumPopulationAttitude;
+}
+
+namespace MsgsSimToClient
+{
+    class MsgPopulationFlowKnowledgeCreation;
+    class MsgPopulationFlowKnowledgeUpdate;
+}
 
 namespace kernel
 {
@@ -36,13 +47,13 @@ class PopulationFlowKnowledge : public SimpleEntity< >
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const ASN1T_MsgPopulationFlowKnowledgeCreation& msg );
+             PopulationFlowKnowledge( const kernel::PopulationKnowledge_ABC& populationKnowledge, const MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& msg );
     virtual ~PopulationFlowKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    void Update( const ASN1T_MsgPopulationFlowKnowledgeUpdate& msg );
+    void Update( const MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& msg );
     void SendCreation   ( ClientPublisher_ABC& publisher ) const;
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
@@ -81,7 +92,7 @@ private:
     unsigned int                           nSpeed_;
     unsigned long                          nNbrAliveHumans_;
     unsigned long                          nNbrDeadHumans_;
-    ASN1T_EnumPopulationAttitude           nAttitude_;    
+    Common::EnumPopulationAttitude         nAttitude_;    
     bool                                   bPerceived_;
     T_Optionals                            optionals_;
     //@}
