@@ -11,8 +11,11 @@
 #define __MessageEncoder_h_
 
 #include "Message.h"
+#pragma warning( push )
+#pragma warning( disable : 4244 )
 #include <google/protobuf/Message.h>
 #include <google/protobuf/Descriptor.h>
+#pragma warning( pop )
 
 namespace tools 
 {
