@@ -169,73 +169,61 @@ namespace
 // Name: OrderParameterSerializer::Serialize
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& /*parameter*/, unsigned long parameterId, const std::string& value ) const
+void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const
 {
-    if (message.value().has_point() )
+    std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
+    std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    if( type != expected )
+        throw std::runtime_error( __FUNCTION__ " " + type + " != " + expected );
+    std::auto_ptr< actions::Parameter_ABC > param;
+
+    if( type == "point" )
         SerializeLocation( *message.mutable_value()->mutable_point()->mutable_location(), parameterId, value );
-    if (message.value().has_polygon() )
+    else if( type == "polygon" )
         SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_polygon()->mutable_location(), parameterId, value );
-    if (message.value().has_location() )
+    else if( type == "location" )
         SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_location(), parameterId, value );
-    if( message.value().has_path() )
+    else if( type == "path" )
         SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_path()->mutable_location(), parameterId, value );
-    if( message.value().has_automat() )
+    else if( type == "automate" )
         SerializeAutomat( *message.mutable_value()->mutable_automat(), value );
-    if( message.value().has_abool() )
-    {
-        //SerializeBool( (bool &) message.mutable_value()->abool(), value );
+    else if( type == "bool" )
         message.mutable_value()->set_abool( value == "true" );
-    }
-    if( message.value().has_heading() )
+    else if( type == "direction" )
         SerializeDirection( *message.mutable_value()->mutable_heading(), value );
-    if( message.value().has_limasorder() )
+    else if( type == "phaselinelist" )
         SerializePhaseLines( *message.mutable_value()->mutable_limasorder(), parameterId, value );
-    if( message.value().has_line() )
+    else if( type == "limit" )
         SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_line()->mutable_location(), parameterId, value );
-    if( message.value().has_intelligencelist() )
+    else if( type == "intelligencelist" )
         SerializeIntelligenceList( *message.mutable_value()->mutable_intelligencelist(), value );
-    if( message.value().has_pointlist() )
+    else if( type == "pointlist" )
         SerializeLocList< Common::MsgPointList >( *message.mutable_value()->mutable_pointlist(), parameterId, value );
-    if( message.value().has_polygonlist() )
+    else if( type == "polygonlist" )
         SerializeLocList< Common::MsgPolygonList >( *message.mutable_value()->mutable_polygonlist(), parameterId, value );
-    if( message.value().has_locationlist() )
+    else if( type == "locationlist" )
         SerializeLocationList( *message.mutable_value()->mutable_locationlist(), parameterId, value );
-    if( message.value().has_areal() )
-    {
-        //SerializeValue( (float &)message.value().areal(), value );
+    else if( type == "numeric" )
         message.mutable_value()->set_areal( boost::lexical_cast< float >( value ) );
-    }
-    // case T_MissionParameter_value_aCharStr:
-    //    SerializeValue( message.value.u.aCharStr, value );
-    //    break;
-    if( message.value().has_enumeration() )
-    {
-        //SerializeValue( message.value().enumeration(), value );
+    else if( type == "enumeration" )
         message.mutable_value()->set_enumeration( boost::lexical_cast< int >( value ) );
-    }
-    if( message.value().has_heading() )
-        SerializeDirection( *message.mutable_value()->mutable_heading(), value );
-    if( message.value().has_unit() )
+    else if( type == "agent" )
         SerializeUnit( *message.mutable_value()->mutable_unit(), value );
-    if( message.value().has_unitlist() )
+    else if( type == "agentlist" )
         SerializeValueList< Common::MsgUnit >( *message.mutable_value()->mutable_unitlist(), value, BIND_SERIALIZER( SerializeUnit ) );
-    if( message.value().has_automatlist() )
-        SerializeValueList< Common::MsgAutomat >( *message.mutable_value()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );
-
-    if( message.value().has_unitknowledge() )
+    else if( type == "automatelist" )
+        SerializeValueList< Common::MsgAutomat >( *message.mutable_value()->mutable_automatlist(), value, BIND_SERIALIZER( SerializeAutomat ) );    
+    else if( type == "agentknowledge" )
         SerializeUnitKnowledge( *message.mutable_value()->mutable_unitknowledge(), value );
-    if( message.value().has_unitknowledgelist() )
+    else if( type == "agentknowledgelist" )
         SerializeValueList< Common::MsgUnitKnowledge >( *message.mutable_value()->mutable_unitknowledgelist(), value, BIND_SERIALIZER( SerializeUnitKnowledge ) );
-    if( message.value().has_objectknowledge() )
+    else if( type == "objectknowledge" )
         SerializeObjectKnowledge( *message.mutable_value()->mutable_objectknowledge(), value );
-    if( message.value().has_objectknowledgelist() )
+    else if( type == "objectknowledgelist" ) 
         SerializeValueList< Common::MsgObjectKnowledge >( *message.mutable_value()->mutable_objectknowledgelist(), value, BIND_SERIALIZER( SerializeObjectKnowledge ) );
-
-    if( message.value().has_line() )
-        SerializeLocation< Common::MsgLocation >( *message.mutable_value()->mutable_line()->mutable_location(), parameterId, value );
-    if( message.value().has_missionobjective() )
+    else if( type == "objective" )
         SerializeMissionObjective( *message.mutable_value()->mutable_missionobjective(), value );
-    if( message.value().has_missionobjectivelist() )
+    else if( type == "objectivelist" )
         SerializeMissionObjectiveList( *message.mutable_value()->mutable_missionobjectivelist(), value );
 
  
