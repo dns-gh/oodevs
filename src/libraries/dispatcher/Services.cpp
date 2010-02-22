@@ -10,11 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Services.h"
 #include "ClientPublisher_ABC.h"
-
-#include "protocol/dispatchersenders.h"
-
-//using namespace Common;
-//using namespace MsgsDispatcherToClient;
+#include "protocol/DispatcherSenders.h"
 
 using namespace dispatcher;
 
@@ -51,10 +47,8 @@ void Services::Declare( const std::string& name )
 // -----------------------------------------------------------------------------
 void Services::Send( ClientPublisher_ABC& publisher ) const
 {
-    std::vector< const char* > names;
-    std::transform( services_.begin(), services_.end(), std::back_inserter( names ), std::mem_fun_ref( &std::string::c_str ) );
-    dispatcher::ServicesDescription services;   
-    for( std::vector< const char* >::const_iterator iter(names.begin()); iter != names.end(); ++iter)
-        *services().add_services( ) = *iter;   // $$$$ _RC_ FDS 2010-01-22: To validate
+    dispatcher::ServicesDescription services;
+    for( std::set< std::string >::const_iterator it = services_.begin(); it != services_.end(); ++it )
+        services().add_services( *it );
     services.Send( publisher );
 }

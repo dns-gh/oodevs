@@ -15,8 +15,6 @@
 #include "tools/ServerNetworker.h"
 #include <boost/lambda/lambda.hpp>
 #include <boost/lexical_cast.hpp>
-#include <google/protobuf/Descriptor.h>
-#include <google/protobuf/Message.h>
 
 using namespace mockpp;
 using namespace google::protobuf;

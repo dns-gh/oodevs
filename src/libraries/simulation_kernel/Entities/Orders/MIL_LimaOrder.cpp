@@ -104,12 +104,8 @@ void MIL_LimaOrder::Serialize( Common::MsgLimaOrder& asn ) const
     NET_ASN_Tools::WriteLine( points_, *asn.mutable_lima() );
     NET_ASN_Tools::WriteTick( nSchedule_, *asn.mutable_horaire() );
 
-    if( !functions_.empty() )
-    {
-        // $$$$ _RC_ FDS 2010-01-26:  unsigned int i = 0; 
-        for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )
-            asn.add_fonctions( (**it).GetAsnID() );  // $$$$ _RC_ FDS 2010-01-26: Validation needed
-    }
+    for( CIT_LimaFunctions it = functions_.begin(); it != functions_.end(); ++it )
+        asn.add_fonctions( (*it)->GetAsnID() );
 }
 
 // -----------------------------------------------------------------------------

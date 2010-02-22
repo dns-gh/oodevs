@@ -19,10 +19,10 @@ using namespace dispatcher;
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 LimaOrder::LimaOrder( const Common::MsgLimaOrder& message )
-: location_ ( message.lima().location() )
+    : location_ ( message.lima().location() )
     , schedule_ ( message.horaire().data(), 15 )
 {
-    for (int i = 0; i < message.fonctions_size(); ++i)
+    for( int i = 0; i < message.fonctions_size(); ++i )
         functions_.push_back( message.fonctions( i ) );
 }
 
@@ -45,5 +45,5 @@ void LimaOrder::Send( Common::MsgLimaOrder& message ) const
     message.mutable_horaire()->set_data( schedule_.c_str() );
 
     for( std::vector< int >::const_iterator it = functions_.begin(); it !=  functions_.end(); ++it )
-        message.add_fonctions( Common::MsgLimaOrder_Function( *it ) );   // $$$$ _RC_ FDS 2010-01-22: Vérification nécessaire sur la traduction!!!
+        message.add_fonctions( Common::MsgLimaOrder_Function( *it ) );
 }

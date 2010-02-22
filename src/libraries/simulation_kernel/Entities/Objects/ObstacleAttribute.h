@@ -67,17 +67,10 @@ public:
     //@}
 
 private:
-    //! @name Type
-    //@{
-    // $$$$ _RC_ FDS 2010-01-22: Necessaire ???
-    typedef Common::ObstacleType_DemolitionTargetType E_DemolitionTargetType;
-    //@}
-
-private:
     //! @name Member data
     //@{
-    E_DemolitionTargetType  obstacle_;
-    bool                    bActivated_;
+    Common::ObstacleType_DemolitionTargetType obstacle_;
+    bool bActivated_;
     //@}
 };
 

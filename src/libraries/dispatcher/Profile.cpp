@@ -222,9 +222,9 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return bSupervision_;
     if( wrapper.message().has_control_checkpoint_set_frequency() )
         return bSupervision_;
-    if ( wrapper.message().has_knowledge_group_creation_request() )  // $$$$ _RC_ FDS 2010-01-22: To validate
+    if( wrapper.message().has_knowledge_group_creation_request() )
         return bSupervision_;
-    if ( wrapper.message().has_knowledge_group_update_request() )     // $$$$ _RC_ FDS 2010-01-22: To validate
+    if( wrapper.message().has_knowledge_group_update_request() )
         return bSupervision_;
     if( wrapper.message().has_control_toggle_vision_cones() )
         return true;

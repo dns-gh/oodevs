@@ -124,7 +124,7 @@
             </then>
         </if>
         <delete dir="${out.dir}/protocol"/>
-        <build-lib name="protocol" pattern="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" suffix="-gd" warnings="none"/>
+        <build-lib name="protocol" pattern="lib${ant.project.name}_protocol-${platform}-mt@{suffix}" suffix="-gd" warnings="none" excludes="**/*.cc"/>
     </target>
 
     <target name="library.ENT" description="build ENT static library">
@@ -595,7 +595,7 @@
     tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts.nocrossbow,test-adaptation,3a_test,plugins_test,clients_test,dispatcher_test,application.simulation_kernel_test,application.integration_decisionnal_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts.nocrossbow,test-adaptation,3a_test,plugins_test,clients_test,dispatcher_test,application.simulation_kernel_test,application.integration_decisionnal_test,protocol_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost,mockpp" 
@@ -785,7 +785,7 @@
         <build-test name="protocol" libs="masalloc,libprotobuf,
                          lib${ant.project.name}_tools-${platform}-mt@{suffix}
                          lib${ant.project.name}_protocol-${platform}-mt@{suffix}"
-                   depends="boost">
+                   depends="boost,mockpp" excludes="**/*.pb.cc">
         </build-test>
     </target>
 
