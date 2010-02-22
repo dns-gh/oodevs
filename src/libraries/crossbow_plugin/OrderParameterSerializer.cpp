@@ -176,7 +176,7 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
     std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
     if( type != expected )
         throw std::runtime_error( __FUNCTION__ " " + type + " != " + expected );
-    std::auto_ptr< actions::Parameter_ABC > param;
+   
 
     if( type == "point" )
         SerializeLocation( *message.mutable_value()->mutable_point()->mutable_location(), parameterId, value );
