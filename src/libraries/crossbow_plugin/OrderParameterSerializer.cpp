@@ -172,11 +172,7 @@ namespace
 // -----------------------------------------------------------------------------
 void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, const kernel::OrderParameter& parameter, unsigned long parameterId, const std::string& value ) const
 {
-    std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
-    std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
-    if( type != expected )
-        throw std::runtime_error( __FUNCTION__ " " + type + " != " + expected );
-   
+    std::string type = boost::algorithm::to_lower_copy( parameter.GetType() );   
 
     if( type == "point" )
         SerializeLocation( *message.mutable_value()->mutable_point()->mutable_location(), parameterId, value );
