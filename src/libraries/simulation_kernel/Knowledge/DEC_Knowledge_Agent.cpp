@@ -493,8 +493,10 @@ void DEC_Knowledge_Agent::SendFullState()
     
     MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
     pCurrentPerceptionLevel_->Serialize( level );
+    asnMsg().set_identification_level( level );
     MsgsSimToClient::EnumUnitIdentificationLevel maxlevel( asnMsg().max_identification_level() );
     pMaxPerceptionLevel_->Serialize( maxlevel );
+    asnMsg().set_max_identification_level( maxlevel );
 
     WriteMsgPerceptionSources( asnMsg() );
 

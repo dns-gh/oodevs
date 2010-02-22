@@ -4881,7 +4881,7 @@ void protobuf_AddDesc_SimToClient_2eproto() {
     "ure\022,\n\005color\030\004 \001(\0132\035.MsgsSimToClient.Msg"
     "ColorRGBA\"\215\001\n\020MsgUrbanCreation\022\013\n\003oid\030\001 "
     "\002(\r\022\014\n\004name\030\002 \002(\t\022%\n\010location\030\003 \002(\0132\023.Co"
-    "mmon.MsgLocation\0227\n\nattributes\030\004 \002(\0132#.M"
+    "mmon.MsgLocation\0227\n\nattributes\030\004 \001(\0132#.M"
     "sgsSimToClient.MsgUrbanAttributes\"c\n\021Msg"
     "UrbanDetection\022\013\n\003oid\030\001 \002(\r\022\021\n\turban_oid"
     "\030\002 \002(\r\022.\n\nvisibility\030\003 \002(\0162\032.Common.Enum"
@@ -52446,7 +52446,7 @@ bool MsgUrbanCreation::MergePartialFromCodedStream(
         break;
       }
       
-      // required .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
+      // optional .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
       case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -52503,7 +52503,7 @@ void MsgUrbanCreation::SerializeWithCachedSizes(
       3, this->location(), output);
   }
   
-  // required .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
+  // optional .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       4, this->attributes(), output);
@@ -52539,7 +52539,7 @@ void MsgUrbanCreation::SerializeWithCachedSizes(
         3, this->location(), target);
   }
   
-  // required .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
+  // optional .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
   if (_has_bit(3)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -52578,7 +52578,7 @@ int MsgUrbanCreation::ByteSize() const {
           this->location());
     }
     
-    // required .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
+    // optional .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
     if (has_attributes()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -52639,7 +52639,7 @@ void MsgUrbanCreation::CopyFrom(const MsgUrbanCreation& from) {
 }
 
 bool MsgUrbanCreation::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000f) != 0x0000000f) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
   if (has_location()) {
     if (!this->location().IsInitialized()) return false;

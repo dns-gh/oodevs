@@ -1100,7 +1100,7 @@ message MsgUrbanCreation {
    required uint32             oid        = 1;
    required string             name       = 2;
    required Common.MsgLocation location   = 3;
-   required MsgUrbanAttributes attributes = 4;
+   optional MsgUrbanAttributes attributes = 4;
 }
 message MsgUrbanDetection {
     required uint32             oid        = 1;

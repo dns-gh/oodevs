@@ -58,8 +58,8 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
         footPrint.Add( point );
     }
     urban::TerrainObject_ABC* object = model_->GetFactory().CreateBlock( id, name, footPrint );
-    urban::UrbanObjectDeserializer_ABC* urbanBlockDeserializer = new UrbanBlockDeserializer( message );
-    object->Accept( *urbanBlockDeserializer );
+    UrbanBlockDeserializer urbanBlockDeserializer( message );
+    object->Accept( urbanBlockDeserializer );
     gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( message, controller_, *object ); 
     object->InstanciateDecoration();
     controller_.Create( *pTerrainObject );

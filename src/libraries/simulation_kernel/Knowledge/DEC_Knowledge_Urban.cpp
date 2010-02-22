@@ -269,10 +269,9 @@ void DEC_Knowledge_Urban::WriteMsgPerceptionSources( MsgsSimToClient::MsgUrbanKn
         asnMsg.automat_perception.elem = pPerceptions;
     }
 */
-    unsigned int i = 0;
     if( !perceptionLevelPerAutomateMap_.empty() )
         for( CIT_PerceptionSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
-            message.mutable_automat_perception()->set_elem(i++, it->first->GetID() );
+            message.mutable_automat_perception()->add_elem( it->first->GetID() );
 }
 
 
@@ -340,15 +339,14 @@ void DEC_Knowledge_Urban::SendFullState()
     message().set_team( army_.GetID() );
     message().set_real_urban( object_.GetId() );
 
-    message().set_relevance( (int)( rRelevance_ * 100. ) );
+    message().set_relevance( int( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
 
     MsgsSimToClient::EnumUnitIdentificationLevel level( message().identification_level() );
     pCurrentPerceptionLevel_->Serialize( level );
+    message().set_identification_level( level );
 
-    message().set_relevance( (int)( rRelevance_ * 100. ) );
-
-    message().set_progress( (int)( rProgressPercent_ * 100. ) );
+    message().set_progress( int( rProgressPercent_ * 100. ) );
     rLastProgressSent_ = rProgressPercent_;
 
     message().set_perceived( true );
@@ -357,9 +355,6 @@ void DEC_Knowledge_Urban::SendFullState()
     WriteMsgPerceptionSources( message() );
 
     message.Send( NET_Publisher_ABC::Publisher() );
-
-    if( message().has_automat_perception() && message().automat_perception().elem_size() > 0 )
-        message().mutable_automat_perception()->Clear(); //$$$ RAM
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::UpdateOnNetwork

@@ -135,8 +135,10 @@ void UrbanModel::SendCreation( urban::Block& object )
     const geometry::Polygon2f::T_Vertices& points = object.GetFootprint()->Vertices();
     for( geometry::Polygon2f::CIT_Vertices it = points.begin(); it != points.end(); ++it )
     {
-        const MT_Vector2D point( it->X(), it->Y() );
-        NET_ASN_Tools::WritePoint( point, *message().mutable_location()->mutable_coordinates()->add_elem() );
+        Common::MsgCoordLatLong* point = message().mutable_location()->mutable_coordinates()->add_elem();
+        point->set_latitude( it->X() );
+        point->set_longitude( it->Y() );
+            
     }
 
     const ColorRGBA* color = object.GetColor();

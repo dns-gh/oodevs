@@ -17794,7 +17794,7 @@ class MsgUrbanCreation : public ::google::protobuf::Message {
   inline const ::Common::MsgLocation& location() const;
   inline ::Common::MsgLocation* mutable_location();
   
-  // required .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
+  // optional .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 4;
@@ -29379,7 +29379,7 @@ inline ::Common::MsgLocation* MsgUrbanCreation::mutable_location() {
   return location_;
 }
 
-// required .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
+// optional .MsgsSimToClient.MsgUrbanAttributes attributes = 4;
 inline bool MsgUrbanCreation::has_attributes() const {
   return _has_bit(3);
 }

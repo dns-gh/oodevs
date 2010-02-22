@@ -181,7 +181,7 @@ std::auto_ptr< ColorRGBA > UrbanBlockDeserializer::GetColor() const
 // -----------------------------------------------------------------------------
 bool UrbanBlockDeserializer::HasColor() const
 {
-    return ( bool ) message_.attributes().has_color();
+    return message_.attributes().has_color();
 }
 
 // -----------------------------------------------------------------------------
@@ -190,7 +190,7 @@ bool UrbanBlockDeserializer::HasColor() const
 // -----------------------------------------------------------------------------
 bool UrbanBlockDeserializer::HasArchitecture() const
 {
-    return  message_.attributes().has_architecture();
+    return message_.attributes().has_architecture();
 }
 
 // -----------------------------------------------------------------------------
