@@ -43,14 +43,3 @@ bool MIL_ParameterType_NatureAtlas::Copy( const MIL_MissionParameter_ABC& from, 
     to.set_null_value( false );
     return from.ToNatureAtlas( *to.mutable_value()->mutable_atlasnature() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_NatureAtlas::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_NatureAtlas::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_atlasnature() );
-    assert( to.mutable_value()->mutable_atlasnature() );
-    delete to.mutable_value()->mutable_atlasnature();
-}

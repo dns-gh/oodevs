@@ -43,12 +43,3 @@ bool MIL_ParameterType_DotationType::Copy( const MIL_MissionParameter_ABC& from,
     to.set_null_value( false );
     return from.ToDotationType( *to.mutable_value()->mutable_dotationtype() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_DotationType::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_DotationType::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_dotationtype() );
-}

@@ -41,11 +41,7 @@ PHY_FireResults_Population::~PHY_FireResults_Population()
 {
     client::StopPopulationFire asnMsg;
     asnMsg().set_fire_oid( nID_ );
-
     Serialize( *asnMsg().mutable_units_damages() );
-
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
-
-    CleanAfterSerialization( *asnMsg().mutable_units_damages() );
 }
 

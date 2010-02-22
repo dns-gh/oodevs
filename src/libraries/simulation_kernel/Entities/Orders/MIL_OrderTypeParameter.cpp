@@ -63,16 +63,6 @@ bool MIL_OrderTypeParameter::Copy( const MIL_MissionParameter_ABC& from, Common:
     return pParameter_->Copy( from, to, knowledgeResolver, bIsOptional_ );
 }
 
-//-----------------------------------------------------------------------------
-// Name: MIL_OrderTypeParameter::CleanAfterSerialization
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-void MIL_OrderTypeParameter::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( pParameter_ );
-    pParameter_->CleanAfterSerialization( to );
-}
-
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderTypeParameter::GetName
 // Created: LDC 2009-04-30

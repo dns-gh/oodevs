@@ -117,16 +117,6 @@ void MIL_Mission_ABC::Serialize( Common::MsgMissionParameters& asn ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Mission_ABC::CleanAfterSerialization
-// Created: NLD 2006-11-21
-// -----------------------------------------------------------------------------
-void MIL_Mission_ABC::CleanAfterSerialization( Common::MsgMissionParameters& asn ) const
-{
-    context_.CleanAfterSerialization( asn );
-    type_.CleanAfterSerialization( asn, context_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Mission_ABC::Accept
 // Created: SBO 2007-11-13
 // -----------------------------------------------------------------------------

@@ -45,12 +45,3 @@ bool MIL_ParameterType_Bool::Copy( const MIL_MissionParameter_ABC& from, Common:
     to.mutable_value()->set_abool( value );
     return true; 
 }
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Bool::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_Bool::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_abool() );
-}

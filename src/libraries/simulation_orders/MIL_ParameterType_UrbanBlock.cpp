@@ -19,6 +19,7 @@
 MIL_ParameterType_UrbanBlock::MIL_ParameterType_UrbanBlock( const std::string& name )
     : MIL_ParameterType_ABC( name )
 {
+    // NOTHING
 }
 
 //-----------------------------------------------------------------------------
@@ -27,11 +28,8 @@ MIL_ParameterType_UrbanBlock::MIL_ParameterType_UrbanBlock( const std::string& n
 //-----------------------------------------------------------------------------
 MIL_ParameterType_UrbanBlock::~MIL_ParameterType_UrbanBlock()
 {
+    // NOTHING
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 //-----------------------------------------------------------------------------
 // Name: MIL_ParameterType_UrbanBlock::Copy
@@ -44,14 +42,4 @@ bool MIL_ParameterType_UrbanBlock::Copy( const MIL_MissionParameter_ABC& from, C
         return false;
     to.set_null_value( !from.ToUrbanBlock( *to.mutable_value()->mutable_urbanblock() ) );
     return !to.null_value() || bIsOptional;
-}
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_UrbanBlock::CleanAfterSerialization
-// Created: MGD 2009-11-02
-//-----------------------------------------------------------------------------
-void MIL_ParameterType_UrbanBlock::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_urbanblock() );
-    to.mutable_value()->clear_urbanblock();
 }

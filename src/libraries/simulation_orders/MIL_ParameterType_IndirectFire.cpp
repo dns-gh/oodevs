@@ -45,12 +45,3 @@ bool MIL_ParameterType_IndirectFire::Copy( const MIL_MissionParameter_ABC& from,
     fire.set_oid( to.value().tirindirect() );
     return from.ToIndirectFire( fire );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_IndirectFire::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_IndirectFire::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_tirindirect() );
-}

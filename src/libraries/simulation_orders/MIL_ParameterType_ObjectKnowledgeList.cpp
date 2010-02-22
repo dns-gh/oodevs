@@ -43,15 +43,3 @@ bool MIL_ParameterType_ObjectKnowledgeList::Copy( const MIL_MissionParameter_ABC
     to.set_null_value( false );
     return from.ToObjectKnowledgeList( *to.mutable_value()->mutable_objectknowledgelist() );
 }
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_ObjectKnowledgeList::CleanAfterSerialization
-// Created: NLD 2006-11-ObjectList
-//-----------------------------------------------------------------------------
-void MIL_ParameterType_ObjectKnowledgeList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_objectknowledgelist() );
-    assert( to.mutable_value()->mutable_objectknowledgelist() );
-    to.mutable_value()->mutable_objectknowledgelist()->Clear();
-    delete to.mutable_value()->mutable_objectknowledgelist();
-}

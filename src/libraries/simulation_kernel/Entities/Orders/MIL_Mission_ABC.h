@@ -79,8 +79,7 @@ protected:
 
     //! @name Network
     //@{
-    void Serialize              ( Common::MsgMissionParameters& asn ) const;
-    void CleanAfterSerialization( Common::MsgMissionParameters& asn ) const;
+    void Serialize( Common::MsgMissionParameters& asn ) const;
     //@}
 
 private:

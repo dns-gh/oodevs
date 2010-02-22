@@ -43,14 +43,3 @@ bool MIL_ParameterType_LocationList::Copy( const MIL_MissionParameter_ABC& from,
     to.set_null_value( false );
     return from.ToLocationList( *to.mutable_value()->mutable_locationlist() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_LocationList::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_LocationList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_locationlist() );
-    assert( to.mutable_value()->mutable_locationlist() );
-    to.mutable_value()->clear_locationlist();
-}

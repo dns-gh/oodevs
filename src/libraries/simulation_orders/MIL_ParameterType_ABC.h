@@ -42,8 +42,7 @@ public:
     
     //! @name Operations
     //@{
-    virtual bool Copy                   ( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
-    virtual void CleanAfterSerialization( Common::MsgMissionParameter& to ) const = 0;
+    virtual bool Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& knowledgeResolver, bool bIsOptional ) const = 0;
     //@}
 
 protected:

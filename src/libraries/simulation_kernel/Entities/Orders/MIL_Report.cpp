@@ -143,6 +143,15 @@ MIL_Report::MIL_Report( unsigned int id, xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Report destructor
+// Created: NLD 2006-12-06
+// -----------------------------------------------------------------------------
+MIL_Report::~MIL_Report()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Report::ReadParameter
 // Created: ABL 2007-07-18
 // -----------------------------------------------------------------------------
@@ -158,46 +167,26 @@ void MIL_Report::ReadParameter( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Report destructor
-// Created: NLD 2006-12-06
-// -----------------------------------------------------------------------------
-MIL_Report::~MIL_Report()
-{
-}
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
-// -----------------------------------------------------------------------------
 // Name: MIL_Report::DoSend
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
 bool MIL_Report::DoSend( unsigned int nSenderID, E_Type nType, const DEC_KnowledgeResolver_ABC& knowledgeResolver, int /*reportId*/, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& params ) const
 {
-    client::Report asn;
     if( params.size() != parameters_.size() )
     {
         MT_LOG_ERROR_MSG( "Report '" << strMessage_ << "' send failed (invalid DIA parameters)" );
         return false;
     }
-
+    client::Report asn;
     asn().set_oid( nSenderID );
     asn().set_cr( nID_ );
     asn().set_cr_oid( std::numeric_limits< unsigned int >::max() - ids_.GetFreeIdentifier() ); // descending order
     asn().set_type( MsgsSimToClient::EnumReportType( nType ) );
     NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_time() );
     asn().mutable_parametres();  // $$$$ FHD 2009-10-28: should be removed if field is optional in protocol
-    if( !parameters_.empty() )
-        for( unsigned int i = 0; i < parameters_.size(); ++i )
-            if( !parameters_[i]->Copy( *params[ i ], *asn().mutable_parametres()->add_elem(), knowledgeResolver, false /*not optional*/ ) )
-                return false; //$$$ Memory leak
+    for( unsigned int i = 0; i < parameters_.size(); ++i )
+        if( !parameters_[i]->Copy( *params[ i ], *asn().mutable_parametres()->add_elem(), knowledgeResolver, false /*not optional*/ ) )
+            return false; //$$$ Memory leak
     asn.Send( NET_Publisher_ABC::Publisher() );
-
-    unsigned int i = 0;
-    for( CIT_ParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++i )
-        (**it).CleanAfterSerialization( *asn().mutable_parametres()->mutable_elem( i ) );
-    if( asn().parametres().elem_size() > 0 )
-        asn().mutable_parametres()->Clear();
     return true;
 }

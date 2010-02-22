@@ -45,12 +45,3 @@ bool MIL_ParameterType_Enumeration::Copy( const MIL_MissionParameter_ABC& from, 
     to.mutable_value()->set_enumeration( id );
     return true;    
 }
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Enumeration::CleanAfterSerialization
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-void MIL_ParameterType_Enumeration::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_enumeration() );
-}

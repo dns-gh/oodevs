@@ -43,12 +43,3 @@ bool MIL_ParameterType_GDH::Copy( const MIL_MissionParameter_ABC& from, Common::
     to.set_null_value( false );
     return from.ToGDH( *to.mutable_value()->mutable_datetime() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_GDH::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_GDH::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    delete to.mutable_value()->mutable_datetime();
-}

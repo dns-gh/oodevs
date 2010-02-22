@@ -154,7 +154,6 @@ void MIL_AutomateMission::GoToCdt()
 void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 {
     client::AutomatOrder asn;
-
     asn().set_oid( automate.GetID() );
     asn().set_mission( 0 );
     asn().mutable_parametres(); //->set_n( 0 );
@@ -168,15 +167,10 @@ void MIL_AutomateMission::SendNoMission( const MIL_Automate& automate )
 void MIL_AutomateMission::Send() const
 {
     client::AutomatOrder asn;
-
     asn().set_oid( automate_.GetID() );
     asn().set_mission( GetType().GetID() );
-
     MIL_Mission_ABC::Serialize( *asn().mutable_parametres() );
-
     asn.Send( NET_Publisher_ABC::Publisher() );
-
-    MIL_Mission_ABC::CleanAfterSerialization( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------

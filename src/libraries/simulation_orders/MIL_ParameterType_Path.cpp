@@ -43,14 +43,3 @@ bool MIL_ParameterType_Path::Copy( const MIL_MissionParameter_ABC& from, Common:
     to.set_null_value( !from.ToPath( (Common::MsgPath&)*to.mutable_value()->mutable_path() ) );
     return !to.null_value() || bIsOptional;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Path::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_Path::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_path() );
-    assert( to.mutable_value()->mutable_path() );
-    to.mutable_value()->clear_path();
-}

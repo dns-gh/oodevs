@@ -44,13 +44,3 @@ bool MIL_ParameterType_AgentKnowledgeList::Copy( const MIL_MissionParameter_ABC&
     to.set_null_value( false );
     return from.ToAgentKnowledgeList( *to.mutable_value()->mutable_unitknowledgelist() );
 }
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_AgentKnowledgeList::CleanAfterSerialization
-// Created: NLD 2006-11-AgentList
-//-----------------------------------------------------------------------------
-void MIL_ParameterType_AgentKnowledgeList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.mutable_value()->mutable_unitknowledgelist() );
-    to.mutable_value()->clear_unitknowledgelist();
-}

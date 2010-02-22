@@ -44,15 +44,6 @@ void PHY_FireDamages_Population::Serialize( const MIL_Population& target, MsgsSi
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_FireDamages_Population::CleanAfterSerialization
-// Created: NLD 2004-10-06
-// -----------------------------------------------------------------------------
-void PHY_FireDamages_Population::CleanAfterSerialization( MsgsSimToClient::MsgPopulationFireDamages& /*asn*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Population::NotifyHumansKilled
 // Created: NLD 2005-11-16
 // -----------------------------------------------------------------------------

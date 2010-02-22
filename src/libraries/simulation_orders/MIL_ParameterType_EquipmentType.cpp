@@ -43,12 +43,3 @@ bool MIL_ParameterType_EquipmentType::Copy( const MIL_MissionParameter_ABC& from
     to.set_null_value( false );
     return from.ToEquipmentType( *to.mutable_value()->mutable_equipmenttype() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_EquipmentType::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_EquipmentType::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_equipmenttype() );
-}

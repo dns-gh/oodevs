@@ -69,10 +69,6 @@ void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const PHY_Human& human, con
     ++ humanWounds[ human.GetWound().GetID() ];
 }
 
-// =============================================================================
-// NETWORK
-// =============================================================================
-
 //-----------------------------------------------------------------------------
 // Name: PHY_FireDamages_Agent::Serialize
 // Created: JVT 04-03-29
@@ -113,17 +109,4 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToCli
         personnel.set_wounded_ue_nbr ( wounds[ PHY_HumanWound::woundedUE_ .GetID() ] );
         personnel.set_dead_nbr       ( wounds[ PHY_HumanWound::killed_    .GetID() ] );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_FireDamages_Agent::CleanAfterSerialization
-// Created: NLD 2004-10-06
-// -----------------------------------------------------------------------------
-void PHY_FireDamages_Agent::CleanAfterSerialization( MsgsSimToClient::MsgUnitFireDamages& asn )
-{
-    if( asn.equipments().elem_size() > 0 )    
-        asn.mutable_equipments()->Clear();
-
-    if( asn.humans().elem_size() > 0 )
-        asn.mutable_humans()->Clear();
 }

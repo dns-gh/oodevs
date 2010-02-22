@@ -43,12 +43,3 @@ bool MIL_ParameterType_String::Copy( const MIL_MissionParameter_ABC& from, Commo
     to.set_null_value( false );
     return from.ToString( *to.mutable_value()->mutable_acharstr() );
 }
-    
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_String::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_String::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_acharstr() );
-}

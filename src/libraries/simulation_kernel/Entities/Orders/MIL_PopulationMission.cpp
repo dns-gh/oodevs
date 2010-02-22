@@ -100,5 +100,4 @@ void MIL_PopulationMission::Send() const
     asn().set_mission( GetType().GetID() );
     Serialize( *asn().mutable_parametres() );
     asn.Send( NET_Publisher_ABC::Publisher() );
-    CleanAfterSerialization( *asn().mutable_parametres() );
 }

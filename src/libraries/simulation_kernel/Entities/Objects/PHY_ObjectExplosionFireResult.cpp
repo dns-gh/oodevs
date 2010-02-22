@@ -35,16 +35,13 @@ PHY_ObjectExplosionFireResult::PHY_ObjectExplosionFireResult( const MIL_Object_A
 // -----------------------------------------------------------------------------
 PHY_ObjectExplosionFireResult::~PHY_ObjectExplosionFireResult()
 {
-    client::Explosion asnMsg;
-    asnMsg().set_object_oid( object_.GetID() );
-
-    Serialize( *asnMsg().mutable_units_damages ()      );
-    Serialize( *asnMsg().mutable_populations_damages() );
-    
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
-
-    CleanAfterSerialization( *asnMsg().mutable_units_damages() );
-    CleanAfterSerialization( *asnMsg().mutable_populations_damages() );
+    {
+        client::Explosion asnMsg;
+        asnMsg().set_object_oid( object_.GetID() );
+        Serialize( *asnMsg().mutable_units_damages ()      );
+        Serialize( *asnMsg().mutable_populations_damages() );
+        asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    }
 
     // $$$ Merde pour VABF Popu
     static MT_Random randomGenerator;

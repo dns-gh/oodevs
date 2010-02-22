@@ -44,14 +44,3 @@ bool MIL_ParameterType_Point::Copy( const MIL_MissionParameter_ABC& from, Common
     to.set_null_value( !from.ToPoint( (Common::MsgPoint&) *to.mutable_value()->mutable_point() ) );
     return ( bIsOptional || !to.null_value() );
 }
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Point::CleanAfterSerialization
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-void MIL_ParameterType_Point::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_point());
-    assert( to.mutable_value()->mutable_point() );
-    to.mutable_value()->clear_point();
-}

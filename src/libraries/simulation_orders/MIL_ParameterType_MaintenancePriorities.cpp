@@ -43,15 +43,3 @@ bool MIL_ParameterType_MaintenancePriorities::Copy( const MIL_MissionParameter_A
     to.set_null_value( !from.ToMaintenancePriorities( *to.mutable_value()->mutable_logmaintenancepriorities() ) );
     return !to.null_value() || bIsOptional;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_MaintenancePriorities::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_MaintenancePriorities::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_logmaintenancepriorities() );
-    assert( to.mutable_value()->mutable_logmaintenancepriorities() );
-    to.mutable_value()->mutable_logmaintenancepriorities()->Clear();
-    delete to.mutable_value()->mutable_logmaintenancepriorities();
-}

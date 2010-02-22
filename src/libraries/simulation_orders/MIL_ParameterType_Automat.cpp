@@ -44,12 +44,3 @@ bool MIL_ParameterType_Automat::Copy( const MIL_MissionParameter_ABC& from, Comm
     to.set_null_value( !from.ToAutomat( *to.mutable_value()->mutable_automat() ) );
     return !to.null_value() || bIsOptional;
 }
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Automat::CleanAfterSerialization
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-void MIL_ParameterType_Automat::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_automat() );
-}

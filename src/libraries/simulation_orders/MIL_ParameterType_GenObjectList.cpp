@@ -44,13 +44,3 @@ bool MIL_ParameterType_GenObjectList::Copy( const MIL_MissionParameter_ABC& from
     to.set_null_value( false);
     return from.ToGenObjectList( *to.mutable_value()->mutable_plannedworklist() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_GenObjectList::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_GenObjectList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    to.mutable_value()->mutable_plannedworklist()->Clear();
-    delete to.mutable_value()->mutable_plannedworklist();
-}

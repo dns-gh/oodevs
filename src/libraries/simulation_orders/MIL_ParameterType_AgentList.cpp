@@ -43,15 +43,3 @@ bool MIL_ParameterType_AgentList::Copy( const MIL_MissionParameter_ABC& from, Co
     to.set_null_value( false );
     return from.ToAgentList( *to.mutable_value()->mutable_unitlist() );
 }
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_AgentList::CleanAfterSerialization
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-void MIL_ParameterType_AgentList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_unitlist() );
-    assert( to.mutable_value()->mutable_unitlist() );
-    to.mutable_value()->mutable_unitlist()->Clear();
-    delete to.mutable_value()->mutable_unitlist();
-}

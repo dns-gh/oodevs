@@ -43,12 +43,3 @@ bool MIL_ParameterType_PopulationKnowledge::Copy( const MIL_MissionParameter_ABC
     to.set_null_value( !from.ToPopulationKnowledge( *to.mutable_value()->mutable_populationknowledge() ) );
     return !to.null_value() || bIsOptional;
 }
-
-//-----------------------------------------------------------------------------
-// Name: MIL_ParameterType_PopulationKnowledge::CleanAfterSerialization
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-void MIL_ParameterType_PopulationKnowledge::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_populationknowledge() );
-}

@@ -45,14 +45,3 @@ bool MIL_ParameterType_PointList::Copy( const MIL_MissionParameter_ABC& from, Co
         return false;
     return true;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_PointList::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_PointList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_pointlist() );
-    to.mutable_value()->mutable_pointlist()->Clear();
-    delete to.mutable_value()->mutable_pointlist();
-}

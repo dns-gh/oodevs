@@ -38,24 +38,8 @@ PHY_FireResults_ABC::~PHY_FireResults_ABC()
 // -----------------------------------------------------------------------------
 void PHY_FireResults_ABC::Serialize( MsgsSimToClient::MsgUnitsFireDamages& asn ) const
 {
-    if( !agentsDamages_.empty() )
-    {
-        unsigned int i = 0;
-        for( CIT_AgentDamagesMap it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
-            it->second.Serialize( *it->first, *asn.mutable_elem( i++ ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_FireResults_ABC::CleanAfterSerialization
-// Created: NLD 2005-11-16
-// -----------------------------------------------------------------------------
-void PHY_FireResults_ABC::CleanAfterSerialization( MsgsSimToClient::MsgUnitsFireDamages& asn )
-{
-    for( int i = 0; i < asn.elem_size(); ++i )  
-        PHY_FireDamages_Agent::CleanAfterSerialization( *asn.mutable_elem( i ) );
-    if( asn.elem_size() > 0 )
-        asn.Clear();
+    for( CIT_AgentDamagesMap it = agentsDamages_.begin(); it != agentsDamages_.end(); ++it )
+        it->second.Serialize( *it->first, *asn.add_elem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -64,24 +48,8 @@ void PHY_FireResults_ABC::CleanAfterSerialization( MsgsSimToClient::MsgUnitsFire
 // -----------------------------------------------------------------------------
 void PHY_FireResults_ABC::Serialize( MsgsSimToClient::MsgPopulationsFireDamages& asn ) const
 {
-    if( !populationsDamages_.empty() )
-    {
-        unsigned int i = 0;
-        for( CIT_PopulationDamagesMap it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
-            it->second.Serialize( *it->first, *asn.mutable_elem( i++ ) );        
-    }
-}
-    
-// -----------------------------------------------------------------------------
-// Name: PHY_FireResults_ABC::CleanAfterSerialization
-// Created: NLD 2005-11-16
-// -----------------------------------------------------------------------------
-void PHY_FireResults_ABC::CleanAfterSerialization( MsgsSimToClient::MsgPopulationsFireDamages& asn )
-{
-    for( int n = 0; n < asn.elem_size(); ++n )  
-        PHY_FireDamages_Population::CleanAfterSerialization( *asn.mutable_elem( n ) );
-    if( asn.elem_size() > 0 )
-        asn.Clear();
+    for( CIT_PopulationDamagesMap it = populationsDamages_.begin(); it != populationsDamages_.end(); ++it )
+        it->second.Serialize( *it->first, *asn.add_elem() );
 }
 
 // -----------------------------------------------------------------------------

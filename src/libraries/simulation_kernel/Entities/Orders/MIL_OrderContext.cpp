@@ -125,23 +125,6 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_OrderContext::CleanAfterSerialization
-// Created: NLD 2006-11-14
-// -----------------------------------------------------------------------------
-void MIL_OrderContext::CleanAfterSerialization( Common::MsgMissionParameters& asn ) const
-{
-    if( hasContext_ )
-    {
-        if( unsigned int( asn.elem_size() ) < Length() )
-            throw std::runtime_error( __FUNCTION__ );
-        CleanPhaseLines( *asn.mutable_elem(1) );
-        CleanLimit( *asn.mutable_elem(2) );
-        CleanLimit( *asn.mutable_elem(3) );
-        CleanIntelligences( *asn.mutable_elem(4) );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: MIL_OrderContext::Accept
 // Created: SBO 2007-11-12
 // -----------------------------------------------------------------------------

@@ -81,16 +81,13 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
 // -----------------------------------------------------------------------------
 PHY_FireResults_Pion::~PHY_FireResults_Pion()
 {
-    client::StopUnitFire asnMsg;
-    asnMsg().set_fire_oid( nID_ );
-
-    Serialize( *asnMsg().mutable_units_damages() );
-    Serialize( *asnMsg().mutable_populations_damages() );
-   
-    asnMsg.Send( NET_Publisher_ABC::Publisher() );
-
-    CleanAfterSerialization( *asnMsg().mutable_units_damages()       );
-    CleanAfterSerialization( *asnMsg().mutable_populations_damages() );
+    {
+        client::StopUnitFire asnMsg;
+        asnMsg().set_fire_oid( nID_ );
+        Serialize( *asnMsg().mutable_units_damages() );
+        Serialize( *asnMsg().mutable_populations_damages() );
+        asnMsg.Send( NET_Publisher_ABC::Publisher() );
+    }
 
     // $$$ Merde pour VABF Popu
     static MT_Random randomGenerator;

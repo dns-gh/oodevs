@@ -43,15 +43,3 @@ bool MIL_ParameterType_MedicalPriorities::Copy( const MIL_MissionParameter_ABC& 
     to.set_null_value( !from.ToMedicalPriorities( *to.mutable_value()->mutable_logmedicalpriorities() ) );
     return !to.null_value() || bIsOptional;
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_MedicalPriorities::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_MedicalPriorities::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_logmedicalpriorities() );
-    assert( to.mutable_value()->mutable_logmedicalpriorities() );
-    to.mutable_value()->mutable_logmedicalpriorities()->Clear();
-    delete to.mutable_value()->mutable_logmedicalpriorities();    
-}

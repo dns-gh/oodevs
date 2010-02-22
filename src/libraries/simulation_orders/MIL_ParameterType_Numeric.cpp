@@ -45,12 +45,3 @@ bool MIL_ParameterType_Numeric::Copy( const MIL_MissionParameter_ABC& from, Comm
     float value = to.value().areal();
     return from.ToNumeric( value );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Numeric::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_Numeric::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_areal() );
-}

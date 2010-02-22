@@ -43,15 +43,3 @@ bool MIL_ParameterType_PolygonList::Copy( const MIL_MissionParameter_ABC& from, 
     to.set_null_value( false );
     return from.ToPolygonList( *to.mutable_value()->mutable_polygonlist() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_PolygonList::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_PolygonList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_polygonlist() );
-    assert( to.mutable_value()->mutable_polygonlist() != NULL );
-    to.mutable_value()->mutable_polygonlist()->Clear();
-    to.mutable_value()->Clear();
-}

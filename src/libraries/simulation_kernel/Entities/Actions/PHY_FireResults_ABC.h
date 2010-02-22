@@ -70,10 +70,8 @@ protected:
 
     //! @name Network tools
     //@{
-           void Serialize              ( MsgsSimToClient::MsgUnitsFireDamages&      asn ) const;
-           void Serialize              ( MsgsSimToClient::MsgPopulationsFireDamages& asn ) const;
-    static void CleanAfterSerialization( MsgsSimToClient::MsgUnitsFireDamages&      asn );
-    static void CleanAfterSerialization( MsgsSimToClient::MsgPopulationsFireDamages& asn );
+    void Serialize( MsgsSimToClient::MsgUnitsFireDamages& asn ) const;
+    void Serialize( MsgsSimToClient::MsgPopulationsFireDamages& asn ) const;
     //@}
 
 private:
@@ -81,7 +79,7 @@ private:
     //@{
     T_AgentDamagesMap      agentsDamages_;
     T_PopulationDamagesMap populationsDamages_;
-    unsigned int                   nNbrRefs_;
+    unsigned int           nNbrRefs_;
     //@}
 };
 

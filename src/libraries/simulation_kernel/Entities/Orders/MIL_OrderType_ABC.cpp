@@ -82,24 +82,6 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
 }
 
 //-----------------------------------------------------------------------------
-// Name: MIL_OrderType_ABC::CleanAfterSerialization
-// Created: NLD 2006-11-19
-//-----------------------------------------------------------------------------
-void MIL_OrderType_ABC::CleanAfterSerialization( Common::MsgMissionParameters& to, const MIL_OrderContext& context ) const
-{
-    // $$$$ _RC_ FDS 2010-02-08: No clean mandatory in protobuf
-//    int index = context.Length();
-//    if( index + parameters_.size() != to.elem_size() )
-//        return;
-//
-//    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it, ++index )
-//        (**it).CleanAfterSerialization( *to.mutable_elem( index ) );
-//
-//    if( to.elem_size() > 0 )
-//        to.Clear();
-}
-
-//-----------------------------------------------------------------------------
 // Name: MIL_OrderType_ABC::GetDIAType
 // Created: NLD 2003-04-10
 //-----------------------------------------------------------------------------

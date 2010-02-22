@@ -43,15 +43,3 @@ bool MIL_ParameterType_ObjectiveList::Copy( const MIL_MissionParameter_ABC& from
     to.set_null_value( false );
     return from.ToObjectiveList( *to.mutable_value()->mutable_missionobjectivelist() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_ObjectiveList::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_ObjectiveList::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_missionobjectivelist() );
-    assert( to.mutable_value()->mutable_missionobjectivelist() );
-    to.mutable_value()->mutable_missionobjectivelist()->Clear();
-    delete to.mutable_value()->mutable_missionobjectivelist();
-}

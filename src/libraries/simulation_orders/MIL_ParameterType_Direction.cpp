@@ -44,12 +44,3 @@ bool MIL_ParameterType_Direction::Copy( const MIL_MissionParameter_ABC& from, Co
     to.set_null_value( false );
     return from.ToDirection( *to.mutable_value()->mutable_heading() );
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_ParameterType_Direction::CleanAfterSerialization
-// Created: SBO 2006-11-27
-// -----------------------------------------------------------------------------
-void MIL_ParameterType_Direction::CleanAfterSerialization( Common::MsgMissionParameter& to ) const
-{
-    assert( to.value().has_heading() );
-}

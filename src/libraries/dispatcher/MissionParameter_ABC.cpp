@@ -48,9 +48,7 @@
 #include "MissionParameter_LimasOrder.h"
 #include "MissionParameter_IntelligenceList.h"
 #include "MissionParameter_UrbanBlock.h"
-//#include "protocol/protocol.h"
 
-////using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------

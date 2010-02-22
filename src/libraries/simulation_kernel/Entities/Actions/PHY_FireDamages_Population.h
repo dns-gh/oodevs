@@ -28,7 +28,7 @@ struct FireResult;
 class PHY_FireDamages_Population
 {
 public:
-     PHY_FireDamages_Population();
+             PHY_FireDamages_Population();
     virtual ~PHY_FireDamages_Population();
 
     //! @name Notifications
@@ -44,7 +44,6 @@ public:
     //! @name Network
     //@{
     void Serialize( const MIL_Population& target, MsgsSimToClient::MsgPopulationFireDamages& asn ) const;
-    static void CleanAfterSerialization( MsgsSimToClient::MsgPopulationFireDamages& asn );
     //@}
 
 private:

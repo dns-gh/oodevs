@@ -34,19 +34,14 @@ MissionParameter_Numeric::~MissionParameter_Numeric()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Numeric::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Numeric::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value ( bNullValue_ );
-    //asn.value.t       = T_MissionParameter_value_aReal;
-    asn.mutable_value()->set_areal ( value_ );
+    asn.set_null_value( bNullValue_ );
+    asn.mutable_value()->set_areal( value_ );
 }
 
 // -----------------------------------------------------------------------------

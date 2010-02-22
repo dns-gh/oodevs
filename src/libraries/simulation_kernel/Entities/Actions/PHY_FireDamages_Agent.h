@@ -33,7 +33,7 @@ struct FireResult;
 class PHY_FireDamages_Agent
 {
 public:
-     PHY_FireDamages_Agent();
+             PHY_FireDamages_Agent();
     virtual ~PHY_FireDamages_Agent();
 
     //! @name Notifications
@@ -45,7 +45,6 @@ public:
     //! @name Network
     //@{
     void Serialize( const MIL_Agent_ABC& target, MsgsSimToClient::MsgUnitFireDamages& asn ) const;
-    static void CleanAfterSerialization( MsgsSimToClient::MsgUnitFireDamages& asn );
     //@}
 
 private:
