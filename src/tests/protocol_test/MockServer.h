@@ -34,7 +34,7 @@ class MockServer : public mockpp::ChainableMockObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MockServer( unsigned int port = 10000 )
+    explicit MockServer( unsigned int port )
         : mockpp::ChainableMockObject( "MockServer", 0 )
         , tools::ServerNetworker( port )
         , OnReceivePion_mocker( "OnReceive", this )

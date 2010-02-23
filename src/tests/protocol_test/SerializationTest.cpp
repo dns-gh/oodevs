@@ -12,13 +12,12 @@
 #include "MessageHelpers.h"
 #include "MockClient.h"
 #include "MockServer.h"
+#include <windows.h>
 
 using namespace mockpp;
 
 namespace
 {
-    const std::string LOCALHOST = "127.0.0.1:10000";
-
     struct Timeout
     {
         explicit Timeout( unsigned int duration ) : duration_( duration ) { Start(); }
@@ -37,15 +36,20 @@ namespace
     struct MessageSendingFixture
     {
         MessageSendingFixture()
+            : endpoint_( "127.0.0.1:33333" )
+            , port_( 33333 )
+            , client_( endpoint_ )
+            , server_( port_ )
         {
             server_.ConnectionSucceeded_mocker.expects( once() ).with( mockpp::any() );
-            client_.ConnectionSucceeded_mocker.expects( once() ).with( eq< const std::string >( LOCALHOST ) );
-            Timeout timeout( 100 );
+            client_.ConnectionSucceeded_mocker.expects( once() ).with( eq< const std::string >( endpoint_ ) );
+            Timeout timeout( 1000 );
             while( !client_.Connected() && !timeout.Expired() )
             {
                 client_.Update();
                 server_.Update();
             }
+            BOOST_REQUIRE( client_.Connected() );
         }
         template< typename M >
         void VerifyServerReception( M& message, unsigned int count = 1 )
@@ -55,8 +59,10 @@ namespace
             for( unsigned int i = 0; i < count; ++i )
             {
                 server_.ResetReceived();
-                client_.Send( LOCALHOST, message );
+                client_.Send( endpoint_, message );
+                ::Sleep( 1 );
                 client_.Update();
+                ::Sleep( 1 );
                 Timeout timeout( 100 );
                 while( !server_.Received() && !timeout.Expired() )
                     server_.Update();
@@ -80,7 +86,9 @@ namespace
             {
                 client_.ResetReceived();
                 server_.Send( message );
+                ::Sleep( 1 );
                 server_.Update();
+                ::Sleep( 1 );
                 Timeout timeout( 100 );
                 while( !client_.Received() && !timeout.Expired() )
                     client_.Update();
@@ -92,14 +100,16 @@ namespace
 
         void AddClientExpectation( MsgPion& message, unsigned int count = 1 )
         {
-            client_.OnReceivePion_mocker.expects( exactly( count ) ).with( eq< const std::string >( LOCALHOST ), eq< const MsgPion >( message ) );
+            client_.OnReceivePion_mocker.expects( exactly( count ) ).with( eq< const std::string >( endpoint_ ), eq< const MsgPion >( message ) );
         }
         
         void AddClientExpectation( EmptyMessage& message, unsigned int count = 1 )
         {
-            client_.OnReceiveEmpty_mocker.expects( exactly( count ) ).with( eq< const std::string >( LOCALHOST ), eq< const EmptyMessage >( message ) );
+            client_.OnReceiveEmpty_mocker.expects( exactly( count ) ).with( eq< const std::string >( endpoint_ ), eq< const EmptyMessage >( message ) );
         }
 
+        const std::string endpoint_;
+        const unsigned short port_;
         MockClient client_;
         MockServer server_;
     };

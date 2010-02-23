@@ -26,7 +26,7 @@ class MockClient : public mockpp::ChainableMockObject
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MockClient( const std::string& address = "127.0.0.1:10000" )
+    explicit MockClient( const std::string& address )
         : mockpp::ChainableMockObject( "MockClient", 0 )
         , tools::ClientNetworker( address )
         , OnReceivePion_mocker( "OnReceive", this )
