@@ -37,18 +37,15 @@ public:
     explicit MockServer( unsigned int port = 10000 )
         : mockpp::ChainableMockObject( "MockServer", 0 )
         , tools::ServerNetworker( port )
-        , ConnectionSucceeded_mocker( "ConnectionSucceeded", this )
         , OnReceivePion_mocker( "OnReceive", this )
-        , OnReceiveObjectInstance_mocker( "OnReceive", this )
-        , OnReceiveTest_mocker( "OnReceive", this )
+        , ConnectionSucceeded_mocker( "ConnectionSucceeded", this )
+        , ConnectionFailed_mocker( "ConnectionFailed", this )
+        , ConnectionError_mocker( "ConnectionError", this )
         , received_( false )
     {
         RegisterMessage( *this, &MockServer::Receive< MsgPion > );
-        RegisterMessage( *this, &MockServer::Receive< Test > );
-        RegisterMessage( *this, &MockServer::Receive< ObjectInstance > );
         AllowConnections();
     }
-    virtual ~MockServer(){}
     //@}
 
     //! @name Accessors
@@ -67,39 +64,34 @@ public:
         for( std::vector< std::string >::const_iterator it = clients_.begin(); it != clients_.end(); ++it )
             tools::MessageSender_ABC::Send( *it, message );
     }
-
     template< typename T >
     void Receive( const std::string& endpoint, const T& message )
     {
         received_ = true;
         OnReceive( endpoint, message );
     }
-
     void OnReceive( const std::string& endpoint, const MsgPion& message )
     {
         received_ = true;
         OnReceivePion_mocker.forward( endpoint, message );
     }
-
-    void OnReceive( const std::string& endpoint, const Test& message )
-    {
-        received_ = true;
-        OnReceiveTest_mocker.forward( endpoint, message );
-    }
-
-    void OnReceive( const std::string& endpoint, const ObjectInstance& message )
-    {
-        received_ = true;
-        OnReceiveObjectInstance_mocker.forward( endpoint, message );
-    }
-
     virtual void ConnectionSucceeded( const std::string& endpoint )
     {
         clients_.push_back( endpoint );
         tools::ServerNetworker::ConnectionSucceeded( endpoint );
         ConnectionSucceeded_mocker.forward( endpoint );
     }
-    void ResetReceived( void )
+    virtual void ConnectionFailed( const std::string& address, const std::string& error )
+    {
+        tools::ServerNetworker::ConnectionFailed( address, error );
+        ConnectionFailed_mocker.forward( address, error );
+    }
+    virtual void ConnectionError( const std::string& address, const std::string& error )
+    {
+        tools::ServerNetworker::ConnectionError( address, error );
+        ConnectionError_mocker.forward( address, error );
+    }
+    void ResetReceived()
     {
         received_ = false;
     }
@@ -108,10 +100,10 @@ public:
 public:
     //! @name Mock methods
     //@{
-    mockpp::ChainableMockMethod< void, const std::string, const MsgPion >          OnReceivePion_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const ObjectInstance >   OnReceiveObjectInstance_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const Test >             OnReceiveTest_mocker;
-    mockpp::ChainableMockMethod< void, const std::string >                         ConnectionSucceeded_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const MsgPion >     OnReceivePion_mocker;
+    mockpp::ChainableMockMethod< void, const std::string >                    ConnectionSucceeded_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const std::string > ConnectionFailed_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const std::string > ConnectionError_mocker;
     //@}
     
 private:

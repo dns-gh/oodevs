@@ -29,22 +29,17 @@ public:
     explicit MockClient( const std::string& address = "127.0.0.1:10000" )
         : mockpp::ChainableMockObject( "MockClient", 0 )
         , tools::ClientNetworker( address )
+        , OnReceivePion_mocker( "OnReceive", this )
+        , OnReceiveEmpty_mocker( "OnReceive", this )
         , ConnectionSucceeded_mocker( "ConnectionSucceeded", this )
         , ConnectionFailed_mocker( "ConnectionFailed", this )
         , ConnectionError_mocker( "ConnectionError", this )
-        , OnReceivePion_mocker( "OnReceive", this )
-        , OnReceiveEmpty_mocker( "OnReceive", this )
-        , OnReceiveTest_mocker( "OnReceive", this )
-        , OnReceiveObjectInstance_mocker( "OnReceive", this )
         , connected_( false )
         , received_( false )
     {
         RegisterMessage( *this, &MockClient::OnReceive< MsgPion > );
         RegisterMessage( *this, &MockClient::OnReceive< EmptyMessage > );
-        RegisterMessage( *this, &MockClient::OnReceive< Test > );
-        RegisterMessage( *this, &MockClient::OnReceive< ObjectInstance > );
     }
-    virtual ~MockClient() { }
     //@}
 
     //! @name Accessors
@@ -59,7 +54,7 @@ public:
     }
     void ResetReceived()
     {
-        if( Received())
+        if( Received() )
             received_ = false;
     }
     //@}
@@ -80,16 +75,6 @@ public:
     {
         LogReceived( message );
         OnReceiveEmpty_mocker.forward( endpoint, message );
-    }
-    void OnReceive( const std::string& endpoint, const Test& message )
-    {
-        LogReceived( message );
-        OnReceiveTest_mocker.forward( endpoint, message );
-    }
-    void OnReceive( const std::string& endpoint, const ObjectInstance& message )
-    {
-        LogReceived( message );
-        OnReceiveObjectInstance_mocker.forward( endpoint, message );
     }
     virtual void ConnectionSucceeded( const std::string& endpoint )
     {
@@ -121,13 +106,11 @@ private:
 public:
     //! @name Mock methods
     //@{
-    mockpp::ChainableMockMethod< void, const std::string, const MsgPion >          OnReceivePion_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const EmptyMessage >     OnReceiveEmpty_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const Test >             OnReceiveTest_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const ObjectInstance >   OnReceiveObjectInstance_mocker;
-    mockpp::ChainableMockMethod< void, const std::string >                         ConnectionSucceeded_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const std::string >      ConnectionFailed_mocker;
-    mockpp::ChainableMockMethod< void, const std::string, const std::string >      ConnectionError_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const MsgPion >      OnReceivePion_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const EmptyMessage > OnReceiveEmpty_mocker;
+    mockpp::ChainableMockMethod< void, const std::string >                     ConnectionSucceeded_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const std::string >  ConnectionFailed_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const std::string >  ConnectionError_mocker;
     //@}
 
 private:

@@ -19,16 +19,32 @@ namespace
 {
     const std::string LOCALHOST = "127.0.0.1:10000";
 
+    struct Timeout
+    {
+        explicit Timeout( unsigned int duration ) : duration_( duration ) { Start(); }
+        void Start()
+        {
+            start_ = boost::posix_time::microsec_clock::universal_time();
+        }
+        bool Expired() const
+        {
+            return ( boost::posix_time::microsec_clock::universal_time() - start_ ).total_milliseconds() > duration_;
+        }
+        const unsigned int duration_;
+        boost::posix_time::ptime start_;
+    };
+
     struct MessageSendingFixture
     {
         MessageSendingFixture()
         {
             server_.ConnectionSucceeded_mocker.expects( once() ).with( mockpp::any() );
             client_.ConnectionSucceeded_mocker.expects( once() ).with( eq< const std::string >( LOCALHOST ) );
-            while( !client_.Connected() )
+            Timeout timeout( 100 );
+            while( !client_.Connected() && !timeout.Expired() )
             {
-                BOOST_CHECK_NO_THROW( client_.Update() );
-                BOOST_CHECK_NO_THROW( server_.Update() );
+                client_.Update();
+                server_.Update();
             }
         }
         template< typename M >
@@ -38,13 +54,12 @@ namespace
             const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
             for( unsigned int i = 0; i < count; ++i )
             {
-                BOOST_CHECK_NO_THROW( client_.Send( LOCALHOST, message ) );
                 server_.ResetReceived();
-                while( !server_.Received() )
-                {
-                    BOOST_CHECK_NO_THROW( client_.Update() );
-                    BOOST_CHECK_NO_THROW( server_.Update() );
-                }
+                client_.Send( LOCALHOST, message );
+                client_.Update();
+                Timeout timeout( 100 );
+                while( !server_.Received() && !timeout.Expired() )
+                    server_.Update();
             }
             BOOST_TEST_MESSAGE( "sent " << count << " message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
             client_.verify();
@@ -63,13 +78,12 @@ namespace
             const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
             for( unsigned int i = 0; i < count; ++i )
             {
-                BOOST_CHECK_NO_THROW( server_.Send( message ) );
                 client_.ResetReceived();
-                while( !client_.Received() )
-                {
-                    BOOST_CHECK_NO_THROW( server_.Update() );
-                    BOOST_CHECK_NO_THROW( client_.Update() );
-                }
+                server_.Send( message );
+                server_.Update();
+                Timeout timeout( 100 );
+                while( !client_.Received() && !timeout.Expired() )
+                    client_.Update();
             }
             BOOST_TEST_MESSAGE( "Sent " << count << " message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
             client_.verify();
@@ -81,11 +95,6 @@ namespace
             client_.OnReceivePion_mocker.expects( exactly( count ) ).with( eq< const std::string >( LOCALHOST ), eq< const MsgPion >( message ) );
         }
         
-        void AddClientExpectation( Test& message, unsigned int count = 1 )
-        {
-            client_.OnReceiveTest_mocker.expects( exactly( count ) ).with( eq< const std::string >( LOCALHOST ), eq< const Test >( message ) );
-        }
-
         void AddClientExpectation( EmptyMessage& message, unsigned int count = 1 )
         {
             client_.OnReceiveEmpty_mocker.expects( exactly( count ) ).with( eq< const std::string >( LOCALHOST ), eq< const EmptyMessage >( message ) );
@@ -106,7 +115,7 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendOneMessageFromClientToServer )
 {
     MsgPion message;
     message.set_id( 101 );
-    message.set_name( "Pion name\n" );
+    message.set_name( "My name" );
     VerifyServerReception( message );
 }
 
@@ -136,10 +145,7 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendMessageBothWays )
     message.set_id( 1 );
     message.set_name( "My name" );
     VerifyClientReception( message );
-
-    Test test;
-    test.set_name( "My test" );
-    VerifyClientReception( test );
+    VerifyServerReception( message );
 }
 
 // -----------------------------------------------------------------------------
