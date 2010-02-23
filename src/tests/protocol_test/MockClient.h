@@ -30,6 +30,8 @@ public:
         : mockpp::ChainableMockObject( "MockClient", 0 )
         , tools::ClientNetworker( address )
         , ConnectionSucceeded_mocker( "ConnectionSucceeded", this )
+        , ConnectionFailed_mocker( "ConnectionFailed", this )
+        , ConnectionError_mocker( "ConnectionError", this )
         , OnReceivePion_mocker( "OnReceive", this )
         , OnReceiveEmpty_mocker( "OnReceive", this )
         , OnReceiveTest_mocker( "OnReceive", this )
@@ -95,6 +97,18 @@ public:
         tools::ClientNetworker::ConnectionSucceeded( endpoint );
         ConnectionSucceeded_mocker.forward( endpoint );
     }
+    virtual void ConnectionFailed( const std::string& address, const std::string& error )
+    {
+        connected_ = false;
+        tools::ClientNetworker::ConnectionFailed( address, error );
+        ConnectionFailed_mocker.forward( address, error );
+    }
+    virtual void ConnectionError( const std::string& address, const std::string& error )
+    {
+        connected_ = false;
+        tools::ClientNetworker::ConnectionError( address, error );
+        ConnectionError_mocker.forward( address, error );
+    }
 
 private:
     template< typename M >
@@ -113,6 +127,8 @@ public:
     mockpp::ChainableMockMethod< void, const std::string, const Test >             OnReceiveTest_mocker;
     mockpp::ChainableMockMethod< void, const std::string, const ObjectInstance >   OnReceiveObjectInstance_mocker;
     mockpp::ChainableMockMethod< void, const std::string >                         ConnectionSucceeded_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const std::string >      ConnectionFailed_mocker;
+    mockpp::ChainableMockMethod< void, const std::string, const std::string >      ConnectionError_mocker;
     //@}
 
 private:

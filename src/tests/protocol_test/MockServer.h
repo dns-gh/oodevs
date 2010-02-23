@@ -48,7 +48,7 @@ public:
         RegisterMessage( *this, &MockServer::Receive< ObjectInstance > );
         AllowConnections();
     }
-    virtual ~MockServer() {}
+    virtual ~MockServer(){}
     //@}
 
     //! @name Accessors
