@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "CoordinateConverter.h"
 #include "geocoord/Geoid.h"
+#include <boost/lexical_cast.hpp>
 
 using namespace kernel;
 
@@ -85,10 +86,8 @@ geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) co
 // -----------------------------------------------------------------------------
 geometry::Point2d CoordinateConverter::ConvertToGeo( const geometry::Point2f& pos ) const
 {
-    static const double r180OverPi = 180. / std::acos( -1. );
-    const geometry::Point2f translated = pos - translation_;
-    planar_.Set( translated.X(), translated.Y() );
-    geodetic_.SetCoordinates( planar_ );
+	static const double r180OverPi = 180. / std::acos( -1. );
+    SetGeodeticCoordinates( pos );
     geometry::Point2d result;
     result.Set( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude() * r180OverPi );
     return result;
@@ -126,4 +125,37 @@ geometry::Point2f CoordinateConverter::ConvertFromGeo( const geometry::Point2d& 
 bool CoordinateConverter::IsInBoundaries( const geometry::Point2f& point ) const
 {
     return extent_.IsInside( point );
+}
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::ConvertToGeoDms
+// Created: AME 2010-02-22
+// -----------------------------------------------------------------------------
+std::string CoordinateConverter::ConvertToGeoDms( const geometry::Point2f& pos ) const
+{
+	SetGeodeticCoordinates( pos );
+	return std::string ( geodetic_.GetLongitude( "DD° MM' SS.SS H" ) + ", " + geodetic_.GetLatitude( "DD° MM' SS.SS H" ) );
+}
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::ConvertToUtm		
+// Created: AME 2010-02-23
+// -----------------------------------------------------------------------------
+std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& pos ) const
+{
+	ConvertToMgrs( pos );
+	mgrs_.GetCoordinates( utm_ );
+	char   istring[ 256 ];
+	sprintf( istring, "%d%s %dE %dN", utm_.GetZone(), utm_.GetHemisphere() == geocoord::eNorth ? "N" : "S"
+									, boost::lexical_cast< int >( utm_.GetEasting() ),  boost::lexical_cast< int >( utm_.GetNorthing() ) );
+	return std::string( istring );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::SetGeodeticCoordinates
+// Created: AME 2010-02-23
+// -----------------------------------------------------------------------------
+void CoordinateConverter::SetGeodeticCoordinates( const geometry::Point2f& pos ) const 
+{
+    const geometry::Point2f translated = pos - translation_;
+    planar_.Set( translated.X(), translated.Y() );
+    geodetic_.SetCoordinates( planar_ );
 }
