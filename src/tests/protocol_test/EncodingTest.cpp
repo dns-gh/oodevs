@@ -10,13 +10,11 @@
 #include "protocol_test_pch.h"
 #include "protocol_includes.h"
 #include "MessageHelpers.h"
-#include "tools/ClientNetworker.h"
-#include "tools/ServerNetworker.h"
+#include "tools/MessageDecoder.h"
+#include "tools/MessageEncoder.h"
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <iostream>
 
 using namespace mockpp;
-using namespace google::protobuf;
 
 namespace
 {
@@ -57,6 +55,9 @@ namespace
         template< typename M >
         void Verify( M& message, unsigned int count = 1 )
         {
+            const unsigned int original = sizeof( message );
+            unsigned int encoded = 0;
+
             BOOST_REQUIRE( message.IsInitialized() );
             const boost::posix_time::ptime start = boost::posix_time::microsec_clock::universal_time();
             for( unsigned int i = 0; i < count; ++i )
@@ -69,11 +70,9 @@ namespace
                 BOOST_REQUIRE_NO_THROW( decoder.reset( new tools::MessageDecoder< M >( StripHeader( encodedCopy ) ) ) );
                 const M& decodedMessage = *decoder;
                 BOOST_CHECK( message == decodedMessage );
-                std::cout << "- Original size: " << sizeof( message ) << std::endl
-                          << "- Encoded size: " << encodedMessage.Size() - 2 * sizeof( unsigned long ) << std::endl;
+                encoded = encodedMessage.Size() - 2 * sizeof( unsigned long );
             }
-            std::cout << "Encoded " << count << " message(s) in " 
-                      << boost::posix_time::microsec_clock::universal_time() - start << std::endl;
+            BOOST_TEST_MESSAGE( "Encoded " << count << " '" << typeid( message ).name() << "' message(s) in " << boost::posix_time::microsec_clock::universal_time() - start << " - Original/Encoded size: " << original << "/" << encoded );
         }
 
         tools::Message& StripHeader( tools::Message& message )

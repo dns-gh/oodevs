@@ -115,8 +115,7 @@ private:
     void LogReceived( const M& message )
     {
         received_ = true;
-        std::cout << "client: " << typeid( message ).name() 
-                  << " received at " << boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ) << std::endl;
+        BOOST_TEST_MESSAGE( "Client: " << typeid( message ).name() << " received at " << boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ) );
     }
 
 public:

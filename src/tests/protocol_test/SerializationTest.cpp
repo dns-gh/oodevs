@@ -12,22 +12,13 @@
 #include "MessageHelpers.h"
 #include "MockClient.h"
 #include "MockServer.h"
-#include "tools/ClientNetworker.h"
-#include "tools/ServerNetworker.h"
-#include <boost/lambda/lambda.hpp>
-#include <boost/lexical_cast.hpp>
-#include <windows.h>
 
 using namespace mockpp;
-using namespace google::protobuf;
 
 namespace
 {
-    std::string LOCALHOST = "127.0.0.1:10000";
-}
+    const std::string LOCALHOST = "127.0.0.1:10000";
 
-namespace
-{
     struct MessageSendingFixture
     {
         MessageSendingFixture()
@@ -55,8 +46,7 @@ namespace
                     BOOST_CHECK_NO_THROW( server_.Update() );
                 }
             }
-            std::cout << "sent " << count << " message(s) in " 
-                      << boost::posix_time::microsec_clock::universal_time() - start << std::endl;
+            BOOST_TEST_MESSAGE( "sent " << count << " message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
             client_.verify();
             server_.verify();
         }
@@ -81,8 +71,7 @@ namespace
                     BOOST_CHECK_NO_THROW( client_.Update() );
                 }
             }
-            std::cout << "sent " << count << " message(s) in " 
-                      << boost::posix_time::microsec_clock::universal_time() - start << std::endl;
+            BOOST_TEST_MESSAGE( "Sent " << count << " message(s) in " << boost::posix_time::microsec_clock::universal_time() - start );
             client_.verify();
             server_.verify();
         }
