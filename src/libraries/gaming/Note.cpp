@@ -7,31 +7,25 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "gaming_pch.h"
 #include "Note.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_gui/Tools.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: Note constructor
 // Created: HBD 2010-01-14
 // -----------------------------------------------------------------------------
-Note::Note(kernel::Controller& controller, unsigned int parent, unsigned int id, const std::string name, const std::string number, const std::string  desc)
-:             controller_( controller)  
-            , parent_( parent )
-            , name_( name )
-            , noteText_( desc )
-            , noteId_(id)
-            , noteNumber_(number)
+Note::Note( kernel::Controller& controller, unsigned int parent, unsigned int id, const std::string& name, const std::string& number, const std::string& desc )
+    : controller_( controller )
+    , parent_( parent )
+    , name_( name )
+    , noteText_( desc )
+    , noteId_( id )
+    , noteNumber_( number )
 {
-    controller_.Create(*this);
-
+    controller_.Create( *this );
 }   
 
 // -----------------------------------------------------------------------------
@@ -42,7 +36,6 @@ Note::~Note()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Note::Update
@@ -58,7 +51,7 @@ void Note::Update(const MsgsMessengerToClient::MsgNoteUpdate& asn)
         noteText_ = asn.description();
     if ( asn.has_parent() )
         parent_ = asn.parent();
-    controller_.Update(*this);
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -76,11 +69,11 @@ void Note::Delete()
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
-void Note::Display( kernel::Displayer_ABC& displayer ) const
+void Note::Display( QListViewItem* item ) const
 {
-    displayer.Display( tools::translate( "Note", "Tree" ), name_ )
-        .Display( tools::translate( "Note", "Value" ), this->noteNumber_ )
-        .Display( tools::translate( "Note", "Text" ), this->noteText_ );
+    item->setText( 0, name_.c_str() );
+    item->setText( 1, noteNumber_.c_str() );
+    item->setText( 2, noteText_.c_str() );
 }
 
 // -----------------------------------------------------------------------------

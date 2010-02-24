@@ -79,8 +79,9 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
 //-----------------------------------------------------------------------------
 SIM_App::~SIM_App()
 {
-    MT_LOG_UNREGISTER_LOGGER( *logger_ );
+        MT_LOG_UNREGISTER_LOGGER( *logger_ );
     delete logger_;
+    delete pDispatcher_;
     if( pNetworkLogger_ )
     {
         MT_LOG_UNREGISTER_LOGGER( *pNetworkLogger_ );

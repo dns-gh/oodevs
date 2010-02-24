@@ -86,7 +86,7 @@ private:
     const dispatcher::Config& config_ ;
     dispatcher::ClientPublisher_ABC& clients_;
     dispatcher::LinkResolver_ABC& links_;
-    Model& model_;
+    std::auto_ptr< Model > model_;
     std::auto_ptr< Chat > chat_;
     //@}
 };

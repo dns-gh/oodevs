@@ -115,7 +115,7 @@ void Application::Initialize( int argc, char** argv )
     controllers_ = new Controllers();
     logger_      = new LoggerProxy();
     services_    = new Services( controllers_->controller_, *logger_ );
-    simulation_  = new Simulation( controllers_->controller_  );
+    simulation_  = new Simulation( controllers_->controller_ );
     workers_     = new Workers();
     network_     = new Network( *services_, *simulation_, *logger_ );
     RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );

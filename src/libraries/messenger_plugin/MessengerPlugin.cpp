@@ -31,7 +31,7 @@ MessengerPlugin::MessengerPlugin( dispatcher::ClientPublisher_ABC& clients, tool
     : config_( config )
     , clients_( clients )
     , links_( links )
-    , model_( *new Model( config, clients, registrables ) )
+    , model_( new Model( config, clients, registrables ) )
     , chat_( new Chat() )
 {
     dispatcher.RegisterMessage( *this, &MessengerPlugin::OnReceiveClientToMessenger );
@@ -62,7 +62,7 @@ void MessengerPlugin::Register( dispatcher::Services& services )
 void MessengerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 {
     if( wrapper.message().has_control_checkpoint_save_end() )
-        model_.Save( wrapper.message().control_checkpoint_save_end().name() );
+        model_->Save( wrapper.message().control_checkpoint_save_end().name() );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +71,7 @@ void MessengerPlugin::Receive( const MsgsSimToClient::MsgSimToClient& wrapper )
 // -----------------------------------------------------------------------------
 void MessengerPlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& profile )
 {
-    model_.SendStateToNewClient( client );
+    model_->SendStateToNewClient( client );
     chat_->NotifyClientAuthenticated( client, profile );
 }
 
@@ -93,42 +93,42 @@ void MessengerPlugin::OnReceiveClientToMessenger( const std::string& client, con
     dispatcher::ClientPublisher_ABC& publisher = links_.GetPublisher( client );
     // Limit
     if( wrapper.message().has_limit_creation_request() )
-        model_.tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_creation_request() ); 
+        model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_creation_request() ); 
     if( wrapper.message().has_limit_destruction_request() )
-        model_.tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_destruction_request() ); 
+        model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_destruction_request() ); 
     if( wrapper.message().has_limit_update_request() )
-        model_.tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_update_request() ); 
+        model_->tacticalLines_.HandleLimitRequest( publisher, wrapper.message().limit_update_request() ); 
     // Lima
     if( wrapper.message().has_lima_creation_request() )
-        model_.tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_creation_request() ); 
+        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_creation_request() ); 
     if( wrapper.message().has_lima_destruction_request() )
-        model_.tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_destruction_request() ); 
+        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_destruction_request() ); 
     if( wrapper.message().has_lima_update_request() )
-        model_.tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_update_request() ); 
+        model_->tacticalLines_.HandleLimaRequest( publisher, wrapper.message().lima_update_request() ); 
     // Intelligence
     if( wrapper.message().has_intelligence_creation_request() )
-        model_.intelligences_.HandleRequest( publisher, wrapper.message().intelligence_creation_request() ); 
+        model_->intelligences_.HandleRequest( publisher, wrapper.message().intelligence_creation_request() ); 
     if( wrapper.message().has_intelligence_update_request() )
-        model_.intelligences_.HandleRequest( publisher, wrapper.message().intelligence_update_request() ); 
+        model_->intelligences_.HandleRequest( publisher, wrapper.message().intelligence_update_request() ); 
     if( wrapper.message().has_intelligence_destruction_request() )
-        model_.intelligences_.HandleRequest( publisher, wrapper.message().intelligence_destruction_request() ); 
+        model_->intelligences_.HandleRequest( publisher, wrapper.message().intelligence_destruction_request() ); 
     // Drawings
     if( wrapper.message().has_shape_creation_request() )
-        model_.drawings_.HandleRequest( publisher, wrapper.message().shape_creation_request() ); 
+        model_->drawings_.HandleRequest( publisher, wrapper.message().shape_creation_request() ); 
     if( wrapper.message().has_shape_update_request() )
-        model_.drawings_.HandleRequest( publisher, wrapper.message().shape_update_request() ); 
+        model_->drawings_.HandleRequest( publisher, wrapper.message().shape_update_request() ); 
     if( wrapper.message().has_shape_destruction_request() )
-        model_.drawings_.HandleRequest( publisher, wrapper.message().shape_destruction_request() ); 
+        model_->drawings_.HandleRequest( publisher, wrapper.message().shape_destruction_request() ); 
     // Chat
     if( wrapper.message().has_text_message() )
         chat_->OnReceive( wrapper.message().text_message() ); 
     // LTO Begin
     // Notes
     if ( wrapper.message().has_note_creation_request() )
-        model_.notes_.HandleRequest( wrapper.message().note_creation_request() );
+        model_->notes_.HandleRequest( wrapper.message().note_creation_request() );
     if ( wrapper.message().has_note_update_request() )
-        model_.notes_.HandleRequest( wrapper.message().note_update_request() );
+        model_->notes_.HandleRequest( wrapper.message().note_update_request() );
     if ( wrapper.message().has_note_destruction_request() )
-        model_.notes_.HandleRequest( wrapper.message().note_destruction_request() );
+        model_->notes_.HandleRequest( wrapper.message().note_destruction_request() );
     // LTO end
 }

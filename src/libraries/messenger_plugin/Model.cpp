@@ -37,7 +37,7 @@ Model::Model( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC&
     , tacticalLines_( *new TacticalLinesModel( clients, *idManager_, *converter_ ) )
     , intelligences_( *new IntelligencesModel( clients, *idManager_, *converter_ ) )
     , drawings_     ( *new DrawingsModel( config, clients, *idManager_, *converter_ ))
-    , notes_        ( *new NotesModel ( config, clients, *idManager_ )) // LTO
+    , notes_        ( *new NotesModel ( config, clients, *idManager_ , config_.BuildSessionChildFile("notes.csv") ))
 {
     registrables.Add( new dispatcher::RegistrableProxy( drawings_ ) );
     Load();
@@ -49,6 +49,7 @@ Model::Model( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC&
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
+    delete &notes_;
     delete &drawings_;
     delete &intelligences_;
     delete &tacticalLines_;
@@ -63,6 +64,7 @@ void Model::SendStateToNewClient( dispatcher::ClientPublisher_ABC& client )
     tacticalLines_.SendStateToNewClient( client );
     intelligences_.SendStateToNewClient( client );
     drawings_     .SendStateToNewClient( client );
+    notes_        .SendStateToNewClient( client );
 }
 
 namespace
@@ -112,6 +114,7 @@ void Model::Save( const std::string& name ) const
     xos << xml::end();
 
     drawings_.Save( directory );
+    notes_.SaveNotes( config_.BuildSessionChildFile("notes.csv" ) );
 }
 
 // -----------------------------------------------------------------------------

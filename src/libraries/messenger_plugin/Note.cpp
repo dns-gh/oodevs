@@ -31,6 +31,21 @@ Note::Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest
 
 // -----------------------------------------------------------------------------
 // Name: Note constructor
+// Created: HBD 2010-02-17
+// -----------------------------------------------------------------------------
+Note::Note(unsigned long id, std::vector<std::string> values, unsigned int parent )
+: id_( id )
+, name_( values[ 0 ] )
+, number_( values[ 2 ] )
+, description_( values[ 3 ] )
+, parent_( parent )
+{
+    children_ = new std::list<unsigned long>();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Note constructor
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
 Note::~Note()
@@ -177,4 +192,32 @@ unsigned long Note::GetParent() const
 void Note::SetParent(unsigned long note)
 {
     parent_ = note;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetName
+// Created: HBD 2010-02-15
+// -----------------------------------------------------------------------------
+std::string Note::GetName() const
+{
+    return name_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetNumber
+// Created: HBD 2010-02-15
+// -----------------------------------------------------------------------------
+std::string Note::GetNumber() const
+{
+    return number_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetDesc
+// Created: HBD 2010-02-15
+// -----------------------------------------------------------------------------
+std::string Note::GetDesc() const
+{
+    return description_;
 }

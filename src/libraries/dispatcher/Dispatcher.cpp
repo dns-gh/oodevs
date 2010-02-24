@@ -25,18 +25,18 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Dispatcher::Dispatcher( const Config& config )
     : config_( config )
-    , handler_()
-    , registrables_()
-    , services_( new Services() )
     , model_( new Model( config_ ) )
-    , clientsNetworker_( new ClientsNetworker( config_, handler_, *services_ ) )
-    , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, handler_, config_ ) )
-    , factory_( new PluginFactory( config_, *model_, *simulationNetworker_, *clientsNetworker_, handler_, registrables_ ) )
+    , registrables_( new CompositeRegistrable() )
+    , handler_( new CompositePlugin( ) )
+    , services_( new Services() )
+    , clientsNetworker_( new ClientsNetworker( config_, *handler_, *services_ ) )
+    , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config_ ) )
+    , factory_( new PluginFactory( config_, *model_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_ ) )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-    handler_.AddHandler( clientsNetworker_ );
-    handler_.AddHandler( model_ );
+    handler_->AddHandler( clientsNetworker_ );
+    handler_->AddHandler( model_ );
 }
 
 // $$$$ AGE 2008-07-16: Les plugins / MessageHandlers doivent être enregistrés dans un certain ordre
@@ -62,7 +62,7 @@ void Dispatcher::Update()
 {
     clientsNetworker_   ->Update();
     simulationNetworker_->Update();
-    handler_.Update();
+    handler_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,5 +81,5 @@ void Dispatcher::RegisterPluginFactory( PluginFactory_ABC& factory )
 void Dispatcher::CreatePlugins()
 {
     factory_->Instanciate();
-    handler_.Register( *services_ );
+    handler_->Register( *services_ );
 }

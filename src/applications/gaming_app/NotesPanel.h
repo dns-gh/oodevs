@@ -27,8 +27,6 @@ class Note;
 class NotesModel;
 class Publisher_ABC;
 
-typedef std::map< unsigned int, gui::ValuedListItem* >::iterator itemIterator;
-
 // =============================================================================
 /** @class  NotesPanel
     @brief  NotesPanel
@@ -36,8 +34,8 @@ typedef std::map< unsigned int, gui::ValuedListItem* >::iterator itemIterator;
 // Created: HBD 2010-01-19
 // =============================================================================
 class NotesPanel : public QDockWindow
-    , public tools::Observer_ABC
-    , public tools::ElementObserver_ABC< Note >
+                 , public tools::Observer_ABC
+                 , public tools::ElementObserver_ABC< Note >
 {
    Q_OBJECT;
 
@@ -74,19 +72,27 @@ private:
     virtual void NotifyCreated( const Note& element );
     virtual void NotifyUpdated( const Note& element );
     virtual void NotifyDeleted( const Note& element );
-    void Display( const Note& note, gui::ValuedListItem* item );
+    void Display( const Note& note, QListViewItem* item );
+
+    QListViewItem*  FindItem( unsigned int parent ) const;
+    QListViewItem*  FindItem(const Note* element ) const; 
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< QListViewItem*, const Note*> T_Items;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    gui::ListDisplayer< NotesPanel >* notes_;
+    QListView* notes_;
     gui::ItemFactory_ABC& factory_;
     NoteDialog* noteDialog_;
     NotesModel& model_;
     Publisher_ABC &publisher_;
-    std::map< unsigned int, gui::ValuedListItem* > itemsList_;
+    T_Items itemsList_;
     //@}
 };
 

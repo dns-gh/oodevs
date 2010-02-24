@@ -125,6 +125,12 @@ void ScoresModel::RequestPlot( dispatcher::ClientPublisher_ABC& publisher, const
     }
 }
 
+namespace directia
+{
+    void UsedByDIA( ScoresModel* ) {}
+    void ReleasedByDIA( ScoresModel* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ScoresModel::RegisterIn
 // Created: SBO 2009-08-20

@@ -34,7 +34,6 @@ NoteDialog::NoteDialog( QDockWindow* parent, Publisher_ABC &publisher)
     setCaption( tools::translate( "NoteDialog", "Create note" ) );
     setFixedSize( 400, 150 );
 
-
     QGroupBox* boxId_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "NoteDialog", "Id" ), this );
     QGroupBox* boxName_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "NoteDialog", "Name" ), this );
     QGroupBox* boxDesc_ = new QGroupBox( 3, Qt::Horizontal, tools::translate( "NoteDialog", "Text" ), this );
@@ -132,25 +131,27 @@ void NoteDialog::OnReject()
     textName_->clear();
     textId_->clear();
     textDesc_->clear();
+    note_ = 0;
     reject();
 }
 
 // -----------------------------------------------------------------------------
-// Name: NoteDialog::setParent
+// Name: NoteDialog::SetParent
 // Created: HBD 2010-02-10
 // -----------------------------------------------------------------------------
-void NoteDialog::setParent(unsigned int note)
+void NoteDialog::SetParent(unsigned int note)
 {
     note_ = note;
 }
 
 // -----------------------------------------------------------------------------
-// Name: NoteDialog::setUpdate
+// Name: NoteDialog::SetUpdate
 // Created: HBD 2010-02-10
 // -----------------------------------------------------------------------------
-void NoteDialog::setUpdate(Note& note)
+void NoteDialog::SetUpdate(const Note& note)
 {
     update_ = true;
+    note_ = note.GetParent();
     noteId_  = note.GetId();
     textDesc_->setText(note.GetDesc());
     textId_->setText(note.GetNumber());

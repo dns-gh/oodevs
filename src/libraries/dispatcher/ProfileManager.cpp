@@ -189,6 +189,12 @@ MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode ProfileMan
     return MsgsAuthenticationToClient::MsgProfileDestructionRequestAck_ErrorCode_success;
 }
 
+namespace directia
+{
+    void UsedByDIA( ProfileManager* ) {}
+    void ReleasedByDIA( ProfileManager* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ProfileManager::RegisterIn
 // Created: SBO 2008-07-24

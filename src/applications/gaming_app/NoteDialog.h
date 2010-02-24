@@ -33,26 +33,23 @@ public:
 
     //! @name Operations
     //@{
-    void setParent(unsigned int note);
-    void setUpdate(Note& note);
+    void SetParent( unsigned int note );
+    void SetUpdate( const Note& note );
     //@}
-    private slots:
-        //! @name Slots
-        //@{
-        void OnAccept();
-        void OnReject();
-        void OnFileChanged();
-        //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnAccept();
+    void OnReject();
+    void OnFileChanged();
+    //@}
 
 private:
     //! @name Copy/Assignment
     //@{
     NoteDialog( const NoteDialog& );            //!< Copy constructor
     NoteDialog& operator=( const NoteDialog& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
     //@}
 
 private:

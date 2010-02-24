@@ -13,6 +13,8 @@
 #include "protocol/MessengerSenders.h"
 #include "tools/Resolver.h"
 
+#include <list>
+
 namespace dispatcher
 {
     class Config;
@@ -38,7 +40,7 @@ class NotesModel : public tools::Resolver< Note >
 public:
     //! @name Constructors/Destructor
     //@{
-             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager );
+             NotesModel( const dispatcher::Config& config, dispatcher::ClientPublisher_ABC& clients, IdManager& idManager , std::string file);
     virtual ~NotesModel();
     //@}
 
@@ -55,7 +57,9 @@ public:
     void SendStateToNewClient( dispatcher::ClientPublisher_ABC& publisher ) const;
 
     void Publish( const Note& note );
-
+    
+    void LoadNotes(const std::string filename);
+    void SaveNotes(const std::string filename);
     //@}
 private:
     //! @name Copy/Assignment
@@ -66,16 +70,21 @@ private:
 
     //! @name Helpers
     //@{
-    void HandleRequestDestructSingle( Note* note );
-    void HandleRequestDestructCascade( Note* note );
+    void         HandleRequestDestructSingle( Note* note );
+    void         HandleRequestDestructCascade( Note* note );
+    void         WriteNote( const Note& note, std::ofstream& file, int& lineNumber, int parentLine ) const;
+    void         ReadNote( const std::string& input, std::vector< unsigned int >& notes );
+    unsigned int CreateNote( std::vector<std::string> note, const unsigned int parent );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const dispatcher::Config& config_;
+    const dispatcher::Config&        config_;
     dispatcher::ClientPublisher_ABC& clients_;
-    IdManager& idManager_;
+    IdManager&                       idManager_;
+    std::list<unsigned int>          headNotes_;
+    const std::string                file_;
     //@}
 };
 

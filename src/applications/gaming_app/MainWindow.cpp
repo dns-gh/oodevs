@@ -336,7 +336,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         NotesPanel* notePanel = new NotesPanel( this, controllers_.controller_, *factory, model_.notes_, publisher );
         moveDockWindow( notePanel, Qt::DockRight );
         setDockEnabled( notePanel, Qt::DockTop, false );
-
     }
 
     // Message panel

@@ -182,6 +182,12 @@ void DrawingsModel::SendStateToNewClient( dispatcher::ClientPublisher_ABC& clien
                  , boost::bind( &T_Elements::value_type::second, _1 ), boost::ref( client ) ) );
 }
 
+namespace directia
+{
+    void UsedByDIA( DrawingsModel* ) {}
+    void ReleasedByDIA( DrawingsModel* ) {}
+}
+
 // -----------------------------------------------------------------------------
 // Name: DrawingsModel::RegisterIn
 // Created: AGE 2008-07-09

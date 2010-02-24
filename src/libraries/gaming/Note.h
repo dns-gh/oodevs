@@ -14,15 +14,13 @@
 
 #include "clients_kernel/Displayable_ABC.h"
 #include "protocol/MessengerSenders.h"
-
 #include <list>
+#include <qlistview.h>
+
 namespace kernel
 {
     class Controller;
 }
-
-typedef std::list< unsigned int >::iterator listIterator; 
-
 
 // =============================================================================
 /** @class  Note
@@ -35,7 +33,7 @@ class Note : public kernel::Displayable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Note(kernel::Controller& controller, unsigned int parent, unsigned int id, const std::string name, const std::string number, const std::string  desc);
+             Note( kernel::Controller& controller, unsigned int parent, unsigned int id, const std::string& name, const std::string& number, const std::string& desc );
     virtual ~Note();
     //@}
 
@@ -51,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
+    virtual void Display( QListViewItem* item ) const;
             void Update( const MsgsMessengerToClient::MsgNoteUpdate& message );
             void Delete();
     //@}
@@ -63,9 +61,6 @@ private:
     Note& operator=( const Note& ); //!< Assignment operator
     //@}
     
-    //! @name Helpers
-    //@{
-    //@}
 private:
     //! @name Member data
     //@{

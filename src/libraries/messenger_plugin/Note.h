@@ -42,11 +42,15 @@ public:
     //! @name Constructors/Destructor
     //@{
              Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message );
+             Note(unsigned long id, std::vector<std::string> values, unsigned int parent );
     virtual ~Note();
     //@}
 
     //! @name Operations
     //@{
+    std::string GetName() const;
+    std::string GetNumber() const;
+    std::string GetDesc() const;
     unsigned long GetId() const;
     unsigned long GetParent() const;
     std::list<unsigned long>& GetChildren() const;

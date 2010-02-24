@@ -7,22 +7,20 @@
 //
 // *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
 #include "gaming_app_pch.h"
 #include "NotesPanel.h"
 #include "moc_NotesPanel.cpp"
-
+#include "clients_gui/ValuedDragObject.h"
+#include "clients_kernel/Controller.h"
 #include "gaming/Tools.h"
 #include "gaming/Note.h"
 #include "gaming/NotesModel.h"
-#include "clients_kernel/Controller.h"
 //#include "game_asn/Messenger.h"
 #include "protocol/Publisher_ABC.h"
 #include "protocol/MessengerSenders.h"
-#include "clients_gui/ValuedDragObject.h"
+
+
+
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel constructor
@@ -43,20 +41,20 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller,
     setCloseMode( QDockWindow::Always );
     setCaption( tools::translate( "NotePanel", "Notations" ) );
 
-    notes_ = new gui::ListDisplayer< NotesPanel > (this, *this, factory_ );
-    notes_->AddColumn( tools::translate( "Notes", "Tree" ) );
-    notes_->AddColumn( tools::translate( "Notes", "Value" ) );
-    notes_->AddColumn( tools::translate( "Notes", "Text" ) );
-    notes_->setColumnWidthMode( 2, QListView::Manual );
-    notes_->setColumnWidthMode( 3, QListView::Manual );
+    notes_ = new QListView( this );
+    notes_->addColumn( tools::translate( "Notes", "Tree" ) );
+    notes_->addColumn( tools::translate( "Notes", "Value" ) );
+    notes_->addColumn( tools::translate( "Notes", "Text" ) );
+    notes_->setColumnWidthMode( 1, QListView::Manual );
+    notes_->setColumnWidthMode( 1, QListView::Manual );
     notes_->setColumnAlignment( 2, Qt::AlignCenter );
-    notes_->setColumnAlignment( 3, Qt::AlignCenter );
-    connect( notes_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int) ), SLOT( OnContextMenu( QListViewItem*, const QPoint&, int) ) );
-
+    notes_->setColumnAlignment( 2, Qt::AlignCenter );
+    notes_->setRootIsDecorated( true );
+    connect( notes_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int) ), this, SLOT( OnContextMenu( QListViewItem*, const QPoint&, int) ) );
+//    connect( item->listView(), SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenu( QListViewItem*, const QPoint&, int ) ) );
     setWidget( notes_ );
 
     noteDialog_ = new NoteDialog( this, publisher_ );
-    notes_->setRootIsDecorated( true ); 
     controller_.Register( *this );
 }
 
@@ -70,6 +68,34 @@ NotesPanel::~NotesPanel()
      // $$$$ _RC_ HBD 2010-02-09: Delete notes_ && itemlist
 }
 
+// -----------------------------------------------------------------------------
+// Name: NotesPanel::FindParentItem
+// Created: HBD 2010-02-22
+// -----------------------------------------------------------------------------
+QListViewItem* NotesPanel::FindItem( unsigned int parent ) const
+{
+    T_Items::const_iterator it = itemsList_.begin();
+    while( it != itemsList_.end() && it->second->GetId() != parent )
+        ++it;
+    if( it == itemsList_.end() )
+        return 0;
+    return it->first;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: NotesPanel::FindParentItem
+// Created: HBD 2010-02-22
+// -----------------------------------------------------------------------------
+QListViewItem* NotesPanel::FindItem(const Note* element ) const
+{
+    T_Items::const_iterator it = itemsList_.begin();
+    while( it != itemsList_.end() && it->second != element )
+        ++it;
+    if( it == itemsList_.end() )
+        return 0;
+    return it->first;
+}
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::NotifyCreated
@@ -79,15 +105,19 @@ NotesPanel::~NotesPanel()
 // -----------------------------------------------------------------------------
 void NotesPanel::NotifyCreated( const Note& element )
 {
-    gui::ValuedListItem* item = 0;
+    QListViewItem* item = 0;
     unsigned int parent = element.GetParent();
-    if( parent && itemsList_.find(parent) != itemsList_.end() )
-        item = factory_.CreateItem( itemsList_[ parent ] );
+    QListViewItem* parentItem = FindItem( parent );
+    if( parent && parentItem )
+        item = new QListViewItem( parentItem );
     else
-        item = factory_.CreateItem( notes_ );
-    itemsList_[element.GetId()] = item ;
+        item = new QListViewItem( notes_ );
+    item->setMultiLinesEnabled( true );
+    itemsList_[ item ] = &element;
     Display( element, item );
 }
+
+
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::NotifyUpdated
 /** @param  element 
@@ -96,21 +126,20 @@ void NotesPanel::NotifyCreated( const Note& element )
 // -----------------------------------------------------------------------------
 void NotesPanel::NotifyUpdated( const Note& element )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &element, notes_->firstChild() ) )
+    if( QListViewItem* item = FindItem( &element ))
     {
-        QListViewItem* oldParent = item->parent();
-        if( oldParent )
+        if( QListViewItem* oldParent = item->parent() )
         {
-           itemIterator it = itemsList_.find( element.GetParent() );
-           if (it != itemsList_.end() && (it->second) != oldParent )
+           QListViewItem* newParent = FindItem( element.GetParent() );
+           if( newParent && newParent != oldParent )
            {
-                oldParent->takeItem(item);
-                it->second->insertItem(item);
+                oldParent->takeItem( item );
+                newParent->insertItem( item );
            }
-           if (element.GetParent() == 0)
+           if( element.GetParent() == 0 )
            {
-               oldParent->takeItem(item);
-               notes_->insertItem(item);
+               oldParent->takeItem( item );
+               notes_->insertItem( item );
            }
         }
         Display( element, item );
@@ -125,8 +154,11 @@ void NotesPanel::NotifyUpdated( const Note& element )
 // -----------------------------------------------------------------------------
 void NotesPanel::NotifyDeleted( const Note& element )
 {
-    if( gui::ValuedListItem* item = gui::FindItem( &element, notes_->firstChild() ) )
+    if( QListViewItem* item = FindItem( &element ))
+    {
+        itemsList_.erase( item );
         delete item;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -136,11 +168,10 @@ void NotesPanel::NotifyDeleted( const Note& element )
 */
 // Created: HBD 2010-01-19
 // -----------------------------------------------------------------------------
-void NotesPanel::Display( const Note& note, gui::ValuedListItem* item )
+void NotesPanel::Display( const Note& note, QListViewItem* item )
 {
     item->setDragEnabled( true );
-    item->SetValue( &note );
-    note.Display( notes_->GetItemDisplayer( item ) );
+    note.Display( item );
 }
 
 // -----------------------------------------------------------------------------
@@ -156,16 +187,15 @@ void NotesPanel::OnContextMenu( QListViewItem* item, const QPoint& point, int)
     QPopupMenu* menu = new QPopupMenu( notes_ );
     if( item )
     {
-        menu->insertItem(tools::translate( "Notes", "Update note" ), this, SLOT( UpdateNote()) );
+        menu->insertItem( tools::translate( "Notes", "Update note" ), this, SLOT( UpdateNote() ) );
         menu->insertSeparator();
-        menu->insertItem(tools::translate( "Notes", "Delete note" ), this, SLOT( ConfirmDeleteNote()) );
-        menu->insertItem(tools::translate( "Notes", "Delete note & children notes" ), this,  SLOT( ConfirmDeleteAllTreeNote()));
+        menu->insertItem( tools::translate( "Notes", "Delete note" ), this, SLOT( ConfirmDeleteNote() ) );
+        menu->insertItem( tools::translate( "Notes", "Delete note & children notes" ), this,  SLOT( ConfirmDeleteAllTreeNote() ) );
         menu->insertSeparator();
     }
     menu->insertItem( tools::translate( "Notes", "Add note" ), this, SLOT( PreCreationProcess() ) );
-    menu->popup(point);
+    menu->popup( point );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::ConfirmDeleteAllTreeNote
@@ -173,46 +203,46 @@ void NotesPanel::OnContextMenu( QListViewItem* item, const QPoint& point, int)
 // -----------------------------------------------------------------------------
 void NotesPanel::ConfirmDeleteAllTreeNote()
 {
-    int result = QMessageBox::question(this,
-        tools::translate("Notes", "Delete note"),
-        tools::translate("Notes", "Are you sure you want to delete this note and its children?"),
-        tools::translate("Notes","&Yes"), tools::translate("Notes","&No"), QString::null, 0, 1 );
+    int result = QMessageBox::question( this,
+        tools::translate( "Notes", "Delete note" ),
+        tools::translate( "Notes", "Are you sure you want to delete this note and its children?" ),
+        tools::translate( "Notes", "&Yes" ), tools::translate( "Notes","&No" ), QString::null, 0, 1 );
 
-    if (result == 0)
-    {
-        if ( gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( notes_->selectedItem()))
+    if( result == 0 )
+        if( QListViewItem* item = notes_->selectedItem() )
         {
-            Note* note = item->GetValue< Note >();
-            if ( note )
+            T_Items::iterator it = itemsList_.find( item );
+            if( it != itemsList_.end())
             {
-//                for (listIterator it = note->GetChildren(); it !=
                     
                 plugins::messenger::NoteDestructionRequest message;
-                message().set_id( note->GetId() );
+                message.Send( publisher_ );
+                message().set_id( it->second->GetId() );
                 message().set_delete_all( true );
                 message.Send( publisher_ );
             }
         }
-    }
 }
+
 // -----------------------------------------------------------------------------
 // Name: NotesPanel::ConfirmDeleteNote
 // Created: HBD 2010-02-05
 // -----------------------------------------------------------------------------
 void NotesPanel::ConfirmDeleteNote()
 {
-    int result = QMessageBox::question(this,
-        tools::translate("Notes", "Delete note"),
-        tools::translate("Notes", "Are you sure you want to delete this note?"),
-        tools::translate("Notes","&Yes"), tools::translate("Notes","&No"), QString::null, 0, 1 );
+    int result = QMessageBox::question( this,
+        tools::translate( "Notes", "Delete note" ),
+        tools::translate( "Notes", "Are you sure you want to delete this note?" ),
+        tools::translate( "Notes","&Yes" ), tools::translate( "Notes","&No" ), QString::null, 0, 1 );
 
-    if (result == 0)
-    {
-        if ( gui::ValuedListItem* item2 = static_cast< gui::ValuedListItem* >( notes_->selectedItem()))
-            if ( Note* note = item2->GetValue< Note >() ) 
+   if( result == 0 )
+        if( QListViewItem* item = notes_->selectedItem() )
+        {
+            T_Items::iterator it = itemsList_.find( item );
+            if( it != itemsList_.end())
             {
                 plugins::messenger::NoteDestructionRequest asn;
-                asn().set_id( note->GetId() );
+                asn().set_id( it->second->GetId() );
                 asn().set_delete_all(false );
                 asn.Send(publisher_);
             }      
@@ -225,17 +255,15 @@ void NotesPanel::ConfirmDeleteNote()
 // -----------------------------------------------------------------------------
 void NotesPanel::PreCreationProcess()
 {
-    noteDialog_->setParent( 0 );
-
-    if (notes_->selectedItem())
+    unsigned int parent = 0;
+    if( QListViewItem* item = notes_->selectedItem() )
     {
-        gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( notes_->selectedItem() );
-        if ( Note* note = item->GetValue< Note >() ) 
-        {
-            noteDialog_->setParent( note->GetId() );
-        }
-     }
-    noteDialog_->show(); 
+        T_Items::iterator it = itemsList_.find( item );
+        if( it != itemsList_.end())
+            parent = it->second->GetId();
+    }
+    noteDialog_->SetParent( parent );
+    noteDialog_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -244,13 +272,11 @@ void NotesPanel::PreCreationProcess()
 // -----------------------------------------------------------------------------
 void NotesPanel::UpdateNote()
 {
-    if (notes_->selectedItem())
-    {
-        gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( notes_->selectedItem() );
-        if ( Note* note = item->GetValue< Note >() ) 
-        {
-            noteDialog_->setUpdate( *note );
-        }
-    }
+   if( QListViewItem* item = notes_->selectedItem() )
+   {
+       T_Items::iterator it = itemsList_.find( item );
+       if( it != itemsList_.end())
+           noteDialog_->SetUpdate( *(it->second) );
+   }  
     noteDialog_->show(); 
-}
+}   

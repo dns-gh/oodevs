@@ -55,10 +55,10 @@ private:
 
 private:
     const Config&                             config_;
-    CompositePlugin                           handler_;
-    CompositeRegistrable                      registrables_;
-    std::auto_ptr< Services >                 services_;
     boost::shared_ptr< Model >                model_;
+    std::auto_ptr< CompositeRegistrable >     registrables_;
+    std::auto_ptr< CompositePlugin >          handler_;
+    std::auto_ptr< Services >                 services_;
     boost::shared_ptr< ClientsNetworker >     clientsNetworker_;
     boost::shared_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< PluginFactory >            factory_;
