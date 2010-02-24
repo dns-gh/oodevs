@@ -3,93 +3,85 @@ defaultMethods
     -- DEFAULT METHODS NEEDED UNTIL SECTION INHERITE FROM
     -- net.masagroup.military.generic.world.Unit
     -- REACHABLE
-    proximityLevel = function() return default_engine.methods.load( "proximityLevel") end,
-    accessibilityLevel = function() return default_engine.methods.load( "accessibilityLevel") end,
-    reachPriority = function() return default_engine.methods.load( "reachPriority") end,
-    isDistant = function() return default_engine.methods.load( "generic_isDistant" ) end,
-    isNearby = function() return default_engine.methods.load( "generic_isNearby" ) end,
-    isFar = function() return default_engine.methods.load( "generic_isFar" ) end,
-    isReached = function() return default_engine.methods.load( "generic_isReached" ) end,
+    proximityLevel = function() return masalife.brain.defaultengine.methods.load( "proximityLevel") end,
+    accessibilityLevel = function() return masalife.brain.defaultengine.methods.load( "accessibilityLevel") end,
+    reachPriority = function() return masalife.brain.defaultengine.methods.load( "reachPriority") end,
+    isDistant = function() return masalife.brain.defaultengine.methods.load( "generic_isDistant" ) end,
+    isNearby = function() return masalife.brain.defaultengine.methods.load( "generic_isNearby" ) end,
+    isFar = function() return masalife.brain.defaultengine.methods.load( "generic_isFar" ) end,
+    isReached = function() return masalife.brain.defaultengine.methods.load( "generic_isReached" ) end,
 
     -- OBSERVABLE
-    hostilityLevel = function() return default_engine.methods.load( "unit_hostilityLevel" ) end,
-    isHostile = function () return default_engine.predicates.load( "generic_isHostile") end,
-    isNeutral = function () return default_engine.methods.load( "generic_isNeutral") end,
-    isFriend = function () return default_engine.methods.load( "generic_isFriend" ) end,
-    perceptionLevel = function() return default_engine.methods.load( "element_perceptionLevel") end,
-    observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
+    hostilityLevel = function() return masalife.brain.defaultengine.methods.load( "unit_hostilityLevel" ) end,
+    isHostile = function () return masalife.brain.defaultengine.predicates.load( "generic_isHostile") end,
+    isNeutral = function () return masalife.brain.defaultengine.methods.load( "generic_isNeutral") end,
+    isFriend = function () return masalife.brain.defaultengine.methods.load( "generic_isFriend" ) end,
+    perceptionLevel = function() return masalife.brain.defaultengine.methods.load( "element_perceptionLevel") end,
+    observationPriority = function() return masalife.brain.defaultengine.methods.load( "generic_observationPriority" ) end,
 
     -- POSITIONNABLE
-    isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
-    canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
+    isInMyAOR = function() return masalife.brain.defaultengine.predicates.load( "isInMyAOR") end,
+    canTakePosition = function() return masalife.brain.defaultengine.methods.load( "canTakePosition" ) end,
 
     -- DESTROYABLE
-    destructionLevel = function() return default_engine.methods.load( "destructionLevel" ) end,
-    canDestroyIt = function() return default_engine.methods.load( "canDestroyIt" ) end,
-    destructionPriority = function() return default_engine.methods.load( "destructionPriority" ) end,
-    isDestroyed = function() return default_engine.predicates.load( "isDestroyed" ) end,
-    isDangerous = function() return default_engine.predicates.load( "unit_isDangerous" ) end,
-    destroyIt = function() return default_engine.methods.load( "destroyIt" ) end,
-    dangerosityLevel = function() return default_engine.methods.load( "dangerosityLevel" ) end,
+    destructionLevel = function() return masalife.brain.defaultengine.methods.load( "destructionLevel" ) end,
+    canDestroyIt = function() return masalife.brain.defaultengine.methods.load( "canDestroyIt" ) end,
+    destructionPriority = function() return masalife.brain.defaultengine.methods.load( "destructionPriority" ) end,
+    isDestroyed = function() return masalife.brain.defaultengine.predicates.load( "isDestroyed" ) end,
+    isDangerous = function() return masalife.brain.defaultengine.predicates.load( "unit_isDangerous" ) end,
+    destroyIt = function() return masalife.brain.defaultengine.methods.load( "destroyIt" ) end,
+    dangerosityLevel = function() return masalife.brain.defaultengine.methods.load( "dangerosityLevel" ) end,
 
     -- NEUTRALIZABLE
-    operationalLevel = function() return default_engine.methods.load( "unit_operationalLevel" ) end,
-    isOperational = function() return default_engine.predicates.load( "generic_isOperational" ) end,
-    canNeutralizeIt = function() return default_engine.methods.load( "unit_canNeutralizeIt" ) end,
-    neutralizeIt = function() return default_engine.methods.load( "unit_neutralizeIt" ) end,
-    neutralizationPriority = function() return default_engine.methods.load( "generic_neutralizationPriority" ) end,    
+    operationalLevel = function() return masalife.brain.defaultengine.methods.load( "unit_operationalLevel" ) end,
+    isOperational = function() return masalife.brain.defaultengine.predicates.load( "generic_isOperational" ) end,
+    canNeutralizeIt = function() return masalife.brain.defaultengine.methods.load( "unit_canNeutralizeIt" ) end,
+    neutralizeIt = function() return masalife.brain.defaultengine.methods.load( "unit_neutralizeIt" ) end,
+    neutralizationPriority = function() return masalife.brain.defaultengine.methods.load( "generic_neutralizationPriority" ) end,    
     
     -- COMMANDING
-    isCommandingFor = function() return default_engine.methods.load( "isCommandingFor" ) end,
-    isInMyTeam = function() return default_engine.methods.load( "isInMyTeam" ) end,
+    isCommandingFor = function() return masalife.brain.defaultengine.methods.load( "isCommandingFor" ) end,
+    isInMyTeam = function() return masalife.brain.defaultengine.methods.load( "isInMyTeam" ) end,
 
     --
-    communicate = function() return default_engine.methods.load( "unit_communicate" ) end,
+    communicate = function() return masalife.brain.defaultengine.methods.load( "unit_communicate" ) end,
 
 
     -- DESTROYING
-    destructionEfficiency = function() return default_engine.methods.load( "destructionEfficiency" ) end,
-    isDestroyingFor = function() return default_engine.predicates.load( "terrain_analysis_isDestroyingFor" ) end,
+    destructionEfficiency = function() return masalife.brain.defaultengine.methods.load( "destructionEfficiency" ) end,
+    isDestroyingFor = function() return masalife.brain.defaultengine.predicates.load( "terrain_analysis_isDestroyingFor" ) end,
 
     -- NEUTRALIZING
-    isNeutralizingFor = function() return default_engine.predicates.load( "terrain_analysis_isNeutralizingFor" ) end,
-    neutralizationEfficiency = function() return default_engine.methods.load( "neutralizationEfficiency" ) end,
+    isNeutralizingFor = function() return masalife.brain.defaultengine.predicates.load( "terrain_analysis_isNeutralizingFor" ) end,
+    neutralizationEfficiency = function() return masalife.brain.defaultengine.methods.load( "neutralizationEfficiency" ) end,
     
 
     -- RECONNOITRING
-    isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR" ) end,
+    isInMyAOR = function() return masalife.brain.defaultengine.predicates.load( "isInMyAOR" ) end,
 
     -- IDENTIFIABLE
-    identificationPriority = function() return default_engine.methods.load( "identificationPriority" ) end,
-    isDetected = function() return default_engine.methods.load( "isDetected" ) end,
-    isRecognized = function() return default_engine.methods.load( "isRecognized" ) end,
-    identificationLevel = function() return default_engine.methods.load( "identificationLevel" ) end,
-    isIdentified = function() return default_engine.predicates.load( "isIdentified" ) end,
+    identificationPriority = function() return masalife.brain.defaultengine.methods.load( "identificationPriority" ) end,
+    isDetected = function() return masalife.brain.defaultengine.methods.load( "isDetected" ) end,
+    isRecognized = function() return masalife.brain.defaultengine.methods.load( "isRecognized" ) end,
+    identificationLevel = function() return masalife.brain.defaultengine.methods.load( "identificationLevel" ) end,
+    isIdentified = function() return masalife.brain.defaultengine.predicates.load( "isIdentified" ) end,
     -- SAFEGUARDABLE
-    canRespond = function() return default_engine.methods.load( "canRespond" ) end,
-    safetyPriority = function() return default_engine.methods.load( "safetyPriority" ) end,
-    threatLevel = function() return default_engine.methods.load( "threatLevel" ) end,
-    isThreatening = function() return default_engine.methods.load( "isThreatening" ) end,
-    selfProtectFromIt = function() return default_engine.methods.load( "selfProtectFromIt" ) end,
-    isThreateningOrHostile = function() return default_engine.predicates.load( "isThreateningOrHostile" ) end,
+    canRespond = function() return masalife.brain.defaultengine.methods.load( "canRespond" ) end,
+    safetyPriority = function() return masalife.brain.defaultengine.methods.load( "safetyPriority" ) end,
+    threatLevel = function() return masalife.brain.defaultengine.methods.load( "threatLevel" ) end,
+    isThreatening = function() return masalife.brain.defaultengine.methods.load( "isThreatening" ) end,
+    selfProtectFromIt = function() return masalife.brain.defaultengine.methods.load( "selfProtectFromIt" ) end,
+    isThreateningOrHostile = function() return masalife.brain.defaultengine.predicates.load( "isThreateningOrHostile" ) end,
    
     -- FLEEABLE
-    fleePriority = function() return default_engine.methods.load( "fleePriority" ) end,
+    fleePriority = function() return masalife.brain.defaultengine.methods.load( "fleePriority" ) end,
     
 }
 
-communication.setMessageTreatment( "Order", integration.communication.StartMissionPion )
+masalife.brain.communication.setMessageTreatment( "Order", integration.masalife.brain.communication.StartMissionPion )
  
 return
 {
-    -- -- @TODO DDA: delete when this method is in the generic base BM
-    -- predicate "isThreateningOrHostile"
-    -- {
-        -- dependencies = "none",
-        -- method = function( self )
-            -- return self:isHostile() or self:isThreatening()
-        -- end 
-     -- },
      
     -- $$$ MIA: temp, to move in default military implementation
     isTotallyPerceived = function( self )
@@ -106,7 +98,7 @@ return
 
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
+    moveToIt = masalife.brain.core.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
 
     -- observable action
     observeIt = function( self )
@@ -178,9 +170,9 @@ return
       return integration.getAttritionForNeutralization( self, target, position )
     end,
     
-    neutralize = behavior_model.integration.startStopAction( { start = integration.startNeutralizingIt, started = function( self, ...) end, stop = integration.stopNeutralizingIt } ),
+    neutralize = masalife.brain.core.integration.startStopAction( { start = integration.startNeutralizingIt, started = function( self, ...) end, stop = integration.stopNeutralizingIt } ),
 
-    destroy = behavior_model.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
+    destroy = masalife.brain.core.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
     
     isOccupied = function( self )
       return true --TODO MGD
@@ -194,7 +186,7 @@ return
     end,
     
     -- SAFEGUARDABLE
-    respondToIt =  behavior_model.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
+    respondToIt =  masalife.brain.core.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
     
     -- FLEEABLE
     fleeFromIt = function( self )
@@ -213,7 +205,7 @@ return
     illuminationLevel = function( self )
         return integration.illuminationLevel( self )
     end,
-    illuminateIt = behavior_model.integration.startStopAction( { start = integration.startIlluminateIt, stop = integration.stopIlluminateIt } ),
+    illuminateIt = masalife.brain.core.integration.startStopAction( { start = integration.startIlluminateIt, stop = integration.stopIlluminateIt } ),
  
     predicate "isDefinitelyIlluminated"
     {
@@ -237,7 +229,7 @@ return
     canApplyFireOnIt = function( self, munition, interventionType )
         return integration.canApplyFireOnSection( self, munition, interventionType )
     end,
-    applyFireOnIt = behavior_model.integration.startStopAction( { start = integration.startApplyFireOnSection, started = startedIlluminateIt, stop = integration.stopApplyFireOnSection } ),
+    applyFireOnIt = masalife.brain.core.integration.startStopAction( { start = integration.startApplyFireOnSection, started = startedIlluminateIt, stop = integration.stopApplyFireOnSection } ),
 
     computeAggressiveness = function( self, target )
       return integration.computeAggressiveness( self, target )
@@ -247,7 +239,7 @@ tasks =
     {
         adder = function( self, task ) error( "unused method", 2 ) end,
         accepter = function( self, visitor )
-                        for role in kBase.executeQuery( { knowledgeType = { directia.core.model.Role } } ) do
+                        for role in masalife.brain.knowledge.executeQuery( { knowledgeType = { directia.core.model.Role } } ) do
                             if role.body == self then
                               return role.tasks:accept( visitor )
                             end

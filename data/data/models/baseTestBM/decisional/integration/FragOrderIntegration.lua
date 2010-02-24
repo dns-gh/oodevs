@@ -27,7 +27,7 @@ integration.startFragOrderTask = function( self )
     mission.interventionType = self.source:GetnbIT_()
   end
   
-  behavior_model.startTask( orderType, mission )
+  masalife.brain.core.startTask( orderType, mission )
   
   DEC_RemoveFromOrdersCategory(self.source)
   DEC_DeleteRepresentation( self.source )

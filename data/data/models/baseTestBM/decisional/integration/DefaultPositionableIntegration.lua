@@ -5,7 +5,7 @@ end
 
 integration.takeUpPositionObject = function( object )
   if( DEC_ConnaissanceObjet_PeutEtreOccupe( object.source ) ) then
-    kBase.me.body.actionOccupy = DEC__StartOccuperObjet( object.source )
+    masalife.brain.knowledge.me.body.actionOccupy = DEC__StartOccuperObjet( object.source )
     BreakForDebug( "occupy")
   end
   return true

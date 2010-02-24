@@ -19,7 +19,7 @@ eEtatActionDeplacement_DejaEnDeplacement = 5
 eEtatActionDeplacement_ItineraireDoitEtreRejoint = 6
 
 integration.getSectionPosition = function( section )
-  if section == kBase.me.body then -- @TODO MGD replace by shared_ptr< DEC_Knowledge_Agent_ABC > and proxy for allies
+  if section == masalife.brain.knowledge.me.body then -- @TODO MGD replace by shared_ptr< DEC_Knowledge_Agent_ABC > and proxy for allies
     return DEC_Agent_Position()
   else
     return DEC_ConnaissanceAgent_Position( section.source )
@@ -50,12 +50,12 @@ end
 
 integration.startMoveToIt = function( reachable )
   -- Leave tactical object
-  if kBase.me.body.actionOccupy then
-    DEC_StopAction( kBase.me.body.actionOccupy )
+  if masalife.brain.knowledge.me.body.actionOccupy then
+    DEC_StopAction( masalife.brain.knowledge.me.body.actionOccupy )
     BreakForDebug( "unoccuppy")
   end
   if not reachable.moveAction then
-    default_engine.methods.occupyPosition( kBase.me.body, nil ) -- UnOccupyPosition
+    default_engine.methods.occupyPosition( masalife.brain.knowledge.me.body, nil ) -- UnOccupyPosition
     it = DEC_CreerItineraireBM( reachable:getPosition(), eTypeItiMouvement )
     reachable.moveAction = DEC_StartDeplacement( it )
     actionCallbacks[ reachable.moveAction ] = function( arg ) reachable.etat = arg end
@@ -65,7 +65,7 @@ end
 
 integration.updateMoveToIt = function( reachable )
   if reachable.etat == eEtatActionDeplacement_Termine then
-    default_engine.methods.occupyPosition( kBase.me.body, reachable ) --OccupyPosition
+    default_engine.methods.occupyPosition( masalife.brain.knowledge.me.body, reachable ) --OccupyPosition
     reachable.moveAction = DEC_StopAction( reachable.moveAction )
     reachable.moveAction = nil
     reachable.etat = nil

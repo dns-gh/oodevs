@@ -1,37 +1,37 @@
 defaultMethods
 {
     -- REACHABLE
-    proximityLevel = function() return default_engine.methods.load( "proximityLevel") end,
-    accessibilityLevel = function() return default_engine.methods.load( "accessibilityLevel") end,
-    reachPriority = function() return default_engine.methods.load( "reachPriority") end,
-    isDistant = function() return default_engine.methods.load( "generic_isDistant" ) end,
-    isNearby = function() return default_engine.methods.load( "generic_isNearby" ) end,
-    isFar = function() return default_engine.methods.load( "generic_isFar" ) end,
-    isReached = function() return default_engine.methods.load( "generic_isReached" ) end,
+    proximityLevel = function() return masalife.brain.defaultengine.methods.load( "proximityLevel") end,
+    accessibilityLevel = function() return masalife.brain.defaultengine.methods.load( "accessibilityLevel") end,
+    reachPriority = function() return masalife.brain.defaultengine.methods.load( "reachPriority") end,
+    isDistant = function() return masalife.brain.defaultengine.methods.load( "generic_isDistant" ) end,
+    isNearby = function() return masalife.brain.defaultengine.methods.load( "generic_isNearby" ) end,
+    isFar = function() return masalife.brain.defaultengine.methods.load( "generic_isFar" ) end,
+    isReached = function() return masalife.brain.defaultengine.methods.load( "generic_isReached" ) end,
 
    -- OBSERVABLE
-    hostilityLevel = function() return default_engine.methods.load( "unit_hostilityLevel" ) end,
-    isHostile = function () return default_engine.predicates.load( "generic_isHostile") end,
-    isNeutral = function () return default_engine.methods.load( "generic_isNeutral") end,
-    isFriend = function () return default_engine.methods.load( "generic_isFriend" ) end,
-    perceptionLevel = function() return default_engine.methods.load( "element_perceptionLevel") end,
-    observationPriority = function() return default_engine.methods.load( "generic_observationPriority" ) end,
+    hostilityLevel = function() return masalife.brain.defaultengine.methods.load( "unit_hostilityLevel" ) end,
+    isHostile = function () return masalife.brain.defaultengine.predicates.load( "generic_isHostile") end,
+    isNeutral = function () return masalife.brain.defaultengine.methods.load( "generic_isNeutral") end,
+    isFriend = function () return masalife.brain.defaultengine.methods.load( "generic_isFriend" ) end,
+    perceptionLevel = function() return masalife.brain.defaultengine.methods.load( "element_perceptionLevel") end,
+    observationPriority = function() return masalife.brain.defaultengine.methods.load( "generic_observationPriority" ) end,
 
     -- RECONNOITRABLE
-    reconnaissancePriority = function() return default_engine.methods.load( "generic_reconnaissancePriority" ) end,
-    canReconnoitreIt = function() return default_engine.methods.load( "me_canReconnoitreIt" ) end,
+    reconnaissancePriority = function() return masalife.brain.defaultengine.methods.load( "generic_reconnaissancePriority" ) end,
+    canReconnoitreIt = function() return masalife.brain.defaultengine.methods.load( "me_canReconnoitreIt" ) end,
     
     -- POSITIONNABLE
-    isInMyAOR = function() return default_engine.predicates.load( "isInMyAOR") end,
-    canTakePosition = function() return default_engine.methods.load( "canTakePosition" ) end,
+    isInMyAOR = function() return masalife.brain.defaultengine.predicates.load( "isInMyAOR") end,
+    canTakePosition = function() return masalife.brain.defaultengine.methods.load( "canTakePosition" ) end,
     
     -- REACHING
-    reachEfficiency = function() return default_engine.methods.load( "reachEfficiency" ) end,
-    isReachingFor = function() return default_engine.predicates.load( "isReachingFor" ) end, 
+    reachEfficiency = function() return masalife.brain.defaultengine.methods.load( "reachEfficiency" ) end,
+    isReachingFor = function() return masalife.brain.defaultengine.predicates.load( "isReachingFor" ) end, 
     
     -- RECONNOITRING
-    reconnaissanceEfficiency = function() return default_engine.methods.load( "reconnaissanceEfficiency" ) end,
-    isReconnoitringFor = function() return default_engine.predicates.load( "terrain_analysis_isReconnoitringFor" ) end,   
+    reconnaissanceEfficiency = function() return masalife.brain.defaultengine.methods.load( "reconnaissanceEfficiency" ) end,
+    isReconnoitringFor = function() return masalife.brain.defaultengine.predicates.load( "terrain_analysis_isReconnoitringFor" ) end,   
 }
 return
 {
@@ -53,7 +53,7 @@ return
     end,
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = behavior_model.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
+    moveToIt = masalife.brain.core.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
     -- observable action
     observeIt = function( self )
         integration.observeIt( self )
@@ -84,18 +84,18 @@ return
     reconnoitreIt = function( self )
         return self:recce()
     end,
-    recce = behavior_model.integration.startStopAction( { start = integration.startRecceUrbanBlock, stop = integration.startRecceUrbanBlock } ),
+    recce = masalife.brain.core.integration.startStopAction( { start = integration.startRecceUrbanBlock, stop = integration.startRecceUrbanBlock } ),
     isRecognized = function( self ) 
         return self:reconnaissanceLevel() == 100 
     end,
 --    estimatedReconnaissanceLevel = function( self, objective )
 --        if not estimatedReconnaissanceLevels[ objective ] then
 --            local values = {}
---            values[ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
+--            values[ self ] = masalife.brain.knowledge.me.body:computeReconnaissanceCapability( objective, self )
 --            estimatedReconnaissanceLevels[ objective ] = values
 --        else
 --            if not estimatedReconnaissanceLevels[ objective ][ self ] then
---                estimatedReconnaissanceLevels[ objective ][ self ] = kBase.me.body:computeReconnaissanceCapability( objective, self )
+--                estimatedReconnaissanceLevels[ objective ][ self ] = masalife.brain.knowledge.me.body:computeReconnaissanceCapability( objective, self )
 --            end
 --        end
 --        return estimatedReconnaissanceLevels[ objective ][ self ]

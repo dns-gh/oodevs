@@ -4,12 +4,12 @@
 --- Bind DIA4 event interface to DIA5 interface
 rawset( getfenv(), "StartEvent", function( task, ... )
   if not ( task == "BEH_Defaut" ) then -- MGD Avoid BEH_Defaut Exception for DIA5
-    behavior_model.startTask( task, ... )
+    masalife.brain.core.startTask( task, ... )
   end
 end )
 
 rawset( getfenv(), "StopEvents", function( ... )
-  behavior_model.stopTasks() --Stop all tasks, main task and fragOrder
+  masalife.brain.core.stopTasks() --Stop all tasks, main task and fragOrder
 end )
 
 --- Create a knowledge
@@ -19,7 +19,7 @@ end )
 -- @author MGD
 -- @release 2010-01-22
 function CreateKnowledge( strKnowledgeType, knowledgeSource )
-    return kBase.create( strKnowledgeType, knowledgeSource )
+    return masalife.brain.knowledge.create( strKnowledgeType, knowledgeSource )
 end
 
 --- Fill mission parameters and create corresponding knowledges
@@ -67,9 +67,9 @@ end
 -- @author MGD
 -- @release 2010-01-22
 function UpdateMe( strKnowledgeType, knowledgeSource, groupName )
-  if not kBase.me.body then
-    kBase.me.body = kBase.create( strKnowledgeType, knowledgeSource )
-    behavior_model.createGroup( groupName )
+  if not masalife.brain.knowledge.me.body then
+    masalife.brain.knowledge.me.body = masalife.brain.knowledge.create( strKnowledgeType, knowledgeSource )
+    masalife.brain.core.createGroup( groupName )
   end
 end
 
@@ -80,9 +80,9 @@ end
 -- @author MGD
 -- @release 2010-01-22
 function UpdateLeaderMe( strKnowledgeType, knowledgeSource, groupName )
-  if not kBase.me.body then
-    kBase.me.body = kBase.create( strKnowledgeType, knowledgeSource )
-    behavior_model.createGroup( groupName )
+  if not masalife.brain.knowledge.me.body then
+    masalife.brain.knowledge.me.body = masalife.brain.knowledge.create( strKnowledgeType, knowledgeSource )
+    masalife.brain.core.createGroup( groupName )
   end
 end
 
@@ -91,7 +91,7 @@ end
 -- @author MGD
 -- @release 2010-01-22
 function CleanBrainBeforeDeletion( groupName )
-  behavior_model.leaveGroup( groupName )
+  masalife.brain.core.leaveGroup( groupName )
 end  
 
 ---\ Callback management /---
@@ -154,7 +154,7 @@ end
 taskListener.TaskStarted = function() BreakForDebug( "startTask" ) end
 taskListener.StageChanged = function() BreakForDebug( "StageChanged" ) end
 taskListener.TaskFinished = function() BreakForDebug( "stopTask" ) end
-behavior_model.registerTaskListener( taskListener ) ]]--
+masalife.brain.core.registerTaskListener( taskListener ) ]]--
 
 --- Tools for print function which create a string for all var type 
 -- @param var The variable to convert to string

@@ -33,6 +33,6 @@ rootnode
 node "IssueTask"
 {
     select = function( self )
-        self.params.task:sendItTo( self.params.entity, { ["mission_type"] = integration.communication.ConvertMission( self.params.task.name, self.params ), ["mission_objectives"] = { ["objectives"] = self.params.objectives } } )
+        self.params.task:sendItTo( self.params.entity, { ["mission_type"] = integration.masalife.brain.communication.ConvertMission( self.params.task.name, self.params ), ["mission_objectives"] = { ["objectives"] = self.params.objectives } } )
     end
 }
