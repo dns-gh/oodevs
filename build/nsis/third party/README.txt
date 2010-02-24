@@ -25,3 +25,6 @@ The following components have been directly or indirectly used :
 8/ BugTrap
  . http://www.intellesoft.net/bugtrap1.shtml
  . ms-pl.txt
+9/ Google Protocol Buffer
+ - http://code.google.com/p/protobuf/
+ - google-protobuf.txt
