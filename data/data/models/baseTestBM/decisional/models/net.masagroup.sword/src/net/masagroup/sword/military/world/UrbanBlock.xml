@@ -68,8 +68,16 @@
           <simple name="numeric"/>
         </type>
       </return>
+    </method><!--
+    <method name="accessibilityLevel">
+      <description>__INTEGRATION</description>
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
     </method>
-    <method name="recce">
+    --><method name="recce">
       <description>__INTEGRATION</description>
       <return>
         <type>

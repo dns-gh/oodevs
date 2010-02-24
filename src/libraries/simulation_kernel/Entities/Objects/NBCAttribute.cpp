@@ -153,13 +153,10 @@ void NBCAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 // -----------------------------------------------------------------------------
 void NBCAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 {
-    if ( asn.nbc().nbc_agents().elem_size() > 0 )
-    {
-        int i = 0;
-        for ( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
-            asn.mutable_nbc()->mutable_nbc_agents()->set_elem( i++ ,(*it)->GetID() );
-    }
     asn.mutable_nbc()->set_danger_level( danger_ );
+	asn.mutable_nbc()->mutable_nbc_agents();
+	for( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )
+		asn.mutable_nbc()->mutable_nbc_agents()->add_elem( (*it)->GetID() );
 }
 
 // -----------------------------------------------------------------------------

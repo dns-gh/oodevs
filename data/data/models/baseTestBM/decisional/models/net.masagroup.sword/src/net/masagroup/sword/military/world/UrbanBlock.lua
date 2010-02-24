@@ -8,6 +8,8 @@ defaultMethods
     isNearby = function() return masalife.brain.defaultengine.methods.load( "generic_isNearby" ) end,
     isFar = function() return masalife.brain.defaultengine.methods.load( "generic_isFar" ) end,
     isReached = function() return masalife.brain.defaultengine.methods.load( "generic_isReached" ) end,
+    accessibilityLevelDefault = function() return default_engine.methods.load( "accessibilityLevel" ) end,
+    
 
    -- OBSERVABLE
     hostilityLevel = function() return masalife.brain.defaultengine.methods.load( "unit_hostilityLevel" ) end,
@@ -85,6 +87,10 @@ return
         return self:recce()
     end,
     recce = masalife.brain.core.integration.startStopAction( { start = integration.startRecceUrbanBlock, stop = integration.startRecceUrbanBlock } ),
+    accessibilityLevel = function( self )
+        return integration.isTrafficable( self ) and 0 or accessibilityLevelDefault()
+    end,
+    recce = behavior_model.integration.startStopAction( { start = integration.startRecceUrbanBlock, stop = integration.startRecceUrbanBlock } ),
     isRecognized = function( self ) 
         return self:reconnaissanceLevel() == 100 
     end,

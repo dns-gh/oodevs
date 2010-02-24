@@ -8,10 +8,8 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-
 #include "NBCAttribute.h"
 
-//using namespace Common;
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -21,9 +19,7 @@ using namespace dispatcher;
 NBCAttribute::NBCAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg )
     : ObjectAttribute_ABC( model, asnMsg )    
 {
-    nbc_.mutable_nbc_agents()->mutable_elem();
-    nbc_.set_danger_level ( 0 );
-    Update( asnMsg );    
+    Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -32,52 +28,37 @@ NBCAttribute::NBCAttribute( const Model& model, const Common::MsgObjectAttribute
 // -----------------------------------------------------------------------------
 NBCAttribute::~NBCAttribute()
 {
-    Clear();
+    // NOTHING
 }  
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute::Update
 // Created: NLD 2006-09-26
 // -----------------------------------------------------------------------------
-void NBCAttribute::Update( const Common::MsgObjectAttributes& asnMsg )
+void NBCAttribute::Update( const Common::MsgObjectAttributes& asn )
 {
-    if ( asnMsg.has_nbc() )
-    {
-        Clear();
-//        nbc_.mutable_nbc_agents()->set_n ( asnMsg.nbc().nbc_agents().elem_size() );
-//        for( unsigned int i = 0; i < nbc_.nbc_agents().elem_size(); ++i)
-//            nbc_.mutable_nbc_agents()->add_elem( nbc_.nbc_agents().elem( i ) );
-
-        for( int i = 0; i < nbc_.nbc_agents().elem_size(); ++i)
-            nbc_.mutable_nbc_agents()->add_elem( asnMsg.nbc().nbc_agents().elem( i ) );
-        
-
-//        memcpy( nbc_.nbc_agents().elem().begin(), asnMsg.nbc().nbc_agents().elem().begin(), sizeof( int ) * nbc_.nbc_agents().elem_size() );
-        nbc_.set_danger_level ( asnMsg.nbc().danger_level() );
-    }
+	if( asn.has_nbc() )
+	{
+		const Common::MsgObjectAttributeNBC& nbc = asn.nbc();
+		danger_ = nbc.danger_level();
+		for( int i = 0; i < nbc.nbc_agents().elem_size(); ++i )
+			agents_.push_back( nbc.nbc_agents().elem( i ) );
+		//nbc_.CopyFrom( asn.nbc() );
+	}
 }
 
 // -----------------------------------------------------------------------------
 // Name: NBCAttribute::Send
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void NBCAttribute::Send( Common::MsgObjectAttributes& asnMsg ) const
+void NBCAttribute::Send( Common::MsgObjectAttributes& asn ) const
 {
-    for( int i = 0; i < nbc_.nbc_agents().elem_size(); ++i )
-        asnMsg.mutable_nbc()->mutable_nbc_agents()->set_elem( i, nbc_.nbc_agents().elem( i ) ); 
-    asnMsg.mutable_nbc()->set_danger_level ( nbc_.danger_level() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: NBCAttribute::Clear
-// Created: JCR 2008-08-27
-// -----------------------------------------------------------------------------
-void NBCAttribute::Clear()
-{
-    if ( nbc_.nbc_agents().elem_size() > 0 )
-    {
-        nbc_.mutable_nbc_agents()->Clear();
-    }
+	Common::MsgObjectAttributeNBC& nbc = *asn.mutable_nbc();
+	nbc.set_danger_level( danger_ );
+	nbc.mutable_nbc_agents();
+	for( std::vector< unsigned int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
+		nbc.mutable_nbc_agents()->add_elem( *it );
+	//asn.mutable_nbc()->CopyFrom( nbc_ );
 }
 
 // -----------------------------------------------------------------------------

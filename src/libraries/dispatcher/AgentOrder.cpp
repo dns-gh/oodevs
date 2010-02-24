@@ -35,10 +35,6 @@ AgentOrder::~AgentOrder()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: AgentOrder::Send
 // Created: NLD 2007-04-20
@@ -46,11 +42,10 @@ AgentOrder::~AgentOrder()
 void AgentOrder::Send( ClientPublisher_ABC& publisher )
 {
     client::UnitOrder asn;
-    asn().set_oid    ( agent_.GetId() );
+    asn().set_oid( agent_.GetId() );
     asn().set_mission( missionID_ );
     Order_ABC::Send( *asn().mutable_parametres() );
     asn.Send( publisher );
-    Delete( *asn().mutable_parametres() );
 }
 
 // -----------------------------------------------------------------------------
@@ -60,7 +55,7 @@ void AgentOrder::Send( ClientPublisher_ABC& publisher )
 void AgentOrder::SendNoMission( const Agent& agent, ClientPublisher_ABC& publisher )
 {
     client::UnitOrder asn;
-    asn().set_oid          ( agent.GetId() );
-    asn().set_mission      ( 0 );
+    asn().set_oid( agent.GetId() );
+    asn().set_mission( 0 );
     asn.Send( publisher );
 }

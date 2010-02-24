@@ -11,7 +11,7 @@
 #define __PopulationConcentrationKnowledge_h_
 
 #include "SimpleEntity.h"
-
+#include "protocol/protocol.h"
 
 namespace Common
 {
@@ -87,7 +87,7 @@ private:
     //@{
     const kernel::PopulationKnowledge_ABC&     populationKnowledge_;
     const kernel::PopulationConcentration_ABC* pConcentration_;
-    const Common::MsgCoordLatLong&             position_;
+    const Common::MsgCoordLatLong              position_;
     unsigned long                              nNbrAliveHumans_;
     unsigned long                              nNbrDeadHumans_;
     Common::EnumPopulationAttitude               nAttitude_;    

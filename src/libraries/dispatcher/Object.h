@@ -14,8 +14,6 @@
 #include "Localisation.h"
 #include "clients_kernel/Object_ABC.h"
 #include "SimpleEntity.h"
-//#include "protocol/protocol.h"
-
 #include <boost/ptr_container/ptr_vector.hpp>
 
 namespace Common

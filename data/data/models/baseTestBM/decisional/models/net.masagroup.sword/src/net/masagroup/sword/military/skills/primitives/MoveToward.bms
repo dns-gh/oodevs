@@ -48,6 +48,7 @@ node "MoveTowardElement"
     activate = function( self )
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
         for _, keypoint in pairs( self.params.positions ) do
+        	BreakForDebug("call mtp")
             Activate( skill.links.moveAndTakePosition, keypoint:reachEfficiency( self.params.entity ), { entity = keypoint } )
         end
     end,

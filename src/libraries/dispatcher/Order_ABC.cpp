@@ -66,9 +66,5 @@ void Order_ABC::Send( Common::MsgMissionParameters& asn ) const
 // -----------------------------------------------------------------------------
 void Order_ABC::Delete( Common::MsgMissionParameters& asn ) const
 {
-    unsigned i = 0;
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        if (*it)
-            (**it).Delete( *asn.mutable_elem(i++) );
     asn.Clear();
 }

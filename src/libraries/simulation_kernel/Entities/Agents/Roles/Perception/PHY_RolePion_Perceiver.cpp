@@ -1281,14 +1281,10 @@ void PHY_RolePion_Perceiver::SendDebugState() const
     client::UnitVisionCones message;
     message().set_oid( pion_.GetID() );
     message().set_elongation( pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() )->GetElongationFactor() ); //@TODO MGD share
-
+	message().mutable_cones();
     for( CIT_SurfaceAgentMap it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
         it->second.SendFullState( *message().mutable_cones()->add_elem() );
     message.Send( NET_Publisher_ABC::Publisher() );
-
-    for( int i = 0; i < message().cones().elem_size(); ++i )
-        message().mutable_cones()->mutable_elem(i)->mutable_directions()->Clear();
-    message().mutable_cones()->Clear();
 }
 
 // -----------------------------------------------------------------------------

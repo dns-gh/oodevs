@@ -34,23 +34,24 @@ class NBCAttribute : public ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-     NBCAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+			 NBCAttribute( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~NBCAttribute();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg );
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg );
+    virtual void Send( Common::MsgObjectAttributes& asnMsg ) const;
     virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const;
     //@}
+
 private:
-    //! @name 
+	//! @name Member data
     //@{
-    void Clear();
-    //@}
-private:
-    Common::MsgObjectAttributeNBC nbc_; // XML reference - no resolved by dispatcher
+	unsigned int danger_;
+	std::vector< unsigned int > agents_;
+    //Common::MsgObjectAttributeNBC nbc_; // XML reference - no resolved by dispatcher
+	//@
 };
 
 }

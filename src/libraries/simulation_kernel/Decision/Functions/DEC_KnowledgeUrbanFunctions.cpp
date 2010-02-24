@@ -42,3 +42,16 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeUrbanFunctions::GetCurrentBarycent
     return pos;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeUrbanFunctions::GetTrafficability
+// Created: LMT 2010-02-19
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeUrbanFunctions::GetTrafficability ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
+{
+	 if( pKnowledge.get() && pKnowledge->IsValid() )
+		return (float)pKnowledge->GetTrafficability( );
+	 else
+		return 0;
+}
+    
+

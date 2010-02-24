@@ -30,14 +30,14 @@ class ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ObjectAttribute_ABC( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+			 ObjectAttribute_ABC( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~ObjectAttribute_ABC();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Update   ( const Common::MsgObjectAttributes& asnMsg ) = 0;
-    virtual void Send     ( Common::MsgObjectAttributes& asnMsg ) const = 0;
+    virtual void Update( const Common::MsgObjectAttributes& asnMsg ) = 0;
+    virtual void Send  ( Common::MsgObjectAttributes& asnMsg ) const = 0;
     virtual void Delete( Common::MsgObjectAttributes& asnMsg ) const = 0;
     //@}
 

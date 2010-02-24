@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Urban.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_ASN_Messages.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "simulation_kernel/Knowledge/DEC_Knowledge_UrbanPerception.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
@@ -19,6 +20,7 @@
 #include "simulation_kernel/MIL_AgentServer.h"
 #include "urban/TerrainObject_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "urban/Soil.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Urban )
 
@@ -495,4 +497,13 @@ const urban::TerrainObject_ABC& DEC_Knowledge_Urban::GetTerrainObjectKnown() con
 bool DEC_Knowledge_Urban::IsValid() const
 {
     return true; //@TODO MGD
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Urban::GetTrafficability
+// Created: LMT 2010-02-19
+// -----------------------------------------------------------------------------
+const float DEC_Knowledge_Urban::GetTrafficability() const
+{
+	return object_.RetrievePhysicalFeature< urban::Soil >()->GetTrafficability();
 }

@@ -496,20 +496,9 @@ bool PHY_RoleAction_Transport::IsLoaded( const MIL_Agent_ABC& transported ) cons
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Transport::SendFullState( client::UnitAttributes& msg ) const
 {
-    if( transportedPions_.empty() )
-    {
-        return;
-    }
-
-    unsigned int nNbrTransported = 0;
     for( CIT_TransportedPionMap it = transportedPions_.begin(); it != transportedPions_.end(); ++it )
-    {
         if( it->second.rTransportedWeight_ > 0. )
-        {            
-            msg().mutable_pions_transportes()->mutable_elem( nNbrTransported )->set_oid( (*it->first).GetID() );
-            ++nNbrTransported;
-        }
-    }
+            msg().mutable_pions_transportes()->add_elem()->set_oid( (*it->first).GetID() );
 }
 
 // -----------------------------------------------------------------------------

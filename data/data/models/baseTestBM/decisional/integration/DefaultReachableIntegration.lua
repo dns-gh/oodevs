@@ -87,3 +87,12 @@ integration.stopMoveToIt = function( reachable )
   reachable.etat = nil
   return false
 end
+
+integration.isTrafficable = function( self )
+    local traffic = DEC_ConnaissanceBlocUrbain_Trafficabilite( self.source )
+    BreakForDebug ("trafficabilité : "..tostring(traffic))
+    if (  traffic < 10) then
+        return true
+    end
+   return false
+end
