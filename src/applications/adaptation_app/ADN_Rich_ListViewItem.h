@@ -126,7 +126,7 @@ void ADN_Rich_ListViewItem::SetValueGreaterThan( uint nColumn, const T& value, c
 template< typename T >
 QString ADN_Rich_ListViewItem::ToString( const T& value, E_FieldUnits eUnit /*= eUnitNone*/ ) const
 {
-    if( eUnit = eUnitHour )
+    if( eUnit == eUnitHour )
     {
         T days    = ( uint )( value / 24 );
         T hours   = ( uint )( value - days * 24 );
