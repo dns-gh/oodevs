@@ -246,7 +246,7 @@ void AgentServerMsgMgr::OnReceiveMsgDebugDrawPoints( const MsgsSimToClient::MsgD
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlPauseAck( const MsgsSimToClient::MsgControlPauseAck& message )
 {
-    if( CheckAcknowledge( logger_, message.error_code(), "ControlPauseAck" ) )
+    if( CheckAcknowledge( logger_, message, "ControlPauseAck" ) )
         simulation_.Pause( true );
 }
 
@@ -256,7 +256,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlPauseAck( const MsgsSimToClient::MsgC
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlResumeAck( const MsgsSimToClient::MsgControlResumeAck& message )
 {
-    if( CheckAcknowledge( logger_, message.error_code(), "ControlResumeAck" ) )
+    if( CheckAcknowledge( logger_, message, "ControlResumeAck" ) )
         simulation_.Pause( false );
 }
 
@@ -266,7 +266,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlResumeAck( const MsgsSimToClient::Msg
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlChangeTimeFactorAck( const MsgsSimToClient::MsgControlChangeTimeFactorAck& message )
 {
-    if( CheckAcknowledge( logger_, message.time_factor(), "ControlTimeFactorAck" ) )
+    if( CheckAcknowledge( logger_, message, "ControlTimeFactorAck" ) )
         simulation_.ChangeSpeed( (int)message.time_factor() );
 }
 
@@ -276,7 +276,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlChangeTimeFactorAck( const MsgsSimToC
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlDatetimeChangeAck( const MsgsSimToClient::MsgControlDatetimeChangeAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ControlDatetimeChangeAck" );
+    CheckAcknowledge( logger_, message, "ControlDatetimeChangeAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -285,7 +285,7 @@ void AgentServerMsgMgr::OnReceiveMsgControlDatetimeChangeAck( const MsgsSimToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgControlSkipToTickAck( const MsgsReplayToClient::MsgControlSkipToTickAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ControlSkipToTickAck" );
+    CheckAcknowledge( logger_, message, "ControlSkipToTickAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -348,7 +348,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileCreation( const MsgsAuthenticationToC
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgProfileCreationRequestAck( const MsgsAuthenticationToClient::MsgProfileCreationRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ProfileCreationRequestAck" );
+    CheckAcknowledge( logger_, message, "ProfileCreationRequestAck" );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -368,7 +368,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileDestruction( const MsgsAuthentication
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgProfileDestructionRequestAck( const MsgsAuthenticationToClient::MsgProfileDestructionRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ProfileDestructionRequestAck" );
+    CheckAcknowledge( logger_, message, "ProfileDestructionRequestAck" );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -389,7 +389,7 @@ void AgentServerMsgMgr::OnReceiveMsgProfileUpdate( const MsgsAuthenticationToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgProfileUpdateRequestAck( const MsgsAuthenticationToClient::MsgProfileUpdateRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ProfileUpdateRequestAck" );
+    CheckAcknowledge( logger_, message, "ProfileUpdateRequestAck" );
     // $$$$ SBO 2007-01-19: display profile name + error
 }
 
@@ -561,7 +561,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitPathFind( const MsgsSimToClient::MsgUnit
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const MsgsSimToClient::MsgUnitMagicActionAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message.error_code(), "UnitMagicActionAck" );
+    CheckAcknowledge( logger_, message, "UnitMagicActionAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -570,7 +570,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitMagicActionAck( const MsgsSimToClient::M
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectMagicActionAck( const MsgsSimToClient::MsgObjectMagicActionAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ObjectMagicActionAck" );
+    CheckAcknowledge( logger_, message, "ObjectMagicActionAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -664,7 +664,7 @@ void AgentServerMsgMgr::OnReceiveMsgCheckPointSaveNowAck()
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitCreationRequestAck( const MsgsMessengerToClient::MsgLimitCreationRequestAck& message)
 {
-    CheckAcknowledge( logger_, message.error_code(), "LimitCreationAck" );
+    CheckAcknowledge( logger_, message, "LimitCreationAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -673,7 +673,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitCreationRequestAck( const MsgsMessenger
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitUpdateRequestAck( const MsgsMessengerToClient::MsgLimitUpdateRequestAck& message)
 {
-    CheckAcknowledge( logger_, message.error_code(), "LimitUpdateAck" );
+    CheckAcknowledge( logger_, message, "LimitUpdateAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -682,7 +682,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitUpdateRequestAck( const MsgsMessengerTo
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimitDestructionRequestAck( const MsgsMessengerToClient::MsgLimitDestructionRequestAck& message)
 {
-    CheckAcknowledge( logger_, message.error_code(), "LimitDestructionAck" );
+    CheckAcknowledge( logger_, message, "LimitDestructionAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -691,7 +691,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimitDestructionRequestAck( const MsgsMessen
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaCreationRequestAck( const MsgsMessengerToClient::MsgLimaCreationRequestAck& message)
 {
-    CheckAcknowledge( logger_, message.error_code(), "LimaCreationAck" );
+    CheckAcknowledge( logger_, message, "LimaCreationAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -700,7 +700,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaCreationRequestAck( const MsgsMessengerT
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaUpdateRequestAck( const MsgsMessengerToClient::MsgLimaUpdateRequestAck& message)
 {
-    CheckAcknowledge( logger_, message.error_code(), "LimaUpdateAck" );
+    CheckAcknowledge( logger_, message, "LimaUpdateAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -709,7 +709,7 @@ void AgentServerMsgMgr::OnReceiveMsgLimaUpdateRequestAck( const MsgsMessengerToC
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgLimaDestructionRequestAck( const MsgsMessengerToClient::MsgLimaDestructionRequestAck& message)
 {
-    CheckAcknowledge( logger_, message.error_code(), "LimaDestructionAck" );
+    CheckAcknowledge( logger_, message, "LimaDestructionAck" );
 }
 
 //-----------------------------------------------------------------------------
@@ -781,7 +781,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatOrder( const Common::MsgAutomatOrder&
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const MsgsSimToClient::MsgAutomatOrderAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( logger_, message.error_code(), "AutomatOrderAck" ) )
+    if( CheckAcknowledge( logger_, message, "AutomatOrderAck" ) )
         GetModel().agents_.GetAutomat( message.oid() ).Update( message );
 }
 
@@ -791,7 +791,7 @@ void AgentServerMsgMgr::OnReceiveMsgAutomatOrderAck( const MsgsSimToClient::MsgA
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitOrderAck( const MsgsSimToClient::MsgUnitOrderAck& message, unsigned long /*nCtx*/ )
 {
-    if( CheckAcknowledge( logger_, message.error_code(), "UnitOrderAck" ) )
+    if( CheckAcknowledge( logger_, message, "UnitOrderAck" ) )
         GetModel().agents_.GetAgent( message.oid() ).Update( message );
 }
 
@@ -810,7 +810,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitOrder( const Common::MsgUnitOrder& messa
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgFragOrderAck( const MsgsSimToClient::MsgFragOrderAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message.error_code(), "FragOrderAck" );
+    CheckAcknowledge( logger_, message, "FragOrderAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -864,7 +864,7 @@ void AgentServerMsgMgr::OnReceiveMsgDecisionalState( const MsgsSimToClient::MsgD
 //-----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgSetAutomatModeAck( const MsgsSimToClient::MsgSetAutomatModeAck& message, unsigned long /*nCtx*/ )
 {
-    CheckAcknowledge( logger_, message.error_code(), "SetAutomatModeAck" );
+    CheckAcknowledge( logger_, message, "SetAutomatModeAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1271,7 +1271,7 @@ void AgentServerMsgMgr::OnMsgPopulationFlowUpdate( const MsgsSimToClient::MsgPop
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const MsgsSimToClient::MsgPopulationMagicActionAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message.oid(), "PopulationMagicActionAck" );
+    CheckAcknowledge( logger_, message, "PopulationMagicActionAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1280,7 +1280,7 @@ void AgentServerMsgMgr::OnReceiveMsgPopulationMagicActionAck( const MsgsSimToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPopulationOrderAck( const MsgsSimToClient::MsgPopulationOrderAck& message, unsigned long )
 {
-    CheckAcknowledge( logger_, message.oid(), "PopulationOrderAck" );
+    CheckAcknowledge( logger_, message, "PopulationOrderAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1352,7 +1352,7 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceDestruction( const MsgsMessenger
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreationRequestAck( const MsgsMessengerToClient::MsgIntelligenceCreationRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "IntelligenceCreationRequestAck" );
+    CheckAcknowledge( logger_, message, "IntelligenceCreationRequestAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1361,7 +1361,7 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceCreationRequestAck( const MsgsMe
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdateRequestAck( const MsgsMessengerToClient::MsgIntelligenceUpdateRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "IntelligenceUpdateRequestAck" );
+    CheckAcknowledge( logger_, message, "IntelligenceUpdateRequestAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1370,7 +1370,7 @@ void AgentServerMsgMgr::OnReceiveMsgIntelligenceUpdateRequestAck( const MsgsMess
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgIntelligenceDestructionRequestAck( const MsgsMessengerToClient::MsgIntelligenceDestructionRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "IntelligenceDestructionRequestAck" );
+    CheckAcknowledge( logger_, message, "IntelligenceDestructionRequestAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1406,7 +1406,7 @@ void AgentServerMsgMgr::OnReceiveMsgShapeDestruction( const MsgsMessengerToClien
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgShapeCreationRequestAck( const MsgsMessengerToClient::MsgShapeCreationRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ShapeCreationRequestAck" );
+    CheckAcknowledge( logger_, message, "ShapeCreationRequestAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1415,7 +1415,7 @@ void AgentServerMsgMgr::OnReceiveMsgShapeCreationRequestAck( const MsgsMessenger
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgShapeUpdateRequestAck( const MsgsMessengerToClient::MsgShapeUpdateRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ShapeUpdateRequestAck" );
+    CheckAcknowledge( logger_, message, "ShapeUpdateRequestAck" );
 }
 
 // -----------------------------------------------------------------------------
@@ -1424,7 +1424,7 @@ void AgentServerMsgMgr::OnReceiveMsgShapeUpdateRequestAck( const MsgsMessengerTo
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgShapeDestructionRequestAck( const MsgsMessengerToClient::MsgShapeDestructionRequestAck& message )
 {
-    CheckAcknowledge( logger_, message.error_code(), "ShapeDestructionRequestAck" );
+    CheckAcknowledge( logger_, message, "ShapeDestructionRequestAck" );
 }
 
 // LTO begin
@@ -1512,27 +1512,42 @@ void AgentServerMsgMgr::OnReceiveMsgUrbanDetection( const MsgsSimToClient::MsgUr
     GetModel().agents_.GetAgent( message.oid() ).Update( message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdateAck
+// Created: FHD 2009-12-10
+// -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdateAck( const MsgsSimToClient::MsgKnowledgeGroupUpdateAck& message, unsigned long nCtx )
 {
     CheckAcknowledge( logger_, message, "KnowledgeGroupUpdateAck" );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdate
+// Created: FHD 2009-12-10
+// -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
     if( GetModel().knowledgeGroups_.Find( message.oid() ) )
         GetModel().knowledgeGroups_.Get( message.oid() ).Update( message );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreationAck
+// Created: FHD 2009-12-10
+// -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreationAck( const MsgsSimToClient::MsgKnowledgeGroupCreationAck& message, unsigned long nCtx )
 {
     CheckAcknowledge( logger_, message, "KnowledgeGroupCreationAck" );
 }
 
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation
+// Created: FHD 2009-12-10
+// -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation( const MsgsSimToClient::MsgKnowledgeGroupCreation& message )
 {
     GetModel().knowledgeGroups_.Get( message.oid() ).Update( message );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation
