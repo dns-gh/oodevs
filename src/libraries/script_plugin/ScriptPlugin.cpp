@@ -84,7 +84,7 @@ ScriptPlugin::~ScriptPlugin()
 // -----------------------------------------------------------------------------
 void ScriptPlugin::Receive( const MsgSimToClient& wrapper )
 {
-    if( wrapper.message().has_control_begin_tick())
+    if( wrapper.message().has_control_end_tick() )
         controller_->Update( events::TickEnded( wrapper.message().control_end_tick().current_tick() ) );
 }
 
