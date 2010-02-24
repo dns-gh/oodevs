@@ -28,3 +28,21 @@ The following components have been directly or indirectly used :
 9/ Google Protocol Buffer
  - http://code.google.com/p/protobuf/
  - google-protobuf.txt
+10/ GDAL/OGR
+ . http://www.gdal.org
+ . gdal.txt
+11/ OGDI
+ . http://ogdi.sourceforge.net/
+ . ogdi.txt
+12/ Jasper
+ . http://www.ece.uvic.ca/~mdadams/jasper/
+ . jasper.txt
+13/ GEOS
+ . http://trac.osgeo.org/geos/
+ . lgpl.txt
+14/ Expat
+ . http://expat.sourceforge.net/
+ . expat.txt
+15/ Proj4
+ . http://trac.osgeo.org/proj/
+ . proj4.txt
