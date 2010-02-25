@@ -30,6 +30,7 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_ListView_Composantes.h"
 #include "ADN_Composantes_WeaponsListView.h"
+#include "ADN_Composantes_ActiveProtectionsListView.h"
 #include "ADN_ListView_Composantes_Objects.h"
 #include "ADN_ComboBox_Composantes_Sizes.h"
 #include "ADN_Composantes_Speeds_GUI.h"
@@ -174,6 +175,11 @@ void ADN_Composantes_GUI::Build()
     pWeapons_ = new ADN_Composantes_WeaponsListView( pWeaponsGroup );
     vInfosConnectors[eWeapons] = &pWeapons_->GetConnector();
 
+    // Active Protections
+    QHGroupBox* pActiveProtectionsGroup = new QHGroupBox( tr( "Active Protections" ), pDataPage );    
+    pActiveProtections_ = new ADN_Composantes_ActiveProtectionsListView( pActiveProtectionsGroup );
+    vInfosConnectors[eActiveProtections] = &pActiveProtections_->GetConnector();
+
     // Dotations
     QHGroupBox* pDotationGroup = new QHGroupBox( tr( "Resources" ), pDataPage );
     pDotations_ = new ADN_Composantes_Dotations_GUI( true, pDotationGroup );
@@ -250,12 +256,13 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 2, 5, 0, 0 );
 
-    pDataPageLayout->addMultiCellWidget( pCargoGroupBox    , 0, 0, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pTroopGroupBox    , 1, 1, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pSensorsGroup     , 2, 2, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pRadarsGroup      , 3, 3, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pWeaponsGroup     , 4, 4, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup, 5, 5, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pCargoGroupBox          , 0, 0, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pTroopGroupBox          , 1, 1, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pSensorsGroup           , 2, 2, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pRadarsGroup            , 3, 3, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pWeaponsGroup           , 4, 4, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup , 5, 5, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup      , 6, 6, 1, 1 );
 
     pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 0, 1, 2, 2 );
     pDataPageLayout->addMultiCellWidget( pDotationGroup    , 2, 3, 2, 2 );
@@ -512,6 +519,8 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
         builder.CreateTableFrom( *pConsumptions_ );
         builder.Section( tr("Weapon systems") );
         builder.CreateTableFrom( *pWeapons_ );
+        builder.Section( tr("Active protection") );
+        builder.CreateTableFrom( *pActiveProtections_ );
 
         builder.Section( tr( "Objects" ) );
         for( ADN_Composantes_Data::IT_ObjectInfos_Vector it2 = composante.vObjects_.begin(); it2 != composante.vObjects_.end(); ++it2 )

@@ -22,6 +22,7 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Weapons_Data.h"
+#include "ADN_ActiveProtections_Data.h"
 #include "ADN_Breakdowns_Data.h"
 
 
@@ -407,6 +408,33 @@ public:
     typedef ADN_Type_Vector_ABC<WeaponInfos>    T_WeaponInfos_Vector;
     typedef T_WeaponInfos_Vector::iterator      IT_WeaponInfos_Vector;
 
+    //*****************************************************************************
+    class ActiveProtectionsInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( ActiveProtectionsInfos )
+
+    public:
+        ActiveProtectionsInfos();
+        ActiveProtectionsInfos( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtections );
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        ActiveProtectionsInfos* CreateCopy();
+
+        void ReadArchive( xml::xistream& input );        
+        void WriteArchive( xml::xostream& output );
+        void ReadProtection( xml::xistream& input );
+
+    public:
+        ADN_TypePtr_InVector_ABC<ADN_ActiveProtections_Data::ActiveProtectionsInfos> ptrActiveProtections_;
+        ADN_Type_String                                                              strName_; //!< Not for editing. 
+    };
+
+    typedef ADN_Type_Vector_ABC<ActiveProtectionsInfos>    T_ActiveProtectionsInfos_Vector;
+    typedef T_ActiveProtectionsInfos_Vector::iterator      IT_ActiveProtectionsInfos_Vector;
 
     //*****************************************************************************
     class HumanProtectionInfos
@@ -642,6 +670,7 @@ public:
         void ReadSensor( xml::xistream& input );
         void ReadRadar( xml::xistream& input );
         void ReadWeapon( xml::xistream& input );
+        void ReadActiveProtection( xml::xistream& input );
         void ReadObject( xml::xistream& input );
         void WriteArchive( xml::xostream& output );
 
@@ -668,7 +697,7 @@ public:
         ConsumptionsInfos                                                         consumptions_;
         DotationInfos                                                             dotations_;
         HumanProtectionInfos                                                      humanProtections_;
-        ActiveProtectionInfos                                                     activeProtections_;
+        T_ActiveProtectionsInfos_Vector                                           vActiveProtections_;
 
         BreakdownGroupInfos                                                       attritionBreakdowns_;
         BreakdownGroupInfos                                                       randomBreakdowns_;

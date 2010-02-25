@@ -85,6 +85,8 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eSensors]->Connect( &pInfos->vSensors_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eRadars]->Connect( &pInfos->vRadars_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eWeapons]->Connect( &pInfos->vWeapons_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eActiveProtections]->Connect( &pInfos->vActiveProtections_, bConnect );
+
     vItemConnectors_[ADN_Composantes_GUI::eDotations]->Connect( &pInfos->dotations_.categories_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eConsumptions]->Connect( &pInfos->consumptions_.vConsumptions_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eObjects]->Connect( &pInfos->vObjects_, bConnect );

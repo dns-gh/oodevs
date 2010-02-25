@@ -35,6 +35,8 @@ class ADN_Objects_GUI;
 class ADN_Objects_Data;
 class ADN_Weapons_GUI;
 class ADN_Weapons_Data;
+class ADN_ActiveProtections_GUI;
+class ADN_ActiveProtections_Data;
 class ADN_Sensors_GUI;
 class ADN_Sensors_Data;
 class ADN_Composantes_GUI;
@@ -88,6 +90,7 @@ public:
     ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >& GetEquipements();
     ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>& GetObjects();
     ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI>& GetWeapons();
+    ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>& GetActiveProtections();
     ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI>& GetSensors();
     ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >& GetComposantes();
     ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >& GetUnits();
@@ -120,6 +123,7 @@ private:
         eNBC,
         eLaunchers,
         eEquipement,
+        eActiveProtections, // LTO
         eObjects,
         eWeapons,
         eSensors,
@@ -137,8 +141,7 @@ private:
         eSupply,
         eHealth,
         ePopulation,
-        eReports,
-        eActiveProtections,
+        eReports,        
         eNbrWorkspaceElements
     };
 
@@ -228,6 +231,16 @@ inline
 ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI>& ADN_Workspace::GetWeapons()
 {
     return (ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI>&)(*elements_[eWeapons]);
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetActiveProtections
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>& ADN_Workspace::GetActiveProtections()
+{
+    return (ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>&)(*elements_[eActiveProtections]);
 }
 
 

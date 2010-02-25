@@ -27,6 +27,8 @@ class ADN_Composantes_RadarsListView;
 class ADN_Composantes_Dotations_GUI;
 class ADN_Composantes_ConsumptionsTable;
 class ADN_Composantes_WeaponsListView;
+class ADN_Composantes_ActiveProtectionsListView;
+
 
 // =============================================================================
 /** @class  ADN_Composantes_GUI
@@ -73,6 +75,7 @@ public:
         eSensors,
         eRadars,
         eWeapons,
+        eActiveProtections,
         eDotations,
         eConsumptions,
         eObjects,
@@ -185,6 +188,7 @@ private:
     ADN_Composantes_Dotations_GUI* pDotations_;
     ADN_Composantes_ConsumptionsTable* pConsumptions_;
     ADN_Composantes_WeaponsListView* pWeapons_;
+    ADN_Composantes_ActiveProtectionsListView* pActiveProtections_;
     //@}
 };
 

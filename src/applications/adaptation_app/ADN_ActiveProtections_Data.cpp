@@ -32,16 +32,37 @@ ADN_ActiveProtections_Data::ADN_ActiveProtections_Data()
 // -----------------------------------------------------------------------------
 ADN_ActiveProtections_Data::~ADN_ActiveProtections_Data()
 {
-    // NOTHING
+    Reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::GetActiveProtectionsInfos
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+ADN_ActiveProtections_Data::T_ActiveProtectionsInfosVector& ADN_ActiveProtections_Data::GetActiveProtectionsInfos()
+{
+    return activeProtections_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::FindWeapon
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+ADN_ActiveProtections_Data::ActiveProtectionsInfos* ADN_ActiveProtections_Data::FindActiveProtection(const std::string& strName )
+{
+    IT_ActiveProtectionsInfosVector it = std::find_if( activeProtections_.begin(), activeProtections_.end(), ADN_Tools::NameCmp<ActiveProtectionsInfos>( strName ) );
+    if( it == activeProtections_.end() )
+        return 0;
+    return *it;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data::FilesNeeded
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::FilesNeeded( T_StringList& vFiles ) const
+void ADN_ActiveProtections_Data::FilesNeeded( T_StringList& vFiles) const
 {
-    vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szActiveProtections_.GetData() );
+   vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szActiveProtections_.GetData() );
 }
     
 // -----------------------------------------------------------------------------
@@ -50,7 +71,7 @@ void ADN_ActiveProtections_Data::FilesNeeded( T_StringList& vFiles ) const
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::Reset()
 {
-    // NOTHING
+    activeProtections_.Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -69,8 +90,9 @@ void ADN_ActiveProtections_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_Data::ReadProtection( xml::xistream& xis )
 {
-    Protection protection( xis );
-    protections_.push_back( protection );
+    std::auto_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
+    spNew->ReadArchive( xis );
+    activeProtections_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,58 +104,124 @@ void ADN_ActiveProtections_Data::WriteArchive( xml::xostream& xos )
     xos << xml::start( "protections" )
             << xml::attribute( "xmlns:xsi","http://www.w3.org/2001/XMLSchema-instance" )
             << xml::attribute( "xsi:noNamespaceSchemaLocation", "schemas/physical/ActiveProtections.xsd" );
-    for( std::vector< ADN_ActiveProtections_Data::Protection >::const_iterator it = protections_.begin(); it != protections_.end(); ++it )
-        it->WriteArchive( xos );
+    for( IT_ActiveProtectionsInfosVector it = activeProtections_.begin(); it != activeProtections_.end(); ++it )
+        (*it)->WriteArchive( xos );
     xos << xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ActiveProtections_Data::Protection
+// Name: ADN_ActiveProtections_Data::ActiveProtectionInfosWeapons
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ActiveProtectionsInfosWeapons()
+: ADN_Ref_ABC           ()
+, ADN_DataTreeNode_ABC  ()
+, strName_              ( tr( "Active Protection weapons" ).ascii() )
+, coefficient_          ( 0 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::ReadArchive
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::ReadArchive( xml::xistream& xis )
+{
+    xis >> xml::attribute( "name", strName_ ) 
+        >> xml::attribute( "coefficient", coefficient_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::WriteArchive
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+void ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::WriteArchive( xml::xostream& xos )
+{    
+    xos << xml::start( "weapon" )
+        << xml::attribute( "name", strName_ )
+        << xml::attribute( "coefficient", coefficient_)
+        << xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::GetItemName
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+std::string ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons::GetItemName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::ActiveProtectionInfos
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+ADN_ActiveProtections_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
+: ADN_Ref_ABC           ()
+, ADN_DataTreeNode_ABC  ()
+, strName_              ( tr( "Active Protection" ).ascii() )
+, coefficient_          ( 0 )
+, hardKill_             ( false )
+, strDotationName_      ( "" )
+, usage_                (0.0)
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::ActiveProtectionsInfos::GetItemName
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+std::string ADN_ActiveProtections_Data::ActiveProtectionsInfos::GetItemName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_Data::ReadArchive
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-ADN_ActiveProtections_Data::Protection::Protection( xml::xistream& xis )
+void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& xis )
 {
-    xis >> xml::attribute( "name", name_ )
+    xis >> xml::attribute( "name"       , strName_ )
         >> xml::attribute( "coefficient", coefficient_ )
-        >> xml::attribute( "hard-kill", hardKill_ )
+        >> xml::attribute( "hard-kill"  , hardKill_ )
         >> xml::optional() >> xml::start( "dotation" )
             >> xml::attribute( "name", strDotationName_ )
             >> xml::attribute( "usage", usage_ )
         >> xml::end()
-        >> xml::list( "weapon", *this, &ADN_ActiveProtections_Data::Protection::ReadWeapon );
+        >> xml::list( "weapon", *this, &ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data::Protection::ReadWeapon
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::Protection::ReadWeapon( xml::xistream& xis )
+void ADN_ActiveProtections_Data::ActiveProtectionsInfos::ReadWeapon( xml::xistream& xis )
 {
-    std::string name;
-    double value;
-    xis >> xml::attribute( "name", name ) >> xml::attribute( "coefficient", value );
-    weapons_.push_back( std::pair< std::string, double >( name, value ) );
+
+    std::auto_ptr<ActiveProtectionsInfosWeapons> spNew( new ActiveProtectionsInfosWeapons() );
+    spNew->ReadArchive( xis );
+    weapons_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_Data::Protection::Write
 // Created: LDC 2010-01-13
 // -----------------------------------------------------------------------------
-void ADN_ActiveProtections_Data::Protection::WriteArchive( xml::xostream& xos ) const
+void ADN_ActiveProtections_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& xos )
 {
     xos << xml::start( "protection" )
-        << xml::attribute( "name", name_ )
+        << xml::attribute( "name", strName_ )
         << xml::attribute( "coefficient", coefficient_ )
         << xml::attribute( "hard-kill", hardKill_ );
-    if( !strDotationName_.empty() )
+    if( strDotationName_ != "" )
         xos << xml::start( "dotation" )
                 << xml::attribute( "name", strDotationName_ )
                 << xml::attribute( "usage", usage_ )
             << xml::end();
-    for( std::vector< std::pair<std::string, double> >::const_iterator it = weapons_.begin(); it != weapons_.end(); ++it )
-        xos << xml::start( "weapon" )
-                << xml::attribute( "name", it->first )
-                << xml::attribute( "coefficient", it->second )
-            << xml::end();
+
+    for( IT_ActiveProtectionsInfosWeaponsVector it = weapons_.begin(); it != weapons_.end(); ++it )
+        (*it)->WriteArchive(xos);
+
     xos << xml::end();
 }

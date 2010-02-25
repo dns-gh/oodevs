@@ -117,6 +117,7 @@ private:
     //@{
     void BuildGeneric( E_DotationFamily nType, QTabWidget* pParent );
     void BuildAmmunition( QTabWidget* pParent );
+    void BuildActiveProtections( QTabWidget* pParent );
     //@}
 
 private slots:

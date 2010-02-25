@@ -1090,7 +1090,7 @@ std::string ADN_Composantes_Data::HumanProtectionInfos::GetItemName()
 // Name: ADN_Composantes_Data::CopyFrom
 // Created: JCR 2009-05-17
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::HumanProtectionInfos::CopyFrom( HumanProtectionInfos& src )
+void ADN_Composantes_Data::HumanProtectionInfos::CopyFrom( HumanProtectionInfos& )
 {
 
 }
@@ -1114,59 +1114,85 @@ void ADN_Composantes_Data::HumanProtectionInfos::WriteArchive( xml::xostream& ou
     output << xml::start( "human-protections" ) << xml::end();
 }
 
-// -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::ActiveProtectionInfos
-// Created: LDC 2010-01-12
-// -----------------------------------------------------------------------------
-ADN_Composantes_Data::ActiveProtectionInfos::ActiveProtectionInfos()
+
+//-----------------------------------------------------------------------------
+// Name: ActiveProtectionsInfos::ActiveProtectionsInfos
+// Created: FDS 10-02-24
+//-----------------------------------------------------------------------------
+ADN_Composantes_Data::ActiveProtectionsInfos::ActiveProtectionsInfos()
+: ADN_Ref_ABC()
+, ptrActiveProtections_ ( ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos(), 0 )
 {
-    // Nothing
+    BindExistenceTo(&ptrActiveProtections_);
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::GetNodeName
-// Created: LDC 2010-01-12
+// Name: ActiveProtectionsInfos::ActiveProtectionsInfos
+// Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::ActiveProtectionInfos::GetNodeName()
+ADN_Composantes_Data::ActiveProtectionsInfos::ActiveProtectionsInfos( ADN_ActiveProtections_Data::ActiveProtectionsInfos& activeProtections )
+: ADN_Ref_ABC()
+, ptrActiveProtections_ ( ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().GetActiveProtectionsInfos(), &activeProtections, "" )
+, strName_   ( activeProtections.strName_.GetData() )
 {
-    return "active-protection";
+    BindExistenceTo(&ptrActiveProtections_);
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::ReadArchive
-// Created: LDC 2010-01-12
+// Name: ActiveProtectionsInfos::GetNodeName
+// Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ActiveProtectionInfos::ReadArchive( xml::xistream& input )
+std::string ADN_Composantes_Data::ActiveProtectionsInfos::GetNodeName()
 {
-    input >> xml::optional() >> xml::start( "active-protections" ) 
-                                 >> xml::list( "protection", *this, &ADN_Composantes_Data::ActiveProtectionInfos::ReadProtection )
-                             >> xml::end();
+    std::string strResult( "de la protection active " );
+    return strResult + ptrActiveProtections_.GetData()->GetNodeName();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Composantes_Data::ReadProtection
-// Created: LDC 2010-01-12
+// Name: ActiveProtectionsInfos::GetItemName
+// Created: FDS 2010-02-24
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ActiveProtectionInfos::ReadProtection( xml::xistream& input )
+std::string ADN_Composantes_Data::ActiveProtectionsInfos::GetItemName()
 {
-    std::string protection;
-    input >> xml::attribute( "name", protection );
-    protections_.push_back( protection );
+    return ((ADN_ActiveProtections_Data::ActiveProtectionsInfos*)ptrActiveProtections_.GetData())->strName_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActiveProtectionsInfos::CreateCopy
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+ADN_Composantes_Data::ActiveProtectionsInfos* ADN_Composantes_Data::ActiveProtectionsInfos::CreateCopy()
+{
+    ActiveProtectionsInfos* pCopy = new ActiveProtectionsInfos();
+    pCopy->ptrActiveProtections_ = ptrActiveProtections_.GetData();
+    pCopy->strName_ = strName_.GetData();
+    return pCopy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActiveProtectionsInfos::ReadArchive
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ActiveProtectionsInfos::ReadArchive( xml::xistream& input )
+{
+    std::string strActiveProtectionName;
+    input >> xml::attribute( "name", strActiveProtectionName );
+    ADN_ActiveProtections_Data::ActiveProtectionsInfos* pActiveProtection = ADN_Workspace::GetWorkspace().GetActiveProtections().GetData().FindActiveProtection( strActiveProtectionName );
+    if( pActiveProtection == 0 )
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid active protection type '%1'" ).arg( strActiveProtectionName.c_str() ).ascii() );
+    ptrActiveProtections_ = pActiveProtection;
+    strName_ = strActiveProtectionName;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::WriteArchive
 // Created: LDC 2010-01-12
 // -----------------------------------------------------------------------------
-void ADN_Composantes_Data::ActiveProtectionInfos::WriteArchive( xml::xostream& output )
+void ADN_Composantes_Data::ActiveProtectionsInfos::WriteArchive( xml::xostream& output )
 {
-    if( protections_.size() )
-    {
-        output << xml::start( "active-protections" );
-        for( std::vector< std::string >::const_iterator it = protections_.begin(); it != protections_.end(); ++it )
-            output << xml::start( "protection" ) << xml::attribute( "name", *it ) << xml::end();
-        output << xml::end();
-    }
+    output << xml::start( "protection" )
+            << xml::attribute( "name", ptrActiveProtections_.GetData()->strName_ )
+           << xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -1695,6 +1721,7 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
 , rWeight_(0)
 , vSpeeds_( false )
 , vWeapons_()
+, vActiveProtections_()
 , vSensors_()
 , vRadars_ ()
 , vObjects_()
@@ -1730,6 +1757,9 @@ ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     vWeapons_.SetParentNode( *this );
     vWeapons_.SetItemTypeName( "un lanceur" );
 
+    vActiveProtections_.SetParentNode( *this );
+    vActiveProtections_.SetItemTypeName( "une protection active" );
+
     vObjects_.SetParentNode( *this );
     vObjects_.SetItemTypeName( "un objet" );
 
@@ -1749,6 +1779,7 @@ ADN_Composantes_Data::ComposanteInfos::~ComposanteInfos()
 {
     vSpeeds_.Reset();
     vWeapons_.Reset();
+    vActiveProtections_.Reset();
     vSensors_.Reset();
     vRadars_.Reset();
     vObjects_.Reset();
@@ -1801,6 +1832,12 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     {
         WeaponInfos* pNew = (*itWeapon)->CreateCopy();
         pCopy->vWeapons_.AddItem( pNew );
+    }
+
+    for( IT_ActiveProtectionsInfos_Vector itActiveProtections = vActiveProtections_.begin(); itActiveProtections != vActiveProtections_.end(); ++itActiveProtections )
+    {
+        ActiveProtectionsInfos* pNew = (*itActiveProtections)->CreateCopy();
+        pCopy->vActiveProtections_.AddItem( pNew );
     }
 
     for( IT_SensorInfos_Vector itSensor = vSensors_.begin(); itSensor != vSensors_.end(); ++itSensor )
@@ -1889,6 +1926,17 @@ void ADN_Composantes_Data::ComposanteInfos::ReadWeapon( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::ComposanteInfos::ReadActiveProtection
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Data::ComposanteInfos::ReadActiveProtection( xml::xistream& input )
+{
+    std::auto_ptr<ActiveProtectionsInfos> spNew( new ActiveProtectionsInfos() );
+    spNew->ReadArchive( input );
+    vActiveProtections_.AddItem( spNew.release() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::ComposanteInfos::ReadObject
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
@@ -1960,16 +2008,18 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
     bTroopEmbarkingTimes_ = embarkingTimePerPerson_ != "0s" || disembarkingTimePerPerson_ != "0s";
     bCanCarryCargo_ = rWeightTransportCapacity_ != 0.;
 
-    consumptions_.ReadArchive( input );
-    
-    activeProtections_.ReadArchive( input );
+    consumptions_.ReadArchive( input );    
 
     input >> xml::start( "weapon-systems" )
             >> xml::list( "weapon-system", *this, &ADN_Composantes_Data::ComposanteInfos::ReadWeapon )
           >> xml::end()
+          >> xml::optional() >> xml::start ( "active-protections" )
+            >> xml::list( "protection", *this, &ADN_Composantes_Data::ComposanteInfos::ReadActiveProtection )
+          >> xml::end()
           >> xml::start( "objects" )
             >> xml::list( "object", *this, &ADN_Composantes_Data::ComposanteInfos::ReadObject )
           >> xml::end();
+
 
     logInfos_.ReadArchive( input );
 
@@ -2043,7 +2093,11 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         (*itWeapon)->WriteArchive( output );
     output << xml::end();
 
-    activeProtections_.WriteArchive( output );
+    output << xml::start( "active-protections" );
+    for( IT_ActiveProtectionsInfos_Vector itActiveProtections = vActiveProtections_.begin(); itActiveProtections != vActiveProtections_.end(); ++itActiveProtections )
+        (*itActiveProtections)->WriteArchive( output );
+    output << xml::end();
+
     humanProtections_.WriteArchive( output );
 
     output << xml::start( "objects" );

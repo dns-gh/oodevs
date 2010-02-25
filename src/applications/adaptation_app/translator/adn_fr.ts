@@ -5337,6 +5337,18 @@ du tireur</translation>
         <source>Workable</source>
         <translation>Animable</translation>
     </message>
+    <message>
+        <source>Spawn</source>
+        <translation>Déposable</translation>
+    </message>
+    <message>
+        <source>Action range</source>
+        <translation>Rayon d'action</translation>
+    </message>
+    <message>
+        <source>Object type</source>
+        <translation>Type d'objet</translation>
+    </message>    
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>
