@@ -71,8 +71,8 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const Common::MsgUnitOrder& message );
-  virtual void DoUpdate( const Common::MsgAutomatOrder& message );
-  virtual void DoUpdate( const Common::MsgPopulationOrder& message );
+    virtual void DoUpdate( const Common::MsgAutomatOrder& message );
+    virtual void DoUpdate( const Common::MsgPopulationOrder& message );
     template< typename T >
     void UpdateMessage( const T& message );
     //@}

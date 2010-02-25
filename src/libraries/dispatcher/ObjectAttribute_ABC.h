@@ -30,7 +30,7 @@ class ObjectAttribute_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-       ObjectAttribute_ABC( const Model& model, const Common::MsgObjectAttributes& asnMsg );
+             ObjectAttribute_ABC( const Model& model, const Common::MsgObjectAttributes& asnMsg );
     virtual ~ObjectAttribute_ABC();
     //@}
 

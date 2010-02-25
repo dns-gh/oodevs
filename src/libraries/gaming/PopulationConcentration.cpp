@@ -70,7 +70,7 @@ unsigned long PopulationConcentration::GetId() const
 void PopulationConcentration::DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate& message )
 {
     if ( message.has_attitude()  )
-    attitude_ = (E_PopulationAttitude)message.attitude();
+        attitude_ = (E_PopulationAttitude)message.attitude();
     static const float oneOnpi = 1.f / std::acos( -1.f );
     if( message.has_nb_humains_vivants()  )
         nLivingHumans_ = message.nb_humains_vivants();

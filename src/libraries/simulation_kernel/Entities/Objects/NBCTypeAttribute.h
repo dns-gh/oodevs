@@ -23,7 +23,7 @@
 // Created: RFT 2008-05-30
 // =============================================================================
 class NBCTypeAttribute : public ObjectAttribute_ABC
-                     , public UpdatableAttribute_ABC
+                       , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor

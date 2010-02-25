@@ -80,7 +80,7 @@ private:
     actions::Action_ABC* CreateMission( xml::xistream& xis ) const;
     actions::Action_ABC* CreateFragOrder( xml::xistream& xis ) const;
 
-  void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const Common::MsgMissionParameters& message ) const;
+    void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const Common::MsgMissionParameters& message ) const;
     void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
     //@}
 

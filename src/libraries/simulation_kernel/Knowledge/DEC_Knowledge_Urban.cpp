@@ -505,5 +505,5 @@ bool DEC_Knowledge_Urban::IsValid() const
 // -----------------------------------------------------------------------------
 const float DEC_Knowledge_Urban::GetTrafficability() const
 {
-  return object_.RetrievePhysicalFeature< urban::Soil >()->GetTrafficability();
+    return object_.RetrievePhysicalFeature< urban::Soil >()->GetTrafficability();
 }

@@ -69,7 +69,7 @@ void crossbow::Line::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spat
 // -----------------------------------------------------------------------------
 void crossbow::Line::Serialize( std::ostream& geometry ) const
 {
-  const int srid = 0;
+    const int srid = 0;
     geometry << "st_linestring("
              << "'linestring"; // point collection already provides '(' and ')'
     PointCollection::Serialize( geometry );

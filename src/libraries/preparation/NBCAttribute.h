@@ -57,7 +57,7 @@ public:
 
     //! @name Modifiers
     //@{    
-  void AddAgent( const kernel::NBCAgent& agent );
+    void AddAgent( const kernel::NBCAgent& agent );
     void SetState( const std::string& state );
     void SetDanger( const unsigned int value );
     //@}

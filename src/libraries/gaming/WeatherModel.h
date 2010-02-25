@@ -14,8 +14,8 @@
 
 namespace MsgsSimToClient
 {
-  class MsgStartFireEffect;
-  class MsgStopFireEffect;
+    class MsgStartFireEffect;
+    class MsgStopFireEffect;
 }
 
 namespace kernel

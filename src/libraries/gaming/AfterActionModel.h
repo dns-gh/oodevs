@@ -14,8 +14,8 @@
 
 namespace MsgsAarToClient
 {
-  class MsgAarInformation;
-  class MsgPlotResult;
+    class MsgAarInformation;
+    class MsgPlotResult;
 }
 
 namespace kernel

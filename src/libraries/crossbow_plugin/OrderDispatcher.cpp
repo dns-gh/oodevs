@@ -46,7 +46,7 @@ OrderDispatcher::OrderDispatcher( Database_ABC& database, const OrderTypes& type
 // -----------------------------------------------------------------------------
 void OrderDispatcher::Clean()
 {
-  try
+    try
     {
         /*
         std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );

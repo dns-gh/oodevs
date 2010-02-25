@@ -635,11 +635,11 @@ void Gl3dWidget::CenterView()
 void Gl3dWidget::UndoRotations() const
 {
     float modelview[ 16 ];
-  glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
-  for( uint i = 0; i < 3; i++ ) 
-      for( uint j = 0; j < 3; j++ )
+    glGetFloatv( GL_MODELVIEW_MATRIX, modelview );
+    for( uint i = 0; i < 3; i++ ) 
+        for( uint j = 0; j < 3; j++ )
             modelview[ i * 4 + j ] = ( i == j ) ? 1.f : 0;
-  glLoadMatrixf( modelview );
+    glLoadMatrixf( modelview );
 }
 
 // -----------------------------------------------------------------------------

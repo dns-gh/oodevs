@@ -15,7 +15,7 @@
 
 namespace MsgsSimToClient
 {
-  class MsgUnitAttributes;
+    class MsgUnitAttributes;
 }
 
 namespace kernel

@@ -194,7 +194,7 @@ void PHY_PerceptionSurfaceAgent::SendFullState( MsgsSimToClient::MsgVisionCone& 
     NET_ASN_Tools::WritePoint( vOrigin_, *msg.mutable_origin() );
     msg.set_height( rHeight_ );
     msg.set_sensor( pSensorType_->GetType().GetName().c_str() );
-  msg.mutable_directions();
+    msg.mutable_directions();
     for( int i = 0; i < sectors_.size(); ++i )
         NET_ASN_Tools::WriteDirection( sectors_[i].GetDirection(), *msg.mutable_directions()->add_elem() );
 }

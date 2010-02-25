@@ -17,13 +17,13 @@
 
 namespace MsgsSimToClient
 {
-  class MsgUnitPathFind;
-  class MsgUnitAttributes;
+    class MsgUnitPathFind;
+    class MsgUnitAttributes;
 }
 
 namespace MsgsClientToSim
 {
-  class MsgUnitMagicAction;
+    class MsgUnitMagicAction;
 }
 
 namespace kernel
@@ -40,7 +40,7 @@ namespace kernel
 class Paths : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitPathFind >
             , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
-      , public kernel::Updatable_ABC< MsgsClientToSim::MsgUnitMagicAction >
+            , public kernel::Updatable_ABC< MsgsClientToSim::MsgUnitMagicAction >
             , public kernel::Drawable_ABC
 {
 

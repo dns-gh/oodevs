@@ -31,17 +31,17 @@ namespace kernel
 
 class ObjectAttributeFactory_ABC
 {
-public:  
-  //! @name Constructors/Destructor
+public:    
+    //! @name Constructors/Destructor
     //@{
-      ObjectAttributeFactory_ABC() {}
-  virtual ~ObjectAttributeFactory_ABC() {}
-  //@}  
+            ObjectAttributeFactory_ABC() {}
+    virtual ~ObjectAttributeFactory_ABC() {}
+    //@}    
 
-  //! @name Registrer
-    //@{  
+    //! @name Registrer
+    //@{    
     virtual void Create( const std::string& attribute, tools::SortedInterfaceContainer< kernel::Extension_ABC >& result, kernel::PropertiesDictionary& dico, xml::xistream& xis ) = 0;
-  //@}
+    //@}
 
 private:
     //! @name Copy/Assignment

@@ -45,7 +45,7 @@ Object::Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg )
     , side_                        ( model.sides_.Get( msg.team() ) )
 {
     Initialize( model, msg.attributes() );
-  side_.Register( *this );
+    side_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +54,7 @@ Object::Object( Model& model, const MsgsSimToClient::MsgObjectCreation& msg )
 // -----------------------------------------------------------------------------
 Object::~Object()
 {
-  side_.Remove( *this );
+    side_.Remove( *this );
 }
 
 #define MSG_ASN_CREATION( ASN, CLASS ) \
@@ -176,5 +176,5 @@ void Object::Display( kernel::Displayer_ABC& ) const
 // -----------------------------------------------------------------------------
 const kernel::ObjectType& Object::GetType() const
 {
-  return type_;
+    return type_;
 }

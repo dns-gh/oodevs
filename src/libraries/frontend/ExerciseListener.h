@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-  bool Wait();
+    bool Wait();
     unsigned int GetPercentage() const;
     //@}
 
@@ -45,8 +45,8 @@ private:
 private:
     //! @name Member data
     //@{
-  const std::string strHost_ ;
-  const unsigned int nPort_ ;
+    const std::string strHost_ ;
+    const unsigned int nPort_ ;
     unsigned int percentage_ ;
     //@}
 };

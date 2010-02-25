@@ -75,7 +75,7 @@ public:
 
     //! @name Operators
     //@{
-  void Update( const MsgsSimToClient::MsgUnitCreation& msg );
+    void Update( const MsgsSimToClient::MsgUnitCreation& msg );
     void Update( const MsgsSimToClient::MsgUnitKnowledgeCreation& msg );
     void Update( const MsgsMessengerToClient::MsgLimitCreation& msg );
     void Update( const MsgsMessengerToClient::MsgLimaCreation& msg );
@@ -83,17 +83,17 @@ public:
     void Update( const MsgsSimToClient::MsgReport& msg );
     void Update( const Common::MsgFormationCreation& message );
     void Update( const MsgsSimToClient::MsgAutomatCreation& message );
-  void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
 
     void Update( const MsgsSimToClient::MsgUnitAttributes& msg );
     void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg );
-  void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
     void Update( const MsgsSimToClient::MsgAutomatAttributes& msg );
 
     void DestroyUnit( const MsgsSimToClient::MsgUnitDestruction& msg );
     void DestroyUnitKnowledge( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg );
     void DestroyObject( const MsgsSimToClient::MsgObjectDestruction& msg ); // $$$$ SBO 2007-09-27: typedef bullshit
-  void DestroyObjectKnowledge( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg );
+    void DestroyObjectKnowledge( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg );
     //@}
 
 private:

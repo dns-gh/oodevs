@@ -1912,9 +1912,9 @@ void AgentServerMsgMgr::OnReceiveMsgAarToClient( const std::string&, const MsgsA
     if( wrapper.message().has_aar_information() )
         OnReceiveMsgAarInformation( wrapper.message().aar_information() ); 
     else if( wrapper.message().has_plot_result() )
-      OnReceiveMsgAarResult     ( wrapper.message().plot_result() ); 
+        OnReceiveMsgAarResult     ( wrapper.message().plot_result() ); 
     else if( wrapper.message().has_indicator() )
-      OnReceiveMsgAarIndicator  ( wrapper.message().indicator() ); 
+        OnReceiveMsgAarIndicator  ( wrapper.message().indicator() ); 
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -1928,7 +1928,7 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
     if( host_.empty() )
         return;
     if( wrapper.message().has_limit_creation_request_ack() )
-      OnReceiveMsgLimitCreationRequestAck   ( wrapper.message().limit_creation_request_ack() ); 
+        OnReceiveMsgLimitCreationRequestAck   ( wrapper.message().limit_creation_request_ack() ); 
     else if( wrapper.message().has_limit_update_request_ack() )
         OnReceiveMsgLimitUpdateRequestAck     ( wrapper.message().limit_update_request_ack() ); 
     else if( wrapper.message().has_limit_destruction_request_ack() )
@@ -1940,7 +1940,7 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
     else if( wrapper.message().has_lima_destruction_request_ack() )
         OnReceiveMsgLimaDestructionRequestAck ( wrapper.message().lima_destruction_request_ack() ); 
     else if( wrapper.message().has_limit_creation() )
-      OnReceiveMsgLimitCreation   ( wrapper.message().limit_creation() ); 
+        OnReceiveMsgLimitCreation   ( wrapper.message().limit_creation() ); 
     else if( wrapper.message().has_limit_update() )
         OnReceiveMsgLimitUpdate     ( wrapper.message().limit_update() ); 
     else if( wrapper.message().has_lima_creation() )
@@ -1950,7 +1950,7 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
     else if( wrapper.message().has_lima_destruction() )
         OnReceiveMsgLimaDestruction ( wrapper.message().lima_destruction() ); 
     else if( wrapper.message().has_intelligence_creation_request_ack() )
-      OnReceiveMsgIntelligenceCreationRequestAck   ( wrapper.message().intelligence_creation_request_ack() ); 
+        OnReceiveMsgIntelligenceCreationRequestAck   ( wrapper.message().intelligence_creation_request_ack() ); 
     else if( wrapper.message().has_intelligence_update_request_ack() )
         OnReceiveMsgIntelligenceUpdateRequestAck     ( wrapper.message().intelligence_update_request_ack() ); 
     else if( wrapper.message().has_intelligence_destruction_request_ack() )
@@ -1962,7 +1962,7 @@ void AgentServerMsgMgr::OnReceiveMsgMessengerToClient( const std::string&, const
     else if( wrapper.message().has_intelligence_destruction() )
         OnReceiveMsgIntelligenceDestruction          ( wrapper.message().intelligence_destruction() ); 
     else if( wrapper.message().has_shape_creation_request_ack() )
-      OnReceiveMsgShapeCreationRequestAck   ( wrapper.message().shape_creation_request_ack() ); 
+        OnReceiveMsgShapeCreationRequestAck   ( wrapper.message().shape_creation_request_ack() ); 
     else if( wrapper.message().has_shape_update_request_ack() )
         OnReceiveMsgShapeUpdateRequestAck     ( wrapper.message().shape_update_request_ack() ); 
     else if( wrapper.message().has_shape_destruction_request_ack() )

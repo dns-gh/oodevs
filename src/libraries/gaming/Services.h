@@ -18,7 +18,7 @@ namespace kernel
 
 namespace MsgsDispatcherToClient
 {
-  class MsgServicesDescription;
+    class MsgServicesDescription;
 }
 
 // =============================================================================

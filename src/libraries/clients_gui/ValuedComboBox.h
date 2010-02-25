@@ -54,7 +54,7 @@ public:
 
     int GetItemIndex( const T& value );
     void SetCurrentItem( const T& value );
-  void Clear();
+    void Clear();
     unsigned int Count() const;
 
     void setSorting( bool sorting );

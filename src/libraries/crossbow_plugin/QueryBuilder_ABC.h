@@ -45,8 +45,8 @@ public:
     //! @Accessors 
     //@{
     virtual bool        IsValid() const = 0;
-  virtual std::string GetSequence() const = 0;
-  virtual std::string GetTableName() const = 0;
+    virtual std::string GetSequence() const = 0;
+    virtual std::string GetTableName() const = 0;
     virtual std::string Create() const = 0;
     //@}
 };

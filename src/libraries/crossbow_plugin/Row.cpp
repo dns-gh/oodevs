@@ -158,10 +158,10 @@ void crossbow::Row::Commit( ICursorPtr cursor /*=NULL*/ )
         HRESULT res = cursor->InsertRow( row_, &value );
         if( FAILED( res ) )
             ThrowError();
-    else
-    {
-      id_ = boost::get< int >( ConvertVariant( value ) );
-    }
+        else
+        {
+            id_ = boost::get< int >( ConvertVariant( value ) );
+        }
     }
 }
 

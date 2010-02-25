@@ -94,11 +94,11 @@ void QueryDatabaseUpdater::Flush()
 // -----------------------------------------------------------------------------
 void QueryDatabaseUpdater::Clean()
 {
-  try
+    try
     {
         const std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
 
-    database_.Execute( DeleteQueryBuilder( database_.GetTableName( "UnitForces" ), clause ) );
+        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "UnitForces" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "KnowledgeUnits" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "BoundaryLimits" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "TacticalLines" ), clause ) );
@@ -106,7 +106,7 @@ void QueryDatabaseUpdater::Clean()
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "TacticalObject_Line" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "TacticalObject_Point" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "KnowledgeObjects" ), clause ) );
-    database_.Execute( DeleteQueryBuilder( database_.GetTableName( "KnowledgeUnits" ), clause ) );
+        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "KnowledgeUnits" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "Reports" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "Formations" ), clause ) );  
     }
@@ -158,7 +158,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeCreati
     builder.SetField( "group_oid", msg.oid_groupe_possesseur() );
     builder.SetField( "unit_oid", msg.oid_unite_reelle() );
     // $$$$ NEEDED ? builder.SetField( "type", msg.type_unite );
-  builder.SetField( "session_id", session_.GetId() );
+    builder.SetField( "session_id", session_.GetId() );
 
     if( const dispatcher::Agent* realAgent = model_.agents_.Find( msg.oid_unite_reelle() ) )
     {
@@ -178,30 +178,30 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
 {
     InsertQueryBuilder builder( database_.GetTableName( "KnowledgeObjects" ) );
 
-  const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
-  std::string symbol = knowledge->pObject_->GetType().GetSymbol(); 
+    const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
+    std::string symbol = knowledge->pObject_->GetType().GetSymbol(); 
 
-  builder.SetId( "id" );
+    builder.SetId( "id" );
     builder.SetField( "public_oid", msg.oid() );
-  builder.SetField( "type", msg.type() );
-  builder.SetField( "team_id", msg.team() );
+    builder.SetField( "type", msg.type() );
+    builder.SetField( "team_id", msg.team() );
 
-  if ( msg.attributes().has_construction() )
-    builder.SetField( "state", msg.attributes().construction().percentage() );
+    if ( msg.attributes().has_construction() )
+        builder.SetField( "state", msg.attributes().construction().percentage() );
 
-  if ( tools::app6::GetAffiliation( symbol ) != "U" )
-    builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
-  builder.SetField( "session_id", session_.GetId() );
-  
-  if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
-  {
-    tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.GetKarma().GetUId() );
+    if ( tools::app6::GetAffiliation( symbol ) != "U" )
+        builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
+    builder.SetField( "session_id", session_.GetId() );
+    
+    if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
+    {
+        tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
-  }
-  else
-    tools::app6::SetAffiliation( symbol, (unsigned int) Common::EnumDiplomacy::unknown_diplo );
+    }
+    else
+        tools::app6::SetAffiliation( symbol, (unsigned int) Common::EnumDiplomacy::unknown_diplo );
 
-  builder.SetField( "symbol_id", FormatSymbol( symbol ) );
+    builder.SetField( "symbol_id", FormatSymbol( symbol ) );
 
     database_.Execute( builder );
 }
@@ -218,7 +218,7 @@ void QueryDatabaseUpdater::Update( const MsgsMessengerToClient::MsgLimitCreation
     builder.SetField( "public_oid", ( long ) msg.oid() );
     builder.SetField( "name", std::string( msg.tactical_line().name() ) );
     builder.SetField( "symbol_id", std::string( "G-GPGLB----H--X" ) );
-  builder.SetField( "session_id", session_.GetId() );
+    builder.SetField( "session_id", session_.GetId() );
     builder.SetGeometry( Line( msg.tactical_line().geometry().coordinates() ) );
     database_.Execute( builder );
 }
@@ -234,7 +234,7 @@ void QueryDatabaseUpdater::Update( const MsgsMessengerToClient::MsgLimaCreation&
     builder.SetId( "id" );
     builder.SetField( "public_oid", ( long ) msg.oid() );
     builder.SetField( "name", std::string( msg.tactical_line().name() ) );
-  builder.SetField( "session_id", session_.GetId() );
+    builder.SetField( "session_id", session_.GetId() );
     builder.SetGeometry( Line( msg.tactical_line().geometry().coordinates() ) );
     database_.Execute( builder );
 }
@@ -252,7 +252,7 @@ namespace
         return className;
     }
 
-  std::string GetObjectKnowledgeTable( const Common::MsgLocation& location )
+    std::string GetObjectKnowledgeTable( const Common::MsgLocation& location )
     {
         std::string className = "KnowledgeObjects_Area";
         switch ( location.type() )
@@ -274,7 +274,7 @@ void QueryDatabaseUpdater::UpdateGeometry( QueryBuilder_ABC& builder, const Comm
     {
     case Common::MsgLocation_Geometry_point:    builder.SetGeometry( Point( location.coordinates().elem( 0 ) ) ); break;
     case Common::MsgLocation_Geometry_line:     builder.SetGeometry( Line( location.coordinates() ) ); break;
-  case Common::MsgLocation_Geometry_polygon:  builder.SetGeometry( Area( location.coordinates() ) ); break;
+    case Common::MsgLocation_Geometry_polygon:  builder.SetGeometry( Area( location.coordinates() ) ); break;
     default:    break;
     }
 }
@@ -286,34 +286,34 @@ void QueryDatabaseUpdater::UpdateGeometry( QueryBuilder_ABC& builder, const Comm
 // -----------------------------------------------------------------------------
 void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg )
 {
-  UpdateQueryBuilder builder( database_.GetTableName( "KnowledgeObjects" ) );
-  std::stringstream query;
+    UpdateQueryBuilder builder( database_.GetTableName( "KnowledgeObjects" ) );
+    std::stringstream query;
     query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
-  builder.SetClause( query.str() );
-  builder.SetField( "team_id", msg.team() );
+    builder.SetClause( query.str() );
+    builder.SetField( "team_id", msg.team() );
 
-  if ( msg.has_attributes() && msg.attributes().has_construction() )
-    builder.SetField( "state", msg.attributes().construction().percentage() );
+    if ( msg.has_attributes() && msg.attributes().has_construction() )
+        builder.SetField( "state", msg.attributes().construction().percentage() );
 
-  const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
-  std::string symbol( knowledge->pObject_->GetType().GetSymbol() ); 
-  if ( tools::app6::GetAffiliation( symbol ) != "U" )
-    builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
+    const dispatcher::ObjectKnowledge* knowledge = model_.objectKnowledges_.Find( msg.oid() );
+    std::string symbol( knowledge->pObject_->GetType().GetSymbol() ); 
+    if ( tools::app6::GetAffiliation( symbol ) != "U" )
+        builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
 
-  if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
-  {
-    tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.GetKarma().GetUId() );
+    if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
+    {
+        tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
-  }
-  else
-    tools::app6::SetAffiliation( symbol, (unsigned int) Common::EnumDiplomacy::unknown_diplo );
+    }
+    else
+        tools::app6::SetAffiliation( symbol, (unsigned int) Common::EnumDiplomacy::unknown_diplo );
 
-  builder.SetField( "symbol_id", FormatSymbol( symbol ) );
-  database_.Execute( builder );
-  
-  //Geometrie
-  if ( msg.has_location() )
-      UpdateObjectKnowledgeGeometry( GetObjectKnowledgeTable( msg.location() ), msg );
+    builder.SetField( "symbol_id", FormatSymbol( symbol ) );
+    database_.Execute( builder );
+    
+    //Geometrie
+    if ( msg.has_location() )
+        UpdateObjectKnowledgeGeometry( GetObjectKnowledgeTable( msg.location() ), msg );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,19 +322,19 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpda
 // -----------------------------------------------------------------------------
 void QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tablename, const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg )
 {
-  std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
-  std::stringstream query;
-  query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
-  Row_ABC* row = table->Find( query.str() );
-  bool bHasRows = row != 0;
-  if ( ! bHasRows )
-  {
-    InsertQueryBuilder builderGeom( database_.GetTableName( tablename ) );
-    builderGeom.SetField( "public_oid", msg.oid() );
-    builderGeom.SetField( "session_id", session_.GetId() );
-    UpdateGeometry( builderGeom, msg.location() );
-    database_.Execute( builderGeom );
-  }
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
+    std::stringstream query;
+    query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
+    Row_ABC* row = table->Find( query.str() );
+    bool bHasRows = row != 0;
+    if ( ! bHasRows )
+    {
+        InsertQueryBuilder builderGeom( database_.GetTableName( tablename ) );
+        builderGeom.SetField( "public_oid", msg.oid() );
+        builderGeom.SetField( "session_id", session_.GetId() );
+        UpdateGeometry( builderGeom, msg.location() );
+        database_.Execute( builderGeom );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -350,42 +350,42 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg
     builder.SetField( "public_oid", msg.oid() );
     builder.SetField( "name", std::string( msg.name() ) );
     builder.SetField( "type", std::string( msg.type() ) );
-  builder.SetField( "session_id", session_.GetId() );
+    builder.SetField( "session_id", session_.GetId() );
     UpdateSymbol( builder, model_.objects_, msg.oid() );
     UpdateGeometry( builder, msg.location() );
    
     database_.Execute( builder );
 
-  // retrieve object id for dumping attributes
-  /*std::stringstream query;
+    // retrieve object id for dumping attributes
+    /*std::stringstream query;
     query << "public_oid=" << msg.oid ;
-  std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location ) ) );
-  Row_ABC* pRow = table->Find( query.str(), true );
-  FieldVariant res = pRow->GetField( "id" );
-  int objectId = boost::get<int>(res);
-  ObjectAttributeUpdater::UpdateObjectAttribute( database_, objectId, msg.attributes );*/
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location ) ) );
+    Row_ABC* pRow = table->Find( query.str(), true );
+    FieldVariant res = pRow->GetField( "id" );
+    int objectId = boost::get<int>(res);
+    ObjectAttributeUpdater::UpdateObjectAttribute( database_, objectId, msg.attributes );*/
 }
 // $$$$ _RC_ FDS 2010-01-21: To Remove ???
 /*void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
 {
-  std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location ) ) );
-  Row_ABC& row = table->CreateRow();
-  row.SetField( "public_oid", FieldVariant( (int)msg.oid ) );
-  row.SetField( "name", FieldVariant( std::string( msg.name ) ) );
-  row.SetField( "type", FieldVariant( std::string( msg.type ) ) );
-  row.SetField( "session_id", FieldVariant( session_.GetId() ) );
-  switch ( msg.location.type )
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location ) ) );
+    Row_ABC& row = table->CreateRow();
+    row.SetField( "public_oid", FieldVariant( (int)msg.oid ) );
+    row.SetField( "name", FieldVariant( std::string( msg.name ) ) );
+    row.SetField( "type", FieldVariant( std::string( msg.type ) ) );
+    row.SetField( "session_id", FieldVariant( session_.GetId() ) );
+    switch ( msg.location.type )
     {
-  case Geometry::point:    row.SetShape( Point( msg.location.coordinates.elem[ 0 ] ) ); break;
-  case Geometry::line:     row.SetShape( Line( msg.location.coordinates ) ); break;
-  case Geometry::polygon:  row.SetShape( Area( msg.location.coordinates ) ); break;
+    case Geometry::point:    row.SetShape( Point( msg.location.coordinates.elem[ 0 ] ) ); break;
+    case Geometry::line:     row.SetShape( Line( msg.location.coordinates ) ); break;
+    case Geometry::polygon:  row.SetShape( Area( msg.location.coordinates ) ); break;
     }
 
-  table->InsertRow( row );
-  long objectId = row.GetID();
+    table->InsertRow( row );
+    long objectId = row.GetID();
 
-  // handle attributes
-  ObjectAttributeUpdater::UpdateObjectAttribute( database_, objectId, msg.attributes );
+    // handle attributes
+    ObjectAttributeUpdater::UpdateObjectAttribute( database_, objectId, msg.attributes );
 }*/
 
 
@@ -400,7 +400,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgReport& msg )
     builder.SetId( "id" );
     builder.SetField( "unit_id", msg.oid() );
     builder.SetField( "message", reportFactory_.CreateMessage( msg ) );
-  builder.SetField( "session_id", session_.GetId() );
+    builder.SetField( "session_id", session_.GetId() );
     // builder.AddParameter( "timestamp", reportFactory_.CreateMessage( msg ) );
     database_.Execute( builder );
 }
@@ -422,7 +422,7 @@ void QueryDatabaseUpdater::Update( const Common::MsgFormationCreation& message )
     builder.SetField( "name", std::string( message.nom() ) );
     builder.SetField( "type", -1 );
     builder.SetField( "engaged", 0 );
-  builder.SetField( "session_id", session_.GetId() );
+    builder.SetField( "session_id", session_.GetId() );
     UpdateSymbol( builder, model_.formations_, message.oid() );
     database_.Execute( builder );
 }
@@ -444,7 +444,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatCreation& me
     builder.SetField( "name", std::string( message.nom() ) );
     builder.SetField( "type", ( long ) message.type_automate() );
     builder.SetField( "engaged", 0 );
-  builder.SetField( "session_id", session_.GetId() );
+    builder.SetField( "session_id", session_.GetId() );
     UpdateSymbol( builder, model_.automats_, message.oid() );
     database_.Execute( builder );
 }
@@ -487,7 +487,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitAttributes& msg
     query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
     
     builder.SetClause( query.str() );
-  if( msg.has_vitesse() )
+    if( msg.has_vitesse() )
         builder.SetField( "speed", msg.vitesse() );
     if( msg.has_etat_operationnel_brut() )
         builder.SetField( "op_state", msg.etat_operationnel_brut() );
@@ -508,7 +508,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate
     std::stringstream query;
     query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
     
-  //AME 2009-10-12 TODO: update field observer_oid 
+    //AME 2009-10-12 TODO: update field observer_oid 
     builder.SetClause( query.str() );
     if( msg.has_speed() )
         builder.SetField( "speed", msg.speed() );
@@ -518,8 +518,8 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate
         builder.SetField( "identification_level", msg.identification_level() );
     if( msg.has_max_identification_level() )
         UpdateSymbol( builder, model_.agentKnowledges_, msg.oid() );
-  if ( msg.has_mort() )
-    builder.SetField( "dead", msg.mort() );
+    if ( msg.has_mort() )
+        builder.SetField( "dead", msg.mort() );
     if( msg.has_position() )
         builder.SetGeometry( Point( msg.position() ) );
     database_.Execute( builder );
@@ -571,7 +571,7 @@ void QueryDatabaseUpdater::DestroyObjectKnowledge( const MsgsSimToClient::MsgObj
 {
     std::stringstream query;
     
-  query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
+    query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
     DeleteQueryBuilder builder( database_.GetTableName( "KnowledgeObjects" ) );
     builder.SetClause( query.str() );
     database_.Execute( builder );
@@ -583,9 +583,9 @@ void QueryDatabaseUpdater::DestroyObjectKnowledge( const MsgsSimToClient::MsgObj
 // -----------------------------------------------------------------------------
 void QueryDatabaseUpdater::DestroyUnitKnowledge( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg )
 {
-   std::stringstream query;
+     std::stringstream query;
     
-  query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
+    query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
     DeleteQueryBuilder builder( database_.GetTableName( "Knowledgeunits" ) );
     builder.SetClause( query.str() );
     database_.Execute( builder );

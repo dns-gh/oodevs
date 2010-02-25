@@ -73,20 +73,20 @@ namespace
         void Register( const std::string& attribute, const T_CallBack& callback )
         {
             if ( ! callbacks_.insert( std::make_pair( attribute, callback ) ).second )
-            throw std::invalid_argument( "capacity '" + attribute + "' already registered." );
+                throw std::invalid_argument( "capacity '" + attribute + "' already registered." );
         }
         
         void Create( const std::string& attribute, tools::SortedInterfaceContainer< Extension_ABC >& result, PropertiesDictionary& dico, xml::xistream& xis )
         {
-          const CIT_Callbacks it = callbacks_.find( attribute );
-          if ( it != callbacks_.end() )
+            const CIT_Callbacks it = callbacks_.find( attribute );
+            if ( it != callbacks_.end() )
                 it->second( result, dico, xis );
         }
 
     private:    
-      //! @name Type
+        //! @name Type
         //@{
-      typedef std::map< std::string, T_CallBack > T_CallBacks;
+        typedef std::map< std::string, T_CallBack > T_CallBacks;
         typedef T_CallBacks::const_iterator         CIT_Callbacks;
         //@}
 

@@ -20,7 +20,7 @@
 
 namespace MsgsSimToClient
 {
-  class MsgUnitAttributes;
+    class MsgUnitAttributes;
 }
 
 namespace kernel
@@ -85,8 +85,8 @@ public:
 
     geometry::Point2f vPos_;
     unsigned int nSpeed_;
-    int  nAltitude_;
-    int  nDirection_;
+    int    nAltitude_;
+    int    nDirection_;
 
     unsigned              nRawOpState_;
     E_OperationalStatus    nOpState_;
@@ -100,7 +100,7 @@ public:
 
     E_UnitPosture nOldPosture_;
     E_UnitPosture nCurrentPosture_;
-    uint      nPostureCompletionPourcentage_;
+    uint          nPostureCompletionPourcentage_;
     uint          nInstallationState_;
 
     E_FireAvailability    nIndirectFireAvailability_;

@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( NBCPropagationCapacity )
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 NBCPropagationCapacity::NBCPropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager )
-  : pManager_        ( &manager )
+    : pManager_        ( &manager )
     , timeOfLastUpdate_( 0 )
 {
     // NOTHING
@@ -38,7 +38,7 @@ NBCPropagationCapacity::NBCPropagationCapacity( xml::xistream& xis, MIL_Propagat
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 NBCPropagationCapacity::NBCPropagationCapacity()
-  : pManager_        ()
+    : pManager_        ()
     , timeOfLastUpdate_( 0 )
 {
     // NOTHING
@@ -96,14 +96,14 @@ void NBCPropagationCapacity::Instanciate( Object& object ) const
     object.AddCapacity< PropagationCapacity_ABC >( capacity );
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 
-  //We get the coordinates of the nbc cloud and adjust them in order that they become divisible by length and width of the fire 
-  MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
+    //We get the coordinates of the nbc cloud and adjust them in order that they become divisible by length and width of the fire 
+    MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
     vOrigin.rX_ = (int)vOrigin.rX_ - (int)vOrigin.rX_ % attr.GetLength();
     vOrigin.rY_ = (int)vOrigin.rY_ - (int)vOrigin.rY_ % attr.GetWidth();
     
-  //We define the origin vector of the nbc cloud
-  object.UpdateLocalisation( GetLocalisation( vOrigin ) );
-  pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
+    //We define the origin vector of the nbc cloud
+    object.UpdateLocalisation( GetLocalisation( vOrigin ) );
+    pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
 }
 
 
@@ -190,12 +190,12 @@ bool NBCPropagationCapacity::UpdateState( Object& object , MT_Vector2D vNormaliz
 
 namespace
 {
-  class MIL_NBCBuilder : public MIL_ObjectBuilder_ABC
+    class MIL_NBCBuilder : public MIL_ObjectBuilder_ABC
     {
     public:
         MIL_NBCBuilder( const Object& object, const TER_Localisation& location ) 
             : object_ ( object ) 
-      , location_ ( location )
+            , location_ ( location )
         {
         }
 
@@ -213,7 +213,7 @@ namespace
 
     private:
         const Object&           object_;
-        const TER_Localisation&  location_;
+        const TER_Localisation&    location_;
     };
 }
 
@@ -225,15 +225,15 @@ namespace
 void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, Object& object )
 {
     NBCTypeAttribute& attr = object.GetAttribute< NBCTypeAttribute >();
-  TER_Localisation location( GetLocalisation( vOrigin ) );
+    TER_Localisation location( GetLocalisation( vOrigin ) );
 
-  if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
-  {
-    MIL_NBCBuilder builder( object, location );
-    MIL_EntityManager::GetSingleton().CreateObject( object.GetArmy(), builder );
+    if( !pManager_->IsFlagged( location , attr.GetLength() , attr.GetWidth() ) ) 
+    {
+        MIL_NBCBuilder builder( object, location );
+        MIL_EntityManager::GetSingleton().CreateObject( object.GetArmy(), builder );
         pManager_->Flag( vOrigin , attr.GetLength() , attr.GetWidth() );
         //Definir peut etre ici une concentration initiale
-  }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -243,7 +243,7 @@ void NBCPropagationCapacity::Propagate( const MT_Vector2D& vOrigin, Object& obje
 // -----------------------------------------------------------------------------
 TER_Localisation NBCPropagationCapacity::GetLocalisation( const MT_Vector2D& pt ) const
 {
-  T_PointVector pointVector;
+    T_PointVector pointVector;
     pointVector.push_back( pt );
-  return TER_Localisation( TER_Localisation::ePoint, pointVector );
+    return TER_Localisation( TER_Localisation::ePoint, pointVector );
 }

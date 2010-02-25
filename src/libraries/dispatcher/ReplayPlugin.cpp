@@ -135,9 +135,9 @@ void ReplayPlugin::SendReplayInfo( ClientPublisher_ABC& client )
 void ReplayPlugin::OnReceive( const std::string& , const MsgsClientToReplay::MsgClientToReplay& wrapper )
 {
     if( wrapper.message().has_control_pause() )
-      Pause();
+        Pause();
     else if( wrapper.message().has_control_resume() )
-      Resume();
+        Resume();
     else if( wrapper.message().has_control_change_time_factor() )
         ChangeTimeFactor( wrapper.message().control_change_time_factor().time_factor() );
     else if( wrapper.message().has_control_skip_to_tick() )

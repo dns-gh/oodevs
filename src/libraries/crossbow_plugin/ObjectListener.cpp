@@ -30,7 +30,7 @@ using namespace plugins::crossbow;
 ObjectListener::ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
     : publisher_( publisher )
     , database_  ( database )
-  , session_ ( session )
+    , session_ ( session )
 {
     Clean();
     table_.reset( database_.OpenTable( "Create_TacticalObject_Point" ) );
@@ -51,11 +51,11 @@ ObjectListener::~ObjectListener()
 // -----------------------------------------------------------------------------
 void ObjectListener::Clean()
 {
-  std::stringstream clause;
+    std::stringstream clause;
     clause << "session_id=" << session_.GetId();
-  try
+    try
     {
-    database_.Execute( DeleteQueryBuilder( database_.GetTableName( "TacticalObject_Point" ), clause.str() ) );
+        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "TacticalObject_Point" ), clause.str() ) );
     }
     catch ( std::exception& e )
     {

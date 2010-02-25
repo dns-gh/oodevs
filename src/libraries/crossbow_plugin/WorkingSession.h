@@ -52,9 +52,9 @@ private:
 private:
     //! @name Types Helpers
     //@{
-  void LoadExercise( const dispatcher::Config& config, QueryDatabaseSession& database );
+    void LoadExercise( const dispatcher::Config& config, QueryDatabaseSession& database );
     int GetExercise() const;
-  void LoadSession( const dispatcher::Config& config, QueryDatabaseSession& database );
+    void LoadSession( const dispatcher::Config& config, QueryDatabaseSession& database );
     //@}
 
 private:

@@ -86,7 +86,7 @@ geometry::Point2f CoordinateConverter::ConvertToXY( const std::string& mgrs ) co
 // -----------------------------------------------------------------------------
 geometry::Point2d CoordinateConverter::ConvertToGeo( const geometry::Point2f& pos ) const
 {
-  static const double r180OverPi = 180. / std::acos( -1. );
+    static const double r180OverPi = 180. / std::acos( -1. );
     SetGeodeticCoordinates( pos );
     geometry::Point2d result;
     result.Set( geodetic_.GetLongitude() * r180OverPi, geodetic_.GetLatitude() * r180OverPi );
@@ -132,21 +132,21 @@ bool CoordinateConverter::IsInBoundaries( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 std::string CoordinateConverter::ConvertToGeoDms( const geometry::Point2f& pos ) const
 {
-  SetGeodeticCoordinates( pos );
-  return std::string ( geodetic_.GetLongitude( "DD° MM' SS.SS H" ) + ", " + geodetic_.GetLatitude( "DD° MM' SS.SS H" ) );
+    SetGeodeticCoordinates( pos );
+    return std::string ( geodetic_.GetLongitude( "DD° MM' SS.SS H" ) + ", " + geodetic_.GetLatitude( "DD° MM' SS.SS H" ) );
 }
 // -----------------------------------------------------------------------------
-// Name: CoordinateConverter::ConvertToUtm    
+// Name: CoordinateConverter::ConvertToUtm        
 // Created: AME 2010-02-23
 // -----------------------------------------------------------------------------
 std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& pos ) const
 {
-  ConvertToMgrs( pos );
-  mgrs_.GetCoordinates( utm_ );
-  char   istring[ 256 ];
-  sprintf( istring, "%d%s %dE %dN", utm_.GetZone(), utm_.GetHemisphere() == geocoord::eNorth ? "N" : "S"
-                  , boost::lexical_cast< int >( utm_.GetEasting() ),  boost::lexical_cast< int >( utm_.GetNorthing() ) );
-  return std::string( istring );
+    ConvertToMgrs( pos );
+    mgrs_.GetCoordinates( utm_ );
+    char   istring[ 256 ];
+    sprintf( istring, "%d%s %dE %dN", utm_.GetZone(), utm_.GetHemisphere() == geocoord::eNorth ? "N" : "S"
+                                    , boost::lexical_cast< int >( utm_.GetEasting() ),  boost::lexical_cast< int >( utm_.GetNorthing() ) );
+    return std::string( istring );
 }
 
 // -----------------------------------------------------------------------------

@@ -20,7 +20,7 @@ using namespace Common;
 
 namespace MsgsSimToClient
 {
-  class MsgUnitDetection;
+    class MsgUnitDetection;
 }
 
 namespace kernel

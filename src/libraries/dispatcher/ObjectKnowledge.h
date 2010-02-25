@@ -105,7 +105,7 @@ public:
     const Model&                 model_;
     const kernel::Team_ABC&      team_;
     const kernel::Object_ABC*    pObject_;
-  const std::string            nType_;
+    const std::string            nType_;
 
 
     unsigned int                   nRelevance_;

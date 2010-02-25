@@ -48,10 +48,10 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeUrbanFunctions::GetCurrentBarycent
 // -----------------------------------------------------------------------------
 float DEC_KnowledgeUrbanFunctions::GetTrafficability ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
 {
-   if( pKnowledge.get() && pKnowledge->IsValid() )
-    return (float)pKnowledge->GetTrafficability( );
-   else
-    return 0;
+     if( pKnowledge.get() && pKnowledge->IsValid() )
+        return (float)pKnowledge->GetTrafficability( );
+     else
+        return 0;
 }
     
 

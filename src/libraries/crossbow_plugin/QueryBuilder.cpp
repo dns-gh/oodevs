@@ -55,7 +55,7 @@ namespace
 // -----------------------------------------------------------------------------
 void QueryBuilder::SetId( const std::string& field )
 {
-  idField_ = field;
+    idField_ = field;
     AddParameter( T_Parameter( field, "nextval('" + table_ + "_" + idField_ + "_seq')" ) );
 }
 
@@ -65,7 +65,7 @@ void QueryBuilder::SetId( const std::string& field )
 // -----------------------------------------------------------------------------
 std::string QueryBuilder::GetSequence() const
 {
-  return table_ + "_" + idField_ + "_seq";
+    return table_ + "_" + idField_ + "_seq";
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ std::string QueryBuilder::GetSequence() const
 // Created: AME 2009-10-12
 // -----------------------------------------------------------------------------
 std::string QueryBuilder::GetTableName() const{
-  return table_;
+    return table_;
 }
 
 // -----------------------------------------------------------------------------

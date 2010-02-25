@@ -18,12 +18,12 @@ class MIL_PropagationManager;
 class NBCPropagationCapacity : public PropagationCapacity_ABC    
 {
 public:
-  //! @name Constructors/Destructor
+    //! @name Constructors/Destructor
     //@{
-  explicit NBCPropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager );
-           NBCPropagationCapacity();
+    explicit NBCPropagationCapacity( xml::xistream& xis, MIL_PropagationManager& manager );
+             NBCPropagationCapacity();
     virtual ~NBCPropagationCapacity();
-  //@}
+    //@}
 
     //! @name CheckPoints
     //@{
@@ -31,11 +31,11 @@ public:
     virtual void Register( Object& /*object*/ );
     //@}
 
-  //! @name virtual
+    //! @name virtual
     //@{
     virtual void Instanciate( Object& object ) const;
-  virtual void Update( Object& object, float time );
-  //@}
+    virtual void Update( Object& object, float time );
+    //@}
 
 private:
     //! @name Copy
@@ -43,24 +43,24 @@ private:
     NBCPropagationCapacity( const NBCPropagationCapacity& from );
     //@}
 
-  //! @name Update
+    //! @name Update
     //@{
     void UpdateShape( Object& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
     bool UpdateState( Object& object , MT_Vector2D vNormalizedWind , MT_Vector2D vPerpendicularToWind , MT_Float windSpeed );
     void Propagate( const MT_Vector2D& vOrigin, Object& object );
     //@}
-  
-  //! @name Helpers
+    
+    //! @name Helpers
     //@{
-  TER_Localisation GetLocalisation( const MT_Vector2D& pt ) const;
-  //@}
+    TER_Localisation GetLocalisation( const MT_Vector2D& pt ) const;
+    //@}
 
 private:
-  //! @name 
+    //! @name 
     //@{
-  MIL_PropagationManager* pManager_;
+    MIL_PropagationManager* pManager_;
     float                   timeOfLastUpdate_;
-  //@}
+    //@}
 };
 
 BOOST_CLASS_EXPORT_KEY( NBCPropagationCapacity )
