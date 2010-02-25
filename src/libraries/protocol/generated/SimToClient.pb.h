@@ -50,6 +50,7 @@ class MsgAutomatChangeSuperiorAck;
 class MsgUnitChangeSuperiorAck;
 class MsgLogSupplyPushFlowAck;
 class MsgLogSupplyChangeQuotasAck;
+class MsgActionCreateFireOrderAck;
 class MsgControlInformation;
 class MsgControlProfilingInformation;
 class MsgControlBeginTick;
@@ -395,6 +396,27 @@ inline bool MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_Parse(
     const ::std::string& name, MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas>(
     MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_descriptor(), name, value);
+}
+enum MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode {
+  MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_no_error = 0,
+  MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_reporter = 1,
+  MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_target = 2,
+  MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_munition = 3,
+  MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_target_no_illuminated = 4
+};
+bool MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_IsValid(int value);
+const MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_EnumActionCreateFireOrderErrorCode_MIN = MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_no_error;
+const MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_EnumActionCreateFireOrderErrorCode_MAX = MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_target_no_illuminated;
+
+const ::google::protobuf::EnumDescriptor* MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_descriptor();
+inline const ::std::string& MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_Name(MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_descriptor(), value);
+}
+inline bool MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_Parse(
+    const ::std::string& name, MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode>(
+    MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_descriptor(), name, value);
 }
 enum ControlAck_ErrorCode {
   ControlAck_ErrorCode_no_error = 0,
@@ -2570,6 +2592,118 @@ class MsgLogSupplyChangeQuotasAck : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgLogSupplyChangeQuotasAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgActionCreateFireOrderAck : public ::google::protobuf::Message {
+ public:
+  MsgActionCreateFireOrderAck();
+  virtual ~MsgActionCreateFireOrderAck();
+  
+  MsgActionCreateFireOrderAck(const MsgActionCreateFireOrderAck& from);
+  
+  inline MsgActionCreateFireOrderAck& operator=(const MsgActionCreateFireOrderAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgActionCreateFireOrderAck& default_instance();
+  void Swap(MsgActionCreateFireOrderAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgActionCreateFireOrderAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgActionCreateFireOrderAck& from);
+  void MergeFrom(const MsgActionCreateFireOrderAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode EnumActionCreateFireOrderErrorCode;
+  static const EnumActionCreateFireOrderErrorCode no_error = MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_no_error;
+  static const EnumActionCreateFireOrderErrorCode error_invalid_reporter = MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_reporter;
+  static const EnumActionCreateFireOrderErrorCode error_invalid_target = MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_target;
+  static const EnumActionCreateFireOrderErrorCode error_invalid_munition = MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_munition;
+  static const EnumActionCreateFireOrderErrorCode error_target_no_illuminated = MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_target_no_illuminated;
+  static inline bool EnumActionCreateFireOrderErrorCode_IsValid(int value) {
+    return MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_IsValid(value);
+  }
+  static const EnumActionCreateFireOrderErrorCode EnumActionCreateFireOrderErrorCode_MIN =
+    MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_EnumActionCreateFireOrderErrorCode_MIN;
+  static const EnumActionCreateFireOrderErrorCode EnumActionCreateFireOrderErrorCode_MAX =
+    MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_EnumActionCreateFireOrderErrorCode_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  EnumActionCreateFireOrderErrorCode_descriptor() {
+    return MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_descriptor();
+  }
+  static inline const ::std::string& EnumActionCreateFireOrderErrorCode_Name(EnumActionCreateFireOrderErrorCode value) {
+    return MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_Name(value);
+  }
+  static inline bool EnumActionCreateFireOrderErrorCode_Parse(const ::std::string& name,
+      EnumActionCreateFireOrderErrorCode* value) {
+    return MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+  // required .MsgsSimToClient.MsgActionCreateFireOrderAck.EnumActionCreateFireOrderErrorCode error_code = 2;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 2;
+  inline ::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode error_code() const;
+  inline void set_error_code(::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int error_code_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgActionCreateFireOrderAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -19529,6 +19663,13 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck& knowledge_group_update_ack() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* mutable_knowledge_group_update_ack();
   
+  // optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 119;
+  inline bool has_action_create_fire_order_ack() const;
+  inline void clear_action_create_fire_order_ack();
+  static const int kActionCreateFireOrderAckFieldNumber = 119;
+  inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& action_create_fire_order_ack() const;
+  inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* mutable_action_create_fire_order_ack();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -19651,11 +19792,12 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgKnowledgeGroupUpdate* knowledge_group_update_;
   ::MsgsSimToClient::MsgKnowledgeGroupCreationAck* knowledge_group_creation_ack_;
   ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* knowledge_group_update_ack_;
+  ::MsgsSimToClient::MsgActionCreateFireOrderAck* action_create_fire_order_ack_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(118 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(119 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -20281,6 +20423,27 @@ inline void MsgLogSupplyChangeQuotasAck::set_ack(::MsgsSimToClient::MsgLogSupply
   GOOGLE_DCHECK(::MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_IsValid(value));
   _set_bit(0);
   ack_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgActionCreateFireOrderAck
+
+// required .MsgsSimToClient.MsgActionCreateFireOrderAck.EnumActionCreateFireOrderErrorCode error_code = 2;
+inline bool MsgActionCreateFireOrderAck::has_error_code() const {
+  return _has_bit(0);
+}
+inline void MsgActionCreateFireOrderAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode MsgActionCreateFireOrderAck::error_code() const {
+  return static_cast< ::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >(error_code_);
+}
+inline void MsgActionCreateFireOrderAck::set_error_code(::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode value) {
+  GOOGLE_DCHECK(::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_IsValid(value));
+  _set_bit(0);
+  error_code_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -31798,6 +31961,23 @@ inline ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* MsgSimToClient_Content::mu
   return knowledge_group_update_ack_;
 }
 
+// optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 119;
+inline bool MsgSimToClient_Content::has_action_create_fire_order_ack() const {
+  return _has_bit(118);
+}
+inline void MsgSimToClient_Content::clear_action_create_fire_order_ack() {
+  if (action_create_fire_order_ack_ != NULL) action_create_fire_order_ack_->::MsgsSimToClient::MsgActionCreateFireOrderAck::Clear();
+  _clear_bit(118);
+}
+inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& MsgSimToClient_Content::action_create_fire_order_ack() const {
+  return action_create_fire_order_ack_ != NULL ? *action_create_fire_order_ack_ : *default_instance_->action_create_fire_order_ack_;
+}
+inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* MsgSimToClient_Content::mutable_action_create_fire_order_ack() {
+  _set_bit(118);
+  if (action_create_fire_order_ack_ == NULL) action_create_fire_order_ack_ = new ::MsgsSimToClient::MsgActionCreateFireOrderAck;
+  return action_create_fire_order_ack_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgSimToClient
@@ -31877,6 +32057,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgLogSupplyP
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas>() {
   return ::MsgsSimToClient::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode>() {
+  return ::MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::ControlAck_ErrorCode>() {

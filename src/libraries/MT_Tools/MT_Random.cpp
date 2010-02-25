@@ -38,7 +38,7 @@ MT_Random::MT_Random( unsigned long nSeed )
 MT_Random::MT_Random()
     : left_ ( 1 )
 {
-    MT_Random::MT_Random( unsigned long( time(0) ) );
+    this->MT_Random::MT_Random( unsigned long( time(0) ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -48,7 +48,7 @@ MT_Random::MT_Random()
 MT_Random::MT_Random( const std::vector< unsigned long >& init_key )
     : left_ ( 1 )
 {
-    MT_Random::MT_Random( 19650218UL );
+    this->MT_Random::MT_Random( 19650218UL );
 
     unsigned int i = 1;
     unsigned int j = 0;

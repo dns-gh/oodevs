@@ -13,6 +13,7 @@
 
 #include "MIL_EntityManager.h"
 
+#include "Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Agents/Units/Categories/PHY_NatureLevel.h"
 #include "Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Agents/Units/Categories/PHY_RoePopulation.h"
@@ -22,6 +23,8 @@
 #include "Agents/Units/HumanFactors/PHY_Tiredness.h"
 #include "Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Agents/Units/Postures/PHY_Posture.h"
+#include "Agents/Units/Dotations/PHY_DotationCategory.h"
+#include "Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Agents/Units/Dotations/PHY_DotationType.h"
 #include "Agents/Units/Dotations/PHY_DotationLogisticType.h"
 #include "Agents/Units/Dotations/PHY_ConsumptionType.h"
@@ -41,6 +44,7 @@
 #include "Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
 #include "Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Agents/Units/Logistic/PHY_BreakdownType.h"
+#include "Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Agents/Roles/Logistic/PHY_Convoy_ABC.h"
 #include "Agents/Roles/Logistic/PHY_MaintenanceResourcesAlarms.h"
 #include "Agents/Roles/Logistic/PHY_MedicalResourcesAlarms.h"
@@ -55,6 +59,7 @@
 #include "Automates/MIL_Automate.h"
 #include "Effects/MIL_EffectManager.h"
 #include "HLA/HLA_Federate.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/MIL_KnowledgeGroupType.h"
 #include "MIL_Army.h"
 #include "MIL_Formation.h"
@@ -1063,6 +1068,47 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim:
     }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgMagicActionCreateFireOrder
+// Created: MGD 2010-02-24
+// LTO
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgMagicActionCreateFireOrder( const MsgsClientToSim::MsgMagicActionCreateFireOrder& message, unsigned int nCtx )
+{
+    client::ActionCreateFireOrderAck  ack;
+    ack().set_error_code( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_no_error );
+    try
+    {
+        MIL_Agent_ABC* reporter = FindAgentPion( message.oid_agentforcr() );
+        if( !reporter )
+            throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_reporter );
+
+
+        boost::shared_ptr< DEC_Knowledge_Agent > targetKn = reporter->GetKnowledge().ResolveKnowledgeAgent( message.oid_targetknowledge() );
+        if( !targetKn )
+            throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_target );
+
+
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( message.munition() );
+        if( !pDotationCategory )
+            throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_invalid_munition );
+            
+        if( pDotationCategory->IsGuided() && !targetKn->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated() )
+            throw NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >( MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode_error_target_no_illuminated );
+
+        PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
+        unsigned int ammos = pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( message.it() );
+
+        pDotationCategory->ApplyIndirectFireEffect( *reporter, targetKn->GetAgentKnown(), ammos , fireResult );
+    }
+    catch( NET_AsnException< MsgsSimToClient::MsgActionCreateFireOrderAck_EnumActionCreateFireOrderErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ChannelPopulations

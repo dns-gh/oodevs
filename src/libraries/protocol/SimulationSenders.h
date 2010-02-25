@@ -46,6 +46,7 @@ GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, LogSupplyPushFlow        
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, LogSupplyChangeQuotas              , log_supply_change_quotas )
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, KnowledgeGroupCreationRequest      , knowledge_group_creation_request )
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, KnowledgeGroupUpdateRequest        , knowledge_group_update_request )
+GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, MagicActionCreateFireOrder         , create_fire_order )
 }
 
 #endif // __protocol_SimulationSenders_h_

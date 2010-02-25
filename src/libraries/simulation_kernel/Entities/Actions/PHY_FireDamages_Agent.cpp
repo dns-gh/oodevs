@@ -77,6 +77,7 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToCli
 {
     asn.set_target( target.GetID() );
 
+    asn.mutable_equipments();
     // Composantes
     if( asn.equipments().elem_size() )
     {
@@ -86,7 +87,7 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToCli
             const PHY_ComposanteType_ABC& type   = *itResult->first;
             const T_ComposanteStates&      states =  itResult->second;
 
-            MsgsSimToClient::MsgUnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->mutable_elem(i);
+            MsgsSimToClient::MsgUnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->add_elem();
             asnEquipement.set_equipement_type( type.GetMosID().equipment() );
             asnEquipement.set_available_nbr( states[ PHY_ComposanteState::undamaged_.GetID() ] );
             asnEquipement.set_repairable_nbr( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
@@ -94,6 +95,7 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToCli
         }
     }
 
+    asn.mutable_humans();
     // Humans
     for( PHY_HumanRank::CIT_HumanRankMap it = PHY_HumanRank::GetHumanRanks().begin(); it != PHY_HumanRank::GetHumanRanks().end(); ++it )
     {

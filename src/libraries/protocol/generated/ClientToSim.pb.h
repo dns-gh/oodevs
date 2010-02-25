@@ -57,6 +57,7 @@ class MsgMagicActionCreateObject;
 class MsgMagicActionUpdateObject;
 class MsgObjectMagicAction_action;
 class MsgObjectMagicAction;
+class MsgMagicActionCreateFireOrder;
 class MsgPopulationMagicAction_action;
 class MsgPopulationMagicAction;
 class MsgLogSupplyPushFlow;
@@ -2719,6 +2720,117 @@ class MsgObjectMagicAction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgMagicActionCreateFireOrder : public ::google::protobuf::Message {
+ public:
+  MsgMagicActionCreateFireOrder();
+  virtual ~MsgMagicActionCreateFireOrder();
+  
+  MsgMagicActionCreateFireOrder(const MsgMagicActionCreateFireOrder& from);
+  
+  inline MsgMagicActionCreateFireOrder& operator=(const MsgMagicActionCreateFireOrder& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgMagicActionCreateFireOrder& default_instance();
+  void Swap(MsgMagicActionCreateFireOrder* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgMagicActionCreateFireOrder* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgMagicActionCreateFireOrder& from);
+  void MergeFrom(const MsgMagicActionCreateFireOrder& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 oid_targetKnowledge = 1;
+  inline bool has_oid_targetknowledge() const;
+  inline void clear_oid_targetknowledge();
+  static const int kOidTargetKnowledgeFieldNumber = 1;
+  inline ::google::protobuf::int32 oid_targetknowledge() const;
+  inline void set_oid_targetknowledge(::google::protobuf::int32 value);
+  
+  // required int32 oid_agentForCr = 2;
+  inline bool has_oid_agentforcr() const;
+  inline void clear_oid_agentforcr();
+  static const int kOidAgentForCrFieldNumber = 2;
+  inline ::google::protobuf::int32 oid_agentforcr() const;
+  inline void set_oid_agentforcr(::google::protobuf::int32 value);
+  
+  // required int32 munition = 3;
+  inline bool has_munition() const;
+  inline void clear_munition();
+  static const int kMunitionFieldNumber = 3;
+  inline ::google::protobuf::int32 munition() const;
+  inline void set_munition(::google::protobuf::int32 value);
+  
+  // required int32 it = 4;
+  inline bool has_it() const;
+  inline void clear_it();
+  static const int kItFieldNumber = 4;
+  inline ::google::protobuf::int32 it() const;
+  inline void set_it(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 oid_targetknowledge_;
+  ::google::protobuf::int32 oid_agentforcr_;
+  ::google::protobuf::int32 munition_;
+  ::google::protobuf::int32 it_;
+  friend void  protobuf_AddDesc_ClientToSim_2eproto();
+  friend void protobuf_AssignDesc_ClientToSim_2eproto();
+  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgMagicActionCreateFireOrder* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgPopulationMagicAction_action : public ::google::protobuf::Message {
  public:
   MsgPopulationMagicAction_action();
@@ -3800,6 +3912,13 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   inline const ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& knowledge_group_update_request() const;
   inline ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest* mutable_knowledge_group_update_request();
   
+  // optional .MsgsClientToSim.MsgMagicActionCreateFireOrder create_fire_order = 29;
+  inline bool has_create_fire_order() const;
+  inline void clear_create_fire_order();
+  static const int kCreateFireOrderFieldNumber = 29;
+  inline const ::MsgsClientToSim::MsgMagicActionCreateFireOrder& create_fire_order() const;
+  inline ::MsgsClientToSim::MsgMagicActionCreateFireOrder* mutable_create_fire_order();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -3832,11 +3951,12 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   ::MsgsClientToSim::MsgLogSupplyChangeQuotas* log_supply_change_quotas_;
   ::MsgsClientToSim::MsgKnowledgeGroupCreationRequest* knowledge_group_creation_request_;
   ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest* knowledge_group_update_request_;
+  ::MsgsClientToSim::MsgMagicActionCreateFireOrder* create_fire_order_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(28 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(29 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -5320,6 +5440,74 @@ inline ::MsgsClientToSim::MsgObjectMagicAction_action* MsgObjectMagicAction::mut
 
 // -------------------------------------------------------------------
 
+// MsgMagicActionCreateFireOrder
+
+// required int32 oid_targetKnowledge = 1;
+inline bool MsgMagicActionCreateFireOrder::has_oid_targetknowledge() const {
+  return _has_bit(0);
+}
+inline void MsgMagicActionCreateFireOrder::clear_oid_targetknowledge() {
+  oid_targetknowledge_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgMagicActionCreateFireOrder::oid_targetknowledge() const {
+  return oid_targetknowledge_;
+}
+inline void MsgMagicActionCreateFireOrder::set_oid_targetknowledge(::google::protobuf::int32 value) {
+  _set_bit(0);
+  oid_targetknowledge_ = value;
+}
+
+// required int32 oid_agentForCr = 2;
+inline bool MsgMagicActionCreateFireOrder::has_oid_agentforcr() const {
+  return _has_bit(1);
+}
+inline void MsgMagicActionCreateFireOrder::clear_oid_agentforcr() {
+  oid_agentforcr_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 MsgMagicActionCreateFireOrder::oid_agentforcr() const {
+  return oid_agentforcr_;
+}
+inline void MsgMagicActionCreateFireOrder::set_oid_agentforcr(::google::protobuf::int32 value) {
+  _set_bit(1);
+  oid_agentforcr_ = value;
+}
+
+// required int32 munition = 3;
+inline bool MsgMagicActionCreateFireOrder::has_munition() const {
+  return _has_bit(2);
+}
+inline void MsgMagicActionCreateFireOrder::clear_munition() {
+  munition_ = 0;
+  _clear_bit(2);
+}
+inline ::google::protobuf::int32 MsgMagicActionCreateFireOrder::munition() const {
+  return munition_;
+}
+inline void MsgMagicActionCreateFireOrder::set_munition(::google::protobuf::int32 value) {
+  _set_bit(2);
+  munition_ = value;
+}
+
+// required int32 it = 4;
+inline bool MsgMagicActionCreateFireOrder::has_it() const {
+  return _has_bit(3);
+}
+inline void MsgMagicActionCreateFireOrder::clear_it() {
+  it_ = 0;
+  _clear_bit(3);
+}
+inline ::google::protobuf::int32 MsgMagicActionCreateFireOrder::it() const {
+  return it_;
+}
+inline void MsgMagicActionCreateFireOrder::set_it(::google::protobuf::int32 value) {
+  _set_bit(3);
+  it_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgPopulationMagicAction_action
 
 // optional .Common.MsgMagicActionPopulationChangeAttitude change_attitude = 1;
@@ -6271,6 +6459,23 @@ inline ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest* MsgClientToSim_Content
   _set_bit(27);
   if (knowledge_group_update_request_ == NULL) knowledge_group_update_request_ = new ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest;
   return knowledge_group_update_request_;
+}
+
+// optional .MsgsClientToSim.MsgMagicActionCreateFireOrder create_fire_order = 29;
+inline bool MsgClientToSim_Content::has_create_fire_order() const {
+  return _has_bit(28);
+}
+inline void MsgClientToSim_Content::clear_create_fire_order() {
+  if (create_fire_order_ != NULL) create_fire_order_->::MsgsClientToSim::MsgMagicActionCreateFireOrder::Clear();
+  _clear_bit(28);
+}
+inline const ::MsgsClientToSim::MsgMagicActionCreateFireOrder& MsgClientToSim_Content::create_fire_order() const {
+  return create_fire_order_ != NULL ? *create_fire_order_ : *default_instance_->create_fire_order_;
+}
+inline ::MsgsClientToSim::MsgMagicActionCreateFireOrder* MsgClientToSim_Content::mutable_create_fire_order() {
+  _set_bit(28);
+  if (create_fire_order_ == NULL) create_fire_order_ = new ::MsgsClientToSim::MsgMagicActionCreateFireOrder;
+  return create_fire_order_;
 }
 
 // -------------------------------------------------------------------

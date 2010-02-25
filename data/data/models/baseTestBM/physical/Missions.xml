@@ -92,7 +92,7 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.SeekAndDestroy" dia-type="T_Mission_Pion_SeekAndDestroy" id="31" name="SeekAndDestroy">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterPoint" id="32" name="ReconnoiterPoint">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterPoint" id="32" name="ReconnoiterPoint">
       <parameter dia-name="objectives" name="point" optional="false" type="PointBM"/>
     </mission>     
     <mission dia-behavior="net.masagroup.testSword.military.tasks.EngageAgents" dia-type="T_Mission_Pion_Engage" id="33" name="EngageAgents">

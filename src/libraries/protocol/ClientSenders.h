@@ -136,6 +136,7 @@ GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupCreation  
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupCreationAck                    , knowledge_group_creation_ack                      )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupUpdate                         , knowledge_group_update                            )
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , KnowledgeGroupUpdateAck                      , knowledge_group_update_ack                        )
+GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , ActionCreateFireOrderAck                     , action_create_fire_order_ack                      )
 // LTO end
 }
 

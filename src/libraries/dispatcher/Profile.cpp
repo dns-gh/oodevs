@@ -260,6 +260,8 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return true;
     if( message.has_log_supply_change_quotas() )
         return true;
+    if( message.has_create_fire_order() )
+        return bSupervision_;
 
     return false;
 }

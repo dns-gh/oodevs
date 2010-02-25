@@ -120,6 +120,7 @@ namespace MsgsSimToClient
     class MsgControlPauseAck;
     class MsgControlResumeAck;
     class MsgControlChangeTimeFactorAck;
+    class MsgActionCreateFireOrderAck;
 }
 
 namespace Common
@@ -469,6 +470,11 @@ private:
     void OnReceiveMsgKnowledgeGroupCreationAck       ( const MsgsSimToClient::MsgKnowledgeGroupCreationAck&      message, unsigned long nCtx );
     // LTO end
     //@}
+
+    // LTO begin
+    // CreateFireOrder
+    void OnReceiveMsgActionCreateFireOrderAck( const MsgsSimToClient::MsgActionCreateFireOrderAck& message, unsigned long nCtx );
+    // LTO end
 
     //! @name Helpers
     //@{

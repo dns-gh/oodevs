@@ -1454,6 +1454,15 @@ void AgentServerMsgMgr::OnReceiveMsgNoteDestruction( const MsgsMessengerToClient
 {
     GetModel().notes_.Delete( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgActionCreateFireOrderAck
+// Created: MGD 2010-02-24
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgActionCreateFireOrderAck( const MsgsSimToClient::MsgActionCreateFireOrderAck& message, unsigned long nCtx )
+{
+    CheckAcknowledge( logger_, message.error_code(), "CreateFireOrderAck" );
+}
 // LTO end
 
 // -----------------------------------------------------------------------------
@@ -1836,6 +1845,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
         OnReceiveMsgKnowledgeGroupUpdateAck( wrapper.message().knowledge_group_update_ack(), wrapper.context() );
     else if( wrapper.message().has_knowledge_group_creation_ack() )
         OnReceiveMsgKnowledgeGroupCreationAck( wrapper.message().knowledge_group_creation_ack(), wrapper.context() );
+    else if( wrapper.message().has_action_create_fire_order_ack() )
+        OnReceiveMsgActionCreateFireOrderAck( wrapper.message().action_create_fire_order_ack(), wrapper.context() );
     else
         UnhandledMessage( &wrapper.message() );
 }

@@ -141,6 +141,13 @@ message MsgObjectMagicAction {
    required MsgObjectMagicAction_action  action             = 1;
 }
 
+message MsgMagicActionCreateFireOrder {
+   required int32                      oid_targetKnowledge = 1;
+   required int32                      oid_agentForCr      = 2;
+   required int32                      munition            = 3;
+   required int32                      it                  = 4;
+}
+
 message MsgPopulationMagicAction_action {
    optional Common.MsgMagicActionPopulationChangeAttitude   change_attitude     = 1;
    optional Common.MsgMagicActionPopulationMoveTo           move_to             = 2;
@@ -219,7 +226,8 @@ message MsgClientToSim {
        optional MsgLogSupplyPushFlow                   log_supply_push_flow                 = 25;
        optional MsgLogSupplyChangeQuotas               log_supply_change_quotas             = 26;   
        optional MsgKnowledgeGroupCreationRequest       knowledge_group_creation_request     = 27;   
-       optional MsgKnowledgeGroupUpdateRequest         knowledge_group_update_request       = 28;   
+       optional MsgKnowledgeGroupUpdateRequest         knowledge_group_update_request       = 28;
+       optional MsgMagicActionCreateFireOrder          create_fire_order                    = 29;   
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

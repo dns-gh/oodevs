@@ -130,6 +130,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation         ( wrapper.message().knowledge_group_creation_request()   , nCtx ); 
     else if( wrapper.message().has_knowledge_group_update_request() )             
         workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupUpdate           ( wrapper.message().knowledge_group_update_request()     , nCtx );        
+    else if( wrapper.message().has_create_fire_order() )             
+        workspace.GetEntityManager        ().OnReceiveMsgMagicActionCreateFireOrder     ( wrapper.message().create_fire_order()          , nCtx );
     // LTO END
 }
 

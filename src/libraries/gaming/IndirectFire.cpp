@@ -25,7 +25,7 @@ IndirectFire::IndirectFire( const MsgsSimToClient::MsgStartUnitFire& message, co
     , id_( message.fire_oid() )
     , target_( converter.ConvertToXY( message.target().position() ) )
 {
-    if( message.target().has_position() )
+    if( !message.target().has_position() )
         throw std::runtime_error( "Indirect fire on an agent..." );
 }
 

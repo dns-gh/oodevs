@@ -50,6 +50,7 @@ namespace MsgsClientToSim
     class MsgUnitMagicAction;    
     class MsgKnowledgeGroupCreationRequest;
     class MsgKnowledgeGroupUpdateRequest;
+    class MsgMagicActionCreateFireOrder;
 }
 
 namespace xml
@@ -169,6 +170,7 @@ public:
     // LTO begin
     void OnReceiveMsgKnowledgeGroupCreation      ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message, unsigned int nCtx );
     void OnReceiveMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest&   message, unsigned int nCtx );
+    void OnReceiveMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgMagicActionCreateFireOrder&    message, unsigned int nCtx );
     // LTO end
     //@}
 

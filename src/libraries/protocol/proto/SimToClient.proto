@@ -162,6 +162,17 @@ message MsgLogSupplyChangeQuotasAck {
     optional LogSupplyChangeQuotas ack = 1;
 }
 
+message MsgActionCreateFireOrderAck {
+    enum EnumActionCreateFireOrderErrorCode {
+        no_error                    = 0;
+        error_invalid_reporter      = 1;
+        error_invalid_target	    = 2;
+        error_invalid_munition      = 3;
+        error_target_no_illuminated = 4;
+    }
+    required EnumActionCreateFireOrderErrorCode  error_code = 2;
+}
+
 message MsgControlInformation {
    required int32                      current_tick         = 1;
    required Common.MsgDateTime         initial_date_time    = 2;
@@ -1271,7 +1282,8 @@ message MsgSimToClient {
         optional MsgKnowledgeGroupCreation                      knowledge_group_creation                       = 115;
         optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 116;
         optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 117;
-        optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 118;  
+        optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 118;
+        optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 119;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;
