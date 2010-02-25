@@ -6,7 +6,7 @@
   <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Reaching</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Reconnoitring</realizes>
-  <realizes>net.masagroup.military.generic.knowledge.Safeguarding</realizes>
+ <!-- <realizes>net.masagroup.military.generic.knowledge.Safeguarding</realizes> -->
   <methods>
     <method name="computeRelation">
       <description>__INTEGRATION</description>

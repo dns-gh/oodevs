@@ -76,7 +76,7 @@ return
     end,
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = masalife.brain.core.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
+    moveToIt = masalife.brain.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
     -- observable action
     observeIt = function( self )
         integration.observeIt( self )
@@ -110,7 +110,7 @@ return
     reconnoitreIt = function( self )
         return self:recce()
     end,
-    recce = masalife.brain.core.integration.startStopAction( { start = integration.startReccePoint, stop = integration.startReccePoint } ),
+    recce = masalife.brain.integration.startStopAction( { start = integration.startReccePoint, stop = integration.startReccePoint } ),
     isRecognized = function( self ) 
         return self:reconnaissanceLevel() == 100 
     end,
@@ -134,4 +134,8 @@ return
     computeIdentificationCapability = function ( self, objective )
         return self:computeDistance( objective )
     end,
+    
+    -- isSafeguardingFor = function (self, target)
+    	-- return integration.isSafeguardingFor(self, target)
+    -- end,
 }

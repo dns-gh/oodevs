@@ -2,7 +2,6 @@ defaultMethods
 {
     -- REACHABLE
     proximityLevel = function() return masalife.brain.defaultengine.methods.load( "proximityLevel") end,
-    accessibilityLevel = function() return masalife.brain.defaultengine.methods.load( "accessibilityLevel") end,
     reachPriority = function() return masalife.brain.defaultengine.methods.load( "reachPriority") end,
     isDistant = function() return masalife.brain.defaultengine.methods.load( "generic_isDistant" ) end,
     isNearby = function() return masalife.brain.defaultengine.methods.load( "generic_isNearby" ) end,
@@ -55,7 +54,7 @@ return
     end,
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = masalife.brain.core.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
+    moveToIt = masalife.brain.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
     -- observable action
     observeIt = function( self )
         integration.observeIt( self )
@@ -86,11 +85,10 @@ return
     reconnoitreIt = function( self )
         return self:recce()
     end,
-    recce = masalife.brain.core.integration.startStopAction( { start = integration.startRecceUrbanBlock, stop = integration.startRecceUrbanBlock } ),
+    recce = masalife.brain.integration.startStopAction( { start = integration.startRecceUrbanBlock, stop = integration.startRecceUrbanBlock } ),
     accessibilityLevel = function( self )
         return integration.isTrafficable( self ) and 0 or accessibilityLevelDefault()
     end,
-    recce = behavior_model.integration.startStopAction( { start = integration.startRecceUrbanBlock, stop = integration.startRecceUrbanBlock } ),
     isRecognized = function( self ) 
         return self:reconnaissanceLevel() == 100 
     end,

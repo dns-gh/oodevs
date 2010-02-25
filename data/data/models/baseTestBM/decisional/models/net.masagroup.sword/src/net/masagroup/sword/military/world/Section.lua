@@ -78,7 +78,7 @@ defaultMethods
     
 }
 
-masalife.brain.communication.setMessageTreatment( "Order", integration.masalife.brain.communication.StartMissionPion )
+masalife.brain.communication.setMessageTreatment( "Order", integration.communication.StartMissionPion )
  
 return
 {
@@ -98,7 +98,7 @@ return
 
     -- INTEGRATION METHODS
     -- reachable action
-    moveToIt = masalife.brain.core.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
+    moveToIt = masalife.brain.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
 
     -- observable action
     observeIt = function( self )
@@ -170,9 +170,9 @@ return
       return integration.getAttritionForNeutralization( self, target, position )
     end,
     
-    neutralize = masalife.brain.core.integration.startStopAction( { start = integration.startNeutralizingIt, started = function( self, ...) end, stop = integration.stopNeutralizingIt } ),
+    neutralize = masalife.brain.integration.startStopAction( { start = integration.startNeutralizingIt, started = function( self, ...) end, stop = integration.stopNeutralizingIt } ),
 
-    destroy = masalife.brain.core.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
+    destroy = masalife.brain.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
     
     isOccupied = function( self )
       return true --TODO MGD
@@ -186,7 +186,7 @@ return
     end,
     
     -- SAFEGUARDABLE
-    respondToIt =  masalife.brain.core.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
+    respondToIt =  masalife.brain.integration.startStopAction( { start = integration.startDestroyingIt, started = function( self, ...) end, stop = integration.stopDestroyingIt } ),
     
     -- FLEEABLE
     fleeFromIt = function( self )
@@ -205,7 +205,7 @@ return
     illuminationLevel = function( self )
         return integration.illuminationLevel( self )
     end,
-    illuminateIt = masalife.brain.core.integration.startStopAction( { start = integration.startIlluminateIt, stop = integration.stopIlluminateIt } ),
+    illuminateIt = masalife.brain.integration.startStopAction( { start = integration.startIlluminateIt, stop = integration.stopIlluminateIt } ),
  
     predicate "isDefinitelyIlluminated"
     {
@@ -229,7 +229,7 @@ return
     canApplyFireOnIt = function( self, munition, interventionType )
         return integration.canApplyFireOnSection( self, munition, interventionType )
     end,
-    applyFireOnIt = masalife.brain.core.integration.startStopAction( { start = integration.startApplyFireOnSection, started = startedIlluminateIt, stop = integration.stopApplyFireOnSection } ),
+    applyFireOnIt = masalife.brain.integration.startStopAction( { start = integration.startApplyFireOnSection, started = startedIlluminateIt, stop = integration.stopApplyFireOnSection } ),
 
     computeAggressiveness = function( self, target )
       return integration.computeAggressiveness( self, target )

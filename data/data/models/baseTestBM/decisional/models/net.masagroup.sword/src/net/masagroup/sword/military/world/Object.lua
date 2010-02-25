@@ -53,7 +53,7 @@ return
     computeDistance = function( self, target )
         return integration.normalizedInversedDistance( self, target )
     end,
-    moveToIt = masalife.brain.core.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
+    moveToIt = masalife.brain.integration.startStopAction( { start = integration.startMoveToIt, started = integration.updateMoveToIt, stop = integration.stopMoveToIt } ),
     -- OBSERVABLE
     observeIt = function( self )
         integration.observeIt( self )

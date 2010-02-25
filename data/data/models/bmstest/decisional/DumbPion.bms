@@ -13,6 +13,6 @@ local configTable = {   eventmanager_plugin =
 
 brain "name" ( configTable )
 
-behavior_model = {}
-behavior_model.startTask = StartEvent
-behavior_model.stopTask = StopEvents
+masalife.brain.core = {}
+masalife.brain.core.startTask = StartEvent
+masalife.brain.core.stopTask = StopEvents
