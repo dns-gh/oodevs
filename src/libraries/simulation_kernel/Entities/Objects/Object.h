@@ -77,7 +77,7 @@ public:
 
     //! @name Construction
     //@{
-	void Update( unsigned int time );
+  void Update( unsigned int time );
     void UpdateLocalisation( const TER_Localisation& location );
     //@}
 

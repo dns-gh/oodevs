@@ -42,8 +42,8 @@ DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatch
 {
     model.RegisterFactory( *factory_ );
 
-	// retrieve exercise and session name
-	// init databases
+  // retrieve exercise and session name
+  // init databases
     Initialize( "geodatabase", config, xis );
     Initialize( "geodatabase-population", config, xis );
     databases_[ "geodatabase-shared" ] = databases_[ "geodatabase" ];
@@ -51,11 +51,11 @@ DatabasePublisher::DatabasePublisher( const dispatcher::Config& config, dispatch
     session_.reset( new WorkingSession( config, *databases_[ "geodatabase" ] ) );
 
     databaseUpdater_.reset( new QueryDatabaseUpdater( *databases_[ "geodatabase" ], model, *reportFactory_, *session_ ) );
-	databaseUpdater_->Clean();
+  databaseUpdater_->Clean();
 
-	folkUpdater_.reset( new FolkUpdater( *databases_[ "geodatabase-population" ], *session_ ) );
+  folkUpdater_.reset( new FolkUpdater( *databases_[ "geodatabase-population" ], *session_ ) );
 
-	// activate listeners
+  // activate listeners
     listeners_.push_back( T_SharedListener( new OrderListener( *databases_[ "geodatabase-shared" ], model, *orderTypes_, publisher, *session_ ) ) );
     // listeners_.push_back( T_SharedListener( new StatusListener( *databases_[ "geodatabase-shared" ], publisher ) ) );
     listeners_.push_back( T_SharedListener( new ObjectListener( *databases_[ "geodatabase-shared" ], publisher, *session_ ) ) );

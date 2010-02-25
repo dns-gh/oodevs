@@ -30,7 +30,7 @@ namespace MsgsSimToClient
 namespace kernel
 {
     class ModelVisitor_ABC;
-	class ObjectType;
+  class ObjectType;
     class Team_ABC;
 }
 
@@ -88,7 +88,7 @@ private:
     //@}
 
 public:    
-	const kernel::ObjectType&    type_;
+  const kernel::ObjectType&    type_;
 
     const std::string            strName_;
           Localisation           localisation_;

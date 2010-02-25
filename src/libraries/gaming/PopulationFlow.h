@@ -80,11 +80,11 @@ private:
     const kernel::CoordinateConverter_ABC& converter_;
 
     uint          nID_;
-	T_PointVector itineraire_; // $$$$ AGE 2006-03-23: extension
-	T_PointVector flow_;
+  T_PointVector itineraire_; // $$$$ AGE 2006-03-23: extension
+  T_PointVector flow_;
     geometry::Rectangle2f boundingBox_;
-	int			  nDirection_;
-	int			  nSpeed_;
+  int        nDirection_;
+  int        nSpeed_;
     
     int           nLivingHumans_;
     int           nDeadHumans_;

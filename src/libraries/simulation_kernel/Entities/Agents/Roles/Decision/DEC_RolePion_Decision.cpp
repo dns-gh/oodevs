@@ -462,7 +462,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite", 
         boost::function< float ( float ) >( boost::bind( &DEC_AgentFunctions::TimeToMoveDistance, boost::cref( GetPion() ), _1 ) ) );
 
-	
+  
     // NBC
     brain.RegisterFunction( "DEC_Agent_EstContamine", boost::bind( &DEC_AgentFunctions::IsContaminated , boost::cref( GetPion() ) ) );  
     brain.RegisterFunction( "DEC_Agent_EstContamine", &DEC_Decision_ABC::IsContaminated );
@@ -607,7 +607,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
             boost::function< int( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_Barycentre"    , 
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentBarycenter, _1 ) ) );
-	 brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_Trafficabilite"    , 
+   brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_Trafficabilite"    , 
             boost::function< int( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetTrafficability, boost::cref( GetPion() ), _1 ) ) );
 
     // Global knowledge

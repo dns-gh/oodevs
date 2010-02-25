@@ -136,7 +136,7 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC& object )
 
     // $$$$ TODO: refactor to handle more than a single resource
     const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
-	const unsigned int                  nDotationNeeded   = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
+  const unsigned int                  nDotationNeeded   = attribute.GetDotationNeededForConstruction( rDeltaPercentage );
     const PHY_DotationCategory* pDotationCategory = object.Get< BuildableCapacity >().GetDotationCategory();
     if( pDotationCategory && !dataComputer.HasDotations( *pDotationCategory, nDotationNeeded ) )
         return eNoMoreDotation;

@@ -99,10 +99,10 @@ namespace
         typedef TElement Element;
         
         Element& operator()( Element& message, const typename Container::value_type& e )
-		{
-			f_( message, e );
-			return message;
-		}
+    {
+      f_( message, e );
+      return message;
+    }
 
         FunctorWrapper( Functor functor ) : f_ ( functor ) {}
         Functor f_;

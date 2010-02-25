@@ -81,7 +81,7 @@ void crossbow::Point::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spa
 // -----------------------------------------------------------------------------
 void crossbow::Point::Serialize( std::ostream& geometry ) const
 {
-	const int srid = 0;
+  const int srid = 0;
     std::stringstream ss;
     SerializeCoordinates( ss, ',' );
     geometry << "st_point("

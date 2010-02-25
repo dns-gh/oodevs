@@ -16,8 +16,8 @@
 
 namespace MsgsSimToClient
 {
-	class MsgUnitKnowledgeUpdate;
-	class MsgUnitAttributes;
+  class MsgUnitKnowledgeUpdate;
+  class MsgUnitAttributes;
 }
 
 namespace kernel

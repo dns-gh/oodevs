@@ -37,7 +37,7 @@ class NBCAttribute : public kernel::NBCAttribute_ABC
                     , public kernel::Updatable_ABC< MsgsSimToClient::MsgObjectCreation >
 {
 public:
-	//! @name Types
+  //! @name Types
     //@{
     typedef std::vector< const kernel::NBCAgent* > T_NBCAgents;
     //@}
@@ -61,7 +61,7 @@ private:
     NBCAttribute( const NBCAttribute& );            //!< Copy constructor
     NBCAttribute& operator=( const NBCAttribute& ); //!< Assignement operator
     //@}
-       	
+         
     //! @name Helpers
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message );

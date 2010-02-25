@@ -181,7 +181,7 @@ void Drawing::SerializeLocation( Common::MsgCoordLatLongList& list ) const
     {
         for( unsigned int i = 0; i < serializer.points_.size(); ++i )
             list.add_elem();
-		std::memcpy( list.mutable_elem(), &serializer.points_.front(), list.elem_size() * sizeof( Common::MsgCoordLatLong ) );
+    std::memcpy( list.mutable_elem(), &serializer.points_.front(), list.elem_size() * sizeof( Common::MsgCoordLatLong ) );
     }
 }
 

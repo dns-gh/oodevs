@@ -25,8 +25,8 @@ namespace kernel
     class MissionType;
     class FragOrderType;
     class Entity_ABC;
-	class ObjectType;
-	class ObjectTypes;
+  class ObjectType;
+  class ObjectTypes;
 }
 
 namespace tools

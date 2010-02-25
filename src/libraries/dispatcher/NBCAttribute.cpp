@@ -37,14 +37,14 @@ NBCAttribute::~NBCAttribute()
 // -----------------------------------------------------------------------------
 void NBCAttribute::Update( const Common::MsgObjectAttributes& asn )
 {
-	if( asn.has_nbc() )
-	{
-		const Common::MsgObjectAttributeNBC& nbc = asn.nbc();
-		danger_ = nbc.danger_level();
-		for( int i = 0; i < nbc.nbc_agents().elem_size(); ++i )
-			agents_.push_back( nbc.nbc_agents().elem( i ) );
-		//nbc_.CopyFrom( asn.nbc() );
-	}
+  if( asn.has_nbc() )
+  {
+    const Common::MsgObjectAttributeNBC& nbc = asn.nbc();
+    danger_ = nbc.danger_level();
+    for( int i = 0; i < nbc.nbc_agents().elem_size(); ++i )
+      agents_.push_back( nbc.nbc_agents().elem( i ) );
+    //nbc_.CopyFrom( asn.nbc() );
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -53,12 +53,12 @@ void NBCAttribute::Update( const Common::MsgObjectAttributes& asn )
 // -----------------------------------------------------------------------------
 void NBCAttribute::Send( Common::MsgObjectAttributes& asn ) const
 {
-	Common::MsgObjectAttributeNBC& nbc = *asn.mutable_nbc();
-	nbc.set_danger_level( danger_ );
-	nbc.mutable_nbc_agents();
-	for( std::vector< unsigned int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
-		nbc.mutable_nbc_agents()->add_elem( *it );
-	//asn.mutable_nbc()->CopyFrom( nbc_ );
+  Common::MsgObjectAttributeNBC& nbc = *asn.mutable_nbc();
+  nbc.set_danger_level( danger_ );
+  nbc.mutable_nbc_agents();
+  for( std::vector< unsigned int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
+    nbc.mutable_nbc_agents()->add_elem( *it );
+  //asn.mutable_nbc()->CopyFrom( nbc_ );
 }
 
 // -----------------------------------------------------------------------------

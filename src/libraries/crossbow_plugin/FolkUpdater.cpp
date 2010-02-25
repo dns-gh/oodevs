@@ -32,7 +32,7 @@ using namespace plugins::crossbow;
 FolkUpdater::FolkUpdater( Database_ABC& database, const WorkingSession& session )
     : database_ ( database )
     , updated_( 0 )
-	, session_( session )
+  , session_( session )
 {
     UpdateQueryBuilder builder( database_.GetTableName( "Population" ) );
 
@@ -42,7 +42,7 @@ FolkUpdater::FolkUpdater( Database_ABC& database, const WorkingSession& session 
     builder.SetField( "office", (long)0 );
     builder.SetField( "shop", (long)0 );
     builder.SetField( "residential", (long)0 );
-	builder.SetField( "session_id" , session_.GetId() );
+  builder.SetField( "session_id" , session_.GetId() );
     // Let previous state because of the delay : database_.Execute( builder );
 }
     

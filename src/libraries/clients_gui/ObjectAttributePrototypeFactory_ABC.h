@@ -37,17 +37,17 @@ public:
     typedef std::vector< ObjectAttributePrototype_ABC* > T_AttributeContainer;
     //@}
 
-public:	
-	//! @name Constructors/Destructor
+public:  
+  //! @name Constructors/Destructor
     //@{
-			 ObjectAttributePrototypeFactory_ABC() {}
-	virtual ~ObjectAttributePrototypeFactory_ABC() {}
-	//@}	
+       ObjectAttributePrototypeFactory_ABC() {}
+  virtual ~ObjectAttributePrototypeFactory_ABC() {}
+  //@}  
 
-	//! @name Registrer
-    //@{	
+  //! @name Registrer
+    //@{  
     virtual void Create( const std::string& capacity, xml::xistream& xis, T_AttributeContainer& container, QWidget* parent ) const = 0;
-	//@}
+  //@}
 
 private:
     //! @name Copy/Assignment

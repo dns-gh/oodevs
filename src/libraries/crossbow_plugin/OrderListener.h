@@ -70,7 +70,7 @@ private:
     std::auto_ptr< OrderDispatcher >     dispatcher_;
     long                                 ref_;
     Database_ABC&                        database_;
-	const WorkingSession&                session_;
+  const WorkingSession&                session_;
     std::auto_ptr< Table_ABC >           table_;
     //@}
 };

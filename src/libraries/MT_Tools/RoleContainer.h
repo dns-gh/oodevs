@@ -43,11 +43,11 @@ public:
     //@{
     template< typename Role > typename Role& GetRole()
     {
-    	return static_cast< Role& >( Get<Role::RoleInterface>() );
+      return static_cast< Role& >( Get<Role::RoleInterface>() );
     }
     template< typename Role > const typename Role& GetRole() const
     {
-      	return static_cast< const Role& >( Get<Role::RoleInterface>() );
+        return static_cast< const Role& >( Get<Role::RoleInterface>() );
     }
     template< typename Role > typename Role* RetrieveRole()
     {

@@ -30,8 +30,8 @@ namespace kernel
     class FragOrderType;
     class MissionType;
     class ModelVisitor_ABC;
-	class ObjectType;
-	class ObjectTypes;
+  class ObjectType;
+  class ObjectTypes;
 }
 
 namespace tools
@@ -122,7 +122,7 @@ public:
     const tools::Resolver_ABC< kernel::AgentType >& GetAgentTypes() const;
     const tools::Resolver_ABC< kernel::MissionType >& GetMissionTypes() const;
     const tools::Resolver_ABC< kernel::FragOrderType >& GetFragOrderTypes() const;
-	const tools::Resolver_ABC< kernel::ObjectType, std::string >& GetObjectTypes() const;
+  const tools::Resolver_ABC< kernel::ObjectType, std::string >& GetObjectTypes() const;
     //@}
 
 private:
@@ -154,7 +154,7 @@ private:
 
     std::auto_ptr< FolkModel >          folk_;
     std::auto_ptr< kernel::AgentTypes > agentTypes_;
-	std::auto_ptr< kernel::ObjectTypes > objectTypes_;
+  std::auto_ptr< kernel::ObjectTypes > objectTypes_;
     //@}
 
 public:

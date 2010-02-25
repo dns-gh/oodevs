@@ -53,7 +53,7 @@ QueryDatabaseSession::~QueryDatabaseSession()
 int QueryDatabaseSession::CreateExercise( const std::string& name )
 {
     InsertQueryBuilder builder( database_.GetTableName( "Exercises" ) );
-	builder.SetId( "id" );
+  builder.SetId( "id" );
     builder.SetField( "name", name );
     database_.Execute( builder );
     return FindExercise( name );
@@ -66,9 +66,9 @@ int QueryDatabaseSession::CreateExercise( const std::string& name )
 int QueryDatabaseSession::CreateSession( const std::string& name, int exercise_id )
 {
     InsertQueryBuilder builder( database_.GetTableName( "Sessions" ) );
-	builder.SetId( "id" );
+  builder.SetId( "id" );
     builder.SetField( "name", name );
-	builder.SetField( "exercise_id", exercise_id );
+  builder.SetField( "exercise_id", exercise_id );
     database_.Execute( builder );
     return FindSession( name, exercise_id );
 }
@@ -92,7 +92,7 @@ int QueryDatabaseSession::FindExercise( const std::string& name ) const
     {
         MT_LOG_ERROR_MSG( "QueryDatabaseSession - Unable to find exercise: " + std::string( ex.what() ) );
     }
-	return -1;
+  return -1;
 }
 
 // -----------------------------------------------------------------------------
@@ -114,5 +114,5 @@ int QueryDatabaseSession::FindSession( const std::string& name, int exercise_id 
     {
         MT_LOG_ERROR_MSG( "QueryDatabaseSession - Unable to find session: " + std::string( ex.what() ) );
     }
-	return -1;
+  return -1;
 }

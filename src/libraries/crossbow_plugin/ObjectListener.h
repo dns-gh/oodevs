@@ -45,7 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual void Listen();
-	        
+          
     //@}
 
 private:
@@ -67,7 +67,7 @@ private:
     dispatcher::SimulationPublisher_ABC& publisher_;
     Database_ABC& database_;
     std::auto_ptr< Table_ABC > table_;
-	const WorkingSession& session_;
+  const WorkingSession& session_;
     //@}
 };
 

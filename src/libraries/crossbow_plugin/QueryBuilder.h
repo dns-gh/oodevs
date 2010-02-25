@@ -48,8 +48,8 @@ public:
     //! @name Accessor
     //@{
     virtual bool IsValid() const;
-	virtual std::string GetSequence() const;
-			std::string GetTableName() const;
+  virtual std::string GetSequence() const;
+      std::string GetTableName() const;
     //@}
 
 protected:
@@ -63,8 +63,8 @@ protected:
     std::string BuildInsert() const;
     std::string BuildUpdate( const std::string& clause ) const;
     std::string BuildDelete( const std::string& clause ) const;
-	std::string BuildSelect( const std::string& clause ) const;
-	//@}
+  std::string BuildSelect( const std::string& clause ) const;
+  //@}
 
 private:
     //! @name Copy/Assignment
@@ -86,7 +86,7 @@ private:
     //@{
     const std::string table_;
     std::vector< T_Parameter > parameters_;
-	std::string idField_;
+  std::string idField_;
     //@}
 };
 
@@ -125,7 +125,7 @@ class DeleteQueryBuilder : public QueryBuilder {
 public:
     explicit DeleteQueryBuilder( const std::string& table ) 
         : QueryBuilder( table ), clause_ () {}
-	DeleteQueryBuilder( const std::string& table, std::string clause ) 
+  DeleteQueryBuilder( const std::string& table, std::string clause ) 
         : QueryBuilder( table ), clause_ ( clause ) {}
     virtual ~DeleteQueryBuilder() {}
 

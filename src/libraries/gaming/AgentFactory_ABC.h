@@ -12,9 +12,9 @@
 
 namespace MsgsSimToClient
 {
-	class MsgAutomatCreation;
-	class MsgUnitCreation;
-	class MsgPopulationCreation;
+  class MsgAutomatCreation;
+  class MsgUnitCreation;
+  class MsgPopulationCreation;
 }
 
 namespace kernel
@@ -42,7 +42,7 @@ public:
 
     //! @name Operations
     //@{
-	virtual kernel::Automat_ABC*    Create( const MsgsSimToClient::MsgAutomatCreation& message ) = 0;
+  virtual kernel::Automat_ABC*    Create( const MsgsSimToClient::MsgAutomatCreation& message ) = 0;
     virtual kernel::Agent_ABC*      Create( const MsgsSimToClient::MsgUnitCreation& message ) = 0;
     virtual kernel::Population_ABC* Create( const MsgsSimToClient::MsgPopulationCreation& message ) = 0;
     //@}

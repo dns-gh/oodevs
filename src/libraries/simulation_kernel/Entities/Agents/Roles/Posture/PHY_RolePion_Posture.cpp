@@ -41,7 +41,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Posture* role, co
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Posture* role, const unsigned int /*version*/ )
 {
-	MIL_Agent_ABC* pion;
+  MIL_Agent_ABC* pion;
     archive >> pion;
     ::new( role )PHY_RolePion_Posture( *pion );
 }
@@ -89,7 +89,7 @@ PHY_RolePion_Posture::~PHY_RolePion_Posture()
 void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     unsigned int nID;
-	file >> boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
+  file >> boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
     file >> nID;
     pCurrentPosture_ = PHY_Posture::FindPosture( nID );
 
@@ -114,7 +114,7 @@ void PHY_RolePion_Posture::load( MIL_CheckPointInArchive& file, const unsigned i
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-	file << boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
+  file << boost::serialization::base_object< PHY_RoleInterface_Posture >( *this );
 
     unsigned current = pCurrentPosture_->GetID(),
              last    = pLastPosture_->GetID();

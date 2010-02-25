@@ -318,16 +318,16 @@ void DatabaseUpdater::Update( const MsgsSimToClient::MsgUnitAttributes& msg )
         table->EndTransaction();
     if( Row_ABC* row = table->Find( query.str() ) )
     {
-		if( msg.has_vitesse() )
+    if( msg.has_vitesse() )
             row->SetField( "speed", FieldVariant( msg.vitesse() ) );
         if( msg.has_etat_operationnel_brut() )
             row->SetField( "op_state", FieldVariant( msg.etat_operationnel_brut() ) );
         if( msg.has_position() )
             row->SetShape( Point( msg.position() ) );
 
-		/*table->BeginTransaction();
+    /*table->BeginTransaction();
         table->UpdateRow( *row );
-		table->EndTransaction();*/
+    table->EndTransaction();*/
     }    
 }
 

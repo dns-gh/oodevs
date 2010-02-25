@@ -49,40 +49,40 @@ using namespace plugins::crossbow;
 
 namespace
 {
-	class DummyClientNetworker : public tools::ClientNetworker
-							   , public Publisher_ABC
-	{
-	public:
-		DummyClientNetworker()
-			: defaultProfile_( new dispatcher::DefaultProfile() )
-		{}
-		virtual ~DummyClientNetworker() {}
+  class DummyClientNetworker : public tools::ClientNetworker
+                 , public Publisher_ABC
+  {
+  public:
+    DummyClientNetworker()
+      : defaultProfile_( new dispatcher::DefaultProfile() )
+    {}
+    virtual ~DummyClientNetworker() {}
 
         virtual void Send( const MsgsClientToSim::MsgClientToSim& message ) {}
         virtual void Send( const MsgsClientToAuthentication::MsgClientToAuthentication& message )
-		{
-			MessageSender_ABC::Send( endpoint_, message );
-		}
+    {
+      MessageSender_ABC::Send( endpoint_, message );
+    }
         virtual void Send( const MsgsClientToReplay::MsgClientToReplay& message ) {}
         virtual void Send( const MsgsClientToAar::MsgClientToAar& message ) {}
         virtual void Send( const MsgsClientToMessenger::MsgClientToMessenger& message ) {}
 
-	protected:
-		virtual void ConnectionSucceeded( const std::string& endpoint )
-		{
-			ClientNetworker::ConnectionSucceeded( endpoint );
-			endpoint_ = endpoint;
+  protected:
+    virtual void ConnectionSucceeded( const std::string& endpoint )
+    {
+      ClientNetworker::ConnectionSucceeded( endpoint );
+      endpoint_ = endpoint;
             authentication::AuthenticationRequest message;
-			message().set_login( defaultProfile_->GetName().c_str() );
-			message().set_password( "" );
-			message.Send( *this );
-			std::cout << "Dummy::ConnectionSucceeded " << endpoint << std::endl;
-		}
+      message().set_login( defaultProfile_->GetName().c_str() );
+      message().set_password( "" );
+      message.Send( *this );
+      std::cout << "Dummy::ConnectionSucceeded " << endpoint << std::endl;
+    }
 
-	private:
-		std::string endpoint_;
-		std::auto_ptr< dispatcher::Profile_ABC > defaultProfile_;
-	};
+  private:
+    std::string endpoint_;
+    std::auto_ptr< dispatcher::Profile_ABC > defaultProfile_;
+  };
 }
 
 // -----------------------------------------------------------------------------
@@ -93,7 +93,7 @@ CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream&
                                 dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher, 
                                 dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
     : databasePublisher_( new DatabasePublisher( config, model, publisher, xis ) )
-	, clientNetworker_  ( new DummyClientNetworker() )
+  , clientNetworker_  ( new DummyClientNetworker() )
 {
     dispatcher.RegisterMessage( *this, &CrossbowPlugin::OnReceiveMessengerToClient );
 }

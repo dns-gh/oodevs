@@ -31,7 +31,7 @@ OrderListener::OrderListener( Database_ABC& database, const dispatcher::Model& m
     , dispatcher_( new OrderDispatcher( database, types, model ) )
     , database_  ( database )
     , ref_ ( 0 )
-	, session_ ( session )
+  , session_ ( session )
 {
     Clean();
     table_.reset( database_.OpenTable( "Orders" ) );
@@ -52,10 +52,10 @@ OrderListener::~OrderListener()
 // -----------------------------------------------------------------------------
 void OrderListener::Clean()
 {
-	try
+  try
     {
         std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
-		database_.Execute( DeleteQueryBuilder( database_.GetTableName( "Orders" ), clause ) );
+    database_.Execute( DeleteQueryBuilder( database_.GetTableName( "Orders" ), clause ) );
     }
     catch ( std::exception& e )
     {

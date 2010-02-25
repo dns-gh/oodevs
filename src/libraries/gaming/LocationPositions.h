@@ -69,7 +69,7 @@ protected:
     //! @name Helpers
     //@{
     const kernel::Location_ABC* GetLocation() const;
-	void Update( const Common::MsgLocation& message );
+  void Update( const Common::MsgLocation& message );
     void Update( const Common::MsgLocation& message, const geometry::Point2f& startPoint );
     //@}
 

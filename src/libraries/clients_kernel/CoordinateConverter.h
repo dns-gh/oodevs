@@ -46,13 +46,13 @@ public:
 
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
 
-    virtual std::string       ConvertToMgrs		( const geometry::Point2f& pos ) const;
-    virtual geometry::Point2d ConvertToGeo		( const geometry::Point2f& pos ) const;
-    virtual geometry::Point2d ConvertToGeo		( const geometry::Point2d& pos ) const;
-    virtual geometry::Point2f ConvertFromGeo	( const geometry::Point2d& pos ) const;
-    virtual geometry::Point2f ConvertToXY		( const std::string& mgrs ) const;
-	virtual std::string		  ConvertToGeoDms	( const geometry::Point2f& pos ) const;
-	virtual std::string		  ConvertToUtm		( const geometry::Point2f& pos ) const;
+    virtual std::string       ConvertToMgrs    ( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2d ConvertToGeo    ( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2d ConvertToGeo    ( const geometry::Point2d& pos ) const;
+    virtual geometry::Point2f ConvertFromGeo  ( const geometry::Point2d& pos ) const;
+    virtual geometry::Point2f ConvertToXY    ( const std::string& mgrs ) const;
+  virtual std::string      ConvertToGeoDms  ( const geometry::Point2f& pos ) const;
+  virtual std::string      ConvertToUtm    ( const geometry::Point2f& pos ) const;
     //@}
 
 private:
@@ -68,9 +68,9 @@ private:
     void ReadWorld( const std::string& strArchive );
     //@}
 
-	 //! @name Helpers
+   //! @name Helpers
     //@{
-	void SetGeodeticCoordinates( const geometry::Point2f& pos ) const;
+  void SetGeodeticCoordinates( const geometry::Point2f& pos ) const;
     //@}   
 
 private:
@@ -84,7 +84,7 @@ private:
     mutable geocoord::PlanarCartesian             planar_;
     mutable geocoord::MGRS                        mgrs_;
     mutable geocoord::Geodetic                    geodetic_;
-	mutable geocoord::UTM utm_;
+  mutable geocoord::UTM utm_;
     //@}
 };
 

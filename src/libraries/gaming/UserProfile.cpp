@@ -85,7 +85,7 @@ UserProfile::~UserProfile()
 // -----------------------------------------------------------------------------
 void UserProfile::RequestCreation()
 {
-	authentication::ProfileCreationRequest message;
+  authentication::ProfileCreationRequest message;
     message().mutable_profile()->set_login( login_.ascii() );
     message().mutable_profile()->set_superviseur( supervision_ );
     message.Send( publisher_ );
@@ -124,7 +124,7 @@ namespace
 // -----------------------------------------------------------------------------
 void UserProfile::RequestUpdate( const QString& newLogin )
 {
-	authentication::ProfileUpdateRequest message;
+  authentication::ProfileUpdateRequest message;
     message().set_login( login_.ascii() );
 
     MsgsAuthenticationToClient::MsgProfile& profile = *message().mutable_profile();
@@ -157,7 +157,7 @@ void UserProfile::DoUpdate( const MsgsAuthenticationToClient::MsgProfileUpdate& 
 namespace
 {
     template< typename List >
-	void CopyList( const List& from, std::vector< unsigned long >& to )
+  void CopyList( const List& from, std::vector< unsigned long >& to )
     {
         to.clear();
         if( from.elem_size() == 0 )

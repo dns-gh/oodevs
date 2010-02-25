@@ -220,7 +220,7 @@ Population_ABC* AgentFactory::Create( const MsgsSimToClient::MsgPopulationCreati
 void AgentFactory::AttachExtensions( Entity_ABC& agent )
 {
     agent.Attach( *new DebugPoints( static_.coordinateConverter_ ) );
-	agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
+  agent.Attach( *new MissionParameters( controllers_.controller_, model_.actionFactory_ ) );
     agent.Attach( *new Paths( static_.coordinateConverter_ ) );
     agent.Attach( *new Reports( agent, controllers_.controller_, static_.reportFactory_ ) );
     agent.Attach( *new ObjectDetections( controllers_.controller_, model_.objects_ ) );

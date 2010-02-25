@@ -104,8 +104,8 @@ private:
     void DoUpdate( const MsgsSimToClient::MsgPopulationFlowDestruction&          message );
     void DoUpdate( const MsgsSimToClient::MsgPopulationUpdate&                   message );
     void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationCreation&    message );
-	void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      message );
-	void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message );
+  void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationUpdate&      message );
+  void DoUpdate( const MsgsSimToClient::MsgPopulationConcentrationDestruction& message );
 
     void ComputeCenter();
     //@}

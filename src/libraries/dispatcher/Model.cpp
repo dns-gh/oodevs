@@ -55,7 +55,7 @@ Model::Model( const tools::ExerciseConfig& config )
     , folk_( new FolkModel() )
     , compositeFactory_( new CompositeFactory() )
     , agentTypes_( new kernel::AgentTypes( config ) )
-	, objectTypes_( new kernel::ObjectTypes( config ) )
+  , objectTypes_( new kernel::ObjectTypes( config ) )
     , levels_( new kernel::FormationLevels() )
 {
     // NOTHING
@@ -214,7 +214,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
     if( wrapper.message().has_stop_population_fire() )
         Destroy( populationFires_, wrapper.message().stop_population_fire().fire_oid() ); 
     if( wrapper.message().has_explosion() )
-	{} // $$$$ merge
+  {} // $$$$ merge
 
         
     if( wrapper.message().has_report() )
@@ -284,42 +284,42 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         agents_.Get( wrapper.message().log_medical_state().oid_pion() ).Update( wrapper.message().log_medical_state() ); 
 
     if( wrapper.message().has_population_creation() )
-	    CreateUpdate< Population >( populations_, wrapper.message().population_creation() ); 
+      CreateUpdate< Population >( populations_, wrapper.message().population_creation() ); 
     if( wrapper.message().has_population_update() )
-	    populations_.Get( wrapper.message().population_update().oid() ).Update( wrapper.message().population_update() ); 
+      populations_.Get( wrapper.message().population_update().oid() ).Update( wrapper.message().population_update() ); 
     if( wrapper.message().has_population_concentration_creation() )
-	    populations_.Get( wrapper.message().population_concentration_creation().oid_population() ).Update( wrapper.message().population_concentration_creation() ); 
+      populations_.Get( wrapper.message().population_concentration_creation().oid_population() ).Update( wrapper.message().population_concentration_creation() ); 
     if( wrapper.message().has_population_concentration_destruction() )
-	    populations_.Get( wrapper.message().population_concentration_destruction().oid_population() ).Update( wrapper.message().population_concentration_destruction() ); 
+      populations_.Get( wrapper.message().population_concentration_destruction().oid_population() ).Update( wrapper.message().population_concentration_destruction() ); 
     if( wrapper.message().has_population_concentration_update() )
-	    populations_.Get( wrapper.message().population_concentration_update().oid_population() ).Update( wrapper.message().population_concentration_update() ); 
+      populations_.Get( wrapper.message().population_concentration_update().oid_population() ).Update( wrapper.message().population_concentration_update() ); 
     if( wrapper.message().has_population_flow_creation() )
-	     populations_.Get( wrapper.message().population_flow_creation().oid_population() ).Update( wrapper.message().population_flow_creation() ); 
+       populations_.Get( wrapper.message().population_flow_creation().oid_population() ).Update( wrapper.message().population_flow_creation() ); 
     if( wrapper.message().has_population_flow_destruction() )
-	     populations_.Get( wrapper.message().population_flow_destruction().oid_population() ).Update( wrapper.message().population_flow_destruction() ); 
+       populations_.Get( wrapper.message().population_flow_destruction().oid_population() ).Update( wrapper.message().population_flow_destruction() ); 
     if( wrapper.message().has_population_flow_update() )
-	     populations_.Get( wrapper.message().population_flow_update().oid_population() ).Update( wrapper.message().population_flow_update() ); 
+       populations_.Get( wrapper.message().population_flow_update().oid_population() ).Update( wrapper.message().population_flow_update() ); 
 
     if( wrapper.message().has_population_knowledge_creation() )
-	     CreateUpdate< PopulationKnowledge >( populationKnowledges_, wrapper.message().population_knowledge_creation().oid_connaissance(), wrapper.message().population_knowledge_creation() ); 
+       CreateUpdate< PopulationKnowledge >( populationKnowledges_, wrapper.message().population_knowledge_creation().oid_connaissance(), wrapper.message().population_knowledge_creation() ); 
     if( wrapper.message().has_population_knowledge_update() )
-	     populationKnowledges_.Get( wrapper.message().population_knowledge_update().oid_connaissance() ).Update( wrapper.message().population_knowledge_update() ); 
+       populationKnowledges_.Get( wrapper.message().population_knowledge_update().oid_connaissance() ).Update( wrapper.message().population_knowledge_update() ); 
     if( wrapper.message().has_population_knowledge_destruction() )
-	     Destroy( populationKnowledges_, wrapper.message().population_knowledge_destruction().oid_connaissance() ); 
+       Destroy( populationKnowledges_, wrapper.message().population_knowledge_destruction().oid_connaissance() ); 
     if( wrapper.message().has_population_concentration_knowledge_creation() )
-	     populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_creation().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_creation() ); 
+       populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_creation().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_creation() ); 
     if( wrapper.message().has_population_concentration_knowledge_update() )
-	     populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_update().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_update() ); 
+       populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_update().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_update() ); 
     if( wrapper.message().has_population_concentration_knowledge_destruction() )
-	     populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_destruction().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_destruction() ); 
+       populationKnowledges_.Get( wrapper.message().population_concentration_knowledge_destruction().oid_connaissance_population() ).Update( wrapper.message().population_concentration_knowledge_destruction() ); 
     if( wrapper.message().has_population_flow_knowledge_creation() )
-	     populationKnowledges_.Get( wrapper.message().population_flow_knowledge_creation().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_creation() ); 
+       populationKnowledges_.Get( wrapper.message().population_flow_knowledge_creation().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_creation() ); 
     if( wrapper.message().has_population_flow_knowledge_update() )
-	     populationKnowledges_.Get( wrapper.message().population_flow_knowledge_update().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_update() ); 
+       populationKnowledges_.Get( wrapper.message().population_flow_knowledge_update().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_update() ); 
     if( wrapper.message().has_population_flow_knowledge_destruction() )
-	     populationKnowledges_.Get( wrapper.message().population_flow_knowledge_destruction().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_destruction() ); 
+       populationKnowledges_.Get( wrapper.message().population_flow_knowledge_destruction().oid_connaissance_population() ).Update( wrapper.message().population_flow_knowledge_destruction() ); 
     if( wrapper.message().has_folk_creation() )
-	     folk_->Update( wrapper.message().folk_creation() ); 
+       folk_->Update( wrapper.message().folk_creation() ); 
 
     if( wrapper.message().has_urban_creation() )
         CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation() );
@@ -506,7 +506,7 @@ const tools::Resolver_ABC< kernel::FragOrderType >& Model::GetFragOrderTypes() c
 // -----------------------------------------------------------------------------
 const tools::Resolver_ABC< kernel::ObjectType, std::string >& Model::GetObjectTypes() const
 {
-	return *objectTypes_;
+  return *objectTypes_;
 }
 
 // -----------------------------------------------------------------------------

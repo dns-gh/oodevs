@@ -175,8 +175,8 @@ void Database::Execute( const QueryBuilder_ABC& builder )
         if( FAILED( workspace_->ExecuteSQL( CComBSTR( query.c_str() ) ) ) )
             ThrowError();
     }
-	else{
-		message += "Invalid query on table " + builder.GetTableName();
-	}
+  else{
+    message += "Invalid query on table " + builder.GetTableName();
+  }
     MT_LOG_MESSAGE_MSG( message );
 }

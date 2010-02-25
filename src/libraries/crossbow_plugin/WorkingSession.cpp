@@ -69,7 +69,7 @@ void WorkingSession::LoadExercise( const dispatcher::Config& config, QueryDataba
     {
         exercise_.second = database.FindExercise( exercise_.first );
         if( exercise_.second < 0 ) 
-	        exercise_.second = database.CreateExercise( exercise_.first );
+          exercise_.second = database.CreateExercise( exercise_.first );
     }
     else
         MT_LOG_ERROR_MSG( "CrossbowPlugin : can't retrieve exercise name" );
@@ -85,6 +85,6 @@ void WorkingSession::LoadSession( const dispatcher::Config& config, QueryDatabas
     bfs::path p( config.GetSessionDir(), bfs::native );
     session_.first = p.filename();
     session_.second = database.FindSession( session_.first, GetExercise() );
-	if( session_.second < 0 )
-		session_.second = database.CreateSession( session_.first, GetExercise() );
+  if( session_.second < 0 )
+    session_.second = database.CreateSession( session_.first, GetExercise() );
 }

@@ -69,7 +69,7 @@ void crossbow::Area::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spat
 // -----------------------------------------------------------------------------
 void crossbow::Area::Serialize( std::ostream& geometry ) const
 {
-	const int srid = 0;
+  const int srid = 0;
     geometry << "st_polygon("
              << "'polygon(";
     PointCollection::Serialize( geometry );

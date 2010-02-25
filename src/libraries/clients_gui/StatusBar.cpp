@@ -32,16 +32,16 @@ StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const C
     pPositionXYZ_->setAlignment( Qt::AlignCenter );
 
     pPositionMgrs_ = new QLabel( NotSet(), parent );
-	pPositionMgrs_->setMinimumWidth( 105 );
+  pPositionMgrs_->setMinimumWidth( 105 );
     pPositionMgrs_->setAlignment( Qt::AlignCenter );
 
     pPositionLatLong_ = new QLabel( NotSet(), parent );
-	pPositionLatLong_->setMinimumWidth( 125 );
+  pPositionLatLong_->setMinimumWidth( 125 );
     pPositionLatLong_->setAlignment( Qt::AlignCenter );
 
     parent->addWidget( pPositionXYZ_    , 0, true );
-	parent->addWidget( pPositionMgrs_   , 0, true );
-	parent->addWidget( pPositionLatLong_, 0, true );
+  parent->addWidget( pPositionMgrs_   , 0, true );
+  parent->addWidget( pPositionLatLong_, 0, true );
 }
     
 // -----------------------------------------------------------------------------
@@ -72,10 +72,10 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
     if( !converter_.IsInBoundaries( position ) )
     {
         pPositionXYZ_->setText( NotSet() );
-		pPositionMgrs_->setText( NotSet() );
+    pPositionMgrs_->setText( NotSet() );
         pPositionLatLong_->setText( NotSet() );
-	}
-	else
+  }
+  else
     {
         const QString xypos = tr( "x:%1 y:%2 h:%3" ).arg( position.X(), 2 )
                                                     .arg( position.Y(), 2 )
@@ -86,7 +86,7 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         const geometry::Point2d latLong( converter_.ConvertToGeo( position ) );
         const QString latlongpos = tr( "Lat:%1 Lon:%2" ).arg( latLong.Y(), 0, 'g', 3 )
                                                         .arg( latLong.X(), 0, 'g', 3 );
-		pPositionLatLong_->setText( latlongpos );
+    pPositionLatLong_->setText( latlongpos );
     }
 }
 

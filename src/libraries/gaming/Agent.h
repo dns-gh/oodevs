@@ -19,7 +19,7 @@
 
 namespace MsgsSimToClient
 {
-	class MsgUnitCreation;
+  class MsgUnitCreation;
 }
 
 namespace kernel

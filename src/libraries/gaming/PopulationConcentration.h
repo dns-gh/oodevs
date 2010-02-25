@@ -43,7 +43,7 @@ public:
     //@{
     float   GetArea   () const;
 
-	virtual QString GetName() const;
+  virtual QString GetName() const;
     virtual unsigned long GetId() const;
     virtual unsigned int GetLivingHumans() const;
     virtual unsigned int GetDeadHumans() const;
@@ -86,7 +86,7 @@ private:
     float radius_;
     float deadRadius_;
     E_PopulationAttitude attitude_;
-    //@}			
+    //@}      
 };
 
 #endif // __PopulationConcentration_h_

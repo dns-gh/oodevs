@@ -40,7 +40,7 @@ namespace dispatcher
 namespace tools
 {
     class MessageDispatcher_ABC;
-	class ClientNetworker;
+  class ClientNetworker;
 }
 
 namespace plugins
@@ -91,9 +91,9 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< DatabasePublisher > databasePublisher_;
-	std::auto_ptr< tools::ClientNetworker > clientNetworker_;
-	std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
-	//@}
+  std::auto_ptr< tools::ClientNetworker > clientNetworker_;
+  std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
+  //@}
 };
 
 }

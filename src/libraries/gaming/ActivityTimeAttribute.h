@@ -16,8 +16,8 @@
 
 namespace MsgsSimToClient
 {
-	class MsgObjectUpdate;
-	class MsgObjectCreation;
+  class MsgObjectUpdate;
+  class MsgObjectCreation;
 }
 
 namespace kernel
