@@ -52,7 +52,7 @@ public:
     virtual void NotifyHitByIndirectFire() = 0;
     //@}
 
-    template< typename Archive > void serialize( Archive& ar, const uint )
+    template< typename Archive > void serialize( Archive& ar, const unsigned int )
     {
         ar & boost::serialization::base_object< tools::Role_ABC >( *this );
     }

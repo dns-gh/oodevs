@@ -134,7 +134,7 @@ void PHY_RolePion_Illumination::NotifyHitByIndirectFire()
 // Name: PHY_RolePion_Illumination::load
 // Created: LDC 2010-02-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const uint )
+void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     ar >>boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
     ar >> bIlluminatedDefinitely_;
@@ -152,7 +152,7 @@ void PHY_RolePion_Illumination::load( MIL_CheckPointInArchive& ar, const uint )
 // Name: PHY_RolePion_Illumination::save
 // Created: LDC 2010-02-19
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Illumination::save( MIL_CheckPointOutArchive& ar, const uint ) const
+void PHY_RolePion_Illumination::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {    
     ar << boost::serialization::base_object<PHY_RoleInterface_Illumination>( *this );
     ar << bIlluminatedDefinitely_;
