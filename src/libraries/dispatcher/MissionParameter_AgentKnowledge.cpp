@@ -14,7 +14,6 @@
 
 using namespace dispatcher;
 
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_AgentKnowledge constructor
 // Created: NLD 2007-04-20
@@ -35,26 +34,12 @@ MissionParameter_AgentKnowledge::~MissionParameter_AgentKnowledge()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_AgentKnowledge::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_AgentKnowledge::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-//    asn.value.t                = T_MissionParameter_value_unitKnowledge;
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_unitknowledge()->set_oid( agentKnowledge_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_AgentKnowledge::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_AgentKnowledge::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

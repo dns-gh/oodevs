@@ -39,18 +39,8 @@ MissionParameter_IntelligenceList::~MissionParameter_IntelligenceList()
 // -----------------------------------------------------------------------------
 void MissionParameter_IntelligenceList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value ( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_intelligencelist();
     for( std::vector< IntelligenceOrder >::const_iterator it = intelligenceOrders_.begin(); it != intelligenceOrders_.end(); ++it )
         it->Send( *asn.mutable_value()->mutable_intelligencelist()->add_elem() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_IntelligenceList::Delete
-// Created: SBO 2008-03-04
-// -----------------------------------------------------------------------------
-void MissionParameter_IntelligenceList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    if( asn.value().intelligencelist().elem_size() > 0 )
-        asn.mutable_value()->mutable_intelligencelist()->Clear();
-    delete asn.mutable_value()->mutable_intelligencelist();
 }

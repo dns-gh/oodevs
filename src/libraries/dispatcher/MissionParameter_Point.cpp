@@ -14,7 +14,6 @@
 
 using namespace dispatcher;
 
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Point constructor
 // Created: NLD 2007-04-20
@@ -41,15 +40,6 @@ MissionParameter_Point::~MissionParameter_Point()
 // -----------------------------------------------------------------------------
 void MissionParameter_Point::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     point_.Send( *asn.mutable_value()->mutable_point()->mutable_location() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Point::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Point::Delete( Common::MsgMissionParameter& asn ) const
-{
-    asn.mutable_value()->clear_point();
 }

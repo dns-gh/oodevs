@@ -34,26 +34,12 @@ MissionParameter_Agent::~MissionParameter_Agent()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Agent::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Agent::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-//    asn.value.t       = T_MissionParameter_value_unit;
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_unit()->set_oid( agent_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Agent::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Agent::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

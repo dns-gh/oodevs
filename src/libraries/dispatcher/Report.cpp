@@ -27,7 +27,7 @@ Report::Report( Model&, const MsgsSimToClient::MsgReport& report )
     , emitter_( report.oid() )
     , report_ ( report.cr() )
     , type_   ( report.type() )
-    , date_   ( report.time().data(), report.time().data().size() )
+    , date_   ( report.time().data() )
 {
     parameters_.resize( report.parametres().elem_size() );
     for( int i = 0; i < report.parametres().elem_size(); ++i )
@@ -64,16 +64,10 @@ void Report::SendCreation( ClientPublisher_ABC& publisher ) const
     asn().set_oid( emitter_ );
     asn().set_cr( report_ );
     asn().set_type( type_ );
-    asn().mutable_time()->set_data( date_.c_str() );
+    asn().mutable_time()->set_data( date_ );
     for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
         (**it).Send( *asn().mutable_parametres()->add_elem() );
-
     asn.Send( publisher );
-
-    unsigned int i = 0;
-    for( CIT_Parameters it = parameters_.begin(); it != parameters_.end(); ++it )
-        (**it).Delete( *asn().mutable_parametres()->mutable_elem(i++) );
-    asn().mutable_parametres()->Clear();
 }
 
 // -----------------------------------------------------------------------------

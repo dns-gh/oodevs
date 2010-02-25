@@ -20,7 +20,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 MissionParameter_GDH::MissionParameter_GDH( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
-    , datation_           ( asn.value().datetime() )
+    , date_( asn.value().datetime() )
 {
     // NOTHING
 }
@@ -34,25 +34,12 @@ MissionParameter_GDH::~MissionParameter_GDH()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_GDH::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_GDH::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-    asn.mutable_value()->mutable_datetime()->set_data( datation_.data() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_GDH::Delete
-// Created: AGE 2007-06-18
-// -----------------------------------------------------------------------------
-void MissionParameter_GDH::Delete( Common::MsgMissionParameter& ) const
-{
-    // NOTHING
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_datetime()->set_data( date_.data() );
 }

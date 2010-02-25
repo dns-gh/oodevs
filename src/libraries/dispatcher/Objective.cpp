@@ -19,7 +19,7 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 Objective::Objective( const Common::MsgMissionObjective& asn )
     : location_( asn.localisation() )
-    , schedule_( asn.horaire().data(), 15 )
+    , schedule_( asn.horaire().data() )
 {
     // NOTHING
 }
@@ -30,11 +30,9 @@ Objective::Objective( const Common::MsgMissionObjective& asn )
 // -----------------------------------------------------------------------------
 Objective::Objective()
     : location_()
-    , schedule_( 0 )
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Objective destructor
@@ -51,6 +49,6 @@ Objective::~Objective()
 // -----------------------------------------------------------------------------
 void Objective::Send( Common::MsgMissionObjective& asn ) const
 {
-    asn.mutable_horaire()->set_data( schedule_.c_str() );
+    asn.mutable_horaire()->set_data( schedule_ );
     location_.Send( *asn.mutable_localisation() );
 }

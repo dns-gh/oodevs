@@ -21,6 +21,7 @@ using namespace dispatcher;
 MissionParameter_ObjectKnowledgeList::MissionParameter_ObjectKnowledgeList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
+    objectKnowledges_.reserve( asn.value().objectknowledgelist().elem_size() );
     for( int i = 0; i < asn.value().objectknowledgelist().elem_size(); ++i )
         objectKnowledges_.push_back( asn.value().objectknowledgelist().elem( i ).oid() );
 }
@@ -40,16 +41,8 @@ MissionParameter_ObjectKnowledgeList::~MissionParameter_ObjectKnowledgeList()
 // -----------------------------------------------------------------------------
 void MissionParameter_ObjectKnowledgeList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value ( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_objectknowledgelist();
     for( std::vector< int >::const_iterator it = objectKnowledges_.begin(); it != objectKnowledges_.end(); ++it )
         asn.mutable_value()->mutable_objectknowledgelist()->add_elem()->set_oid( *it );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_ObjectKnowledgeList::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_ObjectKnowledgeList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    asn.mutable_value()->clear_objectknowledgelist();
 }

@@ -21,14 +21,9 @@ using namespace dispatcher;
 MissionParameter_MaintenancePriorities::MissionParameter_MaintenancePriorities( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for (int i = 0; i < asn.value().logmaintenancepriorities().elem_size(); ++i)
-        maintenancePriorities_ .push_back( asn.value().logmaintenancepriorities().elem( i ).equipment() );
-
-    //    for (::google::protobuf::RepeatedPtrField< ::Common::MsgEquipmentType >::iterator iter(asn.value().logmaintenancepriorities().elem().begin()); iter != asn.value().logmaintenancepriorities().elem().end(); ++iter)
-//        maintenancePriorities_ .push_back( (*iter).equipment() );
-    
-//    std::copy( asn.value().logmaintenancepriorities().elem().begin(), asn.value().logmaintenancepriorities().elem().end()
-//             , std::back_inserter( maintenancePriorities_ ) );
+    maintenancePriorities_.reserve( asn.value().logmaintenancepriorities().elem_size() );
+    for( int i = 0; i < asn.value().logmaintenancepriorities().elem_size(); ++i )
+        maintenancePriorities_.push_back( asn.value().logmaintenancepriorities().elem( i ).equipment() );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,18 +41,8 @@ MissionParameter_MaintenancePriorities::~MissionParameter_MaintenancePriorities(
 // -----------------------------------------------------------------------------
 void MissionParameter_MaintenancePriorities::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_);
-    {
-        for (std::vector< int >::const_iterator it(maintenancePriorities_.begin()); it != maintenancePriorities_.end(); ++it )
-            asn.mutable_value()->mutable_logmaintenancepriorities()->add_elem()->set_equipment( *it );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_MaintenancePriorities::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_MaintenancePriorities::Delete( Common::MsgMissionParameter& asn ) const
-{
-    asn.mutable_value()->clear_logmaintenancepriorities();
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_logmaintenancepriorities();
+    for( std::vector< int >::const_iterator it = maintenancePriorities_.begin(); it != maintenancePriorities_.end(); ++it )
+        asn.mutable_value()->mutable_logmaintenancepriorities()->add_elem()->set_equipment( *it );
 }

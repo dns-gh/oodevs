@@ -28,14 +28,13 @@ class MissionParameter_GenObjectList : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_GenObjectList( const Common::MsgMissionParameter& asn );
+    explicit MissionParameter_GenObjectList( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_GenObjectList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
-    virtual void Delete( Common::MsgMissionParameter& asn ) const;
+    virtual void Send( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

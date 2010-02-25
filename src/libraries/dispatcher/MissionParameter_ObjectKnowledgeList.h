@@ -33,8 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send  ( Common::MsgMissionParameter& asn ) const;
-    virtual void Delete( Common::MsgMissionParameter& asn ) const;
+    virtual void Send( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

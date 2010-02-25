@@ -48,11 +48,10 @@ UrbanKnowledge::~UrbanKnowledge()
 // -----------------------------------------------------------------------------
 void UrbanKnowledge::Update( const MsgsSimToClient::MsgUrbanKnowledgeCreation& message )
 {
-    bool realUrbanChanged = ( message.real_urban() && ! pUrban_ )
-                          || ( pUrban_ && pUrban_->GetId() != message.real_urban() );
+    const bool realUrbanChanged = ( message.real_urban() && ! pUrban_ )
+                               || ( pUrban_ && pUrban_->GetId() != unsigned int( message.real_urban() ) );
     if( realUrbanChanged )
         pUrban_ = model_.UrbanBlocks().Find( message.real_urban() );
-
     ApplyUpdate( message );
 }
 

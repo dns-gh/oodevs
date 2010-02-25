@@ -23,7 +23,6 @@ MissionParameter_AutomatList::MissionParameter_AutomatList( const Common::MsgMis
 {
     for( int i = 0; i < asn.value().automatlist().elem_size(); ++i )
         automats_.push_back( asn.value().automatlist().elem( i ).oid() );
-    //std::copy( asn.value().automatlist().elem().begin(), asn.value().automatlist().elem().end(), std::back_inserter( automats_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -41,16 +40,8 @@ MissionParameter_AutomatList::~MissionParameter_AutomatList()
 // -----------------------------------------------------------------------------
 void MissionParameter_AutomatList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value ( bNullValue_ );
-    for (std::vector< int >::const_iterator iter(automats_.begin()); iter != automats_.end(); ++iter )
-        asn.mutable_value()->mutable_automatlist()->add_elem()->set_oid( *iter );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_AutomatList::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_AutomatList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_automatlist();
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_automatlist();
+    for( std::vector< int >::const_iterator it = automats_.begin(); it != automats_.end(); ++it )
+        asn.mutable_value()->mutable_automatlist()->add_elem()->set_oid( *it );
 }

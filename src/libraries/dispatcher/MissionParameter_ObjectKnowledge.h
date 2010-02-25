@@ -12,8 +12,6 @@
 
 #include "MissionParameter_ABC.h"
 
-////using namespace Common;
-
 namespace dispatcher
 {
 
@@ -29,14 +27,13 @@ class MissionParameter_ObjectKnowledge : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_ObjectKnowledge( const Common::MsgMissionParameter& asn );
+    explicit MissionParameter_ObjectKnowledge( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_ObjectKnowledge();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
-    virtual void Delete( Common::MsgMissionParameter& asn ) const;
+    virtual void Send( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

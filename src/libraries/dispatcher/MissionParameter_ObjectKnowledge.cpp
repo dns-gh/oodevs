@@ -34,25 +34,12 @@ MissionParameter_ObjectKnowledge::~MissionParameter_ObjectKnowledge()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_ObjectKnowledge::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_ObjectKnowledge::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value              ( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_objectknowledge()->set_oid( objectKnowledge_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_ObjectKnowledge::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_ObjectKnowledge::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

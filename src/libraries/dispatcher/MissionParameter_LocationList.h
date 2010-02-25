@@ -13,8 +13,6 @@
 #include "MissionParameter_ABC.h"
 #include "Localisation.h"
 
-////using namespace Common;
-
 namespace dispatcher
 {
 
@@ -30,14 +28,13 @@ class MissionParameter_LocationList : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_LocationList( const Common::MsgMissionParameter& asn );
+    explicit MissionParameter_LocationList( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_LocationList();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
-    virtual void Delete( Common::MsgMissionParameter& asn ) const;
+    virtual void Send( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

@@ -27,14 +27,13 @@ class MissionParameter_Bool : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_Bool( const Common::MsgMissionParameter& asn );
+    explicit MissionParameter_Bool( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_Bool();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send  ( Common::MsgMissionParameter& asn ) const;
-    virtual void Delete( Common::MsgMissionParameter& asn ) const;
+    virtual void Send( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

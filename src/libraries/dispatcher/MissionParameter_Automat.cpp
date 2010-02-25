@@ -34,25 +34,12 @@ MissionParameter_Automat::~MissionParameter_Automat()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Automat::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Automat::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_automat()->set_oid( automat_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Automat::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Automat::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

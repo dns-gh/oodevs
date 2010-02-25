@@ -34,26 +34,12 @@ MissionParameter_DotationType::~MissionParameter_DotationType()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_DotationType::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_DotationType::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-//    asn.value.t              = T_MissionParameter_value_dotationType;
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_dotationtype()->set_oid( dotationType_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_DotationType::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_DotationType::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

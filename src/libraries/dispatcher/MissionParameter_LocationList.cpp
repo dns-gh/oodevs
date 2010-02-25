@@ -23,7 +23,7 @@ MissionParameter_LocationList::MissionParameter_LocationList( const Common::MsgM
 {
     locations_.reserve( asn.value().locationlist().elem_size() );
     for( int i = 0; i != asn.value().locationlist().elem_size(); ++i )
-        locations_.push_back( Localisation( asn.value().locationlist().elem(i) ) );
+        locations_.push_back( Localisation( asn.value().locationlist().elem( i ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -35,31 +35,14 @@ MissionParameter_LocationList::~MissionParameter_LocationList()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_LocationList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_LocationList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value           ( bNullValue_ );
-    if( !locations_.empty() )
-    {
-        for( T_LocalisationVector::const_iterator it = locations_.begin(); it != locations_.end(); ++it )
-            (*it).Send( *asn.mutable_value()->mutable_locationlist()->add_elem() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_LocationList::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_LocationList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    if( asn.value().locationlist().elem_size() > 0 )
-        asn.mutable_value()->mutable_locationlist()->Clear();
-    delete asn.mutable_value()->mutable_locationlist();
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_locationlist();
+    for( T_LocalisationVector::const_iterator it = locations_.begin(); it != locations_.end(); ++it )
+        it->Send( *asn.mutable_value()->mutable_locationlist()->add_elem() );
 }

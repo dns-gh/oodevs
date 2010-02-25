@@ -144,7 +144,7 @@ MissionParameter_ABC* MissionParameter_ABC::Create( const Common::MsgMissionPara
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 MissionParameter_ABC::MissionParameter_ABC( const Common::MsgMissionParameter& asn )
-    : bNullValue_( asn.null_value() )
+    : nullValue_( asn.null_value() )
 {
     // NOTHING
 }
@@ -156,4 +156,13 @@ MissionParameter_ABC::MissionParameter_ABC( const Common::MsgMissionParameter& a
 MissionParameter_ABC::~MissionParameter_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MissionParameter_ABC::Send
+// Created: SBO 2010-02-25
+// -----------------------------------------------------------------------------
+void MissionParameter_ABC::Send( Common::MsgMissionParameter& asn ) const
+{
+    asn.set_null_value( nullValue_ );
 }

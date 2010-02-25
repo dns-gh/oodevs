@@ -34,26 +34,12 @@ MissionParameter_Location::~MissionParameter_Location()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Location::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Location::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value           ( bNullValue_ );
-    //asn.mutable_value()->mutable_location() = new MsgLocation();
+    MissionParameter_ABC::Send( asn );
     location_.Send( *asn.mutable_value()->mutable_location() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Location::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Location::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_location();
 }

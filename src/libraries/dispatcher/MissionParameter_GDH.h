@@ -16,7 +16,6 @@
 namespace Common
 {
     class MsgDateTime;
-    class MsgMissionParameter;
 }
 
 namespace dispatcher
@@ -34,14 +33,13 @@ class MissionParameter_GDH : public MissionParameter_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameter_GDH( const Common::MsgMissionParameter& asn );
+    explicit MissionParameter_GDH( const Common::MsgMissionParameter& asn );
     virtual ~MissionParameter_GDH();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
-    virtual void Delete( Common::MsgMissionParameter& asn ) const;
+    virtual void Send( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:
@@ -54,7 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
-    Common::MsgDateTime datation_;
+    Common::MsgDateTime date_;
     //@}
 };
 

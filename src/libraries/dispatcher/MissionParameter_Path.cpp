@@ -34,27 +34,13 @@ MissionParameter_Path::~MissionParameter_Path()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Path::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Path::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value     ( bNullValue_ );
-    //asn.value.t            = T_MissionParameter_value_path;
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_path();
-    path_.Send( *asn.mutable_value()->mutable_location() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Path::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Path::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_path();
+    path_.Send( *asn.mutable_value()->mutable_path()->mutable_location() );
 }

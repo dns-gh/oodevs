@@ -34,25 +34,12 @@ MissionParameter_NatureAtlas::~MissionParameter_NatureAtlas()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_NatureAtlas::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_NatureAtlas::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_atlasnature()->set_nature( natureAtlas_.nature() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_NatureAtlas::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_NatureAtlas::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_atlasnature();
 }

@@ -35,32 +35,14 @@ MissionParameter_ObjectiveList::~MissionParameter_ObjectiveList()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_ObjectiveList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_ObjectiveList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value               ( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_missionobjectivelist();
-    if( !objects_.empty() )
-    {
-        for( T_ObjectiveVector::const_iterator it = objects_.begin(); it != objects_.end(); ++it  )
-            (*it).Send( *asn.mutable_value()->mutable_missionobjectivelist()->add_elem() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_ObjectiveList::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_ObjectiveList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    if( asn.value().missionobjectivelist().elem_size() > 0 )
-        asn.mutable_value()->mutable_missionobjectivelist()->Clear();
-    delete asn.mutable_value()->mutable_missionobjectivelist();
+    for( T_ObjectiveVector::const_iterator it = objects_.begin(); it != objects_.end(); ++it  )
+        it->Send( *asn.mutable_value()->mutable_missionobjectivelist()->add_elem() );
 }

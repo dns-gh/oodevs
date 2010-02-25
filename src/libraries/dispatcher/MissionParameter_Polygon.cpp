@@ -34,26 +34,12 @@ MissionParameter_Polygon::~MissionParameter_Polygon()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Polygon::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Polygon::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-//    asn.mutable_value()->mutable_polygon() = new MsgPolygon();
+    MissionParameter_ABC::Send( asn );
     polygon_.Send( *asn.mutable_value()->mutable_polygon()->mutable_location() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Polygon::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Polygon::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_polygon();
 }

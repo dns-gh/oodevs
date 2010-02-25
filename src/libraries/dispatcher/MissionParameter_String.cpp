@@ -14,7 +14,6 @@
 
 using namespace dispatcher;
 
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_String constructor
 // Created: NLD 2007-04-20
@@ -35,25 +34,12 @@ MissionParameter_String::~MissionParameter_String()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_String::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_String::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-    asn.mutable_value()->set_acharstr( value_.c_str() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_String::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_String::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->set_acharstr( value_ );
 }

@@ -34,26 +34,12 @@ MissionParameter_Direction::~MissionParameter_Direction()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Direction::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Direction::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-//    asn.value.t         = T_MissionParameter_value_heading;
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_heading()->set_heading( direction_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Direction::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Direction::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

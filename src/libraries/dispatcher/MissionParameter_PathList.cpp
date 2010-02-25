@@ -35,31 +35,14 @@ MissionParameter_PathList::~MissionParameter_PathList()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_PathList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_PathList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-    if( !paths_.empty() )
-    {
-        for( T_LocalisationVector::const_iterator it = paths_.begin(); it != paths_.end(); ++it )
-            (*it).Send( *asn.mutable_value()->mutable_pathlist()->add_elem()->mutable_location() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_PathList::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_PathList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    if( asn.value().pathlist().elem_size() > 0 )
-        asn.mutable_value()->mutable_pathlist()->Clear();
-    delete asn.mutable_value()->mutable_pathlist();
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_pathlist();
+    for( T_LocalisationVector::const_iterator it = paths_.begin(); it != paths_.end(); ++it )
+        it->Send( *asn.mutable_value()->mutable_pathlist()->add_elem()->mutable_location() );
 }

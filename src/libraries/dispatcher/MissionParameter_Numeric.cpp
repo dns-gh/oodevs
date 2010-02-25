@@ -40,15 +40,6 @@ MissionParameter_Numeric::~MissionParameter_Numeric()
 // -----------------------------------------------------------------------------
 void MissionParameter_Numeric::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->set_areal( value_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Numeric::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Numeric::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

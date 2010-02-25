@@ -34,26 +34,12 @@ MissionParameter_Enumeration::~MissionParameter_Enumeration()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Enumeration::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Enumeration::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-    //asn.value.t             = T_MissionParameter_value_enumeration;
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->set_enumeration( enumeration_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Enumeration::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Enumeration::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

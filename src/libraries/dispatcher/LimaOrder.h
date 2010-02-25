@@ -17,10 +17,6 @@ namespace Common
     class MsgLimaOrder;
 }
 
-//using namespace MsgsSimToClient;
-
-//struct LimaOrder;
-
 namespace dispatcher
 {
 // =============================================================================
@@ -48,7 +44,7 @@ private:
     //@{
     Localisation location_;
     std::vector< int > functions_;
-    std::string  schedule_;
+    std::string schedule_;
     //@}
 };
 

@@ -33,9 +33,9 @@ class Objective
 public:
     //! @name Constructors/Destructor
     //@{
-    Objective( const Common::MsgMissionObjective& asn );
-    Objective();
-   virtual ~Objective();
+             Objective();
+    explicit Objective( const Common::MsgMissionObjective& asn );
+    virtual ~Objective();
     //@}
 
     //! @name Operations

@@ -34,26 +34,12 @@ MissionParameter_IndirectFire::~MissionParameter_IndirectFire()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_IndirectFire::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_IndirectFire::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-//    asn.value.t             = T_MissionParameter_value_tirIndirect;
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->set_tirindirect( fire_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_IndirectFire::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_IndirectFire::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

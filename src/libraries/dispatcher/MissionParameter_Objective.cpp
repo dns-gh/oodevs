@@ -34,27 +34,12 @@ MissionParameter_Objective::~MissionParameter_Objective()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Objective::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Objective::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value               ( bNullValue_ );
-    //asn.value.t                  = T_MissionParameter_value_missionObjective;
-//    asn.mutable_value()->mutable_missionobjective() = new MsgMissionObjective();
+    MissionParameter_ABC::Send( asn );
     data_.Send( *asn.mutable_value()->mutable_missionobjective() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Objective::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Objective::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_missionobjective();
 }

@@ -41,7 +41,7 @@ public:
     //! @name Main
     //@{
     void Update( const Common::MsgLocation& asn );
-    void Send  ( Common::MsgLocation& asn ) const;
+    void Send( Common::MsgLocation& asn ) const;
     //@}
 
 private:
@@ -51,8 +51,8 @@ private:
     //@}
 
 private:
-    Common::MsgLocation_Geometry    nType_;
-    T_PositionVector                points_;
+    Common::MsgLocation_Geometry nType_;
+    T_PositionVector             points_;
 };
 
 }

@@ -40,15 +40,6 @@ MissionParameter_UrbanBlock::~MissionParameter_UrbanBlock()
 // -----------------------------------------------------------------------------
 void MissionParameter_UrbanBlock::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_urbanblock()->set_oid( block_ ); 
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_UrbanBlock::Delete
-// Created: SLG 2009-11-06
-// -----------------------------------------------------------------------------
-void MissionParameter_UrbanBlock::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

@@ -40,8 +40,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send  ( Common::MsgMissionParameter& asn ) const = 0;
-    virtual void Delete( Common::MsgMissionParameter& asn ) const = 0;
+    virtual void Send( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:
@@ -51,10 +50,10 @@ private:
     MissionParameter_ABC& operator=( const MissionParameter_ABC& ); //!< Assignment operator
     //@}
 
-protected:
+private:
     //! @name Member data
     //@{
-    bool bNullValue_;
+    bool nullValue_;
     //@}
 };
 

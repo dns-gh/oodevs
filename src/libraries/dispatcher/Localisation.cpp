@@ -18,8 +18,7 @@ using namespace dispatcher;
 // Created: NLD 2006-09-29
 // -----------------------------------------------------------------------------
 Localisation::Localisation()
-: nType_ ( Common::MsgLocation::ellipse )
-    , points_()
+    : nType_ ( Common::MsgLocation::ellipse )
 {
     // NOTHING
 }
@@ -30,7 +29,6 @@ Localisation::Localisation()
 // -----------------------------------------------------------------------------
 Localisation::Localisation( const Common::MsgLocation& asn )
     : nType_ ( asn.type() )
-    , points_( )
 {
     points_.reserve( asn.coordinates().elem_size() );
     std::copy( asn.coordinates().elem().begin(), asn.coordinates().elem().end(), std::back_inserter( points_ ) );

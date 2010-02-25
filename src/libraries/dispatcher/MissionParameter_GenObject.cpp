@@ -34,26 +34,12 @@ MissionParameter_GenObject::~MissionParameter_GenObject()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_GenObject::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_GenObject::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value               ( bNullValue_ ) ;
-//    asn.mutable_value()->mutable_plannedwork() = new MsgPlannedWork();
+    MissionParameter_ABC::Send( asn );
     data_.Send( *asn.mutable_value()->mutable_plannedwork() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_GenObject::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_GenObject::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_plannedwork();
 }

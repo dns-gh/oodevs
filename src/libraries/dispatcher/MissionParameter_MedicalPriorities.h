@@ -10,9 +10,7 @@
 #ifndef __MissionParameter_MedicalPriorities_h_
 #define __MissionParameter_MedicalPriorities_h_
 
-
 #include "MissionParameter_ABC.h"
-
 
 namespace dispatcher
 {
@@ -35,8 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Send     ( Common::MsgMissionParameter& asn ) const;
-    virtual void Delete( Common::MsgMissionParameter& asn ) const;
+    virtual void Send( Common::MsgMissionParameter& asn ) const;
     //@}
 
 private:

@@ -36,31 +36,14 @@ MissionParameter_PolygonList::~MissionParameter_PolygonList()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_PolygonList::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_PolygonList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value          ( bNullValue_ );
-    if( !polygons_.empty() )
-    {
-        for( T_LocalisationVector::const_iterator it = polygons_.begin(); it != polygons_.end(); ++it )
-            (*it).Send( *asn.mutable_value()->mutable_polygonlist()->add_elem()->mutable_location() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_PolygonList::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_PolygonList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    if( asn.value().polygonlist().elem_size() )
-        asn.mutable_value()->mutable_polygonlist()->add_elem();
-    delete asn.mutable_value()->mutable_polygonlist();
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_polygonlist();
+    for( T_LocalisationVector::const_iterator it = polygons_.begin(); it != polygons_.end(); ++it )
+        it->Send( *asn.mutable_value()->mutable_polygonlist()->add_elem()->mutable_location() );
 }

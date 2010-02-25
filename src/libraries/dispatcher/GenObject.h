@@ -10,7 +10,6 @@
 #ifndef __GenObject_h_
 #define __GenObject_h_
 
-
 #include "Localisation.h"
 
 namespace Common
@@ -35,14 +34,14 @@ class GenObject
 public:
     //! @name Constructors/Destructor
     //@{
-    GenObject( const Common::MsgPlannedWork& asn );
-    GenObject();
-   virtual ~GenObject();
+             GenObject();
+    explicit GenObject( const Common::MsgPlannedWork& asn );
+    virtual ~GenObject();
     //@}
 
     //! @name Operations
     //@{
-   void Send( Common::MsgPlannedWork& asn ) const;
+    void Send( Common::MsgPlannedWork& asn ) const;
     //@}
 
 private:

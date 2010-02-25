@@ -39,16 +39,6 @@ MissionParameter_Line::~MissionParameter_Line()
 // -----------------------------------------------------------------------------
 void MissionParameter_Line::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value   ( bNullValue_ );
-//    asn.mutable_value()->mutable_line() = new MsgLine();
+    MissionParameter_ABC::Send( asn );
     location_.Send( *asn.mutable_value()->mutable_line()->mutable_location() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Line::Delete
-// Created: SBO 2008-03-04
-// -----------------------------------------------------------------------------
-void MissionParameter_Line::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_line();
 }

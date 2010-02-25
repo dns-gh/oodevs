@@ -20,7 +20,7 @@ using namespace dispatcher;
 MissionParameter_AgentKnowledgeList::MissionParameter_AgentKnowledgeList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for( int i = 0; i < asn.value().unitknowledgelist().elem_size(); ++i)
+    for( int i = 0; i < asn.value().unitknowledgelist().elem_size(); ++i )
         agentKnowledges_.push_back( asn.value().unitknowledgelist().elem( i ).oid() );    
 }
 
@@ -39,16 +39,8 @@ MissionParameter_AgentKnowledgeList::~MissionParameter_AgentKnowledgeList()
 // -----------------------------------------------------------------------------
 void MissionParameter_AgentKnowledgeList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value ( bNullValue_ );
-    for (std::vector< int >::const_iterator iter(agentKnowledges_.begin()); iter != agentKnowledges_.end(); ++iter)
-        asn.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_oid( *iter );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_AgentKnowledgeList::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_AgentKnowledgeList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_unitknowledgelist();
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_unitknowledgelist();
+    for( std::vector< int >::const_iterator it = agentKnowledges_.begin(); it != agentKnowledges_.end(); ++it )
+        asn.mutable_value()->mutable_unitknowledgelist()->add_elem()->set_oid( *it );
 }

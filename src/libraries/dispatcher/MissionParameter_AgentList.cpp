@@ -20,9 +20,8 @@ using namespace dispatcher;
 MissionParameter_AgentList::MissionParameter_AgentList( const Common::MsgMissionParameter& asn )
     : MissionParameter_ABC( asn )
 {
-    for (int i = 0; i < asn.value().unitlist().elem_size(); ++i)
+    for( int i = 0; i < asn.value().unitlist().elem_size(); ++i )
         agents_.push_back( asn.value().unitlist().elem( i ).oid() );
-//    std::copy( asn.value().unitlist().elem().begin(), asn.value().unitlist().elem().end(), std::back_inserter( agents_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -40,16 +39,8 @@ MissionParameter_AgentList::~MissionParameter_AgentList()
 // -----------------------------------------------------------------------------
 void MissionParameter_AgentList::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value ( bNullValue_ );
-    for (std::vector< int >::const_iterator iter(agents_.begin()); iter != agents_.end(); ++iter )
-        asn.mutable_value()->mutable_unitlist()->add_elem()->set_oid( *iter );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_AgentList::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_AgentList::Delete( Common::MsgMissionParameter& asn ) const
-{
-    delete asn.mutable_value()->mutable_unitlist();
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_unitlist();
+    for( std::vector< int >::const_iterator it = agents_.begin(); it != agents_.end(); ++it )
+        asn.mutable_value()->mutable_unitlist()->add_elem()->set_oid( *it );
 }

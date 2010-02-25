@@ -40,16 +40,8 @@ MissionParameter_MedicalPriorities::~MissionParameter_MedicalPriorities()
 // -----------------------------------------------------------------------------
 void MissionParameter_MedicalPriorities::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
-    for (std::vector< int >::const_iterator it(medicalPriorities_.begin()); it != medicalPriorities_.end(); ++it )
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->mutable_logmedicalpriorities();
+    for( std::vector< int >::const_iterator it = medicalPriorities_.begin(); it != medicalPriorities_.end(); ++it )
         asn.mutable_value()->mutable_logmedicalpriorities()->add_elem( Common::EnumHumanWound( *it ) );        
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_MedicalPriorities::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_MedicalPriorities::Delete( Common::MsgMissionParameter& asn ) const
-{
-    asn.mutable_value()->clear_logmedicalpriorities();
 }

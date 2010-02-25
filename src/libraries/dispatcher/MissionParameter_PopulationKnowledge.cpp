@@ -14,7 +14,6 @@
 
 using namespace dispatcher;
 
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_PopulationKnowledge constructor
 // Created: NLD 2007-04-20
@@ -41,15 +40,6 @@ MissionParameter_PopulationKnowledge::~MissionParameter_PopulationKnowledge()
 // -----------------------------------------------------------------------------
 void MissionParameter_PopulationKnowledge::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_populationknowledge()->set_oid( populationKnowledge_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_PopulationKnowledge::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_PopulationKnowledge::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

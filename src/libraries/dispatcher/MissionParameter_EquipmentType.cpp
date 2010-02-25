@@ -34,25 +34,12 @@ MissionParameter_EquipmentType::~MissionParameter_EquipmentType()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_EquipmentType::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_EquipmentType::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value( bNullValue_ );
+    MissionParameter_ABC::Send( asn );
     asn.mutable_value()->mutable_equipmenttype()->set_equipment( equipmentType_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_EquipmentType::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_EquipmentType::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
 }

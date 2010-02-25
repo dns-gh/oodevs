@@ -34,26 +34,12 @@ MissionParameter_Bool::~MissionParameter_Bool()
     // NOTHING
 }
 
-// =============================================================================
-// OPERATIONS
-// =============================================================================
-
 // -----------------------------------------------------------------------------
 // Name: MissionParameter_Bool::Send
 // Created: NLD 2007-04-20
 // -----------------------------------------------------------------------------
 void MissionParameter_Bool::Send( Common::MsgMissionParameter& asn ) const
 {
-    asn.set_null_value    ( bNullValue_ ); 
-    //asn.value.t       = T_MissionParameter_value_aBool;
-    asn.mutable_value()->set_abool ( bValue_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MissionParameter_Bool::Delete
-// Created: NLD 2007-04-20
-// -----------------------------------------------------------------------------
-void MissionParameter_Bool::Delete( Common::MsgMissionParameter& /*asn*/ ) const
-{
-    // NOTHING
+    MissionParameter_ABC::Send( asn );
+    asn.mutable_value()->set_abool( bValue_ );
 }
