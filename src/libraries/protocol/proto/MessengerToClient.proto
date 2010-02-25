@@ -132,14 +132,17 @@ message MsgShapeDestructionRequestAck {
 message MsgNoteCreation {
     required uint32                     id          = 1;
 	required Common.MsgNote             note        = 2;
+	required string						date		= 3;
 }
 
 message MsgNoteUpdate {
     required uint32                     id          = 1;
-    optional string                     name        = 2; 
-    optional string                     number	    = 3;
-    optional string                     description = 4;
-    optional uint32                     parent      = 5;
+    required string                     date        = 2;
+    optional string                     name        = 3; 
+    optional string                     number	    = 4;
+    optional string                     description = 5;
+    optional uint32                     parent      = 6;
+    
 }
 
 message MsgNoteDestruction {

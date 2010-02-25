@@ -121,7 +121,7 @@ void ObjectPanel::OnApply()
         magicAction.set_oid( object->GetId() );
 
         Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
-        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::translate( "Object", "Reserved obstacle activated:" ) ) );
+        gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::translate( "ObjectPanel", "Reserved obstacle activated:" ) ) );
         if( pCheckBox && pCheckBox->IsChecked() )
         {
             magicAction.mutable_attributes()->mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved );

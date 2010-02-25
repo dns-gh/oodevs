@@ -545,9 +545,10 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgShapeDestructionRequestAck));
   MsgNoteCreation_descriptor_ = file->message_type(27);
-  static const int MsgNoteCreation_offsets_[2] = {
+  static const int MsgNoteCreation_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreation, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreation, note_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteCreation, date_),
   };
   MsgNoteCreation_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -561,8 +562,9 @@ void protobuf_AssignDesc_MessengerToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgNoteCreation));
   MsgNoteUpdate_descriptor_ = file->message_type(28);
-  static const int MsgNoteUpdate_offsets_[5] = {
+  static const int MsgNoteUpdate_offsets_[6] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, date_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, number_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNoteUpdate, description_),
@@ -873,69 +875,70 @@ void protobuf_AddDesc_MessengerToClient_2eproto() {
     "\001(\01620.MsgsMessengerToClient.ShapeRequest"
     "Ack.ErrorCode\"e\n\035MsgShapeDestructionRequ"
     "estAck\022D\n\nerror_code\030\001 \002(\01620.MsgsMesseng"
-    "erToClient.ShapeRequestAck.ErrorCode\"<\n\017"
+    "erToClient.ShapeRequestAck.ErrorCode\"J\n\017"
     "MsgNoteCreation\022\n\n\002id\030\001 \002(\r\022\035\n\004note\030\002 \002("
-    "\0132\017.Common.MsgNote\"^\n\rMsgNoteUpdate\022\n\n\002i"
-    "d\030\001 \002(\r\022\014\n\004name\030\002 \001(\t\022\016\n\006number\030\003 \001(\t\022\023\n"
-    "\013description\030\004 \001(\t\022\016\n\006parent\030\005 \001(\r\" \n\022Ms"
-    "gNoteDestruction\022\n\n\002id\030\001 \002(\r\"\341\021\n\024MsgMess"
-    "engerToClient\022\022\n\007context\030\001 \001(\005:\0010\022D\n\007mes"
-    "sage\030\002 \002(\01323.MsgsMessengerToClient.MsgMe"
-    "ssengerToClient.Content\032\356\020\n\007Content\022?\n\016l"
-    "imit_creation\030\001 \001(\0132\'.MsgsMessengerToCli"
-    "ent.MsgLimitCreation\022;\n\014limit_update\030\002 \001"
-    "(\0132%.MsgsMessengerToClient.MsgLimitUpdat"
-    "e\022E\n\021limit_destruction\030\003 \001(\0132*.MsgsMesse"
-    "ngerToClient.MsgLimitDestruction\022U\n\032limi"
-    "t_creation_request_ack\030\004 \001(\01321.MsgsMesse"
-    "ngerToClient.MsgLimitCreationRequestAck\022"
-    "[\n\035limit_destruction_request_ack\030\005 \001(\01324"
-    ".MsgsMessengerToClient.MsgLimitDestructi"
-    "onRequestAck\022Q\n\030limit_update_request_ack"
-    "\030\006 \001(\0132/.MsgsMessengerToClient.MsgLimitU"
-    "pdateRequestAck\022=\n\rlima_creation\030\007 \001(\0132&"
-    ".MsgsMessengerToClient.MsgLimaCreation\0229"
-    "\n\013lima_update\030\010 \001(\0132$.MsgsMessengerToCli"
-    "ent.MsgLimaUpdate\022C\n\020lima_destruction\030\t "
-    "\001(\0132).MsgsMessengerToClient.MsgLimaDestr"
-    "uction\022S\n\031lima_creation_request_ack\030\n \001("
-    "\01320.MsgsMessengerToClient.MsgLimaCreatio"
-    "nRequestAck\022Y\n\034lima_destruction_request_"
-    "ack\030\013 \001(\01323.MsgsMessengerToClient.MsgLim"
-    "aDestructionRequestAck\022O\n\027lima_update_re"
-    "quest_ack\030\014 \001(\0132..MsgsMessengerToClient."
-    "MsgLimaUpdateRequestAck\022M\n\025intelligence_"
-    "creation\030\r \001(\0132..MsgsMessengerToClient.M"
-    "sgIntelligenceCreation\022I\n\023intelligence_u"
-    "pdate\030\016 \001(\0132,.MsgsMessengerToClient.MsgI"
-    "ntelligenceUpdate\022S\n\030intelligence_destru"
-    "ction\030\017 \001(\01321.MsgsMessengerToClient.MsgI"
-    "ntelligenceDestruction\022c\n!intelligence_c"
-    "reation_request_ack\030\020 \001(\01328.MsgsMessenge"
-    "rToClient.MsgIntelligenceCreationRequest"
-    "Ack\022_\n\037intelligence_update_request_ack\030\021"
-    " \001(\01326.MsgsMessengerToClient.MsgIntellig"
-    "enceUpdateRequestAck\022i\n$intelligence_des"
-    "truction_request_ack\030\022 \001(\0132;.MsgsMesseng"
-    "erToClient.MsgIntelligenceDestructionReq"
-    "uestAck\022?\n\016shape_creation\030\023 \001(\0132\'.MsgsMe"
-    "ssengerToClient.MsgShapeCreation\022;\n\014shap"
-    "e_update\030\024 \001(\0132%.MsgsMessengerToClient.M"
-    "sgShapeUpdate\022E\n\021shape_destruction\030\025 \001(\013"
-    "2*.MsgsMessengerToClient.MsgShapeDestruc"
-    "tion\022U\n\032shape_creation_request_ack\030\026 \001(\013"
-    "21.MsgsMessengerToClient.MsgShapeCreatio"
-    "nRequestAck\022[\n\035shape_destruction_request"
-    "_ack\030\027 \001(\01324.MsgsMessengerToClient.MsgSh"
-    "apeDestructionRequestAck\022Q\n\030shape_update"
-    "_request_ack\030\030 \001(\0132/.MsgsMessengerToClie"
-    "nt.MsgShapeUpdateRequestAck\022,\n\014text_mess"
-    "age\030\031 \001(\0132\026.Common.MsgTextMessage\022=\n\rnot"
-    "e_creation\030\032 \001(\0132&.MsgsMessengerToClient"
-    ".MsgNoteCreation\0229\n\013note_update\030\033 \001(\0132$."
-    "MsgsMessengerToClient.MsgNoteUpdate\022C\n\020n"
-    "ote_destruction\030\034 \001(\0132).MsgsMessengerToC"
-    "lient.MsgNoteDestruction", 5144);
+    "\0132\017.Common.MsgNote\022\014\n\004date\030\003 \002(\t\"l\n\rMsgN"
+    "oteUpdate\022\n\n\002id\030\001 \002(\r\022\014\n\004date\030\002 \002(\t\022\014\n\004n"
+    "ame\030\003 \001(\t\022\016\n\006number\030\004 \001(\t\022\023\n\013description"
+    "\030\005 \001(\t\022\016\n\006parent\030\006 \001(\r\" \n\022MsgNoteDestruc"
+    "tion\022\n\n\002id\030\001 \002(\r\"\341\021\n\024MsgMessengerToClien"
+    "t\022\022\n\007context\030\001 \001(\005:\0010\022D\n\007message\030\002 \002(\01323"
+    ".MsgsMessengerToClient.MsgMessengerToCli"
+    "ent.Content\032\356\020\n\007Content\022?\n\016limit_creatio"
+    "n\030\001 \001(\0132\'.MsgsMessengerToClient.MsgLimit"
+    "Creation\022;\n\014limit_update\030\002 \001(\0132%.MsgsMes"
+    "sengerToClient.MsgLimitUpdate\022E\n\021limit_d"
+    "estruction\030\003 \001(\0132*.MsgsMessengerToClient"
+    ".MsgLimitDestruction\022U\n\032limit_creation_r"
+    "equest_ack\030\004 \001(\01321.MsgsMessengerToClient"
+    ".MsgLimitCreationRequestAck\022[\n\035limit_des"
+    "truction_request_ack\030\005 \001(\01324.MsgsMesseng"
+    "erToClient.MsgLimitDestructionRequestAck"
+    "\022Q\n\030limit_update_request_ack\030\006 \001(\0132/.Msg"
+    "sMessengerToClient.MsgLimitUpdateRequest"
+    "Ack\022=\n\rlima_creation\030\007 \001(\0132&.MsgsMesseng"
+    "erToClient.MsgLimaCreation\0229\n\013lima_updat"
+    "e\030\010 \001(\0132$.MsgsMessengerToClient.MsgLimaU"
+    "pdate\022C\n\020lima_destruction\030\t \001(\0132).MsgsMe"
+    "ssengerToClient.MsgLimaDestruction\022S\n\031li"
+    "ma_creation_request_ack\030\n \001(\01320.MsgsMess"
+    "engerToClient.MsgLimaCreationRequestAck\022"
+    "Y\n\034lima_destruction_request_ack\030\013 \001(\01323."
+    "MsgsMessengerToClient.MsgLimaDestruction"
+    "RequestAck\022O\n\027lima_update_request_ack\030\014 "
+    "\001(\0132..MsgsMessengerToClient.MsgLimaUpdat"
+    "eRequestAck\022M\n\025intelligence_creation\030\r \001"
+    "(\0132..MsgsMessengerToClient.MsgIntelligen"
+    "ceCreation\022I\n\023intelligence_update\030\016 \001(\0132"
+    ",.MsgsMessengerToClient.MsgIntelligenceU"
+    "pdate\022S\n\030intelligence_destruction\030\017 \001(\0132"
+    "1.MsgsMessengerToClient.MsgIntelligenceD"
+    "estruction\022c\n!intelligence_creation_requ"
+    "est_ack\030\020 \001(\01328.MsgsMessengerToClient.Ms"
+    "gIntelligenceCreationRequestAck\022_\n\037intel"
+    "ligence_update_request_ack\030\021 \001(\01326.MsgsM"
+    "essengerToClient.MsgIntelligenceUpdateRe"
+    "questAck\022i\n$intelligence_destruction_req"
+    "uest_ack\030\022 \001(\0132;.MsgsMessengerToClient.M"
+    "sgIntelligenceDestructionRequestAck\022?\n\016s"
+    "hape_creation\030\023 \001(\0132\'.MsgsMessengerToCli"
+    "ent.MsgShapeCreation\022;\n\014shape_update\030\024 \001"
+    "(\0132%.MsgsMessengerToClient.MsgShapeUpdat"
+    "e\022E\n\021shape_destruction\030\025 \001(\0132*.MsgsMesse"
+    "ngerToClient.MsgShapeDestruction\022U\n\032shap"
+    "e_creation_request_ack\030\026 \001(\01321.MsgsMesse"
+    "ngerToClient.MsgShapeCreationRequestAck\022"
+    "[\n\035shape_destruction_request_ack\030\027 \001(\01324"
+    ".MsgsMessengerToClient.MsgShapeDestructi"
+    "onRequestAck\022Q\n\030shape_update_request_ack"
+    "\030\030 \001(\0132/.MsgsMessengerToClient.MsgShapeU"
+    "pdateRequestAck\022,\n\014text_message\030\031 \001(\0132\026."
+    "Common.MsgTextMessage\022=\n\rnote_creation\030\032"
+    " \001(\0132&.MsgsMessengerToClient.MsgNoteCrea"
+    "tion\0229\n\013note_update\030\033 \001(\0132$.MsgsMessenge"
+    "rToClient.MsgNoteUpdate\022C\n\020note_destruct"
+    "ion\030\034 \001(\0132).MsgsMessengerToClient.MsgNot"
+    "eDestruction", 5172);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "MessengerToClient.proto", &protobuf_RegisterTypes);
   TacticalLineAck::default_instance_ = new TacticalLineAck();
@@ -7285,9 +7288,11 @@ void MsgShapeDestructionRequestAck::Swap(MsgShapeDestructionRequestAck* other) {
 
 // ===================================================================
 
+const ::std::string MsgNoteCreation::_default_date_;
 #ifndef _MSC_VER
 const int MsgNoteCreation::kIdFieldNumber;
 const int MsgNoteCreation::kNoteFieldNumber;
+const int MsgNoteCreation::kDateFieldNumber;
 #endif  // !_MSC_VER
 
 MsgNoteCreation::MsgNoteCreation() {
@@ -7307,6 +7312,7 @@ void MsgNoteCreation::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0u;
   note_ = NULL;
+  date_ = const_cast< ::std::string*>(&_default_date_);
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -7315,6 +7321,9 @@ MsgNoteCreation::~MsgNoteCreation() {
 }
 
 void MsgNoteCreation::SharedDtor() {
+  if (date_ != &_default_date_) {
+    delete date_;
+  }
   if (this != default_instance_) {
     delete note_;
   }
@@ -7340,6 +7349,11 @@ void MsgNoteCreation::Clear() {
     id_ = 0u;
     if (_has_bit(1)) {
       if (note_ != NULL) note_->::Common::MsgNote::Clear();
+    }
+    if (_has_bit(2)) {
+      if (date_ != &_default_date_) {
+        date_->clear();
+      }
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -7374,6 +7388,22 @@ bool MsgNoteCreation::MergePartialFromCodedStream(
        parse_note:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_note()));
+        if (input->ExpectTag(26)) goto parse_date;
+        break;
+      }
+      
+      // required string date = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_date:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_date()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->date().data(), this->date().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -7413,6 +7443,15 @@ void MsgNoteCreation::SerializeWithCachedSizes(
       2, this->note(), output);
   }
   
+  // required string date = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->date().data(), this->date().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      3, this->date(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -7431,6 +7470,16 @@ void MsgNoteCreation::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->note(), target);
+  }
+  
+  // required string date = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->date().data(), this->date().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        3, this->date(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -7456,6 +7505,13 @@ int MsgNoteCreation::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->note());
+    }
+    
+    // required string date = 3;
+    if (has_date()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->date());
     }
     
   }
@@ -7489,6 +7545,9 @@ void MsgNoteCreation::MergeFrom(const MsgNoteCreation& from) {
     if (from._has_bit(1)) {
       mutable_note()->::Common::MsgNote::MergeFrom(from.note());
     }
+    if (from._has_bit(2)) {
+      set_date(from.date());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -7506,7 +7565,7 @@ void MsgNoteCreation::CopyFrom(const MsgNoteCreation& from) {
 }
 
 bool MsgNoteCreation::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
   if (has_note()) {
     if (!this->note().IsInitialized()) return false;
@@ -7518,6 +7577,7 @@ void MsgNoteCreation::Swap(MsgNoteCreation* other) {
   if (other != this) {
     std::swap(id_, other->id_);
     std::swap(note_, other->note_);
+    std::swap(date_, other->date_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -7535,11 +7595,13 @@ void MsgNoteCreation::Swap(MsgNoteCreation* other) {
 
 // ===================================================================
 
+const ::std::string MsgNoteUpdate::_default_date_;
 const ::std::string MsgNoteUpdate::_default_name_;
 const ::std::string MsgNoteUpdate::_default_number_;
 const ::std::string MsgNoteUpdate::_default_description_;
 #ifndef _MSC_VER
 const int MsgNoteUpdate::kIdFieldNumber;
+const int MsgNoteUpdate::kDateFieldNumber;
 const int MsgNoteUpdate::kNameFieldNumber;
 const int MsgNoteUpdate::kNumberFieldNumber;
 const int MsgNoteUpdate::kDescriptionFieldNumber;
@@ -7561,6 +7623,7 @@ MsgNoteUpdate::MsgNoteUpdate(const MsgNoteUpdate& from) {
 void MsgNoteUpdate::SharedCtor() {
   _cached_size_ = 0;
   id_ = 0u;
+  date_ = const_cast< ::std::string*>(&_default_date_);
   name_ = const_cast< ::std::string*>(&_default_name_);
   number_ = const_cast< ::std::string*>(&_default_number_);
   description_ = const_cast< ::std::string*>(&_default_description_);
@@ -7573,6 +7636,9 @@ MsgNoteUpdate::~MsgNoteUpdate() {
 }
 
 void MsgNoteUpdate::SharedDtor() {
+  if (date_ != &_default_date_) {
+    delete date_;
+  }
   if (name_ != &_default_name_) {
     delete name_;
   }
@@ -7605,16 +7671,21 @@ void MsgNoteUpdate::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     id_ = 0u;
     if (_has_bit(1)) {
+      if (date_ != &_default_date_) {
+        date_->clear();
+      }
+    }
+    if (_has_bit(2)) {
       if (name_ != &_default_name_) {
         name_->clear();
       }
     }
-    if (_has_bit(2)) {
+    if (_has_bit(3)) {
       if (number_ != &_default_number_) {
         number_->clear();
       }
     }
-    if (_has_bit(3)) {
+    if (_has_bit(4)) {
       if (description_ != &_default_description_) {
         description_->clear();
       }
@@ -7640,12 +7711,28 @@ bool MsgNoteUpdate::MergePartialFromCodedStream(
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &id_));
         _set_bit(0);
-        if (input->ExpectTag(18)) goto parse_name;
+        if (input->ExpectTag(18)) goto parse_date;
         break;
       }
       
-      // optional string name = 2;
+      // required string date = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_date:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_date()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->date().data(), this->date().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
+        if (input->ExpectTag(26)) goto parse_name;
+        break;
+      }
+      
+      // optional string name = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -7656,12 +7743,12 @@ bool MsgNoteUpdate::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->name().data(), this->name().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(26)) goto parse_number;
+        if (input->ExpectTag(34)) goto parse_number;
         break;
       }
       
-      // optional string number = 3;
-      case 3: {
+      // optional string number = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -7672,12 +7759,12 @@ bool MsgNoteUpdate::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->number().data(), this->number().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(34)) goto parse_description;
+        if (input->ExpectTag(42)) goto parse_description;
         break;
       }
       
-      // optional string description = 4;
-      case 4: {
+      // optional string description = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -7688,12 +7775,12 @@ bool MsgNoteUpdate::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->description().data(), this->description().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(40)) goto parse_parent;
+        if (input->ExpectTag(48)) goto parse_parent;
         break;
       }
       
-      // optional uint32 parent = 5;
-      case 5: {
+      // optional uint32 parent = 6;
+      case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -7701,7 +7788,7 @@ bool MsgNoteUpdate::MergePartialFromCodedStream(
        parse_parent:
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &parent_));
-        _set_bit(4);
+        _set_bit(5);
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -7735,36 +7822,45 @@ void MsgNoteUpdate::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->id(), output);
   }
   
-  // optional string name = 2;
+  // required string date = 2;
   if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->date().data(), this->date().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      2, this->date(), output);
+  }
+  
+  // optional string name = 3;
+  if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      2, this->name(), output);
+      3, this->name(), output);
   }
   
-  // optional string number = 3;
-  if (_has_bit(2)) {
+  // optional string number = 4;
+  if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->number().data(), this->number().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      3, this->number(), output);
+      4, this->number(), output);
   }
   
-  // optional string description = 4;
-  if (_has_bit(3)) {
+  // optional string description = 5;
+  if (_has_bit(4)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->description().data(), this->description().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->description(), output);
+      5, this->description(), output);
   }
   
-  // optional uint32 parent = 5;
-  if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(5, this->parent(), output);
+  // optional uint32 parent = 6;
+  if (_has_bit(5)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(6, this->parent(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -7780,39 +7876,49 @@ void MsgNoteUpdate::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->id(), target);
   }
   
-  // optional string name = 2;
+  // required string date = 2;
   if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->date().data(), this->date().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        2, this->date(), target);
+  }
+  
+  // optional string name = 3;
+  if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->name().data(), this->name().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        2, this->name(), target);
+        3, this->name(), target);
   }
   
-  // optional string number = 3;
-  if (_has_bit(2)) {
+  // optional string number = 4;
+  if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->number().data(), this->number().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->number(), target);
+        4, this->number(), target);
   }
   
-  // optional string description = 4;
-  if (_has_bit(3)) {
+  // optional string description = 5;
+  if (_has_bit(4)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->description().data(), this->description().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->description(), target);
+        5, this->description(), target);
   }
   
-  // optional uint32 parent = 5;
-  if (_has_bit(4)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(5, this->parent(), target);
+  // optional uint32 parent = 6;
+  if (_has_bit(5)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(6, this->parent(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -7833,28 +7939,35 @@ int MsgNoteUpdate::ByteSize() const {
           this->id());
     }
     
-    // optional string name = 2;
+    // required string date = 2;
+    if (has_date()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->date());
+    }
+    
+    // optional string name = 3;
     if (has_name()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->name());
     }
     
-    // optional string number = 3;
+    // optional string number = 4;
     if (has_number()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->number());
     }
     
-    // optional string description = 4;
+    // optional string description = 5;
     if (has_description()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->description());
     }
     
-    // optional uint32 parent = 5;
+    // optional uint32 parent = 6;
     if (has_parent()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
@@ -7890,15 +8003,18 @@ void MsgNoteUpdate::MergeFrom(const MsgNoteUpdate& from) {
       set_id(from.id());
     }
     if (from._has_bit(1)) {
-      set_name(from.name());
+      set_date(from.date());
     }
     if (from._has_bit(2)) {
-      set_number(from.number());
+      set_name(from.name());
     }
     if (from._has_bit(3)) {
-      set_description(from.description());
+      set_number(from.number());
     }
     if (from._has_bit(4)) {
+      set_description(from.description());
+    }
+    if (from._has_bit(5)) {
       set_parent(from.parent());
     }
   }
@@ -7918,7 +8034,7 @@ void MsgNoteUpdate::CopyFrom(const MsgNoteUpdate& from) {
 }
 
 bool MsgNoteUpdate::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
   return true;
 }
@@ -7926,6 +8042,7 @@ bool MsgNoteUpdate::IsInitialized() const {
 void MsgNoteUpdate::Swap(MsgNoteUpdate* other) {
   if (other != this) {
     std::swap(id_, other->id_);
+    std::swap(date_, other->date_);
     std::swap(name_, other->name_);
     std::swap(number_, other->number_);
     std::swap(description_, other->description_);

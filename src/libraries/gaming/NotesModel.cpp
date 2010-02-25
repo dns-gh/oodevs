@@ -39,8 +39,7 @@ NotesModel::~NotesModel()
 // -----------------------------------------------------------------------------
 void NotesModel::Create( const MsgsMessengerToClient::MsgNoteCreation& message )
 {
-    Note* note = new Note( controller_, message.note().parent(), message.id(), message.note().name(),
-        message.note().number(), message.note().description() );
+    Note* note = new Note( controller_, message );
     Register( message.id(), *note );
 }
 

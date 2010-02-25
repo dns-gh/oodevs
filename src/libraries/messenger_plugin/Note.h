@@ -41,8 +41,8 @@ class Note
 public:
     //! @name Constructors/Destructor
     //@{
-             Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message );
-             Note(unsigned long id, std::vector<std::string> values, unsigned int parent );
+    Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message, std::string currentTime );
+             Note(unsigned long id, std::vector<std::string> values, unsigned int parent, std::string currentTime );
     virtual ~Note();
     //@}
 
@@ -53,12 +53,15 @@ public:
     std::string GetDesc() const;
     unsigned long GetId() const;
     unsigned long GetParent() const;
-    std::list<unsigned long>& GetChildren() const;
+    std::string GetCreationTime() const;
+    std::string GetLastUpdateTime() const;
+
+     std::list<unsigned long>& GetChildren() const;
     void RemoveChild( unsigned long note );
     void AddChild( unsigned long note );
     void SetParent(unsigned long note);
 
-    void Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message );
+    void Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message, std::string currentTime );
     virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendUpdate     ( dispatcher::ClientPublisher_ABC& publisher, bool stateParent ) const;
     virtual void SendFullState  ( dispatcher::ClientPublisher_ABC& publisher ) const;
@@ -84,6 +87,8 @@ private:
     std::string description_;
     unsigned long parent_;
     std::list<unsigned long>* children_;
+    std::string creationTime_;
+    std::string lastUpdateTime_;
     //@}
 };
 

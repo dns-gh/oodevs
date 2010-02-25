@@ -2746,17 +2746,29 @@ class MsgNoteCreation : public ::google::protobuf::Message {
   inline const ::Common::MsgNote& note() const;
   inline ::Common::MsgNote* mutable_note();
   
+  // required string date = 3;
+  inline bool has_date() const;
+  inline void clear_date();
+  static const int kDateFieldNumber = 3;
+  inline const ::std::string& date() const;
+  inline void set_date(const ::std::string& value);
+  inline void set_date(const char* value);
+  inline void set_date(const char* value, size_t size);
+  inline ::std::string* mutable_date();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::google::protobuf::uint32 id_;
   ::Common::MsgNote* note_;
+  ::std::string* date_;
+  static const ::std::string _default_date_;
   friend void  protobuf_AddDesc_MessengerToClient_2eproto();
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2834,40 +2846,50 @@ class MsgNoteUpdate : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 id() const;
   inline void set_id(::google::protobuf::uint32 value);
   
-  // optional string name = 2;
+  // required string date = 2;
+  inline bool has_date() const;
+  inline void clear_date();
+  static const int kDateFieldNumber = 2;
+  inline const ::std::string& date() const;
+  inline void set_date(const ::std::string& value);
+  inline void set_date(const char* value);
+  inline void set_date(const char* value, size_t size);
+  inline ::std::string* mutable_date();
+  
+  // optional string name = 3;
   inline bool has_name() const;
   inline void clear_name();
-  static const int kNameFieldNumber = 2;
+  static const int kNameFieldNumber = 3;
   inline const ::std::string& name() const;
   inline void set_name(const ::std::string& value);
   inline void set_name(const char* value);
   inline void set_name(const char* value, size_t size);
   inline ::std::string* mutable_name();
   
-  // optional string number = 3;
+  // optional string number = 4;
   inline bool has_number() const;
   inline void clear_number();
-  static const int kNumberFieldNumber = 3;
+  static const int kNumberFieldNumber = 4;
   inline const ::std::string& number() const;
   inline void set_number(const ::std::string& value);
   inline void set_number(const char* value);
   inline void set_number(const char* value, size_t size);
   inline ::std::string* mutable_number();
   
-  // optional string description = 4;
+  // optional string description = 5;
   inline bool has_description() const;
   inline void clear_description();
-  static const int kDescriptionFieldNumber = 4;
+  static const int kDescriptionFieldNumber = 5;
   inline const ::std::string& description() const;
   inline void set_description(const ::std::string& value);
   inline void set_description(const char* value);
   inline void set_description(const char* value, size_t size);
   inline ::std::string* mutable_description();
   
-  // optional uint32 parent = 5;
+  // optional uint32 parent = 6;
   inline bool has_parent() const;
   inline void clear_parent();
-  static const int kParentFieldNumber = 5;
+  static const int kParentFieldNumber = 6;
   inline ::google::protobuf::uint32 parent() const;
   inline void set_parent(::google::protobuf::uint32 value);
   
@@ -2876,6 +2898,8 @@ class MsgNoteUpdate : public ::google::protobuf::Message {
   mutable int _cached_size_;
   
   ::google::protobuf::uint32 id_;
+  ::std::string* date_;
+  static const ::std::string _default_date_;
   ::std::string* name_;
   static const ::std::string _default_name_;
   ::std::string* number_;
@@ -2887,7 +2911,7 @@ class MsgNoteUpdate : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_MessengerToClient_2eproto();
   friend void protobuf_ShutdownFile_MessengerToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4349,6 +4373,48 @@ inline ::Common::MsgNote* MsgNoteCreation::mutable_note() {
   return note_;
 }
 
+// required string date = 3;
+inline bool MsgNoteCreation::has_date() const {
+  return _has_bit(2);
+}
+inline void MsgNoteCreation::clear_date() {
+  if (date_ != &_default_date_) {
+    date_->clear();
+  }
+  _clear_bit(2);
+}
+inline const ::std::string& MsgNoteCreation::date() const {
+  return *date_;
+}
+inline void MsgNoteCreation::set_date(const ::std::string& value) {
+  _set_bit(2);
+  if (date_ == &_default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(value);
+}
+inline void MsgNoteCreation::set_date(const char* value) {
+  _set_bit(2);
+  if (date_ == &_default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(value);
+}
+inline void MsgNoteCreation::set_date(const char* value, size_t size) {
+  _set_bit(2);
+  if (date_ == &_default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgNoteCreation::mutable_date() {
+  _set_bit(2);
+  if (date_ == &_default_date_) {
+    date_ = new ::std::string;
+  }
+  return date_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgNoteUpdate
@@ -4369,145 +4435,187 @@ inline void MsgNoteUpdate::set_id(::google::protobuf::uint32 value) {
   id_ = value;
 }
 
-// optional string name = 2;
-inline bool MsgNoteUpdate::has_name() const {
+// required string date = 2;
+inline bool MsgNoteUpdate::has_date() const {
   return _has_bit(1);
+}
+inline void MsgNoteUpdate::clear_date() {
+  if (date_ != &_default_date_) {
+    date_->clear();
+  }
+  _clear_bit(1);
+}
+inline const ::std::string& MsgNoteUpdate::date() const {
+  return *date_;
+}
+inline void MsgNoteUpdate::set_date(const ::std::string& value) {
+  _set_bit(1);
+  if (date_ == &_default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(value);
+}
+inline void MsgNoteUpdate::set_date(const char* value) {
+  _set_bit(1);
+  if (date_ == &_default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(value);
+}
+inline void MsgNoteUpdate::set_date(const char* value, size_t size) {
+  _set_bit(1);
+  if (date_ == &_default_date_) {
+    date_ = new ::std::string;
+  }
+  date_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgNoteUpdate::mutable_date() {
+  _set_bit(1);
+  if (date_ == &_default_date_) {
+    date_ = new ::std::string;
+  }
+  return date_;
+}
+
+// optional string name = 3;
+inline bool MsgNoteUpdate::has_name() const {
+  return _has_bit(2);
 }
 inline void MsgNoteUpdate::clear_name() {
   if (name_ != &_default_name_) {
     name_->clear();
   }
-  _clear_bit(1);
+  _clear_bit(2);
 }
 inline const ::std::string& MsgNoteUpdate::name() const {
   return *name_;
 }
 inline void MsgNoteUpdate::set_name(const ::std::string& value) {
-  _set_bit(1);
+  _set_bit(2);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
 inline void MsgNoteUpdate::set_name(const char* value) {
-  _set_bit(1);
+  _set_bit(2);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   name_->assign(value);
 }
 inline void MsgNoteUpdate::set_name(const char* value, size_t size) {
-  _set_bit(1);
+  _set_bit(2);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   name_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* MsgNoteUpdate::mutable_name() {
-  _set_bit(1);
+  _set_bit(2);
   if (name_ == &_default_name_) {
     name_ = new ::std::string;
   }
   return name_;
 }
 
-// optional string number = 3;
+// optional string number = 4;
 inline bool MsgNoteUpdate::has_number() const {
-  return _has_bit(2);
+  return _has_bit(3);
 }
 inline void MsgNoteUpdate::clear_number() {
   if (number_ != &_default_number_) {
     number_->clear();
   }
-  _clear_bit(2);
+  _clear_bit(3);
 }
 inline const ::std::string& MsgNoteUpdate::number() const {
   return *number_;
 }
 inline void MsgNoteUpdate::set_number(const ::std::string& value) {
-  _set_bit(2);
+  _set_bit(3);
   if (number_ == &_default_number_) {
     number_ = new ::std::string;
   }
   number_->assign(value);
 }
 inline void MsgNoteUpdate::set_number(const char* value) {
-  _set_bit(2);
+  _set_bit(3);
   if (number_ == &_default_number_) {
     number_ = new ::std::string;
   }
   number_->assign(value);
 }
 inline void MsgNoteUpdate::set_number(const char* value, size_t size) {
-  _set_bit(2);
+  _set_bit(3);
   if (number_ == &_default_number_) {
     number_ = new ::std::string;
   }
   number_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* MsgNoteUpdate::mutable_number() {
-  _set_bit(2);
+  _set_bit(3);
   if (number_ == &_default_number_) {
     number_ = new ::std::string;
   }
   return number_;
 }
 
-// optional string description = 4;
+// optional string description = 5;
 inline bool MsgNoteUpdate::has_description() const {
-  return _has_bit(3);
+  return _has_bit(4);
 }
 inline void MsgNoteUpdate::clear_description() {
   if (description_ != &_default_description_) {
     description_->clear();
   }
-  _clear_bit(3);
+  _clear_bit(4);
 }
 inline const ::std::string& MsgNoteUpdate::description() const {
   return *description_;
 }
 inline void MsgNoteUpdate::set_description(const ::std::string& value) {
-  _set_bit(3);
+  _set_bit(4);
   if (description_ == &_default_description_) {
     description_ = new ::std::string;
   }
   description_->assign(value);
 }
 inline void MsgNoteUpdate::set_description(const char* value) {
-  _set_bit(3);
+  _set_bit(4);
   if (description_ == &_default_description_) {
     description_ = new ::std::string;
   }
   description_->assign(value);
 }
 inline void MsgNoteUpdate::set_description(const char* value, size_t size) {
-  _set_bit(3);
+  _set_bit(4);
   if (description_ == &_default_description_) {
     description_ = new ::std::string;
   }
   description_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* MsgNoteUpdate::mutable_description() {
-  _set_bit(3);
+  _set_bit(4);
   if (description_ == &_default_description_) {
     description_ = new ::std::string;
   }
   return description_;
 }
 
-// optional uint32 parent = 5;
+// optional uint32 parent = 6;
 inline bool MsgNoteUpdate::has_parent() const {
-  return _has_bit(4);
+  return _has_bit(5);
 }
 inline void MsgNoteUpdate::clear_parent() {
   parent_ = 0u;
-  _clear_bit(4);
+  _clear_bit(5);
 }
 inline ::google::protobuf::uint32 MsgNoteUpdate::parent() const {
   return parent_;
 }
 inline void MsgNoteUpdate::set_parent(::google::protobuf::uint32 value) {
-  _set_bit(4);
+  _set_bit(5);
   parent_ = value;
 }
 

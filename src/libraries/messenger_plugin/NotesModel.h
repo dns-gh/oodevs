@@ -60,6 +60,8 @@ public:
     
     void LoadNotes(const std::string filename);
     void SaveNotes(const std::string filename);
+
+    void UpdateTime( std::string time );
     //@}
 private:
     //! @name Copy/Assignment
@@ -85,6 +87,7 @@ private:
     IdManager&                       idManager_;
     std::list<unsigned int>          headNotes_;
     const std::string                file_;
+    std::string                      currentTime_;
     //@}
 };
 

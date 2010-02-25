@@ -19,12 +19,14 @@ using namespace plugins::messenger;
 // Name: Note destructor
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-Note::Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message )
+Note::Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message, std::string currentTime)
     : id_( id )
     , name_( message.note().name() )
     , number_( message.note().number() )
     , description_( message.note().description() )
     , parent_( message.note().parent() )
+    , creationTime_ ( currentTime )
+    , lastUpdateTime_( currentTime )
 {
     children_ = new std::list<unsigned long>();
 }
@@ -33,14 +35,16 @@ Note::Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest
 // Name: Note constructor
 // Created: HBD 2010-02-17
 // -----------------------------------------------------------------------------
-Note::Note(unsigned long id, std::vector<std::string> values, unsigned int parent )
-: id_( id )
-, name_( values[ 0 ] )
-, number_( values[ 2 ] )
-, description_( values[ 3 ] )
-, parent_( parent )
+Note::Note(unsigned long id, std::vector<std::string> values, unsigned int parent, std::string currentTime )
+    : id_( id )
+    , name_( values[ 0 ] )
+    , number_( values[ 2 ] )
+    , description_( values[ 3 ] )
+    , parent_( parent )
+    , creationTime_ ( values[ 4 ] )
+    , lastUpdateTime_( currentTime )
 {
-    children_ = new std::list<unsigned long>();
+     children_ = new std::list<unsigned long>();
 }
 
 
@@ -71,7 +75,7 @@ unsigned long  Note::GetId() const
 */
 // Created: HBD 2010-02-03
 // -----------------------------------------------------------------------------
-void Note::Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message )
+void Note::Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message, std::string currentTime )
 {
     if( message.has_name() )
         name_ = message.name();
@@ -81,7 +85,7 @@ void Note::Update( const MsgsClientToMessenger::MsgNoteUpdateRequest& message )
         description_ = message.description();
     if( message.has_parent() )
         parent_ = message.parent();
-
+    lastUpdateTime_ = currentTime;
 }
 
 // -----------------------------------------------------------------------------
@@ -98,6 +102,8 @@ void Note::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_note()->set_description( description_ );
     message().mutable_note()->set_number( number_ );
     message().mutable_note()->set_parent( parent_ );
+    message().set_date( creationTime_ );
+
     message.Send( publisher );
 }
 
@@ -121,6 +127,8 @@ void  Note::SendUpdate( dispatcher::ClientPublisher_ABC& publisher, bool modifPa
         message().set_description( description_ );
         message().set_number( number_ );
     }
+
+    message().set_date( lastUpdateTime_ );
     message.Send( publisher );
 }
 
@@ -220,4 +228,22 @@ std::string Note::GetNumber() const
 std::string Note::GetDesc() const
 {
     return description_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetCreationTime
+// Created: HBD 2010-02-24
+// -----------------------------------------------------------------------------
+std::string Note::GetCreationTime() const
+{
+    return creationTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetLastUpdateTime
+// Created: HBD 2010-02-24
+// -----------------------------------------------------------------------------
+std::string Note::GetLastUpdateTime() const
+{
+    return lastUpdateTime_;
 }

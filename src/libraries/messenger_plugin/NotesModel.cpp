@@ -20,6 +20,7 @@
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tokenizer.hpp>
 #include <fstream>
@@ -59,7 +60,7 @@ NotesModel::~NotesModel()
 // -----------------------------------------------------------------------------
 void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequest& message )
 {
-   std::auto_ptr< Note > note( new Note( idManager_.NextId(), message ) );
+   std::auto_ptr< Note > note( new Note( idManager_.NextId(), message, currentTime_ ) );
    Register( note->GetId(), *note );
    if (note->GetParent() != 0)
    {
@@ -113,7 +114,7 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateReques
                     newParent->AddChild( note->GetId() );
             }
         }
-        note->Update( message );
+        note->Update( message, currentTime_ );
         note->SendUpdate( clients_, false );
     }
 }
@@ -205,7 +206,9 @@ void NotesModel::WriteNote( const Note& note, std::ofstream& file, int& lineNumb
     file << parentLine;
     std::string tmp = note.GetDesc();
     boost::algorithm::replace_all( tmp, "\n", "<br>" );
-    file << ";\""+ note.GetNumber() + "\";\"" + tmp + "\"" << std::endl;
+    file << ";\""+ note.GetNumber() + "\";\"" + tmp + "\"" ;
+    file << ";\""+ note.GetCreationTime()+ "\";\"" + note.GetLastUpdateTime() + "\"" << std::endl;
+
     std::list<unsigned long>& noteChildren = note.GetChildren();
     int currentLine = lineNumber;   
 
@@ -265,7 +268,12 @@ unsigned int NotesModel::CreateNote( std::vector< std::string > fields, const un
 {
     unsigned int id = idManager_.NextId();
     boost::algorithm::replace_all( fields[3], "<br>", "\n" );
-    std::auto_ptr< Note > note( new Note( id, fields, parent ) );
+    boost::posix_time::ptime time = boost::posix_time::from_iso_string( fields[4] );
+    fields[4] = boost::posix_time::to_simple_string(time);
+    time = boost::posix_time::from_iso_string( fields[5] );
+    fields[5] = boost::posix_time::to_simple_string(time);
+
+    std::auto_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
     Register( note->GetId(), *note );
     if( note->GetParent() != 0 )
     {
@@ -275,4 +283,14 @@ unsigned int NotesModel::CreateNote( std::vector< std::string > fields, const un
     note->SendCreation( clients_ );
     note.release();
     return id;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NotesModel::UpdateTick
+// Created: HBD 2010-02-24
+// -----------------------------------------------------------------------------
+void NotesModel::UpdateTime( std::string message )
+{
+    boost::posix_time::ptime time = boost::posix_time::from_iso_string(message);
+    currentTime_ = boost::posix_time::to_simple_string(time);
 }

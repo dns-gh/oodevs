@@ -45,13 +45,15 @@ NotesPanel::NotesPanel( QMainWindow* mainWindow, kernel::Controller& controller,
     notes_->addColumn( tools::translate( "Notes", "Tree" ) );
     notes_->addColumn( tools::translate( "Notes", "Value" ) );
     notes_->addColumn( tools::translate( "Notes", "Text" ) );
+    notes_->addColumn( tools::translate( "Notes", "Creation Date" ) );
+    notes_->addColumn( tools::translate( "Notes", "Last Update" ) );
     notes_->setColumnWidthMode( 1, QListView::Manual );
-    notes_->setColumnWidthMode( 1, QListView::Manual );
-    notes_->setColumnAlignment( 2, Qt::AlignCenter );
-    notes_->setColumnAlignment( 2, Qt::AlignCenter );
+    notes_->setColumnWidthMode( 2, QListView::Manual );
+    for( int col = 0; col < 5 ; ++col )
+        notes_->setColumnAlignment( col, Qt::AlignCenter );
+   
     notes_->setRootIsDecorated( true );
     connect( notes_, SIGNAL( contextMenuRequested( QListViewItem*, const QPoint&, int) ), this, SLOT( OnContextMenu( QListViewItem*, const QPoint&, int) ) );
-//    connect( item->listView(), SIGNAL( clicked( QListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenu( QListViewItem*, const QPoint&, int ) ) );
     setWidget( notes_ );
 
     noteDialog_ = new NoteDialog( this, publisher_ );

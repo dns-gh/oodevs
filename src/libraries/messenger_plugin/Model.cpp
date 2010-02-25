@@ -190,3 +190,12 @@ void Model::ReadAutomat( xml::xistream& xis )
     xis >> xml::list( "lima" , tacticalLines_, &TacticalLinesModel::ReadLima , diffusion )
         >> xml::list( "limit", tacticalLines_, &TacticalLinesModel::ReadLimit, diffusion );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Model::UpdateTick
+// Created: HBD 2010-02-24
+// -----------------------------------------------------------------------------
+void Model::UpdateTime( std::string time )
+{
+    notes_.UpdateTime( time );
+}

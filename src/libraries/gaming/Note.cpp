@@ -17,15 +17,17 @@
 // Name: Note constructor
 // Created: HBD 2010-01-14
 // -----------------------------------------------------------------------------
-Note::Note( kernel::Controller& controller, unsigned int parent, unsigned int id, const std::string& name, const std::string& number, const std::string& desc )
+Note::Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgNoteCreation& message )
     : controller_( controller )
-    , parent_( parent )
-    , name_( name )
-    , noteText_( desc )
-    , noteId_( id )
-    , noteNumber_( number )
+    , parent_( message.note().parent() )
+    , name_( message.note().name() )
+    , noteText_( message.note().description() )
+    , noteId_( message.id() )
+    , noteNumber_( message.note().number() )
+    , creationTime_ (message.date().data() )
+    , lastUpdateTime_ (message.date().data() )
 {
-    controller_.Create( *this );
+     controller_.Create( *this );
 }   
 
 // -----------------------------------------------------------------------------
@@ -41,16 +43,17 @@ Note::~Note()
 // Name: Note::Update
 // Created: HBD 2010-01-14
 // -----------------------------------------------------------------------------
-void Note::Update(const MsgsMessengerToClient::MsgNoteUpdate& asn)
+void Note::Update(const MsgsMessengerToClient::MsgNoteUpdate& message)
 {
-    if ( asn.has_name() )
-        name_ = asn.name();
-    if ( asn.has_number() )
-        noteNumber_ = asn.number();
-    if ( asn.has_description() )
-        noteText_ = asn.description();
-    if ( asn.has_parent() )
-        parent_ = asn.parent();
+    if ( message.has_name() )
+        name_ = message.name();
+    if ( message.has_number() )
+        noteNumber_ = message.number();
+    if ( message.has_description() )
+        noteText_ = message.description();
+    if ( message.has_parent() )
+        parent_ = message.parent();
+    lastUpdateTime_ = message.date().data();
     controller_.Update( *this );
 }
 
@@ -74,6 +77,8 @@ void Note::Display( QListViewItem* item ) const
     item->setText( 0, name_.c_str() );
     item->setText( 1, noteNumber_.c_str() );
     item->setText( 2, noteText_.c_str() );
+    item->setText( 3, creationTime_.c_str() );
+    item->setText( 4, lastUpdateTime_.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -120,4 +125,22 @@ QString Note::GetDesc() const
 QString Note::GetNumber() const
 {
     return noteNumber_.c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetCreationTime
+// Created: HBD 2010-02-24
+// -----------------------------------------------------------------------------
+const std::string& Note::GetCreationTime() const
+{
+    return creationTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Note::GetLastUpdateTime
+// Created: HBD 2010-02-24
+// -----------------------------------------------------------------------------
+const std::string& Note::GetLastUpdateTime() const
+{
+    return lastUpdateTime_;
 }

@@ -33,7 +33,7 @@ class Note : public kernel::Displayable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Note( kernel::Controller& controller, unsigned int parent, unsigned int id, const std::string& name, const std::string& number, const std::string& desc );
+             Note( kernel::Controller& controller, const MsgsMessengerToClient::MsgNoteCreation&  );
     virtual ~Note();
     //@}
 
@@ -44,6 +44,8 @@ public:
     QString      GetNumber() const;
     unsigned int GetId() const;
     unsigned int GetParent() const;
+    const std::string&  GetCreationTime() const;
+    const std::string&  GetLastUpdateTime() const;
 
     //@}
 
@@ -70,6 +72,8 @@ private:
     std::string         noteText_;
     std::string         noteNumber_;
     unsigned int        noteId_;
+    std::string         creationTime_;
+    std::string         lastUpdateTime_;
     //@}
 
 };
