@@ -65,11 +65,11 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     RegisterUserFunctions( *pBrain_ );
     DEC_DecisionImpl::RegisterCommonUserFunctions( *pBrain_, pEntity_->GetID() );
     
-    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type );
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
-    pRefs_.reset( new ScriptRefs( *pBrain_) );
-
     RegisterSelf( *pBrain_ );
+    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type, GetAutomate().GetName() );   
+    
+    pRefs_.reset( new ScriptRefs( *pBrain_) );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +102,6 @@ void DEC_Decision<T>::UpdateDecision( float duration )
 {
     try
     {
-        UpdateMeKnowledge( *pBrain_ );
         pBrain_->SelectActions         ();
         pBrain_->TriggerSelectedActions( duration );
     }

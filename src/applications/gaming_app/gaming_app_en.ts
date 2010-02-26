@@ -1571,13 +1571,6 @@
     </message>
 </context>
 <context>
-    <name>Object</name>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ObjectKnowledgePanel</name>
     <message>
         <source>Object knowledges</source>

@@ -69,8 +69,9 @@ public:
     //! @name Accessors
     //@{
     virtual MIL_AgentPion&        GetPion         () const;
+    virtual MIL_Automate&         GetAutomate     () const;
 
-    const PHY_RoePopulation&    GetRoePopulation() const;
+    const PHY_RoePopulation&      GetRoePopulation() const;
 
     virtual std::string           GetName         () const;
     virtual DEC_AutomateDecision* GetDecAutomate  () const;
@@ -173,7 +174,6 @@ private:
     //! @name Helpers
     //@{
     virtual void RegisterSelf( directia::Brain& brain );
-    virtual void UpdateMeKnowledge( directia::Brain& brain );
     //@}
 
     //! @name Functions called from dia

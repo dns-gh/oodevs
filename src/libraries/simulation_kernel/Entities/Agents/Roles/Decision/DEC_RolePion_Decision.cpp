@@ -989,28 +989,22 @@ void DEC_RolePion_Decision::SendChangedState( client::UnitAttributes& msg ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::GetAutomate
+// Created: MGD 2010-02-25
+// -----------------------------------------------------------------------------
+MIL_Automate& DEC_RolePion_Decision::GetAutomate() const
+{
+    assert( pEntity_ );
+    return pEntity_->GetAutomate();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_RolePion_Decision::RegisterSelf
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
 void DEC_RolePion_Decision::RegisterSelf( directia::Brain& brain )
 {
     brain.RegisterObject( "myself", (DEC_Decision_ABC*)this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::UpdateMeKnowledge
-// Created: MGD 2009-11-01
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::UpdateMeKnowledge( directia::Brain& brain )
-{
-    const MT_Vector2D*  pos = GetPosition();
-    try
-    {
-   //     brain.GetScriptFunction( "UpdateMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), (DEC_Decision_ABC*)this, GetPion().GetAutomate().GetName(), pos->rX_, pos->rY_, 0. );
-    }
-    catch( std::exception )
-    {
-    }
 }
 
 // -----------------------------------------------------------------------------

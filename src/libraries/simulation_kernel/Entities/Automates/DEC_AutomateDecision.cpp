@@ -592,21 +592,6 @@ void DEC_AutomateDecision::RegisterSelf( directia::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AutomateDecision::UpdateMeKnowledge
-// Created: MGD 2009-11-01
-// -----------------------------------------------------------------------------
-void DEC_AutomateDecision::UpdateMeKnowledge( directia::Brain& brain )
-{
-    try
-    {
-//        brain.GetScriptFunction( "UpdateLeaderMe" )( brain.GetScriptVariable( "net.masagroup.sword.military.world.Compagnie" ), (DEC_Decision_ABC*)this, GetAutomate().GetName() );
-    }
-    catch( std::exception )
-    {
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AutomateDecision::GeteEtatPhaseMission
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------

@@ -60,30 +60,15 @@ function InitQueryReturn( params, strKnowledgeType, knowledgeSource, list)
   end
 end
 
---- Update Pion's data push to lua
+--- Init body and groupe
 -- @param strKnowledgeType The brain's role type
 -- @param knowledgeSource  The cpp source object  
 -- @param groupName The name of the leader  
 -- @author MGD
--- @release 2010-01-22
-function UpdateMe( strKnowledgeType, knowledgeSource, groupName )
-  if not masalife.brain.knowledge.me.body then
+-- @release 2010-02-25
+function InitMe( strKnowledgeType, knowledgeSource, groupName )
     masalife.brain.knowledge.me.body = masalife.brain.knowledge.create( strKnowledgeType, knowledgeSource )
     masalife.brain.core.createGroup( groupName )
-  end
-end
-
---- Update Automat's data push to lua
--- @param strKnowledgeType The brain's role type
--- @param knowledgeSource  The cpp source object  
--- @param groupName The name of the leader  itself
--- @author MGD
--- @release 2010-01-22
-function UpdateLeaderMe( strKnowledgeType, knowledgeSource, groupName )
-  if not masalife.brain.knowledge.me.body then
-    masalife.brain.knowledge.me.body = masalife.brain.knowledge.create( strKnowledgeType, knowledgeSource )
-    masalife.brain.core.createGroup( groupName )
-  end
 end
 
 --- Unregister brain from communication group before deletion

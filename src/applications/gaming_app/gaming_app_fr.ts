@@ -1864,7 +1864,7 @@
     <name>Object</name>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation type="unfinished">Obstacle de manoeuvre activé:</translation>
+        <translation type="obsolete">Obstacle de manoeuvre activé:</translation>
     </message>
 </context>
 <context>

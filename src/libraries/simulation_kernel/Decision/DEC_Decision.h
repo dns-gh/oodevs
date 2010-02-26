@@ -160,7 +160,6 @@ private://! @name Helpers
     void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath );
     
     virtual void RegisterSelf( directia::Brain& brain ) = 0;
-    virtual void UpdateMeKnowledge( directia::Brain& brain ) = 0;
     //@}
 
 protected:

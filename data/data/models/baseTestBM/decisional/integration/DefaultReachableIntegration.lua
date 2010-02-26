@@ -22,7 +22,7 @@ integration.getSectionPosition = function( section )
   if section == masalife.brain.knowledge.me.body then -- @TODO MGD replace by shared_ptr< DEC_Knowledge_Agent_ABC > and proxy for allies
     return DEC_Agent_Position()
   else
-    return DEC_ConnaissanceAgent_Position( section.source )
+    return DEC_ConnaissanceAgent_PositionPtr( section.source )
   end
 end
 integration.getPointPosition = function( point )
