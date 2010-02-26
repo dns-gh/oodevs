@@ -93,6 +93,12 @@ void DEC_PopulationDecision::save( MIL_CheckPointOutArchive& file, const unsigne
          << rLastDominationState_;
 }
 
+void DEC_PopulationDecision::SetModel( const DEC_Model_ABC& model )
+{
+    InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "none" );
+    diaType_ = model.GetDIAType();
+}
+
 // =============================================================================
 // TOOLS
 // =============================================================================

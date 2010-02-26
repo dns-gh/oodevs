@@ -133,6 +133,7 @@ public:
 protected:
     //! @name Helpers
     //@{
+    void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName );
     void CleanStateAfterCrash     ();
 
     void StartDefaultBehavior     ();
@@ -157,8 +158,6 @@ private://! @name Helpers
     void HandleUpdateDecisionError ();
     virtual directia::Brain& GetBrain();
     
-    void InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath );
-    
     virtual void RegisterSelf( directia::Brain& brain ) = 0;
     //@}
 
@@ -167,6 +166,7 @@ protected:
     //@{
     T*                              pEntity_;
     MIL_Mission_ABC*                pMission_;
+    std::string                     diaType_;
     DEC_DataBase&                   database_;
     //@}
 
@@ -177,7 +177,7 @@ private:
     std::auto_ptr< struct ScriptRefs > pRefs_;
     std::string                        brainFile_;
     std::string                        includePath_;
-    std::string                        diaType_;
+
     std::string                        modelName_;
     //@}
 };

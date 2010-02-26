@@ -48,6 +48,7 @@ public:
     
     //! @name Operations
     //@{
+    void SetModel( const DEC_Model_ABC& model );
     void Clean         ();
 
     virtual void StartMissionBehavior( MIL_Mission_ABC& mission );

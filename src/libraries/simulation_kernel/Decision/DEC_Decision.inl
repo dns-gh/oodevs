@@ -53,7 +53,7 @@ namespace directia
 // Created: MGD 2010-01-27
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath )
+void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string& type, const std::string& includePath, const std::string& groupName )
 {
     brainFile_ = brainFile;
     modelName_ = type;
@@ -67,7 +67,7 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
     
     database_.InitKnowledges( *pBrain_ );//@TODO MGD Find a better way to merge dia4/dia5
     RegisterSelf( *pBrain_ );
-    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type, GetAutomate().GetName() );   
+    pBrain_->GetScriptFunction( "include" )( brainFile ,includePath, type, groupName );   
     
     pRefs_.reset( new ScriptRefs( *pBrain_) );
 }
@@ -79,7 +79,7 @@ void DEC_Decision<T>::InitBrain( const std::string& brainFile, const std::string
 template <class T>
 void DEC_Decision<T>::SetModel( const DEC_Model_ABC& model )
 {
-    InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath() );
+    InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), GetAutomate().GetName() );
     diaType_ = model.GetDIAType();
 }
 
@@ -130,7 +130,7 @@ void DEC_Decision<T>::Reset( std::string groupName )
 {
     if( groupName != "" )
         pBrain_->GetScriptFunction( "CleanBrainBeforeDeletion" )( groupName );
-    InitBrain( brainFile_, modelName_, includePath_ );
+    InitBrain( brainFile_, modelName_, includePath_, groupName );
     StartDefaultBehavior();
 }
 
