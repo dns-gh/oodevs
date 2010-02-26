@@ -19,6 +19,11 @@ public:
     }
     virtual ~StubDEC_Decision() {}
     
+    void SetModel( const DEC_Model_ABC& model )
+    {
+        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubAutomate" );
+        diaType_ = model.GetDIAType();
+    }
     virtual DEC_AutomateDecision* GetDecAutomate() const { return 0; }
     virtual std::string GetName() const { throw; }
     virtual void EndCleanStateAfterCrash() {}
