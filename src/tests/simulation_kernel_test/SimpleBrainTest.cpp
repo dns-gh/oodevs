@@ -100,6 +100,12 @@ public:
         StartDefaultBehavior();
     }
 
+    void SetModel( const DEC_Model_ABC& model )
+    {
+        InitBrain( model.GetScriptFile(), model.GetName(), model.GetIncludePath(), "stubPopulation" );
+        diaType_ = model.GetDIAType();
+    }
+
     void StartMissionBehavior( MIL_Mission_ABC& mission )
     {
         const std::string& strBehavior = mission.GetType().GetDIABehavior();
