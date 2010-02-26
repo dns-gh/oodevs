@@ -116,6 +116,7 @@ namespace
 
 BOOST_FIXTURE_TEST_SUITE( MessageTestSuite, MessageSendingFixture )
 
+/*
 // -----------------------------------------------------------------------------
 // Name: SerializationTest_SendOneMessageFromClientToServer
 // Created: FHD 2009-08-24
@@ -128,7 +129,6 @@ BOOST_AUTO_TEST_CASE( SerializationTest_SendOneMessageFromClientToServer )
     VerifyServerReception( message );
 }
 
-/*
 // -----------------------------------------------------------------------------
 // Name: SerializationTest_SendMultipleMessageToServer
 // Created: SBO 2009-10-26
