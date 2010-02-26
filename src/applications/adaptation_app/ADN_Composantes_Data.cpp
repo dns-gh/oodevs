@@ -2093,10 +2093,13 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         (*itWeapon)->WriteArchive( output );
     output << xml::end();
 
-    output << xml::start( "active-protections" );
-    for( IT_ActiveProtectionsInfos_Vector itActiveProtections = vActiveProtections_.begin(); itActiveProtections != vActiveProtections_.end(); ++itActiveProtections )
-        (*itActiveProtections)->WriteArchive( output );
-    output << xml::end();
+    if( ! vActiveProtections_.empty() )
+    {
+        output << xml::start( "active-protections" );
+        for( IT_ActiveProtectionsInfos_Vector itActiveProtections = vActiveProtections_.begin(); itActiveProtections != vActiveProtections_.end(); ++itActiveProtections )
+            (*itActiveProtections)->WriteArchive( output );
+        output << xml::end();
+    }
 
     humanProtections_.WriteArchive( output );
 

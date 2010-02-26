@@ -692,6 +692,17 @@ Parked engine running</source>
     </message>
 </context>
 <context>
+    <name>ADN_Composantes_Data::ActiveProtectionsInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid active protection type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Composantes_Data::BreakdownGroupInfos</name>
     <message>
         <source>Invalid data</source>
@@ -1213,6 +1224,14 @@ Parked engine running</source>
     </message>
     <message>
         <source>Equipment_%1.htm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active Protections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active protection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -254,7 +254,7 @@ void ADN_Composantes_GUI::Build()
     
     pDataPageLayout->addMultiCellWidget( pParamHolder      , 0, 0, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
-    pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 2, 5, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 2, 4, 0, 0 );
 
     pDataPageLayout->addMultiCellWidget( pCargoGroupBox          , 0, 0, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pTroopGroupBox          , 1, 1, 1, 1 );
@@ -262,7 +262,7 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->addMultiCellWidget( pRadarsGroup            , 3, 3, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pWeaponsGroup           , 4, 4, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup , 5, 5, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup      , 6, 6, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup      , 5, 5, 0, 0 );
 
     pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 0, 1, 2, 2 );
     pDataPageLayout->addMultiCellWidget( pDotationGroup    , 2, 3, 2, 2 );
