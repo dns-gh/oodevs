@@ -216,9 +216,7 @@ void NotesPanel::ConfirmDeleteAllTreeNote()
             T_Items::iterator it = itemsList_.find( item );
             if( it != itemsList_.end())
             {
-                    
                 plugins::messenger::NoteDestructionRequest message;
-                message.Send( publisher_ );
                 message().set_id( it->second->GetId() );
                 message().set_delete_all( true );
                 message.Send( publisher_ );
