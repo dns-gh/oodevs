@@ -1587,6 +1587,10 @@ Parked engine running</source>
         <source>Guidance</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Illumination range needed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

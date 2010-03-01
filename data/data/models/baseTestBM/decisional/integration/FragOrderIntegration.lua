@@ -20,9 +20,10 @@ integration.startFragOrderTask = function( self )
   
   orderType = self.source:GetType()
   if orderType == "net.masagroup.sword.military.tasks.Illuminate" then
-    mission.entities = { CreateKnowledge( net.masagroup.sword.military.world.section, self.source:GetAgentKnowledge_() ) }
+    mission.entities = { CreateKnowledge( net.masagroup.sword.military.world.Section, self.source:GetAgentKnowledge_() ) }
+    mission.allie = CreateKnowledge( net.masagroup.sword.military.world.Section, self.source:GetAgent_() )
   elseif orderType =="net.masagroup.sword.military.tasks.ApplyIndirectFire" then
-    mission.entity = CreateKnowledge( net.masagroup.sword.military.world.section, self.source:GetAgentKnowledge_() )
+    mission.entity = CreateKnowledge( net.masagroup.sword.military.world.Section, self.source:GetAgentKnowledge_() )
     mission.munition = self.source:Getmunitions_()
     mission.interventionType = self.source:GetnbIT_()
   end

@@ -24,8 +24,8 @@ integration.illuminationLevel = function( self )
     return DEC_ConnaissanceAgent_EstIllumine() and 100 or 0
 end
 
-integration.startIlluminateIt = function( target )
-    target.actionIlluminate = DEC_StartIlluminer( target.source )
+integration.startIlluminateIt = function( target, allie )
+    target.actionIlluminate = DEC_StartIlluminer( target.source, allie.source  )
     actionCallbacks[ target.actionIlluminate ] = function( arg ) target.actionState = arg end
     return false
 end

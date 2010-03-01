@@ -349,7 +349,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
     pion.RegisterRole( *new PHY_RoleAction_Objects( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_DirectFiring( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_IndirectFiring( pion ) );
-    pion.RegisterRole( *new PHY_RolePion_Illumination() ); // LTO
+    pion.RegisterRole( *new PHY_RolePion_Illumination( pion ) ); // LTO
     pion.RegisterRole( *new DEC_RolePion_Decision( pion, database ) );
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );

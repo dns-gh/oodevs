@@ -10,6 +10,14 @@
         </list>
       </type>
     </parameter>
+    <parameter name="allie">
+      <description>La batterie alliée chargée des tirs.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.sword.military.world.Section"/>
+        </list>
+      </type>
+    </parameter>
     <parameter name="positions">
       <description>Positions permettant d'illuminer les éléments.</description>
       <type>

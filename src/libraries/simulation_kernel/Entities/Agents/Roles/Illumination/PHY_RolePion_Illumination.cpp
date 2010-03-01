@@ -14,17 +14,34 @@
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include "Entities/MIL_Entity_ABC.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_Illumination )
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const PHY_RolePion_Illumination* role, const unsigned int /*version*/ )
+{
+  MIL_Entity_ABC* const owner = &role->owner_;
+  archive << owner;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, PHY_RolePion_Illumination* role, const unsigned int /*version*/ )
+{
+  MIL_Entity_ABC* owner;
+  archive >> owner;
+  ::new( role )PHY_RolePion_Illumination( *owner );
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Illumination constructor
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-PHY_RolePion_Illumination::PHY_RolePion_Illumination()
-    : target_( 0 )
+PHY_RolePion_Illumination::PHY_RolePion_Illumination( MIL_Entity_ABC& owner )
+    : owner_( owner )
     , bIlluminatedDefinitely_( false )
     , bHit_( false )
+    , target_( 0 )
 {
     // NOTHING
 }
@@ -69,9 +86,18 @@ void PHY_RolePion_Illumination::NotifyStopIlluminate()
 // Name: PHY_RolePion_Illumination::IsIlluminated
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-bool PHY_RolePion_Illumination::IsIlluminated() const
+bool PHY_RolePion_Illumination::IsIlluminated( float range ) const
 {
-    return bIlluminatedDefinitely_ || illuminators_.size() > 0;
+    if( bIlluminatedDefinitely_ )
+        return true;
+
+    const MT_Vector2D& posOwner = owner_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    for( std::set< const MIL_Entity_ABC* >::const_iterator it = illuminators_.begin(); it != illuminators_.end(); it++ )
+    {
+      if( posOwner.Distance( (*it)->GetRole< PHY_RoleInterface_Location >().GetPosition() ) < range )
+        return true;
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

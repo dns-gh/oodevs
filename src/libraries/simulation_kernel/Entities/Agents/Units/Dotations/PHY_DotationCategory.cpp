@@ -40,6 +40,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , bMaintainIllumination_ ( false )
     , bGuided_           ( false )
     , bMaintainGuidance_ ( false )
+    , rGuidanceRange_    ( 0.f )
 {
     std::string strNature;
     xis >> xml::attribute( "id", nMosID_ )
@@ -210,6 +211,7 @@ void PHY_DotationCategory::InitializeGuidance( xml::xistream& xis )
         bGuided_ = true;
         xis >> xml::start("guided") 
                 >> xml::attribute( "maintain", bMaintainGuidance_ ) 
+                >> xml::attribute( "range", rGuidanceRange_ )
             >> xml::end();
     }
 }
@@ -392,6 +394,14 @@ bool PHY_DotationCategory::IsGuided() const
     return bGuided_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetGuidanceRange
+// Created: MGD 2010-02-27
+// -----------------------------------------------------------------------------
+float PHY_DotationCategory::GetGuidanceRange() const
+{
+  return rGuidanceRange_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::IsIlluminating

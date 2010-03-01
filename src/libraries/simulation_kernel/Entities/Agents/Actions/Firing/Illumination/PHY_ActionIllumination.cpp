@@ -15,16 +15,21 @@
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
 #include "Decision/DEC_Tools.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 
 using namespace firing;
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIllumination constructor
 // Created: MGD 2010-02-12
 // -----------------------------------------------------------------------------
-PHY_ActionIllumination::PHY_ActionIllumination( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy )
+PHY_ActionIllumination::PHY_ActionIllumination( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, DEC_Decision_ABC* allie )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_                       ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , pEnemy_                     ( pEnemy )
+    , knowledgeGroup_             ( allie->GetPion().GetKnowledgeGroup() )
 {
     Callback( role_.GetInitialReturnCode() );
 }
@@ -50,6 +55,11 @@ PHY_ActionIllumination::~PHY_ActionIllumination()
 void PHY_ActionIllumination::Execute()
 {
     int nResult = role_.IlluminatePion( pEnemy_ );
+    if( nResult == 4 || nResult == 5 )
+    {
+        if( !knowledgeGroup_.GetKnowledge().IsKnown( pEnemy_->GetAgentKnown() ) )
+          knowledgeGroup_.GetKnowledge().GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup_, pEnemy_->GetAgentKnown() );
+    }
     Callback( nResult );
 }
 

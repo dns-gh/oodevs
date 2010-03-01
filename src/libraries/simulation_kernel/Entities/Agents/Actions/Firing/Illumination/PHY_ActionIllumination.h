@@ -18,6 +18,7 @@
 class PHY_FireResults_Pion;
 class PHY_AmmoDotationClass;
 class MIL_AgentPion;
+class MIL_KnowledgeGroup;
 
 // =============================================================================
 // @class  PHY_ActionIllumination
@@ -30,7 +31,7 @@ public:
     typedef MIL_AgentPion ActorType;        
 
 public:
-             PHY_ActionIllumination( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy );
+             PHY_ActionIllumination( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Agent > pEnemy, DEC_Decision_ABC* allie );
     virtual ~PHY_ActionIllumination();
 
     //! @name Operations
@@ -42,6 +43,7 @@ public:
 private:
           firing::PHY_RoleAction_DirectFiring&       role_;
           boost::shared_ptr< DEC_Knowledge_Agent >   pEnemy_;
+          MIL_KnowledgeGroup& knowledgeGroup_;
 };
 
 #endif // __PHY_ActionIllumination_h_

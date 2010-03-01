@@ -78,6 +78,7 @@ public:
         eRange,
         eGuided,
         eMaintainGuidance,
+        eGuidanceRange,
         eNbrAmmoGuiElements
     };
 

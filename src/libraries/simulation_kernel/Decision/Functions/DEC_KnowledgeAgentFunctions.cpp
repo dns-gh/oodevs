@@ -296,9 +296,9 @@ int DEC_KnowledgeAgentFunctions::GetCurrentPerceptionLevel( const MIL_AgentPion&
 // Name: DEC_KnowledgeAgentFunctions::IsIlluminated
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-bool  DEC_KnowledgeAgentFunctions::IsIlluminated( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+bool  DEC_KnowledgeAgentFunctions::IsIlluminated( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float range )
 {
-    return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated();
+    return pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated( range );
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsIlluminated

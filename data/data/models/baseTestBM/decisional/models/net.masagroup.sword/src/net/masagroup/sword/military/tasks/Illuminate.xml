@@ -2,9 +2,18 @@
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.tasks.Illuminate">
   <parameters>
     <parameter name="entities">
+      <description>Les éléments à illuminer.</description>
       <type>
         <list>
           <class name="net.masagroup.sword.military.knowledge.Illuminatable"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="allie">
+      <description>La batterie alliée chargée des tirs.</description>
+      <type>
+        <list>
+          <class name="net.masagroup.sword.military.world.Section"/>
         </list>
       </type>
     </parameter>
@@ -16,6 +25,11 @@
           <parameter name="entities">
             <value>
               <parameter>entities</parameter>
+            </value>
+          </parameter>
+          <parameter name="allie">
+            <value>
+              <parameter>allie</parameter>
             </value>
           </parameter>
           <parameter name="positions">

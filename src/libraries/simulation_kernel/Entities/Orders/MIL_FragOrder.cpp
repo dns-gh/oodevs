@@ -102,6 +102,7 @@ void MIL_FragOrder::Register( directia::Brain& brain )
     brain.RegisterFunction( "GetsiteFranchissementOriginal_", &MIL_FragOrder::GetSiteFranchissementOriginal );
     brain.RegisterFunction( "GetsiteFranchissementVariante_", &MIL_FragOrder::GetSiteFranchissementVariante );
     brain.RegisterFunction( "GetAgentKnowledge_", &MIL_FragOrder::GetAgentKnowledge );
+    brain.RegisterFunction( "GetAgent_", &MIL_FragOrder::GetAgent );
 }
 
 namespace
@@ -437,6 +438,15 @@ boost::shared_ptr< DEC_Knowledge_Agent > MIL_FragOrder::GetAgentKnowledge() cons
         }
     }
     throw std::runtime_error( std::string( "Unknown parameter: " ) + parameterName );
+}
+// -----------------------------------------------------------------------------
+// Name: MIL_FragOrder::GetAgent
+// Created: MGD 2010-02-27
+// -----------------------------------------------------------------------------
+DEC_Decision_ABC* MIL_FragOrder::GetAgent() const
+{
+  static const std::string parameterName( "agent_" );
+  return GetAgentParameter( parameterName, parameters_, type_ );
 }
 
 

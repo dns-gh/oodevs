@@ -280,7 +280,7 @@ bool MIL_Effect_IndirectFire::IsTargetValid() const
             boost::shared_ptr< DEC_Knowledge_Agent > pTargetKnowledge = firer_.GetKnowledgeGroup().GetKnowledge().GetKnowledgeAgentFromID( nTargetKnowledgeID_ );
             if( pTargetKnowledge && pTargetKnowledge->IsValid() )
             {
-                if( !pTargetKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated())
+                if( !pTargetKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Illumination >().IsIlluminated( indirectDotationCategory_.GetDotationCategory().GetGuidanceRange() ))
                 {
                     return false;
                 }

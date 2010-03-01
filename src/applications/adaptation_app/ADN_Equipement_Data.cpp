@@ -437,6 +437,7 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( DotationInfos& parentDo
 , bMaintainIllumination_( false )
 , bGuided_          ( false )
 , bMaintainGuidance_( false )
+, fGuidanceRange_   ( 0 )
 , attritions_       (ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos())
 , indirectAmmoInfos_()
 {
@@ -469,6 +470,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
 
     pCopy->bGuided_ = bGuided_.GetData();
     pCopy->bMaintainGuidance_ = bMaintainGuidance_.GetData();
+    pCopy->fGuidanceRange_ = fGuidanceRange_.GetData();
 
 
     for( uint n = 0; n < attritions_.size(); ++n )
@@ -532,8 +534,9 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
     {
         bGuided_ = true;
         input >> xml::start( "guided" )
-            >> xml::attribute( "maintain", bMaintainGuidance_ )
-            >> xml::end();
+                >> xml::attribute( "maintain", bMaintainGuidance_ )
+                >> xml::attribute( "range", fGuidanceRange_ )
+              >> xml::end();
     }
     
 
@@ -567,6 +570,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
     {
         output << xml::start( "guided" )
                 << xml::attribute( "maintain", bMaintainGuidance_.GetData() )
+                << xml::attribute( "range", fGuidanceRange_.GetData() )
                << xml::end();
 
     }

@@ -270,7 +270,7 @@
     </indirect-fire>
   </dotation>
   <dotation category="Obus 155 OE CCR F1" codeEMAT6="" codeEMAT8="1320-300" codeLFRIL="" codeNNO="" d-type="true" id="22" name="munition" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
-    <guided maintain="false"/>
+    <guided maintain="false" range="1000"/>
     <attritions>
       <attrition destruction="0.05" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
       <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>

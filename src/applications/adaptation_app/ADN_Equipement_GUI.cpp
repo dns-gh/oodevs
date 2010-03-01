@@ -221,6 +221,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     ADN_GroupBox* pGuidanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Guidance" ), pGroupBox );
     vConnectors[eGuided] = &pGuidanceGroup->GetConnector();
     builder.AddField<ADN_CheckBox>( pGuidanceGroup, tr( "Must Maintain guidance" ), vConnectors[eMaintainGuidance] );
+    builder.AddField<ADN_EditLine_Double>( pGuidanceGroup, tr( "Illumination range needed" ), vConnectors[eGuidanceRange] );
 
     //Connect
     pAmmoListView_->SetItemConnectors(vConnectors);

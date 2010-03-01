@@ -242,6 +242,7 @@ public:
 
         ADN_Type_Bool bGuided_;
         ADN_Type_Bool bMaintainGuidance_;
+        ADN_Type_Double fGuidanceRange_;
     };
 
     typedef ADN_Type_Vector_ABC<AmmoCategoryInfo> T_AmmoCategoryInfo_Vector;

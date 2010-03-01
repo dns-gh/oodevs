@@ -299,7 +299,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_StartDebarquement",
             boost::function< PHY_Action_ABC*() >( boost::bind( &DEC_ActionFunctions::StartAction  < transport::PHY_ActionUnload >, boost::ref( GetPion() ) ) ) );
     brain.RegisterFunction( "DEC_StartIlluminer",
-        boost::function< PHY_Action_ABC*( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIllumination, boost::shared_ptr< DEC_Knowledge_Agent > >, boost::ref( GetPion() ), _1 ) ) );
+        boost::function< PHY_Action_ABC*( boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIllumination, boost::shared_ptr< DEC_Knowledge_Agent >, DEC_Decision_ABC* >, boost::ref( GetPion() ), _1, _2 ) ) );
 
 
 
@@ -543,7 +543,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceAgent_TuerOfficiers", 
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::KillOfficers, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstIllumine", 
-        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsIlluminated, _1 ) ) );
+        boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsIlluminated, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDefinitivementIllumine", 
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsDefinitivelyIlluminated, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_PeutEtreIllumine",

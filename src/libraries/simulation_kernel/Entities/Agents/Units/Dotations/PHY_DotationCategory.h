@@ -49,6 +49,7 @@ public:
     const PHY_DotationLogisticType& GetLogisticType     () const;
     const PHY_DotationNature&       GetNature           () const;
           bool                      IsGuided            () const;
+          float                     GetGuidanceRange    () const;
           bool                      IsIlluminating      ( float range, bool permanent ) const;
     //@}
 
@@ -124,6 +125,7 @@ private:
     //Guidance
     bool bGuided_;
     bool bMaintainGuidance_;
+    float rGuidanceRange_;
 
 };
 

@@ -102,6 +102,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Equipement_GUI::eGuided]->Connect( &pInfos->bGuided_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMaintainGuidance]->Connect( &pInfos->bMaintainGuidance_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eGuidanceRange]->Connect( &pInfos->fGuidanceRange_, bConnect );
 }
 
 

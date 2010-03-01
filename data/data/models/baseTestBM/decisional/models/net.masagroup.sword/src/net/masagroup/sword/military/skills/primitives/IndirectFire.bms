@@ -19,6 +19,8 @@ rootnode
     activate = function( self )
         if self.params.entity:canApplyFireOnIt( self.params.munition, self.params.interventionType ) then
             Activate( skill.nodes.ApplyFire, 1, { entity = self.params.entity, munition = self.params.munition, interventionType = self.params.interventionType } )
+        else
+            Feedback( self.feedbacks.done, { state = "no capacity" } )
         end
     end
 }

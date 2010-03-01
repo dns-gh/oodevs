@@ -77,6 +77,7 @@ public:
     DEC_Decision_ABC* GetPionARenforcer() const;
     DEC_Decision_ABC* GetPionRenforce() const;
     boost::shared_ptr< DEC_Knowledge_Agent > GetAgentKnowledge() const;
+    DEC_Decision_ABC* GetAgent() const;
     boost::shared_ptr< MT_Vector2D > GetPointCible() const;
     int GetPorteeAction() const;
     int GetSiteFranchissementOriginal() const;

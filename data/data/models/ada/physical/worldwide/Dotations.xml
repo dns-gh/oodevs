@@ -461,7 +461,7 @@
     </attritions>
   </dotation>
   <dotation category="120-mm Hight Explosive Shell Guided" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="43" name="munition" nature="Solid" package-mass="0.06" package-size="2" package-volume="0.088" type="Obus">
-    <guided maintain="true"/>
+    <guided maintain="true" range="1000"/>
     <attritions>
       <attrition destruction="0" protection="HeavyTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>
       <attrition destruction="0" protection="MediumTank" repairable-with-evacuation="0.1" repairable-without-evacuation="0.05"/>

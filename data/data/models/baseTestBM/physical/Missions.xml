@@ -172,6 +172,7 @@
     </fragorder>
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.tasks.Illuminate" id="367" name="Illuminate">
       <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
+      <parameter dia-name="agent_" name="allie" optional="false" type="AgentBM"/>
     </fragorder>
     <fragorder available-for-all-mission="false" available-without-mission="false" dia-type="net.masagroup.sword.military.tasks.ApplyIndirectFire" id="368" name="ApplyFire">
       <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>

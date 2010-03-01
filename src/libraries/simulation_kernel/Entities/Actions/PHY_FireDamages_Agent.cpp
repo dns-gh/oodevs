@@ -79,20 +79,16 @@ void PHY_FireDamages_Agent::Serialize( const MIL_Agent_ABC& target, MsgsSimToCli
 
     asn.mutable_equipments();
     // Composantes
-    if( asn.equipments().elem_size() )
+    for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult )
     {
-        unsigned int i = 0;
-        for( CIT_ComposanteResults itResult = composanteResults_.begin(); itResult != composanteResults_.end(); ++itResult, ++i )
-        {
-            const PHY_ComposanteType_ABC& type   = *itResult->first;
-            const T_ComposanteStates&      states =  itResult->second;
+        const PHY_ComposanteType_ABC& type   = *itResult->first;
+        const T_ComposanteStates&      states =  itResult->second;
 
-            MsgsSimToClient::MsgUnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->add_elem();
-            asnEquipement.set_equipement_type( type.GetMosID().equipment() );
-            asnEquipement.set_available_nbr( states[ PHY_ComposanteState::undamaged_.GetID() ] );
-            asnEquipement.set_repairable_nbr( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
-            asnEquipement.set_unavailable_nbr( states[ PHY_ComposanteState::dead_.GetID() ] );
-        }
+        MsgsSimToClient::MsgUnitEquipmentFireDamage& asnEquipement = *asn.mutable_equipments()->add_elem();
+        asnEquipement.set_equipement_type( type.GetMosID().equipment() );
+        asnEquipement.set_available_nbr( states[ PHY_ComposanteState::undamaged_.GetID() ] );
+        asnEquipement.set_repairable_nbr( states[ PHY_ComposanteState::repairableWithEvacuation_.GetID() ] + states[ PHY_ComposanteState::repairableWithoutEvacuation_.GetID() ] );
+        asnEquipement.set_unavailable_nbr( states[ PHY_ComposanteState::dead_.GetID() ] );
     }
 
     asn.mutable_humans();

@@ -19,7 +19,7 @@ rootnode
     activate = function( self )
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.illuminateElement, entity:illuminationPriority(), 
-                { entity = entity, positions = self.params.positions[ entity ] or self.params.positions } )
+                { entity = entity, allie = self.params.allie, positions = self.params.positions[ entity ] or self.params.positions } )
         end
     end
 }
@@ -51,20 +51,18 @@ node "illuminateElement"
             Feedback( self.feedbacks.done, { illuminatedEntity = self.params.entity, state = "already Illuminate" } )
         end
 
-        -- current observation toward the element to illuminate
-        -- Activate( skill.links.observe, 1, { entity = self.params.entity } )
+        Activate( skill.links.observe, 1, { entity = self.params.entity } )
 
        -- when it possible illuminate the element
         if self.params.entity:canIlluminateIt() then
-            Activate( skill.nodes.illuminate, 1, { entity = self.params.entity } )
+            Activate( skill.nodes.illuminate, 1, { entity = self.params.entity, allie = self.params.allie } )
         end
 
         -- Moving toward an illuminating positions
-        -- @TODO MGD Add move part after refactor on knowledge position access
-        --for _,position in pairs( self.params.positions )  do
-        --  illuminate( skill.links.moveAndTakePosition, 
-        --    position:illuminationEfficiency( self.params.entity ), { entity = position } )
-        --end
+        for _,position in pairs( self.params.positions )  do
+            Activate( skill.links.moveAndTakePosition, 
+                position:illuminationEfficiency( self.params.entity ), { entity = position } )
+        end
     end
 }
 -- **************************************************************************** 
@@ -77,7 +75,7 @@ node "illuminate"
     acquire = { [ skill.resources.illuminatingCapacity ] = 1 };
 
     select = function( self )
-        if self.params.entity:illuminateIt() then
+        if self.params.entity:illuminateIt( self.params.allie ) then
             Feedback( self.feedbacks.done, { state = "definitely illuminated or stop after indirectFire" } )
         else
             Feedback( self.feedbacks.done, { state = "partially illuminated" } )

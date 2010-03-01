@@ -79,6 +79,7 @@ integration.updateMoveToIt = function( reachable )
   elseif reachable.etat == eEtatActionDeplacement_DejaEnDeplacement then
     --TODO
   end
+  return false
 end
 
 integration.stopMoveToIt = function( reachable )

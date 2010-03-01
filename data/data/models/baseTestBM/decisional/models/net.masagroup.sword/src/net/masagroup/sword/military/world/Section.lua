@@ -195,17 +195,15 @@ return
 
     -- ILLUMINABLE
     illuminationPriority = function( self )
-        -- @ TODO MGD add ( math.max( self:proximityLevel(), 1 ) ) / 100 after refactor on knowledge position
-        return self:isDefinitelyIlluminated() and 0 or 100
+        return self:isDefinitelyIlluminated() and 0 or ( math.max( self:proximityLevel(), 1 ) ) / 100
     end,
     canIlluminateIt = function( self )
-        -- @ TODO MGD add self.params.entity:canObserveIt() after refactor on knowledge position
         return integration.canIlluminateIt( self )
     end,
     illuminationLevel = function( self )
         return integration.illuminationLevel( self )
     end,
-    illuminateIt = masalife.brain.integration.startStopAction( { start = integration.startIlluminateIt, stop = integration.stopIlluminateIt } ),
+    illuminateIt = masalife.brain.integration.startStopAction( { start = integration.startIlluminateIt, started = startedIlluminateIt, stop = integration.stopIlluminateIt } ),
  
     predicate "isDefinitelyIlluminated"
     {
@@ -215,21 +213,19 @@ return
     },
     -- ILLUMINATING
     illuminationEfficiency = function( self, objective )
-        -- @ TODO MGD replace by computeDistance( self, objective ) after refactor on knowledge position
-        return 100
+        return computeDistance( self, objective )
     end,
     predicate "isIlluminatingFor" 
     { 
         method = function( self, objective )
-                    -- @ TODO MGD replace by computeDistance( self, objective ) > 0 after refactor on knowledge position
-                    return true
+                    return self:illuminationEfficiency( objective ) > 0
                  end 
     },
     -- INDIRECTFIREABLE
     canApplyFireOnIt = function( self, munition, interventionType )
         return integration.canApplyFireOnSection( self, munition, interventionType )
     end,
-    applyFireOnIt = masalife.brain.integration.startStopAction( { start = integration.startApplyFireOnSection, started = startedIlluminateIt, stop = integration.stopApplyFireOnSection } ),
+    applyFireOnIt = masalife.brain.integration.startStopAction( { start = integration.startApplyFireOnSection, started = integration.updateApplyFireOnSection, stop = integration.stopApplyFireOnSection } ),
 
     computeAggressiveness = function( self, target )
       return integration.computeAggressiveness( self, target )
