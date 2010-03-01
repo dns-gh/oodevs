@@ -37,7 +37,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit LocationSerializer( const kernel::CoordinateConverter_ABC& converter );
-    LocationSerializer( const kernel::CoordinateConverter_ABC& converter, Common::MsgLocation& localisation );
+             LocationSerializer( const kernel::CoordinateConverter_ABC& converter, Common::MsgLocation& localisation );
     virtual ~LocationSerializer();
     //@}
 
@@ -72,9 +72,7 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    Common::MsgLocation* localisation_;
-    //MsgCoordLatLong* pCoords_;
-    bool ownsCoords_;
+    Common::MsgLocation* location_;
     //@}
 };
 

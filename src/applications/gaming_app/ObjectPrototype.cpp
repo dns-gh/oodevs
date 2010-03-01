@@ -9,12 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "ObjectPrototype.h"
-#include "gaming/StaticModel.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/ObjectType.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_gui/ObjectAttributePrototypeFactory.h"
-
 #include "CrossingSitePrototype.h"
 #include "SupplyRoutePrototype.h"
 #include "LogisticPrototype.h"
@@ -24,12 +18,15 @@
 #include "MedicalTreatmentPrototype.h"
 #include "FirePrototype.h"
 #include "ActivityTimePrototype.h"
-
+#include "gaming/StaticModel.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Team_ABC.h"
+#include "clients_gui/ObjectAttributePrototypeFactory.h"
+#include "protocol/Publisher_ABC.h"
+#include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
-#include <protocol/clientsenders.h>
-#include <protocol/publisher_ABC.h>
-
 
 using namespace kernel;
 using namespace gui;
@@ -142,8 +139,7 @@ ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controll
     : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, *FactoryMaker( controllers, model.objectTypes_, creation_ ) )
     , serializer_( model.coordinateConverter_, *creation_.mutable_location() )
 {
-    //msg_().action.t               = T_MsgObjectMagicAction_action_create_object;
-    *msg_().mutable_action()->mutable_create_object() = creation_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -162,15 +158,15 @@ ObjectPrototype::~ObjectPrototype()
 void ObjectPrototype::Commit( Publisher_ABC& publisher )
 {    
     if( CheckValidity() )
-    {    
-        std::string name = name_->text().isEmpty() ? "" : name_->text().ascii();
-        creation_.set_name( name.c_str() );
+    {
+        simulation::ObjectMagicAction message;
+        creation_.set_name( name_->text().isEmpty() ? "" : name_->text().ascii() );
         creation_.set_team( teams_->GetValue()->GetId() );
-        creation_.set_type( objectTypes_->GetValue()->GetType().c_str() );
+        creation_.set_type( objectTypes_->GetValue()->GetType() );
         if( location_ )
-            serializer_.Serialize( *location_ );    
+            serializer_.Serialize( *location_ );
         ObjectPrototype_ABC::Commit();
-        msg_.Send( publisher );
-        Clean();
+        *message().mutable_action()->mutable_create_object() = creation_;
+        message.Send( publisher );
     }
 }

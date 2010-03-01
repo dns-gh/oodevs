@@ -53,4 +53,6 @@ void CrossingSitePrototype::Commit()
 // -----------------------------------------------------------------------------
 void CrossingSitePrototype::Clean()
 {
+    if( msg_.attributes().has_crossing_site() )
+        msg_.mutable_attributes()->clear_crossing_site();
 }

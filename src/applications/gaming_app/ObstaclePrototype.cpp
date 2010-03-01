@@ -50,5 +50,6 @@ void ObstaclePrototype::Commit()
 // -----------------------------------------------------------------------------
 void ObstaclePrototype::Clean()
 {
-    msg_.mutable_attributes()->clear_obstacle();
+    if( msg_.attributes().has_obstacle() )
+        msg_.mutable_attributes()->clear_obstacle();
 }

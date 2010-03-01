@@ -50,4 +50,6 @@ void LogisticPrototype::Commit()
 // -----------------------------------------------------------------------------
 void LogisticPrototype::Clean()
 {
+    if( msg_.attributes().has_logistic() )
+        msg_.mutable_attributes()->clear_logistic();
 }

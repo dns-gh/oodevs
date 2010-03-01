@@ -12,12 +12,12 @@
 
 #include "LocationSerializer.h"
 #include "clients_gui/ObjectPrototype_ABC.h"
-#include "protocol/SimulationSenders.h"
 
 namespace MsgsClientToSim
 {
     class MsgMagicActionCreateObject;
 }
+
 class StaticModel;
 class Publisher_ABC;
 
@@ -52,7 +52,6 @@ private:
 private:
     //! @name Member data
     //@{
-    simulation::ObjectMagicAction msg_;
     MsgsClientToSim::MsgMagicActionCreateObject creation_;
     LocationSerializer serializer_;
     //@}

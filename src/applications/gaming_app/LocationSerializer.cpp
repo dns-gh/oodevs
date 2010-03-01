@@ -21,10 +21,8 @@ using namespace kernel;
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
 LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter )
-    : converter_   ( converter )
-    , localisation_( NULL )
-    //, pCoords_     ( 0 )
-    , ownsCoords_  ( false )
+    : converter_ ( converter )
+    , location_  ( 0 )
 {
     // NOTHING
 }
@@ -34,14 +32,10 @@ LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------
 LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter, MsgLocation& localisation )
-    : converter_   ( converter )
-    //, localisation_( &localisation )
-    //, pCoords_     ( 0 )
-    , ownsCoords_  ( true )
+    : converter_ ( converter )
+    , location_  ( &localisation )
 {
     // NOTHING
-    localisation_ = new MsgLocation();
-    localisation_->CopyFrom( localisation );
 }
 
 // -----------------------------------------------------------------------------
@@ -50,8 +44,7 @@ LocationSerializer::LocationSerializer( const CoordinateConverter_ABC& converter
 // -----------------------------------------------------------------------------
 LocationSerializer::~LocationSerializer()
 {
-//    if( ownsCoords_ )
-//        delete[] pCoords_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +62,7 @@ void LocationSerializer::Serialize( const Location_ABC& location )
 // -----------------------------------------------------------------------------
 void LocationSerializer::Serialize( const Location_ABC& location, MsgLocation& localisation )
 {
-    *localisation_ = localisation;
+    location_ = &localisation;
     Serialize( location );
 }
 
@@ -79,20 +72,11 @@ void LocationSerializer::Serialize( const Location_ABC& location, MsgLocation& l
 // -----------------------------------------------------------------------------
 void LocationSerializer::SetPoints( const T_PointVector& points )
 {
-    if( ! localisation_ )
+    if( ! location_ )
         throw std::runtime_error( "localisation not set" );
-    const unsigned nNbrPoints = points.size();
-
-//    if( nNbrPoints )
-//    {
-//        if( ownsCoords_ )
-//            delete[] pCoords_;
-//        pCoords_ = new MsgCoordLatLong[ nNbrPoints ];
-//        localisation_->mutable_coordinates().mutable_elem() = pCoords_;
-
-        for( unsigned int i = 0; i < nNbrPoints; ++i )
-            converter_.ConvertToGeo( points[i], *localisation_->mutable_coordinates()->add_elem() );
-//    }
+    location_->mutable_coordinates()->Clear();
+    for( T_PointVector::const_iterator it = points.begin(); it != points.end(); ++it )
+        converter_.ConvertToGeo( *it, *location_->mutable_coordinates()->add_elem() );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +86,7 @@ void LocationSerializer::SetPoints( const T_PointVector& points )
 void LocationSerializer::VisitLines( const T_PointVector& points )
 {
     SetPoints( points );
-    localisation_->set_type( MsgLocation_Geometry_line );
+    location_->set_type( MsgLocation_Geometry_line );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +96,7 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 void LocationSerializer::VisitPolygon( const T_PointVector& points )
 {
     SetPoints( points );
-    localisation_->set_type( MsgLocation_Geometry_polygon );
+    location_->set_type( MsgLocation_Geometry_polygon );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +118,7 @@ void LocationSerializer::VisitCircle( const geometry::Point2f& center, float rad
     points.push_back( center );
     points.push_back( geometry::Point2f( center.X(), center.Y() + radius ) ); // $$$$ AGE 2006-08-09: may go out of extent !
     SetPoints( points );
-    localisation_->set_type( MsgLocation_Geometry_circle );
+    location_->set_type( MsgLocation_Geometry_circle );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,5 +129,5 @@ void LocationSerializer::VisitPoint( const geometry::Point2f& point )
 {
     T_PointVector points( 1, point );
     SetPoints( points );
-    localisation_->set_type( MsgLocation_Geometry_point );
+    location_->set_type( MsgLocation_Geometry_point );
 }

@@ -55,4 +55,6 @@ void SupplyRoutePrototype::Commit()
 // -----------------------------------------------------------------------------
 void SupplyRoutePrototype::Clean()
 {
+    if( msg_.attributes().has_supply_route() )
+        msg_.mutable_attributes()->clear_supply_route();
 }

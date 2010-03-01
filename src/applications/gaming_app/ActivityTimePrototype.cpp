@@ -55,4 +55,6 @@ void ActivityTimePrototype::Commit()
 // -----------------------------------------------------------------------------
 void ActivityTimePrototype::Clean()
 {
+    if( msg_.attributes().has_activity_time() )
+        msg_.mutable_attributes()->clear_activity_time();
 }

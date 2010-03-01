@@ -30,8 +30,7 @@ NBCPrototype::NBCPrototype( QWidget* parent, const tools::Resolver_ABC< NBCAgent
     : NBCPrototype_ABC( parent, resolver, maxToxic )
     , msg_      ( msg ) 
 {
-    msg_.mutable_attributes()->mutable_nbc()->set_danger_level( 0 );
-    msg_.mutable_attributes()->mutable_nbc()->mutable_nbc_agents(); //->set_n( 0 );
+    // NOTHING
 }
     
 // -----------------------------------------------------------------------------
@@ -49,6 +48,8 @@ NBCPrototype::~NBCPrototype()
 // -----------------------------------------------------------------------------
 void NBCPrototype::Commit()
 {
+    msg_.mutable_attributes()->mutable_nbc()->set_danger_level( danger_->value() );
+    msg_.mutable_attributes()->mutable_nbc()->mutable_nbc_agents();
     for( QListViewItem* item = nbcAgents_->firstChild(); item != 0; item = item->nextSibling() )
         if( item->isSelected() )
             msg_.mutable_attributes()->mutable_nbc()->mutable_nbc_agents()->add_elem( static_cast< ValuedListItem* >( item )->GetValue< const NBCAgent >()->GetId() );
@@ -60,6 +61,6 @@ void NBCPrototype::Commit()
 // -----------------------------------------------------------------------------
 void NBCPrototype::Clean()
 {
-    if ( msg_.attributes().nbc().nbc_agents().elem_size() > 0 )
-        delete [] msg_.mutable_attributes()->mutable_nbc()->mutable_nbc_agents()->mutable_elem();
+    if( msg_.attributes().has_nbc() )
+        msg_.mutable_attributes()->clear_nbc();
 }

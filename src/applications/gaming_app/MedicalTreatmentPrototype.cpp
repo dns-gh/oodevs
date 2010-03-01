@@ -62,6 +62,6 @@ void MedicalTreatmentPrototype::Commit()
 // -----------------------------------------------------------------------------
 void MedicalTreatmentPrototype::Clean()
 {
-    if( msg_.attributes().medical_treatment().type_id().elem_size() > 0 )
-        delete [] msg_.mutable_attributes()->mutable_medical_treatment()->mutable_type_id()->mutable_elem();
+    if( msg_.attributes().has_medical_treatment() )
+        msg_.mutable_attributes()->clear_medical_treatment();
 }
