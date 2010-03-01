@@ -35,6 +35,7 @@ class QWidget;
 class QTabWidget;
 class QGroupBox;
 
+
 // =============================================================================
 /** @class  ADN_Equipement_GUI
     @brief  ADN_Equipement_GUI
@@ -118,7 +119,6 @@ private:
     //@{
     void BuildGeneric( E_DotationFamily nType, QTabWidget* pParent );
     void BuildAmmunition( QTabWidget* pParent );
-    void BuildActiveProtections( QTabWidget* pParent );
     //@}
 
 private slots:
@@ -131,7 +131,7 @@ private:
 
     ADN_Equipement_AmmoListView* pAmmoListView_;
     ADN_Equipement_AttritionTable* pAttritionTable_;
-
+    
     ADN_ComboBox* pIndirectTypeCombo_;
     
     QGroupBox* pExplosiveParametersGroup_;

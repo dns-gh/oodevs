@@ -15,12 +15,14 @@
 #include "ADN_Types.h"
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
+#include "ADN_Equipement_Data.h"
+#include "ADN_Weapons_Data.h"
 
 
 // =============================================================================
-/** @class  ADN_ActiveProtections_Data
-    @brief  ADN_ActiveProtections_Data
-*/
+// @class  ADN_ActiveProtections_Data
+//  @brief  ADN_ActiveProtections_Data
+//
 // Created: LDC 2010-01-13
 // =============================================================================
 class ADN_ActiveProtections_Data : public ADN_Data_ABC
@@ -45,6 +47,7 @@ public:
     
     public:
         ADN_Type_String strName_; // To use with ADN_Tools::NameCmp
+        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::CategoryInfo> ptrWeapon_;
         ADN_Type_Double coefficient_;
     };
 
@@ -68,14 +71,16 @@ public:
         void ReadArchive( xml::xistream& input );
         void WriteArchive( xml::xostream& xos );
         void ReadWeapon( xml::xistream& xis );
+
+        T_ActiveProtectionsInfosWeaponsVector& GetActiveProtectionsInfosWeapons();
     
     public:
         ADN_Type_String                       strName_; // To use with ADN_Tools::NameCmp
         ADN_Type_Double                       coefficient_;
         ADN_Type_Bool                         hardKill_;
-        ADN_Type_String                       strDotationName_;
         ADN_Type_Double                       usage_;
         T_ActiveProtectionsInfosWeaponsVector weapons_;
+        ADN_TypePtr_InVector_ABC<ADN_Equipement_Data::AmmoCategoryInfo> ptrAmmunition_;
     };
 
     typedef ADN_Type_Vector_ABC<ActiveProtectionsInfos>  T_ActiveProtectionsInfosVector;
@@ -113,8 +118,6 @@ private:
     virtual void WriteArchive( xml::xostream& xos );
     virtual void ReadProtection( xml::xistream& xis );
     //@}
-
-
 };
 
 #endif // __ADN_ActiveProtections_Data_h_

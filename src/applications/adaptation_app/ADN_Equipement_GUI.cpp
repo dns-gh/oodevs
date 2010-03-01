@@ -47,14 +47,13 @@
 #include "ADN_TimeField.h"
 #include "ADN_ComboBox_Equipment_Nature.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI constructor
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
 ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
-: ADN_GUI_ABC( "ADN_Equipement_GUI" )
-, data_      ( data )
+: ADN_GUI_ABC            ( "ADN_Equipement_GUI" )
+, data_                  ( data )
 {
 }
 
@@ -87,7 +86,6 @@ void ADN_Equipement_GUI::Build()
     this->BuildGeneric( eDotationFamily_Barbele, pTabWidget );
     this->BuildGeneric( eDotationFamily_Ration, pTabWidget );
     this->BuildGeneric( eDotationFamily_Piece, pTabWidget );
-    this->BuildActiveProtections( pTabWidget );
 
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
@@ -230,28 +228,6 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     QHBoxLayout* pMainLayout = new QHBoxLayout( pPage, 10, 10 );
     pMainLayout->addWidget( pAmmoListView_, 1 );
     pMainLayout->addWidget( pGroupBox, 4 );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::BuildActiveProtections
-// Created: APE 2004-12-28
-// -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::BuildActiveProtections( QTabWidget* pParent )
-{
-    ADN_GuiBuilder builder;
-
-    QWidget* pPage = new QWidget( pParent );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
-
-   
-     // TODO ...
-
-
-     // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pPage, 10, 10 );
-    pMainLayout->addWidget( pAmmoListView_, 1 );
-   // pMainLayout->addWidget( pGroupBox, 4 );
 }
 
 // -----------------------------------------------------------------------------

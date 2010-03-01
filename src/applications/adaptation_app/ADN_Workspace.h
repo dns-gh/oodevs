@@ -87,10 +87,10 @@ public:
     ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();
     ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& GetLaunchers();
     ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& GetCategories();
+    ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>& GetActiveProtections();
     ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >& GetEquipements();
     ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>& GetObjects();
     ADN_WorkspaceElement< ADN_Weapons_Data, ADN_Weapons_GUI>& GetWeapons();
-    ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>& GetActiveProtections();
     ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI>& GetSensors();
     ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >& GetComposantes();
     ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >& GetUnits();
@@ -123,9 +123,9 @@ private:
         eNBC,
         eLaunchers,
         eEquipement,
-        eActiveProtections, // LTO
         eObjects,
         eWeapons,
+        eActiveProtections, // LTO
         eSensors,
         eBreakdowns,
         eComposantes,
