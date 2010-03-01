@@ -35,12 +35,12 @@ void save_construct_data( Archive& archive, const ArmyFactory* factory, const un
     const MIL_ObjectManager* const objectFactory = &factory->objectFactory_;
     const PopulationFactory_ABC* const populationFactory = &factory->populationFactory_;
     const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = &factory->knowledgeGroupFactory_; // LTO
-    archive << automateFactory
-            << agentFactory
-            << formationFactory
-            << objectFactory
-            << populationFactory
-            << knowledgeGroupFactory; // LTO
+    archive << automateFactory;
+    archive << agentFactory;
+    archive << formationFactory;
+    archive << objectFactory;
+    archive << populationFactory;
+    archive << knowledgeGroupFactory; // LTO
 }
 // -----------------------------------------------------------------------------
 // Name: ArmyFactory::save_construct_data
@@ -55,12 +55,12 @@ void load_construct_data( Archive& archive, ArmyFactory* factory, const unsigned
     MIL_ObjectManager* objectFactory;
     PopulationFactory_ABC* populationFactory;
     KnowledgeGroupFactory_ABC* knowledgeGroupFactory; // LTO
-    archive >> automateFactory
-            >> agentFactory
-            >> formationFactory
-            >> objectFactory
-            >> populationFactory
-            >> knowledgeGroupFactory; // LTO
+    archive >> automateFactory;
+    archive >> agentFactory;
+    archive >> formationFactory;
+    archive >> objectFactory;
+    archive >> populationFactory;
+    archive >> knowledgeGroupFactory; // LTO
     ::new( factory )ArmyFactory( *automateFactory, *agentFactory, *formationFactory, *objectFactory, *populationFactory, *knowledgeGroupFactory ); // LTO
 }
 

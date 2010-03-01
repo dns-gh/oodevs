@@ -28,8 +28,6 @@ typename Role::RoleInterface& RoleContainer::RegisterRole( Role& role )
 template< class Archive >
 void RoleContainer::load( Archive& archive, const unsigned int /*version*/ )
 {
-    std::vector< Role_ABC* > container;
-    archive >> container;
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +37,6 @@ void RoleContainer::load( Archive& archive, const unsigned int /*version*/ )
 template< class Archive >
 void RoleContainer::save( Archive& archive, const unsigned int /*version*/ ) const
 {
-    archive << extensions_.Container();
 }
 
 // -----------------------------------------------------------------------------

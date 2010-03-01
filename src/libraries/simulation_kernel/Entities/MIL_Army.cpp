@@ -106,7 +106,7 @@ MIL_Army::MIL_Army( ArmyFactory_ABC& armyFactory, const MT_Converter< std::strin
     , armyFactory_( armyFactory )
     , diplomacyConverter_( diplomacyConverter )
 {
-    // NOTHING
+    // NOTHING    
 }
 
 // -----------------------------------------------------------------------------
@@ -129,6 +129,7 @@ namespace boost
 {
     namespace serialization
     {
+        // T_DiplomacyMap
         template< typename Archive >
         inline
         void serialize( Archive& file, MIL_Army::T_DiplomacyMap& map, const unsigned int nVersion )
@@ -165,21 +166,106 @@ namespace boost
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Army::load
-// Created: JVT 2005-03-23
+// Created: LDC 2010-02-22
 // -----------------------------------------------------------------------------
-template< typename Archive > 
-void MIL_Army::serialize( Archive& file, const unsigned int )
+void MIL_Army::load( MIL_CheckPointInArchive& file, const uint )
 {
-    file & boost::serialization::base_object< MIL_Army_ABC >( *this );
-    file & const_cast< std::string& >( strName_ )
-         & const_cast< unsigned int& >( nID_ )
-         & nType_
-         & diplomacies_
-         & knowledgeGroups_
-         & tools::Resolver< MIL_Formation >::elements_
-         & tools::Resolver< MIL_Object_ABC >::elements_
-         & tools::Resolver< MIL_Population >::elements_
-         & pKnowledgeBlackBoard_;
+    file >> boost::serialization::base_object< MIL_Army_ABC >( *this );
+    file >> const_cast< std::string& >( strName_ );
+    file >> const_cast< uint& >( nID_ );
+    file >> nType_;
+    file >> diplomacies_;
+    {
+        unsigned int nNbr;
+        file >> nNbr;
+        while ( nNbr-- )
+        {
+            unsigned long index;
+            file >> index;
+            file >> knowledgeGroups_[ index ];
+        }
+    }
+    {
+        unsigned int nNbr;
+        file >> nNbr;
+        while ( nNbr-- )
+        {
+            unsigned long index;
+            file >> index;
+            file >> tools::Resolver< MIL_Population >::elements_[ index ];
+        }
+    }
+    {
+        unsigned int nNbr;
+        file >> nNbr;
+        while ( nNbr-- )
+        {
+            unsigned long index;
+            file >> index;
+            file >> tools::Resolver< MIL_Formation >::elements_[ index ];
+        }
+    }
+    {
+        unsigned int nNbr;
+        file >> nNbr;
+        while ( nNbr-- )
+        {
+            unsigned long index;
+            file >> index;
+            file >> tools::Resolver< MIL_Object_ABC >::elements_[ index ];
+        }
+    }
+    file >> pKnowledgeBlackBoard_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::save
+// Created: LDC 2010-02-22
+// -----------------------------------------------------------------------------
+void MIL_Army::save( MIL_CheckPointOutArchive& file, const uint ) const
+{
+    file << boost::serialization::base_object< MIL_Army_ABC >( *this );
+    file << const_cast< std::string& >( strName_ );
+    file << const_cast< uint& >( nID_ );
+    file << nType_;
+    file << diplomacies_;
+    {
+        unsigned int size = knowledgeGroups_.size();
+        file << size;
+        for ( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+        {
+            file << it->first
+                 << it->second;
+        }
+    }
+    {
+        unsigned int size = tools::Resolver< MIL_Population >::elements_.size();
+        file << size;
+        for ( std::map< unsigned long, MIL_Population* >::const_iterator it = tools::Resolver< MIL_Population >::elements_.begin(); it != tools::Resolver< MIL_Population >::elements_.end(); ++it )
+        {
+            file << it->first
+                 << it->second;
+        }
+    }
+    {
+        unsigned int size = tools::Resolver< MIL_Formation >::elements_.size();
+        file << size;
+        for ( std::map< unsigned long, MIL_Formation* >::const_iterator it = tools::Resolver< MIL_Formation >::elements_.begin(); it != tools::Resolver< MIL_Formation >::elements_.end(); ++it )
+        {
+            file << it->first
+                 << it->second;
+        }
+    }
+    {
+        unsigned int size = tools::Resolver< MIL_Object_ABC >::elements_.size();
+        file << size;
+        for ( std::map< unsigned long, MIL_Object_ABC* >::const_iterator it = tools::Resolver< MIL_Object_ABC >::elements_.begin(); it != tools::Resolver< MIL_Object_ABC >::elements_.end(); ++it )
+        {
+            file << it->first
+                 << it->second;
+        }
+    }
+    file << pKnowledgeBlackBoard_;
 }
 
 // -----------------------------------------------------------------------------

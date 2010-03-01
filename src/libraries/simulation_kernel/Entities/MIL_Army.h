@@ -74,7 +74,11 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
+
     virtual void WriteODB         ( xml::xostream& xos ) const;
     virtual void WriteDiplomacyODB( xml::xostream& xos ) const;
     //@}

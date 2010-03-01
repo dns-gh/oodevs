@@ -105,6 +105,22 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     automate.RegisterPion( *this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion constructor
+// Created: LDC 2010-02-22
+// -----------------------------------------------------------------------------
+MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
+    : MIL_Agent_ABC            ( type.GetName() )
+    , pType_                   ( &type )
+    , bIsPC_                   ( false )
+    , pAutomate_               ( 0 )
+    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
+    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
+    , algorithmFactories_      ( algorithmFactories )
+{
+    // NOTHING
+}
+
 // =============================================================================
 // CHECKPOINTS
 // =============================================================================
@@ -136,7 +152,6 @@ void save_construct_data( Archive& archive, const MIL_AgentPion* pion, const uns
     unsigned int nTypeID = pion->GetType().GetID();
     const AlgorithmsFactories* const algorithmFactories = &pion->algorithmFactories_;
     archive << nTypeID
-            << pion->pAutomate_
             << algorithmFactories;
 }
 
@@ -144,14 +159,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPion* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID;
-    MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID
-            >> pAutomate
             >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPion( *pType, *pAutomate, *algorithmFactories );
+    ::new( pion )MIL_AgentPion( *pType, *algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------

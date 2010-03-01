@@ -56,11 +56,11 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     : nID_                  ( xml::attribute< unsigned int >( xis, "id" ) )
     , pType_                ( MIL_KnowledgeGroupType::FindType( xml::attribute< std::string >( xis, "type" ) ) )
     , pArmy_                ( &army )
-    , pParent_              ( pParent )
+    , pParent_              ( pParent ) // LTO
     , pKnowledgeBlackBoard_ ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
     , automates_            ()
-    , timeToDiffuse_        ( 0 )
-    , isActivated_          ( true )
+    , timeToDiffuse_        ( 0 ) // LTO
+    , isActivated_          ( true ) // LTO
 {
     if( pParent_ )
     {
@@ -84,6 +84,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , pParent_             ( 0 ) // LTO
     , pKnowledgeBlackBoard_( 0 )
     , automates_           ()
+    , timeToDiffuse_        ( 0 ) // LTO
     , isActivated_         ( true ) // LTO
 {
     // NOTHING
@@ -125,10 +126,14 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
     file >> nTypeID;
     pType_ = MIL_KnowledgeGroupType::FindType( nTypeID );
     
-    file >> const_cast< unsigned int& >( nID_ )
+    file >> nID_
          >> pArmy_
+         >> pParent_ // LTO
          >> pKnowledgeBlackBoard_
-         >> automates_;
+         >> automates_
+         >> knowledgeGroups_ // LTO
+         >> timeToDiffuse_ // LTO
+         >> isActivated_; // LTO
          
     ids_.insert( nID_ );
 }
@@ -140,13 +145,16 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
 void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     assert( pType_ );
-    unsigned type = pType_->GetID();
+    unsigned int type = pType_->GetID();
     file << type
          << nID_
          << pArmy_
          << pParent_ // LTO
          << pKnowledgeBlackBoard_
-         << automates_;
+         << automates_
+         << knowledgeGroups_ // LTO
+         << timeToDiffuse_ // LTO
+         << isActivated_; // LTO
 }
 
 // -----------------------------------------------------------------------------
@@ -179,7 +187,7 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update(currentTimeStep);
-}
+    }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::CleanKnowledges
@@ -239,7 +247,7 @@ void MIL_KnowledgeGroup::SendCreation() const
     asn().set_oid( nID_ );
     asn().set_oid_camp( pArmy_->GetID() );
     asn().set_type(GetType().GetName());
-// LTO begin
+    // LTO begin
     if( pParent_ )
         asn().set_oid_parent( pParent_->GetID() );
     asn.Send( NET_Publisher_ABC::Publisher() );
@@ -277,7 +285,7 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup() const
     {
         // army is the parent
         message().set_oid_parent( 0 );
-    }
+}
     message().set_type( GetType().GetName().c_str() );
     message().set_enabled( IsEnabled() );
     message.Send( NET_Publisher_ABC::Publisher() ); 
@@ -481,12 +489,12 @@ MIL_KnowledgeGroup* MIL_KnowledgeGroup::FindKnowledgeGroup( uint nID ) const
     if( knowledgeGroup == 0 )
     {
         for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
-        {
+         {
             knowledgeGroup = (*itKG)->FindKnowledgeGroup( nID );
             if ( knowledgeGroup )
                 return knowledgeGroup;         
-        }
-        return 0;
+         }
+         return 0;
      }
      return knowledgeGroup;
 }
@@ -545,7 +553,7 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const MsgsClientToSim
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior
-// Created: FHD 2009-12-17: 
+// Created: FHD 2009-12-17:  
 // Modified: FDS 2010-01-13 return bool to use in OnReceiveMsgKnowledgeGroupUpdate
 // Modified: FDS 2010-01-13 refactor algorithm
 // -----------------------------------------------------------------------------

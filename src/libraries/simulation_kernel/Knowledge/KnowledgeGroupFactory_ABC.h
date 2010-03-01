@@ -21,8 +21,8 @@ namespace xml
     class xistream;
 }
 // =============================================================================
-/** @class  FormationFactory_ABC
-@brief  FormationFactory_ABC
+/** @class  KnowledgeGroupFactory_ABC
+@brief  KnowledgeGroupFactory_ABC
 */
 // Created: MGD 2009-10-22
 // =============================================================================
@@ -54,7 +54,7 @@ protected:
 };
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void FormationFactory_ABC::serialize
+// Name: template< typename Archive > void KnowledgeGroupFactory_ABC::serialize
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
 template< typename Archive >
