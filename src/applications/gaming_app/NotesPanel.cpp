@@ -15,7 +15,6 @@
 #include "gaming/Tools.h"
 #include "gaming/Note.h"
 #include "gaming/NotesModel.h"
-//#include "game_asn/Messenger.h"
 #include "protocol/Publisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 
@@ -243,8 +242,8 @@ void NotesPanel::ConfirmDeleteNote()
             {
                 plugins::messenger::NoteDestructionRequest asn;
                 asn().set_id( it->second->GetId() );
-                asn().set_delete_all(false );
-                asn.Send(publisher_);
+                asn().set_delete_all( false );
+                asn.Send( publisher_ );
             }      
     }
 }
@@ -276,7 +275,7 @@ void NotesPanel::UpdateNote()
    {
        T_Items::iterator it = itemsList_.find( item );
        if( it != itemsList_.end())
-           noteDialog_->SetUpdate( *(it->second) );
+           noteDialog_->SetUpdate( *( it->second ) );
    }  
     noteDialog_->show(); 
 }   
