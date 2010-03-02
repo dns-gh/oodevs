@@ -14,7 +14,6 @@
 #include "ADN_Connector_ListView.h"
 #include "ADN_Tools.h"
 #include "ADN_ObjectCreator_ABC.h"
-
 #include <qpopupmenu.h>
 
 typedef ADN_ActiveProtections_Data::ActiveProtectionsInfos ActiveProtectionsInfos;

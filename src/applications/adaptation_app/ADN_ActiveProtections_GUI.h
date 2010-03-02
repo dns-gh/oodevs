@@ -11,12 +11,12 @@
 #define __ADN_ActiveProtections_GUI_h_
 
 #include "ADN_GUI_ABC.h"
-#include "ADN_ActiveProtections_Data.h"
 
+class ADN_ActiveProtections_Data;
 
 // =============================================================================
 // @class  ADN_ActiveProtections_GUI
-//  @brief  ADN_ActiveProtections_GUI
+// @brief  ADN_ActiveProtections_GUI
 //
 // Created: LDC 2010-01-13
 // =============================================================================
@@ -25,7 +25,7 @@ class ADN_ActiveProtections_GUI : public ADN_GUI_ABC
 
 public:
 
-        enum E_ActiveProtectionsGuiElements
+    enum E_ActiveProtectionsGuiElements
     {
         eActiveProtectionName,
         eActiveProtectionHardKill,
@@ -39,7 +39,7 @@ public:
 
     //! @name Constructors/Destructor
     //@{
-    ADN_ActiveProtections_GUI( ADN_ActiveProtections_Data& data);
+    explicit ADN_ActiveProtections_GUI( ADN_ActiveProtections_Data& data);
     virtual ~ADN_ActiveProtections_GUI() {}
     //@}
 

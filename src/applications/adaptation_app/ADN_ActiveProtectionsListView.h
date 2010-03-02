@@ -12,29 +12,27 @@
 
 #include "ADN_ListView.h"
 
-
 // =============================================================================
 //  @class  ADN_ActiveProtectionsListView
 //  @brief  ADN_ActiveProtectionsListView
 // Created: FDS 10-02-25
 // =============================================================================
-class ADN_ActiveProtectionsListView
-: public ADN_ListView
+class ADN_ActiveProtectionsListView : public ADN_ListView
 {
     MT_COPYNOTALLOWED( ADN_ActiveProtectionsListView )
 
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_ActiveProtectionsListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    explicit ADN_ActiveProtectionsListView( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
     virtual ~ADN_ActiveProtectionsListView();
     //@}
 
 private:
     //! @name Operations
     //@{
-    void        ConnectItem  ( bool           bConnect );
-    void        OnContextMenu( const QPoint&  pt       );
+    void ConnectItem  ( bool           bConnect );
+    void OnContextMenu( const QPoint&  pt       );
     //@}
 };
 
