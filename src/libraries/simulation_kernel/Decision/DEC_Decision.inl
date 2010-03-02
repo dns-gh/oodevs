@@ -91,7 +91,7 @@ template <class T>
 const std::string& DEC_Decision<T>::GetDIAType() const
 {
     return diaType_;
-}
+}   
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::UpdateDecision

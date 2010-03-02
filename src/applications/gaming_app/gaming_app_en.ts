@@ -1037,10 +1037,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Quantity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ammo</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1090,6 +1086,10 @@
     </message>
     <message>
         <source>Partial recompletion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Quantity %</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

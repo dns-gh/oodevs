@@ -135,14 +135,7 @@ void UserProfile::RequestUpdate( const QString& newLogin )
 
     message.Send( publisher_ );
 
-    delete[] profile.mutable_read_only_camps()->mutable_elem();
-    delete[] profile.mutable_read_only_formations()->mutable_elem();
-    delete[] profile.mutable_read_only_automates()->mutable_elem();
-    delete[] profile.mutable_read_only_populations()->mutable_elem();
-    delete[] profile.mutable_read_write_camps()->mutable_elem();
-    delete[] profile.mutable_read_write_formations()->mutable_elem();
-    delete[] profile.mutable_read_write_automates()->mutable_elem();
-    delete[] profile.mutable_read_write_populations()->mutable_elem();
+    profile.Clear();
 }
 
 // -----------------------------------------------------------------------------

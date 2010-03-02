@@ -54,6 +54,6 @@ void MissionParameterPoint::Serialize( MsgMissionParameter& parameter ) const
 // -----------------------------------------------------------------------------
 void MissionParameterPoint::Clean( MsgMissionParameter& parameter ) const
 {
-    delete[] parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem();
-    delete parameter.mutable_value()->mutable_point()->mutable_location();
+    parameter.mutable_value()->mutable_point()->mutable_location()->mutable_coordinates()->mutable_elem()->Clear();
+    parameter.mutable_value()->mutable_point()->mutable_location()->Clear();
 }

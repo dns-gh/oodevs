@@ -88,5 +88,5 @@ void PointList::Serialize( MsgCoordLatLongList& asn ) const
 // -----------------------------------------------------------------------------
 void PointList::Clean( MsgCoordLatLongList& asn ) const
 {
-    delete[] asn.mutable_elem();
+    asn.mutable_elem()->Clear();
 }

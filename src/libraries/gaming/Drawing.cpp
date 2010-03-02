@@ -192,7 +192,7 @@ void Drawing::SerializeLocation( Common::MsgCoordLatLongList& list ) const
 void Drawing::CleanLocation( Common::MsgCoordLatLongList& list ) const
 {
     if( list.elem_size() )
-        delete[] list.mutable_elem();
+        list.mutable_elem()->Clear();
 }
 
 // -----------------------------------------------------------------------------

@@ -75,7 +75,7 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
         if( !(**it).Copy( **fromIt, *to.mutable_elem( index ), knowledgeResolver ) )
         {   
             assert( false );
-            delete[] to.mutable_elem();
+            to.mutable_elem()->Clear();
             return false;
         }
     return true;

@@ -342,7 +342,7 @@ void Mission::Clean( MsgMissionParameters& asn ) const
             (*it)->Clean( *asn.mutable_elem( index ) );
     }
     CleanDummyParameters( asn );
-    delete[] asn.mutable_elem();
+    asn.mutable_elem()->Clear();
 }
 
 // -----------------------------------------------------------------------------

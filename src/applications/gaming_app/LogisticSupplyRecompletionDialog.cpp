@@ -140,7 +140,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     dotationsTable_ = new QTable( 0, 3, dotationsGroupBox );
     dotationsTable_->horizontalHeader()->setLabel( 0, "" );
     dotationsTable_->horizontalHeader()->setLabel( 1, tr( "Dotation" ) );
-    dotationsTable_->horizontalHeader()->setLabel( 2, tr( "Quantity" ) );
+    dotationsTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
     dotationsTable_->setColumnWidth( 0, 20 );
     dotationsTable_->setColumnWidth( 2, 60 );
     dotationsTable_->setColumnReadOnly( 1, true );
@@ -151,7 +151,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     munitionsFamilyTable_ = new QTable( 0, 3, dotationsGroupBox );
     munitionsFamilyTable_->horizontalHeader()->setLabel( 0, "" );
     munitionsFamilyTable_->horizontalHeader()->setLabel( 1, tr( "Ammo" ) );
-    munitionsFamilyTable_->horizontalHeader()->setLabel( 2, tr( "Quantity" ) );
+    munitionsFamilyTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
     munitionsFamilyTable_->setColumnWidth( 0, 20 );
     munitionsFamilyTable_->setColumnWidth( 2, 60 );
     munitionsFamilyTable_->setColumnReadOnly( 1, true );
@@ -167,7 +167,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     stockTable_ = new QTable( 0, 3, stockGroupBox );
     stockTable_->horizontalHeader()->setLabel( 0, "" );
     stockTable_->horizontalHeader()->setLabel( 1, tr( "Dotation" ) );
-    stockTable_->horizontalHeader()->setLabel( 2, tr( "Quantity" ) );
+    stockTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
     stockTable_->setColumnWidth( 0, 20 );
     stockTable_->setColumnWidth( 2, 60 );
     stockTable_->setColumnReadOnly( 1, true );
@@ -550,29 +550,16 @@ void LogisticSupplyRecompletionDialog::Validate()
     message().set_oid( selected_->GetId() );
 
     MsgsClientToSim::MsgMagicActionPartialRecovery magicAction;
-    *message().mutable_action()->mutable_recompletement_partiel() = magicAction;   // $$$$ _RC_ FDS 2010-01-27: Je ne comprends pas cette innitialisation ???
-
     FillPersonal( magicAction );
     FillEquipments( magicAction );
     FillDotations( magicAction );
     FillAmmunitions( magicAction );
     FillSupplies( magicAction );
 
+    *message().mutable_action()->mutable_recompletement_partiel() = magicAction;   // $$$$ _RC_ FDS 2010-01-27: Je ne comprends pas cette innitialisation ???
+
     message.Send( publisher_ );
-    if( magicAction.has_dotations()  && magicAction.dotations().elem_size() > 0 )
-        delete [] magicAction.mutable_dotations()->mutable_elem();
-
-    if( magicAction.has_munitions()  && magicAction.munitions().elem_size() > 0 )
-        delete [] magicAction.mutable_munitions()->mutable_elem();
-
-    if( magicAction.has_equipements()  && magicAction.equipements().elem_size() > 0 )
-        delete [] magicAction.mutable_equipements()->mutable_elem();
-
-    if( magicAction.has_personnels()  && magicAction.personnels().elem_size() > 0 )
-        delete [] magicAction.mutable_personnels()->mutable_elem();
-
-    if( magicAction.has_stocks()  && magicAction.stocks().elem_size() > 0 )
-        delete [] magicAction.mutable_stocks()->mutable_elem();
+    magicAction.Clear();    
     selected_ = 0;
     hide();
 }

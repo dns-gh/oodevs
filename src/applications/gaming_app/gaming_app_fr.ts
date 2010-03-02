@@ -1285,7 +1285,7 @@
     </message>
     <message>
         <source>Quantity</source>
-        <translation>Quantité</translation>
+        <translation type="obsolete">Quantité</translation>
     </message>
     <message>
         <source>Ammo</source>
@@ -1338,6 +1338,10 @@
     <message>
         <source>Partial recompletion</source>
         <translation>Recomplétion partielle</translation>
+    </message>
+    <message>
+        <source>Quantity %</source>
+        <translation>Quantité %</translation>
     </message>
 </context>
 <context>
