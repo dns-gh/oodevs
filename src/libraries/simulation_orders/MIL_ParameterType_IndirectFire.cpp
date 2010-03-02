@@ -42,6 +42,10 @@ bool MIL_ParameterType_IndirectFire::Copy( const MIL_MissionParameter_ABC& from,
         return false;
     to.set_null_value( false );
     Common::MsgUnitFire fire;
-    fire.set_oid( to.value().tirindirect() );
-    return from.ToIndirectFire( fire );
+    if( from.ToIndirectFire( fire ) )
+    {
+        to.mutable_value()->set_tirindirect( fire.oid() );
+        return true;
+    }
+    return false;
 }

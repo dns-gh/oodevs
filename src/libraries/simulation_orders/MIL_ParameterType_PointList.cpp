@@ -41,7 +41,5 @@ bool MIL_ParameterType_PointList::Copy( const MIL_MissionParameter_ABC& from, Co
     if( !from.IsOfType( *this ) )
         return false;
     to.set_null_value( false );
-    if( !from.ToPointList( *to.mutable_value()->mutable_pointlist() ) )
-        return false;
-    return true;
+    return from.ToPointList( *to.mutable_value()->mutable_pointlist() );
 }
