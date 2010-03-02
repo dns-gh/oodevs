@@ -14,11 +14,6 @@
 
 using namespace kernel;
 
-namespace MsgsSimToClient
-{
-    class MsgVisionCone;
-}
-
 // -----------------------------------------------------------------------------
 // Name: SurfaceFactory constructor
 // Created: AGE 2006-04-04

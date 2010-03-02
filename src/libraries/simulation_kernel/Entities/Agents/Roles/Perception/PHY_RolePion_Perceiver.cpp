@@ -1280,7 +1280,8 @@ void PHY_RolePion_Perceiver::SendDebugState() const
 {
     client::UnitVisionCones message;
     message().set_oid( pion_.GetID() );
-    message().set_elongation( pion_.Execute( pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer() )->GetElongationFactor() ); //@TODO MGD share
+    std::auto_ptr< detection::PerceptionDistanceComputer_ABC > algorithm = pion_.GetAlgorithms().detectionComputerFactory_->CreateDistanceComputer();
+    message().set_elongation( pion_.Execute( *algorithm ).GetElongationFactor() ); //@TODO MGD share
     message().mutable_cones();
     for( CIT_SurfaceAgentMap it = surfacesAgent_.begin(); it != surfacesAgent_.end(); ++it )
         it->second.SendFullState( *message().mutable_cones()->add_elem() );
