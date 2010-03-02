@@ -3,6 +3,7 @@
   <description>Une section interarme en milieu urbain.</description>
   <realizes>directia.core.model.RoleBody</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Reachable</realizes>
+  <realizes>net.masagroup.military.generic.knowledge.Reaching</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Observable</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Destroying</realizes>
   <realizes>net.masagroup.military.generic.knowledge.Destroyable</realizes>

@@ -46,7 +46,9 @@ defaultMethods
     --
     communicate = function() return masalife.brain.defaultengine.methods.load( "unit_communicate" ) end,
 
-
+    -- REACHING
+    reachEfficiency = function() return masalife.brain.defaultengine.methods.load( "reachEfficiency" ) end,
+    isReachingFor = function() return masalife.brain.defaultengine.predicates.load( "isReachingFor" ) end,
     -- DESTROYING
     destructionEfficiency = function() return masalife.brain.defaultengine.methods.load( "destructionEfficiency" ) end,
     isDestroyingFor = function() return masalife.brain.defaultengine.predicates.load( "terrain_analysis_isDestroyingFor" ) end,
@@ -82,7 +84,6 @@ masalife.brain.communication.setMessageTreatment( "Order", integration.communica
  
 return
 {
-     
     -- $$$ MIA: temp, to move in default military implementation
     isTotallyPerceived = function( self )
         return self:perceptionLevel() == 100

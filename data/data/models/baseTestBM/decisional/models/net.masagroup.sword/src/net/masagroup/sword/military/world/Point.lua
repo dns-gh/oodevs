@@ -41,8 +41,8 @@ defaultMethods
     destructionEfficiency = function() return masalife.brain.defaultengine.methods.load( "destructionEfficiency" ) end,
     
     -- IDENTIFYING
-  	isIdentifyingFor = function() return masalife.brain.defaultengine.predicates.load( "terrain_analysis_isIdentifyingFor" ) end,
-  	identificationEfficiency = function() return masalife.brain.defaultengine.methods.load( "identificationEfficiency" ) end,
+    isIdentifyingFor = function() return masalife.brain.defaultengine.predicates.load( "terrain_analysis_isIdentifyingFor" ) end,
+    identificationEfficiency = function() return masalife.brain.defaultengine.methods.load( "identificationEfficiency" ) end,
 
     -- SAFEGUARDING
     isSafeguardingFor = function() return masalife.brain.defaultengine.predicates.load( "terrain_analysis_isSafeguardingFor") end,
