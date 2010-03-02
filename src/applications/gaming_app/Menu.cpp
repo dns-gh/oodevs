@@ -146,7 +146,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Direction" )     , MakePixmap( "direction" )  , controllers.options_, "Direction" );
     subMenu->insertSeparator();
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Convex hulls" ),     MakePixmap( "convex_hulls" )    , controllers.options_, "ConvexHulls" );
-    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MsgMissionParameters" );
+    AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Current Mission" ),  MakePixmap( "current_mission" ) , controllers.options_, "MissionParameters" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState" );
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Formations" ),       MakePixmap( "formations" )      , controllers.options_, "Formations" );
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
