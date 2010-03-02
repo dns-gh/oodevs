@@ -1,12 +1,10 @@
 queryImplementation "getIdentifying" { ["execute"] = function ( params )
-    local allRes = {}
+    local allRes = {}    
     for _, objective in pairs( params.objectives ) do
-        local res = {}
-        DEC_Crossroads( objective:getPosition(), 5000, res )
-        if objective:isOfType( net.masagroup.military.generic.knowledge.identifying ) then
-          res[ #res + 1 ] = objective -- add objectif itself
-        end
-        allRes[ objective ] = res
+      DEC_Crossroads( objective:getPosition(), 5000, allRes )
+      if objective:isOfType( net.masagroup.military.generic.knowledge.identifying ) then
+        allRes[ #allRes + 1 ] = objective -- add objectif itself
+      end
     end
     return allRes
 end}
