@@ -574,10 +574,10 @@ BOOST_AUTO_TEST_CASE( ParametersSerialization_ObjectKnowledge )
     MOCK_EXPECT( object, GetId ).returns( 42 );
     resolver.Register( object.GetId(), object );
     MockTeam owner;
-    MockCommunicationHierarchies hierarchies;
-    MOCK_EXPECT( hierarchies, GetSuperior ).returns( 0 );
-    MOCK_EXPECT( hierarchies, GetEntity ).returns( boost::cref( owner ) );
-    owner.Attach< kernel::CommunicationHierarchies >( hierarchies );
+    MockCommunicationHierarchies* pHierarchies = new MockCommunicationHierarchies;
+    MOCK_EXPECT( *pHierarchies, GetSuperior ).returns( 0 );
+    MOCK_EXPECT( *pHierarchies, GetEntity ).returns( boost::cref( owner ) );
+    owner.Attach< kernel::CommunicationHierarchies >( *pHierarchies );
     MockObjectKnowledge knowledge;
     MOCK_EXPECT( knowledge, GetId ).returns( 15 );
     MockObjectKnowledgeConverter converter;
