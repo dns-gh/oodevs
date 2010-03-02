@@ -58,6 +58,7 @@ public:
           unsigned int         GetCheckPointsKept     () const;
           unsigned int         GetTimeStep            () const;
           unsigned int         GetTimeFactor          () const;
+          unsigned int         GetEndTick             () const;
           unsigned int         GetPathFinderThreads   () const;
           bool         IsHLAEnabled           () const;
     const std::string& GetHLAFederation       () const;
@@ -106,27 +107,28 @@ private:
 private:
     //! @name Member data
     //@{
-    bool                       bCheckPointOrbat_;
-    bool                       bUseCheckPointCRC_;
     unsigned int               checkPointsKept_;
     unsigned int               checkPointsFrequency_;
+    unsigned int               timeStep_;
+    unsigned int               timeFactor_;
+    unsigned int               endTick_;
+    unsigned int               pathFinderThreads_;
+    unsigned short             diaDebuggerPort_;
+    unsigned short             networkLoggerPort_;
+    unsigned short             networkPort_;
+    bool                       bCheckPointOrbat_;
+    bool                       bUseCheckPointCRC_;
     bool                       bUseOnlyDIAArchive_;
     bool                       bCheckAutomateComposition_;
     bool                       bUseDecDebug_;
     bool                       bUsePathDebug_;
     bool                       bUseDiaDebugger_;
-    unsigned short             diaDebuggerPort_;
     bool                       bUseNetworkLogger_;
-    unsigned short             networkLoggerPort_;
     bool                       bProfilingEnabled_;
     bool                       bDataTestMode_;
     bool                       bTestMode_;
     bool                       bFrozenMode_;
     bool                       bEmbeddedDispatcher_;
-    unsigned short             networkPort_;
-    unsigned int                       timeStep_;
-    unsigned int                       timeFactor_;
-    unsigned int                       pathFinderThreads_;
     bool                       bHLAEnabled_;
     std::string                hlaFederation_;
     std::string                hlaFederate_;
