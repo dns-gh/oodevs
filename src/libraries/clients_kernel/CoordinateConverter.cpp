@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "CoordinateConverter.h"
 #include "geocoord/Geoid.h"
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 
 using namespace kernel;
@@ -143,10 +144,10 @@ std::string CoordinateConverter::ConvertToUtm( const geometry::Point2f& pos ) co
 {
     ConvertToMgrs( pos );
     mgrs_.GetCoordinates( utm_ );
-    char   istring[ 256 ];
-    sprintf( istring, "%d%s %dE %dN", utm_.GetZone(), utm_.GetHemisphere() == geocoord::eNorth ? "N" : "S"
-                                    , boost::lexical_cast< int >( utm_.GetEasting() ),  boost::lexical_cast< int >( utm_.GetNorthing() ) );
-    return std::string( istring );
+    return boost::str( boost::format( "%d%s %dE %dN" ) % utm_.GetZone() 
+                                                       % ( utm_.GetHemisphere() == geocoord::eNorth ? "N" : "S" )
+                                                       % boost::lexical_cast< int >( utm_.GetEasting() )
+                                                       % boost::lexical_cast< int >( utm_.GetNorthing() ) );
 }
 
 // -----------------------------------------------------------------------------
