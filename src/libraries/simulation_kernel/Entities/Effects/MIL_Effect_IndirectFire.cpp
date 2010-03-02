@@ -309,6 +309,7 @@ bool MIL_Effect_IndirectFire::MustWaitImpact() const
     {
         return bFired_ && !bArrived_;
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
