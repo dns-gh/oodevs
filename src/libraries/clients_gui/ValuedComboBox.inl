@@ -62,6 +62,8 @@ void ValuedComboBox<T>::AddItem( const QString& label, const T& value )
         insertItem( label, nInsertPos );
         values_.insert( values_.begin() + nInsertPos, value );
     }
+    if( currentItem() == -1 )
+        SetCurrentItem( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,11 +178,9 @@ void ValuedComboBox<T>::RemoveItem( const T& value )
     IT_ValueVector it = std::find( values_.begin(), values_.end(), value );
     if( it == values_.end() )
         return;
-
     removeItem( it - values_.begin() );
     values_.erase( it );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ValuedComboBox::SetCurrentItem
