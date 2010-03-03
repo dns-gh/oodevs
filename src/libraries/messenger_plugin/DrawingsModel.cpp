@@ -73,10 +73,14 @@ void DrawingsModel::Load( const dispatcher::Config& config )
 {
     try
     {
-        xml::xifstream xis( BuildDrawingsFile( config ) );
-        xis >> xml::start( "shapes" )
-                >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
-            >> xml::end();
+        const std::string filename = BuildDrawingsFile( config );
+        if( bfs::exists( filename ) )
+        {
+            xml::xifstream xis( filename );
+            xis >> xml::start( "shapes" )
+                    >> xml::list( "shape", *this, &DrawingsModel::ReadShape )
+                >> xml::end();
+        }
     }
     catch( std::exception& )
     {
