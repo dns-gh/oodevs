@@ -131,7 +131,7 @@ MT_Float PHY_RoleAction_Loading::ComputeLoadingTime() const
 MT_Float PHY_RoleAction_Loading::ComputeUnloadingTime() const
 {
     std::auto_ptr< HumanLoadingTimeComputer_ABC > loadingTimeComputer = pion_.GetAlgorithms().loadingComputerFactory_->CreateHumanLoadingTimeComputer();
-    pion_.Execute( loadingTimeComputer );
+    pion_.Execute( *loadingTimeComputer );
     if( loadingTimeComputer->GetHumansUnloadedPerTimeStep() == 0. )
         return std::numeric_limits< MT_Float >::max();
     return loadingTimeComputer->GetHumansCount() / loadingTimeComputer->GetHumansUnloadedPerTimeStep();
