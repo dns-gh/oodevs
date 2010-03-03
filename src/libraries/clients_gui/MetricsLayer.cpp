@@ -9,10 +9,13 @@
 
 #include "clients_gui_pch.h"
 #include "MetricsLayer.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/GlTooltip_ABC.h"
-#include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Styles.h"
+#include "clients_kernel/OptionVariant.h"
 #include "Tools.h"
 #include <qfont.h>
 
@@ -23,11 +26,13 @@ using namespace gui;
 // Name: MetricsLayer constructor
 // Created: AGE 2006-03-17
 // -----------------------------------------------------------------------------
-MetricsLayer::MetricsLayer( GlTools_ABC& tools )
-    : ruling_( false )
-    , tools_ ( tools )
+MetricsLayer::MetricsLayer( Controllers& controllers, const kernel::DetectionMap& elevation, GlTools_ABC& tools )
+    : controllers_      ( controllers )
+    , tools_            ( tools )
+    , elevation_        ( elevation )
+    , multiRulingMode_  ( false )
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -45,17 +50,34 @@ MetricsLayer::~MetricsLayer()
 // -----------------------------------------------------------------------------
 void MetricsLayer::Paint( kernel::Viewport_ABC& )
 {
-    if( ruling_ )
+    if( multiRulingMode_ && !metricPoints_.empty() )
     {
+        for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
+        {
+            if( metricPoints_.size() > 1 )
+            {
+                geometry::Point2f start = *(it - 1 ); 
+                geometry::Point2f end = *it ;
+                glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
+                glLineWidth( 4 );
+                glColor4f( COLOR_WHITE );
+                tools_.DrawLine( start, end );
+                glLineWidth( 2 );
+                glColor4f( COLOR_BLACK );
+                tools_.DrawLine( start, end );
+            }
+        }
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
         glLineWidth( 4 );
         glColor4f( COLOR_WHITE );
-        tools_.DrawLine( start_, end_ );
+        tools_.DrawLine( metricPoints_.back(), end_ );
         glLineWidth( 2 );
         glColor4f( COLOR_BLACK );
-        tools_.DrawLine( start_, end_ );
-        const geometry::Point2f middle( 0.5f * ( start_.X() + end_.X() ), 0.5f * ( start_.Y() + end_.Y() ) );
-        const QString message = tools::translate( "Règle GL", " %1m" ).arg( start_.Distance( end_ ), 0, 'f', 1 );
+        tools_.DrawLine( metricPoints_.back(), end_ );
+
+
+        const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
+        const QString message = tools::translate( "Règle GL", " %1m" ).arg( ComputeRuleDistance(), 0, 'f', 1 );
         if( !tooltip_.get() )
         {
             std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
@@ -74,13 +96,8 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
 // -----------------------------------------------------------------------------
 bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( ( event->button() & Qt::LeftButton ) && event->state() == Qt::NoButton )
-        start_ = point;
-    else if( ( event->button() & Qt::LeftButton ) && ( event->state() & Qt::LeftButton ) )
-    {
-        ruling_ = false;
-        start_.Set( 0, 0 );
-    }
+    if( ( event->button() & Qt::LeftButton ) && event->state() == Qt::ShiftButton )
+        metricPoints_.push_back( point );
     return false;
 }
 
@@ -90,17 +107,61 @@ bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f
 // -----------------------------------------------------------------------------
 bool MetricsLayer::HandleMouseMove( QMouseEvent* event, const geometry::Point2f& point )
 {
-    if( event->state() == Qt::LeftButton  )
+    if( event->state() == Qt::ShiftButton  )
     {
-        if( ! start_.IsZero() && start_.Distance( point ) > 10 * tools_.Pixels( point ) )
-            ruling_ = true;
-        if( ruling_ )
-            end_ = point;
+        multiRulingMode_ = true;
+        end_ = point;
     }
     else
     {
-        start_.Set( 0, 0 );
-        ruling_ = false;
+        metricPoints_.clear();
+        multiRulingMode_ = false;
     }
-    return ruling_;
+    return multiRulingMode_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MetricsLayer::ComputeRuleDistance
+// Created: SLG 2010-03-01
+// -----------------------------------------------------------------------------
+float MetricsLayer::ComputeRuleDistance()
+{
+    float distance = 0;
+    if( b3dComputation_ )
+    {
+        for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
+        {
+            geometry::Point2f start2d = *(it - 1 );
+            geometry::Point2f end2d = *(it ); 
+            geometry::Point3f start3d = geometry::Point3f( start2d.X(), start2d.Y(), elevation_.ElevationAt( start2d ) ) ;
+            geometry::Point3f end3d = geometry::Point3f( end2d.X(), end2d.Y(), elevation_.ElevationAt( end2d ) ); 
+            distance += start3d.Distance( end3d );
+        }
+        geometry::Point3f start3dPoint = geometry::Point3f( metricPoints_.back().X(), metricPoints_.back().Y(), elevation_.ElevationAt( metricPoints_.back() ) );
+        geometry::Point3f end3dPoint = geometry::Point3f( end_.X(), end_.Y(), elevation_.ElevationAt( end_ ) );
+        distance += start3dPoint.Distance( end3dPoint );
+        return distance;
+    }
+    else
+    {
+        for( CIT_MetricPoints it = ( metricPoints_.begin() + 1 ); it != metricPoints_.end(); ++it )
+        {
+            geometry::Point2f start = *(it - 1 );
+            geometry::Point2f end = *(it ); 
+            distance += start.Distance( end );
+        }
+        distance += metricPoints_.back().Distance( end_ );
+        return distance;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalLinesLayer::OptionChanged
+// Created: AGE 2006-11-21
+// -----------------------------------------------------------------------------
+void MetricsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "3dDistanceComputation" )
+        b3dComputation_ = value.To< bool >();
 }

@@ -71,7 +71,7 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ ); 
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
-//    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) ); // $$$$ SBO 2008-08-12: options not used
+    AddPage( tr( "General" ), *new OptionsPanel( this, controllers ) ); // $$$$ SBO 2008-08-12: options not used
 
     box = new QHBox( this );
     box->setMargin( 5 );

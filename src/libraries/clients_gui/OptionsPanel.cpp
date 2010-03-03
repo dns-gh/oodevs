@@ -31,43 +31,12 @@ OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
 {
     // Display panel
     QWidget* pDisplayPanel = new QWidget( this );
-    QGridLayout* pSubLayout2 = new QGridLayout( pDisplayPanel, 9, 2, 5 );
-    pSubLayout2->setMargin( 5 );
+    QGridLayout* pSubLayout = new QGridLayout( pDisplayPanel, 9, 2, 5 );
+    pSubLayout->setMargin( 5 );
 
-    QLabel* pL2 = new QLabel( tr( "Font size" ), pDisplayPanel );
-    pFontSpinbox_ = new QSpinBox( 1, 50, 1, pDisplayPanel );
-    pSubLayout2->addWidget( pL2, 1, 0 );
-    pSubLayout2->addWidget( pFontSpinbox_, 1, 1 );
-    pSubLayout2->setRowStretch( 9, 10 );
-    connect( pFontSpinbox_, SIGNAL( valueChanged( int ) ), this, SLOT( FontSizeChanged( int ) ) );
-
-    pDrawObjectIcons_ = new QCheckBox( tr( "Display object icons"), pDisplayPanel );
-    pSubLayout2->addWidget( pDrawObjectIcons_, 2, 0 );
-    connect( pDrawObjectIcons_, SIGNAL( toggled( bool ) ), this, SLOT( DrawObjectsChanged( bool ) ) );
-
-    pDrawHoveredInfo_ = new QCheckBox( tr( "Display state summary on mouse over" ), pDisplayPanel );
-    pSubLayout2->addWidget( pDrawHoveredInfo_, 3, 0 );
-    connect( pDrawHoveredInfo_, SIGNAL( toggled( bool ) ), this, SLOT( DrawHoveredInfoChanged( bool ) ) );
-
-    pDisplayRCOnMap_ = new QCheckBox( tr("Display reports on map"), pDisplayPanel );
-    pSubLayout2->addWidget( pDisplayRCOnMap_, 4, 0 );
-    connect( pDisplayRCOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawRCsChanged( bool ) ) );
-
-    pDisplayOnlySubscribedAgentsRC_ = new QCheckBox( tr("Display only subscribed-unit reports on map"), pDisplayPanel );
-    pSubLayout2->addWidget( pDisplayOnlySubscribedAgentsRC_, 5, 0 );
-    connect( pDisplayOnlySubscribedAgentsRC_, SIGNAL( toggled( bool ) ), this, SLOT( DrawSubscribedRCsOnlyChanged( bool ) ) );
-
-    pDisplayMessagesOnMap_ = new QCheckBox( tr("Display message"), pDisplayPanel );
-    pSubLayout2->addWidget( pDisplayMessagesOnMap_, 6, 0 );
-    connect( pDisplayMessagesOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawMessagesChanged( bool ) ) );
-
-    pDisplayTracesOnMap_ = new QCheckBox( tr("Display traces"), pDisplayPanel );
-    pSubLayout2->addWidget( pDisplayTracesOnMap_, 7, 0 );
-    connect( pDisplayTracesOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawTracesChanged( bool ) ) );
-
-    pDisplayIdentificationLevelOnMap_ = new QCheckBox( tr("Display detection reports"), pDisplayPanel );
-    pSubLayout2->addWidget( pDisplayIdentificationLevelOnMap_, 8, 0 );
-    connect( pDisplayIdentificationLevelOnMap_, SIGNAL( toggled( bool ) ), this, SLOT( DrawIdentificationsChanged( bool ) ) );
+    pCompute3dDistance_ = new QCheckBox( tr( "Display object icons"), pDisplayPanel );
+    pSubLayout->addWidget( pCompute3dDistance_, 2, 0 );
+    connect( pCompute3dDistance_, SIGNAL( toggled( bool ) ), this, SLOT( Change3dDistanceOption( bool ) ) );
 
     controllers_.Register( *this );
 }
@@ -87,92 +56,15 @@ OptionsPanel::~OptionsPanel()
 // -----------------------------------------------------------------------------
 void OptionsPanel::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    if( name == "FontSize" )
-        pFontSpinbox_->setValue( value.To< int >() );
-    else if( name == "DrawObjectsIcons" )
-        pDrawObjectIcons_->setChecked( value.To< bool >() );
-    else if( name == "DrawHoveredInfos" )
-        pDrawHoveredInfo_->setChecked( value.To< bool >() );
-    else if( name == "DrawRCs" )
-        pDisplayRCOnMap_->setChecked( value.To< bool >() );
-    else if( name == "DrawSubscribedRCsOnly" )
-        pDisplayOnlySubscribedAgentsRC_->setChecked( value.To< bool >() );
-    else if( name == "DrawMessages" )
-        pDisplayMessagesOnMap_->setChecked( value.To< bool >() );
-    else if( name == "DrawTraces" )
-        pDisplayTracesOnMap_->setChecked( value.To< bool >() );
-    else if( name == "DrawIdentifications" )
-        pDisplayIdentificationLevelOnMap_->setChecked( value.To< bool >() );
+    if( name == "3dDistanceComputation" )
+        pCompute3dDistance_->setChecked( value.To< bool >() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: OptionsPanel::FontSizeChanged
-// Created: AGE 2006-02-27
+// Name: OptionsPanel::Change3dDistanceOption
+// Created: SLG 2010-03-01
 // -----------------------------------------------------------------------------
-void OptionsPanel::FontSizeChanged( int value )
+void OptionsPanel::Change3dDistanceOption( bool value )
 {
-    options_.Change( "FontSize", value ); // $$$$ SBO 2008-08-12: not used
+    options_.Change( "3dDistanceComputation", value );
 }
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPanel::DrawObjectsChanged
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::DrawObjectsChanged( bool value )
-{
-    options_.Change( "DrawObjectsIcons", value ); // $$$$ SBO 2008-08-12: not used
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPanel::DrawHoveredInfoChanged
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::DrawHoveredInfoChanged( bool value )
-{
-    options_.Change( "DrawHoveredInfos", value ); // $$$$ SBO 2008-08-12: not used
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPanel::DrawRCsChanged
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::DrawRCsChanged( bool value )
-{
-    options_.Change( "DrawRCs", value ); // $$$$ SBO 2008-08-12: not used
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPanel::DrawSubscribedRCsOnlyChanged
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::DrawSubscribedRCsOnlyChanged( bool value )
-{
-    options_.Change( "DrawSubscribedRCsOnly", value ); // $$$$ SBO 2008-08-12: not used
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPanel::DrawMessagesChanged
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::DrawMessagesChanged( bool value )
-{
-    options_.Change( "DrawMessages", value ); // $$$$ SBO 2008-08-12: not used
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPanel::DrawTracesChanged
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::DrawTracesChanged( bool value )
-{
-    options_.Change( "DrawTraces", value ); // $$$$ SBO 2008-08-12: not used
-}
-
-// -----------------------------------------------------------------------------
-// Name: OptionsPanel::DrawIdentificationsChanged
-// Created: AGE 2006-02-27
-// -----------------------------------------------------------------------------
-void OptionsPanel::DrawIdentificationsChanged( bool value )
-{
-    options_.Change( "DrawIdentifications", value ); // $$$$ SBO 2008-08-12: not used
-}   

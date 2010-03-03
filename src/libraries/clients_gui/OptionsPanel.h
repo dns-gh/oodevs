@@ -57,14 +57,9 @@ private:
 private slots:
     //! @name Helpers
     //@{
-    void FontSizeChanged( int );
-    void DrawObjectsChanged( bool );
-    void DrawHoveredInfoChanged( bool );
-    void DrawRCsChanged( bool );
-    void DrawSubscribedRCsOnlyChanged( bool );
-    void DrawMessagesChanged( bool );
-    void DrawTracesChanged( bool );
-    void DrawIdentificationsChanged( bool );
+
+    void Change3dDistanceOption( bool );
+
     //@}
 
 private:
@@ -73,14 +68,8 @@ private:
     kernel::Controllers& controllers_;
     kernel::Options&     options_;
 
-    QSpinBox* pFontSpinbox_;
-    QCheckBox* pDrawObjectIcons_;
-    QCheckBox* pDrawHoveredInfo_;
-    QCheckBox* pDisplayRCOnMap_;
-    QCheckBox* pDisplayMessagesOnMap_;
-    QCheckBox* pDisplayTracesOnMap_;
-    QCheckBox* pDisplayIdentificationLevelOnMap_ ;
-    QCheckBox* pDisplayOnlySubscribedAgentsRC_ ;
+    QCheckBox* pCompute3dDistance_;
+   
     //@}
 };
 

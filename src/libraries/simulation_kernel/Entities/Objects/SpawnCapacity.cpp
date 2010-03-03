@@ -76,7 +76,9 @@ template< typename Archive >
 void SpawnCapacity::serialize( Archive& file, const uint )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-        & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+        & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
+        & rActionRange_
+        & childType_;
 }
 
 // -----------------------------------------------------------------------------

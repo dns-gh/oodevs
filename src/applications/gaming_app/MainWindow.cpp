@@ -385,7 +385,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_, *glProxy_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
-    Layer_ABC& metrics              = *new MetricsLayer( *glProxy_ );
+    Layer_ABC& metrics              = *new MetricsLayer( controllers_, staticModel_.detection_, *glProxy_ );
     Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligenceFactory_ );
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
     Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, publisher );
