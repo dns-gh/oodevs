@@ -58,7 +58,7 @@ end
     local _continue = true
 do
             local pion = x
-            if( pion:GetType() == "Stations_Horizon" and F_Pion_GeteEtatDestruction( pion ) == "eEtatDestruction_None" ) then
+            if( pion:GetType() == "Stations_Horizon" and F_Pion_GeteEtatDestruction( pion ) == eEtatDestruction_None ) then
                 DIA_PushFront( selTemp, pion )
             end
 
