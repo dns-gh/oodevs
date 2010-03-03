@@ -85,7 +85,7 @@ node "BEH_Mission_Automate_GEN_CDT_OuvrirAxesProgressionGererRenforcement"
 ]]--[[// Mettre à jour la liste des objets traités --> association à un 
 ]]--[[// T_ConnaissanceObjet_local
 ]]--[[//---------------------------------------------------------------------
-]]        local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( SectionGenie )
+]]        local listePionsGenie = S_ObtenirPionsOperationnelsFiltre( "SectionGenie" )
         for _,pion in pairs( listePionsGenie or {} ) do
         local _continue = true
 do

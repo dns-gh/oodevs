@@ -296,14 +296,12 @@ elseif switch_1 == "SectionInfanterie"
 ]]--[[//		si le pion n'a pas de mission en cours
 ]]--[[// 		si le pion a la mission suivre						
 ]]
-                    if _continue then
-                    if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
-                        do
-                            Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
-                        end
+                if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
+                    do
+                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
                     end
-
                 end
+
             end
 
         end
@@ -356,14 +354,12 @@ elseif switch_1 == "SectionInfanterie"
 ]]--[[//		si le pion n'a pas de mission en cours
 ]]--[[// 		si le pion a la mission suivre						
 ]]
-                    if _continue then
-                    if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
-                        do
-                            Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
-                        end
+                if( ( bInconnue and DEC_GetMission( pion ) == 0 or bInconnue and DEC_GetMission( pion ) == nil ) and F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon_Second ) then
+                    do
+                        Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pion, DEC_Automate_PionPC(), } )
                     end
-
                 end
+
             end
 
         end

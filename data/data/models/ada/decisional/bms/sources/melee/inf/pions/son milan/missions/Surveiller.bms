@@ -80,9 +80,7 @@ elseif switch_1 == "Rep_OrderConduite_Decrocher" then
                         end
                     end
 
-                    if _continue then
-                    Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
-                end
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
 
         end

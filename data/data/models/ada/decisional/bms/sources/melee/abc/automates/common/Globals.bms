@@ -338,9 +338,9 @@ end
 
 function S_Dispositif_Automate_ABC_PionsPourArmerPointControle( )
     local _returnValue = {}
-    local listePionPatrouille = S_ObtenirPionsOperationnelsFiltre( Patrouille_EI )
-    local listePionPatrouilleMilan = S_ObtenirPionsOperationnelsFiltre( Patrouille_EI_Milan )
-    local listePionPAD = S_ObtenirPionsOperationnelsFiltre( Peloton_AD )
+    local listePionPatrouille = S_ObtenirPionsOperationnelsFiltre( "Patrouille_EI" )
+    local listePionPatrouilleMilan = S_ObtenirPionsOperationnelsFiltre( "Patrouille_EI_Milan" )
+    local listePionPAD = S_ObtenirPionsOperationnelsFiltre( "Peloton_AD" )
     local selTemp = {}
     for _,pion in pairs( listePionPatrouille or {} ) do
     local _continue = true
