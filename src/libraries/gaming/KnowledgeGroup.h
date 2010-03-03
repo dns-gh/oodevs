@@ -20,6 +20,11 @@ namespace kernel
 {
     class KnowledgeGroupType;
 }
+
+namespace MsgsSimToClient
+{
+    class MsgKnowledgeGroupUpdate;
+}
 // LTO end
 
 // =============================================================================

@@ -23,6 +23,7 @@ KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, ke
     : controllers_( controllers )
     , knowledgeGroupFactory_( knowledgeGroupFactory ) // LTO
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

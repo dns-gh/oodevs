@@ -10,7 +10,6 @@
 #include "clients_kernel_pch.h"
 #include "KnowledgeGroup_ABC.h"
 #include "ActionController.h"
-#include "protocol/Simulation.h"
 
 using namespace kernel;
 
@@ -32,15 +31,6 @@ KnowledgeGroup_ABC::KnowledgeGroup_ABC()
 KnowledgeGroup_ABC::~KnowledgeGroup_ABC()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup_ABC::DoUpdate
-// Created: SYD 2009-12-26
-// -----------------------------------------------------------------------------
-void KnowledgeGroup_ABC::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& )
-{
-    throw std::exception( __FUNCTION__ " not implemented" ); 
 }
 
 // -----------------------------------------------------------------------------

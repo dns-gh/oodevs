@@ -11,18 +11,10 @@
 #define __KnowledgeGroup_ABC_h_
 
 #include "Entity_ABC.h"
-#include "tools/Resolver.h"
-#include "clients_kernel/Updatable_ABC.h"
-
-namespace MsgsSimToClient
-{
-    class MsgKnowledgeGroupUpdate;
-}
 
 namespace kernel
 {
     class Automat_ABC;
-    class Team_ABC;
 
 // =============================================================================
 /** @class  KnowledgeGroup_ABC
@@ -31,7 +23,6 @@ namespace kernel
 // Created: SBO 2006-08-09
 // =============================================================================
 class KnowledgeGroup_ABC : public Entity_ABC
-                         , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate >
 {
 public:
     //! @name Static
@@ -55,7 +46,6 @@ public:
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;
     // LTO begin
-    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& );
     virtual bool IsActivated() const = 0;
     virtual void Register( KnowledgeGroup_ABC& knowledgeGroup ) = 0;
     virtual void Remove( KnowledgeGroup_ABC& knowledgeGroup ) = 0;

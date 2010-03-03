@@ -31,6 +31,7 @@ KnowledgeGroupFactory::KnowledgeGroupFactory( kernel::Controllers& controllers, 
     , idManager_( idManager )
     , staticModel_( staticModel )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -89,25 +90,3 @@ kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::Create( xml::xistream& xis, k
     result->Polish();
     return result;
 }
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupFactory::FindKnowledgeGroup
-// Created: AGE 2006-02-15
-// -----------------------------------------------------------------------------
-//kernel::KnowledgeGroup_ABC* KnowledgeGroupFactory::FindKnowledgeGroup( const unsigned long& id ) const
-//{
-//    for( tools::Resolver< Team_ABC >::CIT_Elements it = tools::Resolver< Team_ABC >::elements_.begin(); it != tools::Resolver< Team_ABC >::elements_.end(); ++it )
-//    {
-//        Team_ABC& team = *it->second;
-//        const kernel::CommunicationHierarchies& hierarchies = team.Get< kernel::CommunicationHierarchies >();
-//        tools::Iterator< const kernel::Entity_ABC& > subIt = hierarchies.CreateSubordinateIterator();
-//        while( subIt.HasMoreElements() )
-//        {
-//            const kernel::Entity_ABC& kg = subIt.NextElement();
-//            if( kg.GetId() == id )
-//                // $$$$ AGE 2006-10-09: 
-//                return const_cast< KnowledgeGroup_ABC* >( static_cast< const KnowledgeGroup_ABC* >( &kg ) );
-//        };
-//    }
-//    return 0;
-//}
