@@ -155,14 +155,8 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     SEND_ASN_ATTRIBUTE( message() ,  nature_pc, bPC_ );
 
     if( optionals_.perception_par_compagniePresent )
-    {
         for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
-        {
-            MsgsSimToClient::AutomatPerception& perception = *message().mutable_perception_par_compagnie()->add_elem();
-            perception.set_oid_compagnie( automatePerceptions_[ i ].oid_compagnie() );
-            perception.set_identification_level( MsgsSimToClient::EnumUnitIdentificationLevel::signale );
-        }
-    }
+            *message().mutable_perception_par_compagnie()->add_elem() = automatePerceptions_[ i ];
 
     SEND_ASN_ATTRIBUTE( message() ,  rendu                    , bSurrendered_          );
     SEND_ASN_ATTRIBUTE( message() ,  prisonnier               , bPrisoner_             );

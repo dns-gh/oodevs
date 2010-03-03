@@ -421,9 +421,9 @@ void DEC_Knowledge_Agent::WriteMsgPerceptionSources( MsgsSimToClient::MsgUnitKno
         {
             MsgsSimToClient::AutomatPerception& perception = *asnMsg.mutable_perception_par_compagnie()->add_elem();
             perception.set_oid_compagnie( it->first->GetID() );
-            MsgsSimToClient::EnumUnitIdentificationLevel val;
-            it->second->Serialize( val );
-            perception.set_identification_level( val );
+            MsgsSimToClient::EnumUnitIdentificationLevel level;
+            it->second->Serialize( level );
+            perception.set_identification_level( level );
         }
 }
 
@@ -455,12 +455,14 @@ void DEC_Knowledge_Agent::SendChangedState()
     {        
         MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().identification_level() );
         pCurrentPerceptionLevel_->Serialize( level );
+        asnMsg().set_identification_level( level );
     }
 
     if( bMaxPerceptionLevelUpdated_ )
     {
         MsgsSimToClient::EnumUnitIdentificationLevel level( asnMsg().max_identification_level() );
         pMaxPerceptionLevel_->Serialize( level );
+        asnMsg().set_max_identification_level( level );
     }
 
     if( bPerceptionPerAutomateUpdated )

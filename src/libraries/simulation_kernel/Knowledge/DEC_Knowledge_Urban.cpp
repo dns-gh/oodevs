@@ -297,6 +297,7 @@ void DEC_Knowledge_Urban::SendChangedState()
     {
         MsgsSimToClient::EnumUnitIdentificationLevel level( message().identification_level() );
         pCurrentPerceptionLevel_->Serialize( level );
+        message().set_identification_level( level );
         bMustSend = true;
     }
 
@@ -309,7 +310,7 @@ void DEC_Knowledge_Urban::SendChangedState()
 
     if( perceptionLevelPerAutomateMap_.size() == 0 && bLastPerceived_ )
     {
-        message().set_perceived( 0 );
+        message().set_perceived( false );
         bLastPerceived_ = false;
         bMustSend = true;
     }
