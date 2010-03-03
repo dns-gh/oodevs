@@ -72,7 +72,12 @@
           </return>
         </method>
         <method name="takeUpPosition">
-          <description>__INTEGRATION</description>
+            <description>__INTEGRATION</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
         </method>
         <method name="occupationLevel">
           <description>__INTEGRATION</description>
