@@ -1516,7 +1516,7 @@ Voulez-vous le supprimer?</translation>
     <name>gui::OptionsPanel</name>
     <message>
         <source>Font size</source>
-        <translation>Taille des polices</translation>
+        <translation type="obsolete">Taille des polices</translation>
     </message>
     <message>
         <source>Display object icons</source>
@@ -1524,27 +1524,27 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Display state summary on mouse over</source>
-        <translation>Afficher un résumé sous le curseur</translation>
+        <translation type="obsolete">Afficher un résumé sous le curseur</translation>
     </message>
     <message>
         <source>Display reports on map</source>
-        <translation>Afficher les rapports sur la carte</translation>
+        <translation type="obsolete">Afficher les rapports sur la carte</translation>
     </message>
     <message>
         <source>Display only subscribed-unit reports on map</source>
-        <translation>Afficher uniquement les rapports des unités souscrites</translation>
+        <translation type="obsolete">Afficher uniquement les rapports des unités souscrites</translation>
     </message>
     <message>
         <source>Display message</source>
-        <translation>Afficher les messages</translation>
+        <translation type="obsolete">Afficher les messages</translation>
     </message>
     <message>
         <source>Display traces</source>
-        <translation>Afficher les traces</translation>
+        <translation type="obsolete">Afficher les traces</translation>
     </message>
     <message>
         <source>Display detection reports</source>
-        <translation>Afficher les rapports de détection</translation>
+        <translation type="obsolete">Afficher les rapports de détection</translation>
     </message>
 </context>
 <context>
@@ -1574,7 +1574,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="obsolete">Général</translation>
+        <translation type="unfinished">Général</translation>
     </message>
     <message>
         <source>Ok</source>

@@ -851,35 +851,7 @@ Do you want to remove it?</source>
 <context>
     <name>gui::OptionsPanel</name>
     <message>
-        <source>Font size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Display object icons</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display state summary on mouse over</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display reports on map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display only subscribed-unit reports on map</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display traces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Display detection reports</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -918,6 +890,10 @@ Do you want to remove it?</source>
     </message>
     <message>
         <source>2D/Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
