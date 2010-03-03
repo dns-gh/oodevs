@@ -93,7 +93,7 @@ do
             if( pion:GetType() == "SectionGenie" ) then
                 do
                     local section = pion
-                    section:SetobjMisEnCours_( nil )
+                    section:SetobjMisEnCours_( 0 )
                 end
             end
 
