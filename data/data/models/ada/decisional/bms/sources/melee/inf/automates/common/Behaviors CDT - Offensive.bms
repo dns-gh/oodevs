@@ -268,7 +268,7 @@ if( DEC_ConnaissanceAgent_EstValide( self._namedParams.ksEniManoeuvre ) ) then
         --[[// Initialise la couverture
 ]]DEC_Trace( "Conduite Assaut : Mission Couvrir " .. DEC_GetSzName( pionCouv ) )
         --[[// Objectif		
-]]Activate( self.activations.BEH_Mission_Automate_INF_AssignerA_Couvrir, 1, { ePhase_CDT, pionCouv, self._namedParams.pPion, self.misPion:GetpointObjectif_(), } )
+]]Activate( self.activations.BEH_Mission_Automate_INF_AssignerA_Couvrir, 1, { ePhase_CDT, pionCouv, self._namedParams.pPion, self.misPion.pointObjectif_, } )
     end,
 
     destroy = function( self )
