@@ -285,7 +285,7 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup() const
     {
         // army is the parent
         message().set_oid_parent( 0 );
-}
+    }
     message().set_type( GetType().GetName().c_str() );
     message().set_enabled( IsEnabled() );
     message.Send( NET_Publisher_ABC::Publisher() ); 
@@ -544,10 +544,11 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message )
 {
-    if ( message.has_enabled() ) {
+    if ( message.has_enabled() )
+    {
         isActivated_ = message.enabled();
         return true;
-}
+    }
     return false;
 }
 
@@ -575,7 +576,7 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsCli
             pParent->UnregisterKnowledgeGroup( *this );
             pNewParent->RegisterKnowledgeGroup( *this );
             SetParent( pNewParent );
-            UpdateKnowledgeGroup();
+            return true;
         }
         else if( pParent == NULL )
         {
@@ -583,7 +584,7 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsCli
             GetArmy().UnregisterKnowledgeGroup( *this );
             pNewParent->RegisterKnowledgeGroup( *this );
             SetParent( pNewParent );
-            UpdateKnowledgeGroup();
+            return true;
         }
     }
     else
@@ -595,9 +596,10 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsCli
             pParent->UnregisterKnowledgeGroup( *this );
             GetArmy().RegisterKnowledgeGroup( *this );
             SetParent( NULL );
-            UpdateKnowledgeGroup();
+            return true;
         }
     }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

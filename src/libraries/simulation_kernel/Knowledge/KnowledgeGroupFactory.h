@@ -25,7 +25,7 @@ class KnowledgeGroupFactory : public KnowledgeGroupFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit KnowledgeGroupFactory();
+             KnowledgeGroupFactory();
     virtual ~KnowledgeGroupFactory();
     //@}
 

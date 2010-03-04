@@ -15,6 +15,8 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 
 class MIL_Army;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 namespace xml
 {
@@ -41,9 +43,12 @@ public:
     virtual MIL_KnowledgeGroup& Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent = 0 ) = 0;
     //@}
 
-    //! @name CheckPoint
+    //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive& file, const uint );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    
+    void load( MIL_CheckPointInArchive&, const uint );
+    void save( MIL_CheckPointOutArchive&, const uint ) const;
     //@}
 
 protected:
@@ -53,14 +58,13 @@ protected:
     //@}
 };
 
-// -----------------------------------------------------------------------------
-// Name: template< typename Archive > void KnowledgeGroupFactory_ABC::serialize
-// Created: MGD 2009-10-24
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void KnowledgeGroupFactory_ABC::serialize( Archive& file, const uint )
-{
-    file & elements_;
+// BOOST_SERIALIZATION_ASSUME_ABSTRACT should be used for this
+// but it seems to be buggy : inherits boost::is_abstract<T> instead of boost::true_type
+namespace boost {
+namespace serialization {
+    template<>
+    struct is_abstract<const KnowledgeGroupFactory_ABC> : boost::true_type { } ;
+} // namespace serialization
 }
 
 #endif // __KnowledgeGroupFactory_ABC_h_

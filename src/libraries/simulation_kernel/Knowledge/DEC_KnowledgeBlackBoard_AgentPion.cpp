@@ -118,6 +118,7 @@ void DEC_KnowledgeBlackBoard_AgentPion::serialize( Archive& archive, const unsig
             & pKnowledgeObjectPerceptionContainer_     
             & pKnowledgePopulationPerceptionContainer_ 
             & pKnowledgePopulationCollisionContainer_  
+            & pKnowledgeUrbanPerceptionContainer_
             & pKsObjectInteraction_                    
             & pKsPopulationInteraction_                
             & pKsFire_                                 

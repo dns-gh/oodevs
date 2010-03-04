@@ -17,16 +17,18 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( KnowledgeGroupFactory )
 
+// LTO begin
 template< typename Archive >
-void save_construct_data( Archive& archive, const KnowledgeGroupFactory* /*factory*/, const unsigned int /*version*/ )
+void save_construct_data( Archive& /*archive*/, const KnowledgeGroupFactory* /*factory*/, const unsigned int /*version*/ )
 {
-    //TODO
+    // NOTHING
 }
 template< typename Archive >
-void load_construct_data( Archive& /*archive*/, KnowledgeGroupFactory* /*factory*/, const unsigned int /*version*/ )
+void load_construct_data( Archive& /*archive*/, KnowledgeGroupFactory* factory, const unsigned int /*version*/ )
 {
-    //TODO
+    ::new( factory )KnowledgeGroupFactory(); 
 }
+// LTO end
 
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroupFactory constructor
@@ -73,4 +75,35 @@ void KnowledgeGroupFactory::load( MIL_CheckPointInArchive& file, const unsigned 
 void KnowledgeGroupFactory::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object < KnowledgeGroupFactory_ABC >( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory_ABC::load
+// Created: LDC 2010-03-04
+// -----------------------------------------------------------------------------
+void KnowledgeGroupFactory_ABC::load( MIL_CheckPointInArchive& file, const uint )
+{
+    unsigned int nNbr;
+    file >> nNbr;
+    while ( nNbr-- )
+    {
+        unsigned long index;
+        file >> index;
+        file >> elements_[ index ];
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory_ABC::save
+// Created: LDC 2010-03-04
+// -----------------------------------------------------------------------------
+void KnowledgeGroupFactory_ABC::save( MIL_CheckPointOutArchive& file, const uint ) const
+{
+    unsigned int size = elements_.size();
+    file << size;
+    for ( std::map< unsigned long, MIL_KnowledgeGroup* >::const_iterator it = elements_.begin(); it != elements_.end(); ++it )
+    {
+        file << it->first
+             << it->second;
+    }
 }

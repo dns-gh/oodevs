@@ -42,7 +42,6 @@ public:
     virtual std::string GetCheckpointDirectory( const std::string& checkpoint ) const;
 
     virtual bool HasCheckpoint() const;
-    virtual std::string GetCheckpointName() const;
     virtual std::string GetCheckpointDirectory() const;
 
     virtual void Parse( int argc, char** argv );

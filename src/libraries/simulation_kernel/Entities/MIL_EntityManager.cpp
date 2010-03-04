@@ -1134,8 +1134,11 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     AutomateFactory_ABC * automateFactory;
     AgentFactory_ABC * agentFactory;
     PopulationFactory_ABC * populationFactory;
+    KnowledgeGroupFactory_ABC * knowledgeGroupFactory; // LTO
     file //>> effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         >> armyFactory
+         >> knowledgeGroupFactory; // LTO
+    knowledgeGroupFactory_.reset( knowledgeGroupFactory );
+    file >> armyFactory
          >> formationFactory//@TODO MGD serialize
          >> agentFactory
          >> automateFactory
@@ -1172,9 +1175,11 @@ void MIL_EntityManager::save( MIL_CheckPointOutArchive& file, const unsigned int
     const AgentFactory_ABC * const tempAgentFactory = agentFactory_.get();
     const AutomateFactory_ABC * const tempAutomateFactory = automateFactory_.get();
     const PopulationFactory_ABC * const populationFactory = populationFactory_.get();
+    const KnowledgeGroupFactory_ABC* const knowledgeGroupFactory = knowledgeGroupFactory_.get();
 
     file //<< effectManager_  // Effets liés aux actions qui ne sont pas sauvegardés
-         << tempArmy
+         << knowledgeGroupFactory; // LTO
+    file << tempArmy
          << tempFormationFactory
          << tempAgentFactory
          << tempAutomateFactory

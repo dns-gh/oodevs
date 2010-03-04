@@ -117,15 +117,6 @@ bool SessionConfig::HasCheckpoint() const
 {
     return hasCheckPoint_;
 }
-    
-// -----------------------------------------------------------------------------
-// Name: SessionConfig::GetCheckpointName
-// Created: AGE 2008-03-14
-// -----------------------------------------------------------------------------
-std::string SessionConfig::GetCheckpointName() const
-{
-    return strCheckPointName_;
-}
 
 // -----------------------------------------------------------------------------
 // Name: SessionConfig::GetCheckpointDirectory
