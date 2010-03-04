@@ -27,6 +27,7 @@ class MIL_ObjectKnowledgeListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_ObjectKnowledgeListParameter();
              MIL_ObjectKnowledgeListParameter( const Common::MsgObjectKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver );
     explicit MIL_ObjectKnowledgeListParameter( const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& knowledgeObjectList );
     virtual ~MIL_ObjectKnowledgeListParameter();
@@ -41,6 +42,11 @@ public:
     //@{
     virtual bool ToObjectKnowledgeList( Common::MsgObjectKnowledgeList& asn ) const;
     virtual bool ToObjectKnowledgeList( std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& ) const;
+    //@}
+
+    //! @name Modifiers
+    //@{
+    virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject );
     //@}
 
 private:

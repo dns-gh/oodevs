@@ -14,6 +14,7 @@
 #include <boost/shared_ptr.hpp>
 
 class DEC_KnowledgeResolver_ABC;
+class DEC_Knowledge_Object;
 class MIL_FragOrderType;
 class MIL_KnowledgeGroup;
 class MIL_MissionParameter_ABC;
@@ -61,6 +62,7 @@ public:
             void           Accept               ( MIL_IntelligenceOrdersVisitor_ABC& visitor ) const;
             void           SetParameter         ( const std::string& name, boost::shared_ptr< MIL_MissionParameter_ABC > param );
             void           AppendToParameter    ( const std::string& name, boost::shared_ptr< TER_Localisation > pLocation );
+            void           AppendToParameter    ( const std::string& name, boost::shared_ptr< DEC_Knowledge_Object > pObjectKnowledge );
     //@}
 
     //! @name Parameters Management

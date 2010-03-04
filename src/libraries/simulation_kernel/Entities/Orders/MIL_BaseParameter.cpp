@@ -585,3 +585,12 @@ void MIL_BaseParameter::Append( boost::shared_ptr< TER_Localisation > pLocation 
 {
     throw std::runtime_error( "Trying to append a location. Incompatible types." );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::Append
+// Created: JSR 2010-03-04
+// -----------------------------------------------------------------------------
+void MIL_BaseParameter::Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )
+{
+    throw std::runtime_error( "Trying to append a knowledge object. Incompatible types." );
+}

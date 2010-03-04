@@ -16,6 +16,15 @@
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectKnowledgeListParameter constructor
+// Created: JSR 2010-03-04
+// -----------------------------------------------------------------------------
+MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectKnowledgeListParameter constructor
 // Created: LDC 2009-05-26
 // -----------------------------------------------------------------------------
 MIL_ObjectKnowledgeListParameter::MIL_ObjectKnowledgeListParameter( const Common::MsgObjectKnowledgeList& asn, const DEC_KnowledgeResolver_ABC& resolver )
@@ -80,4 +89,13 @@ bool MIL_ObjectKnowledgeListParameter::ToObjectKnowledgeList( std::vector< boost
     for( unsigned int i = 0; i < knowledgeObjectList_.size(); ++i )
         value[i] = knowledgeObjectList_[i];
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectKnowledgeListParameter::Append
+// Created: JSR 2010-03-04
+// -----------------------------------------------------------------------------
+void MIL_ObjectKnowledgeListParameter::Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )
+{
+    knowledgeObjectList_.push_back( pKnowledgeObject );
 }

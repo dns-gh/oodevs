@@ -106,6 +106,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     brain.RegisterFunction( "DEC_Copie_Localisation_Mission",                       &DEC_DIAFunctions::CopyLocalisationMission );
     brain.RegisterFunction( "DEC_Copie_ListeLocalisations_Mission",                 &DEC_DIAFunctions::CopyLocalisationListMission );
     brain.RegisterFunction( "DEC_Copie_LocalisationDansListeLocalisations_Mission", &DEC_DIAFunctions::CopyLocalisationToLocationListMission );
+    brain.RegisterFunction( "DEC_UserTypeList_PushBack_Mission",                    &DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission );
 
     // User type lists manipulation
     brain.RegisterFunction( "DEC_ListePoints_GetAt",     &DEC_DIAFunctions::ListPoint_GetAt );

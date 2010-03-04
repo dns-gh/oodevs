@@ -157,6 +157,7 @@ public:
     virtual bool ToUrbanBlock( boost::shared_ptr< DEC_Knowledge_Urban >& ) const = 0;
 
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation ) = 0;
+    virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject ) = 0;
     //@}
 };
 

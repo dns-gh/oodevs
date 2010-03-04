@@ -163,6 +163,8 @@ public:
     { throw; }
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation )
     { throw; }
+    virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )
+    { throw; }
     //@}
     
 private:

@@ -18,6 +18,7 @@
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_MissionParameterFactory.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include <iostream>
 
 class DEC_Path_ABC;
@@ -151,6 +152,16 @@ void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisat
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( pLocation );
     pMission->SetParameter( parameter, pParameter );
 }    
+
+// -----------------------------------------------------------------------------
+// Name: DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission
+// Created: JSR 2010-03-04
+// -----------------------------------------------------------------------------
+void DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource )
+{
+    assert( pKnowledgeObjectSource );
+    pMission->AppendToParameter( parameter, pKnowledgeObjectSource );
+}
 
 // =============================================================================
 // TIME MANAGEMENT

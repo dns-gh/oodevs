@@ -14,6 +14,7 @@
 #include "MIL_MissionParameterVisitor_ABC.h"
 #include "MIL_NullParameter.h"
 #include "MIL_PolygonListParameter.h"
+#include "MIL_ObjectKnowledgeListParameter.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
 #include "protocol/protocol.h"
 
@@ -202,6 +203,22 @@ void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_
         parameters_[index] = param;
     }
     parameters_[index]->Append( pLocation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::AppendToParameter
+// Created: JSR 2010-03-04
+// -----------------------------------------------------------------------------
+void MIL_Mission_ABC::AppendToParameter( const std::string& name, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject )
+{
+    unsigned int index = type_.GetParameterIndex( name );
+    if( parameters_.size() <= index || !parameters_[index] )
+    {
+        EnsureParameters( parameters_, index );
+        boost::shared_ptr< MIL_MissionParameter_ABC > param( new MIL_ObjectKnowledgeListParameter() );
+        parameters_[index] = param;
+    }
+    parameters_[index]->Append( pKnowledgeObject );
 }
 
 // -----------------------------------------------------------------------------

@@ -15,6 +15,7 @@
 #include "MIL.h"
 class MIL_Mission_ABC;
 class DEC_Path_ABC;
+class DEC_Knowledge_Object;
 
 //=============================================================================
 // Created: NLD 2002-12-24
@@ -49,6 +50,7 @@ public:
     static void CopyLocalisationMission       ( boost::shared_ptr< TER_Localisation > pLocation, MIL_Mission_ABC* pMission, const std::string& parameter );
     static void CopyLocalisationListMission   ( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, MIL_Mission_ABC* pMission, const std::string& parameter );
     static void CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, MIL_Mission_ABC* pMission, const std::string& parameter );
+    static void CopyKnowledgeObjectToKnowledgeObjectListMission( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource );
 };
 
 #endif // __DEC_DIAFunctions_h_
