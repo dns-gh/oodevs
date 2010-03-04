@@ -52,9 +52,6 @@ namespace
         "<resource-networks/>"
         "<underground-networks/>"
         "</urban>" );
-
-    std::auto_ptr< urban::StaticModel > staticModel( new urban::StaticModel() );
-    std::auto_ptr< urban::Model > model( new urban::Model( *staticModel ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -63,6 +60,8 @@ namespace
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
 {
+    std::auto_ptr< urban::StaticModel > staticModel( new urban::StaticModel() );
+    std::auto_ptr< urban::Model > model( new urban::Model( *staticModel ) );
     model->Load( flux );
 
     FixturePion pion;
