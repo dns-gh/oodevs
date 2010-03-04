@@ -237,7 +237,35 @@ node "BEH_Pion_ASS_Installer_ZoneImplantationCanon"
         self.eActionObj2 = self.eActionObj2 or eActionEnCours
         if( ModuleBegins() ) then
             do
-                S_Geometrie_CreerPositionTir_Canon( self._namedParams.ptInstallation, 750, self.locInstallation_1, self.locInstallation_2 )
+                local rFloat = 750
+                local lstObstacles = S_Obj_ListeObstacle( self._namedParams.ptInstallation, rFloat + 100 )
+                local repObj = nil
+                local dirPos = nil
+                local ptPos = nil
+                local mission = DEC_GetMission( myself )
+                --[[// Point d'installation 1		
+]]--[[// ---------------------------------------------------------------------
+]]self.locInstallation_1 = nil
+                local directionDanger = DEC_GetDirectionDanger( mission )
+                dirPos = DEC_Geometrie_CreerDirectionPerpendiculaire( directionDanger, true )
+                ptPos = DEC_Geometrie_PositionTranslateDir( self._namedParams.ptInstallation, dirPos, rFloat )
+                --[[// Chercher un position valide ?
+]]repObj = S_Obj_ObtenirObjetProcheDePosition( ptPos, lstObstacles, rFloat + 100 )
+                if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
+                    self.locInstallation_1 = DEC_Geometrie_ConvertirPointEnLocalisation( ptPos )
+                end
+
+                --[[// Point d'installation 2
+]]--[[// ---------------------------------------------------------------------
+]]self.locInstallation_2 = nil
+                dirPos = DEC_Geometrie_CreerDirectionPerpendiculaire( directionDanger, false )
+                ptPos = DEC_Geometrie_PositionTranslateDir( self._namedParams.ptInstallation, dirPos, rFloat )
+                --[[// Chercher un position valide ?
+]]repObj = S_Obj_ObtenirObjetProcheDePosition( ptPos, lstObstacles, rFloat + 100 )
+                if( not DEC_ConnaissanceObjet_EstValide( repObj ) ) then
+                    self.locInstallation_2 = DEC_Geometrie_ConvertirPointEnLocalisation( ptPos )
+                end
+
             end
         end
 
