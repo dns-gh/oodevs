@@ -3197,6 +3197,10 @@ Make sure that the file is not write-protected.</source>
         <source>Counter battery radar</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>UrbanBlock material modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
@@ -4158,6 +4162,34 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>scrambling</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Concrete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Metal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cob</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prefab</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vegetation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

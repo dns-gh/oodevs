@@ -95,6 +95,18 @@ enum E_VisionObject
     eNbrVisionObjects
 };
 
+enum E_VisionUrbanBlockMaterial
+{
+    eVisionWood = 0,
+    eVisionConcrete,
+    eVisionBrick,
+    eVisionMetal,
+    eVisionCob,
+    eVisionPrefab,
+    eVisionVegetation,
+    eNbrVisionUrbanBlocks
+};
+
 
 enum E_KeyPoint
 {

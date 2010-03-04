@@ -201,6 +201,43 @@ public:
     typedef ADN_Type_Vector_ABC<ModificatorEnvironmentInfos>  T_ModificatorEnvironmentInfos_Vector;
     typedef T_ModificatorEnvironmentInfos_Vector::iterator    IT_ModificatorEnvironmentInfos_Vector;
 
+    //*****************************************************************************
+    class ModificatorUrbanBlockInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( ModificatorUrbanBlockInfos )
+
+    public:
+        ModificatorUrbanBlockInfos(const E_VisionUrbanBlockMaterial& e);
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        E_VisionUrbanBlockMaterial      eType_;
+        ADN_Type_Double     rCoeff_;
+
+    public:
+        class Cmp : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
+        {
+        public:
+            Cmp(const E_VisionUrbanBlockMaterial& val) : val_(val) {}
+            ~Cmp() {}
+
+            bool operator()( ModificatorUrbanBlockInfos* tgtnfos ) const 
+            { return tgtnfos->eType_==val_; }
+
+        private:
+            E_VisionUrbanBlockMaterial val_;
+        };
+    };
+
+    typedef ADN_Type_Vector_ABC<ModificatorUrbanBlockInfos>  T_ModificatorUrbanBlockInfos_Vector;
+    typedef T_ModificatorUrbanBlockInfos_Vector::iterator    IT_ModificatorUrbanBlockInfos_Vector;
 
 //*****************************************************************************
     class ModificatorPostureInfos
@@ -322,6 +359,7 @@ public:
         void ReadSourcePosture( xml::xistream& input );
         void ReadTargetPosture( xml::xistream& input );
         void ReadTerrain( xml::xistream& input );
+        void ReadUrbanBlockMaterial( xml::xistream& input );
         void ReadItem( const std::string& name, xml::xistream& input );
         void WriteArchive( xml::xostream& output );
     
@@ -341,6 +379,7 @@ public:
         T_ModificatorPostureInfos_Vector        vModifStance_;
         T_ModificatorPostureInfos_Vector        vModifTargetStance_;
         T_ModificatorEnvironmentInfos_Vector    vModifEnvironments_;
+        T_ModificatorUrbanBlockInfos_Vector     vModifUrbanBlocks_;
         PopulationInfos                         populationInfos_;
 
 

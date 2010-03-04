@@ -46,6 +46,7 @@ public:
         eModifWeather,
         eModifIllumination,
         eModifEnvironement,
+        eModifUrbanBlockMaterial,
         eModifStances,
         eModifTargetStances,
         eTargets,

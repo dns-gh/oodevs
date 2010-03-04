@@ -261,6 +261,64 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // =============================================================================
 
 //-----------------------------------------------------------------------------
+// Name: ModificatorEnvironmentInfos::ModificatorUrbanBlockInfos
+// Created: SLG 2010-03-02
+//-----------------------------------------------------------------------------
+ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos(const E_VisionUrbanBlockMaterial& e)
+: ADN_Ref_ABC()
+, ADN_DataTreeNode_ABC()
+, eType_(e)
+, rCoeff_(0.0)
+{
+    rCoeff_.SetDataName( "le modificateur de perception dû" );
+    rCoeff_.SetParentNode( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModificatorUrbanBlockInfos::GetNodeName
+// Created: SLG 2010-03-02
+// -----------------------------------------------------------------------------
+std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetNodeName()
+{
+    std::string strResult( "au type de materiaux " );
+    return strResult + ADN_Tr::ConvertFromVisionUrbanBlock( eType_, ENT_Tr_ABC::eToTr );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModificatorUrbanBlockInfos::GetItemName
+// Created: SLG 2010-03-02
+// -----------------------------------------------------------------------------
+std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetItemName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModificatorUrbanBlockInfos::ReadArchive
+// Created: SLG 2010-03-02
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::ModificatorUrbanBlockInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "value", rCoeff_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModificatorUrbanBlockInfos::WriteArchive
+// Created: SLG 2010-03-02
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "distance-modifier" )
+        << xml::attribute( "value", rCoeff_ )
+        << xml::attribute( "type", ADN_Tr::ConvertFromVisionUrbanBlock( eType_ ) )
+        << xml::end();
+}
+
+// =============================================================================
+// 
+// =============================================================================
+
+//-----------------------------------------------------------------------------
 // Name: ModificatorPostureInfos::ModificatorPostureInfos
 // Created: JDY 03-09-29
 //-----------------------------------------------------------------------------
@@ -536,6 +594,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 , vModifIlluminations_( false )
 , vModifWeather_( false )
 , vModifEnvironments_( false )
+, vModifUrbanBlocks_( false )
 , vModifStance_( false )
 , vModifTargetStance_( false )
 , populationInfos_ ()
@@ -571,6 +630,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     vModifIlluminations_.SetParentNode( *this );
     vModifWeather_.SetParentNode( *this );
     vModifEnvironments_.SetParentNode( *this );
+    vModifUrbanBlocks_.SetParentNode( *this );
     vModifStance_.SetParentNode( *this );
     vModifTargetStance_.SetParentNode( *this );
     vModifSizes_.SetParentNode( *this );
@@ -597,6 +657,13 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
         vModifEnvironments_.AddItem( pInfo );
     }
 
+    // initialize urbanBlcok material modificator infos
+    for( i= 0 ; i< eNbrVisionUrbanBlocks ; ++i)
+    {
+        ModificatorUrbanBlockInfos* pInfo = new ModificatorUrbanBlockInfos((E_VisionUrbanBlockMaterial)i);
+        vModifUrbanBlocks_.AddItem( pInfo );
+    }
+
     // initialize posture modificator infos
     for( i=0 ; i< eNbrUnitPosture ; ++i)
     {
@@ -617,6 +684,7 @@ ADN_Sensors_Data::SensorInfos::~SensorInfos()
     vModifIlluminations_.Reset();
     vModifWeather_.Reset();
     vModifEnvironments_.Reset();
+    vModifUrbanBlocks_.Reset();
     vModifStance_.Reset();
     vModifTargetStance_.Reset();
 }
@@ -674,6 +742,10 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     // initialize environment modificator infos
     for( i= 0 ; i< eNbrVisionObjects ; ++i)
         pCopy->vModifEnvironments_[i]->rCoeff_ = vModifEnvironments_[i]->rCoeff_.GetData();
+
+    // initialize urbanBlock material modificator infos
+    for( i= 0 ; i< eNbrVisionUrbanBlocks ; ++i)
+        pCopy->vModifUrbanBlocks_[i]->rCoeff_ = vModifUrbanBlocks_[i]->rCoeff_.GetData();
 
     // initialize posture modificator infos
     for( i=0 ; i< eNbrUnitPosture ; ++i)
@@ -789,6 +861,17 @@ void ADN_Sensors_Data::SensorInfos::ReadTerrain( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::SensorInfos::ReadTerrain
+// Created: AGE 2007-08-21
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial( xml::xistream& input )
+{
+    const std::string type = xml::attribute< std::string >( input, "type" );
+    E_VisionUrbanBlockMaterial n = ADN_Tr::ConvertToVisionUrbanBlock( type );
+    vModifUrbanBlocks_.at( n )->ReadArchive( input );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::SensorInfos::ReadUnitDetection
 // Created: AGE 2007-08-21
 // -----------------------------------------------------------------------------
@@ -820,6 +903,9 @@ void ADN_Sensors_Data::SensorInfos::ReadUnitDetection( xml::xistream& input )
             >> xml::end()
             >> xml::start( "terrain-modifiers" )
                 >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadTerrain )
+            >> xml::end()
+            >> xml::start( "urbanBlock-material-modifiers" )
+                >> xml::list( "distance-modifier", *this, &ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial )
             >> xml::end();
     populationInfos_.ReadArchive( input );
     input >> xml::end();
@@ -927,6 +1013,11 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
         output << xml::start( "terrain-modifiers" );
         for( IT_ModificatorEnvironmentInfos_Vector it6 = vModifEnvironments_.begin(); it6 != vModifEnvironments_.end(); ++it6 )
             (*it6)->WriteArchive( output );
+        output << xml::end();
+
+        output << xml::start( "urbanBlock-material-modifiers" );
+        for( IT_ModificatorUrbanBlockInfos_Vector it7 = vModifUrbanBlocks_.begin(); it7 != vModifUrbanBlocks_.end(); ++it7 )
+            (*it7)->WriteArchive( output );
         output << xml::end();
 
         output << xml::end(); // distance-modifiers

@@ -77,6 +77,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eModifWeather]->Connect( &pInfos->vModifWeather_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifIllumination]->Connect( &pInfos->vModifIlluminations_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifEnvironement]->Connect( &pInfos->vModifEnvironments_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::eModifUrbanBlockMaterial]->Connect( &pInfos->vModifUrbanBlocks_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifStances]->Connect( &pInfos->vModifStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eTargets]->Connect( &pInfos->vTargets_, bConnect );

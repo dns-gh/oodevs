@@ -36,6 +36,7 @@
 #include "ADN_Sensors_Meteos_GUI.h"
 #include "ADN_Sensors_Illumination_GUI.h"
 #include "ADN_Sensors_Environments_GUI.h"
+#include "ADN_Sensors_UrbanBlockMaterial_GUI.h"
 #include "ADN_Sensors_Postures_GUI.h"
 #include "ADN_Sensors_TargetsListView.h"
 #include "ADN_Tr.h"
@@ -141,6 +142,9 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     ADN_Sensors_Environments_GUI* pEnv = new ADN_Sensors_Environments_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifEnvironement] = &pEnv->GetConnector();
 
+    ADN_Sensors_UrbanBlockMaterial_GUI* pMaterial = new ADN_Sensors_UrbanBlockMaterial_GUI( pAgentDetectionModifiersGroup );
+    vConnectors[eModifUrbanBlockMaterial] = &pMaterial->GetConnector();
+
     // Modificators (group 2)
     QGroupBox* pAgentDetectionModifiersGroup2 = new QGroupBox( 0, Qt::Horizontal, tr( "Stance modifiers" ), pAgentParamGroupBox );
 
@@ -199,6 +203,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pModificatorsLayout1->addWidget( pMeteos, 1 );
     pModificatorsLayout1->addWidget( pIllu, 1 );
     pModificatorsLayout1->addWidget( pEnv, 1 );
+    pModificatorsLayout1->addWidget( pMaterial, 1 );
 
     QHBoxLayout* pModificatorsLayout2 = new QHBoxLayout( pAgentDetectionModifiersGroup2->layout(), 5 );
     pModificatorsLayout2->addWidget( pStance, 1 );
@@ -334,7 +339,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->setTopMargin( 0 );
 
     pTable->setNumRows( 2 );
-    pTable->setNumCols( 6 + sizes.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrUnitPosture * 2 );
+    pTable->setNumCols( 7 + sizes.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrVisionUrbanBlocks +eNbrUnitPosture * 2 );
     for( int n = 0; n < pTable->numCols(); ++n )
         pTable->horizontalHeader()->setLabel( n, "" );
 
@@ -349,7 +354,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->AddBoldGridCol( 6 );
     pTable->AddBoldGridRow( 2 );
 
-    int nCol = 6;    
+    int nCol = 7;    
     builder.AddTableCell( pTable, 0, nCol, 1, sizes.size(), tr( "Target size" ) );
     for( uint n = 0; n < sizes.size(); ++n )
         builder.AddTableCell( pTable, 1, nCol + n, sizes[n]->GetData().c_str() );
@@ -358,6 +363,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
     AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ADN_Tr::ConvertFromTimeCategory, eNbrTimeCategory );
     AddHeaders( pTable, nCol, tr( "Environement modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
+    AddHeaders( pTable, nCol, tr( "UrbanBlock material modifiers" ), ADN_Tr::ConvertFromVisionUrbanBlock, eNbrVisionUrbanBlocks );
     AddHeaders( pTable, nCol, tr( "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
     AddHeaders( pTable, nCol, tr( "Target stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
 
@@ -379,11 +385,12 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
         builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 4, sensor.rDistIdent_, eGreaterEqualZero );
         builder.AddTableCell<ADN_TableItem_Double>( pTable, &sensor, nRow, 5, sensor.rDistProximity_, eGreaterEqualZero );
 
-        int nCol = 6;
+        int nCol = 7;
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifSizes_, sizes.size() );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifWeather_, eNbrSensorWeatherModifiers );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrTimeCategory );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifEnvironments_, eNbrVisionObjects );
+        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, eNbrVisionUrbanBlocks );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifStance_, eNbrUnitPosture );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifTargetStance_, eNbrUnitPosture );
 
