@@ -59,7 +59,7 @@ DetectionCapacity::DetectionCapacity( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DetectionCapacity::ReadTime
+// Name: DetectionCapacity::ReadAcquisitionTime
 // Created: SLG 2010-02-11
 // -----------------------------------------------------------------------------
 void DetectionCapacity::ReadAcquisitionTime( xml::xistream& xis )
@@ -111,7 +111,7 @@ DetectionCapacity::DetectionCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyCapacity constructor
+// Name: DetectionCapacity constructor
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 DetectionCapacity::DetectionCapacity( const DetectionCapacity& from )
@@ -221,7 +221,7 @@ void DetectionCapacity::ProcessAgentExiting( Object& /*object*/, MIL_Agent_ABC& 
 }
   
 // -----------------------------------------------------------------------------
-// Name: WorkableCapacity::AddAnimator
+// Name: WorkableCapacity::AddDetector
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 void DetectionCapacity::AddDetector( Object& object, const MIL_Agent_ABC& agent )

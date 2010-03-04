@@ -16,8 +16,8 @@
 class MIL_Agent_ABC;
 class TER_Localisation;
 // =============================================================================
-/** @class  DetectionCapacity
-@brief  DetectionCapacity
+/** @class  SpawnCapacity
+@brief  SpawnCapacity
 */
 // Created: MGD 2009-03-05
 // =============================================================================

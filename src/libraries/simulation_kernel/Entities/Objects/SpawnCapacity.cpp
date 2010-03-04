@@ -92,7 +92,7 @@ void SpawnCapacity::Register( Object& object )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DetectionCapacity::Instanciate
+// Name: SpawnCapacity::Instanciate
 // Created: MGD 2009-03-05
 // -----------------------------------------------------------------------------
 void SpawnCapacity::Instanciate( Object& object ) const
