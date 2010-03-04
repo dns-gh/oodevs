@@ -68,7 +68,9 @@ void PHY_Actor::UnregisterAction( PHY_Action_ABC& action )
 // -----------------------------------------------------------------------------
 void PHY_Actor::CancelAllActions()
 {
-    actions_.clear();
+    std::set< PHY_Action_ABC* > tmp = actions_;
+    for( std::set< PHY_Action_ABC* >::iterator it = tmp.begin(); it != tmp.end(); ++it )
+        delete *it;
 }
 
 // -----------------------------------------------------------------------------

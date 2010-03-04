@@ -128,6 +128,7 @@ void DEC_Decision<T>::GarbageCollect()
 template <class T>
 void DEC_Decision<T>::Reset( std::string groupName )
 {
+    StopDefaultBehavior();
     if( groupName != "" )
         pBrain_->GetScriptFunction( "CleanBrainBeforeDeletion" )( groupName );
     InitBrain( brainFile_, modelName_, includePath_, groupName );

@@ -655,8 +655,9 @@ void MIL_AgentPion::OnReceiveMsgDestroyComponent()
 void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
 {
     GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
-    orderManager_.StopAllMissions();
+    CancelAllActions();
     GetRole< DEC_RolePion_Decision >().Reset( GetAutomate().GetName() );
+    orderManager_.ReplaceMission();
 }
 
 // -----------------------------------------------------------------------------

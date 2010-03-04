@@ -80,7 +80,7 @@ PHY_Action_ABC* DEC_ActionFunctions::StartAction( typename ActionType::ActorType
 template< typename T >
 PHY_Action_ABC* DEC_ActionFunctions::StopAction( const T& caller, PHY_Action_ABC* pAction )
 {
-    if( pAction )
+   if( pAction )
     {
         assert( caller.HasAction( *pAction ) );
         delete pAction;
