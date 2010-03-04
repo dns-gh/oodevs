@@ -347,8 +347,8 @@ namespace
 {
     void MakePhaseLine( Common::MsgLimaOrder& message )
     {
-        message.set_fonctions( 0, Common::MsgLimaOrder_Function_ligne_coordination );
-        message.set_fonctions( 1, Common::MsgLimaOrder_Function_ligne_debouche );
+        message.add_fonctions( Common::MsgLimaOrder_Function_ligne_coordination );
+        message.add_fonctions( Common::MsgLimaOrder_Function_ligne_debouche );
         message.mutable_horaire()->set_data( "20100225T105942" );
         for( unsigned int i = 0; i < 4; ++i )
             MakeLine( *message.mutable_lima()->mutable_location() );
