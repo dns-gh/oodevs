@@ -11,11 +11,7 @@
 #define __PopulationFire_h_
 
 #include "SimpleEntity.h"
-
-namespace MsgsSimToClient
-{
-    class MsgStartPopulationFire;
-}
+#include "protocol/clientsenders.h"
 
 namespace kernel
 {
@@ -61,7 +57,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const MsgsSimToClient::MsgStartPopulationFire& msg_;
+    MsgsSimToClient::MsgStartPopulationFire msg_;
     //@}
 };
 

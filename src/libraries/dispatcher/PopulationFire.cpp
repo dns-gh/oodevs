@@ -11,7 +11,6 @@
 #include "PopulationFire.h"
 #include "ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "protocol/clientsenders.h"
 
 using namespace dispatcher;
 
@@ -63,7 +62,7 @@ void PopulationFire::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
     client::StopPopulationFire message;
     message().set_fire_oid( msg_.fire_oid() );
-    message().mutable_units_damages()->Clear();
+    message().mutable_units_damages();
     message.Send( publisher );
 }
 
