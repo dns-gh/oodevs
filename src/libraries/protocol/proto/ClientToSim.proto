@@ -182,10 +182,9 @@ message MsgControlToggleVisionCones {
 }
 
 message MsgKnowledgeGroupCreationRequest {
-   required uint32 oid         = 1;
-   required uint32 oid_camp    = 2;
-   optional uint32 oid_parent  = 3;
-   required string type        = 4;
+   required uint32 oid_camp    = 1;
+   optional uint32 oid_parent  = 2;
+   required string type        = 3;
 }
 
 message MsgKnowledgeGroupUpdateRequest {

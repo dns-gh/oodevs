@@ -19,6 +19,7 @@
 namespace MsgsSimToClient
 {
     class MsgKnowledgeGroupCreation;
+    class MsgKnowledgeGroupUpdate;
 }
 
 namespace kernel
@@ -53,11 +54,19 @@ public:
     void SendFullUpdate ( ClientPublisher_ABC& publisher ) const;
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
+
+    void Update( const MsgsSimToClient::MsgKnowledgeGroupCreation& message );
+    void Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
     virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP  // LTO
     virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void Register( kernel::Automat_ABC& automat ); // LTO
     virtual void Remove( kernel::Automat_ABC& automat ); // LTO
+    //@}
+
+    //! @name Accessors
+    //@{
+    const kernel::Team_ABC& GetTeam() const;
     //@}
 
 private:
@@ -67,12 +76,19 @@ private:
     KnowledgeGroup& operator=( const KnowledgeGroup& ); //!< Assignement operator
     //@}
 
-public:
+    //! @name Helpers
+    //@{
+    void ChangeSuperior( kernel::KnowledgeGroup_ABC* superior );
+    //@}
+
+private:
     //! @name Member data
     //@{
-    kernel::Team_ABC&   team_;
-    kernel::KnowledgeGroup_ABC*     parent_;
+    Model_ABC& model_;
+    kernel::Team_ABC& team_;
+    kernel::KnowledgeGroup_ABC* parent_;
     std::string type_; // LTO
+    bool enabled_; // LTO
     tools::Resolver< kernel::KnowledgeGroup_ABC > knowledgeGroups_;
     tools::Resolver< kernel::Automat_ABC > automats_;
     //@}

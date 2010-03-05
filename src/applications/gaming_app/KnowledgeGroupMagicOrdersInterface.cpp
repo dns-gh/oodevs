@@ -62,9 +62,9 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
     const KnowledgeGroup& knowledgeGroup = static_cast< const KnowledgeGroup& >( entity );
 
     if( knowledgeGroup.IsActivated() ) 
-        AddMagic( tr( "Desactivate" ), SLOT( OnDesactivateKnowledgeGroup() ), magicMenu );  
+        AddMagic( tr( "Desactivate" ), SLOT( OnToggleKnowledgeGroupActivation() ), magicMenu );  
     else
-        AddMagic( tr( "Activate KnowledgeGroup" ), SLOT( OnActivateKnowledgeGroup() ), magicMenu );
+        AddMagic( tr( "Activate" ), SLOT( OnToggleKnowledgeGroupActivation() ), magicMenu );
     AddMagic( tr( "Create child KnowledgeGroup" ), SLOT( OnCreateSubKnowledgeGroup() ), magicMenu );
     
     QPopupMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
@@ -78,31 +78,16 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
 }
 
 // -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicOrdersInterface::OnActivateKnowledgeGroup
+// Name: KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::OnActivateKnowledgeGroup()
+void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
 {
-    simulation::KnowledgeGroupUpdateRequest message;
     if( selectedEntity_ )
     {
+        simulation::KnowledgeGroupUpdateRequest message;
         message().set_oid( selectedEntity_->GetId() );
-        message().set_enabled( true );
-        message.Send( publisher_ );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroupMagicOrdersInterface::OnDesactivateKnowledgeGroup
-// Created: SLG 2009-12-17
-// -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::OnDesactivateKnowledgeGroup()
-{
-    simulation::KnowledgeGroupUpdateRequest message;
-    if( selectedEntity_ )
-    {
-        message().set_oid( selectedEntity_->GetId() );
-        message().set_enabled( false );
+        message().set_enabled( ! selectedEntity_->IsActivated() );
         message.Send( publisher_ );
     }
 }
@@ -120,7 +105,7 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
         {
             simulation::KnowledgeGroupUpdateRequest message;
             message().set_oid( selectedEntity_->GetId() );
-            message().set_type( it->second->GetName().c_str() );
+            message().set_type( it->second->GetName() );
             message.Send( publisher_ );
         }
     }
@@ -132,15 +117,15 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
 // -----------------------------------------------------------------------------
 void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
 {
-    simulation::KnowledgeGroupCreationRequest message;
     if( selectedEntity_ )
-    {
-        message().set_type( "Standard" );
         if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
+        {
+            simulation::KnowledgeGroupCreationRequest message;
+            message().set_type( "Standard" ); // $$$$ _RC_ SBO 2010-03-04: used kernel::KnowledgeGroupTypes::GetDefault() or something
             message().set_oid_camp( hierarchies->GetTop().GetId() );
-        message().set_oid_parent( selectedEntity_->GetId() );
-        message.Send( publisher_ );
-    }
+            message().set_oid_parent( selectedEntity_->GetId() );
+            message.Send( publisher_ );
+        }
 }
 
 // -----------------------------------------------------------------------------

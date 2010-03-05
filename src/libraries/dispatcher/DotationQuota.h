@@ -30,14 +30,14 @@ class DotationQuota
 public:
     //! @name Constructors/Destructor
     //@{
-    DotationQuota( const Model_ABC& model, const Common::MsgDotationQuota& message );
+             DotationQuota( const Model_ABC& model, const Common::MsgDotationQuota& message );
     virtual ~DotationQuota();
     //@}
 
     //! @name Operations
     //@{
     void Update( const Common::MsgDotationQuota& message );
-    void Send  ( Common::MsgDotationQuota& message ) const ;
+    void Send  ( Common::MsgDotationQuota& message ) const;
     //@}
 
 private:

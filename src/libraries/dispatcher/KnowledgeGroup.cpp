@@ -24,18 +24,15 @@ using namespace dispatcher;
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnowledgeGroupCreation& msg )
     : SimpleEntity< kernel::KnowledgeGroup_ABC >( msg.oid() )
-    , team_( model.Sides().Get( msg.oid_camp() ) )
-    , parent_( msg.has_oid_parent() ? &model.KnowledgeGroups().Get( msg.oid_parent() ) : 0 )
+    , model_( model )
+    , team_( model_.Sides().Get( msg.oid_camp() ) )
+    , parent_( msg.has_oid_parent() ? &model_.KnowledgeGroups().Get( msg.oid_parent() ) : 0 )
     , type_( msg.type() ) // LTO
+    , enabled_( true ) // LTO
 {
     // LTO begin
-    if( parent_ == this )
-        throw std::runtime_error( __FUNCTION__ ": recursive hierarchy." );
-    if( parent_ )
-        parent_->Register( *this );
-    else
+    ChangeSuperior( parent_ );
     // LTO end
-        team_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,11 +41,61 @@ KnowledgeGroup::KnowledgeGroup( Model_ABC& model, const MsgsSimToClient::MsgKnow
 // -----------------------------------------------------------------------------
 KnowledgeGroup::~KnowledgeGroup()
 {
-    // $$$ RDS : completement invalide si la formation parente a déja été detruite !!! 
+    // LTO begin
+    tools::Iterator< const kernel::KnowledgeGroup_ABC& > it( knowledgeGroups_.CreateIterator() );
+    while( it.HasMoreElements() )
+    {
+        kernel::KnowledgeGroup_ABC& entity = const_cast< kernel::KnowledgeGroup_ABC& >( it.NextElement() );
+        static_cast< KnowledgeGroup& >( entity ).ChangeSuperior( parent_ );
+    }
+    ChangeSuperior( 0 );
+    // LTO end
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Update
+// Created: SBO 2010-03-04
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupCreation& /*message*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Update
+// Created: SBO 2010-03-04
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
+{
+    // LTO begin
+    if( message.has_type() )
+        type_ = message.type();
+    if( message.has_enabled() )
+        enabled_ = message.enabled();
+    if( message.has_oid_parent() )
+        ChangeSuperior( message.oid_parent() ? &model_.KnowledgeGroups().Get( message.oid_parent() ) : 0 );
+    // LTO end
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::ChangeSuperior
+// Created: SBO 2010-03-04
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::ChangeSuperior( kernel::KnowledgeGroup_ABC* superior )
+{
+    // LTO begin
+    if( superior == this )
+        throw std::runtime_error( __FUNCTION__ ": recursive hierarchy." );
     if( parent_ )
         parent_->Remove( *this );
     else
         team_.Remove( *this );
+    parent_ = superior;
+    if( parent_ )
+        parent_->Register( *this );
+    else
+        team_.Register( *this );
+    // LTO end
 }
 
 // -----------------------------------------------------------------------------
@@ -73,9 +120,17 @@ void KnowledgeGroup::SendCreation( ClientPublisher_ABC& publisher ) const
 // Name: KnowledgeGroup::SendFullUpdate
 // Created: NLD 2006-09-27
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& /*publisher*/ ) const
+void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
-    // NOTHING
+    client::KnowledgeGroupUpdate message;
+    message().set_oid( GetId() );
+    if( parent_ )
+        message().set_oid_parent( parent_->GetId() );
+    else
+        message().set_oid_camp( team_.GetId() );
+    message().set_type( type_ );
+    message().set_enabled( enabled_ );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,4 +189,13 @@ void KnowledgeGroup::Register( kernel::Automat_ABC& automat )
 void KnowledgeGroup::Remove( kernel::Automat_ABC& automat )
 {
     automats_.Remove( automat.GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::GetTeam
+// Created: SBO 2010-03-04
+// -----------------------------------------------------------------------------
+const kernel::Team_ABC& KnowledgeGroup::GetTeam() const
+{
+    return team_;
 }

@@ -73,7 +73,7 @@ Position KnowledgeManipulator::GetPosition() const
 // -----------------------------------------------------------------------------
 std::string KnowledgeManipulator::GetOwnerTeam() const
 {
-    return std::string( knowledge_.knowledgeGroup_.team_.GetName() );
+    return std::string( knowledge_.knowledgeGroup_.GetTeam().GetName() );
 }
 
 

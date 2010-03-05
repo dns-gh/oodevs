@@ -685,8 +685,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlToggleVisionCones));
   MsgKnowledgeGroupCreationRequest_descriptor_ = file->message_type(23);
-  static const int MsgKnowledgeGroupCreationRequest_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, oid_),
+  static const int MsgKnowledgeGroupCreationRequest_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, oid_camp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, oid_parent_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, type_),
@@ -1072,64 +1071,64 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "\0132\032.Common.SeqOfDotationQuota\"5\n MsgCont"
     "rolCheckPointSetFrequency\022\021\n\tfrequency\030\001"
     " \002(\005\"3\n\033MsgControlToggleVisionCones\022\024\n\014v"
-    "ision_cones\030\001 \002(\010\"c\n MsgKnowledgeGroupCr"
-    "eationRequest\022\013\n\003oid\030\001 \002(\r\022\020\n\010oid_camp\030\002"
-    " \002(\r\022\022\n\noid_parent\030\003 \001(\r\022\014\n\004type\030\004 \002(\t\"r"
-    "\n\036MsgKnowledgeGroupUpdateRequest\022\013\n\003oid\030"
-    "\001 \002(\r\022\020\n\010oid_camp\030\002 \001(\r\022\022\n\noid_parent\030\003 "
-    "\001(\r\022\017\n\007enabled\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\234\020\n\016M"
-    "sgClientToSim\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007mes"
-    "sage\030\002 \002(\0132\'.MsgsClientToSim.MsgClientTo"
-    "Sim.Content\032\273\017\n\007Content\022,\n\014control_stop\030"
-    "\001 \001(\0132\026.Common.MsgControlStop\022.\n\rcontrol"
-    "_pause\030\002 \001(\0132\027.Common.MsgControlPause\0220\n"
-    "\016control_resume\030\003 \001(\0132\030.Common.MsgContro"
-    "lResume\022F\n\032control_change_time_factor\030\004 "
-    "\001(\0132\".Common.MsgControlChangeTimeFactor\022"
-    "K\n\030control_date_time_change\030\005 \001(\0132).Msgs"
-    "ClientToSim.MsgControlDatetimeChange\022D\n\024"
-    "control_global_meteo\030\006 \001(\0132&.MsgsClientT"
-    "oSim.MsgControlGlobalMeteo\022B\n\023control_lo"
-    "cal_meteo\030\007 \001(\0132%.MsgsClientToSim.MsgCon"
-    "trolLocalMeteo\022Q\n\033control_checkpoint_sav"
-    "e_now\030\010 \001(\0132,.MsgsClientToSim.MsgControl"
-    "CheckPointSaveNow\022[\n control_checkpoint_"
-    "set_frequency\030\t \001(\01321.MsgsClientToSim.Ms"
-    "gControlCheckPointSetFrequency\022Q\n\033contro"
-    "l_toggle_vision_cones\030\n \001(\0132,.MsgsClient"
-    "ToSim.MsgControlToggleVisionCones\022(\n\nuni"
-    "t_order\030\013 \001(\0132\024.Common.MsgUnitOrder\022.\n\ra"
-    "utomat_order\030\014 \001(\0132\027.Common.MsgAutomatOr"
-    "der\0224\n\020population_order\030\r \001(\0132\032.Common.M"
-    "sgPopulationOrder\0221\n\nfrag_order\030\016 \001(\0132\035."
-    "MsgsClientToSim.MsgFragOrder\022<\n\020set_auto"
-    "mat_mode\030\017 \001(\0132\".MsgsClientToSim.MsgSetA"
-    "utomatMode\022F\n\025unit_creation_request\030\020 \001("
-    "\0132\'.MsgsClientToSim.MsgUnitCreationReque"
-    "st\022>\n\021unit_magic_action\030\021 \001(\0132#.MsgsClie"
-    "ntToSim.MsgUnitMagicAction\022B\n\023object_mag"
-    "ic_action\030\022 \001(\0132%.MsgsClientToSim.MsgObj"
-    "ectMagicAction\022J\n\027population_magic_actio"
-    "n\030\023 \001(\0132).MsgsClientToSim.MsgPopulationM"
-    "agicAction\0224\n\020change_diplomacy\030\024 \001(\0132\032.C"
-    "ommon.MsgChangeDiplomacy\022N\n\036automat_chan"
-    "ge_knowledge_group\030\025 \001(\0132&.Common.MsgAut"
-    "omatChangeKnowledgeGroup\022L\n\035automat_chan"
-    "ge_logistic_links\030\026 \001(\0132%.Common.MsgAuto"
-    "matChangeLogisticLinks\022A\n\027automat_change"
-    "_superior\030\027 \001(\0132 .Common.MsgAutomatChang"
-    "eSuperior\022;\n\024unit_change_superior\030\030 \001(\0132"
-    "\035.Common.MsgUnitChangeSuperior\022C\n\024log_su"
-    "pply_push_flow\030\031 \001(\0132%.MsgsClientToSim.M"
-    "sgLogSupplyPushFlow\022K\n\030log_supply_change"
-    "_quotas\030\032 \001(\0132).MsgsClientToSim.MsgLogSu"
-    "pplyChangeQuotas\022[\n knowledge_group_crea"
-    "tion_request\030\033 \001(\01321.MsgsClientToSim.Msg"
-    "KnowledgeGroupCreationRequest\022W\n\036knowled"
-    "ge_group_update_request\030\034 \001(\0132/.MsgsClie"
-    "ntToSim.MsgKnowledgeGroupUpdateRequest\022I"
-    "\n\021create_fire_order\030\035 \001(\0132..MsgsClientTo"
-    "Sim.MsgMagicActionCreateFireOrder", 6993);
+    "ision_cones\030\001 \002(\010\"V\n MsgKnowledgeGroupCr"
+    "eationRequest\022\020\n\010oid_camp\030\001 \002(\r\022\022\n\noid_p"
+    "arent\030\002 \001(\r\022\014\n\004type\030\003 \002(\t\"r\n\036MsgKnowledg"
+    "eGroupUpdateRequest\022\013\n\003oid\030\001 \002(\r\022\020\n\010oid_"
+    "camp\030\002 \001(\r\022\022\n\noid_parent\030\003 \001(\r\022\017\n\007enable"
+    "d\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\234\020\n\016MsgClientToSim"
+    "\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'."
+    "MsgsClientToSim.MsgClientToSim.Content\032\273"
+    "\017\n\007Content\022,\n\014control_stop\030\001 \001(\0132\026.Commo"
+    "n.MsgControlStop\022.\n\rcontrol_pause\030\002 \001(\0132"
+    "\027.Common.MsgControlPause\0220\n\016control_resu"
+    "me\030\003 \001(\0132\030.Common.MsgControlResume\022F\n\032co"
+    "ntrol_change_time_factor\030\004 \001(\0132\".Common."
+    "MsgControlChangeTimeFactor\022K\n\030control_da"
+    "te_time_change\030\005 \001(\0132).MsgsClientToSim.M"
+    "sgControlDatetimeChange\022D\n\024control_globa"
+    "l_meteo\030\006 \001(\0132&.MsgsClientToSim.MsgContr"
+    "olGlobalMeteo\022B\n\023control_local_meteo\030\007 \001"
+    "(\0132%.MsgsClientToSim.MsgControlLocalMete"
+    "o\022Q\n\033control_checkpoint_save_now\030\010 \001(\0132,"
+    ".MsgsClientToSim.MsgControlCheckPointSav"
+    "eNow\022[\n control_checkpoint_set_frequency"
+    "\030\t \001(\01321.MsgsClientToSim.MsgControlCheck"
+    "PointSetFrequency\022Q\n\033control_toggle_visi"
+    "on_cones\030\n \001(\0132,.MsgsClientToSim.MsgCont"
+    "rolToggleVisionCones\022(\n\nunit_order\030\013 \001(\013"
+    "2\024.Common.MsgUnitOrder\022.\n\rautomat_order\030"
+    "\014 \001(\0132\027.Common.MsgAutomatOrder\0224\n\020popula"
+    "tion_order\030\r \001(\0132\032.Common.MsgPopulationO"
+    "rder\0221\n\nfrag_order\030\016 \001(\0132\035.MsgsClientToS"
+    "im.MsgFragOrder\022<\n\020set_automat_mode\030\017 \001("
+    "\0132\".MsgsClientToSim.MsgSetAutomatMode\022F\n"
+    "\025unit_creation_request\030\020 \001(\0132\'.MsgsClien"
+    "tToSim.MsgUnitCreationRequest\022>\n\021unit_ma"
+    "gic_action\030\021 \001(\0132#.MsgsClientToSim.MsgUn"
+    "itMagicAction\022B\n\023object_magic_action\030\022 \001"
+    "(\0132%.MsgsClientToSim.MsgObjectMagicActio"
+    "n\022J\n\027population_magic_action\030\023 \001(\0132).Msg"
+    "sClientToSim.MsgPopulationMagicAction\0224\n"
+    "\020change_diplomacy\030\024 \001(\0132\032.Common.MsgChan"
+    "geDiplomacy\022N\n\036automat_change_knowledge_"
+    "group\030\025 \001(\0132&.Common.MsgAutomatChangeKno"
+    "wledgeGroup\022L\n\035automat_change_logistic_l"
+    "inks\030\026 \001(\0132%.Common.MsgAutomatChangeLogi"
+    "sticLinks\022A\n\027automat_change_superior\030\027 \001"
+    "(\0132 .Common.MsgAutomatChangeSuperior\022;\n\024"
+    "unit_change_superior\030\030 \001(\0132\035.Common.MsgU"
+    "nitChangeSuperior\022C\n\024log_supply_push_flo"
+    "w\030\031 \001(\0132%.MsgsClientToSim.MsgLogSupplyPu"
+    "shFlow\022K\n\030log_supply_change_quotas\030\032 \001(\013"
+    "2).MsgsClientToSim.MsgLogSupplyChangeQuo"
+    "tas\022[\n knowledge_group_creation_request\030"
+    "\033 \001(\01321.MsgsClientToSim.MsgKnowledgeGrou"
+    "pCreationRequest\022W\n\036knowledge_group_upda"
+    "te_request\030\034 \001(\0132/.MsgsClientToSim.MsgKn"
+    "owledgeGroupUpdateRequest\022I\n\021create_fire"
+    "_order\030\035 \001(\0132..MsgsClientToSim.MsgMagicA"
+    "ctionCreateFireOrder", 6980);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -10368,7 +10367,6 @@ void MsgControlToggleVisionCones::Swap(MsgControlToggleVisionCones* other) {
 
 const ::std::string MsgKnowledgeGroupCreationRequest::_default_type_;
 #ifndef _MSC_VER
-const int MsgKnowledgeGroupCreationRequest::kOidFieldNumber;
 const int MsgKnowledgeGroupCreationRequest::kOidCampFieldNumber;
 const int MsgKnowledgeGroupCreationRequest::kOidParentFieldNumber;
 const int MsgKnowledgeGroupCreationRequest::kTypeFieldNumber;
@@ -10388,7 +10386,6 @@ MsgKnowledgeGroupCreationRequest::MsgKnowledgeGroupCreationRequest(const MsgKnow
 
 void MsgKnowledgeGroupCreationRequest::SharedCtor() {
   _cached_size_ = 0;
-  oid_ = 0u;
   oid_camp_ = 0u;
   oid_parent_ = 0u;
   type_ = const_cast< ::std::string*>(&_default_type_);
@@ -10424,10 +10421,9 @@ MsgKnowledgeGroupCreationRequest* MsgKnowledgeGroupCreationRequest::New() const 
 
 void MsgKnowledgeGroupCreationRequest::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
     oid_camp_ = 0u;
     oid_parent_ = 0u;
-    if (_has_bit(3)) {
+    if (_has_bit(2)) {
       if (type_ != &_default_type_) {
         type_->clear();
       }
@@ -10443,35 +10439,21 @@ bool MsgKnowledgeGroupCreationRequest::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
+      // required uint32 oid_camp = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_oid_camp;
-        break;
-      }
-      
-      // required uint32 oid_camp = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_oid_camp:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &oid_camp_));
-        _set_bit(1);
-        if (input->ExpectTag(24)) goto parse_oid_parent;
+        _set_bit(0);
+        if (input->ExpectTag(16)) goto parse_oid_parent;
         break;
       }
       
-      // optional uint32 oid_parent = 3;
-      case 3: {
+      // optional uint32 oid_parent = 2;
+      case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -10479,13 +10461,13 @@ bool MsgKnowledgeGroupCreationRequest::MergePartialFromCodedStream(
        parse_oid_parent:
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &oid_parent_));
-        _set_bit(2);
-        if (input->ExpectTag(34)) goto parse_type;
+        _set_bit(1);
+        if (input->ExpectTag(26)) goto parse_type;
         break;
       }
       
-      // required string type = 4;
-      case 4: {
+      // required string type = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -10524,28 +10506,23 @@ void MsgKnowledgeGroupCreationRequest::SerializeWithCachedSizes(
     return;
   }
   
-  // required uint32 oid = 1;
+  // required uint32 oid_camp = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid_camp(), output);
   }
   
-  // required uint32 oid_camp = 2;
+  // optional uint32 oid_parent = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->oid_camp(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->oid_parent(), output);
   }
   
-  // optional uint32 oid_parent = 3;
+  // required string type = 3;
   if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->oid_parent(), output);
-  }
-  
-  // required string type = 4;
-  if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->type().data(), this->type().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     ::google::protobuf::internal::WireFormatLite::WriteString(
-      4, this->type(), output);
+      3, this->type(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -10556,29 +10533,24 @@ void MsgKnowledgeGroupCreationRequest::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgKnowledgeGroupCreationRequest::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
+  // required uint32 oid_camp = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid_camp(), target);
   }
   
-  // required uint32 oid_camp = 2;
+  // optional uint32 oid_parent = 2;
   if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->oid_camp(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->oid_parent(), target);
   }
   
-  // optional uint32 oid_parent = 3;
+  // required string type = 3;
   if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->oid_parent(), target);
-  }
-  
-  // required string type = 4;
-  if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormat::VerifyUTF8String(
       this->type().data(), this->type().length(),
       ::google::protobuf::internal::WireFormat::SERIALIZE);
     target =
       ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        4, this->type(), target);
+        3, this->type(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -10592,28 +10564,21 @@ int MsgKnowledgeGroupCreationRequest::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
-    }
-    
-    // required uint32 oid_camp = 2;
+    // required uint32 oid_camp = 1;
     if (has_oid_camp()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->oid_camp());
     }
     
-    // optional uint32 oid_parent = 3;
+    // optional uint32 oid_parent = 2;
     if (has_oid_parent()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->oid_parent());
     }
     
-    // required string type = 4;
+    // required string type = 3;
     if (has_type()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -10646,15 +10611,12 @@ void MsgKnowledgeGroupCreationRequest::MergeFrom(const MsgKnowledgeGroupCreation
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid(from.oid());
-    }
-    if (from._has_bit(1)) {
       set_oid_camp(from.oid_camp());
     }
-    if (from._has_bit(2)) {
+    if (from._has_bit(1)) {
       set_oid_parent(from.oid_parent());
     }
-    if (from._has_bit(3)) {
+    if (from._has_bit(2)) {
       set_type(from.type());
     }
   }
@@ -10674,14 +10636,13 @@ void MsgKnowledgeGroupCreationRequest::CopyFrom(const MsgKnowledgeGroupCreationR
 }
 
 bool MsgKnowledgeGroupCreationRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000000b) != 0x0000000b) return false;
+  if ((_has_bits_[0] & 0x00000005) != 0x00000005) return false;
   
   return true;
 }
 
 void MsgKnowledgeGroupCreationRequest::Swap(MsgKnowledgeGroupCreationRequest* other) {
   if (other != this) {
-    std::swap(oid_, other->oid_);
     std::swap(oid_camp_, other->oid_camp_);
     std::swap(oid_parent_, other->oid_parent_);
     std::swap(type_, other->type_);

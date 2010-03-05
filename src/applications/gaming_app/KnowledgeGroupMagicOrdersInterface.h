@@ -55,8 +55,7 @@ private slots:
     //! @name Slots
     //@{
     void OnCreateSubKnowledgeGroup();
-    void OnActivateKnowledgeGroup();
-    void OnDesactivateKnowledgeGroup();
+    void OnToggleKnowledgeGroupActivation();
     void OnSetType( int );
     //@}
 

@@ -186,6 +186,8 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         CreateUpdate< Side >( sides_, wrapper.message().side_creation() ); 
     if( wrapper.message().has_knowledge_group_creation() )
         CreateUpdate< KnowledgeGroup >( knowledgeGroups_, wrapper.message().knowledge_group_creation() ); 
+    if( wrapper.message().has_knowledge_group_update() )
+        knowledgeGroups_.Get( wrapper.message().knowledge_group_update().oid() ).Update( wrapper.message().knowledge_group_update() );
     if( wrapper.message().has_formation_creation() )
         CreateUpdate< Formation >( formations_, wrapper.message().formation_creation().oid(), wrapper.message().formation_creation(), *levels_ ); 
     if( wrapper.message().has_unit_creation() )

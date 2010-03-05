@@ -276,17 +276,12 @@ void MIL_KnowledgeGroup::UpdateKnowledgeGroup() const
 {
     client::KnowledgeGroupUpdate message;
     message().set_oid( nID_ );
-    MIL_KnowledgeGroup *pParent = GetParent();
-    if( pParent )
-    {
+    if( MIL_KnowledgeGroup* pParent = GetParent() )
         message().set_oid_parent( pParent->GetID() );
-    }
     else
-    {
         // army is the parent
         message().set_oid_parent( 0 );
-    }
-    message().set_type( GetType().GetName().c_str() );
+    message().set_type( GetType().GetName() );
     message().set_enabled( IsEnabled() );
     message.Send( NET_Publisher_ABC::Publisher() ); 
 
@@ -544,7 +539,7 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message )
 {
-    if ( message.has_enabled() )
+    if( message.has_enabled() )
     {
         isActivated_ = message.enabled();
         return true;

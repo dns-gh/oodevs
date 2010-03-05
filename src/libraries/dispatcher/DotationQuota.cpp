@@ -8,11 +8,10 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "protocol/SimulationSenders.h"
 #include "DotationQuota.h"
+#include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;
-//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: DotationQuota constructor

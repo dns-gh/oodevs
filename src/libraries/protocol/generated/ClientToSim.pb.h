@@ -3478,31 +3478,24 @@ class MsgKnowledgeGroupCreationRequest : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required uint32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::uint32 oid() const;
-  inline void set_oid(::google::protobuf::uint32 value);
-  
-  // required uint32 oid_camp = 2;
+  // required uint32 oid_camp = 1;
   inline bool has_oid_camp() const;
   inline void clear_oid_camp();
-  static const int kOidCampFieldNumber = 2;
+  static const int kOidCampFieldNumber = 1;
   inline ::google::protobuf::uint32 oid_camp() const;
   inline void set_oid_camp(::google::protobuf::uint32 value);
   
-  // optional uint32 oid_parent = 3;
+  // optional uint32 oid_parent = 2;
   inline bool has_oid_parent() const;
   inline void clear_oid_parent();
-  static const int kOidParentFieldNumber = 3;
+  static const int kOidParentFieldNumber = 2;
   inline ::google::protobuf::uint32 oid_parent() const;
   inline void set_oid_parent(::google::protobuf::uint32 value);
   
-  // required string type = 4;
+  // required string type = 3;
   inline bool has_type() const;
   inline void clear_type();
-  static const int kTypeFieldNumber = 4;
+  static const int kTypeFieldNumber = 3;
   inline const ::std::string& type() const;
   inline void set_type(const ::std::string& value);
   inline void set_type(const char* value);
@@ -3513,7 +3506,6 @@ class MsgKnowledgeGroupCreationRequest : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::google::protobuf::uint32 oid_;
   ::google::protobuf::uint32 oid_camp_;
   ::google::protobuf::uint32 oid_parent_;
   ::std::string* type_;
@@ -3522,7 +3514,7 @@ class MsgKnowledgeGroupCreationRequest : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -5781,90 +5773,74 @@ inline void MsgControlToggleVisionCones::set_vision_cones(bool value) {
 
 // MsgKnowledgeGroupCreationRequest
 
-// required uint32 oid = 1;
-inline bool MsgKnowledgeGroupCreationRequest::has_oid() const {
-  return _has_bit(0);
-}
-inline void MsgKnowledgeGroupCreationRequest::clear_oid() {
-  oid_ = 0u;
-  _clear_bit(0);
-}
-inline ::google::protobuf::uint32 MsgKnowledgeGroupCreationRequest::oid() const {
-  return oid_;
-}
-inline void MsgKnowledgeGroupCreationRequest::set_oid(::google::protobuf::uint32 value) {
-  _set_bit(0);
-  oid_ = value;
-}
-
-// required uint32 oid_camp = 2;
+// required uint32 oid_camp = 1;
 inline bool MsgKnowledgeGroupCreationRequest::has_oid_camp() const {
-  return _has_bit(1);
+  return _has_bit(0);
 }
 inline void MsgKnowledgeGroupCreationRequest::clear_oid_camp() {
   oid_camp_ = 0u;
-  _clear_bit(1);
+  _clear_bit(0);
 }
 inline ::google::protobuf::uint32 MsgKnowledgeGroupCreationRequest::oid_camp() const {
   return oid_camp_;
 }
 inline void MsgKnowledgeGroupCreationRequest::set_oid_camp(::google::protobuf::uint32 value) {
-  _set_bit(1);
+  _set_bit(0);
   oid_camp_ = value;
 }
 
-// optional uint32 oid_parent = 3;
+// optional uint32 oid_parent = 2;
 inline bool MsgKnowledgeGroupCreationRequest::has_oid_parent() const {
-  return _has_bit(2);
+  return _has_bit(1);
 }
 inline void MsgKnowledgeGroupCreationRequest::clear_oid_parent() {
   oid_parent_ = 0u;
-  _clear_bit(2);
+  _clear_bit(1);
 }
 inline ::google::protobuf::uint32 MsgKnowledgeGroupCreationRequest::oid_parent() const {
   return oid_parent_;
 }
 inline void MsgKnowledgeGroupCreationRequest::set_oid_parent(::google::protobuf::uint32 value) {
-  _set_bit(2);
+  _set_bit(1);
   oid_parent_ = value;
 }
 
-// required string type = 4;
+// required string type = 3;
 inline bool MsgKnowledgeGroupCreationRequest::has_type() const {
-  return _has_bit(3);
+  return _has_bit(2);
 }
 inline void MsgKnowledgeGroupCreationRequest::clear_type() {
   if (type_ != &_default_type_) {
     type_->clear();
   }
-  _clear_bit(3);
+  _clear_bit(2);
 }
 inline const ::std::string& MsgKnowledgeGroupCreationRequest::type() const {
   return *type_;
 }
 inline void MsgKnowledgeGroupCreationRequest::set_type(const ::std::string& value) {
-  _set_bit(3);
+  _set_bit(2);
   if (type_ == &_default_type_) {
     type_ = new ::std::string;
   }
   type_->assign(value);
 }
 inline void MsgKnowledgeGroupCreationRequest::set_type(const char* value) {
-  _set_bit(3);
+  _set_bit(2);
   if (type_ == &_default_type_) {
     type_ = new ::std::string;
   }
   type_->assign(value);
 }
 inline void MsgKnowledgeGroupCreationRequest::set_type(const char* value, size_t size) {
-  _set_bit(3);
+  _set_bit(2);
   if (type_ == &_default_type_) {
     type_ = new ::std::string;
   }
   type_->assign(reinterpret_cast<const char*>(value), size);
 }
 inline ::std::string* MsgKnowledgeGroupCreationRequest::mutable_type() {
-  _set_bit(3);
+  _set_bit(2);
   if (type_ == &_default_type_) {
     type_ = new ::std::string;
   }

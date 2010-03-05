@@ -49,7 +49,8 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
     , nRoe_             ( MsgsSimToClient::RulesOfEngagement_Value_tir_interdit )
     , order_            ( 0 )
 {
-    assert( parentFormation_ || parentAutomat_ );
+    if( ! parentFormation_ && ! parentAutomat_ )
+        throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.nom() );
 
     knowledgeGroup_->Register( *this );
     if( parentFormation_ )
@@ -217,10 +218,9 @@ void Automat::Update( const Common::MsgAutomatOrder& msg )
 
 namespace
 {
-    void SerializeQuota( ::google::protobuf::RepeatedPtrField< ::Common::MsgDotationQuota >::iterator& asn, const DotationQuota& quota )
+    void SerializeQuota( ::Common::SeqOfDotationQuota& message, const DotationQuota& quota )
     {
-        quota.Send( *asn );
-        ++asn;
+        quota.Send( *message.add_elem() );
     }
 }
 
@@ -247,15 +247,8 @@ void Automat::SendCreation( ClientPublisher_ABC& publisher ) const
     {
         client::LogSupplyQuotas asn;
         asn().set_oid_automate ( GetId() );
-
-        for ( int i = 0; i < asn().quotas().elem_size(); ++i )
-            asn().mutable_quotas()->add_elem( );
-
-        quotas_.Apply( boost::bind( &::SerializeQuota, boost::ref( asn().mutable_quotas()->mutable_elem()->begin() ), _1 ) );
-
+        quotas_.Apply( boost::bind( &::SerializeQuota, boost::ref( *asn().mutable_quotas() ), _1 ) );
         asn.Send( publisher );
-        if( asn().quotas().elem_size() > 0 )
-            asn().mutable_quotas()->Clear();
     }
 }
 
@@ -267,11 +260,6 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 {
     {
         client::AutomatAttributes asn;
-//        asn().set_etat_automatePresent( 1 );
-//        asn().set_rapport_de_forcePresent( 1 );
-//        asn().set_combat_de_rencontrePresent( 1 );
-//        asn().set_etat_operationnelPresent( 1 );
-//        asn().set_roePresent( 1 );
         asn().set_oid ( GetId() );
         asn().set_etat_automate( nAutomatState_ );
         asn().set_rapport_de_force( nForceRatioState_);
@@ -301,25 +289,13 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         client::AutomatChangeLogisticLinks asn;
         asn().set_oid( GetId() );
         if( pTC2_ )
-        {
-            //asn().set_oid_tc2Present( 1 );
             asn().set_oid_tc2( pTC2_->GetId() );
-        }
         if( pLogMaintenance_ )
-        {
-            //asn().set_oid_maintenancePresent( 1 );
             asn().set_oid_maintenance( pLogMaintenance_->GetId() );
-        }
         if( pLogMedical_ )
-        {
-            //asn().set_oid_santePresent( 1 );
             asn().set_oid_sante( pLogMedical_->GetId() );
-        }
         if( pLogSupply_ )
-        {
-            //asn().set_oid_ravitaillementPresent( 1 );
             asn().set_oid_ravitaillement( pLogSupply_->GetId() );
-        }
         asn.Send( publisher );
     }
     if( order_.get() )
@@ -452,11 +428,12 @@ kernel::Team_ABC& Automat::GetTeam() const
     return team_;
 }
 // -----------------------------------------------------------------------------
-// Name: Automat::GetFormation
+// Name: Automat::GetKnowledgeGroup
 // Created: MGD 2009-12-23
 // -----------------------------------------------------------------------------
 kernel::KnowledgeGroup_ABC& Automat::GetKnowledgeGroup() const
 {
-    assert( knowledgeGroup_ );
+    if( !knowledgeGroup_ )
+        throw std::runtime_error( __FUNCTION__ ": automat without a knowledge group." );
     return *knowledgeGroup_;
 }  

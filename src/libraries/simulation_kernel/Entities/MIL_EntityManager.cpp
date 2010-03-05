@@ -1021,20 +1021,31 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::Ms
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message, unsigned int nCtx )
 {
     client::KnowledgeGroupCreationAck ack;
-    ack().set_oid( message.oid() );
+    ack().set_oid( 0 );
     ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
-
-    try
-    {
-        MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.oid() );
-        if( !pReceiver )
-            throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_type );
-        pReceiver->OnReceiveMsgKnowledgeGroupCreation( message );
-    }
-    catch( NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
+    // $$$$ _RC_ SBO 2010-03-04: not implemented
+//
+//    try
+//    {
+//        if( message.has_parent() )
+//        {
+//            if( MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.oid_parent() ) )
+//                pReceiver->OnReceiveMsgKnowledgeGroupCreation( message );
+//            else
+//                throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
+//        }
+//        else
+//        {
+//            if( MIL_Army* parent = FindArmy( message.oid_camp() ) )
+//                parent->OnReceiveMsgKnowledgeGroupCreation( message );
+//            else
+//                throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_camp );
+//        }
+//    }
+//    catch( NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >& e )
+//    {
+//        ack().set_error_code( e.GetErrorID() );
+//    }
     ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
@@ -1046,7 +1057,7 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSi
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, unsigned int nCtx )
 {
-    client::KnowledgeGroupUpdateAck  ack;
+    client::KnowledgeGroupUpdateAck ack;
     ack().set_oid( message.oid() );
     ack().set_error_code( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_no_error );
 
