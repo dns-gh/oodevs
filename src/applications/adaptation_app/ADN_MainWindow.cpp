@@ -342,9 +342,14 @@ void ADN_MainWindow::OpenProject()
 // Name: ADN_MainWindow::OpenProject
 // Created: APE 2005-04-14
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::OpenProject( const std::string& szFilename )
+void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isNormalMode )
 {
-    if( ! SelectOpenMode() )
+
+    if (isNormalMode){
+        workspace_.SetOpenMode( eOpenMode_Normal );
+        emit OpenModeToggled();    
+    }
+    else if( ! SelectOpenMode() )
         return;
 /*
     workspace_.SetOpenMode( eOpenMode_Admin );

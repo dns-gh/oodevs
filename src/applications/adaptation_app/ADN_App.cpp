@@ -128,7 +128,7 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     try
     {
         if( !inputFile.empty() )
-            pMainWindow_->OpenProject( inputFile );
+            pMainWindow_->OpenProject( inputFile, true );
         if( !outputFile.empty() )
         {
             pMainWindow_->SaveProjectAs( outputFile );
