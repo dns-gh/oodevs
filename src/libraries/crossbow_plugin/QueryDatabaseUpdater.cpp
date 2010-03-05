@@ -195,7 +195,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
     
     if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
     {
-        tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.GetKarma().GetUId() );
+        tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
@@ -302,7 +302,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpda
 
     if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
     {
-        tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->team_.GetKarma().GetUId() );
+        tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
