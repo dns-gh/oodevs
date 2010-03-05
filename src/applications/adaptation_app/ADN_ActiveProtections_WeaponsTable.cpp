@@ -50,7 +50,6 @@ public:
         pItemName->GetConnector().Connect( &pWeapons->strName_ );
 
         // set table item properties
-        //pItemOdds->GetValidator().setRange( 0.0, 100.0, 2 );
         pItemOdds->GetConnector().Connect( &pWeapons->coefficient_ );
 
         weaponsTable_.OnModified();
@@ -118,6 +117,8 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( int , int , const QPoint
     ADN_Equipement_Data::T_CategoryInfos_Vector& pWeapon = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition ).categories_;
     for( ADN_Equipement_Data::IT_CategoryInfos_Vector it = pWeapon.begin(); it != pWeapon.end(); ++it )
     {       
+        if( this->Contains( **it ) )
+            continue;
         addMenu.insertItem( (*it)->strName_.GetData().c_str(), (int)(*it) );
     }
     ADN_Tools::SortMenu( addMenu );
@@ -141,7 +142,10 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( int , int , const QPoint
     {
         // Create a new element
         ActiveProtectionsInfosWeapons* pNewInfo = new ActiveProtectionsInfosWeapons();
-        pNewInfo->ptrWeapon_ = (ADN_Equipement_Data::CategoryInfo*)nMenuResult;;
+        pNewInfo->ptrWeapon_   = (ADN_Equipement_Data::CategoryInfo*)nMenuResult;
+        pNewInfo->coefficient_ = 0;
+        pNewInfo->strName_     = pNewInfo->ptrWeapon_.GetData()->strName_.GetData();
+
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
         pCTable->AddItem( 0 );  
@@ -155,4 +159,23 @@ void ADN_ActiveProtections_WeaponsTable::OnContextMenu( int , int , const QPoint
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_WeaponsTable::OnModified()
 {
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ActiveProtections_WeaponsTable::Contains
+// Created: FDS 2010-02-24
+// -----------------------------------------------------------------------------
+bool ADN_ActiveProtections_WeaponsTable::Contains( ADN_Equipement_Data::CategoryInfo& category )
+{
+    int n = 0;
+    while( item( n, 1 ) != 0 )
+    {
+        ADN_TableItem_ABC* pItem = static_cast<ADN_TableItem_ABC*>( item( n, 1 ) );
+        ActiveProtectionsInfosWeapons* pInfos = static_cast<ActiveProtectionsInfosWeapons*>( pItem->GetData() );
+        if( pInfos->ptrWeapon_.GetData() == &category )
+            return true;
+        ++n;
+    }
+    return false;
 }

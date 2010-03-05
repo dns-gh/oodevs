@@ -31,6 +31,7 @@ public slots:
 
 private:
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual bool Contains( ADN_Equipement_Data::CategoryInfo& category );
 };
 
 #endif // __ADN_ActiveProtections_WeaponsTable_h_
