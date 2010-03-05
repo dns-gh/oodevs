@@ -26,7 +26,7 @@ typename Role::RoleInterface& RoleContainer::RegisterRole( Role& role )
 // Created: SBO 2009-08-14
 // -----------------------------------------------------------------------------
 template< class Archive >
-void RoleContainer::load( Archive& archive, const unsigned int /*version*/ )
+void RoleContainer::load( Archive& /*archive*/, const unsigned int /*version*/ )
 {
 }
 
@@ -35,7 +35,7 @@ void RoleContainer::load( Archive& archive, const unsigned int /*version*/ )
 // Created: SBO 2009-08-14
 // -----------------------------------------------------------------------------
 template< class Archive >
-void RoleContainer::save( Archive& archive, const unsigned int /*version*/ ) const
+void RoleContainer::save( Archive& /*archive*/, const unsigned int /*version*/ ) const
 {
 }
 

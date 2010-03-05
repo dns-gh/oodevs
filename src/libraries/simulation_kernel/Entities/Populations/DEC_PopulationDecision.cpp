@@ -68,6 +68,7 @@ DEC_PopulationDecision::~DEC_PopulationDecision()
 // -----------------------------------------------------------------------------
 void DEC_PopulationDecision::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    file >> boost::serialization::base_object< DEC_Decision< MIL_Population  > >( *this );
     file >> pEntity_
          >> rDominationState_
          >> rLastDominationState_;

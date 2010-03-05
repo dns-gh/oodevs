@@ -151,7 +151,7 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 
     file >> attributes_;
     idManager_.Lock( id_ );
-    MIL_Object_ABC::Register();
+    //MIL_Object_ABC::Register();
 }
     
 // -----------------------------------------------------------------------------
