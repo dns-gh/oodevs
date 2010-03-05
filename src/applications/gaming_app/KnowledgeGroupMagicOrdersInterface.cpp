@@ -65,7 +65,7 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
         AddMagic( tr( "Desactivate" ), SLOT( OnToggleKnowledgeGroupActivation() ), magicMenu );  
     else
         AddMagic( tr( "Activate" ), SLOT( OnToggleKnowledgeGroupActivation() ), magicMenu );
-    AddMagic( tr( "Create child KnowledgeGroup" ), SLOT( OnCreateSubKnowledgeGroup() ), magicMenu );
+    //AddMagic( tr( "Create child KnowledgeGroup" ), SLOT( OnCreateSubKnowledgeGroup() ), magicMenu );  // $$$$ _RC_ SBO 2010-03-05: Not implemented
     
     QPopupMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
     tools::Iterator< const kernel::KnowledgeGroupType& > it = knowledgeGroupTypes_.CreateIterator();

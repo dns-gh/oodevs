@@ -51,7 +51,6 @@
 #include <qtimer.h>
 #include <qlayout.h>
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow constructor
 // Created: JDY 03-06-19
@@ -73,15 +72,14 @@ ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
     setCaption( tr( "Sword Adaptation Tool - No Project" ) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow destructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
 ADN_MainWindow::~ADN_MainWindow()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow::Build
@@ -305,8 +303,8 @@ void ADN_MainWindow::NewProject()
     workspace_.SetOpenMode( eOpenMode_Admin );
     emit OpenModeToggled();
 
-//    if( ! SelectOpenMode() )
-//    return;
+    if( ! SelectOpenMode() )
+        return;
 
     SetMenuEnabled(false);
     pTab_->hide();
@@ -346,11 +344,12 @@ void ADN_MainWindow::OpenProject()
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::OpenProject( const std::string& szFilename )
 {
-//    if( ! SelectOpenMode() )
-//    return;
-
+    if( ! SelectOpenMode() )
+        return;
+/*
     workspace_.SetOpenMode( eOpenMode_Admin );
     emit OpenModeToggled();
+    */
 
     SetMenuEnabled( false );
     pTab_->hide();
