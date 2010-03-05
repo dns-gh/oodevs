@@ -216,12 +216,26 @@ node "BEH_Misc_Automate_GEN_GererReductionDesObstacles"
 
     activate = function( self )
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
+        self.listeObjetsADegager = self.listeObjetsADegager or {}
         --[[//copie ? --> NLD: oui
-]]self.listeObjetsADegager = self.listeObjetsADegager or self._namedParams.obstacles
-        --[[//-------------------------------------------------------------------------
+]]--[[// JSR : copie membre à membre de la liste, pour contourner un bug causé par la traduction lors d'une affectation directe
+]]if( ModuleBegins() ) then
+            do
+                for _,obj in pairs( self._namedParams.obstacles or {} ) do
+                local _continue = true
+                    do
+                        DIA_PushBack( self.listeObjetsADegager, obj )
+                    end
+
+                end
+
+            end
+--[[//-------------------------------------------------------------------------
 ]]--[[// Assignation des missions
 ]]--[[//-------------------------------------------------------------------------
-]]local listePionsGenie = S_Gen_ObtenirSectionsGenieDisponibles()
+]]        end
+
+        local listePionsGenie = S_Gen_ObtenirSectionsGenieDisponibles()
         for _,pion in pairs( listePionsGenie or {} ) do
         local _continue = true
 do
