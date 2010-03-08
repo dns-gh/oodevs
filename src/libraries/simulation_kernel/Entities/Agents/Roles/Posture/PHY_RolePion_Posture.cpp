@@ -188,7 +188,8 @@ void PHY_RolePion_Posture::Update( bool bIsDead )
     PostureComputer_ABC::Results& result = computer->Result(); 
     if( result.newPosture_ )
         ChangePosture( *result.newPosture_ );
-    ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
+    else
+        ChangePostureCompletionPercentage( result.postureCompletionPercentage_ );
     bIsStealth_ = result.bIsStealth_;
 
     if( HasChanged() )
