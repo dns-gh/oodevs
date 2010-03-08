@@ -25,14 +25,22 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
     end,
 
     select = function( self )
-                F_Pion_SeteEtatPhaseMission( myself, self._namedParams.eEtatPhaseMission )
+                self.selectedEtat = self.selectedEtat or myself
+        F_Pion_SeteEtatPhaseMission( myself, self._namedParams.eEtatPhaseMission )
     end,
 
     deselect = function( self )
-            end,
+                if( self.selectedEtat == myself ) then
+            self.selectedEtat = nil
+        end
+
+    end,
 
     destroy = function( self )
-                F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_None )
+                if( self.selectedEtat == myself ) then
+            F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_None )
+        end
+
     end,
 
 }
