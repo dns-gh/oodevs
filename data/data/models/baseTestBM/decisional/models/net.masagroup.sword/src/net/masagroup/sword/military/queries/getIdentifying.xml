@@ -9,6 +9,11 @@
         </list>
       </type>
     </parameter>
+    <parameter name="dynamic">
+      <type>
+        <simple name="boolean"/>
+      </type>
+    </parameter>
   </parameters>
   <target name="k">
     <type>

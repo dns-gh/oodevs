@@ -26,6 +26,11 @@
                   <parameter>entities</parameter>
                 </value>
               </parameter>
+              <parameter name="dynamic">
+                <value>
+                  <boolean>true</boolean>
+                </value>
+              </parameter>
             </call>
           </value>
         </parameter>

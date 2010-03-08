@@ -19,7 +19,7 @@ end )
 -- @author MGD
 -- @release 2010-01-22
 function CreateKnowledge( strKnowledgeType, knowledgeSource )
-    return masalife.brain.knowledge.create( strKnowledgeType, knowledgeSource )
+    return masalife.brain.knowledge.create( strKnowledgeType, knowledgeSource, nil, 1 )
 end
 
 --- Fill mission parameters and create corresponding knowledges

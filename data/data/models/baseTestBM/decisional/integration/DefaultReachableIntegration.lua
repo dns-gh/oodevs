@@ -52,7 +52,6 @@ integration.startMoveToIt = function( reachable )
   -- Leave tactical object
   if masalife.brain.knowledge.me.body.actionOccupy then
     DEC_StopAction( masalife.brain.knowledge.me.body.actionOccupy )
-    BreakForDebug( "unoccuppy")
   end
   if not reachable.moveAction then
     default_engine.methods.occupyPosition( masalife.brain.knowledge.me.body, nil ) -- UnOccupyPosition

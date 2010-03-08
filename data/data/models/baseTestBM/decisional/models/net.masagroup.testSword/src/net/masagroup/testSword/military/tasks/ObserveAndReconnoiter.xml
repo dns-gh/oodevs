@@ -42,6 +42,11 @@
                     <parameter>objectives</parameter>
                   </value>
                 </parameter>
+                <parameter name="dynamic">
+                  <value>
+                    <boolean>false</boolean>
+                  </value>
+                </parameter>
               </call>
             </value>
           </parameter>
@@ -51,6 +56,11 @@
                 <parameter name="objectives">
                   <value>
                     <parameter>objectives</parameter>
+                  </value>
+                </parameter>
+                <parameter name="dynamic">
+                  <value>
+                    <boolean>false</boolean>
                   </value>
                 </parameter>
               </call>

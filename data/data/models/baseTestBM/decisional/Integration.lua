@@ -1,4 +1,5 @@
 include "integration/ToolsFunctions.lua"
+include "integration/KnowledgeManager.lua"
 
 integration = {}
 
