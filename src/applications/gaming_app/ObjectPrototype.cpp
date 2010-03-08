@@ -165,6 +165,7 @@ void ObjectPrototype::Commit( Publisher_ABC& publisher )
         creation_.set_type( objectTypes_->GetValue()->GetType() );
         if( location_ )
             serializer_.Serialize( *location_ );
+        creation_.mutable_attributes();
         ObjectPrototype_ABC::Commit();
         *message().mutable_action()->mutable_create_object() = creation_;
         message.Send( publisher );
