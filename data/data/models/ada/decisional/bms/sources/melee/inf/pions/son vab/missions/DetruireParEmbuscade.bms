@@ -89,21 +89,21 @@ do
             local _continue = true
             local switch_1 = self.ePhase
             local cases_switch_1 = {}
-                if switch_1 == eSeMettreEnPlace then
+            if switch_1 == eSeMettreEnPlace then
                     if( self.eCurrentPhase == eFinMission ) then
                         do
                             self.eAction = eActionEnCours
                             self.ePhase = eRompreContact
-                                                        do return end
+                            do return end
 
                         end
                     end
 
-                    if( self.eAction == eActionImpossible or self.eAction == eActionHalt ) then
+                    if( self.eAction == eActionImpossible or self.eAction== eActionHalt ) then
                         do
                             self.eAction = eActionEnCours
                             self.ePhase = eRompreContact
-                                                        do return end
+                            do return end
 
                         end
                     end
@@ -111,9 +111,9 @@ do
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
-                                                        do
+                                do
                                 self.ePhase = eRompreContact
-                                                                do return end
+                                do return end
 
                             end
 
@@ -125,13 +125,13 @@ do
                     _continue = false
                 --[[// Decrocher sur ordre ou non
 ]]                cases_switch_1[1] = true
-elseif switch_1 == eRompreContact then
+                elseif switch_1 == eRompreContact then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
-                                                        do
+                                do
                                 self.ePhase = eFinMission
-                                                                do return end
+                                do return end
 
                             end
 
@@ -143,14 +143,14 @@ elseif switch_1 == eRompreContact then
                     Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                     _continue = false
                                 cases_switch_1[2] = true
-elseif switch_1 == eFinMission then
+                  elseif switch_1 == eFinMission then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
                                                         do
                                 DEC_Trace( "fin de mission" )
                                 DEC_FinMission()
-                                                                self.params.__returnValue = eActionEffectuee
+                                self.params.__returnValue = eActionEffectuee
                                 Halt( self )
                                 do return end
 
@@ -200,13 +200,13 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
         self.ptEmbuscade = self.ptEmbuscade or self.mission.positionEmbuscade_
         if( ModuleBegins() ) then
             do
-                --[[// Une fois que l'on s'est replier
+                --[[// Une fois que l'on s'est replier              
 ]]if( GetActivity() == 2 ) then
-                    self.ePhase = eInstallerDispositif
-                end
+                self.ePhase = eInstallerDispositif
+             end
 
                 --[[// Verifie que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+]]            StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
             end
         end
 
@@ -215,17 +215,17 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
 
         if( self.eAction == eActionImpossible ) then
             do
-                                do
-                    DEC_Warning( eRC_MissionImpossible )
-                                        self.params.__returnValue = eFinMission
-                    Halt( self )
-                    do return end
-
-                end
-
-                                self.params.__returnValue = eActionImpossible
+              do
+                DEC_Warning( eRC_MissionImpossible )
+                self.params.__returnValue = eFinMission
                 Halt( self )
                 do return end
+
+              end
+
+              self.params.__returnValue = eActionImpossible
+              Halt( self )
+              do return end
 
             end
         end
@@ -236,15 +236,15 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
             local cases_switch_1 = {}
                 if switch_1 == eRejoindre then
                     --[[// On rejoint la position d'embuscade
-]]if( self.eAction == eActionEffectuee ) then
+]]                  if( self.eAction == eActionEffectuee ) then
                         do
-                            self.eAction = eActionEnCours
-                                                        do
-                                self.ePhase = eInstallerDispositif
-                                                                self.params.__returnValue = self.ePhase
-                                do return end
+                          self.eAction = eActionEnCours
+                            do
+                              self.ePhase = eInstallerDispositif
+                              self.params.__returnValue = self.ePhase
+                            do return end
 
-                            end
+                           end
 
                         end
                     end
@@ -255,7 +255,7 @@ node "BEH_Mission_Pion_VAB_DetruireEmbuscade"
                     _continue = false
                 --[[// Rejoins la position d'enbuscade et prepare le terrain
 ]]                cases_switch_1[1] = true
-elseif switch_1 == eInstallerDispositif then
+                  elseif switch_1 == eInstallerDispositif then
                     Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
                     StartActivateOverride( self, self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// On fait en sorte de ne pas etre vu
@@ -264,13 +264,13 @@ elseif switch_1 == eInstallerDispositif then
                     if( self.eAction == eActionEffectuee ) then
                         do
                             self.eAction = eActionEnCours
-                                                        do
+                                do
                                 StartActivateOverride( self, self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 1.5, { self.ptEmbuscade, self.mission.natureObstacle_, } )
                                 self.ePhase = eSurveiller
-                                                                self.params.__returnValue = self.ePhase
+                                self.params.__returnValue = self.ePhase
                                 do return end
 
-                            end
+                              end
 
                         end
                     end
@@ -279,7 +279,7 @@ elseif switch_1 == eInstallerDispositif then
                     _continue = false
                 --[[// Surveille la position
 ]]                cases_switch_1[2] = true
-elseif switch_1 == eSurveiller then
+                  elseif switch_1 == eSurveiller then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnSurveillance, } )
                     Activate( self.activations.ACT_Dep_Pion_INF_ActiverFurtivite, 1, { 0.1, } )
                     --[[// detection par l'eni
@@ -287,7 +287,7 @@ elseif switch_1 == eSurveiller then
                     --[[// Formation
 ]]Activate( self.activations.ACT_Obs_ObserverZone, 1, { self.ptEmbuscade, 1000, } )
                     _continue = false
-                                cases_switch_1[3] = true
+                     cases_switch_1[3] = true
 
                 else
                                 end
@@ -296,6 +296,10 @@ elseif switch_1 == eSurveiller then
                 self.params.__returnValue = self.ePhase
         do return end
 
+    end,
+    
+    destroy = function( self )
+      obstacleEmbuscade = nil
     end,
 
 --[[//=============================================================================
@@ -316,7 +320,7 @@ node "BEH_Eni_Pion_VAB_DetruireEmbuscade"
     end,
 
     activate = function( self )
-                self.mission = self.mission or DEC_GetMission( myself )
+        self.mission = self.mission or DEC_GetMission( myself )
         self.ptEmbuscade = self.ptEmbuscade or self.mission.positionEmbuscade_
         self.ksEni_Mission = self.ksEni_Mission or self.mission.ennemi_
         self.eActionDelai = self.eActionDelai or eActionEnCours
@@ -330,14 +334,14 @@ node "BEH_Eni_Pion_VAB_DetruireEmbuscade"
                 if( DEC_ConnaissanceAgent_EstValide( ksEni_Percu ) and ( S_Geometrie_EstProchePosition( self.ptEmbuscade, DEC_ConnaissanceAgent_Position( ksEni_Percu ), rDist_Max ) or S_Geometrie_EstProchePosition( DEC_Agent_Position(), DEC_ConnaissanceAgent_Position( ksEni_Percu ), rDist_Max ) ) ) then
                     do
                         DEC_RC( eRC_PointTenuParEni, ksEni_Percu )
-                                                self.params.__returnValue = eActionHalt
+                        self.params.__returnValue = eActionHalt
                         Halt( self )
                         do return end
 
                     end
                 end
 
-                                do return end
+                do return end
 
             end
         end

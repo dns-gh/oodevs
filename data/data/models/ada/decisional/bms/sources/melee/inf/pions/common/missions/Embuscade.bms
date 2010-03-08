@@ -25,274 +25,279 @@ include "bit.lua"
 ]]--[[// ----------------------------------------------------------------------------
 ]]node "BEH_Obj_Pion_INF_GererInstallationObstacle"
 {
-    activations =
-    {
-        { "ACT_Info_Trace", {} },
-        { "ACT_Obj_Pion_INF_RealiserBouchonMines", {} },
-        { "ACT_Obj_Pion_INF_PreparerAbattis", {} },
-        { "ACT_Misc_Pion_DelaiInstallation", {} },
-        { "ACT_Obj_Pion_INF_Activer", {} },
-    },
+  activations =
+  {
+    { "ACT_Info_Trace", {} },
+    { "ACT_Obj_Pion_INF_RealiserBouchonMines", {} },
+    { "ACT_Obj_Pion_INF_PreparerAbattis", {} },
+    { "ACT_Misc_Pion_DelaiInstallation", {} },
+    { "ACT_Obj_Pion_INF_Activer", {} },
+  },
 
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.ptEmbuscade = self.params[1]
-        self._namedParams.eTypeObjet = self.params[2]
-    end,
+  create = function( self )
+    self._namedParams = {}
+    self._namedParams.ptEmbuscade = self.params[1]
+    self._namedParams.eTypeObjet = self.params[2]
+  end,
 
-    activate = function( self )
-        self.locEmbuscade = self.locEmbuscade or nil
-        self.eAction = self.eAction or eActionEnCours
-        self.eActionAbattis = self.eActionAbattis or eActionEnCours
-        self.repObj = self.repObj or nil
-        self.ePhase = self.ePhase or eRealiserObstacle
+  activate = function( self )
+      self.locEmbuscade = self.locEmbuscade or nil
+      self.eAction = self.eAction or eActionEnCours
+      self.eActionAbattis = self.eActionAbattis or eActionEnCours
+      self.repObj = self.repObj or nil
+      self.ePhase = self.ePhase or eRealiserObstacle
+      do
+      end
+
+      if( ModuleBegins() ) then
         do
-        end
+          self.locEmbuscade = S_Geometrie_INF_ChercherPositionObstacle( self._namedParams.ptEmbuscade, self._namedParams.eTypeObjet, 500 )
+          if( ( self.locEmbuscade == 0 or self.locEmbuscade == nil ) ) then
+          self.locEmbuscade = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptEmbuscade )
+          end
 
-        if( ModuleBegins() ) then
-            do
-                self.locEmbuscade = S_Geometrie_INF_ChercherPositionObstacle( self._namedParams.ptEmbuscade, self._namedParams.eTypeObjet, 500 )
-                if( ( self.locEmbuscade == 0 or self.locEmbuscade == nil ) ) then
-                    self.locEmbuscade = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.ptEmbuscade )
-                end
-
-            end
---[[// Demande exterieur d'activation de l'obstacle
+       end
+      --[[// Demande exterieur d'activation de l'obstacle
 ]]        end
 
-        if( GetActivity() >= 2 and self.eActionAbattis == eActionEffectuee and self.ePhase == eAttendre ) then
-            self.ePhase = eActiverObstacle
-        end
+      if( GetActivity() >= 2 and self.eActionAbattis == eActionEffectuee and self.ePhase == eAttendre ) then
+        self.ePhase = eActiverObstacle
+      end
 
-        do
+      do
         end
 
          do
-            local _continue = true
-            local switch_1 = self.ePhase
-            local cases_switch_1 = {}
-                if switch_1 == eRealiserObstacle then
-                    do
-                    end
+        local _continue = true
+        local switch_1 = self.ePhase
+        local cases_switch_1 = {}
+        if switch_1 == eRealiserObstacle then
+        do
+        end
+        
+        if( self.eActionAbattis == eActionImpossible ) then
+          do
+            self.ePhase = eAttendre
+            Activate( self.activations.ACT_Info_Trace, 1, { "preparation echouee, on attend", } )
+            do return end
 
-                    if( self.eActionAbattis == eActionImpossible ) then
-                        do
-                            self.ePhase = eAttendre
-                            Activate( self.activations.ACT_Info_Trace, 1, { "preparation echouee, on attend", } )
-                                                        do return end
+           end
+        end
+        
+        if( self.eAction == eActionEffectuee and self.eActionAbattis == eActionEffectuee ) then
+          do          
+            self.ePhase = eAttendre
+            self.repObj = S_Obj_ObtenirObjetProcheDe( self.locEmbuscade, self._namedParams.eTypeObjet, 800 )
+            Activate( self.activations.ACT_Info_Trace, 1, { "preparation terminee, on attend", } )
+            do return end
 
-                        end
-                    end
+          end
+        end
 
-                    if( self.eAction == eActionEffectuee and self.eActionAbattis == eActionEffectuee ) then
-                        do
-                            self.ePhase = eAttendre
-                            self.repObj = S_Obj_ObtenirObjetProcheDe( self.locEmbuscade, self._namedParams.eTypeObjet, 800 )
-                            Activate( self.activations.ACT_Info_Trace, 1, { "preparation terminee, on attend", } )
-                                                        do return end
-
-                        end
-                    end
-
-                    if( self.eActionAbattis == eActionEnCours ) then
-                        do
-                             do
-                                local _continue = true
-                                local switch_2 = --[[// Realiser abatti		
-]]self._namedParams.eTypeObjet
-                                local cases_switch_2 = {}
-                                    if switch_2 == eTypeObjectBouchonMines then
-                                                                            Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locEmbuscade, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
-                                        _continue = false
-                                                                        cases_switch_2[1] = true
-elseif switch_2 == eTypeObjectAbatti then
+        if( self.eActionAbattis == eActionEnCours ) then
+        do
+          do
+          local _continue = true
+          local switch_2 = --[[// Realiser abatti		
+          ]]self._namedParams.eTypeObjet
+          local cases_switch_2 = {}
+            if switch_2 == eTypeObjectBouchonMines then
+              Activate( self.activations.ACT_Obj_Pion_INF_RealiserBouchonMines, 1, setmetatable( { self.locEmbuscade, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
+              _continue = false
+              cases_switch_2[1] = true
+              elseif switch_2 == eTypeObjectAbatti then
                                                                             Activate( self.activations.ACT_Obj_Pion_INF_PreparerAbattis, 1, setmetatable( { self.locEmbuscade, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionAbattis = v else rawset( t, k, v ) end end } ) )
-                                        _continue = false
-                                                                        cases_switch_2[2] = true
+                _continue = false
+                cases_switch_2[2] = true
 
-                                    else
-                                                                            DEC_Trace( "eTypeObstacle : Object non reconnu " .. EnumToString( self._namedParams.eTypeObjet, E_TypeObject ) )
-                                        self.eActionAbattis = eActionEffectuee
-                                                                        end
-                                end
+                else
+                DEC_Trace( "eTypeObstacle : Object non reconnu " .. EnumToString( self._namedParams.eTypeObjet, E_TypeObject ) )
+                self.eActionAbattis = eActionEffectuee
+              end
+            end
 
-                        end
-                    end
+          end
+        end
 
-                    if( self.eAction == eActionEnCours ) then
-                        --[[// Temps de mise en place du dispositif
-]]Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-                    end
+        if( self.eAction == eActionEnCours ) then
+          --[[// Temps de mise en place du dispositif
+          ]]Activate( self.activations.ACT_Misc_Pion_DelaiInstallation, 1, setmetatable( { eNiveauInstallation_Poste, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+        end
 
-                    _continue = false
-                                cases_switch_1[1] = true
-elseif switch_1 == eActiverObstacle then
-                    if( not DEC_ConnaissanceObjet_EstValide( self.repObj ) ) then
-                        do
+        _continue = false
+        cases_switch_1[1] = true
+       elseif switch_1 == eActiverObstacle then
+          if( not DEC_ConnaissanceObjet_EstValide( self.repObj ) ) then
+            do
                             DEC_Trace( "objet cree non recupere" )
-                            self.ePhase = ePrendreContact
-                                                        self.params.__returnValue = eActionEffectuee
-                            do return end
+              self.ePhase = ePrendreContact
+              self.params.__returnValue = eActionEffectuee
+              obstacleEmbuscade = eActionEffectuee
+              do return end
 
-                        end
-                    end
+            end
+          end
 
-                    if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
-                        do
-                            Activate( self.activations.ACT_Info_Trace, 1, { "unite eni se presente bien", } )
-                            --[[// Si il est a porte de tir, on lance l'assaut    				    				
-]]if( S_Geometrie_EstProcheLocalisation( DEC_ConnaissanceAgent_Position( F_Pion_GeteniEnCours( myself ) ), DEC_ConnaissanceObjet_Localisation( self.repObj ), 200 ) ) then
-                                do
-                                    StartActivateOverride( self, self.activations.ACT_Obj_Pion_INF_Activer, 1, { self.repObj, } )
-                                    self.ePhase = ePrendreContact
-                                                                        self.params.__returnValue = eActionEffectuee
-                                    do return end
+          if( F_Pion_GeteniEnCours( myself ) ~= nil ) then
+            do
+              Activate( self.activations.ACT_Info_Trace, 1, { "unite eni se presente bien", } )
+              --[[// Si il est a porte de tir, on lance l'assaut    				    				
+              ]]if( S_Geometrie_EstProcheLocalisation( DEC_ConnaissanceAgent_Position( F_Pion_GeteniEnCours( myself ) ), DEC_ConnaissanceObjet_Localisation( self.repObj ), 200 ) ) then
+                do
+                  StartActivateOverride( self, self.activations.ACT_Obj_Pion_INF_Activer, 1, { self.repObj, } )
+                  self.ePhase = ePrendreContact
+                  self.params.__returnValue = eActionEffectuee
+                  do return end
 
-                                end
-                            end
-
-                        end
-                    end
-
-                    _continue = false
-                                cases_switch_1[2] = true
-elseif switch_1 == ePrendreContact
-                or switch_1 == eAttendre then
-                    _continue = false
-                                cases_switch_1[3] = true
                 end
             end
 
-    end,
+          end
+        end
 
---[[// ============================================================================
-]]--[[// BEH_Pion_Milice_RejoindrePositionTir_Embusc( T_Point ptPos )
-]]--[[//
-]]--[[//		ptPos : Point sur lequel la section eni est censee arriver
-]]--[[//
-]]--[[// Description: rejoins une position sur laquel on va pouvoir ouvrir le feu
-]]--[[// ============================================================================
-]]}
+        _continue = false
+        cases_switch_1[2] = true   
+        elseif switch_1 == ePrendreContact
+           or switch_1 == eAttendre then
+             _continue = false
+             cases_switch_1[3] = true
+           end
+        end
+
+    end,
+     
+  --[[// ============================================================================
+  ]]--[[// BEH_Pion_Milice_RejoindrePositionTir_Embusc( T_Point ptPos )
+  ]]--[[//
+  ]]--[[//		ptPos : Point sur lequel la section eni est censee arriver
+  ]]--[[//
+  ]]--[[// Description: rejoins une position sur laquel on va pouvoir ouvrir le feu
+  ]]--[[// ============================================================================
+  ]]}
 
 node "BEH_Dep_Pion_INF_RejoindrePositionTir_Embusc"
 {
-    activations =
-    {
-        { "BEH_Dep_ProgressionVers", {} },
-    },
+  activations =
+  {
+    { "BEH_Dep_ProgressionVers", {} },
+  },
 
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.ptPos = self.params[1]
-        self._namedParams.ptRepli = self.params[2]
-    end,
+  create = function( self )
+  self._namedParams = {}
+  self._namedParams.ptPos = self.params[1]
+  self._namedParams.ptRepli = self.params[2]
+  end,
 
-    activate = function( self )
-        self.eAction = self.eAction or eActionEnCours
-        --[[// Cree la position d'observation		
-]]self.ptEmbuscade = self.ptEmbuscade or nil
-        if( ModuleBegins() ) then
-            do
-                self.ptEmbuscade = DEC_Geometrie_CalculerPositionEmbuscade( self._namedParams.ptPos, self._namedParams.ptRepli, 300 )
-                DEC_Trace( "deplacement sur position d'embuscade" )
-            end
-        end
+  activate = function( self )
+  self.eAction = self.eAction or eActionEnCours
+  --[[// Cree la position d'observation		
+  ]]self.ptEmbuscade = self.ptEmbuscade or nil
+  if( ModuleBegins() ) then
+  do
+  self.ptEmbuscade = DEC_Geometrie_CalculerPositionEmbuscade( self._namedParams.ptPos, self._namedParams.ptRepli, 300 )
+  DEC_Trace( "deplacement sur position d'embuscade" )
+  end
+  end
 
-        if( self.eAction == eActionImpossible ) then
-            do
-                                do
-                end
+  if( self.eAction == eActionImpossible ) then
+  do
+  do
+  end
 
-                                self.params.__returnValue = eActionImpossible
-                Halt( self )
-                do return end
+  self.params.__returnValue = eActionImpossible
+  Halt( self )
+  do return end
 
-            end
---[[// Puis on la rejoint								
-]]        end
+  end
+  --[[// Puis on la rejoint								
+  ]]        end
 
-        if( self.eAction == eActionEffectuee ) then
-            do
-                self.eAction = eActionEnCours
-                                do
-                                        self.params.__returnValue = eActionEffectuee
-                    Halt( self )
-                    do return end
+  if( self.eAction == eActionEffectuee ) then
+  do
+  self.eAction = eActionEnCours
+  do
+  self.params.__returnValue = eActionEffectuee
+  Halt( self )
+  do return end
 
-                end
+  end
 
-            end
-        end
+  end
+  end
 
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptEmbuscade, eProgressionDefaut, eTypeItiAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
-    end,
+  Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.ptEmbuscade, eProgressionDefaut, eTypeItiAttaque, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+  end,
 
---[[// ============================================================================
-]]--[[// $Created : JCR : 25/03/2005 10:24
-]]--[[// Partie commune de la destruction par embuscade
-]]--[[// ============================================================================
-]]}
+  --[[// ============================================================================
+  ]]--[[// $Created : JCR : 25/03/2005 10:24
+  ]]--[[// Partie commune de la destruction par embuscade
+  ]]--[[// ============================================================================
+  ]]}
 
 node "BEH_Eni_Pion_INF_DetruireEmbuscade"
 {
-    activations =
-    {
-        { "ACT_Maj_Pion_PasserEnTirLibre", {} },
-        { "BEH_MOT_DesactiveSauvegarde", {} },
-        { "BEH_Obj_Pion_INF_GererInstallationObstacle", {} },
-        { "ACT_Misc_Delai", {} },
-        { "ACT_MAJ_EnnemiEnCours", {} },
-    },
+  activations =
+  {
+    { "ACT_Maj_Pion_PasserEnTirLibre", {} },
+    { "BEH_MOT_DesactiveSauvegarde", {} },
+    { "BEH_Obj_Pion_INF_GererInstallationObstacle", {} },
+    { "ACT_Misc_Delai", {} },
+    { "ACT_MAJ_EnnemiEnCours", {} },
+  },
 
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.ptEmbuscade = self.params[1]
-        self._namedParams.eTypeObj = self.params[2]
-    end,
+  create = function( self )
+  self._namedParams = {}
+  self._namedParams.ptEmbuscade = self.params[1]
+  self._namedParams.eTypeObj = self.params[2]
+  end,
 
-    activate = function( self )
-        self.eActionDelai = self.eActionDelai or eActionEnCours
-        self.eActionObst = self.eActionObst or eActionEnCours
-        if( self.eActionDelai == eActionEffectuee ) then
-            do
-                self.eActionDelai = eActionEnCours
-                                self.params.__returnValue = eActionHalt
+  activate = function( self )
+  self.eActionDelai = self.eActionDelai or eActionEnCours
+  if( self.eActionDelai == eActionEffectuee ) then
+    do
+      self.eActionDelai = eActionEnCours
+      self.params.__returnValue = eActionHalt
                 do return end
 
-            end
---[[// Si pas d'objet, on active ici la gestion des ROE		
+    end
+    --[[// Si pas d'objet, on active ici la gestion des ROE		
 ]]        end
 
-        if( self.eActionObst == eActionEffectuee ) then
-            Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
-        else
-            Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
-        end
+  if( obstacleEmbuscade == eActionEffectuee ) then
+    Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )
+  else
+    Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+  end
 
-        --[[//
-]]--[[// Gestion des unites percues
-]]local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
-        for _,x in pairs( lstEnisPercus or {} ) do
-        local _continue = true
-do
-                --[[// On fait l'assaut
-]]if( S_Tir_EstAPorteePosturesReelles( x, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
-                    do
+  --[[//
+  ]]--[[// Gestion des unites percues
+  ]]local lstEnisPercus = DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau()
+    for _,x in pairs( lstEnisPercus or {} ) do
+      local _continue = true
+      do
+        --[[// On fait l'assaut
+        ]]if( S_Tir_EstAPorteePosturesReelles( x, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
+            do
                         StartActivateOverride( self, self.activations.BEH_Obj_Pion_INF_GererInstallationObstacle, 0.5, setmetatable( { self._namedParams.ptEmbuscade, self._namedParams.eTypeObj, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionObst = v else rawset( t, k, v ) end end } ) )
-                        --[[// Au bout de 3 min, on retourne au point de regroupement
+                --[[// Au bout de 3 min, on retourne au point de regroupement
 ]]if( F_Pion_GeteEtatFeu( myself ) == eEtatFeu_Executer ) then
-                            StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
-                        end
+               StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, 1, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionDelai = v else rawset( t, k, v ) end end } ) )
+              end
 
-                        Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { x, } )
-                    end
-                end
-
+              Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { x, } )
             end
+          end          
 
-        end
+      end
 
-    end,
+    end
+    
+    if( obstacleEmbuscade == eActionEffectuee ) then
+      self.params.__returnValue = eActionHalt
+      do return end
+    end
+
+  end,
 
 }
 
