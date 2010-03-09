@@ -94,6 +94,7 @@ node "BEH_Default"
                 else
                     DEC_RC( eRC_PopulationTemporairementRepoussee )
                 end
+
             end
         else
 if( ( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 or GetStateVariable( "VE_Domination" ) == 1 and rCourage == nil ) ) then
@@ -105,6 +106,7 @@ if( ( GetStateVariable( "VE_Domination" ) == 1 and rCourage == 0 or GetStateVari
 ]]--[[// =============================================================================
 ]]            end
         end
+
         DEC_Population_ChangeEtatDomination( GetStateVariable( "VE_Domination" ) * GetStateVariable( "VE_Courage" ) )
         --[[// =============================================================================
 ]]--[[// Reception d'un ordre de l'ANIBAS
@@ -135,6 +137,7 @@ elseif switch_1 == "Rep_OrderConduite_Population_ChangerAttitude" then
                                                 cases_switch_1[3] = true
                         end
                     end
+
                 Activate( self.activations.ACT_Ordre_Suppression, 1, { x, } )
             end
 
