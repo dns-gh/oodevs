@@ -322,7 +322,7 @@
     <parameter type="Numeric"/>
     <parameter type="Numeric"/>
   </report>
-  <report id="243" message="attitude population">
+  <report id="243" message="attitude population: %1">
     <parameter type="Enumeration">
       <value id="0" name="calme"/>
       <value id="1" name="agitee"/>
