@@ -181,9 +181,7 @@
         <argument name="objectives">
            <description>L'entité dont l'agent veut se sauvegarder.</description>
            <type>
-              <list>
                 <class name="net.masagroup.military.generic.knowledge.Safeguardable"/>
-                </list>
            </type>
            </argument>
     </predicate>
