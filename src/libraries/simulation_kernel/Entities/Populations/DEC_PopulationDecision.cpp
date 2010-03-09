@@ -222,16 +222,16 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_GetSzName",             &DEC_PopulationFunctions::GetSzName       );
     brain.RegisterFunction( "DEC_GetRawMission",         &DEC_PopulationFunctions::GetMission            );
     brain.RegisterFunction( "DEC_SetMission",
-        boost::function< void ( DEC_Decision_ABC*, MIL_Mission_ABC* ) >( boost::bind( &DEC_PopulationFunctions::SetMission, _1, _2 ) ) );
+        boost::function< void ( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_PopulationFunctions::SetMission, _1, _2 ) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationDecision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StartMissionBehavior( MIL_Mission_ABC& mission )
+void DEC_PopulationDecision::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior();
+    const std::string& strBehavior = mission->GetType().GetDIABehavior();
 
     ActivateOrder( strBehavior, mission );
 }
@@ -240,9 +240,9 @@ void DEC_PopulationDecision::StartMissionBehavior( MIL_Mission_ABC& mission )
 // Name: DEC_PopulationDecision::StopMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_PopulationDecision::StopMissionBehavior( MIL_Mission_ABC& mission )
+void DEC_PopulationDecision::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior();
+    const std::string& strBehavior = mission->GetType().GetDIABehavior();
     StopMission( strBehavior );
 }
 

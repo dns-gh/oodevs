@@ -265,7 +265,7 @@ bool DEC_AutomateFunctions::MakePionRelievePion( const MIL_Automate& callerAutom
 
     if( relieving->GetPion().GetOrderManager().RelievePion( relieved->GetPion() ) )
     {
-        relieved->GetPion().GetOrderManager().ReplaceMission();
+        relieved->GetPion().GetOrderManager().CancelMission();
         return true;
     }
     return false;
@@ -307,7 +307,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AutomateFunctions::ComputePionNearestLocali
 // Name: DEC_AutomateFunctions::GetMission
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC* DEC_AutomateFunctions::GetMission( DEC_Decision_ABC* pAgent )
+boost::shared_ptr< MIL_Mission_ABC > DEC_AutomateFunctions::GetMission( DEC_Decision_ABC* pAgent )
 {
     return pAgent->GetMission();
 }
@@ -316,7 +316,7 @@ MIL_Mission_ABC* DEC_AutomateFunctions::GetMission( DEC_Decision_ABC* pAgent )
 // Name: DEC_AutomateFunctions::SetMission
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_AutomateFunctions::SetMission( DEC_Decision_ABC* object, MIL_Mission_ABC* mission )
+void DEC_AutomateFunctions::SetMission( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     object->SetMission( mission );
 }

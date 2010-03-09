@@ -336,7 +336,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateP
 // Name: MIL_MissionParameterFactory::SetPawnParameter
 // Created: LDC 2009-07-10
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetPawnParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Decision_ABC* pion )
+void MIL_MissionParameterFactory::SetPawnParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, DEC_Decision_ABC* pion )
 {
     pMission->SetParameter( parameter, CreatePawn (pion ) );
 }
@@ -354,7 +354,7 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateA
 // Name: MIL_MissionParameterFactory::SetAutomatParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetAutomatParameter( MIL_Mission_ABC* pMission, const std::string& parameter, DEC_Decision_ABC* automat )
+void MIL_MissionParameterFactory::SetAutomatParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, DEC_Decision_ABC* automat )
 {
     pMission->SetParameter( parameter, CreateAutomat( automat ) );
 }
@@ -363,7 +363,7 @@ void MIL_MissionParameterFactory::SetAutomatParameter( MIL_Mission_ABC* pMission
 // Name: MIL_MissionParameterFactory::SetBoolParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetBoolParameter( MIL_Mission_ABC* pMission, const std::string& parameter, bool value )
+void MIL_MissionParameterFactory::SetBoolParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, bool value )
 {
     boost::shared_ptr< MIL_BoolParameter > boolParam( new MIL_BoolParameter( value ) );
     pMission->SetParameter( parameter, boolParam );
@@ -373,7 +373,7 @@ void MIL_MissionParameterFactory::SetBoolParameter( MIL_Mission_ABC* pMission, c
 // Name: MIL_MissionParameterFactory::SetObjectKnowledgeParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetObjectKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+void MIL_MissionParameterFactory::SetObjectKnowledgeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     pMission->SetParameter( parameter, Create( pKnowledge ) );
 }
@@ -382,7 +382,7 @@ void MIL_MissionParameterFactory::SetObjectKnowledgeParameter( MIL_Mission_ABC* 
 // Name: MIL_MissionParameterFactory::SetNatureAtlasTypeParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetNatureAtlasTypeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, int natureAtlas )
+void MIL_MissionParameterFactory::SetNatureAtlasTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int natureAtlas )
 {
     boost::shared_ptr< MIL_AtlasNatureParameter > natureParam( new MIL_AtlasNatureParameter( natureAtlas ) );
     pMission->SetParameter( parameter, natureParam );
@@ -392,7 +392,7 @@ void MIL_MissionParameterFactory::SetNatureAtlasTypeParameter( MIL_Mission_ABC* 
 // Name: MIL_MissionParameterFactory::SetAutomatListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetAutomatListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& automatList )
+void MIL_MissionParameterFactory::SetAutomatListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& automatList )
 {
     std::vector< DEC_AutomateDecision* > typedAutomatList;
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = automatList.begin(); it != automatList.end(); ++it )
@@ -405,7 +405,7 @@ void MIL_MissionParameterFactory::SetAutomatListParameter( MIL_Mission_ABC* pMis
 // Name: MIL_MissionParameterFactory::SetAgentKnowledgeParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
+void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge )
 {
     pMission->SetParameter( parameter, Create( agentKnowledge ) );
 }
@@ -414,7 +414,7 @@ void MIL_MissionParameterFactory::SetAgentKnowledgeParameter( MIL_Mission_ABC* p
 // Name: MIL_MissionParameterFactory::SetPathListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetPathListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& list )
+void MIL_MissionParameterFactory::SetPathListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >& list )
 {
     boost::shared_ptr< MIL_PathListParameter > listParam( new MIL_PathListParameter( list ) );
     pMission->SetParameter( parameter, listParam );
@@ -424,7 +424,7 @@ void MIL_MissionParameterFactory::SetPathListParameter( MIL_Mission_ABC* pMissio
 // Name: MIL_MissionParameterFactory::SetEnumereParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetEnumereParameter( MIL_Mission_ABC* pMission, const std::string& parameter, int value )
+void MIL_MissionParameterFactory::SetEnumereParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int value )
 {
     pMission->SetParameter( parameter, Create( value ) );
 }
@@ -433,7 +433,7 @@ void MIL_MissionParameterFactory::SetEnumereParameter( MIL_Mission_ABC* pMission
 // Name: MIL_MissionParameterFactory::SetLocationParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetLocationParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< TER_Localisation > location )
+void MIL_MissionParameterFactory::SetLocationParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< TER_Localisation > location )
 {
     pMission->SetParameter( parameter, Create( location ) );
 }
@@ -442,7 +442,7 @@ void MIL_MissionParameterFactory::SetLocationParameter( MIL_Mission_ABC* pMissio
 // Name: MIL_MissionParameterFactory::SetObjectKnowledgeListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetObjectKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& objectKnowledgeList )
+void MIL_MissionParameterFactory::SetObjectKnowledgeListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& objectKnowledgeList )
 {
     boost::shared_ptr< MIL_ObjectKnowledgeListParameter > listParam( new MIL_ObjectKnowledgeListParameter( objectKnowledgeList ) );
     pMission->SetParameter( parameter, listParam );
@@ -452,7 +452,7 @@ void MIL_MissionParameterFactory::SetObjectKnowledgeListParameter( MIL_Mission_A
 // Name: MIL_MissionParameterFactory::SetPointParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetPointParameter( MIL_Mission_ABC* pMission, const std::string& parameter, MT_Vector2D& point )
+void MIL_MissionParameterFactory::SetPointParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, MT_Vector2D& point )
 {
     pMission->SetParameter( parameter, Create( point ) );
 }
@@ -461,7 +461,7 @@ void MIL_MissionParameterFactory::SetPointParameter( MIL_Mission_ABC* pMission, 
 // Name: MIL_MissionParameterFactory::SetAgentKnowledgeListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& agentKnowledgeList )
+void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& agentKnowledgeList )
 {
     boost::shared_ptr< MIL_AgentKnowledgeListParameter > listParam( new MIL_AgentKnowledgeListParameter( agentKnowledgeList ) );
     pMission->SetParameter( parameter, listParam );
@@ -471,7 +471,7 @@ void MIL_MissionParameterFactory::SetAgentKnowledgeListParameter( MIL_Mission_AB
 // Name: MIL_MissionParameterFactory::SetGenObjectListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetGenObjectListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Gen_Object > >& list )
+void MIL_MissionParameterFactory::SetGenObjectListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< DEC_Gen_Object > >& list )
 {
     boost::shared_ptr< MIL_PlannedWorkListParameter > listParam( new MIL_PlannedWorkListParameter( list ) );
     pMission->SetParameter( parameter, listParam );
@@ -481,7 +481,7 @@ void MIL_MissionParameterFactory::SetGenObjectListParameter( MIL_Mission_ABC* pM
 // Name: MIL_MissionParameterFactory::SetPionListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetPionListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& pionList )
+void MIL_MissionParameterFactory::SetPionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< DEC_Decision_ABC* >& pionList )
 {
     std::vector< DEC_RolePion_Decision* > agentList;
     for( std::vector< DEC_Decision_ABC* >::const_iterator it = pionList.begin(); it != pionList.end(); ++it )
@@ -494,7 +494,7 @@ void MIL_MissionParameterFactory::SetPionListParameter( MIL_Mission_ABC* pMissio
 // Name: MIL_MissionParameterFactory::SetLocationListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetLocationListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
+void MIL_MissionParameterFactory::SetLocationListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
 {
     boost::shared_ptr< MIL_LocationListParameter > listParam( new MIL_LocationListParameter( locationList ) );
     pMission->SetParameter( parameter, listParam );    
@@ -504,7 +504,7 @@ void MIL_MissionParameterFactory::SetLocationListParameter( MIL_Mission_ABC* pMi
 // Name: MIL_MissionParameterFactory::SetPolygonListParameter
 // Created: LDC 2009-09-25
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetPolygonListParameter( MIL_Mission_ABC* pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
+void MIL_MissionParameterFactory::SetPolygonListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< TER_Localisation > >& locationList )
 {
     boost::shared_ptr< MIL_PolygonListParameter > listParam( new MIL_PolygonListParameter( locationList ) );
     pMission->SetParameter( parameter, listParam );    
@@ -514,7 +514,7 @@ void MIL_MissionParameterFactory::SetPolygonListParameter( MIL_Mission_ABC* pMis
 // Name: MIL_MissionParameterFactory::SetUrbanBlockParameter
 // Created: MGD 2010-01-15
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetUrbanBlockParameter( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock )
+void MIL_MissionParameterFactory::SetUrbanBlockParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Urban > urbanblock )
 {
     pMission->SetParameter( parameter, Create( urbanblock ) );
 }

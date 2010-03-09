@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateMRT.h"
-#include "MIL_PionMission.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
 
 //-----------------------------------------------------------------------------
 // Name: MIL_AutomateMRT constructor
@@ -37,12 +37,10 @@ MIL_AutomateMRT::~MIL_AutomateMRT()
 // Name: MIL_AutomateMRT::SetMissionForPion
 // Created: NLD 2003-04-14
 //-----------------------------------------------------------------------------
-void MIL_AutomateMRT::SetMissionForPion( MIL_AgentPion& pion, MIL_PionMission& mission )
+void MIL_AutomateMRT::SetMissionForPion( MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    MIL_PionMission*& pMission = missionsPion_[ &pion ];
-    if( pMission )
-        delete pMission;
-    pMission = &mission;
+    bool bOut = missionsPion_.insert( std::pair< MIL_AgentPion*, const boost::shared_ptr< MIL_Mission_ABC > >( &pion, mission ) ).second;
+    assert( bOut );
 }
 
 //-----------------------------------------------------------------------------
@@ -87,12 +85,12 @@ void MIL_AutomateMRT::Activate()
     for( CIT_MissionPionMap it = missionsPion_.begin(); it != missionsPion_.end(); ++it )
     {
         MIL_AgentPion&   pion    = *it->first;
-        MIL_PionMission& mission = *it->second;
+        boost::shared_ptr< MIL_Mission_ABC > mission = it->second;
 
         const MIL_Fuseau* pFuseau = GetFuseauForPion( pion );
         if( pFuseau )
-            mission.AffectFuseau( *pFuseau );
-        pion.GetOrderManager().ReplaceMission( &mission );
+            mission->AffectFuseau( *pFuseau );
+        pion.GetOrderManager().ReplaceMission( mission );
     }
     missionsPion_.clear();
     bActivated_ = true;
@@ -109,7 +107,7 @@ void MIL_AutomateMRT::Cancel()
 {
     bActivated_ = false;
     for( CIT_MissionPionMap it = missionsPion_.begin(); it != missionsPion_.end(); ++it )
-        delete it->second;
+        it->second->Stop( it->second );
     missionsPion_.clear();
 
     for( CIT_FuseauPionMap it = fuseauxPion_.begin(); it != fuseauxPion_.end(); ++it )

@@ -901,7 +901,7 @@ void MIL_Population::OnReceiveMsgMagicMove( const Common::MsgMagicActionPopulati
         (**it).MagicMove( vPosTmp );
 
     GetRole< DEC_PopulationDecision >().Reset();
-    orderManager_.ReplaceMission();
+    orderManager_.CancelMission();
     bHasDoneMagicMove_ = true;
 }
 
@@ -918,7 +918,7 @@ void MIL_Population::OnReceiveMsgDestroyAll()
         (**it).KillAllHumans();
 
     GetRole< DEC_PopulationDecision >().Reset();
-    orderManager_.ReplaceMission();
+    orderManager_.CancelMission();
 }
 
 // -----------------------------------------------------------------------------

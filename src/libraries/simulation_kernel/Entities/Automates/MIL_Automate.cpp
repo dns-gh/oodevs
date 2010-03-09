@@ -497,7 +497,7 @@ void MIL_Automate::UpdateDecision( float duration )
     }
     catch( std::runtime_error& /*e*/ )
     {
-        orderManager_.ReplaceMission();
+        orderManager_.CancelMission();
         MT_LOG_ERROR_MSG( "Entity " << GetID() << "('" << GetName() << "') : Mission impossible" );
     }
     GetRole< DEC_Decision_ABC >().GarbageCollect();
@@ -643,7 +643,7 @@ void MIL_Automate::NotifyDotationSupplied( const PHY_SupplyDotationState& supply
 //-----------------------------------------------------------------------------
 void MIL_Automate::Disengage()
 {
-    orderManager_.ReplaceMission();
+    orderManager_.CancelMission();
     if( bEngaged_ )
     {
         bEngaged_             = false;
@@ -660,9 +660,9 @@ void MIL_Automate::Engage()
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).Engage();
 
-    orderManager_.ReplaceMission();
+    orderManager_.CancelMission();
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
-        (**it).GetOrderManager().ReplaceMission();
+        (**it).GetOrderManager().CancelMission();
 
     if( !bEngaged_ )
     {
@@ -760,7 +760,7 @@ void MIL_Automate::Surrender( const MIL_Army_ABC& amrySurrenderedTo )
     if( pArmySurrenderedTo_ )
         return;
 
-    orderManager_.ReplaceMission();
+    orderManager_.CancelMission();
     pArmySurrenderedTo_ = &amrySurrenderedTo;
     pTC2_               = 0;
 }
@@ -991,7 +991,7 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMa
             (**itPion).OnReceiveMsgMagicMove( (**itPion).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
 
         GetRole< DEC_AutomateDecision >().Reset( GetName() );
-        orderManager_.ReplaceMission();
+        orderManager_.CancelMission();
     }
     else if( asnMsg.action().has_se_rendre() )
     {

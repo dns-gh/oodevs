@@ -372,7 +372,7 @@ void MIL_AgentPion::CleanKnowledges()
 void MIL_AgentPion::UpdateDecision( float duration )
 {
     if( IsDead() )
-        orderManager_.ReplaceMission( 0 );
+        orderManager_.CancelMission();
     try
     {
         orderManager_.Update();
@@ -657,7 +657,7 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
     GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
     CancelAllActions();
     GetRole< DEC_RolePion_Decision >().Reset( GetAutomate().GetName() );
-    orderManager_.ReplaceMission();
+    orderManager_.CancelMission();
 }
 
 // -----------------------------------------------------------------------------
@@ -895,7 +895,7 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitM
 void MIL_AgentPion::OnReceiveMagicSurrender()
 {
     GetRole< surrender::PHY_RoleInterface_Surrender >().NotifySurrendered();
-    orderManager_.ReplaceMission();
+    orderManager_.CancelMission();
     UpdatePhysicalState();
 }
 

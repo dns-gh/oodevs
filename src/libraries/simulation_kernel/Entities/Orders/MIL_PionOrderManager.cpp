@@ -61,7 +61,7 @@ void MIL_PionOrderManager::OnReceiveMission( const Common::MsgUnitOrder& asnMsg 
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
 
-    MIL_PionMission* pMission = new MIL_PionMission( *pMissionType, pion_, asnMsg );
+    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( *pMissionType, pion_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
 
@@ -71,7 +71,7 @@ void MIL_PionOrderManager::OnReceiveMission( const Common::MsgUnitOrder& asnMsg 
 // -----------------------------------------------------------------------------
 void MIL_PionOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 {
-    MIL_PionMission* pMission = new MIL_PionMission( type, pion_ );
+    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PionMission( type, pion_ ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
 
@@ -147,12 +147,12 @@ bool MIL_PionOrderManager::RelievePion( const MIL_AgentPion& pion )
     if( !CanRelievePion( pion ) )
         return false;
 
-    const MIL_PionMission* pPionMission = static_cast< const MIL_PionMission* >( pion.GetOrderManager().GetCurrentMission() ); //$$ BOF
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = pion.GetOrderManager().GetCurrentMission();
     if( !pPionMission )
         return false;
 
-    MIL_PionMission& newMission = pPionMission->CreateCopy( pion_ );
-    MIL_OrderManager_ABC::ReplaceMission( &newMission );
+    boost::shared_ptr< MIL_Mission_ABC > newMission = static_cast< MIL_PionMission* >( pPionMission.get() )->CreateCopy( pion_ );
+    MIL_OrderManager_ABC::ReplaceMission( newMission );
     return true;
 }
 

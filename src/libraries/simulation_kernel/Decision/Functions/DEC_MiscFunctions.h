@@ -75,12 +75,12 @@ public:
     static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, DEC_PathPoint* pPoint );
     
     //
-    static void FillMissionParameters                         ( const directia::Brain& brain, directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC* mission );
+    static void FillMissionParameters                         ( const directia::Brain& brain, directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission );
     
     static std::string  GetName                               ( DEC_Decision_ABC* pEntity );
     static DEC_Decision_ABC* GetAutomate                      ( DEC_Decision_ABC* pAgent );
-    static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( MIL_Mission_ABC* pMission );
-    static void CopyDirectionDanger                           ( MT_Vector2D* pPosSource, MIL_Mission_ABC* pMission );
+    static boost::shared_ptr< MT_Vector2D > GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission );
+    static void CopyDirectionDanger                           ( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission );
 };
 
 #include "DEC_MiscFunctions.inl"

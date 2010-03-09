@@ -67,9 +67,9 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
 // Name: MIL_Mission_ABC constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& parent )
+MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const boost::shared_ptr< MIL_Mission_ABC > parent )
     : type_             ( type )
-    , context_          ( parent.context_ )
+    , context_          ( parent->context_ )
     , knowledgeResolver_( knowledgeResolver )
 {
     // Parameters will be filled by DIA $$$ // $$$$ LDC: TODO Fill parameters_ from DIA....
@@ -310,3 +310,22 @@ const std::string& MIL_Mission_ABC::GetDIAType() const
 {
     return GetType().GetDIAType();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::GetPion
+// Created: MGD 2010-03-09
+// -----------------------------------------------------------------------------
+MIL_AgentPion& MIL_Mission_ABC::GetPion() const
+{
+    throw std::runtime_error( "Invalid call of this Mission class" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Mission_ABC::GetPion
+// Created: MGD 2010-073-09
+// -----------------------------------------------------------------------------
+MIL_Automate& MIL_Mission_ABC::GetAutomate() const
+{
+    throw std::runtime_error( "Invalid call of this Mission class" );
+}
+

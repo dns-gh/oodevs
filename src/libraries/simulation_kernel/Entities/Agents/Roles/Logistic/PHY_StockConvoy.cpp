@@ -55,7 +55,7 @@ PHY_StockConvoy::~PHY_StockConvoy()
 {
     if( pPionConvoy_ )
     {
-        pPionConvoy_->GetOrderManager().ReplaceMission();
+        pPionConvoy_->GetOrderManager().CancelMission();
 
         for( CIT_ConveyorMap it = conveyors_.begin(); it != conveyors_.end(); ++it )
             it->second->UndoLend();

@@ -36,14 +36,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Start();
+    virtual void Start( boost::shared_ptr< MIL_Mission_ABC > self );
+    virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > self );
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void Stop();
     void Send() const;
     static void SendNoMission( const MIL_Population& population );
     //@}

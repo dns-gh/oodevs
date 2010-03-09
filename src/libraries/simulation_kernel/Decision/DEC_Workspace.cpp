@@ -13,7 +13,6 @@
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
-#include "Entities/Orders/MIL_PionMission.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateMission.h"
 #include "Entities/Orders/MIL_PopulationMissionType.h"

@@ -44,8 +44,6 @@ MIL_AutomateOrderManager::MIL_AutomateOrderManager( MIL_Automate& automate )
 MIL_AutomateOrderManager::~MIL_AutomateOrderManager()
 {
     // Destruction de toutes les missions préparées mais non données
-    for( CIT_MissionSet it = preparedMissions_.begin(); it != preparedMissions_.end(); ++it )
-        delete *it;
     preparedMissions_.clear();
 }
 
@@ -67,7 +65,7 @@ void MIL_AutomateOrderManager::OnReceiveMission( const Common::MsgAutomatOrder& 
     if( !pMissionType || !automate_.GetType().GetModel().IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
 
-    MIL_AutomateMission* pMission = new MIL_AutomateMission( *pMissionType, automate_, asnMsg );
+    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_AutomateMission( *pMissionType, automate_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
 
@@ -77,7 +75,7 @@ void MIL_AutomateOrderManager::OnReceiveMission( const Common::MsgAutomatOrder& 
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::OnReceiveMission( const MIL_MissionType_ABC& type )
 {
-    MIL_AutomateMission* pMission = new MIL_AutomateMission( type, automate_ );
+    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_AutomateMission( type, automate_ ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
 
@@ -119,15 +117,13 @@ void MIL_AutomateOrderManager::StopAllMissions()
     if( automate_.IsEngaged() )
     {
         for( MIL_Automate::CIT_AutomateVector it = automate_.GetAutomates().begin(); it != automate_.GetAutomates().end(); ++it )
-            (**it).GetOrderManager().ReplaceMission( 0 );
+            (**it).GetOrderManager().CancelMission();
 
         for( MIL_Automate::CIT_PionVector it = automate_.GetPions().begin(); it != automate_.GetPions().end(); ++it )
-            (**it).GetOrderManager().ReplaceMission( 0 );
+            (**it).GetOrderManager().CancelMission();
     }
 
     // Destruction de toutes les missions préparées mais non données par l'automate à ses pions pendant la conduite
-    for( CIT_MissionSet it = preparedMissions_.begin(); it != preparedMissions_.end(); ++it )
-        delete *it;
     preparedMissions_.clear();
 
     mrt_.Cancel();
@@ -185,31 +181,31 @@ void MIL_AutomateOrderManager::MRT_SetFuseauForPion( MIL_AgentPion& pion, MIL_Fu
 // Name: MIL_AutomateOrderManager::MRT_CreatePionMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_PionMission* MIL_AutomateOrderManager::MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
+boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
 {
     assert( automate_.IsEngaged() );
 
     if( !pion.GetOrderManager().IsMissionAvailable( missionType ) )
     {
         MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, __FUNCTION__);
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();
     }
 
-    const MIL_AutomateMission* pCurrentMission = static_cast< const MIL_AutomateMission* >( GetCurrentMission() ); 
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission(); 
     if( !pCurrentMission )
     {
         MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, __FUNCTION__ );
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();;
     }
 
     if( mrt_.IsActivated() )
     {
         MT_LOG_ERROR( "MRT already activated for automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') - Mission '" << missionType.GetName() << "'", 4, __FUNCTION__ );
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();
     }
     
-    MIL_PionMission* pPionMission = new MIL_PionMission( missionType, pion, *pCurrentMission );
-    mrt_.SetMissionForPion( pion, *pPionMission );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
+    mrt_.SetMissionForPion( pion, pPionMission );
     return pPionMission;
 }
 
@@ -221,7 +217,7 @@ void MIL_AutomateOrderManager::MRT_Validate()
 {
     assert( automate_.IsEngaged() );
 
-    MIL_AutomateMission* pCurrentMission = static_cast< MIL_AutomateMission* >( GetCurrentMission() ); 
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission(); 
     if( !pCurrentMission )
     {
         MT_LOG_ERROR( "Automate has no current mission", 2, __FUNCTION__ );
@@ -234,35 +230,35 @@ void MIL_AutomateOrderManager::MRT_Validate()
     }
 
     mrt_.Activate();
-    pCurrentMission->GoToCdt();    
+    static_cast< MIL_AutomateMission* >( pCurrentMission.get())->GoToCdt( pCurrentMission );    
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateOrderManager::CDT_CreatePionMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_PionMission* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
+boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
 {
     assert( automate_.IsEngaged() );
 
-    const MIL_AutomateMission* pCurrentMission = static_cast< const MIL_AutomateMission* >( GetCurrentMission() ); 
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission(); 
     if( !pCurrentMission )
     {
         MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();
     }
     if( !pion.GetOrderManager().IsMissionAvailable( missionType ) )
     {
         MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();
     }
     if( !mrt_.IsActivated() )
     {
         MT_LOG_ERROR( "MRT not activated for automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "')", 4, __FUNCTION__ );
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();
     }
 
-    MIL_PionMission* pPionMission = new MIL_PionMission( missionType, pion, *pCurrentMission );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
     bool bOut = preparedMissions_.insert( pPionMission ).second;
     assert( bOut );
     return pPionMission;
@@ -273,23 +269,23 @@ MIL_PionMission* MIL_AutomateOrderManager::CDT_CreatePionMission( MIL_AgentPion&
 // Created: MGD 2010-01-14
 // Like CDT_CreatePionMission but no need of active MRT
 // -----------------------------------------------------------------------------
-MIL_PionMission* MIL_AutomateOrderManager::CreatePionMissionBM( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
+boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMissionBM( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType )
 {
     assert( automate_.IsEngaged() );
 
-    const MIL_AutomateMission* pCurrentMission = static_cast< const MIL_AutomateMission* >( GetCurrentMission() ); 
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission(); 
     if( !pCurrentMission )
     {
         MT_LOG_WARNING( "Automate '" << automate_.GetName() << "' (ID " << automate_.GetID() << ", Model '" << automate_.GetType().GetModel().GetName() << "') has no current mission", 2, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();
     }
     if( !pion.GetOrderManager().IsMissionAvailable( missionType ) )
     {
         MT_LOG_ERROR( "Mission '" << missionType.GetName() << "' not available for pion '" << pion.GetName() << "' (ID " << pion.GetID() << ", Model '" << pion.GetType().GetModel().GetName() << "')", 4, "MIL_AutomateOrderManager::CDT_CreatePionMission" );
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();
     }
 
-    MIL_PionMission* pPionMission = new MIL_PionMission( missionType, pion, *pCurrentMission );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
     bool bOut = preparedMissions_.insert( pPionMission ).second;
     assert( bOut );
     return pPionMission;
@@ -299,31 +295,30 @@ MIL_PionMission* MIL_AutomateOrderManager::CreatePionMissionBM( MIL_AgentPion& p
 // Name: MIL_AutomateOrderManager::CDT_GivePionMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::CDT_GivePionMission( MIL_Mission_ABC& mission )
+void MIL_AutomateOrderManager::CDT_GivePionMission( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     assert( automate_.IsEngaged() );
 
-    int nOut = preparedMissions_.erase( &mission );
+    int nOut = preparedMissions_.erase( mission );
     assert( nOut == 1 );
-    MIL_PionMission& pionMission = dynamic_cast< MIL_PionMission& >( mission );
-    pionMission.GetPion().GetOrderManager().ReplaceMission( &mission );
+    mission->GetPion().GetOrderManager().ReplaceMission( mission );
 }
     
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateOrderManager::CreateAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-MIL_AutomateMission* MIL_AutomateOrderManager::CreateAutomateMission( MIL_Automate& automate, const MIL_MissionType_ABC& missionType )
+boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMission( MIL_Automate& automate, const MIL_MissionType_ABC& missionType )
 {
     if( !automate.GetOrderManager().IsMissionAvailable( missionType ) )
-        return 0;
+        return boost::shared_ptr< MIL_Mission_ABC >();
 
-    const MIL_AutomateMission* pCurrentMission = static_cast< const MIL_AutomateMission* >( GetCurrentMission() );
-    MIL_AutomateMission* pAutomateMission = 0;
+    const boost::shared_ptr< MIL_Mission_ABC > pCurrentMission = GetCurrentMission();
+    boost::shared_ptr< MIL_Mission_ABC > pAutomateMission;
     if( pCurrentMission )
-        pAutomateMission = new MIL_AutomateMission( missionType, automate, *pCurrentMission );
+        pAutomateMission = boost::shared_ptr< MIL_Mission_ABC >( new MIL_AutomateMission( missionType, automate, pCurrentMission ) );
     else
-        pAutomateMission = new MIL_AutomateMission( missionType, automate );
+        pAutomateMission = boost::shared_ptr< MIL_Mission_ABC >( new MIL_AutomateMission( missionType, automate ) );
 
     bool bOut = preparedMissions_.insert( pAutomateMission ).second;
     assert( bOut );
@@ -334,9 +329,9 @@ MIL_AutomateMission* MIL_AutomateOrderManager::CreateAutomateMission( MIL_Automa
 // Name: MIL_AutomateOrderManager::GiveAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-void MIL_AutomateOrderManager::GiveAutomateMission( MIL_AutomateMission& mission )
+void MIL_AutomateOrderManager::GiveAutomateMission( boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    int nOut = preparedMissions_.erase( &mission );
+    int nOut = preparedMissions_.erase( mission );
     assert( nOut == 1 );
-    mission.GetAutomate().GetOrderManager().ReplaceMission( &mission );
+    mission->GetAutomate().GetOrderManager().ReplaceMission( mission );
 }

@@ -245,9 +245,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 
 // Missions
     brain.RegisterFunction( "DEC_CreerMissionPion",
-        boost::function< MIL_Mission_ABC*( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) ) );
+        boost::function< boost::shared_ptr< MIL_Mission_ABC >( const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CreatePionMissionBM, boost::ref( GetPion().GetAutomate() ), this, _1 ) ) );
     brain.RegisterFunction( "DEC_DonnerMissionPion",
-        boost::function< void( MIL_Mission_ABC* pMission ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMission, boost::ref( GetPion().GetAutomate() ), _1 ) ) );
+        boost::function< void( boost::shared_ptr< MIL_Mission_ABC > pMission ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMission, boost::ref( GetPion().GetAutomate() ), _1 ) ) );
     // Actions
     brain.RegisterFunction( "DEC_StopAction",
         boost::function< PHY_Action_ABC*( PHY_Action_ABC* ) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
@@ -675,7 +675,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
             boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::PionSetMissionLimaScheduleFlag, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_GetRawMission", &DEC_AgentFunctions::GetMission );
     brain.RegisterFunction( "DEC_SetMission",
-        boost::function< void( DEC_Decision_ABC*, MIL_Mission_ABC* )>( boost::bind( &DEC_AgentFunctions::SetMission, _1, _2 ) ) );
+        boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AgentFunctions::SetMission, _1, _2 ) ) );
 
     // Etat décisionnel
     brain.RegisterFunction( "DEC_Agent_ChangeEtatRapportDeForce",
@@ -917,9 +917,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 // Name: DEC_RolePion_Decision::StartMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StartMissionBehavior( MIL_Mission_ABC& mission )
+void DEC_RolePion_Decision::StartMissionBehavior(const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior();
+    const std::string& strBehavior = mission->GetType().GetDIABehavior();
     
     ActivateOrder( strBehavior, mission );
 }
@@ -928,9 +928,9 @@ void DEC_RolePion_Decision::StartMissionBehavior( MIL_Mission_ABC& mission )
 // Name: DEC_RolePion_Decision::StopMissionBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::StopMissionBehavior( MIL_Mission_ABC& mission )
+void DEC_RolePion_Decision::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior();
+    const std::string& strBehavior = mission->GetType().GetDIABehavior();
     StopMission( strBehavior );
 }
 

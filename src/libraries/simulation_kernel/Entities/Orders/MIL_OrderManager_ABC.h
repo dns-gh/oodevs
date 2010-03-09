@@ -37,7 +37,8 @@ public:
  
     // @name Events 
     //@{
-    void ReplaceMission( MIL_Mission_ABC* pMission = 0 ); // asynchronous
+    void ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pMission  ); // asynchronous
+    void CancelMission(); // asynchronous
     virtual void StopAllMissions(); // synchronous
     //@}
 
@@ -62,12 +63,12 @@ public:
 protected:
     //! @name Accessors
     //@{
-    MIL_Mission_ABC* GetCurrentMission() const;
+    boost::shared_ptr< MIL_Mission_ABC > GetCurrentMission() const;
     //@}
 
 private:
-    MIL_Mission_ABC* pMission_;
-    MIL_Mission_ABC* pNextMission_;
+    boost::shared_ptr< MIL_Mission_ABC > pMission_;
+    boost::shared_ptr< MIL_Mission_ABC > pNextMission_;
     bool             bNewMissionStarted_;
 };
 

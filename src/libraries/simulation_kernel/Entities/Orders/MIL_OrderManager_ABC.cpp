@@ -19,9 +19,7 @@
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
 MIL_OrderManager_ABC::MIL_OrderManager_ABC()
-    : pMission_          ( 0 )
-    , pNextMission_      ( 0 )
-    , bNewMissionStarted_( false )
+    : bNewMissionStarted_( false )
 {
 }
 
@@ -44,8 +42,8 @@ void MIL_OrderManager_ABC::Update()
 
     if( pNextMission_ != pMission_ )
     {
-        MIL_Mission_ABC* pNewMission = pNextMission_;
-        pNextMission_ = 0;
+        boost::shared_ptr< MIL_Mission_ABC > pNewMission = pNextMission_;
+        pNextMission_.reset();
 
         StopAllMissions();
         assert( !pMission_ );
@@ -56,14 +54,13 @@ void MIL_OrderManager_ABC::Update()
         {
             try
             {
-                pMission_->Start();
+                pMission_->Start( pMission_ );
                 bNewMissionStarted_ = true;
             }
             catch( std::runtime_error& e )
             {
-                pNextMission_ = 0;
-                pMission_ = 0;
-                delete pNewMission;
+                pNextMission_.reset();
+                pMission_.reset();
                 bNewMissionStarted_ = false;
                 throw e;
             }
@@ -75,12 +72,18 @@ void MIL_OrderManager_ABC::Update()
 // Name: MIL_OrderManager_ABC::ReplaceMission
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_OrderManager_ABC::ReplaceMission( MIL_Mission_ABC* pNewMission )
+void MIL_OrderManager_ABC::ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > pNewMission )
 {
-    if( pNextMission_ != pMission_ )
-        delete pNextMission_;
-
     pNextMission_ = pNewMission;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderManager_ABC::CancelMission
+// Created: NLD 2006-11-21
+// -----------------------------------------------------------------------------
+void MIL_OrderManager_ABC::CancelMission()
+{
+    pNextMission_.reset();
 }
 
 //-----------------------------------------------------------------------------
@@ -89,17 +92,13 @@ void MIL_OrderManager_ABC::ReplaceMission( MIL_Mission_ABC* pNewMission )
 //-----------------------------------------------------------------------------
 void MIL_OrderManager_ABC::StopAllMissions()
 {
-    if( pNextMission_ != pMission_ )
-    {
-        delete pNextMission_;
-        pNextMission_ = 0;
-    }
-    if( pMission_ )
-    {
-        delete pMission_;
-        pMission_ = 0;
-        pNextMission_ = 0;
-    }
+    if( pNextMission_.get() )
+        pNextMission_->Stop( pNextMission_ );
+    if( pMission_.get() )
+        pMission_->Stop( pMission_ );
+
+    pNextMission_.reset();
+    pMission_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -205,7 +204,7 @@ bool MIL_OrderManager_ABC::IsNewMissionStarted() const
 // Name: MIL_OrderManager_ABC::GetCurrentMission
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC* MIL_OrderManager_ABC::GetCurrentMission() const
+boost::shared_ptr< MIL_Mission_ABC > MIL_OrderManager_ABC::GetCurrentMission() const
 {
     return pMission_;
 }

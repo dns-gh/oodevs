@@ -52,7 +52,7 @@ void MIL_PopulationOrderManager::OnReceiveMission( const Common::MsgPopulationOr
     if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission );
 
-    MIL_PopulationMission* pMission = new MIL_PopulationMission( *pMissionType, population_, asnMsg );
+    boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_PopulationMission( *pMissionType, population_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
 }
 

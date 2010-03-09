@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const Common::MsgAutomatOrder& asn );
-             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const MIL_AutomateMission& parent );
+             MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const boost::shared_ptr< MIL_Mission_ABC > parent );
              MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate );
     virtual ~MIL_AutomateMission();
     //@}
@@ -44,10 +44,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void                 Start               ();
-            void                 GoToCdt             ();
+    virtual void                 Start               ( boost::shared_ptr< MIL_Mission_ABC > self );
+    virtual void                 Stop                ( boost::shared_ptr< MIL_Mission_ABC > self );
+            void                 GoToCdt             ( boost::shared_ptr< MIL_Mission_ABC > self );
     virtual bool                 IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
-            MIL_AutomateMission& CreateCopy          ( MIL_Automate& target ) const;
+    boost::shared_ptr< MIL_Mission_ABC > CreateCopy  ( MIL_Automate& target ) const;
     virtual void                 AffectDirection     ( const MT_Vector2D& direction );
     //@}
 
@@ -59,8 +60,6 @@ private:
 
     //! @name Tools
     //@{
-    void Stop();
-
     void StartMrtBehavior();
     void StopMrtBehavior ();
     void StartCdtBehavior();

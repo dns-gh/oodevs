@@ -212,7 +212,7 @@ std::string DEC_PopulationFunctions::GetSzName( MIL_Population& callerPopulation
 // Name: DEC_PopulationFunctions::GetMission
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC* DEC_PopulationFunctions::GetMission( DEC_Decision_ABC* pAgent )
+boost::shared_ptr< MIL_Mission_ABC > DEC_PopulationFunctions::GetMission( DEC_Decision_ABC* pAgent )
 {
     return pAgent->GetMission();
 }
@@ -221,7 +221,7 @@ MIL_Mission_ABC* DEC_PopulationFunctions::GetMission( DEC_Decision_ABC* pAgent )
 // Name: DEC_PopulationFunctions::SetMission
 // Created: LDC 2009-05-19
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::SetMission( DEC_Decision_ABC* object, MIL_Mission_ABC* mission )
+void DEC_PopulationFunctions::SetMission( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     object->SetMission( mission );
 }

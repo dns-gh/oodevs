@@ -56,10 +56,10 @@ public:
     void Clean          ();
     bool HasStateChanged() const;
 
-    void StartMissionMrtBehavior     ( MIL_Mission_ABC& mission );
-    void StopMissionMrtBehavior      ( MIL_Mission_ABC& mission );
-    void StartMissionConduiteBehavior( MIL_Mission_ABC& mission );
-    void StopMissionConduiteBehavior ( MIL_Mission_ABC& mission );
+    void StartMissionMrtBehavior     ( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    void StopMissionMrtBehavior      ( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    void StartMissionConduiteBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    void StopMissionConduiteBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     //@}
 
     //! @name Notifications

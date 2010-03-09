@@ -15,6 +15,8 @@
 
 class DEC_KnowledgeResolver_ABC;
 class DEC_Knowledge_Object;
+class MIL_AgentPion;
+class MIL_Automate;
 class MIL_FragOrderType;
 class MIL_KnowledgeGroup;
 class MIL_MissionParameter_ABC;
@@ -38,7 +40,8 @@ public:
 
      //! @name Operations
     //@{
-    virtual void Start               () = 0;
+    virtual void Start               ( boost::shared_ptr< MIL_Mission_ABC > self ) = 0;
+    virtual void Stop                ( boost::shared_ptr< MIL_Mission_ABC > self ) = 0;
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const = 0;
 
     void UsedByDIA    ();
@@ -49,6 +52,9 @@ public:
     //@{
     virtual const MIL_MissionType_ABC& GetType() const;
     const std::string& GetDIAType() const;
+
+    virtual MIL_AgentPion& GetPion() const;
+    virtual MIL_Automate&  GetAutomate() const;
 
     const   std::string&   GetName              () const;
     const   MT_Vector2D&   GetDirDanger         () const;
@@ -75,7 +81,7 @@ protected:
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver );
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const Common::MsgMissionParameters& parameters );
     MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const Common::MsgMissionParameters& parameters, const MT_Vector2D& refPosition );
-    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& parent );
+    MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const boost::shared_ptr< MIL_Mission_ABC > parent );
     MIL_Mission_ABC( const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_Mission_ABC& rhs );
     //@}
 

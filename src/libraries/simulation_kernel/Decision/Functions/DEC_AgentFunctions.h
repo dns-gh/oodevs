@@ -106,10 +106,10 @@ public:
     static void Install      ( MIL_AgentPion& callerAgent );
 
     // Missions
-    static boost::shared_ptr< MT_Vector2D > GetDirectionDanger( MIL_Mission_ABC* pMission );
+    static boost::shared_ptr< MT_Vector2D > GetDirectionDanger( const boost::shared_ptr< MIL_Mission_ABC > pMission );
 
-    static MIL_Mission_ABC* GetMission( DEC_Decision_ABC* pAgent );
-    static void SetMission( DEC_Decision_ABC* pAgent, MIL_Mission_ABC* pMission );
+    static boost::shared_ptr< MIL_Mission_ABC > GetMission( DEC_Decision_ABC* pAgent );
+    static void SetMission( DEC_Decision_ABC* pAgent, boost::shared_ptr< MIL_Mission_ABC > pMission );
 
     // Test / debug
     static void DecisionalState( const MIL_AgentPion& callerAgent, const std::string& key, const std::string& value );

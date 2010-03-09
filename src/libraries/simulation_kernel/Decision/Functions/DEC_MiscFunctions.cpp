@@ -129,17 +129,17 @@ void DEC_MiscFunctions::DeleteOrderRepresentation( MIL_Entity_ABC& callerAgent, 
 
 namespace DEC_DecisionImpl
 {
-    void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
+    void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_MiscFunctions::FillMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::FillMissionParameters( const directia::Brain& brain, directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC* pMission )
+void DEC_MiscFunctions::FillMissionParameters( const directia::Brain& brain, directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     if( pMission )
-        DEC_DecisionImpl::RegisterMissionParameters( brain, initTaskFunction, refMission, *pMission );
+        DEC_DecisionImpl::RegisterMissionParameters( brain, initTaskFunction, refMission, pMission );
 }
 
 // -----------------------------------------------------------------------------
@@ -164,7 +164,7 @@ DEC_Decision_ABC* DEC_MiscFunctions::GetAutomate( DEC_Decision_ABC* pAgent )
 // Name: DEC_MiscFunctions::GetDirectionEnnemi
 // Created: LDC 2009-04-20
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_MiscFunctions::GetDirectionEnnemi( MIL_Mission_ABC* pMission )
+boost::shared_ptr< MT_Vector2D > DEC_MiscFunctions::GetDirectionEnnemi( boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D( pMission->GetDirDanger() ) );
     return result;
@@ -174,7 +174,7 @@ boost::shared_ptr< MT_Vector2D > DEC_MiscFunctions::GetDirectionEnnemi( MIL_Miss
 // Name: DEC_MiscFunctions::CopyDirectionDanger
 // Created: LDC 2009-04-21
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::CopyDirectionDanger( MT_Vector2D* pPosSource, MIL_Mission_ABC* pMission )
+void DEC_MiscFunctions::CopyDirectionDanger( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     assert( pPosSource );
     assert( !pPosSource->IsZero() );

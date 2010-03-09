@@ -69,7 +69,7 @@ public:
         , Mission_mocker( "Mission", this )
     {}
     mockpp::ChainableMockMethod< void, std::string > Call_mocker;
-    mockpp::ChainableMockMethod< void, MIL_Mission_ABC* > Mission_mocker;
+    mockpp::ChainableMockMethod< void, boost::shared_ptr< MIL_Mission_ABC > > Mission_mocker;
 };
 
 class DEC_TestPopulationDecision;
@@ -81,11 +81,11 @@ namespace
     {
         scriptMocker_.Call_mocker.forward( text );
     }
-    void NotifyMissionCallFromScript( MIL_Mission_ABC* pMission )
+    void NotifyMissionCallFromScript( boost::shared_ptr< MIL_Mission_ABC > pMission )
     {
         scriptMocker_.Mission_mocker.forward( pMission );
     }
-    MIL_Mission_ABC* GetRawMission( DEC_TestPopulationDecision* pAgent );
+    boost::shared_ptr< MIL_Mission_ABC > GetRawMission( DEC_TestPopulationDecision* pAgent );
 }
 
 class DEC_TestPopulationDecision : public DEC_Decision<MIL_Population>
@@ -106,9 +106,9 @@ public:
         diaType_ = model.GetDIAType();
     }
 
-    void StartMissionBehavior( MIL_Mission_ABC& mission )
+    void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
     {
-        const std::string& strBehavior = mission.GetType().GetDIABehavior();
+        const std::string& strBehavior = mission->GetType().GetDIABehavior();
         ActivateOrder( strBehavior, mission );
     }
     
@@ -131,7 +131,7 @@ protected:
         brain.RegisterFunction( "DEC_TestMissionCalled",     &NotifyMissionCallFromScript );
         brain.RegisterFunction( "DEC_GetRawMission",         &GetRawMission );
         brain.RegisterFunction( "DEC_FillMissionParameters",
-            boost::function< void( const directia::ScriptRef&, MIL_Mission_ABC* ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( brain.GetScriptFunction("InitTaskParameter") ), _1 , _2 ) ) );
+            boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref( brain ), boost::ref( brain.GetScriptFunction("InitTaskParameter") ), _1 , _2 ) ) );
         if( pOther_ )
             brain.RegisterObject< DEC_TestPopulationDecision* >( "other", pOther_ );
     }
@@ -142,7 +142,7 @@ private:
 
 namespace
 {  
-    MIL_Mission_ABC* GetRawMission( DEC_TestPopulationDecision* pAgent )
+    boost::shared_ptr< MIL_Mission_ABC > GetRawMission( DEC_TestPopulationDecision* pAgent )
     {
         return pAgent->GetMission();
     }
@@ -165,7 +165,7 @@ BOOST_AUTO_TEST_CASE( ActivateOrderExecutesBehaviour )
     std::string typeString( "missionBehavior" );
     missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
     StubDEC_KnowledgeResolver_ABC resolver;
-    StubMIL_Mission_ABC mission( missionType, resolver );
+    boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
 
@@ -191,10 +191,10 @@ BOOST_AUTO_TEST_CASE( ActivateOrderPassesMissionToDecisional )
     std::string typeString( "missionBehaviorWithArg" );
     missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
     StubDEC_KnowledgeResolver_ABC resolver;
-    StubMIL_Mission_ABC mission( missionType, resolver );
+    boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
-    scriptMocker_.Mission_mocker.expects( once() ).with( eq< MIL_Mission_ABC* >( &mission ) );
+    scriptMocker_.Mission_mocker.expects( once() ).with( eq< boost::shared_ptr< MIL_Mission_ABC > >( mission ) );
     decision.UpdateDecision( 1.f );
     scriptMocker_.verify();
 }
@@ -219,7 +219,7 @@ BOOST_AUTO_TEST_CASE( DecisionalCanUseMissionParameters )
     missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "param" );
-    StubMIL_Mission_ABC mission( missionType, resolver, missionParameter );
+    boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
     scriptMocker_.Call_mocker.expects( once() ).with( eq( std::string( "missionBehavior called" ) ) );
@@ -247,7 +247,7 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLua )
     missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "parameterValue" );
-    StubMIL_Mission_ABC mission( missionType, resolver, missionParameter );
+    boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
     scriptMocker_.Call_mocker.expects( once() ).with( eq( missionParameter ) );
@@ -275,7 +275,7 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission )
     missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "parameterValue" );
-    StubMIL_Mission_ABC mission( missionType, resolver, missionParameter );
+    boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
     decision.StartMissionBehavior( mission );
     missionType.verify();
     scriptMocker_.Call_mocker.expects( once() ).with( eq( missionParameter ) );
@@ -306,10 +306,10 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua )
     missionType.GetDIABehavior_mocker.expects( exactly( 2 ) ).will( returnValue( &typeString ) );
 
     StubDEC_KnowledgeResolver_ABC resolver;
-    StubMIL_Mission_ABC mission( missionType, resolver );
+    boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
 
     std::string otherMissionParameter( "otherParameterValue" );
-    StubMIL_Mission_ABC otherMission( missionType, resolver, otherMissionParameter );
+    boost::shared_ptr< MIL_Mission_ABC > otherMission ( new StubMIL_Mission_ABC( missionType, resolver, otherMissionParameter ) );
 
     otherDecision.StartMissionBehavior( otherMission );
     decision.StartMissionBehavior( mission );

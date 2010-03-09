@@ -37,7 +37,6 @@ MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, M
 // -----------------------------------------------------------------------------
 MIL_PopulationMission::~MIL_PopulationMission()
 {
-    Stop();
 }
 
 // -----------------------------------------------------------------------------
@@ -53,11 +52,11 @@ bool MIL_PopulationMission::IsFragOrderAvailable( const MIL_FragOrderType& fragO
 // Name: MIL_PopulationMission::Start
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PopulationMission::Start()
+void MIL_PopulationMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     assert( !bDIABehaviorActivated_ );
 
-    population_.GetDecision().StartMissionBehavior( *this );
+    population_.GetDecision().StartMissionBehavior( self );
     bDIABehaviorActivated_ = true;
     Send();
 }
@@ -66,11 +65,11 @@ void MIL_PopulationMission::Start()
 // Name: MIL_PopulationMission::Stop
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PopulationMission::Stop()
+void MIL_PopulationMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     if( bDIABehaviorActivated_ )
     {
-        population_.GetDecision().StopMissionBehavior( *this );
+        population_.GetDecision().StopMissionBehavior( self );
         bDIABehaviorActivated_ = false;
     }    
     SendNoMission( population_ );

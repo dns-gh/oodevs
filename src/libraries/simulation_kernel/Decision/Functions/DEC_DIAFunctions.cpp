@@ -69,7 +69,7 @@ std::string DEC_DIAFunctions::PathToString( DEC_Path_ABC* pPath )
 // Name: DEC_DIAFunctions::CopyLocalisationToLocationListMission
 // Created: NLD 2005-08-17
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, MIL_Mission_ABC* pMission, const std::string& parameter )
+void DEC_DIAFunctions::CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     assert( pLocSource.get() );
     pMission->AppendToParameter( parameter, pLocSource );
@@ -79,7 +79,7 @@ void DEC_DIAFunctions::CopyLocalisationToLocationListMission( boost::shared_ptr<
 // Name: DEC_DIAFunctions::CopyLocalisationListMission
 // Created: LDC 2009-12-04
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyLocalisationListMission( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, MIL_Mission_ABC* pMission, const std::string& parameter )
+void DEC_DIAFunctions::CopyLocalisationListMission( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     MIL_MissionParameterFactory::SetPolygonListParameter( pMission, parameter, locSource );
 }
@@ -88,7 +88,7 @@ void DEC_DIAFunctions::CopyLocalisationListMission( const std::vector< boost::sh
 // Name: DEC_DIAFunctions::CopyPathMission
 // Created: LDC 2009-07-08
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyPathMission( std::vector< boost::shared_ptr< MT_Vector2D > >pointList, MIL_Mission_ABC* pMission, const std::string& parameter )
+void DEC_DIAFunctions::CopyPathMission( std::vector< boost::shared_ptr< MT_Vector2D > >pointList, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     pMission->SetParameter( parameter, MIL_MissionParameterFactory::CreatePath( pointList ) );
 }    
@@ -113,7 +113,7 @@ void DEC_DIAFunctions::CopyPoint( MT_Vector2D* pPosSource, boost::shared_ptr< MT
 // Name: DEC_DIAFunctions::CopyPointMission
 // Created: LDC 2009-07-24
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyPointMission( MT_Vector2D* pPosSource, MIL_Mission_ABC* pMission, const std::string& parameter )
+void DEC_DIAFunctions::CopyPointMission( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     assert( pPosSource );
     pMission->SetParameter( parameter, MIL_MissionParameterFactory::Create( *pPosSource ) );
@@ -123,7 +123,7 @@ void DEC_DIAFunctions::CopyPointMission( MT_Vector2D* pPosSource, MIL_Mission_AB
 // Name: DEC_DIAFunctions::CopyPointToListPointMission
 // Created: LDC 2009-07-10
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyPointToListPointMission( boost::shared_ptr< MT_Vector2D > pPosSource, MIL_Mission_ABC* pMission, const std::string& parameter )
+void DEC_DIAFunctions::CopyPointToListPointMission( boost::shared_ptr< MT_Vector2D > pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     assert( pPosSource );
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::CreatePath( pPosSource );
@@ -146,7 +146,7 @@ void DEC_DIAFunctions::CopyLocalisation( const TER_Localisation* pLocSource, TER
 // Name: DEC_DIAFunctions::CopyLocalisationMission
 // Created: LDC 2009-07-24
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisation > pLocation, MIL_Mission_ABC* pMission, const std::string& parameter )
+void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisation > pLocation, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter )
 {
     assert( pLocation );
     boost::shared_ptr< MIL_MissionParameter_ABC > pParameter = MIL_MissionParameterFactory::Create( pLocation );
@@ -157,7 +157,7 @@ void DEC_DIAFunctions::CopyLocalisationMission( boost::shared_ptr< TER_Localisat
 // Name: DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission
 // Created: JSR 2010-03-04
 // -----------------------------------------------------------------------------
-void DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource )
+void DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource )
 {
     assert( pKnowledgeObjectSource );
     pMission->AppendToParameter( parameter, pKnowledgeObjectSource );

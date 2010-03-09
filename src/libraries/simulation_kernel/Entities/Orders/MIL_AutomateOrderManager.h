@@ -58,14 +58,14 @@ public:
     //@{
     void                    MRT_SetFuseauForPion ( MIL_AgentPion& pion, MIL_Fuseau& fuseau );
     const MIL_Fuseau*       MRT_GetFuseauForPion ( MIL_AgentPion& pion ) const;
-    MIL_PionMission*        MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
+    boost::shared_ptr< MIL_Mission_ABC > MRT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
     void                    MRT_Validate         ();
-    MIL_PionMission*        CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
-    MIL_PionMission*        CreatePionMissionBM( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
-    void                    CDT_GivePionMission  ( MIL_Mission_ABC& mission );
+    boost::shared_ptr< MIL_Mission_ABC > CDT_CreatePionMission( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
+    boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionBM( MIL_AgentPion& pion, const MIL_MissionType_ABC& missionType );
+    void                    CDT_GivePionMission  ( const boost::shared_ptr< MIL_Mission_ABC > mission );
 
-    MIL_AutomateMission*    CreateAutomateMission( MIL_Automate& automate, const MIL_MissionType_ABC& missionType );
-    void                    GiveAutomateMission  ( MIL_AutomateMission& mission );
+    boost::shared_ptr< MIL_Mission_ABC > CreateAutomateMission( MIL_Automate& automate, const MIL_MissionType_ABC& missionType );
+    void                    GiveAutomateMission  ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     //@}
 
 private:
@@ -77,7 +77,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< MIL_Mission_ABC* > T_MissionSet;
+    typedef std::set< boost::shared_ptr< MIL_Mission_ABC > > T_MissionSet;
     typedef T_MissionSet::const_iterator CIT_MissionSet;
     //@}
    

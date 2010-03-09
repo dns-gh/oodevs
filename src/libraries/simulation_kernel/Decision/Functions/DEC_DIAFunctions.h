@@ -43,14 +43,14 @@ public:
 
     // Parameters copy
     static void CopyPoint                     ( MT_Vector2D* pPosSource, boost::shared_ptr< MT_Vector2D > pPosDest );
-    static void CopyPointMission              ( MT_Vector2D* pPosSource, MIL_Mission_ABC* pMission, const std::string& parameter );
-    static void CopyPathMission               ( std::vector< boost::shared_ptr< MT_Vector2D > > pointList, MIL_Mission_ABC* pMission, const std::string& parameter );
-    static void CopyPointToListPointMission   ( boost::shared_ptr< MT_Vector2D > pPosSource, MIL_Mission_ABC* pMission, const std::string& parameter );
+    static void CopyPointMission              ( MT_Vector2D* pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyPathMission               ( std::vector< boost::shared_ptr< MT_Vector2D > > pointList, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyPointToListPointMission   ( boost::shared_ptr< MT_Vector2D > pPosSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
     static void CopyLocalisation              ( const TER_Localisation* pLocSource, TER_Localisation* pLocDest );
-    static void CopyLocalisationMission       ( boost::shared_ptr< TER_Localisation > pLocation, MIL_Mission_ABC* pMission, const std::string& parameter );
-    static void CopyLocalisationListMission   ( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, MIL_Mission_ABC* pMission, const std::string& parameter );
-    static void CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, MIL_Mission_ABC* pMission, const std::string& parameter );
-    static void CopyKnowledgeObjectToKnowledgeObjectListMission( MIL_Mission_ABC* pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource );
+    static void CopyLocalisationMission       ( boost::shared_ptr< TER_Localisation > pLocation, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyLocalisationListMission   ( const std::vector< boost::shared_ptr< TER_Localisation > >& locSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyLocalisationToLocationListMission( boost::shared_ptr< TER_Localisation > pLocSource, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter );
+    static void CopyKnowledgeObjectToKnowledgeObjectListMission( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObjectSource );
 };
 
 #endif // __DEC_DIAFunctions_h_

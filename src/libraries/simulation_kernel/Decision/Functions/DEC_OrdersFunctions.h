@@ -44,17 +44,17 @@ public:
                            static void AutomateSetMissionLimaScheduleFlag( MIL_Automate& caller, unsigned int limaId, bool flag  );
 
     // Automate
-    static MIL_Mission_ABC* MRT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
+    static boost::shared_ptr< MIL_Mission_ABC > MRT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
     static void             MRT_Validate           ( MIL_Automate& callerAutomate );
     static void             MRT_AffectFuseaux      ( MIL_Automate& callerAutomate, std::vector< DEC_Decision_ABC* > pions );   
-    static MIL_Mission_ABC* CDT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
-    static MIL_Mission_ABC* CreatePionMissionBM    ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
-    static void             CDT_GivePionMission    ( MIL_Automate& callerAutomate, MIL_Mission_ABC* pMission );
+    static boost::shared_ptr< MIL_Mission_ABC > CDT_CreatePionMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
+    static boost::shared_ptr< MIL_Mission_ABC > CreatePionMissionBM    ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission );
+    static void             CDT_GivePionMission    ( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission );
 
-    static MIL_Mission_ABC* CreateAutomateMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission  );
-    static void AssignFuseauToAutomateMission   ( MIL_Fuseau* pFuseau, MIL_AutomateMission* pMission );
-    static void AssignDirectionToAutomateMission( MT_Vector2D* pDirection, MIL_AutomateMission* pMission);
-    static void GiveAutomateMission             ( MIL_AutomateMission* pMission, MIL_Automate& callerAutomate );
+    static boost::shared_ptr< MIL_Mission_ABC > CreateAutomateMission  ( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission  );
+    static void AssignFuseauToAutomateMission   ( MIL_Fuseau* pFuseau, boost::shared_ptr< MIL_Mission_ABC > pMission );
+    static void AssignDirectionToAutomateMission( MT_Vector2D* pDirection, boost::shared_ptr< MIL_Mission_ABC > pMission);
+    static void GiveAutomateMission             ( boost::shared_ptr< MIL_Mission_ABC > pMission, MIL_Automate& callerAutomate );
     static std::list<MIL_Fuseau*> SplitFuseau   ( MIL_Automate& callerAutomate, unsigned int nbrSubFuseaux );
 
 private:

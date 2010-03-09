@@ -9,7 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_PionMission.h"
-#include "MIL_AutomateMission.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -36,7 +35,7 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
 // Name: MIL_PionMission constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent )
+MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > parent )
     : MIL_Mission_ABC       ( type, pion.GetKnowledge(), parent )
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
@@ -74,16 +73,16 @@ MIL_PionMission::MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rh
 // -----------------------------------------------------------------------------
 MIL_PionMission::~MIL_PionMission()
 {
-    Stop();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PionMission::CreateCopy
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_PionMission& MIL_PionMission::CreateCopy( MIL_AgentPion& target ) const
+boost::shared_ptr< MIL_Mission_ABC > MIL_PionMission::CreateCopy( MIL_AgentPion& target ) const
 {
-    return *new MIL_PionMission( target, *this );
+    return boost::shared_ptr< MIL_Mission_ABC >( new MIL_PionMission( target, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,11 +98,11 @@ bool MIL_PionMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrderTy
 // Name: MIL_PionMission::Start
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PionMission::Start()
+void MIL_PionMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     assert( !bDIABehaviorActivated_ );
 
-    pion_.GetDecision().StartMissionBehavior( *this );
+    pion_.GetDecision().StartMissionBehavior( self );
     bDIABehaviorActivated_ = true;
     Send();
 }
@@ -112,11 +111,11 @@ void MIL_PionMission::Start()
 // Name: MIL_PionMission::Stop
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_PionMission::Stop()
+void MIL_PionMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     if( bDIABehaviorActivated_ )
     {
-        pion_.GetDecision().StopMissionBehavior( *this );
+        pion_.GetDecision().StopMissionBehavior( self );
         bDIABehaviorActivated_ = false;
     }
     SendNoMission( pion_ );

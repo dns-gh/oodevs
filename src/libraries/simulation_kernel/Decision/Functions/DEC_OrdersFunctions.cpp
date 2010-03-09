@@ -17,7 +17,6 @@
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_PionMissionType.h"
-#include "Entities/Orders/MIL_PionMission.h"
 #include "Entities/Orders/MIL_AutomateMissionType.h"
 #include "Entities/Orders/MIL_AutomateMission.h"
 
@@ -29,14 +28,14 @@
 // Name: DEC_OrdersFunctions::MRT_CreatePionMission
 // Created: NLD 2003-04-14
 //-----------------------------------------------------------------------------
-MIL_Mission_ABC* DEC_OrdersFunctions::MRT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::MRT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
     assert( pPion );
 
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     assert( pMissionType );
 
-    MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().MRT_CreatePionMission( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
 
@@ -99,7 +98,7 @@ void DEC_OrdersFunctions::MRT_AffectFuseaux( MIL_Automate& callerAutomate, std::
 // Name: DEC_OrdersFunctions::CDT_CreatePionMission
 // Created: NLD 2003-04-16
 //-----------------------------------------------------------------------------
-MIL_Mission_ABC* DEC_OrdersFunctions::CDT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CDT_CreatePionMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
     assert( pPion );
 
@@ -107,7 +106,7 @@ MIL_Mission_ABC* DEC_OrdersFunctions::CDT_CreatePionMission( MIL_Automate& calle
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     assert( pMissionType );
 
-    MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().CDT_CreatePionMission( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
 
@@ -116,7 +115,7 @@ MIL_Mission_ABC* DEC_OrdersFunctions::CDT_CreatePionMission( MIL_Automate& calle
 // Created: MGD 2010-01-14
 // Like CDT_CreatePionMission but no need of active MRT
 //-----------------------------------------------------------------------------
-MIL_Mission_ABC* DEC_OrdersFunctions::CreatePionMissionBM( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreatePionMissionBM( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion, const std::string& mission )
 {
     assert( pPion );
 
@@ -124,7 +123,7 @@ MIL_Mission_ABC* DEC_OrdersFunctions::CreatePionMissionBM( MIL_Automate& callerA
     const MIL_MissionType_ABC* pMissionType = MIL_PionMissionType::FindFromDiaID( mission );
     assert( pMissionType );
 
-    MIL_PionMission* pPionMission = callerAutomate.GetOrderManager().CreatePionMissionBM( pPion->GetPion(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pPionMission = callerAutomate.GetOrderManager().CreatePionMissionBM( pPion->GetPion(), *pMissionType );
     return pPionMission;
 }
 
@@ -132,9 +131,9 @@ MIL_Mission_ABC* DEC_OrdersFunctions::CreatePionMissionBM( MIL_Automate& callerA
 // Name: DEC_OrdersFunctions::CDT_GivePionMission
 // Created: NLD 2003-04-16
 //-----------------------------------------------------------------------------
-void DEC_OrdersFunctions::CDT_GivePionMission( MIL_Automate& callerAutomate, MIL_Mission_ABC* pMission )
+void DEC_OrdersFunctions::CDT_GivePionMission( MIL_Automate& callerAutomate, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
-    callerAutomate.GetOrderManager().CDT_GivePionMission( *pMission );
+    callerAutomate.GetOrderManager().CDT_GivePionMission( pMission );
 }
 
 // =============================================================================
@@ -145,14 +144,14 @@ void DEC_OrdersFunctions::CDT_GivePionMission( MIL_Automate& callerAutomate, MIL
 // Name: DEC_OrdersFunctions::CreateAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC* DEC_OrdersFunctions::CreateAutomateMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission   )
+boost::shared_ptr< MIL_Mission_ABC > DEC_OrdersFunctions::CreateAutomateMission( MIL_Automate& callerAutomate, DEC_Decision_ABC* pAutomate, const std::string& mission   )
 {
     assert( pAutomate );
 
     const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::FindFromDiaID( mission );
     assert( pMissionType );
 
-    MIL_AutomateMission* pMission = callerAutomate.GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );
+    boost::shared_ptr< MIL_Mission_ABC > pMission = callerAutomate.GetOrderManager().CreateAutomateMission( pAutomate->GetAutomate(), *pMissionType );
     return pMission;
 }
 
@@ -160,9 +159,9 @@ MIL_Mission_ABC* DEC_OrdersFunctions::CreateAutomateMission( MIL_Automate& calle
 // Name: DEC_OrdersFunctions::GiveAutomateMission
 // Created: NLD 2007-04-03
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::GiveAutomateMission( MIL_AutomateMission* pMission, MIL_Automate& callerAutomate )
+void DEC_OrdersFunctions::GiveAutomateMission( boost::shared_ptr< MIL_Mission_ABC > pMission, MIL_Automate& callerAutomate )
 {
-    callerAutomate.GetOrderManager().GiveAutomateMission( *pMission );
+    callerAutomate.GetOrderManager().GiveAutomateMission( pMission );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +179,7 @@ std::list<MIL_Fuseau*> DEC_OrdersFunctions::SplitFuseau( MIL_Automate& callerAut
 // Name: DEC_OrdersFunctions::AssignFuseauToAutomateMission
 // Created: NLD 2007-04-05
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::AssignFuseauToAutomateMission( MIL_Fuseau* pFuseau, MIL_AutomateMission* pMission )
+void DEC_OrdersFunctions::AssignFuseauToAutomateMission( MIL_Fuseau* pFuseau,  boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     assert( pMission && pFuseau );
 
@@ -191,7 +190,7 @@ void DEC_OrdersFunctions::AssignFuseauToAutomateMission( MIL_Fuseau* pFuseau, MI
 // Name: DEC_OrdersFunctions::AssignDirectionToAutomateMission
 // Created: SBO 2008-01-04
 // -----------------------------------------------------------------------------
-void DEC_OrdersFunctions::AssignDirectionToAutomateMission( MT_Vector2D* pDirection, MIL_AutomateMission* pMission )
+void DEC_OrdersFunctions::AssignDirectionToAutomateMission( MT_Vector2D* pDirection,  boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     assert( pMission && pDirection );
 

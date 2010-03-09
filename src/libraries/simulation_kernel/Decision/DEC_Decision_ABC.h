@@ -54,8 +54,8 @@ public:
     //! @name Operations
     //@{
     virtual void UpdateDecision( float duration ) = 0;
-    virtual void SetMission( MIL_Mission_ABC* pMission ) = 0;
-    virtual MIL_Mission_ABC* GetMission() = 0;
+    virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission ) = 0;
+    virtual boost::shared_ptr< MIL_Mission_ABC > GetMission() = 0;
     virtual DEC_AutomateDecision* GetDecAutomate() const = 0;
     virtual std::string GetName() const = 0;
     virtual void RemoveCallback( PHY_Action_ABC* pAction ) = 0;
@@ -68,8 +68,8 @@ public:
     
     virtual void GarbageCollect() = 0;
     
-    virtual void StartMissionBehavior( MIL_Mission_ABC& mission ) = 0;
-    virtual void StopMissionBehavior ( MIL_Mission_ABC& mission ) = 0;
+    virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
+    virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     
     virtual int  GeteEtatPhaseMission() const = 0;
     virtual void SeteEtatPhaseMission( int value ) = 0;

@@ -351,23 +351,23 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
 
     // MRT / conduite
     brain.RegisterFunction( "DEC_MRT_CreerMissionPion",
-        boost::function< MIL_Mission_ABC* ( DEC_Decision_ABC*, const std::string& ) >( boost::bind( &DEC_OrdersFunctions::MRT_CreatePionMission, boost::ref( GetAutomate() ), _1, _2 ) ) );
+        boost::function< boost::shared_ptr< MIL_Mission_ABC > ( DEC_Decision_ABC*, const std::string& ) >( boost::bind( &DEC_OrdersFunctions::MRT_CreatePionMission, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_MRT_Valide",
                             boost::bind( &DEC_OrdersFunctions::MRT_Validate, boost::ref( GetAutomate() ) ) );
     brain.RegisterFunction( "DEC_MRT_AffecteFuseaux",
         boost::function< void( std::vector< DEC_Decision_ABC* > ) >( boost::bind( &DEC_OrdersFunctions::MRT_AffectFuseaux, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_CDT_CreerMissionPion",
-        boost::function< MIL_Mission_ABC*( DEC_Decision_ABC*, const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CDT_CreatePionMission, boost::ref( GetAutomate() ), _1, _2 ) ) );
+        boost::function< boost::shared_ptr< MIL_Mission_ABC >( DEC_Decision_ABC*, const std::string& ) >( boost::bind( &DEC_OrdersFunctions::CDT_CreatePionMission, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_CDT_DonnerMissionPion_Mission",
-        boost::function< void( MIL_Mission_ABC* pMission ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMission, boost::ref( GetAutomate() ), _1 ) ) );
+        boost::function< void( boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMission, boost::ref( GetAutomate() ), _1 ) ) );
     brain.RegisterFunction( "DEC_CreerMissionAutomate",
-        boost::function< MIL_Mission_ABC* (DEC_Decision_ABC*, const std::string&)> ( boost::bind( &DEC_OrdersFunctions::CreateAutomateMission, boost::ref( GetAutomate() ), _1, _2 ) ) );
+        boost::function< boost::shared_ptr< MIL_Mission_ABC > (DEC_Decision_ABC*, const std::string&)> ( boost::bind( &DEC_OrdersFunctions::CreateAutomateMission, boost::ref( GetAutomate() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DonnerMissionAutomate",
-            boost::function< void( MIL_AutomateMission*)>( boost::bind( &DEC_OrdersFunctions::GiveAutomateMission , _1, boost::ref( GetAutomate() ) ) ) );
+            boost::function< void( boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::GiveAutomateMission , _1, boost::ref( GetAutomate() ) ) ) );
     brain.RegisterFunction( "DEC_AssignerFuseauAMissionAutomate",
-            boost::function< void( MIL_Fuseau* , MIL_AutomateMission*)>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToAutomateMission , _1, _2 ) ) );
+            boost::function< void( MIL_Fuseau* ,  boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_OrdersFunctions::AssignFuseauToAutomateMission , _1, _2 ) ) );
     brain.RegisterFunction( "DEC_AssignerDirectionAMissionAutomate",
-            boost::function< void (MT_Vector2D* , MIL_AutomateMission* ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) ) );
+            boost::function< void (MT_Vector2D* ,  boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) ) );
     brain.RegisterFunction( "DEC_DecouperFuseau",
             boost::function<std::list<MIL_Fuseau*> (unsigned int ) >( boost::bind( &DEC_OrdersFunctions::SplitFuseau  , boost::ref( GetAutomate() ), _1 ) ) );
 
@@ -432,9 +432,9 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
         
     // Former szName_, mission_, automate_:
     brain.RegisterFunction( "DEC_GetRawMission", 
-        boost::function< MIL_Mission_ABC*( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetMission, _1 ) ) );
+        boost::function< boost::shared_ptr< MIL_Mission_ABC >( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::GetMission, _1 ) ) );
     brain.RegisterFunction( "DEC_SetMission",
-        boost::function< void( DEC_Decision_ABC*, MIL_Mission_ABC* )>( boost::bind( &DEC_AutomateFunctions::SetMission, _1, _2 ) ) );
+        boost::function< void( DEC_Decision_ABC*, boost::shared_ptr< MIL_Mission_ABC > )>( boost::bind( &DEC_AutomateFunctions::SetMission, _1, _2 ) ) );
     brain.RegisterFunction( "DEC_GetSzName",             &DEC_MiscFunctions::GetName             );
     brain.RegisterFunction( "DEC_GetAutomate",           &DEC_MiscFunctions::GetAutomate         );
     brain.RegisterFunction( "DEC_GetDirectionEnnemi",    &DEC_MiscFunctions::GetDirectionEnnemi  );
@@ -457,9 +457,9 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
 // Name: DEC_AutomateDecision::StartMissionMrtBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_Mission_ABC& mission )
+void DEC_AutomateDecision::StartMissionMrtBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );    
+    const std::string& strBehavior = mission->GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );    
 
     ActivateOrder( strBehavior, mission );
 }
@@ -468,9 +468,9 @@ void DEC_AutomateDecision::StartMissionMrtBehavior( MIL_Mission_ABC& mission )
 // Name: DEC_AutomateDecision::StopMissionMrtBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_Mission_ABC& mission )
+void DEC_AutomateDecision::StopMissionMrtBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
+    const std::string& strBehavior = mission->GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseMRT );
     StopMission( strBehavior );
 }
 
@@ -478,9 +478,9 @@ void DEC_AutomateDecision::StopMissionMrtBehavior( MIL_Mission_ABC& mission )
 // Name: DEC_AutomateDecision::StartMissionConduiteBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_Mission_ABC& mission )
+void DEC_AutomateDecision::StartMissionConduiteBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
+    const std::string& strBehavior = mission->GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
 
     ActivateOrder( strBehavior, mission );
 }
@@ -489,9 +489,9 @@ void DEC_AutomateDecision::StartMissionConduiteBehavior( MIL_Mission_ABC& missio
 // Name: DEC_AutomateDecision::StopMissionConduiteBehavior
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_AutomateDecision::StopMissionConduiteBehavior( MIL_Mission_ABC& mission )
+void DEC_AutomateDecision::StopMissionConduiteBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    const std::string& strBehavior = mission.GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
+    const std::string& strBehavior = mission->GetType().GetDIABehavior( MIL_MissionType_ABC::ePhaseCDT );
     StopMission( strBehavior );
 }
 

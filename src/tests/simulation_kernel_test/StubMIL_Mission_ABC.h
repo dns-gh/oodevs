@@ -16,7 +16,8 @@ public:
     {}
     virtual ~StubMIL_Mission_ABC() {}
 
-    virtual void Start               () {}
+    virtual void Start               ( boost::shared_ptr< MIL_Mission_ABC > self ){};
+    virtual void Stop                ( boost::shared_ptr< MIL_Mission_ABC > self ){};
     virtual bool IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const 
     {
         return false;

@@ -61,8 +61,8 @@ public:
     //@{
     void Clean         ();
 
-    virtual void StartMissionBehavior( MIL_Mission_ABC& mission );
-    virtual void StopMissionBehavior ( MIL_Mission_ABC& mission );
+    virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual void NotifyHasChanged();
     //@}
 

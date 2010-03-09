@@ -51,7 +51,7 @@ MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_A
 // Name: MIL_AutomateMission constructor
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const MIL_AutomateMission& parent )
+MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const boost::shared_ptr< MIL_Mission_ABC > parent )
     : MIL_Mission_ABC          ( type, automate.GetKnowledge(), parent )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
@@ -79,16 +79,16 @@ MIL_AutomateMission::MIL_AutomateMission( MIL_Automate& automate, const MIL_Auto
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::~MIL_AutomateMission()
 {
-    Stop();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateMission::CreateCopy
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_AutomateMission& MIL_AutomateMission::CreateCopy( MIL_Automate& target ) const
+boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateMission::CreateCopy( MIL_Automate& target ) const
 {
-    return *new MIL_AutomateMission( target, *this );
+    return boost::shared_ptr< MIL_Mission_ABC >( new MIL_AutomateMission( target, *this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,11 +104,11 @@ bool MIL_AutomateMission::IsFragOrderAvailable( const MIL_FragOrderType& fragOrd
 // Name: MIL_AutomateMission::Start
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_AutomateMission::Start()
+void MIL_AutomateMission::Start( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     assert( !bDIAMrtBehaviorActivated_ );
 
-    automate_.GetDecision().StartMissionMrtBehavior( *this );
+    automate_.GetDecision().StartMissionMrtBehavior( self );
     bDIAMrtBehaviorActivated_ = true;
     Send();
 }
@@ -117,12 +117,12 @@ void MIL_AutomateMission::Start()
 // Name: MIL_AutomateMission::Stop
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-void MIL_AutomateMission::Stop()
+void MIL_AutomateMission::Stop( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     if( bDIAMrtBehaviorActivated_ )
-        automate_.GetDecision().StopMissionMrtBehavior( *this );
+        automate_.GetDecision().StopMissionMrtBehavior( self );
     if( bDIACdtBehaviorActivated_ )
-        automate_.GetDecision().StopMissionConduiteBehavior( *this );
+        automate_.GetDecision().StopMissionConduiteBehavior( self );
 
     SendNoMission( automate_ );
     
@@ -134,15 +134,15 @@ void MIL_AutomateMission::Stop()
 // Name: MIL_AutomateMission::GoToCdt
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------
-void MIL_AutomateMission::GoToCdt()
+void MIL_AutomateMission::GoToCdt( boost::shared_ptr< MIL_Mission_ABC > self )
 {
     assert(  bDIAMrtBehaviorActivated_ );
     assert( !bDIACdtBehaviorActivated_ );
 
-    automate_.GetDecision().StopMissionMrtBehavior( *this );
+    automate_.GetDecision().StopMissionMrtBehavior( self );
     bDIAMrtBehaviorActivated_ = false;
 
-    automate_.GetDecision().StartMissionConduiteBehavior( *this );
+    automate_.GetDecision().StartMissionConduiteBehavior( self );
     bDIACdtBehaviorActivated_ = true;
 }
 

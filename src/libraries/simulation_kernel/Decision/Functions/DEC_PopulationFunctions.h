@@ -51,8 +51,8 @@ public:
     static std::string  GetSzName( MIL_Population& callerPopulation );
     //@}    
     
-    static MIL_Mission_ABC* GetMission( DEC_Decision_ABC* pAgent );
-    static void SetMission            ( DEC_Decision_ABC* object, MIL_Mission_ABC* mission );  
+    static boost::shared_ptr< MIL_Mission_ABC > GetMission( DEC_Decision_ABC* pAgent );
+    static void SetMission            ( DEC_Decision_ABC* object, boost::shared_ptr< MIL_Mission_ABC > mission );  
 
 };
 

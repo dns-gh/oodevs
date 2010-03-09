@@ -14,7 +14,7 @@
 
 class MIL_AgentPion;
 class MIL_Fuseau;
-class MIL_PionMission;
+class MIL_Mission_ABC;
 
 //=============================================================================
 // Created: NLD 2003-04-14
@@ -28,7 +28,7 @@ public:
 
     //! @name Operations
     //@{
-          void        SetMissionForPion( MIL_AgentPion& pion, MIL_PionMission& mission );
+          void        SetMissionForPion( MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > mission );
           void        SetFuseauForPion ( MIL_AgentPion& pion, MIL_Fuseau& fuseau );
     const MIL_Fuseau* GetFuseauForPion ( MIL_AgentPion& pion ) const;
     
@@ -41,7 +41,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< MIL_AgentPion*, MIL_PionMission* >  T_MissionPionMap;
+    typedef std::map< MIL_AgentPion*, boost::shared_ptr< MIL_Mission_ABC > >  T_MissionPionMap;
     typedef T_MissionPionMap::const_iterator               CIT_MissionPionMap;
     
     typedef std::map< MIL_AgentPion*, MIL_Fuseau* > T_FuseauPionMap;

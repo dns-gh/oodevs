@@ -81,7 +81,7 @@ static const MIL_Fuseau& DEC_OrdersFunctions::GetFuseau( const T& caller )
 template< typename T >
 void DEC_OrdersFunctions::FinishMission( T& caller )
 {
-    caller.GetOrderManager().ReplaceMission( 0 );
+    caller.GetOrderManager().CancelMission();
 }
 
 // -----------------------------------------------------------------------------

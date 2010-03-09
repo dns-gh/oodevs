@@ -51,8 +51,8 @@ public:
     virtual void UpdateDecision( float duration );
     virtual void Reset( std::string groupName = "" );
     
-    virtual void SetMission( MIL_Mission_ABC* pMission );
-    virtual MIL_Mission_ABC* GetMission();
+    virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission );
+    virtual boost::shared_ptr< MIL_Mission_ABC > GetMission();
     virtual void RemoveCallback( PHY_Action_ABC* pAction );
     virtual void CallbackKnowledge( PHY_Action_ABC* pAction, boost::shared_ptr< DEC_Knowledge_Object > value );
     virtual void CallbackPerception( int id );
@@ -62,8 +62,8 @@ public:
     
     virtual void GarbageCollect();
     
-    virtual void StartMissionBehavior( MIL_Mission_ABC& mission );
-    virtual void StopMissionBehavior ( MIL_Mission_ABC& mission );
+    virtual void StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > mission );
+    virtual void StopMissionBehavior ( const boost::shared_ptr< MIL_Mission_ABC > mission );
 
     virtual int  GeteEtatPhaseMission() const;
     virtual void SeteEtatPhaseMission( int value );
@@ -140,7 +140,7 @@ protected:
     void StopDefaultBehavior      ();
     void LogCrash                 ();
     
-    void ActivateOrder( const std::string& strBehavior, MIL_Mission_ABC& mission );
+    void ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission );
     void StopMission( const std::string& strBehavior );
 
     virtual void EndCleanStateAfterCrash  () = 0;
@@ -165,7 +165,7 @@ protected:
     //!@name Data
     //@{
     T*                              pEntity_;
-    MIL_Mission_ABC*                pMission_;
+    boost::shared_ptr< MIL_Mission_ABC >                pMission_;
     std::string                     diaType_;
     DEC_DataBase&                   database_;
     //@}

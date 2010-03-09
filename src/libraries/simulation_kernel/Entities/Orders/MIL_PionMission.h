@@ -33,21 +33,22 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const Common::MsgUnitOrder& asn );
-             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const MIL_AutomateMission& parent );
+             MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > parent );
              MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion& pion );
     virtual ~MIL_PionMission();
     //@}
 
     //! @name Accessors
     //@{
-    MIL_AgentPion& GetPion() const;
+    virtual MIL_AgentPion& GetPion() const;
     //@}
 
     //! @name Operations
     //@{
-    virtual void             Start               ();
+    virtual void             Start               ( boost::shared_ptr< MIL_Mission_ABC > self );
+    virtual void             Stop                ( boost::shared_ptr< MIL_Mission_ABC > self );
     virtual bool             IsFragOrderAvailable( const MIL_FragOrderType& fragOrderType ) const;
-            MIL_PionMission& CreateCopy          ( MIL_AgentPion& target ) const;
+    boost::shared_ptr< MIL_Mission_ABC > CreateCopy( MIL_AgentPion& target ) const;
     virtual void             AffectDirection     ( const MT_Vector2D& direction );
     //@}
 
@@ -55,11 +56,6 @@ private:
     //! @name Constructors/Destructor
     //@{
     MIL_PionMission( MIL_AgentPion& pion, const MIL_PionMission& rhs );
-    //@}
-
-    //! @name Tools
-    //@{
-    void Stop();
     //@}
 
     //! @name Network

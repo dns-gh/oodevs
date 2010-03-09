@@ -21,7 +21,6 @@
 template <class T>
 DEC_Decision<T>::DEC_Decision( T& entity, DEC_DataBase& database )
 : pEntity_( &entity )
-, pMission_( 0 )
 , database_( database )
 {
 }
@@ -39,7 +38,7 @@ DEC_Decision<T>::~DEC_Decision()
 namespace DEC_DecisionImpl
 {
     void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id );
-    void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission );
+    void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission );
 }
 
 namespace directia
@@ -163,7 +162,7 @@ void DEC_Decision<T>::HandleUpdateDecisionError()
     LogCrash();
     CleanStateAfterCrash();
     MIL_Report::PostEvent( *pEntity_, MIL_Report::eReport_MissionImpossible_ );
-    pEntity_->GetOrderManager().ReplaceMission();               
+    pEntity_->GetOrderManager().CancelMission();               
 }
 
 // -----------------------------------------------------------------------------
@@ -239,14 +238,14 @@ void DEC_Decision<T>::StopDefaultBehavior()
 // Created: LDC 2009-04-07
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, MIL_Mission_ABC& mission )
+void DEC_Decision<T>::ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    pMission_ = &mission;
+    pMission_ = mission;
     // Register mission parameters in the brain...
     directia::ScriptRef refMission = pBrain_->RegisterObject( pMission_ );
     directia::ScriptRef refFunction = pBrain_->GetScriptFunction( "InitTaskParameter" );
-    DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, refFunction, refMission, *pMission_ );
-    pRefs_->startEvent_( strBehavior, pMission_ );
+    DEC_DecisionImpl::RegisterMissionParameters( *pBrain_, refFunction, refMission, pMission_ );
+    pRefs_->startEvent_( strBehavior, refMission );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +258,7 @@ void DEC_Decision<T>::StopMission( const std::string& strBehavior )
     try
     {
         pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior );
-        pMission_ = 0;
+        pMission_.reset();
     }
     catch( std::runtime_error& )
     {
@@ -272,7 +271,7 @@ void DEC_Decision<T>::StopMission( const std::string& strBehavior )
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::SetMission( MIL_Mission_ABC* pMission )
+void DEC_Decision<T>::SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     pMission_ = pMission;
 }
@@ -282,7 +281,7 @@ void DEC_Decision<T>::SetMission( MIL_Mission_ABC* pMission )
 // Created: LDC 2009-04-09
 // -----------------------------------------------------------------------------
 template <class T>
-MIL_Mission_ABC* DEC_Decision<T>::GetMission()
+boost::shared_ptr< MIL_Mission_ABC > DEC_Decision<T>::GetMission()
 {
     return pMission_;
 }
@@ -332,7 +331,7 @@ MIL_Automate& DEC_Decision<T>::GetAutomate() const
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::StartMissionBehavior( MIL_Mission_ABC& /*mission*/ )
+void DEC_Decision<T>::StartMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
 {
     throw std::runtime_error( "StartMissionBehavior cannot be called for this Decision class" );
 }
@@ -342,7 +341,7 @@ void DEC_Decision<T>::StartMissionBehavior( MIL_Mission_ABC& /*mission*/ )
 // Created: LDC 2009-07-13
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::StopMissionBehavior( MIL_Mission_ABC& /*mission*/ )
+void DEC_Decision<T>::StopMissionBehavior( const boost::shared_ptr< MIL_Mission_ABC > /*mission*/ )
 {
     throw std::runtime_error( "StopMissionBehavior cannot be called for this Decision class" );
 }

@@ -170,7 +170,7 @@ void RegisterCommonUserFunctions( directia::Brain& brain, unsigned int id )
     
     directia::ScriptRef initParameterFunction = brain.GetScriptFunction( "InitTaskParameter" );
     brain.RegisterFunction( "DEC_FillMissionParameters",
-        boost::function< void( const directia::ScriptRef&, MIL_Mission_ABC* ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2 ) ) );
+        boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_MiscFunctions::FillMissionParameters, boost::ref(brain), initParameterFunction, _1 , _2 ) ) );
     
     // Debug
     brain.RegisterFunction( "DEC_PointToString",      &DEC_DIAFunctions::PointToString );
@@ -619,11 +619,11 @@ private:
 // Name: RegisterMissionParameters
 // Created: LDC 2009-05-04
 // -----------------------------------------------------------------------------
-void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, MIL_Mission_ABC& mission )
+void RegisterMissionParameters( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     InitFunctions();
     RegisterMissionParameterVisitor visitor( brain, refMission, knowledgeCreateFunction );
-    mission.Visit( visitor );
+    mission->Visit( visitor );
 }
 
 }

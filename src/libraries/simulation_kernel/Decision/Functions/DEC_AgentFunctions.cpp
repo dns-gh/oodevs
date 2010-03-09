@@ -35,7 +35,8 @@
 
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
-#include "Entities/Orders/MIL_PionMission.h"
+
+#include "Entities/Orders/MIL_Mission_ABC.h"
 
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
@@ -439,7 +440,7 @@ bool DEC_AgentFunctions::RelievePion( MIL_AgentPion& callerAgent, const DEC_Deci
 {
     if( !callerAgent.GetOrderManager().RelievePion( agentToRelieve->GetPion() ) )
         return false;
-    agentToRelieve->GetPion().GetOrderManager().ReplaceMission( 0 ); //$$$ TMP - renommer la méthode
+    agentToRelieve->GetPion().GetOrderManager().CancelMission();
     return true;
 }
 
@@ -623,7 +624,7 @@ void DEC_AgentFunctions::Install( MIL_AgentPion& callerAgent )
 // Name: DEC_AgentFunctions::GetDirectionDanger
 // Created: LDC 2009-04-21
 // -----------------------------------------------------------------------------
-boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetDirectionDanger( MIL_Mission_ABC* pMission )
+boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetDirectionDanger( const boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     boost::shared_ptr< MT_Vector2D > result( new MT_Vector2D( pMission->GetDirDanger() ) );
     return result;
@@ -633,7 +634,7 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetDirectionDanger( MIL_Mis
 // Name: DEC_AgentFunctions::GetMission
 // Created: LDC 2009-06-16
 // -----------------------------------------------------------------------------
-MIL_Mission_ABC* DEC_AgentFunctions::GetMission( DEC_Decision_ABC* pAgent )
+boost::shared_ptr< MIL_Mission_ABC > DEC_AgentFunctions::GetMission( DEC_Decision_ABC* pAgent )
 {
     return pAgent->GetMission();
 }
@@ -642,7 +643,7 @@ MIL_Mission_ABC* DEC_AgentFunctions::GetMission( DEC_Decision_ABC* pAgent )
 // Name: DEC_AgentFunctions::SetMission
 // Created: LDC 2009-06-18
 // -----------------------------------------------------------------------------
-void DEC_AgentFunctions::SetMission( DEC_Decision_ABC* pAgent, MIL_Mission_ABC* pMission )
+void DEC_AgentFunctions::SetMission( DEC_Decision_ABC* pAgent, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     pAgent->SetMission( pMission );
 }
