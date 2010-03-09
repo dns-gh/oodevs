@@ -25,19 +25,32 @@ includedFiles["sources/common/pions/actions/Actions - Maj.bms"] = true
     end,
 
     select = function( self )
-                self.selectedEtat = self.selectedEtat or myself
+                selectedEtat = self
         F_Pion_SeteEtatPhaseMission( myself, self._namedParams.eEtatPhaseMission )
-    end,
+        if( ModuleBegins() ) then
+            do
+                local eRC = S_Convertir_SituationMission_RC( self._namedParams.eEtatPhaseMission )
+                if( eRC ~= eNbr ) then
+                    do
+                        if( not DEC_Agent_AutomateEstEmbraye() ) then
+                            DEC_RC( eRC )
+                        else
+                            DEC_Message( eRC )
+                        end
 
-    deselect = function( self )
-                if( self.selectedEtat == myself ) then
-            self.selectedEtat = nil
+                    end
+                end
+
+            end
         end
 
     end,
 
+    deselect = function( self )
+            end,
+
     destroy = function( self )
-                if( self.selectedEtat == myself ) then
+                if( selectedEtat == self ) then
             F_Pion_SeteEtatPhaseMission( myself, eEtatPhaseMission_None )
         end
 

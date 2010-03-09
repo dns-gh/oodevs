@@ -450,23 +450,17 @@ elseif switch_1 == eEtatAmbiance_Vitesse then
 
 node "BEH_Info_Pion_RendreCompteSurSituationMissions"
 {
-    activations =
-    {
-        { "ACT_RC", {} },
-    },
-
     create = function( self )
     end,
 
     activate = function( self )
-        local eRC = S_Convertir_SituationMission_RC( F_Pion_GeteEtatPhaseMission( myself ) )
-        if( eRC ~= eNbr ) then
-            Activate( self.activations.ACT_RC, 1, { eRC, } )
-        end
-
     end,
 
---[[// *****************************************************************************
+--[[// JSR Ce code est repris dans ACT_MAJ_EtatPhaseMission et devrait être inutile ici.
+]]--[[//    E_TypeRC eRC = S_Convertir_SituationMission_RC( F_Pion_GeteEtatPhaseMission( myself ) );
+]]--[[//    if( eRC != eNbr )
+]]--[[//        action ACT_RC( eRC );  
+]]--[[// *****************************************************************************
 ]]--[[// BEH_Info_Pion_RendreCompteSurPriseAPartiParArt()
 ]]--[[//
 ]]--[[// Commentaires :
@@ -1045,7 +1039,6 @@ connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSilenceRa
 connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSituationCoordination, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSituationDeplacement, "ACT_RC_SurObjet", nodes.ACT_RC_SurObjet }
 connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSituationDeplacement, "ACT_RC", nodes.ACT_RC }
-connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_RendreCompteSurSituationMissions, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Info_RenseignerSurEtatDec, "ACT_Info_EtatDec", nodes.ACT_Info_EtatDec }
 connections[ #connections + 1 ] = { nodes.BEH_Info_RenseignerSurEtatOperationnel, "ACT_Info_EtatOperationnel", nodes.ACT_Info_EtatOperationnel }
 connections[ #connections + 1 ] = { nodes.BEH_Info_RenseignerSurROE, "ACT_Info_EtatROE", nodes.ACT_Info_EtatROE }
