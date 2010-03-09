@@ -101,8 +101,7 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MiseEnOeuvreSurPosition" id="34" name="DeployOnPosition">
       <parameter dia-name="objectives" name="objective" optional="false" type="ObjectKnowledgeBM"/>
     </mission> 
-     <mission dia-behavior="net.masagroup.testSword.military.tasks.Safeguard" dia-type="T_Mission_Pion_Safeguard" id="35" name="Safeguard">
-      <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+     <mission dia-behavior="net.masagroup.testSword.military.tasks.Safeguard" dia-type="T_Mission_Pion_Safeguard" id="35" name="Safeguard"> 
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Flee" dia-type="T_Mission_Pion_Flee" id="36" name="Flee">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>

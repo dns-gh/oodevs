@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.testSword.military.tasks.Safeguard">
-  <parameters>
-    <parameter name="entities">
-      <type>
-        <list>
-          <class name="net.masagroup.military.generic.knowledge.Safeguardable"/>
-        </list>
-      </type>
-    </parameter>
-  </parameters>
+  <parameters/>
   <stages>
-    <stage permanent="true">
+    <stage label="Safeguard from enemies" permanent="true">
+      <let name="entitiesToSafeguardFrom">
+        <value>
+          <call method="net.masagroup.sword.military.queries.getSafeguardable">
+            <parameter name="dynamic">
+              <value>
+                <boolean>true</boolean>
+              </value>
+            </parameter>
+          </call>
+        </value>
+      </let>
       <skills>
         <skill name="net.masagroup.sword.military.skills.primitives.Safeguard">
           <parameter name="entities">
             <value>
-              <parameter>entities</parameter>
+              <parameter>entitiesToSafeguardFrom</parameter>
             </value>
           </parameter>
           <parameter name="positions">
@@ -23,7 +26,7 @@
               <call method="net.masagroup.sword.military.queries.getSafeguarding">
                 <parameter name="objectives">
                   <value>
-                    <parameter>entities</parameter>
+                    <parameter>entitiesToSafeguardFrom</parameter>
                   </value>
                 </parameter>
                 <parameter name="dynamic">

@@ -2,6 +2,7 @@ queryImplementation "getDestroying" { ["execute"] = function ( params )
     local allRes = knowledgeManager.getQueryResult( "getDestroying" )  
     
     if knowledgeManager.bCanCallStaticQuery or params.dynamic then
+    allRes={}
       -- Add position of myself, add position of all keypoints nearby
       for _, objective in pairs( params.entities ) do
         if objective:isOfType( net.masagroup.military.generic.knowledge.Destroying ) then
