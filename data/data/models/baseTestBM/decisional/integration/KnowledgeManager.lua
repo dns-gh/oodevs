@@ -31,10 +31,10 @@ knowledgeManager.TaskFinished = function()
 end
 knowledgeManager.UpdateDecision = function() knowledgeManager.bCanCallStaticQuery = false end
 knowledgeManager.getQueryResult = function( queryName )
-  if not knowledgeManager.queries.queryName then
-      knowledgeManager.queries.queryName = {}
+  if not knowledgeManager.queries[ queryName ] then
+      knowledgeManager.queries[ queryName ] = {}
   end
-  return knowledgeManager.queries.queryName
+  return knowledgeManager.queries[ queryName ]
 end
 
 masalife.brain.core.registerTaskListener( knowledgeManager )
