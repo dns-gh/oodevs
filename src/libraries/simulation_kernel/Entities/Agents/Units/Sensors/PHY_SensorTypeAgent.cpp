@@ -432,7 +432,9 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
                 else
                     throw std::exception( "géométriquement impossible" );
              }
-            else 
+            else if ( intersectPoints.empty() )
+                intersectionDistance = vSourcePoint.Distance( vTargetPoint );
+            else
                 intersectionDistance = (*intersectPoints.begin()).Distance( *intersectPoints.rbegin() );
                     
             const urban::Architecture* architecture = it.NextElement().RetrievePhysicalFeature< urban::Architecture >();
