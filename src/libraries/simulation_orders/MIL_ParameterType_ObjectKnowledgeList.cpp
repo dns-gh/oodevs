@@ -35,7 +35,7 @@ MIL_ParameterType_ObjectKnowledgeList::~MIL_ParameterType_ObjectKnowledgeList()
 // Name: MIL_ParameterType_ObjectKnowledgeList::Copy
 // Created: NLD 2006-11-ObjectList
 //-----------------------------------------------------------------------------
-bool MIL_ParameterType_ObjectKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool bIsOptional ) const
+bool MIL_ParameterType_ObjectKnowledgeList::Copy( const MIL_MissionParameter_ABC& from, Common::MsgMissionParameter& to, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, bool /*bIsOptional*/ ) const
 {
     // Check source
     if( !from.IsOfType( *this ) )

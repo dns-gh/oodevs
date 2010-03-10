@@ -62,6 +62,6 @@ float BlockPhFirerModifier::Execute( urban::BlockModel& blockModel, const geomet
 // -----------------------------------------------------------------------------
 float BlockPhFirerModifier::HeightModifier( const urban::Architecture& architecture ) const 
 {
-    float modifier = architecture.GetHeight()*0.007; // $$$$ _RC_ SLG 2010-01-08:  les facteurs doivent etre paramétrable dans le nouvel ADN
-    return modifier > 1.5 ? 1.5 : modifier;
+    float modifier = architecture.GetHeight() * 0.007f; // $$$$ _RC_ SLG 2010-01-08:  les facteurs doivent etre paramétrable dans le nouvel ADN
+    return std::min( modifier, 1.5f );
 }

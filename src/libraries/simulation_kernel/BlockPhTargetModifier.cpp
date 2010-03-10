@@ -66,9 +66,8 @@ float BlockPhTargetModifier::Execute( urban::BlockModel& blockModel, const geome
 // -----------------------------------------------------------------------------
 float BlockPhTargetModifier::ArchitectureModifier( const urban::Architecture& architecture ) const 
 {
-    float modifier = architecture.GetHeight()*0.005 + architecture.GetFacadeOpacity()*0.2;  // $$$$ _RC_ SLG 2010-01-08:  les facteurs doivent etre paramétrable dans le nouvel ADN
-    return modifier > 0.25 ? 0.25 : modifier;
-
+    float modifier = architecture.GetHeight() * 0.005f + architecture.GetFacadeOpacity() * 0.2f; // $$$$ _RC_ SLG 2010-01-08:  les facteurs doivent etre paramétrable dans le nouvel ADN
+    return std::min( modifier, 0.25f );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,6 +76,6 @@ float BlockPhTargetModifier::ArchitectureModifier( const urban::Architecture& ar
 // -----------------------------------------------------------------------------
 float BlockPhTargetModifier::SoilModifier( const urban::Soil& soil) const 
 {
-    float modifier = soil.GetOccupation() * 0.1; // $$$$ _RC_ SLG 2010-01-08:  les facteurs doivent etre paramétrable dans le nouvel ADN
-    return modifier > 0.25 ? 0.25 : modifier;
+    float modifier = soil.GetOccupation() * 0.1f; // $$$$ _RC_ SLG 2010-01-08:  les facteurs doivent etre paramétrable dans le nouvel ADN
+    return std::min( modifier, 0.25f );
 }
