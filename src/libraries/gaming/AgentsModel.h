@@ -36,12 +36,6 @@ namespace kernel
 
 class AgentFactory_ABC;
 
-namespace DIN
-{
-    class DIN_Input;
-};
-
-
 // =============================================================================
 /** @class  AgentsModel
     @brief  AgentsModel

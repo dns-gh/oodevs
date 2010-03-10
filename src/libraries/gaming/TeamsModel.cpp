@@ -9,7 +9,6 @@
 
 #include "gaming_pch.h"
 #include "TeamsModel.h"
-#include "DIN/DIN_Input.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
