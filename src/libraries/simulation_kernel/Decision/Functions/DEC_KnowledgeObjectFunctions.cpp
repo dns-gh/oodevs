@@ -85,7 +85,7 @@ bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_AgentPion& callerAge
 // Name: DEC_KnowledgeObjectFunctions::GetAnimationLevel
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeObjectFunctions::GetAnimationLevel( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
+float DEC_KnowledgeObjectFunctions::GetAnimationLevel( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
 {
     if( pKnowledge && pKnowledge->IsValid() )
     {
@@ -206,13 +206,16 @@ void DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity( boost::shared_
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeObjectFunctions::IsStockSupplied( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
-    MIL_Object_ABC* pObject;
-    if( pKnowledge && ( pObject = pKnowledge->GetObjectKnown() ) )
+    if( pKnowledge )
     {
-        StockAttribute* pAttribute = pObject->RetrieveAttribute< StockAttribute >();
-        if( pAttribute )
+        MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
+        if( pObject )
         {
-            return pAttribute->IsFull();
+            StockAttribute* pAttribute = pObject->RetrieveAttribute< StockAttribute >();
+            if( pAttribute )
+            {
+                return pAttribute->IsFull();
+            }
         }
     }
     return false;

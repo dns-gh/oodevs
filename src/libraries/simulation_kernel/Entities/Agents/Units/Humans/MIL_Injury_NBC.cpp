@@ -121,7 +121,7 @@ void MIL_Injury_NBC::SetInjuryCategory( MIL_MedicalTreatmentType::E_InjuryCatego
 // Name: MIL_Injury_NBC::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-bool MIL_Injury_NBC::IsInjured( const PHY_ComposantePion& pComposante )
+bool MIL_Injury_NBC::IsInjured( const PHY_ComposantePion& /*pComposante*/ )
 {/*
     //Ne pas oublier de prendre en compte la protection avec:
     //pComposante.GetType().GetProtection().Get...
@@ -152,7 +152,7 @@ bool MIL_Injury_NBC::IsInjured( const PHY_ComposantePion& pComposante )
 // Name: MIL_Injury_NBC::SetInjury
 // Created: RFT 24/07/2008
 // -----------------------------------------------------------------------------
-void MIL_Injury_NBC::SetInjury( MT_Float rNbrAliveHumans , MT_Float rDensity )
+void MIL_Injury_NBC::SetInjury( MT_Float /*rNbrAliveHumans*/ , MT_Float /*rDensity*/ )
 {/*
     //Population doesn't have any protection
     //Ne pas oublier de prendre en compte le temps d'exposition

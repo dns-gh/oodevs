@@ -1020,7 +1020,7 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::Ms
 // Created: FHD 2009-12-15: 
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& /*message*/, unsigned int nCtx )
 {
     client::KnowledgeGroupCreationAck ack;
     ack().set_oid( 0 );

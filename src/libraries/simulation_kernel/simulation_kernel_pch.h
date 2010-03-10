@@ -26,7 +26,7 @@
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
 
-#include <boost/utility.hpp>
+#include <boost/noncopyable.hpp>
 
 #pragma warning( pop )
 
@@ -41,7 +41,6 @@
 #include "MT_Tools/MT_Circle.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Random.h"
-#include "MT_Tools/MT_GaussianRandom.h"
 
 #include "simulation_terrain/TER.h"
 #include "simulation_terrain/TER_Localisation.h"

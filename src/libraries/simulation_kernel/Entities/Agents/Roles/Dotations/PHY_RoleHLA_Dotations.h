@@ -71,7 +71,7 @@ public:
     //! @name Fire dotations
     //@{
     virtual MT_Float AddFireReservation( const PHY_DotationCategory& /*category*/, MT_Float /*rNbr*/ ) { return 0; }
-    virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const { return 0; }
+    virtual const PHY_DotationCategory* GetIlluminationDotations( float /*range*/, bool /*permanent*/ ) const { return 0; }
     //@}
 
     //! @name Network
