@@ -630,7 +630,7 @@
             <syslibset libs="gdi32"/>
         </build-test>
     </target>                              
-    
+
     <target name="dispatcher_test">
         <build-test name="dispatcher" depends="boost"
             libs="lib${ant.project.name}_clients_kernel-${platform}-mt,libprotobuf,
@@ -921,7 +921,6 @@
         <update name="turtle"/>
         <update name="protobuf"/>
         <update name="vcredist" package="vcredist"/>
-        <update name="turtle"/>
         <update name="system"/>
         <update-database database="core-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/libs/core"/>
         <update-database database="generic-database" dir="${data.dir}/data/models/baseTestBM/decisional/models/libs/base"/>
