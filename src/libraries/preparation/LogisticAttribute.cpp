@@ -76,7 +76,7 @@ void LogisticAttribute::Display( Displayer_ABC& displayer ) const
 void LogisticAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << start( "tc2" )
-            << attribute( "id", long( ((const kernel::Automat_ABC*)tc2_)->GetId() ) )            
+        << attribute( "id", tc2_ ? long( ((const kernel::Automat_ABC*)tc2_)->GetId() ) : 0)            
         << end();
 }
 
