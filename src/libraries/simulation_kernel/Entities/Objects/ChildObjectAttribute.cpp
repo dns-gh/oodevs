@@ -48,7 +48,7 @@ ChildObjectAttribute::~ChildObjectAttribute()
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------
 template< typename Archive > 
-void ChildObjectAttribute::serialize( Archive& file, const uint )
+void ChildObjectAttribute::serialize( Archive& /*file*/, const uint )
 {
     //TODO
 }

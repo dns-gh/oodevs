@@ -644,8 +644,7 @@ void MIL_Army::OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& as
 {
     MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.oid_camp2() );
     if( !pArmy2 || *pArmy2 == *this )
-        throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
-
+        throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
     if( asnMsg.diplomatie() == Common::EnumDiplomacy::unknown_diplo )
         nDiplomacy = eUnknown;

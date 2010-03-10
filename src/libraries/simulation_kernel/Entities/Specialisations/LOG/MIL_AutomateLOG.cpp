@@ -951,7 +951,7 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const Common::MsgAutomatC
 void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& asnMsg )
 {
     if( !pSupplySuperior_ || GetLogisticAutomate( asnMsg.oid_donneur() ) != pSupplySuperior_ )
-        throw NET_AsnException< MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas::MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas);
+        throw NET_AsnException< MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas );
 
     for( int i = 0; i < asnMsg.quotas().elem_size(); ++i )
         if( const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnMsg.quotas().elem( i ).ressource_id() ) )
@@ -971,7 +971,7 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::MsgL
 {
     MIL_AutomateLOG* pSupplier = GetLogisticAutomate( asnMsg.oid_donneur() );
     if( !pSupplier )
-        throw NET_AsnException< MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
+        throw NET_AsnException< MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
 
     PHY_SupplyStockRequestContainer supplyRequests( *this, asnMsg.stocks() );
 
