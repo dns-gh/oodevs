@@ -57,7 +57,8 @@ if( DEC_ConnaissanceObjet_EstValide( installation ) and DEC_ConnaissanceObjet_Es
         end
 
         if( not bInstallation ) then
-            Activate( self.activations.BEH_Pop_RejoindrePoint, 1, { DEC_Geometrie_CalculerBarycentreLocalisation( self._namedParams.mission.zone_ ), } )
+            self.position = self.position or DEC_Geometrie_CalculerBarycentreLocalisation( self._namedParams.mission.zone_ )
+            Activate( self.activations.BEH_Pop_RejoindrePoint, 1, { self.position, } )
         end
 
         Activate( self.activations.BEH_Pop_PAPPions, 1, {} )--[[//------------------------------------------------------------------------------------
