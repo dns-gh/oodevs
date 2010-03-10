@@ -28,15 +28,15 @@ class DEC_ActionFunctions
 public:
     //! @name Functions
     //@{
-    template< typename ActionType > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller );
-    template< typename ActionType, typename T > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T arg );
-    template< typename ActionType, typename T1, typename T2 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2 );
-    template< typename ActionType, typename T1, typename T2, typename T3 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3 );
-    template< typename ActionType, typename T1, typename T2, typename T3, typename T4 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4 );
-    template< typename ActionType, typename T1, typename T2, typename T3, typename T4, typename T5 > static PHY_Action_ABC* StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5 );
-    template< typename T >          static PHY_Action_ABC* StopAction   ( const T& caller, PHY_Action_ABC* pAction );
-    template< typename T >          static void SuspendAction( const T& caller, PHY_Action_ABC* pAction );
-    template< typename T >          static void ResumeAction ( const T& caller, PHY_Action_ABC* pAction );
+    template< typename ActionType > static boost::shared_ptr< PHY_Action_ABC > StartAction  ( typename ActionType::ActorType& caller );
+    template< typename ActionType, typename T > static boost::shared_ptr< PHY_Action_ABC > StartAction  ( typename ActionType::ActorType& caller, T arg );
+    template< typename ActionType, typename T1, typename T2 > static boost::shared_ptr< PHY_Action_ABC > StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2 );
+    template< typename ActionType, typename T1, typename T2, typename T3 > static boost::shared_ptr< PHY_Action_ABC > StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3 );
+    template< typename ActionType, typename T1, typename T2, typename T3, typename T4 > static boost::shared_ptr< PHY_Action_ABC > StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4 );
+    template< typename ActionType, typename T1, typename T2, typename T3, typename T4, typename T5 > static boost::shared_ptr< PHY_Action_ABC > StartAction  ( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5 );
+    template< typename T >          static boost::shared_ptr< PHY_Action_ABC > StopAction   ( T& caller, boost::shared_ptr< PHY_Action_ABC > pAction );
+    template< typename T >          static void SuspendAction( const T& caller, boost::shared_ptr< PHY_Action_ABC > pAction );
+    template< typename T >          static void ResumeAction ( const T& caller, boost::shared_ptr< PHY_Action_ABC > pAction );
 
     static void Transport_AddPion         ( MIL_AgentPion& callerAgent, DEC_Decision_ABC* pPion, bool bTransportOnlyLoadable );        
     static void Transport_AddPions        ( MIL_AgentPion& callerAgent, const std::vector< DEC_Decision_ABC* >& pions, bool bTransportOnlyLoadable );        

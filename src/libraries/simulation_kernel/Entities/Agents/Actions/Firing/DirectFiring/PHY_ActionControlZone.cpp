@@ -73,7 +73,7 @@ namespace
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Localisation* pLocalisation, MT_Float rRadius, bool bFire )
-    : PHY_Action_ABC    ( pion )
+    : PHY_Action_ABC    ()
     , rolePerceiver_    ( pion.GetRole< PHY_RoleInterface_Perceiver      >() )
     , roleDirectFiring_ ( pion.GetRole< PHY_RoleAction_DirectFiring >() )
     , pFireResult_      ( 0 )  

@@ -24,7 +24,7 @@ class PHY_Action_ABC : private boost::noncopyable
 {
 
 public:
-    explicit PHY_Action_ABC( PHY_Actor& actor );
+    explicit PHY_Action_ABC();
     virtual ~PHY_Action_ABC();
 
     //! @name Operations
@@ -40,9 +40,6 @@ protected:
     virtual void Execute         () = 0;
     virtual void ExecuteSuspended() = 0;
     //@}
-
-protected:
-    PHY_Actor& actor_;
 
 private:
     bool bSuspended_;

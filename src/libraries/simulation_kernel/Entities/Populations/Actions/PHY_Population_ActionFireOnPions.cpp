@@ -19,7 +19,7 @@
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_Population_ActionFireOnPions::PHY_Population_ActionFireOnPions( MIL_Population& population, float rIntensity )
-    : PHY_Action_ABC( population )
+    : PHY_Action_ABC()
     , population_   ( population )
     , fireResults_  ( population )
     , rIntensity_   ( rIntensity )

@@ -19,7 +19,7 @@
 // Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionFly::PHY_ActionFly( MIL_Entity_ABC& entity )
-    : PHY_Action_ABC( entity )
+    : PHY_Action_ABC()
     , role_         ( entity.GetRole< PHY_RoleAction_InterfaceFlying >() )
 {
     // NOTHING

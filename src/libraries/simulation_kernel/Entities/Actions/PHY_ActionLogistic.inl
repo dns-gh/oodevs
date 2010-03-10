@@ -15,7 +15,7 @@
 // -----------------------------------------------------------------------------
 template< typename T >
 PHY_ActionLogistic< T >::PHY_ActionLogistic( T& entity )
-    : PHY_Action_ABC( entity )
+    : PHY_Action_ABC()
     , entity_       ( entity )
 {
     // NOTHING

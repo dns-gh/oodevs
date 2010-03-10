@@ -20,7 +20,7 @@
 // Demined: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionAnimateObject::PHY_ActionAnimateObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
-    : PHY_Action_ABC    ( pion )
+    : PHY_Action_ABC    ()
     , role_             ( pion.GetRole< PHY_RoleAction_Objects >() )
     , pKnowledge_       ( pKnowledge )
 {    

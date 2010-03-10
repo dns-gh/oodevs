@@ -40,14 +40,14 @@ public:
 
     //! @name Actions
     //@{
-    void RegisterAction  ( PHY_Action_ABC& action );
-    void UnregisterAction( PHY_Action_ABC& action );
+    void RegisterAction  ( const boost::shared_ptr< PHY_Action_ABC > action );
+    void UnregisterAction( const boost::shared_ptr< PHY_Action_ABC > action );
     void CancelAllActions();
-    bool HasAction       ( PHY_Action_ABC& action ) const;
+    bool HasAction       ( const boost::shared_ptr< PHY_Action_ABC > action ) const;
     //@}
 
 private:
-    std::set< PHY_Action_ABC* > actions_;
+    std::set< const boost::shared_ptr< PHY_Action_ABC > > actions_;
 };
 
 #endif // __PHY_Actor_h_

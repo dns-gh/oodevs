@@ -16,7 +16,7 @@
 // Created: LDC 2009-06-26
 // -----------------------------------------------------------------------------
 PHY_DecisionCallbackAction_ABC::PHY_DecisionCallbackAction_ABC( MIL_Entity_ABC& actor )
-: PHY_Action_ABC( actor )
+: PHY_Action_ABC()
 , decision_( actor.GetRole<DEC_Decision_ABC >() )
 {
     // NOTHING

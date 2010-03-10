@@ -28,8 +28,7 @@ PHY_Actor::PHY_Actor()
 // -----------------------------------------------------------------------------
 PHY_Actor::~PHY_Actor()
 {
-    while( !actions_.empty() )
-        delete *actions_.begin();
+    actions_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -38,7 +37,7 @@ PHY_Actor::~PHY_Actor()
 // -----------------------------------------------------------------------------
 void PHY_Actor::UpdateActions()
 {
-    for( std::set< PHY_Action_ABC* >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
+    for( std::set< const boost::shared_ptr< PHY_Action_ABC > >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
         (*it)->Update();
 }
 
@@ -46,9 +45,9 @@ void PHY_Actor::UpdateActions()
 // Name: PHY_Actor::RegisterAction
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-void PHY_Actor::RegisterAction( PHY_Action_ABC& action )
+void PHY_Actor::RegisterAction( const boost::shared_ptr< PHY_Action_ABC > action )
 {
-    bool bOut = actions_.insert( &action ).second;
+    bool bOut = actions_.insert( action ).second;
     assert( bOut );
 }
 
@@ -56,9 +55,9 @@ void PHY_Actor::RegisterAction( PHY_Action_ABC& action )
 // Name: PHY_Actor::UnregisterAction
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-void PHY_Actor::UnregisterAction( PHY_Action_ABC& action )
+void PHY_Actor::UnregisterAction( const boost::shared_ptr< PHY_Action_ABC > action )
 {
-    int nOut = actions_.erase( &action );
+    int nOut = actions_.erase( action );
     assert( nOut == 1 );
 }
 
@@ -68,16 +67,14 @@ void PHY_Actor::UnregisterAction( PHY_Action_ABC& action )
 // -----------------------------------------------------------------------------
 void PHY_Actor::CancelAllActions()
 {
-    std::set< PHY_Action_ABC* > tmp = actions_;
-    for( std::set< PHY_Action_ABC* >::iterator it = tmp.begin(); it != tmp.end(); ++it )
-        delete *it;
+    actions_.clear();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Actor::HasAction
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-bool PHY_Actor::HasAction( PHY_Action_ABC& action ) const
+bool PHY_Actor::HasAction( const boost::shared_ptr< PHY_Action_ABC > action ) const
 {
-    return actions_.find( &action ) != actions_.end();
+    return actions_.find( action ) != actions_.end();
 }

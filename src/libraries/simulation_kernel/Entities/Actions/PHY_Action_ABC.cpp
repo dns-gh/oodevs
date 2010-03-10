@@ -20,11 +20,9 @@
 // Name: PHY_Action_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
-PHY_Action_ABC::PHY_Action_ABC( PHY_Actor& actor )
+PHY_Action_ABC::PHY_Action_ABC()
     : bSuspended_( false )
-    , actor_     ( actor )
 {
-    actor_.RegisterAction( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +31,6 @@ PHY_Action_ABC::PHY_Action_ABC( PHY_Actor& actor )
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::~PHY_Action_ABC()
 {
-    actor_.UnregisterAction( *this );
 }
 
 

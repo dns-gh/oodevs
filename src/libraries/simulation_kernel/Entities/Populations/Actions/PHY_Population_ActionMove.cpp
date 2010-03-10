@@ -19,7 +19,7 @@
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_Population_ActionMove::PHY_Population_ActionMove( MIL_Population& population, MT_Vector2D* pTargetPosition )
-    : PHY_Action_ABC      ( population )
+    : PHY_Action_ABC      ()
     , population_         ( population )
     , destination_        ()
 {    
