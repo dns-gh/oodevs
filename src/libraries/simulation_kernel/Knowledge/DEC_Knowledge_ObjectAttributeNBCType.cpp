@@ -62,6 +62,7 @@ void DEC_Knowledge_ObjectAttributeNBCType::load( MIL_CheckPointInArchive& file, 
 {
     unsigned int nID;
     int concentration;
+    file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file >> nID
          >> concentration;
 
@@ -76,6 +77,7 @@ void DEC_Knowledge_ObjectAttributeNBCType::load( MIL_CheckPointInArchive& file, 
 void DEC_Knowledge_ObjectAttributeNBCType::save( MIL_CheckPointOutArchive& file, const uint ) const
 {
     unsigned int nID = ( pAgent_ ? pAgent_->GetID() : (uint)-1 );
+    file << boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file << nID
          << concentration_;
 }

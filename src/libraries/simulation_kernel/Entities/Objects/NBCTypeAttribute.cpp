@@ -117,6 +117,7 @@ void NBCTypeAttribute::load( MIL_CheckPointInArchive& ar, const uint )
 {
     std::string agentName;
     
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );        
     ar >> agentName
        >> concentration_;     
 

@@ -22,10 +22,8 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID = pion->GetType().GetID();
-    const MIL_Automate* const pAutomate = &pion->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
     archive << nTypeID
-            << pAutomate
             << algorithmFactories;
 }
 
@@ -33,14 +31,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPionLOGConvoy* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID;
-    MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
     archive >> nTypeID
-            >> pAutomate
             >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPionLOGConvoy( *pType, *pAutomate, *algorithmFactories );
+    ::new( pion )MIL_AgentPionLOGConvoy( *pType, *algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,6 +55,16 @@ MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, M
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
     : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOGConvoy constructor
+// Created: JSR 2010-03-09
+// -----------------------------------------------------------------------------
+MIL_AgentPionLOGConvoy::MIL_AgentPionLOGConvoy( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
+    : MIL_AgentPionLOG_ABC( type, algorithmFactories )
 {
     // NOTHING
 }

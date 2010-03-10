@@ -83,6 +83,7 @@ InputToxicCloudAttribute::~InputToxicCloudAttribute()
 // -----------------------------------------------------------------------------
 void InputToxicCloudAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
+    ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> filename_
        >> field_
        >> dataField_

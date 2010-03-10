@@ -110,6 +110,7 @@ void NBCAttribute::load( MIL_CheckPointInArchive& file , const unsigned int )
          
     unsigned int nNbrNbcAgents;
     file >> danger_;
+    file >> nForm_;
     file >> nNbrNbcAgents;
     while ( nNbrNbcAgents-- )
     {
@@ -129,6 +130,7 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
     file << boost::serialization::base_object< ObjectAttribute_ABC >( *this );    
     
     file << danger_;
+    file << nForm_;
     unsigned size = agents_.size();
     file << size;
     for ( CIT_NBCAgents it = agents_.begin(); it != agents_.end(); ++it )

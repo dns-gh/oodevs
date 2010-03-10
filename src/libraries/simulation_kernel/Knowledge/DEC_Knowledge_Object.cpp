@@ -124,14 +124,14 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> name;
     pObjectType_ = &MIL_ObjectFactory::FindType( name );
     
-    file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
-         >> pObjectKnown_
-         >> const_cast< unsigned int& >( nID_ )
-         >> attributes_
-         >> nAttributesUpdated_
-         >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
-         >> localisation_
-         >> avoidanceLocalisation_;
+    file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ );
+    file >> pObjectKnown_;
+    file >> const_cast< unsigned int& >( nID_ );
+    file >> attributes_;
+    file >> nAttributesUpdated_;
+    file >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ );
+    file >> localisation_;
+    file >> avoidanceLocalisation_;
          
     idManager_.Lock( nID_ );
 

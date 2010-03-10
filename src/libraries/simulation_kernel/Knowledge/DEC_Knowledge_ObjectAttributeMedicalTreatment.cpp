@@ -68,6 +68,7 @@ DEC_Knowledge_ObjectAttributeMedicalTreatment::~DEC_Knowledge_ObjectAttributeMed
 void DEC_Knowledge_ObjectAttributeMedicalTreatment::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     int availableBeds, availableDoctors, beds, doctors, listSize, nID;
+    file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file >> availableBeds
          >> availableDoctors
          >> beds

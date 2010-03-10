@@ -63,6 +63,7 @@ void DEC_Knowledge_ObjectAttributeFire::load( MIL_CheckPointInArchive& file, con
 {
     unsigned int nID;
     
+    file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
     file >> *const_cast< FireAttribute* >( attr_ )
          >> nID
          >> heat_;

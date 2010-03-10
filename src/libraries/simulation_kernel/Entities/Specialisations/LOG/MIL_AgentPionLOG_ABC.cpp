@@ -44,6 +44,17 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOG_ABC constructor
+// Created: JSR 2010-03-09
+// -----------------------------------------------------------------------------
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
+    : MIL_AgentPion   ( type, algorithmFactories )
+    , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPionLOG_ABC destructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------

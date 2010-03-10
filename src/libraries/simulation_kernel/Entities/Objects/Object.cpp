@@ -161,10 +161,10 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Object_ABC >( *this );
-    file << name_
-         << id_
-         << capacities_
-         << attributes_;
+    file << name_;
+    file << id_;
+    file << capacities_;
+    file << attributes_;
 }
 
 // -----------------------------------------------------------------------------

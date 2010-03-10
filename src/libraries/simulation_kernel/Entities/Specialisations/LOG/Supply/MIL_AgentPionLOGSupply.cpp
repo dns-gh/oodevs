@@ -20,10 +20,8 @@ template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AgentPionLOGSupply* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID = pion->GetType().GetID();
-    const MIL_Automate* const pAutomate = &pion->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &pion->GetAlgorithms();
     archive << nTypeID 
-        << pAutomate
         << algorithmFactories;
 }
 
@@ -31,14 +29,12 @@ template< typename Archive >
 void load_construct_data( Archive& archive, MIL_AgentPionLOGSupply* pion, const unsigned int /*version*/ )
 {
     unsigned int nTypeID;
-    MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories;
     archive >> nTypeID
-        >> pAutomate
         >> algorithmFactories;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( pion )MIL_AgentPionLOGSupply( *pType, *pAutomate, *algorithmFactories );
+    ::new( pion )MIL_AgentPionLOGSupply( *pType, *algorithmFactories );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +53,16 @@ MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, M
 // -----------------------------------------------------------------------------
 MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
     : MIL_AgentPionLOG_ABC( type, automate, algorithmFactories )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPionLOGSupply constructor
+// Created: LDC 2010-03-09
+// -----------------------------------------------------------------------------
+MIL_AgentPionLOGSupply::MIL_AgentPionLOGSupply( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
+    : MIL_AgentPionLOG_ABC( type, algorithmFactories )
 {
     // NOTHING
 }
