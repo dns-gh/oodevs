@@ -29,12 +29,12 @@ PHY_PerceptionRecoUrbanBlockReco::PHY_PerceptionRecoUrbanBlockReco( const boost:
     : urbanBlock_( urbanBlock )
 {
     T_PointVector points;
-    geometry::T_Point2fVector footprint = urbanBlock_->GetTerrainObjectKnown().GetFootprint()->Vertices();
-    for( geometry::T_Point2fVector::iterator it = footprint.begin(); it != footprint.end(); ++it )
+    const geometry::Polygon2f::T_Vertices footprint = urbanBlock_->GetTerrainObjectKnown().GetFootprint()->Vertices();
+    for( geometry::Polygon2f::T_Vertices::const_iterator it = footprint.begin(); it != footprint.end(); ++it )
         points.push_back( MT_Vector2D( it->X(), it->Y() ) );
     localisation_.Reset( TER_Localisation::ePolygon, points );
 }
- 
+
 // -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRecoUrbanBlockReco::IsInside
 // Created: MGD 2010-02-11
