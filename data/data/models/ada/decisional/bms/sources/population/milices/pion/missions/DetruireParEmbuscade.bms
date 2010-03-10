@@ -178,7 +178,7 @@ node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
     end,
 
     activate = function( self )
-        self.mission = self.mission or DEC_GetMission( myself )
+                self.mission = self.mission or DEC_GetMission( myself )
         self.ePhase = self.ePhase or eRejoindre
         self.eAction = self.eAction or eActionEnCours
         --[[// Positions liees a la mission		
@@ -186,7 +186,7 @@ node "BEH_Mission_Pion_Milice_DetruireEmbuscade"
         if( ModuleBegins() ) then
             do
                 --[[// Une fois que l'on s'est replier
-]]if( GetActivity() == 2 ) then
+]]if( GetActivity() >= 2 ) then
                     self.ePhase = eInstallerDispositif
                 end
 
@@ -281,6 +281,10 @@ elseif switch_1 == eSurveiller then
 
     end,
 
+    destroy = function( self )
+                obstacleEmbuscade = nil
+    end,
+
 --[[//=============================================================================
 ]]--[[//							Gestion des ennemis 
 ]]--[[//=============================================================================
@@ -302,7 +306,7 @@ node "BEH_Eni_Pion_Milice_DetruireEmbuscade"
         self.mission = self.mission or DEC_GetMission( myself )
         self.ptEmbuscade = self.ptEmbuscade or self.mission.positionEmbuscade_
         self.eAction = self.eAction or eActionEnCours
-        if( self.eAction ~= eActionEnCours ) then
+        if( obstacleEmbuscade == eActionEffectuee ) then
             self.params.__returnValue = eActionHalt
             do return end
         end
