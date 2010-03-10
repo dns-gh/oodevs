@@ -909,7 +909,6 @@
         <update name="xalan-c"/>
         <update name="xeuseuleu"/>
         <update name="svgl"/>
-        <update name="zipstream"/>
         <update name="zlib"/>
         <update name="bugtrap"/>
         <update name="shapelib"/>
