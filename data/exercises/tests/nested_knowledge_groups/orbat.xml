@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<orbat>
+  <sides>
+    <side id="1" name="Camp Bleu" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="6" level="x" name="Formation [6]">
+          <automat engaged="true" id="34" knowledge-group="2" name="34 - Compagnie INF VAB" type="Compagnie INF VAB">
+            <unit command-post="true" id="35" name="Section CDT CIE INF VAB" position="31UEQ0882219155" type="Section CDT CIE INF VAB"/>
+            <unit command-post="false" id="36" name="Section CBT INF VAB CDS OFF" position="31UEQ0932218655" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="37" name="Section CBT INF VAB CDS OFF" position="31UEQ0882118157" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="38" name="Section CBT INF VAB CDS OFF" position="31UEQ0832118656" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="39" name="Section CBT INF VAB CDS SOFF" position="31UEQ0932319154" type="Section CBT INF VAB CDS SOFF"/>
+          </automat>
+          <automat engaged="true" id="40" knowledge-group="52" name="40 - Compagnie INF VAB" type="Compagnie INF VAB">
+            <unit command-post="true" id="41" name="Section CDT CIE INF VAB" position="31UEQ0772124133" type="Section CDT CIE INF VAB"/>
+            <unit command-post="false" id="42" name="Section CBT INF VAB CDS OFF" position="31UEQ0822123633" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="43" name="Section CBT INF VAB CDS OFF" position="31UEQ0772023134" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="44" name="Section CBT INF VAB CDS OFF" position="31UEQ0722023634" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="45" name="Section CBT INF VAB CDS SOFF" position="31UEQ0822224132" type="Section CBT INF VAB CDS SOFF"/>
+          </automat>
+          <automat engaged="true" id="46" knowledge-group="54" name="46 - Compagnie INF VAB" type="Compagnie INF VAB">
+            <unit command-post="true" id="47" name="Section CDT CIE INF VAB" position="31UEQ1041116623" type="Section CDT CIE INF VAB"/>
+            <unit command-post="false" id="48" name="Section CBT INF VAB CDS OFF" position="31UEQ1091116123" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="49" name="Section CBT INF VAB CDS OFF" position="31UEQ1040915624" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="50" name="Section CBT INF VAB CDS OFF" position="31UEQ0990916124" type="Section CBT INF VAB CDS OFF"/>
+            <unit command-post="false" id="51" name="Section CBT INF VAB CDS SOFF" position="31UEQ1091116622" type="Section CBT INF VAB CDS SOFF"/>
+          </automat>
+          <limit name="Limite 7">
+            <point>31UEQ0687827739</point>
+            <point>31UEQ0640623008</point>
+            <point>31UEQ0505917232</point>
+          </limit>
+          <limit name="Limite 8">
+            <point>31UEQ1459227148</point>
+            <point>31UEQ1540525405</point>
+            <point>31UEQ1307021141</point>
+            <point>31UEQ1195514320</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="2" name="Group 1" type="Standard">
+          <knowledge-group id="52" name="Group 2" type="Standard">
+            <knowledge-group id="54" name="Group 3" type="Standard"/>
+          </knowledge-group>
+        </knowledge-group>
+        <knowledge-group id="53" name="Group 4" type="Standard"/>
+      </communication>
+      <populations/>
+      <logistic/>
+    </side>
+  </sides>
+  <diplomacies>
+    <side id="1"/>
+  </diplomacies>
+</orbat>
