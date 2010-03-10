@@ -264,15 +264,17 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // Name: ModificatorEnvironmentInfos::ModificatorUrbanBlockInfos
 // Created: SLG 2010-03-02
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos(const E_VisionUrbanBlockMaterial& e)
+ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos(ADN_Zurb_Data::ZurbInfos* ptr)
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
-, eType_(e)
+, ptrMaterial_(ADN_Workspace::GetWorkspace().GetZurb().GetData().GetMaterialsInfos(),(ADN_Zurb_Data::ZurbInfos*)ptr)
 , rCoeff_(0.0)
 {
+    BindExistenceTo(&ptrMaterial_);
     rCoeff_.SetDataName( "le modificateur de perception dû" );
     rCoeff_.SetParentNode( *this );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: ModificatorUrbanBlockInfos::GetNodeName
@@ -281,7 +283,7 @@ ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos(const E
 std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetNodeName()
 {
     std::string strResult( "au type de materiaux " );
-    return strResult + ADN_Tr::ConvertFromVisionUrbanBlock( eType_, ENT_Tr_ABC::eToTr );
+    return strResult + ptrMaterial_.GetData()->GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +312,7 @@ void ADN_Sensors_Data::ModificatorUrbanBlockInfos::WriteArchive( xml::xostream& 
 {
     output << xml::start( "distance-modifier" )
         << xml::attribute( "value", rCoeff_ )
-        << xml::attribute( "type", ADN_Tr::ConvertFromVisionUrbanBlock( eType_ ) )
+        << xml::attribute( "type", ptrMaterial_.GetData()->GetData() )
         << xml::end();
 }
 
@@ -590,11 +592,11 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 , rDistDetection_(0)
 , rDistReco_(0)
 , rDistIdent_(0)
-, vModifSizes_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos())
+, vModifSizes_(ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
 , vModifIlluminations_( false )
 , vModifWeather_( false )
 , vModifEnvironments_( false )
-, vModifUrbanBlocks_( false )
+, vModifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetZurb().GetData().GetMaterialsInfos() )
 , vModifStance_( false )
 , vModifTargetStance_( false )
 , populationInfos_ ()
@@ -655,13 +657,6 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     {
         ModificatorEnvironmentInfos* pInfo = new ModificatorEnvironmentInfos((E_VisionObject)i);
         vModifEnvironments_.AddItem( pInfo );
-    }
-
-    // initialize urbanBlcok material modificator infos
-    for( i= 0 ; i< eNbrVisionUrbanBlocks ; ++i)
-    {
-        ModificatorUrbanBlockInfos* pInfo = new ModificatorUrbanBlockInfos((E_VisionUrbanBlockMaterial)i);
-        vModifUrbanBlocks_.AddItem( pInfo );
     }
 
     // initialize posture modificator infos
@@ -743,10 +738,6 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     for( i= 0 ; i< eNbrVisionObjects ; ++i)
         pCopy->vModifEnvironments_[i]->rCoeff_ = vModifEnvironments_[i]->rCoeff_.GetData();
 
-    // initialize urbanBlock material modificator infos
-    for( i= 0 ; i< eNbrVisionUrbanBlocks ; ++i)
-        pCopy->vModifUrbanBlocks_[i]->rCoeff_ = vModifUrbanBlocks_[i]->rCoeff_.GetData();
-
     // initialize posture modificator infos
     for( i=0 ; i< eNbrUnitPosture ; ++i)
     {
@@ -756,6 +747,9 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
 
     for( T_ModificatorSizeInfos_Vector::iterator itSizeModif = vModifSizes_.begin(); itSizeModif != vModifSizes_.end(); ++itSizeModif )
         pCopy->vModifSizes_[ std::distance( vModifSizes_.begin(), itSizeModif ) ]->rCoeff_ = (*itSizeModif)->rCoeff_.GetData();
+
+    for( T_ModificatorUrbanBlockInfos_Vector::iterator itUrbanBlockModif = vModifUrbanBlocks_.begin(); itUrbanBlockModif != vModifUrbanBlocks_.end(); ++itUrbanBlockModif )
+        pCopy->vModifUrbanBlocks_[ std::distance( vModifUrbanBlocks_.begin(), itUrbanBlockModif ) ]->rCoeff_ = (*itUrbanBlockModif)->rCoeff_.GetData();
 
     return pCopy;
 }
@@ -867,8 +861,11 @@ void ADN_Sensors_Data::SensorInfos::ReadTerrain( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::ReadUrbanBlockMaterial( xml::xistream& input )
 {
     const std::string type = xml::attribute< std::string >( input, "type" );
-    E_VisionUrbanBlockMaterial n = ADN_Tr::ConvertToVisionUrbanBlock( type );
-    vModifUrbanBlocks_.at( n )->ReadArchive( input );
+    IT_ModificatorUrbanBlockInfos_Vector it = std::find_if( vModifUrbanBlocks_.begin(), vModifUrbanBlocks_.end(), ModificatorUrbanBlockInfos::Cmp( type ) );
+    if( it != vModifUrbanBlocks_.end() )
+        (*it)->ReadArchive( input );
+    else
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Sensors - Invalid unit volume '%1'" ).arg( type.c_str() ).ascii() );
 }
 
 // -----------------------------------------------------------------------------

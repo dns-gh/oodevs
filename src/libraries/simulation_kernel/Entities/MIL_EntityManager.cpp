@@ -84,6 +84,7 @@
 #include "simulation_kernel/FormationFactory.h"
 #include "simulation_kernel/PopulationFactory.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
+#include "simulation_kernel/ZurbType.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
@@ -190,6 +191,7 @@ MIL_EntityManager::~MIL_EntityManager()
     PHY_MaintenanceResourcesAlarms::Terminate();
     PHY_MedicalResourcesAlarms    ::Terminate();
     MIL_LimaFunction              ::Terminate();
+    ZurbType                      ::Terminate();
 
     delete pObjectManager_;
 }

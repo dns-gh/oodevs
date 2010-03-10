@@ -17,7 +17,6 @@
 #include "protocol/Protocol.h"
 #include "urban/BlockModel.h"
 #include "urban/Model.h"
-#include "urban/StaticModel.h"
 #include "urban/UrbanFactory.h"
 #include "urban/UrbanObjectDeserializer_ABC.h"
 
@@ -26,9 +25,9 @@
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controller& controller, const urban::StaticModel& staticModel )
+UrbanModel::UrbanModel( kernel::Controller& controller )
     : controller_( controller )
-    , model_( new urban::Model( staticModel ) )
+    , model_( new urban::Model() )
 {
     // NOTHING
 }

@@ -109,18 +109,6 @@ ADN_Tr::T_ConverterVisionObject ADN_Tr::visionObjectConverter_[] =
     T_ConverterVisionObject( ""       ,  ""                                   ,   (E_VisionObject)-1 )
 };
 
-ADN_Tr::T_ConverterVisionUrbanBlock ADN_Tr::visionUrbanBlockConverter_[] =
-{
-    T_ConverterVisionUrbanBlock( "Bois"         ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Wood")      ,   eVisionWood      ) ,
-    T_ConverterVisionUrbanBlock( "Beton"        ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Concrete")  ,   eVisionConcrete       ) ,
-    T_ConverterVisionUrbanBlock( "Brique"       ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Brick")     ,   eVisionBrick      ) ,
-    T_ConverterVisionUrbanBlock( "Metal"        ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Metal")     ,   eVisionMetal       ) ,
-    T_ConverterVisionUrbanBlock( "Torchis"      ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Cob")       ,   eVisionCob       ) ,
-    T_ConverterVisionUrbanBlock( "Prefabrique"  ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Prefab")    ,   eVisionPrefab       ) ,
-    T_ConverterVisionUrbanBlock( "Vegetation"   ,  QT_TRANSLATE_NOOP("ADN_Tr" ,"Vegetation"),   eVisionVegetation       ) ,
-    T_ConverterVisionUrbanBlock( ""             ,  ""                                       ,   (E_VisionUrbanBlockMaterial)-1 )
-};
-
 ADN_Tr::T_ConverterKeyPoint ADN_Tr::keyPointConverter_[] =
 {
     T_ConverterKeyPoint( "foret" ,       QT_TRANSLATE_NOOP( "ADN_Tr" , "forest" ) ,     eKeyPointForest ) ,
@@ -380,15 +368,6 @@ const std::string& ADN_Tr::ConvertFromVisionObject( E_VisionObject nValue, E_Con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertFromVisionUrbanBlock
-// Created: SLG 2010-03-02
-// -----------------------------------------------------------------------------
-const std::string& ADN_Tr::ConvertFromVisionUrbanBlock( E_VisionUrbanBlockMaterial nValue, E_Conversion nConversion )
-{
-    return ADN_Tr::InverseFindInConverter( visionUrbanBlockConverter_, nValue, nConversion );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromKeyPoint
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -576,15 +555,6 @@ E_VisionObject ADN_Tr::ConvertToVisionObject( const std::string& strName )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Tr::ConvertToVisionUrbanBlock
-// Created: SLG 2010-03-02
-// -----------------------------------------------------------------------------
-E_VisionUrbanBlockMaterial ADN_Tr::ConvertToVisionUrbanBlock( const std::string& strName )
-{
-    return ADN_Tr::FindInConverter( visionUrbanBlockConverter_, strName );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToKeyPoint
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -745,7 +715,6 @@ void ADN_Tr::InitTranslations()
     InitTr( consumptionTypeConverter_, "ADN_Tr" );
     InitTr( timeCategoryConverter_, "ADN_Tr" );
     InitTr( visionObjectConverter_, "ADN_Tr" );
-    InitTr( visionUrbanBlockConverter_, "ADN_Tr" );
     InitTr( keyPointConverter_, "ADN_Tr" );
     InitTr( agentTypePionConverter_, "ADN_Tr" );
     InitTr( agentTypeAutomateConverter_, "ADN_Tr" );

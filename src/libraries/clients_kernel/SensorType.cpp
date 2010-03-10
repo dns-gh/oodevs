@@ -198,6 +198,15 @@ float SensorType::ComputeExtinction( float distanceModificator, bool inForest, b
 }
 
 // -----------------------------------------------------------------------------
+// Name: SensorType::ComputeExtinction
+// Created: SLG 2010-03-09
+// -----------------------------------------------------------------------------
+bool SensorType::ComputeExtinction( const geometry::Point2f& point, float& skyRock ) const
+{   
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SensorType::InterpreteNRJ
 // Created: JVT 2004-09-28
 // -----------------------------------------------------------------------------

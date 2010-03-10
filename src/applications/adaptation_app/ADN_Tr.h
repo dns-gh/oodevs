@@ -29,7 +29,6 @@ public:
     static const std::string& ConvertFromConsumptionType ( E_ConsumptionType, E_Conversion = eToSim );
     static const std::string& ConvertFromTimeCategory( E_TimeCategory, E_Conversion = eToSim );
     static const std::string& ConvertFromVisionObject( E_VisionObject, E_Conversion = eToSim );
-    static const std::string& ConvertFromVisionUrbanBlock( E_VisionUrbanBlockMaterial, E_Conversion = eToSim );
     static const std::string& ConvertFromKeyPoint( E_KeyPoint, E_Conversion = eToSim );
     static const std::string& ConvertFromAgentTypePion( E_AgentTypePion, E_Conversion = eToSim );
     static const std::string& ConvertFromAgentTypeAutomate( E_AgentTypeAutomate, E_Conversion = eToSim );
@@ -54,7 +53,6 @@ public:
     static E_ConsumptionType ConvertToConsumptionType  ( const std::string& );
     static E_TimeCategory    ConvertToTimeCategory     ( const std::string& );
     static E_VisionObject    ConvertToVisionObject     ( const std::string& );
-    static E_VisionUrbanBlockMaterial    ConvertToVisionUrbanBlock     ( const std::string& );
     static E_KeyPoint        ConvertToKeyPoint         ( const std::string& );
     static E_AgentTypePion   ConvertToAgentTypePion    ( const std::string& );
     static E_AgentTypeAutomate   ConvertToAgentTypeAutomate( const std::string& );
@@ -82,7 +80,6 @@ public:
     typedef converter<E_ConsumptionType>            T_ConverterConsumptionType;
     typedef converter<E_TimeCategory>               T_ConverterTimeCategory;
     typedef converter<E_VisionObject>               T_ConverterVisionObject;
-    typedef converter<E_VisionUrbanBlockMaterial>   T_ConverterVisionUrbanBlock;
     typedef converter<E_KeyPoint>                   T_ConverterKeyPoint;
     typedef converter<E_AgentTypePion>              T_ConverterAgentTypePion;
     typedef converter<E_AgentTypeAutomate>          T_ConverterAgentTypeAutomate;
@@ -107,7 +104,6 @@ public:
     static T_ConverterConsumptionType   consumptionTypeConverter_[];
     static T_ConverterTimeCategory      timeCategoryConverter_[];
     static T_ConverterVisionObject      visionObjectConverter_[];
-    static T_ConverterVisionUrbanBlock  visionUrbanBlockConverter_[];
     static T_ConverterKeyPoint          keyPointConverter_[];
     static T_ConverterAgentTypePion     agentTypePionConverter_[];
     static T_ConverterAgentTypeAutomate agentTypeAutomateConverter_[];

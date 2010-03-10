@@ -330,6 +330,7 @@ void AddCells( ADN_Table* pTable, void* pData, int nRow, int& nCol, T& vVector, 
 ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
     ADN_Categories_Data::T_SizeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
+    ADN_Categories_Data::T_SizeInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetZurb().GetData().GetMaterialsInfos();
 
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );
@@ -339,7 +340,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     pTable->setTopMargin( 0 );
 
     pTable->setNumRows( 2 );
-    pTable->setNumCols( 7 + sizes.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrVisionUrbanBlocks +eNbrUnitPosture * 2 );
+    pTable->setNumCols( 7 + sizes.size() + materials.size() + eNbrSensorWeatherModifiers + eNbrTimeCategory + eNbrVisionObjects + eNbrUnitPosture * 2 );
     for( int n = 0; n < pTable->numCols(); ++n )
         pTable->horizontalHeader()->setLabel( n, "" );
 
@@ -363,7 +364,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
     AddHeaders( pTable, nCol, tr( "Weather modifiers" ), ADN_Tr::ConvertFromSensorWeatherModifiers, eNbrSensorWeatherModifiers );
     AddHeaders( pTable, nCol, tr( "Illumination modifiers" ), ADN_Tr::ConvertFromTimeCategory, eNbrTimeCategory );
     AddHeaders( pTable, nCol, tr( "Environement modifiers" ), ADN_Tr::ConvertFromVisionObject, eNbrVisionObjects );
-    AddHeaders( pTable, nCol, tr( "UrbanBlock material modifiers" ), ADN_Tr::ConvertFromVisionUrbanBlock, eNbrVisionUrbanBlocks );
+    //AddHeaders( pTable, nCol, tr( "UrbanBlock material modifiers" ), ADN_Tr::ConvertFromVisionUrbanBlock, eNbrVisionUrbanBlocks );
     AddHeaders( pTable, nCol, tr( "Stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
     AddHeaders( pTable, nCol, tr( "Target stance modifiers" ), ENT_Tr::ConvertFromUnitPosture, eNbrUnitPosture );
 
@@ -390,7 +391,7 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifWeather_, eNbrSensorWeatherModifiers );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifIlluminations_, eNbrTimeCategory );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifEnvironments_, eNbrVisionObjects );
-        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, eNbrVisionUrbanBlocks );
+        AddCells( pTable, &sensor, nRow, nCol, sensor.vModifUrbanBlocks_, materials.size() );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifStance_, eNbrUnitPosture );
         AddCells( pTable, &sensor, nRow, nCol, sensor.vModifTargetStance_, eNbrUnitPosture );
 

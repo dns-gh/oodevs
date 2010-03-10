@@ -25,7 +25,6 @@
 #include <Urban/BlockPhModifier_ABC.h>
 #include <Urban/ColorRGBA.h>
 #include <Urban/PhysicalFeature_ABC.h>
-#include <Urban/StaticModel.h>
 #include <Urban/WorldParameters.h>
 #include <Urban/Architecture.h>
 #include <Urban/Soil.h>
@@ -44,8 +43,7 @@ namespace
 // Created: SLG 2009-08-10
 // -----------------------------------------------------------------------------
 UrbanModel::UrbanModel()
-    : staticModel_      ( new urban::StaticModel() )
-    , model_            ( new urban::Model( *staticModel_ ) )
+    : model_            ( new urban::Model() )
     , phFirerModifier_  ( new BlockPhFirerModifier() )
     , phTargetModifier_ ( new BlockPhTargetModifier() )
 {
@@ -231,6 +229,6 @@ urban::Model& UrbanModel::GetModel() const
 UrbanModel& UrbanModel::GetSingleton()
 {
     if( !singleton )
-        throw std::runtime_error( "EntityManager not defined" );
+        throw std::runtime_error( "urbanModel not defined" );
     return *singleton;
 }

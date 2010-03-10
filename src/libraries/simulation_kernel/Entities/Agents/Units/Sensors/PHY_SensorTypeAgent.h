@@ -81,6 +81,7 @@ private:
     void InitializeDistances         ( xml::xistream& xis );
     void InitializeEnvironmentFactors( xml::xistream& xis );
     void InitializePopulationFactors ( xml::xistream& xis );
+    void InitializeUrbanBlockFactors ( xml::xistream& xis );      
     //@}
 
     //! @name Tools
@@ -90,7 +91,8 @@ private:
 
     const PHY_PerceptionLevel& RayTrace                 ( const MT_Vector2D& vSource, MT_Float rSourceAltitude, const MT_Vector2D& vTarget, MT_Float rTargetAltitude, MT_Float rDistanceMaxModificator ) const;
     MT_Float                   ComputeEnvironementFactor( PHY_RawVisionData::envBits nEnv ) const;
-    MT_Float                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rInitialCoef ) const;
+    MT_Float                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rInitialCoef, bool bIsAroundBU ) const;
+    bool                       ComputeUrbanExtinction   ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const;
     const PHY_PerceptionLevel& InterpretExtinction     ( MT_Float rExtinction ) const;
 
     MT_Float GetSourceFactor( const MIL_AgentPion&       source ) const;
@@ -104,6 +106,7 @@ private:
     //@{
     void ReadDistance       ( xml::xistream& xis );
     void ReadTerrainModifier( xml::xistream& xis, unsigned int& visionObject );
+    void ReadUrbanBlockModifier( xml::xistream& xis, unsigned int& visionUrbanBlockMaterial );
     //@}
 
 private:
@@ -124,7 +127,8 @@ private:
     T_FactorVector lightingFactors_;
     T_FactorVector postureSourceFactors_;
     T_FactorVector postureTargetFactors_;
-    T_FactorVector environmentFactors_;   
+    T_FactorVector environmentFactors_; 
+    T_FactorVector urbanBlockFactors_; 
 
     // Population
     MT_Float rPopulationDensity_;

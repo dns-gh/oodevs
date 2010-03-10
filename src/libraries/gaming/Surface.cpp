@@ -150,6 +150,7 @@ E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) 
     while( ! line.IsDone() && skyrock > 0 )
     {
         line.Increment();
+        //bool bIsAroundBU = sensorType_.ComputeUrbanExtinction( point, skyrock ); 
         if( skyrock == std::numeric_limits< float >::infinity() )
             skyrock = sensorType_.ComputeExtinction( distanceModificator_,
                 line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );

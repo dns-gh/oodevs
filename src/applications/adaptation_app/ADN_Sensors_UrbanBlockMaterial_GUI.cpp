@@ -45,14 +45,19 @@ public:
 
         // disable first column
         pItemString->setEnabled(false);
-        pItemString->setText(ADN_Tr::ConvertFromVisionUrbanBlock(static_cast<ModificatorUrbanBlockInfos*>(obj)->eType_,ENT_Tr_ABC::eToTr).c_str());
+
 
         // set table item properties
         pItemDouble->GetValidator().setRange( 0, 1, 2 );
 
         // connect items & datas
+        pItemString->GetConnector().Connect(static_cast<ModificatorUrbanBlockInfos*>(obj)->ptrMaterial_.GetData());
         pItemDouble->GetConnector().Connect(&static_cast<ModificatorUrbanBlockInfos*>(obj)->rCoeff_);
     }
+
+
+
+
 
 private:
     ADN_CT_Sensors_UrbanBlock& operator=( const ADN_CT_Sensors_UrbanBlock& );

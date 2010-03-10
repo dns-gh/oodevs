@@ -91,7 +91,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
     , scores_( *new ScoreModel( controllers, publisher, staticModel.scores_ ) )
-    , urbanObjects_( *new UrbanModel( controllers.controller_, staticModel.urbanTypes_ ) )
+    , urbanObjects_( *new UrbanModel( controllers.controller_ ) )
     , notes_( *new NotesModel(controllers.controller_) )  // LTO
 {
     // NOTHING

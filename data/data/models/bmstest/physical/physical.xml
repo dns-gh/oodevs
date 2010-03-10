@@ -2,8 +2,9 @@
 <physical>
   <decisional file="Decisionnel.xml"/>
   <volumes file="Volumes.xml"/>
-  <active-protections file="ActiveProtections.xml"/>
   <protections file="Protections.xml"/>
+  <active-protections file="ActiveProtections.xml"/>
+  <human-protections file="HumanProtections.xml"/>
   <dotation-natures file="DotationNatures.xml"/>
   <objects file="Objets.xml"/>
   <dotations file="Dotations.xml"/>
@@ -17,7 +18,6 @@
   <fire file="Fire.xml"/>
   <medical-treatment file="MedicalTreatment.xml"/>
   <health file="Sante.xml"/>
-  <classeids file="IDClasses.xml"/>
   <human-factors file="FacteursHumains.xml"/>
   <breakdowns file="Pannes.xml"/>
   <knowledge-groups file="GroupesConnaissance.xml"/>
@@ -30,4 +30,5 @@
   <models file="Modeles.xml"/>
   <missions file="Missions.xml"/>
   <object-names file="ObjectNames.xml"/>
+  <zurb file="Zurb.xml"/>
 </physical>

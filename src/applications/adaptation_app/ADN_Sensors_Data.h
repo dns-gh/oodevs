@@ -18,6 +18,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Categories_Data.h"
+#include "ADN_Zurb_Data.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Radars_Data.h"
@@ -209,7 +210,7 @@ public:
         MT_COPYNOTALLOWED( ModificatorUrbanBlockInfos )
 
     public:
-        ModificatorUrbanBlockInfos(const E_VisionUrbanBlockMaterial& e);
+        ModificatorUrbanBlockInfos(ADN_Zurb_Data::ZurbInfos* ptr);
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -218,25 +219,39 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        E_VisionUrbanBlockMaterial      eType_;
-        ADN_Type_Double     rCoeff_;
+        ADN_TypePtr_InVector_ABC<ADN_Zurb_Data::ZurbInfos>         ptrMaterial_;
+        ADN_Type_Double                                                rCoeff_;
 
     public:
+        typedef ADN_Zurb_Data::ZurbInfos                  T_Item;
+
         class Cmp : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
         {
         public:
-            Cmp(const E_VisionUrbanBlockMaterial& val) : val_(val) {}
+            Cmp(const std::string& val) : val_(val) {}
             ~Cmp() {}
 
             bool operator()( ModificatorUrbanBlockInfos* tgtnfos ) const 
-            { return tgtnfos->eType_==val_; }
+            { return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->GetData()==val_; }
 
         private:
-            E_VisionUrbanBlockMaterial val_;
+            std::string val_;
+        };
+        class CmpRef : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
+        {
+        public:
+            CmpRef(ADN_Zurb_Data::ZurbInfos* val) : val_(val) {}
+            ~CmpRef(){}
+
+            bool operator()( ModificatorUrbanBlockInfos* tgtnfos ) const 
+            {   return tgtnfos->ptrMaterial_.GetData() == val_;}
+
+        private:
+            ADN_Zurb_Data::ZurbInfos* val_;
         };
     };
 
-    typedef ADN_Type_Vector_ABC<ModificatorUrbanBlockInfos>  T_ModificatorUrbanBlockInfos_Vector;
+    typedef ADN_Type_VectorFixed_ABC<ModificatorUrbanBlockInfos>  T_ModificatorUrbanBlockInfos_Vector;
     typedef T_ModificatorUrbanBlockInfos_Vector::iterator    IT_ModificatorUrbanBlockInfos_Vector;
 
 //*****************************************************************************

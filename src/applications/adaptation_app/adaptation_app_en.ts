@@ -3197,10 +3197,6 @@ Make sure that the file is not write-protected.</source>
         <source>Counter battery radar</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>UrbanBlock material modifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
@@ -4164,34 +4160,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>scrambling</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Wood</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Concrete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Brick</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Metal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cob</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Prefab</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vegetation</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ADN_Units_Composantes_GUI</name>
@@ -4778,6 +4746,68 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Active Protections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zurb</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Zurb_Data</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Material - Duplicated material type name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Material - Duplicated volume type names</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Material - Invalid volume type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Facade - Duplicated material type name &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Facade - Invalid volume type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape - Invalid volume type name</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Zurb_GUI</name>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Facades</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Facade</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShapes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Materials</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

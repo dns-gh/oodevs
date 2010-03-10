@@ -20,7 +20,6 @@ namespace MsgsSimToClient
 namespace urban
 {
     class Model;
-    class StaticModel;
 }
 
 namespace kernel
@@ -41,7 +40,7 @@ class UrbanModel : public tools::Resolver< kernel::Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controller& controller, const urban::StaticModel& staticModel ); 
+             UrbanModel( kernel::Controller& controller ); 
     virtual ~UrbanModel();
     //@}
 

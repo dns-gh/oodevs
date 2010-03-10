@@ -29,6 +29,8 @@ class ADN_Launchers_Data;
 class ADN_Project_Data;
 class ADN_Categories_GUI;
 class ADN_Categories_Data;
+class ADN_Zurb_GUI;
+class ADN_Zurb_Data;
 class ADN_Equipement_GUI;
 class ADN_Equipement_Data;
 class ADN_Objects_GUI;
@@ -87,6 +89,7 @@ public:
     ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& GetNbc();
     ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& GetLaunchers();
     ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& GetCategories();
+    ADN_WorkspaceElement< ADN_Zurb_Data, ADN_Zurb_GUI >& GetZurb();
     ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>& GetActiveProtections();
     ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >& GetEquipements();
     ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>& GetObjects();
@@ -120,6 +123,7 @@ private:
     enum E_WorkspaceElements
     {
         eCategories,
+        eZurb,
         eNBC,
         eLaunchers,
         eEquipement,
@@ -198,6 +202,16 @@ inline
 ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >& ADN_Workspace::GetCategories()
 {
     return (ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >&)(*elements_[eCategories]);
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetCategories
+// Created: APE 2004-12-07
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_Zurb_Data, ADN_Zurb_GUI >& ADN_Workspace::GetZurb()
+{
+    return (ADN_WorkspaceElement< ADN_Zurb_Data, ADN_Zurb_GUI >&)(*elements_[eZurb]);
 }
 
 

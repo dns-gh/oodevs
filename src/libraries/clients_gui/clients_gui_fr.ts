@@ -922,7 +922,7 @@ Voulez-vous le supprimer?</translation>
     <name>R&#xe8;gle GL</name>
     <message>
         <source> %1m</source>
-        <translation> %1m</translation>
+        <translation type="unfinished"> %1m</translation>
     </message>
 </context>
 <context>

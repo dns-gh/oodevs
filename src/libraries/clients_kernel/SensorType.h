@@ -33,6 +33,7 @@ public:
     float GetMaxDistance   ( float distanceModificator ) const;
     float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance ) const;
     float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance ) const;
+    bool  ComputeExtinction( const geometry::Point2f& point, float& skyRock ) const;
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
 

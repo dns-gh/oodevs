@@ -39,6 +39,7 @@ public:
     public:
         ADN_Type_String szDecisional_;
         ADN_Type_String szSizes_;
+        ADN_Type_String szZurb_;
         ADN_Type_String szArmors_;
         ADN_Type_String szActiveProtections_;
         ADN_Type_String szHumanProtections_;

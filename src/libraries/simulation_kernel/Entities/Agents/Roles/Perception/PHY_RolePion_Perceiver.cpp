@@ -829,7 +829,7 @@ void PHY_RolePion_Perceiver::ComputeMainPerceptionDirection( MT_Vector2D& vMainP
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::PreparePerceptionData()
 {
-    if(    !( *perceiverPosition_ == lastPerceiverPosition_ )
+    if(    ( *perceiverPosition_ == lastPerceiverPosition_ )
         && !bExternalMustChangePerception_
         && !HasChanged() )
         return;

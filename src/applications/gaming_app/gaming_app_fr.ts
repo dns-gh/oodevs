@@ -1022,10 +1022,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create child KnowledgeGroup</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Change Type</source>
         <translation type="unfinished"></translation>
     </message>

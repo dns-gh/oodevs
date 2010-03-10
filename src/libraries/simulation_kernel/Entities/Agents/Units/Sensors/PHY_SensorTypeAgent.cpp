@@ -24,13 +24,23 @@
 #include "Meteo/PHY_Lighting.h"
 #include "Meteo/RawVisionData/PHY_RawVisionDataIterator.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Simulation_kernel/UrbanModel.h"
+#include "Simulation_kernel/ZurbType.h"
 #include "Tools/MIL_Tools.h"
+#include "tools/Resolver.h"
 
 #include "AlgorithmsFactories.h"
 #include "DetectionComputerFactory_ABC.h"
 #include "PerceptionDistanceComputer_ABC.h"
 
-#include "urban/TerrainObject_ABC.h"
+#include "geometry/Types.h"
+#include <urban/Architecture.h>
+#include <urban/Block.h>
+#include <urban/BlockModel.h>
+#include <urban/TerrainObject_ABC.h>
+#include <urban/Model.h>
+#include <urban/StaticModel.h>
+#include <urban/MaterialCompositionType.h>
 
 #include <xeumeuleu/xml.h>
 
@@ -122,6 +132,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , environmentFactors_  ( PHY_RawVisionData::eNbrVisionObjects         , 0. )
+    , urbanBlockFactors_   ( ZurbType::GetZurbType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
 {
@@ -138,6 +149,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
 
     InitializeEnvironmentFactors( xis );
     InitializePopulationFactors ( xis );
+    InitializeUrbanBlockFactors( xis );
 
     xis >> xml::end();
 }
@@ -244,7 +256,7 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int&
 // Name: PHY_SensorTypeAgent::InitializePopulationFactors
 // Created: NLD 2005-10-27
 // -----------------------------------------------------------------------------
-    void PHY_SensorTypeAgent::InitializePopulationFactors( xml::xistream& xis )
+void PHY_SensorTypeAgent::InitializePopulationFactors( xml::xistream& xis )
 {
     xis >> xml::start( "population-modifier" )
             >> xml::attribute( "density", rPopulationDensity_ )
@@ -255,6 +267,34 @@ void PHY_SensorTypeAgent::ReadTerrainModifier( xml::xistream& xis, unsigned int&
         xis.error( "population-modifier: density < 0" );
     if( rPopulationFactor_ < 0 || rPopulationFactor_ > 1 )
         xis.error( "population-modifier: modifier not in [0..1]" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::InitializeUrbanBlockFactors
+// Created: SLG 2010-03-03
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeAgent::InitializeUrbanBlockFactors( xml::xistream& xis )
+{
+    unsigned int visionUrbanBlockMaterial = 0;
+    xis >> xml::start( "urbanBlock-material-modifiers" )
+        >> xml::list( "distance-modifier", *this, &PHY_SensorTypeAgent::ReadUrbanBlockModifier, visionUrbanBlockMaterial )
+        >> xml::end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ReadUrbanBlockModifier
+// Created: SLG 2010-03-03
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeAgent::ReadUrbanBlockModifier( xml::xistream& xis, unsigned int& visionUrbanBlockMaterial )
+{
+    assert( urbanBlockFactors_.size() > visionUrbanBlockMaterial );  // $$$$ _RC_ ABL 2007-07-27: use exception instead
+    MT_Float& rFactor = urbanBlockFactors_[ visionUrbanBlockMaterial ];
+    std::string materialType;
+    xis >> xml::attribute( "type", materialType )
+        >> xml::attribute( "value", rFactor );
+    if( rFactor < 0 || rFactor > 1 )
+        xis.error( "urbanBlock-modifier: value not in [0..1]" );
+    ++visionUrbanBlockMaterial;
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +389,7 @@ MT_Float PHY_SensorTypeAgent::ComputeEnvironementFactor( PHY_RawVisionData::envB
 // Created: JVT 02-11-20
 // Last modified: JVT 04-02-12
 //-----------------------------------------------------------------------------
-MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rVisionNRJ ) const
+MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rVisionNRJ, bool bIsAroundBU ) const
 {
     assert( rVisionNRJ <= rDetectionDist_ );
     assert( rVisionNRJ > 0 );
@@ -359,8 +399,51 @@ MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator
     // Prise en compte des précipitations
     rDistanceModificator *= precipitationFactors_ [ env.GetPrecipitation().GetID() ];
     // Prise en compte des objets
-    rDistanceModificator *= ComputeEnvironementFactor( env.GetCurrentEnv() );
+    if ( !bIsAroundBU ) 
+        rDistanceModificator *= ComputeEnvironementFactor( env.GetCurrentEnv() );
     return rDistanceModificator <= MT_Epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ComputeUrbanExtinction
+// Created: SLG 2010-03-02
+// -----------------------------------------------------------------------------
+bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const
+{
+    bool bIsAroundBU = false;
+    urban::BlockModel& blocks = UrbanModel::GetSingleton().GetModel().blocks_;
+    for( tools::Iterator< const urban::Block& > it = blocks.CreateIterator(); it.HasMoreElements(); )
+    {
+        geometry::Point2f vSourcePoint( vSource.rX_, vSource.rY_  );
+        geometry::Point2f vTargetPoint( vTarget.rX_, vTarget.rY_ );
+        const geometry::Polygon2f* footPrint = it.NextElement().GetFootprint();
+        std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
+        if ( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+        {
+            bIsAroundBU = true;
+            float intersectionDistance = 0;
+            std::sort( intersectPoints.begin(), intersectPoints.end() );
+            if ( intersectPoints.size() == 1 )
+            {
+                if( footPrint->IsInside( vSourcePoint ) )
+                    intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
+                else if( footPrint->IsInside( vTargetPoint ) )
+                    intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
+                else
+                    throw std::exception( "géométriquement impossible" );
+             }
+            else 
+                intersectionDistance = (*intersectPoints.begin()).Distance( *intersectPoints.rbegin() );
+                    
+            const urban::Architecture* architecture = it.NextElement().RetrievePhysicalFeature< urban::Architecture >();
+            if ( architecture )
+            {
+                MT_Float rDistanceModificator = urbanBlockFactors_[ ZurbType::GetZurbType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
+                rDistanceModificator <= MT_Epsilon ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ + intersectionDistance * ( 1 - 1 / rDistanceModificator );
+            }
+        }
+    }
+    return bIsAroundBU;
 }
 
 //-----------------------------------------------------------------------------
@@ -392,11 +475,15 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::RayTrace( const MT_Vector2D& vSo
     const MT_Vector3D vSource3D( vSource.rX_, vSource.rY_, rSourceAltitude );
     const MT_Vector3D vTarget3D( vTarget.rX_, vTarget.rY_, rTargetAltitude );
 
+    MT_Float rVisionNRJ = rDetectionDist_;
+    bool bIsAroundBU = ComputeUrbanExtinction( vSource, vTarget, rVisionNRJ );
+
     PHY_RawVisionDataIterator it( vSource3D, vTarget3D );
-    MT_Float rVisionNRJ = it.End() ? std::numeric_limits< MT_Float >::max() : ComputeExtinction( it, rDistanceMaxModificator, rDetectionDist_ );
+    if ( rVisionNRJ > 0 )
+        rVisionNRJ = it.End() ? std::numeric_limits< MT_Float >::max() : ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
 
     while ( rVisionNRJ > 0 && !(++it).End() )
-        rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ );
+        rVisionNRJ = ComputeExtinction( it, rDistanceMaxModificator, rVisionNRJ, bIsAroundBU );
 
     return InterpretExtinction( rVisionNRJ );
 }

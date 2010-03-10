@@ -448,7 +448,10 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     SetHeight( pion_.Execute( *computer ).GetHeight() );
 
     if( HasLocationChanged() )
+    {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+    }
     if( HasSpeedChanged() )
         pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
 
