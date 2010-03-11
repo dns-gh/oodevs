@@ -65,7 +65,7 @@ namespace
 BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
 {
     std::auto_ptr< urban::StaticModel > staticModel( new urban::StaticModel() );
-    std::auto_ptr< urban::Model > model( new urban::Model( *staticModel ) );
+    std::auto_ptr< urban::Model > model( new urban::Model() );
     model->Load( flux );
 
     MockArmy army;
