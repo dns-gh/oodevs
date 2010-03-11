@@ -71,13 +71,14 @@ private:
 private:
     //! @name Member data
     //@{
-    Common::MsgUnitFire              oid_tir;
-    Common::MsgUnit                  tireur;
-    Common::MsgStartUnitFire_type type;
-    bool                        munitionPresent_;
-    Common::MsgDotationType          munition;
-    int                         typeCible_;
-    /*OID*/ int                   oid_cible_;
+    Common::MsgUnitFire              oid_tir_;
+    Common::MsgUnit                  tireur_;
+    Common::MsgStartUnitFire_type    type_;
+    bool                             munitionPresent_;
+    Common::MsgDotationType          munition_;
+    int                              typeCible_;
+    int                              oid_cible_;
+    int                              population_cible_;
     Common::MsgCoordLatLong          positionCible_;
     //@}
 };

@@ -14,6 +14,7 @@
 
 #include "PHY_FireDamages_Agent.h"
 #include "PHY_FireDamages_Population.h"
+#include "Tools/MIL_IDManager.h"
 
 namespace MsgsSimToClient
 {
@@ -72,6 +73,8 @@ protected:
     //@{
     void Serialize( MsgsSimToClient::MsgUnitsFireDamages& asn ) const;
     void Serialize( MsgsSimToClient::MsgPopulationsFireDamages& asn ) const;
+
+    static MIL_IDManager idManager_;
     //@}
 
 private:

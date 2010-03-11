@@ -19,8 +19,6 @@
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
 
-MIL_IDManager PHY_FireResults_Pion::idManager_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_FireResults_Pion constructor
 // Created: NLD 2005-11-15

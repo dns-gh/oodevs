@@ -14,7 +14,6 @@
 
 #include "MIL.h"
 #include "Entities/Actions/PHY_FireResults_ABC.h"
-#include "Tools/MIL_IDManager.h"
 
 class MIL_Population;
 
@@ -32,7 +31,6 @@ public:
 private:
     const MIL_Population& firer_;
     const unsigned int            nID_;
-    static MIL_IDManager idManager_;
 };
 
 #endif // __PHY_FireResults_Population_h_

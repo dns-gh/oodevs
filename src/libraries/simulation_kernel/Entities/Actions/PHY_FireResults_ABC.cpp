@@ -13,6 +13,8 @@
 #include "PHY_FireResults_ABC.h"
 #include "protocol/protocol.h"
 
+MIL_IDManager PHY_FireResults_ABC::idManager_;
+
 // -----------------------------------------------------------------------------
 // Name: PHY_FireResults_ABC constructor
 // Created: NLD 2004-10-06

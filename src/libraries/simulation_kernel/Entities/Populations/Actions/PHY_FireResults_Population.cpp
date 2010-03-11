@@ -16,8 +16,6 @@
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
 
-MIL_IDManager PHY_FireResults_Population::idManager_;
-
 // -----------------------------------------------------------------------------
 // Name: PHY_FireResults_Population constructor
 // Created: NLD 2004-10-06
