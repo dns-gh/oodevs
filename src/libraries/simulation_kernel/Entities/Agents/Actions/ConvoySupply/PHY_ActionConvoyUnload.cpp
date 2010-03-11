@@ -31,6 +31,15 @@ PHY_ActionConvoyUnload::PHY_ActionConvoyUnload( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 PHY_ActionConvoyUnload::~PHY_ActionConvoyUnload()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionConvoyUnload::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionConvoyUnload::StopAction()
+{
     Callback( true );
 }
 

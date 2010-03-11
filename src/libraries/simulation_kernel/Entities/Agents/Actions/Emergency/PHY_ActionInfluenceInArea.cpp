@@ -42,10 +42,18 @@ PHY_ActionInfluenceInArea::PHY_ActionInfluenceInArea( MIL_AgentPion& pion, const
 // -----------------------------------------------------------------------------
 PHY_ActionInfluenceInArea::~PHY_ActionInfluenceInArea()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionInfluenceInArea::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionInfluenceInArea::StopAction()
+{
     if ( pObject_ )
         role_.ReleaseInfluence( *pObject_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionInfluenceInArea::Execute

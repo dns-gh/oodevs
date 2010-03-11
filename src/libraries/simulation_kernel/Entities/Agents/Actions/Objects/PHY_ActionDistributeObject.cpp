@@ -39,6 +39,15 @@ PHY_ActionDistributeObject::PHY_ActionDistributeObject( MIL_AgentPion& pion
 // -----------------------------------------------------------------------------
 PHY_ActionDistributeObject::~PHY_ActionDistributeObject()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionDistributeObject::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionDistributeObject::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

@@ -37,6 +37,7 @@ public:
     virtual ~PHY_ActionIndirectFire_ABC();
 
 protected:
+    virtual void StopAction();
           firing::PHY_RoleAction_IndirectFiring& role_;
     const PHY_DotationCategory*          pDotationCategory_;
     const MT_Float                       rNbInterventionType_;

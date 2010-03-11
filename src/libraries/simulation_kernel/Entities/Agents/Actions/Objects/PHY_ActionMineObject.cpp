@@ -34,6 +34,15 @@ PHY_ActionMineObject::PHY_ActionMineObject( MIL_AgentPion& pion, boost::shared_p
 // -----------------------------------------------------------------------------
 PHY_ActionMineObject::~PHY_ActionMineObject()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMineObject::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionMineObject::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

@@ -38,6 +38,14 @@ PHY_ActionIndirectFire_ABC::PHY_ActionIndirectFire_ABC( MIL_Agent_ABC& pion, con
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_ABC::~PHY_ActionIndirectFire_ABC()
 {
-    Callback( role_.GetFinalReturnCode() );
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIndirectFire_ABC::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionIndirectFire_ABC::StopAction()
+{
+    Callback( role_.GetFinalReturnCode() );
+}

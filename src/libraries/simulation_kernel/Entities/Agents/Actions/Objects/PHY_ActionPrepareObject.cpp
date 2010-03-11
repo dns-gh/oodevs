@@ -39,6 +39,15 @@ PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, const std
 // -----------------------------------------------------------------------------
 PHY_ActionPrepareObject::~PHY_ActionPrepareObject()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionPrepareObject::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionPrepareObject::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

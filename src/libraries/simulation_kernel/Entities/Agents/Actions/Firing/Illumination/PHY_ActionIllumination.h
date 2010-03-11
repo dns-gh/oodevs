@@ -38,6 +38,7 @@ public:
     //@{
     virtual void Execute         ();
     virtual void ExecuteSuspended();
+    virtual void StopAction();
     //@}
 
 private:

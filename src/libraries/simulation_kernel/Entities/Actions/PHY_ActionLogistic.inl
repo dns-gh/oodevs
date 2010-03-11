@@ -51,3 +51,13 @@ void PHY_ActionLogistic< T >::ExecuteSuspended()
     Execute();
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionLogistic::Stop
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+template< typename T >
+void PHY_ActionLogistic< T >::Stop()
+{
+
+}
+

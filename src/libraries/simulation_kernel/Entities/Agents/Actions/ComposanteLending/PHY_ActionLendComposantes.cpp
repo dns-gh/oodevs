@@ -46,6 +46,15 @@ PHY_ActionLendComposantes::PHY_ActionLendComposantes( MIL_AgentPion& pion, DEC_R
 // -----------------------------------------------------------------------------
 PHY_ActionLendComposantes::~PHY_ActionLendComposantes()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionLendComposantes::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionLendComposantes::StopAction()
+{
     if( !bLoanDone_ )
         MIL_Report::PostEvent( role_.GetPion(), MIL_Report::eReport_EquipmentLoanCanceled );
 }

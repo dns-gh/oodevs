@@ -33,6 +33,14 @@ PHY_ActionAnimateObject::PHY_ActionAnimateObject( MIL_AgentPion& pion, boost::sh
 // -----------------------------------------------------------------------------
 PHY_ActionAnimateObject::~PHY_ActionAnimateObject()
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionAnimateObject::Stop
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionAnimateObject::Stop()
+{
     role_.StopAnimateObject( pKnowledge_ );
 }
 

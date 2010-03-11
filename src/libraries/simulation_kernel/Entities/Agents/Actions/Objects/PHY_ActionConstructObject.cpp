@@ -38,6 +38,15 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const
 // -----------------------------------------------------------------------------
 PHY_ActionConstructObject::~PHY_ActionConstructObject()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionConstructObject::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionConstructObject::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

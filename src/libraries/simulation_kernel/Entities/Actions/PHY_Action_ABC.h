@@ -32,6 +32,7 @@ public:
     void Suspend();
     void Resume ();
     void Update ();
+    virtual void Stop() = 0;
     //@}
 
 protected:

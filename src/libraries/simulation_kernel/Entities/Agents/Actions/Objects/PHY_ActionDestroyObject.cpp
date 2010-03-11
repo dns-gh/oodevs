@@ -34,6 +34,15 @@ PHY_ActionDestroyObject::PHY_ActionDestroyObject( MIL_AgentPion& pion, boost::sh
 // -----------------------------------------------------------------------------
 PHY_ActionDestroyObject::~PHY_ActionDestroyObject()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionDestroyObject::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionDestroyObject::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

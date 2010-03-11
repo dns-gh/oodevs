@@ -33,6 +33,15 @@ PHY_ActionOccupyObject::PHY_ActionOccupyObject( MIL_AgentPion& pion, boost::shar
 // -----------------------------------------------------------------------------
 PHY_ActionOccupyObject::~PHY_ActionOccupyObject()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionOccupyObject::Stop
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionOccupyObject::Stop()
+{
     role_.StopOccupyingObject( pKnowledge_ );
 }
 

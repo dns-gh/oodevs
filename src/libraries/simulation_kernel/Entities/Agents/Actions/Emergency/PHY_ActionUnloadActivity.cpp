@@ -43,10 +43,18 @@ PHY_ActionUnloadActivity::PHY_ActionUnloadActivity( MIL_AgentPion& pion, const s
 // -----------------------------------------------------------------------------
 PHY_ActionUnloadActivity::~PHY_ActionUnloadActivity()
 {
+    // NOTHIN
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionUnloadActivity::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionUnloadActivity::StopAction()
+{
     if ( pObject_ )
         role_.ReleaseInfluence( *pObject_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionUnloadActivity::Execute

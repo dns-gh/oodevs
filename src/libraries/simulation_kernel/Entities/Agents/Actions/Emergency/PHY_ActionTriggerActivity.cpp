@@ -44,10 +44,18 @@ PHY_ActionTriggerActivity::PHY_ActionTriggerActivity( MIL_AgentPion& pion, const
 // -----------------------------------------------------------------------------
 PHY_ActionTriggerActivity::~PHY_ActionTriggerActivity()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionTriggerActivity::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionTriggerActivity::StopAction()
+{
     if ( pObject_ )
         role_.ReleaseInfluence( *pObject_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionTriggerActivity::Execute

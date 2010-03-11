@@ -31,6 +31,15 @@ PHY_ActionTransportLoad::PHY_ActionTransportLoad( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 PHY_ActionTransportLoad::~PHY_ActionTransportLoad()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionTransportLoad::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionTransportLoad::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

@@ -34,6 +34,15 @@ PHY_ActionSupplyObject::PHY_ActionSupplyObject( MIL_AgentPion& pion, boost::shar
 // -----------------------------------------------------------------------------
 PHY_ActionSupplyObject::~PHY_ActionSupplyObject()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionSupplyObject::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionSupplyObject::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

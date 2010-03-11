@@ -45,11 +45,21 @@ PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_Agent_ABC&
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 {
+    // NOTHING
+}
+    
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIndirectFire_Position::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionIndirectFire_Position::StopAction()
+{
     if( pEffect_ )
     {
         pEffect_->ForceFlying();
         pEffect_->DecRef();
     }
+    PHY_ActionIndirectFire_ABC::StopAction();
 }
 
 // -----------------------------------------------------------------------------

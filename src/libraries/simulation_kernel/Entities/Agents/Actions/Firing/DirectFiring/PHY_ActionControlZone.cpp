@@ -102,6 +102,19 @@ PHY_ActionControlZone::PHY_ActionControlZone( MIL_AgentPion& pion, const TER_Loc
 // -----------------------------------------------------------------------------
 PHY_ActionControlZone::~PHY_ActionControlZone()
 {
+    // NOTHING
+}
+
+// =============================================================================
+// OPERATIONS
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionControlZone::Stop
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionControlZone::Stop()
+{
     rolePerceiver_.DisableRecoLocalisation( perceptionZoneID_ );
 
     if( pFireResult_ )
@@ -114,10 +127,6 @@ PHY_ActionControlZone::~PHY_ActionControlZone()
     pFireResult_       = 0;
     perceptionZoneID_ = 0;
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionControlZone::Execute

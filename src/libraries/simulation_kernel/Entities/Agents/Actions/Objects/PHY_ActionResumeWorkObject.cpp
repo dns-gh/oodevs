@@ -33,6 +33,15 @@ PHY_ActionResumeWorkObject::PHY_ActionResumeWorkObject( MIL_AgentPion& pion, boo
 // -----------------------------------------------------------------------------
 PHY_ActionResumeWorkObject::~PHY_ActionResumeWorkObject()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionResumeWorkObject::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionResumeWorkObject::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

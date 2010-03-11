@@ -46,11 +46,19 @@ PHY_ActionDirectFirePion_ABC::PHY_ActionDirectFirePion_ABC( MIL_AgentPion& pion,
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePion_ABC::~PHY_ActionDirectFirePion_ABC()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionDirectFirePion_ABC::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionDirectFirePion_ABC::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
     if( pFireResult_ )
         pFireResult_->DecRef();
 }
-
 
 // =============================================================================
 // OPERATIONS

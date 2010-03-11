@@ -29,6 +29,15 @@ PHY_DecisionCallbackAction_ABC::PHY_DecisionCallbackAction_ABC( MIL_Entity_ABC& 
 PHY_DecisionCallbackAction_ABC::~PHY_DecisionCallbackAction_ABC()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DecisionCallbackAction_ABC::Stop
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_DecisionCallbackAction_ABC::Stop()
+{
+    StopAction();
     decision_.RemoveCallback( this );
 }
 

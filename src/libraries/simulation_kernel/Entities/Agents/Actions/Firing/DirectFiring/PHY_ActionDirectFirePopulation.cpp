@@ -39,10 +39,18 @@ PHY_ActionDirectFirePopulation::PHY_ActionDirectFirePopulation( MIL_AgentPion& p
 // -----------------------------------------------------------------------------
 PHY_ActionDirectFirePopulation::~PHY_ActionDirectFirePopulation()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionDirectFirePopulation::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionDirectFirePopulation::StopAction()
+{
     if( pFireResult_ )
         pFireResult_->DecRef();
 }
-
 
 // =============================================================================
 // OPERATIONS

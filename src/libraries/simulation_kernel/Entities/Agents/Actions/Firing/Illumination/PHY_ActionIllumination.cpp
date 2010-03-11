@@ -40,9 +40,17 @@ PHY_ActionIllumination::PHY_ActionIllumination( MIL_AgentPion& pion, boost::shar
 // -----------------------------------------------------------------------------
 PHY_ActionIllumination::~PHY_ActionIllumination()
 {
-    Callback( role_.GetFinalReturnCode() );
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIllumination::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionIllumination::StopAction()
+{
+    Callback( role_.GetFinalReturnCode() );
+}
 
 // =============================================================================
 // OPERATIONS

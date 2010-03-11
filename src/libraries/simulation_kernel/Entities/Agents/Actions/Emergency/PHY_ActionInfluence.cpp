@@ -41,6 +41,15 @@ PHY_ActionInfluence::PHY_ActionInfluence( MIL_AgentPion& pion, const std::string
 // -----------------------------------------------------------------------------
 PHY_ActionInfluence::~PHY_ActionInfluence()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionInfluence::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionInfluence::StopAction()
+{
     if ( pObject_ )
         role_.ReleaseInfluence( *pObject_ );
 }

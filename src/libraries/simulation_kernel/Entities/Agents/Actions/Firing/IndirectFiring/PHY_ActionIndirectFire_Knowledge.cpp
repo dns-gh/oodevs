@@ -58,11 +58,21 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionIndirectFire_Knowledge::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionIndirectFire_Knowledge::StopAction()
+{
     if( pEffect_ )
     {
         pEffect_->ForceFlying();
         pEffect_->DecRef();
     }
+    PHY_ActionIndirectFire_ABC::StopAction();
 }
 
 // -----------------------------------------------------------------------------

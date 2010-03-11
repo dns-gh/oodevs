@@ -31,6 +31,15 @@ PHY_ActionConvoyLoad::PHY_ActionConvoyLoad( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 PHY_ActionConvoyLoad::~PHY_ActionConvoyLoad()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionConvoyLoad::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionConvoyLoad::StopAction()
+{
     Callback( true );
 }
 

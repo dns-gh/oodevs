@@ -52,3 +52,12 @@ void PHY_ActionFly::ExecuteSuspended()
     assert( false );
     Execute();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionFly::Stop
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionFly::Stop()
+{
+
+}

@@ -33,6 +33,15 @@ PHY_ActionLoad::PHY_ActionLoad( MIL_AgentPion& pion )
 // -----------------------------------------------------------------------------
 PHY_ActionLoad::~PHY_ActionLoad()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionLoad::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionLoad::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

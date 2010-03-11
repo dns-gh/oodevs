@@ -57,6 +57,7 @@ void PHY_Actor::RegisterAction( const boost::shared_ptr< PHY_Action_ABC > action
 // -----------------------------------------------------------------------------
 void PHY_Actor::UnregisterAction( const boost::shared_ptr< PHY_Action_ABC > action )
 {
+    action->Stop();
     int nOut = actions_.erase( action );
     assert( nOut == 1 );
 }
@@ -67,6 +68,8 @@ void PHY_Actor::UnregisterAction( const boost::shared_ptr< PHY_Action_ABC > acti
 // -----------------------------------------------------------------------------
 void PHY_Actor::CancelAllActions()
 {
+    for( std::set< const boost::shared_ptr< PHY_Action_ABC > >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
+        (*it)->Stop();
     actions_.clear();
 }
 

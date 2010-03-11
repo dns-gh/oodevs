@@ -44,10 +44,18 @@ PHY_ActionTriggerActivityInArea::PHY_ActionTriggerActivityInArea( MIL_AgentPion&
 // -----------------------------------------------------------------------------
 PHY_ActionTriggerActivityInArea::~PHY_ActionTriggerActivityInArea()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionTriggerActivityInArea::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionTriggerActivityInArea::StopAction()
+{
     if ( pObject_ )
         role_.ReleaseInfluence( *pObject_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionTriggerActivityInArea::Execute

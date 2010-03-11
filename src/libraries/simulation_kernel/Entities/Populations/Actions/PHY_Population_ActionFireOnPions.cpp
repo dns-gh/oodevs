@@ -37,6 +37,15 @@ PHY_Population_ActionFireOnPions::~PHY_Population_ActionFireOnPions()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Population_ActionFireOnPions::Stop
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_Population_ActionFireOnPions::Stop()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Population_ActionFireOnPions::Execute
 // Bypassd: NLD 2004-08-18
 // -----------------------------------------------------------------------------

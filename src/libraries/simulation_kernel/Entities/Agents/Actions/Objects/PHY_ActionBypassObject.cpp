@@ -33,6 +33,14 @@ PHY_ActionBypassObject::PHY_ActionBypassObject( MIL_AgentPion& pion, boost::shar
 // -----------------------------------------------------------------------------
 PHY_ActionBypassObject::~PHY_ActionBypassObject()
 {
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionBypassObject::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionBypassObject::StopAction()
+{
     Callback( role_.GetFinalReturnCode() );
 }
 

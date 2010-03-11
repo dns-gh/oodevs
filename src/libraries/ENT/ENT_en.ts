@@ -1817,19 +1817,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>stopping</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>parked</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>parked on self-prepared area</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>parked on engineer-prepared area</source>
+        <source>fuel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1946,6 +1934,22 @@
     </message>
     <message>
         <source>forbidden fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>stopping</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parked on self-prepared area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parked on engineer-prepared area</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2253,6 +2257,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>preliminary</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>event</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2274,14 +2282,6 @@
     </message>
     <message>
         <source>nervous</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>fuel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>preliminary</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

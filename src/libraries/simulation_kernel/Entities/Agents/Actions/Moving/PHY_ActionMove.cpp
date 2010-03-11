@@ -55,6 +55,15 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
 // -----------------------------------------------------------------------------
 PHY_ActionMove::~PHY_ActionMove()
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::StopAction
+// Created: LDC 2010-03-11
+// -----------------------------------------------------------------------------
+void PHY_ActionMove::StopAction()
+{
     Callback( static_cast< int >( DEC_PathWalker::eFinished ) );
     
     DestroyJoiningPath();
