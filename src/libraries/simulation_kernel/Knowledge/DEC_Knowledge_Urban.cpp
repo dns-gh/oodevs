@@ -299,9 +299,10 @@ void DEC_Knowledge_Urban::SendChangedState()
         pCurrentPerceptionLevel_->Serialize( level );
         message().set_identification_level( level );
         bMustSend = true;
+        pPreviousPerceptionLevel_ = pCurrentPerceptionLevel_;
     }
 
-    if( std::abs( rLastProgressSent_ - rProgressPercent_ ) >= 0.01 )
+    if( std::abs( rLastProgressSent_ - rProgressPercent_ ) >= 0.05 )
     {
         message().set_progress( (int)( rProgressPercent_ * 100. ) );
         rLastProgressSent_ = rProgressPercent_;
@@ -352,8 +353,7 @@ void DEC_Knowledge_Urban::SendFullState()
     message().set_progress( int( rProgressPercent_ * 100. ) );
     rLastProgressSent_ = rProgressPercent_;
 
-    message().set_perceived( true );
-    bLastPerceived_ = true;
+    message().set_perceived( bLastPerceived_ );
 
     WriteMsgPerceptionSources( message() );
 
