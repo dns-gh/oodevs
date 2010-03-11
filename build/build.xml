@@ -595,7 +595,7 @@
     tests
     ============================================================================
     -->
-    <target name="test" depends="generate-license,test-scripts.nocrossbow,test-adaptation,3a_test,plugins_test,clients_test,dispatcher_test,application.simulation_kernel_test,application.integration_decisionnal_test,protocol_test" description="run all tests"/>
+    <target name="test" depends="generate-license,test-scripts.nocrossbow,test-adaptation,3a_test,plugins_test,clients_test,dispatcher_test,application.simulation_kernel_test,application.integration_decisionnal_test,protocol_test,checkpoint_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
         <build-test name="3a" depends="xerces,terrain,boost,mockpp" 
@@ -670,6 +670,24 @@
     <target name="test-scripts.nocrossbow" description="run all tests" depends="application.simulation_app.nocrossbow">
         <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="worldwide"/>
+    </target>
+    
+    <target name="checkpoint_test" description="save and load a checkpoint" depends="">
+        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true">
+            <arg value="--root-dir=../../data"/>
+            <arg value="--exercise=CheckpointTests"/>
+            <arg value="--session=default"/>
+            <arg value="--test"/>
+            <arg value="--savecheckpoint=tempcheckpoint"/>
+        </exec>
+        <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true">
+            <arg value="--root-dir=../../data"/>
+            <arg value="--exercise=CheckpointTests"/>
+            <arg value="--session=default"/>
+            <arg value="--test"/>
+            <arg value="--checkpoint=tempcheckpoint"/>
+            <arg value="--deletecheckpoint"/>
+        </exec>
     </target>
 
     <macrodef name="test-adaptation">
