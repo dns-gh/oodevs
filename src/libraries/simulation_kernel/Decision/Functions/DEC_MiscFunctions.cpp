@@ -82,7 +82,7 @@ void DEC_MiscFunctions::CancelReinforcement( MIL_AgentPion& callerAgent )
 // Name: DEC_MiscFunctions::GetOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-std::vector<MIL_FragOrder*> DEC_MiscFunctions::GetOrdersCategory( MIL_Entity_ABC& callerAgent )
+std::vector< boost::shared_ptr< MIL_FragOrder > > DEC_MiscFunctions::GetOrdersCategory( MIL_Entity_ABC& callerAgent )
 {
     DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
     return role.GetOrdersCategory();
@@ -101,7 +101,7 @@ std::vector< boost::shared_ptr< DEC_PathPoint > > DEC_MiscFunctions::GetPointsCa
 // Name: DEC_MiscFunctions::RemoveFromOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::RemoveFromOrdersCategory( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder )
+void DEC_MiscFunctions::RemoveFromOrdersCategory( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder )
 {
     DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
     role.RemoveFromOrdersCategory( pOrder );
@@ -121,7 +121,7 @@ void DEC_MiscFunctions::RemoveFromPointsCategory( MIL_Entity_ABC& callerAgent, b
 // Name: DEC_MiscFunctions::DeleteOrderRepresentation
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_MiscFunctions::DeleteOrderRepresentation( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder )
+void DEC_MiscFunctions::DeleteOrderRepresentation( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder )
 {
     DEC_Representations& role = callerAgent.GetRole< DEC_Representations >();
     role.DeleteOrderRepresentation( pOrder );

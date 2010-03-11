@@ -26,9 +26,8 @@
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn )
     : type_           ( type )
-    , representations_( engine )
 {
     MIL_MissionParameterFactory::Copy( asn.parametres(), parameters_, knowledgeResolver );
 }
@@ -37,9 +36,8 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations
 // Name: MIL_FragOrder constructor
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
-MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, const MIL_FragOrder& rhs )
+MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& /*knowledgeResolver*/, const MIL_FragOrder& rhs )
     : type_           ( type )
-    , representations_( engine )
     , parameters_     ( rhs.parameters_ )
 {
     // NOTHING
@@ -52,15 +50,6 @@ MIL_FragOrder::MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations
 MIL_FragOrder::~MIL_FragOrder()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_FragOrder::Launch
-// Created: NLD 2006-11-22
-// -----------------------------------------------------------------------------
-void MIL_FragOrder::Launch()
-{
-    representations_.AddToOrdersCategory( this );
 }
 
 // -----------------------------------------------------------------------------

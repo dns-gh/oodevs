@@ -44,14 +44,13 @@ class MIL_FragOrder
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn );
-             MIL_FragOrder( const MIL_FragOrderType& type, DEC_Representations& engine, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
+             MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MsgsClientToSim::MsgFragOrder& asn );
+             MIL_FragOrder( const MIL_FragOrderType& type, const DEC_KnowledgeResolver_ABC& knowledgeResolver, const MIL_FragOrder& rhs );
     virtual ~MIL_FragOrder();
     //@}
 
     //! @name Operations
     //@{
-    void Launch();
     static void Register( directia::Brain& brain );
     //@}
     
@@ -86,7 +85,6 @@ public:
 
 private:
     const MIL_FragOrderType&   type_;
-          DEC_Representations& representations_;
           std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > > parameters_;
 };
 

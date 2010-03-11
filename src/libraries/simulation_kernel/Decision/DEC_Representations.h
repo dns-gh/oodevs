@@ -35,10 +35,10 @@ public:
 
     //! @name Operations
     //@{
-    const std::vector< MIL_FragOrder* >& GetOrdersCategory();
-    void AddToOrdersCategory( MIL_FragOrder* pObject );
-    void RemoveFromOrdersCategory( MIL_FragOrder* pObject );
-    void DeleteOrderRepresentation( MIL_FragOrder* pObject );
+    const std::vector< boost::shared_ptr< MIL_FragOrder > >& GetOrdersCategory();
+    void AddToOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject );
+    void RemoveFromOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject );
+    void DeleteOrderRepresentation( boost::shared_ptr< MIL_FragOrder > pObject );
 
     const std::vector< boost::shared_ptr< DEC_PathPoint > >& GetPointsCategory();
     void AddToPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject );
@@ -63,7 +63,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< MIL_FragOrder* >          T_OrdersRepresentationVector;
+    typedef std::vector< boost::shared_ptr< MIL_FragOrder > >          T_OrdersRepresentationVector;
     typedef T_OrdersRepresentationVector::iterator IT_OrdersRepresentationVector;
     typedef std::vector< boost::shared_ptr< DEC_PathPoint > > T_PointsRepresentationVector;
     typedef T_PointsRepresentationVector::iterator IT_PointsRepresentationVector;

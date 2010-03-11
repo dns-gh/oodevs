@@ -68,10 +68,10 @@ public:
     static void SetMaxSpeedModificator    ( MIL_AgentPion& callerAgent, MT_Float rFactor );
     
     // Representations
-    static std::vector<MIL_FragOrder*> GetOrdersCategory ( MIL_Entity_ABC& callerAgent );
+    static std::vector< boost::shared_ptr< MIL_FragOrder > > GetOrdersCategory ( MIL_Entity_ABC& callerAgent );
     static std::vector< boost::shared_ptr< DEC_PathPoint > > GetPointsCategory ( MIL_Entity_ABC& callerAgent );
-    static void RemoveFromOrdersCategory                 ( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder );
-    static void DeleteOrderRepresentation                ( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder );
+    static void RemoveFromOrdersCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
+    static void DeleteOrderRepresentation                ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< MIL_FragOrder > pOrder );
     static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_PathPoint > pPoint );
     
     //

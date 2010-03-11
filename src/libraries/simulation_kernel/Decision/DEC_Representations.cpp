@@ -36,7 +36,7 @@ DEC_Representations::~DEC_Representations()
 // Name: DEC_Representations::GetOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-const std::vector< MIL_FragOrder* >& DEC_Representations::GetOrdersCategory()
+const std::vector< boost::shared_ptr< MIL_FragOrder > >& DEC_Representations::GetOrdersCategory()
 {
     return orderRepresentations_;
 }
@@ -54,7 +54,7 @@ const std::vector< boost::shared_ptr< DEC_PathPoint > >& DEC_Representations::Ge
 // Name: DEC_Representations::AddToOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::AddToOrdersCategory( MIL_FragOrder* pObject )
+void DEC_Representations::AddToOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject )
 {
     orderRepresentations_.push_back( pObject );
 }
@@ -72,7 +72,7 @@ void DEC_Representations::AddToPointsCategory( boost::shared_ptr< DEC_PathPoint 
 // Name: DEC_Representations::RemoveFromOrdersCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::RemoveFromOrdersCategory( MIL_FragOrder* pObject )
+void DEC_Representations::RemoveFromOrdersCategory( boost::shared_ptr< MIL_FragOrder > pObject )
 {
     for( IT_OrdersRepresentationVector it = orderRepresentations_.begin(); it != orderRepresentations_.end(); ++it )
     {
@@ -103,14 +103,13 @@ void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< DEC_PathP
 // Name: DEC_Representations::DeleteOrderRepresentation
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::DeleteOrderRepresentation( MIL_FragOrder* pObject )
+void DEC_Representations::DeleteOrderRepresentation( boost::shared_ptr< MIL_FragOrder > pObject )
 {    
     for( IT_OrdersRepresentationVector oit = orderRepresentations_.begin(); oit != orderRepresentations_.end(); ++oit )
     {
         if( *oit == pObject )
         {
             orderRepresentations_.erase( oit );
-            delete pObject;
             return;
         }
     }
