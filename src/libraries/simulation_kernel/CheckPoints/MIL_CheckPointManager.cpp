@@ -94,6 +94,21 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_CheckPointManager::SaveCheckPointTestMode
+// Created: JSR 2010-03-10
+// -----------------------------------------------------------------------------
+void MIL_CheckPointManager::SaveCheckPointTestMode( const MIL_Config& config )
+{
+    // should only be called in test mode
+    assert( config.IsTestMode() == true && config.IsSaveCheckpointTestMode() == true );
+
+    SaveCheckPoint( config.GetCheckpointNameTestMode() );
+
+    client::ControlCheckPointSaveNowAck asnReplyMsg;
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::Update
 // Created: NLD 2005-12-27
 // -----------------------------------------------------------------------------

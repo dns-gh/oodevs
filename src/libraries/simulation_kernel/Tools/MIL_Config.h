@@ -37,32 +37,35 @@ public:
 
     //! @name Accessors
     //@{
-          bool         UseOnlyDIAArchive          () const;
-          bool         CheckAutomateComposition   () const;
-          bool         UseDecDebug                () const;
-          bool         UsePathDebug               () const;
-          bool         IsProfilingEnabled         () const;
-          bool         IsDataTestMode             () const;
-          bool         IsTestMode                 () const;
-          bool         IsFrozenMode                 () const;
-          bool         IsDispatcherEmbedded       () const;
-          unsigned short GetNetworkPort             () const;
-          bool         IsThreadedNetwork          () const;
+    bool               UseOnlyDIAArchive         () const;
+    bool               CheckAutomateComposition  () const;
+    bool               UseDecDebug               () const;
+    bool               UsePathDebug              () const;
+    bool               IsProfilingEnabled        () const;
+    bool               IsDataTestMode            () const;
+    bool               IsTestMode                () const;
+    bool               IsSaveCheckpointTestMode  () const;
+    bool               IsDeleteCheckpointTestMode() const;
+    bool               IsFrozenMode              () const;
+    bool               IsDispatcherEmbedded      () const;
+    unsigned short     GetNetworkPort            () const;
+    bool               IsThreadedNetwork         () const;
 
-          bool         UseCheckPointCRC       () const;
-          bool         UseDiaDebugger         () const;
-          unsigned short GetDiaDebuggerPort     () const;
-          bool         UseNetworkLogger       () const;
-          unsigned short GetNetworkLoggerPort   () const;
-          unsigned int         GetCheckPointsFrequency() const;
-          unsigned int         GetCheckPointsKept     () const;
-          unsigned int         GetTimeStep            () const;
-          unsigned int         GetTimeFactor          () const;
-          unsigned int         GetEndTick             () const;
-          unsigned int         GetPathFinderThreads   () const;
-          bool         IsHLAEnabled           () const;
-    const std::string& GetHLAFederation       () const;
-    const std::string& GetHLAFederate         () const;
+    bool               UseCheckPointCRC          () const;
+    bool               UseDiaDebugger            () const;
+    unsigned short     GetDiaDebuggerPort        () const;
+    bool               UseNetworkLogger          () const;
+    unsigned short     GetNetworkLoggerPort      () const;
+    unsigned int       GetCheckPointsFrequency   () const;
+    unsigned int       GetCheckPointsKept        () const;
+    unsigned int       GetTimeStep               () const;
+    unsigned int       GetTimeFactor             () const;
+    unsigned int       GetEndTick                () const;
+    unsigned int       GetPathFinderThreads      () const;
+    bool               IsHLAEnabled              () const;
+    const std::string& GetHLAFederation          () const;
+    const std::string& GetHLAFederate            () const;
+    const std::string& GetCheckpointNameTestMode () const;
     //@}
 
     //! @name Operations
@@ -127,11 +130,14 @@ private:
     bool                       bProfilingEnabled_;
     bool                       bDataTestMode_;
     bool                       bTestMode_;
+    bool                       bSaveCheckpointTestMode_;
+    bool                       bDeleteCheckpointTestMode_;
     bool                       bFrozenMode_;
     bool                       bEmbeddedDispatcher_;
     bool                       bHLAEnabled_;
     std::string                hlaFederation_;
     std::string                hlaFederate_;
+    std::string                strCheckPointNameTestMode_;
     T_CRCMap                   CRCMap_;
     //@}
 };

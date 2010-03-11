@@ -18,6 +18,7 @@
 #include "SIM_Dispatcher.h"
 
 #include "simulation_kernel/MIL_AgentServer.h"
+#include "simulation_kernel/CheckPoints/MIL_CheckPointManager.h"
 #include "MT_Tools/MT_Version.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Profiler.h"
@@ -25,6 +26,8 @@
 
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/convenience.hpp>
 
 bool SIM_App::bCrashWithCoreDump_ = false;
 bool SIM_App::bUserInterrupt_     = false;
@@ -344,8 +347,9 @@ int SIM_App::Test()
     static const std::string prefix( "ERROR: " );
     try
     {
-        Initialize();
-        Cleanup   ();
+        Initialize    ();
+        CheckpointTest();
+        Cleanup       ();
         return EXIT_SUCCESS;
     }
     catch( MT_ScipioException& exception )
@@ -370,6 +374,25 @@ int SIM_App::Test()
         std::cerr << Wrap( exception.what(), prefix ) << std::endl;
     }
     return EXIT_FAILURE;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SIM_App::SaveCheckpointTest
+// Created: JSR 2010-03-10
+// -----------------------------------------------------------------------------
+void SIM_App::CheckpointTest()
+{
+    if( startupConfig_.IsSaveCheckpointTestMode() == true && startupConfig_.IsTestMode() == true )
+    {
+        MIL_AgentServer::GetWorkspace().GetCheckPointManager().SaveCheckPointTestMode( startupConfig_ );
+    }
+
+    if( startupConfig_.IsDeleteCheckpointTestMode() == true && startupConfig_.IsTestMode() == true )
+    {
+        // Temporary checkpoint was loaded in Initialize, we can delete it now.
+        const boost::filesystem::path path( startupConfig_.GetCheckpointDirectory(), boost::filesystem::native );
+        boost::filesystem::remove_all( path );
+    }
 }
 
 namespace

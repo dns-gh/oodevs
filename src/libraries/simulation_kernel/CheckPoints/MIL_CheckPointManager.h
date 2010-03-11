@@ -47,8 +47,9 @@ public:
 
     //! @name Main
     //@{
-    void Update        ();
-    void LoadCheckPoint( const MIL_Config& config );
+    void Update                ();
+    void LoadCheckPoint        ( const MIL_Config& config );
+    void SaveCheckPointTestMode( const MIL_Config& config );
     //@}
 
     //! @name Accessors

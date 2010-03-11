@@ -44,14 +44,18 @@ MIL_Config::MIL_Config()
     , bUseNetworkLogger_        ( false )
     , bProfilingEnabled_        ( false )
     , bDataTestMode_            ( false )
+    , bSaveCheckpointTestMode_  ( false )
+    , bDeleteCheckpointTestMode_( false )
     , bFrozenMode_              ( false )
     , bEmbeddedDispatcher_      ( false )
 {
     po::options_description desc( "Simulation options" );
     desc.add_options()
-        ( "checkpointorbat",                                                  "use backup orbat with checkpoint"         )
-        ( "test"           ,                                                  "test mode: loading + first tick"          )
-        ( "testdata"       ,                                                  "test mode: load models only (no terrain)" )
+        ( "checkpointorbat"                                                         , "use backup orbat with checkpoint"         )
+        ( "test"                                                                    , "test mode: loading + first tick"          )
+        ( "testdata"                                                                , "test mode: load models only (no terrain)" )
+        ( "savecheckpoint" , po::value< std::string >( &strCheckPointNameTestMode_ ), "specify checkpoint to save"               )
+        ( "deletecheckpoint"                                                        , "delete checkpoint folder"                 )
     ;
     AddOptions( desc );
 }
@@ -74,7 +78,9 @@ void MIL_Config::Parse( int argc, char** argv )
     tools::SessionConfig::Parse( argc, argv );
     bDataTestMode_    = IsSet( "testdata" );
     bTestMode_        = bDataTestMode_ || IsSet( "test" );
+    bSaveCheckpointTestMode_ = IsSet( "savecheckpoint" );
     bCheckPointOrbat_ = IsSet( "checkpointorbat" );
+    bDeleteCheckpointTestMode_ = IsSet( "deletecheckpoint" );
     ReadSessionFile( GetSessionFile() );
 }
 

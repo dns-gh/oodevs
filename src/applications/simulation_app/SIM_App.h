@@ -49,12 +49,13 @@ public:
 private:
     //! @name Tools
     //@{
-    void Initialize();
-    void Run       ();
-    void Stop      (); 
-    bool Tic       (); 
-    void Cleanup   ();
-    int  Test      ();
+    void Initialize        ();
+    void Run               ();
+    void Stop              (); 
+    bool Tic               (); 
+    void Cleanup           ();
+    int  Test              ();
+    void CheckpointTest    ();
 
     std::string Wrap( const std::string& content, const std::string& prefix ) const;
 

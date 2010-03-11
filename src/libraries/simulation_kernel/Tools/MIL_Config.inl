@@ -110,6 +110,26 @@ bool MIL_Config::IsTestMode() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Config::IsSaveCheckpointTestMode
+// Created: JSR 2010-03-10
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsSaveCheckpointTestMode() const
+{
+    return bSaveCheckpointTestMode_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::IsDeleteCheckpointTestMode
+// Created: JSR 2010-03-11
+// -----------------------------------------------------------------------------
+inline
+bool MIL_Config::IsDeleteCheckpointTestMode() const
+{
+    return bDeleteCheckpointTestMode_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Config::IsTestMode
 // Created: RPD 2009-06-12
 // -----------------------------------------------------------------------------
@@ -247,4 +267,14 @@ inline
 const std::string& MIL_Config::GetHLAFederate() const
 {
     return hlaFederate_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Config::GetCheckpointTestName
+// Created: JSR 2010-03-11
+// -----------------------------------------------------------------------------
+inline
+const std::string& MIL_Config::GetCheckpointNameTestMode() const
+{
+    return strCheckPointNameTestMode_;
 }
