@@ -124,7 +124,7 @@ node "ActivatedByMOT_PoursuivreFaceAEni"
     end,
 
     activate = function( self )
-        Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )--[[// -----------------------------------------------------------------------------
+        --[[// -----------------------------------------------------------------------------
 ]]--[[// Modules activateurs 
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Valeur sup à Garder ses distances
@@ -149,7 +149,10 @@ node "ActivatedByMOT_PoursuivreFaceAEni"
 ]]--[[// -----------------------------------------------------------------------------
 ]]--[[// Code executé quand la valeur de la motivation est supérieur à 0.
 ]]--[[// -----------------------------------------------------------------------------
-]]
+]]if( GetMotivation( "MOT_PoursuivreFaceAEni" ) > 0 ) then
+            Activate( self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+        end
+
     end,
 
 }
