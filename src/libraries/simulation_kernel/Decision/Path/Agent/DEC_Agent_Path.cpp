@@ -165,6 +165,11 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::~DEC_Agent_Path()
 {
+    for( IT_PathPointList it = resultList_.begin(); it!= resultList_.end(); it++ )
+    {
+        if( (*it)->GetType() != DEC_PathPoint::eTypePointPath )
+            (*it)->RemoveFromDIA( *it );
+    }
     fuseau_        .Reset();
     automateFuseau_.Reset();
 }
@@ -332,11 +337,11 @@ DEC_Agent_Path::IT_PathPointList DEC_Agent_Path::GetPreviousPathPointOnDifferent
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: NLD 2005-08-11
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent )
 {
-    MT_Float rDistanceLeft = spottedPathPoint.GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
+    MT_Float rDistanceLeft = spottedPathPoint->GetTypePoint() == DEC_Rep_PathPoint::eTypePointLima ?
                              queryMaker_.GetType().GetDistanceAvantLima() :
-                             queryMaker_.GetType().GetDistanceAvantPoint( spottedPathPoint.GetTypeTerrain() );
+                             queryMaker_.GetType().GetDistanceAvantPoint( spottedPathPoint->GetTypeTerrain() );
 
     while( true )
     {
@@ -344,7 +349,7 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
 
         if( itCurrent == resultList_.begin() )
         {
-            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vCurrentPos, spottedPathPoint );
+            boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vCurrentPos, spottedPathPoint ) );
             resultList_.insert( ++itCurrent, pNewPoint );
             break;
         }
@@ -365,7 +370,7 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
         if( rDistanceLeft == 0. )
         {
             // Positionnement du point avant au même endroit qu'un autre point
-            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vPreviousPos, spottedPathPoint );
+            boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vPreviousPos, spottedPathPoint ) );
 
             resultList_.insert( itPrev, pNewPoint );
             break;
@@ -377,7 +382,7 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
             vTmp *= rDistanceLeft;
             vTmp += vPreviousPos;
 
-            DEC_Rep_PathPoint_Front* pNewPoint = new DEC_Rep_PathPoint_Front( vTmp, spottedPathPoint );
+            boost::shared_ptr< DEC_PathPoint > pNewPoint( new DEC_Rep_PathPoint_Front( vTmp, spottedPathPoint ) );
 
             resultList_.insert( itCurrent, pNewPoint );
             break;
@@ -392,7 +397,7 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
 // Name: DEC_Agent_Path::InsertPointAvant
 // Created: JVT 02-12-04
 //----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAvant( const boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPointAvant )
 {
     static MT_Float rDist = 2000.;
     if( rDistSinceLastPointAvant > rDist )
@@ -406,18 +411,17 @@ void DEC_Agent_Path::InsertPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_P
 // Name: DEC_Agent_Path::InsertPoint
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-bool DEC_Agent_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint )
+bool DEC_Agent_Path::InsertPoint( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint )
 {
     static MT_Float rDist = 500.;
     if( rDistSinceLastPoint > rDist )
     {
-        resultList_.insert( itCurrent, &spottedPathPoint );
+        resultList_.insert( itCurrent, spottedPathPoint );
         rDistSinceLastPoint = 0.;
         return true;
     }
     else 
     {
-        delete &spottedPathPoint;
         return false;
     }
 }
@@ -426,7 +430,7 @@ bool DEC_Agent_Path::InsertPoint( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPo
 // Name: DEC_Agent_Path::Shit
 // Created: NLD 2005-08-10
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::InsertPointAndPointAvant( DEC_Rep_PathPoint& spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant )
+void DEC_Agent_Path::InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint > spottedPathPoint, IT_PathPointList itCurrent, MT_Float& rDistSinceLastPoint, MT_Float& rDistSinceLastPointAvant )
 {
     if( InsertPoint( spottedPathPoint, itCurrent, rDistSinceLastPoint ) )
         InsertPointAvant( spottedPathPoint, itCurrent, rDistSinceLastPointAvant );
@@ -475,24 +479,24 @@ void DEC_Agent_Path::InsertPointAvants()
         
         // Village
         if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierVillage, TerrainData::Urban() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         else if( IsPointAvantOut( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Urban() ) )
-            InsertPoint( *new DEC_Rep_PathPoint( (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ), itPoint, rDistSinceLastPoint );
+            InsertPoint( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint( (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Urban() ) ), itPoint, rDistSinceLastPoint );
 
         // Forest
         else if( IsPointAvant( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Forest() ) )
-            InsertPointAndPointAvant( *new DEC_Rep_PathPoint( (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint( (*itPoint)->GetPos(), DEC_Rep_PathPoint::eTypePointCCT, TerrainData::Forest() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Cross roads
         else if( current.GetObjectTypes().ContainsOne( TerrainData::Crossroad() ) )
-            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierCarrefour, TerrainData::Crossroad() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         // Pont
         else if( IsPointAvantIn( nObjectTypesBefore, nObjectTypesToNextPoint, TerrainData::Bridge() ) 
                 || ( !current.GetObjectTypes().ContainsOne( TerrainData::SmallRiver() ) && current.GetObjectTypes().ContainsOne( TerrainData::Bridge() ) && !nObjectTypesBefore.ContainsOne( TerrainData::Bridge() ) && !nObjectTypesToNextPoint.ContainsOne( TerrainData::Bridge() ) )
                 )
-            InsertPointAndPointAvant( *new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
+            InsertPointAndPointAvant( boost::shared_ptr< DEC_PathPoint >( new DEC_Rep_PathPoint_Special( (*itPoint)->GetPos(), DEC_Rep_PathPoint_Special::eTypePointParticulierPont, TerrainData::Bridge() ) ), itPoint, rDistSinceLastPoint, rDistSinceLastPointAvant );
 
         nObjectTypesBefore = nObjectTypesToNextPoint;
 
@@ -506,13 +510,13 @@ void DEC_Agent_Path::InsertPointAvants()
 //-----------------------------------------------------------------------------
 void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
 {
-    DEC_PathPoint* pLastPoint = 0;
+    boost::shared_ptr< DEC_PathPoint > pLastPoint;
     for( IT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
     {
-        DEC_PathPoint* pCurrentPoint = *itPoint;
+        boost::shared_ptr< DEC_PathPoint > pCurrentPoint = *itPoint;
         assert ( pCurrentPoint );
 
-        if( pLastPoint && ( pCurrentPoint->GetPos() != pLastPoint->GetPos() ) )
+        if( pLastPoint.get() && ( pCurrentPoint->GetPos() != pLastPoint->GetPos() ) )
         {
             MT_Line segment( pLastPoint->GetPos(), pCurrentPoint->GetPos() );
             MT_Vector2D posIntersect;
@@ -520,9 +524,9 @@ void DEC_Agent_Path::InsertLima( const MIL_LimaOrder& lima )
             {   
                 for( MIL_LimaOrder::CIT_LimaFunctions itFunction = lima.GetFunctions().begin(); itFunction != lima.GetFunctions().end(); ++itFunction )
                 {
-                    DEC_Rep_PathPoint* pPoint = new DEC_Rep_PathPoint_Lima( posIntersect, TerrainData(), lima.GetID(), **itFunction );
+                    boost::shared_ptr< DEC_PathPoint > pPoint( new DEC_Rep_PathPoint_Lima( posIntersect, TerrainData(), lima.GetID(), **itFunction ) );
                     IT_PathPointList itTmp = resultList_.insert( itPoint, pPoint );
-                    InsertPointAvant( *pPoint, itTmp );
+                    InsertPointAvant( pPoint, itTmp );
                 }
             }
         }

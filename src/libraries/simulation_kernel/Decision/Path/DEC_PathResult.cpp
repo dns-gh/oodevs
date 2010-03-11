@@ -34,8 +34,6 @@ DEC_PathResult::DEC_PathResult()
 //-----------------------------------------------------------------------------
 DEC_PathResult::~DEC_PathResult()
 {
-    for( CIT_PathPointList itPoint = resultList_.begin(); itPoint != resultList_.end(); ++itPoint )
-        delete *itPoint;
     resultList_.clear();
 }
 
@@ -253,11 +251,11 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
     if( bSectionJustEnded_ )
     {
         // Pop last point
-        delete resultList_.back();
         resultList_.pop_back();
         bSectionJustEnded_ = false;
     }
-    resultList_.push_back( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
+    boost::shared_ptr< DEC_PathPoint > point( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
+    resultList_.push_back( point );
 }
 
 // -----------------------------------------------------------------------------

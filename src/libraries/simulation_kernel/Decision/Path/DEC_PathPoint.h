@@ -28,17 +28,21 @@ public:
     /** @name Types */
     //-------------------------------------------------------------------------
     //@{
-    enum E_Point
-    {
-        eAvantPoint,
-        ePoint
-    };
-
-
     enum E_Type
     {
         eTypePointPath,
+        eTypePointFront,
         eTypePointSpecial
+    };
+    enum E_TypePoint
+    {
+        eTypePointNormal        = 1,    // défaut
+        eTypePointObservation   = 2,    // point d'observation
+        eTypePointParticulier   = 4,    // point particulier
+        eTypePointBond          = 8,    // point de limite de bond
+        eTypePointLima          = 16,   // point sur une lima
+        eTypePointSonde         = 32,   // point necessitant coup de sonde 
+        eTypePointCCT           = 64    // point de changement de compartiment terrain
     };
     //@}
 
@@ -48,7 +52,7 @@ public:
              DEC_PathPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint );
     virtual ~DEC_PathPoint();    
 protected:
-             DEC_PathPoint( const MT_Vector2D& vPos, const char* szDIARepType );
+             DEC_PathPoint( const MT_Vector2D& vPos, E_Type type, E_TypePoint nPointType, const char* szDIARepType);
     //@}
 
 public:
@@ -57,8 +61,13 @@ public:
     //@{
     const MT_Vector2D& GetPos                   () const;
     E_Type             GetType                  () const;
+    E_TypePoint        GetTypePoint             () const;
     const TerrainData& GetObjectTypes           () const;
     const TerrainData& GetObjectTypesToNextPoint() const;
+    virtual boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
+    virtual int GetTypeLima();
+    virtual unsigned int GetLimaID();
+    virtual const TerrainData& GetTypeTerrain() const;
     //@}
 
     //! @name Main
@@ -69,7 +78,8 @@ public:
 
     //! @name DIA
     //@{
-    virtual void SendToDIA    ( DEC_Representations& agent ) const;
+    virtual void SendToDIA    ( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
+    virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
     const std::string& GetDIAType() const;
     //@}
 
@@ -81,6 +91,7 @@ public:
 protected:
     MT_Vector2D vPos_;
     E_Type      nType_;
+    E_TypePoint nPointType_;
     TerrainData nObjectTypes_;
     TerrainData nObjectTypesToNextPoint_; 
 

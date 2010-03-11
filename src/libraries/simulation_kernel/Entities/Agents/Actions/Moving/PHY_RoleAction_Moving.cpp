@@ -322,9 +322,10 @@ void PHY_RoleAction_Moving::NotifyMovingOnPathPoint( const DEC_PathPoint& /*poin
 // Name: PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( const DEC_PathPoint& point )
+void PHY_RoleAction_Moving::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point )
 {
-    point.SendToDIA( pion_.GetRole< DEC_Representations >() );
+    //@TODO MGD Refactor Path_Point and DEC_Representation, DEC_Representations must be a manager to avoid auto dia register
+    point->SendToDIA( pion_.GetRole< DEC_Representations >(), point );
 }
 
 // -----------------------------------------------------------------------------

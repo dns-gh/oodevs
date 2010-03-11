@@ -69,10 +69,10 @@ public:
     
     // Representations
     static std::vector<MIL_FragOrder*> GetOrdersCategory ( MIL_Entity_ABC& callerAgent );
-    static std::vector<DEC_PathPoint*> GetPointsCategory ( MIL_Entity_ABC& callerAgent );
+    static std::vector< boost::shared_ptr< DEC_PathPoint > > GetPointsCategory ( MIL_Entity_ABC& callerAgent );
     static void RemoveFromOrdersCategory                 ( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder );
     static void DeleteOrderRepresentation                ( MIL_Entity_ABC& callerAgent, MIL_FragOrder* pOrder );
-    static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, DEC_PathPoint* pPoint );
+    static void RemoveFromPointsCategory                 ( MIL_Entity_ABC& callerAgent, boost::shared_ptr< DEC_PathPoint > pPoint );
     
     //
     static void FillMissionParameters                         ( const directia::Brain& brain, directia::ScriptRef& initTaskFunction, const directia::ScriptRef& refMission, boost::shared_ptr< MIL_Mission_ABC > mission );

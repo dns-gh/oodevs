@@ -40,9 +40,9 @@ public:
     void RemoveFromOrdersCategory( MIL_FragOrder* pObject );
     void DeleteOrderRepresentation( MIL_FragOrder* pObject );
 
-    const std::vector< DEC_PathPoint* >& GetPointsCategory();
-    void AddToPointsCategory( DEC_PathPoint* pObject );
-    void RemoveFromPointsCategory( DEC_PathPoint* pObject );
+    const std::vector< boost::shared_ptr< DEC_PathPoint > >& GetPointsCategory();
+    void AddToPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject );
+    void RemoveFromPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject );
     //@}
 
 private:
@@ -65,7 +65,7 @@ private:
     //@{
     typedef std::vector< MIL_FragOrder* >          T_OrdersRepresentationVector;
     typedef T_OrdersRepresentationVector::iterator IT_OrdersRepresentationVector;
-    typedef std::vector< DEC_PathPoint* >          T_PointsRepresentationVector;
+    typedef std::vector< boost::shared_ptr< DEC_PathPoint > > T_PointsRepresentationVector;
     typedef T_PointsRepresentationVector::iterator IT_PointsRepresentationVector;
     //@}
 

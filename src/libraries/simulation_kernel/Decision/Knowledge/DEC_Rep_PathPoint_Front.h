@@ -25,13 +25,14 @@ class DEC_Rep_PathPoint_Front  : public DEC_PathPoint
 {
 
 public:
-             DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest );
+             DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< DEC_PathPoint > dest );
     virtual ~DEC_Rep_PathPoint_Front();
 
     //! @name DIA
     //@{
-    virtual void SendToDIA( DEC_Representations& agent ) const;
-    DEC_PathPoint& GetDestPoint() const;
+    virtual void SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const;
+    virtual void RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self );
+    boost::shared_ptr< DEC_PathPoint > GetDestPoint() const;
     //@}
 
     //! @name Debug
@@ -40,7 +41,7 @@ public:
     //@}
 
 private:
-    DEC_Rep_PathPoint& destPoint_;
+    boost::shared_ptr< DEC_PathPoint > destPoint_;
 
     mutable DEC_Representations* pSentToDiaAgent_;
 };

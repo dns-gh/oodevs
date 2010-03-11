@@ -153,7 +153,7 @@ bool DEC_PathFunctions::IsMovingOnPath( const MIL_AgentPion& callerAgent, const 
 // Name: DEC_PathFunctions::GetRepPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-MT_Vector2D* DEC_PathFunctions::GetRepPoint( DEC_PathPoint* pPoint )
+MT_Vector2D* DEC_PathFunctions::GetRepPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
     return (MT_Vector2D*)&pPoint->GetPos();
 }
@@ -162,58 +162,52 @@ MT_Vector2D* DEC_PathFunctions::GetRepPoint( DEC_PathPoint* pPoint )
 // Name: DEC_PathFunctions::IsAvantPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-bool DEC_PathFunctions::IsAvantPoint( DEC_PathPoint* pPoint )
+bool DEC_PathFunctions::IsAvantPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
-    DEC_Rep_PathPoint_Front* pFront = dynamic_cast< DEC_Rep_PathPoint_Front* >( pPoint );
-    return pFront ? true : false;
+    return pPoint->GetType() == DEC_PathPoint::eTypePointFront;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::IsPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-bool DEC_PathFunctions::IsPoint( DEC_PathPoint* pPoint )
+bool DEC_PathFunctions::IsPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
-    DEC_Rep_PathPoint* pPathPoint = dynamic_cast< DEC_Rep_PathPoint* >( pPoint );
-    return pPathPoint ? true : false;
+    return pPoint->GetType() == DEC_PathPoint::eTypePointSpecial;
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetTypePoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-int DEC_PathFunctions::GetTypePoint( DEC_PathPoint* pPoint )
+int DEC_PathFunctions::GetTypePoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
-    DEC_Rep_PathPoint* pPathPoint = dynamic_cast< DEC_Rep_PathPoint* >( pPoint );
-    return static_cast< int >( pPathPoint->GetTypePoint() );
+    return static_cast< int >( pPoint->GetTypePoint() );
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetDestPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-DEC_PathPoint* DEC_PathFunctions::GetDestPoint( DEC_PathPoint* pPoint )
-{
-    DEC_Rep_PathPoint_Front* pFront = dynamic_cast< DEC_Rep_PathPoint_Front* >( pPoint );
-    return &pFront->GetDestPoint();
+boost::shared_ptr< DEC_PathPoint > DEC_PathFunctions::GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
+{      
+    return pPoint->GetDestPoint();
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetTypeLimaPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-int DEC_PathFunctions::GetTypeLimaPoint( DEC_PathPoint* pPoint )
+int DEC_PathFunctions::GetTypeLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
-    DEC_Rep_PathPoint_Lima* pLimaPoint = dynamic_cast< DEC_Rep_PathPoint_Lima* >( pPoint );
-    return pLimaPoint->GetTypeLima();
+    return pPoint->GetTypeLima();
 }
     
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetLimaPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-unsigned int DEC_PathFunctions::GetLimaPoint( DEC_PathPoint* pPoint )
+unsigned int DEC_PathFunctions::GetLimaPoint( boost::shared_ptr< DEC_PathPoint > pPoint )
 {
-    DEC_Rep_PathPoint_Lima* pLimaPoint = dynamic_cast< DEC_Rep_PathPoint_Lima* >( pPoint );
-    return pLimaPoint->GetLimaID();
+    return pPoint->GetLimaID();
 }

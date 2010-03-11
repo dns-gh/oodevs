@@ -175,7 +175,7 @@ bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
     // points particuliers -> EVT vers DEC
     do 
     {
-        movingEntity_.NotifyMovingOnSpecialPoint( **itNextPathPoint_ );
+        movingEntity_.NotifyMovingOnSpecialPoint( *itNextPathPoint_ );
         itCurrentPathPoint_ = itNextPathPoint_;
     }
     while      ( ++itNextPathPoint_ != path.GetResult().end()

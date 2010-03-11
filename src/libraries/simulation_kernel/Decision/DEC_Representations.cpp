@@ -45,7 +45,7 @@ const std::vector< MIL_FragOrder* >& DEC_Representations::GetOrdersCategory()
 // Name: DEC_Representations::GetPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-const std::vector< DEC_PathPoint* >& DEC_Representations::GetPointsCategory()
+const std::vector< boost::shared_ptr< DEC_PathPoint > >& DEC_Representations::GetPointsCategory()
 {
     return pointRepresentations_;
 }
@@ -63,7 +63,7 @@ void DEC_Representations::AddToOrdersCategory( MIL_FragOrder* pObject )
 // Name: DEC_Representations::AddToPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::AddToPointsCategory( DEC_PathPoint* pObject )
+void DEC_Representations::AddToPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject )
 {
     pointRepresentations_.push_back( pObject );
 }
@@ -87,7 +87,7 @@ void DEC_Representations::RemoveFromOrdersCategory( MIL_FragOrder* pObject )
 // Name: DEC_Representations::RemoveFromPointsCategory
 // Created: LDC 2009-04-03
 // -----------------------------------------------------------------------------
-void DEC_Representations::RemoveFromPointsCategory( DEC_PathPoint* pObject )
+void DEC_Representations::RemoveFromPointsCategory( boost::shared_ptr< DEC_PathPoint > pObject )
 {
     for( IT_PointsRepresentationVector it = pointRepresentations_.begin(); it != pointRepresentations_.end(); ++it )
     {

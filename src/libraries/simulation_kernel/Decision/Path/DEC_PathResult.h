@@ -32,7 +32,7 @@ class DEC_PathResult : public DEC_Path_ABC
 public:
     //! @name Types
     //@{   
-    typedef std::list< DEC_PathPoint* >     T_PathPointList;
+    typedef std::list< boost::shared_ptr< DEC_PathPoint > > T_PathPointList;
     typedef T_PathPointList::iterator       IT_PathPointList;
     typedef T_PathPointList::const_iterator CIT_PathPointList;    
     //@}

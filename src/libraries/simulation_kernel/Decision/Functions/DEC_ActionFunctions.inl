@@ -95,8 +95,11 @@ boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename A
 template< typename T >
 boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StopAction( T& caller, boost::shared_ptr< PHY_Action_ABC > pAction )
 {
-    assert( caller.HasAction( pAction ) );
-    caller.UnregisterAction( pAction );
+    if( pAction.get() )
+    {
+        assert( caller.HasAction( pAction ) );
+        caller.UnregisterAction( pAction );
+    }
     return boost::shared_ptr< PHY_Action_ABC >();
 }
 

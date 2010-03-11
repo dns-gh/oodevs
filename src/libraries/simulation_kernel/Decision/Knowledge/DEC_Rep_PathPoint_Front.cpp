@@ -21,8 +21,8 @@
 // Name: DEC_Rep_PathPoint_Front constructor
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_Rep_PathPoint& dest )
-    : DEC_PathPoint     ( vPos, "Rep_AvantPoint" )
+DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, boost::shared_ptr< DEC_PathPoint > dest )
+    : DEC_PathPoint     ( vPos, eTypePointFront, eTypePointNormal, "Rep_AvantPoint" )
     , destPoint_        ( dest )
     , pSentToDiaAgent_  ( 0 )
 {
@@ -34,10 +34,6 @@ DEC_Rep_PathPoint_Front::DEC_Rep_PathPoint_Front( const MT_Vector2D& vPos, DEC_R
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 {
-    if( pSentToDiaAgent_ )
-    {
-        pSentToDiaAgent_->RemoveFromPointsCategory( const_cast< DEC_Rep_PathPoint_Front* >( this ) );
-    }
 }
 
 //-----------------------------------------------------------------------------
@@ -45,21 +41,33 @@ DEC_Rep_PathPoint_Front::~DEC_Rep_PathPoint_Front()
 // Created: JVT 02-12-09
 // Last modified: JVT 02-12-16
 //-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint_Front::SendToDIA( DEC_Representations& agent ) const
+void DEC_Rep_PathPoint_Front::SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const
 {
     if( pSentToDiaAgent_ )
         return;
 
-    agent.AddToPointsCategory( const_cast< DEC_Rep_PathPoint_Front* >( this ) );
+    agent.AddToPointsCategory( point );
 
     pSentToDiaAgent_ = &agent;
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint_Front::SendToDIA
+// Created: MGD 10-03-11
+//-----------------------------------------------------------------------------
+void DEC_Rep_PathPoint_Front::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
+{
+    if( pSentToDiaAgent_ )
+    {
+        pSentToDiaAgent_->RemoveFromPointsCategory( self );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint_Front::GetDestPoint
 // Created: LDC 2009-04-22
 // -----------------------------------------------------------------------------
-DEC_PathPoint& DEC_Rep_PathPoint_Front::GetDestPoint() const
+boost::shared_ptr< DEC_PathPoint > DEC_Rep_PathPoint_Front::GetDestPoint() const
 {
     return destPoint_;
 }
@@ -73,8 +81,8 @@ void DEC_Rep_PathPoint_Front::Dump() const
     std::cout << "    DEC_Rep_PathPoint_Front " << vPos_ 
               << " - Type : " << nObjectTypes_.DumpToString() 
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
-              << " - DestPoint : " << destPoint_.GetPos()
-              << " - Dest Type : " << destPoint_.GetTypeTerrain().DumpToString() 
+              << " - DestPoint : " << destPoint_->GetPos()
+              << " - Dest Type : " << destPoint_->GetTypeTerrain().DumpToString() 
               << std::endl;
 }
 

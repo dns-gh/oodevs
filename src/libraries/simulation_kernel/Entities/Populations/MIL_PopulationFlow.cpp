@@ -763,7 +763,7 @@ MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*env
 // Name: MIL_PopulationFlow::NotifyMovingOnSpecialPoint
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( const DEC_PathPoint& /*point*/ )
+void MIL_PopulationFlow::NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point /*point*/ )
 {
     // NOTHING
 }

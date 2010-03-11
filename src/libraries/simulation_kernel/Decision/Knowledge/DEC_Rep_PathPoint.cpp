@@ -19,12 +19,11 @@
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nTypePoint, const TerrainData& nTypeTerrain, const char* szDIARepType )
-    : DEC_PathPoint     ( vPos, szDIARepType )
-    , nTypePoint_       ( nTypePoint )
+    : DEC_PathPoint     ( vPos, eTypePointSpecial, nTypePoint, szDIARepType )
     , nTypeTerrain_     ( nTypeTerrain )
     , pSentToDiaAgent_  ( 0 )
 {
-    assert( nType_ != eTypePointPath );
+
 }
 
 //-----------------------------------------------------------------------------
@@ -33,25 +32,34 @@ DEC_Rep_PathPoint::DEC_Rep_PathPoint( const MT_Vector2D& vPos, E_TypePoint nType
 //-----------------------------------------------------------------------------
 DEC_Rep_PathPoint::~DEC_Rep_PathPoint()
 {
-    if( pSentToDiaAgent_ )
-    {
-        pSentToDiaAgent_->RemoveFromPointsCategory( const_cast< DEC_Rep_PathPoint* >( this ) );
-    }
 }
 
 //-----------------------------------------------------------------------------
 // Name: DEC_Rep_PathPoint::SendToDIA
 // Created: JVT 02-12-09
 //-----------------------------------------------------------------------------
-void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent ) const
+void DEC_Rep_PathPoint::SendToDIA( DEC_Representations& agent, boost::shared_ptr< DEC_PathPoint > point ) const
 {
     if( pSentToDiaAgent_ )
         return;
         
     // ATTENTION, si cette fonction est appelée, alors l'agent physique s'est automatiquement arrêté sur la position du point...
-    agent.AddToPointsCategory( const_cast< DEC_Rep_PathPoint* >( this ) );
+    agent.AddToPointsCategory( point );
 
     pSentToDiaAgent_ = &agent;
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: DEC_Rep_PathPoint::SendToDIA
+// Created: MGD 10-03-11
+//-----------------------------------------------------------------------------
+void DEC_Rep_PathPoint::RemoveFromDIA( boost::shared_ptr< DEC_PathPoint > self )
+{
+    if( pSentToDiaAgent_ )
+    {
+        pSentToDiaAgent_->RemoveFromPointsCategory( self );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -64,7 +72,7 @@ void DEC_Rep_PathPoint::Dump() const
               << " - Type : " << nObjectTypes_.DumpToString() 
               << " - TypeToNext " << nObjectTypesToNextPoint_.DumpToString() 
               << " - Type terrain " << nTypeTerrain_.DumpToString() 
-              << " - nTypePoint_ " << (unsigned int)nTypePoint_
+              << " - nTypePoint_ " << (unsigned int)GetTypePoint()
               << std::endl;
 }
 

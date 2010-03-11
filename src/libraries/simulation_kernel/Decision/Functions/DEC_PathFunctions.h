@@ -39,13 +39,13 @@ public:
     static boost::shared_ptr< MT_Vector2D > ExtrapolatePosition   ( const MIL_AgentPion& callerAgent, const MT_Float time, bool bBoundOnPath );
     static boost::shared_ptr< MT_Vector2D > GetLastPointOfPath    ( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath );
     static bool IsMovingOnPath        ( const MIL_AgentPion& callerAgent, const DEC_Path_ABC* pPath );
-    static MT_Vector2D* GetRepPoint   ( DEC_PathPoint* pPoint );
-    static bool IsAvantPoint          ( DEC_PathPoint* pPoint );
-    static bool IsPoint               ( DEC_PathPoint* pPoint );
-    static int  GetTypePoint          ( DEC_PathPoint* pPoint );
-    static DEC_PathPoint* GetDestPoint( DEC_PathPoint* pPoint );
-    static int  GetTypeLimaPoint      ( DEC_PathPoint* pPoint );
-    static unsigned int GetLimaPoint  ( DEC_PathPoint* pPoint );
+    static MT_Vector2D* GetRepPoint   ( boost::shared_ptr< DEC_PathPoint > pPoint );
+    static bool IsAvantPoint          ( boost::shared_ptr< DEC_PathPoint > pPoint );
+    static bool IsPoint               ( boost::shared_ptr< DEC_PathPoint > pPoint );
+    static int  GetTypePoint          ( boost::shared_ptr< DEC_PathPoint > pPoint );
+    static boost::shared_ptr< DEC_PathPoint > GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint );
+    static int  GetTypeLimaPoint      ( boost::shared_ptr< DEC_PathPoint > pPoint );
+    static unsigned int GetLimaPoint  ( boost::shared_ptr< DEC_PathPoint > pPoint );
     //@}
 };
 
