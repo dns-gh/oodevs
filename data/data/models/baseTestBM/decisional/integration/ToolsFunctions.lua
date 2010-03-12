@@ -172,3 +172,13 @@ printGaming = function( ... )
   DEC_Trace( res )
   DEC_Debug( res )
 end
+
+tableSize = function( tab )
+  local i = 0
+  if tab then
+    for elem in pairs( tab ) do
+        i = i +1
+    end
+  end
+  return i
+end
