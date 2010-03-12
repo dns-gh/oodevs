@@ -199,13 +199,15 @@ public:
 
         // For flares
         ADN_Type_Time                                                         deployTime_;
-        ADN_Type_Time                                                         lifeTime_;
 
         // For smoke
         ADN_Type_Int                                                          nMineNumber_;
 
-        // For scrambling
+        // For effect
         std::string                                                           objectType_;
+
+        //Common for effect or flares
+        ADN_Type_Time                                                         lifeTime_;
     };
 
 // *****************************************************************************

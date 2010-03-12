@@ -378,8 +378,9 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
         case eTypeMunitionTirIndirect_Mine:
             input >> xml::attribute( "mine-count", nMineNumber_ );
             break;
-        case eTypeMunitionTirIndirect_Scrambling:
+        case eTypeMunitionTirIndirect_Effect:
             input >> xml::attribute( "object-type", objectType_ );
+            input >> xml::attribute( "life-time", lifeTime_ );
             break;
     }
 }
@@ -415,8 +416,9 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
     case eTypeMunitionTirIndirect_Mine:
         output << xml::attribute( "mine-count", nMineNumber_ );
         break;
-    case eTypeMunitionTirIndirect_Scrambling:
-        output << xml::attribute( "object-type", objectType_ );
+    case eTypeMunitionTirIndirect_Effect:
+        output << xml::attribute( "object-type", objectType_ )
+               << xml::attribute( "life-time", lifeTime_ );
         break;
     }
 

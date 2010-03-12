@@ -37,7 +37,7 @@ public:
     static const PHY_IndirectFireDotationClass fumigene_;
     static const PHY_IndirectFireDotationClass eclairant_;
     static const PHY_IndirectFireDotationClass mine_;
-    static const PHY_IndirectFireDotationClass scrambling_;
+    static const PHY_IndirectFireDotationClass effect_;
     //@}
 
 public:
@@ -81,7 +81,7 @@ public:
         eFumigene,
         eEclairant,
         eMine,
-        eScrambling
+        eEffect
     };
     //@}
 

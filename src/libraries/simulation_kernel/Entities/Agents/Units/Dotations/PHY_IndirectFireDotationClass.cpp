@@ -23,7 +23,7 @@ const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::aced_      ( 
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::fumigene_  ( "Fumigene"  , eFumigene  , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::eclairant_ ( "Eclairant" , eEclairant , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::mine_      ( "Mine"      , eMine      , /*NeedPH*/false, &PHY_DotationCategory_IndirectMineFire          ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::scrambling_( "Scrambling", eScrambling, /*NeedPH*/false, &PHY_DotationCategory_IndirectObjectCreationFire::Create );
+const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::effect_    ( "Effect"    , eEffect    , /*NeedPH*/false, &PHY_DotationCategory_IndirectObjectCreationFire::Create );
 
 PHY_IndirectFireDotationClass::T_TypeMap PHY_IndirectFireDotationClass::types_;
 
@@ -40,7 +40,7 @@ void PHY_IndirectFireDotationClass::Initialize()
     types_[ fumigene_  .GetID() ] = &fumigene_;
     types_[ eclairant_ .GetID() ] = &eclairant_;
     types_[ mine_      .GetID() ] = &mine_;
-    types_[ scrambling_.GetID() ] = &scrambling_;
+    types_[ effect_    .GetID() ] = &effect_;
 }
 
 // -----------------------------------------------------------------------------

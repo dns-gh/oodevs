@@ -16,6 +16,7 @@
 #include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
 #include "simulation_terrain/TER_Localisation.h"
+#include "Tools/xmlcodecs.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -34,7 +35,12 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectObjectCreati
 PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
 {
-    xis >> xml::attribute( "object-type", objectType_ );
+    std::string lifeTime;
+    xis >> xml::attribute( "object-type", objectType_ )
+        >> xml::attribute( "life-time", lifeTime );
+    
+    if( ! tools::DecodeTime( lifeTime, rLifeDuration_ ) || rLifeDuration_ < 0. )
+      xis.error( "indirect-fire: life-time < 0" );
 }
 
 // -----------------------------------------------------------------------------
