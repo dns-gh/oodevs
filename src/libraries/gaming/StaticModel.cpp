@@ -11,7 +11,6 @@
 #include "StaticModel.h"
 #include "ReportFactory.h"
 #include "ScoreDefinitions.h"
-#include "SurfaceFactory.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/DetectionMap.h"
@@ -26,6 +25,8 @@
 #include "indicators/GaugeTypes.h"
 #include "tools/ExerciseConfig.h"
 #include "urban/StaticModel.h"
+#include "urban/Model.h"
+#include "UrbanModel.h"
 
 using namespace kernel;
 
@@ -40,7 +41,6 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
-    , surfaceFactory_     ( *new SurfaceFactory( coordinateConverter_, detection_, types_ ) )
     , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, simu ) )
     , atlasNatures_       ( *new AtlasNatures() )
     , drawings_           ( *new gui::DrawingTypes( controllers_.controller_ ) )
@@ -64,7 +64,6 @@ StaticModel::~StaticModel()
     delete &drawings_;
     delete &atlasNatures_;
     delete &reportFactory_;
-    delete &surfaceFactory_;
     delete &levels_;
     delete &objectTypes_;
     delete &types_;

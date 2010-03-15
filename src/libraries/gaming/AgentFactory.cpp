@@ -163,7 +163,7 @@ Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation& message
     result->Attach( *new CommandPostAttributes( *result ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< Positions >( *new AgentPositions( *result, static_.coordinateConverter_ ) );
-    result->Attach( *new VisionCones( *result, static_.surfaceFactory_, workers_ ) );
+    result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );
     result->Attach( *new MagicOrders( *result ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );

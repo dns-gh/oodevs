@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __UrbanModel_h_
-#define __UrbanModel_h_
+#ifndef __Gaming_UrbanModel_h_
+#define __Gaming_UrbanModel_h_
 
 #include "tools/Resolver.h"
 
@@ -25,7 +25,10 @@ namespace urban
 namespace kernel
 {
     class Controller;
+    class DetectionMap;
 }
+
+class UrbanBlockDetectionMap;
 
 // =============================================================================
 /** @class  UrbanModel
@@ -40,7 +43,7 @@ class UrbanModel : public tools::Resolver< kernel::Entity_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanModel( kernel::Controller& controller ); 
+             UrbanModel( kernel::Controller& controller, const kernel::DetectionMap& map ); 
     virtual ~UrbanModel();
     //@}
 
@@ -48,6 +51,8 @@ public:
     //@{
     void Create( const MsgsSimToClient::MsgUrbanCreation& message );
     void Purge();
+    const urban::Model& GetModel() const;
+    const UrbanBlockDetectionMap& GetUrbanBlockMap() const;
     //@}
 
 private:
@@ -62,6 +67,8 @@ public:
     //@{
     kernel::Controller& controller_;
     std::auto_ptr< urban::Model > model_;
+    const kernel::DetectionMap& map_;
+    UrbanBlockDetectionMap& urbanBlockDetectionMap_;
     //@}
 };
 

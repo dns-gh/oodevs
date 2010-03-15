@@ -46,7 +46,7 @@ class RcEntityResolver_ABC;
 class ReportFactory;
 class ScoreDefinitions;
 class Simulation;
-class SurfaceFactory;
+class UrbanModel;
 
 // =============================================================================
 /** @class  StaticModel
@@ -80,7 +80,6 @@ public:
     kernel::ObjectTypes&             objectTypes_;
     kernel::FormationLevels&         levels_;
     kernel::AtlasNatures&            atlasNatures_;
-    SurfaceFactory&                  surfaceFactory_;
     ReportFactory&                   reportFactory_;
     gui::DrawingTypes&               drawings_;
     indicators::Primitives&          indicators_;

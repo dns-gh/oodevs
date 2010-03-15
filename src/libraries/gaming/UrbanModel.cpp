@@ -10,11 +10,13 @@
 #include "gaming_pch.h"
 #include "UrbanModel.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "gaming/UrbanBlockDeserializer.h"
 #include "protocol/Simulation.h"
 #include "protocol/Protocol.h"
+#include "UrbanBlockDetectionMap.h"
 #include "urban/BlockModel.h"
 #include "urban/Model.h"
 #include "urban/UrbanFactory.h"
@@ -25,9 +27,11 @@
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( kernel::Controller& controller )
+UrbanModel::UrbanModel( kernel::Controller& controller, const kernel::DetectionMap& map )
     : controller_( controller )
     , model_( new urban::Model() )
+    , map_( map )
+    , urbanBlockDetectionMap_( *new UrbanBlockDetectionMap( map ) )
 {
     // NOTHING
 }
@@ -64,6 +68,7 @@ void UrbanModel::Create( const MsgsSimToClient::MsgUrbanCreation& message )
     controller_.Create( *pTerrainObject );
     if( !Resolver< kernel::Entity_ABC >::Find( id ) )
         tools::Resolver< kernel::Entity_ABC >::Register( id, *pTerrainObject );
+    urbanBlockDetectionMap_.AddUrbanBlock( *object );
 }
 /*
 // -----------------------------------------------------------------------------
@@ -93,4 +98,22 @@ void UrbanModel::Purge()
 {
     tools::Resolver< kernel::Entity_ABC >::DeleteAll();
     model_->blocks_.Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::GetModel
+// Created: SLG 2009-10-20
+// -----------------------------------------------------------------------------
+const urban::Model& UrbanModel::GetModel() const
+{
+    return *model_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::GetUrbanBlockMap
+// Created: SLG 2010-03-12
+// -----------------------------------------------------------------------------
+const UrbanBlockDetectionMap& UrbanModel::GetUrbanBlockMap() const
+{
+    return urbanBlockDetectionMap_;
 }

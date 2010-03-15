@@ -62,6 +62,7 @@ class ActionFactory_ABC;
 class ParameterFactory_ABC;
 class UrbanKnowledgeFactory;;
 class UrbanModel;
+class SurfaceFactory;
 class NotesModel; // LTO
 
 // =============================================================================
@@ -126,6 +127,7 @@ public:
     DrawingsModel&        drawings_;
     ScoreModel&           scores_;
     UrbanModel&           urbanObjects_;
+    SurfaceFactory&       surfaceFactory_;
     NotesModel&           notes_;   // LTO
     //@}
 

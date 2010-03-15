@@ -7,6 +7,12 @@
 
 namespace xml { class xistream; };
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
+
 namespace kernel
 {
     class Agent_ABC;
@@ -31,8 +37,8 @@ public:
     //! @name Operations
     //@{
     float GetMaxDistance   ( float distanceModificator ) const;
-    float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance ) const;
-    float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance ) const;
+    float ComputeExtinction( float distanceModificator, float rCurrentNRJ, bool inForest, bool inTown, bool inGround, float distance, const urban::TerrainObject_ABC* object ) const;
+    float ComputeExtinction( float distanceModificator, bool inForest, bool inTown, bool inGround, float distance, const urban::TerrainObject_ABC* object ) const;
     bool  ComputeExtinction( const geometry::Point2f& point, float& skyRock ) const;
 
     E_PerceptionResult InterpreteNRJ( float skyRock ) const;
@@ -51,19 +57,23 @@ private:
     //! @name Types
     //@{
     typedef std::vector< float > T_FactorVector;
+    typedef std::map< std::string, float > T_MaterialFactorMap;
     //@}
 
 private:
     //! @name 
     //@{
-    void InitializeDistances           ( xml::xistream& xis );
-    void InitializeEnvironnementFactors( xml::xistream& xis );
-    void ReadEnvironnementFactor       ( xml::xistream& xis );
-    void InitializeAngle               ( xml::xistream& xis );
-    void ReadDistance                  ( xml::xistream& xis );
+    void InitializeDistances                ( xml::xistream& xis );
+    void InitializeEnvironnementFactors     ( xml::xistream& xis );
+    void ReadEnvironnementFactor            ( xml::xistream& xis );
+    void InitializeUrbanBlockMaterialFactors( xml::xistream& xis );
+    void ReadUrbanBlockMaterialFactor       ( xml::xistream& xis );
+    void InitializeAngle                    ( xml::xistream& xis );
+    void ReadDistance                       ( xml::xistream& xis );
 
-    float GetPostureSourceFactor    ( const Agent_ABC& agent ) const;
-    float ComputeEnvironementFactor ( bool inForest, bool inTown, bool inGround ) const;
+    float GetPostureSourceFactor            ( const Agent_ABC& agent ) const;
+    float ComputeEnvironementFactor         ( bool inForest, bool inTown, bool inGround ) const;
+    bool ComputeUrbanExtinction             ( float& skyRock, float distance, const urban::TerrainObject_ABC* object ) const;
     //@}
 
 private:
@@ -81,6 +91,8 @@ private:
     T_FactorVector postureSourceFactors_;
     T_FactorVector lightingFactors_;
     T_FactorVector weatherFactors_;
+
+    T_MaterialFactorMap urbanBlockFactors_;
 
     float factorInForest_;
     float factorInTown_;

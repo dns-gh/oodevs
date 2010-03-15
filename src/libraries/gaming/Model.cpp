@@ -28,6 +28,7 @@
 #include "FireFactory.h"
 #include "WeatherModel.h"
 #include "StaticModel.h"
+#include "SurfaceFactory.h"
 #include "TacticalLineFactory.h"
 #include "UserProfilesModel.h"
 #include "UserProfileFactory.h"
@@ -91,7 +92,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
     , scores_( *new ScoreModel( controllers, publisher, staticModel.scores_ ) )
-    , urbanObjects_( *new UrbanModel( controllers.controller_ ) )
+    , urbanObjects_( *new UrbanModel( controllers.controller_, static_.detection_ ) )
+    , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
     , notes_( *new NotesModel(controllers.controller_) )  // LTO
 {
     // NOTHING
@@ -104,6 +106,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 Model::~Model()
 {
     delete &urbanObjects_;
+    delete &surfaceFactory_;
     delete &scores_;
     delete &drawings_;
     delete &intelligences_;

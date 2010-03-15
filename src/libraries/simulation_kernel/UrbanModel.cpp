@@ -22,6 +22,7 @@
 #include <Urban/BlockModel.h>
 #include <Urban/TerrainObject_ABC.h>
 #include <Urban/Block.h>
+#include <Urban/BlockModel.h>
 #include <Urban/BlockPhModifier_ABC.h>
 #include <Urban/ColorRGBA.h>
 #include <Urban/PhysicalFeature_ABC.h>
@@ -217,9 +218,9 @@ MT_Float UrbanModel::ComputeUrbanPhModifier( const MT_Vector3D& firerPosition, c
 // Name: UrbanModel::GetModel
 // Created: RPD 2009-12-01
 // -----------------------------------------------------------------------------
-urban::Model& UrbanModel::GetModel() const
+urban::Model& UrbanModel::GetModel()
 {
-    return *model_;
+    return* model_;
 }
 
 // -----------------------------------------------------------------------------

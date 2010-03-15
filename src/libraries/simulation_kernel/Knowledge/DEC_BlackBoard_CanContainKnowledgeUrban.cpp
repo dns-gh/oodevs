@@ -18,24 +18,41 @@
 #include <urban/BlockModel.h>
 #include <urban/Model.h>
 #include <urban/TerrainObject_ABC.h>
-
+#include <urban/TerrainObjectVisitor_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrban )
+
+namespace
+{
+    class UrbanBlockKnowledgeCreator : public urban::TerrainObjectVisitor_ABC
+                                     , public boost::noncopyable
+    {
+    public:
+        UrbanBlockKnowledgeCreator( DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements, const MIL_Army& army )
+            : elements_( elements ), army_( army ) {}
+        virtual ~UrbanBlockKnowledgeCreator() {}
+
+        virtual void Visit( const urban::TerrainObject_ABC& object )
+        {
+            elements_[ object.GetId() ] = boost::shared_ptr< DEC_Knowledge_Urban > ( new DEC_Knowledge_Urban( army_, object ) );
+        }
+
+    private:
+        DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements_;
+        const MIL_Army& army_;
+    };
+
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeUrban constructor
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army& army )
-    : army_           ( army )
+    : army_( army )
 {
-    for( tools::Iterator< const urban::Block& > it = UrbanModel::GetSingleton().GetModel().blocks_.CreateIterator(); it.HasMoreElements(); )
-    {
-        const urban::TerrainObject_ABC& object = it.NextElement();
-        boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, object ) );
-        bool bOut = urbanMapFromConcrete_.insert( std::make_pair( object.GetId(), knowledge ) ).second;
-        assert( bOut );
-    }
+    UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, army );
+    UrbanModel::GetSingleton().GetModel().Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------

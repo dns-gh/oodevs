@@ -31,6 +31,7 @@ namespace kernel
 }
 
 class VisionMap;
+class UrbanBlockDetectionMap;
 
 //*****************************************************************************
 // Created: JVT 02-08-30
@@ -41,7 +42,7 @@ class Surface
 public:
     //! @name Constructor/Destructor
     //@{
-             Surface( const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, float elongation );
+             Surface( const kernel::Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const kernel::DetectionMap& map, const tools::Resolver_ABC< kernel::SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap );
     virtual ~Surface();
     //@}
 
@@ -87,6 +88,7 @@ private:
     float elongation_;
     mutable float maxRadius_;
     mutable float distanceModificator_;
+    const UrbanBlockDetectionMap& urbanModelMap_;
     //@}
 };
 

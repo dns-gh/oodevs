@@ -20,6 +20,8 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "protocol/Protocol.h"
+#include "UrbanModel.h"
+#include "UrbanBlockDetectionMap.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -28,13 +30,14 @@ using namespace kernel;
 // Name: Surface constructor
 // Created: NLD 2004-09-10
 // -----------------------------------------------------------------------------
-Surface::Surface( const Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation )
+Surface::Surface( const Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& message, const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, float elongation, const UrbanBlockDetectionMap& urbanModelMap )
     : map_( map )
     , origin_( converter.ConvertToXY( message.origin() ) )
     , height_( message.height() + agent.Get< Positions >().GetHeight() )
     , sensorType_( resolver.Get( message.sensor() ) )
     , elongation_( elongation )
     , distanceModificator_( 1 )
+    , urbanModelMap_( urbanModelMap )
 {
     sectors_.reserve( message.directions().elem_size() );
     for( int i = 0; i < message.directions().elem_size(); ++i )
@@ -150,13 +153,12 @@ E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) 
     while( ! line.IsDone() && skyrock > 0 )
     {
         line.Increment();
-        //bool bIsAroundBU = sensorType_.ComputeUrbanExtinction( point, skyrock ); 
         if( skyrock == std::numeric_limits< float >::infinity() )
             skyrock = sensorType_.ComputeExtinction( distanceModificator_,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetUrbanBlock( line.CurrentPoint() ) );
         else
             skyrock = sensorType_.ComputeExtinction( distanceModificator_, skyrock,
-                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length() );
+                line.IsInForest(), line.IsInTown(), line.IsInGround(), line.Length(), urbanModelMap_.GetUrbanBlock( line.CurrentPoint() ) );
     }
     return sensorType_.InterpreteNRJ( skyrock );
 }

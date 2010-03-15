@@ -11,6 +11,7 @@
 #include "SurfaceFactory.h"
 #include "Surface.h"
 #include "VisionMap.h"
+#include "UrbanModel.h"
 
 using namespace kernel;
 
@@ -18,10 +19,11 @@ using namespace kernel;
 // Name: SurfaceFactory constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-SurfaceFactory::SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver )
+SurfaceFactory::SurfaceFactory( const kernel::CoordinateConverter_ABC& converter, const DetectionMap& map, const tools::Resolver_ABC< SensorType, std::string >& resolver, const UrbanBlockDetectionMap& urbanModelMap )
     : converter_( converter )
     , map_( map )
     , resolver_( resolver )
+    , urbanModelMap_( urbanModelMap )
 {
     // NOTHING
 }
@@ -41,7 +43,7 @@ SurfaceFactory::~SurfaceFactory()
 // -----------------------------------------------------------------------------
 Surface* SurfaceFactory::CreateSurface( const Agent_ABC& agent, const MsgsSimToClient::MsgVisionCone& input, float elongation )
 {
-    return new Surface( agent, input, converter_, map_, resolver_, elongation );
+    return new Surface( agent, input, converter_, map_, resolver_, elongation, urbanModelMap_ );
 }
 
 // -----------------------------------------------------------------------------
