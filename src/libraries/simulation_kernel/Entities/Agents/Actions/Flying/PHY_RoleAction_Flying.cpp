@@ -11,11 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Flying.h"
-#include "MIL_AgentServer.h"
 #include "PHY_ActionFly.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/MIL_EntityManager.h"
 
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/LocationComputer_ABC.h"
@@ -122,10 +120,11 @@ void PHY_RoleAction_Flying::SetFlyingHeight( double rHeight )
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Flying::Fly
 // Created: NLD 2004-10-04
+// Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Flying::Fly()
 {
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( effectFly_ );
+    MIL_EffectManager::GetEffectManager().Register( effectFly_ );
 }
 
 // -----------------------------------------------------------------------------

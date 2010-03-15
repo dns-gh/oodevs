@@ -37,7 +37,7 @@ integration.startedIlluminateIt = function( target )
 end
 
 integration.stopIlluminateIt = function( target )
-    DEC_StopAction( target.actionIlluminate )
+    target.actionIlluminate = DEC_StopAction( target.actionIlluminate )
     return false
 end
 

@@ -92,7 +92,6 @@ public:
     MIL_EntityManager&       GetEntityManager      () const;
     MIL_Folk&                GetFolkManager        () const;
     UrbanModel&              GetUrbanModel         () const;
-    MIL_EffectManager&       GetEffectManager      () const;
     DEC_Workspace&           GetWorkspaceDIA       () const;
     NET_AgentServer&         GetAgentServer        () const;
     MIL_TacticalLineManager& GetTacticalLineManager() const;

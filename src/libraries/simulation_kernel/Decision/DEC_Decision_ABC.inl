@@ -12,10 +12,10 @@
 // Created: LDC 2009-06-29
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_Decision_ABC::Callback( PHY_Action_ABC* pAction, T value )
+void DEC_Decision_ABC::Callback( unsigned int actionId, T value )
 {
     directia::ScriptRef function = GetBrain().GetScriptFunction( "CallbackAction" );
-    function( pAction, value );
+    function( actionId, value );
 }
 
 // -----------------------------------------------------------------------------

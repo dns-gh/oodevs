@@ -29,9 +29,7 @@
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Effects/MIL_Effect_PopulationFire.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/MIL_Army.h"
-#include "MIL_AgentServer.h"
 #include "Entities/Agents/Units/Humans/MIL_Injury_ABC.h"
 
 MT_Random MIL_PopulationElement_ABC::randomGenerator_;

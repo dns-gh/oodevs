@@ -53,8 +53,8 @@ public:
     
     virtual void SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission );
     virtual boost::shared_ptr< MIL_Mission_ABC > GetMission();
-    virtual void RemoveCallback( PHY_Action_ABC* pAction );
-    virtual void CallbackKnowledge( PHY_Action_ABC* pAction, boost::shared_ptr< DEC_Knowledge_Object > value );
+    virtual void RemoveCallback( unsigned int actionId );
+    virtual void CallbackKnowledge( unsigned int actionId, boost::shared_ptr< DEC_Knowledge_Object > value );
     virtual void CallbackPerception( int id );
     virtual const std::string& GetDIAType() const;
     virtual MIL_AgentPion& GetPion() const;

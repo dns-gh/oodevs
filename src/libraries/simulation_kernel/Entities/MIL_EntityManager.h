@@ -125,8 +125,6 @@ public:
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
         
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
-    
-    MIL_EffectManager& GetEffectManager() const;
     //@}
 
     //! @name Stats
@@ -256,4 +254,5 @@ private:
 BOOST_CLASS_EXPORT_KEY( MIL_EntityManager )
 
 #endif // __MIL_EntityManager_h_
+
 

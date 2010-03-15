@@ -37,29 +37,31 @@ PHY_Actor::~PHY_Actor()
 // -----------------------------------------------------------------------------
 void PHY_Actor::UpdateActions()
 {
-    for( std::set< const boost::shared_ptr< PHY_Action_ABC > >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
-        (*it)->Update();
+    for( std::map< unsigned int, boost::shared_ptr< PHY_Action_ABC > >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
+        (*it).second->Update();
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Actor::RegisterAction
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-void PHY_Actor::RegisterAction( const boost::shared_ptr< PHY_Action_ABC > action )
+void PHY_Actor::RegisterAction( boost::shared_ptr< PHY_Action_ABC > action )
 {
-    bool bOut = actions_.insert( action ).second;
-    assert( bOut );
+    actions_.insert( std::pair< unsigned int, boost::shared_ptr< PHY_Action_ABC > >( action->GetId(), action ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Actor::UnregisterAction
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-void PHY_Actor::UnregisterAction( const boost::shared_ptr< PHY_Action_ABC > action )
+void PHY_Actor::UnregisterAction( unsigned int actionId )
 {
-    action->Stop();
-    int nOut = actions_.erase( action );
-    assert( nOut == 1 );
+    std::map< unsigned int, boost::shared_ptr< PHY_Action_ABC > >::iterator it = actions_.find( actionId );
+    if( it != actions_.end() )
+    {
+        it->second->Stop();
+        actions_.erase( it );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -68,8 +70,8 @@ void PHY_Actor::UnregisterAction( const boost::shared_ptr< PHY_Action_ABC > acti
 // -----------------------------------------------------------------------------
 void PHY_Actor::CancelAllActions()
 {
-    for( std::set< const boost::shared_ptr< PHY_Action_ABC > >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
-        (*it)->Stop();
+    for( std::map< unsigned int, boost::shared_ptr< PHY_Action_ABC > >::const_iterator it = actions_.begin(); it != actions_.end(); ++it )
+        it->second->Stop();
     actions_.clear();
 }
 
@@ -77,7 +79,19 @@ void PHY_Actor::CancelAllActions()
 // Name: PHY_Actor::HasAction
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-bool PHY_Actor::HasAction( const boost::shared_ptr< PHY_Action_ABC > action ) const
+bool PHY_Actor::HasAction( unsigned int actionId ) const
 {
-    return actions_.find( action ) != actions_.end();
+    return actions_.find( actionId ) != actions_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Actor::HasAction
+// Created: NLD 2004-09-14
+// -----------------------------------------------------------------------------
+boost::shared_ptr< PHY_Action_ABC > PHY_Actor::GetAction( unsigned int actionId ) const
+{
+    std::map< unsigned int, boost::shared_ptr< PHY_Action_ABC > >::const_iterator it = actions_.find( actionId );
+    if( it != actions_.end() )
+        return it->second;
+    return boost::shared_ptr< PHY_Action_ABC >();
 }

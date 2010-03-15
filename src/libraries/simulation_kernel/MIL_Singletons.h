@@ -32,7 +32,6 @@ public:
     static MIL_EntityManager_ABC& GetEntityManager();
     static HLA_Federate*          GetHla();
     static MIL_ProfilerMgr&       GetProfiler();
-    static MIL_EffectManager&     GetEffectManager();
 
     static void RegisterTime( MIL_Time_ABC& time );
     static void UnregisterTime( MIL_Time_ABC& time );

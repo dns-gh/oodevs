@@ -14,5 +14,5 @@
 template< typename T > 
 void PHY_DecisionCallbackAction_ABC::Callback( T value )
 {
-    decision_.Callback( this, value );
+    decision_.Callback( GetId(), value );
 }

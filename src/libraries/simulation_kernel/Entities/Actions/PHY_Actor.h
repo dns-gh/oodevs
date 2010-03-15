@@ -12,8 +12,6 @@
 #ifndef __PHY_Actor_h_
 #define __PHY_Actor_h_
 
-#include <set>
-
 class PHY_Action_ABC;
 
 // =============================================================================
@@ -24,7 +22,7 @@ class PHY_Actor : private boost::noncopyable
 {
 
 public:
-             PHY_Actor();
+    PHY_Actor();
     virtual ~PHY_Actor();
 
     //! @name CheckPoints
@@ -40,14 +38,15 @@ public:
 
     //! @name Actions
     //@{
-    void RegisterAction  ( const boost::shared_ptr< PHY_Action_ABC > action );
-    void UnregisterAction( const boost::shared_ptr< PHY_Action_ABC > action );
+    void RegisterAction  ( boost::shared_ptr< PHY_Action_ABC > action );
+    void UnregisterAction( unsigned int actionId );
     void CancelAllActions();
-    bool HasAction       ( const boost::shared_ptr< PHY_Action_ABC > action ) const;
+    bool HasAction       ( unsigned int actionId ) const;
+    boost::shared_ptr< PHY_Action_ABC > GetAction( unsigned int actionId ) const;
     //@}
 
 private:
-    std::set< const boost::shared_ptr< PHY_Action_ABC > > actions_;
+    std::map< unsigned int, boost::shared_ptr< PHY_Action_ABC > > actions_;
 };
 
 #endif // __PHY_Actor_h_

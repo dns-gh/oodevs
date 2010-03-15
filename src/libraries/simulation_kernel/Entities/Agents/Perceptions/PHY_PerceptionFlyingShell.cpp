@@ -17,9 +17,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Tools.h"
-#include "MIL_AgentServer.h"
 #include <xeumeuleu/xml.h>
 
 MT_Float PHY_PerceptionFlyingShell::rRadius_ = 0;
@@ -96,7 +94,7 @@ void PHY_PerceptionFlyingShell::RemoveLocalisation( int id )
 // -----------------------------------------------------------------------------
 void PHY_PerceptionFlyingShell::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perceivableAgents*/, const detection::DetectionComputerFactory_ABC& /*detectionComputerFactory*/ )
 {
-    const MIL_EffectManager::T_FlyingShellSet& flyingShells = MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().GetFlyingShells();
+    const MIL_EffectManager::T_FlyingShellSet& flyingShells = MIL_EffectManager::GetEffectManager().GetFlyingShells();
     const MT_Vector2D&                         source       = perceiver_.GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
 
     T_FlyingShellSet perceivedFlyingShells;

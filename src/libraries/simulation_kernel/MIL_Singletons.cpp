@@ -76,12 +76,3 @@ MIL_ProfilerMgr& MIL_Singletons::GetProfiler()
 {
     return MIL_AgentServer::GetWorkspace().GetProfilerManager();
 }
-
-// -----------------------------------------------------------------------------
-// Name: MIL_Singletons::GetEffectManager
-// Created: AGE 2007-08-13
-// -----------------------------------------------------------------------------
-MIL_EffectManager& MIL_Singletons::GetEffectManager()
-{
-    return MIL_EffectManager::GetEffectManager();
-}

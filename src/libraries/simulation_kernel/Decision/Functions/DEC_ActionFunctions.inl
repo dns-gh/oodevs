@@ -21,11 +21,11 @@
 // Created: LDC 2009-06-26
 // -----------------------------------------------------------------------------
 template< typename ActionType >
-boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller )
+unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller )
 {
     boost::shared_ptr< PHY_Action_ABC > action( new ActionType( caller ) );
     caller.RegisterAction( action );
-    return action;
+    return action->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -33,11 +33,11 @@ boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename A
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 template< typename ActionType, typename T >
-boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T arg )
+unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T arg )
 {
     boost::shared_ptr< PHY_Action_ABC > action( new ActionType( caller, arg ) );
     caller.RegisterAction( action );
-    return action;
+    return action->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -45,11 +45,11 @@ boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename A
 // Created: LDC 2009-06-26
 // -----------------------------------------------------------------------------
 template< typename ActionType, typename T1, typename T2 >
-boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2 )
+unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2 )
 {
     boost::shared_ptr< PHY_Action_ABC > action( new ActionType( caller, arg1, arg2 ) );
     caller.RegisterAction( action );
-    return action;
+    return action->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,11 +57,11 @@ boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename A
 // Created: LDC 2009-06-26
 // -----------------------------------------------------------------------------
 template< typename ActionType, typename T1, typename T2, typename T3 >
-boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3 )
+unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3 )
 {
     boost::shared_ptr< PHY_Action_ABC > action( new ActionType( caller, arg1, arg2, arg3 ) );
     caller.RegisterAction( action );
-    return action;
+    return action->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -69,11 +69,11 @@ boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename A
 // Created: LDC 2009-06-26
 // -----------------------------------------------------------------------------
 template< typename ActionType, typename T1, typename T2, typename T3, typename T4 >
-boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4 )
+unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4 )
 {
     boost::shared_ptr< PHY_Action_ABC > action( new ActionType( caller, arg1, arg2, arg3, arg4 ) );
     caller.RegisterAction( action );
-    return action;
+    return action->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -81,11 +81,11 @@ boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename A
 // Created: LDC 2009-12-30
 // -----------------------------------------------------------------------------
 template< typename ActionType, typename T1, typename T2, typename T3, typename T4, typename T5 >
-boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5 )
+unsigned int DEC_ActionFunctions::StartAction( typename ActionType::ActorType& caller, T1 arg1, T2 arg2, T3 arg3, T4 arg4, T5 arg5 )
 {
     boost::shared_ptr< PHY_Action_ABC > action( new ActionType( caller, arg1, arg2, arg3, arg4, arg5 ) );
     caller.RegisterAction( action );
-    return action;
+    return action->GetId();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,14 +93,14 @@ boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StartAction( typename A
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 template< typename T >
-boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StopAction( T& caller, boost::shared_ptr< PHY_Action_ABC > pAction )
+unsigned int DEC_ActionFunctions::StopAction( T& caller, unsigned int actionId )
 {
-    if( pAction.get() )
+    if( actionId != 0 )
     {
-        assert( caller.HasAction( pAction ) );
-        caller.UnregisterAction( pAction );
+        assert( caller.HasAction( actionId ) );
+        caller.UnregisterAction( actionId );
     }
-    return boost::shared_ptr< PHY_Action_ABC >();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -108,10 +108,11 @@ boost::shared_ptr< PHY_Action_ABC > DEC_ActionFunctions::StopAction( T& caller, 
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_ActionFunctions::SuspendAction( const T& caller, boost::shared_ptr< PHY_Action_ABC > pAction )
+void DEC_ActionFunctions::SuspendAction( const T& caller, unsigned int actionId  )
 {
-    assert( caller.HasAction( pAction ) );
-    pAction->Suspend();
+    boost::shared_ptr< PHY_Action_ABC > pAction = caller.GetAction( actionId );
+    if( pAction.get() )
+        pAction->Suspend();
 }
 
 // -----------------------------------------------------------------------------
@@ -119,8 +120,9 @@ void DEC_ActionFunctions::SuspendAction( const T& caller, boost::shared_ptr< PHY
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
 template< typename T >
-void DEC_ActionFunctions::ResumeAction( const T& caller, boost::shared_ptr< PHY_Action_ABC > pAction )
+void DEC_ActionFunctions::ResumeAction( const T& caller, unsigned int actionId  )
 {
-    assert( caller.HasAction( pAction ) );
-    pAction->Resume();
+    boost::shared_ptr< PHY_Action_ABC > pAction = caller.GetAction( actionId );
+    if( pAction.get() )
+        pAction->Resume();
 }

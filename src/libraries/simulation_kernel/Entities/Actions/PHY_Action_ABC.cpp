@@ -16,12 +16,14 @@
 #include "PHY_Actor.h"
 #include "Decision/DEC_Tools.h"
 
+MIL_IDManager PHY_Action_ABC::idManager_;
 // -----------------------------------------------------------------------------
 // Name: PHY_Action_ABC constructor
 // Created: NLD 2004-10-04
 // -----------------------------------------------------------------------------
 PHY_Action_ABC::PHY_Action_ABC()
-    : bSuspended_( false )
+: id_( idManager_.GetFreeId() )
+, bSuspended_( false )
 {
 }
 
@@ -33,6 +35,15 @@ PHY_Action_ABC::~PHY_Action_ABC()
 {
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Action_ABC::GetId
+// Created: MGD 2010-03-12
+// -----------------------------------------------------------------------------
+unsigned int PHY_Action_ABC::GetId() const
+{
+    return id_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Action_ABC::Suspend
@@ -62,4 +73,13 @@ void PHY_Action_ABC::Update()
         ExecuteSuspended();
     else
         Execute();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DecisionCallbackAction_ABC::Stop
+// Created: MGD 2010-03-15
+// -----------------------------------------------------------------------------
+void PHY_Action_ABC::Stop()
+{
+    //NOTHING
 }

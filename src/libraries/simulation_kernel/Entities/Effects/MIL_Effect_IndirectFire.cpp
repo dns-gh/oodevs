@@ -11,8 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Effect_IndirectFire.h"
-#include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_WeaponDataType_IndirectFire.h"
@@ -22,7 +22,6 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Entities/Agents/Actions/Firing/PHY_FireResults_Pion.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
@@ -349,5 +348,6 @@ unsigned int MIL_Effect_IndirectFire::GetNbrAmmoFired() const
 {
     return nNbrAmmoFired_;
 }
+
 
 

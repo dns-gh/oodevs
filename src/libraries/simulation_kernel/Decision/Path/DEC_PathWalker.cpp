@@ -9,9 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathWalker.h"
-#include "MIL_AgentServer.h"
 #include "Decision/Path/DEC_PathPoint.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
@@ -368,7 +366,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::Move
 // Created: NLD 2004-09-22
-// Modified: JVT 2004-10-20
+// Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
 {
@@ -392,7 +390,7 @@ int DEC_PathWalker::Move( boost::shared_ptr< DEC_PathResult > pPath )
     ComputeCurrentSpeed();
     vNewPos_ = movingEntity_.GetPosition ();
     vNewDir_ = movingEntity_.GetDirection();
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( effectMove_ );
+    MIL_EffectManager::GetEffectManager().Register( effectMove_ );
 
     if( rCurrentSpeed_ == 0. || !movingEntity_.CanMove() )
     {
@@ -510,5 +508,6 @@ bool DEC_PathWalker::SerializeCurrentPath( Common::MsgPath& asn ) const
     pCurrentPath_->Serialize( asn );
     return true;
 }
+
 
 

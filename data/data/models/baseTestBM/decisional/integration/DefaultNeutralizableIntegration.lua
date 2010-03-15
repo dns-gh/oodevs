@@ -41,7 +41,7 @@ integration.startNeutralizingIt = function( target )
 end
 
 integration.stopNeutralizingIt = function( target )
-  DEC_StopAction( target.actionTir )
+  target.actionTir = DEC_StopAction( target.actionTir )
   target.actionTir = nil
 end
 

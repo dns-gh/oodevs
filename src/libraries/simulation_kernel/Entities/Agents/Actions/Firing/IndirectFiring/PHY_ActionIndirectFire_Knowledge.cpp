@@ -12,9 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_ActionIndirectFire_Knowledge.h"
 #include "PHY_RoleAction_IndirectFiring.h"
-#include "MIL_AgentServer.h"
 #include "Decision/DEC_Tools.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_IndirectFire.h"
@@ -23,6 +21,7 @@
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Knowledge constructor
 // Created: NLD 2004-08-18
+// Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, unsigned int nTargetKnowledgeID )
     : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
@@ -32,13 +31,14 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
     {
         pEffect_ = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
         pEffect_->IncRef();
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+        MIL_EffectManager::GetEffectManager().Register( *pEffect_ );
     }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionIndirectFire_Knowledge constructor
 // Created: MGD 2010-02-17
+// Modified: MGD 2010-03-12
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, boost::shared_ptr< DEC_Knowledge_Agent > targetKnowledge )
 : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
@@ -48,7 +48,7 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
     {
         pEffect_ = new MIL_Effect_IndirectFire( pion, targetKnowledge->GetID(), *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
         pEffect_->IncRef();
-        MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect_ );
+        MIL_EffectManager::GetEffectManager().Register( *pEffect_ );
     }
 }
 

@@ -13,6 +13,7 @@
 #define __PHY_Action_ABC_h_
 
 #include "MIL.h"
+#include "Tools/MIL_IDManager.h"
 
 class PHY_Actor;
 
@@ -29,10 +30,11 @@ public:
 
     //! @name Operations
     //@{
+    unsigned int GetId() const;
     void Suspend();
     void Resume ();
     void Update ();
-    virtual void Stop() = 0;
+    virtual void Stop();
     //@}
 
 protected:
@@ -43,7 +45,11 @@ protected:
     //@}
 
 private:
+    unsigned int id_;
     bool bSuspended_;
+
+    static MIL_IDManager idManager_;
+
 };
 
 namespace directia

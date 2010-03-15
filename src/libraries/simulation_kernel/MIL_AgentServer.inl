@@ -42,17 +42,6 @@ NET_AgentServer& MIL_AgentServer::GetAgentServer() const
     return *pAgentServer_;
 }
 
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentServer::GetEffectManager
-// Created: AGE 2007-08-13
-// -----------------------------------------------------------------------------
-inline
-MIL_EffectManager& MIL_AgentServer::GetEffectManager() const
-{
-    assert( pEffectManager_ );
-    return *pEffectManager_;
-}
-
 //-----------------------------------------------------------------------------
 // Name: MIL_AgentServer::GetTacticalLineManager
 // Created: NLD 2002-08-08
@@ -281,4 +270,5 @@ void MIL_AgentServer::DestroyWorkspace()
         pTheAgentServer_ = 0;
     }
 }
+
 

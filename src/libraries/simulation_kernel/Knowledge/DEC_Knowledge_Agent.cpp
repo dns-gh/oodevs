@@ -12,7 +12,6 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
-#include "MIL_AgentServer.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -22,7 +21,6 @@
 #include "Entities/Effects/MIL_Effect_KillOfficers.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_Army.h"
-#include "Entities/MIL_EntityManager.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -796,7 +794,7 @@ void DEC_Knowledge_Agent::KillOfficers()
 {
     assert( pAgentKnown_ );
     MIL_Effect_KillOfficers* pEffect = new MIL_Effect_KillOfficers( *pAgentKnown_ );
-    MIL_AgentServer::GetWorkspace().GetEntityManager().GetEffectManager().Register( *pEffect );
+    MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }
 
 // =============================================================================

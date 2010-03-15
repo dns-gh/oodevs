@@ -180,9 +180,9 @@ directia::Brain& DEC_Decision<T>::GetBrain()
 // Created: LDC 2009-07-02
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::RemoveCallback( PHY_Action_ABC* pAction )
+void DEC_Decision<T>::RemoveCallback( unsigned int actionId )
 {
-    pBrain_->GetScriptFunction( "RemoveAction" )( pAction );
+    pBrain_->GetScriptFunction( "RemoveAction" )( actionId );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,9 +291,9 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_Decision<T>::GetMission()
 // Created: LDC 2009-07-06
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::CallbackKnowledge( PHY_Action_ABC* pAction, boost::shared_ptr< DEC_Knowledge_Object > value )
+void DEC_Decision<T>::CallbackKnowledge( unsigned int actionId, boost::shared_ptr< DEC_Knowledge_Object > value )
 {
-    GetBrain().GetScriptFunction( "KnowledgeCallbackAction" )( pAction, value );
+    GetBrain().GetScriptFunction( "KnowledgeCallbackAction" )( actionId, value );
 }
 
 // -----------------------------------------------------------------------------
@@ -865,4 +865,5 @@ void DEC_Decision<T>::RemoveNbcProtectionSuit() const
 {
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
+
 

@@ -120,17 +120,17 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
 {
     // Actions
     brain.RegisterFunction( "DEC_StopAction",
-        boost::function< boost::shared_ptr< PHY_Action_ABC > (boost::shared_ptr< PHY_Action_ABC >) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
+        boost::function< unsigned int ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_PauseAction",
-        boost::function< void (boost::shared_ptr< PHY_Action_ABC >) >( boost::bind( &DEC_ActionFunctions::SuspendAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
+        boost::function< void ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::SuspendAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ReprendAction",
-        boost::function< void (boost::shared_ptr< PHY_Action_ABC >) >( boost::bind( &DEC_ActionFunctions::ResumeAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
+        boost::function< void ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::ResumeAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC__StartDeplacement",
-        boost::function< boost::shared_ptr< PHY_Action_ABC >( MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionMove, MT_Vector2D* >, boost::ref( GetPopulation() ), _1 ) ) );
+        boost::function< unsigned int( MT_Vector2D* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionMove, MT_Vector2D* >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC__StartTirSurPions",
-        boost::function< boost::shared_ptr< PHY_Action_ABC >( float ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPions, float >, boost::ref( GetPopulation() ), _1 ) ) );
+        boost::function< unsigned int( float ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPions, float >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC__StartTirSurPion",
-        boost::function< boost::shared_ptr< PHY_Action_ABC >( float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int >, boost::ref( GetPopulation() ), _1, _2 ) ) );
+        boost::function< unsigned int( float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int >, boost::ref( GetPopulation() ), _1, _2 ) ) );
 
     // Knowledge agents
     brain.RegisterFunction( "DEC_ConnaissanceAgent_RoePopulation",

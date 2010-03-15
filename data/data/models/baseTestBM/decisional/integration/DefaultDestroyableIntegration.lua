@@ -29,8 +29,7 @@ integration.startDestroyingIt = function( target )
 end
 
 integration.stopDestroyingIt = function( target )
-  DEC_StopAction( target.actionTir )
-  target.actionTir = nil
+  target.actionTir = DEC_StopAction( target.actionTir )
 end
 
 integration.firePermitted = function(target)

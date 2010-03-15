@@ -21,8 +21,6 @@
 #include "HLA_Serialization.h"
 #include "Entities/Effects/MIL_Effect_HLAIndirectFire.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/MIL_EntityManager.h"
-#include "MIL_AgentServer.h"
 #include <hla/Interaction.h>
 #include <hla/Attribute.h>
 

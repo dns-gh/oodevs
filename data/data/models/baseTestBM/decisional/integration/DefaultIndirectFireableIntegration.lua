@@ -87,8 +87,7 @@ end
 -- @modified MGD 2010-01-27
 integration.updateApplyFireOnSection = function( target )
   if target.eIndirectFireState == eIndirectFireState_Finished then
-    DEC_StopAction( target.actionIndirectFire )
-    target.actionIndirectFire = nil
+    target.actionIndirectFire = DEC_StopAction( target.actionIndirectFire )
     target.eIndirectFireState = nil
     return true
   elseif target.eIndirectFireState == eIndirectFireState_NoCapacity then
@@ -107,7 +106,6 @@ end
 -- @created 2010-01-15
 -- @modified MGD 2010-01-27
 integration.stopApplyFireOnIt = function( target )
-  DEC_StopAction( target.actionIndirectFire )
-  target.actionIndirectFire = nil
+  target.actionIndirectFire = DEC_StopAction( target.actionIndirectFire )
   return false
 end

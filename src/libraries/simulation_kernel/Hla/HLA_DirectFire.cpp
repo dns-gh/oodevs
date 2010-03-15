@@ -26,8 +26,6 @@
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 #include "Entities/Effects/MIL_Effect_DirectFirePion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/MIL_EntityManager.h"
-#include "MIL_AgentServer.h"
 #include <hla/Interaction.h>
 #include <hla/Attribute.h>
 

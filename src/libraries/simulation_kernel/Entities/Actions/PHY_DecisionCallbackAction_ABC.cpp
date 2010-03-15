@@ -33,12 +33,11 @@ PHY_DecisionCallbackAction_ABC::~PHY_DecisionCallbackAction_ABC()
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DecisionCallbackAction_ABC::Stop
-// Created: LDC 2010-03-11
+// Created: MGD 2010-03-15
 // -----------------------------------------------------------------------------
 void PHY_DecisionCallbackAction_ABC::Stop()
 {
-    StopAction();
-    decision_.RemoveCallback( this );
+    decision_.RemoveCallback( GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,5 +46,5 @@ void PHY_DecisionCallbackAction_ABC::Stop()
 // -----------------------------------------------------------------------------
 void PHY_DecisionCallbackAction_ABC::CallbackKnowledge( boost::shared_ptr< DEC_Knowledge_Object > id )
 {
-    decision_.CallbackKnowledge( this, id );
+    decision_.CallbackKnowledge( GetId(), id );
 }

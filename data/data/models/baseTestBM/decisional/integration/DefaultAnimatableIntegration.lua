@@ -20,6 +20,6 @@ integration.startAnimateIt = function( object )
     return true
 end,
 integration.stopAnimateIt = function( object )
-    return DEC_StopAction( object.actionAnimation )
+    object.actionAnimation = DEC_StopAction( object.actionAnimation )
 end,
 

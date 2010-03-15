@@ -39,8 +39,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual MIL_EffectManager& GetEffectManager() const = 0;
-
     virtual       MIL_AgentPion*      FindAgentPion ( unsigned int nID ) const = 0;
     virtual       MIL_Automate*       FindAutomate  ( unsigned int nID ) const = 0;
     virtual       MIL_KnowledgeGroup* FindKnowledgeGroup( unsigned int nID ) const = 0; // LTO

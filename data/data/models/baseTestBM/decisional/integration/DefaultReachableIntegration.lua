@@ -51,7 +51,7 @@ end
 integration.startMoveToIt = function( reachable )
   -- Leave tactical object
   if masalife.brain.knowledge.me.body.actionOccupy then
-    DEC_StopAction( masalife.brain.knowledge.me.body.actionOccupy )
+    masalife.brain.knowledge.me.body.actionOccupy = DEC_StopAction( masalife.brain.knowledge.me.body.actionOccupy )
   end
   if not reachable.moveAction then
     default_engine.methods.occupyPosition( masalife.brain.knowledge.me.body, nil ) -- UnOccupyPosition
@@ -66,7 +66,6 @@ integration.updateMoveToIt = function( reachable )
   if reachable.etat == eEtatActionDeplacement_Termine then
     default_engine.methods.occupyPosition( masalife.brain.knowledge.me.body, reachable ) --OccupyPosition
     reachable.moveAction = DEC_StopAction( reachable.moveAction )
-    reachable.moveAction = nil
     reachable.etat = nil
     return true
   elseif reachable.etat == eEtatActionDeplacement_Pause then
@@ -82,8 +81,7 @@ integration.updateMoveToIt = function( reachable )
 end
 
 integration.stopMoveToIt = function( reachable )
-  DEC_StopAction( reachable.moveAction )
-  reachable.moveAction = nil
+  reachable.moveAction = DEC_StopAction( reachable.moveAction )
   reachable.etat = nil
   return false
 end

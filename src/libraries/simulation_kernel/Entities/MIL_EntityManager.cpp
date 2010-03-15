@@ -112,7 +112,7 @@ void save_construct_data( Archive& /*archive*/, const MIL_EntityManager* /*entit
 template< typename Archive >
 void load_construct_data( Archive& /*archive*/, MIL_EntityManager* role, const unsigned int /*version*/ )
 {
-    ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_Singletons::GetEffectManager(),
+    ::new( role )MIL_EntityManager( MIL_Singletons::GetTime(), MIL_EffectManager::GetEffectManager(),
                                     MIL_Singletons::GetProfiler(), MIL_Singletons::GetHla(),
                                     MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().GetDatabase() );
 }
@@ -1334,13 +1334,4 @@ MT_Float MIL_EntityManager::GetEffectsTime() const
 MT_Float MIL_EntityManager::GetStatesTime() const
 {
     return rStatesTime_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::GetEffectManager
-// Created: NLD 2005-02-21
-// -----------------------------------------------------------------------------
-MIL_EffectManager& MIL_EntityManager::GetEffectManager() const
-{
-    return effectManager_;
 }

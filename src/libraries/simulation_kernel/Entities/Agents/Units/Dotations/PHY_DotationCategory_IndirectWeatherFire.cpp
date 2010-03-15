@@ -13,9 +13,6 @@
 #include "PHY_DotationCategory_IndirectWeatherFire.h"
 #include "Entities/Effects/MIL_Effect_Weather.h"
 #include "Entities/Effects/MIL_EffectManager.h"
-#include "Entities/MIL_EntityManager.h"
-#include "MIL_AgentServer.h"
-#include "MIL_Singletons.h"
 #include <xeumeuleu/xml.h>
 #include "Tools/xmlcodecs.h"
 
@@ -71,5 +68,5 @@ void PHY_DotationCategory_IndirectWeatherFire::ApplyEffect( const MIL_Agent_ABC&
 
     const MT_Ellipse effectSurface( vTargetPosition, vTargetPosition + vFireDirection, vTargetPosition + vRotatedFireDirection );
     MIL_Effect_Weather* pEffect = new MIL_Effect_Weather( effectSurface, category_, rLifeDuration_, rDeploymentDuration_ );
-    MIL_Singletons::GetEffectManager().Register( *pEffect );
+    MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }
