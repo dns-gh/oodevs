@@ -42,8 +42,11 @@ FirePrototype::~FirePrototype()
 // -----------------------------------------------------------------------------
 void FirePrototype::Commit()
 {
-    msg_.mutable_attributes()->mutable_fire()->set_class_id( fireClass_->GetValue()->GetId() );
-//    msg_.attributes.fire.heat = fireClass_->heat; // $$$$ SBO 2010-01-13: PROTOBUF
+    if( const kernel::FireClass* fire = fireClass_->GetValue() )
+    {
+        msg_.mutable_attributes()->mutable_fire()->set_class_id( fire->GetId() );
+        msg_.mutable_attributes()->mutable_fire()->set_heat( fire->GetDefaultHeat() );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -21,7 +21,8 @@ using namespace xml;
 FireClass::FireClass( xistream& input )
 {
     input >> attribute( "name", name_ )
-          >> attribute( "id", id_ );
+          >> attribute( "id", id_ )
+          >> attribute( "defaultheat", defaultHeat_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -49,4 +50,13 @@ unsigned long FireClass::GetId() const
 std::string FireClass::GetName() const
 {
     return name_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireClass::GetDefaultHeat
+// Created: JSR 2010-03-12
+// -----------------------------------------------------------------------------
+int FireClass::GetDefaultHeat() const
+{
+    return defaultHeat_;
 }

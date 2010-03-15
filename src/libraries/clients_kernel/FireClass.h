@@ -35,6 +35,7 @@ public:
     //@{
     unsigned long GetId() const;
     std::string GetName() const;
+    int GetDefaultHeat() const;
     //@}
 
 private:
@@ -42,6 +43,7 @@ private:
     //@{
     unsigned long id_;
     std::string name_;
+    int defaultHeat_;
     //@}
 };
 
