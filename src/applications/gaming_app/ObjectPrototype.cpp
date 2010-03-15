@@ -169,5 +169,6 @@ void ObjectPrototype::Commit( Publisher_ABC& publisher )
         ObjectPrototype_ABC::Commit();
         *message().mutable_action()->mutable_create_object() = creation_;
         message.Send( publisher );
+        ObjectPrototype_ABC::Clean();
     }
 }
