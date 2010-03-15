@@ -42,9 +42,9 @@ namespace
 {
     PHY_Action_ABC* pExpectedAction;
     int callbackValue = -1;
-    void CheckCallback( PHY_Action_ABC* pAction, int callback )
+    void CheckCallback( unsigned int action, int callback )
     {
-        BOOST_CHECK_EQUAL( pAction, pExpectedAction );
+        BOOST_CHECK_EQUAL( action, pExpectedAction->GetId() );
         callbackValue = callback;
     }
 }
