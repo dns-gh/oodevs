@@ -60,7 +60,7 @@ includedFiles["sources/appui/circulation/pions/Actions.bms"] = true
         --[[//booleens suspension reprise et terminaison
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
-        self.act = self.act or nil
+        self.act = self.act or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------
@@ -191,7 +191,7 @@ elseif switch_1 == eActionObjetTerminee then
     end,
 
     select = function( self )
-                self.actionPreterRemorqueurs = self.actionPreterRemorqueurs or nil
+                self.actionPreterRemorqueurs = self.actionPreterRemorqueurs or 0
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee

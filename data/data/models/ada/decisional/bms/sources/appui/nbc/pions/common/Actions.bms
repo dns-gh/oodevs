@@ -60,7 +60,7 @@ includedFiles["sources/appui/nbc/pions/common/Actions.bms"] = true
     end,
 
     select = function( self )
-                self.actionAnimer = self.actionAnimer or nil
+                self.actionAnimer = self.actionAnimer or 0
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

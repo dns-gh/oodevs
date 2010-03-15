@@ -22,7 +22,7 @@ include "bit.lua"
 
     select = function( self )
                 self.eEtatDeplacement = self.eEtatDeplacement or eEtatActionDeplacement_EnCours
-        self.actionDeplacement = self.actionDeplacement or nil
+        self.actionDeplacement = self.actionDeplacement or 0
         self.bEnPanne = self.bEnPanne or false
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init --> début déplacement

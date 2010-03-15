@@ -203,7 +203,7 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
     end,
 
     select = function( self )
-                self.actionPreterVSRAM = self.actionPreterVSRAM or nil
+                self.actionPreterVSRAM = self.actionPreterVSRAM or 0
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee
@@ -271,7 +271,7 @@ includedFiles["sources/appui/log/pions/Actions.bms"] = true
     end,
 
     select = function( self )
-                self.actionPreterRemorqueurs = self.actionPreterRemorqueurs or nil
+                self.actionPreterRemorqueurs = self.actionPreterRemorqueurs or 0
         self.bFinManoeuvre = self.bFinManoeuvre or false
         if( self.bFinManoeuvre ) then
             self.params.__returnValue = eActionEffectuee

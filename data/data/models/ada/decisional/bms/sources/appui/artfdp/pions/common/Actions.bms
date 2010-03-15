@@ -27,7 +27,7 @@ node "ACT_Obj_Pion_ASS_RealiserObjet"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -192,7 +192,7 @@ node "ACT_Tir_Pion_ASS_SurPosition"
                 self.eTir = self.eTir or eActionTirIndirect_EnCours
         self.bReprendre = self.bReprendre or false
         self.bPremierCoupPartie = self.bPremierCoupPartie or false
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( self.bReprendre ) then
             do
                 self.bReprendre = false

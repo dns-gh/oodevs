@@ -25,7 +25,7 @@ include "bit.lua"
 
     select = function( self )
                 self.bTir = self.bTir or false
-        self.actionTir = self.actionTir or nil--[[//handler sur l'action
+        self.actionTir = self.actionTir or 0--[[//handler sur l'action
 ]]
         self.eTir = self.eTir or nil
         if( ModuleBegins() ) then

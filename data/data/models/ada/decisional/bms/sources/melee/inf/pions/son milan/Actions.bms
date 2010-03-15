@@ -31,7 +31,7 @@ includedFiles["sources/melee/inf/pions/son milan/Actions.bms"] = true
     select = function( self )
                 self.bReprise = self.bReprise or false
         self.eEtat_EmbDeb = self.eEtat_EmbDeb or eActionEmbDeb_EnCours
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Debarquement : debut" )
@@ -115,7 +115,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
     select = function( self )
                 self.eTir = self.eTir or eActionTirDirect_Running
         self.bReprendre = self.bReprendre or false
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( self.bReprendre ) then
             do
                 self.bReprendre = false
@@ -251,7 +251,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
     select = function( self )
                 self.eTir = self.eTir or eActionTirDirect_Running
         self.bReprendre = self.bReprendre or false
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( self.bReprendre ) then
             do
                 self.bReprendre = false

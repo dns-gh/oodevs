@@ -16,7 +16,7 @@ includedFiles["sources/appui/alat/pions/common/actions/Actions - Log.bms"] = tru
         self.eEtatConstruction = self.eEtatConstruction or nil
         self.repPlotLogistique = self.repPlotLogistique or nil
         self.localisation = self.localisation or nil
-        self.actionCreerPlot = self.actionCreerPlot or nil
+        self.actionCreerPlot = self.actionCreerPlot or 0
         assert( self._namedParams.point ~= nil, "ALAT : Realiser plot log position invalide" )
         if( ModuleBegins() ) then
             do

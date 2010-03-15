@@ -215,7 +215,7 @@ node "ACT_Obj_Pion_GEN_RealiserZoneMobilite"
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bInit = self.bInit or false
-        self.act = self.act or nil
+        self.act = self.act or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------

@@ -60,7 +60,7 @@ node "ACT_Transport_Pion_EOP_Debarquer"
     select = function( self )
                 self.bReprise = self.bReprise or false
         self.eEtat_EmbDeb = self.eEtat_EmbDeb or eActionEmbDeb_EnCours
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Landing: begin" )

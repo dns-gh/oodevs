@@ -21,7 +21,7 @@ node "ACT_Tir_DirectSur"
 
     select = function( self )
         --[[//handler sur l'action
-]]        self.actionTir = self.actionTir or nil
+]]        self.actionTir = self.actionTir or 0
         self.eTir = self.eTir or nil
         --[[// ----------------------------------------------------------------------------- 
 ]]--[[// Init
@@ -107,7 +107,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 
     select = function( self )
         --[[//handler sur l'action
-]]        self.actionTir = self.actionTir or nil
+]]        self.actionTir = self.actionTir or 0
         self.eTir = self.eTir or nil
         --[[// ----------------------------------------------------------------------------- 
 ]]--[[// Init
@@ -186,7 +186,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 
     select = function( self )
         --[[//handler sur l'action
-]]        self.actionTir = self.actionTir or nil
+]]        self.actionTir = self.actionTir or 0
         self.eTir = self.eTir or nil
         --[[// ----------------------------------------------------------------------------- 
 ]]--[[// Init
@@ -235,7 +235,7 @@ elseif switch_1 == eActionTirDirect_NoAmmo
 
     select = function( self )
         --[[//handler sur l'action
-]]        self.actionTir = self.actionTir or nil
+]]        self.actionTir = self.actionTir or 0
         self.eTir = self.eTir or nil
         --[[// ----------------------------------------------------------------------------- 
 ]]--[[// Init

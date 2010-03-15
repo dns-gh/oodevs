@@ -30,7 +30,7 @@ node "ACT_Transport_Pion_INF_Debarquer"
     select = function( self )
                 self.bReprise = self.bReprise or false
         self.eEtat_EmbDeb = self.eEtat_EmbDeb or eActionEmbDeb_EnCours
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Debarquement : debut" )
@@ -113,7 +113,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
     select = function( self )
                 self.eTir = self.eTir or eActionTirDirect_Running
         self.bReprendre = self.bReprendre or false
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( self.bReprendre ) then
             do
                 self.bReprendre = false
@@ -249,7 +249,7 @@ elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
     select = function( self )
                 self.eTir = self.eTir or eActionTirDirect_Running
         self.bReprendre = self.bReprendre or false
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( self.bReprendre ) then
             do
                 self.bReprendre = false
@@ -384,7 +384,7 @@ node "ACT_Pion_VAB_ControleZone"
     select = function( self )
                 self.bInit = self.bInit or false
         self.bTirDeclenche = self.bTirDeclenche or false
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         --[[// Le rc eRC_DebutControleZone est fait au debut de la phase de la 
 ]]--[[// mission
 ]]if( not self.bInit ) then
@@ -448,7 +448,7 @@ node "ACT_Pion_VAB_ControleZone"
 
     select = function( self )
         --[[//objet reel pour la creation de la representation de l'abatti
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -562,7 +562,7 @@ elseif switch_1 == eActionObjetTerminee then
 
     select = function( self )
         --[[//objet reel pour la creation de la representation de l'abatti
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -692,7 +692,7 @@ elseif switch_1 == eActionObjetTerminee then
 
     select = function( self )
         --[[//objet reel pour le creation de la representation de l'abatti
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -809,7 +809,7 @@ elseif switch_1 == eActionObjetTerminee then
 
     select = function( self )
         --[[//objet reel pour le creation de la representation de l'abatti
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -963,7 +963,7 @@ do
     end,
 
     select = function( self )
-                self.actionID = self.actionID or nil
+                self.actionID = self.actionID or 0
         --[[// if ( !DEC_Agent_PeutDetruireObjet( ? ) )
 ]]self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         --[[// 		halt( eActionImpossible );

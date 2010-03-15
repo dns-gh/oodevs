@@ -45,7 +45,7 @@ includedFiles["sources/population/populations/Actions.bms"] = true
     end,
 
     select = function( self )
-                self.actionPions = self.actionPions or nil
+                self.actionPions = self.actionPions or 0
         self.bReprise = self.bReprise or false
         self.intensite = self.intensite or 1
         --[[//------------------------------------------------------------------------------------
@@ -108,7 +108,7 @@ includedFiles["sources/population/populations/Actions.bms"] = true
     end,
 
     select = function( self )
-                self.actionPion = self.actionPion or nil
+                self.actionPion = self.actionPion or 0
         self.bReprise = self.bReprise or false
         self.intensite = self.intensite or 1
         --[[//------------------------------------------------------------------------------------
@@ -248,7 +248,7 @@ includedFiles["sources/population/populations/Actions.bms"] = true
 
     select = function( self )
         --[[//DEC_Trace( " move "  );
-]]        self.actionMove = self.actionMove or nil
+]]        self.actionMove = self.actionMove or 0
         self.bReprise = self.bReprise or false
         if( ModuleBegins() ) then
             do

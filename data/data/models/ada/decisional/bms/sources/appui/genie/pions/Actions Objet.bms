@@ -28,7 +28,7 @@ include "bit.lua"
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bInit = self.bInit or false
-        self.act = self.act or nil
+        self.act = self.act or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------
@@ -147,7 +147,7 @@ include "bit.lua"
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bInit = self.bInit or false
-        self.act = self.act or nil
+        self.act = self.act or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------
@@ -308,7 +308,7 @@ include "bit.lua"
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bInit = self.bInit or false
-        self.act = self.act or nil
+        self.act = self.act or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------
@@ -424,7 +424,7 @@ include "bit.lua"
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bInit = self.bInit or false
-        self.act = self.act or nil
+        self.act = self.act or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------
@@ -538,7 +538,7 @@ include "bit.lua"
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bInit = self.bInit or false
-        self.act = self.act or nil
+        self.act = self.act or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------
@@ -651,7 +651,7 @@ include "bit.lua"
 ]]        self.eActionObjet = self.eActionObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bInit = self.bInit or false
-        self.act = self.act or nil
+        self.act = self.act or 0
         --[[//-----------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------

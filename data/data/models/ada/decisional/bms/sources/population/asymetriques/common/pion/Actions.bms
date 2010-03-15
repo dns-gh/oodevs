@@ -103,7 +103,7 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
     end,
 
     select = function( self )
-                self.actionExaction = self.actionExaction or nil
+                self.actionExaction = self.actionExaction or 0
         self.bReprise = self.bReprise or false
         self.eActionTir = self.eActionTir or nil
         if( ModuleBegins() ) then
@@ -195,7 +195,7 @@ do
     end,
 
     select = function( self )
-                self.actionExaction = self.actionExaction or nil
+                self.actionExaction = self.actionExaction or 0
         self.bReprise = self.bReprise or false
         self.eActionTir = self.eActionTir or nil
         if( ModuleBegins() ) then

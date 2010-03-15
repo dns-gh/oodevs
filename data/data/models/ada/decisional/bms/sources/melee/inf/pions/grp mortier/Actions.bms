@@ -38,7 +38,7 @@ includedFiles["sources/melee/inf/pions/grp mortier/Actions.bms"] = true
     select = function( self )
                 self.bReprise = self.bReprise or false
         self.eEtat_EmbDeb = self.eEtat_EmbDeb or eActionEmbDeb_EnCours
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( ModuleBegins() ) then
             do
                 DEC_Trace( "Debarquement : debut" )
@@ -138,7 +138,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                 self.eTir = self.eTir or eActionTirIndirect_Impossible
         self.bReprendre = self.bReprendre or false
         self.bPremierCoupPartie = self.bPremierCoupPartie or false
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( self.bReprendre ) then
             do
                 self.bReprendre = false
@@ -298,7 +298,7 @@ node "ACT_Tir_Pion_INF_TirCouverture"
                 self.eTir = self.eTir or eActionTirIndirect_EnCours
         self.bReprendre = self.bReprendre or false
         self.bPremierCoupPartie = self.bPremierCoupPartie or false
-        self.actionID = self.actionID or nil
+        self.actionID = self.actionID or 0
         if( self.bReprendre ) then
             do
                 self.bReprendre = false

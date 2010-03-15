@@ -30,7 +30,7 @@ node "ACT_Obj_Pion_INF_RealiserBouchonMines"
 
     select = function( self )
         --[[//objet reel pour la creation de la representation de l'abatti
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -127,7 +127,7 @@ elseif switch_1 == eActionObjetTerminee then
 
     select = function( self )
         --[[//objet reel pour la creation de la representation de l'abatti
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -240,7 +240,7 @@ elseif switch_1 == eActionObjetTerminee then
 
     select = function( self )
         --[[//objet reel pour le creation de la representation de l'abatti
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -375,7 +375,7 @@ do
     end,
 
     select = function( self )
-                self.actionID = self.actionID or nil
+                self.actionID = self.actionID or 0
         --[[// if ( !DEC_Agent_PeutDetruireObjet( ? ) )
 ]]self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         --[[// 		halt( eActionImpossible );

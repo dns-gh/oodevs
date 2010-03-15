@@ -158,7 +158,7 @@ node "ACT_Pion_ABC_AnimerSite"
     end,
 
     select = function( self )
-                self.actionAnimer = self.actionAnimer or nil
+                self.actionAnimer = self.actionAnimer or 0
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
 ]]--[[//-----------------------------------------------------------------------------

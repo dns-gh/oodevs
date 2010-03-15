@@ -17,7 +17,7 @@ node "ACT_Pion_Emergency_BlockRoad"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
         self.eEtatInfluence = self.eEtatInfluence or nil
@@ -85,7 +85,7 @@ node "ACT_Pion_Emergency_Influence"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
         self.eEtatInfluence = self.eEtatInfluence or nil
@@ -163,7 +163,7 @@ node "ACT_Pion_Emergency_InfluenceInArea"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
         self.eEtatInfluence = self.eEtatInfluence or nil
@@ -233,7 +233,7 @@ node "ACT_Pion_Emergency_TriggerActivity"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
         self.eEtatInfluence = self.eEtatInfluence or nil
@@ -311,7 +311,7 @@ node "ACT_Pion_Emergency_TriggerActivityInArea"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
         self.eEtatInfluence = self.eEtatInfluence or nil
@@ -379,7 +379,7 @@ node "ACT_Pion_Emergency_UnloadActivity"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
         self.eEtatInfluence = self.eEtatInfluence or nil
@@ -461,7 +461,7 @@ node "ACT_Obj_Pion_Emergency_RealiserObjet"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
@@ -589,7 +589,7 @@ node "ACT_Obj_Pion_Emergency_Supply"
     end,
 
     select = function( self )
-                self.actionID = self.actionID or nil
+                self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -682,7 +682,7 @@ node "ACT_Obj_Pion_Emergency_Distribute"
     end,
 
     select = function( self )
-                self.actionID = self.actionID or nil
+                self.actionID = self.actionID or 0
         self.eEtatObjet = self.eEtatObjet or eActionObjetEnCours
         --[[//-----------------------------------------------------------------------------
 ]]--[[// Init
@@ -754,7 +754,7 @@ node "ACT_Obj_Pion_Emergency_ExtinguishFire"
 
     select = function( self )
         --[[//booleens suspension reprise et terminaison
-]]        self.actionID = self.actionID or nil
+]]        self.actionID = self.actionID or 0
         self.bSuspendu = self.bSuspendu or false
         self.bReprise = self.bReprise or false
         self.eEtatAction = self.eEtatAction or nil
