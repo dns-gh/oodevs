@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "FireAttribute.h"
+#include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeFire.h"
 #include "MIL_AgentServer.h"
@@ -116,7 +117,10 @@ void FireAttribute::load( MIL_CheckPointInArchive& ar, const unsigned int )
     std::string className;
     ar >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar >> className
-       >> heat_;
+       >> heat_
+       >> timeOfLastUpdate_
+       >> width_
+       >> length_;
     pClass_ = MIL_FireClass::Find( className );
     if( !pClass_ )
         throw std::runtime_error( "Unknown 'Fire class' '" + className + "' for fire object attribute" );
@@ -130,7 +134,10 @@ void FireAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 {
     ar << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     ar << pClass_->GetName()
-       << heat_;
+       << heat_
+       << timeOfLastUpdate_
+       << width_
+       << length_;
 }
 
 // -----------------------------------------------------------------------------
@@ -140,6 +147,15 @@ void FireAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 void FireAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeFire( *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FireAttribute::Register
+// Created: JSR 2010-03-12
+// -----------------------------------------------------------------------------
+void FireAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< FireAttribute, FireAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

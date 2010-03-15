@@ -34,6 +34,11 @@ public:
     template< typename Archive > void serialize( Archive&, const uint );
     //@}
 
+    //! @name From ObjectAttribute_ABC
+    //@{
+    virtual void Register( Object& object ) const;
+    //@}
+
     //! @name Operations
     //@{
     void AddChildObject( Object& object );

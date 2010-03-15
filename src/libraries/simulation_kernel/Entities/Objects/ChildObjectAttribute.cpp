@@ -54,6 +54,15 @@ void ChildObjectAttribute::serialize( Archive& /*file*/, const uint )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ChildObjectAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void ChildObjectAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< ChildObjectAttribute, ChildObjectAttribute >( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ChildObjectAttribute::AddAnimator
 // Created: SLG 2010-02-16
 // -----------------------------------------------------------------------------

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "OccupantAttribute.h"
+#include "Object.h"
 #include "MIL.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( OccupantAttribute )
@@ -62,6 +63,15 @@ void OccupantAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     // $$$$ _RC_ SBO 2009-06-10: what about occupant?
+}
+
+// -----------------------------------------------------------------------------
+// Name: OccupantAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void OccupantAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< OccupantAttribute, OccupantAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

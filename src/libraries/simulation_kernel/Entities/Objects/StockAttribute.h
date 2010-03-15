@@ -53,6 +53,11 @@ public:
     void Instanciate( DEC_Knowledge_Object& object ) const;    
     //@}
 
+    //! @name From ObjectAttribute_ABC
+    //@{
+    void Register( Object& object ) const;
+    //@}
+
     //! @name Network Update
     //@{
     void SendFullState( Common::MsgObjectAttributes& asn ) const;

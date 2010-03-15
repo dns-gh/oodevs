@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "LogisticAttribute.h"
+#include "Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeLogistic.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "MIL_AgentServer.h"
@@ -100,6 +101,15 @@ template < typename Archive > void LogisticAttribute::serialize( Archive& file, 
 void LogisticAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeLogistic( *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void LogisticAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< LogisticAttribute, LogisticAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

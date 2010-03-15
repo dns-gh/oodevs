@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "StockAttribute.h"
+#include "Object.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeConstruction.h"
@@ -82,6 +83,14 @@ void StockAttribute::Instanciate( DEC_Knowledge_Object& /*object*/ ) const
     // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: StockAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void StockAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< StockAttribute, StockAttribute >( *this );
+}
 
 // -----------------------------------------------------------------------------
 // Name: StockAttribute::operator=

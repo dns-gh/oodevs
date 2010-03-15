@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PopulationAttribute.h"
+#include "Object.h"
 #include <xeumeuleu/xml.h>
 
 // -----------------------------------------------------------------------------
@@ -49,6 +50,15 @@ void PopulationAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     // $$$$ _RC_ SBO 2009-06-11: what about density?
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void PopulationAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< PopulationAttribute, PopulationAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

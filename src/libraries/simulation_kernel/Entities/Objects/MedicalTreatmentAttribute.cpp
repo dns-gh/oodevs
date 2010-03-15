@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MedicalTreatmentAttribute.h"
+#include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeMedicalTreatment.h"
 #include "MIL.h"
@@ -184,6 +185,15 @@ void MedicalTreatmentAttribute::save( MIL_CheckPointOutArchive& ar, const unsign
 void MedicalTreatmentAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeMedicalTreatment() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MedicalTreatmentAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void MedicalTreatmentAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< MedicalTreatmentAttribute, MedicalTreatmentAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

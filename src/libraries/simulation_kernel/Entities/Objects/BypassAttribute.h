@@ -44,6 +44,7 @@ public:
     //! @name From ObjectAttribute_ABC
     //@{
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
+    virtual void Register( Object& object ) const;
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
     virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
     virtual void OnUpdate( const Common::MsgObjectAttributes& asn );

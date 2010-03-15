@@ -38,6 +38,11 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
+    //! @name From ObjectAttribute_ABC
+    //@{
+    virtual void Register( Object& object ) const;
+    //@}
+
     //! @name Operations
     //@{
     unsigned int GetMaxAnimators() const;

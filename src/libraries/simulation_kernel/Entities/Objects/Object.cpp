@@ -149,7 +149,10 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> capacities;
     std::for_each( capacities.begin(), capacities.end(), boost::bind( &ObjectCapacity_ABC::Register, _1, boost::ref( *this ) ) );
 
-    file >> attributes_;
+    T_Attributes attributes;
+    file >> attributes;
+    std::for_each( attributes.begin(), attributes.end(), boost::bind( &ObjectAttribute_ABC::Register, _1, boost::ref( *this ) ) );
+
     idManager_.Lock( id_ );
     //MIL_Object_ABC::Register();
 }

@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "TimeLimitedAttribute.h"
+#include "Object.h"
 #include "Tools/MIL_Tools.h"
 #include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
@@ -106,6 +107,15 @@ void TimeLimitedAttribute::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this )         
          & nActivityTime_ 
          & nDeathTimeStep_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimeLimitedAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void TimeLimitedAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< TimeLimitedAttribute, TimeLimitedAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

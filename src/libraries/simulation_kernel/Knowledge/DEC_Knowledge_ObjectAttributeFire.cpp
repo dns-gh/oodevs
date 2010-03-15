@@ -64,9 +64,9 @@ void DEC_Knowledge_ObjectAttributeFire::load( MIL_CheckPointInArchive& file, con
     unsigned int nID;
     
     file >> boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
-    file >> *const_cast< FireAttribute* >( attr_ )
-         >> nID
-         >> heat_;
+    file >> const_cast< FireAttribute*& >( attr_ );
+    file >> nID;
+    file >> heat_;
     pFireClass_ = MIL_FireClass::Find( nID );
 }
 
@@ -78,9 +78,9 @@ void DEC_Knowledge_ObjectAttributeFire::save( MIL_CheckPointOutArchive& file, co
 {
     unsigned int nID = ( pFireClass_ ? pFireClass_->GetID() : (unsigned int)-1 );
     file << boost::serialization::base_object< DEC_Knowledge_ObjectAttribute_ABC >( *this );
-    file << attr_
-         << nID
-         << heat_;
+    file << const_cast< FireAttribute*& >( attr_ );
+    file << nID;
+    file << heat_;
 }
 
 // -----------------------------------------------------------------------------

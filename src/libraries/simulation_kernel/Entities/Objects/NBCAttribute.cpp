@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "NBCAttribute.h"
+#include "Object.h"
 #include "MIL.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeNBC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -147,6 +148,15 @@ void NBCAttribute::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
 void NBCAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeNBC( *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NBCAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void NBCAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< NBCAttribute, NBCAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

@@ -37,6 +37,11 @@ public:
     void Create( ObjectPrototype& object, const std::string& capacity, xml::xistream& xis );
     //@}
 
+    //! @name Accessors
+    //@{
+    MIL_PropagationManager* GetPropagationManager() const;
+    //@}
+
 private:
     //! @name Registration
     //@{

@@ -41,6 +41,11 @@ public:
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;
     //@}
 
+    //! @name From ObjectAttribute_ABC
+    //@{
+    virtual void Register( Object& object ) const;
+    //@}
+
     //! @name ASN Network update
     //@{     
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const; //<! Send update to asn client

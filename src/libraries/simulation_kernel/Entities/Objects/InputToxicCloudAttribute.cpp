@@ -13,6 +13,7 @@
 #include "MIL_NbcAgentType.h"
 #include "MIL_ToxicEffectManipulator.h"
 #include "NBCAttribute.h"
+#include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeInputToxicCloud.h"
 #include "simulation_terrain/TER_World.h"
@@ -196,6 +197,15 @@ void InputToxicCloudAttribute::ReadFiles( xml::xistream& xis )
 void InputToxicCloudAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: InputToxicCloudAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void InputToxicCloudAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< InputToxicCloudAttribute, InputToxicCloudAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

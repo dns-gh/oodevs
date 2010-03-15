@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "InteractionHeightAttribute.h"
+#include "Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeInteractionHeight.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/protocol.h"
@@ -73,6 +74,15 @@ void InteractionHeightAttribute::serialize( Archive& file, const unsigned int )
 void InteractionHeightAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeInteractionHeight( *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionHeightAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void InteractionHeightAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< InteractionHeightAttribute, InteractionHeightAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

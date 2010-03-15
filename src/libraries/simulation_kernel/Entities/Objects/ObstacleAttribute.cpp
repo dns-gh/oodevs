@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "ObstacleAttribute.h"
+#include "Object.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeObstacle.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
@@ -151,6 +152,15 @@ void ObstacleAttribute::Activate()
 void ObstacleAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeObstacle( *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< ObstacleAttribute, ObstacleAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

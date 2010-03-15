@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "SupplyRouteAttribute.h"
+#include "Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeSupplyRoute.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/protocol.h"
@@ -135,6 +136,15 @@ void SupplyRouteAttribute::WriteODB( xml::xostream& xos ) const
 void SupplyRouteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeSupplyRoute( *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRouteAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void SupplyRouteAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< SupplyRouteAttribute, SupplyRouteAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

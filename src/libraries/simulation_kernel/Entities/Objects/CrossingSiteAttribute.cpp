@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "CrossingSiteAttribute.h"
+#include "Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/protocol.h"
@@ -112,6 +113,15 @@ void CrossingSiteAttribute::WriteODB( xml::xostream& xos ) const
 void CrossingSiteAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeCrossingSite( *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrossingSiteAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void CrossingSiteAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< CrossingSiteAttribute, CrossingSiteAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

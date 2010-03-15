@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "AnimatorAttribute.h"
+#include "Object.h"
 #include "MIL.h"
 #include <xeumeuleu/xml.h>
 
@@ -72,6 +73,15 @@ void AnimatorAttribute::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
     file & maxAnimators_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AnimatorAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void AnimatorAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< AnimatorAttribute, AnimatorAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

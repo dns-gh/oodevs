@@ -128,3 +128,12 @@ void CapacityFactory::Create( ObjectPrototype& prototype, const std::string& cap
     if ( it != callbacks_.end() )
         it->second( prototype, xis );
 }
+
+// -----------------------------------------------------------------------------
+// Name: CapacityFactory::GetPropagationManager
+// Created: JSR 2010-03-12
+// -----------------------------------------------------------------------------
+MIL_PropagationManager* CapacityFactory::GetPropagationManager() const
+{
+    return propagation_.get();
+}

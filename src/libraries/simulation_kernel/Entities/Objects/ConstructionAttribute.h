@@ -52,6 +52,11 @@ public:
     void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
+    //! @name From ObjectAttribute_ABC
+    //@{
+    virtual void Register( Object& object ) const;
+    //@}
+
     //! @name Knowledge
     //@{
     virtual void Instanciate( DEC_Knowledge_Object& object ) const;    

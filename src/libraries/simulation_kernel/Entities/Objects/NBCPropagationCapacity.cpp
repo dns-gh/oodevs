@@ -15,6 +15,8 @@
 #include "ContaminationCapacity.h"
 #include "MIL_PropagationManager.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Objects/MIL_ObjectLoader.h"
+#include "Entities/Objects/CapacityFactory.h"
 
 #include "Tools/MIL_Tools.h"
 
@@ -38,7 +40,7 @@ NBCPropagationCapacity::NBCPropagationCapacity( xml::xistream& xis, MIL_Propagat
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 NBCPropagationCapacity::NBCPropagationCapacity()
-    : pManager_        ()
+    : pManager_        ( MIL_ObjectLoader::GetLoader().GetCapacityFactory().GetPropagationManager() )
     , timeOfLastUpdate_( 0 )
 {
     // NOTHING

@@ -13,6 +13,8 @@
 #include "FireAttribute.h"
 #include "MIL_PropagationManager.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Objects/MIL_ObjectLoader.h"
+#include "Entities/Objects/CapacityFactory.h"
 #include "Tools/MIL_Tools.h"
 #include "MIL_ObjectBuilder_ABC.h"
 #include "BurnCapacity.h"
@@ -39,7 +41,7 @@ FirePropagationCapacity::FirePropagationCapacity( xml::xistream& /*xis*/, MIL_Pr
 // Created: RFT 2008-05-22
 // -----------------------------------------------------------------------------
 FirePropagationCapacity::FirePropagationCapacity()
-    : pManager_ ( 0 )
+    : pManager_ ( MIL_ObjectLoader::GetLoader().GetCapacityFactory().GetPropagationManager() )
     , timeOfCreation_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , timeOfDeath_ ( 0 )
     , needUpdate_ ( true )

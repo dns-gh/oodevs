@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DetectorAttribute.h"
+#include "Object.h"
 #include "MIL.h"
 
 BOOST_CLASS_EXPORT_GUID( DetectorAttribute, "AnimatorAttribute" )
@@ -51,6 +52,15 @@ template< typename Archive >
 void DetectorAttribute::serialize( Archive& /*file*/, const uint )
 {
     //TODO
+}
+
+// -----------------------------------------------------------------------------
+// Name: DetectorAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void DetectorAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< DetectorAttribute, DetectorAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------

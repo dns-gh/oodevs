@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MineAttribute.h"
+#include "Object.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeMine.h"
@@ -157,6 +158,15 @@ void MineAttribute::WriteODB( xml::xostream& xos ) const
 void MineAttribute::Instanciate( DEC_Knowledge_Object& object ) const
 {
     object.Attach( *new DEC_Knowledge_ObjectAttributeMine( *this ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MineAttribute::Register
+// Created: JSR 2010-03-15
+// -----------------------------------------------------------------------------
+void MineAttribute::Register( Object& object ) const
+{
+    object.SetAttribute< MineAttribute, MineAttribute >( *this );
 }
 
 // -----------------------------------------------------------------------------
