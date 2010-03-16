@@ -182,3 +182,6 @@ tableSize = function( tab )
   end
   return i
 end
+
+-- Redirection for compatibility with DirectIA 4
+DEC_StopAction = DEC__StopAction
