@@ -13,7 +13,7 @@
 #define __PHY_RawVisionData_h_
 
 #include "MIL.h"
-#include "Meteo/PHY_Meteo.h"
+#include "meteo/PHY_Meteo.h"
 
 class MIL_Config;
 class PHY_AmmoEffect;
