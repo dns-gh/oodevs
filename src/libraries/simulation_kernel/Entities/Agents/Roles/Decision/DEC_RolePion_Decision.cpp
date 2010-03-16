@@ -249,7 +249,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_DonnerMissionPion",
         boost::function< void( boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::CDT_GivePionMission, boost::ref( GetPion().GetAutomate() ), _1 ) ) );
     // Actions
-    brain.RegisterFunction( "DEC_StopAction",
+    brain.RegisterFunction( "DEC__StopAction",
         boost::function< unsigned int( unsigned int) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_PauseAction",
         boost::function< void( unsigned int ) >( boost::bind( &DEC_ActionFunctions::SuspendAction< MIL_AgentPion >, boost::ref( GetPion() ), _1 ) ) );

@@ -119,7 +119,7 @@ void DEC_PopulationDecision::EndCleanStateAfterCrash()
 void DEC_PopulationDecision::RegisterUserFunctions( directia::Brain& brain )
 {
     // Actions
-    brain.RegisterFunction( "DEC_StopAction",
+    brain.RegisterFunction( "DEC__StopAction",
         boost::function< unsigned int ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::StopAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );
     brain.RegisterFunction( "DEC_PauseAction",
         boost::function< void ( unsigned int ) >( boost::bind( &DEC_ActionFunctions::SuspendAction< MIL_Population >, boost::ref( GetPopulation() ), _1 ) ) );

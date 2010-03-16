@@ -714,3 +714,8 @@ do
     end )
 end
 
+function DEC_StopAction( actionID )
+    if actionID then
+        DEC__StopAction( actionID )
+    end
+end
