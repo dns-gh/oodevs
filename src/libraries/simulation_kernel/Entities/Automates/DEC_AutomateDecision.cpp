@@ -72,7 +72,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, DEC_DataBase
     catch( std::runtime_error& e )
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
-    }
+    }   
 
     StartDefaultBehavior();
 }

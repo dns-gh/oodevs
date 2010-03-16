@@ -26,12 +26,24 @@ const PHY_Ephemeride& PHY_MeteoDataManager::GetEphemeride() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::GetLighting
+// Created: HBD 2010-03-10  
+// -----------------------------------------------------------------------------
+inline
+const PHY_Lighting& PHY_MeteoDataManager::GetLighting() const
+{
+    assert( pEphemeride_ );
+    return pEphemeride_->GetLightingBase();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::RegisterMeteo
 // Created: NLD 2006-03-13
 // -----------------------------------------------------------------------------
 inline
 void PHY_MeteoDataManager::RegisterMeteo( PHY_Meteo& meteo )
 {
+    meteo.SetListener( this );
     bool bOut = meteos_.insert( &meteo ).second;
     assert( bOut );
 }

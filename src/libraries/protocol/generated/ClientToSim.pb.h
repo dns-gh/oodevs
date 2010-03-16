@@ -32,7 +32,6 @@ void protobuf_AssignDesc_ClientToSim_2eproto();
 void protobuf_ShutdownFile_ClientToSim_2eproto();
 
 class MsgControlDatetimeChange;
-class MsgMeteoAttributes;
 class MsgControlGlobalMeteo;
 class MsgControlLocalMeteo;
 class MsgControlCheckPointSaveNow;
@@ -158,141 +157,6 @@ class MsgControlDatetimeChange : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgMeteoAttributes : public ::google::protobuf::Message {
- public:
-  MsgMeteoAttributes();
-  virtual ~MsgMeteoAttributes();
-  
-  MsgMeteoAttributes(const MsgMeteoAttributes& from);
-  
-  inline MsgMeteoAttributes& operator=(const MsgMeteoAttributes& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMeteoAttributes& default_instance();
-  void Swap(MsgMeteoAttributes* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgMeteoAttributes* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMeteoAttributes& from);
-  void MergeFrom(const MsgMeteoAttributes& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 temperature = 1;
-  inline bool has_temperature() const;
-  inline void clear_temperature();
-  static const int kTemperatureFieldNumber = 1;
-  inline ::google::protobuf::int32 temperature() const;
-  inline void set_temperature(::google::protobuf::int32 value);
-  
-  // required int32 wind_speed = 2;
-  inline bool has_wind_speed() const;
-  inline void clear_wind_speed();
-  static const int kWindSpeedFieldNumber = 2;
-  inline ::google::protobuf::int32 wind_speed() const;
-  inline void set_wind_speed(::google::protobuf::int32 value);
-  
-  // required .Common.MsgHeading wind_direction = 3;
-  inline bool has_wind_direction() const;
-  inline void clear_wind_direction();
-  static const int kWindDirectionFieldNumber = 3;
-  inline const ::Common::MsgHeading& wind_direction() const;
-  inline ::Common::MsgHeading* mutable_wind_direction();
-  
-  // required int32 cloud_floor = 4;
-  inline bool has_cloud_floor() const;
-  inline void clear_cloud_floor();
-  static const int kCloudFloorFieldNumber = 4;
-  inline ::google::protobuf::int32 cloud_floor() const;
-  inline void set_cloud_floor(::google::protobuf::int32 value);
-  
-  // required int32 cloud_ceiling = 5;
-  inline bool has_cloud_ceiling() const;
-  inline void clear_cloud_ceiling();
-  static const int kCloudCeilingFieldNumber = 5;
-  inline ::google::protobuf::int32 cloud_ceiling() const;
-  inline void set_cloud_ceiling(::google::protobuf::int32 value);
-  
-  // required int32 cloud_density = 6;
-  inline bool has_cloud_density() const;
-  inline void clear_cloud_density();
-  static const int kCloudDensityFieldNumber = 6;
-  inline ::google::protobuf::int32 cloud_density() const;
-  inline void set_cloud_density(::google::protobuf::int32 value);
-  
-  // required .Common.EnumPrecipitationType precipitation = 7;
-  inline bool has_precipitation() const;
-  inline void clear_precipitation();
-  static const int kPrecipitationFieldNumber = 7;
-  inline Common::EnumPrecipitationType precipitation() const;
-  inline void set_precipitation(Common::EnumPrecipitationType value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 temperature_;
-  ::google::protobuf::int32 wind_speed_;
-  ::Common::MsgHeading* wind_direction_;
-  ::google::protobuf::int32 cloud_floor_;
-  ::google::protobuf::int32 cloud_ceiling_;
-  ::google::protobuf::int32 cloud_density_;
-  int precipitation_;
-  friend void  protobuf_AddDesc_ClientToSim_2eproto();
-  friend void protobuf_AssignDesc_ClientToSim_2eproto();
-  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgMeteoAttributes* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgControlGlobalMeteo : public ::google::protobuf::Message {
  public:
   MsgControlGlobalMeteo();
@@ -346,18 +210,18 @@ class MsgControlGlobalMeteo : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .MsgsClientToSim.MsgMeteoAttributes attributes = 1;
+  // required .Common.MsgMeteoAttributes attributes = 1;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 1;
-  inline const ::MsgsClientToSim::MsgMeteoAttributes& attributes() const;
-  inline ::MsgsClientToSim::MsgMeteoAttributes* mutable_attributes();
+  inline const ::Common::MsgMeteoAttributes& attributes() const;
+  inline ::Common::MsgMeteoAttributes* mutable_attributes();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::MsgsClientToSim::MsgMeteoAttributes* attributes_;
+  ::Common::MsgMeteoAttributes* attributes_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
@@ -447,12 +311,12 @@ class MsgControlLocalMeteo : public ::google::protobuf::Message {
   inline const ::Common::MsgCoordLatLong& bottom_right_coordinate() const;
   inline ::Common::MsgCoordLatLong* mutable_bottom_right_coordinate();
   
-  // optional .MsgsClientToSim.MsgMeteoAttributes attributes = 3;
+  // optional .Common.MsgMeteoAttributes attributes = 3;
   inline bool has_attributes() const;
   inline void clear_attributes();
   static const int kAttributesFieldNumber = 3;
-  inline const ::MsgsClientToSim::MsgMeteoAttributes& attributes() const;
-  inline ::MsgsClientToSim::MsgMeteoAttributes* mutable_attributes();
+  inline const ::Common::MsgMeteoAttributes& attributes() const;
+  inline ::Common::MsgMeteoAttributes* mutable_attributes();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -460,7 +324,7 @@ class MsgControlLocalMeteo : public ::google::protobuf::Message {
   
   ::Common::MsgCoordLatLong* top_left_coordinate_;
   ::Common::MsgCoordLatLong* bottom_right_coordinate_;
-  ::MsgsClientToSim::MsgMeteoAttributes* attributes_;
+  ::Common::MsgMeteoAttributes* attributes_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
@@ -4090,140 +3954,22 @@ inline ::Common::MsgDateTime* MsgControlDatetimeChange::mutable_date_time() {
 
 // -------------------------------------------------------------------
 
-// MsgMeteoAttributes
-
-// required int32 temperature = 1;
-inline bool MsgMeteoAttributes::has_temperature() const {
-  return _has_bit(0);
-}
-inline void MsgMeteoAttributes::clear_temperature() {
-  temperature_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgMeteoAttributes::temperature() const {
-  return temperature_;
-}
-inline void MsgMeteoAttributes::set_temperature(::google::protobuf::int32 value) {
-  _set_bit(0);
-  temperature_ = value;
-}
-
-// required int32 wind_speed = 2;
-inline bool MsgMeteoAttributes::has_wind_speed() const {
-  return _has_bit(1);
-}
-inline void MsgMeteoAttributes::clear_wind_speed() {
-  wind_speed_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgMeteoAttributes::wind_speed() const {
-  return wind_speed_;
-}
-inline void MsgMeteoAttributes::set_wind_speed(::google::protobuf::int32 value) {
-  _set_bit(1);
-  wind_speed_ = value;
-}
-
-// required .Common.MsgHeading wind_direction = 3;
-inline bool MsgMeteoAttributes::has_wind_direction() const {
-  return _has_bit(2);
-}
-inline void MsgMeteoAttributes::clear_wind_direction() {
-  if (wind_direction_ != NULL) wind_direction_->::Common::MsgHeading::Clear();
-  _clear_bit(2);
-}
-inline const ::Common::MsgHeading& MsgMeteoAttributes::wind_direction() const {
-  return wind_direction_ != NULL ? *wind_direction_ : *default_instance_->wind_direction_;
-}
-inline ::Common::MsgHeading* MsgMeteoAttributes::mutable_wind_direction() {
-  _set_bit(2);
-  if (wind_direction_ == NULL) wind_direction_ = new ::Common::MsgHeading;
-  return wind_direction_;
-}
-
-// required int32 cloud_floor = 4;
-inline bool MsgMeteoAttributes::has_cloud_floor() const {
-  return _has_bit(3);
-}
-inline void MsgMeteoAttributes::clear_cloud_floor() {
-  cloud_floor_ = 0;
-  _clear_bit(3);
-}
-inline ::google::protobuf::int32 MsgMeteoAttributes::cloud_floor() const {
-  return cloud_floor_;
-}
-inline void MsgMeteoAttributes::set_cloud_floor(::google::protobuf::int32 value) {
-  _set_bit(3);
-  cloud_floor_ = value;
-}
-
-// required int32 cloud_ceiling = 5;
-inline bool MsgMeteoAttributes::has_cloud_ceiling() const {
-  return _has_bit(4);
-}
-inline void MsgMeteoAttributes::clear_cloud_ceiling() {
-  cloud_ceiling_ = 0;
-  _clear_bit(4);
-}
-inline ::google::protobuf::int32 MsgMeteoAttributes::cloud_ceiling() const {
-  return cloud_ceiling_;
-}
-inline void MsgMeteoAttributes::set_cloud_ceiling(::google::protobuf::int32 value) {
-  _set_bit(4);
-  cloud_ceiling_ = value;
-}
-
-// required int32 cloud_density = 6;
-inline bool MsgMeteoAttributes::has_cloud_density() const {
-  return _has_bit(5);
-}
-inline void MsgMeteoAttributes::clear_cloud_density() {
-  cloud_density_ = 0;
-  _clear_bit(5);
-}
-inline ::google::protobuf::int32 MsgMeteoAttributes::cloud_density() const {
-  return cloud_density_;
-}
-inline void MsgMeteoAttributes::set_cloud_density(::google::protobuf::int32 value) {
-  _set_bit(5);
-  cloud_density_ = value;
-}
-
-// required .Common.EnumPrecipitationType precipitation = 7;
-inline bool MsgMeteoAttributes::has_precipitation() const {
-  return _has_bit(6);
-}
-inline void MsgMeteoAttributes::clear_precipitation() {
-  precipitation_ = 0;
-  _clear_bit(6);
-}
-inline Common::EnumPrecipitationType MsgMeteoAttributes::precipitation() const {
-  return static_cast< Common::EnumPrecipitationType >(precipitation_);
-}
-inline void MsgMeteoAttributes::set_precipitation(Common::EnumPrecipitationType value) {
-  GOOGLE_DCHECK(Common::EnumPrecipitationType_IsValid(value));
-  _set_bit(6);
-  precipitation_ = value;
-}
-
-// -------------------------------------------------------------------
-
 // MsgControlGlobalMeteo
 
-// required .MsgsClientToSim.MsgMeteoAttributes attributes = 1;
+// required .Common.MsgMeteoAttributes attributes = 1;
 inline bool MsgControlGlobalMeteo::has_attributes() const {
   return _has_bit(0);
 }
 inline void MsgControlGlobalMeteo::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::MsgsClientToSim::MsgMeteoAttributes::Clear();
+  if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
   _clear_bit(0);
 }
-inline const ::MsgsClientToSim::MsgMeteoAttributes& MsgControlGlobalMeteo::attributes() const {
+inline const ::Common::MsgMeteoAttributes& MsgControlGlobalMeteo::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::MsgsClientToSim::MsgMeteoAttributes* MsgControlGlobalMeteo::mutable_attributes() {
+inline ::Common::MsgMeteoAttributes* MsgControlGlobalMeteo::mutable_attributes() {
   _set_bit(0);
-  if (attributes_ == NULL) attributes_ = new ::MsgsClientToSim::MsgMeteoAttributes;
+  if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
   return attributes_;
 }
 
@@ -4265,20 +4011,20 @@ inline ::Common::MsgCoordLatLong* MsgControlLocalMeteo::mutable_bottom_right_coo
   return bottom_right_coordinate_;
 }
 
-// optional .MsgsClientToSim.MsgMeteoAttributes attributes = 3;
+// optional .Common.MsgMeteoAttributes attributes = 3;
 inline bool MsgControlLocalMeteo::has_attributes() const {
   return _has_bit(2);
 }
 inline void MsgControlLocalMeteo::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::MsgsClientToSim::MsgMeteoAttributes::Clear();
+  if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
   _clear_bit(2);
 }
-inline const ::MsgsClientToSim::MsgMeteoAttributes& MsgControlLocalMeteo::attributes() const {
+inline const ::Common::MsgMeteoAttributes& MsgControlLocalMeteo::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
-inline ::MsgsClientToSim::MsgMeteoAttributes* MsgControlLocalMeteo::mutable_attributes() {
+inline ::Common::MsgMeteoAttributes* MsgControlLocalMeteo::mutable_attributes() {
   _set_bit(2);
-  if (attributes_ == NULL) attributes_ = new ::MsgsClientToSim::MsgMeteoAttributes;
+  if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
   return attributes_;
 }
 

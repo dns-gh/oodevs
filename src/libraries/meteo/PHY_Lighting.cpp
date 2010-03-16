@@ -9,7 +9,6 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
 
 #include "PHY_Lighting.h"
 
@@ -37,7 +36,7 @@ PHY_Lighting PHY_Lighting::eclairant_             ( "Eclairant"             , eE
 // -----------------------------------------------------------------------------
 void PHY_Lighting::Initialize()
 {
-    MT_LOG_INFO_MSG( "Initializing lightings" );
+    // MT_LOG_INFO_MSG( "Initializing lightings" );
     lightings_[ jourSansNuage_         .GetName() ] = &jourSansNuage_;
     lightings_[ jourPeuNuageux_        .GetName() ] = &jourPeuNuageux_;
     lightings_[ jourMoyennementNuageux_.GetName() ] = &jourMoyennementNuageux_;

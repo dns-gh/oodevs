@@ -38,6 +38,7 @@ namespace kernel
 {
     class Controller;
     class CoordinateConverter_ABC;
+    class CoordinateConverter;
 }
 
 namespace tools
@@ -110,7 +111,7 @@ private:
     const dispatcher::Config& config_;
     dispatcher::CompositeRegistrable& registrables_;
     std::auto_ptr< kernel::Controller > controller_;
-    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
+    std::auto_ptr< kernel::CoordinateConverter > converter_;
     std::auto_ptr< ExtensionFactory > factory_;
     std::auto_ptr< Actions > actions_;
     boost::ptr_vector< Script > scripts_;

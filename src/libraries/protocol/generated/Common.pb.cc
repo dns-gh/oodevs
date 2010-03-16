@@ -308,6 +308,9 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgNote_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgNote_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgMeteoAttributes_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgMeteoAttributes_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* EnumDotationFamily_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* EnumAmmunitionFamily_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* EnumPrecipitationType_descriptor_ = NULL;
@@ -1925,6 +1928,27 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgNote));
+  MsgMeteoAttributes_descriptor_ = file->message_type(95);
+  static const int MsgMeteoAttributes_offsets_[7] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, temperature_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, wind_speed_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, wind_direction_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, cloud_floor_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, cloud_ceiling_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, cloud_density_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, precipitation_),
+  };
+  MsgMeteoAttributes_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgMeteoAttributes_descriptor_,
+      MsgMeteoAttributes::default_instance_,
+      MsgMeteoAttributes_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgMeteoAttributes));
   EnumDotationFamily_descriptor_ = file->enum_type(0);
   EnumAmmunitionFamily_descriptor_ = file->enum_type(1);
   EnumPrecipitationType_descriptor_ = file->enum_type(2);
@@ -2152,6 +2176,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
     MsgObjectAttributes_descriptor_, &MsgObjectAttributes::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgNote_descriptor_, &MsgNote::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgMeteoAttributes_descriptor_, &MsgMeteoAttributes::default_instance());
 }
 
 }  // namespace
@@ -2351,6 +2377,8 @@ void protobuf_ShutdownFile_Common_2eproto() {
   delete MsgObjectAttributes_reflection_;
   delete MsgNote::default_instance_;
   delete MsgNote_reflection_;
+  delete MsgMeteoAttributes::default_instance_;
+  delete MsgMeteoAttributes_reflection_;
 }
 
 void protobuf_AddDesc_Common_2eproto() {
@@ -2609,77 +2637,83 @@ void protobuf_AddDesc_Common_2eproto() {
     "t\030\017 \001(\0132!.Common.MsgObjectAttributeNBCTy"
     "pe\"L\n\007MsgNote\022\014\n\004name\030\001 \002(\t\022\016\n\006number\030\002 "
     "\002(\t\022\023\n\013description\030\003 \002(\t\022\016\n\006parent\030\004 \002(\r"
-    "*m\n\022EnumDotationFamily\022\014\n\010munition\020\000\022\r\n\t"
-    "carburant\020\001\022\014\n\010explosif\020\002\022\010\n\004mine\020\003\022\013\n\007b"
-    "arbele\020\004\022\t\n\005piece\020\005\022\n\n\006ration\020\006*Q\n\024EnumA"
-    "mmunitionFamily\022\010\n\004obus\020\000\022\017\n\013missile_air"
-    "\020\001\022\017\n\013missile_sol\020\002\022\r\n\tmitraille\020\003*w\n\025En"
-    "umPrecipitationType\022\030\n\024pas_de_precipitat"
-    "ion\020\000\022\021\n\rtempete_sable\020\001\022\016\n\nbrouillard\020\002"
-    "\022\013\n\007crachin\020\003\022\t\n\005pluie\020\004\022\t\n\005neige\020\005*\264\003\n "
-    "EnumLogMaintenanceHandlingStatus\022\033\n\027depl"
-    "acement_vers_chaine\020\000\022$\n attente_disponi"
-    "bilite_remorqueur\020\001\022 \n\034remorqueur_deplac"
-    "ement_aller\020\002\022\031\n\025remorqueur_chargement\020\003"
-    "\022!\n\035remorqueur_deplacement_retour\020\004\022\033\n\027r"
-    "emorqueur_dechargement\020\005\022\034\n\030diagnostique"
-    "_maintenance\020\006\0220\n,attente_prise_en_charg"
-    "e_par_niveau_superieur\020\007\022 \n\034attente_disp"
-    "onibilite_pieces\020\010\022$\n attente_disponibil"
-    "ite_reparateur\020\t\022\016\n\nreparation\020\n\022\017\n\013reto"
-    "ur_pion\020\013\022\027\n\023termine_maintenance\020\014*\364\005\n\034E"
-    "numLogMedicalHandlingStatus\022*\n&attente_d"
-    "isponibilite_ambulance_releve\020\000\022&\n\"ambul"
-    "ance_releve_deplacement_aller\020\001\022\037\n\033ambul"
-    "ance_releve_chargement\020\002\022/\n+attente_char"
-    "gement_complet_ambulance_releve\020\003\022\'\n#amb"
-    "ulance_releve_deplacement_retour\020\004\022!\n\035am"
-    "bulance_releve_dechargement\020\005\0223\n/attente"
-    "_disponibilite_medecin_pour_diagnostique"
-    "\020\006\022\020\n\014diagnostique\020\007\022\031\n\025recherche_secteu"
-    "r_tri\020\010\022*\n&attente_disponibilite_medecin"
-    "_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026recherche_secteu"
-    "r_soin\020\013\022+\n\'attente_disponibilite_medeci"
-    "n_pour_soin\020\014\022\010\n\004soin\020\r\022\023\n\017hospitalisati"
-    "on\020\016\022-\n)attente_disponibilite_ambulance_"
-    "ramassage\020\017\022\"\n\036ambulance_ramassage_charg"
-    "ement\020\020\0222\n.attente_chargement_complet_am"
-    "bulance_ramassage\020\021\022)\n%ambulance_ramassa"
-    "ge_deplacement_aller\020\022\022$\n ambulance_rama"
-    "ssage_dechargement\020\023\022\013\n\007termine\020\024*_\n\022Enu"
-    "mUnitVisibility\022\r\n\tinvisible\020\000\022\014\n\010detect"
-    "ed\020\001\022\016\n\nrecognized\020\002\022\016\n\nidentified\020\003\022\014\n\010"
-    "recorded\020\004*1\n\022EnumFireEffectType\022\014\n\010fumi"
-    "gene\020\000\022\r\n\teclairant\020\001*H\n\023EnumSimulationS"
-    "tate\022\013\n\007running\020\000\022\n\n\006paused\020\001\022\013\n\007stopped"
-    "\020\002\022\013\n\007loading\020\003*l\n\033EnumMeetingEngagement"
-    "Status\022\020\n\014none_meeting\020\000\022\020\n\014etat_esquive"
-    "\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat_poursuite_miss"
-    "ion\020\003*[\n\025EnumOperationalStatus\022\026\n\022detrui"
-    "t_totalement\020\000\022\030\n\024detruit_tactiquement\020\001"
-    "\022\020\n\014operationnel\020\002*1\n\025MsgStartUnitFire_t"
-    "ype\022\n\n\006direct\020\000\022\014\n\010indirect\020\001*+\n\017EnumAut"
-    "omatMode\022\013\n\007embraye\020\000\022\013\n\007debraye\020\001*K\n\026En"
-    "umPopulationAttitude\022\t\n\005calme\020\000\022\n\n\006agite"
-    "e\020\001\022\013\n\007excitee\020\002\022\r\n\tagressive\020\003*8\n\021EnumU"
-    "nitTiredness\022\n\n\006normal\020\000\022\013\n\007fatigue\020\001\022\n\n"
-    "\006epuise\020\002*@\n\016EnumUnitMorale\022\r\n\tfanatique"
-    "\020\000\022\007\n\003bon\020\001\022\t\n\005moyen\020\002\022\013\n\007mauvais\020\003*@\n\022E"
-    "numUnitExperience\022\013\n\007veteran\020\000\022\017\n\013experi"
-    "mente\020\001\022\014\n\010conscrit\020\002*8\n\rEnumHumanRank\022\014"
-    "\n\010officier\020\000\022\020\n\014sous_officer\020\001\022\007\n\003mdr\020\002*"
-    "X\n\rEnumDiplomacy\022\021\n\runknown_diplo\020\000\022\020\n\014f"
-    "riend_diplo\020\001\022\017\n\013enemy_diplo\020\002\022\021\n\rneutra"
-    "l_diplo\020\003*\210\001\n\016EnumHumanWound\022\016\n\nnon_bles"
-    "se\020\000\022\010\n\004mort\020\001\022\024\n\020blesse_urgence_1\020\002\022\024\n\020"
-    "blesse_urgence_2\020\003\022\024\n\020blesse_urgence_3\020\004"
-    "\022\032\n\026blesse_urgence_extreme\020\005*Y\n\037EnumLogM"
-    "aintenanceRegimeTravail\022\014\n\010regime_1\020\000\022\014\n"
-    "\010regime_2\020\001\022\014\n\010regime_3\020\002\022\014\n\010regime_4\020\003*"
-    "\204\001\n\017EnumNatureLevel\022\024\n\020none_naturelevel\020"
-    "\000\022\005\n\001o\020\001\022\006\n\002oo\020\002\022\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005"
-    "\022\007\n\003iii\020\006\022\005\n\001x\020\007\022\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxx"
-    "x\020\n\022\t\n\005xxxxx\020\013", 12774);
+    "\"\342\001\n\022MsgMeteoAttributes\022\023\n\013temperature\030\001"
+    " \002(\005\022\022\n\nwind_speed\030\002 \002(\005\022*\n\016wind_directi"
+    "on\030\003 \002(\0132\022.Common.MsgHeading\022\023\n\013cloud_fl"
+    "oor\030\004 \002(\005\022\025\n\rcloud_ceiling\030\005 \002(\005\022\025\n\rclou"
+    "d_density\030\006 \002(\005\0224\n\rprecipitation\030\007 \002(\0162\035"
+    ".Common.EnumPrecipitationType*m\n\022EnumDot"
+    "ationFamily\022\014\n\010munition\020\000\022\r\n\tcarburant\020\001"
+    "\022\014\n\010explosif\020\002\022\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n"
+    "\005piece\020\005\022\n\n\006ration\020\006*Q\n\024EnumAmmunitionFa"
+    "mily\022\010\n\004obus\020\000\022\017\n\013missile_air\020\001\022\017\n\013missi"
+    "le_sol\020\002\022\r\n\tmitraille\020\003*w\n\025EnumPrecipita"
+    "tionType\022\030\n\024pas_de_precipitation\020\000\022\021\n\rte"
+    "mpete_sable\020\001\022\016\n\nbrouillard\020\002\022\013\n\007crachin"
+    "\020\003\022\t\n\005pluie\020\004\022\t\n\005neige\020\005*\264\003\n EnumLogMain"
+    "tenanceHandlingStatus\022\033\n\027deplacement_ver"
+    "s_chaine\020\000\022$\n attente_disponibilite_remo"
+    "rqueur\020\001\022 \n\034remorqueur_deplacement_aller"
+    "\020\002\022\031\n\025remorqueur_chargement\020\003\022!\n\035remorqu"
+    "eur_deplacement_retour\020\004\022\033\n\027remorqueur_d"
+    "echargement\020\005\022\034\n\030diagnostique_maintenanc"
+    "e\020\006\0220\n,attente_prise_en_charge_par_nivea"
+    "u_superieur\020\007\022 \n\034attente_disponibilite_p"
+    "ieces\020\010\022$\n attente_disponibilite_reparat"
+    "eur\020\t\022\016\n\nreparation\020\n\022\017\n\013retour_pion\020\013\022\027"
+    "\n\023termine_maintenance\020\014*\364\005\n\034EnumLogMedic"
+    "alHandlingStatus\022*\n&attente_disponibilit"
+    "e_ambulance_releve\020\000\022&\n\"ambulance_releve"
+    "_deplacement_aller\020\001\022\037\n\033ambulance_releve"
+    "_chargement\020\002\022/\n+attente_chargement_comp"
+    "let_ambulance_releve\020\003\022\'\n#ambulance_rele"
+    "ve_deplacement_retour\020\004\022!\n\035ambulance_rel"
+    "eve_dechargement\020\005\0223\n/attente_disponibil"
+    "ite_medecin_pour_diagnostique\020\006\022\020\n\014diagn"
+    "ostique\020\007\022\031\n\025recherche_secteur_tri\020\010\022*\n&"
+    "attente_disponibilite_medecin_pour_tri\020\t"
+    "\022\007\n\003tri\020\n\022\032\n\026recherche_secteur_soin\020\013\022+\n"
+    "\'attente_disponibilite_medecin_pour_soin"
+    "\020\014\022\010\n\004soin\020\r\022\023\n\017hospitalisation\020\016\022-\n)att"
+    "ente_disponibilite_ambulance_ramassage\020\017"
+    "\022\"\n\036ambulance_ramassage_chargement\020\020\0222\n."
+    "attente_chargement_complet_ambulance_ram"
+    "assage\020\021\022)\n%ambulance_ramassage_deplacem"
+    "ent_aller\020\022\022$\n ambulance_ramassage_decha"
+    "rgement\020\023\022\013\n\007termine\020\024*_\n\022EnumUnitVisibi"
+    "lity\022\r\n\tinvisible\020\000\022\014\n\010detected\020\001\022\016\n\nrec"
+    "ognized\020\002\022\016\n\nidentified\020\003\022\014\n\010recorded\020\004*"
+    "1\n\022EnumFireEffectType\022\014\n\010fumigene\020\000\022\r\n\te"
+    "clairant\020\001*H\n\023EnumSimulationState\022\013\n\007run"
+    "ning\020\000\022\n\n\006paused\020\001\022\013\n\007stopped\020\002\022\013\n\007loadi"
+    "ng\020\003*l\n\033EnumMeetingEngagementStatus\022\020\n\014n"
+    "one_meeting\020\000\022\020\n\014etat_esquive\020\001\022\r\n\tetat_"
+    "fixe\020\002\022\032\n\026etat_poursuite_mission\020\003*[\n\025En"
+    "umOperationalStatus\022\026\n\022detruit_totalemen"
+    "t\020\000\022\030\n\024detruit_tactiquement\020\001\022\020\n\014operati"
+    "onnel\020\002*1\n\025MsgStartUnitFire_type\022\n\n\006dire"
+    "ct\020\000\022\014\n\010indirect\020\001*+\n\017EnumAutomatMode\022\013\n"
+    "\007embraye\020\000\022\013\n\007debraye\020\001*K\n\026EnumPopulatio"
+    "nAttitude\022\t\n\005calme\020\000\022\n\n\006agitee\020\001\022\013\n\007exci"
+    "tee\020\002\022\r\n\tagressive\020\003*8\n\021EnumUnitTirednes"
+    "s\022\n\n\006normal\020\000\022\013\n\007fatigue\020\001\022\n\n\006epuise\020\002*@"
+    "\n\016EnumUnitMorale\022\r\n\tfanatique\020\000\022\007\n\003bon\020\001"
+    "\022\t\n\005moyen\020\002\022\013\n\007mauvais\020\003*@\n\022EnumUnitExpe"
+    "rience\022\013\n\007veteran\020\000\022\017\n\013experimente\020\001\022\014\n\010"
+    "conscrit\020\002*8\n\rEnumHumanRank\022\014\n\010officier\020"
+    "\000\022\020\n\014sous_officer\020\001\022\007\n\003mdr\020\002*X\n\rEnumDipl"
+    "omacy\022\021\n\runknown_diplo\020\000\022\020\n\014friend_diplo"
+    "\020\001\022\017\n\013enemy_diplo\020\002\022\021\n\rneutral_diplo\020\003*\210"
+    "\001\n\016EnumHumanWound\022\016\n\nnon_blesse\020\000\022\010\n\004mor"
+    "t\020\001\022\024\n\020blesse_urgence_1\020\002\022\024\n\020blesse_urge"
+    "nce_2\020\003\022\024\n\020blesse_urgence_3\020\004\022\032\n\026blesse_"
+    "urgence_extreme\020\005*Y\n\037EnumLogMaintenanceR"
+    "egimeTravail\022\014\n\010regime_1\020\000\022\014\n\010regime_2\020\001"
+    "\022\014\n\010regime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n\017EnumNat"
+    "ureLevel\022\024\n\020none_naturelevel\020\000\022\005\n\001o\020\001\022\006\n"
+    "\002oo\020\002\022\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005"
+    "\n\001x\020\007\022\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xxxx"
+    "x\020\013", 13003);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Common.proto", &protobuf_RegisterTypes);
   MsgTeam::default_instance_ = new MsgTeam();
@@ -2779,6 +2813,7 @@ void protobuf_AddDesc_Common_2eproto() {
   MsgObjectAttributeNBCType::default_instance_ = new MsgObjectAttributeNBCType();
   MsgObjectAttributes::default_instance_ = new MsgObjectAttributes();
   MsgNote::default_instance_ = new MsgNote();
+  MsgMeteoAttributes::default_instance_ = new MsgMeteoAttributes();
   MsgTeam::default_instance_->InitAsDefaultInstance();
   MsgPopulation::default_instance_->InitAsDefaultInstance();
   MsgAutomat::default_instance_->InitAsDefaultInstance();
@@ -2876,6 +2911,7 @@ void protobuf_AddDesc_Common_2eproto() {
   MsgObjectAttributeNBCType::default_instance_->InitAsDefaultInstance();
   MsgObjectAttributes::default_instance_->InitAsDefaultInstance();
   MsgNote::default_instance_->InitAsDefaultInstance();
+  MsgMeteoAttributes::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_Common_2eproto);
 }
 
@@ -28828,6 +28864,451 @@ void MsgNote::Swap(MsgNote* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgNote_descriptor_;
   metadata.reflection = MsgNote_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgMeteoAttributes::kTemperatureFieldNumber;
+const int MsgMeteoAttributes::kWindSpeedFieldNumber;
+const int MsgMeteoAttributes::kWindDirectionFieldNumber;
+const int MsgMeteoAttributes::kCloudFloorFieldNumber;
+const int MsgMeteoAttributes::kCloudCeilingFieldNumber;
+const int MsgMeteoAttributes::kCloudDensityFieldNumber;
+const int MsgMeteoAttributes::kPrecipitationFieldNumber;
+#endif  // !_MSC_VER
+
+MsgMeteoAttributes::MsgMeteoAttributes() {
+  SharedCtor();
+}
+
+void MsgMeteoAttributes::InitAsDefaultInstance() {
+  wind_direction_ = const_cast< ::Common::MsgHeading*>(&::Common::MsgHeading::default_instance());
+}
+
+MsgMeteoAttributes::MsgMeteoAttributes(const MsgMeteoAttributes& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgMeteoAttributes::SharedCtor() {
+  _cached_size_ = 0;
+  temperature_ = 0;
+  wind_speed_ = 0;
+  wind_direction_ = NULL;
+  cloud_floor_ = 0;
+  cloud_ceiling_ = 0;
+  cloud_density_ = 0;
+  precipitation_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgMeteoAttributes::~MsgMeteoAttributes() {
+  SharedDtor();
+}
+
+void MsgMeteoAttributes::SharedDtor() {
+  if (this != default_instance_) {
+    delete wind_direction_;
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgMeteoAttributes::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgMeteoAttributes_descriptor_;
+}
+
+const MsgMeteoAttributes& MsgMeteoAttributes::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
+}
+
+MsgMeteoAttributes* MsgMeteoAttributes::default_instance_ = NULL;
+
+MsgMeteoAttributes* MsgMeteoAttributes::New() const {
+  return new MsgMeteoAttributes;
+}
+
+void MsgMeteoAttributes::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    temperature_ = 0;
+    wind_speed_ = 0;
+    if (_has_bit(2)) {
+      if (wind_direction_ != NULL) wind_direction_->::Common::MsgHeading::Clear();
+    }
+    cloud_floor_ = 0;
+    cloud_ceiling_ = 0;
+    cloud_density_ = 0;
+    precipitation_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgMeteoAttributes::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required int32 temperature = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &temperature_));
+        _set_bit(0);
+        if (input->ExpectTag(16)) goto parse_wind_speed;
+        break;
+      }
+      
+      // required int32 wind_speed = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_wind_speed:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &wind_speed_));
+        _set_bit(1);
+        if (input->ExpectTag(26)) goto parse_wind_direction;
+        break;
+      }
+      
+      // required .Common.MsgHeading wind_direction = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_wind_direction:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_wind_direction()));
+        if (input->ExpectTag(32)) goto parse_cloud_floor;
+        break;
+      }
+      
+      // required int32 cloud_floor = 4;
+      case 4: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_cloud_floor:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &cloud_floor_));
+        _set_bit(3);
+        if (input->ExpectTag(40)) goto parse_cloud_ceiling;
+        break;
+      }
+      
+      // required int32 cloud_ceiling = 5;
+      case 5: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_cloud_ceiling:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &cloud_ceiling_));
+        _set_bit(4);
+        if (input->ExpectTag(48)) goto parse_cloud_density;
+        break;
+      }
+      
+      // required int32 cloud_density = 6;
+      case 6: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_cloud_density:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &cloud_density_));
+        _set_bit(5);
+        if (input->ExpectTag(56)) goto parse_precipitation;
+        break;
+      }
+      
+      // required .Common.EnumPrecipitationType precipitation = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_precipitation:
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (Common::EnumPrecipitationType_IsValid(value)) {
+          set_precipitation(static_cast< Common::EnumPrecipitationType >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(7, value);
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgMeteoAttributes::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgMeteoAttributes::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required int32 temperature = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->temperature(), output);
+  }
+  
+  // required int32 wind_speed = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->wind_speed(), output);
+  }
+  
+  // required .Common.MsgHeading wind_direction = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      3, this->wind_direction(), output);
+  }
+  
+  // required int32 cloud_floor = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->cloud_floor(), output);
+  }
+  
+  // required int32 cloud_ceiling = 5;
+  if (_has_bit(4)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->cloud_ceiling(), output);
+  }
+  
+  // required int32 cloud_density = 6;
+  if (_has_bit(5)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->cloud_density(), output);
+  }
+  
+  // required .Common.EnumPrecipitationType precipitation = 7;
+  if (_has_bit(6)) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      7, this->precipitation(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgMeteoAttributes::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required int32 temperature = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->temperature(), target);
+  }
+  
+  // required int32 wind_speed = 2;
+  if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->wind_speed(), target);
+  }
+  
+  // required .Common.MsgHeading wind_direction = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->wind_direction(), target);
+  }
+  
+  // required int32 cloud_floor = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->cloud_floor(), target);
+  }
+  
+  // required int32 cloud_ceiling = 5;
+  if (_has_bit(4)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->cloud_ceiling(), target);
+  }
+  
+  // required int32 cloud_density = 6;
+  if (_has_bit(5)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->cloud_density(), target);
+  }
+  
+  // required .Common.EnumPrecipitationType precipitation = 7;
+  if (_has_bit(6)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      7, this->precipitation(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgMeteoAttributes::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required int32 temperature = 1;
+    if (has_temperature()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->temperature());
+    }
+    
+    // required int32 wind_speed = 2;
+    if (has_wind_speed()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->wind_speed());
+    }
+    
+    // required .Common.MsgHeading wind_direction = 3;
+    if (has_wind_direction()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->wind_direction());
+    }
+    
+    // required int32 cloud_floor = 4;
+    if (has_cloud_floor()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->cloud_floor());
+    }
+    
+    // required int32 cloud_ceiling = 5;
+    if (has_cloud_ceiling()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->cloud_ceiling());
+    }
+    
+    // required int32 cloud_density = 6;
+    if (has_cloud_density()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->cloud_density());
+    }
+    
+    // required .Common.EnumPrecipitationType precipitation = 7;
+    if (has_precipitation()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->precipitation());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgMeteoAttributes::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgMeteoAttributes* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMeteoAttributes*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgMeteoAttributes::MergeFrom(const MsgMeteoAttributes& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_temperature(from.temperature());
+    }
+    if (from._has_bit(1)) {
+      set_wind_speed(from.wind_speed());
+    }
+    if (from._has_bit(2)) {
+      mutable_wind_direction()->::Common::MsgHeading::MergeFrom(from.wind_direction());
+    }
+    if (from._has_bit(3)) {
+      set_cloud_floor(from.cloud_floor());
+    }
+    if (from._has_bit(4)) {
+      set_cloud_ceiling(from.cloud_ceiling());
+    }
+    if (from._has_bit(5)) {
+      set_cloud_density(from.cloud_density());
+    }
+    if (from._has_bit(6)) {
+      set_precipitation(from.precipitation());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgMeteoAttributes::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgMeteoAttributes::CopyFrom(const MsgMeteoAttributes& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgMeteoAttributes::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000007f) != 0x0000007f) return false;
+  
+  if (has_wind_direction()) {
+    if (!this->wind_direction().IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgMeteoAttributes::Swap(MsgMeteoAttributes* other) {
+  if (other != this) {
+    std::swap(temperature_, other->temperature_);
+    std::swap(wind_speed_, other->wind_speed_);
+    std::swap(wind_direction_, other->wind_direction_);
+    std::swap(cloud_floor_, other->cloud_floor_);
+    std::swap(cloud_ceiling_, other->cloud_ceiling_);
+    std::swap(cloud_density_, other->cloud_density_);
+    std::swap(precipitation_, other->precipitation_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgMeteoAttributes::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgMeteoAttributes_descriptor_;
+  metadata.reflection = MsgMeteoAttributes_reflection_;
   return metadata;
 }
 

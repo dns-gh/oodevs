@@ -19,6 +19,7 @@
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/protocol.h"
+#include "meteo/ReadDirections.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_OrderContext constructor
@@ -185,7 +186,7 @@ void MIL_OrderContext::ReadDirection( const Common::MsgMissionParameter& asn )
     if( !asn.value().has_heading() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( !asn.null_value() )
-        NET_ASN_Tools::ReadDirection( asn.value().heading(), dirDanger_ );
+        ReadDirections::ReadDirection( asn.value().heading(), dirDanger_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -65,21 +65,6 @@ typedef T_ObjectiveVector::const_iterator CIT_ObjectiveVector;
 //=============================================================================
 
 //-----------------------------------------------------------------------------
-// Name: NET_ASN_Tools::ReadDirection
-// Created: AGN 03-02-04
-//-----------------------------------------------------------------------------
-// static
-void NET_ASN_Tools::ReadDirection( const MsgHeading& asnDir, MT_Vector2D& vDir )
-{
-    vDir = MT_Vector2D( 0, 1 ); // North vector
-
-    MT_Float rRadAngle = asnDir.heading() * MT_PI / 180.;
-    vDir.Rotate( rRadAngle );
-    vDir.Normalize();
-    assert( !vDir.IsZero() );
-}
-
-//-----------------------------------------------------------------------------
 // Name: NET_ASN_Tools::ReadLocation
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------

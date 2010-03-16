@@ -199,6 +199,8 @@ class MsgKnowledgeGroupUpdate;
 class KnowledgeGroupAck;
 class MsgKnowledgeGroupCreationAck;
 class MsgKnowledgeGroupUpdateAck;
+class MsgControlGlobalMeteo;
+class MsgControlLocalMeteo;
 class MsgSimToClient;
 class MsgSimToClient_Content;
 
@@ -18784,6 +18786,196 @@ class MsgKnowledgeGroupUpdateAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgControlGlobalMeteo : public ::google::protobuf::Message {
+ public:
+  MsgControlGlobalMeteo();
+  virtual ~MsgControlGlobalMeteo();
+  
+  MsgControlGlobalMeteo(const MsgControlGlobalMeteo& from);
+  
+  inline MsgControlGlobalMeteo& operator=(const MsgControlGlobalMeteo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlGlobalMeteo& default_instance();
+  void Swap(MsgControlGlobalMeteo* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlGlobalMeteo* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlGlobalMeteo& from);
+  void MergeFrom(const MsgControlGlobalMeteo& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Common.MsgMeteoAttributes attributes = 1;
+  inline bool has_attributes() const;
+  inline void clear_attributes();
+  static const int kAttributesFieldNumber = 1;
+  inline const ::Common::MsgMeteoAttributes& attributes() const;
+  inline ::Common::MsgMeteoAttributes* mutable_attributes();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::MsgMeteoAttributes* attributes_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlGlobalMeteo* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgControlLocalMeteo : public ::google::protobuf::Message {
+ public:
+  MsgControlLocalMeteo();
+  virtual ~MsgControlLocalMeteo();
+  
+  MsgControlLocalMeteo(const MsgControlLocalMeteo& from);
+  
+  inline MsgControlLocalMeteo& operator=(const MsgControlLocalMeteo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlLocalMeteo& default_instance();
+  void Swap(MsgControlLocalMeteo* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlLocalMeteo* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlLocalMeteo& from);
+  void MergeFrom(const MsgControlLocalMeteo& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+  inline bool has_top_left_coordinate() const;
+  inline void clear_top_left_coordinate();
+  static const int kTopLeftCoordinateFieldNumber = 1;
+  inline const ::Common::MsgCoordLatLong& top_left_coordinate() const;
+  inline ::Common::MsgCoordLatLong* mutable_top_left_coordinate();
+  
+  // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+  inline bool has_bottom_right_coordinate() const;
+  inline void clear_bottom_right_coordinate();
+  static const int kBottomRightCoordinateFieldNumber = 2;
+  inline const ::Common::MsgCoordLatLong& bottom_right_coordinate() const;
+  inline ::Common::MsgCoordLatLong* mutable_bottom_right_coordinate();
+  
+  // optional .Common.MsgMeteoAttributes attributes = 3;
+  inline bool has_attributes() const;
+  inline void clear_attributes();
+  static const int kAttributesFieldNumber = 3;
+  inline const ::Common::MsgMeteoAttributes& attributes() const;
+  inline ::Common::MsgMeteoAttributes* mutable_attributes();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Common::MsgCoordLatLong* top_left_coordinate_;
+  ::Common::MsgCoordLatLong* bottom_right_coordinate_;
+  ::Common::MsgMeteoAttributes* attributes_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlLocalMeteo* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgSimToClient_Content : public ::google::protobuf::Message {
  public:
   MsgSimToClient_Content();
@@ -19670,6 +19862,20 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& action_create_fire_order_ack() const;
   inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* mutable_action_create_fire_order_ack();
   
+  // optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 120;
+  inline bool has_control_global_meteo() const;
+  inline void clear_control_global_meteo();
+  static const int kControlGlobalMeteoFieldNumber = 120;
+  inline const ::MsgsSimToClient::MsgControlGlobalMeteo& control_global_meteo() const;
+  inline ::MsgsSimToClient::MsgControlGlobalMeteo* mutable_control_global_meteo();
+  
+  // optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 121;
+  inline bool has_control_local_meteo() const;
+  inline void clear_control_local_meteo();
+  static const int kControlLocalMeteoFieldNumber = 121;
+  inline const ::MsgsSimToClient::MsgControlLocalMeteo& control_local_meteo() const;
+  inline ::MsgsSimToClient::MsgControlLocalMeteo* mutable_control_local_meteo();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -19793,11 +19999,13 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgKnowledgeGroupCreationAck* knowledge_group_creation_ack_;
   ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* knowledge_group_update_ack_;
   ::MsgsSimToClient::MsgActionCreateFireOrderAck* action_create_fire_order_ack_;
+  ::MsgsSimToClient::MsgControlGlobalMeteo* control_global_meteo_;
+  ::MsgsSimToClient::MsgControlLocalMeteo* control_local_meteo_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(119 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(121 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -29953,6 +30161,82 @@ inline void MsgKnowledgeGroupUpdateAck::set_error_code(::MsgsSimToClient::Knowle
 
 // -------------------------------------------------------------------
 
+// MsgControlGlobalMeteo
+
+// required .Common.MsgMeteoAttributes attributes = 1;
+inline bool MsgControlGlobalMeteo::has_attributes() const {
+  return _has_bit(0);
+}
+inline void MsgControlGlobalMeteo::clear_attributes() {
+  if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::MsgMeteoAttributes& MsgControlGlobalMeteo::attributes() const {
+  return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
+}
+inline ::Common::MsgMeteoAttributes* MsgControlGlobalMeteo::mutable_attributes() {
+  _set_bit(0);
+  if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
+  return attributes_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgControlLocalMeteo
+
+// optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+inline bool MsgControlLocalMeteo::has_top_left_coordinate() const {
+  return _has_bit(0);
+}
+inline void MsgControlLocalMeteo::clear_top_left_coordinate() {
+  if (top_left_coordinate_ != NULL) top_left_coordinate_->::Common::MsgCoordLatLong::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::MsgCoordLatLong& MsgControlLocalMeteo::top_left_coordinate() const {
+  return top_left_coordinate_ != NULL ? *top_left_coordinate_ : *default_instance_->top_left_coordinate_;
+}
+inline ::Common::MsgCoordLatLong* MsgControlLocalMeteo::mutable_top_left_coordinate() {
+  _set_bit(0);
+  if (top_left_coordinate_ == NULL) top_left_coordinate_ = new ::Common::MsgCoordLatLong;
+  return top_left_coordinate_;
+}
+
+// optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+inline bool MsgControlLocalMeteo::has_bottom_right_coordinate() const {
+  return _has_bit(1);
+}
+inline void MsgControlLocalMeteo::clear_bottom_right_coordinate() {
+  if (bottom_right_coordinate_ != NULL) bottom_right_coordinate_->::Common::MsgCoordLatLong::Clear();
+  _clear_bit(1);
+}
+inline const ::Common::MsgCoordLatLong& MsgControlLocalMeteo::bottom_right_coordinate() const {
+  return bottom_right_coordinate_ != NULL ? *bottom_right_coordinate_ : *default_instance_->bottom_right_coordinate_;
+}
+inline ::Common::MsgCoordLatLong* MsgControlLocalMeteo::mutable_bottom_right_coordinate() {
+  _set_bit(1);
+  if (bottom_right_coordinate_ == NULL) bottom_right_coordinate_ = new ::Common::MsgCoordLatLong;
+  return bottom_right_coordinate_;
+}
+
+// optional .Common.MsgMeteoAttributes attributes = 3;
+inline bool MsgControlLocalMeteo::has_attributes() const {
+  return _has_bit(2);
+}
+inline void MsgControlLocalMeteo::clear_attributes() {
+  if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
+  _clear_bit(2);
+}
+inline const ::Common::MsgMeteoAttributes& MsgControlLocalMeteo::attributes() const {
+  return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
+}
+inline ::Common::MsgMeteoAttributes* MsgControlLocalMeteo::mutable_attributes() {
+  _set_bit(2);
+  if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
+  return attributes_;
+}
+
+// -------------------------------------------------------------------
+
 // MsgSimToClient_Content
 
 // optional .MsgsSimToClient.MsgUnitOrderAck unit_order_ack = 1;
@@ -31976,6 +32260,40 @@ inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* MsgSimToClient_Content::m
   _set_bit(118);
   if (action_create_fire_order_ack_ == NULL) action_create_fire_order_ack_ = new ::MsgsSimToClient::MsgActionCreateFireOrderAck;
   return action_create_fire_order_ack_;
+}
+
+// optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 120;
+inline bool MsgSimToClient_Content::has_control_global_meteo() const {
+  return _has_bit(119);
+}
+inline void MsgSimToClient_Content::clear_control_global_meteo() {
+  if (control_global_meteo_ != NULL) control_global_meteo_->::MsgsSimToClient::MsgControlGlobalMeteo::Clear();
+  _clear_bit(119);
+}
+inline const ::MsgsSimToClient::MsgControlGlobalMeteo& MsgSimToClient_Content::control_global_meteo() const {
+  return control_global_meteo_ != NULL ? *control_global_meteo_ : *default_instance_->control_global_meteo_;
+}
+inline ::MsgsSimToClient::MsgControlGlobalMeteo* MsgSimToClient_Content::mutable_control_global_meteo() {
+  _set_bit(119);
+  if (control_global_meteo_ == NULL) control_global_meteo_ = new ::MsgsSimToClient::MsgControlGlobalMeteo;
+  return control_global_meteo_;
+}
+
+// optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 121;
+inline bool MsgSimToClient_Content::has_control_local_meteo() const {
+  return _has_bit(120);
+}
+inline void MsgSimToClient_Content::clear_control_local_meteo() {
+  if (control_local_meteo_ != NULL) control_local_meteo_->::MsgsSimToClient::MsgControlLocalMeteo::Clear();
+  _clear_bit(120);
+}
+inline const ::MsgsSimToClient::MsgControlLocalMeteo& MsgSimToClient_Content::control_local_meteo() const {
+  return control_local_meteo_ != NULL ? *control_local_meteo_ : *default_instance_->control_local_meteo_;
+}
+inline ::MsgsSimToClient::MsgControlLocalMeteo* MsgSimToClient_Content::mutable_control_local_meteo() {
+  _set_bit(120);
+  if (control_local_meteo_ == NULL) control_local_meteo_ = new ::MsgsSimToClient::MsgControlLocalMeteo;
+  return control_local_meteo_;
 }
 
 // -------------------------------------------------------------------

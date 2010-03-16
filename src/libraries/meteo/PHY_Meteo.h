@@ -12,9 +12,12 @@
 #ifndef __PHY_Meteo_h_
 #define __PHY_Meteo_h_
 
-#include "MIL.h"
+#include <boost/noncopyable.hpp>
+#include "MT_Tools/MT_Tools_Types.h"
+#include "MT_Tools/MT_Vector2D.h"
 
-namespace MsgsClientToSim
+
+namespace Common
 {
     class MsgMeteoAttributes;
 }
@@ -24,9 +27,10 @@ namespace xml
     class xistream;
 }
 
-class PHY_Ephemeride;
+
 class PHY_Precipitation;
 class PHY_Lighting;
+class MeteoManager_ABC;
 
 //*****************************************************************************
 // Created: JVT 03-08-05
@@ -43,8 +47,8 @@ public:
     };
 
 public:
-             PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride );
-    explicit PHY_Meteo( const MsgsClientToSim::MsgMeteoAttributes& );
+             PHY_Meteo( xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
+    explicit PHY_Meteo( const Common::MsgMeteoAttributes& );
 
     //-------------------------------------------------------------------------
     /** @name Creation / destruction */
@@ -54,25 +58,27 @@ public:
     void IncRef( unsigned int );
     void DecRef();
     void DecRef( unsigned int );
+    void SetListener( MeteoManager_ABC* );
     //@}
 
     //-------------------------------------------------------------------------
     /** @name Accessors */
     //-------------------------------------------------------------------------
     //@{
-    const PHY_Lighting&      GetLighting     () const;
     const PHY_Precipitation& GetPrecipitation() const;
+    const PHY_Lighting&      GetLighting     () const;
     const sWindData&         GetWind         () const;       
     //@}
 
     //! @name Operations
     //@{
-    void Update( const PHY_Ephemeride& );
-    void Update( const MsgsClientToSim::MsgMeteoAttributes& asn );
-    //@}
+    void Update( const Common::MsgMeteoAttributes& asn );
+     void Update( const PHY_Lighting& /*PHY_Ephemeride&*/ );
+     //@}
 
 private:
     ~PHY_Meteo();
+
    
 private:
     int                      nPlancherCouvertureNuageuse_;
@@ -83,6 +89,8 @@ private:
     const PHY_Precipitation* pPrecipitation_;
 
     unsigned int nRefCount_;
+    int conversionFactor_;
+    MeteoManager_ABC* listener_;
 };
 
 #include "PHY_Meteo.inl"

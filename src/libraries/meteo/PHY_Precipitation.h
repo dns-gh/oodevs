@@ -12,8 +12,10 @@
 #ifndef __PHY_Precipitation_h_
 #define __PHY_Precipitation_h_
 
-#include "MIL.h"
-#include "protocol/protocol.h"
+#include <boost/noncopyable.hpp>
+#include <map>
+#include "protocol/ClientSenders.h"
+#include "MT_tools/MT_Tools_Types.h"
 
 // =============================================================================
 // @class  PHY_Precipitation
@@ -42,8 +44,8 @@ public:
 
     //! @name Accessors
     //@{
-    const std::string&          GetName () const;
-    unsigned int                        GetID   () const;
+    const std::string&            GetName () const;
+    unsigned int                  GetID   () const;
     Common::EnumPrecipitationType GetAsnID() const;
     //@}
 

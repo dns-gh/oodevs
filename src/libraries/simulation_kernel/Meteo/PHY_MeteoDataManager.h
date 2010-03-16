@@ -6,6 +6,10 @@
 #define __PHY_MeteoDataManager_h_
 
 #include "MIL.h"
+#include "meteo/MeteoManager_ABC.h"
+#include "meteo/PHY_Precipitation.h"
+#include "meteo/PHY_Meteo.h"
+#include "PHY_Ephemeride.h"
 
 namespace MsgsClientToSim
 {
@@ -18,10 +22,9 @@ namespace xml
     class xistream;
 }
 
+
 class MIL_Config;
 class PHY_RawVisionData;
-class PHY_Ephemeride;
-class PHY_Meteo;
 class MT_Ellipse;
 class PHY_IndirectFireDotationClass;
 
@@ -29,7 +32,8 @@ class PHY_IndirectFireDotationClass;
 // Created: JVT 02-10-21
 // Last modified: JVT 04-03-25
 //*****************************************************************************
-class PHY_MeteoDataManager : private boost::noncopyable
+class PHY_MeteoDataManager : private boost::noncopyable,
+                             public MeteoManager_ABC
 {
     friend class PHY_Meteo; // For UnregisterMeteo
 
@@ -39,9 +43,10 @@ public:
     
     //! @name Raw Data management
     //@{
-    const PHY_RawVisionData& GetRawVisionData() const;
-    const PHY_Ephemeride&    GetEphemeride   () const;
-          void               Update          ( unsigned int date );
+    virtual const PHY_RawVisionData& GetRawVisionData() const;
+    virtual const PHY_Ephemeride&    GetEphemeride   () const;
+    virtual const PHY_Lighting&      GetLighting     () const;
+    virtual      void                Update          ( unsigned int date );
     //@}
 
     //! @name Weather effects
@@ -52,15 +57,15 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgGlobalMeteo( const MsgsClientToSim::MsgControlGlobalMeteo& asnMsg );
-    void OnReceiveMsgLocalMeteo ( const MsgsClientToSim::MsgControlLocalMeteo&  asnMsg );
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsClientToSim::MsgControlGlobalMeteo& msg );
+    virtual void OnReceiveMsgLocalMeteo ( const MsgsClientToSim::MsgControlLocalMeteo&  msg );
     //@}
 
 private:
     //! @name Registration
     //@{
-    void RegisterMeteo  ( PHY_Meteo& meteo );
-    void UnregisterMeteo( PHY_Meteo& meteo );
+    virtual void RegisterMeteo  ( PHY_Meteo& meteo );
+    virtual void UnregisterMeteo( PHY_Meteo& meteo );
     //@}
 
     //! @name Helpers
@@ -83,10 +88,10 @@ private:
     //@}
 
 private:
-    PHY_Ephemeride*     pEphemeride_;
-    PHY_Meteo*          pGlobalMeteo_;
+    PHY_Ephemeride*          pEphemeride_;
+    PHY_Meteo*               pGlobalMeteo_;
     T_MeteoSet          meteos_;    // Including global meteo
-    PHY_RawVisionData*  pRawData_;        
+    PHY_RawVisionData*  pRawData_; 
 };
 
 

@@ -17,19 +17,20 @@ namespace xml
     class xostream;
 }
 
-class MIL_EffectManager;
-class MIL_TacticalLineManager;
-class MIL_Agent_ABC;
-class MIL_CheckPointManager;
-class MIL_EntityManager;
+
 class DEC_Workspace;
 class DEC_PathFind_Manager;
+class MIL_Agent_ABC;
+class MIL_CheckPointManager;
+class MIL_EffectManager;
+class MIL_EntityManager;
+class HLA_Federate;
+class MIL_Folk;
+class MIL_ProfilerMgr;
+class MIL_TacticalLineManager;
 class NET_AgentServer;
 class PHY_MeteoDataManager;
-class MIL_ProfilerMgr;
-class HLA_Federate;
 class ProcessMonitor;
-class MIL_Folk;
 class UrbanModel;
 
 //*****************************************************************************
@@ -162,7 +163,7 @@ private:
     MIL_EntityManager*           pEntityManager_;
     DEC_Workspace*               pWorkspaceDIA_;
     PHY_MeteoDataManager*        pMeteoDataManager_;
-
+      
     MT_TimerManager              timerManager_;
     MIL_TacticalLineManager*     pTacticalLineManager_;
     DEC_PathFind_Manager*        pPathFindManager_;

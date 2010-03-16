@@ -1162,6 +1162,17 @@ message MsgKnowledgeGroupUpdateAck {
     required KnowledgeGroupAck.ErrorCode error_code = 2;
 }
 
+//meteo 
+message MsgControlGlobalMeteo {
+   required Common.MsgMeteoAttributes attributes = 1;
+}
+
+message MsgControlLocalMeteo {
+   optional Common.MsgCoordLatLong top_left_coordinate     = 1;
+   optional Common.MsgCoordLatLong bottom_right_coordinate = 2;
+   optional Common.MsgMeteoAttributes     attributes              = 3;
+}
+
 // Message container
 message MsgSimToClient {
     message Content {
@@ -1284,6 +1295,8 @@ message MsgSimToClient {
         optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 117;
         optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 118;
         optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 119;
+        optional MsgControlGlobalMeteo			                control_global_meteo						   = 120;
+        optional MsgControlLocalMeteo		                    control_local_meteo							   = 121;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

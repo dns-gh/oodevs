@@ -731,3 +731,15 @@ message MsgNote {
 }
 
 // LTO end
+
+// meteo
+message MsgMeteoAttributes {
+   required int32                        temperature     = 1;
+   required int32                        wind_speed      = 2;
+   required Common.MsgHeading            wind_direction  = 3;
+   required int32                        cloud_floor     = 4;
+   required int32                        cloud_ceiling   = 5;
+   required int32                        cloud_density   = 6;
+   required Common.EnumPrecipitationType precipitation   = 7;
+}
+

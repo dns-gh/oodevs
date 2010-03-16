@@ -9,8 +9,6 @@
 //
 // *****************************************************************************
 
-#include "simulation_kernel_pch.h"
-
 #include "PHY_Precipitation.h"
 
 PHY_Precipitation::T_PrecipitationMap PHY_Precipitation::precipitations_;
@@ -33,7 +31,7 @@ PHY_Precipitation PHY_Precipitation::smoke_    ( "Fumigene"          , eSmoke   
 // -----------------------------------------------------------------------------
 void PHY_Precipitation::Initialize()
 {
-    MT_LOG_INFO_MSG( "Initializing precipitations" );
+//    MT_LOG_INFO_MSG( "Initializing precipitations" );
     precipitations_[ none_     .GetName() ] = &none_;
     precipitations_[ sandStorm_.GetName() ] = &sandStorm_;
     precipitations_[ fog_      .GetName() ] = &fog_;

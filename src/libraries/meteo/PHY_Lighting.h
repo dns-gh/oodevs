@@ -12,7 +12,10 @@
 #ifndef __PHY_Lighting_h_
 #define __PHY_Lighting_h_
 
-#include "MIL.h"
+#include <boost/noncopyable.hpp>
+#include <map>
+#include "protocol/Protocol.h"
+#include "MT_tools/MT_Tools_Types.h"
 
 // =============================================================================
 // @class  PHY_Lighting
@@ -41,7 +44,7 @@ public:
     //! @name Accessors
     //@{
     const std::string& GetName() const;
-          unsigned int         GetID  () const;
+          unsigned int GetID  () const;
     //@}
 
     //! @name Operations

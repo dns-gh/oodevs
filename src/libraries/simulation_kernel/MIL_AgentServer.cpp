@@ -16,11 +16,11 @@
 #include "MIL_Folk.h"
 #include "UrbanModel.h"
 
+#include "CheckPoints/MIL_CheckPointManager.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "CheckPoints/MIL_CheckPointManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
 #include "Hla/HLA_Federate.h"
@@ -66,9 +66,9 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     , pCheckPointManager_      ( 0 )
     , pAgentServer_            ( 0 )
     , pFederate_               ( 0 )
-    , pProcessMonitor_         ( new ProcessMonitor() )
     , pFolk_                   ( new MIL_Folk( config ) )
     , pUrbanModel_             ( new UrbanModel( /*config*/ ) )
+    , pProcessMonitor_         ( new ProcessMonitor() )
 {
     assert( !pTheAgentServer_ );
     pTheAgentServer_ = this;
@@ -142,7 +142,7 @@ void MIL_AgentServer::ReadStaticData()
     MT_LOG_INFO_MSG( MT_FormatString( "Simulation acceleration factor : %d", nTimeFactor_ ) );    
         
     pAgentServer_ = new NET_AgentServer( config_, *this, *this );
-
+    
     ReadTerData();
     pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
     pWorkspaceDIA_     = new DEC_Workspace       ( config_ );

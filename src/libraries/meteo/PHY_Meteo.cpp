@@ -8,27 +8,24 @@
 // $Workfile: PHY_Meteo.cpp $
 //
 //*****************************************************************************
-
-#include "simulation_kernel_pch.h"
 #include "PHY_Meteo.h"
-#include "PHY_Ephemeride.h"
-#include "MIL_AgentServer.h"
-#include "Meteo/PHY_MeteoDataManager.h"
-#include "Meteo/PHY_Lighting.h"
-#include "Meteo/PHY_Precipitation.h"
-#include "Network/NET_ASN_Tools.h"
+#include "PHY_Lighting.h"
+#include "PHY_Precipitation.h"
+#include "MeteoManager_ABC.h"
 #include "protocol/SimulationSenders.h"
-#include "Tools/MIL_Tools.h"
+#include "ReadDirections.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
-    : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
-    , pPrecipitation_( &PHY_Precipitation::none_ )
-    , nRefCount_     ( 0 )
+PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Lighting& light, int conversionFactor )
+    : pLighting_        ( &PHY_Lighting::jourSansNuage_ )
+    , pPrecipitation_   ( &PHY_Precipitation::none_ )
+    , nRefCount_        ( 0 )
+    , conversionFactor_ ( conversionFactor )
 {
     unsigned int nVal;
     xis >> xml::start( "cloud-cover" )
@@ -46,10 +43,11 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
         >> xml::end();
     if( wind_.rWindSpeed_ < 0 )
         xis.error( "meteo: VitesseVent < 0" );
-    wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( wind_.rWindSpeed_ );
+
+        wind_.rWindSpeed_ = conversionFactor_ * /*MIL_Tools::ConvertSpeedMosToSim*/( wind_.rWindSpeed_ );
     if( nAngle < 0 || nAngle > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
-    NET_ASN_Tools::ReadDirection( heading, wind_.vWindDirection_ );
+    ReadDirections::ReadDirection( heading, wind_.vWindDirection_ );
 
     std::string strVal;
     xis >> xml::start( "precipitation" )
@@ -58,14 +56,14 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Ephemeride& ephemeride )
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( strVal );
     if( !pPrecipitation_ )
         xis.error( "Unknown Precipitation type '" + strVal + "'" );
-    Update( ephemeride );
+    Update( light );
 }
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( const MsgsClientToSim::MsgMeteoAttributes& asnMsg )
+PHY_Meteo::PHY_Meteo( const Common::MsgMeteoAttributes& asnMsg )
     : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
@@ -79,7 +77,9 @@ PHY_Meteo::PHY_Meteo( const MsgsClientToSim::MsgMeteoAttributes& asnMsg )
 //-----------------------------------------------------------------------------
 PHY_Meteo::~PHY_Meteo()
 {
-    MIL_AgentServer::GetWorkspace().GetMeteoDataManager().UnregisterMeteo( *this );
+
+    if( listener_ )
+        listener_->UnregisterMeteo( *this );;
     assert( nRefCount_ == 0 );
 }
 
@@ -87,39 +87,47 @@ PHY_Meteo::~PHY_Meteo()
 // Name: PHY_Meteo::Update
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::Update( const MsgsClientToSim::MsgMeteoAttributes& asnMsg )
+void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
 {
     // Plancher de couverture nuageuse
-    nPlancherCouvertureNuageuse_ = asnMsg.cloud_floor();
+    nPlancherCouvertureNuageuse_ = msg.cloud_floor();
 
     // Plafond de couverture nuageuse
-    nPlafondCouvertureNuageuse_ = asnMsg.cloud_ceiling();
+    nPlafondCouvertureNuageuse_ = msg.cloud_ceiling();
 
     // Densite moyenne de couverture nuageuse
-    rDensiteCouvertureNuageuse_ = std::min( std::max( asnMsg.cloud_density(), 0 ), 100 ) / 100.;
+    rDensiteCouvertureNuageuse_ = std::min( std::max( msg.cloud_density(), 0 ), 100 ) / 100.;
 
     // Vitesse du vent
-    wind_.rWindSpeed_ = MIL_Tools::ConvertSpeedMosToSim( asnMsg.wind_speed() );
+    wind_.rWindSpeed_ = conversionFactor_ * msg.wind_speed();
 
     // Direction du vent
-    NET_ASN_Tools::ReadDirection( asnMsg.wind_direction(), wind_.vWindDirection_ );
+    ReadDirections::ReadDirection( msg.wind_direction(), wind_.vWindDirection_ );
 
     // Précipitation
-    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( asnMsg.precipitation() );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
     if( !pPrecipitation_ )
     {
         assert( false );
         pPrecipitation_ = &PHY_Precipitation::none_;
     }
-
-    Update( MIL_AgentServer::GetWorkspace().GetMeteoDataManager().GetEphemeride() );
+    Update( listener_->GetLighting() );
 }
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo::Update
 // Created: JVT 03-08-07
 //-----------------------------------------------------------------------------
-void PHY_Meteo::Update( const PHY_Ephemeride& ephemeride )
+void PHY_Meteo::Update( const PHY_Lighting& light )
 {
-    pLighting_ = &ephemeride.GetLightingBase().GetDegradedLighting( (unsigned int)( rDensiteCouvertureNuageuse_ * ( nPlafondCouvertureNuageuse_ - nPlancherCouvertureNuageuse_ ) / 2000 ) );
+    pLighting_ = &light.GetDegradedLighting( (unsigned int)( rDensiteCouvertureNuageuse_ * ( nPlafondCouvertureNuageuse_ - nPlancherCouvertureNuageuse_ ) / 2000 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Meteo::SetListener
+// Created: HBD 2010-03-10
+// -----------------------------------------------------------------------------
+void PHY_Meteo::SetListener( MeteoManager_ABC* listener )
+{
+    listener_ = listener;
 }
