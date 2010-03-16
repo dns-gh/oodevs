@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -136,9 +137,11 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     , urbanBlockFactors_   ( ZurbType::GetZurbType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
+    , isLimitedToSensors_  ( false )
 {
-    InitializeAngle        ( xis );
-    InitializeDistances    ( xis );
+    InitializeAngle           ( xis );
+    InitializeLimitedToSensors( xis );
+    InitializeDistances       ( xis );
 
     xis >> xml::start( "distance-modifiers" );
 
@@ -174,6 +177,17 @@ void PHY_SensorTypeAgent::InitializeAngle( xml::xistream& xis )
         >> xml::attribute( "scanning", bScanningAllowed_ );
 
     rAngle_ *= ( MT_PI / 180. );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::InitializeLimitedToSensors
+// Created: JSR 2010-03-16
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeAgent::InitializeLimitedToSensors( xml::xistream& xis )
+{
+    xis >> xml::optional() >> xml::start( "limited-to-sensors" )
+            >> xml::list( "sensor", *this, &PHY_SensorTypeAgent::ReadLimitedToSensorsList )
+        >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
@@ -223,6 +237,20 @@ void PHY_SensorTypeAgent::ReadDistance( xml::xistream& xis )
     }
     else
         xis.error( "base-distance: unknow distance level" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ReadLimitedToSensorsList
+// Created: JSR 2010-03-16
+// -----------------------------------------------------------------------------
+void PHY_SensorTypeAgent::ReadLimitedToSensorsList( xml::xistream& xis )
+{
+    isLimitedToSensors_ = true;
+    std::string sensorTypeString;
+    xis >> xml::attribute( "name", sensorTypeString );
+    if( sensorTypeString == "" )
+        xis.error( "No sensor defined in limited-to-sensor list" );
+    limitedToSensorsList_.push_back( sensorTypeString );
 }
 
 // -----------------------------------------------------------------------------
@@ -346,6 +374,9 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) con
 // -----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
 {
+    if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target ) == false )
+        return 0;
+
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
 
     const unsigned int nOldPostureIdx = targetPosture.GetLastPosture   ().GetID();
@@ -362,12 +393,36 @@ MT_Float PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) con
 // -----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target ) const
 {
+    if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target.GetAgentKnown() ) == false )
+        return 0;
+
     const unsigned int nOldPostureIdx = target.GetLastPosture   ().GetID();
     const unsigned int nCurPostureIdx = target.GetCurrentPosture().GetID();
 
     assert( postureTargetFactors_.size() > nOldPostureIdx );
     assert( postureTargetFactors_.size() > nCurPostureIdx );
     return postureTargetFactors_[ nOldPostureIdx ] + target.GetPostureCompletionPercentage() * ( postureTargetFactors_[ nCurPostureIdx ] - postureTargetFactors_[ nOldPostureIdx ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ContainsSensorFromLimitedList
+// Created: JSR 2010-03-16
+// -----------------------------------------------------------------------------
+bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const
+{
+    const PHY_RoleInterface_Perceiver& targetPerceiver = target.GetRole< PHY_RoleInterface_Perceiver >();
+    const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = targetPerceiver.GetSurfacesAgent();
+    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+    {
+        const PHY_PerceptionSurfaceAgent& surface = itSurface->second;
+        const std::string& sensorName = surface.GetSensorTypeName();
+
+        for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
+            if( *it == sensorName )
+                return true;
+    }
+
+    return false;
 }
 
 //-----------------------------------------------------------------------------

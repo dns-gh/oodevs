@@ -209,6 +209,17 @@ bool PHY_PerceptionSurfaceAgent::IsInitialized()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::GetSensorTypeName
+// Created: JSR 2010-03-16
+// -----------------------------------------------------------------------------
+const std::string& PHY_PerceptionSurfaceAgent::GetSensorTypeName() const
+{
+    assert( pSensorType_ );
+
+    return pSensorType_->GetType().GetName();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionSurfaceAgent::operator=
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------

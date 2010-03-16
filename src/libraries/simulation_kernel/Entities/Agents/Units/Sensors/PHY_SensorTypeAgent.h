@@ -78,6 +78,7 @@ private:
     //! @name Init
     //@{
     void InitializeAngle             ( xml::xistream& xis );
+    void InitializeLimitedToSensors  ( xml::xistream& xis );
     void InitializeDistances         ( xml::xistream& xis );
     void InitializeEnvironmentFactors( xml::xistream& xis );
     void InitializePopulationFactors ( xml::xistream& xis );
@@ -99,14 +100,17 @@ private:
     MT_Float GetTargetFactor( const MIL_Agent_ABC&       target ) const;
     MT_Float GetTargetFactor( const DEC_Knowledge_Agent& target ) const;
 
+    bool ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const;
+
     MT_Float GetPopulationFactor( MT_Float rDensity ) const;
     //@}
 
     //! @name Helpers
     //@{
-    void ReadDistance       ( xml::xistream& xis );
-    void ReadTerrainModifier( xml::xistream& xis, unsigned int& visionObject );
-    void ReadUrbanBlockModifier( xml::xistream& xis, unsigned int& visionUrbanBlockMaterial );
+    void ReadDistance            ( xml::xistream& xis );
+    void ReadLimitedToSensorsList( xml::xistream& xis );
+    void ReadTerrainModifier     ( xml::xistream& xis, unsigned int& visionObject );
+    void ReadUrbanBlockModifier  ( xml::xistream& xis, unsigned int& visionUrbanBlockMaterial );
     //@}
 
 private:
@@ -132,7 +136,11 @@ private:
 
     // Population
     MT_Float rPopulationDensity_;
-    MT_Float rPopulationFactor_;    
+    MT_Float rPopulationFactor_;
+
+    // Limité aux autres capteurs
+    bool                       isLimitedToSensors_;
+    std::vector< std::string > limitedToSensorsList_;
 };
 
 #endif // __PHY_SensorTypeAgent_h_

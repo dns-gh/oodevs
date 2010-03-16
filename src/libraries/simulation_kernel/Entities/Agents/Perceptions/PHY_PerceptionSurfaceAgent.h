@@ -63,7 +63,8 @@ public:
 
     //! @name Accessors
     //@{
-    bool IsInitialized();
+    bool               IsInitialized();
+    const std::string& GetSensorTypeName() const;
     //@}
 
     //! @name Operators
