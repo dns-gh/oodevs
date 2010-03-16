@@ -20,8 +20,10 @@ using namespace dispatcher;
 // Created: AGE 2007-04-18
 // -----------------------------------------------------------------------------
 Fire::Fire( Model& , const MsgsSimToClient::MsgStartUnitFire& msg )
-    : SimpleEntity< > ( msg.fire_oid() )
-    , type_           ( msg.type() )    
+    : SimpleEntity< >  ( msg.fire_oid() )
+    , type_            ( msg.type() )
+    , oid_cible_       ( 0 )
+    , population_cible_( 0 )
 {
     oid_tir_.set_oid( msg.fire_oid() );
     tireur_.set_oid( msg.firer_oid() );
@@ -73,8 +75,10 @@ void Fire::SendCreation( ClientPublisher_ABC& publisher ) const
     }
     else
     {
-        asn().mutable_target()->set_unit( oid_cible_ );
-        asn().mutable_target()->set_population( population_cible_ );
+        if( oid_cible_ )
+            asn().mutable_target()->set_unit( oid_cible_ );
+        if( population_cible_ )
+            asn().mutable_target()->set_population( population_cible_ );
     }
     asn.Send( publisher );
 }
