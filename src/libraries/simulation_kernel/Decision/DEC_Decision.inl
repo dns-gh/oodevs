@@ -11,8 +11,11 @@
 #include "Decision/DEC_DataBase.h"
 #include "Decision/Functions/DEC_PathFunctions.h"
 #include "Entities/MIL_EntityManager.h"
+#include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
+#include "MIL_Singletons.h"
+#include "MIL_Time_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision constructor
@@ -274,6 +277,9 @@ template <class T>
 void DEC_Decision<T>::SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     pMission_ = pMission;
+    std::stringstream fullMessage;
+    fullMessage << "Tick " << MIL_Singletons::GetTime().GetCurrentTick() << " - " << pEntity_->GetName() << " [" << pEntity_->GetID() << "] : Mission received : " << pMission->GetName().c_str();
+    MT_LOG_INFO_MSG( fullMessage.str().c_str() );
 }
     
 // -----------------------------------------------------------------------------
