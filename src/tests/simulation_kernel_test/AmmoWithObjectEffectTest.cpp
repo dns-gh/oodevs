@@ -111,3 +111,4 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
     
     TER_World::DestroyWorld();    
 }
+

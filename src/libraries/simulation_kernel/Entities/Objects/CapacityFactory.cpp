@@ -12,6 +12,7 @@
 #include "ObjectPrototype.h"
 
 #include "ActivableCapacity.h"
+#include "AttitudeModifierCapacity.h"
 #include "AttritionCapacity.h"
 #include "AvoidanceCapacity.h"
 #include "BridgingCapacity.h"
@@ -29,7 +30,9 @@
 #include "IntoxicationCapacity.h"
 #include "InputPropagationCapacity.h"
 #include "MobilityCapacity.h"
+#include "PerceptionCapacity.h"
 #include "ProtectionCapacity.h"
+#include "ScatteringCapacity.h"
 #include "SpawnCapacity.h"
 #include "TerrainHeuristicCapacity.h"
 #include "TimeLimitedCapacity.h"
@@ -97,6 +100,9 @@ CapacityFactory::CapacityFactory()
     Register( "supply", boost::bind( &AddBuilder< SupplyCapacity >::Add, _1, _2 ) );
     Register( "detection", boost::bind( &AddBuilder< DetectionCapacity >::Add, _1, _2 ) );
     Register( "spawn", boost::bind( &AddBuilder< SpawnCapacity >::Add, _1, _2 ) );
+    Register( "perception", boost::bind( &AddBuilder< PerceptionCapacity >::Add, _1, _2 ) );
+    Register( "attitude-modifier", boost::bind( &AddBuilder< AttitudeModifierCapacity >::Add, _1, _2 ) );
+    Register( "scattering", boost::bind( &AddBuilder< ScatteringCapacity >::Add, _1, _2 ) );
 }
 
 // -----------------------------------------------------------------------------

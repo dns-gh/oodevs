@@ -127,6 +127,8 @@ public:
     void     FireOnPion    ( MT_Float rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
     MT_Float GetDangerosity( const MIL_AgentPion& target ) const;
     void     SetAttitude   ( const MIL_PopulationAttitude& attitude );
+    void     SetBlinded    ( bool blinded );
+    bool     IsBlinded     () const;
 
     MIL_PopulationElement_ABC* GetClosestAliveElement    ( const MIL_Agent_ABC& reference ) const;
     void                       ComputeClosestAliveElement( const MT_Vector2D& position, MIL_PopulationElement_ABC*& pClosestElement, MT_Float& rMinDistance ) const;
@@ -235,6 +237,7 @@ private:
           // Pion effects
           bool                       bPionMaxSpeedOverloaded_;
           MT_Float                   rOverloadedPionMaxSpeed_;
+          bool                       bBlinded_;
 
           // Misc
           bool                       bHasDoneMagicMove_;

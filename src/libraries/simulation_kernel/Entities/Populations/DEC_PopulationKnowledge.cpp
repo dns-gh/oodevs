@@ -12,16 +12,34 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PopulationKnowledge.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Populations/MIL_Population.h"
 #include "protocol/protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_PopulationKnowledge )
+
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const DEC_PopulationKnowledge* popKn, const unsigned int /*version*/ )
+{
+    const MIL_Population* const population = &popKn->population_;
+    archive << population;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, DEC_PopulationKnowledge* popKn, const unsigned int /*version*/ )
+{
+    MIL_Population* population;
+    archive >> population;
+    ::new( popKn )DEC_PopulationKnowledge( *population );
+}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PopulationKnowledge constructor
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------
-DEC_PopulationKnowledge::DEC_PopulationKnowledge()
-    : attackers_             ()
+DEC_PopulationKnowledge::DEC_PopulationKnowledge( const MIL_Population& population )
+    : population_            ( population )
+    , attackers_             ()
     , newAttackers_          ()
     , securers_              ()
     , newSecurers_           ()
@@ -99,9 +117,12 @@ void DEC_PopulationKnowledge::serialize( Archive& file, const unsigned int )
 void DEC_PopulationKnowledge::Update()
 {
     attackers_.clear();
-    std::swap( attackers_, newAttackers_ );
     securers_.clear();
-    std::swap( securers_, newSecurers_ );
+    if( !population_.IsBlinded() )
+    {
+        std::swap( attackers_, newAttackers_ );
+        std::swap( securers_, newSecurers_ );
+    }
     channelingLocations_.clear();
     std::swap( channelingLocations_, newChannelingLocations_ );
     bChannelingChanged_ = bNewChannelingChanged_;

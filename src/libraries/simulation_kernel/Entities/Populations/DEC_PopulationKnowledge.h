@@ -24,6 +24,7 @@ namespace Common
 
 class MIL_Agent_ABC;
 class MIL_AgentPion;
+class MIL_Population;
 
 // =============================================================================
 // @class  DEC_PopulationKnowledge
@@ -44,7 +45,7 @@ public:
     //@}
 
 public:
-     DEC_PopulationKnowledge();
+    DEC_PopulationKnowledge( const MIL_Population& population );
     virtual ~DEC_PopulationKnowledge();
 
     //! @name Main operations
@@ -86,6 +87,14 @@ public:
     //@}
 
 private:
+    //! @name CheckPoints
+    //@{
+    template< typename Archive > friend  void save_construct_data( Archive& archive, const DEC_PopulationKnowledge* role, const unsigned int /*version*/ );
+    template< typename Archive > friend  void load_construct_data( Archive& archive, DEC_PopulationKnowledge* role, const unsigned int /*version*/ );
+    //@}
+
+private:
+    const MIL_Population& population_;
     T_AgentSet attackers_; 
     T_AgentSet newAttackers_;
 

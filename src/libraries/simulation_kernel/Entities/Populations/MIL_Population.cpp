@@ -73,15 +73,15 @@ MIL_Population::MIL_Population( xml::xistream& xis, const MIL_PopulationType& ty
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
+    , bBlinded_               ( false )
 {
-
     std::string strAttitude;
     xis >> xml::attribute( "attitude", strAttitude );
     pDefaultAttitude_ = MIL_PopulationAttitude::Find( strAttitude );
     if( !pDefaultAttitude_ )
         xis.error( "Unknown attitude" );
 
-    pKnowledge_ = new DEC_PopulationKnowledge();
+    pKnowledge_ = new DEC_PopulationKnowledge( *this );
     RegisterRole( *new DEC_PopulationDecision( *this, database ) );
     RegisterRole( *new DEC_Representations() );
 
@@ -101,15 +101,16 @@ MIL_Population::MIL_Population(const MIL_PopulationType& type )
     , pType_                  ( &type )
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
-    , pDefaultAttitude_       ( 0 )
+    , pDefaultAttitude_       ( MIL_PopulationAttitude::Find( "calme" ) )
     , rPeopleCount_           ( 0. )
     , pKnowledge_             ( 0 )
     , orderManager_           ( *this )
     , bPionMaxSpeedOverloaded_( false )
     , rOverloadedPionMaxSpeed_( 0. )
     , bHasDoneMagicMove_      ( false )
+    , bBlinded_               ( false )
 {
-    pKnowledge_ = new DEC_PopulationKnowledge();
+    pKnowledge_ = new DEC_PopulationKnowledge( *this );
 }
 
 // =============================================================================
@@ -1216,4 +1217,22 @@ void MIL_Population::ResetPionMaxSpeed()
 bool MIL_Population::HasDoneMagicMove() const
 {
     return bHasDoneMagicMove_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::SetBlinded
+// Created: MGD 2010-03-15
+// -----------------------------------------------------------------------------
+void MIL_Population::SetBlinded( bool blinded )
+{
+    bBlinded_ = blinded;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::IsBlinded
+// Created: MGD 2010-03-15
+// -----------------------------------------------------------------------------
+bool MIL_Population::IsBlinded() const
+{
+    return bBlinded_;
 }

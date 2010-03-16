@@ -15,6 +15,7 @@
 //struct MsgLocation;
 
 #include "simulation_kernel/Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
+#include "simulation_kernel/Decision/DEC_Model.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
@@ -36,7 +37,17 @@
 #include "simulation_kernel/Entities/Objects/ObstacleAttribute.h"
 #include "simulation_kernel/Entities/Objects/TimeLimitedAttribute.h"
 #include "simulation_kernel/Entities/Objects/MineAttribute.h"
+#include "simulation_kernel/Entities/Orders/MIL_Mission_ABC.h"
+#include "simulation_kernel/Entities/Populations/MIL_PopulationConcentration.h"
+#include "simulation_kernel/Entities/Populations/MIL_PopulationAttitude.h"
 
+#include "simulation_terrain/TER_World.h"
+
+#include "StubMIL_Population.h"
+#include "StubMIL_PopulationType.h"
+
+
+#include "MockNET_Publisher_ABC.h"
 #include "MockBuilder.h"
 #include "MockArmy.h"
 #include "MockAgent.h"
@@ -509,3 +520,150 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Mine )
 
     army.verify();
 }
+
+// -----------------------------------------------------------------------------
+// Name: VerifyObjectCapacity_InteractionAttitudeModifier
+// Created: MGD 2010-03-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
+{
+    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    MockNET_Publisher_ABC mockPublisher;
+
+    {
+        mockPublisher.Send_mocker.expects( atLeastOnce() );
+        MIL_PopulationAttitude::Initialize();
+        MIL_ObjectLoader loader;
+        {
+            xml::xistringstream xis( "<objects>"
+                    "<object id='1' name='zone paralysante' type='paralyzing area'>"
+                        "<attitude-modifier attitude='agressive'/>"
+                    "</object>"
+                "</objects>"
+                );
+
+            loader.Initialize( xis );
+        }
+
+        const MIL_ObjectType_ABC& type = loader.GetType( "paralyzing area" );
+        MockArmy army;
+        MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
+
+        MIL_Object_ABC* object = CreateObject( type, army, loader );
+        
+        xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
+        xis.start( "main" );
+        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+        StubMIL_PopulationType popuType( model );
+        StubMIL_Population population( popuType );
+        
+        xml::xistringstream xisConcentration( "<population attitude='calme' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+        xisConcentration.start( "population" );
+        MIL_PopulationConcentration concentration( population, xisConcentration );
+
+        BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("calme") );
+        object->ProcessPopulationInside( concentration );
+        BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("agressive") );
+    }
+
+    TER_World::DestroyWorld();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: VerifyObjectCapacity_InteractionPerception
+// Created: MGD 2010-03-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
+{
+    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    MockNET_Publisher_ABC mockPublisher;
+    {
+        mockPublisher.Send_mocker.expects( atLeastOnce() );
+        MIL_PopulationAttitude::Initialize();
+        MIL_ObjectLoader loader;
+        {
+            xml::xistringstream xis( "<objects>"
+                "<object id='1' name='zone aveuglante' type='blinding area'>"
+                    "<perception blinded='true'/>"
+                "</object>"
+                "</objects>"
+                );
+
+            loader.Initialize( xis );
+        }
+
+        const MIL_ObjectType_ABC& type = loader.GetType( "blinding area" );
+        MockArmy army;
+        MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
+
+        MIL_Object_ABC* object = CreateObject( type, army, loader );
+
+        xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
+        xis.start( "main" );
+        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+        StubMIL_PopulationType popuType( model );
+        StubMIL_Population population( popuType );
+
+        xml::xistringstream xisConcentration( "<population attitude='agressive' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+        xisConcentration.start( "population" );
+        MIL_PopulationConcentration concentration( population, xisConcentration );
+
+        BOOST_CHECK( !population.IsBlinded() );
+        object->ProcessPopulationInside( concentration );
+        BOOST_CHECK( population.IsBlinded() );
+    }
+
+    TER_World::DestroyWorld();    
+}
+
+// -----------------------------------------------------------------------------
+// Name: VerifyObjectCapacity_InteractionPerception
+// Created: MGD 2010-03-16
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
+{
+    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+    MockNET_Publisher_ABC mockPublisher;
+    
+    {
+        mockPublisher.Send_mocker.expects( atLeastOnce() );
+        MIL_PopulationAttitude::Initialize();
+        MIL_ObjectLoader loader;
+        {
+            xml::xistringstream xis( "<objects>"
+                "<object id='1' name='zone dispercante' type='scattering area'>"
+                    "<scattering human-by-time-step='30'/>"
+                "</object>"
+                "</objects>"
+                );
+
+            loader.Initialize( xis );
+        }
+
+        const MIL_ObjectType_ABC& type = loader.GetType( "scattering area" );
+        MockArmy army;
+        MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
+
+        MIL_Object_ABC* object = CreateObject( type, army, loader );
+
+        xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
+        xis.start( "main" );
+        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+        DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+        StubMIL_PopulationType popuType( model );
+        StubMIL_Population population( popuType );
+
+        xml::xistringstream xisConcentration( "<population attitude='agressive' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+        xisConcentration.start( "population" );
+        MIL_PopulationConcentration concentration( population, xisConcentration );
+
+        unsigned int before = concentration.GetNbrHumans();
+        object->ProcessPopulationInside( concentration );
+        BOOST_CHECK( before > concentration.GetNbrHumans() );
+    }
+
+    TER_World::DestroyWorld();    
+}
+
