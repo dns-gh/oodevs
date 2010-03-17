@@ -32,16 +32,12 @@ public:
     virtual ~PHY_DecisionCallbackAction_ABC();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Stop();
-    //@}
-
 protected:
     //! @name Operations
     //@{
     template< typename T > void Callback( T );
     void CallbackKnowledge( boost::shared_ptr< DEC_Knowledge_Object > id );
+    virtual void StopAction() = 0;
     //@}
 
 private:
@@ -49,6 +45,11 @@ private:
     //@{
     PHY_DecisionCallbackAction_ABC( const PHY_DecisionCallbackAction_ABC& );            //!< Copy constructor
     PHY_DecisionCallbackAction_ABC& operator=( const PHY_DecisionCallbackAction_ABC& ); //!< Assignment operator
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Stop();
     //@}
 
 private:

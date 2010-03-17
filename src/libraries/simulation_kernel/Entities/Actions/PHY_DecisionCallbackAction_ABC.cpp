@@ -37,6 +37,7 @@ PHY_DecisionCallbackAction_ABC::~PHY_DecisionCallbackAction_ABC()
 // -----------------------------------------------------------------------------
 void PHY_DecisionCallbackAction_ABC::Stop()
 {
+    StopAction();
     decision_.RemoveCallback( GetId() );
 }
 
