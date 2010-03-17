@@ -47,7 +47,6 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     for( int i = 0; i < (int)kernel::eNbrLightingType; ++i )
         lighting_->AddItem( tools::ToString( (kernel::E_LightingType)i ), (kernel::E_LightingType)i );
 
-    globalWeather_ = new WeatherWidget( this, tr( "Global weather" ) );
     QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Local weather" ), this );
     localWeathers_ = new LocalWeathersList( localGroup, converter );
     localWeatherBox_ = new QVBox( localGroup );
@@ -87,7 +86,6 @@ void WeatherPanel::NotifyUpdated( const WeatherModel& model )
     sunrise_->setTime( currentModel_->sunrise_ );
     sunset_ ->setTime( currentModel_->sunset_  );
     lighting_->SetCurrentItem( currentModel_->lighting_ );
-    globalWeather_->Update( *currentModel_->globalWeather_ );
     localWeathers_->Update( *currentModel_ );
     Show();
 }
@@ -114,7 +112,6 @@ void WeatherPanel::Commit()
     currentModel_->sunrise_  = sunrise_->time();
     currentModel_->sunset_   = sunset_ ->time();
     currentModel_->lighting_ = lighting_->GetValue();
-    globalWeather_->CommitTo( *currentModel_->globalWeather_ );
     localWeathers_->CommitTo( *currentModel_ );
 }
 

@@ -83,7 +83,6 @@ private:
     QTimeEdit* sunrise_;
     QTimeEdit* sunset_;
     gui::ValuedComboBox< kernel::E_LightingType >* lighting_;
-    WeatherWidget* globalWeather_;
     QVBox* localWeatherBox_;
     LocalWeathersList* localWeathers_;
     LocalWeather* selectedLocal_;

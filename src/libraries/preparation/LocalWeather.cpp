@@ -20,6 +20,7 @@ namespace
     unsigned int localCounter_ = 1;
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: LocalWeather constructor
 // Created: SBO 2006-12-20

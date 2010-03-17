@@ -948,7 +948,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Global weather</source>
-        <translation>Météo du théatre</translation>
+        <translation type="obsolete">Météo du théatre</translation>
     </message>
     <message>
         <source>Local weather</source>
@@ -984,6 +984,14 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Weather type:</source>
         <translation>Type de temps:</translation>
+    </message>
+    <message>
+        <source>Start time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End time:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
