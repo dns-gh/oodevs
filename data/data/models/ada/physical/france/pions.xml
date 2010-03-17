@@ -10360,6 +10360,14 @@
       <crew-rank count="1" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="10" logistic-threshold="25" name="LTO Obus brouillage" normalized-consumption="0"/>
+        <dotation capacity="10" logistic-threshold="25" name="LTO Obus paralysant" normalized-consumption="0"/>
+        <dotation capacity="10" logistic-threshold="25" name="LTO Obus aveuglant" normalized-consumption="0"/>
+        <dotation capacity="10" logistic-threshold="25" name="LTO Obus dispercant" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
