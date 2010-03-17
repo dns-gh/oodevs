@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="net.masagroup.sword.military.world.Compagnie">
-  <description>Compagnie</description>
-    <realizes>directia.core.model.RoleBody</realizes>
-    <methods/>
-</class>

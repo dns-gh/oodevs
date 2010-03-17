@@ -1015,4 +1015,10 @@
   <automat decisional-model="GTIA" id="640" name="GTIA" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="Peloton LECLERC CDT ESC"/>
   </automat>
+  <automat decisional-model="net.masagroup.sword.military.roles.Compagnie" id="641" name="Proto SGTIA" type="Automate SGTIA">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="Proto Section CBT INF VAB CDS OFF"/>
+    <unit max-occurs="2" min-occurs="2" type="Proto Section CDT CIE INF VAB"/>
+    <unit max-occurs="2" min-occurs="2" type="Proto Peloton LECLERC CDP OFF"/>
+    <unit max-occurs="2" min-occurs="0" type="Proto Section de Tir AUF1 CDS OFF"/>
+  </automat>
 </automats>

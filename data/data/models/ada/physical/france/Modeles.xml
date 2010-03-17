@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Models.xsd">
   <units>
+    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Section">
+      <missions>
+        <mission name="Follow"/>
+        <mission name="Load"/>
+        <mission name="Mount"/>
+        <mission name="MoveToPoint">
+          <fragorder name="Illuminate"/>
+        </mission>
+        <mission name="MoveToPolygon"/>
+        <mission name="MoveToAutomate"/>
+        <mission name="MoveToAgent"/>
+        <mission name="MoveToAgentKnowledge"/>
+        <mission name="MoveToObjectKnowledge"/>
+        <mission name="MoveToPointList"/>
+        <mission name="MoveToPolygonList"/>
+        <mission name="MoveToAutomateList"/>
+        <mission name="MoveToAgentList"/>
+        <mission name="MoveToAgentKnowledgeList"/>
+        <mission name="MoveToObjectKnowledgeList"/>
+        <mission name="MoveToUrbanBlock"/>
+        <mission name="DestroyAgents"/>
+        <mission name="NeutralizeAgents"/>
+        <mission name="ObserveAndReconnoiterPoint"/>
+        <mission name="ObserveAndReconnoiterUrbanBlock"/>
+        <mission name="ObservePoint"/>
+        <mission name="ObserveUrbanBlock"/>
+        <mission name="ObserveAgent"/>
+        <mission name="ObserveObject"/>
+        <mission name="ReconnoiterUrbanBlock"/>
+        <mission name="ReconnoiterPoint"/>
+        <mission name="IdentifyAgent"/>
+        <mission name="MoveAndObserve"/>
+        <mission name="SeekAndDestroy"/>
+        <mission name="EngageAgents"/>
+        <mission name="Safeguard"/>
+        <mission name="Flee"/>
+        <mission name="SelfProtect"/>
+      </missions>
+    </unit>
+    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">
+      <missions>
+        <mission name="DeployOnPosition">
+          <fragorder name="ApplyFire"/>
+          <fragorder name="ApplyGuidedFire"/>
+        </mission>
+      </missions>
+    </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">
       <missions>
         <mission name="JOINT AIR Effectuer Raid"/>
@@ -2842,6 +2889,12 @@
     </unit>
   </units>
   <automats>
+    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.Compagnie">
+      <missions>
+        <mission name="GiveOrderMoveToUrbanBlock"/>
+        <mission name="GiveOrderMoveToPoint"/>
+      </missions>
+    </automat>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" name="Groupe Assaut AIR">
       <missions>
         <mission name="Faire Mouvement"/>

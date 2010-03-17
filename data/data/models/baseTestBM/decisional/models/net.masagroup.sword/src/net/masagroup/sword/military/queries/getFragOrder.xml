@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<query name="net.masagroup.sword.military.queries.getFragOrder" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<parameters/>
-	<target name="fragOrder">
-		<type>
-			<class name="net.masagroup.sword.military.knowledge.FragOrder"/>
-		</type>
-	</target>
-</query>

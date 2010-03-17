@@ -57,7 +57,7 @@ private:
     void InitializeObjectNames ( MIL_Config& config );
     void InitializeMissions    ( MIL_Config& config );
     void InitializeDIA         ( MIL_Config& config );
-    void InitializeModels      ( MIL_Config& config, const std::string& strSourcePath );   
+    void InitializeModels      ( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths );   
     //@}
 
 private:
@@ -71,7 +71,8 @@ private:
 
     //! @name Helpers
     //@{
-    void ReadModel( xml::xistream& xis, const std::string& strBinaryPath, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes );
+    void RegisterSourcePath( xml::xistream& xis, MIL_Config& config, std::map< std::string, std::string >& paths );
+    void ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes );
     //@}
 
 private:

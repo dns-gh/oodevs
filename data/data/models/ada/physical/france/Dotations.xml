@@ -1563,4 +1563,37 @@
   <dotation category="Rechange NTI 3 glaise" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="136" name="piece" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <dotation category="Vivre" codeEMAT6="Vivre" codeEMAT8="Vivre" codeLFRIL="Vivre" codeNNO="Vivre" id="137" name="ration" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
   <dotation category="Eau" codeEMAT6="Eau" codeEMAT8="Eau" codeLFRIL="Eau" codeNNO="Eau" id="138" name="ration" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
+  <dotation category="LTO Obus 155 OE CCR F1 GUIDED" codeEMAT6="" codeEMAT8="1320-300" codeLFRIL="" codeNNO="" d-type="true" id="139" name="munition" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
+    <guided maintain="false" range="1000"/>
+    <attritions>
+      <attrition destruction="0.05" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
+      <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>
+      <attrition destruction="0.15" protection="BlindeLeger" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
+      <attrition destruction="0.15" protection="TransportBlinde" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
+      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
+      <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
+      <ph target-posture="Mouvement" value="0.3"/>
+      <ph target-posture="MouvementDiscret" value="0.3"/>
+      <ph target-posture="Arret" value="0.6"/>
+      <ph target-posture="PosteReflexe" value="0.6"/>
+      <ph target-posture="Poste" value="0.5"/>
+      <ph target-posture="PosteAmenage" value="0.3"/>
+      <ph target-posture="PostePrepareGenie" value="0.1"/>
+    </indirect-fire>
+  </dotation>
+    <dotation category="LTO Charg 5,56 Illuminating" codeEMAT6="" codeEMAT8="1305-054" codeLFRIL="" codeNNO="" id="140" name="munition" nature="Solide" package-mass="0.021" package-size="1300" package-volume="0.018" type="Mitraille">
+    <illuminating maintain="false" range="1000"/>
+    <attritions>
+      <attrition destruction="0" protection="CharLourd" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="CharMoyen" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+      <attrition destruction="0" protection="BlindeLeger" repairable-with-evacuation="0.1" repairable-without-evacuation="0.5"/>
+      <attrition destruction="0" protection="TransportBlinde" repairable-with-evacuation="0.1" repairable-without-evacuation="0.5"/>
+      <attrition destruction="0" protection="Aeronef" repairable-with-evacuation="0.3" repairable-without-evacuation="0.7"/>
+      <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.7"/>
+      <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
+    </attritions>
+  </dotation>
 </dotations>

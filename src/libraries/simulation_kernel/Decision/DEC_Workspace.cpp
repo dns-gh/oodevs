@@ -36,6 +36,8 @@
 #include <xeumeuleu/xml.h>
 #include "tools/InputBinaryStream.h"
 #include <boost/filesystem/operations.hpp>
+#include <boost/algorithm/string.hpp>
+
 
 
 #include <sys/stat.h>
@@ -157,14 +159,15 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     xml::xifstream xis( strDecFile );
     config.AddFileToCRC( strDecFile );
     xis >> xml::start( "decisional" );
-    std::string strSourcePath;
-    xis >> xml::content( "RepertoireSources" , strSourcePath );
-    strSourcePath = config.BuildDecisionalChildFile( strSourcePath );
+    std::map< std::string, std::string > strSourcePaths;
+    xis >> xml::start( "RepertoiresSources" )
+            >> xml::list( "RepertoireSources" , *this, &DEC_Workspace::RegisterSourcePath, config, strSourcePaths )
+        >> xml::end();
 
     MIL_ParameterType_ABC    ::Initialize   ();
 
     InitializeMissions( config );
-    InitializeModels  ( config, strSourcePath );
+    InitializeModels  ( config, strSourcePaths );
 
     // Debugger
     if( config.UseDiaDebugger() )
@@ -176,13 +179,26 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
     if( xis.has_child( "BMDatabase" ) )
     {
         xis >> xml::start( "BMDatabase" );
-        dataBase_.reset( new DEC_DataBase( xis, strSourcePath ) );
+        dataBase_.reset( new DEC_DataBase( xis, strSourcePaths["net.masagroup"] ) );
         xis >> xml::end();
     }
     else
     {
         dataBase_.reset( new DEC_DataBase( std::vector< std::string >(), std::vector< const std::string >() ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Workspace::RegisterSourcePath
+// Created: MGD 2010-03-17
+// -----------------------------------------------------------------------------
+void DEC_Workspace::RegisterSourcePath( xml::xistream& xis, MIL_Config& config, std::map< std::string, std::string >& paths )
+{
+    std::string nameSpace, dir;
+    xis >> xml::attribute( "namespace", nameSpace )
+        >> xml::attribute( "directory", dir );
+
+    paths.insert( std::pair< std::string, std::string >( nameSpace, config.BuildDecisionalChildFile( dir ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -215,7 +231,7 @@ void DEC_Workspace::InitializeMissions( MIL_Config& config )
 // Name: DEC_Workspace::InitializeModels
 // Created: NLD 2004-09-03
 // -----------------------------------------------------------------------------
-void DEC_Workspace::InitializeModels( MIL_Config& config, const std::string& strSourcePath )
+void DEC_Workspace::InitializeModels( MIL_Config& config, const std::map< std::string, std::string >& strSourcePaths )
 {
     xml::xifstream xis( config.GetPhysicalFile() );
 
@@ -237,19 +253,19 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::string& str
     // Pions
     MT_LOG_INFO_MSG( "Initializing unit DIA models" );
     xisModels >> xml::start( "units" )
-                >> xml::list( "unit", *this, &DEC_Workspace::ReadModel, strSourcePath, strUnits, MIL_PionMissionType::MissionNames() )
+                >> xml::list( "unit", *this, &DEC_Workspace::ReadModel, strSourcePaths, strUnits, MIL_PionMissionType::MissionNames() )
               >> xml::end();
 
     // Automates
     MT_LOG_INFO_MSG( "Initializing automat DIA models" );
     xisModels >> xml::start( "automats" )
-                  >> xml::list( "automat", *this, &DEC_Workspace::ReadModel, strSourcePath, strAutomats, MIL_AutomateMissionType::MissionNames() )
+                  >> xml::list( "automat", *this, &DEC_Workspace::ReadModel, strSourcePaths, strAutomats, MIL_AutomateMissionType::MissionNames() )
               >> xml::end();
 
     // Populations
     MT_LOG_INFO_MSG( "Initializing population DIA models" );
     xisModels >> xml::start( "populations" )
-                  >> xml::list( "population", *this, &DEC_Workspace::ReadModel, strSourcePath, strPopulation, MIL_PopulationMissionType::MissionNames() )
+                  >> xml::list( "population", *this, &DEC_Workspace::ReadModel, strSourcePaths, strPopulation, MIL_PopulationMissionType::MissionNames() )
               >> xml::end();
 
     xisModels >> xml::end(); // models
@@ -259,7 +275,7 @@ void DEC_Workspace::InitializeModels( MIL_Config& config, const std::string& str
 // Name: DEC_Workspace::ReadModel
 // Created: RDS 2008-05-21
 // -----------------------------------------------------------------------------
-void DEC_Workspace::ReadModel( xml::xistream& xis, const std::string& strSourcePath, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes )
+void DEC_Workspace::ReadModel( xml::xistream& xis, const std::map< std::string, std::string >& strSourcePaths, const std::string& strEntityType, const T_MissionTypeNameMap& missionTypes )
 {
     std::string strName;
     xis >> xml::attribute( "name", strName );
@@ -270,7 +286,22 @@ void DEC_Workspace::ReadModel( xml::xistream& xis, const std::string& strSourceP
     const DEC_Model_ABC*& pModel = (*pModels)[ strName ];
     if( pModel )
         xis.error( "Duplicate model name" );
-    pModel = new DEC_Model( strName, xis, strSourcePath, strEntityType, missionTypes );
+
+
+    //Extract namespace from name
+    std::vector<std::string> namespaceComponent;
+    boost::split( namespaceComponent, strName, boost::is_any_of( "." ) );
+
+    //Key base on two first part
+    std::string key = "none";
+    if( namespaceComponent.size() >= 2 )
+        key = namespaceComponent[0] + "." + namespaceComponent[1];
+
+    const std::map< std::string, std::string >::const_iterator itFind = strSourcePaths.find( key );
+    if( itFind == strSourcePaths.end() )
+        xis.error( "Model name correspond to an unknown namespace" );
+
+    pModel = new DEC_Model( strName, xis, itFind->second, strEntityType, missionTypes );
 }
 
 //-----------------------------------------------------------------------------

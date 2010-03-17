@@ -1,7 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <decisional>
     <RepertoireBinaires>Binaires</RepertoireBinaires>
-    <RepertoireSources>bms/sources</RepertoireSources>
+    <RepertoiresSources>
+      <RepertoireSources namespace="none" directory="bms/sources"/>
+      <RepertoireSources namespace="net.masagroup" directory="directia5"/>
+    </RepertoiresSources>
     <DIATypes>Common/Types.hal</DIATypes>
     <DIAWorkspace>Common/Moteur/Workspace.hal</DIAWorkspace>
+    <BMDatabase>
+      <RepertoiresBM>
+        <Repertoire>directia5/models/libs/base</Repertoire>
+        <Repertoire>directia5/models/libs/core</Repertoire>
+        <Repertoire>directia5/models/net.masagroup.sword</Repertoire>
+      </RepertoiresBM>
+      <Knowledges>
+        <Knowledge>net.masagroup.sword.military.world.Area</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.Compagnie</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.Object</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.Point</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.Section</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.UrbanBlock</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.FragOrder</Knowledge>
+      </Knowledges>
+    </BMDatabase>
 </decisional>
