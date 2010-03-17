@@ -43,10 +43,10 @@ void MeteoModel::UnregisterMeteo( PHY_Meteo& meteo)
 // Name: MeteoModel::GetLighting
 // Created: HBD 2010-03-10
 // -----------------------------------------------------------------------------
-//const PHY_Lighting& MeteoModel::GetLighting() const
-//{
-//    PHY_Lighting* toto = new PHY_Lighting();
-//}
+const PHY_Lighting& MeteoModel::GetLighting() const
+{
+    return pGlobalMeteo_->GetLighting();
+}
 
 // -----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo
@@ -79,4 +79,13 @@ void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalM
         RegisterMeteo( *pTmp );
     }
 //    RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MeteoModel::RegisterMeteo
+// Created: HBD 2010-03-17
+// -----------------------------------------------------------------------------
+void MeteoModel::RegisterMeteo( PHY_Meteo& )
+{
+
 }
