@@ -3,38 +3,39 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2008 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __FeatureNameParser_h_
-#define __FeatureNameParser_h_
+#ifndef __Wgs84DmsParser_h_
+#define __Wgs84DmsParser_h_
+
+#ifdef __GNUG__
+#   pragma interface
+#endif
 
 #include "LocationParser_ABC.h"
 
 namespace kernel
 {
-    class Controllers;
+    class CoordinateConverter_ABC;
 }
-
 namespace gui
 {
-    class TerrainFeatureSearcher;
-
 // =============================================================================
-/** @class  FeatureNameParser
-    @brief  FeatureNameParser
+/** @class  Wgs84DmsParser
+    @brief  Wgs84DmsParser
 */
-// Created: AGE 2008-05-29
+// Created: AME 2010-03-04
 // =============================================================================
-class FeatureNameParser : public LocationParser_ABC
+class Wgs84DmsParser : public LocationParser_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FeatureNameParser( kernel::Controllers& controllers );
-    virtual ~FeatureNameParser();
+             Wgs84DmsParser( const kernel::CoordinateConverter_ABC& converter );
+    virtual ~Wgs84DmsParser();
     //@}
 
     //! @name Operations
@@ -46,19 +47,21 @@ public:
 private:
     //! @name Copy/Assignment
     //@{
-    FeatureNameParser( const FeatureNameParser& );            //!< Copy constructor
-    FeatureNameParser& operator=( const FeatureNameParser& ); //!< Assignment operator
+    Wgs84DmsParser( const Wgs84DmsParser& );            //!< Copy constructor
+    Wgs84DmsParser& operator=( const Wgs84DmsParser& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
+    bool FormatDmsCoordinate( const QString content, bool longitude, QString& hint ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< TerrainFeatureSearcher > searcher_;
-    mutable QString lastRequest_;
+	const kernel::CoordinateConverter_ABC& converter_;
     int numParameters_;
     //@}
 };
-
 }
-
-#endif // __FeatureNameParser_h_
+#endif // __Wgs84DmsParser_h_

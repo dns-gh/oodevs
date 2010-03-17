@@ -10,7 +10,6 @@
 #ifndef __AgentPositions_h_
 #define __AgentPositions_h_
 
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
@@ -35,11 +34,10 @@ namespace xml
 */
 // Created: AGE 2006-03-16
 // =============================================================================
-class AgentPositions : public kernel::Positions
+class AgentPositions : public kernel::Moveable_ABC
                      , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
                      , public kernel::Serializable_ABC
-                     , public kernel::Moveable_ABC
 {
 
 public:
@@ -64,7 +62,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Move( const geometry::Point2f& point );
+    virtual void Move( const geometry::Point2f& position );
     //@}
 
 private:
@@ -87,6 +85,7 @@ private:
     const kernel::Agent_ABC& agent_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Controller& controller_;
+    kernel::Moveable_ABC* moveable_;
     geometry::Point2f position_;
     float height_;
     bool aggregated_;

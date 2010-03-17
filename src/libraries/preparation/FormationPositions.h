@@ -10,7 +10,6 @@
 #ifndef __FormationPositions_h_
 #define __FormationPositions_h_
 
-#include "clients_kernel/Positions.h"
 #include "clients_kernel/Moveable_ABC.h"
 
 namespace kernel
@@ -24,8 +23,7 @@ namespace kernel
 */
 // Created: SBO 2009-02-02
 // =============================================================================
-class FormationPositions : public kernel::Positions
-                         , public kernel::Moveable_ABC
+class FormationPositions : public kernel::Moveable_ABC
 {
 
 public:

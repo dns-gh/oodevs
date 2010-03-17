@@ -1,5 +1,16 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name>@default</name>
+    <message>
+        <source>x:%1 y:%2 h:%3</source>
+        <translation type="obsolete">x:%1 y:%2 h:%3</translation>
+    </message>
+    <message>
+        <source>Lat:%1 Lon:%2</source>
+        <translation type="obsolete">Lat:%1 Lon:%2</translation>
+    </message>
+</context>
+<context>
     <name>AboutDialog</name>
     <message>
         <source>About</source>
@@ -1109,6 +1120,17 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
+    <name>gui::CoordinateSystemsPanel</name>
+    <message>
+        <source>Coordinate System</source>
+        <translation>Système de coordonnées</translation>
+    </message>
+    <message>
+        <source>Select current coordinate system:</source>
+        <translation>Sélectionnez le système de coordonnées par défaut:</translation>
+    </message>
+</context>
+<context>
     <name>gui::DrawerPanel</name>
     <message>
         <source>Load drawings file</source>
@@ -1346,6 +1368,29 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>gui::LocationEditorBox</name>
+    <message>
+        <source>Location: </source>
+        <translation>Localiser: </translation>
+    </message>
+    <message>
+        <source>long: </source>
+        <translation>long:</translation>
+    </message>
+    <message>
+        <source>lat: </source>
+        <translation>lat:</translation>
+    </message>
+    <message>
+        <source>y: </source>
+        <translation>y:</translation>
+    </message>
+    <message>
+        <source>x: </source>
+        <translation>x:</translation>
+    </message>
+</context>
+<context>
     <name>gui::LocationEditorToolbar</name>
     <message>
         <source>Location editor</source>
@@ -1353,7 +1398,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Location: </source>
-        <translation>Localiser: </translation>
+        <translation type="obsolete">Localiser: </translation>
     </message>
     <message>
         <source>Enter UTM coordinate</source>
@@ -1407,7 +1452,11 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Enter UTM coordinate, local coordinate or feature name</source>
-        <translation>Saisissez des coordonnées (UTM ou locales) ou un nom d&apos;élément (ville, route...)</translation>
+        <translation type="obsolete">Saisissez des coordonnées (UTM ou locales) ou un nom d&apos;élément (ville, route...)</translation>
+    </message>
+    <message>
+        <source>Feature</source>
+        <translation type="unfinished">Elément</translation>
     </message>
 </context>
 <context>
@@ -1596,6 +1645,10 @@ Voulez-vous le supprimer?</translation>
         <source>User controls</source>
         <translation type="obsolete">Contrôles</translation>
     </message>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished">Système de coordonnées</translation>
+    </message>
 </context>
 <context>
     <name>gui::StatusBar</name>
@@ -1605,11 +1658,23 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>x:%1 y:%2 h:%3</source>
-        <translation>x:%1 y:%2 h:%3</translation>
+        <translation type="obsolete">x:%1 y:%2 h:%3</translation>
     </message>
     <message>
         <source>Lat:%1 Lon:%2</source>
-        <translation>Lat:%1 Lon:%2</translation>
+        <translation type="unfinished">Lat:%1 Lon:%2</translation>
+    </message>
+    <message>
+        <source>y:%1 x:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>h:%1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation>Elévation</translation>
     </message>
 </context>
 <context>

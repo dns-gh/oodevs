@@ -5,6 +5,7 @@ ActivityTimePrototype_ABC.cpp \
 AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
+CoordinateSystemsPanel.cpp \
 ConstructionPrototype_ABC.cpp \
 CrossingSitePrototype_ABC.cpp \
 DiplomacyDialog_ABC.cpp \
@@ -26,6 +27,7 @@ IntelligencesPanel.cpp \
 LayersPanel.cpp \
 LightingPanel.cpp \
 LocationCreator.cpp \
+LocationEditorBox.cpp \
 LocationEditorToolbar.cpp \
 Logger.cpp \
 LogisticPrototype_ABC.cpp \

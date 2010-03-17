@@ -45,6 +45,7 @@ public:
     //! @name Operations
     //@{
     void Clear();
+    void Update( const QString& name );
     virtual void Hide();
     virtual void Call( kernel::Property_ABC* const& property );
     //@}

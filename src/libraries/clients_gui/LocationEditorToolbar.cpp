@@ -17,8 +17,12 @@
 #include "LocationsLayer.h"
 #include "LocationParser_ABC.h"
 #include "UtmParser.h"
-#include "XyParser.h"
+#include "XYParser.h"
+#include "Wgs84DdParser.h"
+#include "Wgs84DmsParser.h"
 #include "FeatureNameParser.h"
+#include "LocationEditorBox.h"
+#include "LocationParsers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ActionController.h"
@@ -36,23 +40,17 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     : QToolBar( parent, "location editor" )
     , controllers_( controllers )
     , converter_( converter )
+    , featureNameParser_( controllers )
     , view_( view )
     , layer_( layer )
     , parameters_( 0 )
     , bookmarksMenu_( 0 )
 {
-    // $$$$ AGE 2008-05-29: externaliser
-    parsers_.push_back( new UtmParser( controllers, converter ) );
-    parsers_.push_back( new XyParser() );
-    parsers_.push_back( new FeatureNameParser( controllers ) );
 
     setLabel( tr( "Location editor" ) );
-    new QLabel( tr( "Location: " ), this );
-    utm_ = new QLineEdit( this );
-    QToolTip::add( utm_, tr( "Enter UTM coordinate, local coordinate or feature name" ) );
-    utm_->setMaxLength( 20 );
-    utm_->setFixedWidth( 110 );
-    gotoButton_ = new QToolButton( this );
+    locBox_ = new LocationEditorBox( this, controllers, converter );
+    locBox_->AddParser( featureNameParser_, tr( "Feature" ) );
+	gotoButton_ = new QToolButton( this );
     gotoButton_->setIconSet( MAKE_PIXMAP( goto ) );
     gotoButton_->setPopupDelay( 0 );
     bookmarksMenu_ = new QPopupMenu( gotoButton_ );
@@ -68,15 +66,6 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     paramsButton_->setIconSet( MAKE_PIXMAP( special_point ) );
     QToolTip::add( paramsButton_, tr( "Set special point" ) );
 
-    subMenu_ = new QPopupMenu();
-    list_ = new QListBox( subMenu_ );
-    list_->setColumnMode( QListBox::Variable );
-    list_->setRowMode( QListBox::Variable );
-    list_->setFrameStyle( QFrame::NoFrame );
-    subMenu_->insertItem( list_ );
-    subMenu_->hide();
-
-    connect( utm_, SIGNAL( returnPressed() ), SLOT( Goto() ) );
     connect( gotoButton_, SIGNAL( clicked() ), SLOT( Goto() ) );
     connect( okButton_, SIGNAL( clicked() ), SLOT( AddPoint() ) );
     connect( paramsButton_, SIGNAL( clicked() ), SLOT( AddParamPoint() ) );
@@ -91,15 +80,6 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
 LocationEditorToolbar::~LocationEditorToolbar()
 {
     controllers_.Unregister( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: LocationEditorToolbar::AddParser
-// Created: AGE 2008-05-29
-// -----------------------------------------------------------------------------
-void LocationEditorToolbar::AddParser( std::auto_ptr< LocationParser_ABC > parser )
-{
-    parsers_.push_back( parser.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -220,38 +200,9 @@ void LocationEditorToolbar::ClearBookmarks()
 // -----------------------------------------------------------------------------
 bool LocationEditorToolbar::GetPosition( geometry::Point2f& result )
 {
-    subMenu_->hide();
-    if( utm_->text().isEmpty() )
-        return false;
-    QString hint;
-    T_Parsers::const_iterator it = std::find_if( parsers_.begin(), parsers_.end(),
-        boost::bind( &LocationParser_ABC::Parse, _1, utm_->text(), boost::ref( result ), boost::ref( hint ) ) );
-
-    SetAspect( hint, it == parsers_.end() );
-    return it != parsers_.end();
+    bool parseSucceed = locBox_->GetPosition( result );
+    return parseSucceed;
 }
-
-// -----------------------------------------------------------------------------
-// Name: LocationEditorToolbar::SetAspect
-// Created: AGE 2008-05-29
-// -----------------------------------------------------------------------------
-void LocationEditorToolbar::SetAspect( const QString& hint, bool red )
-{
-    if( !hint.isEmpty() && hint != utm_->text() )
-    {
-        list_->clear();
-        list_->insertItem( hint );
-        list_->setMinimumSize( 110, 12 );
-        const QPoint topLeft = utm_->mapToGlobal( QPoint( 0, 0 ) );
-        subMenu_->popup( QPoint( topLeft.x(), topLeft.y() + utm_->height() ) );
-        utm_->setFocus();
-    }
-    if( red )
-        utm_->setPaletteBackgroundColor( Qt::red.light( 120 ) );
-    else
-        utm_->unsetPalette();
-}
-
 // -----------------------------------------------------------------------------
 // Name: LocationEditorToolbar::NotifyContextMenu
 // Created: SBO 2007-03-26

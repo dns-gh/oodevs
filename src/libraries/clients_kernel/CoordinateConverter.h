@@ -25,7 +25,7 @@ namespace tools
 
 namespace kernel
 {
-
+    class CoordinateSystems;
 // =============================================================================
 // Created: APE 2004-07-19
 // $$$$ AGE 2006-04-28: warning : not thread safe
@@ -35,7 +35,7 @@ class CoordinateConverter : public CoordinateConverter_ABC
 public:
     //! @name Constructor / Destructor
     //@{
-             CoordinateConverter();
+             CoordinateConverter( const CoordinateSystems& coordSystems );
     explicit CoordinateConverter( const tools::ExerciseConfig& config );
     virtual ~CoordinateConverter();
     //@}
@@ -45,14 +45,17 @@ public:
     void Load( const tools::ExerciseConfig& config );
 
     virtual bool IsInBoundaries( const geometry::Point2f& point ) const;
+    virtual const CoordinateSystems& GetCoordSystem() const;
+    virtual std::string GetStringPosition( const geometry::Point2f& position ) const;	
 
-    virtual std::string       ConvertToMgrs        ( const geometry::Point2f& pos ) const;
-    virtual geometry::Point2d ConvertToGeo        ( const geometry::Point2f& pos ) const;
-    virtual geometry::Point2d ConvertToGeo        ( const geometry::Point2d& pos ) const;
+    virtual std::string       ConvertToMgrs     ( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2d ConvertToGeo      ( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2d ConvertToGeo      ( const geometry::Point2d& pos ) const;
     virtual geometry::Point2f ConvertFromGeo    ( const geometry::Point2d& pos ) const;
-    virtual geometry::Point2f ConvertToXY        ( const std::string& mgrs ) const;
-    virtual std::string          ConvertToGeoDms    ( const geometry::Point2f& pos ) const;
-    virtual std::string          ConvertToUtm        ( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2f ConvertToXY       ( const std::string& mgrs ) const;
+    virtual std::string       ConvertToGeoDms   ( const geometry::Point2f& pos ) const;
+    virtual geometry::Point2f ConvertFromGeoDms ( const std::string& longitude, const std::string& latitude ) const;
+    virtual std::string       ConvertToUtm      ( const geometry::Point2f& pos ) const;
     //@}
 
 private:
@@ -85,6 +88,7 @@ private:
     mutable geocoord::MGRS                        mgrs_;
     mutable geocoord::Geodetic                    geodetic_;
     mutable geocoord::UTM utm_;
+    const CoordinateSystems&   coordinateSystems_;    	
     //@}
 };
 

@@ -129,7 +129,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     setIcon( MAKE_PIXMAP( csword ) );
 
     lighting_ = new LightingProxy( this );
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_ );
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_ );
     new Dialogs( this, controllers, PreparationProfile::GetProfile() );
     
     glProxy_ = new GlProxy();
@@ -200,7 +200,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
         pPropertiesDockWnd->setCaption( tr( "Properties" ) );
         setDockEnabled( pPropertiesDockWnd, Qt::DockTop, false );
     }
-
     // A few layers
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer ) );

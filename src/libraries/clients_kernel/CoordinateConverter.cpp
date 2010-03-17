@@ -12,6 +12,7 @@
 #include "geocoord/Geoid.h"
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
+#include "CoordinateSystems.h"
 
 using namespace kernel;
 
@@ -19,8 +20,9 @@ using namespace kernel;
 // Name: CoordinateConverter constructor
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
-CoordinateConverter::CoordinateConverter()
+CoordinateConverter::CoordinateConverter( const CoordinateSystems& coordSystems )
     : planar_( parameters_ )
+    , coordinateSystems_( coordSystems )
 {
     // NOTHING
 }
@@ -31,6 +33,8 @@ CoordinateConverter::CoordinateConverter()
 // -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter( const tools::ExerciseConfig& config )
     : planar_( parameters_ )
+    , coordinateSystems_( *new CoordinateSystems() )
+    	
 {
     Load( config );
 }
@@ -127,6 +131,7 @@ bool CoordinateConverter::IsInBoundaries( const geometry::Point2f& point ) const
 {
     return extent_.IsInside( point );
 }
+
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::ConvertToGeoDms
 // Created: AME 2010-02-22
@@ -134,7 +139,7 @@ bool CoordinateConverter::IsInBoundaries( const geometry::Point2f& point ) const
 std::string CoordinateConverter::ConvertToGeoDms( const geometry::Point2f& pos ) const
 {
     SetGeodeticCoordinates( pos );
-    return std::string ( geodetic_.GetLongitude( "DD° MM' SS.SS H" ) + ", " + geodetic_.GetLatitude( "DD° MM' SS.SS H" ) );
+    return std::string ( geodetic_.GetLatitude( "DD° MM' SS.SS H" ) + ":" + geodetic_.GetLongitude( "DD° MM' SS.SS H" ) );
 }
 // -----------------------------------------------------------------------------
 // Name: CoordinateConverter::ConvertToUtm        
@@ -159,4 +164,51 @@ void CoordinateConverter::SetGeodeticCoordinates( const geometry::Point2f& pos )
     const geometry::Point2f translated = pos - translation_;
     planar_.Set( translated.X(), translated.Y() );
     geodetic_.SetCoordinates( planar_ );
+}
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::ConvertFromGeoDms	
+// Created: AME 2010-03-05
+// -----------------------------------------------------------------------------
+geometry::Point2f CoordinateConverter::ConvertFromGeoDms ( const std::string& longitude, const std::string& latitude ) const
+{
+    geodetic_.Set( latitude , longitude,  "DD° MM' SS.SS H",  "DD° MM' SS.SS H" );
+    planar_.SetCoordinates( geodetic_ );
+    return geometry::Point2f( float( planar_.GetX() ), float( planar_.GetY() ) ) + translation_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::GetCoordSystem
+// Created: AME 2010-03-15
+// -----------------------------------------------------------------------------
+const CoordinateSystems& CoordinateConverter::GetCoordSystem() const
+{
+    return coordinateSystems_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter::GetStringPosition
+// Created: AME 2010-03-15
+// -----------------------------------------------------------------------------
+std::string CoordinateConverter::GetStringPosition( const geometry::Point2f& position ) const
+{
+    std::string positionStr;
+    switch( coordinateSystems_.defaultCoordinateSystem_ )
+    {
+        case CoordinateSystems::E_Mgrs: positionStr = ConvertToMgrs( position ); break; 
+        case CoordinateSystems::E_Wgs84Dd: 
+            {
+                geometry::Point2d pos( ConvertToGeo( position ) );
+                positionStr = boost::str( boost::format( "%f:%f" )  % pos.X()
+                                                                    % pos.Y() );
+                break;
+            }
+        case CoordinateSystems::E_Wgs84Dms: positionStr = ConvertToGeoDms( position ); break;
+        case CoordinateSystems::E_Local:
+            positionStr = boost::str( boost::format( "%f:%f" ) % position.X()
+                                                               % position.Y() );
+             break;
+        default: break;
+    }
+
+    return positionStr;
 }

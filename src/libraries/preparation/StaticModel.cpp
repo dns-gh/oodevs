@@ -18,6 +18,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"
+#include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_gui/DrawingTypes.h"
@@ -33,7 +34,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 StaticModel::StaticModel( Controllers& controllers )
     : controllers_        ( controllers )
-    , coordinateConverter_( *new CoordinateConverter() )
+    , coordinateSystems_  ( *new CoordinateSystems() )
+    , coordinateConverter_( *new CoordinateConverter( coordinateSystems_ ) )
     , detection_          ( *new DetectionMap() )
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
@@ -65,6 +67,7 @@ StaticModel::~StaticModel()
     delete &types_;
     delete &detection_;
     delete &coordinateConverter_;
+    delete &coordinateSystems_;
 }
 
 // -----------------------------------------------------------------------------

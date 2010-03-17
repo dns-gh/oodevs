@@ -10,6 +10,8 @@
 #ifndef __Moveable_ABC_h_
 #define __Moveable_ABC_h_
 
+#include "Positions.h"
+
 namespace kernel
 {
 
@@ -19,7 +21,7 @@ namespace kernel
 */
 // Created: SBO 2009-02-02
 // =============================================================================
-class Moveable_ABC
+class Moveable_ABC : public Positions
 {
 
 public:

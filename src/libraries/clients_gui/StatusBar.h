@@ -41,6 +41,7 @@ public slots:
     //@{
     void OnMouseMove( const geometry::Point2f& position );
     void OnMouseMove( const geometry::Point3f& position );
+	void ParameterSelected( int index );
     //@}
 
 private:
@@ -53,6 +54,8 @@ private:
     //! @name Helpers
     //@{
     static QString NotSet();
+	void Init();
+	void DisplayParameter( QLabel& label );
     //@}
 
 private:
@@ -61,9 +64,14 @@ private:
     const kernel::DetectionMap& detection_;
     const kernel::CoordinateConverter_ABC& converter_;
 
-    QLabel* pPositionXYZ_;
+    QLabel* pPositionXY_;
+	QLabel* pElevation_;
     QLabel* pPositionMgrs_;
     QLabel* pPositionLatLong_;
+    QLabel* pPositionDms_;
+	QToolButton* pButtonBarParameters_;
+	QPopupMenu* pMenu_;
+    int ElevId_;
     //@}
 };
 

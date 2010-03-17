@@ -170,3 +170,14 @@ void PropertiesTable::focusOutEvent( QFocusEvent* event )
     clearSelection();
     QTable::focusOutEvent( event );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTable::Update
+// Created: AME 2010-03-10
+// -----------------------------------------------------------------------------
+void PropertiesTable::Update( const QString& name )
+{
+    CIT_PropertyRows it = rows_.find( name );
+    if( it != rows_.end() )
+        updateCell( it->second, 1 );
+}

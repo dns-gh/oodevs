@@ -505,6 +505,29 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>PositionEditor</name>
+    <message>
+        <source>Position Editor</source>
+        <translation>Edition de la position</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Invalid coordinates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> Location is outside terrain bounding box </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ProfileDialog</name>
     <message>
         <source>User profiles</source>

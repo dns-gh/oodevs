@@ -33,8 +33,14 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( QString content, geometry::Point2f& result, QString& hint ) const;
+    bool Parse( QString content, geometry::Point2f& result, QString& hint ) const;
+    virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const;
+    virtual int GetNumberOfParameters() const;
+
     //@}
+
+private:
+    int numParameters_;
 };
 
 }

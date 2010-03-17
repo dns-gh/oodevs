@@ -23,6 +23,7 @@ class LocationParser_ABC
 {
 
 public:
+
     //! @name Constructors/Destructor
     //@{
              LocationParser_ABC() {};
@@ -31,8 +32,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( QString content, geometry::Point2f& result, QString& hint ) const = 0;
+    virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const = 0;
+    virtual int GetNumberOfParameters() const = 0;
     //@}
+
+private:
+   int numParameters_;
 };
 
 }

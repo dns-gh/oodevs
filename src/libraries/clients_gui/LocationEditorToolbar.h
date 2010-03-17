@@ -12,7 +12,8 @@
 
 #include "LocationEditor_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include <boost/ptr_container/ptr_vector.hpp>
+#include "FeatureNameParser.h"
+#include <boost/ptr_container/ptr_map.hpp>
 
 namespace kernel
 {
@@ -21,11 +22,13 @@ namespace kernel
 }
 
 namespace gui
-{
+{   
     class ParametersLayer;
+    class LocationEditorBox;
     class LocationsLayer;
+    class LocationParsers;
     class View_ABC;
-    class LocationParser_ABC;
+   
 
 // =============================================================================
 /** @class  LocationEditorToolbar
@@ -49,7 +52,6 @@ public:
 
     //! @name Construction
     //@{
-    void AddParser( std::auto_ptr< LocationParser_ABC > parser );
     //@}
 
     //! @name Operations
@@ -81,7 +83,7 @@ private:
     //@{
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
     bool GetPosition( geometry::Point2f& point );
-    void SetAspect( const QString& hint, bool red );
+    void SetAspect( bool oneValue, bool red );
     //@}
 
     //! @name Types
@@ -99,7 +101,6 @@ private:
     typedef std::vector< Bookmark >       T_Bookmarks;
     typedef T_Bookmarks::const_iterator CIT_Bookmarks;
 
-    typedef boost::ptr_vector< LocationParser_ABC > T_Parsers;
     //@}
 
 private:
@@ -110,16 +111,14 @@ private:
     View_ABC& view_;
     LocationsLayer& layer_;
     ParametersLayer* parameters_;
-    QLineEdit* utm_;
     QToolButton* okButton_;
     QToolButton* paramsButton_;
     QToolButton* gotoButton_;
     QPopupMenu* bookmarksMenu_;
-    QPopupMenu* subMenu_;
-    QListBox* list_;
     T_Bookmarks bookmarks_;
     geometry::Point2f menuPoint_;
-    T_Parsers parsers_;
+    FeatureNameParser featureNameParser_;
+    LocationEditorBox* locBox_;
     //@}
 };
 

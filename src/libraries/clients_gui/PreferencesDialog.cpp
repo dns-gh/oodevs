@@ -17,6 +17,7 @@
 #include "GraphicPreferences.h"
 #include "PreferencesList.h"
 #include "PreferencePanel_ABC.h"
+#include "CoordinateSystemsPanel.h"
 #include "LightingPanel.h"
 #include "LayersPanel.h"
 #include "resources.h"
@@ -30,7 +31,7 @@ using namespace gui;
 // Name: PreferencesDialog constructor
 // Created: SBO 2006-05-03
 // -----------------------------------------------------------------------------
-PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting )
+PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems )
     : QDialog( parent, "PreferencesDialog" )
     , controllers_( controllers )
     , pGraphicPrefPanel_( 0 )
@@ -68,6 +69,8 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
 
     pGraphicPrefPanel_ = new GraphicsPanel( this, controllers );
     layersPanel_       = new LayersPanel( this, controllers );
+    pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
+    AddPage( tr( "Coordinate System" ), *pCoordinateSystemsPanel_ );
     AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" )        , *layersPanel_ ); 
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );

@@ -486,6 +486,17 @@
     </message>
 </context>
 <context>
+    <name>gui::CoordinateSystemsPanel</name>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select current coordinate system:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::DrawerPanel</name>
     <message>
         <source>Load drawings file</source>
@@ -699,13 +710,32 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
-    <name>gui::LocationEditorToolbar</name>
+    <name>gui::LocationEditorBox</name>
     <message>
-        <source>Location editor</source>
+        <source>Location: </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Location: </source>
+        <source>long: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lat: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>x: </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::LocationEditorToolbar</name>
+    <message>
+        <source>Location editor</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -750,7 +780,7 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enter UTM coordinate, local coordinate or feature name</source>
+        <source>Feature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -896,6 +926,10 @@ Do you want to remove it?</source>
         <source>General</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Coordinate System</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::StatusBar</name>
@@ -904,11 +938,19 @@ Do you want to remove it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>x:%1 y:%2 h:%3</source>
+        <source>y:%1 x:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>h:%1 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lat:%1 Lon:%2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Elevation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

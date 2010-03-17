@@ -9,11 +9,13 @@
 
 #include "preparation_app_pch.h"
 #include "PropertiesTableDisplayer.h"
-#include "preparation/DotationsItem.h"
-#include "preparation/Dotation.h"
-#include "clients_kernel/DotationType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/CoordinateSystems.h"
+#include "clients_kernel/DotationType.h"
+#include "clients_kernel/Moveable_ABC.h"
 #include "clients_gui/Tools.h"
+#include "preparation/Dotation.h"
+#include "preparation/DotationsItem.h"
 
 // -----------------------------------------------------------------------------
 // Name: PropertiesTableDisplayer constructor
@@ -81,6 +83,22 @@ void PropertiesTableDisplayer::Call( const geometry::Point2f& value )
             AddToDisplay( tools::translate( "PropertiesTableDisplayer", "not set" ) );
         else
             AddToDisplay( converter_.ConvertToMgrs( value ) );
+    }
+    catch( ... )
+    {
+        AddToDisplay( tools::translate( "PropertiesTableDisplayer", "invalid" ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PropertiesTableDisplayer::Call
+// Created: SBO 2008-03-25
+// -----------------------------------------------------------------------------
+void PropertiesTableDisplayer::Call( const kernel::Moveable_ABC& value )
+{
+    try
+    { 
+        AddToDisplay( converter_.GetStringPosition( value.GetPosition() ).c_str() );
     }
     catch( ... )
     {

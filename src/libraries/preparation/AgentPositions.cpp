@@ -21,11 +21,39 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "Tools.h"
+#include <boost/ref.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace geometry;
 using namespace kernel;
 using namespace xml;
+
+namespace
+{
+    class MoveableProxy : public kernel::Moveable_ABC
+    {
+    public:
+        explicit MoveableProxy( kernel::Moveable_ABC& moveable ) : moveable_( &moveable ) {}
+        virtual ~MoveableProxy() {}
+
+        virtual void Move( const geometry::Point2f& position )
+        {
+            moveable_->Move( position );
+        }
+        virtual geometry::Point2f GetPosition() const
+        {
+            return moveable_->GetPosition();
+        }
+        virtual float GetHeight() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
+        virtual bool IsAt( const geometry::Point2f& /*pos*/, float /*precision = 100.f*/,  float /*adaptiveFactor = 1.f*/) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
+        virtual bool IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
+        virtual geometry::Rectangle2f GetBoundingBox() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
+        virtual void Accept( LocationVisitor_ABC& /*visitor*/ ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
+
+    private:
+        kernel::Moveable_ABC* moveable_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: AgentPositions constructor
@@ -35,11 +63,21 @@ AgentPositions::AgentPositions( const Agent_ABC& agent, const CoordinateConverte
     : agent_( agent )
     , converter_( converter )
     , controller_( controller )
+    , moveable_( new MoveableProxy( *this ) )
     , position_( position )
     , height_( 0 )
     , aggregated_( false )
 {
     CreateDictionary( dico );
+}
+
+namespace
+{
+    geometry::Point2f ReadPosition( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
+    {
+        const std::string position = xml::attribute< std::string >( xis, "position" );
+        return converter.ConvertToXY( position );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -50,13 +88,12 @@ AgentPositions::AgentPositions( xml::xistream& xis, const Agent_ABC& agent, cons
     : agent_( agent )
     , converter_( converter )
     , controller_( controller )
+    , moveable_( new MoveableProxy( *this ) )
+    , position_( ReadPosition( xis, converter_ ) )
     , height_( 0 )
     , aggregated_( false )
 {
     CreateDictionary( dico );
-    std::string position;
-    xis >> attribute( "position", position );
-    position_ = converter_.ConvertToXY( position );
 }
 
 // -----------------------------------------------------------------------------
@@ -65,7 +102,7 @@ AgentPositions::AgentPositions( xml::xistream& xis, const Agent_ABC& agent, cons
 // -----------------------------------------------------------------------------
 AgentPositions::~AgentPositions()
 {
-    // NOTHING
+    delete moveable_;
 }
 
 // -----------------------------------------------------------------------------
@@ -164,10 +201,10 @@ void AgentPositions::SerializeAttributes( xml::xostream& xos ) const
 // Name: AgentPositions::Move
 // Created: SBO 2006-09-29
 // -----------------------------------------------------------------------------
-void AgentPositions::Move( const geometry::Point2f& point )
+void AgentPositions::Move( const geometry::Point2f& position )
 {
-    position_ = point;
-    // $$$$ SBO 2008-03-25: somehow trigger dictionary update
+    position_ = position;
+    controller_.Update( kernel::DictionaryUpdated( const_cast< kernel::Agent_ABC& >( agent_ ), tools::translate( "AgentPositions", "Info/Position" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -176,5 +213,5 @@ void AgentPositions::Move( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void AgentPositions::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *(const AgentPositions*)this, tools::translate( "AgentPositions", "Info/Position" ), position_, *this, &AgentPositions::Move );
+    dico.Register( (const AgentPositions*)this, tools::translate( "AgentPositions", "Info/Position" ), moveable_ );
 }

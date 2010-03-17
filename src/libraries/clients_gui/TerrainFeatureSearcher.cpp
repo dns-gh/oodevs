@@ -106,7 +106,10 @@ bool TerrainFeatureSearcher::Search( const QString& name, geometry::Point2f& poi
 // -----------------------------------------------------------------------------
 bool TerrainFeatureSearcher::FindNext( geometry::Point2f& point, QString& hint )
 {
-    ++index_;
+    if ( index_ == ( current_->second.size() - 1 ) )
+        index_ = 0;
+    else
+        ++index_;
     if( current_ )
     {
         index_ = index_ % current_->second.size();

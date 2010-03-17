@@ -19,11 +19,12 @@
 
 namespace kernel
 {
-    class Controllers;
     class Automat_ABC;
+    class Controllers;
     class Entity_ABC;
-    class NBCAgent;
     class KnowledgeGroupType;
+    class Moveable_ABC;
+    class NBCAgent;
 }
 
 class Model;
@@ -51,7 +52,7 @@ class EditorFactory : public gui::EditorFactory
                     , public tools::Caller< Enum_PopulationAttitude* >
                     , public tools::Caller< Enum_DemolitionTargetType* >
                     , public tools::Caller< DotationsItem** >
-                    , public tools::Caller< geometry::Point2f* >
+                    , public tools::Caller< kernel::Moveable_ABC** >
 {
 
 public:
@@ -75,7 +76,7 @@ public:
     virtual void Call( Enum_PopulationAttitude* const& value );
     virtual void Call( Enum_DemolitionTargetType* const& value );
     virtual void Call( DotationsItem** const& value );
-    virtual void Call( geometry::Point2f* const& value );
+    virtual void Call( kernel::Moveable_ABC** const& value );
     //@}
 
 private:

@@ -22,6 +22,7 @@ namespace kernel
     class DetectionMap;
     class Controllers;
     class CoordinateConverter_ABC;
+    class CoordinateSystems;
     class FormationLevels;
     class AtlasNatures;
 }
@@ -74,6 +75,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controllers&             controllers_;
+    kernel::CoordinateSystems&       coordinateSystems_;
     kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::DetectionMap&            detection_;
     kernel::AgentTypes&              types_;

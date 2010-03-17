@@ -11,6 +11,7 @@ MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \
 ObjectCreationPanel.cpp \
+PositionEditor.cpp \
 PopulationListView.cpp \
 PopulationTypesListView.cpp \
 PopulationsPanel.cpp \

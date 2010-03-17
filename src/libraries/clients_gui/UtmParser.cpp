@@ -27,6 +27,7 @@ using namespace gui;
 UtmParser::UtmParser( kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
     : controllers_( controllers )
     , converter_( converter )
+    , numParameters_( 1 )
 {
     controllers_.Register( *this );
 }
@@ -44,7 +45,7 @@ UtmParser::~UtmParser()
 // Name: UtmParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool UtmParser::Parse( QString content, geometry::Point2f& result, QString& hint ) const
+bool UtmParser::Parse( QString content, geometry::Point2f& result, QStringList& hint ) const
 {
     // "31 NEA 00000 00000"
     try
@@ -57,7 +58,7 @@ bool UtmParser::Parse( QString content, geometry::Point2f& result, QString& hint
         if( content.length() < 15 )
             content = Fill( content );
         result = converter_.ConvertToXY( std::string( content.ascii() ) );
-        hint = content;
+        hint.append( content );
         return true;
     }
     catch( ... )
@@ -94,4 +95,13 @@ void UtmParser::NotifyUpdated( const kernel::ModelLoaded& model )
     kernel::WorldParameters parameters( model.config_ );
     if( ! parameters.utmZones_.empty() )
         zone_ = boost::lexical_cast< std::string, unsigned int >( parameters.utmZones_.front() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UtmParser::GetNumberOfParameters
+// Created: AME 2010-03-11
+// -----------------------------------------------------------------------------
+int UtmParser::GetNumberOfParameters() const
+{
+    return numParameters_;
 }

@@ -296,6 +296,8 @@ void PropertiesWidget::UpdatePath( const kernel::DictionaryUpdated& message, con
         else
             message.GetEntity().Get< kernel::PropertiesDictionary >().DisplaySubPath( message.GetEntry(), parent );
     }
+    else
+        table_->Update( name );
 }
 
 // -----------------------------------------------------------------------------

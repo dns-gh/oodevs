@@ -16,6 +16,7 @@ namespace kernel
     class ObjectTypes;
     class DetectionMap;
     class Controllers;
+    class CoordinateSystems;
     class CoordinateConverter_ABC;
     class FormationLevels;
 }
@@ -66,7 +67,7 @@ public:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-
+    kernel::CoordinateSystems&       coordinateSystems_;
     kernel::CoordinateConverter_ABC& coordinateConverter_;
     kernel::DetectionMap&            detection_;
     kernel::AgentTypes&              types_;

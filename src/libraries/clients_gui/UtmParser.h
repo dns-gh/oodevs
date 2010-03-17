@@ -43,7 +43,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool Parse( QString content, geometry::Point2f& result, QString& hint ) const;
+    virtual bool Parse( QString content, geometry::Point2f& result, QStringList& hint ) const;
+    virtual int GetNumberOfParameters() const;
     //@}
 
 private:
@@ -65,6 +66,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::CoordinateConverter_ABC& converter_;
     std::string zone_;
+    int numParameters_;
     //@}
 };
 

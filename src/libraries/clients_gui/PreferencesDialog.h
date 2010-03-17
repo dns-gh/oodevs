@@ -14,19 +14,21 @@
 
 namespace kernel
 {
+    class CoordinateSystems;
     class Controllers;
 }
 
 namespace gui
 {
-    class LightingProxy;
+    class Elevation2dLayer;
     class GraphicPreferences;
     class GraphicsPanel;
-    class PreferencesList;
-    class PreferencePanel_ABC;
     class Layer_ABC;
     class LayersPanel;
-    class Elevation2dLayer;
+    class LightingProxy;
+    class PreferencesList;
+    class PreferencePanel_ABC;
+    class CoordinateSystemsPanel;
 
 // =============================================================================
 /** @class  PreferencesDialog
@@ -41,7 +43,7 @@ class PreferencesDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting );
+             PreferencesDialog( QWidget* parent, kernel::Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems );
     virtual ~PreferencesDialog();
     //@}
 
@@ -89,6 +91,7 @@ private:
     PreferencesList* list_;
     LayersPanel*     layersPanel_;
     GraphicsPanel*   pGraphicPrefPanel_;
+    CoordinateSystemsPanel* pCoordinateSystemsPanel_;
     //@}
 };
 

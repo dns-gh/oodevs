@@ -20,6 +20,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 FeatureNameParser::FeatureNameParser( kernel::Controllers& controllers )
     : searcher_( new TerrainFeatureSearcher( controllers ) )
+    , numParameters_( 1 )
 {
     // NOTHING
 }
@@ -37,12 +38,24 @@ FeatureNameParser::~FeatureNameParser()
 // Name: FeatureNameParser::Parse
 // Created: AGE 2008-05-29
 // -----------------------------------------------------------------------------
-bool FeatureNameParser::Parse( QString content, geometry::Point2f& result, QString& hint ) const
+bool FeatureNameParser::Parse( QString content, geometry::Point2f& result, QStringList& hint ) const
 {
     const bool next = lastRequest_ == content;
     lastRequest_ = content;
+    QString hintSearch;
+    bool found = false;
     if( next )
-        return searcher_->FindNext( result, hint );
+        found =  searcher_->FindNext( result, hintSearch );
     else 
-        return searcher_->Search( content, result, hint );
+        found =  searcher_->Search( content, result, hintSearch );
+    hint.append( hintSearch );
+    return found;
+}
+// -----------------------------------------------------------------------------
+// Name: FeatureNameParser::GetNumberOfParameters
+// Created: AME 2010-03-11
+// -----------------------------------------------------------------------------
+int FeatureNameParser::GetNumberOfParameters() const
+{
+    return numParameters_;
 }
