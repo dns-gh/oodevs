@@ -12,6 +12,7 @@
 #include "moc_WeatherPanel.cpp"
 #include "WeatherWidget.h"
 #include "LocalWeathersList.h"
+#include "GlobalWeathersList.h"
 #include "WeatherLayer.h"
 #include "preparation/WeatherModel.h"
 #include "preparation/LocalWeather.h"
@@ -31,6 +32,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     , layer_( layer )
     , currentModel_( 0 )
     , selectedLocal_( 0 )
+    , selectedGlobal_( 0 )
 {
     QHBox* timeBox = new QHBox( this );
     new QLabel( tr( "Exercise date:" ), timeBox );
@@ -47,6 +49,14 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     for( int i = 0; i < (int)kernel::eNbrLightingType; ++i )
         lighting_->AddItem( tools::ToString( (kernel::E_LightingType)i ), (kernel::E_LightingType)i );
 
+    //GlobalWeather
+    QGroupBox* globalGroup = new QGroupBox( 1, Qt::Horizontal, tr( "global weather" ), this );
+    globalWeathers_ = new GlobalWeathersList( globalGroup, converter );
+    globalWeatherBox_ = new QVBox( globalGroup );
+    globalWeather_ = new WeatherWidget( globalWeatherBox_, tr( "Weather parameters" ) );
+    globalWeatherBox_->hide();
+
+    //LocalWeather
     QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Local weather" ), this );
     localWeathers_ = new LocalWeathersList( localGroup, converter );
     localWeatherBox_ = new QVBox( localGroup );
@@ -62,6 +72,7 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
 
     connect( okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );
     connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
+    connect( globalWeathers_, SIGNAL( selectionChanged() ), this, SLOT( GlobalSelectionChanged() ) ); // Global
     connect( localWeathers_, SIGNAL( selectionChanged() ), this, SLOT( LocalSelectionChanged() ) );
     controllers_.Register( *this );
 }
@@ -131,6 +142,7 @@ void WeatherPanel::Reset()
 // -----------------------------------------------------------------------------
 void WeatherPanel::LocalSelectionChanged()
 {
+    globalWeatherBox_->hide();
     LocalWeather* selected = localWeathers_->SelectedItem();
     if( selected )
     {
@@ -144,6 +156,27 @@ void WeatherPanel::LocalSelectionChanged()
     else
         localWeatherBox_->hide();
 }
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::GlobalSelectionChanged
+// Created: SLG 2010-03-17
+// -----------------------------------------------------------------------------
+void WeatherPanel::GlobalSelectionChanged()
+{
+    localWeatherBox_->hide();
+    Weather* selected = globalWeathers_->SelectedItem();
+    if( selected )
+    {
+        if( selectedGlobal_ )
+            globalWeather_->CommitTo( *selectedGlobal_ );
+        globalWeather_->Update( *selected );
+        globalWeatherBox_->show();
+        selectedGlobal_ = selected;
+    }
+    else
+        globalWeatherBox_->hide();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: WeatherPanel::SetPatchPosition

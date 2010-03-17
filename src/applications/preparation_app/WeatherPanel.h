@@ -29,7 +29,9 @@ namespace gui
 class WeatherModel;
 class WeatherWidget;
 class LocalWeathersList;
+class GlobalWeathersList;
 class LocalWeather;
+class Weather;
 class WeatherLayer;
 
 // =============================================================================
@@ -57,6 +59,7 @@ private slots:
     void Commit();
     void Reset ();
     void LocalSelectionChanged();
+    void GlobalSelectionChanged();
     void SetPatchPosition();
     //@}
 
@@ -83,6 +86,12 @@ private:
     QTimeEdit* sunrise_;
     QTimeEdit* sunset_;
     gui::ValuedComboBox< kernel::E_LightingType >* lighting_;
+    
+    QVBox* globalWeatherBox_;
+    GlobalWeathersList* globalWeathers_;
+    Weather* selectedGlobal_;
+    WeatherWidget* globalWeather_;
+
     QVBox* localWeatherBox_;
     LocalWeathersList* localWeathers_;
     LocalWeather* selectedLocal_;

@@ -26,7 +26,8 @@ namespace
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 LocalWeather::LocalWeather( const kernel::CoordinateConverter_ABC& converter )
-    : converter_( converter )
+    : Weather()
+    , converter_( converter )
     , id_( localCounter_++ )
     , name_( tools::translate( "LocalWeather", "Local weather %1" ).arg( id_ ) )
 {

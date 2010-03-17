@@ -35,6 +35,7 @@ class LocalWeather;
 // Created: SBO 2006-12-19
 // =============================================================================
 class WeatherModel : public tools::Resolver< LocalWeather >
+                   , public tools::Resolver< Weather >
 {
 
 public:

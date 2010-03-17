@@ -34,14 +34,18 @@ namespace
             , list.count() > 2 ? list[2].toInt() : 0 );
     }
 
+    unsigned int Counter_ = 1;
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: Weather constructor
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 Weather::Weather()
-    : windSpeed_( 0 )
+    : id_( Counter_++ )
+    , name_( tools::translate( "GlobalWeather", "Global weather %1" ).arg( id_ ) )
+    , windSpeed_( 0 )
     , windDirection_( 0 )
     , cloudFloor_( 1000 )
     , cloudCeiling_( 10000 )
@@ -108,4 +112,22 @@ void Weather::Serialize( xml::xostream& xos ) const
         << start( "precipitation" )
             << attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20: 
         << end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Weather::GetId
+// Created: SLG 2010-03-17
+// -----------------------------------------------------------------------------
+unsigned long Weather::GetId() const
+{
+    return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Weather::GetName
+// Created: SLG 2010-03-17
+// -----------------------------------------------------------------------------
+QString Weather::GetName() const
+{
+    return name_;
 }

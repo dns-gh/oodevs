@@ -873,6 +873,10 @@ Do you want to save anyway?</source>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>global weather</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherWidget</name>

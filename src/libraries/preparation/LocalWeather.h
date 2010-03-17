@@ -42,8 +42,8 @@ public:
 
     //! @name Operations
     //@{
-    unsigned long GetId() const;
-    QString GetName() const;
+    virtual unsigned long GetId() const;
+    virtual QString GetName() const;
     void Serialize( xml::xostream& xos ) const;
     void SetPosition( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     geometry::Point2f GetTopLeft() const;

@@ -8,18 +8,18 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "LocalWeathersList.h"
-#include "moc_LocalWeathersList.cpp"
+#include "GlobalWeathersList.h"
+#include "moc_GlobalWeathersList.cpp"
 #include "preparation/WeatherModel.h"
-#include "preparation/LocalWeather.h"
+#include "preparation/Weather.h"
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList constructor
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList constructor
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-LocalWeathersList::LocalWeathersList( QWidget* parent, const kernel::CoordinateConverter_ABC& converter )
-    : QListView( parent, "LocalWeathersList" )
-    , converter_( converter )
+GlobalWeathersList::GlobalWeathersList( QWidget* parent, const kernel::CoordinateConverter_ABC& converter )
+: QListView( parent, "LocalWeathersList" )
+, converter_( converter )
 {
     addColumn( tr( "Local patch" ) );
     setResizeMode( QListView::LastColumn );
@@ -27,19 +27,19 @@ LocalWeathersList::LocalWeathersList( QWidget* parent, const kernel::CoordinateC
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList destructor
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList destructor
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-LocalWeathersList::~LocalWeathersList()
+GlobalWeathersList::~GlobalWeathersList()
 {
     Clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList::ContextMenuRequested
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList::ContextMenuRequested
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-void LocalWeathersList::ContextMenuRequested( QListViewItem* item, const QPoint& point, int )
+void GlobalWeathersList::ContextMenuRequested( QListViewItem* item, const QPoint& point, int )
 {
     QPopupMenu* menu = new QPopupMenu( this );
     menu->insertItem( tr( "Add" ), this, SLOT( CreateItem() ) );
@@ -49,73 +49,73 @@ void LocalWeathersList::ContextMenuRequested( QListViewItem* item, const QPoint&
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList::CreateItem
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList::CreateItem
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-void LocalWeathersList::CreateItem()
+void GlobalWeathersList::CreateItem()
 {
-    LocalWeather* weather = new LocalWeather( converter_ );
+    Weather* weather = new Weather( /*converter_*/ );
     QListViewItem* item = new QListViewItem( this );
     item->setText( 0, weather->GetName() );
     weathers_.push_back( weather );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList::DeleteItem
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList::DeleteItem
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-void LocalWeathersList::DeleteItem()
+void GlobalWeathersList::DeleteItem()
 {
     if( selectedItem() )
     {
         const QString text = selectedItem()->text( 0 );
-        for( IT_LocalWeathers it = weathers_.begin(); it != weathers_.end(); ++it )
+        for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
             if( (*it)->GetName() == text )
             {
                 weathers_.erase( it );
                 break;
             }
-        removeItem( selectedItem() );
+            removeItem( selectedItem() );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList::Clear
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList::Clear
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-void LocalWeathersList::Clear()
+void GlobalWeathersList::Clear()
 {
-    for( IT_LocalWeathers it = weathers_.begin(); it != weathers_.end(); ++it )
+    for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
         delete *it;
     weathers_.clear();
     clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList::CommitTo
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList::CommitTo
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-void LocalWeathersList::CommitTo( WeatherModel& model )
+void GlobalWeathersList::CommitTo( WeatherModel& model )
 {
-    model.Resolver< LocalWeather >::DeleteAll();
-    for( IT_LocalWeathers it = weathers_.begin(); it != weathers_.end(); ++it )
+    model.tools::Resolver< Weather >::DeleteAll();
+    for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
     {
-        LocalWeather* weather = new LocalWeather( **it );
-        model.Resolver< LocalWeather >::Register( weather->GetId(), *weather );
+        Weather* weather = new Weather( **it );
+        model.Resolver< Weather >::Register( weather->GetId(), *weather );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList::Update
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList::Update
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-void LocalWeathersList::Update( const WeatherModel& model )
+void GlobalWeathersList::Update( const WeatherModel& model )
 {
     Clear();
-    tools::Iterator< const LocalWeather& > it( model.Resolver< LocalWeather >::CreateIterator() );
+    tools::Iterator< const Weather& > it( model.Resolver< Weather >::CreateIterator() );
     while( it.HasMoreElements() )
     {
-        LocalWeather* weather = new LocalWeather( it.NextElement() );
+        Weather* weather = new Weather( it.NextElement() );
         weathers_.push_back( weather );
         QListViewItem* item = new QListViewItem( this );
         item->setText( 0, weather->GetName() );
@@ -123,15 +123,15 @@ void LocalWeathersList::Update( const WeatherModel& model )
 }
 
 // -----------------------------------------------------------------------------
-// Name: LocalWeathersList::SelectedItem
-// Created: SBO 2006-12-20
+// Name: GlobalWeathersList::SelectedItem
+// Created: SLG 2010-03-17
 // -----------------------------------------------------------------------------
-LocalWeather* LocalWeathersList::SelectedItem()
+Weather* GlobalWeathersList::SelectedItem()
 {
     if( selectedItem() )
     {
         const QString text = selectedItem()->text( 0 );
-        for( IT_LocalWeathers it = weathers_.begin(); it != weathers_.end(); ++it )
+        for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
             if( (*it)->GetName() == text )
                 return *it;
     }

@@ -37,6 +37,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual unsigned long GetId() const;
+    virtual QString GetName() const;
     void Serialize( xml::xostream& xos ) const;
     //@}
 
@@ -49,6 +51,8 @@ private:
 public:
     //! @name Member data
     //@{
+    unsigned long id_;
+    QString name_;
     int windSpeed_;
     int windDirection_;
     int cloudFloor_;

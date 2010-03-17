@@ -970,6 +970,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>global weather</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherWidget</name>
