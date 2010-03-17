@@ -299,6 +299,9 @@
     <composition>
       <category name="munition">
         <dotation capacity="240" logistic-threshold="10" name="Charg 5,56 2 O-1T-4 O" normalized-consumption="30"/>
+        <dotation capacity="53" logistic-threshold="30" name="LTO Obus paralysant" normalized-consumption="44"/>
+        <dotation capacity="53" logistic-threshold="30" name="LTO Obus aveuglant" normalized-consumption="44"/>
+        <dotation capacity="53" logistic-threshold="30" name="LTO Obus dispercant" normalized-consumption="44"/>
       </category>
       <category name="ration">
         <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
@@ -320,6 +323,10 @@
     </consumptions>
     <weapon-systems>
       <weapon-system launcher="Fusil Assaut FAMAS" munition="Charg 5,56 2 O-1T-4 O"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus brouillage"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus paralysant"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus aveuglant"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus dispercant"/>
     </weapon-systems>
     <human-protections/>
     <objects>
@@ -32441,7 +32448,7 @@
     <weapon-systems>
       <weapon-system launcher="Mitrailleuse Tourelleau" munition="Bd 12,7 PANA 4 ORD+1T"/>
       <weapon-system launcher="Fusil Assaut FAMAS" munition="Charg 5,56 2 O-1T-4 O"/>
-      <weapon-system launcher="LTO Brouilleur" munition="LTO Obus brouillage"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus brouillage"/>
     </weapon-systems>
     <active-protections>
       <protection name="counter-measure"/>
