@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<volumes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Volumes.xsd">
-  <volume name="Gros"/>
-  <volume name="Moyen"/>
-  <volume name="Petit"/>
-  <volume name="Personnel"/>
-</volumes>
