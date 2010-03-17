@@ -520,11 +520,11 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Invalid coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Coordonnées invalides</translation>
     </message>
     <message>
         <source> Location is outside terrain bounding box </source>
-        <translation type="unfinished"></translation>
+        <translation>La position est en dehors du terrain</translation>
     </message>
 </context>
 <context>

@@ -4157,7 +4157,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>scrambling</source>
+        <source>effect</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
