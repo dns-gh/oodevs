@@ -14,7 +14,7 @@
 
 #include "MT_Tools_Types.h"
 
-#include "MT_Vector2D.h"
+#include "Mt_Vector2DTypes.h"
 
 class MT_Line;
 

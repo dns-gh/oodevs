@@ -90,8 +90,8 @@ private:
 private:
     PHY_Ephemeride*          pEphemeride_;
     PHY_Meteo*               pGlobalMeteo_;
-    T_MeteoSet          meteos_;    // Including global meteo
-    PHY_RawVisionData*  pRawData_; 
+    T_MeteoSet               meteos_;    // Including global meteo
+    PHY_RawVisionData*       pRawData_; 
 };
 
 

@@ -8,7 +8,7 @@
 
 #include "MT_Tools_Types.h"
 
-#include "MT_Vector2D.h"
+#include "MT_Vector2DTypes.h"
 
 typedef enum E_CollisionState
 {

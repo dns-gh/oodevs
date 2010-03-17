@@ -141,7 +141,7 @@
         <build-lib name="simulation_terrain" pattern="lib${ant.project.name}_simulation_terrain-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.protocol,library.simulation_terrain,library.simulation_orders">
+    <target name="library.simulation_kernel" description="build simulation_kernel static library" depends="library.tools,library.protocol,library.simulation_terrain,library.simulation_orders,library.meteo">
         <build-lib name="simulation_kernel" pattern="lib${ant.project.name}_simulation_kernel-${platform}-mt@{suffix}" suffix="-gd">
             <includepath path="${libraries.dir}/simulation_kernel"/> <!-- pour MIL.h -->
             <defineset define="USE_DLL"/> <!-- folk use dll -->
@@ -224,7 +224,12 @@
             <defineset define="XML_LIBRARY"/>  <!-- xerces static -->
         </build-lib>
     </target>
+	
+    <target name="library.meteo" description="build meteo static library" depends="library.protocol,library.clients_kernel">
+        <build-lib name="meteo" pattern="lib${ant.project.name}_meteo-${platform}-mt@{suffix}" suffix="-gd"/>
+    </target>
 
+	
     <target name="library.script_plugin" description="build script_plugin static library" depends="library.dispatcher">
         <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt"/>
         <mkdir dir="${run.dir}/resources/scripts"/>

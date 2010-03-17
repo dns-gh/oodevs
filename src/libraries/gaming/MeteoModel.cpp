@@ -7,17 +7,16 @@
 //
 // *****************************************************************************
 
+#include "gaming_pch.h"
 #include "MeteoModel.h"
-#include "CoordinateConverter.h"
-
+#include "clients_kernel/CoordinateConverter.h"
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel constructor
 // Created: HBD 2010-03-10
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( kernel::CoordinateConverter& conv, Publisher_ABC& publisher ) :
-   publisher_ ( publisher )
-  , converter_ ( conv )
+MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv ) :
+  converter_ ( conv )
 {
     // NOTHING
 }
@@ -58,6 +57,7 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 {
     assert( pGlobalMeteo_ );
     pGlobalMeteo_->Update( msg.attributes() );
+ 
 }
 
 // -----------------------------------------------------------------------------
@@ -67,9 +67,9 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg )
 {
-    geometry::Point2d vUpLeft = converter_.ConvertToGeo( geometry::Point2d( msg.top_left_coordinate().longitude(), 
+    geometry::Point2d vUpLeft = converter_.ConvertToGeo( geometry::Point2f( msg.top_left_coordinate().longitude(), 
         msg.top_left_coordinate().latitude() ));
-    geometry::Point2d vDownRight = converter_.ConvertToGeo( geometry::Point2d( msg.bottom_right_coordinate().longitude(), 
+    geometry::Point2d vDownRight = converter_.ConvertToGeo( geometry::Point2f( msg.bottom_right_coordinate().longitude(), 
         msg.bottom_right_coordinate().latitude() ));
 
     PHY_Meteo* pTmp = 0;

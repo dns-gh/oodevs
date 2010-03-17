@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "Meteo/PHY_Lighting.h"
+#include "meteo/PHY_Lighting.h"
 
 namespace xml
 {

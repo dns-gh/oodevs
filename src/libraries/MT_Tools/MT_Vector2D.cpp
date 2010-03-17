@@ -5,6 +5,7 @@
 
 #include "MT_Tools_pch.h"
 #include "MT_Vector2D.h"
+#include "MT_Vector2DTypes.h"
 
 #include "MT_Droite.h"
 

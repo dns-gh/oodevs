@@ -46,6 +46,7 @@
 #include "UrbanModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
+#include "MeteoModel.h"
 #include "UrbanKnowledgeFactory.h"
 #include "urban/StaticModel.h"
 
@@ -94,7 +95,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , scores_( *new ScoreModel( controllers, publisher, staticModel.scores_ ) )
     , urbanObjects_( *new UrbanModel( controllers.controller_, static_.detection_ ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
-    , notes_( *new NotesModel(controllers.controller_) )  // LTO
+    , notes_( *new NotesModel( controllers.controller_ ))  // LTO
+    , meteo_( *new MeteoModel(  static_.coordinateConverter_ ) )
 {
     // NOTHING
 }
@@ -105,8 +107,10 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
 // -----------------------------------------------------------------------------
 Model::~Model()
 {
-    delete &urbanObjects_;
+    delete &meteo_;
+    delete &notes_;
     delete &surfaceFactory_;
+    delete &urbanObjects_;
     delete &scores_;
     delete &drawings_;
     delete &intelligences_;
@@ -138,6 +142,7 @@ Model::~Model()
     delete &agentKnowledgeConverter_;
     delete &objectKnowledgeFactory_;
     delete &agentsKnowledgeFactory_;
+
 }
 
 // -----------------------------------------------------------------------------

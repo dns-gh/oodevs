@@ -64,6 +64,7 @@ class UrbanKnowledgeFactory;;
 class UrbanModel;
 class SurfaceFactory;
 class NotesModel; // LTO
+class MeteoModel;
 
 // =============================================================================
 /** @class  Model
@@ -130,6 +131,8 @@ public:
     SurfaceFactory&       surfaceFactory_;
     NotesModel&           notes_;   // LTO
     //@}
+    MeteoModel&           meteo_;  
+
 
 private:
     //! @name Copy/Assignement

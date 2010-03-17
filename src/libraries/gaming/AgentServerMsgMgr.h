@@ -215,6 +215,12 @@ namespace kernel
     class Logger_ABC;
 }
 
+namespace MsgsSimToClient
+{
+  class MsgControlGlobalMeteo;
+  class MsgControlLocalMeteo;
+}
+
 class Model;
 class Services;
 class Simulation;
@@ -289,6 +295,8 @@ private:
     void OnReceiveMsgUnitDestruction             ( const MsgsSimToClient::MsgUnitDestruction&                   message );
     void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                            message );
     void OnReceiveMsgAuthenticationResponse      ( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message );
+    void OnReceiveMsgControlMeteoGlobal          ( const MsgsSimToClient::MsgControlGlobalMeteo&                message );
+    void OnReceiveMsgControlMeteoLocal           ( const MsgsSimToClient::MsgControlLocalMeteo&                 message );
 
     // Profiles
     void OnReceiveMsgProfileCreation             ( const MsgsAuthenticationToClient::MsgProfileCreation&                message );

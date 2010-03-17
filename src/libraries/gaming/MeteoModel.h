@@ -10,11 +10,12 @@
 #ifndef __MeteoModel_h_
 #define __MeteoModel_h_
 
-#include "MeteoManager_ABC.h"
+#include "meteo/MeteoManager_ABC.h"
 #include "protocol/Protocol.h"
 
 namespace kernel
 {
+    class CoordinateConverter_ABC;
     class CoordinateConverter;
 }
 class Publisher_ABC;
@@ -31,7 +32,7 @@ class MeteoModel : public MeteoManager_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MeteoModel( kernel::CoordinateConverter& conv, Publisher_ABC& pub );
+    MeteoModel( kernel::CoordinateConverter_ABC& conv );
     virtual ~MeteoModel();
     //@}
 
@@ -41,6 +42,8 @@ public:
     virtual void                 RegisterMeteo ( PHY_Meteo& );
     virtual void                 UnregisterMeteo( PHY_Meteo& );
     virtual const PHY_Lighting&  GetLighting  () const;
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg );    
+    virtual void OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg ); 
     //@}
 
 private:
@@ -54,8 +57,6 @@ private:
     //@{
     typedef std::set< PHY_Meteo* >     T_MeteoSet;
     typedef T_MeteoSet::const_iterator CIT_MeteoSet;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg );    
-    virtual void OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg ); 
    //@}
 
 private:
@@ -63,8 +64,7 @@ private:
     //@{
     PHY_Meteo*                       pGlobalMeteo_;
     T_MeteoSet                       meteos_;    // Including global meteo
-    Publisher_ABC&                   publisher_;
-    kernel::CoordinateConverter&         converter_;
+    kernel::CoordinateConverter_ABC&     converter_;
     //@}
 };
 

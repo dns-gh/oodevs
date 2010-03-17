@@ -46,6 +46,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_gui/Drawing_ABC.h"
+#include "MeteoModel.h"
 #include "protocol/publisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/AarSenders.h"
@@ -1847,6 +1848,10 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
         OnReceiveMsgKnowledgeGroupCreationAck( wrapper.message().knowledge_group_creation_ack(), wrapper.context() );
     else if( wrapper.message().has_action_create_fire_order_ack() )
         OnReceiveMsgActionCreateFireOrderAck( wrapper.message().action_create_fire_order_ack(), wrapper.context() );
+    else if( wrapper.message().has_control_global_meteo() )
+        OnReceiveMsgControlMeteoGlobal        ( wrapper.message().control_global_meteo() ); 
+    else if( wrapper.message().has_control_local_meteo() )
+        OnReceiveMsgControlMeteoLocal         ( wrapper.message().control_local_meteo() );     
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -1996,10 +2001,10 @@ void AgentServerMsgMgr::OnReceiveMsgDispatcherToClient( const std::string& , con
     else
         UnhandledMessage( &wrapper.message() );
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: AgentServerMsgMgr::OnReceiveMsgPluginToClient
+//
+//
+//// -----------------------------------------------------------------------------
+//// Name: AgentServerMsgMgr::OnReceiveMsgPluginToClient
 // Created: RPD 2009-08-13
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgPluginToClient( const std::string& , const MsgsPluginToClient::MsgPluginToClient& wrapper )
@@ -2049,4 +2054,22 @@ Profile& AgentServerMsgMgr::GetProfile() const
     if( !profile_ )
         throw std::runtime_error( "No profile set for AgentServerMsgMgr" );
     return *profile_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal
+// Created: HBD 2010-03-16
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal( const MsgsSimToClient::MsgControlGlobalMeteo& message )
+{
+        GetModel().meteo_.OnReceiveMsgGlobalMeteo( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoLocal
+// Created: HBD 2010-03-16
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocal( const MsgsSimToClient::MsgControlLocalMeteo& message )
+{
+      GetModel().meteo_.OnReceiveMsgLocalMeteo( message );
 }

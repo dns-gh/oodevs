@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoEffect.h"
 
-#include "Meteo/PHY_Lighting.h"
+#include "meteo/PHY_Lighting.h"
 #include "Meteo/PHY_Precipitation.h"
 
 //-----------------------------------------------------------------------------

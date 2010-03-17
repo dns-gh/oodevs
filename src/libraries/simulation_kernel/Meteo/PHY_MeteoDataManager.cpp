@@ -22,7 +22,7 @@
 PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     : pEphemeride_ ( 0 )
     , pGlobalMeteo_( 0 )
-    , meteos_      ( )
+    , meteos_      ()
     , pRawData_    ( 0 )
 {
     PHY_Precipitation::Initialize();

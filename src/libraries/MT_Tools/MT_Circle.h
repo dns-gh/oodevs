@@ -13,7 +13,7 @@
 #define __MT_Circle_h_
 
 #include "MT_Tools_Types.h"
-#include "MT_Vector2D.h"
+#include "MT_Vector2DTypes.h"
 #include "MT_Line.h"
 //*****************************************************************************
 // Created: JDY 03-03-06
