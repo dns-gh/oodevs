@@ -17,6 +17,8 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
+#include "Entities/Agents/Units/Radars/PHY_RadarClass.h" // LTO
+#include "Entities/Agents/Units/Radars/PHY_RadarType.h" // LTO
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -418,6 +420,7 @@ MT_Float PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target
 bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const
 {
     const PHY_RoleInterface_Perceiver& targetPerceiver = target.GetRole< PHY_RoleInterface_Perceiver >();
+
     const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = targetPerceiver.GetSurfacesAgent();
     for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
     {
@@ -427,6 +430,23 @@ bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& ta
         for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
             if( *it == sensorName )
                 return true;
+    }
+
+    PHY_RadarClass::T_RadarClassMap radarClasses = PHY_RadarClass::GetRadarClasses();
+    for( PHY_RadarClass::CIT_RadarClassMap itRadarClass = radarClasses.begin(); itRadarClass != radarClasses.end(); ++itRadarClass )
+    {
+        if( targetPerceiver.IsUsingActiveRadar( *itRadarClass->second ) == false )
+            continue;
+
+        const PHY_RoleInterface_Perceiver::T_RadarSet& radars = const_cast< PHY_RoleInterface_Perceiver& >( targetPerceiver ).GetRadars( *itRadarClass->second );
+        for( PHY_RoleInterface_Perceiver::CIT_RadarSet itRadar = radars.begin(); itRadar != radars.end(); ++itRadar )
+        {
+            const std::string& radarName = (*itRadar)->GetName();
+
+            for( std::vector< std::string >::const_iterator it = limitedToSensorsList_.begin(); it != limitedToSensorsList_.end(); ++it )
+            if( *it == radarName )
+                return true;
+        }
     }
 
     return false;

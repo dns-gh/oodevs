@@ -104,7 +104,8 @@ public:
     void SetVisionModeNormal   ();
     void SetVisionModeDirection( const MT_Vector2D& vDirection );
     void SetVisionModePoint    ( const MT_Vector2D& vPoint );
-    virtual bool IsUsingActiveRadar  () const;
+    virtual bool IsUsingActiveRadar() const;
+    virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
 
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     virtual void NotifyComponentHasChanged();

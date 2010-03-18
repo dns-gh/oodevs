@@ -80,7 +80,8 @@ public:
 
     //! @name Operations
     //@{    
-    virtual bool IsUsingActiveRadar() const = 0;
+    virtual bool IsUsingActiveRadar()                                   const = 0;
+    virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const = 0; // LTO
     //@}
 
     virtual void NotifyExternalPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level ) = 0;

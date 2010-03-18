@@ -123,6 +123,25 @@ bool PHY_PerceptionRadar::IsUsingActiveRadar() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRadar::IsUsingActiveRadar
+// Created: JSR 2010-03-18
+// LTO
+// -----------------------------------------------------------------------------
+bool PHY_PerceptionRadar::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
+{
+    if( !radarClass.IsActive() )
+        return false;
+
+    const PHY_PerceptionRadarData::T_ZoneSet& zones = radarZones_         [ radarClass.GetID() ];
+    const bool bRadarEnabledOnPerceiverPos          = radarOnUnitPosition_[ radarClass.GetID() ];
+
+    if( bRadarEnabledOnPerceiverPos || !zones.empty() )
+        return true;
+
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_PerceptionRadar::Compute
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------

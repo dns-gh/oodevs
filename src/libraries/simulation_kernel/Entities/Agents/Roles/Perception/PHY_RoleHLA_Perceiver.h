@@ -31,6 +31,7 @@ public:
     //! @name Operations
     //@{    
     virtual bool IsUsingActiveRadar() const;
+    virtual bool IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const; // LTO
     //@}
 
     //! @name Modifiers

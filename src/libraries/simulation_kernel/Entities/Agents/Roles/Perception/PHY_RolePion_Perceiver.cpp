@@ -512,6 +512,16 @@ bool PHY_RolePion_Perceiver::IsUsingActiveRadar() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Perceiver::IsUsingActiveRadar
+// Created: JSR 2010-03-18
+// LTO
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& radarClass ) const
+{
+    return ( pPerceptionRadar_ && pPerceptionRadar_->IsUsingActiveRadar( radarClass ) ) || pPerceptionFlyingShell_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::EnableRadarOnLocalisation
 // Created: NLD 2005-05-02
 // -----------------------------------------------------------------------------

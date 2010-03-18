@@ -50,3 +50,13 @@ bool PHY_RoleHLA_Perceiver::IsUsingActiveRadar() const
 {
     return bIsUsingActiveRadar_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Perceiver::IsUsingActiveRadar
+// Created: JSR 2010-03-18
+// LTO
+// -----------------------------------------------------------------------------
+bool PHY_RoleHLA_Perceiver::IsUsingActiveRadar( const PHY_RadarClass& /*radarClass*/ ) const
+{
+    return bIsUsingActiveRadar_;
+}
