@@ -11,7 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RawVisionData.h"
-
+#include "meteo/PHY_Lighting.h"
+#include "meteo/PHY_Precipitation.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
