@@ -170,7 +170,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk( int currentTimeStep )
         // Extrapolation
         pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( & DEC_Knowledge_Agent::Extrapolate, _1 ) );
         // Relevance
-        pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::UpdateRelevance, _1, 0 ) );
+        pBlackBoard_->GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &DEC_Knowledge_Agent::UpdateRelevance, _1, currentTimeStep ) );
     }
 
 }
