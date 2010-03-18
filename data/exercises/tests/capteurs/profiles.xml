@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<profiles>
+  <profile name="Army" password="" supervision="true">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <side id="99"/>
+        <side id="162"/>
+      </readwrite>
+    </rights>
+  </profile>
+</profiles>
