@@ -137,6 +137,10 @@
         <source>Delete recorded orders?</source>
         <translation>Supprimer les ordres enregistrés ?</translation>
     </message>
+    <message>
+        <source>Planning mode on/off</source>
+        <translation>Basculer en mode Plannification</translation>
+    </message>
 </context>
 <context>
     <name>AfterAction</name>
@@ -542,6 +546,14 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Not connected to %1:%2
+Reason: %3
+</source>
+        <translation type="obsolete">Non connecté à %1:%2
+Reason: %3
+</translation>
     </message>
 </context>
 <context>

@@ -140,10 +140,10 @@ bool ActionsModel::IsRecording() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsModel::ToggleRecording
+// Name: ActionsModel::EnableRecording
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::ToggleRecording()
+void ActionsModel::EnableRecording( bool enabled )
 {
-    isRecording_ = !isRecording_;
+    isRecording_ = enabled;
 }

@@ -56,7 +56,7 @@ void IndicatorRequest::Commit() const
 {
     aar::PlotRequest message;
     const std::string request = definition_.Commit( parameters_ );
-    message().set_identifier( reinterpret_cast< int >( this ) );
+    message().set_identifier( reinterpret_cast< unsigned int >( this ) );
     message().set_request( request.c_str() );
     message.Send( publisher_, 0 );
 }
@@ -67,7 +67,7 @@ void IndicatorRequest::Commit() const
 // -----------------------------------------------------------------------------
 void IndicatorRequest::Update( const MsgsAarToClient::MsgPlotResult& message )
 {
-    if( message.identifier() == reinterpret_cast< int >( this ) )
+    if( message.identifier() == reinterpret_cast< unsigned int >( this ) )
     {
         done_ = true;
         result_.resize( message.values_size() );
@@ -88,7 +88,7 @@ void IndicatorRequest::Update( const MsgsAarToClient::MsgIndicator& message )
         newValues_.push_back( message.value() );
     if( IsDone() )
     {
-        for (std::vector< double>::iterator iter = newValues_.begin(); iter != newValues_.end(); ++iter )
+        for( std::vector< double >::iterator iter = newValues_.begin(); iter != newValues_.end(); ++iter )
             result_.push_back( *iter );
         newValues_.clear();
     }

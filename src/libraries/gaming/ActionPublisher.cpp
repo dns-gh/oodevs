@@ -1,0 +1,90 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+#include "gaming_pch.h"
+#include "ActionPublisher.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/OptionVariant.h"
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher constructor
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+ActionPublisher::ActionPublisher( Publisher_ABC& publisher, kernel::Controllers& controllers )
+    : controllers_( controllers )
+    , publisher_( publisher )
+    , design_( false )
+{
+    controllers_.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher destructor
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+ActionPublisher::~ActionPublisher()
+{
+    controllers_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher::Send
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+void ActionPublisher::Send( const MsgsClientToSim::MsgClientToSim& message )
+{
+    if( !design_ )
+        publisher_.Send( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher::Send
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+void ActionPublisher::Send( const MsgsClientToAuthentication::MsgClientToAuthentication& /*message*/ )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher::Send
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+void ActionPublisher::Send( const MsgsClientToReplay::MsgClientToReplay& /*message*/ )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher::Send
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+void ActionPublisher::Send( const MsgsClientToAar::MsgClientToAar& /*message*/ )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher::Send
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+void ActionPublisher::Send( const MsgsClientToMessenger::MsgClientToMessenger& /*message*/ )
+{
+    throw std::runtime_error( __FUNCTION__ ": not to be called." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionPublisher::OptionChanged
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+void ActionPublisher::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "DesignMode" )
+        design_ = value.To< bool >();
+}

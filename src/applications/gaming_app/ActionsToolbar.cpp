@@ -13,6 +13,9 @@
 #include "gaming/ActionsScheduler.h"
 #include "actions/ActionsModel.h"
 #include "actions/Action_ABC.h"
+#include "clients_gui/BooleanOptionButton.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/OptionVariant.h"
 #include "tools/ExerciseConfig.h"
 #include "icons.h"
 #include <boost/function.hpp>
@@ -41,6 +44,11 @@ namespace
     private:
         T_Callback callback_;
     };
+
+    QPixmap MakePixmap( const std::string& name )
+    {
+        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gaming/" ) + name + ".png" ).c_str() );
+    }
 }
 
 using namespace actions;
@@ -49,13 +57,14 @@ using namespace actions;
 // Name: ActionsToolbar constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config )
-    : QHBox     ( parent, "ActionsToolbar" )
-    , actions_  ( actions )
-    , scheduler_( scheduler )
-    , config_   ( config )
-    , pixRecord_( MAKE_PIXMAP( recrec ) )
-    , pixStop_  ( MAKE_PIXMAP( recstop ) )
+ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsScheduler& scheduler, const tools::ExerciseConfig& config, kernel::Controllers& controllers )
+    : QHBox       ( parent, "ActionsToolbar" )
+    , controllers_( controllers )
+    , actions_    ( actions )
+    , scheduler_  ( scheduler )
+    , config_     ( config )
+    , pixRecord_  ( MAKE_PIXMAP( recrec ) )
+    , pixStop_    ( MAKE_PIXMAP( recstop ) )
 {
     setSizePolicy( QSizePolicy::Maximum, QSizePolicy::Maximum );
     setBackgroundMode( Qt::PaletteButton );
@@ -76,8 +85,12 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsS
 
     recordBtn_ = new QToolButton( this );
     recordBtn_->setAutoRaise( true );
+    recordBtn_->setToggleButton( true );
     recordBtn_->setPixmap( pixRecord_ );
     recordBtn_->setTextLabel( tr( "Toggle order recording on/off" ) );
+
+    planningBtn_ = new gui::BooleanOptionButton( MakePixmap( "actions_designmode" ), tr( "Planning mode on/off" ), this, controllers.options_, "DesignMode" );
+    planningBtn_->setAutoRaise( true );
 
     QToolButton* purgeBtn = new QToolButton( this );
     purgeBtn->setAutoRaise( true );
@@ -86,10 +99,13 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsS
     
     confirmation_ = new ConfirmationBox( tr( "Actions recorder" ), boost::bind( &ActionsToolbar::PurgeConfirmed, this, _1 ) );
 
-    connect( loadBtn_  , SIGNAL( clicked() ), SLOT( Load()   ) );
-    connect( saveBtn_  , SIGNAL( clicked() ), SLOT( Save()   ) );
-    connect( recordBtn_, SIGNAL( clicked() ), SLOT( Record() ) );
-    connect( purgeBtn  , SIGNAL( clicked() ), SLOT( Purge()  ) );
+    connect( loadBtn_    , SIGNAL( clicked() ), SLOT( Load()   ) );
+    connect( saveBtn_    , SIGNAL( clicked() ), SLOT( Save()   ) );
+    connect( recordBtn_  , SIGNAL( toggled( bool ) ), SLOT( ToggleRecording( bool ) ) );
+    connect( planningBtn_, SIGNAL( toggled( bool ) ), SLOT( TogglePlanning( bool ) ) );
+    connect( purgeBtn    , SIGNAL( clicked() ), SLOT( Purge()  ) );
+
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,19 +114,19 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, ActionsS
 // -----------------------------------------------------------------------------
 ActionsToolbar::~ActionsToolbar()
 {
+    controllers_.Unregister( *this );
     delete confirmation_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ActionsToolbar::Record
+// Name: ActionsToolbar::ToggleRecording
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsToolbar::Record()
+void ActionsToolbar::ToggleRecording( bool toggled )
 {
-    actions_.ToggleRecording();
-    const bool isRecording = actions_.IsRecording();
-    recordBtn_->setPixmap( isRecording ? pixStop_ : pixRecord_ );
-    saveBtn_->setDisabled( isRecording );
+    actions_.EnableRecording( toggled );
+    recordBtn_->setPixmap( toggled ? pixStop_ : pixRecord_ );
+    saveBtn_->setDisabled( toggled );
 }
 
 // -----------------------------------------------------------------------------
@@ -167,4 +183,18 @@ void ActionsToolbar::PurgeConfirmed( int result )
 {
     if( result  == QMessageBox::Yes )
         actions_.Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionsToolbar::OptionChanged
+// Created: SBO 2010-03-17
+// -----------------------------------------------------------------------------
+void ActionsToolbar::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "DesignMode" )
+    {
+        const bool designMode = value.To< bool >();
+        ToggleRecording( designMode );
+        recordBtn_->setDisabled( designMode );
+    }
 }

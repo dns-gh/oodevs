@@ -57,7 +57,7 @@ public:
     void Save( const std::string& filename ) const;
 
     bool IsRecording() const;
-    void ToggleRecording();
+    void EnableRecording( bool enabled );
     //@}
 
 private:

@@ -94,6 +94,10 @@
         <source>Delete recorded orders?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Planning mode on/off</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AfterAction</name>

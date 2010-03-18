@@ -21,11 +21,12 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
-#include "gaming/Decisions.h"
+#include "gaming/ActionPublisher.h"
 #include "gaming/AutomatDecisions.h"
-#include "gaming/StaticModel.h"
-#include "gaming/PopulationDecisions.h"
 #include "gaming/CommandPublisher.h"
+#include "gaming/Decisions.h"
+#include "gaming/PopulationDecisions.h"
+#include "gaming/StaticModel.h"
 
 #include "UnitMissionInterface.h"
 #include "AutomateMissionInterface.h"
@@ -48,12 +49,12 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const St
     , controllers_             ( controllers )
     , static_                  ( model )
     , actionsModel_            ( actionsModel )
-    , publisher_               ( publisher )
+    , publisher_               ( new ActionPublisher( publisher, controllers ) )
     , layer_                   ( layer )
     , converter_               ( static_.coordinateConverter_ )
     , tools_                   ( tools )
     , profile_                 ( profile )
-    , commandPublisher_        ( new CommandPublisher( controllers_, publisher_, profile_ ) )
+    , commandPublisher_        ( new CommandPublisher( controllers_, publisher, profile_ ) )
     , pMissionInterface_       ( 0 )
     , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_, layer_, knowledgeConverter, objectKnowledgeConverter, static_, simulation ) )
     , selectedEntity_          ( controllers )
@@ -314,7 +315,7 @@ void MissionPanel::ActivateAgentMission( int id )
 {
     SetInterface( 0 );
     const MissionType& mission = static_cast< tools::Resolver_ABC< MissionType >& >( static_.types_).Get( id );
-    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, *publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -328,7 +329,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, *publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -339,7 +340,7 @@ void MissionPanel::ActivatePopulationMission( int id )
 {
     SetInterface( 0 );
     const MissionType& mission = static_cast< tools::Resolver_ABC< MissionType >& >( static_.types_).Get( id );
-    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, *publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +351,7 @@ void MissionPanel::ActivateFragOrder( int id )
 {
     SetInterface( 0 );
     const FragOrderType& order = static_cast< tools::Resolver_ABC< FragOrderType >& >( static_.types_).Get( id );
-    SetInterface( new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, publisher_, *interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new FragmentaryOrderInterface( this, *selectedEntity_.ConstCast(), order, controllers_.actions_, *publisher_, *interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------

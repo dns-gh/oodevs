@@ -129,7 +129,7 @@ private:
     kernel::Controllers& controllers_;
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
-    Publisher_ABC& publisher_;
+    std::auto_ptr< Publisher_ABC > publisher_;
     gui::ParametersLayer& layer_;
     const kernel::CoordinateConverter_ABC& converter_;
     const kernel::GlTools_ABC& tools_;
