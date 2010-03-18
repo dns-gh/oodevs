@@ -119,7 +119,7 @@ template < typename T >
 void ADN_Type_Choice< T >::SetDataPrivate( void *data )
 {
     int i = *static_cast< int* >( data );
-    assert( i < choices_.size() );
+    assert( i < static_cast< int >( choices_.size() ) );
     T& tmp = choices_[ i ];
     if ( CheckData( tmp ) )
         SetDataPrivate( tmp, true );

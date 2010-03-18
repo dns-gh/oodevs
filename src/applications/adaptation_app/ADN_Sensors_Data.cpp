@@ -27,6 +27,83 @@
 // =============================================================================
 
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::LimitedToSensorsInfos::LimitedToSensorsInfos
+// Created: JSR 2010-03-16
+// LTO
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::LimitedToSensorsInfos::LimitedToSensorsInfos()
+: ADN_Ref_ABC         ()
+, ADN_DataTreeNode_ABC()
+{
+    // NOTHING
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::LimitedToSensorsInfos::~LimitedToSensorsInfos
+// Created: JSR 2010-03-16
+// LTO
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::LimitedToSensorsInfos::~LimitedToSensorsInfos()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::LimitedToSensorsInfos::GetItemName
+// Created: JSR 2010-03-16
+// LTO
+// -----------------------------------------------------------------------------
+std::string ADN_Sensors_Data::LimitedToSensorsInfos::GetItemName()
+{
+    return strName_.GetData();
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::LimitedToSensorsInfos::CreateCopy
+// Created: JSR 2010-03-16
+// LTO
+// -----------------------------------------------------------------------------
+ADN_Sensors_Data::LimitedToSensorsInfos* ADN_Sensors_Data::LimitedToSensorsInfos::CreateCopy()
+{
+    LimitedToSensorsInfos* newInfos = new LimitedToSensorsInfos();
+    newInfos->strName_ = strName_.GetData();
+    return newInfos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::LimitedToSensorsInfos::GetNodeName
+// Created: JSR 2010-03-18
+// LTO
+// -----------------------------------------------------------------------------
+std::string ADN_Sensors_Data::LimitedToSensorsInfos::GetNodeName()
+{
+    return strName_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::LimitedToSensorsInfos::ReadArchive
+// Created: JSR 2010-03-16
+// LTO
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::LimitedToSensorsInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "name", strName_ );
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive
+// Created: JSR 2010-03-16
+// LTO
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::LimitedToSensorsInfos::WriteArchive( xml::xostream& output )
+{
+    output << xml::start( "sensor" )
+                << xml::attribute( "name", strName_ )
+           << xml::end();
+}
+
+// =============================================================================
+// 
+// =============================================================================
+
 //-----------------------------------------------------------------------------
 // Name: ModificatorSizeInfos::ModificatorSizeInfos
 // Created: JDY 03-08-28
@@ -588,6 +665,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 , bCanDetectObjects_(false)
 , bCanScan_( false )
 , rAngle_(0)
+, bLimitedToSensors_(false) // LTO
 , rDistProximity_(0)
 , rDistDetection_(0)
 , rDistReco_(0)
@@ -601,7 +679,6 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 , vModifTargetStance_( false )
 , populationInfos_ ()
 {
-
     strName_.SetDataName( "le nom" );
     strName_.SetParentNode( *this );
 
@@ -623,11 +700,17 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
     bCanDetectAgents_.SetDataName( "la capacité de détecter des unités" );
     bCanDetectAgents_.SetParentNode( *this );
 
+    bLimitedToSensors_.SetDataName( "la capacité de détecter d'autres capteurs" ); // LTO
+    bLimitedToSensors_.SetParentNode( *this ); // LTO
+
     bCanDetectObjects_.SetDataName( "la capacité de détecter des objets" );
     bCanDetectObjects_.SetParentNode( *this );
 
     vTargets_.SetParentNode( *this );
     vTargets_.SetItemTypeName( "une cible objet" );
+
+    vLimitedToSensorsInfos_.SetParentNode( *this ); // LTO
+    vLimitedToSensorsInfos_.SetItemTypeName( "une cible capteur" ); // LTO
 
     vModifIlluminations_.SetParentNode( *this );
     vModifWeather_.SetParentNode( *this );
@@ -676,6 +759,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 ADN_Sensors_Data::SensorInfos::~SensorInfos()
 {
     vTargets_.Reset();
+    vLimitedToSensorsInfos_.Reset(); // LTO
     vModifIlluminations_.Reset();
     vModifWeather_.Reset();
     vModifEnvironments_.Reset();
@@ -717,6 +801,7 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
     pCopy->rAngle_            = rAngle_.GetData();
     pCopy->bCanScan_          = bCanScan_.GetData();
     pCopy->bCanDetectAgents_  = bCanDetectAgents_.GetData();
+    pCopy->bLimitedToSensors_ = bLimitedToSensors_.GetData(); // LTO
     pCopy->bCanDetectObjects_ = bCanDetectObjects_.GetData();
     pCopy->populationInfos_.CopyFrom( populationInfos_ );
 
@@ -725,6 +810,15 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
         TargetInfos* pNewInfo = (*itTarget)->CreateCopy();
         pCopy->vTargets_.AddItem( pNewInfo );
     }
+
+    // LTO begin
+    pCopy->vLimitedToSensorsInfos_.reserve( vLimitedToSensorsInfos_.size() );
+    for( IT_LimitedToSensorsInfos_Vector it = vLimitedToSensorsInfos_.begin(); it != vLimitedToSensorsInfos_.end(); ++it )
+    {
+        LimitedToSensorsInfos* newInfos = (*it)->CreateCopy();
+        pCopy->vLimitedToSensorsInfos_.AddItem( newInfos );
+    }
+    // LTO end
 
     uint i;
     for( i= 0 ; i< eNbrTimeCategory ; ++i)
@@ -752,6 +846,20 @@ ADN_Sensors_Data::SensorInfos* ADN_Sensors_Data::SensorInfos::CreateCopy()
         pCopy->vModifUrbanBlocks_[ std::distance( vModifUrbanBlocks_.begin(), itUrbanBlockModif ) ]->rCoeff_ = (*itUrbanBlockModif)->rCoeff_.GetData();
 
     return pCopy;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Data::ReadLimitedToSensorsList
+// Created: JSR 2010-03-16
+// LTO
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList( xml::xistream& input )
+{
+    bLimitedToSensors_ = true;
+
+    std::auto_ptr< LimitedToSensorsInfos > spNew( new LimitedToSensorsInfos() );
+    spNew->ReadArchive( input );
+    vLimitedToSensorsInfos_.AddItem( spNew.release() );
 }
 
 // -----------------------------------------------------------------------------
@@ -878,6 +986,9 @@ void ADN_Sensors_Data::SensorInfos::ReadUnitDetection( xml::xistream& input )
 
     input >> xml::attribute( "scanning", bCanScan_ )
           >> xml::attribute( "angle", rAngle_ )
+          >> xml::optional() >> xml::start( "limited-to-sensors" ) // LTO
+            >> xml::list( "sensor", *this, &ADN_Sensors_Data::SensorInfos::ReadLimitedToSensorsList ) // LTO
+          >> xml::end() // LTO
           >> xml::start( "base-distances" )
             >> xml::attribute( "close-range", rDistProximity_ )
             >> xml::list( "base-distance", *this, &ADN_Sensors_Data::SensorInfos::ReadBaseDistance )
@@ -947,8 +1058,9 @@ void ADN_Sensors_Data::SensorInfos::ReadObjectDetection( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "name", strName_ )
-          >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
+    input >> xml::attribute( "name", strName_ );
+
+    input >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
 }
 
 // -----------------------------------------------------------------------------
@@ -964,8 +1076,19 @@ void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
     {
         output << xml::start( "unit-detection" )
                 << xml::attribute( "scanning", bCanScan_ )
-                << xml::attribute( "angle", rAngle_ )
-                << xml::start( "base-distances" )
+                << xml::attribute( "angle", rAngle_ );
+
+        // LTO begin
+        if ( bLimitedToSensors_.GetData() )
+        {
+            output << xml::start( "limited-to-sensors" );
+            for( unsigned int i = 0; i < vLimitedToSensorsInfos_.size(); ++i )
+                vLimitedToSensorsInfos_[i]->WriteArchive( output );
+            output << xml::end();
+        }
+        // LTO end
+
+        output  << xml::start( "base-distances" )
                     << xml::attribute( "close-range", rDistProximity_ )
                     << xml::start( "base-distance" )
                         << xml::attribute( "level", "identification" ) << xml::attribute( "distance", rDistIdent_ )

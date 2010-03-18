@@ -3197,6 +3197,10 @@ Make sure that the file is not write-protected.</source>
         <source>Counter battery radar</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Limited To Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>

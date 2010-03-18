@@ -54,6 +54,8 @@ public:
         eCanDetectObjects,
         ePopulationDensity,
         ePopulationModifier,
+        eLimitedSensorsList, // LTO
+        eLimitedToSensors, // LTO
         eNbrGuiElements
     };
 

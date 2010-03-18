@@ -27,11 +27,37 @@
 //*****************************************************************************
 // Created: JDY 03-06-25
 //*****************************************************************************
+// LTO begin
 class ADN_Sensors_Data : public ADN_Data_ABC
 {
     MT_COPYNOTALLOWED( ADN_Sensors_Data )
 
 public:
+//*****************************************************************************
+    class LimitedToSensorsInfos : public ADN_Ref_ABC
+                                , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( LimitedToSensorsInfos )
+    public:
+                 LimitedToSensorsInfos();
+        virtual ~LimitedToSensorsInfos();
+
+        std::string GetItemName();
+        LimitedToSensorsInfos* CreateCopy();
+
+        std::string GetNodeName();
+
+        void ReadArchive ( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+    public:
+        ADN_Type_String strName_;
+    };
+
+    typedef ADN_Type_Vector_ABC<LimitedToSensorsInfos>  T_LimitedToSensorsInfos_Vector;
+    typedef T_LimitedToSensorsInfos_Vector::iterator   IT_LimitedToSensorsInfos_Vector;
+// LTO end
+
 //*****************************************************************************
     class ModificatorSizeInfos
         : public ADN_Ref_ABC
@@ -364,6 +390,7 @@ public:
         SensorInfos* CreateCopy();
 
         void ReadArchive( xml::xistream& input );
+        void ReadLimitedToSensorsList( xml::xistream& input ); // LTO
         void ReadBaseDistance( xml::xistream& input );
         void ReadObject( xml::xistream& input );
         void ReadObjectDetection( xml::xistream& input );
@@ -384,10 +411,12 @@ public:
         ADN_Type_Bool                           bCanDetectAgents_;
         ADN_Type_Bool                           bCanScan_;
         ADN_Type_Double                         rAngle_;
+        ADN_Type_Bool                           bLimitedToSensors_; // LTO
         ADN_Type_Double                         rDistProximity_;
         ADN_Type_Double                         rDistDetection_;
         ADN_Type_Double                         rDistReco_;
         ADN_Type_Double                         rDistIdent_;
+        T_LimitedToSensorsInfos_Vector          vLimitedToSensorsInfos_; // LTO
         T_ModificatorSizeInfos_Vector           vModifSizes_;
         T_ModificatorMeteoInfos_Vector          vModifWeather_;
         T_ModificatorIlluminationInfos_Vector   vModifIlluminations_;

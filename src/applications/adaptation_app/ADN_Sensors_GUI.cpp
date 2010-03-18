@@ -38,6 +38,7 @@
 #include "ADN_Sensors_Environments_GUI.h"
 #include "ADN_Sensors_UrbanBlockMaterial_GUI.h"
 #include "ADN_Sensors_Postures_GUI.h"
+#include "ADN_Sensors_LimitedToSensorsListView.h" // LTO
 #include "ADN_Sensors_TargetsListView.h"
 #include "ADN_Tr.h"
 #include "ADN_GuiBuilder.h"
@@ -160,8 +161,21 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Density" ) , vConnectors[ePopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
     builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Modifier" ), vConnectors[ePopulationModifier], 0, eGreaterEqualZero );
 
+    // LTO begin
+    // Group for last line layout (Limited to sensors and targets)
+    QGroupBox* pLimitedAndObjectsGroup = new QGroupBox( 0, Qt::Horizontal, pSensorGroupBox );
+    pLimitedAndObjectsGroup->setFlat( true );
+
+    // Limited to sensors parameters
+    ADN_GroupBox* pLimitedToSensorsGroupBox = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Limited To Sensors" ), pLimitedAndObjectsGroup );
+    vConnectors[eLimitedToSensors] = &pLimitedToSensorsGroupBox->GetConnector();
+
+    ADN_Sensors_LimitedToSensorsListView* pLimitedToSensorsListView = new ADN_Sensors_LimitedToSensorsListView( pLimitedToSensorsGroupBox );
+    vConnectors[eLimitedSensorsList] = &pLimitedToSensorsListView->GetConnector();
+    // LTO end
+
     // Object detection parameters
-    ADN_GroupBox* pObjectParamGroupBox = new ADN_GroupBox( 0, Qt::Vertical, tr( "Can detect objects" ), pSensorGroupBox );
+    ADN_GroupBox* pObjectParamGroupBox = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Can detect objects" ), pLimitedAndObjectsGroup );
     vConnectors[eCanDetectObjects] = &pObjectParamGroupBox->GetConnector();
 
     ADN_Sensors_TargetsListView* pTargetListView = new ADN_Sensors_TargetsListView( pObjectParamGroupBox );
@@ -186,6 +200,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Set the connectors.
     pTargetListView->SetItemConnectors( vTargetConnectors );
     pListView->SetItemConnectors(vConnectors);
+
+    connect( pAgentParamGroupBox, SIGNAL( toggled( bool ) ), pLimitedToSensorsGroupBox, SLOT( setEnabled( bool ) ) ); // LTO
 
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pPage, 10, 10 );
@@ -224,6 +240,15 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pOGroupLayout->setAlignment( Qt::AlignTop );
     pOGroupLayout->addWidget( pTargetListView );
     pOGroupLayout->addWidget( pTargetParamsGroupBox );
+
+    // LTO begin
+    QHBoxLayout* pLimitedAndObjectsGroupLayout = new QHBoxLayout( pLimitedAndObjectsGroup->layout(), 5 );
+    pLimitedAndObjectsGroupLayout->setAlignment( Qt::AlignTop );
+    pLimitedAndObjectsGroupLayout->addWidget( pLimitedToSensorsGroupBox );
+    pLimitedAndObjectsGroupLayout->addWidget( pObjectParamGroupBox );
+    pLimitedAndObjectsGroupLayout->setStretchFactor( pLimitedToSensorsGroupBox, 1 );
+    pLimitedAndObjectsGroupLayout->setStretchFactor( pObjectParamGroupBox, 2 );
+    // LTO end
 }
 
 
