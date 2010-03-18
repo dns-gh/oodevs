@@ -64,7 +64,7 @@ public:
     //! @name Accessors
     //@{
     bool               IsInitialized();
-    const std::string& GetSensorTypeName() const;
+    const std::string& GetSensorTypeName() const; // LTO
     //@}
 
     //! @name Operators

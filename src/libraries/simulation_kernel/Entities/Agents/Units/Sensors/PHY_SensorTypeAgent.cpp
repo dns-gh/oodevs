@@ -16,7 +16,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
-#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -137,10 +137,10 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     , urbanBlockFactors_   ( ZurbType::GetZurbType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
-    , isLimitedToSensors_  ( false )
+    , isLimitedToSensors_  ( false ) // LTO
 {
     InitializeAngle           ( xis );
-    InitializeLimitedToSensors( xis );
+    InitializeLimitedToSensors( xis ); // LTO
     InitializeDistances       ( xis );
 
     xis >> xml::start( "distance-modifiers" );
@@ -182,6 +182,7 @@ void PHY_SensorTypeAgent::InitializeAngle( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::InitializeLimitedToSensors
 // Created: JSR 2010-03-16
+// LTO
 // -----------------------------------------------------------------------------
 void PHY_SensorTypeAgent::InitializeLimitedToSensors( xml::xistream& xis )
 {
@@ -242,6 +243,7 @@ void PHY_SensorTypeAgent::ReadDistance( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ReadLimitedToSensorsList
 // Created: JSR 2010-03-16
+// LTO
 // -----------------------------------------------------------------------------
 void PHY_SensorTypeAgent::ReadLimitedToSensorsList( xml::xistream& xis )
 {
@@ -374,8 +376,10 @@ MT_Float PHY_SensorTypeAgent::GetSourceFactor( const MIL_AgentPion& source ) con
 // -----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) const
 {
+    // LTO begin
     if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target ) == false )
         return 0;
+    // LTO end
 
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
 
@@ -393,8 +397,10 @@ MT_Float PHY_SensorTypeAgent::GetTargetFactor( const MIL_Agent_ABC& target ) con
 // -----------------------------------------------------------------------------
 MT_Float PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target ) const
 {
+    // LTO begin
     if( isLimitedToSensors_ && ContainsSensorFromLimitedList( target.GetAgentKnown() ) == false )
         return 0;
+    // LTO end
 
     const unsigned int nOldPostureIdx = target.GetLastPosture   ().GetID();
     const unsigned int nCurPostureIdx = target.GetCurrentPosture().GetID();
@@ -407,6 +413,7 @@ MT_Float PHY_SensorTypeAgent::GetTargetFactor( const DEC_Knowledge_Agent& target
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ContainsSensorFromLimitedList
 // Created: JSR 2010-03-16
+// LTO
 // -----------------------------------------------------------------------------
 bool PHY_SensorTypeAgent::ContainsSensorFromLimitedList( const MIL_Agent_ABC& target ) const
 {
