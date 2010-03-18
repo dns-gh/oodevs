@@ -74,8 +74,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPoint
 DEC_Knowledge_PopulationCollision& DEC_BlackBoard_CanContainKnowledgePopulationCollision::CreateKnowledgePopulationCollision( const MIL_AgentPion& agent, MIL_Population& population )
 {
     DEC_Knowledge_PopulationCollision* pKnowledge = new DEC_Knowledge_PopulationCollision( agent, population );//$$ RAM   
-    bool bOut = knowledgePopulationCollisionMap_.insert( std::make_pair( &population, pKnowledge ) ).second;
-    assert( bOut );
+    if( ! knowledgePopulationCollisionMap_.insert( std::make_pair( &population, pKnowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;
 }
 
@@ -85,8 +85,8 @@ DEC_Knowledge_PopulationCollision& DEC_BlackBoard_CanContainKnowledgePopulationC
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationCollision::DestroyKnowledgePopulationCollision( DEC_Knowledge_PopulationCollision& knowledge )
 {
-    int nOut = knowledgePopulationCollisionMap_.erase( &knowledge.GetPopulation() );
-    assert( nOut == 1 );
+    if( knowledgePopulationCollisionMap_.erase( &knowledge.GetPopulation() ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     delete &knowledge;
 }
 

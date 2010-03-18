@@ -419,8 +419,8 @@ void TER_Localisation::Reset( const MT_Vector2D& vPos )
     nType_ = ePoint;
     pointVector_.clear();
     pointVector_.push_back( vPos );
-    bool bOut = Initialize();
-    assert( bOut );
+    if( ! Initialize() )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Initialization failed" );
 }
 
 // -----------------------------------------------------------------------------

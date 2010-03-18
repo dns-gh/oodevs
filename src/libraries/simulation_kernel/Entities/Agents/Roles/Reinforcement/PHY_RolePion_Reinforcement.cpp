@@ -201,8 +201,8 @@ void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinforcement )
 {
-    bool bOut = reinforcements_.insert( &reinforcement ).second;
-    assert( bOut );
+    if( ! reinforcements_.insert( &reinforcement ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );    
     bHasChanged_ = true;
 }
 
@@ -212,8 +212,8 @@ void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinfo
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::NotifyReinforcementRemoved( MIL_AgentPion& reinforcement )
 {
-    int nOut = reinforcements_.erase( &reinforcement );
-    assert( nOut == 1 );
+    if( reinforcements_.erase( &reinforcement ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     bHasChanged_ = true;
 }
 

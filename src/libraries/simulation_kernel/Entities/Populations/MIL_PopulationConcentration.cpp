@@ -210,8 +210,8 @@ bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) 
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::RegisterPushingFlow( MIL_PopulationFlow& flow )
 {
-    bool bOut = pushingFlows_.insert( &flow ).second;
-    assert( bOut );
+    if( ! pushingFlows_.insert( &flow ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     SetAttitude( flow.GetAttitude() );   
 }
 
@@ -407,8 +407,8 @@ bool MIL_PopulationConcentration::HasChanged() const
 // -----------------------------------------------------------------------------
 void MIL_PopulationConcentration::UnregisterPushingFlow( MIL_PopulationFlow& flow )
 {
-    int nOut = pushingFlows_.erase( &flow );
-    assert( nOut );
+    if( pushingFlows_.erase( &flow ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

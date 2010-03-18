@@ -103,8 +103,8 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutA
 DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived )
 {
     DEC_Knowledge_ObjectCollision* pKnowledge = new DEC_Knowledge_ObjectCollision( agentPerceiving, objectPerceived );//$$ RAM   
-    bool bOut = knowledgeObjectCollisionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second;
-    assert( bOut );
+    if( ! knowledgeObjectCollisionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;
 }
 
@@ -115,8 +115,8 @@ DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectCollision::DestroyKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge )
 {
-    int nOut = knowledgeObjectCollisionMap_.erase( &knowledge.GetObject() );
-    assert( nOut == 1 );
+    if( knowledgeObjectCollisionMap_.erase( &knowledge.GetObject() ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     delete &knowledge;
 }
 

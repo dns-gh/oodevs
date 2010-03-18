@@ -42,7 +42,7 @@ public:
     {
         aar::Indicator result;
         result().set_name( name_.c_str() );
-        result().set_value( double( arg ) );
+        result().set_value( float( arg ) );
         result.Send( publisher_ );
     }
     virtual void EndTick() {};

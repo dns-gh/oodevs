@@ -53,7 +53,7 @@ const TER_LimitData& MIL_TacticalLineManager::CreateLimitData( const T_PointVect
 // -----------------------------------------------------------------------------
 void MIL_TacticalLineManager::DestroyLimitData( const TER_LimitData& data )
 {
-    int nOut = limitsData_.erase( data.GetPoints() );
-    assert( nOut == 1 );
+    if( limitsData_.erase( data.GetPoints() ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     delete &data;
 }

@@ -1372,8 +1372,8 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
     if( !pMaintenanceComposanteState )
         return 0;
 
-    bool bOut = maintenanceComposanteStates_.insert( pMaintenanceComposanteState ).second;
-    assert( bOut );
+    if( ! maintenanceComposanteStates_.insert( pMaintenanceComposanteState ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return pMaintenanceComposanteState;
 }
 
@@ -1383,8 +1383,8 @@ PHY_MaintenanceComposanteState* PHY_RolePion_Composantes::NotifyComposanteWaitin
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::NotifyComposanteBackFromMaintenance( PHY_MaintenanceComposanteState& composanteState )
 {
-    int nOut = maintenanceComposanteStates_.erase( &composanteState );
-    assert( nOut == 1 );
+    if( maintenanceComposanteStates_.erase( &composanteState ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // =============================================================================

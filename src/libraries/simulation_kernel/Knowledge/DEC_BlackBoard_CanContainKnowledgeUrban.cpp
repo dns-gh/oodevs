@@ -107,9 +107,8 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& fi
 boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::CreateKnowledgeUrban( const MIL_Army& army, const urban::TerrainObject_ABC& object )
 {
     boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, object ) );
-    bool bOut = urbanMapFromConcrete_.insert( std::make_pair( object.GetId(), knowledge ) ).second;
-    assert( bOut );
-
+    if( ! urbanMapFromConcrete_.insert( std::make_pair( object.GetId(), knowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return knowledge;
 }
 
@@ -119,8 +118,8 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::DestroyKnowledgeUrban( DEC_Knowledge_Urban& knowledge )
 {
-    int nOut = urbanMapFromConcrete_.erase( knowledge.GetId() );
-    assert( nOut >= 1 );
+    if( urbanMapFromConcrete_.erase( knowledge.GetId() ) < 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

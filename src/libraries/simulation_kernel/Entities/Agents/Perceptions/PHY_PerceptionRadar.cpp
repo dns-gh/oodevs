@@ -66,8 +66,8 @@ int PHY_PerceptionRadar::EnableRadar( const PHY_RadarClass& radarClass, const TE
 {
     assert( radarZones_.size() > radarClass.GetID() );
     const TER_Localisation* pZone = new TER_Localisation( zone );
-    bool bOut = radarZones_[ radarClass.GetID() ].insert( pZone ).second;
-    assert( bOut );
+    if( ! radarZones_[ radarClass.GetID() ].insert( pZone ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     int id = PHY_Perception_ABC::GetPerceptionId();
     radarId_[ id ] = pZone;
     return id;

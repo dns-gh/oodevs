@@ -108,13 +108,11 @@ void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& f
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const MIL_Army& teamKnowing, MIL_Object_ABC& objectKnown )
 {
     boost::shared_ptr< DEC_Knowledge_Object > knowledge = objectKnown.CreateKnowledge( teamKnowing );
-    
-    bool bOut = objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second;
-    assert( bOut );
-
-    bOut = knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second;
-    assert( bOut );
-
+   
+    if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return knowledge;
 }
 
@@ -126,13 +124,10 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
 {
     knowledge.Invalidate();
     if( knowledge.GetObjectKnown() )
-    {
-        int nOut = objectMap_.erase( knowledge.GetObjectKnown() );
-        assert( nOut >= 1 );
-    }
-
-    int nOut = knowledgeObjectFromIDMap_.erase( knowledge.GetID() );
-    assert( nOut >= 1 );
+        if( objectMap_.erase( knowledge.GetObjectKnown() ) < 1 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+    if( knowledgeObjectFromIDMap_.erase( knowledge.GetID() ) < 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,8 +137,8 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
 void DEC_BlackBoard_CanContainKnowledgeObject::NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge )
 {
     assert( knowledge.GetObjectKnown() == 0 );
-    int nOut = objectMap_.erase( &objectKnown );
-    assert( nOut >= 1 );
+    if( objectMap_.erase( &objectKnown ) < 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

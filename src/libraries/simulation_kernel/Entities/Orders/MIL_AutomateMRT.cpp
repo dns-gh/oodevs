@@ -39,8 +39,8 @@ MIL_AutomateMRT::~MIL_AutomateMRT()
 //-----------------------------------------------------------------------------
 void MIL_AutomateMRT::SetMissionForPion( MIL_AgentPion& pion, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    bool bOut = missionsPion_.insert( std::pair< MIL_AgentPion*, const boost::shared_ptr< MIL_Mission_ABC > >( &pion, mission ) ).second;
-    assert( bOut );
+    if( ! missionsPion_.insert( std::pair< MIL_AgentPion*, const boost::shared_ptr< MIL_Mission_ABC > >( &pion, mission ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }
 
 //-----------------------------------------------------------------------------

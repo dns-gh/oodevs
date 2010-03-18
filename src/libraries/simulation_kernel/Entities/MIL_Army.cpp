@@ -448,8 +448,8 @@ void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automat
 // -----------------------------------------------------------------------------
 void MIL_Army::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 {
-    bool bOut = knowledgeGroups_.insert( std::make_pair( knowledgeGroup.GetID(), &knowledgeGroup ) ).second;
-    assert( bOut );
+    if( ! knowledgeGroups_.insert( std::make_pair( knowledgeGroup.GetID(), &knowledgeGroup ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -458,8 +458,8 @@ void MIL_Army::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 // -----------------------------------------------------------------------------
 void MIL_Army::UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 {
-    int nOut = knowledgeGroups_.erase( knowledgeGroup.GetID() );
-    assert( nOut == 1 );
+    if( knowledgeGroups_.erase( knowledgeGroup.GetID() ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

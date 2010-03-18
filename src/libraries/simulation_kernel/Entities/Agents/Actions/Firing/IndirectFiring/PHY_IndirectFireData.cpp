@@ -189,6 +189,6 @@ PHY_Weapon* PHY_IndirectFireData::sComposanteWeapons::GetUnusedWeapon() const
 // -----------------------------------------------------------------------------
 void PHY_IndirectFireData::RemoveFirer( const PHY_ComposantePion& firer )
 {
-    int nOut = composantesWeapons_.erase( &firer );
-    assert( nOut == 1 );
+    if( composantesWeapons_.erase( &firer ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }

@@ -75,8 +75,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulation::save( MIL_CheckPointOutArchiv
 DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationPerceived )
 {
     DEC_Knowledge_Population* pKnowledge = new DEC_Knowledge_Population( knowledgeGroup, populationPerceived );
-    bool bOut = knowledgePopulationMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second;
-    assert( bOut );
+    if( ! knowledgePopulationMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;
 }
 
@@ -87,8 +87,8 @@ DEC_Knowledge_Population& DEC_BlackBoard_CanContainKnowledgePopulation::CreateKn
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulation::DestroyKnowledgePopulation( DEC_Knowledge_Population& knowledge )
 {
-    int nOut = knowledgePopulationMap_.erase( &knowledge.GetPopulationKnown() );
-    assert( nOut == 1 );
+    if( knowledgePopulationMap_.erase( &knowledge.GetPopulationKnown() ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     delete &knowledge;
 }
 

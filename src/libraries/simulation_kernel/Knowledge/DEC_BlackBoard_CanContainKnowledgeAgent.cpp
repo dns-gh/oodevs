@@ -156,12 +156,10 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& fi
 DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown )
 {
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge = agentKnown.CreateKnowledge( knowledgeGroup );
-    bool bOut = realAgentMap_.insert( std::make_pair( &agentKnown, knowledge ) ).second;
-    assert( bOut );
-
-    bOut = unitKnowledgeFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second;
-    assert( bOut );
-
+    if( ! realAgentMap_.insert( std::make_pair( &agentKnown, knowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    if( ! unitKnowledgeFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *knowledge;
 }
 
@@ -172,10 +170,10 @@ DEC_Knowledge_Agent& DEC_BlackBoard_CanContainKnowledgeAgent::CreateKnowledgeAge
 void DEC_BlackBoard_CanContainKnowledgeAgent::DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge )
 {
     knowledge.Invalidate();
-    int nOut = realAgentMap_.erase( &knowledge.GetAgentKnown() );
-    assert( nOut >= 1 );
-    nOut = unitKnowledgeFromIDMap_.erase( knowledge.GetID() );
-    assert( nOut == 1 );
+    if( realAgentMap_.erase( &knowledge.GetAgentKnown() ) < 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+    if( unitKnowledgeFromIDMap_.erase( knowledge.GetID() ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // -----------------------------------------------------------------------------

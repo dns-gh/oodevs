@@ -266,7 +266,6 @@ MT_Float PHY_RoleAction_Transport::DoUnload( const MT_Float rWeightToUnload )
             bHasChanged_ = true;
             MIL_Agent_ABC& pion = *it->first;
             pion.Apply(&TransportNotificationHandler_ABC::UnloadFromTransport,  transporter_, it->second.bTransportOnlyLoadable_ );
-            //assert( bOut );
             it = transportedPions_.erase( it );
         }
         else

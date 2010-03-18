@@ -74,8 +74,8 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOut
 DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPerception::CreateKnowledgeObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived )
 {
     DEC_Knowledge_ObjectPerception* pKnowledge = new DEC_Knowledge_ObjectPerception( agentPerceiving, objectPerceived );//$$ RAM   
-    bool bOut = knowledgeObjectPerceptionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second;
-    assert( bOut );
+    if( ! knowledgeObjectPerceptionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;
 }
 
@@ -85,8 +85,8 @@ DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPercepti
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObjectPerception::DestroyKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge )
 {
-    int nOut = knowledgeObjectPerceptionMap_.erase( &knowledge.GetObjectPerceived() );
-    assert( nOut == 1 );
+    if( knowledgeObjectPerceptionMap_.erase( &knowledge.GetObjectPerceived() ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     delete &knowledge;
 }
 

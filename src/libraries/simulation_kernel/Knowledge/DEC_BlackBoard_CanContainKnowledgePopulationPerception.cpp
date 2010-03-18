@@ -74,8 +74,8 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPoin
 DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulationPerception::CreateKnowledgePopulationPerception( const MIL_AgentPion& agentPerceiving, MIL_Population& populationPerceived )
 {
     DEC_Knowledge_PopulationPerception* pKnowledge = new DEC_Knowledge_PopulationPerception( agentPerceiving, populationPerceived );//$$ RAM   
-    bool bOut = knowledgePopulationPerceptionMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second;
-    assert( bOut );
+    if( ! knowledgePopulationPerceptionMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return *pKnowledge;
 }
 
@@ -85,8 +85,8 @@ DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulation
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgePopulationPerception::DestroyKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge )
 {
-    int nOut = knowledgePopulationPerceptionMap_.erase( &knowledge.GetPopulationPerceived() );
-    assert( nOut == 1 );
+    if( knowledgePopulationPerceptionMap_.erase( &knowledge.GetPopulationPerceived() ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     delete &knowledge;
 }
 

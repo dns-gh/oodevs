@@ -44,8 +44,8 @@ inline
 void PHY_MeteoDataManager::RegisterMeteo( PHY_Meteo& meteo )
 {
     meteo.SetListener( this );
-    bool bOut = meteos_.insert( &meteo ).second;
-    assert( bOut );
+    if( ! meteos_.insert( &meteo ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +55,7 @@ void PHY_MeteoDataManager::RegisterMeteo( PHY_Meteo& meteo )
 inline
 void PHY_MeteoDataManager::UnregisterMeteo( PHY_Meteo& meteo )
 {
-    int nOut = meteos_.erase( &meteo );
-    assert( nOut == 1 );
+    if( meteos_.erase( &meteo ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
   

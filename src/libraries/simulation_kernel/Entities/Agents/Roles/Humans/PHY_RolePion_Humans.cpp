@@ -422,8 +422,8 @@ void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MI
         return;
     }
     
-    bool bOut = medicalHumanStates_.insert( pMedicalHumanState ).second;
-    assert( bOut );
+    if( ! medicalHumanStates_.insert( pMedicalHumanState ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     human.SetMedicalState( pMedicalHumanState );
 }
 
@@ -456,8 +456,8 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Human& human )
         return;
     }
     
-    bool bOut = medicalHumanStates_.insert( pMedicalHumanState ).second;
-    assert( bOut );
+    if( ! medicalHumanStates_.insert( pMedicalHumanState ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     human.SetMedicalState( pMedicalHumanState );
 }
 
@@ -467,8 +467,8 @@ void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Human& human )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Humans::NotifyHumanBackFromMedical( PHY_MedicalHumanState& humanState )
 {
-    int nOut = medicalHumanStates_.erase( &humanState );
-    assert( nOut == 1 );
+    if( medicalHumanStates_.erase( &humanState ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 

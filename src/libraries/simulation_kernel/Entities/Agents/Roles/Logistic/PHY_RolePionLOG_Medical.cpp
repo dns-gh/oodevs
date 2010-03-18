@@ -333,8 +333,8 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
         return 0;
 
     PHY_MedicalEvacuationAmbulance* pAmbulance = new PHY_MedicalEvacuationAmbulance( *this, *pCompAmbulance );
-    bool bOut = pAmbulance->RegisterHuman( consign );
-    assert( bOut );
+    if( ! pAmbulance->RegisterHuman( consign ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Register failed" );
     evacuationAmbulances_.insert( std::make_pair( &humanAutomate, pAmbulance ) );
     return pAmbulance;
 }
@@ -361,8 +361,8 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
         return 0;
 
     PHY_MedicalCollectionAmbulance* pAmbulance = new PHY_MedicalCollectionAmbulance( *this, *pCompAmbulance );
-    bool bOut = pAmbulance->RegisterHuman( consign );
-    assert( bOut );
+    if( ! pAmbulance->RegisterHuman( consign ) )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Register failed" );
     collectionAmbulances_.push_back( pAmbulance );
     return pAmbulance;
 }
@@ -1043,6 +1043,6 @@ void PHY_RolePionLOG_Medical::ReserveForSorting( const PHY_MedicalCollectionAmbu
 // -----------------------------------------------------------------------------
 void PHY_RolePionLOG_Medical::CancelReservationForSorting( const PHY_MedicalCollectionAmbulance& ambulance )
 {
-    int nOut = reservations_.erase( &ambulance );
-    assert( nOut == 1 );
+    if( reservations_.erase( &ambulance ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }

@@ -260,8 +260,8 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CDT_CreatePionMis
     }
 
     boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
-    bool bOut = preparedMissions_.insert( pPionMission ).second;
-    assert( bOut );
+    if( ! preparedMissions_.insert( pPionMission ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return pPionMission;
 }
 
@@ -287,8 +287,8 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreatePionMission
     }
 
     boost::shared_ptr< MIL_Mission_ABC > pPionMission ( new MIL_PionMission( missionType, pion, pCurrentMission ) );
-    bool bOut = preparedMissions_.insert( pPionMission ).second;
-    assert( bOut );
+    if( ! preparedMissions_.insert( pPionMission ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return pPionMission;
 }
 
@@ -300,8 +300,8 @@ void MIL_AutomateOrderManager::CDT_GivePionMission( const boost::shared_ptr< MIL
 {
     assert( automate_.IsEngaged() );
 
-    int nOut = preparedMissions_.erase( mission );
-    assert( nOut == 1 );
+    if( preparedMissions_.erase( mission ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     mission->GetPion().GetOrderManager().ReplaceMission( mission );
 }
     
@@ -321,8 +321,8 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMis
     else
         pAutomateMission = boost::shared_ptr< MIL_Mission_ABC >( new MIL_AutomateMission( missionType, automate ) );
 
-    bool bOut = preparedMissions_.insert( pAutomateMission ).second;
-    assert( bOut );
+    if( ! preparedMissions_.insert( pAutomateMission ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     return pAutomateMission;
 }
 
@@ -332,7 +332,7 @@ boost::shared_ptr< MIL_Mission_ABC > MIL_AutomateOrderManager::CreateAutomateMis
 // -----------------------------------------------------------------------------
 void MIL_AutomateOrderManager::GiveAutomateMission( boost::shared_ptr< MIL_Mission_ABC > mission )
 {
-    int nOut = preparedMissions_.erase( mission );
-    assert( nOut == 1 );
+    if( preparedMissions_.erase( mission ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
     mission->GetAutomate().GetOrderManager().ReplaceMission( mission );
 }

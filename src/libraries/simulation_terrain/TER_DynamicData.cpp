@@ -17,10 +17,9 @@
 // *****************************************************************************
 
 #include "simulation_terrain_pch.h"
-
 #include "TER_DynamicData.h"
-
 #include "TER_PathFinderThread.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "pathfind/TerrainRetractationHandle.h"
 
 // -----------------------------------------------------------------------------
@@ -66,8 +65,8 @@ void TER_DynamicData::RegisterDynamicData( TER_PathFinderThread& thread )
 {
     boost::mutex::scoped_lock locker( mutex_ );
 
-    bool bOut = handles_.insert( std::make_pair( &thread, &thread.CreateLineTree( points_, terrainData_ ) ) ).second;
-    assert( bOut );
+    if( ! handles_.insert( std::make_pair( &thread, &thread.CreateLineTree( points_, terrainData_ ) ) ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
     assert( nNbrRefs_ > 0 );
     -- nNbrRefs_;
 }

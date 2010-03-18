@@ -307,8 +307,8 @@ bool PHY_Convoy_ABC::ReserveTransporters()
                 break; // No more convoys
 
             PHY_Conveyor* pConveyor = new PHY_Conveyor( *pConveyorComp, *pConveyorPion );
-            bool bOut = conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second;
-            assert( bOut );
+            if( ! conveyors_.insert( std::make_pair( pConveyorComp, pConveyor ) ).second )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );            
 
             const MT_Float rNbrConvoyed = pConveyor->Convoy( *pConsign_, dotationCategory, itMerchandise->second );
             if( rNbrConvoyed > 0. )

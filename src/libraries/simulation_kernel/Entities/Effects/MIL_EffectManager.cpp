@@ -56,8 +56,8 @@ MIL_EffectManager::~MIL_EffectManager()
 // -----------------------------------------------------------------------------
 void MIL_EffectManager::Register( MIL_Effect_ABC& effect )
 {
-    bool bOut = effects_.insert( &effect ).second;
-    assert( bOut );
+    if( ! effects_.insert( &effect ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,8 +82,8 @@ void MIL_EffectManager::Update()
 // -----------------------------------------------------------------------------
 void MIL_EffectManager::RegisterFlyingShell( const MIL_Effect_IndirectFire& effect )
 {
-    bool bOut = flyingShells_.insert( &effect ).second;
-    assert( bOut );
+    if( ! flyingShells_.insert( &effect ).second )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }
 
 // -----------------------------------------------------------------------------
@@ -92,8 +92,8 @@ void MIL_EffectManager::RegisterFlyingShell( const MIL_Effect_IndirectFire& effe
 // -----------------------------------------------------------------------------
 void MIL_EffectManager::UnregisterFlyingShell( const MIL_Effect_IndirectFire& effect )
 {
-    int nOut = flyingShells_.erase( &effect );
-    assert( nOut == 1 );
+    if( flyingShells_.erase( &effect ) != 1 )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // -----------------------------------------------------------------------------
