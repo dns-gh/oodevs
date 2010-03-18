@@ -20,6 +20,8 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 
+#include "urban/TerrainObject_ABC.h"
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau
 // Created: NLD 2006-04-14
@@ -149,6 +151,43 @@ void DEC_KnowledgeFunctions::GetObservableKnowledge( const directia::Brain& brai
     knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), urbansKn, true );
 
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledge
+// Created: DDA 2010-03-15
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetUrbanBlockKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
+{
+    //Urban
+    T_KnowledgeUrbanVector urbansKn;
+    pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
+
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), urbansKn, true );
+
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle
+// Created: DDA 2010-03-16
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table, boost::shared_ptr< MT_Vector2D > center, float radius )
+{
+    //Urban
+    T_KnowledgeUrbanVector urbansKn;
+	T_KnowledgeUrbanVector result;
+    pion.GetArmy().GetKnowledge().GetUrbanObjects( urbansKn );
+	geometry::Point2f geoCenter( (float)center->rX_, (float)center->rY_ ); 
+
+	for( T_KnowledgeUrbanVector::iterator it = urbansKn.begin(); it != urbansKn.end(); it++ )
+	{
+		if( (*it)->GetTerrainObjectKnown().GetFootprint()->Intersect( geoCenter, radius ) )
+            result.push_back( (*it) );
+	}
+
+
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.UrbanBlock" ), result, true );
+
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetDestroyableKnowledge

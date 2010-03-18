@@ -621,7 +621,11 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercues", boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Connaissances_Observable",
         boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObservableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
-    brain.RegisterFunction( "DEC_Connaissances_Destroyable",
+    brain.RegisterFunction( "DEC_Connaissances_BlocUrbain",
+        boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
+	brain.RegisterFunction( "DEC_Connaissances_BlocUrbainDansCercle",
+		boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MT_Vector2D>, float )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1, _2, _3 ) ) );	
+	brain.RegisterFunction( "DEC_Connaissances_Destroyable",
         boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetDestroyableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );//@TODO MGD same function than Observable for the moment
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion", 
         boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) ) );
@@ -708,7 +712,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< boost::shared_ptr< MT_Vector2D >( MT_Vector2D*, MT_Vector2D*, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeAmbushPosition, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSurete",
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPosition, boost::ref( GetPion() ), _1, _2 ) ) );
-    brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSureteAvecPopulation",
+	brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSureteStatique",
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >) >( boost::bind( &DEC_GeometryFunctions::ComputeStaticSafetyPosition, boost::ref( GetPion() ), _1 ) ) );  
+	brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSureteAvecPopulation",
         boost::function< boost::shared_ptr< MT_Vector2D >( unsigned int, MT_Float ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Geometrie_CalculerPositionSureteAvecObjectif",
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent >, MT_Float, MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputeSafetyPositionWithObjective, boost::ref( GetPion() ), _1, _2, _3 ) ) );
@@ -773,7 +779,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< const PHY_DotationCategory* ( int, const MT_Vector2D* ) >( boost::bind( &DEC_FireFunctions::GetMunitionForIndirectFire, boost::ref( GetPion() ), _1, _2 ) ) );
     //
     brain.RegisterFunction( "DEC_Fire_GetRangeToExtinguish", 
-        boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_DynamicFireFunctions::GetRangeToExtinguish, boost::cref( GetPion() ), _1 ) ) );
+        boost::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_DynamicFireFunctions::GetRangeToExtinguish, boost::cref( GetPion() ), _1 ) ) );
 
     // RC
     brain.RegisterFunction( "DEC_RC1",

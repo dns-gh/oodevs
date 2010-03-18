@@ -487,6 +487,47 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::ComputeStaticSafetyPosition
+// Created: DDA 2010-03-10
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStaticSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy )
+{
+	static std::map< unsigned int, boost::shared_ptr< MT_Vector2D > > buffer;//@TODO MGD Replace by a buffer module for terrain analysis
+
+	MT_Float rMinDistance = pKnowledgeEnemy->GetMaxRangeToFireOn(callerAgent,0)+200;
+
+    if( pKnowledgeEnemy && pKnowledgeEnemy->IsValid() )
+    {
+		unsigned int key = callerAgent.GetID() * 100000 + pKnowledgeEnemy->GetID();
+		std::map< unsigned int, boost::shared_ptr< MT_Vector2D > >::iterator search = buffer.find( key); 
+
+        // Position de l'ennemi
+        const MT_Vector2D& vEnemyPos  = pKnowledgeEnemy->GetPosition();
+
+        MT_Vector2D vDirEniToAmi = ( callerAgent.GetRole< PHY_RoleInterface_Location >().GetPosition() - vEnemyPos).Normalize();
+        if( vDirEniToAmi.IsZero() )
+            vDirEniToAmi = -callerAgent.GetOrderManager().GetDirDanger();
+
+        MT_Vector2D vSafetyPos = vEnemyPos + vDirEniToAmi * rMinDistance;
+
+        TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
+		//MT_Vector2D vCornerPoint= UrbanModel::GetSingleton().GetCornerPoint( vSafetyPos );
+
+		//update buffer when delta > 100 m
+		if( search == buffer.end() || ( search != buffer.end() && vSafetyPos.SquareDistance( *(*search).second.get() ) > 10000. ) )
+		{
+			boost::shared_ptr< MT_Vector2D > pResult(new MT_Vector2D( vSafetyPos ));
+			buffer.insert( std::pair< unsigned int, boost::shared_ptr< MT_Vector2D > >( key, pResult ) );
+			return pResult;
+		}
+		else
+			return (*search).second;
+    }
+	return boost::shared_ptr< MT_Vector2D >();
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeSafetyPositionWithPopulation
 // Created: SBO 2005-12-16
 // Modified: RPD 2009-08-04

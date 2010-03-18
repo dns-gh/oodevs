@@ -88,7 +88,8 @@ public:
     static boost::shared_ptr< MT_Vector2D > ComputeSupportPosition( const MIL_AgentPion& callerAgent, DEC_Decision_ABC* pAgentToSupport, MT_Float rDist );
     static boost::shared_ptr< MT_Vector2D > ComputeAmbushPosition ( const MIL_AgentPion& callerAgent, MT_Vector2D* pAmbushPosition, MT_Vector2D* pRetreatPosition, MT_Float rDist );
     static boost::shared_ptr< MT_Vector2D > ComputeSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy, MT_Float rMinDistance );
-    static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithPopulation              ( const MIL_AgentPion& callerAgent, unsigned int nPopulationKnowledgeID, MT_Float rMinDistance );
+    static boost::shared_ptr< MT_Vector2D > ComputeStaticSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy);
+	static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithPopulation              ( const MIL_AgentPion& callerAgent, unsigned int nPopulationKnowledgeID, MT_Float rMinDistance );
     static boost::shared_ptr< MT_Vector2D > ComputeSafetyPositionWithObjective( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnnemy, MT_Float rMinMeterDistance, MT_Vector2D* pObjective );
     template< typename T > static boost::shared_ptr< MT_Vector2D > ComputeDestPoint     ( const T& caller );
     static boost::shared_ptr< MT_Vector2D > ComputeDestPointForPion( MIL_Automate& callerAutomate, DEC_Decision_ABC* pPion );
