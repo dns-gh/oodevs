@@ -1022,4 +1022,13 @@
     <unit max-occurs="2" min-occurs="0" type="Proto Section de Tir AUF1 CDS OFF"/>
     <unit max-occurs="2" min-occurs="0" type="Proto Groupe EBG"/>
   </automat>
+  <automat decisional-model="Batterie Tir AUF1" id="642" name="Test Capteurs" type="Automate ASS">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="PC Batterie Test Capteur"/>
+    <unit max-occurs="1" min-occurs="1" type="Section Test Capteur"/>
+  </automat>
+  <automat decisional-model="Compagnie INF" id="643" name="Compagnie INF VAB Test Capteur" type="Automate INF">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="Section PC INF Capteur Test"/>
+    <unit max-occurs="3" min-occurs="3" type="Section CBT INF VAB CDS OFF"/>
+    <unit max-occurs="1" min-occurs="1" type="Section CBT INF VAB CDS SOFF"/>
+  </automat>
 </automats>

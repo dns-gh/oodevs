@@ -10480,4 +10480,79 @@
     </postures>
     <nbc decontamination-delay="450s"/>
   </unit>
+  <unit decisional-model="PC INF" id="430" name="Section PC INF Capteur Test" type="Pion INF">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
+    <equipments>
+      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1200s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+  </unit>
+  <unit decisional-model="SAM" id="431" name="Section Test Capteur" type="Pion ASS">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
+    <equipments>
+      <equipment count="2" crew="6" major="true" type="Equipe Test Capteur"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="100" logistic-threshold="50" name="LTO Obus brouillage" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit decisional-model="PC ASS Tir" id="432" name="PC Batterie Test Capteur" type="Pion ASS">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
+    <equipments>
+      <equipment count="1" crew="2" type="Equipement Test Capteur"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="1950s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
 </units>
