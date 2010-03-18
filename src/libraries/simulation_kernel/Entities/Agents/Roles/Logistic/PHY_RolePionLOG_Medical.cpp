@@ -10,6 +10,7 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "protocol/protocol.h"
 #include "PHY_RolePionLOG_Medical.h"
 #include "PHY_MedicalConsign_ABC.h"
 #include "PHY_MedicalHumanState.h"
