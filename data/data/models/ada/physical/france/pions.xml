@@ -10463,4 +10463,21 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
+  <unit decisional-model="net.masagroup.sword.military.roles.Genie" id="429" name="Proto Groupe EBG" type="Pion GEN">
+    <nature atlas-nature="None" level="oo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="1" crew="3" major="true" type="EBG"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+  </unit>
 </units>

@@ -1020,5 +1020,6 @@
     <unit max-occurs="2" min-occurs="2" type="Proto Section CDT CIE INF VAB"/>
     <unit max-occurs="2" min-occurs="2" type="Proto Peloton LECLERC CDP OFF"/>
     <unit max-occurs="2" min-occurs="0" type="Proto Section de Tir AUF1 CDS OFF"/>
+    <unit max-occurs="2" min-occurs="0" type="Proto Groupe EBG"/>
   </automat>
 </automats>
