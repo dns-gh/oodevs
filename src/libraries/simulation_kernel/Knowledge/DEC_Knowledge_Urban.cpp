@@ -502,9 +502,12 @@ bool DEC_Knowledge_Urban::IsValid() const
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Urban::GetTrafficability
-// Created: LMT 2010-02-19
+// Created: MGD 2010-03-18
 // -----------------------------------------------------------------------------
-const float DEC_Knowledge_Urban::GetTrafficability() const
+const float DEC_Knowledge_Urban::GetPathfindCost( float weight ) const
 {
-    return object_.RetrievePhysicalFeature< urban::Soil >()->GetTrafficability();
+    const urban::Soil* soil = object_.RetrievePhysicalFeature< urban::Soil >();
+    if( soil )
+        return soil->GetPathfindCost( weight );
+    return 0;
 }

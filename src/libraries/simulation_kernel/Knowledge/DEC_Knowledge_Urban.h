@@ -65,7 +65,7 @@ public:
     unsigned GetId  () const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
-    const float GetTrafficability() const;
+    const float GetPathfindCost( float weight ) const;
     double GetProgress() const; 
     const geometry::Point2f GetBarycenter() const;
     const urban::TerrainObject_ABC& GetTerrainObjectKnown() const;

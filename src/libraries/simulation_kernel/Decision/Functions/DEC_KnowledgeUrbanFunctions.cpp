@@ -11,6 +11,7 @@
 #include "DEC_KnowledgeUrbanFunctions.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
 
 
@@ -43,13 +44,13 @@ boost::shared_ptr< MT_Vector2D > DEC_KnowledgeUrbanFunctions::GetCurrentBarycent
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeUrbanFunctions::GetTrafficability
-// Created: LMT 2010-02-19
+// Name: DEC_KnowledgeUrbanFunctions::GetPathfindCost
+// Created: MGD 2010-03-18
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeUrbanFunctions::GetTrafficability( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
-{
+float DEC_KnowledgeUrbanFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
+{  
      if( pKnowledge.get() && pKnowledge->IsValid() )
-        return (float)pKnowledge->GetTrafficability( );
+        return pKnowledge->GetPathfindCost( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
      else
-        return 0;
+        return -1;
 }
