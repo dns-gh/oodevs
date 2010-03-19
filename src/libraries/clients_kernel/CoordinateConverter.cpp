@@ -20,6 +20,16 @@ using namespace kernel;
 // Name: CoordinateConverter constructor
 // Created: AGE 2005-03-14
 // -----------------------------------------------------------------------------
+CoordinateConverter::CoordinateConverter()
+: planar_( parameters_ )
+, coordinateSystems_( *new CoordinateSystems() )
+{
+    // NOTHING
+}
+// -----------------------------------------------------------------------------
+// Name: CoordinateConverter constructor
+// Created: AGE 2005-03-14
+// -----------------------------------------------------------------------------
 CoordinateConverter::CoordinateConverter( const CoordinateSystems& coordSystems )
     : planar_( parameters_ )
     , coordinateSystems_( coordSystems )

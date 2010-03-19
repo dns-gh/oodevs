@@ -35,6 +35,7 @@ class CoordinateConverter : public CoordinateConverter_ABC
 public:
     //! @name Constructor / Destructor
     //@{
+             CoordinateConverter();        
              CoordinateConverter( const CoordinateSystems& coordSystems );
     explicit CoordinateConverter( const tools::ExerciseConfig& config );
     virtual ~CoordinateConverter();
