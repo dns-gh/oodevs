@@ -75,9 +75,9 @@ void ADN_ActiveProtections_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterZero );
 
     // Weapons
-    QGroupBox* pWeaponsGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Weapons" ), pGroup );
+    QGroupBox* pWeaponsGroup_ = new QGroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ), pGroup );
 
-    ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Weapons" ).ascii(), pWeaponsGroup_ );
+    ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ).ascii(), pWeaponsGroup_ );
     vConnectors[eActiveProtectionWeapons] = &pWeapons->GetConnector();
 
     //Connect
