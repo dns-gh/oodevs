@@ -481,7 +481,7 @@ void GenObjectFunctionBM( const directia::Brain& brain, directia::ScriptRef& kno
 {
     std::vector< DEC_Decision_ABC* > value;
     if( element.ToAgentList( value ) )
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.EngineerObject" ), name, value, true );
 }
 void GenObjectListFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
@@ -493,7 +493,7 @@ void GenObjectListFunctionBM( const directia::Brain& brain, directia::ScriptRef&
 {
     std::vector< boost::shared_ptr< DEC_Gen_Object > > value;
     if( element.ToGenObjectList( value ) )
-        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Object" ), name, value, true );
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.EngineerObject" ), name, value, true );
 }
 void MaintenancePrioritiesFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {

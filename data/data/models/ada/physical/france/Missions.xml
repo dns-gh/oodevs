@@ -800,8 +800,8 @@
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.DestroyAgents" dia-type="T_Mission_Pion_Destroy" id="2013" name="DestroyAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
-    </mission>    
-     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiter" id="2014" name="ObserveAndReconnoiterPoint">
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiter" id="2014" name="ObserveAndReconnoiterPoint">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiterUrbanBlock" id="2015" name="ObserveAndReconnoiterUrbanBlock">
@@ -812,25 +812,25 @@
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObservePoint" id="2017" name="ObservePoint">
       <parameter dia-name="objectives" name="target" optional="false" type="PointBM"/>
-    </mission>  
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveUrbanBlock" id="2018" name="ObserveUrbanBlock">
       <parameter dia-name="objectives" name="target" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveAgent" id="2019" name="ObserveAgent">
       <parameter dia-name="objectives" name="target" optional="false" type="AgentKnowledgeBM"/>
-    </mission>      
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObserveObject" id="2020" name="ObserveObject">
       <parameter dia-name="objectives" name="target" optional="false" type="ObjectKnowledgeBM"/>
-    </mission>     
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_Reconnoiter" id="2021" name="ReconnoiterUrbanBlock">
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Load" dia-type="T_Mission_Pion_Load" id="2022" name="Load">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
-    </mission> 
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.tmp.Mount" dia-type="T_Mission_Pion_Mount" id="2023" name="Mount">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
-    </mission> 
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Identify" dia-type="T_Mission_Pion_Identify" id="2024" name="IdentifyAgent">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentKnowledgeBM"/>
     </mission>
@@ -839,25 +839,26 @@
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveAndObserve" dia-type="T_Mission_Pion_MoveAndObserve" id="2026" name="MoveAndObserve">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
-    </mission> 
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.SeekAndDestroy" dia-type="T_Mission_Pion_SeekAndDestroy" id="2027" name="SeekAndDestroy">
       <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterPoint" id="2028" name="ReconnoiterPoint">
       <parameter dia-name="objectives" name="point" optional="false" type="PointBM"/>
-    </mission>     
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.EngageAgents" dia-type="T_Mission_Pion_Engage" id="2029" name="EngageAgents">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MiseEnOeuvreSurPosition" id="2030" name="DeployOnPosition">
       <parameter dia-name="objectives" name="objective" optional="false" type="ObjectKnowledgeBM"/>
-    </mission> 
-     <mission dia-behavior="net.masagroup.testSword.military.tasks.Safeguard" dia-type="T_Mission_Pion_Safeguard" id="2031" name="Safeguard"> 
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.Flee" dia-type="T_Mission_Pion_Flee" id="2032" name="Flee">
-    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Safeguard" dia-type="T_Mission_Pion_Safeguard" id="2031" name="Safeguard"/>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Flee" dia-type="T_Mission_Pion_Flee" id="2032" name="Flee"/>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.SelfProtect" dia-type="T_Mission_Pion_SelfProtect" id="2033" name="SelfProtect">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Build" dia-type="T_Mission_Pion_Build" id="2034" name="Build">
+      <parameter dia-name="entities" name="entities" optional="false" type="GenObjectListBM"/>
     </mission>
   </units>
   <automats>
@@ -1462,15 +1463,14 @@
       <parameter dia-name="PopulationKnowledge_" name="PopulationKnowledgeParam" optional="true" type="PopulationKnowledge"/>
       <parameter dia-name="GenObject_" name="GenObjectParam" optional="true" type="GenObject"/>
       <parameter dia-name="GenObjectList_" name="GenObjectListParam" optional="true" type="GenObjectList"/>
-      <!--<parameter dia-name="DotationType_" name="DotationTypeParam" optional="true" type="DotationType"/>-->
       <parameter dia-name="MaintenancePriorities_" name="MaintenancePrioritiesParam" optional="true" type="MaintenancePriorities"/>
       <parameter dia-name="MedicalPriorities_" name="MedicalPrioritiesParam" optional="true" type="MedicalPriorities"/>
       <parameter dia-name="ObjectiveList_" name="ObjectiveListParam" optional="true" type="ObjectiveList"/>
     </mission>
-    <mission mrt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToUrbanBlock" id="1001" cdt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" name="GiveOrderMoveToUrbanBlock">
+    <mission cdt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToUrbanBlock" id="1001" mrt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" name="GiveOrderMoveToUrbanBlock">
       <parameter dia-name="objective" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission>
-    <mission mrt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToPoint" id="1002" cdt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" name="GiveOrderMoveToPoint">
+    <mission cdt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" dia-type="T_Mission_Automate_GiveOrderMoveToPoint" id="1002" mrt-dia-behavior="net.masagroup.testSword.military.tasks.GiveOrderMoveTo" name="GiveOrderMoveToPoint">
       <parameter dia-name="objective" name="destination" optional="false" type="PointBM"/>
     </mission>
   </automats>
@@ -1637,8 +1637,8 @@
         <value id="3" name="agressive"/>
       </parameter>
     </fragorder>
-    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="381" name="Changer les r&#232;gles d&apos;engagement">
-      <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Ordre conduite: changer les r&#232;gles d&apos;engagement" optional="false" type="Enumeration">
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="381" name="Changer les règles d'engagement">
+      <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Ordre conduite: changer les règles d'engagement" optional="false" type="Enumeration">
         <value id="0" name="none"/>
         <value id="1" name="tir_libre"/>
         <value id="2" name="tir_sur_riposte"/>

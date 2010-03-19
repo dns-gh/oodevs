@@ -113,6 +113,15 @@ public:
         eActionRange,
         eObjectType,
 
+        eAttitudeModifierCapacityPresent,
+        eAttitude,
+
+        ePerceptionCapacityPresent,
+        eBlinded,
+
+        eScatteringCapacityPresent,
+        eHumanByTimeStep,
+
         eNbrGuiElements
     };
 

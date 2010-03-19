@@ -2625,6 +2625,18 @@ stance</source>
         <source>Object type</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Attitude</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Aveuglant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nombre d&apos;humain par pas de simulation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_OpenFile_Exception</name>
@@ -4161,7 +4173,75 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>scrambling</source>
+        <source>effect</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutomateBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutomateListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentKnowledgeBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentKnowledgeListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectKnowledgeBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectKnowledgeListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PopulationKnowledgeBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GenObjectBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GenObjectListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PointBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PointListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AreaBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AreaListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UrbanBlockBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Combined Arms</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

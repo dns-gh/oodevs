@@ -38,24 +38,24 @@
     <time-limited/>
   </object>
   <object geometry="polygon" name="Zone paralysante" symbol="G*EW***********" type="paralyzing area">
+    <attitude-modifier attitude="calme"/>
     <avoidable distance="250"/>
     <interact-with-enemy/>
-    <attitude-modifier attitude="calme"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="30" unit-speed-impact-mode="AuPlusLent"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <time-limited/>
   </object>
   <object geometry="polygon" name="Zone aveuglante" symbol="G*EW***********" type="blinding area">
     <avoidable distance="250"/>
     <interact-with-enemy/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <perception blinded="true"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="60" unit-speed-impact-mode="AuPlusLent"/>
     <time-limited/>
   </object>
   <object geometry="polygon" name="Zone dispercante" symbol="G*EW***********" type="scattering area">
     <avoidable distance="250"/>
     <interact-with-enemy/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <scattering human-by-time-step="30"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="60" unit-speed-impact-mode="AuPlusLent"/>
     <time-limited/>
   </object>
   <object geometry="polygon" name="Zone NBC" symbol="G*MPNR----****X" type="nbc zone">

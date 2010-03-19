@@ -138,6 +138,7 @@ enum E_AgentTypePion
 
 enum E_AgentTypeAutomate
 {
+    eAgentTypeAutomateSGTIA,
     eAgentTypeAutomateINF,
     eAgentTypeAutomateASA,
     eAgentTypeAutomateALAT,
@@ -393,9 +394,13 @@ enum E_TypeMunitionTirIndirect
 enum E_MissionParameterType
 {
     eMissionParameterTypeAgent,
+    eMissionParameterTypeAgentBM,
     eMissionParameterTypeAgentList,
+    eMissionParameterTypeAgentListBM,
     eMissionParameterTypeAutomate,
+    eMissionParameterTypeAutomateBM,
     eMissionParameterTypeAutomateList,
+    eMissionParameterTypeAutomateListBM,
     eMissionParameterTypeBool,
     eMissionParameterTypeNumeric,
     eMissionParameterTypeString,
@@ -404,22 +409,33 @@ enum E_MissionParameterType
     eMissionParameterTypeEnumeration,
     eMissionParameterTypeNatureAtlas,
     eMissionParameterTypeAgentKnowledge,
+    eMissionParameterTypeAgentKnowledgeBM,
     eMissionParameterTypeAgentKnowledgeList,
+    eMissionParameterTypeAgentKnowledgeListBM,
     eMissionParameterTypeObjectKnowledge,
+    eMissionParameterTypeObjectKnowledgeBM,
     eMissionParameterTypeObjectKnowledgeList,
+    eMissionParameterTypeObjectKnowledgeListBM,
     eMissionParameterTypePopulationKnowledge,
+    eMissionParameterTypePopulationKnowledgeBM,
     eMissionParameterTypeGenObject,
+    eMissionParameterTypeGenObjectBM,
     eMissionParameterTypeGenObjectList,
+    eMissionParameterTypeGenObjectListBM,
     eMissionParameterTypeObjective,
     eMissionParameterTypeObjectiveList,
     eMissionParameterTypePath,
     eMissionParameterTypePathList,
     eMissionParameterTypePoint,
+    eMissionParameterTypePointBM,
     eMissionParameterTypePointList,
+    eMissionParameterTypePointListBM,
     eMissionParameterTypePolygon,
     eMissionParameterTypePolygonList,
+    eMissionParameterTypeAreaBM,
     eMissionParameterTypeLocation,
     eMissionParameterTypeLocationList,
+    eMissionParameterTypeAreaListBM,
     eMissionParameterTypeEquipmentType,
     eMissionParameterTypeDotationType,
     eMissionParameterTypeMaintenancePriorities,
@@ -428,6 +444,7 @@ enum E_MissionParameterType
     eMissionParameterTypeLimit,
     eMissionParameterTypePhaseLineList,
     eMissionParameterTypeIntelligenceList,
+    eMissionParameterTypeUrbanBlock,
 
     eNbrMissionParameterType
 };

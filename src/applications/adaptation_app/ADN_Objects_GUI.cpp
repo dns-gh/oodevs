@@ -298,6 +298,24 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_ComboBox_List >( propagation, tr( "Model"), vInfosConnectors[ ePropagationCapacity_ModelType ] );
     }
 
+    ADN_GroupBox* attitudeModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::DISPLAY_NAME.c_str() ), hBox );        
+    {
+        vInfosConnectors[ eAttitudeModifierCapacityPresent ] = & attitudeModifier->GetConnector();
+        builder.AddField<ADN_EditLine_String>( attitudeModifier, tr( "Attitude" ), vInfosConnectors[eAttitude] );
+    }
+
+    ADN_GroupBox* perception = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Perception::DISPLAY_NAME.c_str() ), hBox );        
+    {
+        vInfosConnectors[ ePerceptionCapacityPresent ] = & perception->GetConnector();
+        builder.AddField<ADN_CheckBox>( perception, tr( "Aveuglant" ), vInfosConnectors[eBlinded] );
+    }
+
+    ADN_GroupBox* scattering = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Scattering::DISPLAY_NAME.c_str() ), hBox );        
+    {
+        vInfosConnectors[ eScatteringCapacityPresent ] = & scattering->GetConnector();
+        builder.AddField<ADN_EditLine_Int>( scattering, tr( "Nombre d'humain par pas de simulation" ), vInfosConnectors[eHumanByTimeStep] );
+    }
+
     // Connect the list to the interface.
     pList->SetItemConnectors( vInfosConnectors );
     

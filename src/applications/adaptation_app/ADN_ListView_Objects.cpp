@@ -209,6 +209,18 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Objects_GUI::eActionRange]->Connect( &spawn.rActionRange_, bConnect );
     vItemConnectors_[ADN_Objects_GUI::eObjectType]->Connect( &spawn.ptrObject_, bConnect );
 
+    ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier& attitudeModifier = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier >( ADN_Objects_GUI::eAttitudeModifierCapacityPresent );
+    vItemConnectors_[ADN_Objects_GUI::eAttitudeModifierCapacityPresent]->Connect( &attitudeModifier.bPresent_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eAttitude]->Connect( &attitudeModifier.attitude_, bConnect );
+
+    ADN_Objects_Data::ADN_CapacityInfos_Perception& perception = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Perception >( ADN_Objects_GUI::ePerceptionCapacityPresent );
+    vItemConnectors_[ADN_Objects_GUI::ePerceptionCapacityPresent]->Connect( &perception.bPresent_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eBlinded]->Connect( &perception.blinded_, bConnect );
+
+    ADN_Objects_Data::ADN_CapacityInfos_Scattering& scattering = builder.Link< ADN_Objects_Data::ADN_CapacityInfos_Scattering >( ADN_Objects_GUI::eScatteringCapacityPresent );
+    vItemConnectors_[ADN_Objects_GUI::eScatteringCapacityPresent]->Connect( &scattering.bPresent_, bConnect );
+    vItemConnectors_[ADN_Objects_GUI::eHumanByTimeStep]->Connect( &scattering.humanByTimeStep_, bConnect );
+
 	ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Objects_GUI::eNbrGuiElements );
 }
 

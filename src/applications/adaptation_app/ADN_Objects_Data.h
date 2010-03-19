@@ -172,7 +172,10 @@ public:
         eTerrainHeuristicCapacity,
         eTimeLimitedCapacity,
         eWorkableCapacity,
-        eSpawnCapacity
+        eSpawnCapacity,
+        eAttitudeModifierCapacity,
+        ePerceptionCapacity,
+        eScatteringCapacity
     };
 
     template< E_Capacities T, typename DefaultFieldsHolderType = NullType >
@@ -590,6 +593,78 @@ public:
         ADN_Objects_Data::ObjectInfos* pObject_;
         ADN_Type_String ptrObject_;
         ADN_Type_Double rActionRange_;
+    };
+
+    class ADN_CapacityInfos_AttitudeModifier
+        : public ADN_CapacityInfos_Default< eAttitudeModifierCapacity >
+    {
+    public:
+        static const std::string TAG;
+        static const std::string DISPLAY_NAME;
+        ADN_CapacityInfos_AttitudeModifier();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+        const std::string& displayName() const
+        {
+            return DISPLAY_NAME;
+        }
+        const std::string& tag() const
+        {
+            return TAG;
+        }
+
+    public:
+        ADN_Type_String attitude_;
+    };
+
+    class ADN_CapacityInfos_Perception
+        : public ADN_CapacityInfos_Default< ePerceptionCapacity >
+    {
+    public:
+        static const std::string TAG;
+        static const std::string DISPLAY_NAME;
+        ADN_CapacityInfos_Perception();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+        const std::string& displayName() const
+        {
+            return DISPLAY_NAME;
+        }
+        const std::string& tag() const
+        {
+            return TAG;
+        }
+
+    public:
+        ADN_Type_Bool blinded_;
+    };
+
+    class ADN_CapacityInfos_Scattering
+        : public ADN_CapacityInfos_Default< eScatteringCapacity >
+    {
+    public:
+        static const std::string TAG;
+        static const std::string DISPLAY_NAME;
+        ADN_CapacityInfos_Scattering();
+
+        void ReadArchive( xml::xistream& input );
+        void WriteArchive( xml::xostream& output );
+
+        const std::string& displayName() const
+        {
+            return DISPLAY_NAME;
+        }
+        const std::string& tag() const
+        {
+            return TAG;
+        }
+
+    public:
+        ADN_Type_Int humanByTimeStep_;
     };
     
 //*****************************************************************************

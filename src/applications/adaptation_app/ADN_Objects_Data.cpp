@@ -908,6 +908,99 @@ void ADN_Objects_Data::ADN_CapacityInfos_Spawn::WriteArchive( xml::xostream& out
 }
 //@}
 
+//! @name ADN_CapacityInfos_AttitudeModifier
+//@{
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ADN_CapacityInfos_AttitudeModifier()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::ReadArchive( xml::xistream& input )
+{
+    bPresent_ = true;
+    input >> xml::attribute( "attitude", attitude_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::WriteArchive
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_AttitudeModifier::WriteArchive( xml::xostream& output )
+{
+    output << xml::attribute( "attitude", attitude_ );
+}
+//@}
+
+//! @name ADN_CapacityInfos_Perception
+//@{
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Perception
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Perception::ADN_CapacityInfos_Perception()
+: blinded_( false )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Perception::ReadArchive
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Perception::ReadArchive( xml::xistream& input )
+{
+    bPresent_ = true;
+    input >> xml::attribute( "blinded", blinded_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Perception::WriteArchive
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Perception::WriteArchive( xml::xostream& output )
+{
+    bPresent_ = true;
+    output << xml::attribute( "blinded", blinded_ );
+}
+//@}
+
+//! @name ADN_CapacityInfos_Scattering
+//@{
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Scattering
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+ADN_Objects_Data::ADN_CapacityInfos_Scattering::ADN_CapacityInfos_Scattering()
+: humanByTimeStep_( 0 )
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Scattering::ReadArchive
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Scattering::ReadArchive( xml::xistream& input )
+{
+    bPresent_ = true;
+    input >> xml::attribute( "human-by-time-step", humanByTimeStep_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive
+// Created: MGD 2010-03-19
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data::ADN_CapacityInfos_Scattering::WriteArchive( xml::xostream& output )
+{
+    output << xml::attribute( "human-by-time-step", humanByTimeStep_ );
+}
+//@}
+
 
 // =============================================================================
 // ObjectInfos
@@ -948,6 +1041,9 @@ INIT_DATA( ADN_CapacityInfos_TerrainHeuristic, "Terrain Heuristic", "heuristic" 
 INIT_DATA( ADN_CapacityInfos_TimeLimited,      "TimeLimited",       "time-limited" );
 INIT_DATA( ADN_CapacityInfos_Workable,         "Workable",          "workable" );
 INIT_DATA( ADN_CapacityInfos_Spawn,            "Spawn   ",          "spawn" );
+INIT_DATA( ADN_CapacityInfos_AttitudeModifier, "AttitudeModifier",  "attitude-modifier" );
+INIT_DATA( ADN_CapacityInfos_Perception      , "Perception"      ,  "perception" );
+INIT_DATA( ADN_CapacityInfos_Scattering      , "Scattering"      ,  "scattering" );
 
 
 //-----------------------------------------------------------------------------
@@ -1017,6 +1113,9 @@ void ADN_Objects_Data::ObjectInfos::InitializeCapacities()
     capacities_[ ADN_CapacityInfos_TimeLimited::TAG ].reset( new ADN_CapacityInfos_TimeLimited() );
     capacities_[ ADN_CapacityInfos_Workable::TAG ].reset( new ADN_CapacityInfos_Workable() );
     capacities_[ ADN_CapacityInfos_Spawn::TAG ].reset( new ADN_CapacityInfos_Spawn() );
+    capacities_[ ADN_CapacityInfos_AttitudeModifier::TAG ].reset( new ADN_CapacityInfos_AttitudeModifier() );
+    capacities_[ ADN_CapacityInfos_Perception::TAG ].reset( new ADN_CapacityInfos_Perception() );
+    capacities_[ ADN_CapacityInfos_Scattering::TAG ].reset( new ADN_CapacityInfos_Scattering() );
 }
 
 // -----------------------------------------------------------------------------

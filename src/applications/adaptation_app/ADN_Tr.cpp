@@ -151,6 +151,7 @@ ADN_Tr::T_ConverterAgentTypePion ADN_Tr::agentTypePionConverter_[] =
 
 ADN_Tr::T_ConverterAgentTypeAutomate ADN_Tr::agentTypeAutomateConverter_[] =
 {
+    T_ConverterAgentTypeAutomate( "Automate SGTIA"                  ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Combined Arms" ),                       eAgentTypeAutomateSGTIA ),
     T_ConverterAgentTypeAutomate( "Automate INF"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Infantry" ),                       eAgentTypeAutomateINF ),
     T_ConverterAgentTypeAutomate( "Automate ASA"                    ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Anti air" ),                       eAgentTypeAutomateASA ),
     T_ConverterAgentTypeAutomate( "Automate ALAT"                   ,QT_TRANSLATE_NOOP( "ADN_Tr", "Commander, Army aviation" ),                      eAgentTypeAutomateALAT ),
@@ -290,9 +291,13 @@ ADN_Tr::T_ConverterEquipmentState ADN_Tr::equipmentStateConverter_[] =
 ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[] =
 {
     T_ConverterMissionParameterType( "Agent", QT_TRANSLATE_NOOP("ADN_Tr", "Agent" ), eMissionParameterTypeAgent ),
+    T_ConverterMissionParameterType( "AgentBM", QT_TRANSLATE_NOOP("ADN_Tr", "AgentBM" ), eMissionParameterTypeAgentBM ),
     T_ConverterMissionParameterType( "AgentList", QT_TRANSLATE_NOOP("ADN_Tr", "AgentList" ), eMissionParameterTypeAgentList ),
+    T_ConverterMissionParameterType( "AgentListBM", QT_TRANSLATE_NOOP("ADN_Tr", "AgentListBM" ), eMissionParameterTypeAgentListBM ),
     T_ConverterMissionParameterType( "Automate", QT_TRANSLATE_NOOP("ADN_Tr", "Automate" ), eMissionParameterTypeAutomate ),
+    T_ConverterMissionParameterType( "AutomateBM", QT_TRANSLATE_NOOP("ADN_Tr", "AutomateBM" ), eMissionParameterTypeAutomateBM ),
     T_ConverterMissionParameterType( "AutomateList", QT_TRANSLATE_NOOP("ADN_Tr", "AutomateList" ), eMissionParameterTypeAutomateList ),
+    T_ConverterMissionParameterType( "AutomateListBM", QT_TRANSLATE_NOOP("ADN_Tr", "AutomateListBM" ), eMissionParameterTypeAutomateListBM ),
     T_ConverterMissionParameterType( "Bool", QT_TRANSLATE_NOOP("ADN_Tr", "Bool" ), eMissionParameterTypeBool ),
     T_ConverterMissionParameterType( "Numeric", QT_TRANSLATE_NOOP("ADN_Tr", "Numeric" ), eMissionParameterTypeNumeric ),
     T_ConverterMissionParameterType( "String", QT_TRANSLATE_NOOP("ADN_Tr", "String" ), eMissionParameterTypeString ),
@@ -301,20 +306,31 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "Enumeration", QT_TRANSLATE_NOOP("ADN_Tr", "Enumeration" ), eMissionParameterTypeEnumeration ),
     T_ConverterMissionParameterType( "NatureAtlas", QT_TRANSLATE_NOOP("ADN_Tr", "NatureAtlas" ), eMissionParameterTypeNatureAtlas ),
     T_ConverterMissionParameterType( "AgentKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "AgentKnowledge" ), eMissionParameterTypeAgentKnowledge ),
+    T_ConverterMissionParameterType( "AgentKnowledgeBM", QT_TRANSLATE_NOOP("ADN_Tr", "AgentKnowledgeBM" ), eMissionParameterTypeAgentKnowledgeBM ),
     T_ConverterMissionParameterType( "AgentKnowledgeList", QT_TRANSLATE_NOOP("ADN_Tr", "AgentKnowledgeList" ), eMissionParameterTypeAgentKnowledgeList ),
+    T_ConverterMissionParameterType( "AgentKnowledgeListBM", QT_TRANSLATE_NOOP("ADN_Tr", "AgentKnowledgeListBM" ), eMissionParameterTypeAgentKnowledgeListBM ),
     T_ConverterMissionParameterType( "ObjectKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectKnowledge" ), eMissionParameterTypeObjectKnowledge ),
+    T_ConverterMissionParameterType( "ObjectKnowledgeBM", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectKnowledgeBM" ), eMissionParameterTypeObjectKnowledgeBM ),
     T_ConverterMissionParameterType( "ObjectKnowledgeList", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectKnowledgeList" ), eMissionParameterTypeObjectKnowledgeList ),
+    T_ConverterMissionParameterType( "ObjectKnowledgeListBM", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectKnowledgeListBM" ), eMissionParameterTypeObjectKnowledgeListBM ),
     T_ConverterMissionParameterType( "PopulationKnowledge", QT_TRANSLATE_NOOP("ADN_Tr", "PopulationKnowledge" ), eMissionParameterTypePopulationKnowledge ),
+    T_ConverterMissionParameterType( "PopulationKnowledgeBM", QT_TRANSLATE_NOOP("ADN_Tr", "PopulationKnowledgeBM" ), eMissionParameterTypePopulationKnowledgeBM ),
     T_ConverterMissionParameterType( "GenObject", QT_TRANSLATE_NOOP("ADN_Tr", "GenObject" ), eMissionParameterTypeGenObject ),
+    T_ConverterMissionParameterType( "GenObjectBM", QT_TRANSLATE_NOOP("ADN_Tr", "GenObjectBM" ), eMissionParameterTypeGenObjectBM ),
     T_ConverterMissionParameterType( "GenObjectList", QT_TRANSLATE_NOOP("ADN_Tr", "GenObjectList" ), eMissionParameterTypeGenObjectList ),
+    T_ConverterMissionParameterType( "GenObjectListBM", QT_TRANSLATE_NOOP("ADN_Tr", "GenObjectListBM" ), eMissionParameterTypeGenObjectListBM ),
     T_ConverterMissionParameterType( "Objective", QT_TRANSLATE_NOOP("ADN_Tr", "Objective" ), eMissionParameterTypeObjective ),
     T_ConverterMissionParameterType( "ObjectiveList", QT_TRANSLATE_NOOP("ADN_Tr", "ObjectiveList" ), eMissionParameterTypeObjectiveList ),
     T_ConverterMissionParameterType( "Path", QT_TRANSLATE_NOOP("ADN_Tr", "Path" ), eMissionParameterTypePath ),
     T_ConverterMissionParameterType( "PathList", QT_TRANSLATE_NOOP("ADN_Tr", "PathList" ), eMissionParameterTypePathList ),
     T_ConverterMissionParameterType( "Point", QT_TRANSLATE_NOOP("ADN_Tr", "Point" ), eMissionParameterTypePoint ),
+    T_ConverterMissionParameterType( "PointBM", QT_TRANSLATE_NOOP("ADN_Tr", "PointBM" ), eMissionParameterTypePointBM ),
     T_ConverterMissionParameterType( "PointList", QT_TRANSLATE_NOOP("ADN_Tr", "PointList" ), eMissionParameterTypePointList ),
+    T_ConverterMissionParameterType( "PointListBM", QT_TRANSLATE_NOOP("ADN_Tr", "PointListBM" ), eMissionParameterTypePointListBM ),
     T_ConverterMissionParameterType( "Polygon", QT_TRANSLATE_NOOP("ADN_Tr", "Polygon" ), eMissionParameterTypePolygon ),
+    T_ConverterMissionParameterType( "AreaBM", QT_TRANSLATE_NOOP("ADN_Tr", "AreaBM" ), eMissionParameterTypeAreaBM ),
     T_ConverterMissionParameterType( "PolygonList", QT_TRANSLATE_NOOP("ADN_Tr", "PolygonList" ), eMissionParameterTypePolygonList ),
+    T_ConverterMissionParameterType( "AreaListBM", QT_TRANSLATE_NOOP("ADN_Tr", "AreaListBM" ), eMissionParameterTypeAreaListBM ),
     T_ConverterMissionParameterType( "Location", QT_TRANSLATE_NOOP("ADN_Tr", "Location" ), eMissionParameterTypeLocation ),
     T_ConverterMissionParameterType( "LocationList", QT_TRANSLATE_NOOP("ADN_Tr", "LocationList" ), eMissionParameterTypeLocationList ),
     T_ConverterMissionParameterType( "EquipmentType", QT_TRANSLATE_NOOP("ADN_Tr", "EquipmentType" ), eMissionParameterTypeEquipmentType ),
@@ -325,6 +341,8 @@ ADN_Tr::T_ConverterMissionParameterType ADN_Tr::missionParameterTypeConverter_[]
     T_ConverterMissionParameterType( "Limit", QT_TRANSLATE_NOOP("ADN_Tr", "Limit" ), eMissionParameterTypeLimit ),
     T_ConverterMissionParameterType( "PhaseLineList", QT_TRANSLATE_NOOP("ADN_Tr", "PhaseLineList" ), eMissionParameterTypePhaseLineList ),
     T_ConverterMissionParameterType( "IntelligenceList", QT_TRANSLATE_NOOP("ADN_Tr", "IntelligenceList" ), eMissionParameterTypeIntelligenceList ),
+    T_ConverterMissionParameterType( "UrbanBlockBM", QT_TRANSLATE_NOOP("ADN_Tr", "UrbanBlockBM" ), eMissionParameterTypeUrbanBlock ),
+
     T_ConverterMissionParameterType( "", "", (E_MissionParameterType)-1 )
 };
 
