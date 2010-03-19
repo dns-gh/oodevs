@@ -106,8 +106,8 @@ LicenseLangString LICENSE ${LANG_FRENCH} "license-scalped.txt"
     !verbose pop
 !macroend
 
-!insertmacro INSTALL.DECLARE_PATCH "patch_app" "C:\Program Files\SCALPED" "$INSTDIR"
-!insertmacro INSTALL.DECLARE_PATCH "patch_data" "C:\Documents and Settings\sbo\Mes Documents\SCALPED" "${INSTDATADIR}"
+!insertmacro INSTALL.DECLARE_PATCH "patch_app" "C:\Program Files\SCALPED_1.0.3" "$INSTDIR"
+!insertmacro INSTALL.DECLARE_PATCH "patch_data" "C:\Documents and Settings\sbo\Mes Documents\SCALPED_1.0.3" "${INSTDATADIR}"
 
 ;--------------------------------
 Section "Patch"

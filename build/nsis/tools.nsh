@@ -56,7 +56,7 @@
     !endif
     
     !ifndef INSTDATADIR
-        !define INSTDATADIR "$DOCUMENTS\${APP_NAME}"
+        !define INSTDATADIR "$DOCUMENTS\${PRODUCT_NAME}"
     !endif
 
 !macroend
@@ -70,7 +70,7 @@
         SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\bms"
+        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\Binaires"
         File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\*.xml"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
@@ -95,9 +95,9 @@
 ;------------------------------------------------------------------------------
 ; Adds Physical Models Section
 ;------------------------------------------------------------------------------
-!macro OT.AddPhysicalModels DataSet Localization SectionId
+!macro OT.AddPhysicalModels DataSet Localization
 
-    Section "${DataSet} - ${Localization}" ${SectionId}
+    Section "Physical" s_phymod
         SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\physical\${Localization}"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
@@ -156,6 +156,42 @@
 !macroend
 
 ;------------------------------------------------------------------------------
+; Adds Documentation Section
+;------------------------------------------------------------------------------
+!macro OT.AddDocumentation
+
+    SetOutPath "$INSTDIR\doc"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /x ".svn" "${DOCDIR}\*.pdf"
+    File /r /x ".svn" "third party"
+    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+    SetOutPath "$INSTDIR\doc\en"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DOCDIR}\en\final\Trainee_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\final\Trainer_User_Guide.pdf"
+    File /r /x ".svn" "${DOCDIR}\en\final\Reference_Guide.pdf"
+    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Trainee Guide.lnk" "$INSTDIR\doc\en\Trainee_User_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Trainer Guide.lnk" "$INSTDIR\doc\en\Trainer_User_Guide.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\English\Reference Guide.lnk" "$INSTDIR\doc\en\Reference_Guide.pdf"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    
+    SetOutPath "$INSTDIR\doc\fr"
+    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
+    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_de_Reference.pdf"
+    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Entrainé.pdf"
+    File /r /x ".svn" "${DOCDIR}\fr\final\Guide_Utilisateur_Entraineur.pdf"
+    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide de Reference.lnk" "$INSTDIR\doc\fr\Guide_de_Reference.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Entrainé.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Entrainé.pdf"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\Documentation\Français\Guide Utilisateur Entraineur.lnk" "$INSTDIR\doc\fr\Guide_Utilisateur_Entraineur.pdf"
+    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+
+!macroend
+
+;------------------------------------------------------------------------------
 ; Checks dependency between two sections 
 ;------------------------------------------------------------------------------
 !macro OT.CheckDependency FromSection ToSection
@@ -182,7 +218,7 @@
 !macro OT.AddUninstallEntry
 
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir" "$INSTDIR"
-    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${APP_NAME}"
+    WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayName" "${PRODUCT_NAME}"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "DisplayVersion" "${APP_VERSION_MINOR}"
     WriteRegStr ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "UninstallString" "${UNINST_EXE}"
     WriteRegDWORD ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "NoModify" 1
@@ -259,7 +295,7 @@ FunctionEnd
 ;------------------------------------------------------------------------------
 !macro OT.CheckRunning
 
-    System::Call 'kernel32::CreateMutexA(i 0, i 0, t "${APP_NAME}") i .r1 ?e'
+    System::Call 'kernel32::CreateMutexA(i 0, i 0, t "${PRODUCT_NAME}") i .r1 ?e'
     Pop $R0
     StrCmp $R0 0 +3
         MessageBox MB_OK|MB_ICONEXCLAMATION "$(OT_ALREADY_RUNNING)"
@@ -292,10 +328,10 @@ FunctionEnd
     Section "${ComponentName}"
         SetOutPath "$INSTDIR\installation files"
         File "${OUTDIR}\SWORD ${ComponentName}_${PLATFORM}.exe"
-        WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
+        WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
         ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /D=$INSTDIR\${ComponentName}'
         SetOutPath "$INSTDIR\${ComponentName}\applications"
-        CreateShortCut "$SMPROGRAMS\${APP_NAME}\${ComponentName}.lnk" "$INSTDIR\${ComponentName}\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\${ComponentName}.lnk" "$INSTDIR\${ComponentName}\applications\generation_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
 !macroend
@@ -307,7 +343,7 @@ FunctionEnd
 
     IfFileExists "$INSTDIR\${ComponentName}\uninstall.exe" 0 +3
         ExecWait '"$INSTDIR\${ComponentName}\uninstall.exe" /S _?=$INSTDIR\${ComponentName}'
-        DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}\Common\Components\${ComponentName}"
+        DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}"
 
 !macroend
 
@@ -327,12 +363,13 @@ FunctionEnd
     Delete "${UNINST_DAT}"
     Delete "${UNINST_EXE}"
     
-    Delete "$DESKTOP\${APP_NAME}.lnk"
-    Delete "$QUICKLAUNCH\${APP_NAME}.lnk"
-    RmDir /r "$SMPROGRAMS\${APP_NAME}"
+    Delete "$DESKTOP\${PRODUCT_NAME}.lnk"
+    Delete "$QUICKLAUNCH\${PRODUCT_NAME}.lnk"
+    RmDir /r "$SMPROGRAMS\${PRODUCT_NAME}"
     DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}"
     ; TODO: prompt keep / delete preferences
-    ; DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${APP_NAME}"
+    DeleteRegKey ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}"
+    DeleteRegKey /ifempty ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}"
     
     ; unregister .otpak extension association
     DeleteRegKey HKCR ".otpak"

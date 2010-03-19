@@ -3,40 +3,13 @@
 ; This file is part of a MASA library or program.
 ; Refer to the included end-user license agreement for restrictions.
 ;
-; Copyright (c) 2009 Mathématiques Appliquées SA (MASA)
+; Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 ;
 ; ------------------------------------------------------------------------------
-
-;...............................................................................
-!define APP_NAME "SWORD Security"
-!define COMPANY_NAME "MASA Group"
-!define PRODUCT_NAME "SWORD"
-
-;........................................
-; defined from ant call
-!ifndef APP_VERSION_MAJOR
-    !define APP_VERSION_MAJOR "1.1.0"
-!endif
-
-!ifndef APP_VERSION_MINOR
-    !define APP_VERSION_MINOR "1.1.0.0"
-!endif
-
-; worldwide / france
-!ifndef APP_MODEL
-    !define APP_MODEL "worldwide"
-!endif
 
 !ifndef BUILDDIR
     !define BUILDDIR ".."
 !endif
-
-;........................................
-
-
-!define INSTDIR_REG_ROOT "HKLM"
-!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
-!define DATA_REG_KEY "SOFTWARE\MASA Group\SWORD Officer Training\Common"
 
 
 !include "AdvUninstLog.nsh"
@@ -46,21 +19,19 @@
 !insertmacro OT.Initialize
 ;..................................................................................................
 
-Name "${APP_NAME}"
+Name "${PRODUCT_NAME}"
 !ifdef EVALUATION
-    OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}_eval.exe"
+    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}_eval.exe"
 !else
-    OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}.exe"
+    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}.exe"
 !endif
-InstallDir "$PROGRAMFILES\${COMPANY_NAME}\${APP_NAME}"
-InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL
 
 !include "version.nsh"
 
 ;--------------------------------
-Section "!${APP_NAME}"
+Section "!${PRODUCT_NAME}"
     SectionIn RO
 
     ; resources: localization
@@ -132,7 +103,7 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\lua-${PLATFORM}-mt-5_1_4.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
-    File "*.ico"
+    File "resources\*.ico"
     
     ; terrain dependencies
     File "${RUNDIR}\expat_ogdi31.dll"
@@ -163,12 +134,12 @@ Section "!${APP_NAME}"
     
     
     SetOutPath "$INSTDIR\applications"
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_FRONTEND).lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    ; CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_FRONTEND).lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    ; CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
-    CreateShortcut "$SMPROGRAMS\${APP_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
+    CreateShortcut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
 
     !insertmacro OT.AddUninstallEntry
     !insertmacro OT.AddFileAssoc
@@ -248,14 +219,14 @@ SectionGroup "Shortcuts" s_sc
     ;--------------------------------
     Section "Desktop" s_desktop
         SetOutPath "$INSTDIR\applications"
-        CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
     
     ;--------------------------------
     Section "Quick Launch" s_quick
         SetOutPath "$INSTDIR\applications"
         StrCmp $QUICKLAUNCH $TEMP +2
-        CreateShortCut "$QUICKLAUNCH\${APP_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        CreateShortCut "$QUICKLAUNCH\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
 SectionGroupEnd
@@ -288,12 +259,17 @@ Function .onInit
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
     SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
     
+    !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
 
 Function .onInstSuccess
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+FunctionEnd
+
+Function un.onInit
+    !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
 Function .onSelChange

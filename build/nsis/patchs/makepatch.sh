@@ -1,12 +1,15 @@
 #!/bin/sh
 
+productName=""
 installDir="C:/Program Files"
 documentDir="C:/Documents and Settings/sbo/Mes Documents"
-fromVersion="1.0.1"
-toVersion="1.0.2"
+fromVersion="1.0.2"
+toVersion="1.0.3"
 
-../bin/nsis/nsisPatchGen.exe --prefix patch_app "${installDir}/SCALPED_${fromVersion}" "${installDir}/SCALPED" patch_app patch_app.nsi
-../bin/nsis/nsisPatchGen.exe --prefix patch_data "${documentDir}/SCALPED_${fromVersion}" "${documentDir}/SCALPED" patch_data patch_data.nsi
+patchApp="../../bin/nsis/nsisPatchGen.exe"
+
+${patchApp} --prefix patch_app "${installDir}/${productName}_${fromVersion}" "${installDir}/${productName}_${toVersion}" patch_app patch_app.nsi
+${patchApp} --prefix patch_data "${documentDir}/${productName}_${fromVersion}" "${documentDir}/${productName}_${toVersion}" patch_data patch_data.nsi
 
 function prepare_patch {
     tempFile="$1.tmp"

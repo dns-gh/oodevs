@@ -3,34 +3,9 @@
 ; This file is part of a MASA library or program.
 ; Refer to the included end-user license agreement for restrictions.
 ;
-; Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+; Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
 ;
 ; ------------------------------------------------------------------------------
-
-;..................................................................................................
-!define APP_NAME "SWORD"
-!define COMPANY_NAME "MASA Group"
-!define PRODUCT_NAME "SWORD"
-
-;........................................
-; defined from ant call
-!ifndef APP_VERSION_MAJOR
-    !define APP_VERSION_MAJOR "1.0.0"
-!endif
-
-!ifndef APP_VERSION_MINOR
-    !define APP_VERSION_MINOR "1.0.0.0"
-!endif
-
-; worldwide / france
-!ifndef APP_MODEL
-    !define APP_MODEL "worldwide"
-!endif
-;........................................
-
-
-!define INSTDIR_REG_ROOT "HKLM"
-!define INSTDIR_REG_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${APP_NAME}"
 
 !include "AdvUninstLog.nsh"
 !include "lang.nsh"
@@ -39,21 +14,19 @@
 !insertmacro OT.Initialize
 ;..................................................................................................
 
-Name "${APP_NAME}"
+Name "${PRODUCT_NAME}"
 !ifdef EVALUATION
-    OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}_eval.exe"
+    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}_eval.exe"
 !else
-    OutFile "${DISTDIR}\${APP_NAME}_${APP_VERSION_MAJOR}.exe"
+    OutFile "${DISTDIR}\${PRODUCT_NAME}_${APP_VERSION_MAJOR}.exe"
 !endif
-InstallDir "$PROGRAMFILES\${COMPANY_NAME}\${APP_NAME}"
-InstallDirRegKey ${INSTDIR_REG_ROOT} "${INSTDIR_REG_KEY}" "InstallDir"
 
 !insertmacro UNATTENDED_UNINSTALL
 
 !include "version.nsh"
 
 ;--------------------------------
-Section "!${APP_NAME}"
+Section "!${PRODUCT_NAME}"
     SectionIn RO
 
     ; resources: localization
@@ -115,7 +88,6 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\zlib1.dll"
     File "${RUNDIR}\bugtrap.dll"
     File "${RUNDIR}\shapelib.dll"
-    File "${RUNDIR}\library-${PLATFORM}-mt.dll"
     File "${RUNDIR}\population-${PLATFORM}-mt.dll"
     File "${RUNDIR}\dispatcher-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
@@ -131,9 +103,8 @@ Section "!${APP_NAME}"
     File "${RUNDIR}\libxslt.dll"
     File "${RUNDIR}\msvcr71.dll"
     File "${RUNDIR}\gssapi32.dll"
-    File /x "*-gd-*" /x "*-gd.*" /x "*unittest*.*" /x "*debugger*.*" "${RUNDIR}\*.plugin"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
-    File "*.ico"
+    File "resources\*.ico"
     
     ; terrain dependencies
     File "${RUNDIR}\expat_ogdi31.dll"
@@ -154,12 +125,12 @@ Section "!${APP_NAME}"
     
     !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
 
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_FRONTEND).lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    CreateDirectory "$SMPROGRAMS\${PRODUCT_NAME}"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_ADAPTATION).lnk" "$INSTDIR\applications\adaptation_app.exe" "" "$INSTDIR\applications\adaptation.ico"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_FRONTEND).lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+    CreateShortCut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_SELF_TRAINING).lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     ;create shortcut for uninstaller always use ${UNINST_EXE} instead of uninstall.exe
-    CreateShortcut "$SMPROGRAMS\${APP_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
+    CreateShortcut "$SMPROGRAMS\${PRODUCT_NAME}\$(OT_UNINSTALL).lnk" "${UNINST_EXE}"
 
     !insertmacro OT.AddUninstallEntry
     !insertmacro OT.AddFileAssoc
@@ -182,7 +153,7 @@ SectionGroupEnd
 SectionGroup "Models" s_mod
 
     !insertmacro OT.AddDecisionalModels "ada"
-    !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}" "s_phy1"
+    !insertmacro OT.AddPhysicalModels "ada" "${APP_MODEL}"
 
 SectionGroupEnd
 
@@ -191,17 +162,21 @@ SectionGroup "Exercises" s_exo
 
     !ifdef STRESS
         !insertmacro OT.AddExercise "Charge" "Cabourg" "s_exo1"
+        !insertmacro OT.AddExercise "ChargeLight" "Cabourg" "s_exo2"
+        !insertmacro OT.AddExercise "ChargeMedium" "Cabourg" "s_exo3"
     !else if "${APP_MODEL}" == "worldwide"
         !insertmacro OT.AddExercise "Egypt" "Nord egypt" "s_exo1"
         !insertmacro OT.AddExercise "Paris" "Paris_Est" "s_exo2"
         !insertmacro OT.AddExercise "Scripting demo" "test" "s_exo3"
         !insertmacro OT.AddExercise "9_cases" "Angers_x9" "s_exo4"
         !insertmacro OT.AddExercise "Musoria Border Defense" "Paris_Est" "s_exo5"
-        !insertmacro OT.AddExercise "Drosoville" "Drosoville" "s_exo6"
+        !insertmacro OT.AddExercise "tutorials\Generalities" "Paris_Est" "s_exo6"
     !else if "${APP_MODEL}" == "france"
         !insertmacro OT.AddExercise "esag" "Angers" "s_exo1"
         !insertmacro OT.AddExercise "CENTORSEM" "Paris_Est" "s_exo2"
         !insertmacro OT.AddExercise "puma" "larochelle" "s_exo3"
+        !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
+        !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
         !insertmacro OT.AddExercise "tutorials\01 - Generalites" "Paris_Est" "s_exo4"
         !insertmacro OT.AddExercise "tutorials\02 - Jeu" "Paris_Est" "s_exo5"
         !insertmacro OT.AddExercise "tutorials\03 - Mission" "Paris_Est" "s_exo6"
@@ -215,11 +190,6 @@ SectionGroup "Exercises" s_exo
         !insertmacro OT.AddExercise "tutorials\08 - Fonctions Avancees" "Paris_Est" "s_exo14"
         !insertmacro OT.AddExercise "tutorials\09 - Rejeu et AAA" "Paris_Est" "s_exo15"
         !insertmacro OT.AddExercise "tutorials\10 - Preparation" "Paris_Est" "s_exo16"
-        !insertmacro OT.AddExercise "Cabourg" "Cabourg" "s_exo17"
-        !insertmacro OT.AddExercise "Ares" "Blois" "s_exo18"
-        !insertmacro OT.AddExercise "ValidationTests" "Angers_x9" "s_exo19"
-        !insertmacro OT.AddExercise "ValidationTests aux tomates" "Angers_x9" "s_exo20"
-        !insertmacro OT.AddExercise "ValidationTests LOG" "Angers_x9" "s_exo21"
     !endif
 
 SectionGroupEnd
@@ -238,7 +208,6 @@ SectionGroup "Terrains" s_ter
         !insertmacro OT.AddTerrain "larochelle" "s_ter3"
         !insertmacro OT.AddTerrain "Cabourg" "s_ter4"
         !insertmacro OT.AddTerrain "Blois" "s_ter5"
-        !insertmacro OT.AddTerrain "Angers_x9" "s_ter6"
     !endif
 
 SectionGroupEnd
@@ -246,29 +215,8 @@ SectionGroupEnd
 ;--------------------------------
 Section "Documentation" s_doc
 
-    SetOutPath "$INSTDIR\doc"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\*.pdf"
-    File /r /x ".svn" "third party"
-    CreateDirectory "$SMPROGRAMS\${APP_NAME}\Documentation"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
+    !insertmacro OT.AddDocumentation
 
-    SetOutPath "$INSTDIR\doc\en"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\en\Trainee_User_Guide.pdf"
-    File /r /x ".svn" "${DOCDIR}\en\Trainer_User_Guide.pdf"
-    File /r /x ".svn" "${DOCDIR}\en\Reference_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Trainee Guide.lnk" "$INSTDIR\doc\en\Trainee_User_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Trainer Guide.lnk" "$INSTDIR\doc\en\Trainer_User_Guide.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Reference Guide.lnk" "$INSTDIR\doc\en\Reference_Guide.pdf"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
-    SetOutPath "$INSTDIR\doc\fr"
-    !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-    File /r /x ".svn" "${DOCDIR}\fr\Guide Utilisateur.pdf"
-    CreateShortCut "$SMPROGRAMS\${APP_NAME}\Documentation\Guide Utilisateur.lnk" "$INSTDIR\doc\fr\Guide Utilisateur.pdf"
-    !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
-    
 SectionEnd
 
 SectionGroup "Shortcuts" s_sc
@@ -276,14 +224,14 @@ SectionGroup "Shortcuts" s_sc
     ;--------------------------------
     Section "Desktop" s_desktop
         SetOutPath "$INSTDIR\applications"
-        CreateShortCut "$DESKTOP\${APP_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        CreateShortCut "$DESKTOP\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\selftraining_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
     
     ;--------------------------------
     Section "Quick Launch" s_quick
         SetOutPath "$INSTDIR\applications"
         StrCmp $QUICKLAUNCH $TEMP +2
-        CreateShortCut "$QUICKLAUNCH\${APP_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
+        CreateShortCut "$QUICKLAUNCH\${PRODUCT_NAME}.lnk" "$INSTDIR\applications\frontend_app.exe" "" "$INSTDIR\applications\sword-ot.ico"
     SectionEnd
 
 SectionGroupEnd
@@ -315,12 +263,17 @@ Function .onInit
     SectionSetText ${s_desktop} $(OT_SECTION_DESKTOP_SHORTCUT)
     SectionSetText ${s_quick} $(OT_SECTION_QUICKLAUNCH_SHORTCUT)
     
+    !insertmacro MULTIUSER_INIT
     !insertmacro UNINSTALL.LOG_PREPARE_INSTALL
 FunctionEnd
 
 Function .onInstSuccess
     ;create/update log always within .onInstSuccess function
     !insertmacro UNINSTALL.LOG_UPDATE_INSTALL
+FunctionEnd
+
+Function un.onInit
+    !insertmacro MULTIUSER_UNINIT
 FunctionEnd
 
 Function .onSelChange
@@ -331,6 +284,7 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo3" "s_ter3"
         !insertmacro OT.CheckDependency "s_exo4" "s_ter4"
         !insertmacro OT.CheckDependency "s_exo5" "s_ter2"
+        !insertmacro OT.CheckDependency "s_exo6" "s_ter2"
     !else if "${APP_MODEL}" == "france"
         !insertmacro OT.CheckDependency "s_exo1" "s_ter1"
         !insertmacro OT.CheckDependency "s_exo2" "s_ter2"
@@ -350,9 +304,6 @@ Function .onSelChange
         !insertmacro OT.CheckDependency "s_exo16" "s_ter2"
         !insertmacro OT.CheckDependency "s_exo17" "s_ter4"
         !insertmacro OT.CheckDependency "s_exo18" "s_ter5"
-        !insertmacro OT.CheckDependency "s_exo19" "s_ter6"
-        !insertmacro OT.CheckDependency "s_exo20" "s_ter6"
-        !insertmacro OT.CheckDependency "s_exo21" "s_ter6"
     !endif
      
 FunctionEnd

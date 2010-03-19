@@ -831,17 +831,17 @@
     -->
     <target name="package" description="package the installers" depends="package.defense,package.security,package.eval,package.france,package.stress"/>
 
-    <target name="package.defense" description="package the standard installer: worlwide, no license">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
+    <target name="package.defense" description="package the standard installer: worldwide, no license">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=worldwide"/>
-            <arg value="/X!include sword-ot.nsh"/>
+            <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
 
     <target name="package.security" description="create the installer">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-security" script="sword-security.nsi">
+        <nsis todir="${dist.dir}/current/${platform}/security" name="sword-security" script="sword-security.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=worldwide"/>
@@ -850,32 +850,32 @@
     </target>
 
     <target name="package.eval" description="package the standard installer: worlwide, 3 months license">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot" script="sword-ot.nsi">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEVALUATION=1"/>
             <arg value="/DAPP_MODEL=worldwide"/>
-            <arg value="/X!include sword-ot.nsh"/>
+            <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
 
     <target name="package.stress" description="package the french version of installer for stress test: france, 3 months license">
-        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
+        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEVALUATION=1"/>
             <arg value="/DAPP_MODEL=france"/>
             <arg value="/DSTRESS=1"/>
-            <arg value="/X!include sword-ot.nsh"/>
+            <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
 
     <target name="package.france" description="package the french version of installer: france, no license">
-        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-ot" script="sword-ot.nsi">
+        <nsis todir="${dist.dir}/current/${platform}/france" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DAPP_MODEL=france"/>
-            <arg value="/X!include sword-ot.nsh"/>
+            <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
 
@@ -888,21 +888,11 @@
     </target>
 
     <target name="package.patch" description="create a patch installer">
-        <nsis todir="${dist.dir}/current/${platform}" name="sword-ot-scalped-patch" script="sword-ot-scalped-patch.nsi" license="true">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-patch" script="resources/sword-patch.nsi" license="true">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
-            <arg value="/X!include sword-ot.nsh"/>
+            <arg value="/X!include sword-defense.nsh"/>
         </nsis>
-    </target>
-
-    <target name="package.arcmap" description="create the crossbow installer">
-        <nsis todir="${dist.dir}/current" name="crossbow_install" script="crossbow.nsi"/>
-        <!-- <exec executable="${bin.dir}/RegAsm.exe">
-            <arg value="../out/applications/crossbow_app/vc80/Release/Crossbow.dll"/>
-            <arg value="/codebase"/>
-            <arg value="/regfile:SwordCrossbow.reg"/>
-        </exec> -->
-        <!--<nsis todir="${dist.dir}/current" name="crossbow_installer" script="crossbow_installer.nsi"/>-->
     </target>
 
     <!--
