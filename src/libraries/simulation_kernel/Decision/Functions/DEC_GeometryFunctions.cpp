@@ -492,14 +492,14 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPosition( c
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStaticSafetyPosition( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledgeEnemy )
 {
-	static std::map< unsigned int, boost::shared_ptr< MT_Vector2D > > buffer;//@TODO MGD Replace by a buffer module for terrain analysis
+    static std::map< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > > buffer;//@TODO MGD Replace by a buffer module for terrain analysis
 
 	MT_Float rMinDistance = pKnowledgeEnemy->GetMaxRangeToFireOn(callerAgent,0)+200;
 
     if( pKnowledgeEnemy && pKnowledgeEnemy->IsValid() )
     {
 		unsigned int key = callerAgent.GetID() * 100000 + pKnowledgeEnemy->GetID();
-		std::map< unsigned int, boost::shared_ptr< MT_Vector2D > >::iterator search = buffer.find( key); 
+		std::map< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > >::iterator search = buffer.find( key); 
 
         // Position de l'ennemi
         const MT_Vector2D& vEnemyPos  = pKnowledgeEnemy->GetPosition();
@@ -514,14 +514,20 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeStaticSafetyPosit
 		//MT_Vector2D vCornerPoint= UrbanModel::GetSingleton().GetCornerPoint( vSafetyPos );
 
 		//update buffer when delta > 100 m
-		if( search == buffer.end() || ( search != buffer.end() && vSafetyPos.SquareDistance( *(*search).second.get() ) > 10000. ) )
+		if( search == buffer.end() )
+        {
+            boost::shared_ptr< MT_Vector2D > pResult(new MT_Vector2D( vSafetyPos ));
+            buffer.insert( std::pair< unsigned int, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D > >( key, std::pair< boost::shared_ptr< MT_Vector2D >, MT_Vector2D >(pResult, vEnemyPos) ) );
+            return pResult;
+        }
+        else if( vEnemyPos.SquareDistance( search->second.second ) > 10000. && vSafetyPos.SquareDistance( search->second.second ) > 10000. )
 		{
-			boost::shared_ptr< MT_Vector2D > pResult(new MT_Vector2D( vSafetyPos ));
-			buffer.insert( std::pair< unsigned int, boost::shared_ptr< MT_Vector2D > >( key, pResult ) );
-			return pResult;
+            search->second.first.reset( new MT_Vector2D( vSafetyPos ) );
+            search->second.second = vEnemyPos;
+			return search->second.first;
 		}
 		else
-			return (*search).second;
+			return search->second.first;
     }
 	return boost::shared_ptr< MT_Vector2D >();
 }
