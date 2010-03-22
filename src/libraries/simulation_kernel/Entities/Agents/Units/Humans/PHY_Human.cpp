@@ -95,6 +95,8 @@ PHY_Human::~PHY_Human()
 // -----------------------------------------------------------------------------
 void PHY_Human::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    file >> boost::serialization::base_object< Human_ABC >( *this );
+
     file >> pComposante_;
     
     unsigned int nID;
@@ -122,6 +124,9 @@ void PHY_Human::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 
     unsigned rank  = pRank_->GetID(),
              wound = pWound_->GetID();
+
+    file << boost::serialization::base_object< Human_ABC >( *this );
+
     file << pComposante_
          << rank
          << wound
