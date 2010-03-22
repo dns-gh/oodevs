@@ -70,8 +70,7 @@
         SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\Binaires"
-        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\*.xml"
+        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
     
