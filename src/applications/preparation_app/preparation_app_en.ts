@@ -897,7 +897,19 @@ Do you want to save anyway?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>global weather</source>
+        <source>Global weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Time and Position Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start time:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>End time:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -913,14 +925,6 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Weather type:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start time:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End time:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1569,7 +1569,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Display object icons</source>
-        <translation>Afficher les icônes des objets</translation>
+        <translation type="obsolete">Afficher les icônes des objets</translation>
     </message>
     <message>
         <source>Display state summary on mouse over</source>
@@ -1594,6 +1594,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Display detection reports</source>
         <translation type="obsolete">Afficher les rapports de détection</translation>
+    </message>
+    <message>
+        <source>3D metric computation</source>
+        <translation type="unfinished">Mesure 3D</translation>
     </message>
 </context>
 <context>

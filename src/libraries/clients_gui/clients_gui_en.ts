@@ -881,7 +881,7 @@ Do you want to remove it?</source>
 <context>
     <name>gui::OptionsPanel</name>
     <message>
-        <source>Display object icons</source>
+        <source>3D metric computation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -971,7 +971,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Global weather</source>
-        <translation type="obsolete">Météo du théatre</translation>
+        <translation type="unfinished">Météo du théatre</translation>
     </message>
     <message>
         <source>Local weather</source>
@@ -994,8 +994,16 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>global weather</source>
-        <translation type="unfinished"></translation>
+        <source>Time and Position Parameters</source>
+        <translation>Paramètres temporel et de localisation</translation>
+    </message>
+    <message>
+        <source>Start time:</source>
+        <translation>Date de début:</translation>
+    </message>
+    <message>
+        <source>End time:</source>
+        <translation>Date de fin:</translation>
     </message>
 </context>
 <context>
@@ -1011,14 +1019,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Weather type:</source>
         <translation>Type de temps:</translation>
-    </message>
-    <message>
-        <source>Start time:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>End time:</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
