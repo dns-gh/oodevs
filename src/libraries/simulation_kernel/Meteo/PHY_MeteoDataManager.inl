@@ -58,4 +58,3 @@ void PHY_MeteoDataManager::UnregisterMeteo( PHY_Meteo& meteo )
     if( meteos_.erase( &meteo ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
-  

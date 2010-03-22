@@ -89,13 +89,13 @@ PHY_RawVisionData::~PHY_RawVisionData()
 // Created: JVT 03-08-06
 // Last modified: JVT 03-08-18
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::RegisterMeteoPatch( const MT_Vector2D& upLeft, const MT_Vector2D& downRight, PHY_Meteo* pMeteo )
+void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, PHY_Meteo* pMeteo )
 {
     assert( ppCells_ );
-    unsigned int nXEnd = std::min( GetCol( downRight.rX_ ), nNbrCol_ - 1 );
-    unsigned int nYEnd = std::min( GetRow( upLeft.rY_ ),    nNbrRow_ - 1 );
-    unsigned int nXBeg = std::min( GetCol( upLeft.rX_ ),    nNbrCol_ - 1 );
-    unsigned int nYBeg = std::min( GetRow( downRight.rY_ ), nNbrRow_ - 1 );
+    unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
+    unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
+    unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
+    unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
     
     // On remet éventuellement dans le bon sens
     if ( nXEnd < nXBeg )
@@ -115,6 +115,38 @@ void PHY_RawVisionData::RegisterMeteoPatch( const MT_Vector2D& upLeft, const MT_
             if ( cell.pMeteo )
                 cell.pMeteo->DecRef();
             cell.pMeteo = pMeteo;
+        }
+        ++nXBeg;
+    }
+}
+
+
+//-----------------------------------------------------------------------------
+// Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
+// Created: SLG 2010-03-19
+//-----------------------------------------------------------------------------
+void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, PHY_Meteo* pMeteo )
+{
+    assert( ppCells_ );
+    unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
+    unsigned int nYEnd = std::min( GetRow( upLeft.Y() ),    nNbrRow_ - 1 );
+    unsigned int nXBeg = std::min( GetCol( upLeft.X() ),    nNbrCol_ - 1 );
+    unsigned int nYBeg = std::min( GetRow( downRight.Y() ), nNbrRow_ - 1 );
+
+    // On remet éventuellement dans le bon sens
+    if ( nXEnd < nXBeg )
+        std::swap( nXEnd, nXBeg );
+    if ( nYEnd < nYBeg )
+        std::swap( nYEnd, nYBeg );
+
+    while ( nXBeg <= nXEnd )
+    {
+        for ( unsigned int y = nYBeg; y <= nYEnd; ++y )
+        {
+            sCell& cell = ppCells_[ nXBeg ][ y ];
+            if ( cell.pMeteo == pMeteo )
+                cell.pMeteo->DecRef();
+            cell.pMeteo = 0;
         }
         ++nXBeg;
     }

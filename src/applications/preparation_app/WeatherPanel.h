@@ -29,39 +29,36 @@ namespace gui
 class WeatherModel;
 class WeatherWidget;
 class LocalWeathersList;
-class GlobalWeathersList;
 class LocalWeather;
-class Weather;
 class WeatherLayer;
 
 // =============================================================================
 /** @class  WeatherPanel
-    @brief  WeatherPanel
+@brief  WeatherPanel
 */
 // Created: SBO 2006-12-19
 // =============================================================================
 class WeatherPanel : public gui::InfoPanel_ABC
-                   , public tools::Observer_ABC
-                   , public tools::ElementObserver_ABC< WeatherModel >
+    , public tools::Observer_ABC
+    , public tools::ElementObserver_ABC< WeatherModel >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer );
+    WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer );
     virtual ~WeatherPanel();
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    void Commit();
-    void Reset ();
-    void LocalSelectionChanged();
-    void GlobalSelectionChanged();
-    void SetPatchPosition();
-    //@}
+    private slots:
+        //! @name Slots
+        //@{
+        void Commit();
+        void Reset ();
+        void LocalSelectionChanged();
+        void SetPatchPosition();
+        //@}
 
 private:
     //! @name Copy/Assignement
@@ -86,16 +83,15 @@ private:
     QTimeEdit* sunrise_;
     QTimeEdit* sunset_;
     gui::ValuedComboBox< kernel::E_LightingType >* lighting_;
-    
-    QVBox* globalWeatherBox_;
-    GlobalWeathersList* globalWeathers_;
-    Weather* selectedGlobal_;
     WeatherWidget* globalWeather_;
-
     QVBox* localWeatherBox_;
     LocalWeathersList* localWeathers_;
     LocalWeather* selectedLocal_;
     WeatherWidget* localWeather_;
+    QLabel* startTimeLabel_;
+    QDateTimeEdit* startTime_;
+    QLabel* endTimeLabel_;
+    QDateTimeEdit* endTime_;
     //@}
 };
 

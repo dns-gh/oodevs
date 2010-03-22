@@ -56,8 +56,6 @@ private:
     gui::ValuedComboBox< kernel::E_WeatherType >* type_;
     QLabel* startTimeLabel_;
     QLabel* endTimeLabel_;
-    QTimeEdit* startTime_;
-    QTimeEdit* endTime_;
     //@}
 };
 

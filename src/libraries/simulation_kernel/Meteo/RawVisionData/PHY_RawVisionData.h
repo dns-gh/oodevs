@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "meteo/PHY_Meteo.h"
+#include "meteo/PHY_RawVisionData_ABC.h"
 
 class MIL_Config;
 class PHY_AmmoEffect;
@@ -26,7 +27,8 @@ class PHY_IndirectFireDotationClass;
 // Created: JVT 02-11-05
 // Last modified: JVT 04-03-24
 //*****************************************************************************
-class PHY_RawVisionData : private boost::noncopyable
+class PHY_RawVisionData : public PHY_RawVisionData_ABC
+                        , private boost::noncopyable
 {
 
 public:
@@ -111,7 +113,8 @@ public:
 
     template< typename T > void GetVisionObjectsInSurface( const T& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
-    void RegisterMeteoPatch   ( const MT_Vector2D&, const MT_Vector2D&, PHY_Meteo* );
+    void RegisterMeteoPatch   ( const geometry::Point2d&, const geometry::Point2d&, PHY_Meteo* );
+    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&, PHY_Meteo* );
 
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );

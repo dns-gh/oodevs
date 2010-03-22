@@ -184,7 +184,7 @@ void DetectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent
         }
 
         const MIL_Agent_ABC* detector = object.GetAttribute< DetectorAttribute >().GetDetector();
-        if( detector )
+        if( detector && !detector->IsDead() )
         {
             PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >( *detector ).GetRole< PHY_RoleInterface_Perceiver >();
             if( it->second + rIdentificationTime_ < currentTime )

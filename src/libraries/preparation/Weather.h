@@ -20,7 +20,7 @@ namespace xml
 
 // =============================================================================
 /** @class  Weather
-    @brief  Weather
+@brief  Weather
 */
 // Created: SBO 2006-12-19
 // =============================================================================
@@ -30,15 +30,13 @@ class Weather
 public:
     //! @name Constructors/Destructor
     //@{
-             Weather();
+    Weather();
     explicit Weather( xml::xistream& xis );
     virtual ~Weather();
     //@}
 
     //! @name Operations
     //@{
-    virtual unsigned long GetId() const;
-    virtual QString GetName() const;
     void Serialize( xml::xostream& xos ) const;
     //@}
 
@@ -51,16 +49,12 @@ private:
 public:
     //! @name Member data
     //@{
-    unsigned long id_;
-    QString name_;
     int windSpeed_;
     int windDirection_;
     int cloudFloor_;
     int cloudCeiling_;
     int cloudDensity_;
     kernel::E_WeatherType type_;
-    QTime startTime_;
-    QTime endTime_;
     //@}
 };
 

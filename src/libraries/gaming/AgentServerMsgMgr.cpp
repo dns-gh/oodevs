@@ -26,6 +26,7 @@
 #include "LogSupplyConsign.h"
 #include "LogTools.h"
 #include "Model.h"
+#include "StaticModel.h"
 #include "NotesModel.h"
 #include "ObjectsModel.h"
 #include "Profile.h"

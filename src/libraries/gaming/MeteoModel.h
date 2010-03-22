@@ -19,6 +19,7 @@ namespace kernel
     class CoordinateConverter;
 }
 class Publisher_ABC;
+class PHY_Meteo;
 
 // =============================================================================
 /** @class  MeteoModel

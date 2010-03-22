@@ -48,6 +48,13 @@ public:
     void SetPosition( const geometry::Point2f& topLeft, const geometry::Point2f& bottomRight );
     geometry::Point2f GetTopLeft() const;
     geometry::Point2f GetBottomRight() const;
+
+    //@}
+
+    //! @name Member data
+    //@
+    QDateTime startTime_;
+    QDateTime endTime_;
     //@}
 
 private:

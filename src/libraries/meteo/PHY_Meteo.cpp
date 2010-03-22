@@ -14,6 +14,7 @@
 #include "MeteoManager_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "ReadDirections.h"
+#include "PHY_RawVisionData_ABC.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
@@ -77,9 +78,8 @@ PHY_Meteo::PHY_Meteo( const Common::MsgMeteoAttributes& asnMsg )
 //-----------------------------------------------------------------------------
 PHY_Meteo::~PHY_Meteo()
 {
-
     if( listener_ )
-        listener_->UnregisterMeteo( *this );;
+        listener_->UnregisterMeteo( *this );
     assert( nRefCount_ == 0 );
 }
 
@@ -130,4 +130,13 @@ void PHY_Meteo::Update( const PHY_Lighting& light )
 void PHY_Meteo::SetListener( MeteoManager_ABC* listener )
 {
     listener_ = listener;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Meteo::UpdateMeteoPatch
+// Created: SLG 2010-03-18
+// -----------------------------------------------------------------------------
+void PHY_Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVision_ */)
+{
+    //NOTHING
 }

@@ -34,7 +34,7 @@ OptionsPanel::OptionsPanel( QWidget* pParent, Controllers& controllers )
     QGridLayout* pSubLayout = new QGridLayout( pDisplayPanel, 9, 2, 5 );
     pSubLayout->setMargin( 5 );
 
-    pCompute3dDistance_ = new QCheckBox( tr( "Display object icons"), pDisplayPanel );
+    pCompute3dDistance_ = new QCheckBox( tr( "3D metric computation"), pDisplayPanel );
     pSubLayout->addWidget( pCompute3dDistance_, 2, 0 );
     connect( pCompute3dDistance_, SIGNAL( toggled( bool ) ), this, SLOT( Change3dDistanceOption( bool ) ) );
 

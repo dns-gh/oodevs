@@ -25,34 +25,19 @@ namespace
                 return (E_WeatherType)i;
         return (E_WeatherType)-1;
     }
-
-    QTime MakeTime( const QString& str )
-    {
-        QStringList list = QStringList::split( QRegExp( "[hms]" ), str );
-        return QTime( list.count() > 0 ? list[0].toInt() : 0
-            , list.count() > 1 ? list[1].toInt() : 0
-            , list.count() > 2 ? list[2].toInt() : 0 );
-    }
-
-    unsigned int Counter_ = 1;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Weather constructor
 // Created: SBO 2006-12-20
 // -----------------------------------------------------------------------------
 Weather::Weather()
-    : id_( Counter_++ )
-    , name_( tools::translate( "GlobalWeather", "Global weather %1" ).arg( id_ ) )
-    , windSpeed_( 0 )
-    , windDirection_( 0 )
-    , cloudFloor_( 1000 )
-    , cloudCeiling_( 10000 )
-    , cloudDensity_( 0 )
-    , type_( eWeatherTypeNone )
-    , startTime_()
-    , endTime_()
+: windSpeed_( 0 )
+, windDirection_( 0 )
+, cloudFloor_( 1000 )
+, cloudCeiling_( 10000 )
+, cloudDensity_( 0 )
+, type_( eWeatherTypeNone )
 {
     // NOTHING
 }
@@ -62,25 +47,21 @@ Weather::Weather()
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
 Weather::Weather( xml::xistream& xis )
-{   
-    std::string precipitation, startTime, endTime;
-    xis >> attribute( "start-time", startTime )
-        >> attribute( "end-time", endTime );
+{
+    std::string precipitation;
     xis >> start( "wind" )
-            >> attribute( "speed", windSpeed_ )
-            >> attribute( "direction", windDirection_ )
+        >> attribute( "speed", windSpeed_ )
+        >> attribute( "direction", windDirection_ )
         >> end()
         >> start( "cloud-cover" )
-            >> attribute( "floor", cloudFloor_ )
-            >> attribute( "ceiling", cloudCeiling_ )
-            >> attribute( "density", cloudDensity_ )
+        >> attribute( "floor", cloudFloor_ )
+        >> attribute( "ceiling", cloudCeiling_ )
+        >> attribute( "density", cloudDensity_ )
         >> end()
         >> start( "precipitation" )
-            >> attribute( "value", precipitation )
+        >> attribute( "value", precipitation )
         >> end();
     type_ = ConvertToWeatherType( precipitation.c_str() );
-    startTime_ = MakeTime( startTime.c_str() );
-    endTime_ = MakeTime( endTime.c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,36 +79,16 @@ Weather::~Weather()
 // -----------------------------------------------------------------------------
 void Weather::Serialize( xml::xostream& xos ) const
 {
-    xos << attribute( "start-time", QString( "%1h%2m%3s" ).arg( startTime_.hour() ).arg( startTime_.minute() ).arg( startTime_.second() ).ascii() )
-        << attribute( "end-time", QString( "%1h%2m%3s" ).arg( endTime_.hour() ).arg( endTime_.minute() ).arg( endTime_.second() ).ascii() );
     xos << start( "wind" )
-            << attribute( "speed", windSpeed_ )
-            << attribute( "direction", windDirection_ )
+        << attribute( "speed", windSpeed_ )
+        << attribute( "direction", windDirection_ )
         << end()
         << start( "cloud-cover" )
-            << attribute( "floor", cloudFloor_ )
-            << attribute( "ceiling", cloudCeiling_ )
-            << attribute( "density", cloudDensity_ )
+        << attribute( "floor", cloudFloor_ )
+        << attribute( "ceiling", cloudCeiling_ )
+        << attribute( "density", cloudDensity_ )
         << end()
         << start( "precipitation" )
-            << attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20: 
+        << attribute( "value", tools::GetXmlSection( type_ ) ) // $$$$ SBO 2006-12-20: 
         << end();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Weather::GetId
-// Created: SLG 2010-03-17
-// -----------------------------------------------------------------------------
-unsigned long Weather::GetId() const
-{
-    return id_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Weather::GetName
-// Created: SLG 2010-03-17
-// -----------------------------------------------------------------------------
-QString Weather::GetName() const
-{
-    return name_;
 }

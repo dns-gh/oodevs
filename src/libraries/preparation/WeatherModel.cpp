@@ -52,8 +52,7 @@ WeatherModel::~WeatherModel()
 // -----------------------------------------------------------------------------
 void WeatherModel::Purge()
 {
-    tools::Resolver< Weather >::DeleteAll();
-    tools::Resolver< LocalWeather >::DeleteAll();
+    DeleteAll();
     globalWeather_.reset( new Weather() );
 }
 
@@ -101,7 +100,7 @@ void WeatherModel::Serialize( const std::string& filename ) const
     globalWeather_->Serialize( xos );
     xos     << end()
             << start( "local-weather" );
-    tools::Iterator< const LocalWeather& > it( tools::Resolver< LocalWeather >::CreateIterator() );
+    tools::Iterator< const LocalWeather& > it( CreateIterator() );
     while( it.HasMoreElements() )
     {
         xos << start( "local" );
@@ -177,5 +176,5 @@ void WeatherModel::ReadGlobalWeather( xml::xistream& xis )
 void WeatherModel::ReadLocalWeather( xml::xistream& xis )
 {
     LocalWeather* local = new LocalWeather( xis, converter_ );
-    tools::Resolver< LocalWeather >::Register( local->GetId(), *local );
+    Register( local->GetId(), *local );
 }

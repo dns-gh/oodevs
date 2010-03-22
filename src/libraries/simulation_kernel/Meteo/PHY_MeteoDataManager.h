@@ -64,20 +64,22 @@ public:
 private:
     //! @name Registration
     //@{
-    virtual void RegisterMeteo  ( PHY_Meteo& meteo );
-    virtual void UnregisterMeteo( PHY_Meteo& meteo );
+    virtual void RegisterMeteo          ( PHY_Meteo& meteo );
+    virtual void UnregisterMeteo        ( PHY_Meteo& meteo );
     //@}
 
     //! @name Helpers
     //@{
     void ReadPatchLocal( xml::xistream& xis );
+    void ReadPatchGlobal( xml::xistream& xis );
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::set< PHY_Meteo* >     T_MeteoSet;
-    typedef T_MeteoSet::const_iterator CIT_MeteoSet;
+    typedef std::set< PHY_Meteo* >    T_MeteoSet;
+    typedef T_MeteoSet::const_iterator  CIT_MeteoSet;
+    typedef T_MeteoSet::iterator         IT_MeteoSet;
     //@}
 
 private:
@@ -90,7 +92,7 @@ private:
 private:
     PHY_Ephemeride*          pEphemeride_;
     PHY_Meteo*               pGlobalMeteo_;
-    T_MeteoSet               meteos_;    // Including global meteo
+    T_MeteoSet               meteos_;
     PHY_RawVisionData*       pRawData_; 
 };
 

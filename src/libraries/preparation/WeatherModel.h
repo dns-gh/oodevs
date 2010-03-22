@@ -30,18 +30,17 @@ class LocalWeather;
 
 // =============================================================================
 /** @class  WeatherModel
-    @brief  WeatherModel
+@brief  WeatherModel
 */
 // Created: SBO 2006-12-19
 // =============================================================================
 class WeatherModel : public tools::Resolver< LocalWeather >
-                   , public tools::Resolver< Weather >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+    WeatherModel( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~WeatherModel();
     //@}
 

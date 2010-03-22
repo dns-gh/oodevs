@@ -12,11 +12,11 @@
 #include "moc_WeatherPanel.cpp"
 #include "WeatherWidget.h"
 #include "LocalWeathersList.h"
-#include "GlobalWeathersList.h"
 #include "WeatherLayer.h"
 #include "preparation/WeatherModel.h"
 #include "preparation/LocalWeather.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Tools.h"
 
 #include <qhgroupbox.h>
@@ -27,12 +27,11 @@
 // Created: SBO 2006-12-19
 // -----------------------------------------------------------------------------
 WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter, WeatherLayer& layer )
-    : InfoPanel_ABC( parent, panel, tr( "Weather" ), "WeatherPanel" )
-    , controllers_( controllers )
-    , layer_( layer )
-    , currentModel_( 0 )
-    , selectedLocal_( 0 )
-    , selectedGlobal_( 0 )
+: InfoPanel_ABC( parent, panel, tr( "Weather" ), "WeatherPanel" )
+, controllers_( controllers )
+, layer_( layer )
+, currentModel_( 0 )
+, selectedLocal_( 0 )
 {
     QHBox* timeBox = new QHBox( this );
     new QLabel( tr( "Exercise date:" ), timeBox );
@@ -49,19 +48,19 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
     for( int i = 0; i < (int)kernel::eNbrLightingType; ++i )
         lighting_->AddItem( tools::ToString( (kernel::E_LightingType)i ), (kernel::E_LightingType)i );
 
-    //GlobalWeather
-    QGroupBox* globalGroup = new QGroupBox( 1, Qt::Horizontal, tr( "global weather" ), this );
-    globalWeathers_ = new GlobalWeathersList( globalGroup, converter );
-    globalWeatherBox_ = new QVBox( globalGroup );
-    globalWeather_ = new WeatherWidget( globalWeatherBox_, tr( "Weather parameters" ) );
-    globalWeatherBox_->hide();
-
-    //LocalWeather
+    globalWeather_ = new WeatherWidget( this, tr( "Global weather" ) );
     QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Local weather" ), this );
     localWeathers_ = new LocalWeathersList( localGroup, converter );
     localWeatherBox_ = new QVBox( localGroup );
     localWeather_ = new WeatherWidget( localWeatherBox_, tr( "Weather parameters" ) );
-    QButton* btn = new QPushButton( tr( "Set location" ), localWeatherBox_ );
+
+    QGroupBox* localParametersGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Time and Position Parameters" ), localWeatherBox_ );
+    startTimeLabel_ = new QLabel( tr( "Start time:" ), localParametersGroup );
+    startTime_ = new QDateTimeEdit( localParametersGroup );
+    endTimeLabel_ = new QLabel( tr( "End time:" ), localParametersGroup );
+    endTime_ = new QDateTimeEdit( localParametersGroup );
+
+    QButton* btn = new QPushButton( tr( "Set location" ), localParametersGroup );
     connect( btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
     localWeatherBox_->hide();
 
@@ -72,7 +71,6 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel:
 
     connect( okBtn,     SIGNAL( clicked() ), this, SLOT( Commit() ) );
     connect( cancelBtn, SIGNAL( clicked() ), this, SLOT( Reset() ) );
-    connect( globalWeathers_, SIGNAL( selectionChanged() ), this, SLOT( GlobalSelectionChanged() ) ); // Global
     connect( localWeathers_, SIGNAL( selectionChanged() ), this, SLOT( LocalSelectionChanged() ) );
     controllers_.Register( *this );
 }
@@ -97,6 +95,7 @@ void WeatherPanel::NotifyUpdated( const WeatherModel& model )
     sunrise_->setTime( currentModel_->sunrise_ );
     sunset_ ->setTime( currentModel_->sunset_  );
     lighting_->SetCurrentItem( currentModel_->lighting_ );
+    globalWeather_->Update( *currentModel_->globalWeather_ );
     localWeathers_->Update( *currentModel_ );
     Show();
 }
@@ -123,7 +122,9 @@ void WeatherPanel::Commit()
     currentModel_->sunrise_  = sunrise_->time();
     currentModel_->sunset_   = sunset_ ->time();
     currentModel_->lighting_ = lighting_->GetValue();
+    globalWeather_->CommitTo( *currentModel_->globalWeather_ );
     localWeathers_->CommitTo( *currentModel_ );
+    controllers_.controller_.Create( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -142,41 +143,28 @@ void WeatherPanel::Reset()
 // -----------------------------------------------------------------------------
 void WeatherPanel::LocalSelectionChanged()
 {
-    globalWeatherBox_->hide();
     LocalWeather* selected = localWeathers_->SelectedItem();
     if( selected )
     {
         if( selectedLocal_ )
+        {
             localWeather_->CommitTo( *selectedLocal_ );
+            selectedLocal_->startTime_ = startTime_->dateTime();
+            selectedLocal_->endTime_ = endTime_->dateTime();
+        }
+
         localWeather_->Update( *selected );
+        startTime_->setDateTime( selected->startTime_ );
+        endTime_->setDateTime( selected->endTime_ );
         layer_.SetPosition( *selected );
         localWeatherBox_->show();
         selectedLocal_ = selected;
     }
     else
-        localWeatherBox_->hide();
-}
-
-// -----------------------------------------------------------------------------
-// Name: WeatherPanel::GlobalSelectionChanged
-// Created: SLG 2010-03-17
-// -----------------------------------------------------------------------------
-void WeatherPanel::GlobalSelectionChanged()
-{
-    localWeatherBox_->hide();
-    Weather* selected = globalWeathers_->SelectedItem();
-    if( selected )
     {
-        if( selectedGlobal_ )
-            globalWeather_->CommitTo( *selectedGlobal_ );
-        globalWeather_->Update( *selected );
-        globalWeatherBox_->show();
-        selectedGlobal_ = selected;
+        localWeatherBox_->hide();
     }
-    else
-        globalWeatherBox_->hide();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: WeatherPanel::SetPatchPosition

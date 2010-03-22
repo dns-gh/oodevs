@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "MeteoModel.h"
 #include "clients_kernel/CoordinateConverter.h"
+#include "meteo/PHY_Meteo.h"
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel constructor
@@ -78,7 +79,7 @@ void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalM
         pTmp = new PHY_Meteo( msg.attributes() );
         RegisterMeteo( *pTmp );
     }
-//    RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
+    //RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
 }
 
 // -----------------------------------------------------------------------------

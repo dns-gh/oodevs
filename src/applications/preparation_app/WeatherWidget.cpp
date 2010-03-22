@@ -40,10 +40,6 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
     type_ = new gui::ValuedComboBox< kernel::E_WeatherType >( this );
     for( int i = 0; i < (int)kernel::eNbrWeatherType; ++i )
         type_->AddItem( tools::ToString( (kernel::E_WeatherType)i ), (kernel::E_WeatherType)i );
-    startTimeLabel_ = new QLabel( tr( "Start time:" ), this );
-    startTime_ = new QTimeEdit( this );
-    endTimeLabel_ = new QLabel( tr( "End time:" ), this );
-    endTime_ = new QTimeEdit( this );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,8 +63,6 @@ void WeatherWidget::Update( const Weather& weather )
     cloudCeiling_->setValue( weather.cloudCeiling_ );
     cloudDensity_->setValue( weather.cloudDensity_ );
     type_->SetCurrentItem( weather.type_ ); 
-    startTime_->setTime( weather.startTime_ );
-    endTime_->setTime( weather.endTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,6 +77,4 @@ void WeatherWidget::CommitTo( Weather& weather ) const
     weather.cloudCeiling_ = cloudCeiling_->value();
     weather.cloudDensity_ = cloudDensity_->value();
     weather.type_ = type_->GetValue();
-    weather.startTime_ = startTime_->time();
-    weather.endTime_ = endTime_->time();
 }

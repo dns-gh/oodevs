@@ -6,6 +6,7 @@
 #include "PHY_MeteoDataManager.h"
 #include "PHY_Ephemeride.h"
 #include "meteo/PHY_Meteo.h"
+#include "meteo/PHY_LocalMeteo.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -13,6 +14,7 @@
 #include "RawVisionData/PHY_RawVisionData.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
+
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
@@ -65,6 +67,7 @@ void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
     xis >> xml::start( "theater" );
     pGlobalMeteo_ = new PHY_Meteo( xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
     pGlobalMeteo_->IncRef();
+    pGlobalMeteo_->SetListener( this );
     RegisterMeteo( *pGlobalMeteo_ );
     xis >> xml::end();
 }
@@ -86,19 +89,8 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    std::string strPos;
-    MT_Vector2D vUpLeft;
-    MT_Vector2D vDownRight;
-
-    xis >> xml::attribute( "top-left", strPos );
-    MIL_Tools::ConvertCoordMosToSim( strPos, vUpLeft );
-
-    xis >> xml::attribute( "bottom-right", strPos );
-    MIL_Tools::ConvertCoordMosToSim( strPos, vDownRight );
-
-    PHY_Meteo* pMeteo = new PHY_Meteo( xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
+    PHY_Meteo* pMeteo = new PHY_LocalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
     RegisterMeteo( *pMeteo );
-    pRawData_->RegisterMeteoPatch( vUpLeft, vDownRight, pMeteo );
 }
 
 // =============================================================================
@@ -134,16 +126,14 @@ void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const MsgsClientToSim::MsgCon
     PHY_Meteo* pTmp = 0;
     if( msg.has_attributes() )
     {
-        pTmp = new PHY_Meteo( msg.attributes() );
+        pTmp = new PHY_LocalMeteo( msg.attributes(), vUpLeft, vDownRight );
         RegisterMeteo( *pTmp );
     }
     assert( pRawData_ );
-    pRawData_->RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
 
     client::ControlLocalMeteoAck replyMsg;
     replyMsg.Send( NET_Publisher_ABC::Publisher() );
 }
-
 
 //=============================================================================
 // SPECIAL AMMO EFFECTS
@@ -183,4 +173,7 @@ void PHY_MeteoDataManager::Update( unsigned int date )
         for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
             (*it)->Update( pEphemeride_->GetLightingBase() );
     }
+
+    for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+        (*it)->UpdateMeteoPatch( date, *pRawData_ );
 }

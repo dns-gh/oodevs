@@ -31,6 +31,7 @@ namespace xml
 class PHY_Precipitation;
 class PHY_Lighting;
 class MeteoManager_ABC;
+class PHY_RawVisionData_ABC;
 
 //*****************************************************************************
 // Created: JVT 03-08-05
@@ -73,10 +74,11 @@ public:
     //! @name Operations
     //@{
     void Update( const Common::MsgMeteoAttributes& asn );
-     void Update( const PHY_Lighting& /*PHY_Ephemeride&*/ );
+    void Update( const PHY_Lighting& /*PHY_Ephemeride&*/ );
+    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision_ );
      //@}
 
-private:
+public:
     ~PHY_Meteo();
 
    

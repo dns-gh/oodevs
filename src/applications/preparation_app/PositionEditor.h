@@ -31,7 +31,7 @@ namespace gui
 // Created: AME 2010-03-08
 // =============================================================================
 class PositionEditor : public QDialog
-                       , public kernel::ValueEditor< kernel::Moveable_ABC* >
+                     , public kernel::ValueEditor< kernel::Moveable_ABC* >
 {
 	Q_OBJECT;
 
