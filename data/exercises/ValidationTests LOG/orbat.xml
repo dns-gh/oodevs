@@ -155,6 +155,10 @@
             <unit command-post="false" id="738" name="Patrouille CIRCU P4 [738]" position="31UCP0000950875" type="Patrouille CIRCU P4"/>
             <unit command-post="false" id="739" name="Patrouille CIRCU P4 [739]" position="31UCP0103151332" type="Patrouille CIRCU P4"/>
           </automat>
+          <lima name="Lima 897">
+            <point>31UCP0834626692</point>
+            <point>31UCP3464020913</point>
+          </lima>
           <limit name="Limite 897">
             <point>31UCP1405038322</point>
             <point>31TCP0623914016</point>
@@ -163,10 +167,6 @@
             <point>31UCP3087234454</point>
             <point>31TCP2376905150</point>
           </limit>
-          <lima name="Lima 897">
-            <point>31UCP0834626692</point>
-            <point>31UCP3464020913</point>
-          </lima>
         </formation>
         <formation id="775" level="ii" name="Logistique Case 5 [775]">
           <automat engaged="false" id="596" knowledge-group="4" name="Zone Fonctionnelle Maintenance BLT [596]" type="Zone Fonctionnelle Maintenance BLT">
@@ -309,6 +309,24 @@
             <unit command-post="false" id="895" name="Groupe Appro Vivre Eau BLIAT" position="31UCP4368151692" type="Groupe Appro Vivre Eau BLIAT"/>
           </automat>
         </formation>
+        <formation id="897" level="ii" name="Bataillon Case 1">
+          <automat engaged="false" id="898" knowledge-group="4" name="Escadron Transport Blinde [898]" type="Escadron Transport Blinde">
+            <unit command-post="true" id="899" name="Peloton CDT ESC TRPT BLD" position="30UXU5127237781" type="Peloton CDT ESC TRPT BLD"/>
+            <unit command-post="false" id="900" name="Peloton Transport Blindes CL100" position="30UXU5179037300" type="Peloton Transport Blindes CL100"/>
+            <unit command-post="false" id="901" name="Peloton Transport Blindes CL50" position="30UXU5130836783" type="Peloton Transport Blindes CL50"/>
+          </automat>
+          <automat engaged="false" id="902" knowledge-group="4" name="Compagnie INF AMX 10 P [902]" type="Compagnie INF AMX 10 P">
+            <unit command-post="true" id="903" name="Section CDT CIE INF AMX10P" position="30UXU5310437070" type="Section CDT CIE INF AMX10P"/>
+            <unit command-post="false" id="904" name="Section CBT INF AMX10P CDS OFF" position="30UXU5362236589" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="905" name="Section CBT INF AMX10P CDS OFF" position="30UXU5314036072" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="906" name="Section CBT INF AMX10P CDS OFF" position="30UXU5262136553" type="Section CBT INF AMX10P CDS OFF"/>
+            <unit command-post="false" id="907" name="Section CBT INF AMX10P CDS SOFF" position="30UXU5360437088" type="Section CBT INF AMX10P CDS SOFF"/>
+          </automat>
+          <automat engaged="false" id="908" knowledge-group="4" name="Zone Fonctionnelle Sante BLD [908]" type="Zone Fonctionnelle Sante BLD">
+            <unit command-post="true" id="909" name="PC LOG BLD Sante" position="30UXU4632838636" type="PC LOG BLD Sante"/>
+            <unit command-post="false" id="913" name="Section Decontamination Medicale NBC" position="30UXU4682938654" type="Section Decontamination Medicale NBC"/>
+          </automat>
+        </formation>
       </tactical>
       <communication>
         <knowledge-group id="4" name="Groupe de connaissance [4]" type="Standard"/>
@@ -371,6 +389,7 @@
             </quotas>
           </subordinate>
         </automat>
+        <automat id="908"/>
       </logistic>
     </side>
   </sides>
