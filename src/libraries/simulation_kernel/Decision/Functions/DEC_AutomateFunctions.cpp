@@ -16,6 +16,7 @@
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
+#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
@@ -62,7 +63,11 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
     result.reserve( pions.size() - 1 );
     for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
         if( callerAutomate.GetPionPC() != (**it) )
-            result.push_back( &(*it)->GetDecision() );
+        {
+            const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >(); // LTO
+            if( role.CanCommunicate() )   // LTO
+                result.push_back( &(*it)->GetDecision() );
+        }
     return result;
 }
 
@@ -95,7 +100,11 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const MI
     const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
     std::vector< DEC_Decision_ABC* > result( pions.size() );
     for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
-        result.push_back( &(**it).GetDecision() );
+    {
+        const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >(); // LTO
+        if( role.CanCommunicate() )   // LTO
+            result.push_back( &(**it).GetDecision() );
+    }
     return result;
 }
 
