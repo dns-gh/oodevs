@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanRank.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/clientsenders.h"
 
@@ -29,7 +30,7 @@ MIL_IDManager PHY_MedicalHumanState::idManager_;
 // Name: PHY_MedicalHumanState constructor
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& human, bool bEvacuatedByThirdParty )
+PHY_MedicalHumanState::PHY_MedicalHumanState( MIL_AgentPion& pion, Human_ABC& human, bool bEvacuatedByThirdParty )
     : nID_                   ( idManager_.GetFreeId() )
     , nCreationTick_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , pPion_                 ( &pion )
@@ -320,7 +321,7 @@ void PHY_MedicalHumanState::SendMsgDestruction() const
 // Name: PHY_MedicalHumanState::GetHuman
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-const PHY_Human& PHY_MedicalHumanState::GetHuman() const
+const Human_ABC& PHY_MedicalHumanState::GetHuman() const
 {
     assert( pHuman_ );
     return *pHuman_;

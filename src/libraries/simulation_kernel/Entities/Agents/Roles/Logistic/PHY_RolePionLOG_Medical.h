@@ -74,9 +74,9 @@ public:
     virtual void ChangePriorities( const T_MedicalPriorityVector& priorities );
     virtual void ChangePriorities( const T_AutomateVector& priorities );
 
-    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty ( MIL_AgentPion& pion, PHY_Human& human ); // Imex
-    virtual PHY_MedicalHumanState* HandleHumanForEvacuation         ( MIL_AgentPion& pion, PHY_Human& human ); // Releve
-    virtual int                    GetAvailabilityScoreForEvacuation( const PHY_Human& human ) const;
+    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty ( MIL_AgentPion& pion, Human_ABC& human ); // Imex
+    virtual PHY_MedicalHumanState* HandleHumanForEvacuation         ( MIL_AgentPion& pion, Human_ABC& human ); // Releve
+    virtual int                    GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const;
     virtual bool                   HandleHumanForCollection         ( PHY_MedicalHumanState& humanState );     // Ramassage
     virtual int                    GetAvailabilityScoreForCollection( const PHY_MedicalHumanState& humanState ) const;
 
@@ -92,8 +92,8 @@ public:
     PHY_MedicalCollectionAmbulance* GetAvailableCollectionAmbulance( PHY_MedicalCollectionConsign& consign );
     PHY_ComposantePion*             GetAvailableDoctorForDiagnosing() const;
     PHY_ComposantePion*             GetAvailableDoctorForSorting   () const;
-    PHY_ComposantePion*             GetAvailableDoctorForHealing   ( const PHY_Human& human ) const;
-    bool                            HasUsableDoctorForHealing      ( const PHY_Human& human, bool bBypassPriorities = false ) const;
+    PHY_ComposantePion*             GetAvailableDoctorForHealing   ( const Human_ABC& human ) const;
+    bool                            HasUsableDoctorForHealing      ( const Human_ABC& human, bool bBypassPriorities = false ) const;
     //@}
 
     //! @name Tools
@@ -147,8 +147,8 @@ private:
     void InsertConsign ( PHY_MedicalConsign_ABC&  );
     void InsertConsigns( const T_MedicalConsigns& );
 
-    bool HasUsableEvacuationAmbulance( const PHY_Human& human ) const;
-    bool HasUsableCollectionAmbulance( const PHY_Human& human ) const;
+    bool HasUsableEvacuationAmbulance( const Human_ABC& human ) const;
+    bool HasUsableCollectionAmbulance( const Human_ABC& human ) const;
     bool HasUsableDoctorForSorting   () const;
 
     MT_Float GetAvailabilityRatio( PHY_ComposanteUsePredicate& predicate ) const;

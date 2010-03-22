@@ -62,7 +62,7 @@ void PHY_FireDamages_Agent::NotifyComposanteStateChanged( const PHY_Composante_A
 // Name: PHY_FireDamages_Agent::NotifyHumanWoundChanged
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const PHY_Human& human, const PHY_HumanWound& oldWound )
+void PHY_FireDamages_Agent::NotifyHumanWoundChanged( const Human_ABC& human, const PHY_HumanWound& oldWound )
 {
     T_HumansPerWoundVector& humanWounds = humanResults_[ human.GetRank().GetID() ];
     -- humanWounds[       oldWound  .GetID() ];

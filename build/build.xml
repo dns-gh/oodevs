@@ -10,9 +10,6 @@
 
     <import file="//install/masa/common/dev/common/poney/poney.xml"/>
 
-    <svn>
-        <status path="${root.dir}" lastChangedRevisionProperty="svn.version"/>
-    </svn>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="4.0.0"/>

@@ -12,8 +12,10 @@
 #ifndef __PHY_HumansComposante_h_
 #define __PHY_HumansComposante_h_
 
-#include "simulation_kernel/Entities/Agents/Units/Humans/PHY_Human.h"
+#include "HumansComposante_ABC.h"
+#include <boost/serialization/export.hpp>
 
+class Human_ABC;
 class PHY_HumanRank;
 class PHY_HumanWound;
 class PHY_ComposantePion;
@@ -30,14 +32,14 @@ class MIL_Injury_ABC;
 // @class  PHY_HumansComposante
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_HumansComposante : private boost::noncopyable
+class PHY_HumansComposante : public HumansComposante_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_HumansComposante();
-     PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, unsigned int nNbrMdr );
+    PHY_HumansComposante();
+    PHY_HumansComposante( const MIL_Time_ABC& time, PHY_ComposantePion& composante, unsigned int nNbrMdr );
     virtual ~PHY_HumansComposante();
     //@}
 
@@ -71,9 +73,9 @@ public:
 
     //! @name Humans notifications
     //@{
-    void NotifyHumanAdded  ( PHY_Human& human );
-    void NotifyHumanRemoved( PHY_Human& human );
-    void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
+    void NotifyHumanAdded  ( Human_ABC& human );
+    void NotifyHumanRemoved( Human_ABC& human );
+    void NotifyHumanChanged( Human_ABC& human, const Human_ABC& copyOfOldHumanState );
     //@}
 
     //! @name Medical
@@ -90,23 +92,10 @@ public:
 
 private:
     PHY_ComposantePion* pComposante_;
-    PHY_Human::T_HumanVector humans_;
+    std::vector< Human_ABC* > humans_;
     unsigned int nNbrUsableHumans_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_HumansComposante )
-
-// -----------------------------------------------------------------------------
-// Name: PHY_HumansComposante::serialize
-// Created: JVT 2005-04-01
-// -----------------------------------------------------------------------------
-template< typename Archive >
-void PHY_HumansComposante::serialize( Archive& file, const unsigned int )
-{
-    file & pComposante_
-         & humans_
-         & nNbrUsableHumans_;
-    assert( pComposante_ );
-}
 
 #endif // __PHY_HumansComposante_h_

@@ -49,9 +49,9 @@ public:
 
     //! @name Notifications
     //@{
-    virtual void NotifyHumanAdded  ( PHY_Human& human );
-    virtual void NotifyHumanRemoved( PHY_Human& human );
-    virtual void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState );
+    virtual void NotifyHumanAdded  ( Human_ABC& human );
+    virtual void NotifyHumanRemoved( Human_ABC& human );
+    virtual void NotifyHumanChanged( Human_ABC& human, const Human_ABC& copyOfOldHumanState );
     //@}
 
     //! @name Medical
@@ -59,8 +59,8 @@ public:
     virtual void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
     virtual bool                   HasWoundedHumansToEvacuate      () const;   
     virtual void                   ChangeEvacuationMode            ( E_EvacuationMode nMode );
-    virtual void                   NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ); // Imex
-    virtual void                   NotifyHumanWaitingForMedical    ( PHY_Human& human );
+    virtual void                   NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 ); // Imex
+    virtual void                   NotifyHumanWaitingForMedical    ( Human_ABC& human );
     virtual void                   NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState );
     //@}
 
@@ -83,8 +83,8 @@ public:
 private:
     //! @name Tools
     //@{
-    void UpdateDataWhenHumanRemoved( const PHY_Human& human );
-    void UpdateDataWhenHumanAdded  ( const PHY_Human& human );
+    void UpdateDataWhenHumanRemoved( const Human_ABC& human );
+    void UpdateDataWhenHumanAdded  ( const Human_ABC& human );
 
     void SendLogisticChangedState() const;
     void SendLogisticFullState   () const;
@@ -114,7 +114,7 @@ private:
     typedef T_HumanDataVector::iterator       IT_HumanDataVector;
     typedef T_HumanDataVector::const_iterator CIT_HumanDataVector;
 
-    typedef std::set< PHY_Human* >     T_HumanSet;
+    typedef std::set< Human_ABC* >     T_HumanSet;
     typedef T_HumanSet::iterator       IT_HumanSet;
     typedef T_HumanSet::const_iterator CIT_HumanSet;
 

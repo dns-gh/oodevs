@@ -28,9 +28,9 @@ public:
     virtual ~StubMIL_Time_ABC() {}
     //@}
     virtual unsigned int GetCurrentTick() const
-    { throw; }
+    { return 0; }
     virtual unsigned int GetTickDuration() const
-    { throw; }
+    { return 1; }
 };
 
 #endif // __StubMIL_Time_ABC_h_

@@ -28,7 +28,7 @@ class PHY_ComposanteTypePion;
 class PHY_DotationCategory;
 class PHY_FireDamages_Agent;
 class PHY_FireResults_ABC;
-class PHY_Human;
+class Human_ABC;
 class PHY_MaintenanceComposanteState;
 class PHY_SensorTypeAgent;
 class PHY_Volume;

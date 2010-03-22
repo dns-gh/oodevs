@@ -11,16 +11,15 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_Human.h"
+#include "HumansComposante_ABC.h"
 #include "PHY_HumanRank.h"
-#include "MIL_AgentServer.h"
-#include "MIL_Singletons.h"
+#include "PHY_HumanWound.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Objects/MIL_ToxicEffectManipulator.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "simulation_kernel/HumansActionsNotificationHandler_ABC.h"
-#include <boost/bind.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Human )
 
@@ -28,8 +27,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Human )
 // Name: PHY_Human constructor
 // Created: NLD 2004-12-21
 // -----------------------------------------------------------------------------
-PHY_Human::PHY_Human( const MIL_Time_ABC& time, PHY_HumansComposante& composante )
-    : time_           ( time )
+PHY_Human::PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante )
+    : Human_ABC       ()
+    , time_           ( time )
     , pComposante_    ( &composante )
     , pRank_          ( &PHY_HumanRank::militaireDuRang_ )
     , pWound_         ( &PHY_HumanWound::notWounded_     )
@@ -47,7 +47,8 @@ PHY_Human::PHY_Human( const MIL_Time_ABC& time, PHY_HumansComposante& composante
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human( const PHY_Human& rhs )
-    : time_           ( rhs.time_            )
+    : Human_ABC       ()
+    , time_           ( rhs.time_            )
     , pComposante_    ( 0                    )
     , pRank_          ( rhs.pRank_           )
     , pWound_         ( rhs.pWound_          )
@@ -65,7 +66,8 @@ PHY_Human::PHY_Human( const PHY_Human& rhs )
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_Human::PHY_Human()
-    : time_           ( MIL_Singletons::GetTime() )
+    : Human_ABC       ()
+    , time_           ( MIL_Singletons::GetTime() )
     , pComposante_    ( 0 )
     , pRank_          ( 0 )
     , pWound_         ( 0 )
@@ -135,7 +137,7 @@ void PHY_Human::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 // Created: NLD 2005-01-14
 // -----------------------------------------------------------------------------
 inline
-void PHY_Human::NotifyHumanChanged( const PHY_Human& oldHumanState )
+void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
 {
     assert( pComposante_ );
     pComposante_->NotifyHumanChanged( *this, oldHumanState );

@@ -13,13 +13,9 @@
 #define __PHY_Human_h_
 
 #include "MIL.h"
-#include "PHY_HumanWound.h"
+#include "Human_ABC.h"
 
-class MIL_ToxicEffectManipulator;
-class MIL_AutomateLOG;
-class PHY_HumanRank;
-class PHY_HumansComposante;
-class PHY_MedicalHumanState;
+class HumansComposante_ABC;
 class MIL_Time_ABC;
 
 //$$$ Clarifier l'interface (trop de trucs différents pour trop de fonctionnalités proches) (Log vs Magic vs attrition)
@@ -28,28 +24,14 @@ class MIL_Time_ABC;
 // @class  PHY_Human
 // Created: JVT 2004-08-03
 // =============================================================================
-class PHY_Human
+class PHY_Human : public Human_ABC
 {
-public:
-    //! @name Types
-    //@{
-    enum E_Location
-    {
-        eBattleField,
-        eMaintenance,
-        eMedical
-    };
-
-    typedef std::vector< PHY_Human* >      T_HumanVector;
-    typedef T_HumanVector::const_iterator  CIT_HumanVector;
-    //@}
-
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_Human( const MIL_Time_ABC& time, PHY_HumansComposante& composante );
-     PHY_Human( const PHY_Human& rhs );
-     PHY_Human();
+    PHY_Human( const MIL_Time_ABC& time, HumansComposante_ABC& composante );
+    PHY_Human( const PHY_Human& rhs );
+    PHY_Human();
     virtual ~PHY_Human();
     //@}
     
@@ -119,12 +101,12 @@ private:
 
     //! @name Tools
     //@{
-    void NotifyHumanChanged( const PHY_Human& oldHumanState );
+    void NotifyHumanChanged( const Human_ABC& oldHumanState );
     //@}
 
 private:
     const MIL_Time_ABC&          time_;
-          PHY_HumansComposante*  pComposante_;
+          HumansComposante_ABC*  pComposante_;
     const PHY_HumanRank*         pRank_;
     const PHY_HumanWound*        pWound_;
           bool                   bMentalDiseased_;

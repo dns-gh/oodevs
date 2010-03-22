@@ -16,7 +16,7 @@
 #include "MT_Tools/Role_ABC.h"
 
 class PHY_MedicalHumanState;
-class PHY_Human;
+class Human_ABC;
 class MIL_AgentPion;
 class MIL_AgentPionLOG_ABC;
 class MIL_AutomateLOG;
@@ -63,9 +63,9 @@ public:
     virtual void ChangePriorities( const T_MedicalPriorityVector& priorities ) = 0;
     virtual void ChangePriorities( const T_AutomateVector& priorities ) = 0;
 
-    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty ( MIL_AgentPion& pion, PHY_Human& human ) = 0; // Imex
-    virtual PHY_MedicalHumanState* HandleHumanForEvacuation         ( MIL_AgentPion& pion, PHY_Human& human ) = 0; // Releve
-    virtual int                    GetAvailabilityScoreForEvacuation( const PHY_Human& human ) const = 0;
+    virtual PHY_MedicalHumanState* HandleHumanEvacuatedByThirdParty ( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Imex
+    virtual PHY_MedicalHumanState* HandleHumanForEvacuation         ( MIL_AgentPion& pion, Human_ABC& human ) = 0; // Releve
+    virtual int                    GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const = 0;
     virtual bool                   HandleHumanForCollection         ( PHY_MedicalHumanState& humanState ) = 0; // Ramassage
     virtual int                    GetAvailabilityScoreForCollection( const PHY_MedicalHumanState& humanState ) const = 0;
 
@@ -81,8 +81,8 @@ public:
     virtual PHY_MedicalCollectionAmbulance* GetAvailableCollectionAmbulance( PHY_MedicalCollectionConsign& consign ) = 0;
     virtual PHY_ComposantePion*             GetAvailableDoctorForDiagnosing() const = 0;
     virtual PHY_ComposantePion*             GetAvailableDoctorForSorting   () const = 0;
-    virtual PHY_ComposantePion*             GetAvailableDoctorForHealing   ( const PHY_Human& human ) const = 0;
-    virtual bool                            HasUsableDoctorForHealing      ( const PHY_Human& human, bool bBypassPriorities = false ) const = 0;
+    virtual PHY_ComposantePion*             GetAvailableDoctorForHealing   ( const Human_ABC& human ) const = 0;
+    virtual bool                            HasUsableDoctorForHealing      ( const Human_ABC& human, bool bBypassPriorities = false ) const = 0;
     //@}
 
     //! @name Tools

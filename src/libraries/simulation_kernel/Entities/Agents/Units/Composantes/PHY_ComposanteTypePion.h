@@ -40,7 +40,7 @@ class PHY_ComposanteTypeObjectData;
 class PHY_ConsumptionType;
 class PHY_DotationConsumptions;
 class PHY_DotationNature;
-class PHY_Human;
+class Human_ABC;
 class PHY_HumanProtection;
 class PHY_MaintenanceLevel;
 class PHY_RadarType;
@@ -155,10 +155,10 @@ public:
     //! @name Logistic - medical
     //@{
     bool     CanEvacuateCasualties                       () const;
-    bool     CanEvacuateCasualty                         ( const PHY_Human& human ) const;
+    bool     CanEvacuateCasualty                         ( const Human_ABC& human ) const;
     bool     CanCollectCasualties                        () const;
-    bool     CanCollectCasualty                          ( const PHY_Human& human ) const;
-    bool     CanHealHuman                                ( const PHY_Human& human ) const;
+    bool     CanCollectCasualty                          ( const Human_ABC& human ) const;
+    bool     CanHealHuman                                ( const Human_ABC& human ) const;
     bool     CanHealHumans                               () const;
     bool     CanDiagnoseHumans                           () const;
     bool     CanSortHumans                               () const;
@@ -168,8 +168,8 @@ public:
     unsigned int     GetAmbulanceEvacuationCapacity              () const;
     MT_Float GetNbrHumansLoadedForEvacuationPerTimeStep  () const;
     MT_Float GetNbrHumansUnloadedForEvacuationPerTimeStep() const;
-    unsigned int     GetHealingTime                              ( const PHY_Human& human ) const;
-    unsigned int     Heal                                        (       PHY_Human& human ) const;
+    unsigned int     GetHealingTime                              ( const Human_ABC& human ) const;
+    unsigned int     Heal                                        (       Human_ABC& human ) const;
     //@}
 
     //! @name Logistic - supply

@@ -20,7 +20,7 @@ namespace client
 }
 
 class PHY_HumanRank;
-class PHY_Human;
+class Human_ABC;
 class MIL_AutomateLOG;
 
 namespace human

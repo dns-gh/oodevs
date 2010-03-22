@@ -18,28 +18,30 @@
 
 #include "PHY_ComposanteState.h"
 #include "PHY_ComposanteTypePion.h"
-#include "Entities/Agents/Units/Humans/PHY_HumansComposante.h"
 
 #include "MT_Tools/MT_Random.h"
 
+class AttritionCapacity;
+class DEC_Knowledge_AgentComposante;
+class Human_ABC;
+class HumansComposante_ABC;
+class MIL_Agent_ABC;
 class MIL_AutomateLOG;
+class MIL_Injury_ABC;
+class MIL_Object_ABC;
 class MIL_PopulationType;
 class MIL_PopulationAttitude;
-class PHY_Sensor;
-class PHY_Weapon;
-class PHY_HumanProtection;
-class MIL_Object_ABC;
-class AttritionCapacity;
-class PHY_FireDamages_Agent;
+class MIL_Time_ABC;
+class MIL_ToxicEffectManipulator;
 class PHY_AttritionData;
 class PHY_Breakdown;
+class PHY_FireDamages_Agent;
+class PHY_HumanProtection;
+class PHY_HumanRank;
 class PHY_MaintenanceComposanteState;
-class PHY_Human;
-class DEC_Knowledge_AgentComposante;
-class MIL_Time_ABC;
 class PHY_RoleInterface_Composantes;
-class MIL_Injury_ABC;
-class MIL_Agent_ABC;
+class PHY_Sensor;
+class PHY_Weapon;
 
 namespace firing
 {
@@ -103,14 +105,14 @@ public:
     bool                   HasWoundedHumansToEvacuate      () const;
     void                   EvacuateWoundedHumans           ( MIL_AutomateLOG& destinationTC2 ) const;
     bool                   CanEvacuateCasualties           () const;
-    bool                   CanEvacuateCasualty             ( const PHY_Human& human ) const;
+    bool                   CanEvacuateCasualty             ( const Human_ABC& human ) const;
     bool                   CanCollectCasualties            () const;
-    bool                   CanCollectCasualty              ( const PHY_Human& human ) const;
+    bool                   CanCollectCasualty              ( const Human_ABC& human ) const;
     bool                   CanDiagnoseHumans               () const;
     bool                   CanSortHumans                   () const;
-    bool                   CanHealHuman                    ( const PHY_Human& human ) const;
-    unsigned int                   GetHealingTime                  ( const PHY_Human& human ) const;
-    unsigned int                   Heal                            (       PHY_Human& human ) const;
+    bool                   CanHealHuman                    ( const Human_ABC& human ) const;
+    unsigned int                   GetHealingTime                  ( const Human_ABC& human ) const;
+    unsigned int                   Heal                            (       Human_ABC& human ) const;
     //@}
 
     //! @name Logistic - Supply
@@ -258,7 +260,7 @@ private:
           T_WeaponVector            weapons_;
           T_HumanProtectionVector   protections_;
           T_SensorVector            sensors_;
-          PHY_HumansComposante*     pHumans_;
+          HumansComposante_ABC* pHumans_;
 
     // Breakdowns
           unsigned int                            nAutoRepairTimeStep_;

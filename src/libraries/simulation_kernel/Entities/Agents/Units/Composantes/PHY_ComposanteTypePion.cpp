@@ -20,6 +20,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
+#include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h"
@@ -1159,7 +1160,7 @@ bool PHY_ComposanteTypePion::CanHaul( const PHY_ComposanteTypePion& type ) const
 // Name: PHY_ComposanteTypePion::CanEvacuateCasualty
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanEvacuateCasualty( const PHY_Human& human ) const
+bool PHY_ComposanteTypePion::CanEvacuateCasualty( const Human_ABC& human ) const
 {
     if( !CanEvacuateCasualties() )
         return false;
@@ -1181,7 +1182,7 @@ bool PHY_ComposanteTypePion::CanEvacuateCasualty( const PHY_Human& human ) const
 // Name: PHY_ComposanteTypePion::CanCollectCasualty
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanCollectCasualty( const PHY_Human& human ) const
+bool PHY_ComposanteTypePion::CanCollectCasualty( const Human_ABC& human ) const
 {
     if( !CanCollectCasualties() )
         return false;
@@ -1212,7 +1213,7 @@ bool PHY_ComposanteTypePion::CanHealHumans() const
 // Name: PHY_ComposanteTypePion::CanHealHuman
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-bool PHY_ComposanteTypePion::CanHealHuman( const PHY_Human& human ) const
+bool PHY_ComposanteTypePion::CanHealHuman( const Human_ABC& human ) const
 {
     if( human.IsContaminated() )
         return bCanHealContaminated_;
@@ -1231,7 +1232,7 @@ bool PHY_ComposanteTypePion::CanHealHuman( const PHY_Human& human ) const
 // Name: PHY_ComposanteTypePion::GetHealingTime
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-unsigned int PHY_ComposanteTypePion::GetHealingTime( const PHY_Human& human ) const
+unsigned int PHY_ComposanteTypePion::GetHealingTime( const Human_ABC& human ) const
 {
     if( human.IsContaminated() )
     {
@@ -1258,7 +1259,7 @@ unsigned int PHY_ComposanteTypePion::GetHealingTime( const PHY_Human& human ) co
 // Name: PHY_ComposanteTypePion::Heal
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-unsigned int PHY_ComposanteTypePion::Heal( PHY_Human& human ) const
+unsigned int PHY_ComposanteTypePion::Heal( Human_ABC& human ) const
 {
     if( human.IsContaminated() )
     {

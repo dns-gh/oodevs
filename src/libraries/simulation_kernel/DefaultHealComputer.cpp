@@ -11,6 +11,7 @@
 
 #include "simulation_kernel/DefaultHealComputer.h"
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
+#include "simulation_kernel/Entities/Agents/Units/Humans/PHY_HumanWound.h"
 
 namespace human
 {

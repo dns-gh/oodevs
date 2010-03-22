@@ -17,8 +17,8 @@ namespace MsgsSimToClient
     class MsgUnitFireDamages;
 }
 
+class Human_ABC;
 class MIL_Agent_ABC;
-class PHY_Human;
 class PHY_HumanWound;
 class PHY_Composante_ABC;
 class PHY_ComposanteType_ABC;
@@ -38,7 +38,7 @@ public:
 
     //! @name Notifications
     //@{
-    void NotifyHumanWoundChanged     ( const PHY_Human& human, const PHY_HumanWound& oldWound );
+    void NotifyHumanWoundChanged     ( const Human_ABC& human, const PHY_HumanWound& oldWound );
     void NotifyComposanteStateChanged( const PHY_Composante_ABC& composante, const PHY_ComposanteState& oldState, const PHY_ComposanteState& newState );
     //@}
 

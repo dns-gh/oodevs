@@ -10,7 +10,7 @@
 #ifndef __HumansActionsNotificationHandler_ABC_H__
 #define __HumansActionsNotificationHandler_ABC_H__
 
-class PHY_Human;
+class Human_ABC;
 class MIL_AutomateLOG;
 class PHY_MedicalHumanState;
 
@@ -27,12 +27,12 @@ public:
              HumansActionsNotificationHandler_ABC() {}
     virtual ~HumansActionsNotificationHandler_ABC() {}
 
-    virtual void NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 ) = 0;
-    virtual void NotifyHumanWaitingForMedical    ( PHY_Human& human ) = 0;
+    virtual void NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 ) = 0;
+    virtual void NotifyHumanWaitingForMedical    ( Human_ABC& human ) = 0;
     virtual void NotifyHumanBackFromMedical      ( PHY_MedicalHumanState& humanState ) = 0;
-    virtual void NotifyHumanAdded  ( PHY_Human& human ) = 0;
-    virtual void NotifyHumanRemoved( PHY_Human& human ) = 0;
-    virtual void NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState ) = 0;
+    virtual void NotifyHumanAdded  ( Human_ABC& human ) = 0;
+    virtual void NotifyHumanRemoved( Human_ABC& human ) = 0;
+    virtual void NotifyHumanChanged( Human_ABC& human, const Human_ABC& copyOfOldHumanState ) = 0;
 };
 
 } // namespace human

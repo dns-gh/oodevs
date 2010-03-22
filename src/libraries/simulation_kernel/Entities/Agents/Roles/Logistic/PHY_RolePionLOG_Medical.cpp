@@ -325,7 +325,7 @@ PHY_MedicalEvacuationAmbulance* PHY_RolePionLOG_Medical::GetAvailableEvacuationA
             return &ambulance;
     }
 
-    PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
+    PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     pion_.Execute( *computer );
@@ -353,7 +353,7 @@ PHY_MedicalCollectionAmbulance* PHY_RolePionLOG_Medical::GetAvailableCollectionA
             return &ambulance;
     }
 
-    PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
+    PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, consign.GetHumanState().GetHuman() );
     GetComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     pion_.Execute( *computer );
@@ -398,9 +398,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForSorting() cons
 // Name: PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const PHY_Human& human ) const
+PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const Human_ABC& human ) const
 {
-    PHY_ComposantePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanHealHuman, human );
+    PHY_ComposantePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanHealHuman, human );
     GetComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     pion_.Execute( *computer );
@@ -411,9 +411,9 @@ PHY_ComposantePion* PHY_RolePionLOG_Medical::GetAvailableDoctorForHealing( const
 // Name: PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const PHY_Human& human ) const
+bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const Human_ABC& human ) const
 {
-    PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
+    PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     HasUsableComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     pion_.Execute( *computer );
@@ -424,9 +424,9 @@ bool PHY_RolePionLOG_Medical::HasUsableEvacuationAmbulance( const PHY_Human& hum
 // Name: PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const PHY_Human& human ) const
+bool PHY_RolePionLOG_Medical::HasUsableCollectionAmbulance( const Human_ABC& human ) const
 {
-    PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanCollectCasualty, human );
+    PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanCollectCasualty, human );
     HasUsableComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     pion_.Execute( *computer );
@@ -450,12 +450,12 @@ bool PHY_RolePionLOG_Medical::HasUsableDoctorForSorting() const
 // Name: PHY_RolePionLOG_Medical::HasUsableDoctorForHealing
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const PHY_Human& human, bool bBypassPriorities /* = false */ ) const
+bool PHY_RolePionLOG_Medical::HasUsableDoctorForHealing( const Human_ABC& human, bool bBypassPriorities /* = false */ ) const
 {
     if( !bBypassPriorities && human.IsWounded() && std::find( priorities_.begin(), priorities_.end(), &human.GetWound() ) == priorities_.end() )
         return false;
 
-    PHY_ComposanteTypePredicate1< PHY_Human > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );        
+    PHY_ComposanteTypePredicate1< Human_ABC > predicate( &PHY_ComposanteTypePion::CanHealHuman, human );        
     HasUsableComponentFunctor functor( predicate );
     std::auto_ptr< OnComponentComputer_ABC > computer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( functor ) );
     pion_.Execute( *computer );
@@ -573,7 +573,7 @@ void PHY_RolePionLOG_Medical::InsertConsign( PHY_MedicalConsign_ABC& consign )
 // Name: PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
 // Created: NLD 2005-08-01
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, PHY_Human& human )
+PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human )
 {
     if( !bSystemEnabled_ )
         return 0;
@@ -588,7 +588,7 @@ PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanEvacuatedByThirdParty
 // Name: PHY_RolePionLOG_Medical::HandleHumanForEvacuation
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_AgentPion& pion, PHY_Human& human )
+PHY_MedicalHumanState* PHY_RolePionLOG_Medical::HandleHumanForEvacuation( MIL_AgentPion& pion, Human_ABC& human )
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return 0;
@@ -617,13 +617,13 @@ void PHY_RolePionLOG_Medical::ExecuteOnComponentsAndLendedComponents( Composante
 // Name: PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation
 // Created: NLD 2006-03-29
 // -----------------------------------------------------------------------------
-int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const PHY_Human& human ) const
+int PHY_RolePionLOG_Medical::GetAvailabilityScoreForEvacuation( const Human_ABC& human ) const
 {
     if( !bSystemEnabled_ || !HasUsableEvacuationAmbulance( human ) )
         return std::numeric_limits< int >::min();
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
-    PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
+    PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanEvacuateCasualty, &PHY_ComposanteTypePion::CanEvacuateCasualty, human );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
 
     unsigned int nNbrAvailableAllowedToWork = 0;
@@ -657,7 +657,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForCollection( const PHY_Medica
         return std::numeric_limits< int >::min();
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
-    PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
+    PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanCollectCasualty, &PHY_ComposanteTypePion::CanCollectCasualty, humanState.GetHuman() );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
 
     unsigned int nNbrAvailableAllowedToWork = 0;
@@ -727,7 +727,7 @@ int PHY_RolePionLOG_Medical::GetAvailabilityScoreForHealing( const PHY_MedicalHu
         return std::numeric_limits< int >::min();
 
     PHY_Composante_ABC::T_ComposanteUseMap composanteUse;
-    PHY_ComposanteUsePredicate1< PHY_Human > predicate( &PHY_ComposantePion::CanHealHuman, &PHY_ComposanteTypePion::CanHealHuman, humanState.GetHuman() );
+    PHY_ComposanteUsePredicate1< Human_ABC > predicate( &PHY_ComposantePion::CanHealHuman, &PHY_ComposanteTypePion::CanHealHuman, humanState.GetHuman() );
     ExecuteOnComponentsAndLendedComponents( predicate, composanteUse );
 
     unsigned int nNbrAllowedToWork = 0;

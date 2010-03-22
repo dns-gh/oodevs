@@ -15,7 +15,7 @@
 #include "MIL.h"
 #include "Tools/MIL_IDManager.h"
 
-class PHY_Human;
+class Human_ABC;
 class PHY_MedicalConsign_ABC;
 class MIL_AgentPion;
 class MIL_Automate;
@@ -31,7 +31,7 @@ class PHY_MedicalHumanState : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_MedicalHumanState( MIL_AgentPion& pion, PHY_Human& humann, bool bEvacuatedByThirdParty = false );
+     PHY_MedicalHumanState( MIL_AgentPion& pion, Human_ABC& humann, bool bEvacuatedByThirdParty = false );
      PHY_MedicalHumanState();
     virtual ~PHY_MedicalHumanState();
     //@}
@@ -47,7 +47,7 @@ public:
     //! @name Accessors
     //@{
     const MIL_Automate& GetAutomate          () const;
-    const PHY_Human&    GetHuman             () const;
+    const Human_ABC&    GetHuman             () const;
     const MT_Vector2D&  GetHumanPosition     () const;
           void          SetHumanPosition     ( const MT_Vector2D& vPosition );
     const MT_Vector2D&  GetPionPosition      () const;
@@ -95,7 +95,7 @@ private:
     const unsigned int nID_;
     const unsigned int nCreationTick_;
     MIL_AgentPion* pPion_;
-    PHY_Human* pHuman_;
+    Human_ABC* pHuman_;
     PHY_MedicalConsign_ABC* pConsign_;
     MT_Vector2D vHumanPosition_; // Position de l'humain lors de son traitement dans la chaine medical
     bool bShouldGoBackToWar_;

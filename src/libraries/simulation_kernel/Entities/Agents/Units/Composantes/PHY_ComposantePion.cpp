@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory_IndirectFire_ABC.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
+#include "Entities/Agents/Units/Humans/PHY_HumansComposante.h"
 #include "Entities/Agents/Units/Humans/PHY_HumanProtection.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
@@ -852,7 +853,7 @@ bool PHY_ComposantePion::CanEvacuateCasualties() const
 // Name: PHY_ComposantePion::CanEvacuateCasualty
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanEvacuateCasualty( const PHY_Human& human ) const
+bool PHY_ComposantePion::CanEvacuateCasualty( const Human_ABC& human ) const
 {
     assert( pType_ );
     return pState_->IsUsable() && CanBeUsed() && pType_->CanEvacuateCasualty( human );
@@ -872,7 +873,7 @@ bool PHY_ComposantePion::CanCollectCasualties() const
 // Name: PHY_ComposantePion::CanCollectCasualty
 // Created: NLD 2007-02-05
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanCollectCasualty( const PHY_Human& human ) const
+bool PHY_ComposantePion::CanCollectCasualty( const Human_ABC& human ) const
 {
     assert( pType_ );
     return pState_->IsUsable() && CanBeUsed() && pType_->CanCollectCasualty( human );
@@ -882,7 +883,7 @@ bool PHY_ComposantePion::CanCollectCasualty( const PHY_Human& human ) const
 // Name: PHY_ComposantePion::CanHealHumans
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-bool PHY_ComposantePion::CanHealHuman( const PHY_Human& human ) const
+bool PHY_ComposantePion::CanHealHuman( const Human_ABC& human ) const
 {
     assert( pType_ );
     return pState_->IsUsable() && CanBeUsed() && pType_->CanHealHuman( human );
@@ -892,7 +893,7 @@ bool PHY_ComposantePion::CanHealHuman( const PHY_Human& human ) const
 // Name: PHY_ComposantePion::Heal
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-unsigned int PHY_ComposantePion::Heal( PHY_Human& human ) const
+unsigned int PHY_ComposantePion::Heal( Human_ABC& human ) const
 {
     assert( pType_ );
     assert( bUsedForLogistic_ );
@@ -904,7 +905,7 @@ unsigned int PHY_ComposantePion::Heal( PHY_Human& human ) const
 // Name: PHY_ComposantePion::GetHealingTime
 // Created: NLD 2005-01-12
 // -----------------------------------------------------------------------------
-unsigned int PHY_ComposantePion::GetHealingTime( const PHY_Human& human ) const
+unsigned int PHY_ComposantePion::GetHealingTime( const Human_ABC& human ) const
 {
     assert( pType_ );
     assert( bUsedForLogistic_ );

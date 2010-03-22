@@ -190,7 +190,7 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
 {
     for( CIT_HumanSet it = humansToUpdate_.begin(); it != humansToUpdate_.end(); )
     {
-        PHY_Human& human = **it;
+        Human_ABC& human = **it;
         ++it; 
         human.Update(); // !!! Can erase the human from humansToUpdate_
     }
@@ -247,7 +247,7 @@ unsigned int PHY_RolePion_Humans::GetNbrAliveHumans( const PHY_HumanRank& rank )
 // Name: PHY_RolePion_Humans::UpdateDataWhenHumanRemoved
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const PHY_Human& human )
+void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const Human_ABC& human )
 {
     assert( nNbrHumans_ > 0 );
     -- nNbrHumans_;
@@ -295,9 +295,9 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const PHY_Human& human )
 
     switch( human.GetLocation() )
     {
-        case PHY_Human::eBattleField: break;
-        case PHY_Human::eMaintenance: assert( humanData.nNbrInLogisticMaintenance_ > 0 ); -- humanData.nNbrInLogisticMaintenance_; break;
-        case PHY_Human::eMedical    : assert( humanData.nNbrInLogisticMedical_     > 0 ); -- humanData.nNbrInLogisticMedical_; break;
+        case Human_ABC::eBattleField: break;
+        case Human_ABC::eMaintenance: assert( humanData.nNbrInLogisticMaintenance_ > 0 ); -- humanData.nNbrInLogisticMaintenance_; break;
+        case Human_ABC::eMedical    : assert( humanData.nNbrInLogisticMedical_     > 0 ); -- humanData.nNbrInLogisticMedical_; break;
         default:
             assert( false );
     }
@@ -307,7 +307,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanRemoved( const PHY_Human& human )
 // Name: PHY_RolePion_Humans::UpdateDataWhenHumanAdded
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const PHY_Human& human )
+void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const Human_ABC& human )
 {
     ++ nNbrHumans_;
 
@@ -334,9 +334,9 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const PHY_Human& human )
 
     switch( human.GetLocation() )
     {
-        case PHY_Human::eBattleField: break;
-        case PHY_Human::eMaintenance: ++ humanData.nNbrInLogisticMaintenance_; break;
-        case PHY_Human::eMedical    : ++ humanData.nNbrInLogisticMedical_    ; break;
+        case Human_ABC::eBattleField: break;
+        case Human_ABC::eMaintenance: ++ humanData.nNbrInLogisticMaintenance_; break;
+        case Human_ABC::eMedical    : ++ humanData.nNbrInLogisticMedical_    ; break;
         default:
             assert( false );
     }
@@ -346,7 +346,7 @@ void PHY_RolePion_Humans::UpdateDataWhenHumanAdded( const PHY_Human& human )
 // Name: PHY_RolePion_Humans::NotifyHumanAdded
 // Created: NLD 2005-01-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::NotifyHumanAdded( PHY_Human& human )
+void PHY_RolePion_Humans::NotifyHumanAdded( Human_ABC& human )
 {
     UpdateDataWhenHumanAdded( human );
     if( human.NeedMedical() )
@@ -357,7 +357,7 @@ void PHY_RolePion_Humans::NotifyHumanAdded( PHY_Human& human )
 // Name: PHY_RolePion_Humans::NotifyHumanRemoved
 // Created: NLD 2005-01-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::NotifyHumanRemoved( PHY_Human& human )
+void PHY_RolePion_Humans::NotifyHumanRemoved( Human_ABC& human )
 {
     UpdateDataWhenHumanRemoved( human );
     humansToUpdate_.erase( &human );
@@ -367,7 +367,7 @@ void PHY_RolePion_Humans::NotifyHumanRemoved( PHY_Human& human )
 // Name: PHY_RolePion_Humans::NotifyHumanChanged
 // Created: NLD 2005-01-07
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::NotifyHumanChanged( PHY_Human& human, const PHY_Human& copyOfOldHumanState )
+void PHY_RolePion_Humans::NotifyHumanChanged( Human_ABC& human, const Human_ABC& copyOfOldHumanState )
 {
     UpdateDataWhenHumanRemoved( copyOfOldHumanState );
     UpdateDataWhenHumanAdded  ( human );
@@ -411,7 +411,7 @@ bool PHY_RolePion_Humans::HasWoundedHumansToEvacuate() const
 // Name: PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MIL_AutomateLOG& destinationTC2 )
+void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( Human_ABC& human, MIL_AutomateLOG& destinationTC2 )
 {
 
     
@@ -431,7 +431,7 @@ void PHY_RolePion_Humans::NotifyHumanEvacuatedByThirdParty( PHY_Human& human, MI
 // Name: PHY_RolePion_Humans::NotifyHumanWaitingForMedical
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( PHY_Human& human )
+void PHY_RolePion_Humans::NotifyHumanWaitingForMedical( Human_ABC& human )
 {
 
     

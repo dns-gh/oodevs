@@ -25,7 +25,7 @@ class MIL_Agent_ABC;
 class MIL_AutomateTypeLOG;
 class PHY_MaintenanceComposanteState;
 class PHY_MedicalHumanState;
-class PHY_Human;
+class Human_ABC;
 class PHY_MedicalCollectionAmbulance;
 class PHY_RoleInterface_Medical;
 class PHY_Dotation;
@@ -94,8 +94,8 @@ public:
 
     //! @name Medical
     //@{
-    PHY_MedicalHumanState* MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, PHY_Human& human ); // Imex
-    PHY_MedicalHumanState* MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, PHY_Human& human ); // Releve
+    PHY_MedicalHumanState* MedicalHandleHumanEvacuatedByThirdParty( MIL_AgentPion& pion, Human_ABC& human ); // Imex
+    PHY_MedicalHumanState* MedicalHandleHumanForEvacuation        ( MIL_AgentPion& pion, Human_ABC& human ); // Releve
     bool                   MedicalHandleHumanForCollection        ( PHY_MedicalHumanState& humanState );     // Ramassage    
     PHY_RoleInterface_Medical*  MedicalReserveForSorting          ( PHY_MedicalCollectionAmbulance& ambulance );
     bool                   MedicalHandleHumanForHealing           ( PHY_MedicalHumanState& humanState );
