@@ -468,6 +468,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
 
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >() );
     MockAgent detector;
+    MOCKPP_CHAINER_FOR( MockAgent, IsDead )( &detector ).expects( once() ).will( mockpp::returnValue( false ) );
     detector.RegisterRole( *new MockRolePerceiver() );
     static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >().AddDetector( detector );
 
