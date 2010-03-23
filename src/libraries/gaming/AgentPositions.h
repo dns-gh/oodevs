@@ -10,10 +10,11 @@
 #ifndef __AgentPositions_h_
 #define __AgentPositions_h_
 
+#include "clients_kernel/Aggregatable_ABC.h"
+#include "clients_kernel/Displayable_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
-#include "clients_kernel/Drawable_ABC.h"
-#include "clients_kernel/Aggregatable_ABC.h"
 
 namespace MsgsSimToClient
 {
@@ -36,6 +37,7 @@ class AgentPositions : public kernel::Positions
                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
                      , public kernel::Drawable_ABC
                      , public kernel::Aggregatable_ABC
+                     , public kernel::Displayable_ABC
 {
 
 public:
@@ -54,6 +56,7 @@ public:
     virtual geometry::Rectangle2f GetBoundingBox() const;
     virtual void Accept( kernel::LocationVisitor_ABC& visitor ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:

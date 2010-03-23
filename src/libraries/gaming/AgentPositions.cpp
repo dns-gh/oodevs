@@ -17,6 +17,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "protocol/Protocol.h"
+#include "Tools.h"
 
 using namespace geometry;
 using namespace kernel;
@@ -139,4 +140,12 @@ void AgentPositions::Draw( const Point2f& where, const kernel::Viewport_ABC& vie
 void AgentPositions::Aggregate( const bool& bDummy )
 {
     aggregated_ = bDummy;
+}
+// -----------------------------------------------------------------------------
+// Name: AgentPositions::DisplayInSummary
+// Created: AME 2010-03-19
+// -----------------------------------------------------------------------------
+void AgentPositions::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "AgentPositions", "Position:" ) , converter_.GetStringPosition( GetPosition() ) ) ;
 }
