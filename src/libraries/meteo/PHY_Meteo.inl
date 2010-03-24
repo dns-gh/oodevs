@@ -73,7 +73,7 @@ inline
 void PHY_Meteo::DecRef()
 {
     assert( nRefCount_ );
-    --nRefCount_
+    --nRefCount_;
 }
 
 
