@@ -73,8 +73,7 @@ inline
 void PHY_Meteo::DecRef()
 {
     assert( nRefCount_ );
-    if ( !--nRefCount_ )
-        delete this;
+    --nRefCount_
 }
 
 
