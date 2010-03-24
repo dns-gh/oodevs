@@ -119,7 +119,7 @@ namespace
     template< typename It >
     void FillGradient( It from, It end, const QColor& cFrom, const QColor& cEnd )
     {
-        float increment = 1.f / float( end - from );
+        float increment = 1.f / float( std::distance( from, end ) );
         float ratio = 0.f;
         while( from != end )
         {
@@ -171,9 +171,9 @@ void Gradient::MakeGlTexture( float alpha )
     FillColors( colors, colors_, distance / 1024.f );
 
     glTexImage1D( GL_TEXTURE_1D, 0, GL_RGBA, textureSize_, 0, GL_RGBA, GL_FLOAT, & colors.front() ) ;
-    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_WRAP_S , gl::GL_CLAMP_TO_EDGE );
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, gl::GL_CLAMP_TO_EDGE );
 }
 
 // -----------------------------------------------------------------------------

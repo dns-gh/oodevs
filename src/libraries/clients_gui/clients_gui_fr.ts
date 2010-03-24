@@ -304,6 +304,41 @@ Please check access permissions or write protection.</source>
     </message>
 </context>
 <context>
+    <name>GisToolbar</name>
+    <message>
+        <source>GIS tools</source>
+        <translation>Outils cartographiques</translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation>Montée des eaux</translation>
+    </message>
+    <message>
+        <source>Enable/disable watershed display</source>
+        <translation>Active/désactive la montée des eaux</translation>
+    </message>
+    <message>
+        <source>&lt;</source>
+        <translation>&lt;</translation>
+    </message>
+    <message>
+        <source>&gt;</source>
+        <translation>&gt;</translation>
+    </message>
+    <message>
+        <source>Display water below or above specified height</source>
+        <translation>Affiche l&apos;eau au dessous ou au dessus de l&apos;altitude spécifiée</translation>
+    </message>
+    <message>
+        <source>Set water height limit</source>
+        <translation>Défini l&apos;altitude limite de l&apos;eau</translation>
+    </message>
+    <message>
+        <source>Change watershed color</source>
+        <translation>Change la couleur de l&apos;eau</translation>
+    </message>
+</context>
+<context>
     <name>GradientWidget</name>
     <message>
         <source>Copy preset</source>
@@ -1670,11 +1705,11 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>y:%1 x:%2</source>
-        <translation type="unfinished"></translation>
+        <translation>y:%1 x:%2</translation>
     </message>
     <message>
         <source>h:%1 </source>
-        <translation type="unfinished"></translation>
+        <translation>h:%1 </translation>
     </message>
     <message>
         <source>Elevation</source>

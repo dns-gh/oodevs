@@ -17,6 +17,7 @@ ElevationExtrema.cpp \
 ElevationPanel.cpp \
 FirePrototype_ABC.cpp \
 FixedLightWidget.cpp \
+GisToolbar.cpp \
 GradientWidget.cpp \
 GraphicPreferences.cpp \
 HelpSystem.cpp \

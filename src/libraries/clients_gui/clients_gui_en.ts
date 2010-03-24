@@ -134,6 +134,41 @@
     </message>
 </context>
 <context>
+    <name>GisToolbar</name>
+    <message>
+        <source>GIS tools</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable/disable watershed display</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Display water below or above specified height</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Set water height limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Change watershed color</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>GraphicPreferences</name>
     <message>
         <source>Colors</source>

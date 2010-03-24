@@ -11,7 +11,6 @@
 #define __Elevation3dLayer_h_
 
 #include "Layer_ABC.h"
-#include "graphics/ElevationColor_ABC.h"
 #include "graphics/ViewFrustum.h"
 #include "tools/Observer_ABC.h"
 #include "tools/ElementObserver_ABC.h"

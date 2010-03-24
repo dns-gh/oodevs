@@ -290,6 +290,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>No file loaded</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Watershed</source>
+        <translation>Montée des eaux</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

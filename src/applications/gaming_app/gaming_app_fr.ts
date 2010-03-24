@@ -1446,6 +1446,10 @@ Reason: %3
         <source>Error loading exercise: </source>
         <translation>Erreur lors du chargement de l&apos;exercice: </translation>
     </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>

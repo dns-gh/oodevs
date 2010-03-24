@@ -118,6 +118,8 @@
 #include "clients_gui/IntelligenceList.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/GisToolbar.h"
+#include "clients_gui/WatershedLayer.h"
 
 #include "tools/ExerciseConfig.h"
 
@@ -198,6 +200,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
     new DisplayToolbar( this, controllers );
     new EventToolbar( this, controllers, profile );
+    new gui::GisToolbar( this, controllers, staticModel_.detection_ );
 
     // A few layers
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
@@ -382,6 +385,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences() );
+    Layer_ABC& watershed            = *new WatershedLayer( controllers_, staticModel_.detection_ );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_, *glProxy_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
@@ -407,6 +411,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( raster );                   preferences.AddLayer( tr( "Raster" ), raster );                 raster              .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( terrain );                  preferences.AddLayer( tr( "Terrain" ), terrain );               terrain             .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( urbanLayer );               /*preferences.AddLayer( tr( "Urban" ), urbanLayer );*/          urbanLayer          .SetPasses( "main,miniviews" );
+    glProxy_->Register( watershed );                preferences.AddLayer( tr( "Watershed" ), watershed );           watershed           .SetPasses( "main,composition,miniviews" );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );
     glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );                folkLayer           .SetPasses( "main,miniviews" );

@@ -3,121 +3,60 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
 #include "clients_gui_pch.h"
-#include "Elevation2dLayer.h"
-#include "clients_kernel/GLTools_ABC.h"
-#include "clients_kernel/Controller.h"
+#include "WatershedLayer.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_kernel/GLTools_ABC.h"
+#include "clients_kernel/OptionVariant.h"
 #include "graphics/ElevationTextureSet.h"
 #include "graphics/FixedElevationTextureSet.h"
 #include "graphics/ElevationShader.h"
 #include "graphics/extensions.h"
 #include "graphics/Visitor2d.h"
-#include "ElevationExtrema.h"
-#include "Gradient.h"
 
 using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer constructor
-// Created: AGE 2006-03-29
+// Name: WatershedLayer constructor
+// Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-Elevation2dLayer::Elevation2dLayer( Controller& controller, const DetectionMap& elevation )
-    : controller_     ( controller )
+WatershedLayer::WatershedLayer( kernel::Controllers& controllers, const kernel::DetectionMap& elevation )
+    : controllers_    ( controllers )
     , elevation_      ( elevation )
     , reset_          ( false )
     , modelLoaded_    ( false )
     , ignore_         ( false )
     , updateGradient_ ( true )
     , gradientTexture_( 0 )
-    , enabled_        ( true )
-    , minElevation_   ( 0 )
-    , maxElevation_   ( 0 )
-    , hsx_            ( 1 )
-    , hsy_            ( 1 )
-    , hsStrength_     ( 1 )
+    , gradientSize_   ( 1024 ) // $$$$ SBO 2010-03-23: hard coded maximum
+    , height_         ( 0 )
+    , enabled_        ( false )
+    , inverted_       ( false )
+    , color_          ( 20, 164, 218 )
 {
-    gradient_.AddColor( 0, Qt::white );
-    gradient_.AddColor( 1, Qt::black );
-    controller_.Register( *this );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer destructor
-// Created: AGE 2006-03-29
+// Name: WatershedLayer destructor
+// Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-Elevation2dLayer::~Elevation2dLayer()
+WatershedLayer::~WatershedLayer()
 {
-    controller_.Unregister( *this );
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetGradient
-// Created: AGE 2007-07-03
-// -----------------------------------------------------------------------------
-void Elevation2dLayer::SetGradient( const Gradient& gradient )
-{
-    gradient_ = gradient;
-    updateGradient_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetHillShadeDirection
-// Created: AGE 2007-07-02
-// -----------------------------------------------------------------------------
-void Elevation2dLayer::SetHillShadeDirection( int angle )
-{
-    const float convert = std::acos( -1.f ) / 180.f;
-    hsx_ = std::cos( angle * convert );
-    hsy_ = std::sin( angle * convert );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::EnableVariableGradient
-// Created: AGE 2007-01-18
-// -----------------------------------------------------------------------------
-void Elevation2dLayer::EnableVariableGradient( bool enable )
-{
-    lastViewport_ = geometry::Rectangle2f();
-    enabled_ = enable;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetHillShadeStrength
-// Created: AGE 2007-07-02
-// -----------------------------------------------------------------------------
-void Elevation2dLayer::SetHillShadeStrength( float strength )
-{
-    hsStrength_ = strength;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetElevations
-// Created: AGE 2007-01-17
-// -----------------------------------------------------------------------------
-void Elevation2dLayer::SetElevations()
-{
-    CreateShader();
-    if( shader_.get() )
-    {
-        shader_->SetMinimumElevation( minElevation_ );
-        shader_->SetMaximumElevation( maxElevation_ );
-        float delta = std::min( 1.f, 100.f / float( maxElevation_ - minElevation_ ) );
-        shader_->SetHillShade( hsx_, hsy_, delta * hsStrength_ );
-        shader_->Use();
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::NotifyUpdated
+// Name: WatershedLayer::NotifyUpdated
 // Created: SBO 2006-05-24
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
+void WatershedLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 {
     // $$$$ AGE 2008-01-23: les ressources opengl doivent etre detruites quand le bon contexte opengl est actif
     // $$$$ AGE 2008-01-23: ie en pratique dans le Paint. C'est pénible
@@ -126,14 +65,40 @@ void Elevation2dLayer::NotifyUpdated( const ModelLoaded& /*modelLoaded*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetAlpha
+// Name: WatershedLayer::SetAlpha
 // Created: AGE 2007-02-23
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::SetAlpha( float alpha )
+void WatershedLayer::SetAlpha( float alpha )
 {
     Layer2d_ABC::SetAlpha( alpha );
     updateGradient_ = true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: WatershedLayer::OptionChanged
+// Created: SBO 2010-03-23
+// -----------------------------------------------------------------------------
+void WatershedLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "WatershedEnabled" )
+        enabled_ = value.To< bool >();
+    else if( name == "WatershedHeight" )
+    {
+        height_ = unsigned short( value.To< int >() );
+        updateGradient_ = true;
+    }
+    else if( name == "WatershedInverse" )
+    {
+        inverted_ = value.To< bool >();
+        updateGradient_ = true;
+    }
+    else if( name == "WatershedColor" )
+    {
+        color_.setNamedColor( value.To< QString >() );
+        updateGradient_ = true;
+    }
+}
+
 
 namespace
 {
@@ -160,12 +125,12 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::Paint
+// Name: WatershedLayer::Paint
 // Created: AGE 2006-03-29
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
+void WatershedLayer::Paint( const geometry::Rectangle2f& viewport )
 {
-    if( !ShouldDrawPass() )
+    if( !ShouldDrawPass() || !enabled_ )
         return;
     if( reset_ )
     {
@@ -184,17 +149,9 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
     if( layer_.get() )
     {
         SetGradient();
-        if( ! enabled_ )
-        {
-            minElevation_ = 0;
-            maxElevation_ = elevation_.MaximumElevation();
-        }
-        else if( viewport != lastViewport_ )
-        {
-            extrema_->FindExtrema( viewport, minElevation_, maxElevation_ );
-            lastViewport_ = viewport;
-        }
-        SetElevations();
+        CreateShader();
+        if( shader_.get() )
+            shader_->Use();
         Visitor2d visitor;
         layer_->Accept( visitor, 0, viewport );
         Cleanup();
@@ -202,10 +159,35 @@ void Elevation2dLayer::Paint( const geometry::Rectangle2f& viewport )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::Cleanup
+// Name: WatershedLayer::SetGradient
 // Created: AGE 2007-01-17
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::Cleanup()
+void WatershedLayer::SetGradient()
+{
+    gl::Initialize();
+    if( !gl::HasMultiTexturing() )
+        return;
+    gl::glActiveTexture( gl::GL_TEXTURE1 );
+    glDisable( GL_TEXTURE_2D );
+    glEnable( GL_TEXTURE_1D );
+    if( updateGradient_ )
+    {
+        glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
+        MakeGlTexture();
+        if( shader_.get() )
+            shader_->SetGradientSize( gradientSize_ );
+        updateGradient_ = false;
+    }
+    glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
+    gl::glActiveTexture( gl::GL_TEXTURE0 );
+    glEnable( GL_TEXTURE_2D );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WatershedLayer::Cleanup
+// Created: AGE 2007-01-17
+// -----------------------------------------------------------------------------
+void WatershedLayer::Cleanup()
 {
     if( shader_.get() )
         shader_->Unuse();
@@ -219,38 +201,48 @@ void Elevation2dLayer::Cleanup()
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::SetGradient
-// Created: AGE 2007-01-17
-// -----------------------------------------------------------------------------
-void Elevation2dLayer::SetGradient()
+namespace
 {
-    gl::Initialize();
-    if( !gl::HasMultiTexturing() )
-        return;
-    gl::glActiveTexture( gl::GL_TEXTURE1 );
-    glDisable( GL_TEXTURE_2D );
-    glEnable( GL_TEXTURE_1D );
-    if( updateGradient_ )
+    struct Color
     {
-        glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
-        gradient_.MakeGlTexture( GetAlpha() );
-        if( shader_.get() )
-            shader_->SetGradientSize( unsigned short( gradient_.Length() ), gradient_.UsedRatio() );
-        updateGradient_ = false;
-    }
-    glBindTexture( GL_TEXTURE_1D, gradientTexture_ );
-    gl::glActiveTexture( gl::GL_TEXTURE0 );
-    glEnable( GL_TEXTURE_2D );
+        Color() : r( 0 ), g( 0 ), b( 0 ), a( 0 ) {}
+        float r, g, b, a;
+    };
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::Reset
+// Name: WatershedLayer::MakeGlTexture
+// Created: SBO 2010-03-23
+// -----------------------------------------------------------------------------
+void WatershedLayer::MakeGlTexture()
+{
+    unsigned short maxElevation = elevation_.MaximumElevation();
+    if( maxElevation == 0 )
+        return;
+    std::vector< Color > colors;
+    colors.resize( gradientSize_ );
+    Color color;
+    color.r = color_.red() / 256.f;
+    color.g = color_.green() / 256.f;
+    color.b = color_.blue() / 256.f;
+    color.a = GetAlpha();
+
+    const unsigned short heightIndex = gradientSize_ * height_ / maxElevation;
+    const unsigned short lowerBound = inverted_ ? heightIndex : 0;
+    const unsigned short upperBound = inverted_ ? gradientSize_ : heightIndex;
+    std::fill( colors.begin() + lowerBound, colors.begin() + upperBound, color );
+    glTexImage1D( GL_TEXTURE_1D, 0, GL_RGBA, gradientSize_, 0, GL_RGBA, GL_FLOAT, &colors.front() ) ;
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MIN_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    glTexParameteri( GL_TEXTURE_1D, GL_TEXTURE_WRAP_S, gl::GL_CLAMP_TO_EDGE );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WatershedLayer::Reset
 // Created: AGE 2007-01-19
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::Reset()
+void WatershedLayer::Reset()
 {
-    extrema_.reset();
     shader_.reset();
     modelLoaded_ = false;
     ignore_ = false;
@@ -258,21 +250,21 @@ void Elevation2dLayer::Reset()
     glDeleteTextures( 1, &gradientTexture_ );
     gradientTexture_ = 0;
     updateGradient_ = true;
-    lastViewport_ = geometry::Rectangle2f();
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::CreateShader
+// Name: WatershedLayer::CreateShader
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::CreateShader()
+void WatershedLayer::CreateShader()
 {
     if( ! shader_.get() && ! ignore_ )
     {
         try
         {
             shader_.reset( new ElevationShader() );
-            minElevation_ = 0; maxElevation_ = elevation_.MaximumElevation();
+            shader_->SetMinimumElevation( 0 );
+            shader_->SetMaximumElevation( elevation_.MaximumElevation() );
         }
         catch( ... )
         {
@@ -282,13 +274,12 @@ void Elevation2dLayer::CreateShader()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Elevation2dLayer::CreateTextures
+// Name: WatershedLayer::CreateTextures
 // Created: AGE 2007-04-25
 // -----------------------------------------------------------------------------
-void Elevation2dLayer::CreateTextures()
+void WatershedLayer::CreateTextures()
 {
     glGenTextures( 1, &gradientTexture_ );
-    extrema_.reset( new ElevationExtrema( elevation_.GetMap() ) );
     CreateShader();
     if( !ignore_ )
         layer_.reset( new ElevationTextureSet( elevation_.GetMap() ) );

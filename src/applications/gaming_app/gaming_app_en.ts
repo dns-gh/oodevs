@@ -1183,6 +1183,10 @@
         <source> - Not connected</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MaintenanceConsignsWidget</name>

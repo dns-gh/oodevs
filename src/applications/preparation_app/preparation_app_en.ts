@@ -221,6 +221,10 @@ Do you want to save anyway?</source>
         <source>No file loaded</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Watershed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>

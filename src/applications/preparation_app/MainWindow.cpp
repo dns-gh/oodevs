@@ -53,6 +53,7 @@
 #include "clients_kernel/FormationLevels.h"
 
 #include "clients_gui/GlProxy.h"
+#include "clients_gui/GisToolbar.h"
 #include "clients_gui/GraphicPreferences.h"
 #include "clients_gui/OptionsPanel.h"
 #include "clients_gui/ParametersLayer.h"
@@ -90,6 +91,8 @@
 #include "clients_gui/IntelligenceList.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/HelpSystem.h"
+#include "clients_gui/WatershedLayer.h"
+#include "clients_gui/resources.h"
 
 #include "graphics/DragMovementLayer.h"
 
@@ -224,6 +227,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this );
     new DisplayToolbar( this, controllers );
+    new gui::GisToolbar( this, controllers, staticModel_.detection_ );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *successFactorDialog, *factory, expiration, *help );
@@ -267,6 +271,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
+    Layer_ABC& watershed            = *new WatershedLayer( controllers_, staticModel_.detection_ );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics              = *new MetricsLayer( controllers_, staticModel_.detection_, *glProxy_ );
@@ -282,6 +287,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( elevation2d );             preferences.AddLayer( tr( "Elevation" ), elevation2d );          elevation2d         .SetPasses( "main" );
     glProxy_->Register( raster );                  preferences.AddLayer( tr( "Raster" ), raster );                  raster              .SetPasses( "main" );
     glProxy_->Register( terrain );                 preferences.AddLayer( tr( "Terrain" ), terrain );                terrain             .SetPasses( "main" );
+    glProxy_->Register( watershed );               preferences.AddLayer( tr( "Watershed" ), watershed );            watershed           .SetPasses( "main" );
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main" );
     glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main" );
