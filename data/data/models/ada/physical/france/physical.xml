@@ -30,5 +30,5 @@
   <models file="Modeles.xml"/>
   <missions file="Missions.xml"/>
   <object-names file="ObjectNames.xml"/>
-  <zurb file="Zurb.xml"/>
+  <urban file="Urban.xml"/>
 </physical>

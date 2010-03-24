@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ZurbType_h_
-#define __ZurbType_h_
+#ifndef __UrbanType_h_
+#define __UrbanType_h_
 
 namespace xml
 {
@@ -21,12 +21,12 @@ namespace urban
 }
 
 // =============================================================================
-/** @class  ZurbType
-    @brief  ZurbType
+/** @class  UrbanType
+    @brief  UrbanType
 */
 // Created: SLG 2010-03-05
 // =============================================================================
-class ZurbType : private boost::noncopyable
+class UrbanType : private boost::noncopyable
 {
 
 public:
@@ -35,21 +35,21 @@ public:
     //@{
     static void Initialize( xml::xistream& xis );
     static void Terminate ();
-    static ZurbType& GetZurbType();
+    static UrbanType& GetUrbanType();
     urban::StaticModel& GetStaticModel();
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    ZurbType( const ZurbType& );            //!< Copy constructor
-    ZurbType& operator=( const ZurbType& ); //!< Assignment operator
+    UrbanType( const UrbanType& );            //!< Copy constructor
+    UrbanType& operator=( const UrbanType& ); //!< Assignment operator
     //@}
 
     //! @name Constructors/Destructor
     //@{
-    ZurbType( xml::xistream& xis );
-    virtual ~ZurbType();
+    UrbanType( xml::xistream& xis );
+    virtual ~UrbanType();
     //@}
 
     //! @name Helpers
@@ -60,8 +60,8 @@ private:
     //! @name Member data
     //@{
     std::auto_ptr< urban::StaticModel > staticModel_;
-    static ZurbType* zurbType_;
+    static UrbanType* urbanType_;
     //@}
 };
 
-#endif // __ZurbType_h_
+#endif // __UrbanType_h_

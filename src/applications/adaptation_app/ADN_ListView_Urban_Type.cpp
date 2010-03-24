@@ -9,30 +9,30 @@
 //
 //*****************************************************************************
 #include "adaptation_app_pch.h"
-#include "ADN_ListView_Zurb_Type.h"
+#include "ADN_ListView_Urban_Type.h"
 
 #include <qpopupmenu.h>
 
 #include "ADN_Connector_ListView_ABC.h"
-#include "ADN_Zurb_Data.h"
-#include "ADN_Zurb_GUI.h"
+#include "ADN_Urban_Data.h"
+#include "ADN_Urban_GUI.h"
 #include "ADN_GuiTools.h"
 
-typedef ADN_Zurb_Data::ZurbInfos ZurbInfos;
+typedef ADN_Urban_Data::UrbanInfos UrbanInfos;
 
 //-----------------------------------------------------------------------------
-// Internal List View Zurb_Material connector to be connected with ADN_ListView_Zurb_Material
+// Internal List View Urban_Material connector to be connected with ADN_ListView_Urban_Material
 //-----------------------------------------------------------------------------
-class ADN_CLV_Zurb_Type
+class ADN_CLV_Urban_Type
     : public ADN_Connector_ListView_ABC
 {
 public:
 
-    ADN_CLV_Zurb_Type(ADN_ListView_Zurb_Type& list) 
+    ADN_CLV_Urban_Type(ADN_ListView_Urban_Type& list) 
         : ADN_Connector_ListView_ABC(list)
     {}
 
-    virtual ~ADN_CLV_Zurb_Type()
+    virtual ~ADN_CLV_Urban_Type()
     {}
 
     ADN_ListViewItem* CreateItem(void * obj)
@@ -41,21 +41,21 @@ public:
         ADN_ListViewItem *pItem                 = new ADN_ListViewItem(&list_,obj,1);
 
         // connect list item with object's name
-        pItem->Connect(0,static_cast<ZurbInfos*>(obj));
+        pItem->Connect(0,static_cast<UrbanInfos*>(obj));
 
         return pItem;
     }
 
 private:
-    ADN_CLV_Zurb_Type& operator=( const ADN_CLV_Zurb_Type& );
+    ADN_CLV_Urban_Type& operator=( const ADN_CLV_Urban_Type& );
 };
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Zurb_Type constructor
+// Name: ADN_ListView_Urban_Type constructor
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-ADN_ListView_Zurb_Type::ADN_ListView_Zurb_Type(QWidget * parent, const char * name, WFlags f)
+ADN_ListView_Urban_Type::ADN_ListView_Urban_Type(QWidget * parent, const char * name, WFlags f)
 :   ADN_ListView(parent,name,f)
 {
     // Add a column && disable sorting
@@ -64,41 +64,41 @@ ADN_ListView_Zurb_Type::ADN_ListView_Zurb_Type(QWidget * parent, const char * na
     setResizeMode( QListView::AllColumns );
 
     // Connector creation
-    pConnector_ = new ADN_CLV_Zurb_Type( *this );
+    pConnector_ = new ADN_CLV_Urban_Type( *this );
 
     this->SetDeletionEnabled( true );
 }
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Zurb_Type destructor
+// Name: ADN_ListView_Urban_Type destructor
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-ADN_ListView_Zurb_Type::~ADN_ListView_Zurb_Type()
+ADN_ListView_Urban_Type::~ADN_ListView_Urban_Type()
 {
     delete pConnector_;
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Zurb_Type::ConnectItem
+// Name: ADN_ListView_Urban_Type::ConnectItem
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-void ADN_ListView_Zurb_Type::ConnectItem( bool bConnect )
+void ADN_ListView_Urban_Type::ConnectItem( bool bConnect )
 {
     if( pCurData_ == 0 )
         return;
 
-    ZurbInfos* pInfos = (ZurbInfos*) pCurData_;
-    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Zurb_GUI::eNbrZurbGuiElements );
+    UrbanInfos* pInfos = (UrbanInfos*) pCurData_;
+    ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Urban_GUI::eNbrUrbanGuiElements );
 
-    vItemConnectors_[ADN_Zurb_GUI::eZurbName]->Connect( pInfos, bConnect );
+    vItemConnectors_[ADN_Urban_GUI::eUrbanName]->Connect( pInfos, bConnect );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_ListView_Zurb_Type::OnContextMenu
+// Name: ADN_ListView_Urban_Type::OnContextMenu
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-void  ADN_ListView_Zurb_Type::OnContextMenu( const QPoint& pt)
+void  ADN_ListView_Urban_Type::OnContextMenu( const QPoint& pt)
 {
     QPopupMenu popuMenu( this );
 
@@ -112,7 +112,7 @@ void  ADN_ListView_Zurb_Type::OnContextMenu( const QPoint& pt)
     case 0:
         {
             // create new sensor & add it to list
-            ZurbInfos* pNewInfo = new ZurbInfos();
+            UrbanInfos* pNewInfo = new UrbanInfos();
             pNewInfo->SetDataName( "le nom de la catégorie de volume" );
 
             ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
@@ -132,7 +132,7 @@ void  ADN_ListView_Zurb_Type::OnContextMenu( const QPoint& pt)
         }
     case 1:
         {
-            ZurbInfos* pCurSize=(ZurbInfos*)pCurData_;
+            UrbanInfos* pCurSize=(UrbanInfos*)pCurData_;
             if ( pCurSize )
             {
                 if( pCurSize->IsMultiRef() && ! ADN_GuiTools::MultiRefWarning() )

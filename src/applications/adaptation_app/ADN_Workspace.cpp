@@ -20,8 +20,8 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Categories_GUI.h"
 #include "ADN_Categories_Data.h"
-#include "ADN_Zurb_GUI.h"
-#include "ADN_Zurb_Data.h"
+#include "ADN_Urban_GUI.h"
+#include "ADN_Urban_Data.h"
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Equipement_Data.h"
 #include "ADN_Objects_GUI.h"
@@ -118,7 +118,7 @@ ADN_Workspace::ADN_Workspace()
 
     projectData_ = new ADN_Project_Data();
     elements_[eCategories]        = new ADN_WorkspaceElement< ADN_Categories_Data, ADN_Categories_GUI >( tr( "Categories" ) );
-    elements_[eZurb]        = new ADN_WorkspaceElement< ADN_Zurb_Data, ADN_Zurb_GUI >( tr( "Zurb" ) );
+    elements_[eUrban]        = new ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >( tr( "Urban" ) );
     elements_[eNBC]               = new ADN_WorkspaceElement< ADN_NBC_Datas, ADN_NBC_GUI >( tr( "NBC" ) );
     elements_[eLaunchers]         = new ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >( tr( "Launchers" ) );
     elements_[eEquipement]        = new ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >( tr( "Resources" ) );
@@ -174,7 +174,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
 
     // Force an order for the tabs. Combine some other tabs. Exclude others... All in all, has to be done by hand.
     mainWindow.AddPage( elements_[eCategories]->GetName(), * elements_[eCategories]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eZurb]->GetName(), * elements_[eZurb]->GetGuiABC().GetMainWidget() );
+    mainWindow.AddPage( elements_[eUrban]->GetName(), * elements_[eUrban]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eLaunchers]->GetName(), * elements_[eLaunchers]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eEquipement]->GetName(), * elements_[eEquipement]->GetGuiABC().GetMainWidget() );
     mainWindow.AddPage( elements_[eWeapons]->GetName(), * elements_[eWeapons]->GetGuiABC().GetMainWidget() );

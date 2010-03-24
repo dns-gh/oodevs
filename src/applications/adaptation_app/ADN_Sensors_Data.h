@@ -18,7 +18,7 @@
 #include "ADN_Type_Vector_ABC.h"
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Categories_Data.h"
-#include "ADN_Zurb_Data.h"
+#include "ADN_Urban_Data.h"
 #include "ADN_Objects_Data.h"
 #include "ADN_DataTreeNode_ABC.h"
 #include "ADN_Radars_Data.h"
@@ -236,7 +236,7 @@ public:
         MT_COPYNOTALLOWED( ModificatorUrbanBlockInfos )
 
     public:
-        ModificatorUrbanBlockInfos(ADN_Zurb_Data::ZurbInfos* ptr);
+        ModificatorUrbanBlockInfos(ADN_Urban_Data::UrbanInfos* ptr);
 
         virtual std::string GetNodeName();
         std::string GetItemName();
@@ -245,11 +245,11 @@ public:
         void WriteArchive( xml::xostream& output );
 
     public:
-        ADN_TypePtr_InVector_ABC<ADN_Zurb_Data::ZurbInfos>         ptrMaterial_;
+        ADN_TypePtr_InVector_ABC<ADN_Urban_Data::UrbanInfos>         ptrMaterial_;
         ADN_Type_Double                                                rCoeff_;
 
     public:
-        typedef ADN_Zurb_Data::ZurbInfos                  T_Item;
+        typedef ADN_Urban_Data::UrbanInfos                  T_Item;
 
         class Cmp : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
         {
@@ -266,14 +266,14 @@ public:
         class CmpRef : public std::unary_function< ModificatorUrbanBlockInfos* , bool >
         {
         public:
-            CmpRef(ADN_Zurb_Data::ZurbInfos* val) : val_(val) {}
+            CmpRef(ADN_Urban_Data::UrbanInfos* val) : val_(val) {}
             ~CmpRef(){}
 
             bool operator()( ModificatorUrbanBlockInfos* tgtnfos ) const 
             {   return tgtnfos->ptrMaterial_.GetData() == val_;}
 
         private:
-            ADN_Zurb_Data::ZurbInfos* val_;
+            ADN_Urban_Data::UrbanInfos* val_;
         };
     };
 

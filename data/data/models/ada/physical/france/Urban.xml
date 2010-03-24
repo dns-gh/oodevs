@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<urban xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Urban.xsd">
+  <urban-block-types>
+    <material-composition-types>
+      <material-composition-type name="Bois"/>
+      <material-composition-type name="Beton"/>
+      <material-composition-type name="Brique"/>
+      <material-composition-type name="Metal"/>
+      <material-composition-type name="Torchis"/>
+      <material-composition-type name="Prefabrique"/>
+      <material-composition-type name="Vegetation"/>
+    </material-composition-types>
+    <facade-types>
+      <facade-type name="Transparent"/>
+      <facade-type name="Semi-opaque"/>
+      <facade-type name="Opaque"/>
+    </facade-types>
+    <roof-shape-types>
+      <roof-shape-type name="Plat"/>
+      <roof-shape-type name="Pentu"/>
+    </roof-shape-types>
+  </urban-block-types>
+</urban>

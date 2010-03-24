@@ -9,24 +9,24 @@
 //
 //*****************************************************************************
 
-#ifndef __ADN_ListView_Zurb_Type_h_
-#define __ADN_ListView_Zurb_Type_h_
+#ifndef __ADN_ListView_Urban_Type_h_
+#define __ADN_ListView_Urban_Type_h_
 
 #include "ADN_ListView.h"
 
 
 // =============================================================================
-/** @class  ADN_ListView_Zurb_Type
-@brief  ADN_ListView_Zurb_Type
+/** @class  ADN_ListView_Urban_Type
+@brief  ADN_ListView_Urban_Type
 */
 // Created: SLG 2010-03-08
 // =============================================================================
-class ADN_ListView_Zurb_Type
+class ADN_ListView_Urban_Type
     : public ADN_ListView
 {
 public:
-    explicit ADN_ListView_Zurb_Type( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
-    virtual ~ADN_ListView_Zurb_Type();
+    explicit ADN_ListView_Urban_Type( QWidget* pParent = 0, const char* szName = 0, WFlags f = 0 );
+    virtual ~ADN_ListView_Urban_Type();
 
 private:
     void ConnectItem( bool bConnect );
@@ -34,4 +34,4 @@ private:
 };
 
 
-#endif // __ADN_ListView_Zurb_Type_h_
+#endif // __ADN_ListView_Urban_Type_h_

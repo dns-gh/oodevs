@@ -76,7 +76,7 @@
 #include "simulation_kernel/FormationFactory.h"
 #include "simulation_kernel/PopulationFactory.h"
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
-#include "simulation_kernel/ZurbType.h"
+#include "simulation_kernel/UrbanType.h"
 #include "Tools/MIL_IDManager.h"
 #include "Tools/MIL_ProfilerMgr.h"
 #include "Tools/MIL_Tools.h"
@@ -141,7 +141,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"         );
     InitializeType< PHY_LauncherType               >( xis, config, "launchers"          );
     InitializeType< PHY_ActiveProtection           >( xis, config, "active-protections" );
-    InitializeType< ZurbType                       >( xis, config, "zurb"               );
+    InitializeType< UrbanType                       >( xis, config, "urban"              );
     InitializeWeapons    ( xis, config, time );
     InitializeSensors    ( xis, config, time );
     InitializeComposantes( xis, config, time );

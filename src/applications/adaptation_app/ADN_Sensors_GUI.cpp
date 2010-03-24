@@ -355,7 +355,7 @@ void AddCells( ADN_Table* pTable, void* pData, int nRow, int& nCol, T& vVector, 
 ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 {
     ADN_Categories_Data::T_SizeInfos_Vector& sizes = ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos();
-    ADN_Categories_Data::T_SizeInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetZurb().GetData().GetMaterialsInfos();
+    ADN_Categories_Data::T_SizeInfos_Vector& materials = ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos();
 
     ADN_GuiBuilder builder;
     ADN_Table* pTable = builder.CreateTable( 0 );

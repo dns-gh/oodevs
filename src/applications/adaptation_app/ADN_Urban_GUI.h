@@ -9,14 +9,14 @@
 //
 //*****************************************************************************
 
-#ifndef __ADN_Zurb_GUI_h_
-#define __ADN_Zurb_GUI_h_
+#ifndef __ADN_Urban_GUI_h_
+#define __ADN_Urban_GUI_h_
 
 #include "ADN_GUI_ABC.h"
 #include <qobject.h>
 
-class ADN_Zurb_Data;
-class ADN_ListView_Zurb_Type;
+class ADN_Urban_Data;
+class ADN_ListView_Urban_Type;
 
 
 // =============================================================================
@@ -25,32 +25,32 @@ class ADN_ListView_Zurb_Type;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Zurb_GUI 
+class ADN_Urban_GUI 
     : public ADN_GUI_ABC
 {
     Q_OBJECT
 
 public:
 
-    enum E_ZurbGuiElements
+    enum E_UrbanGuiElements
     {
-        eZurbName,
-        eNbrZurbGuiElements
+        eUrbanName,
+        eNbrUrbanGuiElements
     };
 
 public:
-             ADN_Zurb_GUI( ADN_Zurb_Data& data );
-    virtual ~ADN_Zurb_GUI();
+             ADN_Urban_GUI( ADN_Urban_Data& data );
+    virtual ~ADN_Urban_GUI();
 
     void Build();
 
 private:
-    ADN_Zurb_Data& data_;
+    ADN_Urban_Data& data_;
 
-    ADN_ListView_Zurb_Type*           pListMaterial_;
-    ADN_ListView_Zurb_Type*           pListFacade_;
-    ADN_ListView_Zurb_Type*           pListRoofShape_;
+    ADN_ListView_Urban_Type*           pListMaterial_;
+    ADN_ListView_Urban_Type*           pListFacade_;
+    ADN_ListView_Urban_Type*           pListRoofShape_;
 };
 
 
-#endif // __ADN_Zurb_GUI_h_
+#endif // __ADN_Urban_GUI_h_

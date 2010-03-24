@@ -28,7 +28,7 @@
 #include "meteo/PHY_Lighting.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Simulation_kernel/UrbanModel.h"
-#include "Simulation_kernel/ZurbType.h"
+#include "Simulation_kernel/UrbanType.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Resolver.h"
 
@@ -136,7 +136,7 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , environmentFactors_  ( PHY_RawVisionData::eNbrVisionObjects         , 0. )
-    , urbanBlockFactors_   ( ZurbType::GetZurbType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
+    , urbanBlockFactors_   ( UrbanType::GetUrbanType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
     , rPopulationDensity_  ( 1. )
     , rPopulationFactor_   ( 1. )
     , isLimitedToSensors_  ( false ) // LTO
@@ -525,7 +525,7 @@ namespace
                 const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
                 if ( architecture )
                 {
-                    MT_Float rDistanceModificator = elements_[ ZurbType::GetZurbType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
+                    MT_Float rDistanceModificator = elements_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
                     rDistanceModificator <= MT_Epsilon ? rVisionNRJ_ = -1 : rVisionNRJ_ = rVisionNRJ_ + intersectionDistance * ( 1 - 1 / rDistanceModificator );
                 }
             }

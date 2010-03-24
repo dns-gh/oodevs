@@ -14,7 +14,7 @@
 // *****************************************************************************
 static const char* physicalXml =
 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>"
-"<physical>"
+"<physical xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"schemas/physical/Physical.xsd\">"
 "  <decisional file=\"Decisionnel.xml\"/>\n"
 "  <volumes file=\"Volumes.xml\"/>\n"
 "  <protections file=\"Protections.xml\"/>\n"
@@ -45,5 +45,5 @@ static const char* physicalXml =
 "  <models file=\"Modeles.xml\"/>\n"
 "  <missions file=\"Orders.xml\"/>\n"
 "  <object-names file=\"ObjectNames.xml\"/>\n"
-"  <object-names file=\"Zurb.xml\"/>\n"
+"  <urban file=\"Urban.xml\"/>\n"
 "</physical>";

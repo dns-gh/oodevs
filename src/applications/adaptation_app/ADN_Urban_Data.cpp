@@ -9,7 +9,7 @@
 //
 //*****************************************************************************
 #include "adaptation_app_pch.h"
-#include "ADN_Zurb_Data.h"
+#include "ADN_Urban_Data.h"
 
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
@@ -22,10 +22,10 @@
 
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data constructor
+// Name: ADN_Urban_Data constructor
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
-ADN_Zurb_Data::ADN_Zurb_Data()
+ADN_Urban_Data::ADN_Urban_Data()
 : ADN_Data_ABC()
 , vMaterials_()
 , vFacades_()
@@ -40,28 +40,28 @@ ADN_Zurb_Data::ADN_Zurb_Data()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data destructor
+// Name: ADN_Urban_Data destructor
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
-ADN_Zurb_Data::~ADN_Zurb_Data()
+ADN_Urban_Data::~ADN_Urban_Data()
 {
     Reset();
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::FilesNeeded
+// Name: ADN_Urban_Data::FilesNeeded
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
-void ADN_Zurb_Data::FilesNeeded(T_StringList& files) const
+void ADN_Urban_Data::FilesNeeded(T_StringList& files) const
 {
-    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szZurb_.GetData() );
+    files.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_.GetData() );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::Reset
+// Name: ADN_Urban_Data::Reset
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
-void ADN_Zurb_Data::Reset()
+void ADN_Urban_Data::Reset()
 {
     vMaterials_.Reset();
     vFacades_.Reset();
@@ -69,28 +69,28 @@ void ADN_Zurb_Data::Reset()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::Load
+// Name: ADN_Urban_Data::Load
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
-void ADN_Zurb_Data::Load()
+void ADN_Urban_Data::Load()
 {
     std::string szMaterialsFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szZurb_.GetData();
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_.GetData();
     xml::xifstream sizesInput( szMaterialsFile );
-    ReadZurb( sizesInput );
+    ReadUrban( sizesInput );
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::Save
+// Name: ADN_Urban_Data::Save
 // Created: SLG 2010-03-08
 //-----------------------------------------------------------------------------
-void ADN_Zurb_Data::Save()
+void ADN_Urban_Data::Save()
 {
     std::string szSizesFile= ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() 
-        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szZurb_.GetData();
+        + ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szUrban_.GetData();
     ADN_Tools::CreatePathToFile( szSizesFile );
     xml::xofstream sizeOutput( szSizesFile );
-    WriteZurb( sizeOutput );
+    WriteUrban( sizeOutput );
 }
 
 
@@ -133,12 +133,12 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::ReadZurb
+// Name: ADN_Urban_Data::ReadUrban
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::ReadZurb( xml::xistream& input )
+void ADN_Urban_Data::ReadUrban( xml::xistream& input )
 {
-    input >> xml::start( "zurb" )
+    input >> xml::start( "urban" )
           >> xml::start( "urban-block-types" );
     ReadMaterials( input );
     ReadFacades( input );
@@ -148,13 +148,13 @@ void ADN_Zurb_Data::ReadZurb( xml::xistream& input )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::WriteZurb
+// Name: ADN_Urban_Data::WriteUrban
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::WriteZurb( xml::xostream& output )
+void ADN_Urban_Data::WriteUrban( xml::xostream& output )
 {
-    output  << xml::start( "zurb" );
-    ADN_Tools::AddSchema( output, "Zurb" );
+    output  << xml::start( "urban" );
+    ADN_Tools::AddSchema( output, "Urban" );
     output  << xml::start( "urban-block-types" );
     WriteMaterials( output );
     WriteFacades( output );
@@ -164,44 +164,44 @@ void ADN_Zurb_Data::WriteZurb( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::ReadMaterials
+// Name: ADN_Urban_Data::ReadMaterials
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::ReadMaterials( xml::xistream& input )
+void ADN_Urban_Data::ReadMaterials( xml::xistream& input )
 {
     input >> xml::start( "material-composition-types" )
-          >> xml::list( "material-composition-type", *this, &ADN_Zurb_Data::ReadMaterial )
+          >> xml::list( "material-composition-type", *this, &ADN_Urban_Data::ReadMaterial )
           >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::ReadMaterial
+// Name: ADN_Urban_Data::ReadMaterial
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::ReadMaterial( xml::xistream& input )
+void ADN_Urban_Data::ReadMaterial( xml::xistream& input )
 {
     std::string strName = xml::attribute< std::string >( input, "name" );
-    T_ZurbInfos_Vector::iterator foundMaterial = std::find_if( vMaterials_.begin(), vMaterials_.end(), ADN_String_Cmp( strName ) );
+    T_UrbanInfos_Vector::iterator foundMaterial = std::find_if( vMaterials_.begin(), vMaterials_.end(), ADN_String_Cmp( strName ) );
     if( foundMaterial != vMaterials_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
 
-    ZurbInfos* pNewMaterial = new ZurbInfos(strName);
+    UrbanInfos* pNewMaterial = new UrbanInfos(strName);
     pNewMaterial->SetDataName( "le nom du type de materiau" );
     vMaterials_.AddItem( pNewMaterial );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::WriteMaterials
+// Name: ADN_Urban_Data::WriteMaterials
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::WriteMaterials( xml::xostream& output )
+void ADN_Urban_Data::WriteMaterials( xml::xostream& output )
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vMaterials_, StringExtractor() ) )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Duplicated volume type names" ).ascii() );
 
     output << xml::start( "material-composition-types" );
-    for( T_ZurbInfos_Vector::const_iterator itMaterial = vMaterials_.begin(); itMaterial != vMaterials_.end(); ++itMaterial )
+    for( T_UrbanInfos_Vector::const_iterator itMaterial = vMaterials_.begin(); itMaterial != vMaterials_.end(); ++itMaterial )
     {
         if( (*itMaterial)->GetData().empty() )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Invalid volume type name" ).ascii() );
@@ -215,44 +215,44 @@ void ADN_Zurb_Data::WriteMaterials( xml::xostream& output )
 
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::ReadFacades
+// Name: ADN_Urban_Data::ReadFacades
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::ReadFacades( xml::xistream& input )
+void ADN_Urban_Data::ReadFacades( xml::xistream& input )
 {
     input >> xml::start( "facade-types" )
-        >> xml::list( "facade-type", *this, &ADN_Zurb_Data::ReadFacade )
+        >> xml::list( "facade-type", *this, &ADN_Urban_Data::ReadFacade )
         >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::ReadFacade
+// Name: ADN_Urban_Data::ReadFacade
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::ReadFacade( xml::xistream& input )
+void ADN_Urban_Data::ReadFacade( xml::xistream& input )
 {
     std::string strName = xml::attribute< std::string >( input, "name" );
-    T_ZurbInfos_Vector::iterator foundFacade = std::find_if( vFacades_.begin(), vFacades_.end(), ADN_String_Cmp( strName ) );
+    T_UrbanInfos_Vector::iterator foundFacade = std::find_if( vFacades_.begin(), vFacades_.end(), ADN_String_Cmp( strName ) );
     if( foundFacade != vFacades_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
 
-    ZurbInfos* pNewFacade = new ZurbInfos(strName);
+    UrbanInfos* pNewFacade = new UrbanInfos(strName);
     pNewFacade->SetDataName( "le nom du type de facade" );
     vFacades_.AddItem( pNewFacade );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::WriteFacades
+// Name: ADN_Urban_Data::WriteFacades
 // Created: SLG 2010-03-10
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::WriteFacades( xml::xostream& output )
+void ADN_Urban_Data::WriteFacades( xml::xostream& output )
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vFacades_, StringExtractor() ) )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Duplicated volume type names" ).ascii() );
 
     output << xml::start( "facade-types" );
-    for( T_ZurbInfos_Vector::const_iterator itFacade = vFacades_.begin(); itFacade != vFacades_.end(); ++itFacade )
+    for( T_UrbanInfos_Vector::const_iterator itFacade = vFacades_.begin(); itFacade != vFacades_.end(); ++itFacade )
     {
         if( (*itFacade)->GetData().empty() )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Invalid volume type name" ).ascii() );
@@ -265,44 +265,44 @@ void ADN_Zurb_Data::WriteFacades( xml::xostream& output )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::ReadRoofShapes
+// Name: ADN_Urban_Data::ReadRoofShapes
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::ReadRoofShapes( xml::xistream& input )
+void ADN_Urban_Data::ReadRoofShapes( xml::xistream& input )
 {
     input >> xml::start( "roof-shape-types" )
-        >> xml::list( "roof-shape-type", *this, &ADN_Zurb_Data::ReadRoofShape )
+        >> xml::list( "roof-shape-type", *this, &ADN_Urban_Data::ReadRoofShape )
         >> xml::end();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::ReadRoofShape
+// Name: ADN_Urban_Data::ReadRoofShape
 // Created: SLG 2010-03-08
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::ReadRoofShape( xml::xistream& input )
+void ADN_Urban_Data::ReadRoofShape( xml::xistream& input )
 {
     std::string strName = xml::attribute< std::string >( input, "name" );
-    T_ZurbInfos_Vector::iterator foundRoofShape = std::find_if( vRoofShapes_.begin(), vRoofShapes_.end(), ADN_String_Cmp( strName ) );
+    T_UrbanInfos_Vector::iterator foundRoofShape = std::find_if( vRoofShapes_.begin(), vRoofShapes_.end(), ADN_String_Cmp( strName ) );
     if( foundRoofShape != vRoofShapes_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Facade - Duplicated material type name '%1'" ).arg( strName.c_str() ).ascii() );
 
-    ZurbInfos* pNewRoofShape = new ZurbInfos(strName);
+    UrbanInfos* pNewRoofShape = new UrbanInfos(strName);
     pNewRoofShape->SetDataName( "le nom du type de facade" );
     vRoofShapes_.AddItem( pNewRoofShape );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Zurb_Data::WriteRoofShapes
+// Name: ADN_Urban_Data::WriteRoofShapes
 // Created: SLG 2010-03-10
 // -----------------------------------------------------------------------------
-void ADN_Zurb_Data::WriteRoofShapes( xml::xostream& output )
+void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output )
 {
     // Check the sizes data for duplicates.
     if( HasDuplicates( vRoofShapes_, StringExtractor() ) )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Material - Duplicated volume type names" ).ascii() );
 
     output << xml::start( "roof-shape-types" );
-    for( T_ZurbInfos_Vector::const_iterator itRoofShape = vRoofShapes_.begin(); itRoofShape != vRoofShapes_.end(); ++itRoofShape )
+    for( T_UrbanInfos_Vector::const_iterator itRoofShape = vRoofShapes_.begin(); itRoofShape != vRoofShapes_.end(); ++itRoofShape )
     {
         if( (*itRoofShape)->GetData().empty() )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "RoofShape - Invalid volume type name" ).ascii() );

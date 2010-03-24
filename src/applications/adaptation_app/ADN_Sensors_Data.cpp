@@ -341,10 +341,10 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // Name: ModificatorEnvironmentInfos::ModificatorUrbanBlockInfos
 // Created: SLG 2010-03-02
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos(ADN_Zurb_Data::ZurbInfos* ptr)
+ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos(ADN_Urban_Data::UrbanInfos* ptr)
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
-, ptrMaterial_(ADN_Workspace::GetWorkspace().GetZurb().GetData().GetMaterialsInfos(),(ADN_Zurb_Data::ZurbInfos*)ptr)
+, ptrMaterial_(ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(),(ADN_Urban_Data::UrbanInfos*)ptr)
 , rCoeff_(0.0)
 {
     BindExistenceTo(&ptrMaterial_);
@@ -674,7 +674,7 @@ ADN_Sensors_Data::SensorInfos::SensorInfos()
 , vModifIlluminations_( false )
 , vModifWeather_( false )
 , vModifEnvironments_( false )
-, vModifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetZurb().GetData().GetMaterialsInfos() )
+, vModifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 , vModifStance_( false )
 , vModifTargetStance_( false )
 , populationInfos_ ()

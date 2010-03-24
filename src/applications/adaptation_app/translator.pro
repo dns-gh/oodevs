@@ -24,8 +24,8 @@ ADN_Breakdowns_PartsTable.cpp \
 ADN_Categories_AttritionEffect_Table.cpp \
 ADN_Categories_Data.cpp \
 ADN_Categories_GUI.cpp \
-ADN_Zurb_Data.cpp \
-ADN_Zurb_GUI.cpp \
+ADN_Urban_Data.cpp \
+ADN_Urban_GUI.cpp \
 ADN_ChangeValueCommand_Bool.cpp \
 ADN_ChangeValueCommand_Double.cpp \
 ADN_ChangeValueCommand_Enum.inl \
