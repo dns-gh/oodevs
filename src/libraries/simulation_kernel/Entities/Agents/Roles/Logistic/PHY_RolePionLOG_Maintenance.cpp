@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePionLOG_Maintenance.h"
+#include "protocol/ClientSenders.h"
 #include "PHY_MaintenanceConsign_ABC.h"
 #include "PHY_MaintenanceRepairConsign.h"
 #include "PHY_MaintenanceTransportConsign.h"
@@ -24,7 +25,6 @@
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Network/NET_Publisher_ABC.h"
-#include "protocol/ClientSenders.h"
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "simulation_kernel/OnComponentFunctor_ABC.h"
 #include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
