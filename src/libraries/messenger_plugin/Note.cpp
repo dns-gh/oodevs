@@ -35,7 +35,7 @@ Note::Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest
 // Name: Note constructor
 // Created: HBD 2010-02-17
 // -----------------------------------------------------------------------------
-Note::Note(unsigned long id, std::vector<std::string> values, unsigned int parent, std::string currentTime )
+Note::Note(unsigned long id, std::vector<std::string>& values, unsigned int parent, std::string currentTime )
     : id_( id )
     , name_( values[ 0 ] )
     , number_( values[ 2 ] )

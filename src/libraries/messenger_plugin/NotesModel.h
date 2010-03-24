@@ -76,7 +76,7 @@ private:
     void         HandleRequestDestructCascade( Note* note );
     void         WriteNote( const Note& note, std::ofstream& file, int& lineNumber, int parentLine ) const;
     void         ReadNote( const std::string& input, std::vector< unsigned int >& notes );
-    unsigned int CreateNote( std::vector<std::string> note, const unsigned int parent );
+    unsigned int CreateNote( std::vector<std::string>& note, const unsigned int parent );
     //@}
 
 private:

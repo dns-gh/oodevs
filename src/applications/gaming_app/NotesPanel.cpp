@@ -14,12 +14,12 @@
 #include "clients_kernel/Controller.h"
 #include "gaming/Tools.h"
 #include "gaming/Note.h"
+#include "gaming/Simulation.h"
 #include "gaming/NotesModel.h"
 #include "protocol/Publisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 
-
-
+#include <qmessagebox.h>
 
 // -----------------------------------------------------------------------------
 // Name: NotesPanel constructor
@@ -157,6 +157,12 @@ void NotesPanel::NotifyDeleted( const Note& element )
 {
     if( QListViewItem* item = FindItem( &element ))
     {
+        if ( element.GetId() == noteDialog_->GetCurrentNoteEdited())
+        {
+            noteDialog_->SetUpdate( false );
+            QMessageBox::information( this, tools::translate( "Notes", "Current note edited has been deleted" ),
+                tools::translate( "Notes", "The current note edited will be recreated if"), QMessageBox::Yes );
+        }
         itemsList_.erase( item );
         delete item;
     }
@@ -279,3 +285,17 @@ void NotesPanel::UpdateNote()
    }  
     noteDialog_->show(); 
 }   
+
+// -----------------------------------------------------------------------------
+// Name: NotesPanel::NotifyUpdated
+// Created: HBD 2010-03-22
+// -----------------------------------------------------------------------------
+void NotesPanel::NotifyUpdated( const Simulation& simulation )
+{
+    if( !simulation.IsConnected() )
+    {
+        notes_->clear();
+        itemsList_.clear();
+        model_.Clear();
+     }
+}

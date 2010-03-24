@@ -36,7 +36,7 @@ class Publisher_ABC;
 class NotesPanel : public QDockWindow
                  , public tools::Observer_ABC
                  , public tools::ElementObserver_ABC< Note >
-{
+                 , public tools::ElementObserver_ABC< Simulation >{
    Q_OBJECT;
 
 public:
@@ -72,6 +72,8 @@ private:
     virtual void NotifyCreated( const Note& element );
     virtual void NotifyUpdated( const Note& element );
     virtual void NotifyDeleted( const Note& element );
+    virtual void NotifyUpdated( const Simulation& simulation );
+
     void Display( const Note& note, QListViewItem* item );
 
     QListViewItem*  FindItem( unsigned int parent ) const;

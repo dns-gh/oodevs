@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     Note(unsigned long id, const MsgsClientToMessenger::MsgNoteCreationRequest& message, std::string currentTime );
-             Note(unsigned long id, std::vector<std::string> values, unsigned int parent, std::string currentTime );
+             Note(unsigned long id, std::vector<std::string>& values, unsigned int parent, std::string currentTime );
     virtual ~Note();
     //@}
 

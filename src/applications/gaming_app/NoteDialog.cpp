@@ -14,6 +14,8 @@
 #include "gaming/Note.h"
 #include "protocol/Publisher_ABC.h"
 #include "protocol/MessengerSenders.h"
+#include "gaming/Simulation.h"
+
 #include <qpushbutton.h>
 #include <qlabel.h>
 #include <qtextview.h>
@@ -141,7 +143,11 @@ void NoteDialog::OnReject()
 // -----------------------------------------------------------------------------
 void NoteDialog::SetParent(unsigned int note)
 {
-    note_ = note;
+     update_ = false;
+     note_ = note;
+     textName_->clear();
+     textId_->clear();
+     textDesc_->clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -156,4 +162,25 @@ void NoteDialog::SetUpdate(const Note& note)
     textDesc_->setText(note.GetDesc());
     textId_->setText(note.GetNumber());
     textName_->setText(note.GetName());
+}
+
+// -----------------------------------------------------------------------------
+// Name: NoteDialog::GetCurrentNoteEdited
+// Created: HBD 2010-03-22
+// -----------------------------------------------------------------------------
+unsigned int NoteDialog::GetCurrentNoteEdited()
+{
+    if ( isShown() && update_ )
+        return noteId_;
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NoteDialog::SetUpdate
+// Created: HBD 2010-02-10
+// -----------------------------------------------------------------------------
+void NoteDialog::SetUpdate(bool up)
+{
+    update_ = up;
+    note_ = 0;
 }

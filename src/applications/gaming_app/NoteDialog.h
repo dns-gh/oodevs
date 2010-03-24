@@ -12,8 +12,10 @@
 
 #include <qdialog.h>
 #include <qtextedit.h>
+
 class Note;
 class Publisher_ABC;
+class Simulation;
 
 // =============================================================================
 /** @class  NoteDialog
@@ -33,8 +35,10 @@ public:
 
     //! @name Operations
     //@{
-    void SetParent( unsigned int note );
-    void SetUpdate( const Note& note );
+    void         SetParent( unsigned int note );
+    void         SetUpdate( const Note& note );
+    void         SetUpdate( bool updateStatus );
+    unsigned int GetCurrentNoteEdited();
     //@}
 
 private slots:

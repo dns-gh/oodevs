@@ -69,6 +69,7 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteCreationRequ
    } 
    note->SendCreation( clients_ );
    note.release();
+   SaveNotes( file_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +87,10 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteDestructionR
         if ( message.delete_all() )
             HandleRequestDestructCascade( note );
         else
+      
             HandleRequestDestructSingle( note );
    }
+   SaveNotes( file_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -117,6 +120,7 @@ void NotesModel::HandleRequest( const MsgsClientToMessenger::MsgNoteUpdateReques
         note->Update( message, currentTime_ );
         note->SendUpdate( clients_, false );
     }
+    SaveNotes( file_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -264,18 +268,18 @@ void NotesModel::ReadNote( const std::string& input, std::vector< unsigned int >
 // Name: NotesModel::CreateNote
 // Created: HBD 2010-02-16
 // -----------------------------------------------------------------------------
-unsigned int NotesModel::CreateNote( std::vector< std::string > fields, const unsigned int parent )
+unsigned int NotesModel::CreateNote( std::vector< std::string >& fields, const unsigned int parent )
 {
     unsigned int id = idManager_.NextId();
     boost::algorithm::replace_all( fields[3], "<br>", "\n" );
-    boost::posix_time::ptime time = boost::posix_time::from_iso_string( fields[4] );
-    fields[4] = boost::posix_time::to_simple_string(time);
-    time = boost::posix_time::from_iso_string( fields[5] );
-    fields[5] = boost::posix_time::to_simple_string(time);
+//    boost::posix_time::ptime time = boost::posix_time::from_iso_string( fields[4] );
+//    fields[4] = boost::posix_time::to_simple_string(time);
+//    time = boost::posix_time::from_iso_string( fields[5] );
+//    fields[5] = boost::posix_time::to_simple_string(time);
 
     std::auto_ptr< Note > note( new Note( id, fields, parent, currentTime_ ) );
     Register( note->GetId(), *note );
-    if( note->GetParent() != 0 )
+    if( note->GetParent() != 0 )    
     {
         Note *parent = Find( note->GetParent() );
         parent->AddChild( note->GetId() );
