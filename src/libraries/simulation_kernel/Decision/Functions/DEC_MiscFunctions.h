@@ -52,6 +52,7 @@ public:
     template< typename T > static void ReportPionAutomate       ( T& caller, int type, int reportId, DEC_Decision_ABC* pion, DEC_Decision_ABC* automate );
     template< typename T > static void ReportPopulationKnowledge( T& caller, int type, int reportId, int populationKnowledge );
     template< typename T > static void ReportTirPion            ( T& caller, int type, int reportId, int id );
+    template< typename T > static void ReportString             ( T& caller, int type, int reportId, const std::string& message );
 
     template< typename T > static void Trace                      ( const T& caller, const std::string& message );
     template< typename T > static void Debug                      ( const T& caller, const std::string& callerType, const std::string& message );

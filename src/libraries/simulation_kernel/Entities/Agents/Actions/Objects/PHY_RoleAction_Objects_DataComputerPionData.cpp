@@ -68,7 +68,7 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
         case eBypass   : rDeltaTime = composante.GetBypassTime      ( pObject_->GetType(), (*pObject_)().GetSizeCoef(), (*pObject_)().IsMined() ); break;
         default: assert( false );
     }
-    assert( rDeltaTime >= 0. );
+    //@TODO MGD rDeltaTime can be negative to accelerate work with EBG, need to replace algorithm
     if( rDeltaTime == std::numeric_limits< MT_Float >::max() )
         return;
     workingComposantes_.push_back( std::make_pair( &composante, rDeltaTime ) );

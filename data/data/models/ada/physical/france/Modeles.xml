@@ -50,7 +50,10 @@
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Genie">
       <missions>
+        <mission name="GEN Realiser Travaux"/>
         <mission name="Build"/>
+        <mission name="Valorize"/>
+        <mission name="Activate"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">

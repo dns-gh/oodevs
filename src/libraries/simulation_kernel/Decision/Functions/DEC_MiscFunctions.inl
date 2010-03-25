@@ -227,6 +227,23 @@ void DEC_MiscFunctions::ReportTirPion( T& caller, int type, int reportId, int id
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_MiscFunctions::ReportString
+// Created: MGD 2010-03-24
+// -----------------------------------------------------------------------------
+template< typename T >
+void DEC_MiscFunctions::ReportString( T& caller, int type, int reportId, const std::string& message )
+{
+    const MIL_Report* pReport = MIL_Report::Find( reportId );
+    if( pReport )
+    {
+        std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > params;
+        boost::shared_ptr<MIL_MissionParameter_ABC> missionParam( MIL_MissionParameterFactory::Create( message ) );
+        params.push_back( missionParam );
+        pReport->SendReportWithTypeAsArgument( caller, MIL_Report::E_Type( type ), reportId, params );
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_PopulationFunctions::Trace
 // Created: AHC 2009-07-30

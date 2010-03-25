@@ -806,7 +806,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportPopulationKnowledge< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     brain.RegisterFunction( "DEC_RC_TirPion",
         boost::function< void ( int, int, int ) >( boost::bind( &DEC_MiscFunctions::ReportTirPion< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
-    
+    brain.RegisterFunction( "DEC_RC_String",
+        boost::function< void ( int, int, const std::string& ) >( boost::bind( &DEC_MiscFunctions::ReportString< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     // Hirarchie
     brain.RegisterFunction( "DEC_Pion_PionsAvecPC", boost::bind( &DEC_AgentFunctions::GetPionsWithPC, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Pion_PionsSansPC", boost::bind( &DEC_AgentFunctions::GetPionsWithoutPC, boost::ref( GetPion() ) ) );

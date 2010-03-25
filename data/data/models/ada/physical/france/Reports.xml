@@ -354,4 +354,16 @@
     <parameter type="Numeric"/>
   </report>
   <report id="258" message="execution attentat"/>
+  <report id="259" message="debut mission : %1">
+    <parameter type="String"/>
+  </report>
+  <report id="260" message="fin mission : %1">
+    <parameter type="String"/>
+  </report>
+  <report id="261" message="debut de la phase : %1">
+    <parameter type="String"/>
+  </report>
+  <report id="262" message="fin de la phase : %1">
+    <parameter type="String"/>
+  </report>
 </reports>
