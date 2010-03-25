@@ -487,58 +487,6 @@ MT_Float PHY_SensorTypeAgent::ComputeExtinction( const PHY_RawVisionDataIterator
     return rDistanceModificator <= MT_Epsilon ? -1. : rVisionNRJ - env.Length() / rDistanceModificator ;
 }
 
-namespace
-{
-    class UrbanBlockUrbanExtinctionComputer : public urban::TerrainObjectVisitor_ABC
-        , public boost::noncopyable
-    {
-    public:
-        UrbanBlockUrbanExtinctionComputer( const PHY_SensorTypeAgent::T_FactorVector& elements, const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ, bool& bIsAroundBU )
-            : elements_( elements ), vSource_( vSource ), vTarget_( vTarget ), rVisionNRJ_( rVisionNRJ ), bIsAroundBU_( bIsAroundBU ) {}
-        virtual ~UrbanBlockUrbanExtinctionComputer() {}
-
-        virtual void Visit( const urban::TerrainObject_ABC& object )
-        {
-            geometry::Point2f vSourcePoint( vSource_.rX_, vSource_.rY_  );
-            geometry::Point2f vTargetPoint( vTarget_.rX_, vTarget_.rY_ );
-            const geometry::Polygon2f* footPrint = object.GetFootprint();
-            std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
-            if ( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
-            {
-                bIsAroundBU_ = true;
-                float intersectionDistance = 0;
-                std::sort( intersectPoints.begin(), intersectPoints.end() );
-                if ( intersectPoints.size() == 1 )
-                {
-                    if( footPrint->IsInside( vSourcePoint ) )
-                        intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
-                    else if( footPrint->IsInside( vTargetPoint ) )
-                        intersectionDistance = vTargetPoint.Distance( *intersectPoints.begin() );
-                }
-                else if ( intersectPoints.empty() )
-                    intersectionDistance = vSourcePoint.Distance( vTargetPoint );
-                else
-                    intersectionDistance = (*intersectPoints.begin()).Distance( *intersectPoints.rbegin() );
-
-                const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
-                if ( architecture )
-                {
-                    MT_Float rDistanceModificator = elements_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
-                    rDistanceModificator <= MT_Epsilon ? rVisionNRJ_ = -1 : rVisionNRJ_ = rVisionNRJ_ + intersectionDistance * ( 1 - 1 / rDistanceModificator );
-                }
-            }
-        }
-
-    private:
-        const PHY_SensorTypeAgent::T_FactorVector& elements_;
-        MT_Vector2D vSource_;
-        MT_Vector2D vTarget_;
-        MT_Float& rVisionNRJ_;
-        bool& bIsAroundBU_;
-    };
-
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::ComputeUrbanExtinction
 // Created: SLG 2010-03-02
@@ -546,8 +494,55 @@ namespace
 bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const
 {
     bool bIsAroundBU = false;
-    UrbanBlockUrbanExtinctionComputer visitor( urbanBlockFactors_, vSource, vTarget, rVisionNRJ, bIsAroundBU );
-    UrbanModel::GetSingleton().GetModel().Accept( visitor );
+
+    geometry::Point2f vSourcePoint( static_cast< float >( vSource.rX_ ), static_cast< float >( vSource.rY_ ) );
+    geometry::Point2f vTargetPoint( static_cast< float >( vTarget.rX_ ), static_cast< float >( vTarget.rY_ ) );
+
+    geometry::Point2f center( ( vSourcePoint.X() + vTargetPoint.X() ) * 0.5f, ( vSourcePoint.Y() + vTargetPoint.Y() ) * 0.5f );
+    float radius = vSourcePoint.Distance( vTargetPoint ) * 0.5f;
+
+    std::vector< const urban::TerrainObject_ABC* > list;
+    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( center, radius, list );
+
+    if( !list.empty() )
+    {
+        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end(); it++ )
+        {
+            const urban::TerrainObject_ABC& object = **it;
+
+            const urban::Architecture* architecture = object.RetrievePhysicalFeature< urban::Architecture >();
+
+            if( architecture == 0 && bIsAroundBU == true )
+                continue;
+
+            const geometry::Polygon2f* footPrint = object.GetFootprint();
+            std::vector< geometry::Point2f > intersectPoints = footPrint->Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
+            if ( !intersectPoints.empty() || footPrint->IsInside( vSourcePoint ) || footPrint->IsInside( vTargetPoint ) )
+            {
+                bIsAroundBU = true;
+                if( architecture != 0 )
+                {
+                    float intersectionDistance = 0;
+                    std::sort( intersectPoints.begin(), intersectPoints.end() );
+                    if ( intersectPoints.size() == 1 )
+                    {
+                        if( footPrint->IsInside( vSourcePoint ) )
+                            intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
+                        else if( footPrint->IsInside( vTargetPoint ) )
+                            intersectionDistance = vTargetPoint.Distance( *intersectPoints.begin() );
+                    }
+                    else if ( intersectPoints.empty() )
+                        intersectionDistance = vSourcePoint.Distance( vTargetPoint );
+                    else
+                        intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
+
+                    MT_Float rDistanceModificator = urbanBlockFactors_[ UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId() ];
+                    rDistanceModificator <= MT_Epsilon ? rVisionNRJ = -1 : rVisionNRJ = rVisionNRJ + intersectionDistance * ( 1 - 1 / rDistanceModificator );
+                }
+            }
+        }
+    }
+
     return bIsAroundBU;
 }
 
