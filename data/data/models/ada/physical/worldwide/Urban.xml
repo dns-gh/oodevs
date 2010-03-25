@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<zurb xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Zurb.xsd">
+<urban xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Urban.xsd">
   <urban-block-types>
     <material-composition-types>
       <material-composition-type name="Bois"/>
@@ -20,4 +20,4 @@
       <roof-shape-type name="Pentu"/>
     </roof-shape-types>
   </urban-block-types>
-</zurb>
+</urban>
