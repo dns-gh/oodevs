@@ -22,6 +22,8 @@
 #include <google/protobuf/repeated_field.h>
 #include <google/protobuf/extension_set.h>
 #include <google/protobuf/generated_message_reflection.h>
+#include "Common.pb.h"
+#include "Version.pb.h"
 
 namespace MsgsAdminToLauncher {
 
@@ -30,7 +32,367 @@ void  protobuf_AddDesc_AdminToLauncher_2eproto();
 void protobuf_AssignDesc_AdminToLauncher_2eproto();
 void protobuf_ShutdownFile_AdminToLauncher_2eproto();
 
+class MsgConnectionRequest;
+class MsgExercicesListRequest;
+class MsgControlStart;
+class MsgControlStop;
 
+// ===================================================================
+
+class MsgConnectionRequest : public ::google::protobuf::Message {
+ public:
+  MsgConnectionRequest();
+  virtual ~MsgConnectionRequest();
+  
+  MsgConnectionRequest(const MsgConnectionRequest& from);
+  
+  inline MsgConnectionRequest& operator=(const MsgConnectionRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgConnectionRequest& default_instance();
+  void Swap(MsgConnectionRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgConnectionRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgConnectionRequest& from);
+  void MergeFrom(const MsgConnectionRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required .Version.ProtocolVersion version = 1;
+  inline bool has_version() const;
+  inline void clear_version();
+  static const int kVersionFieldNumber = 1;
+  inline const ::Version::ProtocolVersion& version() const;
+  inline ::Version::ProtocolVersion* mutable_version();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::Version::ProtocolVersion* version_;
+  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
+  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
+  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgConnectionRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgExercicesListRequest : public ::google::protobuf::Message {
+ public:
+  MsgExercicesListRequest();
+  virtual ~MsgExercicesListRequest();
+  
+  MsgExercicesListRequest(const MsgExercicesListRequest& from);
+  
+  inline MsgExercicesListRequest& operator=(const MsgExercicesListRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgExercicesListRequest& default_instance();
+  void Swap(MsgExercicesListRequest* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgExercicesListRequest* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgExercicesListRequest& from);
+  void MergeFrom(const MsgExercicesListRequest& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional int32 context = 1 [default = 0];
+  inline bool has_context() const;
+  inline void clear_context();
+  static const int kContextFieldNumber = 1;
+  inline ::google::protobuf::int32 context() const;
+  inline void set_context(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 context_;
+  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
+  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
+  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgExercicesListRequest* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgControlStart : public ::google::protobuf::Message {
+ public:
+  MsgControlStart();
+  virtual ~MsgControlStart();
+  
+  MsgControlStart(const MsgControlStart& from);
+  
+  inline MsgControlStart& operator=(const MsgControlStart& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlStart& default_instance();
+  void Swap(MsgControlStart* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlStart* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlStart& from);
+  void MergeFrom(const MsgControlStart& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string exercise_name = 1;
+  inline bool has_exercise_name() const;
+  inline void clear_exercise_name();
+  static const int kExerciseNameFieldNumber = 1;
+  inline const ::std::string& exercise_name() const;
+  inline void set_exercise_name(const ::std::string& value);
+  inline void set_exercise_name(const char* value);
+  inline void set_exercise_name(const char* value, size_t size);
+  inline ::std::string* mutable_exercise_name();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* exercise_name_;
+  static const ::std::string _default_exercise_name_;
+  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
+  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
+  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlStart* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgControlStop : public ::google::protobuf::Message {
+ public:
+  MsgControlStop();
+  virtual ~MsgControlStop();
+  
+  MsgControlStop(const MsgControlStop& from);
+  
+  inline MsgControlStop& operator=(const MsgControlStop& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgControlStop& default_instance();
+  void Swap(MsgControlStop* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgControlStop* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgControlStop& from);
+  void MergeFrom(const MsgControlStop& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string exercise_name = 1;
+  inline bool has_exercise_name() const;
+  inline void clear_exercise_name();
+  static const int kExerciseNameFieldNumber = 1;
+  inline const ::std::string& exercise_name() const;
+  inline void set_exercise_name(const ::std::string& value);
+  inline void set_exercise_name(const char* value);
+  inline void set_exercise_name(const char* value, size_t size);
+  inline ::std::string* mutable_exercise_name();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* exercise_name_;
+  static const ::std::string _default_exercise_name_;
+  friend void  protobuf_AddDesc_AdminToLauncher_2eproto();
+  friend void protobuf_AssignDesc_AdminToLauncher_2eproto();
+  friend void protobuf_ShutdownFile_AdminToLauncher_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgControlStop* default_instance_;
+};
 // ===================================================================
 
 
@@ -39,8 +401,136 @@ void protobuf_ShutdownFile_AdminToLauncher_2eproto();
 
 // ===================================================================
 
+// MsgConnectionRequest
 
-// ===================================================================
+// required .Version.ProtocolVersion version = 1;
+inline bool MsgConnectionRequest::has_version() const {
+  return _has_bit(0);
+}
+inline void MsgConnectionRequest::clear_version() {
+  if (version_ != NULL) version_->::Version::ProtocolVersion::Clear();
+  _clear_bit(0);
+}
+inline const ::Version::ProtocolVersion& MsgConnectionRequest::version() const {
+  return version_ != NULL ? *version_ : *default_instance_->version_;
+}
+inline ::Version::ProtocolVersion* MsgConnectionRequest::mutable_version() {
+  _set_bit(0);
+  if (version_ == NULL) version_ = new ::Version::ProtocolVersion;
+  return version_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgExercicesListRequest
+
+// optional int32 context = 1 [default = 0];
+inline bool MsgExercicesListRequest::has_context() const {
+  return _has_bit(0);
+}
+inline void MsgExercicesListRequest::clear_context() {
+  context_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgExercicesListRequest::context() const {
+  return context_;
+}
+inline void MsgExercicesListRequest::set_context(::google::protobuf::int32 value) {
+  _set_bit(0);
+  context_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgControlStart
+
+// required string exercise_name = 1;
+inline bool MsgControlStart::has_exercise_name() const {
+  return _has_bit(0);
+}
+inline void MsgControlStart::clear_exercise_name() {
+  if (exercise_name_ != &_default_exercise_name_) {
+    exercise_name_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& MsgControlStart::exercise_name() const {
+  return *exercise_name_;
+}
+inline void MsgControlStart::set_exercise_name(const ::std::string& value) {
+  _set_bit(0);
+  if (exercise_name_ == &_default_exercise_name_) {
+    exercise_name_ = new ::std::string;
+  }
+  exercise_name_->assign(value);
+}
+inline void MsgControlStart::set_exercise_name(const char* value) {
+  _set_bit(0);
+  if (exercise_name_ == &_default_exercise_name_) {
+    exercise_name_ = new ::std::string;
+  }
+  exercise_name_->assign(value);
+}
+inline void MsgControlStart::set_exercise_name(const char* value, size_t size) {
+  _set_bit(0);
+  if (exercise_name_ == &_default_exercise_name_) {
+    exercise_name_ = new ::std::string;
+  }
+  exercise_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgControlStart::mutable_exercise_name() {
+  _set_bit(0);
+  if (exercise_name_ == &_default_exercise_name_) {
+    exercise_name_ = new ::std::string;
+  }
+  return exercise_name_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgControlStop
+
+// required string exercise_name = 1;
+inline bool MsgControlStop::has_exercise_name() const {
+  return _has_bit(0);
+}
+inline void MsgControlStop::clear_exercise_name() {
+  if (exercise_name_ != &_default_exercise_name_) {
+    exercise_name_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& MsgControlStop::exercise_name() const {
+  return *exercise_name_;
+}
+inline void MsgControlStop::set_exercise_name(const ::std::string& value) {
+  _set_bit(0);
+  if (exercise_name_ == &_default_exercise_name_) {
+    exercise_name_ = new ::std::string;
+  }
+  exercise_name_->assign(value);
+}
+inline void MsgControlStop::set_exercise_name(const char* value) {
+  _set_bit(0);
+  if (exercise_name_ == &_default_exercise_name_) {
+    exercise_name_ = new ::std::string;
+  }
+  exercise_name_->assign(value);
+}
+inline void MsgControlStop::set_exercise_name(const char* value, size_t size) {
+  _set_bit(0);
+  if (exercise_name_ == &_default_exercise_name_) {
+    exercise_name_ = new ::std::string;
+  }
+  exercise_name_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgControlStop::mutable_exercise_name() {
+  _set_bit(0);
+  if (exercise_name_ == &_default_exercise_name_) {
+    exercise_name_ = new ::std::string;
+  }
+  return exercise_name_;
+}
 
 
 }  // namespace MsgsAdminToLauncher
