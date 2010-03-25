@@ -514,8 +514,6 @@ namespace
                         intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
                     else if( footPrint->IsInside( vTargetPoint ) )
                         intersectionDistance = vTargetPoint.Distance( *intersectPoints.begin() );
-                    else
-                        throw std::exception( "géométriquement impossible" );
                 }
                 else if ( intersectPoints.empty() )
                     intersectionDistance = vSourcePoint.Distance( vTargetPoint );
