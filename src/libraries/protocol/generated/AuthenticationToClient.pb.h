@@ -295,7 +295,7 @@ class MsgProfileCreation : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
+  // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
   inline bool has_profile() const;
   inline void clear_profile();
   static const int kProfileFieldNumber = 1;
@@ -1611,7 +1611,7 @@ inline ::MsgsAuthenticationToClient::MsgProfile* MsgAuthenticationResponse::muta
 
 // MsgProfileCreation
 
-// required .MsgsAuthenticationToClient.MsgProfile profile = 1;
+// optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
 inline bool MsgProfileCreation::has_profile() const {
   return _has_bit(0);
 }

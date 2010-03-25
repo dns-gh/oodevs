@@ -12,7 +12,7 @@ message MsgAuthenticationResponse {
 }
 
 message MsgProfileCreation {
-    required MsgProfile profile = 1;
+    optional MsgProfile profile = 1;
 }
 
 message MsgProfileCreationRequestAck {

@@ -374,7 +374,7 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
     " \001(\0132&.MsgsAuthenticationToClient.MsgPro"
     "file\"+\n\tErrorCode\022\013\n\007success\020\000\022\021\n\rinvali"
     "d_login\020\001\"M\n\022MsgProfileCreation\0227\n\007profi"
-    "le\030\001 \002(\0132&.MsgsAuthenticationToClient.Ms"
+    "le\030\001 \001(\0132&.MsgsAuthenticationToClient.Ms"
     "gProfile\"\335\001\n\034MsgProfileCreationRequestAc"
     "k\022\r\n\005login\030\001 \002(\t\022V\n\nerror_code\030\002 \002(\0162B.M"
     "sgsAuthenticationToClient.MsgProfileCrea"
@@ -813,7 +813,7 @@ bool MsgProfileCreation::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
+      // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -849,7 +849,7 @@ void MsgProfileCreation::SerializeWithCachedSizes(
     return;
   }
   
-  // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
+  // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       1, this->profile(), output);
@@ -863,7 +863,7 @@ void MsgProfileCreation::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgProfileCreation::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
+  // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -881,7 +881,7 @@ int MsgProfileCreation::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .MsgsAuthenticationToClient.MsgProfile profile = 1;
+    // optional .MsgsAuthenticationToClient.MsgProfile profile = 1;
     if (has_profile()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -933,7 +933,6 @@ void MsgProfileCreation::CopyFrom(const MsgProfileCreation& from) {
 }
 
 bool MsgProfileCreation::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
   if (has_profile()) {
     if (!this->profile().IsInitialized()) return false;

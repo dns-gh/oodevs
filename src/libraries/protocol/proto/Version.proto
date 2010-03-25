@@ -1,5 +1,0 @@
-package Version;
-
-message ProtocolVersion {
-   required string value	= 1 [default = "4.0.0.1"];
-}

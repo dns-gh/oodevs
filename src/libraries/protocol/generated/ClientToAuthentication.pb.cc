@@ -42,10 +42,9 @@ void protobuf_AssignDesc_ClientToAuthentication_2eproto() {
       "ClientToAuthentication.proto");
   GOOGLE_CHECK(file != NULL);
   MsgAuthenticationRequest_descriptor_ = file->message_type(0);
-  static const int MsgAuthenticationRequest_offsets_[3] = {
+  static const int MsgAuthenticationRequest_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationRequest, login_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationRequest, password_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationRequest, version_),
   };
   MsgAuthenticationRequest_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -188,32 +187,29 @@ void protobuf_AddDesc_ClientToAuthentication_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::MsgsAuthenticationToClient::protobuf_AddDesc_AuthenticationToClient_2eproto();
-  ::Version::protobuf_AddDesc_Version_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\034ClientToAuthentication.proto\022\032MsgsClie"
     "ntToAuthentication\032\034AuthenticationToClie"
-    "nt.proto\032\rVersion.proto\"f\n\030MsgAuthentica"
-    "tionRequest\022\r\n\005login\030\001 \002(\t\022\020\n\010password\030\002"
-    " \002(\t\022)\n\007version\030\003 \002(\0132\030.Version.Protocol"
-    "Version\"T\n\031MsgProfileCreationRequest\0227\n\007"
-    "profile\030\001 \002(\0132&.MsgsAuthenticationToClie"
-    "nt.MsgProfile\"a\n\027MsgProfileUpdateRequest"
-    "\022\r\n\005login\030\001 \002(\t\0227\n\007profile\030\002 \002(\0132&.MsgsA"
-    "uthenticationToClient.MsgProfile\"-\n\034MsgP"
-    "rofileDestructionRequest\022\r\n\005login\030\001 \002(\t\""
-    "\356\003\n\031MsgClientToAuthentication\022\022\n\007context"
-    "\030\001 \001(\005:\0010\022N\n\007message\030\002 \002(\0132=.MsgsClientT"
-    "oAuthentication.MsgClientToAuthenticatio"
-    "n.Content\032\354\002\n\007Content\022T\n\026authentication_"
-    "request\030\001 \001(\01324.MsgsClientToAuthenticati"
-    "on.MsgAuthenticationRequest\022W\n\030profile_c"
-    "reation_request\030\002 \001(\01325.MsgsClientToAuth"
-    "entication.MsgProfileCreationRequest\022S\n\026"
-    "profile_update_request\030\003 \001(\01323.MsgsClien"
-    "tToAuthentication.MsgProfileUpdateReques"
-    "t\022]\n\033profile_destruction_request\030\004 \001(\01328"
-    ".MsgsClientToAuthentication.MsgProfileDe"
-    "structionRequest", 936);
+    "nt.proto\";\n\030MsgAuthenticationRequest\022\r\n\005"
+    "login\030\001 \002(\t\022\020\n\010password\030\002 \002(\t\"T\n\031MsgProf"
+    "ileCreationRequest\0227\n\007profile\030\001 \002(\0132&.Ms"
+    "gsAuthenticationToClient.MsgProfile\"a\n\027M"
+    "sgProfileUpdateRequest\022\r\n\005login\030\001 \002(\t\0227\n"
+    "\007profile\030\002 \002(\0132&.MsgsAuthenticationToCli"
+    "ent.MsgProfile\"-\n\034MsgProfileDestructionR"
+    "equest\022\r\n\005login\030\001 \002(\t\"\356\003\n\031MsgClientToAut"
+    "hentication\022\022\n\007context\030\001 \001(\005:\0010\022N\n\007messa"
+    "ge\030\002 \002(\0132=.MsgsClientToAuthentication.Ms"
+    "gClientToAuthentication.Content\032\354\002\n\007Cont"
+    "ent\022T\n\026authentication_request\030\001 \001(\01324.Ms"
+    "gsClientToAuthentication.MsgAuthenticati"
+    "onRequest\022W\n\030profile_creation_request\030\002 "
+    "\001(\01325.MsgsClientToAuthentication.MsgProf"
+    "ileCreationRequest\022S\n\026profile_update_req"
+    "uest\030\003 \001(\01323.MsgsClientToAuthentication."
+    "MsgProfileUpdateRequest\022]\n\033profile_destr"
+    "uction_request\030\004 \001(\01328.MsgsClientToAuthe"
+    "ntication.MsgProfileDestructionRequest", 878);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToAuthentication.proto", &protobuf_RegisterTypes);
   MsgAuthenticationRequest::default_instance_ = new MsgAuthenticationRequest();
@@ -246,7 +242,6 @@ const ::std::string MsgAuthenticationRequest::_default_password_;
 #ifndef _MSC_VER
 const int MsgAuthenticationRequest::kLoginFieldNumber;
 const int MsgAuthenticationRequest::kPasswordFieldNumber;
-const int MsgAuthenticationRequest::kVersionFieldNumber;
 #endif  // !_MSC_VER
 
 MsgAuthenticationRequest::MsgAuthenticationRequest() {
@@ -254,7 +249,6 @@ MsgAuthenticationRequest::MsgAuthenticationRequest() {
 }
 
 void MsgAuthenticationRequest::InitAsDefaultInstance() {
-  version_ = const_cast< ::Version::ProtocolVersion*>(&::Version::ProtocolVersion::default_instance());
 }
 
 MsgAuthenticationRequest::MsgAuthenticationRequest(const MsgAuthenticationRequest& from) {
@@ -266,7 +260,6 @@ void MsgAuthenticationRequest::SharedCtor() {
   _cached_size_ = 0;
   login_ = const_cast< ::std::string*>(&_default_login_);
   password_ = const_cast< ::std::string*>(&_default_password_);
-  version_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -282,7 +275,6 @@ void MsgAuthenticationRequest::SharedDtor() {
     delete password_;
   }
   if (this != default_instance_) {
-    delete version_;
   }
 }
 
@@ -312,9 +304,6 @@ void MsgAuthenticationRequest::Clear() {
       if (password_ != &_default_password_) {
         password_->clear();
       }
-    }
-    if (_has_bit(2)) {
-      if (version_ != NULL) version_->::Version::ProtocolVersion::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -354,19 +343,6 @@ bool MsgAuthenticationRequest::MergePartialFromCodedStream(
         ::google::protobuf::internal::WireFormat::VerifyUTF8String(
           this->password().data(), this->password().length(),
           ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(26)) goto parse_version;
-        break;
-      }
-      
-      // required .Version.ProtocolVersion version = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_version:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_version()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -413,12 +389,6 @@ void MsgAuthenticationRequest::SerializeWithCachedSizes(
       2, this->password(), output);
   }
   
-  // required .Version.ProtocolVersion version = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      3, this->version(), output);
-  }
-  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -447,13 +417,6 @@ void MsgAuthenticationRequest::SerializeWithCachedSizes(
         2, this->password(), target);
   }
   
-  // required .Version.ProtocolVersion version = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        3, this->version(), target);
-  }
-  
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -477,13 +440,6 @@ int MsgAuthenticationRequest::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::StringSize(
           this->password());
-    }
-    
-    // required .Version.ProtocolVersion version = 3;
-    if (has_version()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->version());
     }
     
   }
@@ -517,9 +473,6 @@ void MsgAuthenticationRequest::MergeFrom(const MsgAuthenticationRequest& from) {
     if (from._has_bit(1)) {
       set_password(from.password());
     }
-    if (from._has_bit(2)) {
-      mutable_version()->::Version::ProtocolVersion::MergeFrom(from.version());
-    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -537,11 +490,8 @@ void MsgAuthenticationRequest::CopyFrom(const MsgAuthenticationRequest& from) {
 }
 
 bool MsgAuthenticationRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
-  if (has_version()) {
-    if (!this->version().IsInitialized()) return false;
-  }
   return true;
 }
 
@@ -549,7 +499,6 @@ void MsgAuthenticationRequest::Swap(MsgAuthenticationRequest* other) {
   if (other != this) {
     std::swap(login_, other->login_);
     std::swap(password_, other->password_);
-    std::swap(version_, other->version_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

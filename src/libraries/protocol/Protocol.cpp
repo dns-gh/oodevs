@@ -11,7 +11,6 @@
 #pragma warning( disable : 4244 4125 4127 4512 )
 
 #include "generated/AarToClient.pb.cc"
-#include "generated/AdminToLauncher.pb.cc"
 #include "generated/AuthenticationToClient.pb.cc"
 #include "generated/ClientToAar.pb.cc"
 #include "generated/ClientToAuthentication.pb.cc"
@@ -21,11 +20,9 @@
 #include "generated/Common.pb.cc"
 #include "generated/DispatcherToClient.pb.cc"
 #include "generated/DispatcherToSim.pb.cc"
-#include "generated/LauncherToAdmin.pb.cc"
 #include "generated/MessengerToClient.pb.cc"
 #include "generated/PluginToClient.pb.cc"
 #include "generated/ReplayToClient.pb.cc"
 #include "generated/SimToClient.pb.cc"
-#include "generated/Version.pb.cc"
 
 #pragma warning( pop )

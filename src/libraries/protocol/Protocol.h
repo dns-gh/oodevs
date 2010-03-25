@@ -14,7 +14,6 @@
 #pragma warning( disable : 4244 )
 
 #include "Definitions.h"
-#include "generated/AdminToLauncher.pb.h"
 #include "generated/AarToClient.pb.h"
 #include "generated/AuthenticationToClient.pb.h"
 #include "generated/ClientToAar.pb.h"
@@ -25,12 +24,10 @@
 #include "generated/Common.pb.h"
 #include "generated/DispatcherToClient.pb.h"
 #include "generated/DispatcherToSim.pb.h"
-#include "generated/LauncherToAdmin.pb.h"
 #include "generated/MessengerToClient.pb.h"
 #include "generated/PluginToClient.pb.h"
 #include "generated/ReplayToClient.pb.h"
 #include "generated/SimToClient.pb.h"
-#include "generated/Version.pb.h"
 
 #pragma warning( pop )
 
