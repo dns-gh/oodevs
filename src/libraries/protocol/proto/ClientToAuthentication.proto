@@ -1,10 +1,12 @@
 package MsgsClientToAuthentication;
 
 import "AuthenticationToClient.proto";
+import "Version.proto";
 
 message MsgAuthenticationRequest {
-   required string login    = 1;
-   required string password = 2;
+   required string login			= 1;
+   required string password			= 2;
+   required Version.ProtocolVersion version = 3;
 }
 
 message MsgProfileCreationRequest {
