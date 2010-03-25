@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <models xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/physical/Models.xsd">
   <units>
-    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Section">
+    <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Platoon">
       <missions>
-        <mission name="Follow"/>
         <mission name="Load"/>
         <mission name="Mount"/>
         <mission name="MoveToPoint">
@@ -38,6 +37,7 @@
         <mission name="Safeguard"/>
         <mission name="Flee"/>
         <mission name="SelfProtect"/>
+        <mission name="StayClose"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">
@@ -2897,7 +2897,7 @@
     </unit>
   </units>
   <automats>
-    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.Compagnie">
+    <automat dia-type="BMAutomat" file="BMAutomat.bms" name="net.masagroup.sword.military.roles.Company">
       <missions>
         <mission name="GiveOrderMoveToUrbanBlock"/>
         <mission name="GiveOrderMoveToPoint"/>

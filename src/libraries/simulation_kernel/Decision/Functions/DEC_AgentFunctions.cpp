@@ -210,12 +210,30 @@ boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetPosition( const MIL_Agen
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetAgentPositionPtr
+// Created: DDA 2010-03-25
+// -----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_AgentFunctions::GetAgentPositionPtr( DEC_Decision_ABC* brain )
+{
+    return brain->GetPion().GetRole< PHY_RoleInterface_Location >().GetSharedPosition();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetDirection
 // Created: NLD 2004-10-21
 // -----------------------------------------------------------------------------
 const MT_Vector2D* DEC_AgentFunctions::GetDirection( const MIL_AgentPion& callerAgent )
 {
     return &callerAgent.GetRole< PHY_RoleInterface_Location >().GetDirection();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetIdentificationDistance
+// Created: DDA 2010-03-24
+// -----------------------------------------------------------------------------
+float DEC_AgentFunctions::GetIdentificationDistance( MIL_AgentPion& callerAgent )
+{
+    return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante()->GetIdentificationMaxRange();
 }
 
 // -----------------------------------------------------------------------------

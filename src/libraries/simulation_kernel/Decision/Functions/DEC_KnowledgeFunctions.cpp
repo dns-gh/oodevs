@@ -136,7 +136,7 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( co
 void DEC_KnowledgeFunctions::GetObservableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
 {
     //Agents
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
 
     //Object
     T_KnowledgeObjectVector objectsKn;
@@ -196,7 +196,7 @@ void DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle( const directia::Bra
 void DEC_KnowledgeFunctions::GetDestroyableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
 {
     //Agents //@TODO Add private tools function
-    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Section" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
 }
 
 // -----------------------------------------------------------------------------

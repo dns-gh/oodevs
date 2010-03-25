@@ -24,6 +24,8 @@
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceLevel.h"
 #include "Entities/Agents/Units/Logistic/PHY_Breakdown.h"
 #include "Entities/Agents/Units/Sensors/PHY_Sensor.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
+#include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Weapons/PHY_Weapon.h"
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -1016,6 +1018,23 @@ const PHY_ComposanteTypePion& PHY_ComposantePion::GetType() const
 {
     assert( pType_ );
     return *pType_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetIdentificationMaxRange
+// Created: DDA 2010-03-24
+// -----------------------------------------------------------------------------
+float PHY_ComposantePion::GetIdentificationMaxRange () const
+{
+	float distanceIt, distance = numeric_limits<float>::max();  
+	for (CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
+	{
+		distanceIt = (*itSensor)->GetType().GetTypeAgent()->IdentificationDistance();
+		if (distanceIt < distance)
+			distance = distanceIt;
+	}
+	
+	return distance;
 }
 
 // -----------------------------------------------------------------------------

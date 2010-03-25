@@ -43,7 +43,8 @@ public:
     // Creation / destruction
     static boost::shared_ptr< TER_Localisation > CreateLocalisation ();
     static std::vector< boost::shared_ptr< MT_Vector2D > > CreateListPoint();
-    static boost::shared_ptr< MT_Vector2D > CreatePoint         ();  
+    static boost::shared_ptr< MT_Vector2D > CreatePoint         ();
+	static boost::shared_ptr< MT_Vector2D > CopyPoint( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr< MT_Vector2D > CreateDirection     ( MT_Vector2D* pPosSource, MT_Vector2D* pPosDest );
     static boost::shared_ptr< MT_Vector2D > CreateOrthoDirection( MT_Vector2D* pDir, bool bCounterClockwise );
 

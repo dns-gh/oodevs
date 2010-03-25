@@ -170,7 +170,8 @@ public:
     virtual bool                            CanFireWhenUnloaded() const;            
             
     virtual const PHY_ComposanteTypePion&   GetType        () const;
-    virtual unsigned int                            GetMajorScore  () const;
+	virtual float						    GetIdentificationMaxRange () const;
+    virtual unsigned int                    GetMajorScore  () const;
     //@}
 
     //! @name Dotations

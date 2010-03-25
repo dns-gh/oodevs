@@ -52,6 +52,7 @@ public:
     //! @name Accessors
     //@{
     virtual const PHY_ComposanteType_ABC& GetType            () const = 0;
+	virtual float				    GetIdentificationMaxRange() const = 0;
     virtual bool                          CanFire            () const = 0;
     virtual bool                          CanFireWhenUnloaded() const = 0;
     virtual unsigned int                          GetMajorScore      () const = 0;

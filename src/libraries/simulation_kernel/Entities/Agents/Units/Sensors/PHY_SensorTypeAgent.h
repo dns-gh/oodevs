@@ -66,6 +66,7 @@ public:
     const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight, T_PointVector& shape ) const;
           MT_Float             ComputePerceptionAccuracy( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight ) const;
     const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const;
+	const MT_Float			   IdentificationDistance() const;
     //@}
 
 public:
@@ -95,8 +96,8 @@ private:
     MT_Float                   ComputeExtinction        ( const PHY_RawVisionDataIterator& env, MT_Float rDistanceModificator, MT_Float rInitialCoef, bool bIsAroundBU ) const;
     bool                       ComputeUrbanExtinction   ( const MT_Vector2D& vSource, const MT_Vector2D& vTarget, MT_Float& rVisionNRJ ) const;
     const PHY_PerceptionLevel& InterpretExtinction     ( MT_Float rExtinction ) const;
-
-    MT_Float GetSourceFactor( const MIL_AgentPion&       source ) const;
+    
+	MT_Float GetSourceFactor( const MIL_AgentPion&       source ) const;
     MT_Float GetTargetFactor( const MIL_Agent_ABC&       target ) const;
     MT_Float GetTargetFactor( const DEC_Knowledge_Agent& target ) const;
 

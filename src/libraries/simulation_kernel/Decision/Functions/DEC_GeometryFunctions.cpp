@@ -94,12 +94,22 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::CreateLis
 // Name: DEC_GeometryFunctions::CreatePoint
 // Created: AGN 03-03-14
 //-----------------------------------------------------------------------------
-// static
 boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CreatePoint()
 {
     boost::shared_ptr< MT_Vector2D > pVect( new MT_Vector2D() );
     return pVect;
 }
+
+//-----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::CopyPoint
+// Created: MGD 10-03-23
+//-----------------------------------------------------------------------------
+boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::CopyPoint( boost::shared_ptr< MT_Vector2D > point )
+{
+    boost::shared_ptr< MT_Vector2D > pVect( new MT_Vector2D( *point ) );
+    return pVect;
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::CreateDirection

@@ -563,6 +563,15 @@ const PHY_PerceptionLevel& PHY_SensorTypeAgent::InterpretExtinction( MT_Float rE
     return PHY_PerceptionLevel::notSeen_;
 }
 
+//-----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::IdentificationDistance
+// Created: DDA 10-03-24
+//-----------------------------------------------------------------------------
+const MT_Float PHY_SensorTypeAgent::IdentificationDistance() const
+{
+	return rIdentificationDist_;
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: NLD 2004-10-14

@@ -807,7 +807,7 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiterUrbanBlock" id="2015" name="ObserveAndReconnoiterUrbanBlock">
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.Follow" dia-type="T_Mission_Pion_Follow" id="2016" name="Follow">
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.StayClose" dia-type="T_Mission_Pion_StayClose" id="2016" name="StayClose">
       <parameter dia-name="objectives" name="objectives" optional="false" type="AgentBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveToward" dia-type="T_Mission_Pion_ObservePoint" id="2017" name="ObservePoint">

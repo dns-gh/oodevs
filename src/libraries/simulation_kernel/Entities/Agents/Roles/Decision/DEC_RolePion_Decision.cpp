@@ -394,7 +394,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
                             boost::bind( &DEC_PerceptionFunctions::DisableSensors, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Perception_ActiverSenseurs",
                             boost::bind( &DEC_PerceptionFunctions::EnableSensors, boost::ref( GetPion() ) ) );
-
+	brain.RegisterFunction( "DEC_Identification_DistanceMinCompMajeure",
+                            boost::bind( &DEC_AgentFunctions::GetIdentificationDistance, boost::ref( GetPion() ) ) );
     // Gestion des renforts
     brain.RegisterFunction( "DEC_Renforts" ,
         boost::function< std::vector<DEC_Decision_ABC*> () >( boost::bind( &DEC_MiscFunctions::GetReinforcements, boost::ref( GetPion() ) ) ) );
@@ -452,6 +453,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Agent_AutomateEstEmbraye", &DEC_Decision_ABC::IsAutomateEngaged );
     brain.RegisterFunction( "DEC_Agent_Position", boost::bind( &DEC_AgentFunctions::GetPosition, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_Position", &DEC_Decision_ABC::GetPosition );
+    brain.RegisterFunction( "DEC_Agent_PositionPtr", &DEC_AgentFunctions::GetAgentPositionPtr);
     brain.RegisterFunction( "DEC_Agent_Direction", boost::bind( &DEC_AgentFunctions::GetDirection, boost::cref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_EstMort", boost::bind( &DEC_AgentFunctions::IsDead, boost::cref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Agent_EstMort", &DEC_Decision_ABC::IsDead );
