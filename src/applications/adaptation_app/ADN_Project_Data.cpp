@@ -98,6 +98,7 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
 void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "physical" );
+    ADN_Tools::AddSchema( output, "Physical" );
     WriteFile( output, "decisional", szDecisional_ );
     WriteFile( output, "volumes", szSizes_ );
     WriteFile( output, "protections", szArmors_ );
