@@ -344,11 +344,11 @@
     </message>
     <message>
         <source>Terrain:</source>
-        <translation type="unfinished"></translation>
+        <translation>Terrain:</translation>
     </message>
     <message>
         <source>Model:</source>
-        <translation type="unfinished"></translation>
+        <translation>Modèle:</translation>
     </message>
 </context>
 <context>

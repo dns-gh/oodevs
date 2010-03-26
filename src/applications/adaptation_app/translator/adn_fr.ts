@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>Op. Indicators - Thread management - Invalid operational state effect value (must be &gt;=0 and &lt;= 100)</source>
-        <translation>Facteurs Op. - Gestion de la menace - La valeur d&apos;effet du status opérationnel doit être &gt;= 0 et &lt;= 100</translation>
+        <translation>Facteurs Op. - Gestion de la menace - La valeur d&apos;effet du statut opérationnel doit être &gt;= 0 et &lt;= 100</translation>
     </message>
     <message>
         <source>Op. Indicators - Thread management - Invalid neutralization state effect value (must be &gt;=0 and &lt;= 100)</source>
@@ -668,7 +668,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Attrition breakdown chance</source>
-        <translation type="obsolete">Probabilité de panne dûe à l&apos;attrition</translation>
+        <translation type="obsolete">Probabilité de panne due à l&apos;attrition</translation>
     </message>
     <message>
         <source>Breakdown</source>
@@ -1593,7 +1593,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Device category:</source>
-        <translation type="obsolete">Catégorie matériel:</translation>
+        <translation type="obsolete">Catégorie matériel :</translation>
     </message>
     <message>
         <source>Conveyor</source>
@@ -3464,14 +3464,14 @@ Arrêt moteur allumé</translation>
     <name>ADN_EquipementSelector</name>
     <message>
         <source>Click here to select</source>
-        <translation>Cliquer ici pour séléctionner</translation>
+        <translation>Cliquer ici pour sélectionner</translation>
     </message>
 </context>
 <context>
     <name>ADN_EquipementSelector::ADN_EquipementSelector_Connector</name>
     <message>
         <source>Click here to select</source>
-        <translation type="obsolete">Cliquer ici pour séléctionner</translation>
+        <translation type="obsolete">Cliquer ici pour sélectionner</translation>
     </message>
 </context>
 <context>
@@ -3628,7 +3628,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Deploy time</source>
-        <translation type="obsolete">Temps de déploiment</translation>
+        <translation type="obsolete">Temps de déploiement</translation>
     </message>
     <message>
         <source>Lifetime</source>
@@ -3652,7 +3652,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Repair no evac</source>
-        <translation type="obsolete">Réparable sans évacutation</translation>
+        <translation type="obsolete">Réparable sans évacuation</translation>
     </message>
     <message>
         <source>Repair evac</source>
@@ -3684,7 +3684,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Packaging</source>
-        <translation>Condtionnement</translation>
+        <translation>Conditionnement</translation>
     </message>
     <message>
         <source>Nbr per package</source>
@@ -3830,7 +3830,7 @@ Arrêt moteur allumé</translation>
     <name>ADN_Health_GUI</name>
     <message>
         <source>Diagnostic time</source>
-        <translation type="obsolete">Temps de diagnostique</translation>
+        <translation type="obsolete">Temps de diagnostic</translation>
     </message>
     <message>
         <source>s</source>
@@ -3949,7 +3949,7 @@ Arrêt moteur allumé</translation>
     <name>ADN_HumanFactors_GUI</name>
     <message>
         <source>Training modifiers</source>
-        <translation type="obsolete">Modificateurs dûs à l&apos;expérience</translation>
+        <translation type="obsolete">Modificateurs dus à l&apos;expérience</translation>
     </message>
     <message>
         <source>Newbie</source>
@@ -3965,7 +3965,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Tiredness modifiers</source>
-        <translation>Modificateurs dûs à la fatigue</translation>
+        <translation>Modificateurs dus à la fatigue</translation>
     </message>
     <message>
         <source>Normal</source>
@@ -4072,7 +4072,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Maximum distance between known unit and real unit positions</source>
-        <translation>Distance maximale encore la position connue d&apos;un pion et sa position réelle</translation>
+        <translation>Distance maximale entre la position connue d&apos;un pion et sa position réelle</translation>
     </message>
     <message>
         <source>Extrapolation duration</source>
@@ -4552,7 +4552,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Regime</source>
-        <translation type="obsolete">Regime</translation>
+        <translation type="obsolete">Régime</translation>
     </message>
     <message>
         <source>Work time</source>
@@ -4730,7 +4730,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Parameters</source>
-        <translation>Paramètes</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Enumeration values</source>
@@ -5171,7 +5171,7 @@ du tireur</translation>
     </message>
     <message>
         <source>valeur</source>
-        <translation type="obsolete">value</translation>
+        <translation type="obsolete">valeur</translation>
     </message>
     <message>
         <source>Is dangerous</source>
@@ -5203,7 +5203,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Max Animator: </source>
-        <translation>Animateurs max: </translation>
+        <translation>Animateurs max : </translation>
     </message>
     <message>
         <source>agents</source>
@@ -5227,7 +5227,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Genie prepared</source>
-        <translation>Préparé génie</translation>
+        <translation>Génie préparé</translation>
     </message>
     <message>
         <source>Activable</source>
@@ -5927,7 +5927,7 @@ Assurez vous que le fichier existe.</translation>
         <source>When &apos;Detection times&apos; is unchecked, units are recognized instantly.
 When &apos;HQ detection times&apos; is unchecked, the detection times for HQs are the same as the others.</source>
         <translation type="obsolete">Quand la groupBox &apos;Durées acquisition&apos; est décochée, les unités sont reconnues instantanément. 
-Quand la sous groupBox &apos;Durées spécifiques pour PCs&quot; est décochée, les temps d&apos;acqusitions des PCs sont les mêmes que ceux des autres pions.</translation>
+Quand la sous groupBox &apos;Durées spécifiques pour PCs&quot; est décochée, les temps d&apos;acquisitions des PCs sont les mêmes que ceux des autres pions.</translation>
     </message>
     <message>
         <source>Durations</source>
@@ -6130,7 +6130,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Stance modificators</source>
-        <translation type="obsolete">Modificateurs dûs à la posture</translation>
+        <translation type="obsolete">Modificateurs dus à la posture</translation>
     </message>
     <message>
         <source>Stance</source>
@@ -6146,7 +6146,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Parameters</source>
-        <translation>Paramètes</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Specific parameters</source>
@@ -6254,23 +6254,23 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Weather modifiers</source>
-        <translation>Modificateurs dûs aux précipitations</translation>
+        <translation>Modificateurs dus aux précipitations</translation>
     </message>
     <message>
         <source>Illumination modifiers</source>
-        <translation>Modificateurs dûs à l&apos;éclairement</translation>
+        <translation>Modificateurs dus à l&apos;éclairement</translation>
     </message>
     <message>
         <source>Environement modifiers</source>
-        <translation>Modificateurs dûs au terrain</translation>
+        <translation>Modificateurs dus au terrain</translation>
     </message>
     <message>
         <source>Stance modifiers</source>
-        <translation>Modificateurs dûs à la posture</translation>
+        <translation>Modificateurs dus à la posture</translation>
     </message>
     <message>
         <source>Target stance modifiers</source>
-        <translation>Modificateurs dûs à la posture cible</translation>
+        <translation>Modificateurs dus à la posture cible</translation>
     </message>
     <message>
         <source>Object</source>
@@ -6362,7 +6362,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Terrain modifiers</source>
-        <translation>Modificateurs dûs au terrain</translation>
+        <translation>Modificateurs dus au terrain</translation>
     </message>
     <message>
         <source>Army aviation</source>
@@ -6475,7 +6475,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <name>ADN_SupplyUnitSelector</name>
     <message>
         <source>Click here to select</source>
-        <translation>Cliquer ici pour séléctionner</translation>
+        <translation>Cliquer ici pour sélectionner</translation>
     </message>
 </context>
 <context>
@@ -6709,7 +6709,7 @@ Cliquez sur &quot;Ok&quot; pour l&apos;éffacer ainsi que ceux qui le référenc
     <message>
         <source>Really delete this item?
 Click &quot;Ok&quot; to delete it and all its references.</source>
-        <translation>Voulez vous effacer cet element? Cliquez sur &quot;Ok&quot; pour l&apos;effacer ainsi que tout ce qui le référence.</translation>
+        <translation>Voulez vous effacer cet element? Cliquez sur &quot;Ok&quot; pour l&apos;effacer ainsi que tous ceux qui le référencent.</translation>
     </message>
 </context>
 <context>
@@ -6720,7 +6720,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>foret</source>
-        <translation type="obsolete">foret</translation>
+        <translation type="obsolete">forêt</translation>
     </message>
     <message>
         <source>plantation</source>
@@ -8040,7 +8040,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>railroad</source>
-        <translation>voie férée</translation>
+        <translation>voie ferrée</translation>
     </message>
     <message>
         <source>crossroad</source>
@@ -8256,7 +8256,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Commander, Ground artillery</source>
-        <translation>Commadnant, Artillerie</translation>
+        <translation>Commandant, Artillerie</translation>
     </message>
     <message>
         <source>Commander, Communication</source>
@@ -8774,7 +8774,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Is autonomous (UAV)</source>
-        <translation>Pion autonome (Drônes ...)</translation>
+        <translation>Pion autonome (Drones ...)</translation>
     </message>
     <message>
         <source>Installation</source>
@@ -9367,7 +9367,7 @@ Erreur: %3</translation>
     <name>T</name>
     <message>
         <source>Next</source>
-        <translation>Suiant</translation>
+        <translation>Suivant</translation>
     </message>
     <message>
         <source>Previous</source>

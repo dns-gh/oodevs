@@ -628,15 +628,15 @@
     <name>Fire</name>
     <message>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Incendie</translation>
     </message>
     <message>
         <source>Fire class:</source>
-        <translation type="unfinished"></translation>
+        <translation>Classe d'incendie</translation>
     </message>
     <message>
         <source>Fire temperature:</source>
-        <translation type="unfinished"></translation>
+        <translation>Température du feu :</translation>
     </message>
 </context>
 <context>
@@ -946,31 +946,31 @@
     <name>MedicalTreatment</name>
     <message>
         <source>Medical Treatment services</source>
-        <translation type="unfinished"></translation>
+        <translation>Service de traitement médical</translation>
     </message>
     <message>
         <source>Medical Treatment type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de traitement médical</translation>
     </message>
     <message>
         <source>Medical Treatment capacity</source>
-        <translation type="unfinished"></translation>
+        <translation>Capacité de traitement médical</translation>
     </message>
     <message>
         <source>Total number of beds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre total de lits :</translation>
     </message>
     <message>
         <source>Number of available beds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de lits disponibles :</translation>
     </message>
     <message>
         <source>Total number of doctors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre total de médecins :</translation>
     </message>
     <message>
         <source>Number of available doctors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de médecins disponibles :</translation>
     </message>
 </context>
 <context>
@@ -1033,15 +1033,15 @@
     </message>
     <message>
         <source>NBC/Contamination quantity</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC/Quantité de contamination</translation>
     </message>
     <message>
         <source>Contamination quantity:</source>
-        <translation type="unfinished"></translation>
+        <translation>Quantité de contamination :</translation>
     </message>
     <message>
         <source>Danger:</source>
-        <translation type="unfinished"></translation>
+        <translation>Danger :</translation>
     </message>
 </context>
 <context>
@@ -1071,7 +1071,7 @@
     <name>Object</name>
     <message>
         <source>TC2:</source>
-        <translation type="unfinished">TC2:</translation>
+        <translation>TC2:</translation>
     </message>
     <message>
         <source>Type:</source>
@@ -1079,27 +1079,27 @@
     </message>
     <message>
         <source>Construction:</source>
-        <translation type="unfinished">Construction:</translation>
+        <translation>Construction:</translation>
     </message>
     <message>
         <source>Crossing site</source>
-        <translation type="unfinished">Site de franchissement</translation>
+        <translation>Site de franchissement</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Largeur:</translation>
+        <translation>Largeur:</translation>
     </message>
     <message>
         <source>Depth:</source>
-        <translation type="unfinished">Profondeur:</translation>
+        <translation>Profondeur:</translation>
     </message>
     <message>
         <source>Stream speed:</source>
-        <translation type="unfinished">Débit du courant:</translation>
+        <translation>Débit du courant:</translation>
     </message>
     <message>
         <source>Build river banks:</source>
-        <translation type="unfinished">Aménagement des rives:</translation>
+        <translation>Aménagement des rives:</translation>
     </message>
     <message>
         <source>Logistic route</source>
@@ -1107,19 +1107,19 @@
     </message>
     <message>
         <source>Equipped:</source>
-        <translation type="unfinished">Equipé:</translation>
+        <translation>Equipé:</translation>
     </message>
     <message>
         <source>Flow:</source>
-        <translation type="unfinished">Débit:</translation>
+        <translation>Débit:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Longueur:</translation>
+        <translation>Longueur:</translation>
     </message>
     <message>
         <source>Maximum weight:</source>
-        <translation type="unfinished">Poids maximum:</translation>
+        <translation>Poids maximum:</translation>
     </message>
     <message>
         <source>Information</source>
@@ -1139,11 +1139,11 @@
     </message>
     <message>
         <source>Bypass:</source>
-        <translation type="unfinished">Contournement:</translation>
+        <translation>Contournement:</translation>
     </message>
     <message>
         <source>Development dotation:</source>
-        <translation type="unfinished">Dotation de valorisation:</translation>
+        <translation>Dotation de valorisation:</translation>
     </message>
     <message>
         <source>Details</source>
@@ -1171,7 +1171,7 @@
     </message>
     <message>
         <source>Camp</source>
-        <translation type="unfinished">Camp</translation>
+        <translation>Camp</translation>
     </message>
     <message>
         <source>Construction dotation:</source>
@@ -1179,11 +1179,11 @@
     </message>
     <message>
         <source>Mine parameters</source>
-        <translation type="unfinished">Paramètres des mines</translation>
+        <translation>Paramètres des mines</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation type="unfinished">Temps d&apos;activité:</translation>
+        <translation>Temps d&apos;activité:</translation>
     </message>
     <message>
         <source>Density:</source>
@@ -1191,19 +1191,19 @@
     </message>
     <message>
         <source>Mining:</source>
-        <translation type="unfinished">Valorisation:</translation>
+        <translation>Valorisation:</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation type="unfinished">Type d&apos;obstacle:</translation>
+        <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation type="unfinished">Obstacle de manoeuvre activé:</translation>
+        <translation>Obstacle de manoeuvre activé:</translation>
     </message>
     <message>
         <source>Supply route</source>
-        <translation type="unfinished"></translation>
+        <translation>Route de ravitaillement</translation>
     </message>
 </context>
 <context>
@@ -1353,19 +1353,19 @@
     <name>Score</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Tendency</source>
-        <translation type="unfinished"></translation>
+        <translation>Tendance</translation>
     </message>
     <message>
         <source>Gauge</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauge</translation>
     </message>
 </context>
 <context>

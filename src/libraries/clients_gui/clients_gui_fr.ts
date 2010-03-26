@@ -33,11 +33,11 @@
     <name>ActivityTimePrototype_ABC</name>
     <message>
         <source>Activity time</source>
-        <translation type="unfinished"></translation>
+        <translation>Durée d&apos;activité</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation type="unfinished">Durée d&apos;activité:</translation>
+        <translation>Durée d&apos;activité:</translation>
     </message>
 </context>
 <context>
@@ -48,11 +48,11 @@
     </message>
     <message>
         <source>&#xa9; 2008 MASA Group</source>
-        <translation type="unfinished"></translation>
+        <translation>&#xa9; 2008 MASA Group</translation>
     </message>
     <message>
         <source>www.masagroup.net</source>
-        <translation type="unfinished"></translation>
+        <translation>www.masagroup.net</translation>
     </message>
     <message>
         <source>images/gui/splash_swordot.jpg</source>
@@ -74,7 +74,7 @@
     <name>BypassPrototype_ABC</name>
     <message>
         <source>Bypass parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de contournement</translation>
     </message>
 </context>
 <context>
@@ -104,11 +104,11 @@
     <name>ConstructionPrototype_ABC</name>
     <message>
         <source>Construction</source>
-        <translation type="unfinished"></translation>
+        <translation>Construction</translation>
     </message>
     <message>
         <source>Construction:</source>
-        <translation type="unfinished"></translation>
+        <translation>Construction:</translation>
     </message>
 </context>
 <context>
@@ -161,7 +161,7 @@
     </message>
     <message>
         <source>Fog of war</source>
-        <translation type="unfinished">Brouillard de guerre</translation>
+        <translation>Brouillard de guerre</translation>
     </message>
 </context>
 <context>
@@ -277,11 +277,11 @@ Please check access permissions or write protection.</source>
     <name>FirePrototype_ABC</name>
     <message>
         <source>Fire parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres d'incendie</translation>
     </message>
     <message>
         <source>Fire Class:</source>
-        <translation type="unfinished"></translation>
+        <translation>Classe d'incendie:</translation>
     </message>
 </context>
 <context>
@@ -400,31 +400,31 @@ Please check access permissions or write protection.</source>
     <name>InputPropagationPrototype_ABC</name>
     <message>
         <source>Propagation</source>
-        <translation type="unfinished"></translation>
+        <translation>Propagation</translation>
     </message>
     <message>
         <source>NBC Agent:</source>
-        <translation type="unfinished">Agent NBC:</translation>
+        <translation>Agent NBC:</translation>
     </message>
     <message>
         <source>Lookup data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Données correspondantes:</translation>
     </message>
     <message>
         <source>Send data:</source>
-        <translation type="unfinished"></translation>
+        <translation>Données envoyées:</translation>
     </message>
     <message>
         <source>Propagation (propagation.xml)</source>
-        <translation type="unfinished"></translation>
+        <translation>Propagation (propagation.xml)</translation>
     </message>
     <message>
         <source>Open File</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir le fichier</translation>
     </message>
     <message>
         <source>Input file...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier d'entrée...</translation>
     </message>
 </context>
 <context>
@@ -652,31 +652,31 @@ Voulez-vous le supprimer?</translation>
     <name>MedicalTreatmentPrototype_ABC</name>
     <message>
         <source>MedicalTreatment parameters</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de traitement médical</translation>
     </message>
     <message>
         <source>MedicalTreatment Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de traitement médical:</translation>
     </message>
     <message>
         <source>Beds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lits:</translation>
     </message>
     <message>
         <source>Initial available beds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Lits disponibles initiaux:</translation>
     </message>
     <message>
         <source>Doctors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Médecins:</translation>
     </message>
     <message>
         <source>Initial available doctors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Médecins disponibles initiaux:</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
 </context>
 <context>
@@ -721,15 +721,15 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>NBC agent(s):</source>
-        <translation type="unfinished"></translation>
+        <translation>Agent(s) NBC</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>NBC agent state:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat de l'agent NBC:</translation>
     </message>
 </context>
 <context>
@@ -796,15 +796,15 @@ Voulez-vous le supprimer?</translation>
     <name>ObstaclePrototype_ABC</name>
     <message>
         <source>Obstacle</source>
-        <translation type="unfinished"></translation>
+        <translation>Obstacle</translation>
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation type="unfinished">Type d&apos;obstacle:</translation>
+        <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation type="unfinished">Obstacle de manoeuvre activé:</translation>
+        <translation>Obstacle de manoeuvre activé:</translation>
     </message>
 </context>
 <context>
@@ -968,7 +968,7 @@ Voulez-vous le supprimer?</translation>
     <name>R&#xe8;gle GL</name>
     <message>
         <source> %1m</source>
-        <translation type="unfinished"> %1m</translation>
+        <translation"> %1m</translation>
     </message>
 </context>
 <context>
@@ -990,27 +990,27 @@ Voulez-vous le supprimer?</translation>
     <name>SupplyRoutePrototype_ABC</name>
     <message>
         <source>Logistic route</source>
-        <translation type="unfinished">Itinéraire logistique</translation>
+        <translation>Itinéraire logistique</translation>
     </message>
     <message>
         <source>Flow:</source>
-        <translation type="unfinished">Débit:</translation>
+        <translation>Débit:</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished">Largeur:</translation>
+        <translation>Largeur:</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished">Longueur:</translation>
+        <translation>Longueur:</translation>
     </message>
     <message>
         <source>Maximum weight:</source>
-        <translation type="unfinished">Poids maximum:</translation>
+        <translation>Poids maximum:</translation>
     </message>
     <message>
         <source>Equipped:</source>
-        <translation type="unfinished">Equipé:</translation>
+        <translation>Equipé:</translation>
     </message>
 </context>
 <context>
@@ -1018,7 +1018,7 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source> px</source>
         <comment>TerrainPreference</comment>
-        <translation type="obsolete"> px</translation>
+        <translation> px</translation>
     </message>
     <message>
         <source>Line thickness: </source>
@@ -1593,7 +1593,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Attributs</translation>
     </message>
 </context>
 <context>
@@ -1632,7 +1632,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>3D metric computation</source>
-        <translation type="unfinished">Mesure 3D</translation>
+        <translation>Mesure 3D</translation>
     </message>
 </context>
 <context>
@@ -1662,7 +1662,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished">Général</translation>
+        <translation>Général</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -1686,7 +1686,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Coordinate System</source>
-        <translation type="unfinished">Système de coordonnées</translation>
+        <translation>Système de coordonnées</translation>
     </message>
 </context>
 <context>
@@ -1701,7 +1701,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Lat:%1 Lon:%2</source>
-        <translation type="unfinished">Lat:%1 Lon:%2</translation>
+        <translation>Lat:%1 Lon:%2</translation>
     </message>
     <message>
         <source>y:%1 x:%2</source>

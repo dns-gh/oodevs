@@ -81,11 +81,11 @@
     </message>
     <message>
         <source>MM-dd hh:mm</source>
-        <translation></translation>
+        <translation>MM-dd hh:mm</translation>
     </message>
     <message>
         <source>MM-d hh:mm</source>
-        <translation></translation>
+        <translation>MM-d hh:mm</translation>
     </message>
 </context>
 <context>
@@ -332,15 +332,15 @@
     </message>
     <message>
         <source>Gaming</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeu</translation>
     </message>
     <message>
         <source>SWORD Officer Training</source>
-        <translation type="unfinished"></translation>
+        <translation>SWORD Officer Training</translation>
     </message>
     <message>
         <source>sword@masagroup.net</source>
-        <translation type="unfinished"></translation>
+        <translation>sword@masagroup.net</translation>
     </message>
 </context>
 <context>
@@ -754,11 +754,11 @@ Reason: %3
     <name>IndicatorPlot</name>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Time (Tick)</source>
-        <translation type="unfinished">Temps (ticks)</translation>
+        <translation>Temps (ticks)</translation>
     </message>
 </context>
 <context>
@@ -769,19 +769,19 @@ Reason: %3
     </message>
     <message>
         <source>Time</source>
-        <translation type="unfinished">Temps</translation>
+        <translation>Temps</translation>
     </message>
     <message>
         <source>Export data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Export des données</translation>
     </message>
     <message>
         <source>Export score data...</source>
-        <translation type="unfinished"></translation>
+        <translation>Export des données de score</translation>
     </message>
     <message>
         <source>Create report...</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un rapport</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1023,7 @@ Reason: %3
     <name>KnowledgeGroupMagicOrdersInterface</name>
     <message>
         <source>Magic orders</source>
-        <translation type="unfinished">Actions magiques</translation>
+        <translation>Actions magiques</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1031,15 +1031,15 @@ Reason: %3
     </message>
     <message>
         <source>Desactivate</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactiver</translation>
     </message>
     <message>
         <source>Change Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Changer le type</translation>
     </message>
     <message>
         <source>Activate</source>
-        <translation type="unfinished"></translation>
+        <translation>Activer</translation>
     </message>
 </context>
 <context>
@@ -1122,19 +1122,19 @@ Reason: %3
     </message>
     <message>
         <source>Password: </source>
-        <translation type="unfinished"></translation>
+        <translation>Mot de passe:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Anonymous</source>
-        <translation type="unfinished"></translation>
+        <translation>Anonyme</translation>
     </message>
     <message>
         <source>Select user profile</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un profil utilisateur</translation>
     </message>
 </context>
 <context>
@@ -1448,7 +1448,7 @@ Reason: %3
     </message>
     <message>
         <source>Watershed</source>
-        <translation type="unfinished"></translation>
+        <translation>Montée des eaux</translation>
     </message>
 </context>
 <context>
@@ -1800,15 +1800,15 @@ Reason: %3
     </message>
     <message>
         <source>Units toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barre d'outils Unités</translation>
     </message>
     <message>
         <source>Logistics toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barre d'outils Logistique</translation>
     </message>
     <message>
         <source>Terrain toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barre d'outils Terrain</translation>
     </message>
 </context>
 <context>
@@ -2042,11 +2042,11 @@ Reason: %3
     </message>
     <message>
         <source>NBC</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC</translation>
     </message>
     <message>
         <source>Danger:</source>
-        <translation type="unfinished"></translation>
+        <translation>Danger:</translation>
     </message>
 </context>
 <context>
@@ -2220,35 +2220,35 @@ Reason: %3
     </message>
     <message>
         <source>NBC</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC</translation>
     </message>
     <message>
         <source>NBC agent state:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat de l'agent NBC:</translation>
     </message>
     <message>
         <source>Danger:</source>
-        <translation type="unfinished"></translation>
+        <translation>Danger:</translation>
     </message>
     <message>
         <source>Medical Treatment</source>
-        <translation type="unfinished"></translation>
+        <translation>Traitement médical</translation>
     </message>
     <message>
         <source>Total number of beds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre total de lits:</translation>
     </message>
     <message>
         <source>Number of available beds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de lits disponibles:</translation>
     </message>
     <message>
         <source>Total number of doctors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre total de médecins:</translation>
     </message>
     <message>
         <source>Number of available doctors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de médecins disponibles:</translation>
     </message>
 </context>
 <context>
@@ -2720,26 +2720,26 @@ Reason: %3
     <name>Score</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished">Nom</translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished">Valeur</translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Tendency</source>
-        <translation type="unfinished"></translation>
+        <translation>Tendance</translation>
     </message>
     <message>
         <source>Gauge</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauge</translation>
     </message>
 </context>
 <context>
     <name>ScorePanel</name>
     <message>
         <source>Scores</source>
-        <translation type="unfinished"></translation>
+        <translation>Scores</translation>
     </message>
     <message>
         <source>Plot</source>
@@ -2747,46 +2747,46 @@ Reason: %3
     </message>
     <message>
         <source>View graph</source>
-        <translation type="unfinished"></translation>
+        <translation>Voir le graphique</translation>
     </message>
 </context>
 <context>
     <name>Scores</name>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Export data</source>
-        <translation type="unfinished"></translation>
+        <translation>Export des données</translation>
     </message>
     <message>
         <source>Output</source>
-        <translation type="unfinished"></translation>
+        <translation>Sortie</translation>
     </message>
     <message>
         <source>File: </source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier:</translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation type="unfinished"></translation>
+        <translation>Parcourir</translation>
     </message>
     <message>
         <source>Separator: </source>
-        <translation type="unfinished"></translation>
+        <translation>Séparateur: </translation>
     </message>
     <message>
         <source>Headers</source>
-        <translation type="unfinished"></translation>
+        <translation>En-têtes</translation>
     </message>
     <message>
         <source>CSV (*.csv)</source>
-        <translation type="unfinished"></translation>
+        <translation>CSV (*.csv)</translation>
     </message>
     <message>
         <source>Time</source>
@@ -2935,31 +2935,31 @@ Reason: %3
     </message>
     <message>
         <source>Recover - All</source>
-        <translation type="unfinished">Recompléter - Tout</translation>
+        <translation>Recompléter - Tout</translation>
     </message>
     <message>
         <source>Recover - Troops</source>
-        <translation type="unfinished">Recompléter - Troupes</translation>
+        <translation>Recompléter - Troupes</translation>
     </message>
     <message>
         <source>Recover - Equipments</source>
-        <translation type="unfinished">Recompléter - Composantes</translation>
+        <translation>Recompléter - Composantes</translation>
     </message>
     <message>
         <source>Recover - Resources</source>
-        <translation type="unfinished">Recompléter - Ressources</translation>
+        <translation>Recompléter - Ressources</translation>
     </message>
     <message>
         <source>Destroy - All</source>
-        <translation type="unfinished">Détruire - Entièrement</translation>
+        <translation>Détruire - Entièrement</translation>
     </message>
     <message>
         <source>Cancel surrender</source>
-        <translation type="unfinished">Annuler la rédition</translation>
+        <translation>Annuler la rédition</translation>
     </message>
     <message>
         <source>Surrender to</source>
-        <translation type="unfinished">Rédition</translation>
+        <translation>Rédition</translation>
     </message>
 </context>
 <context>
@@ -3056,11 +3056,11 @@ Reason: %3
     <name>gui</name>
     <message>
         <source>Objects</source>
-        <translation type="unfinished">Objets</translation>
+        <translation>Objets</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
 </context>
 <context>

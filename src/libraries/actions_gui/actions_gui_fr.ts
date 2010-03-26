@@ -41,41 +41,41 @@
     <name>LimaParameter</name>
     <message>
         <source>Line</source>
-        <translation type="unfinished"></translation>
+        <translation>Ligne</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonctions</translation>
     </message>
     <message>
         <source>Schedule</source>
-        <translation type="unfinished">Horaire</translation>
+        <translation>Horaire</translation>
     </message>
     <message>
         <source>Set &apos;%1&apos; function</source>
-        <translation type="unfinished"></translation>
+        <translation>Assigner la fonction &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
     <name>LimitParameter</name>
     <message>
         <source>Set %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Assigner %1</translation>
     </message>
 </context>
 <context>
     <name>ListParameter</name>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>Clear list</source>
-        <translation type="unfinished"></translation>
+        <translation>Vider la liste</translation>
     </message>
 </context>
 <context>
@@ -89,181 +89,181 @@
     <name>MissionInteface_ABC</name>
     <message>
         <source>Doctrine</source>
-        <translation type="unfinished"></translation>
+        <translation>Doctrine</translation>
     </message>
     <message>
         <source>Usage</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilisation</translation>
     </message>
 </context>
 <context>
     <name>MissionInterface_ABC</name>
     <message>
         <source>Mandatory</source>
-        <translation type="unfinished"></translation>
+        <translation>Obligatoire</translation>
     </message>
     <message>
         <source>Optional</source>
-        <translation type="unfinished"></translation>
+        <translation>Optionnel</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Help</source>
-        <translation type="unfinished"></translation>
+        <translation>Aide</translation>
     </message>
 </context>
 <context>
     <name>ParamAgentKnowledgeList</name>
     <message>
         <source>Add agent knowledge</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une connaissance</translation>
     </message>
     <message>
         <source>Agent knowledge %1</source>
-        <translation type="unfinished">Connaissance %1</translation>
+        <translation>Connaissance %1</translation>
     </message>
 </context>
 <context>
     <name>ParamAgentList</name>
     <message>
         <source>Add agent</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une unité</translation>
     </message>
     <message>
         <source>Agent %1:%2</source>
-        <translation type="unfinished">Unité %1:%2</translation>
+        <translation>Unité %1:%2</translation>
     </message>
     <message>
         <source>Add hierarchy</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une hiérarchie</translation>
     </message>
 </context>
 <context>
     <name>ParamAutomatList</name>
     <message>
         <source>Add automat</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un automate</translation>
     </message>
     <message>
         <source>Automat %1</source>
-        <translation type="unfinished">Automate %1</translation>
+        <translation>Automate %1</translation>
     </message>
 </context>
 <context>
     <name>ParamHumanWoundList</name>
     <message>
         <source>Add...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>ParamIntelligenceList</name>
     <message>
         <source>Add intelligence</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter un renseignement</translation>
     </message>
     <message>
         <source>Intelligence %1</source>
-        <translation type="unfinished">Renseignement %1</translation>
+        <translation>Renseignement %1</translation>
     </message>
 </context>
 <context>
     <name>ParamLimaList</name>
     <message>
         <source>Phase line %1</source>
-        <translation type="unfinished">Lima %1</translation>
+        <translation>Lima %1</translation>
     </message>
     <message>
         <source>Add line as</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une ligne en tant que</translation>
     </message>
 </context>
 <context>
     <name>ParamLocationList</name>
     <message>
         <source>Location %1</source>
-        <translation type="unfinished">Position %1</translation>
+        <translation>Position %1</translation>
     </message>
 </context>
 <context>
     <name>ParamMissionObjective</name>
     <message>
         <source>Location</source>
-        <translation type="unfinished">Position</translation>
+        <translation>Position</translation>
     </message>
     <message>
         <source>Schedule</source>
-        <translation type="unfinished">Horaire</translation>
+        <translation>Horaire</translation>
     </message>
 </context>
 <context>
     <name>ParamMissionObjectiveList</name>
     <message>
         <source>Objective %1</source>
-        <translation type="unfinished">Objectif %1</translation>
+        <translation>Objectif %1</translation>
     </message>
 </context>
 <context>
     <name>ParamObjectKnowledgeList</name>
     <message>
         <source>Add object knowledge</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter une connaissance d'objet</translation>
     </message>
     <message>
         <source>Object knowledge %1</source>
-        <translation type="unfinished">Connaissance d&apos;objet %1</translation>
+        <translation>Connaissance d&apos;objet %1</translation>
     </message>
 </context>
 <context>
     <name>ParamObstacle</name>
     <message>
         <source>Type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type:</translation>
     </message>
     <message>
         <source>Demolition target type:</source>
-        <translation type="unfinished"></translation>
+        <translation>Type de cible de démolition</translation>
     </message>
     <message>
         <source>Density</source>
-        <translation type="unfinished">Densité</translation>
+        <translation>Densité</translation>
     </message>
     <message>
         <source>TC2</source>
-        <translation type="unfinished">TC2</translation>
+        <translation>TC2</translation>
     </message>
     <message>
         <source>Location</source>
-        <translation type="unfinished">Position</translation>
+        <translation>Position</translation>
     </message>
     <message>
         <source>Obstacle type</source>
-        <translation type="unfinished">Type d&apos;obstacle</translation>
+        <translation>Type d&apos;obstacle</translation>
     </message>
 </context>
 <context>
     <name>ParamObstacleList</name>
     <message>
         <source>Obstacle %1</source>
-        <translation type="unfinished">Obstacle %1</translation>
+        <translation>Obstacle %1</translation>
     </message>
 </context>
 <context>
     <name>ParamPathList</name>
     <message>
         <source>Route %1</source>
-        <translation type="unfinished">Itinéraire %1</translation>
+        <translation>Itinéraire %1</translation>
     </message>
 </context>
 <context>

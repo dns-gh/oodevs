@@ -97,7 +97,7 @@
     </message>
     <message>
         <source>sword@masagroup.net</source>
-        <translation type="unfinished"></translation>
+        <translation>sword@masagroup.net</translation>
     </message>
 </context>
 <context>
@@ -141,27 +141,27 @@
     <name>CrossbowPluginConfigPanel</name>
     <message>
         <source>Enable Crossbow export</source>
-        <translation type="unfinished"></translation>
+        <translation><Activer l'export Crossbow/translation>
     </message>
     <message>
         <source>Format for gdb: filename.{gdb|mdb}</source>
-        <translation type="unfinished"></translation>
+        <translation>Format pour gdb: nomdefichier.{gdb|mdb}</translation>
     </message>
     <message>
         <source>Format for sde connection: sde://user:password@host:port/db_name.sword</source>
-        <translation type="unfinished"></translation>
+        <translation>Format pour connection sde: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>Geodatabase export:</source>
-        <translation type="unfinished"></translation>
+        <translation>Export Geodatabase:</translation>
     </message>
     <message>
         <source>Geodatabase population export:</source>
-        <translation type="unfinished"></translation>
+        <translation>Export de population Geodatabase:</translation>
     </message>
     <message>
         <source>Geodatabase order import:</source>
-        <translation type="unfinished"></translation>
+        <translation>Import d'action Geodatabase</translation>
     </message>
 </context>
 <context>
@@ -206,7 +206,7 @@
     <name>Frontend</name>
     <message>
         <source>Critical error</source>
-        <translation type="unfinished"></translation>
+        <translation>Erreur critique</translation>
     </message>
 </context>
 <context>
@@ -493,7 +493,7 @@ Description: %3</source>
     </message>
     <message>
         <source>DB Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter DB</translation>
     </message>
 </context>
 <context>
@@ -522,7 +522,7 @@ Description: %3</source>
     </message>
     <message>
         <source>Terrain generation tool was not found on your system.</source>
-        <translation type="unfinished"></translation>
+        <translation>L'outil de génération de terrain n'a pas été trouvé sur votre système.</translation>
     </message>
 </context>
 </TS>

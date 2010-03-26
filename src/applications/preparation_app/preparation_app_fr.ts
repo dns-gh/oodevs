@@ -81,7 +81,7 @@
     </message>
     <message>
         <source>Create sub knowledge group</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un sous-groupe de connaissance</translation>
     </message>
 </context>
 <context>
@@ -288,7 +288,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>No file loaded</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de fichier chargé</translation>
     </message>
     <message>
         <source>Watershed</source>
@@ -451,15 +451,15 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Scores...</source>
-        <translation type="unfinished"></translation>
+        <translation>Scores...</translation>
     </message>
     <message>
         <source>&amp;Exercise</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exercice</translation>
     </message>
     <message>
         <source>Success factors...</source>
-        <translation type="unfinished"></translation>
+        <translation>Facteurs de réussite...</translation>
     </message>
 </context>
 <context>
@@ -634,201 +634,201 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <name>ScoreDialog</name>
     <message>
         <source>Scores</source>
-        <translation type="unfinished"></translation>
+        <translation>Scores</translation>
     </message>
     <message>
         <source>Create new score</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer un nouveau score</translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nom: </translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
 </context>
 <context>
     <name>ScoreEditor</name>
     <message>
         <source>Score editor</source>
-        <translation type="unfinished"></translation>
+        <translation>Editeur de score</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom:</translation>
     </message>
     <message>
         <source>Formula</source>
-        <translation type="unfinished"></translation>
+        <translation>Formule</translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Score edition - %1 </source>
-        <translation type="unfinished"></translation>
+        <translation>Edition du score - %1</translation>
     </message>
     <message>
         <source>Formula is empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>La formule est vide.</translation>
     </message>
     <message>
         <source>Variables</source>
-        <translation type="unfinished"></translation>
+        <translation>Variables</translation>
     </message>
     <message>
         <source>Definition</source>
-        <translation type="unfinished"></translation>
+        <translation>Définition</translation>
     </message>
     <message>
         <source>Gauge</source>
-        <translation type="unfinished"></translation>
+        <translation>Jauge</translation>
     </message>
 </context>
 <context>
     <name>ScoreList</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Edit...</source>
-        <translation type="unfinished"></translation>
+        <translation>Editer...</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Supprimer</translation>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>
     <name>ScorePrimitivesLibrary</name>
     <message>
         <source>Data</source>
-        <translation type="unfinished"></translation>
+        <translation>Données</translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation type="unfinished"></translation>
+        <translation>Fonctions</translation>
     </message>
 </context>
 <context>
     <name>ScorePrimitivesPage</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Insert</source>
-        <translation type="unfinished"></translation>
+        <translation>Insérer</translation>
     </message>
 </context>
 <context>
     <name>ScoreVariableCreationWizard</name>
     <message>
         <source>Create variable</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer une variable</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished">Information</translation>
+        <translation>Information</translation>
     </message>
     <message>
         <source>Name: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nom: </translation>
     </message>
     <message>
         <source>Type: </source>
-        <translation type="unfinished"></translation>
+        <translation>Type: </translation>
     </message>
     <message>
         <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>Unit</source>
-        <translation type="unfinished"></translation>
+        <translation>Unité</translation>
     </message>
     <message>
         <source>Unit list</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste d'unités</translation>
     </message>
     <message>
         <source>Dotation list</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste de dotations</translation>
     </message>
     <message>
         <source>Equipment list</source>
-        <translation type="unfinished"></translation>
+        <translation>Liste d'équipements</translation>
     </message>
     <message>
         <source>Zone</source>
-        <translation type="unfinished"></translation>
+        <translation><Zone/translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Variable value: </source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur de la variable: </translation>
     </message>
     <message>
         <source>Human states</source>
-        <translation type="unfinished"></translation>
+        <translation>Etats des humains</translation>
     </message>
     <message>
         <source>Human ranks</source>
-        <translation type="unfinished"></translation>
+        <translation>Rangs des humains</translation>
     </message>
     <message>
         <source>Equipment states</source>
-        <translation type="unfinished"></translation>
+        <translation>Etats des équipements</translation>
     </message>
 </context>
 <context>
     <name>ScoreVariablesList</name>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">Type</translation>
+        <translation>Type</translation>
     </message>
     <message>
         <source>Value</source>
-        <translation type="unfinished"></translation>
+        <translation>Valeur</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">Ajouter</translation>
+        <translation>Ajouter</translation>
     </message>
     <message>
         <source>Del</source>
-        <translation type="unfinished"></translation>
+        <translation>Suppr</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation type="unfinished"></translation>
+        <translation>Coller</translation>
     </message>
 </context>
 <context>
@@ -975,7 +975,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Global weather</source>
-        <translation type="unfinished">Météo du théatre</translation>
+        <translation>Météo du théatre</translation>
     </message>
     <message>
         <source>Local weather</source>

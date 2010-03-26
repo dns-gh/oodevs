@@ -157,18 +157,18 @@
     <name>Fire</name>
     <message>
         <source>Fire</source>
-        <translation type="unfinished"></translation>
+        <translation>Incendie</translation>
     </message>
     <message>
         <source>Fire class:</source>
-        <translation type="unfinished"></translation>
+        <translation>Classe d'incendie :</translation>
     </message>
 </context>
 <context>
     <name>FireAttribute</name>
     <message>
         <source>Info/Fire attributes/Fire class</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs d'incendie/Classe d'incendie</translation>
     </message>
 </context>
 <context>
@@ -221,11 +221,11 @@
     <name>KnowledgeGroup</name>
     <message>
         <source>Info/Identifier</source>
-        <translation type="unfinished">Info/Identifiant</translation>
+        <translation>Info/Identifiant</translation>
     </message>
     <message>
         <source>Info/Name</source>
-        <translation type="unfinished">Info/Nom</translation>
+        <translation>Info/Nom</translation>
     </message>
     <message>
         <source>Info/Type</source>
@@ -233,15 +233,15 @@
     </message>
     <message>
         <source>Knowledge group [%1]</source>
-        <translation type="unfinished">Groupe de connaissance [%1]</translation>
+        <translation>Groupe de connaissance [%1]</translation>
     </message>
     <message>
         <source>Type/Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Type/Nom</translation>
     </message>
     <message>
         <source>Type/Delay</source>
-        <translation type="unfinished"></translation>
+        <translation>Type/Délai</translation>
     </message>
 </context>
 <context>
@@ -273,7 +273,7 @@
     <name>LogisticAttribute</name>
     <message>
         <source>Info/Camp attributes/Superior</source>
-        <translation type="unfinished">Info/Attributs de camp/Supérieur</translation>
+        <translation>Info/Attributs de camp/Supérieur</translation>
     </message>
 </context>
 <context>
@@ -319,7 +319,7 @@
     <name>MedicalTreatment</name>
     <message>
         <source>Number of available beds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de lits disponibles :</translation>
     </message>
     <message>
         <source></source>
@@ -327,37 +327,37 @@
     </message>
     <message>
         <source>Total number of doctors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre total de médecins :</translation>
     </message>
     <message>
         <source>Number of available doctors:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de médecins disponibles :</translation>
     </message>
     <message>
         <source>Medical Treatment</source>
-        <translation type="unfinished"></translation>
+        <translation>Traitement médical</translation>
     </message>
     <message>
         <source>Total number of beds:</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre total de lits :</translation>
     </message>
     <message>
         <source>Medical Treatment types:</source>
-        <translation type="unfinished"></translation>
+        <translation>Types de traitements médicaux :</translation>
     </message>
 </context>
 <context>
     <name>MedicalTreatmentAttribute</name>
     <message>
         <source>Info/Medical Treatment attributes/Medical Treatment type</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Attributs de Traitement Médical/Type de Traitement Médical</translation>
     </message>
 </context>
 <context>
     <name>MineAttribute</name>
     <message>
         <source>Info/Mine parameters/Density</source>
-        <translation type="unfinished">Info/Paramètres des mines/Densité</translation>
+        <translation>Info/Paramètres des mines/Densité</translation>
     </message>
 </context>
 <context>
@@ -395,26 +395,26 @@
     </message>
     <message>
         <source>NBC</source>
-        <translation type="unfinished"></translation>
+        <translation>NBC</translation>
     </message>
     <message>
         <source>NBC state:</source>
-        <translation type="unfinished"></translation>
+        <translation>Etat NBC :</translation>
     </message>
     <message>
         <source>Danger:</source>
-        <translation type="unfinished"></translation>
+        <translation>Danger :</translation>
     </message>
 </context>
 <context>
     <name>NBCAttribute</name>
     <message>
         <source>Info/NBC attributes/NBC state</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Atributs NBC/Etat NBC</translation>
     </message>
     <message>
         <source>Info/NBC attributes/NBC agents</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Atributs NBC/Agents NBC</translation>
     </message>
 </context>
 <context>
@@ -440,19 +440,19 @@
     </message>
     <message>
         <source>Width:</source>
-        <translation>Largeur:</translation>
+        <translation>Largeur :</translation>
     </message>
     <message>
         <source>Depth:</source>
-        <translation>Profondeur:</translation>
+        <translation>Profondeur :</translation>
     </message>
     <message>
         <source>Stream speed:</source>
-        <translation>Débit du courant:</translation>
+        <translation>Débit du courant :</translation>
     </message>
     <message>
         <source>Build river banks:</source>
-        <translation>Aménagement des rives:</translation>
+        <translation>Aménagement des rives :</translation>
     </message>
     <message>
         <source>Logistic route</source>
@@ -460,19 +460,19 @@
     </message>
     <message>
         <source>Equipped:</source>
-        <translation>Equippé:</translation>
+        <translation>Equipé :</translation>
     </message>
     <message>
         <source>Flow:</source>
-        <translation>Débit:</translation>
+        <translation>Débit :</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation>Longueur:</translation>
+        <translation>Longueur :</translation>
     </message>
     <message>
         <source>Maximum weight:</source>
-        <translation>Poids maximum:</translation>
+        <translation>Poids maximum :</translation>
     </message>
     <message>
         <source>Mine parameters</source>
@@ -480,11 +480,11 @@
     </message>
     <message>
         <source>Activity time:</source>
-        <translation>Durée d&apos;activité:</translation>
+        <translation>Durée d&apos;activité :</translation>
     </message>
     <message>
         <source>Density:</source>
-        <translation>Densité:</translation>
+        <translation>Densité :</translation>
     </message>
     <message>
         <source>%1 [%2]</source>
@@ -496,39 +496,39 @@
     </message>
     <message>
         <source>Identifier:</source>
-        <translation>Identifiant:</translation>
+        <translation>Identifiant :</translation>
     </message>
     <message>
         <source>Name:</source>
-        <translation>Nom:</translation>
+        <translation>Nom :</translation>
     </message>
     <message>
         <source>Type:</source>
-        <translation>Type:</translation>
+        <translation>Type :</translation>
     </message>
     <message>
         <source>Location:</source>
-        <translation>Position:</translation>
+        <translation>Position :</translation>
     </message>
     <message>
         <source>Construction:</source>
-        <translation>Construction:</translation>
+        <translation>Construction :</translation>
     </message>
     <message>
         <source>Mining:</source>
-        <translation>Valorisation:</translation>
+        <translation>Valorisation :</translation>
     </message>
     <message>
         <source>Bypass:</source>
-        <translation>Contournement:</translation>
+        <translation>Contournement :</translation>
     </message>
     <message>
         <source>Construction dotation:</source>
-        <translation type="obsolete">Dotation de construction:</translation>
+        <translation type="obsolete">Dotation de construction :</translation>
     </message>
     <message>
         <source>Development dotation:</source>
-        <translation>Dotation de valorisation:</translation>
+        <translation>Dotation de valorisation :</translation>
     </message>
     <message>
         <source>Info/Identifier</source>
@@ -544,11 +544,11 @@
     </message>
     <message>
         <source>Obstacle type:</source>
-        <translation>Type d&apos;obstacle:</translation>
+        <translation>Type d&apos;obstacle :</translation>
     </message>
     <message>
         <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé:</translation>
+        <translation>Obstacle de manoeuvre activé :</translation>
     </message>
     <message>
         <source>Info/Obstacle type</source>
@@ -560,27 +560,27 @@
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Paramètres de démolition de cible/Type d'obstacle</translation>
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle activated</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Paramètres de démolition de cible/Obstacle activé</translation>
     </message>
     <message>
         <source>Supply route</source>
-        <translation type="unfinished"></translation>
+        <translation>Route de ravitaillement</translation>
     </message>
     <message>
         <source>Info/Construction/Dotation/Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Construction/Dotation/Type</translation>
     </message>
     <message>
         <source>Info/Construction/Dotation/Count</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Construction/Dotation/Compte</translation>
     </message>
     <message>
         <source>Info/Construction/Completion</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Construction/Réalisation</translation>
     </message>
 </context>
 <context>
@@ -686,23 +686,23 @@ Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
     <name>SupplyRouteAttribute</name>
     <message>
         <source>Info/Logistic route attributes/Flow</source>
-        <translation type="unfinished">Info/Attributs de l&apos;itinéraire logistique/Débit</translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Débit</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Width</source>
-        <translation type="unfinished">Info/Attributs de l&apos;itinéraire logistique/Largeur</translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Largeur</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Length</source>
-        <translation type="unfinished">Info/Attributs de l&apos;itinéraire logistique/Longueur</translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Longueur</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Maximum weight</source>
-        <translation type="unfinished">Info/Attributs de l&apos;itinéraire logistique/Poids maximum</translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Poids maximum</translation>
     </message>
     <message>
         <source>Info/Logistic route attributes/Equipped</source>
-        <translation type="unfinished">Info/Attributs de l&apos;itinéraire logistique/Equippé</translation>
+        <translation>Info/Attributs de l&apos;itinéraire logistique/Equipé</translation>
     </message>
 </context>
 <context>
@@ -757,15 +757,15 @@ Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
     <name>ToxicCloudAttribute</name>
     <message>
         <source>Info/Cloud parameters/Data source</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Paramètres du nuage/Source des données</translation>
     </message>
     <message>
         <source>Info/Cloud parameters/Data field</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Paramètres des nuages/Champ des données</translation>
     </message>
     <message>
         <source>Info/Cloud parameters/Data export</source>
-        <translation type="unfinished"></translation>
+        <translation>Info/Paramètres des nuages/Export des données</translation>
     </message>
 </context>
 </TS>

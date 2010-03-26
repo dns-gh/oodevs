@@ -14,11 +14,11 @@
     <name>ActionParameter</name>
     <message>
         <source>TC2</source>
-        <translation type="unfinished">TC2</translation>
+        <translation>TC2</translation>
     </message>
     <message>
         <source>Density</source>
-        <translation type="unfinished">Densité</translation>
+        <translation>Densité</translation>
     </message>
 </context>
 <context>
@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>Location %1</source>
-        <translation type="unfinished">Position %1</translation>
+        <translation>Position %1</translation>
     </message>
     <message>
         <source>Object knowledge not found.</source>
@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Obstacle %1</source>
-        <translation type="unfinished">Obstacle %1</translation>
+        <translation>Obstacle %1</translation>
     </message>
     <message>
         <source>Destination</source>
