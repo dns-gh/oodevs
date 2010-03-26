@@ -12,11 +12,11 @@
 
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Types.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Simulation.h"
 
 namespace tools
 {
-    QString ToString( ASN1T_EnumLocationType nType );
+    QString ToString(  Common::MsgLocation::Geometry nType );
 
     E_LocationType     LocationFromString        ( const QString& type );
     E_AmmunitionFamily AmmunitionFamilyFromString( const QString& type );

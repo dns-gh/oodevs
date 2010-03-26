@@ -9,7 +9,7 @@
 
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
-#include "game_asn/Simulation.h"
+#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace xml;
@@ -50,16 +50,16 @@ unsigned long ReportTemplate::GetId() const
 // Name: ReportTemplate::RenderMessage
 // Created: SBO 2006-12-07
 // -----------------------------------------------------------------------------
-QString ReportTemplate::RenderMessage( const ASN1T_MissionParameters& asn ) const
+QString ReportTemplate::RenderMessage( const Common::MsgMissionParameters& message ) const
 {
-    QString message = message_;
+    QString messageStr = message_;
     unsigned int enums = 0;
-    for( unsigned int i = 0; i < asn.n; ++i )
-        if( asn.elem[i].value.t == T_MissionParameter_value_enumeration )
-            message = message.arg( enumerations_[enums++][asn.elem[i].value.u.enumeration] );
+    for( int i = 0; i < message.elem_size(); ++i )
+        if( message.elem(i).value().has_enumeration() )
+            messageStr = messageStr.arg( enumerations_[enums++][message.elem(i).value().enumeration()] );
         else
-            message = message.arg( factory_.RenderParameter( asn.elem[i] ) );
-    return message;
+            messageStr = messageStr.arg( factory_.RenderParameter( message.elem(i) ) );
+    return messageStr;
 }
 
 // -----------------------------------------------------------------------------

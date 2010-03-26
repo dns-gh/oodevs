@@ -14,8 +14,8 @@
 // Name: Trace constructor
 // Created: NLD 2002-07-16
 //-----------------------------------------------------------------------------
-Trace::Trace( const kernel::Entity_ABC& agent, const kernel::Time_ABC& simulation, const ASN1T_MsgTrace& input )
-    : Report( agent, Report::eTrace, input.message, simulation.GetDateTime() )
+Trace::Trace( const kernel::Entity_ABC& agent, const kernel::Time_ABC& simulation, const MsgsSimToClient::MsgTrace& input )
+    : Report( agent, Report::eTrace, QString( input.message().c_str() ), simulation.GetDateTime() )
 {
     // NOTHING
 }

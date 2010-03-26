@@ -22,7 +22,10 @@ namespace xml
 }
 
 class ReportFactory;
-struct ASN1T_MissionParameters;
+namespace Common
+{
+    class MsgMissionParameters;
+}
 
 // =============================================================================
 /** @class  ReportTemplate
@@ -43,7 +46,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    QString RenderMessage( const ASN1T_MissionParameters& asn ) const;
+    QString RenderMessage( const Common::MsgMissionParameters& asn ) const;
     //@}
 
 private:
