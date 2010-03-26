@@ -131,7 +131,7 @@
         <build-lib name="ENT" depends="qt" pattern="lib${ant.project.name}_ENT-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
-    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.protocol">
+    <target name="library.dispatcher" description="build dispatcher static library" depends="library.MT_Tools,library.tools,library.protocol,library.meteo">
         <build-lib name="dispatcher" pattern="lib${ant.project.name}_dispatcher-${platform}-mt@{suffix}" suffix="-gd" depends="qt">
             <defineset define="XML_LIBRARY,MT_AUTO_LINK"/> <!-- xerces static -->
         </build-lib>
