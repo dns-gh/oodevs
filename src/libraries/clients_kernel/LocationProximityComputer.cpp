@@ -44,6 +44,15 @@ void LocationProximityComputer::VisitLines( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationProximityComputer::VisitRectangle
+// Created: SLG 2010-03-24
+// -----------------------------------------------------------------------------
+void LocationProximityComputer::VisitRectangle( const T_PointVector& points )
+{
+    VisitPolygon( points );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationProximityComputer::VisitPolygon
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------

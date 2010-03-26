@@ -162,7 +162,9 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlGlobalMeteo));
   MsgControlLocalMeteo_descriptor_ = file->message_type(2);
-  static const int MsgControlLocalMeteo_offsets_[3] = {
+  static const int MsgControlLocalMeteo_offsets_[5] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, start_time_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, end_time_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, top_left_coordinate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, bottom_right_coordinate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, attributes_),
@@ -930,11 +932,13 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "mmon.proto\"B\n\030MsgControlDatetimeChange\022&"
     "\n\tdate_time\030\001 \002(\0132\023.Common.MsgDateTime\"G"
     "\n\025MsgControlGlobalMeteo\022.\n\nattributes\030\001 "
-    "\002(\0132\032.Common.MsgMeteoAttributes\"\266\001\n\024MsgC"
-    "ontrolLocalMeteo\0224\n\023top_left_coordinate\030"
-    "\001 \001(\0132\027.Common.MsgCoordLatLong\0228\n\027bottom"
-    "_right_coordinate\030\002 \001(\0132\027.Common.MsgCoor"
-    "dLatLong\022.\n\nattributes\030\003 \001(\0132\032.Common.Ms"
+    "\002(\0132\032.Common.MsgMeteoAttributes\"\206\002\n\024MsgC"
+    "ontrolLocalMeteo\022\'\n\nstart_time\030\001 \002(\0132\023.C"
+    "ommon.MsgDateTime\022%\n\010end_time\030\002 \002(\0132\023.Co"
+    "mmon.MsgDateTime\0224\n\023top_left_coordinate\030"
+    "\003 \002(\0132\027.Common.MsgCoordLatLong\0228\n\027bottom"
+    "_right_coordinate\030\004 \002(\0132\027.Common.MsgCoor"
+    "dLatLong\022.\n\nattributes\030\005 \002(\0132\032.Common.Ms"
     "gMeteoAttributes\"+\n\033MsgControlCheckPoint"
     "SaveNow\022\014\n\004name\030\001 \001(\t\"a\n\014MsgFragOrder\022\013\n"
     "\003oid\030\001 \002(\r\022\022\n\nfrag_order\030\002 \002(\r\0220\n\nparame"
@@ -1094,7 +1098,7 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "est\030\034 \001(\0132/.MsgsClientToSim.MsgKnowledge"
     "GroupUpdateRequest\022I\n\021create_fire_order\030"
     "\035 \001(\0132..MsgsClientToSim.MsgMagicActionCr"
-    "eateFireOrder", 6733);
+    "eateFireOrder", 6813);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -1607,6 +1611,8 @@ void MsgControlGlobalMeteo::Swap(MsgControlGlobalMeteo* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
+const int MsgControlLocalMeteo::kStartTimeFieldNumber;
+const int MsgControlLocalMeteo::kEndTimeFieldNumber;
 const int MsgControlLocalMeteo::kTopLeftCoordinateFieldNumber;
 const int MsgControlLocalMeteo::kBottomRightCoordinateFieldNumber;
 const int MsgControlLocalMeteo::kAttributesFieldNumber;
@@ -1617,6 +1623,8 @@ MsgControlLocalMeteo::MsgControlLocalMeteo() {
 }
 
 void MsgControlLocalMeteo::InitAsDefaultInstance() {
+  start_time_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
+  end_time_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
   top_left_coordinate_ = const_cast< ::Common::MsgCoordLatLong*>(&::Common::MsgCoordLatLong::default_instance());
   bottom_right_coordinate_ = const_cast< ::Common::MsgCoordLatLong*>(&::Common::MsgCoordLatLong::default_instance());
   attributes_ = const_cast< ::Common::MsgMeteoAttributes*>(&::Common::MsgMeteoAttributes::default_instance());
@@ -1629,6 +1637,8 @@ MsgControlLocalMeteo::MsgControlLocalMeteo(const MsgControlLocalMeteo& from) {
 
 void MsgControlLocalMeteo::SharedCtor() {
   _cached_size_ = 0;
+  start_time_ = NULL;
+  end_time_ = NULL;
   top_left_coordinate_ = NULL;
   bottom_right_coordinate_ = NULL;
   attributes_ = NULL;
@@ -1641,6 +1651,8 @@ MsgControlLocalMeteo::~MsgControlLocalMeteo() {
 
 void MsgControlLocalMeteo::SharedDtor() {
   if (this != default_instance_) {
+    delete start_time_;
+    delete end_time_;
     delete top_left_coordinate_;
     delete bottom_right_coordinate_;
     delete attributes_;
@@ -1665,12 +1677,18 @@ MsgControlLocalMeteo* MsgControlLocalMeteo::New() const {
 void MsgControlLocalMeteo::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (_has_bit(0)) {
-      if (top_left_coordinate_ != NULL) top_left_coordinate_->::Common::MsgCoordLatLong::Clear();
+      if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
     }
     if (_has_bit(1)) {
-      if (bottom_right_coordinate_ != NULL) bottom_right_coordinate_->::Common::MsgCoordLatLong::Clear();
+      if (end_time_ != NULL) end_time_->::Common::MsgDateTime::Clear();
     }
     if (_has_bit(2)) {
+      if (top_left_coordinate_ != NULL) top_left_coordinate_->::Common::MsgCoordLatLong::Clear();
+    }
+    if (_has_bit(3)) {
+      if (bottom_right_coordinate_ != NULL) bottom_right_coordinate_->::Common::MsgCoordLatLong::Clear();
+    }
+    if (_has_bit(4)) {
       if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
     }
   }
@@ -1684,20 +1702,46 @@ bool MsgControlLocalMeteo::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+      // required .Common.MsgDateTime start_time = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_top_left_coordinate()));
-        if (input->ExpectTag(18)) goto parse_bottom_right_coordinate;
+             input, mutable_start_time()));
+        if (input->ExpectTag(18)) goto parse_end_time;
         break;
       }
       
-      // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+      // required .Common.MsgDateTime end_time = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_end_time:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_end_time()));
+        if (input->ExpectTag(26)) goto parse_top_left_coordinate;
+        break;
+      }
+      
+      // required .Common.MsgCoordLatLong top_left_coordinate = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_top_left_coordinate:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_top_left_coordinate()));
+        if (input->ExpectTag(34)) goto parse_bottom_right_coordinate;
+        break;
+      }
+      
+      // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -1705,12 +1749,12 @@ bool MsgControlLocalMeteo::MergePartialFromCodedStream(
        parse_bottom_right_coordinate:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_bottom_right_coordinate()));
-        if (input->ExpectTag(26)) goto parse_attributes;
+        if (input->ExpectTag(42)) goto parse_attributes;
         break;
       }
       
-      // optional .Common.MsgMeteoAttributes attributes = 3;
-      case 3: {
+      // required .Common.MsgMeteoAttributes attributes = 5;
+      case 5: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -1746,22 +1790,34 @@ void MsgControlLocalMeteo::SerializeWithCachedSizes(
     return;
   }
   
-  // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+  // required .Common.MsgDateTime start_time = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->top_left_coordinate(), output);
+      1, this->start_time(), output);
   }
   
-  // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+  // required .Common.MsgDateTime end_time = 2;
   if (_has_bit(1)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->bottom_right_coordinate(), output);
+      2, this->end_time(), output);
   }
   
-  // optional .Common.MsgMeteoAttributes attributes = 3;
+  // required .Common.MsgCoordLatLong top_left_coordinate = 3;
   if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      3, this->attributes(), output);
+      3, this->top_left_coordinate(), output);
+  }
+  
+  // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      4, this->bottom_right_coordinate(), output);
+  }
+  
+  // required .Common.MsgMeteoAttributes attributes = 5;
+  if (_has_bit(4)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      5, this->attributes(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1772,25 +1828,39 @@ void MsgControlLocalMeteo::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* MsgControlLocalMeteo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+  // required .Common.MsgDateTime start_time = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        1, this->top_left_coordinate(), target);
+        1, this->start_time(), target);
   }
   
-  // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+  // required .Common.MsgDateTime end_time = 2;
   if (_has_bit(1)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->bottom_right_coordinate(), target);
+        2, this->end_time(), target);
   }
   
-  // optional .Common.MsgMeteoAttributes attributes = 3;
+  // required .Common.MsgCoordLatLong top_left_coordinate = 3;
   if (_has_bit(2)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->attributes(), target);
+        3, this->top_left_coordinate(), target);
+  }
+  
+  // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, this->bottom_right_coordinate(), target);
+  }
+  
+  // required .Common.MsgMeteoAttributes attributes = 5;
+  if (_has_bit(4)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        5, this->attributes(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1804,21 +1874,35 @@ int MsgControlLocalMeteo::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+    // required .Common.MsgDateTime start_time = 1;
+    if (has_start_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->start_time());
+    }
+    
+    // required .Common.MsgDateTime end_time = 2;
+    if (has_end_time()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->end_time());
+    }
+    
+    // required .Common.MsgCoordLatLong top_left_coordinate = 3;
     if (has_top_left_coordinate()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->top_left_coordinate());
     }
     
-    // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+    // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
     if (has_bottom_right_coordinate()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->bottom_right_coordinate());
     }
     
-    // optional .Common.MsgMeteoAttributes attributes = 3;
+    // required .Common.MsgMeteoAttributes attributes = 5;
     if (has_attributes()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1851,12 +1935,18 @@ void MsgControlLocalMeteo::MergeFrom(const MsgControlLocalMeteo& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      mutable_top_left_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.top_left_coordinate());
+      mutable_start_time()->::Common::MsgDateTime::MergeFrom(from.start_time());
     }
     if (from._has_bit(1)) {
-      mutable_bottom_right_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.bottom_right_coordinate());
+      mutable_end_time()->::Common::MsgDateTime::MergeFrom(from.end_time());
     }
     if (from._has_bit(2)) {
+      mutable_top_left_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.top_left_coordinate());
+    }
+    if (from._has_bit(3)) {
+      mutable_bottom_right_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.bottom_right_coordinate());
+    }
+    if (from._has_bit(4)) {
       mutable_attributes()->::Common::MsgMeteoAttributes::MergeFrom(from.attributes());
     }
   }
@@ -1876,7 +1966,14 @@ void MsgControlLocalMeteo::CopyFrom(const MsgControlLocalMeteo& from) {
 }
 
 bool MsgControlLocalMeteo::IsInitialized() const {
+  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
   
+  if (has_start_time()) {
+    if (!this->start_time().IsInitialized()) return false;
+  }
+  if (has_end_time()) {
+    if (!this->end_time().IsInitialized()) return false;
+  }
   if (has_top_left_coordinate()) {
     if (!this->top_left_coordinate().IsInitialized()) return false;
   }
@@ -1891,6 +1988,8 @@ bool MsgControlLocalMeteo::IsInitialized() const {
 
 void MsgControlLocalMeteo::Swap(MsgControlLocalMeteo* other) {
   if (other != this) {
+    std::swap(start_time_, other->start_time_);
+    std::swap(end_time_, other->end_time_);
     std::swap(top_left_coordinate_, other->top_left_coordinate_);
     std::swap(bottom_right_coordinate_, other->bottom_right_coordinate_);
     std::swap(attributes_, other->attributes_);

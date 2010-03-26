@@ -97,7 +97,10 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
 bool MetricsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
     if( ( event->button() & Qt::LeftButton ) && event->state() == Qt::ShiftButton )
+    {
         metricPoints_.push_back( point );
+        return false;
+    }
     return false;
 }
 

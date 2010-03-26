@@ -20,6 +20,7 @@
 #include "protocol/simulationsenders.h"
 #include "FireCreationPanel.h"
 #include "ObjectCreationPanel.h"
+#include "WeatherCreationPanel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -39,6 +40,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     AddPanel( intel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
     AddPanel( new FireCreationPanel( this, *this, controllers, publisher, staticModel ) );
+    AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,6 +59,7 @@ CreationPanels::~CreationPanels()
 void CreationPanels::Draw( Viewport_ABC& viewport ) const
 {
     objects_->Draw( viewport );
+    weather_->Draw( viewport );
 }
 
 // -----------------------------------------------------------------------------

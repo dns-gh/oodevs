@@ -207,7 +207,7 @@ void ObjectPrototype_ABC::OnTypeChanged()
     const ObjectType* type = objectTypes_->GetValue();
     if( !type )
         return;
-    locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle() );
+    locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
     if( location_ && !location_->IsValid() )
         ResetLocation();
     attributes_->Select( *type );

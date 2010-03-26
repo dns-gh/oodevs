@@ -196,7 +196,16 @@ void ObjectPositions::VisitLines( const T_PointVector& points )
 {
     points_ = points;
 }
-    
+
+// -----------------------------------------------------------------------------
+// Name: ObjectPositions::VisitRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void ObjectPositions::VisitRectangle( const T_PointVector& points )
+{
+    points_ = points;
+}
+   
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions::VisitPolygon
 // Created: SBO 2006-10-16

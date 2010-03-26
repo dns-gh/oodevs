@@ -237,6 +237,15 @@ void GlProxy::DrawLines( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlProxy::DrawRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void GlProxy::DrawRectangle( const T_PointVector& points ) const
+{
+    tools_->DrawRectangle( points );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlProxy::DrawConvexPolygon
 // Created: AGE 2007-05-23
 // -----------------------------------------------------------------------------

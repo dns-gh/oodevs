@@ -253,6 +253,10 @@
         <source>Circle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LocationCreator</name>

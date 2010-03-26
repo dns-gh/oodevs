@@ -12,9 +12,9 @@
 
 #include "meteo/PHY_Meteo.h"
 
-namespace Common
+namespace MsgsClientToSim
 {
-    class MsgMeteoAttributes;
+    class MsgControlLocalMeteo;
 }
 
 namespace xml
@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_LocalMeteo( xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-    explicit PHY_LocalMeteo( const Common::MsgMeteoAttributes&, MT_Vector2D upLeft, MT_Vector2D upRight, MeteoManager_ABC* list );
+    explicit PHY_LocalMeteo( const MsgsClientToSim::MsgControlLocalMeteo&, MeteoManager_ABC* list );
     virtual ~PHY_LocalMeteo();
     //@}
 

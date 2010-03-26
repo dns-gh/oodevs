@@ -102,6 +102,17 @@ void LocationBase::VisitLines( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationBase::VisitRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void LocationBase::VisitRectangle( const T_PointVector& points )
+{
+    type_ = eLocationType_Rectangle;
+    for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
+        PushBack( *it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationBase::VisitPolygon
 // Created: SBO 2007-04-25
 // -----------------------------------------------------------------------------

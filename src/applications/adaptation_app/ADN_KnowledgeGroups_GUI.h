@@ -38,6 +38,7 @@ public:
     enum E_GuiElements
     {
         eName,
+        eCommunicationDelay,
         eAgentMaxLifetime,
         eAgentMaxDistance,
         eAgentHasInterpolationTime,

@@ -92,6 +92,7 @@ namespace
                 converter_.ConvertToGeo( *it, *loc_.mutable_coordinates()->add_elem() );
         }
 
+        virtual void VisitRectangle( const T_PointVector& points ) {}
         virtual void VisitPolygon( const T_PointVector& ) {}
         virtual void VisitCircle( const geometry::Point2f&, float ) {}
         virtual void VisitPoint( const geometry::Point2f& ) {}

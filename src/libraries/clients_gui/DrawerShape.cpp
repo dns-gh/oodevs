@@ -172,6 +172,10 @@ namespace
             for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
                 VisitPoint( *it );
         }
+        virtual void VisitRectangle( const T_PointVector& points )
+        {
+            VisitLines( points );
+        }
         virtual void VisitPolygon( const T_PointVector& points )
         {
             T_PointVector copy( points );

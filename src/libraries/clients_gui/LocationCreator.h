@@ -51,7 +51,7 @@ public:
     //! @name Operations
     //@{
     bool Allows( const kernel::Location_ABC& location ) const;
-    void Allow( bool point, bool line, bool polygon, bool circle );
+    void Allow( bool point, bool line, bool polygon, bool circle, bool rectangle );
     //@}
 
 public slots:
@@ -59,6 +59,7 @@ public slots:
     //@{
     void StartPoint();
     void StartLine();
+    void StartRectangle();
     void StartPolygon();
     void StartCircle();
     void AddDrawing();
@@ -95,6 +96,7 @@ private:
     bool lineAllowed_;
     bool polygonAllowed_;
     bool circleAllowed_;
+    bool rectangleAllowed_;
     //@}
 };
 

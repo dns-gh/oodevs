@@ -126,7 +126,7 @@ void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const MsgsClientToSim::MsgCon
     PHY_Meteo* pTmp = 0;
     if( msg.has_attributes() )
     {
-        pTmp = new PHY_LocalMeteo( msg.attributes(), vUpLeft, vDownRight, this );
+        pTmp = new PHY_LocalMeteo( msg, this );
         RegisterMeteo( *pTmp );
     }
     assert( pRawData_ );
@@ -174,7 +174,7 @@ void PHY_MeteoDataManager::Update( unsigned int date )
             (*it)->Update( pEphemeride_->GetLightingBase() );
     }   
 
-    for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         (*it)->UpdateMeteoPatch( date, *pRawData_ );
 }
 

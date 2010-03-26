@@ -90,6 +90,16 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationSerializer::VisitRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void LocationSerializer::VisitRectangle( const T_PointVector& points )
+{
+    SetPoints( points );
+    location_->set_type( MsgLocation_Geometry_line ); //TODO
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationSerializer::VisitPolygon
 // Created: AGE 2006-08-09
 // -----------------------------------------------------------------------------

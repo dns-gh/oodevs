@@ -143,6 +143,7 @@ namespace
                 location_.AddPoint( *it );
         }
 
+        virtual void VisitRectangle( const T_PointVector& ) {}
         virtual void VisitPolygon( const T_PointVector& ) {}
         virtual void VisitCircle( const geometry::Point2f&, float ) {}
         virtual void VisitPoint( const geometry::Point2f& ) {}

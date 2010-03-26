@@ -297,24 +297,38 @@ class MsgControlLocalMeteo : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+  // required .Common.MsgDateTime start_time = 1;
+  inline bool has_start_time() const;
+  inline void clear_start_time();
+  static const int kStartTimeFieldNumber = 1;
+  inline const ::Common::MsgDateTime& start_time() const;
+  inline ::Common::MsgDateTime* mutable_start_time();
+  
+  // required .Common.MsgDateTime end_time = 2;
+  inline bool has_end_time() const;
+  inline void clear_end_time();
+  static const int kEndTimeFieldNumber = 2;
+  inline const ::Common::MsgDateTime& end_time() const;
+  inline ::Common::MsgDateTime* mutable_end_time();
+  
+  // required .Common.MsgCoordLatLong top_left_coordinate = 3;
   inline bool has_top_left_coordinate() const;
   inline void clear_top_left_coordinate();
-  static const int kTopLeftCoordinateFieldNumber = 1;
+  static const int kTopLeftCoordinateFieldNumber = 3;
   inline const ::Common::MsgCoordLatLong& top_left_coordinate() const;
   inline ::Common::MsgCoordLatLong* mutable_top_left_coordinate();
   
-  // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+  // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
   inline bool has_bottom_right_coordinate() const;
   inline void clear_bottom_right_coordinate();
-  static const int kBottomRightCoordinateFieldNumber = 2;
+  static const int kBottomRightCoordinateFieldNumber = 4;
   inline const ::Common::MsgCoordLatLong& bottom_right_coordinate() const;
   inline ::Common::MsgCoordLatLong* mutable_bottom_right_coordinate();
   
-  // optional .Common.MsgMeteoAttributes attributes = 3;
+  // required .Common.MsgMeteoAttributes attributes = 5;
   inline bool has_attributes() const;
   inline void clear_attributes();
-  static const int kAttributesFieldNumber = 3;
+  static const int kAttributesFieldNumber = 5;
   inline const ::Common::MsgMeteoAttributes& attributes() const;
   inline ::Common::MsgMeteoAttributes* mutable_attributes();
   
@@ -322,6 +336,8 @@ class MsgControlLocalMeteo : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
+  ::Common::MsgDateTime* start_time_;
+  ::Common::MsgDateTime* end_time_;
   ::Common::MsgCoordLatLong* top_left_coordinate_;
   ::Common::MsgCoordLatLong* bottom_right_coordinate_;
   ::Common::MsgMeteoAttributes* attributes_;
@@ -329,7 +345,7 @@ class MsgControlLocalMeteo : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -3977,53 +3993,87 @@ inline ::Common::MsgMeteoAttributes* MsgControlGlobalMeteo::mutable_attributes()
 
 // MsgControlLocalMeteo
 
-// optional .Common.MsgCoordLatLong top_left_coordinate = 1;
-inline bool MsgControlLocalMeteo::has_top_left_coordinate() const {
+// required .Common.MsgDateTime start_time = 1;
+inline bool MsgControlLocalMeteo::has_start_time() const {
   return _has_bit(0);
+}
+inline void MsgControlLocalMeteo::clear_start_time() {
+  if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
+  _clear_bit(0);
+}
+inline const ::Common::MsgDateTime& MsgControlLocalMeteo::start_time() const {
+  return start_time_ != NULL ? *start_time_ : *default_instance_->start_time_;
+}
+inline ::Common::MsgDateTime* MsgControlLocalMeteo::mutable_start_time() {
+  _set_bit(0);
+  if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
+  return start_time_;
+}
+
+// required .Common.MsgDateTime end_time = 2;
+inline bool MsgControlLocalMeteo::has_end_time() const {
+  return _has_bit(1);
+}
+inline void MsgControlLocalMeteo::clear_end_time() {
+  if (end_time_ != NULL) end_time_->::Common::MsgDateTime::Clear();
+  _clear_bit(1);
+}
+inline const ::Common::MsgDateTime& MsgControlLocalMeteo::end_time() const {
+  return end_time_ != NULL ? *end_time_ : *default_instance_->end_time_;
+}
+inline ::Common::MsgDateTime* MsgControlLocalMeteo::mutable_end_time() {
+  _set_bit(1);
+  if (end_time_ == NULL) end_time_ = new ::Common::MsgDateTime;
+  return end_time_;
+}
+
+// required .Common.MsgCoordLatLong top_left_coordinate = 3;
+inline bool MsgControlLocalMeteo::has_top_left_coordinate() const {
+  return _has_bit(2);
 }
 inline void MsgControlLocalMeteo::clear_top_left_coordinate() {
   if (top_left_coordinate_ != NULL) top_left_coordinate_->::Common::MsgCoordLatLong::Clear();
-  _clear_bit(0);
+  _clear_bit(2);
 }
 inline const ::Common::MsgCoordLatLong& MsgControlLocalMeteo::top_left_coordinate() const {
   return top_left_coordinate_ != NULL ? *top_left_coordinate_ : *default_instance_->top_left_coordinate_;
 }
 inline ::Common::MsgCoordLatLong* MsgControlLocalMeteo::mutable_top_left_coordinate() {
-  _set_bit(0);
+  _set_bit(2);
   if (top_left_coordinate_ == NULL) top_left_coordinate_ = new ::Common::MsgCoordLatLong;
   return top_left_coordinate_;
 }
 
-// optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+// required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
 inline bool MsgControlLocalMeteo::has_bottom_right_coordinate() const {
-  return _has_bit(1);
+  return _has_bit(3);
 }
 inline void MsgControlLocalMeteo::clear_bottom_right_coordinate() {
   if (bottom_right_coordinate_ != NULL) bottom_right_coordinate_->::Common::MsgCoordLatLong::Clear();
-  _clear_bit(1);
+  _clear_bit(3);
 }
 inline const ::Common::MsgCoordLatLong& MsgControlLocalMeteo::bottom_right_coordinate() const {
   return bottom_right_coordinate_ != NULL ? *bottom_right_coordinate_ : *default_instance_->bottom_right_coordinate_;
 }
 inline ::Common::MsgCoordLatLong* MsgControlLocalMeteo::mutable_bottom_right_coordinate() {
-  _set_bit(1);
+  _set_bit(3);
   if (bottom_right_coordinate_ == NULL) bottom_right_coordinate_ = new ::Common::MsgCoordLatLong;
   return bottom_right_coordinate_;
 }
 
-// optional .Common.MsgMeteoAttributes attributes = 3;
+// required .Common.MsgMeteoAttributes attributes = 5;
 inline bool MsgControlLocalMeteo::has_attributes() const {
-  return _has_bit(2);
+  return _has_bit(4);
 }
 inline void MsgControlLocalMeteo::clear_attributes() {
   if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
-  _clear_bit(2);
+  _clear_bit(4);
 }
 inline const ::Common::MsgMeteoAttributes& MsgControlLocalMeteo::attributes() const {
   return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
 }
 inline ::Common::MsgMeteoAttributes* MsgControlLocalMeteo::mutable_attributes() {
-  _set_bit(2);
+  _set_bit(4);
   if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
   return attributes_;
 }

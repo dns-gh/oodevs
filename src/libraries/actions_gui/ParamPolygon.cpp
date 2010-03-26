@@ -22,7 +22,7 @@ using namespace actions::gui;
 ParamPolygon::ParamPolygon( const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter )
     : ParamLocation( parameter, layer, converter )
 {
-    SetShapeFilter( false, false, true, false );
+    SetShapeFilter( false, false, true, false, false );
 }
 
 // -----------------------------------------------------------------------------

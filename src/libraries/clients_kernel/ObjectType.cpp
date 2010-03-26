@@ -182,6 +182,15 @@ bool ObjectType::CanBeLine() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectType::CanBeRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+bool ObjectType::CanBeRectangle() const
+{
+    return geometry_.empty() || geometry_.find( "rectangle" ) != std::string::npos;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectType::CanBePolygon
 // Created: SBO 2008-04-17
 // -----------------------------------------------------------------------------

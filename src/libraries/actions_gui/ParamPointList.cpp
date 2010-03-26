@@ -53,6 +53,6 @@ void ParamPointList::CommitTo( actions::ParameterContainer_ABC& action ) const
 Param_ABC* ParamPointList::CreateElement()
 {
     Param_ABC* param = ParamLocationList::CreateElement();
-    static_cast< ParamLocation* >( param )->SetShapeFilter( true, false, false, false );
+    static_cast< ParamLocation* >( param )->SetShapeFilter( true, false, false, false, false );
     return param;
 }

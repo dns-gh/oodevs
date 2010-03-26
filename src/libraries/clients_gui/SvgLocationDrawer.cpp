@@ -89,6 +89,15 @@ void SvgLocationDrawer::VisitLines( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SvgLocationDrawer::VisitRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void SvgLocationDrawer::VisitRectangle( const T_PointVector& points )
+{
+    DrawShape( points );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SvgLocationDrawer::VisitPolygon
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------

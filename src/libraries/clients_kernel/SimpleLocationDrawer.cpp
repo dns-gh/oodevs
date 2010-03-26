@@ -43,6 +43,16 @@ void SimpleLocationDrawer::VisitLines( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SimpleLocationDrawer::VisitRectangle
+// Created: SLG 2010-03-24
+// -----------------------------------------------------------------------------
+void SimpleLocationDrawer::VisitRectangle( const T_PointVector& points )
+{
+    if( !points.empty() )
+        tools_.DrawRectangle( points );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SimpleLocationDrawer::VisitPolygon
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------

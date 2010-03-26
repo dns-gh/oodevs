@@ -96,11 +96,12 @@ private:
     void ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id );
     void FillCommonOrders( QPopupMenu* magicMenu );
 
-    virtual void VisitLines  ( const T_PointVector& ) {};
-    virtual void VisitPolygon( const T_PointVector& ) {};
-    virtual void VisitCircle ( const geometry::Point2f& , float ) {};
-    virtual void VisitPoint  ( const geometry::Point2f& point );
-    virtual void VisitPath   ( const geometry::Point2f& , const T_PointVector& ) {};
+    virtual void VisitLines     ( const T_PointVector& ) {};
+    virtual void VisitRectangle ( const T_PointVector& ) {};
+    virtual void VisitPolygon   ( const T_PointVector& ) {};
+    virtual void VisitCircle    ( const geometry::Point2f& , float ) {};
+    virtual void VisitPoint     ( const geometry::Point2f& point );
+    virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector& ) {};
 
     void AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity );
     virtual void NotifyCreated( const kernel::Team_ABC& team );

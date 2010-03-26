@@ -62,6 +62,7 @@ public:
 
     bool CanBePoint() const;
     bool CanBeLine() const;
+    bool CanBeRectangle() const;
     bool CanBePolygon() const;
     bool CanBeCircle() const;    
     //@}

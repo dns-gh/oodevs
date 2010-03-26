@@ -11,9 +11,12 @@ message MsgControlGlobalMeteo {
 }
 
 message MsgControlLocalMeteo {
-   optional Common.MsgCoordLatLong top_left_coordinate     = 1;
-   optional Common.MsgCoordLatLong bottom_right_coordinate = 2;
-   optional Common.MsgMeteoAttributes     attributes              = 3;
+   required Common.MsgDateTime start_time = 1;
+   required Common.MsgDateTime end_time = 2; 
+   required Common.MsgCoordLatLong top_left_coordinate     = 3;
+   required Common.MsgCoordLatLong bottom_right_coordinate = 4;
+   required Common.MsgMeteoAttributes     attributes              = 5;
+   
 }
 
 message MsgControlCheckPointSaveNow {

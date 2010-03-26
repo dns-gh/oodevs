@@ -296,7 +296,7 @@
   </object>
   <object geometry="point" name="Installation" symbol="S*GPI-----*****" type="installation"/>
   <object geometry="point" name="Distribution point" symbol="G*SPPR----****X" type="distribution point"/>
-  <object geometry="point" name="Sensors detection zone" symbol="G*GPGAL---****X" type="sensorsDetectionZone">
+  <object geometry="polygon" name="Sensors detection zone" symbol="G*GPGAL---****X" type="sensorsDetectionZone">
     <detection>
       <acquisition-times>
         <acquisition-time level="detection" time="200s"/>

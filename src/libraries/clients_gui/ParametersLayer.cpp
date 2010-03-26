@@ -15,6 +15,7 @@
 #include "CursorStrategy.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Lines.h"
+#include "clients_kernel/Rectangle.h"
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Circle.h"
 #include "clients_kernel/Path.h"
@@ -186,6 +187,16 @@ void ParametersLayer::StartLine( ShapeHandler_ABC& handler )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParametersLayer::StartRectangle
+// Created: SLG 2010-03-24
+// -----------------------------------------------------------------------------
+void ParametersLayer::StartRectangle( ShapeHandler_ABC& handler )
+{
+    cursors_->SelectTool( MAKE_PIXMAP( polygon_cursor ), true );
+    Start( handler, class Rectangle() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParametersLayer::StartPolygon
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
@@ -250,4 +261,16 @@ void ParametersLayer::NotifyDone()
     if( location )
         handler->Handle( *location );
     cursors_->SelectTool( QCursor(), false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParametersLayer::SelectRaster
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void ParametersLayer::SelectRaster( ShapeHandler_ABC& handler )
+{
+    Location_ABC* location = &class Rectangle().Clone();
+    location->AddPoint( world_.BottomLeft() );
+    location->AddPoint( world_.TopRight() );
+    handler.Handle( *location );
 }

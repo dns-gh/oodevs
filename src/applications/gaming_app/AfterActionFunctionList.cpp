@@ -174,7 +174,7 @@ boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreatePara
     else if( type == "zone" )
     {
         std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
-        location->SetShapeFilter( false, false, true, true );
+        location->SetShapeFilter( false, false, true, true, false );
         result.reset( location.release() );
     }
     return result;

@@ -71,10 +71,13 @@ void ADN_KnowledgeGroups_GUI::Build()
     pGroupsList->GetConnector().Connect( &data_.vGroups_ );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    QGroupBox* pGroup = new QGroupBox( 3, Qt::Vertical, tr( "Knowledge group" ), pMainWidget_ );
+    QGroupBox* pGroup = new QGroupBox( 4, Qt::Vertical, tr( "Knowledge group" ), pMainWidget_ );
 
     QWidget* pHolder = builder.AddFieldHolder( pGroup );
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
+
+    QGroupBox* pDelayGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Delay Parameters" ), pGroup );
+    builder.AddField<ADN_TimeField>( pDelayGroup, tr( "Communication Delay" ), vInfosConnectors[eCommunicationDelay] );
 
     QGroupBox* pAgentGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Parameters on known units" ), pGroup );
     builder.AddField<ADN_TimeField>( pAgentGroup, tr( "Maximum life span" ), vInfosConnectors[eAgentMaxLifetime] );
@@ -89,5 +92,5 @@ void ADN_KnowledgeGroups_GUI::Build()
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
     pMainLayout->addWidget( pGroupsList, 1 );
-    pMainLayout->addWidget( pGroup, 3 );
+    pMainLayout->addWidget( pGroup, 4 );
 }

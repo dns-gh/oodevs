@@ -197,6 +197,15 @@ void Gl3dWidget::DrawLines( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Gl3dWidget::DrawRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void Gl3dWidget::DrawRectangle( const T_PointVector& points ) const
+{
+    //SLG TODO
+}
+
+// -----------------------------------------------------------------------------
 // Name: Gl3dWidget::DrawConvexPolygon
 // Created: AGE 2007-05-23
 // -----------------------------------------------------------------------------

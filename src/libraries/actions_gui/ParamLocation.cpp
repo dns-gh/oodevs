@@ -35,7 +35,7 @@ ParamLocation::ParamLocation( const kernel::OrderParameter& parameter, ::gui::Pa
     , controller_( 0 )
     , pLabel_    ( 0 )
     , location_  ()
-    , filter_    ( true, true, true, true )
+    , filter_    ( true, true, true, true, true )
 {
     // NOTHING
 }
@@ -63,7 +63,7 @@ void ParamLocation::BuildInterface( QWidget* parent )
     pShapeLabel_->setAlignment( Qt::AlignCenter );
     pShapeLabel_->setFrameStyle( QFrame::Box | QFrame::Sunken );
     creator_ = new ::gui::LocationCreator( box, GetName(), layer_, *this );
-    SetShapeFilter( filter_.point_, filter_.line_, filter_.polygon_, filter_.circle_ );
+    SetShapeFilter( filter_.point_, filter_.line_, filter_.polygon_, filter_.circle_, filter_.rectangle_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,11 +128,11 @@ void ParamLocation::Handle( kernel::Location_ABC& location )
 // Name: ParamLocation::SetShapeFilter
 // Created: SBO 2007-04-27
 // -----------------------------------------------------------------------------
-void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool circle )
+void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool circle, bool rectangle )
 {
-    filter_ = ShapeFilter( point, line, polygon, circle );
+    filter_ = ShapeFilter( point, line, polygon, circle, rectangle );
     if( creator_ )
-        creator_->Allow( point, line, polygon, circle );
+        creator_->Allow( point, line, polygon, circle, rectangle );
 }
 
 // -----------------------------------------------------------------------------

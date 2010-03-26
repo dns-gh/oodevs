@@ -57,6 +57,15 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationSerializer::VisitLines
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void LocationSerializer::VisitRectangle( const T_PointVector& points )
+{
+    /**xos_ << attribute( "type", "ligne" );
+    SetPoints( points );*///TODO
+}
+// -----------------------------------------------------------------------------
 // Name: LocationSerializer::VisitPolygon
 // Created: SBO 2006-09-12
 // -----------------------------------------------------------------------------

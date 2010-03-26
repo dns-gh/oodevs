@@ -81,11 +81,12 @@ private:
     //@{
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
     void AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
-    virtual void VisitLines  ( const T_PointVector& ) {};
-    virtual void VisitPolygon( const T_PointVector& ) {};
-    virtual void VisitCircle ( const geometry::Point2f& , float ) {};
-    virtual void VisitPoint  ( const geometry::Point2f& point );
-    virtual void VisitPath   ( const geometry::Point2f& , const T_PointVector& ) {};
+    virtual void VisitLines     ( const T_PointVector& ) {};
+    virtual void VisitRectangle ( const T_PointVector& ) {};
+    virtual void VisitPolygon   ( const T_PointVector& ) {};
+    virtual void VisitCircle    ( const geometry::Point2f& , float ) {};
+    virtual void VisitPoint     ( const geometry::Point2f& point );
+    virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector& ) {};
     //@}
 
 private:

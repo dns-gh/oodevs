@@ -57,7 +57,7 @@ public:
     virtual void BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual void Handle( kernel::Location_ABC& location );
-    void SetShapeFilter( bool point, bool line, bool polygon, bool circle );
+    void SetShapeFilter( bool point, bool line, bool polygon, bool circle, bool rectangle );
 
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
@@ -100,9 +100,9 @@ private:
     //@{
     struct ShapeFilter
     {
-        ShapeFilter( bool point, bool line, bool polygon, bool circle )
-            : point_( point ), line_( line ), polygon_( polygon ), circle_( circle ) {}
-        bool point_, line_, polygon_, circle_;
+        ShapeFilter( bool point, bool line, bool polygon, bool circle, bool rectangle )
+            : point_( point ), line_( line ), polygon_( polygon ), circle_( circle ), rectangle_( rectangle ) {}
+        bool point_, line_, polygon_, circle_, rectangle_;
     };
     //@}
 

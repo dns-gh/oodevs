@@ -151,6 +151,15 @@ void DrawingPositions::VisitLines( const T_PointVector& points )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DrawingPositions::VisitRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void DrawingPositions::VisitRectangle( const T_PointVector& points )
+{
+    VisitLines( points );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DrawingPositions::VisitPolygon
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------

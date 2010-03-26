@@ -1875,6 +1875,14 @@ Parked engine running</source>
         <source>Parameters on known populations</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delay Parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_KnowledgeGroups_ListView</name>

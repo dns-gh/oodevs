@@ -116,6 +116,7 @@ void ADN_Objects_GUI::Build()
 
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name"),  vInfosConnectors[ eName ] );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ] );
+    builder.SetEnabled( false );
     builder.AddField< ADN_EditLine_String >( pHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
     builder.SetEnabled( false );
 
@@ -242,12 +243,13 @@ void ADN_Objects_GUI::Build()
         builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Identification duration" ), vInfosConnectors[eHasIdentificationTime], vInfosConnectors[eIdentificationTime] );
     }
 
-    // Detection
+    // Spawn
     ADN_GroupBox* spawn = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Spawn::DISPLAY_NAME.c_str() ), hBox );        
     {
         vInfosConnectors[ eSpawnCapacityPresent ] = & spawn->GetConnector();
         builder.AddField<ADN_EditLine_Int>( spawn, tr( "Action range" ), vInfosConnectors[eActionRange], tr( "m" ) );
         builder.AddField<ADN_EditLine_String>( spawn, tr( "Object type" ), vInfosConnectors[eObjectType] );
+        builder.SetEnabled( false );
     }
 
 	ADN_GroupBox* extinguishable = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Extinguishable::DISPLAY_NAME.c_str() ), hBox );        

@@ -26,15 +26,16 @@ using namespace gui;
 // Created: AGE 2006-03-31
 // -----------------------------------------------------------------------------
 LocationCreator::LocationCreator( QObject* parent, const QString& menu, ParametersLayer& layer, ShapeHandler_ABC& handler  )
-    : QObject        ( parent )
-    , layer_         ( layer )
-    , handler_       ( handler )
-    , menu_          ( menu )
-    , drawing_       ( 0 )
-    , pointAllowed_  ( true )
-    , lineAllowed_   ( true )
-    , polygonAllowed_( true )
-    , circleAllowed_ ( true )
+    : QObject           ( parent )
+    , layer_            ( layer )
+    , handler_          ( handler )
+    , menu_             ( menu )
+    , drawing_          ( 0 )
+    , pointAllowed_     ( true )
+    , lineAllowed_      ( true )
+    , polygonAllowed_   ( true )
+    , circleAllowed_    ( true )
+    , rectangleAllowed_ ( true )
 {
     // NOTHING
 }
@@ -44,14 +45,15 @@ LocationCreator::LocationCreator( QObject* parent, const QString& menu, Paramete
 // Created: SBO 2006-06-19
 // -----------------------------------------------------------------------------
 LocationCreator::LocationCreator( QObject* parent, ParametersLayer& layer, ShapeHandler_ABC& handler )
-    : QObject        ( parent )
-    , layer_         ( layer )
-    , handler_       ( handler )
-    , drawing_       ( 0 )
-    , pointAllowed_  ( false )
-    , lineAllowed_   ( false )
-    , polygonAllowed_( false )
-    , circleAllowed_ ( false )
+    : QObject           ( parent )
+    , layer_            ( layer )
+    , handler_          ( handler )
+    , drawing_          ( 0 )
+    , pointAllowed_     ( false )
+    , lineAllowed_      ( false )
+    , polygonAllowed_   ( false )
+    , circleAllowed_    ( false )
+    , rectangleAllowed_ ( false )
 {
     // NOTHING
 }
@@ -69,12 +71,16 @@ namespace
 {
     struct LocationValidator : public LocationVisitor_ABC
     {
-        LocationValidator( bool point, bool line, bool polygon, bool circle )
-            : pointAllowed_( point ), lineAllowed_( line ), polygonAllowed_( polygon ), circleAllowed_( circle )
+        LocationValidator( bool point, bool line, bool polygon, bool circle, bool rectangle )
+            : pointAllowed_( point ), lineAllowed_( line ), polygonAllowed_( polygon ), circleAllowed_( circle ), rectangleAllowed_( rectangle )
             , valid_( false ) {}
         virtual void VisitLines( const T_PointVector& )
         {
             valid_ = lineAllowed_;
+        }
+        virtual void VisitRectangle( const T_PointVector& )
+        {
+            valid_ = rectangleAllowed_;
         }
         virtual void VisitPolygon( const T_PointVector& )
         {
@@ -92,7 +98,7 @@ namespace
         {
             valid_ = pointAllowed_;
         }
-        bool pointAllowed_, lineAllowed_, polygonAllowed_, circleAllowed_;
+        bool pointAllowed_, lineAllowed_, polygonAllowed_, circleAllowed_, rectangleAllowed_;
         bool valid_;
     };
 }
@@ -103,7 +109,7 @@ namespace
 // -----------------------------------------------------------------------------
 bool LocationCreator::Allows( const Location_ABC& location ) const
 {
-    LocationValidator validator( pointAllowed_, lineAllowed_, polygonAllowed_, circleAllowed_ );
+    LocationValidator validator( pointAllowed_, lineAllowed_, polygonAllowed_, circleAllowed_, rectangleAllowed_ );
     location.Accept( validator );
     return validator.valid_;
 }
@@ -112,12 +118,13 @@ bool LocationCreator::Allows( const Location_ABC& location ) const
 // Name: LocationCreator::Allow
 // Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
-void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle )
+void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle, bool rectangle )
 {
     pointAllowed_ = point;
     lineAllowed_ = line;
     polygonAllowed_ = polygon;
     circleAllowed_ = circle;
+    rectangleAllowed_ = rectangle;
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +142,8 @@ void LocationCreator::NotifyContextMenu( const kernel::Nothing&, kernel::Context
             subMenu->insertItem( tools::translate( "Localisation", "Polygon" ), this, SLOT( StartPolygon() ) );
         if( circleAllowed_ )
             subMenu->insertItem( tools::translate( "Localisation", "Circle" ), this, SLOT( StartCircle() ) );
+        if( rectangleAllowed_ )
+            subMenu->insertItem( tools::translate( "Localisation", "Rectangle" ), this, SLOT( StartRectangle() ) );
     }
 }
 
@@ -182,7 +191,7 @@ void LocationCreator::NotifyDeleted( const Drawing_ABC& drawing )
 // -----------------------------------------------------------------------------
 void LocationCreator::StartPoint()
 {
-    if( pointAllowed_ || lineAllowed_ || polygonAllowed_ || circleAllowed_ )
+    if( pointAllowed_ || lineAllowed_ || polygonAllowed_ || circleAllowed_ || rectangleAllowed_ )
     {
         Location_ABC* location = new Point();
         location->AddPoint( popupPoint_ );
@@ -199,6 +208,15 @@ void LocationCreator::StartPoint()
 void LocationCreator::StartLine()
 {
     layer_.StartLine( handler_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationCreator::StartRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void LocationCreator::StartRectangle()
+{
+    layer_.StartRectangle( handler_ );
 }
 
 // -----------------------------------------------------------------------------

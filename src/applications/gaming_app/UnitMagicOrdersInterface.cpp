@@ -51,7 +51,7 @@ UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Con
     , magicMove_( false )
 {
     magicMoveLocation_ = new LocationCreator( 0, layer, *this );
-    magicMoveLocation_->Allow( false, false, false, false );
+    magicMoveLocation_->Allow( false, false, false, false, false );
     controllers_.Register( *this );
 }
 

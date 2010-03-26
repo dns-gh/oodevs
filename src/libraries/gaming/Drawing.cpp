@@ -147,6 +147,10 @@ namespace
                 points_.push_back( latlong );
             }
         }
+        virtual void VisitRectangle( const T_PointVector& points )
+        {
+            VisitLines( points );
+        }
         virtual void VisitPolygon( const T_PointVector& points )
         {
             VisitLines( points );

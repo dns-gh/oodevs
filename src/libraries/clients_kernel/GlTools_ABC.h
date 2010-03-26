@@ -82,6 +82,7 @@ public:
     virtual void DrawCross        ( const geometry::Point2f& at, float size = -1.f, E_Unit unit = meters ) const = 0;
     virtual void DrawLine         ( const geometry::Point2f& from, const geometry::Point2f& to ) const = 0;
     virtual void DrawLines        ( const T_PointVector& points ) const = 0;
+    virtual void DrawRectangle    ( const T_PointVector& points ) const = 0;
     virtual void DrawConvexPolygon( const T_PointVector& points ) const = 0;
     virtual void DrawConvexPolygon( const geometry::Polygon2f& polygon    ) const = 0;
     virtual void DrawConvexPolygon( const T_PointVector& points, bool selected ) const = 0;

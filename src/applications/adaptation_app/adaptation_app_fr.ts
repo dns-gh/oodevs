@@ -4212,6 +4212,14 @@ Arrêt moteur allumé</translation>
         <source>Parameters on known populations</source>
         <translation>Paramètres des populations connues</translation>
     </message>
+    <message>
+        <source>Delay Parameters</source>
+        <translation type="unfinished">Paramètres de délai</translation>
+    </message>
+    <message>
+        <source>Communication Delay</source>
+        <translation type="unfinished">Délai de communication</translation>
+    </message>
 </context>
 <context>
     <name>ADN_KnowledgeGroups_ListView</name>

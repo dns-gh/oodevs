@@ -35,6 +35,7 @@ class Publisher_ABC;
 class ObjectCreationPanel;
 class Services;
 class DrawingsModel;
+class WeatherCreationPanel;
 
 // =============================================================================
 /** @class  CreationPanels
@@ -72,6 +73,7 @@ private:
     gui::UnitsPanel* units_;
     ObjectCreationPanel* objects_;
     gui::IntelligencesPanel* intel_;
+    WeatherCreationPanel* weather_;
     //@}
 };
 

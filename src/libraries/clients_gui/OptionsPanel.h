@@ -57,9 +57,7 @@ private:
 private slots:
     //! @name Helpers
     //@{
-
     void Change3dDistanceOption( bool );
-
     //@}
 
 private:

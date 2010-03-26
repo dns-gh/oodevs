@@ -51,12 +51,13 @@ PHY_LocalMeteo::PHY_LocalMeteo( xml::xistream& xis, const PHY_Lighting& light, i
 // Name: PHY_LocalMeteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( const Common::MsgMeteoAttributes& asnMsg, MT_Vector2D upLeft, MT_Vector2D downRight, MeteoManager_ABC* list )
-    : PHY_Meteo( asnMsg, list )
-    , upLeft_( upLeft )
-    , downRight_( downRight )
+PHY_LocalMeteo::PHY_LocalMeteo( const MsgsClientToSim::MsgControlLocalMeteo& msg, MeteoManager_ABC* list )
+    : PHY_Meteo( msg.attributes(), list )
 {
-    //NOTHING
+    NET_ASN_Tools::ReadPoint( msg.top_left_coordinate(),      upLeft_    );
+    NET_ASN_Tools::ReadPoint( msg.bottom_right_coordinate() , downRight_ );
+    startTime_ = ( bpt::from_iso_string( msg.start_time().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+    endTime_ = ( bpt::from_iso_string( msg.end_time().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
 }
 
 // -----------------------------------------------------------------------------

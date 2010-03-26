@@ -73,11 +73,12 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void VisitLines  ( const T_PointVector& points );
-    virtual void VisitPolygon( const T_PointVector& ) {}
-    virtual void VisitCircle ( const geometry::Point2f&, float ) {}
-    virtual void VisitPoint  ( const geometry::Point2f& ) {}
-    virtual void VisitPath   ( const geometry::Point2f& first, const T_PointVector& points );
+    virtual void VisitLines     ( const T_PointVector& points );
+    virtual void VisitRectangle ( const T_PointVector& points ) {};
+    virtual void VisitPolygon   ( const T_PointVector& ) {}
+    virtual void VisitCircle    ( const geometry::Point2f&, float ) {}
+    virtual void VisitPoint     ( const geometry::Point2f& ) {}
+    virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
     void AddPoints( const Common::MsgLocation& message );
     void ReadPoint( xml::xistream& xis );
     void AddPoint( const geometry::Point2f& p, unsigned i, unsigned count );

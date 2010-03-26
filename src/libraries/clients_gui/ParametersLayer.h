@@ -43,13 +43,16 @@ public:
 
     //! @name Operations
     //@{
-    void StartPoint  ( ShapeHandler_ABC& handler );
-    void StartLine   ( ShapeHandler_ABC& handler );
-    void StartPolygon( ShapeHandler_ABC& handler );
-    void StartCircle ( ShapeHandler_ABC& handler );
-    void StartPath   ( ShapeHandler_ABC& handler, const kernel::Positions& position );
-    void Start       ( ShapeHandler_ABC& handler, const kernel::Location_ABC& location );
-    void Reset       ();
+    void StartPoint     ( ShapeHandler_ABC& handler );
+    void StartLine      ( ShapeHandler_ABC& handler );
+    void StartRectangle ( ShapeHandler_ABC& handler );
+    void StartPolygon   ( ShapeHandler_ABC& handler );
+    void StartCircle    ( ShapeHandler_ABC& handler );
+    void StartPath      ( ShapeHandler_ABC& handler, const kernel::Positions& position );
+    void Start          ( ShapeHandler_ABC& handler, const kernel::Location_ABC& location );
+    void SelectRaster   ( ShapeHandler_ABC& handler );
+    void Reset          ();
+
 
     void AddPoint( const geometry::Point2f& point );
 

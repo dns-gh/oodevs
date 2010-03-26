@@ -53,6 +53,6 @@ void ParamPolygonList::CommitTo( actions::ParameterContainer_ABC& action ) const
 Param_ABC* ParamPolygonList::CreateElement()
 {
     Param_ABC* param = ParamLocationList::CreateElement();
-    static_cast< ParamLocation* >( param )->SetShapeFilter( false, false, true, false );
+    static_cast< ParamLocation* >( param )->SetShapeFilter( false, false, true, false, false );
     return param;
 }

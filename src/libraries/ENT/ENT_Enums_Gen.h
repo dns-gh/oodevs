@@ -33,6 +33,7 @@ enum E_LocationType
     eLocationType_Circle,
     eLocationType_Ellipse,
     eLocationType_Line,
+    eLocationType_Rectangle,
     eLocationType_Polygon,
     eLocationType_Point,
     eLocationType_Sector,

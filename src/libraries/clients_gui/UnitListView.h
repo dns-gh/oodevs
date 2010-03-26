@@ -15,6 +15,7 @@
 
 namespace kernel
 {
+    class AgentComposition;
     class AgentTypes;
     class AutomatComposition;
     class AutomatType;
@@ -53,6 +54,7 @@ public:
     void SetOpen( bool open );
     void SetSorting( const std::string& nature );
     void Display( const kernel::ComponentType& type, ValuedListItem* );
+    void Display( const kernel::AgentComposition& type, ValuedListItem* );
     void Display( const kernel::AutomatComposition& type, ValuedListItem* );
     void Display( const kernel::AutomatType& type, ValuedListItem* );
     virtual QDragObject* dragObject();

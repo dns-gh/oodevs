@@ -393,6 +393,28 @@ void GlWidget::DrawLines( const T_PointVector& points ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GlWidget::DrawRectangle
+// Created: SLG 2010-03-25
+// -----------------------------------------------------------------------------
+void GlWidget::DrawRectangle( const T_PointVector& points ) const
+{
+    if( points.size() > 1 )
+    {
+        glEnable( GL_LINE_SMOOTH );
+        glBegin( GL_LINES );
+        glVertex2f(  points.front().X(), points.front().Y() );
+        glVertex2f(  points.front().X(), points.back().Y() );
+        glVertex2f(  points.front().X(), points.back().Y() );
+        glVertex2f(  points.back().X(), points.back().Y() );
+        glVertex2f(  points.back().X(), points.back().Y() );
+        glVertex2f(  points.back().X(), points.front().Y() );
+        glVertex2f(  points.back().X(), points.front().Y() );
+        glVertex2f(  points.front().X(), points.front().Y() );
+        glEnd();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: GlWidget::DrawConvexPolygon
 // Created: AGE 2007-05-23
 // -----------------------------------------------------------------------------

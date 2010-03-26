@@ -33,11 +33,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual void VisitLines  ( const T_PointVector& points ) = 0;
-    virtual void VisitPolygon( const T_PointVector& points ) = 0;
-    virtual void VisitCircle ( const geometry::Point2f& center, float radius ) = 0;
-    virtual void VisitPoint  ( const geometry::Point2f& point ) = 0;
-    virtual void VisitPath   ( const geometry::Point2f& first, const T_PointVector& points ) = 0;
+    virtual void VisitLines     ( const T_PointVector& points ) = 0;
+    virtual void VisitRectangle ( const T_PointVector& points ) = 0;
+    virtual void VisitPolygon   ( const T_PointVector& points ) = 0;
+    virtual void VisitCircle    ( const geometry::Point2f& center, float radius ) = 0;
+    virtual void VisitPoint     ( const geometry::Point2f& point ) = 0;
+    virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points ) = 0;
     //@}
 };
 

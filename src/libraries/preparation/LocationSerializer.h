@@ -46,11 +46,12 @@ public:
 
     //! @name Accessors
     //@{
-    virtual void VisitLines  ( const T_PointVector& points );
-    virtual void VisitPolygon( const T_PointVector& points );
-    virtual void VisitCircle ( const geometry::Point2f& center, float radius );
-    virtual void VisitPoint  ( const geometry::Point2f& point );
-    virtual void VisitPath   ( const geometry::Point2f& first, const T_PointVector& points );
+    virtual void VisitLines     ( const T_PointVector& points );
+    virtual void VisitRectangle ( const T_PointVector& points );
+    virtual void VisitPolygon   ( const T_PointVector& points );
+    virtual void VisitCircle    ( const geometry::Point2f& center, float radius );
+    virtual void VisitPoint     ( const geometry::Point2f& point );
+    virtual void VisitPath      ( const geometry::Point2f& first, const T_PointVector& points );
     //@}
 
 private:
