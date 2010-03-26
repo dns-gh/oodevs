@@ -13,7 +13,6 @@
 #include "UnitListView.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AgentType.h"
-#include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AutomatType.h"
@@ -267,17 +266,6 @@ void UnitListView::Display( const ComponentType& type, ValuedListItem* item )
 
 // -----------------------------------------------------------------------------
 // Name: UnitListView::Display
-// Created: SBO 2007-11-09
-// -----------------------------------------------------------------------------
-void UnitListView::Display( const AgentComposition& type, ValuedListItem* item )
-{
-    QString cnt = QString::number( type.GetNumber() );
-
-    item->SetFontColor( QColor( 100, 100, 100 ) ); 
-    item->Set( &type.GetType(), type.GetType().GetName().c_str(), cnt );
-}
-// -----------------------------------------------------------------------------
-// Name: UnitListView::Display
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
 void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item )
@@ -288,7 +276,7 @@ void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item
     else
         cnt = QString::number( type.GetMin() );
 
-    tools::Iterator< const AgentComposition& > it( type.GetType().CreateAgentCompositionIterator() );
+    tools::Iterator< const ComponentType& > it( type.GetType().CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
     item->Set( &type.GetType(), type.GetType().GetName().c_str(), cnt );
