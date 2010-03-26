@@ -15,6 +15,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Decision_ABC.h"
@@ -30,6 +31,7 @@ PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, const std
     , role_( pion.GetRole< PHY_RoleAction_Objects >() )
     , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_reserved ) )
 {    
+    pObject_->RetrieveAttribute< ConstructionAttribute >()->SetBuiltByGen();
     Callback( role_.GetInitialReturnCode() );
 }
 

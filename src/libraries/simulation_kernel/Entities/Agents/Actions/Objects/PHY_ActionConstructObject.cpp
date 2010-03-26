@@ -14,6 +14,7 @@
 #include "PHY_RoleAction_Objects.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
@@ -29,6 +30,7 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const
     , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_preliminary ) ) 
 {    
     role_.SetCreator( *pObject_ );
+    pObject_->RetrieveAttribute< ConstructionAttribute >()->SetBuiltByGen();
     Callback( role_.GetInitialReturnCode() );
 }
 

@@ -366,4 +366,5 @@
   <report id="262" message="fin de la phase : %1">
     <parameter type="String"/>
   </report>
+  <report id="263" message="activation obstacle de manoeuvre"/>
 </reports>

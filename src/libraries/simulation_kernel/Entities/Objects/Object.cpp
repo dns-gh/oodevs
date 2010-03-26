@@ -249,7 +249,7 @@ void Object::Update( unsigned int time )
     // TODO can be updated
     std::for_each( capacities_.begin(), capacities_.end(), boost::bind( &ObjectCapacity_ABC::Update, _1, boost::ref( *this ), time ) );
     const ConstructionAttribute* attribute = RetrieveAttribute< ConstructionAttribute >();
-    if( attribute && attribute->GetState() == 0.f )
+    if( attribute && attribute->NeedDestruction() )
         MarkForDestruction();
 }
 

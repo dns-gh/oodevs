@@ -83,7 +83,8 @@ public:
     //! @name Operations
     //@{
     void Build( MT_Float rDeltaPercentage );
-    void Improve( MT_Float rDeltaPercentage );    
+    void Improve( MT_Float rDeltaPercentage );
+    void SetBuiltByGen();
     //@}
 
     //! @name Accessors
@@ -92,6 +93,7 @@ public:
     unsigned int GetDotationNeededForConstruction( MT_Float rDeltaPercentage ) const;
     unsigned int GetDotationRecoveredWhenDestroying( MT_Float rDeltaPercentage ) const;
     MT_Float GetState() const;
+    bool NeedDestruction() const;
     unsigned int GetMaxDotation() const;
     //@}
 
@@ -122,6 +124,7 @@ private:
     unsigned int        nFullNbrDotation_;
     unsigned int        nCurrentNbrDotation_;
     MT_Float    rConstructionPercentage_;
+    bool                bBuildByGen_;
     //@}
 };
 

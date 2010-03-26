@@ -30,6 +30,7 @@ ConstructionAttribute::ConstructionAttribute()
     , nCurrentNbrDotation_( 0 )
     , rConstructionPercentage_( 1. )
     , dotation_( 0 )
+    , bBuildByGen_( false )
 {
     // NOTHING
 }
@@ -41,8 +42,9 @@ ConstructionAttribute::ConstructionAttribute()
 ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation )
     : nFullNbrDotation_( nFullNbrDotation )
     , nCurrentNbrDotation_( 0 )
-    , rConstructionPercentage_( 1. )
+    , rConstructionPercentage_( 0. )
     , dotation_( &dotation )
+    , bBuildByGen_( false )
 {
     // NOTHING
 }
@@ -56,6 +58,7 @@ ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotati
     , nCurrentNbrDotation_ ( asn.construction().dotation_nbr() )
     , rConstructionPercentage_ ( 1. )
     , dotation_  ( &dotation )
+    , bBuildByGen_( false )
 {
     // NOTHING
 }
@@ -292,3 +295,20 @@ void ConstructionAttribute::Deserialize( const hla::AttributeIdentifier& attribu
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::GetPercentage
+// Created: MGD 2010-03-26
+// -----------------------------------------------------------------------------
+bool ConstructionAttribute::NeedDestruction() const
+{
+    return !bBuildByGen_ && rConstructionPercentage_ == 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::SetBuiltByGen
+// Created: MGD 2010-03-26
+// -----------------------------------------------------------------------------
+void ConstructionAttribute::SetBuiltByGen()
+{
+    bBuildByGen_ = true;
+}
