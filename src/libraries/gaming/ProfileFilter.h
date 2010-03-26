@@ -63,8 +63,11 @@ private:
     //! @name Helpers
     //@{
     bool IsInHierarchy( const kernel::Entity_ABC& entity ) const;
+    bool IsInKnowledgeGroup( const kernel::Entity_ABC& entity ) const;
+    bool IsObjectOfSameTeam( const kernel::Entity_ABC& entity ) const;
     template< typename D, typename U >
     bool IsChildSubordinateOf( const D& down, const U& up ) const;
+    bool IsKnown( const kernel::TacticalHierarchies* t, const kernel::CommunicationHierarchies* c, const kernel::IntelligenceHierarchies* i, const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

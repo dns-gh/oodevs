@@ -16,8 +16,6 @@
 #include "clients_kernel/IntelligenceHierarchies.h"
 #include "clients_kernel/Controller.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: ProfileFilter constructor
 // Created: AGE 2006-11-29
@@ -57,7 +55,7 @@ QString ProfileFilter::GetLogin() const
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsVisible( const kernel::Entity_ABC& entity ) const
 {
-    return IsInHierarchy( entity ) && forward_.IsVisible( entity );
+    return ( IsInKnowledgeGroup( entity ) || IsObjectOfSameTeam( entity ) || IsInHierarchy( entity ) ) && forward_.IsVisible( entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,9 +92,9 @@ bool ProfileFilter::IsSupervision() const
 void ProfileFilter::SetFilter( const kernel::Entity_ABC& entity )
 {
     entity_ = & entity;
-    tHierarchies_ = entity.Retrieve< TacticalHierarchies >();
-    cHierarchies_ = entity.Retrieve< CommunicationHierarchies >();
-    iHierarchies_ = entity.Retrieve< IntelligenceHierarchies >();
+    tHierarchies_ = entity.Retrieve< kernel::TacticalHierarchies >();
+    cHierarchies_ = entity.Retrieve< kernel::CommunicationHierarchies >();
+    iHierarchies_ = entity.Retrieve< kernel::IntelligenceHierarchies >();
     controller_.Update( *(Profile_ABC*)this );
     controller_.Update( *this );
 }
@@ -131,31 +129,22 @@ const kernel::Entity_ABC* ProfileFilter::GetFilter() const
 bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
 {
     QString name = entity.GetName();
-    unsigned long id = entity.GetId();
     if( ! entity_ || entity_ == &entity )
         return true;
 
-    const TacticalHierarchies*      t = entity.Retrieve< TacticalHierarchies >();
-    const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
-    const IntelligenceHierarchies*  i = entity.Retrieve< IntelligenceHierarchies >();
+    const kernel::TacticalHierarchies*      t = entity.Retrieve< kernel::TacticalHierarchies >();
+    const kernel::CommunicationHierarchies* c = entity.Retrieve< kernel::CommunicationHierarchies >();
+    const kernel::IntelligenceHierarchies*  i = entity.Retrieve< kernel::IntelligenceHierarchies >();
 
     if( ( t && t->IsSubordinateOf( *entity_ ) )
      || ( c && c->IsSubordinateOf( *entity_ ) )
      || ( i && i->IsSubordinateOf( *entity_ ) ) )
         return true;
+    
+    if ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
+         return true;
 
-    if( ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
-     || ( cHierarchies_ && cHierarchies_->IsSubordinateOf( entity ) )
-     || ( iHierarchies_ && iHierarchies_->IsSubordinateOf( entity ) ) )
-        return true;
-
-    if( ! t && tHierarchies_ )
-        return ( c && IsChildSubordinateOf( *c, *tHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *tHierarchies_ ) );
-    if( ! c && cHierarchies_ )
-        return ( t && IsChildSubordinateOf( *t, *cHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *cHierarchies_ ) );
-    if( ! i && iHierarchies_ )
-        return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
-    return false;
+    return IsKnown( t, c, i, entity );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,24 +169,81 @@ bool ProfileFilter::IsChildSubordinateOf( const D& down, const U& /*up*/ ) const
 // Name: ProfileFilter::IsKnown
 // Created: SLG 2009-11-29
 // -----------------------------------------------------------------------------
-bool ProfileFilter::IsKnown( const kernel::Entity_ABC& entity ) const  // $$$$ _RC_ SLG 2009-12-02: ULTRA MOCHE duplication de code pour faire fonctionner la vue filtrer dans gaming au niveau des knowledgeGroup
+bool ProfileFilter::IsKnown( const kernel::Entity_ABC& entity ) const
 {
     if( ! entity_ || entity_ == &entity )
         return true;
 
-    const TacticalHierarchies*      t = entity.Retrieve< TacticalHierarchies >();
-    const CommunicationHierarchies* c = entity.Retrieve< CommunicationHierarchies >();
-    const IntelligenceHierarchies*  i = entity.Retrieve< IntelligenceHierarchies >();
+    const kernel::TacticalHierarchies*      t = entity.Retrieve< kernel::TacticalHierarchies >();
+    const kernel::CommunicationHierarchies* c = entity.Retrieve< kernel::CommunicationHierarchies >();
+    const kernel::IntelligenceHierarchies*  i = entity.Retrieve< kernel::IntelligenceHierarchies >();
 
+    return IsKnown( t, c, i, entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsKnown
+// Created: LDC 2010-03-25
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsKnown( const kernel::TacticalHierarchies* t, const kernel::CommunicationHierarchies* c, const kernel::IntelligenceHierarchies* i, const kernel::Entity_ABC& entity ) const
+{
     if( ( tHierarchies_ && tHierarchies_->IsSubordinateOf( entity ) )
-        || ( iHierarchies_ && iHierarchies_->IsSubordinateOf( entity ) ) )
+     || ( iHierarchies_ && iHierarchies_->IsSubordinateOf( entity ) ) )
         return true;
 
-      if( ! t && tHierarchies_ )
-          return ( c && IsChildSubordinateOf( *c, *tHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *tHierarchies_ ) );
-      if( ! c && cHierarchies_ )
-          return ( t && IsChildSubordinateOf( *t, *cHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *cHierarchies_ ) );
-      if( ! i && iHierarchies_ )
-         return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
-     return false;
+    if( ! t && tHierarchies_ )
+        return ( c && IsChildSubordinateOf( *c, *tHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *tHierarchies_ ) );
+    if( ! c && cHierarchies_ )
+        return ( t && IsChildSubordinateOf( *t, *cHierarchies_ ) ) || ( i && IsChildSubordinateOf( *i, *cHierarchies_ ) );
+    if( ! i && iHierarchies_ )
+        return ( t && IsChildSubordinateOf( *t, *iHierarchies_ ) ) || ( c && IsChildSubordinateOf( *c, *iHierarchies_ ) );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsInKnowledgeGroup
+// Created: LDC 2010-03-25
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsInKnowledgeGroup( const kernel::Entity_ABC& other ) const
+{
+    if( ! entity_ || entity_ == &other )
+        return true;
+    const kernel::CommunicationHierarchies* pHierarchy = other.Retrieve< kernel::CommunicationHierarchies >();
+    if( !pHierarchy )
+        return false;
+    const kernel::CommunicationHierarchies* selfHierarchy = entity_->Retrieve< kernel::CommunicationHierarchies >();
+    if( !selfHierarchy )
+        return false;
+    const AgentKnowledges* entityKnowledges = 0;
+    for( const kernel::Entity_ABC* superior = pHierarchy->GetSuperior(); superior; superior = superior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+    {
+        entityKnowledges = superior->Retrieve< AgentKnowledges >();
+        if( entityKnowledges )
+        {
+            for( const kernel::Entity_ABC* selfSuperior = selfHierarchy->GetSuperior(); selfSuperior; selfSuperior = selfSuperior->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+            {
+                const AgentKnowledges* selfKnowledges = selfSuperior->Retrieve< AgentKnowledges >();
+                if( selfKnowledges )
+                    return( selfKnowledges ==  entityKnowledges );
+            }
+            return false;
+        }
+    }
+    return &(pHierarchy->GetTop()) == &(selfHierarchy->GetTop());
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::IsObjectOfSameTeam
+// Created: LDC 2010-03-26
+// -----------------------------------------------------------------------------
+bool ProfileFilter::IsObjectOfSameTeam( const kernel::Entity_ABC& entity ) const
+{
+    if( ! entity_ || entity_ == &entity )
+        return false;
+    const kernel::TacticalHierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+    if( !hierarchy )
+        return false;
+    if( hierarchy->GetSuperior() == &(hierarchy->GetTop()) )
+        return hierarchy->GetSuperior() == &(entity_->Get< kernel::TacticalHierarchies >().GetTop());
+    return false;
 }
