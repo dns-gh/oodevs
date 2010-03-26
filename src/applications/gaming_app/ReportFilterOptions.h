@@ -10,7 +10,7 @@
 #ifndef __ReportFilterOptions_h_
 #define __ReportFilterOptions_h_
 
-#include "gaming/Report.h"
+#include "reports/Report.h"
 
 // =============================================================================
 /** @class  ReportFilterOptions

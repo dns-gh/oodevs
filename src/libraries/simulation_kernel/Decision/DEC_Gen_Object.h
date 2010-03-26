@@ -55,7 +55,7 @@ public:
 
     //! @name Operations
     //@{
-    void operator=( const DEC_Gen_Object& rhs );
+    DEC_Gen_Object& operator=( const DEC_Gen_Object& rhs );
     void Serialize( Common::MsgPlannedWork& asn ) const;
     //@}
 

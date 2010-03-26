@@ -11,11 +11,12 @@
 #define __Trace_h_
 
 #include "Report.h"
-#include "protocol/simulationsenders.h"
+#include "game_asn/SimulationSenders.h"
 
-using namespace Common;
-
-class Simulation;
+namespace kernel
+{
+    class Time_ABC;
+}
 
 // =============================================================================
 /** @class  ReportFactory
@@ -28,7 +29,7 @@ class Trace : public Report
 public:
     //! @name Constructor/Destructor
     //@{
-    Trace( const kernel::Entity_ABC& agent, const Simulation& simulation, const MsgsSimToClient::MsgTrace& input );
+             Trace( const kernel::Entity_ABC& agent, const kernel::Time_ABC& simulation, const ASN1T_MsgTrace& input );
     virtual ~Trace();
     //@}
 

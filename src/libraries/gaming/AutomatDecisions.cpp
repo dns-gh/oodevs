@@ -17,10 +17,12 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "Tools.h"
-#include "protocol/simulationsenders.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/Protocol.h"
+#include "protocol/SimulationSenders.h"
+#include "protocol/Publisher_ABC.h"
 
 using namespace kernel;
+using namespace Common;
 
 // -----------------------------------------------------------------------------
 // Name: AutomatDecisions constructor

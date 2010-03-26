@@ -254,9 +254,6 @@ void DEC_MiscFunctions::Trace( const T& caller, const std::string& message )
     client::Trace msg;
     msg().set_oid( caller.GetID() );
     *msg().mutable_message() = message.c_str();
-    std::stringstream fullMessage;
-    fullMessage << caller.GetName() << " [" << caller.GetID() << "] : " << message;
-    MT_LOG_VERBOSE_MSG( fullMessage.str().c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 

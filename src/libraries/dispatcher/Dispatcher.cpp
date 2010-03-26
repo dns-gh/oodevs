@@ -12,8 +12,9 @@
 #include "Model.h"
 #include "SimulationNetworker.h"
 #include "ClientsNetworker.h"
-#include "PluginFactory.h"
 #include "Config.h"
+#include "Logger.h"
+#include "PluginFactory.h"
 #include "Services.h"
 #include <google/protobuf/Message.h>
 
@@ -31,7 +32,8 @@ Dispatcher::Dispatcher( const Config& config )
     , services_( new Services() )
     , clientsNetworker_( new ClientsNetworker( config_, *handler_, *services_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config_ ) )
-    , factory_( new PluginFactory( config_, *model_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_ ) )
+    , factory_( new PluginFactory( config_, *model_, *simulationNetworker_, *clientsNetworker_, *handler_, *registrables_, *services_ ) )
+    , logger_( new Logger() )
 {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
 

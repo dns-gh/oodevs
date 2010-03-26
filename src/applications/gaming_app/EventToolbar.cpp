@@ -14,7 +14,7 @@
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "gaming/Report.h"
+#include "reports/Report.h"
 #include "gaming/statusicons.h"
 #include "gaming/Simulation.h"
 #include "clients_gui/resources.h"

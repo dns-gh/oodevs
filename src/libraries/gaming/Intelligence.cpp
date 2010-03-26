@@ -22,9 +22,10 @@
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/Styles.h"
 #include "Tools.h"
-#include "protocol/messengersenders.h"
+#include "protocol/MessengerSenders.h"
 
 using namespace kernel;
+using namespace Common;
 
 namespace
 {

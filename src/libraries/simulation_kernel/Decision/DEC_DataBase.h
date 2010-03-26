@@ -34,7 +34,7 @@ class DEC_DataBase : public directia5::Library
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_DataBase( xml::xistream& xis, const std::string strPath );
+             DEC_DataBase( xml::xistream& xis, const std::string& strPath );
              DEC_DataBase( T_LibPaths libPaths, const std::vector< const std::string >& knowledge );
     virtual ~DEC_DataBase();
     //@}

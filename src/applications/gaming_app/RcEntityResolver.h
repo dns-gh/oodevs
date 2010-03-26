@@ -12,7 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "tools/ElementObserver_ABC.h"
-#include "gaming/RcEntityResolver_ABC.h"
+#include "reports/RcEntityResolver_ABC.h"
 
 namespace kernel
 {

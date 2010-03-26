@@ -26,7 +26,7 @@ namespace
         list.push_back( MIL_Config::BuildChildPath( path, repository ) );
     }
 
-    directia5::Library::T_LibPaths GetLibPaths( xml::xistream& xis, const std::string strPath )
+    directia5::Library::T_LibPaths GetLibPaths( xml::xistream& xis, const std::string& strPath )
     {
         directia5::Library::T_LibPaths repositories;
         xis >> xml::start( "RepertoiresBM" )
@@ -47,7 +47,7 @@ namespace
 // Name: DEC_DataBase constructor
 // Created: MGD 2009-08-06
 // -----------------------------------------------------------------------------
-DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string strPath )
+DEC_DataBase::DEC_DataBase( xml::xistream& xis, const std::string& strPath )
     : directia5::Library( GetLibPaths( xis, strPath ) )
 {
     //@TODO MGD Change to aggregation for directia5::Library

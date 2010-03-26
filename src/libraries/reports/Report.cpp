@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
 #include "Report.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -77,7 +76,7 @@ void Report::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Item( "" )
              .Start( GetColor( type_ ) )
-                .Add( time_.toString() )
+             .Add( time_.toString( "hh:mm" ) )
                 .Add( " " )
                 .Add( message_.section( " - ", 0 ) )
              .End();

@@ -9,7 +9,7 @@
 
 #include "gaming_pch.h"
 #include "StaticModel.h"
-#include "ReportFactory.h"
+#include "reports/ReportFactory.h"
 #include "ScoreDefinitions.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -35,7 +35,7 @@ using namespace kernel;
 // Name: StaticModel constructor
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const Simulation& simu )
+StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const kernel::Time_ABC& simu )
     : controllers_        ( controllers )
     , coordinateSystems_  ( *new CoordinateSystems() )
     , coordinateConverter_( *new CoordinateConverter( coordinateSystems_ ) )
@@ -43,7 +43,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
-    , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, simu ) )
+    , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, &simu ) )
     , atlasNatures_       ( *new AtlasNatures() )
     , drawings_           ( *new gui::DrawingTypes( controllers_.controller_ ) )
     , indicators_         ( *new indicators::Primitives() )

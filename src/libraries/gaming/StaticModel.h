@@ -25,6 +25,7 @@ namespace kernel
     class CoordinateSystems;
     class FormationLevels;
     class AtlasNatures;
+    class Time_ABC;
 }
 
 namespace gui
@@ -61,7 +62,7 @@ class StaticModel
 public:
     //! @name Constructors/Destructor
     //@{
-             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const Simulation& simu );
+             StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const kernel::Time_ABC& simu );
     virtual ~StaticModel();
     //@}
 

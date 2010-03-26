@@ -10,11 +10,14 @@
 #ifndef __ReportFactory_h_
 #define __ReportFactory_h_
 
-#include "tools/Resolver.h"
-#include "protocol/Protocol.h"
+#include "clients_kernel/Resolver.h"
+#include "game_asn/Simulation.h"
 
-using namespace Common;
-
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+#include <qstring.h>
+#include <qdatetime.h>
+#pragma warning( pop )
 
 namespace tools
 {
@@ -31,9 +34,9 @@ namespace kernel
     class Entity_ABC;
     class DotationType;
     class EquipmentType;
+    class Time_ABC;
 }
 
-class Simulation;
 class Report;
 class RcEntityResolver_ABC;
 class ReportTemplate;
@@ -44,16 +47,16 @@ class ReportTemplate;
 */
 // Created: SBO 2006-12-07
 // =============================================================================
-class ReportFactory : public tools::Resolver< ReportTemplate >
+class ReportFactory : public kernel::Resolver< ReportTemplate >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
              ReportFactory( const RcEntityResolver_ABC& rcResolver
-                          , const tools::Resolver_ABC< kernel::DotationType >& dotationResolver
-                          , const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver
-                          , const Simulation& simulation );
+                          , const kernel::Resolver_ABC< kernel::DotationType >& dotationResolver
+                          , const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver
+                          , const kernel::Time_ABC* time );
     virtual ~ReportFactory();
     //@}
 
@@ -62,8 +65,10 @@ public:
     void Load( const tools::ExerciseConfig& config );
     void Purge();
 
-    Report* CreateReport( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgReport&  message ) const;
-    Report* CreateTrace ( const kernel::Entity_ABC& agent, const MsgsSimToClient::MsgTrace& message ) const;
+    Report* CreateReport( const kernel::Entity_ABC& agent, const ASN1T_MsgReport&  asnMsg ) const;
+    Report* CreateTrace ( const kernel::Entity_ABC& agent, const ASN1T_MsgTrace& asnMsg ) const;
+    std::string FormatReport( const ASN1T_MsgReport& asn ) const;
+    QDateTime GetTime( const ASN1T_DateTime& d ) const;
     //@}
 
 private:
@@ -77,16 +82,16 @@ private:
     //@{
     void ReadReport( xml::xistream& xis );
     friend class ReportTemplate;
-    QString RenderParameter( const Common::MsgMissionParameter& value ) const;
+    QString RenderParameter( const ASN1T_MissionParameter& value ) const;
     //@}
 
 private:
     //! @name Member data
     //@{
     const RcEntityResolver_ABC&                          rcResolver_;
-    const tools::Resolver_ABC< kernel::DotationType >&  dotationResolver_;
-    const tools::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
-    const Simulation& simulation_;
+    const kernel::Resolver_ABC< kernel::DotationType >&  dotationResolver_;
+    const kernel::Resolver_ABC< kernel::EquipmentType >& equipmentResolver_;
+    const kernel::Time_ABC*                              time_;
     //@}
 };
 

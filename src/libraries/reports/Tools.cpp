@@ -9,8 +9,7 @@
 //
 //*****************************************************************************
 
-#include "gaming_pch.h"
-#include "tools.h"
+#include "Tools.h"
 #include "ENT/ENT_Tr.h"
 
 const QString localisations[] = 
@@ -27,7 +26,7 @@ const QString localisations[] =
 // Name: tools::ToString
 // Created: AGE 2006-08-08
 // -----------------------------------------------------------------------------
-QString tools::ToString( Common::MsgLocation::Geometry nType )
+QString tools::ToString( ASN1T_EnumLocationType nType )
 {
     if( nType >= 0 && nType < 6 )
         return localisations[ nType ];

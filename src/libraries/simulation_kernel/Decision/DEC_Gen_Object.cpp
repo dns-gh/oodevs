@@ -77,7 +77,7 @@ DEC_Gen_Object::~DEC_Gen_Object()
 // Name: DEC_Gen_Object::operator=
 // Created: NLD 2007-05-14
 // -----------------------------------------------------------------------------
-void DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
+DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
 {
     pType_              = rhs.pType_;
     localisation_       = rhs.localisation_;
@@ -85,6 +85,7 @@ void DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
     rDensity_           = rhs.rDensity_;
     nMinesActivityTime_ = rhs.nMinesActivityTime_;
     pTC2_               = rhs.pTC2_;
+    return *this;
 }
 
 // -----------------------------------------------------------------------------

@@ -10,17 +10,19 @@
 #ifndef __ReportTemplate_h_
 #define __ReportTemplate_h_
 
+#pragma warning( push )
+#pragma warning( disable : 4996 )
+#include <qstring.h>
+#pragma warning( pop )
+#include <vector>
+
 namespace xml
 {
     class xistream;
 }
 
 class ReportFactory;
-
-namespace Common
-{
-    class MsgMissionParameters;
-}
+struct ASN1T_MissionParameters;
 
 // =============================================================================
 /** @class  ReportTemplate
@@ -41,7 +43,7 @@ public:
     //! @name Operations
     //@{
     unsigned long GetId() const;
-    QString RenderMessage( const Common::MsgMissionParameters& message ) const;
+    QString RenderMessage( const ASN1T_MissionParameters& asn ) const;
     //@}
 
 private:

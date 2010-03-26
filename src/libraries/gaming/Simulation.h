@@ -12,6 +12,7 @@
 
 #include "protocol/simulationsenders.h"
 #include "protocol/replaysenders.h"
+#include "clients_kernel/Time_ABC.h"
 #include "Profiling.h"
 
 namespace kernel
@@ -25,7 +26,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class Simulation
+class Simulation : public kernel::Time_ABC
 {
 
 public:

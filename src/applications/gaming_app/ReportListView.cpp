@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ReportListView.h"
 
-#include "gaming/Report.h"
+#include "reports/Report.h"
 #include "ReportFilterOptions.h"
 #include "gaming/Reports.h"
 #include "clients_kernel/Entity_ABC.h"

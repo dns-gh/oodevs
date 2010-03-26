@@ -10,20 +10,5 @@
 #ifndef __Gaming_Tools_h_
 #define __Gaming_Tools_h_
 
-#include "Types.h"
-#include "clients_kernel/Tools.h"
-#include "protocol/Protocol.h"
-
-using namespace Common;
-
-
-namespace tools
-{
-    QString ToString( Common::MsgLocation::Geometry nType );
-
-    E_LocationType     LocationFromString        ( const QString& type );
-    E_AmmunitionFamily AmmunitionFamilyFromString( const QString& type );
-    E_DotationFamily   DotationFamilyFromString  ( const QString& type );
-};
-
+#include "reports/Tools.h"
 #endif // __Gaming_Tools_h_

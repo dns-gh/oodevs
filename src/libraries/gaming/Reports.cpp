@@ -8,12 +8,12 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "Reports.h"
-#include "ReportFactory.h"
-#include "Report.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "RcEntityResolver_ABC.h"
+#include "Reports.h"
+#include "reports/ReportFactory.h"
+#include "reports/Report.h"
+#include "reports/RcEntityResolver_ABC.h"
 #include <boost/bind.hpp>
 
 using namespace kernel;

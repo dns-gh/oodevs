@@ -17,6 +17,7 @@
 #include "DispatcherPlugin.h"
 #include "RightsPlugin.h"
 #include "PluginFactory_ABC.h"
+#include "logger_plugin/LoggerPlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "script_plugin/ScriptPlugin.h"
 #include "score_plugin/ScorePlugin.h"
@@ -29,7 +30,7 @@ using namespace plugins;
 // Name: PluginFactory constructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler, CompositeRegistrable& registrables )
+PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services )
     : config_      ( config )
     , model_       ( model )
     , simulation_  ( simulation )
@@ -37,6 +38,7 @@ PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPubl
     , handler_     ( handler )
     , registrables_( registrables )
     , rights_      ( new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables ) )
+    , services_    ( services )
 {
     handler_.Add( rights_ );
     handler_.Add( new DispatcherPlugin( model_, simulation_, clients_, *rights_ ) );
@@ -71,6 +73,7 @@ void PluginFactory::Instanciate()
     handler_.Add( new messenger::MessengerPlugin( clients_, clients_, clients_, config_, registrables_ ) );
     handler_.Add( new script::ScriptPlugin( model_, config_, simulation_, clients_, clients_, *rights_, registrables_ ) );
     handler_.Add( new score::ScorePlugin( clients_, clients_, clients_, config_, registrables_ ) );
+    handler_.Add( new logger::LoggerPlugin( model_, config_, services_ ) );
 
     xml::xifstream xis( config_.GetSessionFile() );
     xis >> xml::start( "session" ) >> xml::start( "config" ) >> xml::start( "dispatcher" ) >> xml::start( "plugins" )

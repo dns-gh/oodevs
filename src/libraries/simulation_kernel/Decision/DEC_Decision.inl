@@ -277,9 +277,6 @@ template <class T>
 void DEC_Decision<T>::SetMission( boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     pMission_ = pMission;
-    std::stringstream fullMessage;
-    fullMessage << "Tick " << MIL_Singletons::GetTime().GetCurrentTick() << " - " << pEntity_->GetName() << " [" << pEntity_->GetID() << "] : Mission received : " << pMission->GetName().c_str();
-    MT_LOG_INFO_MSG( fullMessage.str().c_str() );
 }
     
 // -----------------------------------------------------------------------------

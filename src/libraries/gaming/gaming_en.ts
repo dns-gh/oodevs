@@ -472,33 +472,6 @@
     </message>
 </context>
 <context>
-    <name>Localisation</name>
-    <message>
-        <source>Circle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ellipse</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sector</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>Logistic</name>
     <message>
         <source>Instruction:</source>
@@ -1026,24 +999,6 @@
     </message>
     <message>
         <source>Reinforced by:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>Report</name>
-    <message>
-        <source>Received</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Report</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ReportFactory</name>
-    <message>
-        <source>Unhandled report parameter type: &apos;%1&apos;.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

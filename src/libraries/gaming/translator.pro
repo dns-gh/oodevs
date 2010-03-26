@@ -42,13 +42,10 @@ PopulationConcentrationKnowledge.cpp \
 PopulationFlowKnowledge.cpp \
 PopulationKnowledge.cpp \
 Reinforcements.cpp \
-Report.cpp \
-ReportFactory.cpp \
 Score.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \
-Tools.cpp \
 Transports.cpp \
 UserProfileFactory.cpp \
 UserProfilesModel.cpp \

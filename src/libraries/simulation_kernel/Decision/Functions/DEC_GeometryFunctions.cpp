@@ -49,7 +49,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeAgentsBarycenter(
         *pResult += pKnow->GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition();
     }
 
-    if( selection.size() != 0 )
+    if( !selection.empty() )
         *pResult = (*pResult / (MT_Float)selection.size());
 
     return pResult;

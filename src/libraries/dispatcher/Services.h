@@ -42,6 +42,12 @@ public:
     {
         Declare( typeid( T ).name() );
     }
+
+    template< typename T >
+    bool HasService() const
+    {
+        return HasService( typeid( T ).name() );
+    }
     //@}
 
 private:
@@ -54,6 +60,7 @@ private:
     //! @name Helpers
     //@{
     void Declare( const std::string& name );
+    bool HasService( const std::string& name ) const;
     //@}
 
 private:

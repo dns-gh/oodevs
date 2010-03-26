@@ -27,6 +27,7 @@ namespace dispatcher
     class CompositeRegistrable;
     class PluginFactory_ABC;
     class RightsPlugin;
+    class Services;
 
 // =============================================================================
 /** @class  PluginFactory
@@ -41,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, 
-                            CompositePlugin& handler, CompositeRegistrable& registrables );
+                            CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services );
     virtual ~PluginFactory();
     //@}
 
@@ -79,6 +80,7 @@ private:
     CompositeRegistrable& registrables_;
     T_Factories factories_;
     boost::shared_ptr< RightsPlugin > rights_;
+    const Services& services_;
     //@}
 };
 

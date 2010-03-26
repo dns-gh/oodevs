@@ -23,6 +23,7 @@ namespace dispatcher
     class PluginFactory_ABC;
     class PluginFactory;
     class Services;
+    class Logger;
 
 // =============================================================================
 /** @class  Dispatcher
@@ -62,6 +63,7 @@ private:
     boost::shared_ptr< ClientsNetworker >     clientsNetworker_;
     boost::shared_ptr< SimulationNetworker >  simulationNetworker_;
     std::auto_ptr< PluginFactory >            factory_;
+    std::auto_ptr< Logger >                   logger_;
 };
 
 }

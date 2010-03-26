@@ -10,6 +10,8 @@
 #ifndef __RcEntityResolver_ABC_h_
 #define __RcEntityResolver_ABC_h_
 
+#include <qstring.h>
+
 // =============================================================================
 /** @class  RcEntityResolver_ABC
     @brief  RcEntityResolver_ABC
