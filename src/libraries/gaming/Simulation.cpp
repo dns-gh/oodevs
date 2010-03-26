@@ -65,7 +65,7 @@ void Simulation::Disconnect()
     connected_ = false;
     controller_.Update( *this );
 }
-
+ 
 // -----------------------------------------------------------------------------
 // Name: Simulation::Pause
 // Created: AGE 2006-02-10

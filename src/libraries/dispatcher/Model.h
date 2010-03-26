@@ -50,6 +50,7 @@ namespace dispatcher
     class PopulationFire;
     class FireEffect;
     class FolkModel;
+    class MeteoModel;
     class Report;
     class CompositeFactory;
     class Factory_ABC;
@@ -152,9 +153,10 @@ private:
     std::auto_ptr< SimulationModel >    simulation_;
     std::auto_ptr< CompositeFactory >   compositeFactory_;
 
-    std::auto_ptr< FolkModel >          folk_;
-    std::auto_ptr< kernel::AgentTypes > agentTypes_;
+    std::auto_ptr< FolkModel >           folk_;
+    std::auto_ptr< kernel::AgentTypes >  agentTypes_;
     std::auto_ptr< kernel::ObjectTypes > objectTypes_;
+    std::auto_ptr< MeteoModel >          meteoModel_;
     //@}
 
 public:

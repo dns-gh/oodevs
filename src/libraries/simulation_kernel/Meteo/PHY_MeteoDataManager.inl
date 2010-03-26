@@ -44,6 +44,7 @@ inline
 void PHY_MeteoDataManager::RegisterMeteo( PHY_Meteo& meteo )
 {
     meteo.SetListener( this );
+    meteo.Update( pEphemeride_->GetLightingBase() );
     if( ! meteos_.insert( &meteo ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }

@@ -14,6 +14,7 @@
 #include "protocol/Protocol.h"
 #include <list>
 
+    
 namespace kernel
 {
     class CoordinateConverter_ABC;
@@ -21,11 +22,14 @@ namespace kernel
 }
 class PHY_Meteo;
 
+namespace dispatcher 
+{
+
 // =============================================================================
 /** @class  MeteoModel
     @brief  MeteoModel
 */
-// Created: HBD 2010-03-10
+// Created: HBD 2010-03-23
 // =============================================================================
 class MeteoModel : public MeteoModel_ABC
 {
@@ -33,12 +37,9 @@ class MeteoModel : public MeteoModel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MeteoModel( kernel::CoordinateConverter_ABC& conv );
+             MeteoModel( kernel::CoordinateConverter_ABC& conv );
     virtual ~MeteoModel();
     //@}
-
-    //! @name Operations
-    //@{
 
 
     virtual const PHY_Lighting&  GetLighting  () const;
@@ -52,20 +53,18 @@ protected:
     virtual void     UnregisterMeteo( PHY_Meteo& );
 
 private:
-    //! @name Helpers
-    //@{
-    typedef std::list< PHY_Meteo* >     T_MeteoList;
-    typedef T_MeteoList::const_iterator CIT_MeteoList;
-    typedef T_MeteoList::iterator       IT_MeteoList;
-   //@}
+
+   typedef std::list< PHY_Meteo* >     T_MeteoList;
+   typedef T_MeteoList::iterator CIT_MeteoList;
 
 private:
     //! @name Member data
     //@{
     PHY_Meteo*                        pGlobalMeteo_;
-    T_MeteoList                        meteos_; 
+    T_MeteoList                        meteos_;    // Including global meteo
     kernel::CoordinateConverter_ABC&  converter_;
     //@}
 };
+}
 
 #endif // __MeteoModel_h_

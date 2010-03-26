@@ -14,10 +14,14 @@
 #include "meteo/MeteoManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Tools/MIL_Tools.h"
-#include "meteo/PHY_RawVisionData_ABC.h"
-#include "protocol/SimulationSenders.h"
+#include "Meteo/PHY_RawVisionData_ABC.h"
+#include "meteo/PHY_Precipitation.h"
+#include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "protocol/Protocol.h"
+#include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.h>
+
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
@@ -47,8 +51,8 @@ PHY_LocalMeteo::PHY_LocalMeteo( xml::xistream& xis, const PHY_Lighting& light, i
 // Name: PHY_LocalMeteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( const Common::MsgMeteoAttributes& asnMsg, MT_Vector2D upLeft, MT_Vector2D downRight  )
-    : PHY_Meteo( asnMsg )
+PHY_LocalMeteo::PHY_LocalMeteo( const Common::MsgMeteoAttributes& asnMsg, MT_Vector2D upLeft, MT_Vector2D downRight, MeteoManager_ABC* list )
+    : PHY_Meteo( asnMsg, list )
     , upLeft_( upLeft )
     , downRight_( downRight )
 {
@@ -76,11 +80,67 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVisi
     {
         dataVision_.RegisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
         bIsPatched_ = true;
+        SendRegisterLocal();
     }
     else if( bIsPatched_ && !bNeedToBePatched )
     {
         dataVision_.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
         bIsPatched_ = false;
+        SendUnregisterLocal();
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo::SendRegisterLocal
+// Created: HBD 2010-03-24
+// -----------------------------------------------------------------------------
+void PHY_LocalMeteo::SendRegisterLocal()
+{
+    client::ControlLocalMeteo msg;
+    Common::MsgMeteoAttributes* att = msg().mutable_attributes();
+
+    att->set_wind_speed(  wind_.rWindSpeed_ / conversionFactor_ );
+    NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
+    att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
+    att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
+    att->set_cloud_density( rDensiteCouvertureNuageuse_ );
+    att->set_precipitation( pPrecipitation_->GetAsnID() );
+    att->set_temperature( 0 );
+
+    Common::MsgCoordLatLong longlat;
+    MIL_Tools::ConvertCoordSimToMos( downRight_, longlat);
+    msg().mutable_bottom_right_coordinate()->set_latitude( longlat.latitude()  );
+    msg().mutable_bottom_right_coordinate()->set_longitude( longlat.longitude()  );
+
+    MIL_Tools::ConvertCoordSimToMos( upLeft_, longlat);
+    msg().mutable_top_left_coordinate()->set_latitude( longlat.latitude()  );
+    msg().mutable_top_left_coordinate()->set_longitude( longlat.longitude()  );
+    msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo::SendUnregistreLocal
+// Created: HBD 2010-03-24
+// -----------------------------------------------------------------------------
+void PHY_LocalMeteo::SendUnregisterLocal()
+{
+    client::ControlLocalMeteo msg;
+    Common::MsgMeteoAttributes* att = msg().mutable_attributes();
+
+    att->set_wind_speed(  wind_.rWindSpeed_ / conversionFactor_ );
+    NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
+    att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
+    att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
+    att->set_cloud_density( rDensiteCouvertureNuageuse_ );
+    att->set_precipitation( pPrecipitation_->GetAsnID() );
+    att->set_temperature( 0 );
+
+    Common::MsgCoordLatLong longlat;
+    MIL_Tools::ConvertCoordSimToMos( downRight_, longlat);
+    msg().mutable_bottom_right_coordinate()->set_latitude( longlat.latitude()  );
+    msg().mutable_bottom_right_coordinate()->set_longitude( longlat.longitude()  );
+    MIL_Tools::ConvertCoordSimToMos( upLeft_, longlat);
+    msg().mutable_top_left_coordinate()->set_latitude( longlat.latitude()  );
+    msg().mutable_top_left_coordinate()->set_longitude( longlat.longitude()  );
+    msg.Send( NET_Publisher_ABC::Publisher() );
+}

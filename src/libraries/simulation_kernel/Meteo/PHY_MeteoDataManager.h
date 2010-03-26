@@ -22,7 +22,7 @@ namespace xml
     class xistream;
 }
 
-
+class PHY_GlobalMeteo;
 class MIL_Config;
 class PHY_RawVisionData;
 class MT_Ellipse;
@@ -47,6 +47,7 @@ public:
     virtual const PHY_Ephemeride&    GetEphemeride   () const;
     virtual const PHY_Lighting&      GetLighting     () const;
     virtual      void                Update          ( unsigned int date );
+    void SendStateToNewClient();
     //@}
 
     //! @name Weather effects
@@ -77,8 +78,8 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< PHY_Meteo* >    T_MeteoSet;
-    typedef T_MeteoSet::const_iterator  CIT_MeteoSet;
+    typedef std::set< PHY_Meteo* >       T_MeteoSet;
+    typedef T_MeteoSet::const_iterator   CIT_MeteoSet;
     typedef T_MeteoSet::iterator         IT_MeteoSet;
     //@}
 
@@ -91,7 +92,7 @@ private:
 
 private:
     PHY_Ephemeride*          pEphemeride_;
-    PHY_Meteo*               pGlobalMeteo_;
+    PHY_GlobalMeteo*         pGlobalMeteo_;
     T_MeteoSet               meteos_;
     PHY_RawVisionData*       pRawData_; 
 };

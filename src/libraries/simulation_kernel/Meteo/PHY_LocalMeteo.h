@@ -40,7 +40,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_LocalMeteo( xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-    explicit PHY_LocalMeteo( const Common::MsgMeteoAttributes&, MT_Vector2D upLeft, MT_Vector2D upRight  );
+    explicit PHY_LocalMeteo( const Common::MsgMeteoAttributes&, MT_Vector2D upLeft, MT_Vector2D upRight, MeteoManager_ABC* list );
     virtual ~PHY_LocalMeteo();
     //@}
 
@@ -58,12 +58,13 @@ private:
 
     //! @name Helpers
     //@{
+    void SendRegisterLocal();
+    void SendUnregisterLocal();
     //@}
 
 private:
     //! @name Member data
     //@{
-    //PHY_Meteo* meteo_;
     int startTime_;
     int endTime_;
     MT_Vector2D upLeft_;

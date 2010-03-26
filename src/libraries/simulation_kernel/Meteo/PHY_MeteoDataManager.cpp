@@ -5,7 +5,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_MeteoDataManager.h"
 #include "PHY_Ephemeride.h"
-#include "meteo/PHY_Meteo.h"
+#include "meteo/PHY_GlobalMeteo.h"
 #include "meteo/PHY_LocalMeteo.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -65,7 +65,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_Meteo( xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
     pGlobalMeteo_->IncRef();
     pGlobalMeteo_->SetListener( this );
     RegisterMeteo( *pGlobalMeteo_ );
@@ -126,7 +126,7 @@ void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const MsgsClientToSim::MsgCon
     PHY_Meteo* pTmp = 0;
     if( msg.has_attributes() )
     {
-        pTmp = new PHY_LocalMeteo( msg.attributes(), vUpLeft, vDownRight );
+        pTmp = new PHY_LocalMeteo( msg.attributes(), vUpLeft, vDownRight, this );
         RegisterMeteo( *pTmp );
     }
     assert( pRawData_ );
@@ -172,8 +172,17 @@ void PHY_MeteoDataManager::Update( unsigned int date )
         MT_LOG_DEBUG_MSG( MT_FormatString( "Maintenant il fait %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
         for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
             (*it)->Update( pEphemeride_->GetLightingBase() );
-    }
+    }   
 
     for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         (*it)->UpdateMeteoPatch( date, *pRawData_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::SendStateToNewClient
+// Created: HBD 2010-03-26
+// -----------------------------------------------------------------------------
+void PHY_MeteoDataManager::SendStateToNewClient()
+{
+    pGlobalMeteo_->SendRegisterGlobal();
 }

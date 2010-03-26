@@ -49,7 +49,7 @@ public:
 
 public:
              PHY_Meteo( xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-    explicit PHY_Meteo( const Common::MsgMeteoAttributes& );
+    explicit PHY_Meteo( const Common::MsgMeteoAttributes&, MeteoManager_ABC* listener );
 
     //-------------------------------------------------------------------------
     /** @name Creation / destruction */
@@ -82,7 +82,7 @@ public:
     ~PHY_Meteo();
 
    
-private:
+protected:
     int                      nPlancherCouvertureNuageuse_;
     int                      nPlafondCouvertureNuageuse_;
     MT_Float                 rDensiteCouvertureNuageuse_;

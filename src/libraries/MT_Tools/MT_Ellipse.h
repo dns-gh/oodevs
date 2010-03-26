@@ -33,11 +33,11 @@ public:
     MT_Ellipse& operator = ( const MT_Ellipse& );
 
     bool               IsInside ( MT_Vector2D ) const;
-    const MT_Vector2D& GetCenter()              const;
-    const MT_Vector2D  GetMajorAxisHighPoint()  const;
-    const MT_Vector2D  GetMinorAxisHighPoint()  const;
-    MT_Float           GetMajorAxeLength    ()  const;
-    MT_Rect            GetBoundingBox() const;
+        const MT_Vector2D& GetCenter()              const;
+        const MT_Vector2D  GetMajorAxisHighPoint()  const;
+        const MT_Vector2D  GetMinorAxisHighPoint()  const;
+        MT_Float           GetMajorAxeLength    ()  const;
+        MT_Rect            GetBoundingBox() const;
 
 public:
 //protected:

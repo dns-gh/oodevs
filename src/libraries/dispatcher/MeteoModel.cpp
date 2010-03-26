@@ -7,20 +7,22 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "dispatcher_pch.h"
 #include "MeteoModel.h"
 #include "clients_kernel/CoordinateConverter.h"
 #include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_Precipitation.h"
+namespace dispatcher
+{
 
 // -----------------------------------------------------------------------------
-// Name: MeteoModel constructor
-// Created: HBD 2010-03-10
+// Name: MeteoModel constructor 
+// Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv ) 
-    :  MeteoModel_ABC()
-    ,  converter_ ( conv )
-    ,  pGlobalMeteo_()
+MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv )  
+  :  MeteoModel_ABC()
+  ,  converter_ ( conv )
+  , pGlobalMeteo_()
 {
     PHY_Precipitation::Initialize();
     PHY_Lighting     ::Initialize();
@@ -28,7 +30,7 @@ MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv )
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel destructor
-// Created: HBD 2010-03-10
+// Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
 MeteoModel::~MeteoModel()
 {
@@ -36,28 +38,18 @@ MeteoModel::~MeteoModel()
     PHY_Lighting     ::Terminate();
 }
 
-// -----------------------------------------------------------------------------
-// Name: MeteoModel::UnregisterMeteo
-// Created: HBD 2010-03-10
-// -----------------------------------------------------------------------------
-void MeteoModel::UnregisterMeteo( PHY_Meteo& meteo)
-{
-   meteos_.remove( &meteo ); 
-}
-
-// -----------------------------------------------------------------------------
+// ----------------------------------------------------                                                                                                                                  -------------------------
 // Name: MeteoModel::GetLighting
-// Created: HBD 2010-03-10
+// Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
 const PHY_Lighting& MeteoModel::GetLighting() const
 {
-    return pGlobalMeteo_->GetLighting();
+   return pGlobalMeteo_->GetLighting();
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo
-// Created: NLD 2003-08-04
-// Last modified: JVT 03-08-05
+// Name: MeteoModel::OnReceiveMsgGlobalMeteo
+// Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg )
 {
@@ -68,9 +60,8 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::OnReceiveMsgLocalMeteo
-// Created: NLD 2003-08-04
-// Last modified: JVT 03-08-05
+// Name: MeteoModel::OnReceiveMsgLocalMeteo
+// Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg )
 {
@@ -85,8 +76,8 @@ void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalM
         pTmp = new PHY_Meteo( msg.attributes(), this );
         RegisterMeteo( *pTmp );
     }
-  // RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel::RegisterMeteo
@@ -94,6 +85,15 @@ void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalM
 // -----------------------------------------------------------------------------
 void MeteoModel::RegisterMeteo( PHY_Meteo& meteo )
 {
-    meteos_.push_front( &meteo ); 
+   meteos_.push_front( &meteo ); 
 }
-    
+// -----------------------------------------------------------------------------
+// Name: MeteoModel::UnregisterMeteo
+// Created: HBD 2010-03-23
+// -----------------------------------------------------------------------------
+void MeteoModel::UnregisterMeteo( PHY_Meteo& meteo )
+{
+ meteos_.remove( &meteo ); 
+}
+
+}

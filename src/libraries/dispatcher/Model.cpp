@@ -23,6 +23,7 @@
 #include "LogConsignMaintenance.h"
 #include "LogConsignSupply.h"
 #include "LogConsignMedical.h"
+#include "MeteoModel.h"
 #include "Object.h"
 #include "ObjectKnowledge.h"
 #include "Population.h"
@@ -40,6 +41,7 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/CoordinateConverter.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
@@ -56,7 +58,8 @@ Model::Model( const tools::ExerciseConfig& config )
     , compositeFactory_( new CompositeFactory() )
     , agentTypes_( new kernel::AgentTypes( config ) )
     , objectTypes_( new kernel::ObjectTypes( config ) )
-    , levels_( new kernel::FormationLevels() )
+    , levels_( new kernel::FormationLevels())
+    , meteoModel_ (new MeteoModel( *(new kernel::CoordinateConverter( config )) ))
 {
     // NOTHING
 }
@@ -333,6 +336,12 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         urbanKnowledges_.Get( wrapper.message().urban_knowledge_update().oid() ).Update( wrapper.message().urban_knowledge_update() ); 
     if( wrapper.message().has_urban_knowledge_destruction() )
         Destroy( urbanKnowledges_, wrapper.message().urban_knowledge_destruction().oid() ); 
+    if( wrapper.message().has_control_global_meteo() )
+        meteoModel_->OnReceiveMsgGlobalMeteo( wrapper.message().control_global_meteo() );
+    if( wrapper.message().has_control_local_meteo() )
+        meteoModel_->OnReceiveMsgLocalMeteo( wrapper.message().control_local_meteo() );
+    if( wrapper.message().has_urban_creation() )
+        CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation() );
 
 //        default:
 //            assert( false );//@TODO restore an exception, some messages aren't linked

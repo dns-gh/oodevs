@@ -35,8 +35,6 @@ public:
     virtual void                 RegisterMeteo  ( PHY_Meteo& ) = 0;
     virtual void                 UnregisterMeteo( PHY_Meteo& ) = 0;
     virtual const PHY_Lighting&  GetLighting     () const = 0;
-
-    
     //@}
 };
 

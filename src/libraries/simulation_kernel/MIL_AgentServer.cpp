@@ -330,6 +330,7 @@ void MIL_AgentServer::SendStateToNewClient() const
     pUrbanModel_->SendStateToNewClient();
     pEntityManager_->SendStateToNewClient();
     pFolk_->SendStateToNewClient();
+    pMeteoDataManager_->SendStateToNewClient();
 }
 
 // =============================================================================

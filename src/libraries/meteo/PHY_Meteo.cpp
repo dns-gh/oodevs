@@ -64,10 +64,11 @@ PHY_Meteo::PHY_Meteo( xml::xistream& xis, const PHY_Lighting& light, int convers
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_Meteo::PHY_Meteo( const Common::MsgMeteoAttributes& asnMsg )
+PHY_Meteo::PHY_Meteo( const Common::MsgMeteoAttributes& asnMsg, MeteoManager_ABC* listener )
     : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
     , pPrecipitation_( &PHY_Precipitation::none_ )
     , nRefCount_     ( 0 )
+    , listener_      ( listener )
 {
     Update( asnMsg );
 }
@@ -107,11 +108,7 @@ void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
     // Précipitation
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
     if( !pPrecipitation_ )
-    {
-        assert( false );
         pPrecipitation_ = &PHY_Precipitation::none_;
-    }
-    Update( listener_->GetLighting() );
 }
 
 //-----------------------------------------------------------------------------
@@ -140,3 +137,4 @@ void PHY_Meteo::UpdateMeteoPatch( int /*date*/, PHY_RawVisionData_ABC& /*dataVis
 {
     //NOTHING
 }
+
