@@ -141,7 +141,7 @@
     <name>CrossbowPluginConfigPanel</name>
     <message>
         <source>Enable Crossbow export</source>
-        <translation><Activer l'export Crossbow/translation>
+        <translation>Activer l'export Crossbow</translation>
     </message>
     <message>
         <source>Format for gdb: filename.{gdb|mdb}</source>
@@ -149,11 +149,11 @@
     </message>
     <message>
         <source>Format for sde connection: sde://user:password@host:port/db_name.sword</source>
-        <translation>Format pour connection sde: sde://user:password@host:port/db_name.sword</translation>
+        <translation>Format pour connectionsde: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>Geodatabase export:</source>
-        <translation>Export Geodatabase:</translation>
+        <translation>Export Geodatabase</translation>
     </message>
     <message>
         <source>Geodatabase population export:</source>
@@ -161,45 +161,45 @@
     </message>
     <message>
         <source>Geodatabase order import:</source>
-        <translation>Import d'action Geodatabase</translation>
+        <translation>Import d'ordre Geodatabase</translation>
     </message>
 </context>
 <context>
     <name>DisPluginConfigPanel</name>
     <message>
         <source>Enable DIS export</source>
-        <translation>Activer l&apos;export DIS</translation>
-    </message>
-    <message>
-        <source>Host: </source>
-        <translation>Hôte: </translation>
-    </message>
-    <message>
-        <source>Site Id: </source>
-        <translation>Id site: </translation>
-    </message>
-    <message>
-        <source>Application Id: </source>
-        <translation>Id application: </translation>
-    </message>
-    <message>
-        <source>Exercise Id: </source>
-        <translation>Id exercice: </translation>
+        <translation>Activer l'export DIS</translation>
     </message>
     <message>
         <source>Disaggregate units:</source>
         <translation>Désagréger les unités:</translation>
+    </message>
+    <message>
+        <source>Host: </source>
+        <translation>Hote: </translation>
+    </message>
+    <message>
+        <source>Site Id: </source>
+        <translation>Id du site: </translation>
+    </message>
+    <message>
+        <source>Application Id: </source>
+        <translation>Id de l'application: </translation>
+    </message>
+    <message>
+        <source>Exercise Id: </source>
+        <translation>Id de l'exercice: </translation>
     </message>
 </context>
 <context>
     <name>EditExercisePanel</name>
     <message>
         <source>Choose the exercise to edit:</source>
-        <translation>Choisissez l&apos;exercice à éditer:</translation>
+        <translation>Choisissez l'exercice à éditer</translation>
     </message>
     <message>
         <source>Edit exercise</source>
-        <translation>Editer l&apos;exercice</translation>
+        <translation>Editer un exercice</translation>
     </message>
 </context>
 <context>
@@ -217,15 +217,15 @@
     </message>
     <message>
         <source>Debug</source>
-        <translation>Déboggage</translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <source>System</source>
-        <translation>Système</translation>
+        <translation>System</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Gestion du temps</translation>
+        <translation>Temps</translation>
     </message>
     <message>
         <source>Time step:</source>
@@ -233,11 +233,11 @@
     </message>
     <message>
         <source>Time factor:</source>
-        <translation>Facteur d&apos;accélération:</translation>
+        <translation>Facteur de temps:</translation>
     </message>
     <message>
         <source>Checkpoints</source>
-        <translation>Sauvegardes automatiques</translation>
+        <translation>Sauvegardes</translation>
     </message>
     <message>
         <source>Frequency:</source>
@@ -249,7 +249,7 @@
     </message>
     <message>
         <source>Logs</source>
-        <translation>Journalisation</translation>
+        <translation>Rapports</translation>
     </message>
     <message>
         <source>Decisional</source>
@@ -257,11 +257,11 @@
     </message>
     <message>
         <source>Pathfind</source>
-        <translation>Cherche-chemin</translation>
+        <translation>Itinéraire</translation>
     </message>
     <message>
         <source>DIA Debugger</source>
-        <translation>Déboggueur DirectIA</translation>
+        <translation>Debugger DIA</translation>
     </message>
     <message>
         <source>Network Console</source>
@@ -269,7 +269,7 @@
     </message>
     <message>
         <source>Pathfind threads:</source>
-        <translation>Threads cherche-chemin:</translation>
+        <translation>Nombre d'itinéraires</translation>
     </message>
     <message>
         <source>Profile</source>
@@ -277,14 +277,14 @@
     </message>
     <message>
         <source>Check ODB Composition</source>
-        <translation>Vérifier composition ODB</translation>
+        <translation>Vérifier la composition de l'ODB</translation>
     </message>
 </context>
 <context>
     <name>HlaPluginConfigPanel</name>
     <message>
         <source>Enable HLA RPR-FOM export</source>
-        <translation>Activer l&apos;export HLA RPR-FOM</translation>
+        <translation>Activer l'export HLA RPR_FOM</translation>
     </message>
     <message>
         <source>Federation: </source>
@@ -307,47 +307,39 @@
     </message>
     <message>
         <source>Package content:</source>
-        <translation>Contenu du paquetage:</translation>
+        <translation>Contenu du paquetage</translation>
     </message>
     <message>
         <source>Select a package</source>
-        <translation>Sélectionnez un paquetage</translation>
+        <translation>Sélectionner un paquetage</translation>
     </message>
     <message>
         <source>Click &quot;Install package&quot; button to install the content of the package.
 Package will be installed to: %1</source>
-        <translation>Cliquez sur le bouton &quot;Installer paquetage&quot; pour installer le contenu du paquetage.
+        <translation>Cliquez sur &quot;Installer un paquetage&quot; pour installer le contenu du paquetage.
 Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
-        <source>Selected file is not a valid SWORD package.</source>
-        <translation type="obsolete">Le fichier sélectionné n&apos;est pas un paquetage SWORD valide.</translation>
-    </message>
-    <message>
         <source>Selected file is not a valid %1 package.</source>
-        <translation>Le fichier sélectionné n&apos;est pas un paquetage %1 valide.</translation>
+        <translation>Le fichier sélectionné n'est pas un paquetage %1 valide.</translation>
     </message>
 </context>
 <context>
     <name>JoinAnalysisPanel</name>
     <message>
         <source>Choose the analysis to join:</source>
-        <translation>Choisissez l&apos;analyse à rejoindre:</translation>
+        <translation>Choisissez l'analyse à rejoindre:</translation>
     </message>
     <message>
         <source>Exercise number:</source>
-        <translation>Numéro de l&apos;exercice:</translation>
+        <translation>Numéro de l'exercice:</translation>
     </message>
 </context>
 <context>
     <name>JoinExercisePanel</name>
     <message>
         <source>Choose the exercise to join:</source>
-        <translation>Choisissez l&apos;exercice à rejoindre:</translation>
-    </message>
-    <message>
-        <source>Exercise number:</source>
-        <translation type="obsolete">Numéro de l&apos;exercice:</translation>
+        <translation>Choisissez un exercice à rejoindre:</translation>
     </message>
     <message>
         <source>Choose the session to join:</source>
@@ -370,65 +362,33 @@ Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
         <source>Manage</source>
-        <translation>Administrer</translation>
+        <translation>Gérer</translation>
     </message>
 </context>
 <context>
     <name>RestartExercisePanel</name>
     <message>
-        <source>Choose the exercise to start:</source>
-        <translation type="obsolete">Choisissez l&apos;exercice à démarrer:</translation>
-    </message>
-    <message>
-        <source>Choose the checkpoint to load:</source>
-        <translation>Choisissez la sauvegarde à reprendre:</translation>
-    </message>
-    <message>
-        <source>Start exercise</source>
-        <translation type="obsolete">Démarrer l&apos;exercice</translation>
-    </message>
-    <message>
-        <source>Restart game: %1</source>
-        <translation>Redémarre l&apos;exercice: %1</translation>
-    </message>
-    <message>
-        <source>The selected exercise as no checkpoint to restart.</source>
-        <translation>L&apos;exercice séléctionné n&apos;a pas de sauvegarde.</translation>
-    </message>
-    <message>
         <source>Choose the session to restart:</source>
         <translation>Choisissez la session à redémarrer:</translation>
     </message>
     <message>
-        <source>Exercise number:</source>
-        <translation type="obsolete">Numéro de l&apos;exercice:</translation>
+        <source>Choose the checkpoint to load:</source>
+        <translation>Choisissez la sauvegarde à charger:</translation>
+    </message>
+    <message>
+        <source>Restart game: %1</source>
+        <translation>Redémarrer le jeu: %1</translation>
+    </message>
+    <message>
+        <source>The selected exercise as no checkpoint to restart.</source>
+        <translation>L'exercice sélectionné n'a pas de sauvegarde pour redémarrer.</translation>
     </message>
 </context>
 <context>
     <name>StartAnalysisPanel</name>
     <message>
         <source>Choose the exercise to analyse:</source>
-        <translation>Choisissez l&apos;exercice à analyser:</translation>
-    </message>
-    <message>
-        <source>Choose the replay to analyse:</source>
-        <translation type="obsolete">Choissisez l&apos;enregistrement à analyser:</translation>
-    </message>
-    <message>
-        <source>Start replay</source>
-        <translation type="obsolete">Démarrer l&apos;analyse</translation>
-    </message>
-    <message>
-        <source>Exercise number:</source>
-        <translation>Numéro de l&apos;exercice:</translation>
-    </message>
-    <message>
-        <source>Replay game: %1</source>
-        <translation type="obsolete">Analyse l&apos;exercice: %1</translation>
-    </message>
-    <message>
-        <source>The selected exercise has no replay.</source>
-        <translation type="obsolete">L&apos;exercice sélectionné n&apos;a pas d&apos;enregistrement.</translation>
+        <translation>Choissez l'exercice à analyser:</translation>
     </message>
     <message>
         <source>Choose the session to analyse:</source>
@@ -439,49 +399,27 @@ Le paquetage sera installé dans: %1</translation>
         <translation>Démarrer une session de rejeu</translation>
     </message>
     <message>
+        <source>Exercise number:</source>
+        <translation>Numéro de l'exercice:</translation>
+    </message>
+    <message>
         <source>The selected exercise has no session to replay.</source>
-        <translation>L&apos;exercice sélectionné n&apos;a pas de session à rejouer.</translation>
+        <translation>L'exercice sélectionné n'a pas de session à rejouer.</translation>
     </message>
     <message>
         <source>Replay session: %1
 Name: %2
 Description: %3</source>
-        <translation>Rejeu de la session: %1 Nom: %2 Description: %3</translation>
+        <translation>Rejouer la session: %1
+Nom: %2
+Description: %3</translation>
     </message>
 </context>
 <context>
     <name>StartExercisePanel</name>
     <message>
-        <source>Exercise</source>
-        <translation type="obsolete">Exercice</translation>
-    </message>
-    <message>
         <source>Options</source>
         <translation>Options</translation>
-    </message>
-    <message>
-        <source>Start exercise</source>
-        <translation type="obsolete">Démarrer l&apos;exercice</translation>
-    </message>
-    <message>
-        <source>Exercise number:</source>
-        <translation>Numéro de l&apos;exercice:</translation>
-    </message>
-    <message>
-        <source>Session name:</source>
-        <translation>Nom de la session:</translation>
-    </message>
-    <message>
-        <source>Session comments:</source>
-        <translation>Commentaires de la session:</translation>
-    </message>
-    <message>
-        <source>The session will be created in directory &apos;%1&apos;</source>
-        <translation>La session sera créée dans le répertoire &quot;%1&quot;</translation>
-    </message>
-    <message>
-        <source>Select an exercise to start</source>
-        <translation>Sélectionnez un exercice à démarrer</translation>
     </message>
     <message>
         <source>HLA Export</source>
@@ -493,36 +431,56 @@ Description: %3</source>
     </message>
     <message>
         <source>DB Export</source>
-        <translation>Exporter DB</translation>
+        <translation>Export DB</translation>
+    </message>
+    <message>
+        <source>Session name:</source>
+        <translation>Nom de la session:</translation>
+    </message>
+    <message>
+        <source>Session comments:</source>
+        <translation>Commentaires de la session:</translation>
+    </message>
+    <message>
+        <source>Exercise number:</source>
+        <translation>Numéro de l'exercice:</translation>
+    </message>
+    <message>
+        <source>The session will be created in directory &apos;%1&apos;</source>
+        <translation>La session sera créée dans le répertoire &apos;%1&apos;</translation>
+    </message>
+    <message>
+        <source>Select an exercise to start</source>
+        <translation>Sélectionnez un exercice à démarrer</translation>
     </message>
 </context>
 <context>
     <name>TerrainCreationPanel</name>
     <message>
         <source>New terrain name:</source>
-        <translation>Nom du nouveau terrain:</translation>
+        <translation>Nouveau nom de terrain:</translation>
     </message>
     <message>
         <source>Enter terrain name</source>
-        <translation>Saisissez le nom du terrain</translation>
+        <translation>Entrez le nom du terrain</translation>
     </message>
     <message>
         <source>Create</source>
         <translation>Créer</translation>
     </message>
     <message>
+        <source>Terrain generation tool was not found on your system.</source>
+        <translation>L'outil de génération de terrain n'a pas été trouvé sur votre système.</translation>
+    </message>
+    <message>
         <source>A terrain with this name already exists.</source>
-        <translation>Un terrain de ce nom existe déjà.</translation>
+        <translation>Un terrain avec ce nom existe déjà.</translation>
     </message>
     <message>
         <source>The new terrain will be created in:
 %1</source>
-        <translation>Le nouveau terrain sera crée dans: 
+        <translation>Le nouveau terrain sera créé dans:
 %1</translation>
-    </message>
-    <message>
-        <source>Terrain generation tool was not found on your system.</source>
-        <translation>L'outil de génération de terrain n'a pas été trouvé sur votre système.</translation>
     </message>
 </context>
 </TS>

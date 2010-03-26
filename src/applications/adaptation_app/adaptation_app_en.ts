@@ -11,6 +11,93 @@
     </message>
 </context>
 <context>
+    <name>ADN_ActiveProtectionsListView</name>
+    <message>
+        <source>active Protection</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ActiveProtections_Data::ActiveProtectionsInfos</name>
+    <message>
+        <source>Active Protection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active protection &apos;%1&apos; - Invalid ammunition type &apos;%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ActiveProtections_Data::ActiveProtectionsInfosWeapons</name>
+    <message>
+        <source>Active Protection weapons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment - Invalid amunition &apos;%1/%2&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ActiveProtections_GUI</name>
+    <message>
+        <source>Active Protection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hard kill</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dotation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ammunitions</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_ActiveProtections_WeaponsTable</name>
+    <message>
+        <source>Coefficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AiEngine_Data</name>
     <message>
         <source>Invalid data</source>
@@ -40,15 +127,15 @@
 <context>
     <name>ADN_AiEngine_GUI</name>
     <message>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Threat management</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Operational state maximum effect on threat</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -140,10 +227,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Total</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>
@@ -185,6 +268,10 @@ Parked engine running</source>
 Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Automata_Data::AutomatonInfos</name>
@@ -223,6 +310,10 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Doctrine model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Command post</source>
         <translation type="unfinished"></translation>
     </message>
@@ -235,7 +326,27 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Automata [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unit [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment [ officers/warrant officers/soldiers ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%1..%2) x %3 x %4 [ %5 ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%1 x %2 [ %3 ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -252,30 +363,6 @@ Parked engine running</source>
     </message>
     <message>
         <source>Logistic per dotation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(%1..%2) x %3 x %4 [ %5 ]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>(%1..%2) x %3 [ %4/%5/%6 ]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctrine model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automata [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unit [ officers/warrant officers/soldiers ]</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment [ officers/warrant officers/soldiers ]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -403,14 +490,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Required parts</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>General parameter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Seriousness</source>
         <translation type="unfinished"></translation>
     </message>
@@ -420,6 +499,14 @@ Parked engine running</source>
     </message>
     <message>
         <source>Repair duration variance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Required parts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>General parameter</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -564,7 +651,15 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -580,19 +675,11 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Nature</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>On site fixable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Resource natures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -675,15 +762,15 @@ Parked engine running</source>
 <context>
     <name>ADN_Composantes_Data</name>
     <message>
-        <source>Creation completed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New equipment creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -835,6 +922,10 @@ Parked engine running</source>
 <context>
     <name>ADN_Composantes_GUI</name>
     <message>
+        <source>Equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -955,7 +1046,15 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Contenance</source>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active Protections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resources</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1007,7 +1106,23 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Medical system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambulance, collection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ambulance, evacuation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Doctor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Triage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1019,11 +1134,35 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Treats psyop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Capacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Loading duration per person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unloading duration per person</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Capabilities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>NBC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>psyop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1040,82 +1179,6 @@ Parked engine running</source>
     </message>
     <message>
         <source>m3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code NNO</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code EMAT6</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code EMAT8</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Code LFRIL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MOS Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Radars</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipment</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Medical system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ambulance, collection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ambulance, evacuation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Triage</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Treats psyop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loading duration per person</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unloading duration per person</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Capabilities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>psyop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Supply system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1175,6 +1238,26 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Code NNO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code EMAT6</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code EMAT8</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Code LFRIL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MOS Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Max steepness</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1192,6 +1275,18 @@ Parked engine running</source>
     </message>
     <message>
         <source>Unloading duration per ton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Radars</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active protection</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1224,14 +1319,6 @@ Parked engine running</source>
     </message>
     <message>
         <source>Equipment_%1.htm</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active Protections</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active protection</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1283,15 +1370,15 @@ Parked engine running</source>
 <context>
     <name>ADN_Composantes_WeaponsListView</name>
     <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Add weapon</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove weapon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1322,12 +1409,12 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Select SIM to use for data test</source>
+        <source>Sword executable (*.exe)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Sword executable (*.exe)</source>
-        <translation>Sword executable (*.exe)</translation>
+        <source>Select SIM to use for data test</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1484,6 +1571,10 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>For indirect fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Attritions</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1524,30 +1615,6 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mine ammo parameters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ammunition</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Target armor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Destroyed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PKs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>For indirect fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Activation duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1556,15 +1623,15 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Mine ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Mines quantity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On site fixable</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Maintenance support needed</source>
+        <source>Illumination capacity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1576,19 +1643,39 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Must Maintain guidance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Illumination capacity</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Guidance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Must Maintain guidance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Illumination range needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ammunition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target armor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On site fixable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance support needed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Destroyed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PKs</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1602,15 +1689,15 @@ Parked engine running</source>
 <context>
     <name>ADN_Equipement_Wizard</name>
     <message>
-        <source>Creation completed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>New resource creation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation completed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1651,14 +1738,6 @@ Parked engine running</source>
 <context>
     <name>ADN_Health_GUI</name>
     <message>
-        <source>Contamination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Medical system data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1672,6 +1751,10 @@ Parked engine running</source>
     </message>
     <message>
         <source>Psyop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contamination</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1702,9 +1785,17 @@ Parked engine running</source>
         <source>Ambulances - collection</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Doctors</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>
+    <message>
+        <source>Experience modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Newbie</source>
         <translation type="unfinished"></translation>
@@ -1722,19 +1813,15 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Not tired</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Tired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Exhausted</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Experience modifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Not tired</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1830,7 +1917,7 @@ Parked engine running</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Phs modificators</source>
+        <source>Phs modifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1843,15 +1930,15 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Shooter&apos;s stance / Target&apos;s stance</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phs modifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Indirect fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Phs modificators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Shooter&apos;s stance / Target&apos;s stance</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1925,11 +2012,11 @@ stance</source>
 <context>
     <name>ADN_ListView_Composantes</name>
     <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <source>Equipments</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Equipments</source>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2054,6 +2141,10 @@ stance</source>
 <context>
     <name>ADN_MainWindow</name>
     <message>
+        <source>Sword Adaptation Tool - No Project</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>&amp;New</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2098,6 +2189,10 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Sword Adaptation Tool - </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Physical model file (physical.xml)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2134,6 +2229,10 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Sword Adaptation Tool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Invalid password</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2145,31 +2244,19 @@ stance</source>
         <source>Save changes to project %1?</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Sword Adaptation Tool - No Project</source>
-        <translation>Sword Security Adaptation Tool - No Project</translation>
-    </message>
-    <message>
-        <source>Sword Adaptation Tool - </source>
-        <translation>Sword Security Adaptation Tool - </translation>
-    </message>
-    <message>
-        <source>Sword Adaptation Tool</source>
-        <translation>Sword Security Adaptation Tool</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
-    <message>
-        <source>Repairers</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Maintenance system data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equipments availability warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Repairers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2300,6 +2387,14 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Doctrine description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Usage description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Parameters</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2313,14 +2408,6 @@ stance</source>
     </message>
     <message>
         <source>Available without mission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctrine description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Usage description</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2434,14 +2521,6 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Spread angle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&#xb0;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Gaseous</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2449,27 +2528,27 @@ stance</source>
         <source>Span</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Spread angle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&#xb0;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_NBC_Intox_GUI</name>
-    <message>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Killed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Contamination</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Poisoning effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unwounded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2486,6 +2565,14 @@ stance</source>
     </message>
     <message>
         <source>Wounded extreme seriousness</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Killed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contamination</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2526,22 +2613,6 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>m</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Default speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Geometry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2566,7 +2637,19 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Bypass Speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default speed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2575,6 +2658,10 @@ stance</source>
     </message>
     <message>
         <source>Max agent speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>%</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2598,14 +2685,6 @@ stance</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Max size</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Genie prepared</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Detection duration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2623,6 +2702,14 @@ stance</source>
     </message>
     <message>
         <source>Object type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Genie prepared</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2747,6 +2834,10 @@ Make sure the file exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Population effects on units firing capability</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Density</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2771,7 +2862,23 @@ Make sure the file exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Behavior model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Density while moving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average movement speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>km/h</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population effects on units movement capability</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2780,6 +2887,14 @@ Make sure the file exists.</source>
     </message>
     <message>
         <source>Max speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attritions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Population -&gt; Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2796,34 +2911,6 @@ Make sure the file exists.</source>
     </message>
     <message>
         <source>Fixable without evacuation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population effects on units firing capability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Behavior model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Density while moving</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Average movement speed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population effects on units movement capability</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Attritions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Population -&gt; Units</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3070,6 +3157,10 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Can detect units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Angle</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3082,7 +3173,35 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Ranges</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proximity range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>m</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detection range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Recognition range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Identification range</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stance modifiers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3110,6 +3229,10 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Limited To Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Can detect objects</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3122,7 +3245,19 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Army aviation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Survey durations</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>/ha</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Counter battery radar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3146,10 +3281,6 @@ Make sure that the file is not write-protected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stance modifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Target stance modifiers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3167,50 +3298,6 @@ Make sure that the file is not write-protected.</source>
     </message>
     <message>
         <source>Object detection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Can detect units</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ranges</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Proximity range</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Detection range</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recognition range</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Identification range</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Terrain modifiers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Army aviation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Survey durations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Counter battery radar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Limited To Sensors</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3325,15 +3412,15 @@ Make sure that the file is not write-protected.</source>
 <context>
     <name>ADN_Supply_GUI</name>
     <message>
-        <source>Mission</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Supply system data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Unit type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mission</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3360,14 +3447,6 @@ Make sure that the file is not write-protected.</source>
 <context>
     <name>ADN_Supply_TrucksDoubleTable</name>
     <message>
-        <source>New</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Trucks qty</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3375,9 +3454,6 @@ Make sure that the file is not write-protected.</source>
         <source>Max speed modifier</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>ADN_Supply_TrucksTimeTable</name>
     <message>
         <source>New</source>
         <translation type="unfinished"></translation>
@@ -3386,12 +3462,23 @@ Make sure that the file is not write-protected.</source>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>ADN_Supply_TrucksTimeTable</name>
     <message>
         <source>Trucks qty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3449,167 +3536,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
 <context>
     <name>ADN_Tr</name>
     <message>
-        <source>grenade</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>mine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dune</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>radar</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Agent</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AgentList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Automate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AutomateList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Bool</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Numeric</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>String</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Direction</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enumeration</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NatureAtlas</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AgentKnowledge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>AgentKnowledgeList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ObjectKnowledge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ObjectKnowledgeList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PopulationKnowledge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GenObject</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>GenObjectList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Objective</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ObjectiveList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Path</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PathList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PointList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Polygon</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PolygonList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>LocationList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>EquipmentType</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DotationType</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MaintenancePriorities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MedicalPriorities</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IndirectFire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Limit</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhaseLineList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>IntelligenceList</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>explosive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>grenade</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3622,6 +3553,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>illumination shell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>effect</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3638,6 +3577,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>swamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dune</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3730,6 +3673,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>mountain edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source></source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3902,6 +3849,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Emergency management</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Commander, Combined Arms</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4129,6 +4080,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>radar</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>listening</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4169,11 +4124,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Datetime</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>effect</source>
+        <source>Agent</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4181,7 +4132,15 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>AgentList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AgentListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4189,7 +4148,43 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>AutomateList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AutomateListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bool</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Numeric</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>String</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Datetime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enumeration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NatureAtlas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AgentKnowledge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4197,7 +4192,15 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>AgentKnowledgeList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AgentKnowledgeListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectKnowledge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4205,7 +4208,15 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>ObjectKnowledgeList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>ObjectKnowledgeListBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PopulationKnowledge</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4213,7 +4224,15 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>GenObject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>GenObjectBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>GenObjectList</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4221,7 +4240,31 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Objective</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ObjectiveList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PathList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>PointBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PointList</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4229,7 +4272,15 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Polygon</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>AreaBM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PolygonList</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4237,16 +4288,60 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>UrbanBlockBM</source>
+        <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Commander, Combined Arms</source>
+        <source>LocationList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EquipmentType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DotationType</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MaintenancePriorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MedicalPriorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IndirectFire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Limit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PhaseLineList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>IntelligenceList</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UrbanBlockBM</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ADN_Units_Composantes_GUI</name>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Qty</source>
+        <translation type="unfinished"></translation>
+    </message>
     <message>
         <source>Major</source>
         <translation type="unfinished"></translation>
@@ -4257,14 +4352,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Conveyor</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Qty</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4367,6 +4454,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Doctrine model</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Decontamination delay</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4419,19 +4510,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Stances</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stock</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctrine model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Nbr of warrant officer(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stances</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4456,6 +4539,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Complementary resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stock</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4515,6 +4602,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
 <context>
     <name>ADN_Urban_GUI</name>
     <message>
+        <source>Materials</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Material</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4532,10 +4623,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>RoofShape</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Materials</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4599,6 +4686,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
 <context>
     <name>ADN_Weapons_GUI</name>
     <message>
+        <source>Weapon system</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Name</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4627,11 +4718,19 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Direct fire</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Ph (%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Distance (m)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4675,23 +4774,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>PHs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon system</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Direct fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Indirect fire</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PHs</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4710,11 +4797,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
 <context>
     <name>ADN_Weapons_ListView</name>
     <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
+        <source>Weapon system</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Weapon system</source>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4751,6 +4838,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Urban</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>NBC</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4759,11 +4850,35 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Resources</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Active Protections</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Objects</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Weapon systems</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Sensors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Op. indicators</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Doctrine models</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4776,6 +4891,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Breakdowns</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Jamming</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4827,11 +4946,23 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Unloading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Project reseted</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Loading project...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Loading: %1...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sword Adaptation Tool - Saving Errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4848,50 +4979,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>ADN - Data export</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resources</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Weapon systems</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Equipments</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Op. indicators</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Doctrine models</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Jamming</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Unloading: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Loading: %1...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Sword Adaptation Tool - Saving Errors</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Active Protections</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

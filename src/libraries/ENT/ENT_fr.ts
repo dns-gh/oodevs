@@ -3187,7 +3187,7 @@
     </message>
     <message>
         <source>preliminary</source>
-        <translation type="unfinished"></translation>
+        <translation>préliminaire</translation>
     </message>
 </context>
 </TS>

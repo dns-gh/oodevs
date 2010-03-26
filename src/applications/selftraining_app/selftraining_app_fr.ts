@@ -449,7 +449,7 @@
     </message>
     <message>
         <source>Start scenarios</source>
-        <translation>Lancer un exercice<byte value="x9"/></translation>
+        <translation>Lancer un exercice</translation>
     </message>
     <message>
         <source>Replay scenario</source>

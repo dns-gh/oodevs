@@ -3,7 +3,7 @@
     <name>ActivityTimeAttribute</name>
     <message>
         <source>Info/Mine parameters/Activity time</source>
-        <translation type="unfinished">Info/Paramètres des mines/Durée d&apos;activité</translation>
+        <translation>Info/Paramètres des mines/Durée d&apos;activité</translation>
     </message>
 </context>
 <context>
@@ -65,19 +65,19 @@
     <name>CrossingSiteAttribute</name>
     <message>
         <source>Info/Crossing site attributes/Width</source>
-        <translation type="unfinished">Info/Attributs de site de franchissement/Largeur</translation>
+        <translation>Info/Attributs de site de franchissement/Largeur</translation>
     </message>
     <message>
         <source>Info/Crossing site attributes/Depth</source>
-        <translation type="unfinished">Info/Attributs de site de franchissement/Profondeur</translation>
+        <translation>Info/Attributs de site de franchissement/Profondeur</translation>
     </message>
     <message>
         <source>Info/Crossing site attributes/Speed</source>
-        <translation type="unfinished">Info/Attributs de site de franchissement/Débit</translation>
+        <translation>Info/Attributs de site de franchissement/Débit</translation>
     </message>
     <message>
         <source>Info/Crossing site attributes/Build river banks</source>
-        <translation type="unfinished">Info/Attributs de site de franchissement/Aménagement des rives</translation>
+        <translation>Info/Attributs de site de franchissement/Aménagement des rives</translation>
     </message>
 </context>
 <context>
@@ -161,14 +161,14 @@
     </message>
     <message>
         <source>Fire class:</source>
-        <translation>Classe d'incendie :</translation>
+        <translation>Classe d&apos;incendie :</translation>
     </message>
 </context>
 <context>
     <name>FireAttribute</name>
     <message>
         <source>Info/Fire attributes/Fire class</source>
-        <translation>Info/Attributs d'incendie/Classe d'incendie</translation>
+        <translation>Info/Attributs d&apos;incendie/Classe d&apos;incendie</translation>
     </message>
 </context>
 <context>
@@ -323,7 +323,7 @@
     </message>
     <message>
         <source></source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Total number of doctors:</source>
@@ -560,7 +560,7 @@
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation>Info/Paramètres de démolition de cible/Type d'obstacle</translation>
+        <translation>Info/Paramètres de démolition de cible/Type d&apos;obstacle</translation>
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle activated</source>

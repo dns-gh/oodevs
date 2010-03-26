@@ -781,7 +781,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Zone</source>
-        <translation><Zone/translation>
+        <translation>Zone</translation>
     </message>
     <message>
         <source>Value</source>

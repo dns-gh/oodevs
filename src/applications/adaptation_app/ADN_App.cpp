@@ -108,7 +108,7 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
 {
     const QString locale = ReadLang();
     AddTranslator( "adaptation", locale );
-    AddTranslator( "adn", locale );
+    AddTranslator( "adaptation_app", locale );
     AddTranslator( "ENT", locale );
     AddTranslator( "tools", locale );
 

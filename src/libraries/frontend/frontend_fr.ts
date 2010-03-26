@@ -10,33 +10,33 @@
     <name>JoinExercise</name>
     <message>
         <source>Starting user interface...</source>
-        <translation>Démarrage de l'interface utilisateur...</translation>
+        <translation>DÃ©marrage de l&apos;interface utilisateur...</translation>
     </message>
     <message>
         <source>User interface started</source>
-        <translation>Interface utilisateur démarrée</translation>
+        <translation>Interface utilisateur dÃ©marrÃ©e</translation>
     </message>
 </context>
 <context>
     <name>SpawnCommand</name>
     <message>
         <source>Starting...</source>
-        <translation>En cours de démarrage...</translation>
+        <translation>En cours de dÃ©marrage...</translation>
     </message>
     <message>
         <source>Started</source>
-        <translation>Démarré</translation>
+        <translation>DÃ©marrÃ©</translation>
     </message>
 </context>
 <context>
     <name>StartExercise</name>
     <message>
         <source>Starting simulation...</source>
-        <translation>Démarrage de la simulation...</translation>
+        <translation>DÃ©marrage de la simulation...</translation>
     </message>
     <message>
         <source>Simulation started</source>
-        <translation>Simulation démarrée</translation>
+        <translation>Simulation dÃ©marrÃ©e</translation>
     </message>
 </context>
 </TS>

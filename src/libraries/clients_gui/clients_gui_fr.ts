@@ -48,7 +48,7 @@
     </message>
     <message>
         <source>&#xa9; 2008 MASA Group</source>
-        <translation>&#xa9; 2008 MASA Group</translation>
+        <translation>© 2008 MASA Group</translation>
     </message>
     <message>
         <source>www.masagroup.net</source>
@@ -56,7 +56,7 @@
     </message>
     <message>
         <source>images/gui/splash_swordot.jpg</source>
-        <translation type="unfinished">images/gui/splash_scalped.jpg</translation>
+        <translation type>images/gui/splash_scalped.jpg</translation>
     </message>
 </context>
 <context>
@@ -277,11 +277,11 @@ Please check access permissions or write protection.</source>
     <name>FirePrototype_ABC</name>
     <message>
         <source>Fire parameters</source>
-        <translation>Paramètres d'incendie</translation>
+        <translation>Paramètres d&apos;incendie</translation>
     </message>
     <message>
         <source>Fire Class:</source>
-        <translation>Classe d'incendie:</translation>
+        <translation>Classe d&apos;incendie:</translation>
     </message>
 </context>
 <context>
@@ -424,7 +424,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Input file...</source>
-        <translation>Fichier d'entrée...</translation>
+        <translation>Fichier d&apos;entrée...</translation>
     </message>
 </context>
 <context>
@@ -729,7 +729,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>NBC agent state:</source>
-        <translation>Etat de l'agent NBC:</translation>
+        <translation>Etat de l&apos;agent NBC:</translation>
     </message>
 </context>
 <context>
@@ -968,22 +968,7 @@ Voulez-vous le supprimer?</translation>
     <name>R&#xe8;gle GL</name>
     <message>
         <source> %1m</source>
-        <translation"> %1m</translation>
-    </message>
-</context>
-<context>
-    <name>StatusBar</name>
-    <message>
-        <source>---</source>
-        <translation type="obsolete">---</translation>
-    </message>
-    <message>
-        <source>x:%1 y:%2 h:%3</source>
-        <translation type="obsolete">x:%1 y:%2 h:%3</translation>
-    </message>
-    <message>
-        <source>Lat:%1 Lon:%2</source>
-        <translation type="obsolete">Lat:%1 Lon:%2</translation>
+        <translation> %1m</translation>
     </message>
 </context>
 <context>
@@ -1016,18 +1001,8 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>TerrainPreference</name>
     <message>
-        <source> px</source>
-        <comment>TerrainPreference</comment>
-        <translation> px</translation>
-    </message>
-    <message>
         <source>Line thickness: </source>
-        <comment>TerrainPreference</comment>
-        <translation type="obsolete">Epaisseur du trait:</translation>
-    </message>
-    <message>
-        <source>Line thickness: </source>
-        <translation>Epaisseur du trait:</translation>
+        <translation>Epaisseur de la ligne: </translation>
     </message>
     <message>
         <source> px</source>
@@ -1045,29 +1020,22 @@ Voulez-vous le supprimer?</translation>
     <name>UnitListView</name>
     <message>
         <source>Unit type</source>
-        <translation>Type d&apos;unité</translation>
+        <translation>Type d'unité</translation>
     </message>
     <message>
         <source>Count</source>
-        <translation>Nombre</translation>
-    </message>
-</context>
-<context>
-    <name>UnitPreviewIcon</name>
-    <message>
-        <source>Drag and drop symbol to map to create a new unit.</source>
-        <translation type="obsolete">Glissez/déposez le symbole sur la carte pour créer une nouvelle unité.</translation>
+        <translation>Compte</translation>
     </message>
 </context>
 <context>
     <name>UnitsPanel</name>
     <message>
         <source>Hierarchical view</source>
-        <translation>Vue hiérachique</translation>
+        <translation>Vue hiérarchique</translation>
     </message>
     <message>
         <source>Level</source>
-        <translation>Niveau</translation>
+        <translation>niveau</translation>
     </message>
     <message>
         <source>Nature</source>
@@ -1075,15 +1043,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Atlas qualifier</source>
-        <translation>Qualificatif Atlas</translation>
-    </message>
-    <message>
-        <source>Units</source>
-        <translation type="obsolete">Unités</translation>
-    </message>
-    <message>
-        <source>Display type: </source>
-        <translation type="obsolete">Type d&apos;affichage: </translation>
+        <translation>Qualification Atlas</translation>
     </message>
 </context>
 <context>
@@ -1104,28 +1064,12 @@ Voulez-vous le supprimer?</translation>
         <translation>A propos</translation>
     </message>
     <message>
-        <source> &#xa9; 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</source>
-        <translation type="obsolete"> © 2007 Masa-SCI &lt;a href=&quot;http://www.masa-sci.com&quot;&gt;www.masa-sci.com&lt;/a&gt;</translation>
-    </message>
-    <message>
         <source>&lt;br&gt;License will expire on </source>
         <translation>&lt;br&gt;La licence expire le </translation>
     </message>
     <message>
         <source>Close</source>
         <translation>Fermer</translation>
-    </message>
-    <message>
-        <source>images/gui/splash_swordot.png</source>
-        <translation type="obsolete">images/gui/splash_astec.png</translation>
-    </message>
-    <message>
-        <source>images/gui/splash_swordot.jpg</source>
-        <translation type="obsolete">images/gui/splash_scalped.jpg</translation>
-    </message>
-    <message>
-        <source>&lt;br&gt;&#xa9; 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</source>
-        <translation type="obsolete">&lt;br&gt;© 2008 MasaGroup &lt;a href=&quot;http://www.masagroup.net&quot;&gt;www.masagroup.net&lt;/a&gt;</translation>
     </message>
 </context>
 <context>
@@ -1140,21 +1084,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::CampPrototype_ABC</name>
-    <message>
-        <source>Camp</source>
-        <translation type="obsolete">Camp</translation>
-    </message>
-    <message>
-        <source>TC2:</source>
-        <translation type="obsolete">TC2:</translation>
-    </message>
-    <message>
-        <source>Camp&apos;s TC2</source>
-        <translation type="obsolete">TC2 du camp</translation>
-    </message>
-</context>
-<context>
     <name>gui::CoordinateSystemsPanel</name>
     <message>
         <source>Coordinate System</source>
@@ -1162,11 +1091,15 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Select current coordinate system:</source>
-        <translation>Sélectionnez le système de coordonnées par défaut:</translation>
+        <translation>Sélection du système de coordonnées courant:</translation>
     </message>
 </context>
 <context>
     <name>gui::DrawerPanel</name>
+    <message>
+        <source>Drawings</source>
+        <translation>Dessins</translation>
+    </message>
     <message>
         <source>Load drawings file</source>
         <translation>Charge le fichier de dessins</translation>
@@ -1178,6 +1111,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Clear drawings</source>
         <translation>Effacer les dessins</translation>
+    </message>
+    <message>
+        <source>Start drawing</source>
+        <translation>Début du dessin</translation>
     </message>
     <message>
         <source>Drawings (*.xml)</source>
@@ -1196,43 +1133,16 @@ Voulez-vous le supprimer?</translation>
 Please check access permissions or write protection.</source>
         <translation>Impossible de sauvegarder les dessins dans le fichier &apos;%1&apos;.</translation>
     </message>
-    <message>
-        <source>Drawings</source>
-        <translation>Dessins</translation>
-    </message>
-    <message>
-        <source>Start drawing</source>
-        <translation>Dessiner</translation>
-    </message>
-</context>
-<context>
-    <name>gui::DrawerToolbar</name>
-    <message>
-        <source>Drawing tools</source>
-        <translation type="obsolete">Outils de dessin</translation>
-    </message>
-    <message>
-        <source>Drawing</source>
-        <translation type="obsolete">Dessin</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="obsolete">Dessiner</translation>
-    </message>
-    <message>
-        <source>Display drawings</source>
-        <translation type="obsolete">Afficher les dessins</translation>
-    </message>
 </context>
 <context>
     <name>gui::ElevationPanel</name>
     <message>
         <source>Elevation colors</source>
-        <translation>Couleurs de l&apos;hypsométrie</translation>
+        <translation>Couleurs de l&apos;ipsométrie</translation>
     </message>
     <message>
         <source>Fit color gradient to viewport</source>
-        <translation>Adapter le dégradé à la zone affichée</translation>
+        <translation>Adapter le gradient de couleur à la zone affichée</translation>
     </message>
     <message>
         <source>Gradient map</source>
@@ -1248,7 +1158,7 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Strength</source>
-        <translation>Intensité</translation>
+        <translation>Force</translation>
     </message>
 </context>
 <context>
@@ -1274,11 +1184,11 @@ Please check access permissions or write protection.</source>
     <name>gui::GradientWidget</name>
     <message>
         <source>Copy preset</source>
-        <translation>Copier le dégradé</translation>
+        <translation>Copier le jeu de couleurs</translation>
     </message>
     <message>
         <source>Delete preset</source>
-        <translation>Supprimer le dégradé</translation>
+        <translation>Supprimer le jeu de couleurs</translation>
     </message>
 </context>
 <context>
@@ -1322,49 +1232,44 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::LayersPanel</name>
     <message>
-        <source>Layer</source>
-        <translation>Calque
-</translation>
-    </message>
-    <message>
-        <source>Transparency</source>
-        <translation type="obsolete">Transparence</translation>
-    </message>
-    <message>
         <source>Fog of war</source>
         <translation>Brouillard de guerre</translation>
     </message>
     <message>
         <source>Display fog of war</source>
-        <translation>Afficher le brouillard de guerre</translation>
+        <translation>Affichage du brouillard de guerre</translation>
     </message>
     <message>
-        <source> (background)</source>
-        <translation> (arrière plan)</translation>
+        <source>Layer display order and transparency</source>
+        <translation>Transparence et ordre des couches d'affichage</translation>
+    </message>
+    <message>
+        <source>Layer</source>
+        <translation>Couche</translation>
+    </message>
+    <message>
+        <source>Move the selected layer forwards</source>
+        <translation>Déplacer la couche sélectionnée dessus</translation>
+    </message>
+    <message>
+        <source>Move the selected layer backwards</source>
+        <translation>Déplacer la couche sélectionnée dessous</translation>
+    </message>
+    <message>
+        <source>Transparency </source>
+        <translation>Transparence</translation>
     </message>
     <message>
         <source> (foreground)</source>
         <translation> (premier plan)</translation>
     </message>
     <message>
-        <source>Move the selected layer forwards</source>
-        <translation>Déplacer le calque sélectionné vers le premier plan</translation>
-    </message>
-    <message>
-        <source>Move the selected layer backwards</source>
-        <translation>Déplacer le calque sélectionné vers l&apos;arrière plan</translation>
-    </message>
-    <message>
-        <source>Layer display order and transparency</source>
-        <translation>Ordre et transparence des calques</translation>
-    </message>
-    <message>
-        <source>Transparency </source>
-        <translation>Transparence </translation>
+        <source> (background)</source>
+        <translation> (arrière plan)</translation>
     </message>
     <message>
         <source>for %1:</source>
-        <translation>de %1:</translation>
+        <translation>for %1:</translation>
     </message>
 </context>
 <context>
@@ -1406,38 +1311,34 @@ Please check access permissions or write protection.</source>
     <name>gui::LocationEditorBox</name>
     <message>
         <source>Location: </source>
-        <translation>Localiser: </translation>
-    </message>
-    <message>
-        <source>long: </source>
-        <translation>long:</translation>
+        <translation>Position: </translation>
     </message>
     <message>
         <source>lat: </source>
-        <translation>lat:</translation>
+        <translation>lat: </translation>
+    </message>
+    <message>
+        <source>long: </source>
+        <translation>long: </translation>
     </message>
     <message>
         <source>y: </source>
-        <translation>y:</translation>
+        <translation>y: </translation>
     </message>
     <message>
         <source>x: </source>
-        <translation>x:</translation>
+        <translation>x: </translation>
     </message>
 </context>
 <context>
     <name>gui::LocationEditorToolbar</name>
     <message>
         <source>Location editor</source>
-        <translation>Localisation</translation>
+        <translation>Editeur de position</translation>
     </message>
     <message>
-        <source>Location: </source>
-        <translation type="obsolete">Localiser: </translation>
-    </message>
-    <message>
-        <source>Enter UTM coordinate</source>
-        <translation type="obsolete">Saisissez les coordonnées UTM</translation>
+        <source>Feature</source>
+        <translation>Caractéristique</translation>
     </message>
     <message>
         <source>Center on location</source>
@@ -1445,23 +1346,23 @@ Please check access permissions or write protection.</source>
     </message>
     <message>
         <source>Add point to current location</source>
-        <translation>Ajouter le point à la localisation en cours de création</translation>
+        <translation>Ajouter le point à la localisation courante</translation>
     </message>
     <message>
         <source>Set special point</source>
-        <translation>Utiliser la position pour un point spécial</translation>
+        <translation>Définir en tant que point spécial</translation>
     </message>
     <message>
         <source>Create bookmark</source>
-        <translation>Créer un signet</translation>
+        <translation>Créer un favori</translation>
     </message>
     <message>
         <source>Enter text to name the bookmark: </source>
-        <translation>Entrez le nom de ce signet: </translation>
+        <translation>Entrez le nom à associer à ce favori: </translation>
     </message>
     <message>
         <source>Clear bookmarks</source>
-        <translation>Effacer les signets</translation>
+        <translation>Vider les favoris</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1470,28 +1371,16 @@ Please check access permissions or write protection.</source>
     <message>
         <source>The bookmark location is not valid.
 Do you want to remove it?</source>
-        <translation>La position du signet n&apos;est pas valide.
+        <translation>La position du favori n&apos;est pas valide.
 Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>No bookmark defined</source>
-        <translation>Aucun signet</translation>
-    </message>
-    <message>
-        <source> is not a valid coordinate.</source>
-        <translation type="obsolete"> n&apos;est pas une coordonnée valide.</translation>
+        <translation>Aucun favori n&apos;est défini</translation>
     </message>
     <message>
         <source>Bookmark location</source>
-        <translation>Créer un signet à cette position</translation>
-    </message>
-    <message>
-        <source>Enter UTM coordinate, local coordinate or feature name</source>
-        <translation type="obsolete">Saisissez des coordonnées (UTM ou locales) ou un nom d&apos;élément (ville, route...)</translation>
-    </message>
-    <message>
-        <source>Feature</source>
-        <translation type="unfinished">Elément</translation>
+        <translation>Ajouter la position en tant que favori</translation>
     </message>
 </context>
 <context>
@@ -1513,15 +1402,15 @@ Voulez-vous le supprimer?</translation>
     <name>gui::LogisticPrototype_ABC</name>
     <message>
         <source>Camp</source>
-        <translation type="unfinished">Camp</translation>
+        <translation>Camp</translation>
     </message>
     <message>
         <source>TC2:</source>
-        <translation type="unfinished">TC2:</translation>
+        <translation>TC2:</translation>
     </message>
     <message>
         <source>Camp&apos;s TC2</source>
-        <translation type="unfinished">TC2 du camp</translation>
+        <translation>TC2 du camp</translation>
     </message>
 </context>
 <context>
@@ -1560,6 +1449,10 @@ Voulez-vous le supprimer?</translation>
         <translation>Information</translation>
     </message>
     <message>
+        <source>Attributes</source>
+        <translation>Attributs</translation>
+    </message>
+    <message>
         <source>Name:</source>
         <translation>Nom:</translation>
     </message>
@@ -1570,14 +1463,6 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Type:</source>
         <translation>Type:</translation>
-    </message>
-    <message>
-        <source>Obstacle type:</source>
-        <translation type="obsolete">Type d&apos;obstacle:</translation>
-    </message>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="obsolete">Obstacle de manoeuvre activé:</translation>
     </message>
     <message>
         <source>Location:</source>
@@ -1591,48 +1476,12 @@ Voulez-vous le supprimer?</translation>
         <source>New object</source>
         <translation>Nouvel objet</translation>
     </message>
-    <message>
-        <source>Attributes</source>
-        <translation>Attributs</translation>
-    </message>
 </context>
 <context>
     <name>gui::OptionsPanel</name>
     <message>
-        <source>Font size</source>
-        <translation type="obsolete">Taille des polices</translation>
-    </message>
-    <message>
-        <source>Display object icons</source>
-        <translation type="obsolete">Afficher les icônes des objets</translation>
-    </message>
-    <message>
-        <source>Display state summary on mouse over</source>
-        <translation type="obsolete">Afficher un résumé sous le curseur</translation>
-    </message>
-    <message>
-        <source>Display reports on map</source>
-        <translation type="obsolete">Afficher les rapports sur la carte</translation>
-    </message>
-    <message>
-        <source>Display only subscribed-unit reports on map</source>
-        <translation type="obsolete">Afficher uniquement les rapports des unités souscrites</translation>
-    </message>
-    <message>
-        <source>Display message</source>
-        <translation type="obsolete">Afficher les messages</translation>
-    </message>
-    <message>
-        <source>Display traces</source>
-        <translation type="obsolete">Afficher les traces</translation>
-    </message>
-    <message>
-        <source>Display detection reports</source>
-        <translation type="obsolete">Afficher les rapports de détection</translation>
-    </message>
-    <message>
         <source>3D metric computation</source>
-        <translation>Mesure 3D</translation>
+        <translation>mesure 3D</translation>
     </message>
 </context>
 <context>
@@ -1647,6 +1496,10 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Preferences</source>
         <translation>Préférences</translation>
+    </message>
+    <message>
+        <source>Coordinate System</source>
+        <translation>Système de coordonnées</translation>
     </message>
     <message>
         <source>3D</source>
@@ -1669,10 +1522,6 @@ Voulez-vous le supprimer?</translation>
         <translation>Ok</translation>
     </message>
     <message>
-        <source>Apply</source>
-        <translation type="obsolete">Appliquer</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
@@ -1680,28 +1529,12 @@ Voulez-vous le supprimer?</translation>
         <source>2D/Elevation</source>
         <translation>2D/Elevation</translation>
     </message>
-    <message>
-        <source>User controls</source>
-        <translation type="obsolete">Contrôles</translation>
-    </message>
-    <message>
-        <source>Coordinate System</source>
-        <translation>Système de coordonnées</translation>
-    </message>
 </context>
 <context>
     <name>gui::StatusBar</name>
     <message>
         <source>---</source>
         <translation>---</translation>
-    </message>
-    <message>
-        <source>x:%1 y:%2 h:%3</source>
-        <translation type="obsolete">x:%1 y:%2 h:%3</translation>
-    </message>
-    <message>
-        <source>Lat:%1 Lon:%2</source>
-        <translation>Lat:%1 Lon:%2</translation>
     </message>
     <message>
         <source>y:%1 x:%2</source>
@@ -1712,6 +1545,10 @@ Voulez-vous le supprimer?</translation>
         <translation>h:%1 </translation>
     </message>
     <message>
+        <source>Lat:%1 Lon:%2</source>
+        <translation>Lat:%1 Lon:%2</translation>
+    </message>
+    <message>
         <source>Elevation</source>
         <translation>Elévation</translation>
     </message>
@@ -1720,7 +1557,7 @@ Voulez-vous le supprimer?</translation>
     <name>gui::UnitPreviewIcon</name>
     <message>
         <source>Drag and drop symbol to map to create a new unit.</source>
-        <translation>Glissez/déposez le symbole sur la carte pour créer une nouvelle unité.</translation>
+        <translation>Glisser et déposer le symbole sur la carte pour créer une nouvelle unité.</translation>
     </message>
 </context>
 <context>
@@ -1731,22 +1568,7 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Display type: </source>
-        <translation>Type d&apos;affichage: </translation>
-    </message>
-</context>
-<context>
-    <name>gui::UserControlPanel</name>
-    <message>
-        <source>Map dragging control</source>
-        <translation type="obsolete">Contrôle du déplacement de la carte</translation>
-    </message>
-    <message>
-        <source>Use left click</source>
-        <translation type="obsolete">Utiliser le clic gauche</translation>
-    </message>
-    <message>
-        <source>Use wheel click</source>
-        <translation type="obsolete">Utiliser le clic du milieu (molette)</translation>
+        <translation>Type d'affichage: </translation>
     </message>
 </context>
 </TS>

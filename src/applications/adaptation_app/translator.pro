@@ -5,6 +5,10 @@ ADN_Table.h \
 
 
 SOURCES = ADN_AddElementCommand.cpp \
+ADN_ActiveProtections_Data.cpp \
+ADN_ActiveProtections_GUI.cpp \
+ADN_ActiveProtections_WeaponsTable.cpp \
+ADN_ActiveProtectionsListView.cpp \
 ADN_AddElementCommand.inl \
 ADN_AiEngine_Data.cpp \
 ADN_AiEngine_GUI.cpp \

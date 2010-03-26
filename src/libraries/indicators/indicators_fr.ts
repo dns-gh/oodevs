@@ -3,23 +3,23 @@
     <name>Indicators</name>
     <message>
         <source>Undefined variable: %1.</source>
-        <translation>Variable indéfinie : %1.</translation>
+        <translation>Variable indï¿½inie : %1.</translation>
     </message>
     <message>
         <source>Undefined function: %1.</source>
-        <translation>Fonction indéfinie : %1.</translation>
+        <translation>Fonction indï¿½inie : %1.</translation>
     </message>
     <message>
         <source>Unresolved type parameter: %1.</source>
-        <translation>Type de paramètre non trouvé : %1.</translation>
+        <translation>Type de paramï¿½re non trouvï¿½: %1.</translation>
     </message>
     <message>
         <source>Cannot convert list parameter.</source>
-        <translation>Impossible de convertir le paramètre de la liste.</translation>
+        <translation>Impossible de convertir le paramï¿½re de la liste.</translation>
     </message>
     <message>
         <source> has no type.</source>
-        <translation> n'a pas de type.</translation>
+        <translation> n&apos;a pas de type.</translation>
     </message>
     <message>
         <source>Syntax error: %1.</source>
@@ -31,15 +31,15 @@
     </message>
     <message>
         <source>too many parameters.</source>
-        <translation>Trop de paramètres.</translation>
+        <translation>Trop de paramï¿½res.</translation>
     </message>
     <message>
         <source>Parameter type mismatch in function &apos;%1&apos;: %2</source>
-        <translation>Type de paramètre incorrect dans la fonction &apos;%1&apos; : %2</translation>
+        <translation>Type de paramï¿½re incorrect dans la fonction &apos;%1&apos; : %2</translation>
     </message>
     <message>
         <source>Parameter type mismatch in function &apos;%1&apos;: too few parameters.</source>
-        <translation>Type de paramètre incorrect dans la fonction &apos;%1&apos; : Pas assez de paramètres.</translation>
+        <translation>Type de paramï¿½re incorrect dans la fonction &apos;%1&apos; : Pas assez de paramï¿½res.</translation>
     </message>
 </context>
 </TS>
