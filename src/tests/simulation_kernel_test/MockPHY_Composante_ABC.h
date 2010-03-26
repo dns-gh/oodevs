@@ -32,6 +32,7 @@ public:
                  , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CanFire )
                  , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CanFireWhenUnloaded )
                  , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetMajorScore )
+                 , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetIdentificationMaxRange )
              {}
              virtual ~MockPHY_Composante_ABC() {}
     //@}
@@ -47,6 +48,7 @@ public:
     MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, bool, CanFire );
     MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, bool, CanFireWhenUnloaded );
     MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, unsigned int, GetMajorScore );
+    MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, float, GetIdentificationMaxRange );
     //@}
 };
 
