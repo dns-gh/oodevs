@@ -289,10 +289,11 @@ message MsgLocation {
         circle  = 0;
         ellipse = 1;
         line    = 2;
-        polygon = 3;
-        point   = 4;
-        sector  = 5;
-        none    = 6;
+        rectangle = 3;
+        polygon = 4;
+        point   = 5;
+        sector  = 6;
+        none    = 7;
     }
    required Geometry            type        = 1;
    optional MsgCoordLatLongList coordinates = 2;

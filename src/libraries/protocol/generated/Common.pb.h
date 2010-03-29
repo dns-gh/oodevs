@@ -133,10 +133,11 @@ enum MsgLocation_Geometry {
   MsgLocation_Geometry_circle = 0,
   MsgLocation_Geometry_ellipse = 1,
   MsgLocation_Geometry_line = 2,
-  MsgLocation_Geometry_polygon = 3,
-  MsgLocation_Geometry_point = 4,
-  MsgLocation_Geometry_sector = 5,
-  MsgLocation_Geometry_none = 6
+  MsgLocation_Geometry_rectangle = 3,
+  MsgLocation_Geometry_polygon = 4,
+  MsgLocation_Geometry_point = 5,
+  MsgLocation_Geometry_sector = 6,
+  MsgLocation_Geometry_none = 7
 };
 bool MsgLocation_Geometry_IsValid(int value);
 const MsgLocation_Geometry MsgLocation_Geometry_Geometry_MIN = MsgLocation_Geometry_circle;
@@ -3351,6 +3352,7 @@ class MsgLocation : public ::google::protobuf::Message {
   static const Geometry circle = MsgLocation_Geometry_circle;
   static const Geometry ellipse = MsgLocation_Geometry_ellipse;
   static const Geometry line = MsgLocation_Geometry_line;
+  static const Geometry rectangle = MsgLocation_Geometry_rectangle;
   static const Geometry polygon = MsgLocation_Geometry_polygon;
   static const Geometry point = MsgLocation_Geometry_point;
   static const Geometry sector = MsgLocation_Geometry_sector;
