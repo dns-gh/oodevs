@@ -44,7 +44,7 @@ public:
         eCircle     = 0,
         eEllipse    = 1,
         eLine       = 2,
-        eRectangle  = 3
+        eRectangle  = 3,
         ePolygon    = 4,
         ePoint      = 5,
         eSector     = 6,
