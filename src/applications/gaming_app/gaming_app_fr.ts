@@ -1800,15 +1800,15 @@ Reason: %3
     </message>
     <message>
         <source>Units toolbar</source>
-        <translation>Barre d'outils Unités</translation>
+        <translation>Barre d&apos;outils Unités</translation>
     </message>
     <message>
         <source>Logistics toolbar</source>
-        <translation>Barre d'outils Logistique</translation>
+        <translation>Barre d&apos;outils Logistique</translation>
     </message>
     <message>
         <source>Terrain toolbar</source>
-        <translation>Barre d'outils Terrain</translation>
+        <translation>Barre d&apos;outils Terrain</translation>
     </message>
 </context>
 <context>
@@ -2224,7 +2224,7 @@ Reason: %3
     </message>
     <message>
         <source>NBC agent state:</source>
-        <translation>Etat de l'agent NBC:</translation>
+        <translation>Etat de l&apos;agent NBC:</translation>
     </message>
     <message>
         <source>Danger:</source>

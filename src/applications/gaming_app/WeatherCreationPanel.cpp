@@ -120,12 +120,6 @@ void WeatherCreationPanel::Commit()
         Reset();
     }
 }
-/*
-boost::posix_time::ptime time = boost::posix_time::from_iso_string(message);
-currentTime_ = boost::posix_time::to_simple_string(time);
-
-startTime_ = ( bpt::from_iso_string( strStartTime ) - bpt::from_time_t( 0 ) ).total_seconds();
-*/
 
 // -----------------------------------------------------------------------------
 // Name: WeatherCreationPanel::OnToogleWeatherType

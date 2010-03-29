@@ -742,27 +742,27 @@
     <name>Localisation</name>
     <message>
         <source>Ellipse</source>
-        <translation>Ellipse</translation>
+        <translation type="obsolete">Ellipse</translation>
     </message>
     <message>
         <source>Point</source>
-        <translation>Point</translation>
+        <translation type="obsolete">Point</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation>Cercle</translation>
+        <translation type="obsolete">Cercle</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Ligne</translation>
+        <translation type="obsolete">Ligne</translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation>Polygone</translation>
+        <translation type="obsolete">Polygone</translation>
     </message>
     <message>
         <source>Sector</source>
-        <translation>Secteur</translation>
+        <translation type="obsolete">Secteur</translation>
     </message>
 </context>
 <context>
@@ -1335,18 +1335,18 @@
     <name>Report</name>
     <message>
         <source>Received</source>
-        <translation>Reçu</translation>
+        <translation type="obsolete">Reçu</translation>
     </message>
     <message>
         <source>Report</source>
-        <translation>Compte-rendu</translation>
+        <translation type="obsolete">Compte-rendu</translation>
     </message>
 </context>
 <context>
     <name>ReportFactory</name>
     <message>
         <source>Unhandled report parameter type: &apos;%1&apos;.</source>
-        <translation>Type de paramètre de rapport non géré: &apos;%1&apos;.</translation>
+        <translation type="obsolete">Type de paramètre de rapport non géré: &apos;%1&apos;.</translation>
     </message>
 </context>
 <context>
