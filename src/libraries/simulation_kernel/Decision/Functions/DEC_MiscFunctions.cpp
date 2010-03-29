@@ -182,3 +182,14 @@ void DEC_MiscFunctions::CopyDirectionDanger( MT_Vector2D* pPosSource, boost::sha
 
     pMission->AffectDirection( *pPosSource );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_MiscFunctions::GetPointXY
+// Created: PSN & GGE 2010-03-25
+// -----------------------------------------------------------------------------
+std::string DEC_MiscFunctions::GetPointXY( boost::shared_ptr< MT_Vector2D > point )
+{
+    std::stringstream stream;
+    stream << "x = " << point->rX_ << ", y = " << point->rY_;
+    return stream.str();
+}

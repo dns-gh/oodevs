@@ -58,6 +58,7 @@ public:
     template< typename T > static void Debug                      ( const T& caller, const std::string& callerType, const std::string& message );
     template< typename T > static void DebugDrawPoints            ( const T& caller, std::vector< boost::shared_ptr< MT_Vector2D > > points );
     template< typename T > static void DebugDrawPoint             ( const T& caller, const MT_Vector2D* pPoint  );
+    static std::string                 GetPointXY                 ( boost::shared_ptr< MT_Vector2D > point );
   
     // Reinforcement
     static std::vector<DEC_Decision_ABC*> GetReinforcements  ( const MIL_AgentPion& callerAgent );
