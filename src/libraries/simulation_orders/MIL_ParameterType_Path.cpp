@@ -16,8 +16,8 @@
 // Name: MIL_ParameterType_Path constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-MIL_ParameterType_Path::MIL_ParameterType_Path()
-    : MIL_ParameterType_ABC( "Path" )
+MIL_ParameterType_Path::MIL_ParameterType_Path( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
     // NOTHING
 }

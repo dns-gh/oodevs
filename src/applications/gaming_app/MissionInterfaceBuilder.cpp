@@ -110,6 +110,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
     builderFunctors_["populationknowledgebm"] = &MissionInterfaceBuilder::BuildPopulationKnowledge;
 
     builderFunctors_["path"]                = &MissionInterfaceBuilder::BuildPath;
+    builderFunctors_["pathbm"]              = &MissionInterfaceBuilder::BuildPath;
     builderFunctors_["pathlist"]            = &MissionInterfaceBuilder::BuildPathList;
     builderFunctors_["point"]               = &MissionInterfaceBuilder::BuildPoint;
     builderFunctors_["pointbm"]             = &MissionInterfaceBuilder::BuildPoint;

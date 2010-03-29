@@ -310,6 +310,12 @@ void PathListFunction( const directia::ScriptRef& refMission, const std::string&
     if( element.ToPathList( value ) && !value.empty() )
         refMission.RegisterObject( name, value );
 }
+void PathFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< boost::shared_ptr< MT_Vector2D > > value;
+    if( element.ToPath( value ) && !value.empty() )
+        knowledgeCreateFunction( refMission, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), name, value, true );       
+}
 void DirectionFunction( const directia::ScriptRef& /*refMission*/, const std::string& /*name*/, MIL_MissionParameter_ABC& /*element*/ )
 {
     // $$$$ LDC: FIXME The only existing Direction argument is dangerDirection_ which is never used by the brains.
@@ -571,6 +577,7 @@ void InitFunctions()
 
         functorsBM[ "PointBM" ] = PointFunctionBM;
         functorsBM[ "PointListBM" ] = PointListFunctionBM;
+        functorsBM[ "PathBM" ] = PathFunctionBM;   
         functorsBM[ "AreaBM" ] = AreaFunctionBM;
         functorsBM[ "AreaListBM" ] = AreaListFunctionBM;
         functorsBM[ "AutomateBM" ] = AutomatFunctionBM;

@@ -425,6 +425,7 @@ enum E_MissionParameterType
     eMissionParameterTypeObjective,
     eMissionParameterTypeObjectiveList,
     eMissionParameterTypePath,
+    eMissionParameterTypePathBM,
     eMissionParameterTypePathList,
     eMissionParameterTypePoint,
     eMissionParameterTypePointBM,

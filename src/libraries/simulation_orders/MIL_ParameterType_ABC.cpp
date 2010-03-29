@@ -95,7 +95,8 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_PolygonList           >( std::string("AreaListBM") );
     RegisterParameterType< MIL_ParameterType_Location              >();
     RegisterParameterType< MIL_ParameterType_LocationList          >();
-    RegisterParameterType< MIL_ParameterType_Path                  >();
+    RegisterParameterType< MIL_ParameterType_Path                  >( std::string("Path") );
+    RegisterParameterType< MIL_ParameterType_Path                  >( std::string("PathBM") );
     RegisterParameterType< MIL_ParameterType_PathList              >();
     RegisterParameterType< MIL_ParameterType_Direction             >();
     RegisterParameterType< MIL_ParameterType_NatureAtlas           >();
