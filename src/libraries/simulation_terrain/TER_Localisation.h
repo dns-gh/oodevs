@@ -44,10 +44,11 @@ public:
         eCircle     = 0,
         eEllipse    = 1,
         eLine       = 2,
-        ePolygon    = 3,
-        ePoint      = 4,
-        eSector     = 5,
-        eNone       = 6
+        eRectangle  = 3
+        ePolygon    = 4,
+        ePoint      = 5,
+        eSector     = 6,
+        eNone       = 7
     };
     //@}
 
