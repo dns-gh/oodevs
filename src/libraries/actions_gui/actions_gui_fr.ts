@@ -218,7 +218,7 @@
     <name>ParamObjectKnowledgeList</name>
     <message>
         <source>Add object knowledge</source>
-        <translation>Ajouter une connaissance d&apos;objet</translation>
+        <translation>Ajouter une connaissance d'objet</translation>
     </message>
     <message>
         <source>Object knowledge %1</source>

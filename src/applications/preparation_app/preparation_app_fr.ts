@@ -769,7 +769,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Unit list</source>
-        <translation>Liste d'unités</translation>
+        <translation>Liste d&apos;unités</translation>
     </message>
     <message>
         <source>Dotation list</source>
@@ -777,7 +777,7 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Equipment list</source>
-        <translation>Liste d'équipements</translation>
+        <translation>Liste d&apos;équipements</translation>
     </message>
     <message>
         <source>Zone</source>
