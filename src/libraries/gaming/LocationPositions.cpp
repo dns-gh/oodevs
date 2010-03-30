@@ -16,6 +16,7 @@
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
+#include "clients_kernel/Rectangle.h"
 #include "clients_kernel/Viewport_ABC.h"
 
 using namespace kernel;
@@ -155,6 +156,7 @@ namespace
         {
         case MsgLocation_Geometry_point:   location.reset( new kernel::Point() ); break;
         case MsgLocation_Geometry_line:    location.reset( new kernel::Lines() ); break;
+        case MsgLocation_Geometry_rectangle: location.reset( new kernel::Rectangle() ); break;
         case MsgLocation_Geometry_polygon: location.reset( new kernel::Polygon() ); break;
         case MsgLocation_Geometry_circle:  location.reset( new kernel::Circle() ); break;
         default: throw std::runtime_error( __FUNCTION__ " unsupported location type." ); break;
