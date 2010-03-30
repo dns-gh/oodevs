@@ -161,23 +161,6 @@ void NET_RolePion_Dotations::SendFullState() const
     msg().set_mort      ( bLastStateDead_ = pion_.IsDead() );
     msg().set_neutralise( bLastStateNeutralized_ = pion_.IsNeutralized() );
 
-//    pPion_->GetRole< PHY_RoleInterface_Humans           >().SendFullState( msg );
-//    pPion_->GetRole< PHY_RoleInterface_Dotations        >().SendFullState( msg );
-//    pPion_->GetRole< PHY_RoleInterface_Posture          >().SendFullState( msg ); // Current, old, pourcentage
-//    pPion_->GetRole< PHY_RoleInterface_Location         >().SendFullState( msg ); // Direction, speed, altitude, position
-//    pPion_->GetRole< PHY_RoleInterface_Composantes      >().SendFullState( msg ); // Etat ops
-//    pPion_->GetRole< PHY_RoleInterface_Reinforcement    >().SendFullState( msg ); // Reinforcement
-//    pPion_->GetRole< PHY_RoleAction_Loading             >().SendFullState( msg ); // Loading state
-//    pPion_->GetRole< DEC_RolePion_Decision              >().SendFullState( msg ); // Dec states
-//    pPion_->GetRole< PHY_RoleInterface_NBC              >().SendFullState( msg ); // NBC state
-//    pPion_->GetRole< PHY_RoleInterface_Communications   >().SendFullState( msg ); // Brouillage
-//    pPion_->GetRole< PHY_RoleInterface_HumanFactors     >().SendFullState( msg );
-//    pPion_->GetRole< PHY_RoleInterface_Transported      >().SendFullState( msg );
-//    pPion_->GetRole< PHY_RoleAction_Transport           >().SendFullState( msg );
-//    pPion_->GetRole< PHY_RoleInterface_Perceiver        >().SendFullState( msg );
-//    pPion_->GetRole< PHY_RoleInterface_Surrender        >().SendFullState( msg );
-//    pPion_->GetRole< PHY_RoleInterface_Refugee          >().SendFullState( msg );
-
     pion_.Apply( &network::NetworkUnitMessageNotificationHandler_ABC::SendFullState, msg );
 
     SendMsg( msg );
