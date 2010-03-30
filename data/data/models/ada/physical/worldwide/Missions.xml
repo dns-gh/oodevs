@@ -1070,6 +1070,8 @@ overwhelming force.]]></doctrine>
       </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Meeting point" optional="false" type="Point"/>
+      <parameter dia-name="suicide_" name="Suicide" optional="false" type="Bool"/>
+      <parameter dia-name="dotation_" name="Ammunition" optional="false" type="DotationType"/>
       <parameter dia-name="populationCible_" name="Population Target" optional="false" type="PopulationKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatContreForcesArmees" dia-type="T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees" id="171" name="Asymetric - carry out an attack (against armed forces)">
@@ -1083,6 +1085,7 @@ overwhelming force.]]></doctrine>
         <value id="0" name="officer assassination"/>
         <value id="1" name="key equipment destruction"/>
       </parameter>
+      <parameter dia-name="suicide_" name="Suicide" optional="false" type="Bool"/>
       <parameter dia-name="uniteCible_" name="Unit Target" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatContreInstallation" dia-type="T_Mission_Pion_ASY_CommettreAttentatContreInstallation" id="172" name="Asymetric - destroy (against critical infrastructure)">
@@ -1092,6 +1095,8 @@ overwhelming force.]]></doctrine>
       </descriptions>
       <parameter dia-name="itineraire_" name="Route" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Meeting point" optional="false" type="Point"/>
+      <parameter dia-name="suicide_" name="Suicide" optional="false" type="Bool"/>
+      <parameter dia-name="dotation_" name="Ammunition" optional="false" type="DotationType"/>
       <parameter dia-name="installationCible_" name="Critical infrastructure Target" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone" dia-type="T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone" id="173" name="Asymetric - attack population (in an area)">

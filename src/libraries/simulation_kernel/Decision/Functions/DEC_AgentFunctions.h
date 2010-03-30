@@ -80,6 +80,7 @@ public:
     static void SetElongationFactor( MIL_AgentPion& callerAgent, MT_Float factor );
     static float TimeLeftForMoving ( const MIL_AgentPion& callerAgent );
     static float TimeToMoveDistance( const MIL_AgentPion& callerAgent, float distance );
+    static void Suicide            ( MIL_AgentPion& callerAgent );
 
     // Hiérarchie
     static std::vector< DEC_Decision_ABC* > GetPionsWithPC   ( const MIL_AgentPion& callerAgent );
@@ -101,6 +102,9 @@ public:
     // Population
     static int GetRoePopulation( const MIL_AgentPion& callerAgent );
     static void ChannelPopulations( const TER_Localisation* location );
+
+    //Dotations
+    static bool HasDotation( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* category );
 
     // Installation
     static bool IsInstalled  ( const MIL_AgentPion& callerAgent );

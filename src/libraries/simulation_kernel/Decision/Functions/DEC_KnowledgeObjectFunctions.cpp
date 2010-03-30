@@ -13,9 +13,10 @@
 #include "DEC_KnowledgeObjectFunctions.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+
 #include "Entities/Objects/Object.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
-
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/DecontaminationCapacity.h"
@@ -123,13 +124,14 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_AgentPion& calle
 // Name: DEC_KnowledgeObjectFunctions::DamageObject
 // Created: SBO 2006-01-23
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::DamageObject( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor )
+int DEC_KnowledgeObjectFunctions::DamageObject( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
             if( (*pObject)().CanBePerceived() )
             {
                 (*pObject)().Destroy( factor );
+                callerAgent.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
                 return int( eQueryValid );
             }
     return int( eQueryInvalid );

@@ -13,6 +13,10 @@
 #include "DEC_AgentFunctions.h"
 
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
+#include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
+#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
+#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/NBC/PHY_RoleInterface_NBC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -22,16 +26,16 @@
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Agents/Units/Postures/PHY_Posture.h"
 #include "Entities/Agents/Units/Categories/PHY_RoePopulation.h"
-#include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
-#include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects.h"
-#include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
-#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
+#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Experience.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Tiredness.h"
+#include "Entities/Agents/Units/Postures/PHY_Posture.h"
+
+#include "Entities/Effects/MIL_EffectManager.h"
+#include "Entities/Effects/MIL_Effect_Suicide.h"
 
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -40,6 +44,7 @@
 
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
+
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
@@ -664,4 +669,23 @@ boost::shared_ptr< MIL_Mission_ABC > DEC_AgentFunctions::GetMission( DEC_Decisio
 void DEC_AgentFunctions::SetMission( DEC_Decision_ABC* pAgent, boost::shared_ptr< MIL_Mission_ABC > pMission )
 {
     pAgent->SetMission( pMission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::HasDotation
+// Created: LDC 2010-03-26
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::HasDotation( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* category )
+{
+    return callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().GetDotationNumber( *category ) > 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::Suicide
+// Created: LDC 2010-03-29
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::Suicide( MIL_AgentPion& callerAgent )
+{
+    MIL_Effect_Suicide* pEffect = new MIL_Effect_Suicide( callerAgent );
+    MIL_EffectManager::GetEffectManager().Register( *pEffect );
 }

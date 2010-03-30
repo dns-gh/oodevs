@@ -1010,7 +1010,7 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </dotation>
-  <dotation category="IED" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="78" name="munition" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
+  <dotation category="IED" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="78" name="munition" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
     <attritions>
       <attrition destruction="0.6" protection="CharLourd" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>
       <attrition destruction="0.6" protection="CharMoyen" repairable-with-evacuation="0.05" repairable-without-evacuation="0.05"/>

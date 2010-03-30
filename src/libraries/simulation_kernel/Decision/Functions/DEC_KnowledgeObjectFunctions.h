@@ -41,7 +41,7 @@ public:
     static float GetAnimationLevel                ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static bool CanBeOccupied                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static void DecontaminateZone                 ( const MIL_AgentPion& callerAgent, const TER_Localisation* location );
-    static int  DamageObject                      ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor );
+    static int  DamageObject                      (       MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation );
 
     static bool CanBeBypassed                     ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 

@@ -19,14 +19,27 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
     create = function( self )
         self._namedParams = {}
         self._namedParams.pop = self.params[1]
+        self._namedParams.suicide = self.params[2]
+        self._namedParams.dotation = self.params[3]
     end,
 
     select = function( self )
                 if( ModuleBegins() ) then
             do
-                local eValiditeRequete = DEC_ConnaissancePopulation_Exterminer( self._namedParams.pop, 20 )
+                local radius = 20
+                if( self._namedParams.suicide ) then
+                    radius = radius * 2
+                end
+
+                local eValiditeRequete = DEC_ConnaissancePopulation_Exterminer( self._namedParams.pop, radius, self._namedParams.dotation )
                 if( eValiditeRequete ~= eRequeteInvalide ) then
-                    DEC_RC( eRC_ExecutionAttentat )
+                    do
+                        DEC_RC( eRC_ExecutionAttentat )
+                        if( self._namedParams.suicide ) then
+                            DEC_Suicide()
+                        end
+
+                    end
                 else
                     DEC_Trace( "Attentat impossible" )
                 end
@@ -59,15 +72,28 @@ includedFiles["sources/population/asymetriques/common/pion/Actions.bms"] = true
     create = function( self )
         self._namedParams = {}
         self._namedParams.installation = self.params[1]
+        self._namedParams.suicide = self.params[2]
+        self._namedParams.dotation = self.params[3]
     end,
 
     select = function( self )
                 if( ModuleBegins() ) then
             do
+                local damage = 0.5
+                if( self._namedParams.suicide ) then
+                    damage = 0.75
+                end
+
                 --[[//HARD CODED VALUE !
-]]local eValiditeRequete = DEC_ConnaissanceObjet_Degrader( self._namedParams.installation, 0.5 )
+]]local eValiditeRequete = DEC_ConnaissanceObjet_Degrader( self._namedParams.installation, damage, self._namedParams.dotation )
                 if( eValiditeRequete ~= eRequeteInvalide ) then
-                    DEC_RC( eRC_ExecutionAttentat )
+                    do
+                        DEC_RC( eRC_ExecutionAttentat )
+                        if( self._namedParams.suicide ) then
+                            DEC_Suicide()
+                        end
+
+                    end
                 else
                     DEC_Trace( "Attentat impossible" )
                 end

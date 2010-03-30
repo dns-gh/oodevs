@@ -19,7 +19,7 @@ includedFiles["sources/appui/alat/pions/pat hm/actions/Actions - Transport.bms"]
     end,
 
     select = function( self )
-                self.actionEmbarquer = self.actionEmbarquer or nil
+                self.actionEmbarquer = self.actionEmbarquer or 0
         self.actionEnPause = self.actionEnPause or false
         self.eEtatTransport = self.eEtatTransport or nil
         if( ModuleBegins() ) then
@@ -88,7 +88,7 @@ elseif switch_1 == eActionTransport_Finished then
     end,
 
     select = function( self )
-                self.actionDebarquer = self.actionDebarquer or nil
+                self.actionDebarquer = self.actionDebarquer or 0
         self.actionEnPause = self.actionEnPause or false
         self.eEtatTransport = self.eEtatTransport or nil
         if( ModuleBegins() ) then

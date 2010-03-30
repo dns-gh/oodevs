@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgePopulationFunctions.h"
 
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/MIL_Army.h"
@@ -106,12 +107,13 @@ bool DEC_KnowledgePopulationFunctions::IsEnemy( const MIL_AgentPion& caller, int
 // Name: DEC_KnowledgePopulationFunctions::Exterminate
 // Created: SBO 2005-12-22
 // -----------------------------------------------------------------------------
-int DEC_KnowledgePopulationFunctions::Exterminate( const MIL_AgentPion& caller, int knowledgeId, float surface )
+int DEC_KnowledgePopulationFunctions::Exterminate( MIL_AgentPion& caller, int knowledgeId, float surface, const PHY_DotationCategory* dotation )
 {
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
         return eQueryInvalid;
-    pKnowledge->Exterminate( caller, surface );
+    pKnowledge->Exterminate( caller, surface );    
+    caller.Get< dotation::PHY_RoleInterface_Dotations >().AddFireReservation( *dotation, 1 );
     return eQueryValid;
 }
 

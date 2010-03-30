@@ -729,11 +729,14 @@
     <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatContrePopulation" dia-type="T_Mission_Pion_ASY_CommettreAttentatContrePopulation" id="170" name="ASY Commettre Attentat Contre Population">
       <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Point repli" optional="false" type="Point"/>
+      <parameter dia-name="suicide_" name="Suicide" optional="false" type="Bool"/>
+      <parameter dia-name="dotation_" name="Munition" optional="false" type="DotationType"/>
       <parameter dia-name="populationCible_" name="Population cible" optional="false" type="PopulationKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatContreForcesArmees" dia-type="T_Mission_Pion_ASY_CommettreAttentatContreForcesArmees" id="171" name="ASY Commettre Attentat Contre Forces Armees">
       <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Point repli" optional="false" type="Point"/>
+      <parameter dia-name="suicide_" name="Suicide" optional="false" type="Bool"/>
       <parameter dia-name="typeAttentatForcesArmees_" name="Type attentat forces armees" optional="false" type="Enumeration">
         <value id="0" name="assasinat_officier"/>
         <value id="1" name="destruction_composante_majeure"/>
@@ -743,6 +746,8 @@
     <mission dia-behavior="MIS_Pion_ASY_CommettreAttentatContreInstallation" dia-type="T_Mission_Pion_ASY_CommettreAttentatContreInstallation" id="172" name="ASY Commettre Attentat Contre Installation">
       <parameter dia-name="itineraire_" name="Itineraire" optional="false" type="Path"/>
       <parameter dia-name="pointRepli_" name="Point repli" optional="false" type="Point"/>
+      <parameter dia-name="suicide_" name="Suicide" optional="false" type="Bool"/>
+      <parameter dia-name="dotation_" name="Munition" optional="false" type="DotationType"/>
       <parameter dia-name="installationCible_" name="Installation cible" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_ASY_CommettreExactionsSurPopulationDansZone" dia-type="T_Mission_Pion_ASY_CommettreExactionsSurPopulationDansZone" id="173" name="ASY Commettre Exactions Sur Population Dans Zone">
