@@ -8,12 +8,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "protocol/protocol.h"
 #include "MIL_AutomatListParameter.h"
 #include "simulation_orders/MIL_ParameterType_AutomatList.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
-#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomatListParameter constructor

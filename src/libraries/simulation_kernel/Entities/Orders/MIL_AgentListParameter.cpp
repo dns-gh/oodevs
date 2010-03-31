@@ -8,12 +8,12 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "protocol/protocol.h"
 #include "MIL_AgentListParameter.h"
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "simulation_orders/MIL_ParameterType_AgentList.h"
-#include "protocol/protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentListParameter constructor
