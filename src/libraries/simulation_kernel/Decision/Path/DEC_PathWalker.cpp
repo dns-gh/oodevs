@@ -8,6 +8,8 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+
+#include "protocol/protocol.h"
 #include "DEC_PathWalker.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
