@@ -122,7 +122,7 @@ void ScriptPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
 // -----------------------------------------------------------------------------
 void ScriptPlugin::OnReceiveClientToMessenger( const std::string&, const MsgClientToMessenger& wrapper )
 {
-    if ( wrapper.message().has_text_message() )
+    if( wrapper.message().has_text_message() )
     {
         MT_LOG_INFO_MSG( wrapper.message().text_message().message() );
         controller_->Update( wrapper.message().text_message() );

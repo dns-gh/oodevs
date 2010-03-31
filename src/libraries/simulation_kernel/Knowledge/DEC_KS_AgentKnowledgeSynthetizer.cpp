@@ -84,7 +84,21 @@ DEC_Knowledge_Agent& DEC_KS_AgentKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL
     
     return pBlackBoard_->GetKnowledgeAgentContainer().CreateKnowledgeAgent( pBlackBoard_->GetKnowledgeGroup(), agentKnown );
 }
-  
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentKnowledgeSynthetizer::GetKnowledgeToUpdate
+// Created: FDS 2010-03-25
+// -----------------------------------------------------------------------------
+inline
+DEC_Knowledge_Agent& DEC_KS_AgentKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Agent_ABC& agentKnown, const MIL_KnowledgeGroup& knowledgeGroup ) const
+{
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = knowledgeGroup.GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );    
+    if( pKnowledge.get() )
+        return *pKnowledge;
+    
+    return knowledgeGroup.GetKnowledge().GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup.GetKnowledge().GetKnowledgeGroup(), agentKnown );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception
 // Created: NLD 2004-03-16
@@ -94,6 +108,18 @@ void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception( cons
 {
     if( perception.IsAvailable() )
         GetKnowledgeToUpdate( perception.GetAgentPerceived() ).Update( perception, currentTimeStep );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgeFromAgentJamedPerception
+// Created: FDS 2010-03-25
+// -----------------------------------------------------------------------------
+inline
+void DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgeFromAgentJamedPerception( const DEC_Knowledge_AgentPerception& perception, const MIL_KnowledgeGroup& knowledgeGroup, int currentTimeStep )
+{
+    if( perception.IsAvailable() )
+        GetKnowledgeToUpdate( perception.GetAgentPerceived(), knowledgeGroup ).Update( perception, currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +153,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk( int currentTimeStep )
     assert( pBlackBoard_ );
 
     {
-        boost::function< void ( const DEC_Knowledge_AgentPerception& ) > functor = boost::bind( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
+        boost::function< void ( const DEC_Knowledge_AgentPerception& ) > functor    = boost::bind( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
 
         // Synthèse de la perception des subordonnés
         // Ajout automatique de la connaissance de chaque subordonné    
@@ -138,7 +164,13 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk( int currentTimeStep )
             for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
-                pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
+                 // $$$$ FDS 2010-03-25: Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
+                if ( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+                    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
+                else {  
+                    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgeFromAgentJamedPerception, this, _1, boost::ref( pion.GetKnowledgeGroup() ), boost::ref(currentTimeStep) ) );
+                    MT_LOG_INFO_MSG( MT_FormatString( "pion can not communicate : '%s' [%d]", pion.GetName().c_str(), pion.GetID() ) );
+                }
             }
         }
     }

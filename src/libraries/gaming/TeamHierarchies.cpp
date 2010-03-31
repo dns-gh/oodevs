@@ -56,3 +56,13 @@ void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupCreation
 void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
 }
+
+// -----------------------------------------------------------------------------
+// Name: TeamHierarchies::DoUpdate
+// Created: FDS 2010-03-30
+// -----------------------------------------------------------------------------
+void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
+{
+    if( Find( message.oid() ) )
+        factory_.DeleteKnowledgeGroup( message ); // LTO
+}

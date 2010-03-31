@@ -16,16 +16,23 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_Knowledge_AgentPerception.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "Tools/MIL_IDManager.h" 
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 #include <boost/ref.hpp>
 #include <xeumeuleu/xml.h>
 #include <boost/serialization/export.hpp>
 
 std::set< unsigned int > MIL_KnowledgeGroup::ids_;
+
+MIL_IDManager MIL_KnowledgeGroup::idManager_;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_KnowledgeGroup )
 
@@ -43,6 +50,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , timeToDiffuse_       ( 0 ) // LTO
     , isActivated_         ( true ) // LTO
 {
+    idManager_.Lock( nID );
     pArmy_->RegisterKnowledgeGroup( *this );
     if( !ids_.insert( nID_ ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "KnowledgeGroup id %d is already used", nID_ ) );
@@ -63,6 +71,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , timeToDiffuse_        ( 0 ) // LTO
     , isActivated_          ( true ) // LTO
 {
+    idManager_.Lock( nID_ );
     if( pParent_ )
     {
         pParent_->RegisterKnowledgeGroup( *this );
@@ -91,6 +100,41 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     // NOTHING
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupFactory::Create
+// Created: FDS 2010-03-17
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source )
+    : pType_               ( source.pType_ )
+    , nID_                 ( idManager_.GetFreeId() )
+    , pArmy_               ( source.pArmy_ )
+    , pParent_             ( 0 ) // LTO
+    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
+    , automates_           ()
+    , timeToDiffuse_        ( 0 ) // LTO
+    , isActivated_         ( true ) // LTO
+{   
+    
+    ids_.insert( nID_ );
+    pArmy_->RegisterKnowledgeGroup( *this );
+    SendCreation();
+
+    source.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::CreateKnowledgesFromAgentPerception, this, _1 ) ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::CreateKnowledgesFromAgentPerception
+// Created: FDS 2010-03-16
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::CreateKnowledgesFromAgentPerception( const DEC_Knowledge_Agent& agent )
+{
+    if( agent.IsValid() )
+    {
+        GetKnowledge().GetKnowledgeAgentContainer().CreateKnowledgeAgent( GetKnowledge().GetKnowledgeGroup(), agent.GetAgentKnown() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup destructor
 // Created: NLD 2004-08-11
@@ -103,6 +147,7 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
     else if( pArmy_ )
     // LTO end
         pArmy_->UnregisterKnowledgeGroup( *this );
+
     delete pKnowledgeBlackBoard_;
     ids_.erase( nID_ );
 }
@@ -135,6 +180,8 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
          >> knowledgeGroups_ // LTO
          >> timeToDiffuse_ // LTO
          >> isActivated_; // LTO
+    
+    idManager_.Lock( nID_ );
          
     ids_.insert( nID_ );
 }
@@ -244,18 +291,31 @@ void MIL_KnowledgeGroup::SendCreation() const
 {
     assert( pArmy_ );
 
-    client::KnowledgeGroupCreation asn;   
-    asn().set_oid( nID_ );
-    asn().set_oid_camp( pArmy_->GetID() );
-    asn().set_type(GetType().GetName());
+    client::KnowledgeGroupCreation msg;   
+    msg().set_oid( nID_ );
+    msg().set_oid_camp( pArmy_->GetID() );
+    msg().set_type(GetType().GetName());
     // LTO begin
     if( pParent_ )
-        asn().set_oid_parent( pParent_->GetID() );
-    asn.Send( NET_Publisher_ABC::Publisher() );
+        msg().set_oid_parent( pParent_->GetID() );
+    msg.Send( NET_Publisher_ABC::Publisher() );
     //SLG : @TODO MGD Move to factory
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         (**it).SendCreation();
     // LTO end
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::SendDestruction
+// Created: FDS 2010-03-30
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::SendDestruction() const
+{
+    // myself destruction
+    client::KnowledgeGroupDestruction msg;   
+    msg().set_oid( nID_ );
+    msg().set_oid_camp( pArmy_->GetID() );
+//TODO FDS: Commentée car actuellement crash de la sim, en cours de debuggage//    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,7 +443,7 @@ const DEC_KnowledgeBlackBoard_KnowledgeGroup& MIL_KnowledgeGroup::GetKnowledge()
 // -----------------------------------------------------------------------------
 MIL_Army_ABC& MIL_KnowledgeGroup::GetArmy() const
 {
-    assert( pArmy_ );
+   // assert( pArmy_ );
     return *pArmy_;
 }
 
@@ -536,7 +596,7 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable
 // Created: SLG 2009-12-17
-// Modified: FDS 2010-01-13 return bool to use in OnReceiveMsgKnowledgeGroupUpdate
+// Modified: FDS 2010-01-13 returns bool to use in OnReceiveMsgKnowledgeGroupUpdate
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message )
 {

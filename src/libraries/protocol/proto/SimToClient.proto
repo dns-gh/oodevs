@@ -348,6 +348,11 @@ message ContaminationState {
    optional float quantity   = 2;
 }
 
+message Communication {
+   optional bool   jammed          = 1[default = false];
+   optional int32  knowledge_group = 2[default = 0];;
+}
+
 message MsgUnitAttributes {
     enum Posture {
         mouvement           = 0;
@@ -396,7 +401,7 @@ message MsgUnitAttributes {
     optional bool                               en_tenue_de_protection_nbc    = 24 [default = false];
     optional Common.MsgListOID                  contamine_par_agents_nbc      = 25;
     optional ContaminationState                 etat_contamination            = 26;
-    optional bool                               communications_brouillees     = 27 [default = false];
+    optional Communication                      communications                = 27;
     optional bool                               silence_radio                 = 28 [default = false];
     optional bool                               radar_actif                   = 29 [default = false];
     optional Common.MsgUnitList                 pions_transportes             = 30;
@@ -1162,6 +1167,11 @@ message MsgKnowledgeGroupUpdateAck {
     required KnowledgeGroupAck.ErrorCode error_code = 2;
 }
 
+message MsgKnowledgeGroupDestruction {
+    required uint32 oid         = 1;
+    required uint32 oid_camp    = 2;
+}
+
 //meteo 
 message MsgControlGlobalMeteo {
    required Common.MsgMeteoAttributes attributes = 1;
@@ -1294,9 +1304,10 @@ message MsgSimToClient {
         optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 116;
         optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 117;
         optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 118;
-        optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 119;
-        optional MsgControlGlobalMeteo			                control_global_meteo						   = 120;
-        optional MsgControlLocalMeteo		                    control_local_meteo							   = 121;
+        optional MsgKnowledgeGroupDestruction                   knowledge_group_destruction                    = 119;        
+        optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 120;
+        optional MsgControlGlobalMeteo			                control_global_meteo						   = 121;
+        optional MsgControlLocalMeteo		                    control_local_meteo							   = 122;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

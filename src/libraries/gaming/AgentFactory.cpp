@@ -81,6 +81,7 @@
 #include "Weapons.h"
 #include "Quotas.h"
 #include "UrbanPerceptions.h"
+#include "AgentHierarchiesCommunication.h"
 
 using namespace kernel;
 
@@ -170,7 +171,7 @@ Agent_ABC* AgentFactory::Create( const MsgsSimToClient::MsgUnitCreation& message
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
     result->Attach( *new LogMedicalConsigns( controllers_.controller_ ) );
     result->Attach( *new LogSupplyConsigns( controllers_.controller_ ) );
-    result->Attach< CommunicationHierarchies >( *new AgentHierarchies< CommunicationHierarchies >( controllers_.controller_, *result, model_.agents_ ) );
+    result->Attach< CommunicationHierarchies >( *new AgentHierarchiesCommunication( controllers_.controller_, *result, model_.agents_, model_.knowledgeGroups_ ) );
     result->Attach< TacticalHierarchies >     ( *new AgentHierarchies< TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
     if( message.pc() )
         result->Attach( *new PcAttributes( *result ) );

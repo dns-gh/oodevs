@@ -298,7 +298,7 @@ void PHY_RadarType::ReadTime( xml::xistream& xis, bool& bIsPCTime )
 // -----------------------------------------------------------------------------
 bool PHY_RadarType::CanAcquire( const MIL_AgentPion& perceiver, const MIL_Agent_ABC& target ) const
 {//@TODO MGD CanAcquire
-    const PHY_RoleInterface_Location&      roleLocationPerceiver = perceiver.GetRole< PHY_RoleInterface_Location      >();
+    const PHY_RoleInterface_Location& roleLocationPerceiver = perceiver.GetRole< PHY_RoleInterface_Location >();
     const PHY_RoleInterface_Location& roleLocationTarget    = target   .GetRole< PHY_RoleInterface_Location >();
 
     if( roleLocationPerceiver.GetPosition().Distance( roleLocationTarget.GetPosition() ) > rRadius_ )

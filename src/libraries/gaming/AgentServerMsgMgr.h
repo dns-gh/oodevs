@@ -115,6 +115,7 @@ namespace MsgsSimToClient
     class MsgKnowledgeGroupCreationAck;
     class MsgKnowledgeGroupUpdate;
     class MsgKnowledgeGroupUpdateAck;
+    class MsgKnowledgeGroupDestruction;
     class MsgUrbanCreation;
     class MsgUrbanDetection;
     class MsgControlPauseAck;
@@ -307,9 +308,10 @@ private:
     void OnReceiveMsgProfileUpdateRequestAck     ( const MsgsAuthenticationToClient::MsgProfileUpdateRequestAck&        message );
 
     // Side/Formation/Knowledge Group creation
-    void OnReveiveMsgKnowledgeGroupCreation   ( const MsgsSimToClient::MsgKnowledgeGroupCreation&            message );
-    void OnReveiveMsgTeamCreation             ( const MsgsSimToClient::MsgTeamCreation&             message );
-    void OnReveiveMsgFormationCreation        ( const Common::MsgFormationCreation&                 message );
+    void OnReveiveMsgKnowledgeGroupCreation   ( const MsgsSimToClient::MsgKnowledgeGroupCreation&    message );
+    void OnReveiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message );
+    void OnReveiveMsgTeamCreation             ( const MsgsSimToClient::MsgTeamCreation&              message );
+    void OnReveiveMsgFormationCreation        ( const Common::MsgFormationCreation&                  message );
 
     // Attributes
     void OnReceiveMsgUnitAttributes     ( const MsgsSimToClient::MsgUnitAttributes&         message );
@@ -477,6 +479,8 @@ private:
     void OnReceiveMsgKnowledgeGroupUpdateAck         ( const MsgsSimToClient::MsgKnowledgeGroupUpdateAck&        message, unsigned long nCtx );
     void OnReceiveMsgKnowledgeGroupCreation          ( const MsgsSimToClient::MsgKnowledgeGroupCreation&         message );
     void OnReceiveMsgKnowledgeGroupCreationAck       ( const MsgsSimToClient::MsgKnowledgeGroupCreationAck&      message, unsigned long nCtx );
+    void OnReceiveMsgKnowledgeGroupDestruction       ( const MsgsSimToClient::MsgKnowledgeGroupDestruction&      message );
+
     // LTO end
     //@}
 

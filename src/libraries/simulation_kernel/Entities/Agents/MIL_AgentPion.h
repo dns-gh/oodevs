@@ -42,7 +42,6 @@ namespace xml
 class DEC_Decision_ABC;
 class DEC_KnowledgeBlackBoard_AgentPion;
 class DEC_KS_AgentQuerier;
-class MIL_AgentPion;
 class MIL_Army;
 class MIL_Automate;
 class MIL_EntityManager;

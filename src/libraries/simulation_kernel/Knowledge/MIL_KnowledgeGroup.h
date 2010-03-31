@@ -14,7 +14,8 @@
 
 #include "MIL.h"
 #include "MIL_KnowledgeGroupType.h"
-#include "tools/Resolver.h"
+#include "Tools/MIL_IDManager.h"
+#include "Tools/Resolver.h"
 #include <boost/serialization/export.hpp>
 
 namespace xml
@@ -25,6 +26,7 @@ namespace xml
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
+class DEC_Knowledge_AgentPerception;
 class KnowledgeGroupFactory_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
@@ -49,7 +51,7 @@ namespace MsgsClientToSim
 // @class  MIL_KnowledgeGroup
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_KnowledgeGroup : private boost::noncopyable
+class MIL_KnowledgeGroup
 {
 
 public:
@@ -67,7 +69,9 @@ public:
 public:
     MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int nID, MIL_Army_ABC& army ); // LTO
     MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
-     MIL_KnowledgeGroup();
+    MIL_KnowledgeGroup();
+    MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source );
+
     virtual ~MIL_KnowledgeGroup();
     //@}
 
@@ -131,6 +135,7 @@ public:
     //! @name Network
     //@{
     void SendCreation () const;
+    void SendDestruction() const;
     void SendFullState() const;
     void SendKnowledge() const;
     // LTO begin
@@ -157,10 +162,14 @@ private:
     bool OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
     bool OnReceiveMsgKnowledgeGroupSetType       ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
 
+    void CreateKnowledgesFromAgentPerception( const DEC_Knowledge_Agent& agent );
+
+
     //@}
     
 private:
     static std::set< unsigned int > ids_;
+    static MIL_IDManager idManager_;
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_KnowledgeGroup )

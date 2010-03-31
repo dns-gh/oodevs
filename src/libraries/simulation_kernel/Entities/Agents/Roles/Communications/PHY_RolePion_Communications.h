@@ -21,7 +21,8 @@ namespace xml
     class xistream;
 }
 
-class MIL_Entity_ABC;
+class MIL_Agent_ABC;
+class MIL_KnowledgeGroup;
 
 namespace firing
 {
@@ -48,7 +49,7 @@ public:
     static void Initialize( xml::xistream& xis );
     //@}
 
-             PHY_RolePion_Communications( MIL_Entity_ABC& entity, const bool bIsAutonomous );
+             PHY_RolePion_Communications( MIL_Agent_ABC& entity, const bool bIsAutonomous );
     virtual ~PHY_RolePion_Communications();
 
     //! @name CheckPoints
@@ -88,6 +89,11 @@ public:
     void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
+    //! @name Accessors
+    //@{
+        MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    //@}
+
 public:
     //! @name Types
     //@{
@@ -101,13 +107,14 @@ private:
     bool HasChanged() const;
     //@}
 
-    MIL_Entity_ABC& entity_;
+    MIL_Agent_ABC&  entity_;
     T_JammerSet     jammers_;
     bool            bBlackoutActivated_;
     bool            bHasChanged_;
 
     const bool      bIsAutonomous_;
 
+    MIL_KnowledgeGroup* pJammingKnowledgeGroup_;
 private:
     static MT_Float rCoefSpeedModificator_;
     static MT_Float rCoefReloadingTimeModificator_;

@@ -141,7 +141,7 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         automats_.Get( wrapper.message().automat_change_knowledge_group().oid() ).Update( wrapper.message().automat_change_knowledge_group() ); 
     if( wrapper.message().has_automat_change_superior() )
         automats_.Get( wrapper.message().automat_change_superior().oid() ).Update( wrapper.message().automat_change_superior() ); 
-    if (wrapper.message().has_automat_change_logistic_links_ack() ||
+    if( wrapper.message().has_automat_change_logistic_links_ack() ||
         wrapper.message().has_automat_change_knowledge_group_ack() ||
         wrapper.message().has_automat_change_superior_ack() ||
         wrapper.message().has_unit_change_superior_ack() )
@@ -189,6 +189,8 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         CreateUpdate< Side >( sides_, wrapper.message().side_creation() ); 
     if( wrapper.message().has_knowledge_group_creation() )
         CreateUpdate< KnowledgeGroup >( knowledgeGroups_, wrapper.message().knowledge_group_creation() ); 
+    if( wrapper.message().has_knowledge_group_destruction() )
+        Destroy( knowledgeGroups_, wrapper.message().knowledge_group_destruction().oid() ); 
     if( wrapper.message().has_knowledge_group_update() )
         knowledgeGroups_.Get( wrapper.message().knowledge_group_update().oid() ).Update( wrapper.message().knowledge_group_update() );
     if( wrapper.message().has_formation_creation() )

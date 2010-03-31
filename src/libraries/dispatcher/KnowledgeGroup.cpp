@@ -49,6 +49,7 @@ KnowledgeGroup::~KnowledgeGroup()
         static_cast< KnowledgeGroup& >( entity ).ChangeSuperior( parent_ );
     }
     ChangeSuperior( 0 );
+    team_.Remove( *this );
     // LTO end
 }
 
@@ -75,6 +76,15 @@ void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& mes
     if( message.has_oid_parent() )
         ChangeSuperior( message.oid_parent() ? &model_.KnowledgeGroups().Get( message.oid_parent() ) : 0 );
     // LTO end
+}
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroup::Update
+// Created: FDS 2010-03-31
+// -----------------------------------------------------------------------------
+void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupDestruction& /*message*/ )
+{
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------

@@ -37,6 +37,7 @@ class KnowledgeGroupFactory_ABC;
 class TeamHierarchies : public kernel::EntityHierarchies< kernel::CommunicationHierarchies >
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupCreation >
                       , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupUpdate > // LTO
+                      , public kernel::Updatable_ABC< MsgsSimToClient::MsgKnowledgeGroupDestruction > // LTO
 {
 
 public:
@@ -51,6 +52,7 @@ private:
     //@{
     virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupCreation& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
+    virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message );
     //@}
 
 private:

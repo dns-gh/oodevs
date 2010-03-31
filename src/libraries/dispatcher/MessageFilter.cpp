@@ -168,7 +168,7 @@ bool MessageFilter::IsRelevant( const MsgsSimToClient::MsgUnitAttributes& messag
 {
     return message.has_altitude()
         || message.has_combat_de_rencontre()
-        || message.has_communications_brouillees()
+        || message.has_communications()
         || message.has_contamine_par_agents_nbc()
         || message.has_direction()
         || message.has_disponibilite_au_tir_indirect()

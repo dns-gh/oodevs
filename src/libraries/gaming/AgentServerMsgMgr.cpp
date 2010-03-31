@@ -611,6 +611,15 @@ void AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupCreation( const MsgsSimToClien
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupDestruction
+// Created: FDS 2010-03-30
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReveiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
+{
+    GetModel().teams_.GetTeam( message.oid_camp() ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReveiveMsgTeamCreation
 // Created: AGE 2006-10-19
 // -----------------------------------------------------------------------------
@@ -1578,6 +1587,15 @@ void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupCreation( const MsgsSimToClien
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDestruction
+// Created: FDS 2010-03-30
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgKnowledgeGroupDestruction( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
+{
+    GetModel().knowledgeGroups_.Get( message.oid() ).Update( message );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentServerMsgMgr::OnReceiveMsgUrbanKnowledgeCreation
 // Created: MGD 2009-12-10
 // -----------------------------------------------------------------------------
@@ -1699,6 +1717,8 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
         return;
     else if( wrapper.message().has_knowledge_group_creation() ) 
         OnReveiveMsgKnowledgeGroupCreation( wrapper.message().knowledge_group_creation() ); 
+    else if( wrapper.message().has_knowledge_group_destruction() ) 
+        OnReveiveMsgKnowledgeGroupDestruction( wrapper.message().knowledge_group_destruction() ); 
     else if( wrapper.message().has_side_creation() )
         OnReveiveMsgTeamCreation              ( wrapper.message().side_creation() ); 
     else if( wrapper.message().has_formation_creation() )

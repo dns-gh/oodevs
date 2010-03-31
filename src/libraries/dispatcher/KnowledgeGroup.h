@@ -20,6 +20,7 @@ namespace MsgsSimToClient
 {
     class MsgKnowledgeGroupCreation;
     class MsgKnowledgeGroupUpdate;
+    class MsgKnowledgeGroupDestruction;
 }
 
 namespace kernel
@@ -57,6 +58,7 @@ public:
 
     void Update( const MsgsSimToClient::MsgKnowledgeGroupCreation& message );
     void Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
+    void Update( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message ); // LTO
     virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP  // LTO
     virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO

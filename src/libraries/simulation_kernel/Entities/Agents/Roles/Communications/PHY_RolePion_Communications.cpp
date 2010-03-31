@@ -11,9 +11,12 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Communications.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "simulation_kernel/knowledge/KnowledgeGroupFactory.h"
+#include "simulation_kernel/knowledge/MIL_KnowledgeGroup.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
@@ -35,7 +38,7 @@ void save_construct_data( Archive& archive, const PHY_RolePion_Communications* r
 template< typename Archive >
 void load_construct_data( Archive& archive, PHY_RolePion_Communications* role, const unsigned int /*version*/ )
 {
-    MIL_Entity_ABC* entity;
+    MIL_Agent_ABC* entity;
   bool isAutonomous;
     archive >> entity
           >> isAutonomous;
@@ -66,11 +69,12 @@ void PHY_RolePion_Communications::Initialize( xml::xistream& xis )
 // Name: PHY_RolePion_Communications constructor
 // Created: NLD 2004-09-07
 // -----------------------------------------------------------------------------
-PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Entity_ABC& entity, const bool bIsAutonomous )
+PHY_RolePion_Communications::PHY_RolePion_Communications( MIL_Agent_ABC& entity, const bool bIsAutonomous )
     : entity_                          ( entity )
     , bHasChanged_                    ( true )
     , bBlackoutActivated_             ( false )
     , bIsAutonomous_                  ( bIsAutonomous )
+    , pJammingKnowledgeGroup_         ( 0 )
 {
     // NOTHING
 }
@@ -132,18 +136,27 @@ void PHY_RolePion_Communications::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< PHY_RoleInterface_Communications >( *this )
          & jammers_
          & bBlackoutActivated_
-         & bHasChanged_;
+         & bHasChanged_
+         & pJammingKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Communications::Jam
 // Created: NLD 2004-11-04
+// Modified: FDS 2010-03-17
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 {
     // UAC ...
     if( bIsAutonomous_ ) 
         return;
+
+    // $$$$ >>>> MODIF FDS 2010-03-17
+    // Copie of Knowledge group for jamming use
+    if( !pJammingKnowledgeGroup_ && CanCommunicate() )
+        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup() );
+    // $$$$ <<<< MODIF FDS 2010-03-17
+
     bHasChanged_ = jammers_.insert( &jammer ).second;
 }
 
@@ -154,6 +167,14 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
 {
     bHasChanged_ = ( jammers_.erase( &jammer ) == 1 );
+
+    // delete copy of knowledge group used in jamming
+    if( CanCommunicate() )
+    {            
+        pJammingKnowledgeGroup_->SendDestruction();
+        delete pJammingKnowledgeGroup_;
+        pJammingKnowledgeGroup_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -162,7 +183,13 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) const
 {
-    msg().set_communications_brouillees( !jammers_.empty() );
+    msg().mutable_communications()->set_jammed( !jammers_.empty() );
+    
+    if( !jammers_.empty() )
+        msg().mutable_communications()->set_knowledge_group( GetKnowledgeGroup().GetID() );
+    else
+        msg().mutable_communications()->set_knowledge_group( 0 );
+
     msg().set_silence_radio( bBlackoutActivated_ );
 }
 
@@ -237,6 +264,21 @@ void PHY_RolePion_Communications::DeactivateBlackout()
 bool PHY_RolePion_Communications::CanCommunicate() const
 {
     return jammers_.empty() && !bBlackoutActivated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::GetKnowledgeGroup
+// Returns the jamming knowledge group if it is defined, the caller must check with 
+// CanCommunicate to check if the jamming knowledge group is defined. 
+// Throws MT_ScipioException if the jamming knowledge group is undefined
+// Created: FDS 2010-03-15
+// -----------------------------------------------------------------------------
+MIL_KnowledgeGroup& PHY_RolePion_Communications::GetKnowledgeGroup() const
+{
+    if (pJammingKnowledgeGroup_ == 0)
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Jamming knowledge group undefined for agent %d ", entity_.GetID() ) );
+
+    return *pJammingKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------

@@ -111,6 +111,8 @@ public:
 
     bool bRadioSilence_;
     bool bCommJammed_;
+    unsigned int knowledgeGroupJammed_;
+
     bool bRadarEnabled_;
 
     bool bPrisoner_;

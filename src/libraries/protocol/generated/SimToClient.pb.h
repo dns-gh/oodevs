@@ -79,6 +79,7 @@ class EquipmentDotations_EquipmentDotation;
 class HumanDotations;
 class HumanDotations_HumanDotation;
 class ContaminationState;
+class Communication;
 class MsgUnitAttributes;
 class MsgUnitPathFind;
 class MsgUnitDestruction;
@@ -199,6 +200,7 @@ class MsgKnowledgeGroupUpdate;
 class KnowledgeGroupAck;
 class MsgKnowledgeGroupCreationAck;
 class MsgKnowledgeGroupUpdateAck;
+class MsgKnowledgeGroupDestruction;
 class MsgControlGlobalMeteo;
 class MsgControlLocalMeteo;
 class MsgSimToClient;
@@ -5665,6 +5667,101 @@ class ContaminationState : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class Communication : public ::google::protobuf::Message {
+ public:
+  Communication();
+  virtual ~Communication();
+  
+  Communication(const Communication& from);
+  
+  inline Communication& operator=(const Communication& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const Communication& default_instance();
+  void Swap(Communication* other);
+  
+  // implements Message ----------------------------------------------
+  
+  Communication* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const Communication& from);
+  void MergeFrom(const Communication& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // optional bool jammed = 1 [default = false];
+  inline bool has_jammed() const;
+  inline void clear_jammed();
+  static const int kJammedFieldNumber = 1;
+  inline bool jammed() const;
+  inline void set_jammed(bool value);
+  
+  // optional int32 knowledge_group = 2 [default = 0];
+  inline bool has_knowledge_group() const;
+  inline void clear_knowledge_group();
+  static const int kKnowledgeGroupFieldNumber = 2;
+  inline ::google::protobuf::int32 knowledge_group() const;
+  inline void set_knowledge_group(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  bool jammed_;
+  ::google::protobuf::int32 knowledge_group_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static Communication* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgUnitAttributes : public ::google::protobuf::Message {
  public:
   MsgUnitAttributes();
@@ -5975,12 +6072,12 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::ContaminationState& etat_contamination() const;
   inline ::MsgsSimToClient::ContaminationState* mutable_etat_contamination();
   
-  // optional bool communications_brouillees = 27 [default = false];
-  inline bool has_communications_brouillees() const;
-  inline void clear_communications_brouillees();
-  static const int kCommunicationsBrouilleesFieldNumber = 27;
-  inline bool communications_brouillees() const;
-  inline void set_communications_brouillees(bool value);
+  // optional .MsgsSimToClient.Communication communications = 27;
+  inline bool has_communications() const;
+  inline void clear_communications();
+  static const int kCommunicationsFieldNumber = 27;
+  inline const ::MsgsSimToClient::Communication& communications() const;
+  inline ::MsgsSimToClient::Communication* mutable_communications();
   
   // optional bool silence_radio = 28 [default = false];
   inline bool has_silence_radio() const;
@@ -6124,7 +6221,7 @@ class MsgUnitAttributes : public ::google::protobuf::Message {
   bool en_tenue_de_protection_nbc_;
   ::Common::MsgListOID* contamine_par_agents_nbc_;
   ::MsgsSimToClient::ContaminationState* etat_contamination_;
-  bool communications_brouillees_;
+  ::MsgsSimToClient::Communication* communications_;
   bool silence_radio_;
   bool radar_actif_;
   ::Common::MsgUnitList* pions_transportes_;
@@ -18786,6 +18883,101 @@ class MsgKnowledgeGroupUpdateAck : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgKnowledgeGroupDestruction : public ::google::protobuf::Message {
+ public:
+  MsgKnowledgeGroupDestruction();
+  virtual ~MsgKnowledgeGroupDestruction();
+  
+  MsgKnowledgeGroupDestruction(const MsgKnowledgeGroupDestruction& from);
+  
+  inline MsgKnowledgeGroupDestruction& operator=(const MsgKnowledgeGroupDestruction& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgKnowledgeGroupDestruction& default_instance();
+  void Swap(MsgKnowledgeGroupDestruction* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgKnowledgeGroupDestruction* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgKnowledgeGroupDestruction& from);
+  void MergeFrom(const MsgKnowledgeGroupDestruction& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 oid = 1;
+  inline bool has_oid() const;
+  inline void clear_oid();
+  static const int kOidFieldNumber = 1;
+  inline ::google::protobuf::uint32 oid() const;
+  inline void set_oid(::google::protobuf::uint32 value);
+  
+  // required uint32 oid_camp = 2;
+  inline bool has_oid_camp() const;
+  inline void clear_oid_camp();
+  static const int kOidCampFieldNumber = 2;
+  inline ::google::protobuf::uint32 oid_camp() const;
+  inline void set_oid_camp(::google::protobuf::uint32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 oid_;
+  ::google::protobuf::uint32 oid_camp_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgKnowledgeGroupDestruction* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgControlGlobalMeteo : public ::google::protobuf::Message {
  public:
   MsgControlGlobalMeteo();
@@ -19855,24 +20047,31 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck& knowledge_group_update_ack() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* mutable_knowledge_group_update_ack();
   
-  // optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 119;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 119;
+  inline bool has_knowledge_group_destruction() const;
+  inline void clear_knowledge_group_destruction();
+  static const int kKnowledgeGroupDestructionFieldNumber = 119;
+  inline const ::MsgsSimToClient::MsgKnowledgeGroupDestruction& knowledge_group_destruction() const;
+  inline ::MsgsSimToClient::MsgKnowledgeGroupDestruction* mutable_knowledge_group_destruction();
+  
+  // optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 120;
   inline bool has_action_create_fire_order_ack() const;
   inline void clear_action_create_fire_order_ack();
-  static const int kActionCreateFireOrderAckFieldNumber = 119;
+  static const int kActionCreateFireOrderAckFieldNumber = 120;
   inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& action_create_fire_order_ack() const;
   inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* mutable_action_create_fire_order_ack();
   
-  // optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 120;
+  // optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 121;
   inline bool has_control_global_meteo() const;
   inline void clear_control_global_meteo();
-  static const int kControlGlobalMeteoFieldNumber = 120;
+  static const int kControlGlobalMeteoFieldNumber = 121;
   inline const ::MsgsSimToClient::MsgControlGlobalMeteo& control_global_meteo() const;
   inline ::MsgsSimToClient::MsgControlGlobalMeteo* mutable_control_global_meteo();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 121;
+  // optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 122;
   inline bool has_control_local_meteo() const;
   inline void clear_control_local_meteo();
-  static const int kControlLocalMeteoFieldNumber = 121;
+  static const int kControlLocalMeteoFieldNumber = 122;
   inline const ::MsgsSimToClient::MsgControlLocalMeteo& control_local_meteo() const;
   inline ::MsgsSimToClient::MsgControlLocalMeteo* mutable_control_local_meteo();
   
@@ -19998,6 +20197,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgKnowledgeGroupUpdate* knowledge_group_update_;
   ::MsgsSimToClient::MsgKnowledgeGroupCreationAck* knowledge_group_creation_ack_;
   ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* knowledge_group_update_ack_;
+  ::MsgsSimToClient::MsgKnowledgeGroupDestruction* knowledge_group_destruction_;
   ::MsgsSimToClient::MsgActionCreateFireOrderAck* action_create_fire_order_ack_;
   ::MsgsSimToClient::MsgControlGlobalMeteo* control_global_meteo_;
   ::MsgsSimToClient::MsgControlLocalMeteo* control_local_meteo_;
@@ -20005,7 +20205,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(121 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(122 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -22174,6 +22374,42 @@ inline void ContaminationState::set_quantity(float value) {
 
 // -------------------------------------------------------------------
 
+// Communication
+
+// optional bool jammed = 1 [default = false];
+inline bool Communication::has_jammed() const {
+  return _has_bit(0);
+}
+inline void Communication::clear_jammed() {
+  jammed_ = false;
+  _clear_bit(0);
+}
+inline bool Communication::jammed() const {
+  return jammed_;
+}
+inline void Communication::set_jammed(bool value) {
+  _set_bit(0);
+  jammed_ = value;
+}
+
+// optional int32 knowledge_group = 2 [default = 0];
+inline bool Communication::has_knowledge_group() const {
+  return _has_bit(1);
+}
+inline void Communication::clear_knowledge_group() {
+  knowledge_group_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 Communication::knowledge_group() const {
+  return knowledge_group_;
+}
+inline void Communication::set_knowledge_group(::google::protobuf::int32 value) {
+  _set_bit(1);
+  knowledge_group_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgUnitAttributes
 
 // required uint32 oid = 1;
@@ -22604,20 +22840,21 @@ inline ::MsgsSimToClient::ContaminationState* MsgUnitAttributes::mutable_etat_co
   return etat_contamination_;
 }
 
-// optional bool communications_brouillees = 27 [default = false];
-inline bool MsgUnitAttributes::has_communications_brouillees() const {
+// optional .MsgsSimToClient.Communication communications = 27;
+inline bool MsgUnitAttributes::has_communications() const {
   return _has_bit(26);
 }
-inline void MsgUnitAttributes::clear_communications_brouillees() {
-  communications_brouillees_ = false;
+inline void MsgUnitAttributes::clear_communications() {
+  if (communications_ != NULL) communications_->::MsgsSimToClient::Communication::Clear();
   _clear_bit(26);
 }
-inline bool MsgUnitAttributes::communications_brouillees() const {
-  return communications_brouillees_;
+inline const ::MsgsSimToClient::Communication& MsgUnitAttributes::communications() const {
+  return communications_ != NULL ? *communications_ : *default_instance_->communications_;
 }
-inline void MsgUnitAttributes::set_communications_brouillees(bool value) {
+inline ::MsgsSimToClient::Communication* MsgUnitAttributes::mutable_communications() {
   _set_bit(26);
-  communications_brouillees_ = value;
+  if (communications_ == NULL) communications_ = new ::MsgsSimToClient::Communication;
+  return communications_;
 }
 
 // optional bool silence_radio = 28 [default = false];
@@ -30161,6 +30398,42 @@ inline void MsgKnowledgeGroupUpdateAck::set_error_code(::MsgsSimToClient::Knowle
 
 // -------------------------------------------------------------------
 
+// MsgKnowledgeGroupDestruction
+
+// required uint32 oid = 1;
+inline bool MsgKnowledgeGroupDestruction::has_oid() const {
+  return _has_bit(0);
+}
+inline void MsgKnowledgeGroupDestruction::clear_oid() {
+  oid_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 MsgKnowledgeGroupDestruction::oid() const {
+  return oid_;
+}
+inline void MsgKnowledgeGroupDestruction::set_oid(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  oid_ = value;
+}
+
+// required uint32 oid_camp = 2;
+inline bool MsgKnowledgeGroupDestruction::has_oid_camp() const {
+  return _has_bit(1);
+}
+inline void MsgKnowledgeGroupDestruction::clear_oid_camp() {
+  oid_camp_ = 0u;
+  _clear_bit(1);
+}
+inline ::google::protobuf::uint32 MsgKnowledgeGroupDestruction::oid_camp() const {
+  return oid_camp_;
+}
+inline void MsgKnowledgeGroupDestruction::set_oid_camp(::google::protobuf::uint32 value) {
+  _set_bit(1);
+  oid_camp_ = value;
+}
+
+// -------------------------------------------------------------------
+
 // MsgControlGlobalMeteo
 
 // required .Common.MsgMeteoAttributes attributes = 1;
@@ -32245,53 +32518,70 @@ inline ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* MsgSimToClient_Content::mu
   return knowledge_group_update_ack_;
 }
 
-// optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 119;
-inline bool MsgSimToClient_Content::has_action_create_fire_order_ack() const {
+// optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 119;
+inline bool MsgSimToClient_Content::has_knowledge_group_destruction() const {
   return _has_bit(118);
+}
+inline void MsgSimToClient_Content::clear_knowledge_group_destruction() {
+  if (knowledge_group_destruction_ != NULL) knowledge_group_destruction_->::MsgsSimToClient::MsgKnowledgeGroupDestruction::Clear();
+  _clear_bit(118);
+}
+inline const ::MsgsSimToClient::MsgKnowledgeGroupDestruction& MsgSimToClient_Content::knowledge_group_destruction() const {
+  return knowledge_group_destruction_ != NULL ? *knowledge_group_destruction_ : *default_instance_->knowledge_group_destruction_;
+}
+inline ::MsgsSimToClient::MsgKnowledgeGroupDestruction* MsgSimToClient_Content::mutable_knowledge_group_destruction() {
+  _set_bit(118);
+  if (knowledge_group_destruction_ == NULL) knowledge_group_destruction_ = new ::MsgsSimToClient::MsgKnowledgeGroupDestruction;
+  return knowledge_group_destruction_;
+}
+
+// optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 120;
+inline bool MsgSimToClient_Content::has_action_create_fire_order_ack() const {
+  return _has_bit(119);
 }
 inline void MsgSimToClient_Content::clear_action_create_fire_order_ack() {
   if (action_create_fire_order_ack_ != NULL) action_create_fire_order_ack_->::MsgsSimToClient::MsgActionCreateFireOrderAck::Clear();
-  _clear_bit(118);
+  _clear_bit(119);
 }
 inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& MsgSimToClient_Content::action_create_fire_order_ack() const {
   return action_create_fire_order_ack_ != NULL ? *action_create_fire_order_ack_ : *default_instance_->action_create_fire_order_ack_;
 }
 inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* MsgSimToClient_Content::mutable_action_create_fire_order_ack() {
-  _set_bit(118);
+  _set_bit(119);
   if (action_create_fire_order_ack_ == NULL) action_create_fire_order_ack_ = new ::MsgsSimToClient::MsgActionCreateFireOrderAck;
   return action_create_fire_order_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 120;
+// optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 121;
 inline bool MsgSimToClient_Content::has_control_global_meteo() const {
-  return _has_bit(119);
+  return _has_bit(120);
 }
 inline void MsgSimToClient_Content::clear_control_global_meteo() {
   if (control_global_meteo_ != NULL) control_global_meteo_->::MsgsSimToClient::MsgControlGlobalMeteo::Clear();
-  _clear_bit(119);
+  _clear_bit(120);
 }
 inline const ::MsgsSimToClient::MsgControlGlobalMeteo& MsgSimToClient_Content::control_global_meteo() const {
   return control_global_meteo_ != NULL ? *control_global_meteo_ : *default_instance_->control_global_meteo_;
 }
 inline ::MsgsSimToClient::MsgControlGlobalMeteo* MsgSimToClient_Content::mutable_control_global_meteo() {
-  _set_bit(119);
+  _set_bit(120);
   if (control_global_meteo_ == NULL) control_global_meteo_ = new ::MsgsSimToClient::MsgControlGlobalMeteo;
   return control_global_meteo_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 121;
+// optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 122;
 inline bool MsgSimToClient_Content::has_control_local_meteo() const {
-  return _has_bit(120);
+  return _has_bit(121);
 }
 inline void MsgSimToClient_Content::clear_control_local_meteo() {
   if (control_local_meteo_ != NULL) control_local_meteo_->::MsgsSimToClient::MsgControlLocalMeteo::Clear();
-  _clear_bit(120);
+  _clear_bit(121);
 }
 inline const ::MsgsSimToClient::MsgControlLocalMeteo& MsgSimToClient_Content::control_local_meteo() const {
   return control_local_meteo_ != NULL ? *control_local_meteo_ : *default_instance_->control_local_meteo_;
 }
 inline ::MsgsSimToClient::MsgControlLocalMeteo* MsgSimToClient_Content::mutable_control_local_meteo() {
-  _set_bit(120);
+  _set_bit(121);
   if (control_local_meteo_ == NULL) control_local_meteo_ = new ::MsgsSimToClient::MsgControlLocalMeteo;
   return control_local_meteo_;
 }

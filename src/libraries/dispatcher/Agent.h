@@ -133,7 +133,10 @@ public:
     bool                                                    bNbcProtectionSuitEnabled_;
     std::vector< unsigned int >                             nbcAgentTypesContaminating_;
     MsgsSimToClient::ContaminationState                     contamination_;
-    bool                                                    bCommunicationJammed_;
+
+    bool                                                    communicationJammed_;
+    unsigned int                                            knowledgeGroupJammed_;
+
     bool                                                    bBlackoutEnabled_;
     bool                                                    bRadarEnabled_;
     tools::Resolver< const kernel::Agent_ABC >              transportedAgents_;

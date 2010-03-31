@@ -128,3 +128,12 @@ KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const MsgsSimToClient::Ms
     model_.knowledgeGroups_.Register( result->GetId(), *result );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TeamFactory::DeleteKnowledgeGroup
+// Created: FDS 2010-03-30
+// -----------------------------------------------------------------------------
+void TeamFactory::DeleteKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
+{
+    model_.knowledgeGroups_.Remove( message.oid() ); // LTO
+}

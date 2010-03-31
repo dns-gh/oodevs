@@ -548,12 +548,22 @@ MIL_Army_ABC& MIL_AgentPion::GetArmy() const
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::GetKnowledgeGroup
+// returns the knowledge group of the automate if can communicate
+// else return the knowledge group of communication role
 // Created: NLD 2004-08-30
+// Modified: FDS 2010-03-17
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup& MIL_AgentPion::GetKnowledgeGroup() const
 {
-    assert( pAutomate_ );
-    return pAutomate_->GetKnowledgeGroup();
+    if( GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+    {
+        if( pAutomate_ == 0 )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automate is undefined for agent id %d ", GetID() ) );
+
+        return pAutomate_->GetKnowledgeGroup();
+    } else {
+        return GetRole< PHY_RolePion_Communications >().GetKnowledgeGroup();
+    }
 }
 
 // =============================================================================

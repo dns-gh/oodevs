@@ -52,6 +52,7 @@ Attributes::Attributes( Controller& controller, const CoordinateConverter_ABC& c
     , bStealthModeEnabled_( false )
     , bRadioSilence_( false )
     , bCommJammed_( false )
+    , knowledgeGroupJammed_( 0 )
     , bRadarEnabled_( false )
     , bPrisoner_( false )
     , surrenderedTo_( 0 )
@@ -159,8 +160,11 @@ void Attributes::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     if( message.has_direction()  )
         nDirection_ = message.direction().heading();
 
-    if( message.has_communications_brouillees()  )
-        bCommJammed_ = message.communications_brouillees() != 0;
+    if( message.has_communications() && message.communications().has_jammed()  )
+        bCommJammed_ = message.communications().jammed() != 0;
+
+    if( message.has_communications() && message.communications().has_knowledge_group()  )
+        knowledgeGroupJammed_ = message.communications().knowledge_group();
 
     if( message.has_silence_radio()  )
         bRadioSilence_ = message.silence_radio() != 0;

@@ -61,7 +61,8 @@ Agent::Agent( Model& model, const MsgsSimToClient::MsgUnitCreation& msg )
     , bNbcProtectionSuitEnabled_    ( false )
     , nbcAgentTypesContaminating_   ()
     , contamination_                ()
-    , bCommunicationJammed_         ( false )
+    , communicationJammed_          ( false )
+    , knowledgeGroupJammed_         ( 0 )
     , bBlackoutEnabled_             ( false )
     , bRadarEnabled_                ( false )
     , pTransporter_                 ( 0 )
@@ -181,7 +182,15 @@ void Agent::Update( const MsgsSimToClient::MsgUnitAttributes& asnMsg )
     }
             
     UPDATE_ASN_ATTRIBUTE( etat_contamination, contamination_ );
-    UPDATE_ASN_ATTRIBUTE( communications_brouillees, bCommunicationJammed_ );
+
+    if( asnMsg.has_communications() )
+    {
+        if( asnMsg.communications().has_jammed() )
+            communicationJammed_ = asnMsg.communications().jammed();
+        if( asnMsg.communications().has_knowledge_group() )
+            knowledgeGroupJammed_ = asnMsg.communications().knowledge_group();
+    }
+
     UPDATE_ASN_ATTRIBUTE( silence_radio, bBlackoutEnabled_ );
     UPDATE_ASN_ATTRIBUTE( radar_actif, bRadarEnabled_ );
 
@@ -409,7 +418,10 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
         }
 
         *asn().mutable_etat_contamination() = contamination_;
-        asn().set_communications_brouillees ( bCommunicationJammed_ );
+        
+        asn().mutable_communications()->set_jammed( communicationJammed_ );
+        asn().mutable_communications()->set_knowledge_group( knowledgeGroupJammed_ );
+
         asn().set_silence_radio ( bBlackoutEnabled_ );
         asn().set_radar_actif ( bRadarEnabled_ );
 

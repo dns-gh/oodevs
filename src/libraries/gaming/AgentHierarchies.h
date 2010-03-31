@@ -57,7 +57,15 @@ public:
     //@{
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
+
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
+    virtual void DoUpdate( const Common::MsgUnitChangeSuperior& message );
     //@}
+    //! @name Helpers
+    //@{
+    void UpdateSuperior( kernel::Entity_ABC& superior );
+    //@}
+  
 
 private:
     //! @name Copy/Assignment
@@ -66,17 +74,13 @@ private:
     AgentHierarchies& operator=( const AgentHierarchies& ); //!< Assignement operator
     //@}
 
-    //! @name Helpers
-    //@{
-    virtual void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
-    virtual void DoUpdate( const Common::MsgUnitChangeSuperior& message );
 
-    void UpdateSuperior( kernel::Entity_ABC& superior );
-    //@}
-
-private:
     //! @name Member data
     //@{
+protected:
+    const tools::Resolver_ABC< kernel::Automat_ABC >& GetAutomatResolver();
+
+private:
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;
     std::string symbol_;
@@ -117,9 +121,9 @@ template< typename I >
 void AgentHierarchies< I >::DoUpdate( const MsgsSimToClient::MsgUnitCreation& message )
 {
     kernel::Automat_ABC& superior = automatResolver_.Get( message.oid_automate() );
-    const Diplomacies_ABC* diplo = superior.Get< I >().GetTop().Retrieve< Diplomacies_ABC >();
+    const kernel::Diplomacies_ABC* diplo = superior.Get< I >().GetTop().Retrieve< kernel::Diplomacies_ABC >();
     if( diplo )
-        App6Symbol::SetKarma( symbol_, diplo->GetKarma() );
+        kernel::App6Symbol::SetKarma( symbol_, diplo->GetKarma() );
     SetSuperior( & superior );
 }
 
@@ -161,6 +165,17 @@ template< typename I >
 std::string AgentHierarchies< I >::GetLevel() const
 {
     return level_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchies::GetAutomatResolver
+// Created: FDS 2010-03-29
+// -----------------------------------------------------------------------------
+template< typename I >
+const tools::Resolver_ABC< kernel::Automat_ABC >& AgentHierarchies< I >::GetAutomatResolver()
+{
+    return automatResolver_;
 }
 
 #endif // __AgentHierarchies_h_

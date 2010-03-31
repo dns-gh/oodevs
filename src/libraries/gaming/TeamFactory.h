@@ -52,6 +52,8 @@ public:
     virtual kernel::Team_ABC* CreateTeam( const MsgsSimToClient::MsgTeamCreation& message );
     virtual kernel::Formation_ABC* CreateFormation( const Common::MsgFormationCreation& message );
     virtual kernel::KnowledgeGroup_ABC* CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, kernel::Team_ABC& team ); // LTO
+    virtual void DeleteKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message ); // LTO
+
     //@}
 
 private:
