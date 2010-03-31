@@ -79,6 +79,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ScoreModel::Update( const MsgsAarToClient::MsgIndicator& message )
 {
+    if( !definitions_.Find( QString( message.name().c_str() ) ) )
+        return;
     Score* score = Find( ExtractRoot( QString( message.name().c_str() ) ) );
     if( !score )
     {

@@ -352,6 +352,27 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectPerception& percept
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::UpdateLocalisationPartially
+// Created: JCR 2009-12-09
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::UpdateLocalisationPartially( const DEC_Knowledge_ObjectCollision& collision )
+{
+    if( std::find( localisation_.GetPoints().begin(), localisation_.GetPoints().end(), collision.GetPosition() ) == localisation_.GetPoints().end() )
+    {
+        T_PointVector points = localisation_.GetPoints();
+        while( points.size() > 10 )  // $$$$ NLD 2007-05-07: 10 : why not ...
+            points.erase( points.begin() );
+        points.push_back( collision.GetPosition() );
+        if( points.size() > 2 )
+            points.push_back( points.front() );
+        localisation_.Reset( points );
+        localisation_.Convexify();
+
+        NotifyAttributeUpdated( eAttr_Localisation );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_Object::Update
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
@@ -369,19 +390,11 @@ void DEC_Knowledge_Object::Update( const DEC_Knowledge_ObjectCollision& collisio
     //$$$ TMP BULLSHIT
     if( !(localisation_ == pObjectKnown_->GetLocalisation() ) )
     {
-        if( std::find( localisation_.GetPoints().begin(), localisation_.GetPoints().end(), collision.GetPosition() ) == localisation_.GetPoints().end() )
-        {
-            T_PointVector points = localisation_.GetPoints();
-            while( points.size() > 10 )  // $$$$ NLD 2007-05-07: 10 : why not ...
-                points.erase( points.begin() );
-            points.push_back( collision.GetPosition() );
-            if( points.size() > 2 )
-                points.push_back( points.front() );
-            localisation_.Reset( points );
-            localisation_.Convexify();
-
-            NotifyAttributeUpdated( eAttr_Localisation );
-        }
+        TER_Localisation::E_LocationType type = pObjectKnown_->GetLocalisation().GetType();
+        if( type == TER_Localisation::ePoint || type == TER_Localisation::eLine )
+            UpdateLocalisations();
+        else
+            UpdateLocalisationPartially( collision );
     }
     UpdateAttributes( attributes_, boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::UpdateOnCollision, _1, boost::ref( collision ) ) );
 }

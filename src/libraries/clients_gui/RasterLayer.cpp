@@ -59,7 +59,6 @@ void RasterLayer::Paint( const geometry::Rectangle2f& viewport )
         glColor4f( 1, 1, 1, GetAlpha() );
         Visitor2d visitor;
         textures_->Accept( visitor, 0, viewport );
-
         glBindTexture( GL_TEXTURE_2D, 0 );
         glDisable(GL_TEXTURE_GEN_S);
         glDisable(GL_TEXTURE_GEN_T);

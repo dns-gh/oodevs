@@ -42,6 +42,7 @@ class TeamFactory_ABC;
 class KnowledgeGroupsModel;
 class AgentsModel;
 class AgentFactory_ABC;
+class Exercise;
 class FormationModel;
 class FormationFactory_ABC;
 class IdManager;
@@ -110,6 +111,7 @@ private:
 public:
     //! @name Member data
     //@{
+    Exercise& exercise_;
     TeamsModel& teams_;
     KnowledgeGroupsModel& knowledgeGroups_;
     FormationModel& formations_;

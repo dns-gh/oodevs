@@ -89,6 +89,7 @@ private:
     UdpNetwork&            network_;
     const DisTypeResolver& resolver_;
     dispatcher::Agent&     holder_;
+    unsigned char          forceId_;
     const unsigned char    exercise_;
     bool                   lagAFrame_;
     T_Identifiers          ids_;

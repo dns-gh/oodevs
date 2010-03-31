@@ -51,6 +51,7 @@ public:
     //! @name Administration
     //@{
     QAction& InstallPackage();
+    QAction& CreatePackage();
     //@}
 
 private:

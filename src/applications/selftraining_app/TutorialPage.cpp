@@ -105,7 +105,7 @@ TutorialPage::TutorialPage( QWidgetStack* pages, Page_ABC& previous, const tools
     QVBox* box = new QVBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
     exercises_ = new ExerciseList( box , config, lister_, "tutorials", true, false );
-    connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( OnSelectExercise( const QString&, const QString& ) ) );
+    connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelectExercise( const QString&, const Profile& ) ) );
     AddContent( box );
     AddNextButton( tools::translate( "TutorialPage", "Start" ), *this, SLOT( OnStart() ) );
 }
@@ -132,7 +132,7 @@ void TutorialPage::Update()
 // Name: TutorialPage::OnSelectExercise
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
-void TutorialPage::OnSelectExercise( const QString& exercise, const QString& /*profile*/ )
+void TutorialPage::OnSelectExercise( const QString& exercise, const Profile& /*profile*/ )
 {
     exercise_ = exercise;
 }
@@ -165,7 +165,7 @@ void TutorialPage::OnStart()
     {
         const unsigned int port = frontend::DispatcherPort( 1 ); // $$$$ SBO 2008-10-16: hard coded port
         boost::shared_ptr< frontend::SpawnCommand > command1( new frontend::StartReplay( config_, exercise_, "default", port, true ) );
-        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinAnalysis( config_, exercise_, port, true ) );
+        boost::shared_ptr< frontend::SpawnCommand > command2( new frontend::JoinAnalysis( config_, exercise_, "default", port, true ) );
         boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, command1, command2 ) );
         progressPage_->Attach( process );
         progressPage_->show();

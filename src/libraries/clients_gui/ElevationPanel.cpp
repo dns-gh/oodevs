@@ -61,7 +61,7 @@ ElevationPanel::ElevationPanel( QWidget* parent, Elevation2dLayer& layer, kernel
         hsDial_->setMaximumSize( 50, 50 );
 
         new QLabel( tr( "Strength" ), hsBox_ );
-        hillShadeStrength_ = new QSlider( 1, 50, 1, 1, Qt::Horizontal, hsBox_ );
+        hillShadeStrength_ = new QSlider( 1, 50, 1, strengthHs_, Qt::Horizontal, hsBox_ );
 
         connect( hsBox_, SIGNAL( toggled( bool ) ), SLOT( OnEnableHillshade( bool ) ) );
         connect( hsDial_, SIGNAL( valueChanged( int ) ), SLOT( OnHillShadeDirection( int ) ) );

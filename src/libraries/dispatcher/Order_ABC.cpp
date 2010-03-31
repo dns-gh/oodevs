@@ -68,3 +68,12 @@ void Order_ABC::Delete( Common::MsgMissionParameters& asn ) const
 {
     asn.Clear();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Order_ABC::GetId
+// Created: SBO 2009-10-05
+// -----------------------------------------------------------------------------
+unsigned int Order_ABC::GetId() const
+{
+    return missionID_;
+}

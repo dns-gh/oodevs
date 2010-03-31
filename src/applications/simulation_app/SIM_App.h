@@ -14,10 +14,11 @@
 
 #include "Sim.h"
 #include "WinArguments.h" 
-
 #include "simulation_kernel/tools/MIL_Config.h"
-
+#pragma warning( push )
+#pragma warning( disable : 4512 4244 )
 #include <boost/thread.hpp>
+#pragma warning( pop )
 
 class SIM_NetworkLogger;
 class SIM_Dispatcher;

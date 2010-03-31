@@ -44,8 +44,11 @@ Application::Application( int argc, char** argv, const QString& license )
     const QString locale = ReadLang();
     AddTranslator( locale, "qt" );
     AddTranslator( locale, "ENT" );
+    AddTranslator( locale, "actions" );
+    AddTranslator( locale, "actions_gui" );
     AddTranslator( locale, "clients_kernel" );
     AddTranslator( locale, "clients_gui" );
+    AddTranslator( locale, "indicators" );
     AddTranslator( locale, "preparation" );
     AddTranslator( locale, "preparation_app" );
     AddTranslator( locale, "tools" );

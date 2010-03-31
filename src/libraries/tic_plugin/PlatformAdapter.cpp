@@ -10,6 +10,7 @@
 #include "tic_plugin_pch.h"
 #include "PlatformAdapter.h"
 #include "dispatcher/Agent.h"
+#include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -43,9 +44,9 @@ PlatformAdapter::~PlatformAdapter()
 // -----------------------------------------------------------------------------
 const ComponentType& PlatformAdapter::GetType() const
 {
-    tools::Iterator< const ComponentType& > it = agent_.type_.CreateIterator();
+    tools::Iterator< const AgentComposition& > it = agent_.type_.CreateIterator();
     if( it.HasMoreElements() )
-        return it.NextElement();
+        return it.NextElement().GetType();
     throw std::runtime_error( __FUNCTION__ );
 }
 

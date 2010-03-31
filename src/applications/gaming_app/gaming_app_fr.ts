@@ -1,5 +1,16 @@
 <!DOCTYPE TS><TS>
 <context>
+    <name></name>
+    <message>
+        <source>Ok</source>
+        <translation type="obsolete">Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="obsolete">Annuler</translation>
+    </message>
+</context>
+<context>
     <name>@default</name>
     <message>
         <source>Alarm parameters</source>
@@ -315,6 +326,10 @@
         <source>Alarm triggered</source>
         <translation>Alarme déclenchée</translation>
     </message>
+    <message>
+        <source>Alarm parameters</source>
+        <translation type="obsolete">Paramètres de l&apos;alarme</translation>
+    </message>
 </context>
 <context>
     <name>Application</name>
@@ -332,7 +347,7 @@
     </message>
     <message>
         <source>Gaming</source>
-        <translation>Jeu</translation>
+        <translation>Gaming</translation>
     </message>
     <message>
         <source>SWORD Officer Training</source>
@@ -551,7 +566,7 @@
         <source>Not connected to %1:%2
 Reason: %3
 </source>
-        <translation type="obsolete">Non connecté à %1:%2
+        <translation type="unfinished">Non connecté à %1:%2
 Reason: %3
 </translation>
     </message>
@@ -762,6 +777,57 @@ Reason: %3
     </message>
 </context>
 <context>
+    <name>IndicatorReports</name>
+    <message>
+        <source>Create report</source>
+        <translation>Créer un rapport</translation>
+    </message>
+    <message>
+        <source>Template</source>
+        <translation>Modèle</translation>
+    </message>
+    <message>
+        <source>File: </source>
+        <translation>Fichier: </translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
+    </message>
+    <message>
+        <source>Output</source>
+        <translation>Sortie</translation>
+    </message>
+    <message>
+        <source>Show generated report</source>
+        <translation>Afficher le rapport généré</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Report template (*.html)</source>
+        <translation>Modèle de rapport (*.html)</translation>
+    </message>
+    <message>
+        <source>Load report template file</source>
+        <translation>Charger un modèle de rapport</translation>
+    </message>
+    <message>
+        <source>Report (*.html)</source>
+        <translation>Rapport (*.html)</translation>
+    </message>
+    <message>
+        <source>Save report to</source>
+        <translation>Enregistrer le rapport sous</translation>
+    </message>
+</context>
+<context>
     <name>Indicators</name>
     <message>
         <source>Plot</source>
@@ -782,6 +848,19 @@ Reason: %3
     <message>
         <source>Create report...</source>
         <translation>Créer un rapport</translation>
+    </message>
+</context>
+<context>
+    <name>IndicatorsReports</name>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>The specified output file is the also the input template.
+ Are you sure you want to overwrite the template file?</source>
+        <translation>Le fichier spécifié en entrée est identique au fichier de modèle.
+Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>

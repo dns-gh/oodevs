@@ -15,14 +15,14 @@
 
 namespace kernel
 {
+    class AgentComposition;
     class AgentTypes;
+    class AgentNature;
     class AutomatComposition;
     class AutomatType;
+    class Controllers;
     class ModelLoaded;
     class ModelUnLoaded;
-    class Controllers;
-    class AgentNature;
-    class ComponentType;
 }
 
 namespace gui
@@ -52,7 +52,7 @@ public:
     //@{
     void SetOpen( bool open );
     void SetSorting( const std::string& nature );
-    void Display( const kernel::ComponentType& type, ValuedListItem* );
+    void Display( const kernel::AgentComposition& type, ValuedListItem* );
     void Display( const kernel::AutomatComposition& type, ValuedListItem* );
     void Display( const kernel::AutomatType& type, ValuedListItem* );
     virtual QDragObject* dragObject();

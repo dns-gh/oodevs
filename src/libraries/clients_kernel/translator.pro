@@ -2,6 +2,7 @@ HEADERS =
 
 SOURCES = AtlasNatures.cpp \
 Circle.cpp \
+CoordinateSystems.cpp \
 EntityHierarchies.inl \
 Formatter.cpp \
 FourStateOption.cpp \
@@ -14,4 +15,4 @@ Tools.cpp \
 TristateOption.cpp \
 Units.cpp \
 
-TRANSLATIONS = clients_kernel_fr.ts clients_kernel_en.ts
+TRANSLATIONS = clients_kernel_fr.ts

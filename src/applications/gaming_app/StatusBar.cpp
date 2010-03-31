@@ -36,8 +36,8 @@ namespace
 // Name: StatusBar constructor
 // Created: SBO 2006-04-14
 // -----------------------------------------------------------------------------
-StatusBar::StatusBar( QStatusBar* parent, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers, QDockWindow* profilingDock )
-    : gui::StatusBar( parent, detection, converter )
+StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers, QDockWindow* profilingDock )
+    : gui::StatusBar( parent, picker, detection, converter )
     , lastSimulationStatus_( false )
     , controllers_( controllers )
     , tickred_( MAKE_PIXMAP( tickred ) )

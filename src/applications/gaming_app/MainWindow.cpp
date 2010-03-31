@@ -120,6 +120,7 @@
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/WatershedLayer.h"
+#include "clients_gui/TerrainPicker.h"
 
 #include "tools/ExerciseConfig.h"
 
@@ -140,7 +141,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::ExerciseConfig& config, LoggerProxy& logger, const QString& license )
+MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticModel, Model& model, const Simulation& simulation, Network& network, const kernel::Profile_ABC& p, tools::ExerciseConfig& config, LoggerProxy& logger, const QString& license )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_  ( controllers )
     , staticModel_  ( staticModel )
@@ -355,9 +356,12 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new Menu( this, controllers, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *prefDialog, profile, publisher );
+    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
+    gui::TerrainLayer* terrainLayer = new TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
+    
+    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, *prefDialog, profile, publisher );
 
-    ::StatusBar* pStatus = new ::StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
+    ::StatusBar* pStatus = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
@@ -377,14 +381,13 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
+void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
 {
     TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& creationsLayer       = *new MiscLayer< CreationPanels >( creationPanels );
     Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
-    Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, preferences.GetPreferences() );
     Layer_ABC& watershed            = *new WatershedLayer( controllers_, staticModel_.detection_ );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& urbanLayer           = *new UrbanLayer( controllers_, *glProxy_ );
@@ -437,7 +440,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( logoLayer );                preferences.AddLayer( tr( "Logo" ), logoLayer );                logoLayer           .SetPasses( "main" );
     
     // ordre des evenements
-  
+    forward_->Register( terrain );
     forward_->Register( parameters );
     forward_->Register( agents );
     forward_->Register( automats );
@@ -600,13 +603,20 @@ namespace
 
     QString ExtractExerciceName( const std::string& filename )
     {
-        if( filename.empty() )
+        if( !bfs::exists( filename ) )
             return "";
-        else
+        try
         {
-            std::string file = bfs::path( filename, bfs::native ).leaf();
-            file = file.substr( 0, file.find_last_of( '.' ) );
-            return file.c_str();
+            std::string name;
+            xml::xifstream xis( filename );
+            xis >> xml::start( "exercise" )
+                    >> xml::start( "meta" )
+                        >> xml::content( "name", name );
+            return name.c_str();
+        }
+        catch( ... )
+        {
+            return bfs::path( filename, bfs::native ).parent_path().leaf().c_str();
         }
     }
 }
@@ -622,7 +632,7 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
         setCaption( appName + QString( " - [%1@%2][%3]" )
                                      .arg( profile_ )
                                      .arg( simulation.GetSimulationHost().c_str() )
-                                     .arg( ExtractExerciceName( "" ) ) ); //$$$$$ POURRI
+                                     .arg( ExtractExerciceName( config_.GetExerciseFile() ) ) ); // $$$$ SBO 2009-12-18: Use exercise META data
     else
     {
         setCaption( appName + tr( " - Not connected" ) );
@@ -649,7 +659,7 @@ void MainWindow::NotifyUpdated( const Profile& profile )
     if( ! profile.IsLoggedIn() )
     {
         profile_ = profile.GetLogin();
-        static LoginDialog* dialog = new LoginDialog( this, profile, network_, config_ );
+        static LoginDialog* dialog = new LoginDialog( this, profile, network_, controllers_ );
         // $$$$ AGE 2006-10-11: exec would create a reentrance...
         QTimer::singleShot( 0, dialog, SLOT(exec()) );
     }

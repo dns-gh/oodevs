@@ -65,8 +65,6 @@ bool DEC_KnowledgePopulationFunctions::IsInZone( const T& caller, unsigned int k
 {
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID(knowledgeId);
     if( !pKnowledge )
-    {
         return false;
-    }
     return  pKnowledge->IsInZone( *pLoc ) ;
 }

@@ -16,6 +16,7 @@
 
 namespace dispatcher
 {
+    class Config;
     class Replayer;
 }
 
@@ -48,7 +49,6 @@ private:
     //@}
 
 private:
-
     //! @name Helpers
     //@{
     void RunGUI( HINSTANCE hinstance ); 
@@ -58,9 +58,11 @@ private:
     static LRESULT CALLBACK MainWndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam); 
     //@}
 
+private:
     //! @name Member data
     //@{
-    dispatcher::Replayer* replayer_;
+    std::auto_ptr< dispatcher::Config >   config_;
+    std::auto_ptr< dispatcher::Replayer > replayer_;
     //@}
 
     //! @name GUI Member data 
@@ -69,7 +71,7 @@ private:
     HINSTANCE                      hInstance_ ; 
     NOTIFYICONDATA                 TrayIcon_;
     unsigned int                   nIconIndex_; 
-    std::auto_ptr< boost::thread > guiThread_ ; 
+    std::auto_ptr< boost::thread > guiThread_ ;
     //@}
 
 

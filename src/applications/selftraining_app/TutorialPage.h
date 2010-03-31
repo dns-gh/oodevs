@@ -28,8 +28,9 @@ namespace kernel
     class Controllers;
 }
 
-class ProgressPage;
 class ExerciseList; 
+class Profile;
+class ProgressPage;
 
 // =============================================================================
 /** @class  TutorialPage
@@ -51,7 +52,7 @@ public:
 private slots:
     //! @name Operations
     //@{
-    void OnSelectExercise( const QString& exercise, const QString& profile );
+    void OnSelectExercise( const QString& exercise, const Profile& profile );
     void OnStart();
     //@}
 

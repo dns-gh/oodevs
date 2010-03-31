@@ -23,6 +23,7 @@
 #include "protocol/ClientSenders.h"
 #include <boost/ref.hpp>
 #include <xeumeuleu/xml.h>
+#include <boost/serialization/export.hpp>
 
 std::set< unsigned int > MIL_KnowledgeGroup::ids_;
 

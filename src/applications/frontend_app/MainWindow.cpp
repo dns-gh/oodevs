@@ -20,6 +20,7 @@
 #include "JoinExercisePanel.h"
 #include "JoinAnalysisPanel.h"
 #include "InstallPackagePanel.h"
+#include "CreatePackagePanel.h"
 #include "Actions.h"
 #include "frontend/Config.h"
 #include "clients_gui/resources.h"
@@ -69,6 +70,7 @@ MainWindow::MainWindow()
 
     QAction& installAction = actions.InstallPackage();
     AddAction< InstallPackagePanel >( tools::translate( "MainWindow", "Manage" ), installAction );
+    AddAction< CreatePackagePanel >( tools::translate( "MainWindow", "Manage" ), actions.CreatePackage() );
 
     linker_, "Create exercise", "Edit exercise", "Start exercise", "Join exercise";
     linker_, "Start analysis", "Join analysis";

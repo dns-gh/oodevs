@@ -70,7 +70,7 @@ private:
     //! @name Member data
     //@{
     const tools::Resolver_ABC< kernel::DotationType, std::string >& dotationTypes_;
-    DotationsItem*& value_;
+    DotationsItem** value_;
     QTable* table_;
     QStringList types_;
     //@}

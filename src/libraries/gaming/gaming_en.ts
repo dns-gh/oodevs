@@ -465,6 +465,20 @@
     </message>
 </context>
 <context>
+    <name>Lima</name>
+    <message>
+        <source>Phase line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Limit</name>
+    <message>
+        <source>Phase line</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Limit</name>
     <message>
         <source>Limit</source>
@@ -1018,6 +1032,13 @@
     </message>
     <message>
         <source>Gauge</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Stock</name>
+    <message>
+        <source>Stock resource attribute</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

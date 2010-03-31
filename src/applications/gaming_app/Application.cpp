@@ -56,12 +56,14 @@ Application::Application( int argc, char** argv, const QString& expiration )
     const QString locale = ReadLang();
     AddTranslator( locale, "qt" );
     AddTranslator( locale, "ENT" );
+    AddTranslator( locale, "actions" );
+    AddTranslator( locale, "actions_gui" );
     AddTranslator( locale, "clients_kernel" );
     AddTranslator( locale, "clients_gui" );
     AddTranslator( locale, "gaming" );
-    AddTranslator( locale, "actions" );
     AddTranslator( locale, "gaming_app" );
     AddTranslator( locale, "reports" );
+    AddTranslator( locale, "indicators" );
     AddTranslator( locale, "tools" );
     ENT_Tr::InitTranslations();
 }
@@ -122,7 +124,7 @@ void Application::Initialize( int argc, char** argv )
     RcEntityResolver_ABC* rcResolver = new RcEntityResolver( this, *controllers_ );
     staticModel_ = new StaticModel( *controllers_, *rcResolver, *simulation_ );
     model_       = new Model( *controllers_, *staticModel_, *simulation_, *workers_, network_->GetMessageMgr(), *rcResolver );
-    profile_     = new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin(), config_->NeedLogin() );
+    profile_     = new Profile( *controllers_, network_->GetMessageMgr(), config_->GetLogin() );
     network_->GetMessageMgr().SetElements( *model_, *profile_ );
     mainWindow_  = new MainWindow( *controllers_, *staticModel_, *model_, *simulation_, *network_, *profile_, *config_, *logger_, expiration_ );
     mainWindow_->show();

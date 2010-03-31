@@ -460,6 +460,7 @@ private:
 
     // 3a
     void OnReceiveMsgAarInformation( const MsgsAarToClient::MsgAarInformation& message );
+    void OnReceiveMsgIndicatorInformation( const MsgsAarToClient::MsgAarInformation& asnMsg );
     void OnReceiveMsgAarResult     ( const MsgsAarToClient::MsgPlotResult&     message );
     void OnReceiveMsgAarIndicator  ( const MsgsAarToClient::MsgIndicator&      message );
 

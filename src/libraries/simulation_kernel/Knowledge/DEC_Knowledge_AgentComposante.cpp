@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_AgentComposante.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentComposante )
 

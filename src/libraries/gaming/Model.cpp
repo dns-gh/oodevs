@@ -18,6 +18,7 @@
 #include "ObjectFactory.h"
 #include "AgentKnowledgeFactory.h"
 #include "ObjectKnowledgeFactory.h"
+#include "UrbanKnowledgeFactory.h"
 #include "AgentKnowledgeConverter.h"
 #include "ObjectKnowledgeConverter.h"
 #include "TeamFactory.h"
@@ -41,14 +42,14 @@
 #include "IntelligencesModel.h"
 #include "DrawingFactory.h"
 #include "DrawingsModel.h"
+#include "ScoreDefinitions.h"
 #include "NotesModel.h" // LTO
+#include "MeteoModel.h" // LTO
 #include "ScoreModel.h"
 #include "UrbanModel.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/FormationLevels.h"
-#include "MeteoModel.h"
-#include "UrbanKnowledgeFactory.h"
-#include "urban/StaticModel.h"
+#include "indicators/GaugeTypes.h"
 
 #pragma warning( disable : 4355 )
 
@@ -92,7 +93,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )
     , drawings_( *new DrawingsModel( controllers, drawingFactory_ ) )
-    , scores_( *new ScoreModel( controllers, publisher, staticModel.scores_ ) )
+    , scoreDefinitions_( *new ScoreDefinitions( staticModel.indicators_, staticModel.gaugeTypes_ ) )
+    , scores_( *new ScoreModel( controllers, publisher, scoreDefinitions_ ) )
     , urbanObjects_( *new UrbanModel( controllers.controller_, static_.detection_ ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
     , notes_( *new NotesModel( controllers.controller_ ))  // LTO
@@ -112,6 +114,7 @@ Model::~Model()
     delete &surfaceFactory_;
     delete &urbanObjects_;
     delete &scores_;
+    delete &scoreDefinitions_;
     delete &drawings_;
     delete &intelligences_;
     delete &aar_;
@@ -153,6 +156,7 @@ void Model::Purge()
 {
     urbanObjects_.Purge();
     scores_.Purge();
+    scoreDefinitions_.Purge();
     drawings_.Purge();
     intelligences_.Purge();
     aar_.Purge();

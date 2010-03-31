@@ -123,10 +123,10 @@ void ADN_Units_GUI::Build()
 
     // Nature
     QGroupBox* pNatureGroup = new QGroupBox( 2, Qt::Vertical, tr( "Nature" ), pGroup ); 
-//    pNatureGroup->setInsideMargin(20);
-//    pNatureGroup->setInsideSpacing(10);
     QGroupBox* subLayout = new QGroupBox( 3, Qt::Horizontal, pNatureGroup );
-    subLayout->setFrameStyle( QFrame::MenuBarPanel | QFrame::Plain );
+    subLayout->setInsideMargin( 0 );
+    subLayout->setInsideSpacing( 0 );
+    subLayout->setFrameStyle( QFrame::Plain );
 
     builder.AddEnumField<E_NatureLevel>( subLayout, tr( "Level" ), vInfosConnectors[eNatureLevel], ENT_Tr::ConvertFromNatureLevel );
 

@@ -82,6 +82,7 @@ private:
     //! @name Member data
     //@{
     dispatcher::LinkResolver_ABC& resolver_;
+    const tools::ExerciseConfig& config_;
     std::auto_ptr< ScoresModel > scores_;
     //@}
 };

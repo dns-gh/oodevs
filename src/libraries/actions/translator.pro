@@ -26,4 +26,4 @@ Path.cpp \
 PathList.cpp \
 PopulationKnowledge.cpp \
 
-TRANSLATIONS = actions_fr.ts actions_en.ts
+TRANSLATIONS = actions_fr.ts

@@ -55,7 +55,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( QWidgetStack* pages, Page_ABC& previ
     {
         exercises_ = new ExerciseList( box, config_, exerciseLister_ );
         exerciseLister_.AddList( exercises_ );
-        connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( SelectExercise( const QString&, const QString& ) ) );
+        connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( SelectExercise( const QString&, const Profile& ) ) );
     }
     ReloadExerciseList();
     AddContent( box ); 
@@ -84,7 +84,7 @@ void BattleCenterJoinPage::Update()
 // Name: BattleCenterJoinPage::SelectExercise
 // Created: SBO 2008-10-14
 // -----------------------------------------------------------------------------
-void BattleCenterJoinPage::SelectExercise( const QString& exercise, const QString& profile )
+void BattleCenterJoinPage::SelectExercise( const QString& exercise, const Profile& profile )
 {
     exercise_ = exercise;
     profile_ = profile;
@@ -96,14 +96,14 @@ void BattleCenterJoinPage::SelectExercise( const QString& exercise, const QStrin
 // -----------------------------------------------------------------------------
 void BattleCenterJoinPage::JoinExercise()
 {
-    if( exercise_.isEmpty() || ! dialogs::KillRunningProcesses( this ) )
+    if( exercise_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
         return;
     {
         frontend::CreateSession action( config_, exercise_.ascii(), MULTIPLAYER_SESSION );
         action.SetDefaultValues();
         action.SetOption( "session/config/gaming/network/@server", QString( "%1:%2" ).arg( host_->text() ).arg( exerciseLister_.GetPort( exercise_ ) ) );
     }
-    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), profile_, true ) );
+    boost::shared_ptr< frontend::SpawnCommand > command( new frontend::JoinExercise( config_, exercise_, MULTIPLAYER_SESSION.c_str(), profile_.GetLogin(), true ) );
     boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
     progressPage_->Attach( process );
     progressPage_->show();

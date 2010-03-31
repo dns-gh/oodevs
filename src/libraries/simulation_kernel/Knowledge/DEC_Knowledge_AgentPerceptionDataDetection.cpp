@@ -23,6 +23,7 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "MIL_AgentServer.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
+#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerceptionDataDetection )
 

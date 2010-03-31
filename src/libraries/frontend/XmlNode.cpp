@@ -123,7 +123,17 @@ namespace
    
     bool IsAttribute( const std::string& path )
     {
-        return path.length() && path[ 0 ] == '@';
+        return !path.empty() && path[ 0 ] == '@';
+    }
+
+    bool IsOptionalAttribute( const std::string& path )
+    {
+        return !path.empty() && path[ path.size() - 1 ] == '?';
+    }
+
+    std::string CleanAttribute( const std::string& path, bool optional )
+    {
+        return path.substr( 1, path.size() - ( optional ? 2 : 1 ) );
     }
 }
 
@@ -160,14 +170,15 @@ bool XmlNode::GetStringValue( const std::string& path, std::string& value ) cons
     {
         if( IsAttribute( path ) )
         {
-            T_Attributes::const_iterator it = attributes_.find( path.substr( 1 ) ) ; 
+            bool optional = IsOptionalAttribute( path );
+            T_Attributes::const_iterator it = attributes_.find( CleanAttribute( path, optional ) ) ; 
             if ( it == attributes_.end() ) 
-                return false ; 
+                return optional; 
             else
-               value = (*it).second ;
+               value = (*it).second;
         }
         else
-            value = text_ ;
+            value = text_;
         return true ;
     }
     std::string element = NextElement( path );

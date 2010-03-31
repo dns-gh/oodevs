@@ -493,6 +493,14 @@ You will not be able to give orders to these units.
     </message>
 </context>
 <context>
+    <name>ScoresModel</name>
+    <message>
+        <source>Score definitions contain errors:
+Reason: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Stocks</name>
     <message>
         <source>Stocks</source>
@@ -500,6 +508,14 @@ You will not be able to give orders to these units.
     </message>
     <message>
         <source>Stocks/Stocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorsModel</name>
+    <message>
+        <source>Success factor definitions contain errors:
+Reason: %1.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

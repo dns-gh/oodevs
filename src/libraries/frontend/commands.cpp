@@ -118,6 +118,31 @@ namespace frontend
             return ListDirectories( config.GetPhysicalsDir( model ), &IsValidPhysicalModel );
         }
 
+        bool IsValidScript( const bfs::path& child )
+        {
+            // std::string file( child.leaf().c_str() );   
+            return bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".lua" ) == 0;
+        }
+
+        QStringList ListScripts( const tools::GeneralConfig& config, const std::string& exercise )
+        {
+            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "scripts" ).native_directory_string() );
+            return ListDirectories( dir, &IsValidScript );
+        }
+        
+        bool IsValidOrder( const bfs::path& child )
+        {
+            return bfs::is_regular_file( child ) && bfs::extension( child ).compare( ".ord" ) == 0;
+            // std::string file( child.leaf().c_str() );
+            // return std::string( file, file.find_last_of( '.' ) ).compare( ".ord" ) == 0;
+        }
+
+        QStringList ListOrders( const tools::GeneralConfig& config, const std::string& exercise )
+        {
+            std::string  dir( ( bfs::path( config.GetExerciseDir( exercise ), bfs::native ) / "orders" ).native_directory_string() );
+            return ListDirectories( dir, &IsValidOrder );
+        }
+       
         QStringList ListPackageFiles( const std::string& filename )
         {
             QStringList list;
@@ -185,5 +210,4 @@ namespace frontend
             }
         }
     }
-
 }

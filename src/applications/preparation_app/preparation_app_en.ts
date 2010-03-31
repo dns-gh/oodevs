@@ -3,7 +3,7 @@
     <name>Application</name>
     <message>
         <source>SWORD</source>
-        <translation>SWORD</translation>
+        <translation>SWORD Officer Training</translation>
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
@@ -613,6 +613,45 @@ Do you want to save anyway?</source>
     </message>
 </context>
 <context>
+    <name>ScoreGaugeConfiguration</name>
+    <message>
+        <source>Representation type: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Value normalization</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Steps: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reverse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Min</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Symbol</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ScoreList</name>
     <message>
         <source>Name</source>
@@ -740,6 +779,129 @@ Do you want to save anyway?</source>
     </message>
     <message>
         <source>Paste</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorConditionItem</name>
+    <message>
+        <source>equals to</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>differs from</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>less than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>less than or equal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>greater than</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>greater than or equal</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorConditionsEditor</name>
+    <message>
+        <source>Actions must be executed when: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>at least one condition is verified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all conditions are verified</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorDialog</name>
+    <message>
+        <source>Success factors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create new factor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorEditor</name>
+    <message>
+        <source>Success factor editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Conditions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Success Factor edition - %1 </source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorList</name>
+    <message>
+        <source>Name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

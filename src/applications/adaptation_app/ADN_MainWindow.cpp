@@ -31,7 +31,7 @@
 
 #include "ADN_ProgressBar.h"
 #include "ADN_SplashScreen.h"
-
+#include "tools/GeneralConfig.h"
 #include "qtundo.h"
 
 #include <qimage.h>
@@ -50,24 +50,58 @@
 #include <qwhatsthis.h>
 #include <qtimer.h>
 #include <qlayout.h>
+#include <shlobj.h>
+#include <qsettings.h>
+#include <qapplication.h>
+
+#pragma warning( push )
+#pragma warning( disable: 4127 4511 4512 )
+#include <boost/program_options.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#pragma warning( pop )
+
+namespace bfs = boost::filesystem;
+
+namespace
+{
+    QString ReadDataDirectory()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        return settings.readEntry( "/Common/DataDirectory", "" );
+    }
+
+    std::string GetDefaultRoot( const std::string& appName )
+    {
+        const QString regDir = ReadDataDirectory();
+        if( !regDir.isEmpty() )
+            return regDir.ascii();
+        char myDocuments[ MAX_PATH ];
+        SHGetSpecialFolderPath( 0, myDocuments, CSIDL_PERSONAL, 0 );
+        return ( bfs::path( myDocuments, bfs::native ) / appName ).native_file_string();
+    }
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_MainWindow constructor
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
 ADN_MainWindow::ADN_MainWindow( ADN_Config& config )
-: QMainWindow       ()
-, workspace_        ( ADN_Workspace::GetWorkspace() )
-, config_           ( config )
-, rIdSaveAs_        ( 0 )
-, rIdClose_         ( 0 )
-, nIdChangeOpenMode_( 0 )
-, pProjectMenu_     ( 0 )
-, pCoheranceTablesMenu_( 0 )
-, pHelpMenu_        ( 0 )
-, bNeedSave_        ( false )
-, strAdminPassword_ ( "" )
+    : QMainWindow       ()
+    , generalConfig_    ( new tools::GeneralConfig( GetDefaultRoot( qApp->translate( "Application", "SWORD" ).ascii() ) ) )
+    , workspace_        ( ADN_Workspace::GetWorkspace() )
+    , config_           ( config )
+    , rIdSaveAs_        ( 0 )
+    , rIdClose_         ( 0 )
+    , nIdChangeOpenMode_( 0 )
+    , pProjectMenu_     ( 0 )
+    , pCoheranceTablesMenu_( 0 )
+    , pHelpMenu_        ( 0 )
+    , bNeedSave_        ( false )
+    , strAdminPassword_ ( "" )
 {
+    generalConfig_->Parse( qApp->argc(), qApp->argv() );
     setMinimumSize( 640, 480 );
     setCaption( tr( "Sword Adaptation Tool - No Project" ) );
 }
@@ -266,7 +300,7 @@ void ADN_MainWindow::SaveProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::SaveAsProject()
 {
-    QString strFileName = QFileDialog::getSaveFileName( QString::null, tr( "Physical model file (physical.xml)" ) , this, "", tr( "Save project as" ) );
+    QString strFileName = QFileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) , this, "", tr( "Save project as" ) );
     if( strFileName.isEmpty() )
         return;
     
@@ -296,7 +330,7 @@ void ADN_MainWindow::SaveAsProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::NewProject()
 {
-    QString qfilename=QFileDialog::getSaveFileName ( QString::null,tr("Physical model file (physical.xml)") , this, "", tr("Create new project"));
+    QString qfilename=QFileDialog::getSaveFileName ( generalConfig_->GetModelsDir().c_str(), tr("Physical model file (physical.xml)"), this, "", tr("Create new project"));
     if (qfilename==QString::null)
         return;
 
@@ -324,7 +358,7 @@ void ADN_MainWindow::NewProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::OpenProject()
 {
-    QString qfilename = QFileDialog::getOpenFileName( QString::null,tr("Physical model file (physical.xml)") , this, "", tr("Open physical model project"));
+    QString qfilename = QFileDialog::getOpenFileName( generalConfig_->GetModelsDir().c_str(), tr("Physical model file (physical.xml)"), this, "", tr("Open physical model project"));
     if( qfilename == QString::null )
         return;
     try

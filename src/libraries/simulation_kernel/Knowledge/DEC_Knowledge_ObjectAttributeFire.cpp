@@ -134,7 +134,7 @@ void DEC_Knowledge_ObjectAttributeFire::UpdateOnPerception( const DEC_Knowledge_
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeFire::UpdateOnCollision( const DEC_Knowledge_ObjectCollision& /*collision*/ )
 {
-    // NOTHING
+    UpdateAttributes();
 }
 
 // -----------------------------------------------------------------------------
@@ -143,7 +143,7 @@ void DEC_Knowledge_ObjectAttributeFire::UpdateOnCollision( const DEC_Knowledge_O
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_ObjectAttributeFire::Send( Common::MsgObjectAttributes& asn ) const
 {
-    if( attr_ )
+    if ( pFireClass_ )
     {
         asn.mutable_fire()->set_class_id( pFireClass_->GetID() );
         asn.mutable_fire()->set_heat( heat_ );

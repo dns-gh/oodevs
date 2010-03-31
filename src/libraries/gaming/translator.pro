@@ -5,6 +5,7 @@ ActionParameterFactory.cpp \
 ActivityTimeAttribute.cpp \
 Agent.cpp \
 AgentKnowledge.cpp \
+AgentPositions.cpp \
 Attributes.cpp \
 Automat.cpp \
 AutomatDecisions.cpp \
@@ -22,6 +23,7 @@ HumanFactors.cpp \
 Intelligence.cpp \
 IntelligenceFactory.cpp \
 KnowledgeGroup.cpp \
+Lima.cpp \
 Limit.cpp \
 LogMaintenanceConsign.cpp \
 LogMedicalConsign.cpp \
@@ -43,6 +45,7 @@ PopulationFlowKnowledge.cpp \
 PopulationKnowledge.cpp \
 Reinforcements.cpp \
 Score.cpp \
+StockAttribute.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 Team.cpp \
@@ -50,4 +53,4 @@ Transports.cpp \
 UserProfileFactory.cpp \
 UserProfilesModel.cpp \
 
-TRANSLATIONS = gaming_fr.ts gaming_en.ts
+TRANSLATIONS = gaming_fr.ts

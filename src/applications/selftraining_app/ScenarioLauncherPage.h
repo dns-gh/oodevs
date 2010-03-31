@@ -12,10 +12,17 @@
 
 #include "ContentPage.h"
 #include "DirectoryExerciseLister.h"
+#include "Profile.h"
+#include <vector>
 
 namespace tools
 {
     class GeneralConfig;
+}
+
+namespace frontend
+{
+    class PluginConfig_ABC;
 }
 
 namespace kernel
@@ -25,6 +32,7 @@ namespace kernel
 
 class ExerciseList;
 class ProgressPage;
+class QTabWidget;
 
 // =============================================================================
 /** @class  ScenarioLauncherPage
@@ -39,7 +47,8 @@ class ScenarioLauncherPage : public ContentPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
+             ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers
+                                 , const tools::GeneralConfig& config, const QString& title = "" );
     virtual ~ScenarioLauncherPage();
     //@}
 
@@ -47,7 +56,7 @@ private slots:
     //! @name Slots
     //@{
     void OnStart();
-    void OnSelect( const QString& exercise, const QString& profile );
+    void OnSelect( const QString& exercise, const Profile& profile );
     //@}
 
 private:
@@ -60,7 +69,15 @@ private:
     //! @name Helpers
     //@{
     virtual void Update();
+    virtual std::string BuildSessionName() const;
     void CreateSession( const QString& exercise, const QString& session );
+    template< typename T >
+    void AddPlugin( QTabWidget* tabs, const QString& name );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< frontend::PluginConfig_ABC* > T_Plugins;
     //@}
 
 private:
@@ -71,8 +88,10 @@ private:
     ProgressPage*               progressPage_;
     ExerciseList*               exercises_;
     QString                     exercise_;
-    QString                     profile_;
+    Profile                     profile_;
     DirectoryExerciseLister     lister_;
+    T_Plugins                   plugins_;
+
     //@}
 };
 

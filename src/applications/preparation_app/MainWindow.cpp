@@ -11,90 +11,92 @@
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
 
-#include "PropertiesPanel.h"
-#include "CreationPanels.h"
-#include "Menu.h"
-#include "ObjectCreationPanel.h"
-#include "ObjectsLayer.h"
-#include "TacticalListView.h"
-#include "CommunicationListView.h"
-#include "ObjectListView.h"
-#include "PopulationListView.h"
 #include "AgentsLayer.h"
-#include "ModelBuilder.h"
+#include "CommunicationListView.h"
+#include "CreationPanels.h"
 #include "Dialogs.h"
-#include "LimitsLayer.h"
-#include "PopulationsLayer.h"
-#include "WeatherLayer.h"
-#include "PreparationProfile.h"
-#include "WeatherPanel.h"
+#include "ExerciseDialog.h"
 #include "FileToolbar.h"
+#include "ImportOrbatDialog.h"
+#include "IntelligencesLayer.h"
+#include "LimitsLayer.h"
+#include "Menu.h"
+#include "ModelBuilder.h"
+#include "ObjectCreationPanel.h"
+#include "ObjectListView.h"
+#include "ObjectsLayer.h"
+#include "PopulationListView.h"
+#include "PopulationsLayer.h"
+#include "PreparationProfile.h"
 #include "ProfileDialog.h"
 #include "ProfileWizardDialog.h"
-#include "TemplatesPanel.h"
-#include "IntelligencesLayer.h"
-#include "ImportOrbatDialog.h"
+#include "PropertiesPanel.h"
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
+#include "TacticalListView.h"
+#include "TemplatesPanel.h"
+#include "WeatherLayer.h"
+#include "WeatherPanel.h"
 
-#include "preparation/Model.h"
-#include "preparation/StaticModel.h"
-#include "preparation/FormationModel.h"
-#include "preparation/IntelligencesModel.h"
-#include "preparation/ModelChecker_ABC.h"
-#include "preparation/Tools.h"
+#include "clients_gui/AutomatsLayer.h"
+#include "clients_gui/CircularEventStrategy.h"
+#include "clients_gui/ColorStrategy.h"
+#include "clients_gui/DefaultLayer.h"
+#include "clients_gui/DisplayToolbar.h"
+#include "clients_gui/DrawerFactory.h"
+#include "clients_gui/DrawerLayer.h"
+#include "clients_gui/DrawerPanel.h"
+#include "clients_gui/Elevation2dLayer.h"
+#include "clients_gui/Elevation3dLayer.h"
+#include "clients_gui/EntitySearchBox.h"
+#include "clients_gui/EntitySymbols.h"
+#include "clients_gui/ExclusiveEventStrategy.h"
+#include "clients_gui/GlProxy.h"
+#include "clients_gui/GlSelector.h"
+#include "clients_gui/GisToolbar.h"
+#include "clients_gui/GraphicPreferences.h"
+#include "clients_gui/GridLayer.h"
+#include "clients_gui/HelpSystem.h"
+#include "clients_gui/HighlightColorModifier.h"
+#include "clients_gui/IntelligenceList.h"
+#include "clients_gui/LightingProxy.h"
+#include "clients_gui/LocationEditorToolbar.h"
+#include "clients_gui/LocationsLayer.h"
+#include "clients_gui/MetricsLayer.h"
+#include "clients_gui/MissionLayer.h"
+#include "clients_gui/OptionsPanel.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_gui/ParametersLayer.h"
+#include "clients_gui/PreferencesDialog.h"
+#include "clients_gui/RasterLayer.h"
+#include "clients_gui/RichItemFactory.h"
+#include "clients_gui/SelectionColorModifier.h"
+#include "clients_gui/Settings.h"
+#include "clients_gui/StatusBar.h"
+#include "clients_gui/SymbolIcons.h"
+#include "clients_gui/TerrainLayer.h"
+#include "clients_gui/TerrainPicker.h"
+#include "clients_gui/TooltipsLayer.h"
+#include "clients_gui/resources.h"
+#include "clients_gui/WatershedLayer.h"
+#include "clients_gui/resources.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Options.h"
-#include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/FormationLevels.h"
-
-#include "clients_gui/GlProxy.h"
-#include "clients_gui/GisToolbar.h"
-#include "clients_gui/GraphicPreferences.h"
-#include "clients_gui/OptionsPanel.h"
-#include "clients_gui/ParametersLayer.h"
-#include "clients_gui/Settings.h"
-#include "clients_gui/StatusBar.h"
-#include "clients_gui/PreferencesDialog.h"
-#include "clients_gui/RichItemFactory.h"
-#include "clients_gui/resources.h"
-#include "clients_gui/ColorStrategy.h"
-#include "clients_gui/SelectionColorModifier.h"
-#include "clients_gui/HighlightColorModifier.h"
-#include "clients_gui/ParametersLayer.h"
-#include "clients_gui/Elevation2dLayer.h"
-#include "clients_gui/TerrainLayer.h"
-#include "clients_gui/MetricsLayer.h"
-#include "clients_gui/GridLayer.h"
-#include "clients_gui/MissionLayer.h"
-#include "clients_gui/CircularEventStrategy.h"
-#include "clients_gui/ExclusiveEventStrategy.h"
-#include "clients_gui/DefaultLayer.h"
-#include "clients_gui/EntitySearchBox.h"
-#include "clients_gui/SymbolIcons.h"
-#include "clients_gui/EntitySymbols.h"
-#include "clients_gui/LightingProxy.h"
-#include "clients_gui/LocationEditorToolbar.h"
-#include "clients_gui/DrawerLayer.h"
-#include "clients_gui/DrawerFactory.h"
-#include "clients_gui/DrawerPanel.h"
-#include "clients_gui/GlSelector.h"
-#include "clients_gui/DisplayToolbar.h"
-#include "clients_gui/RasterLayer.h"
-#include "clients_gui/Elevation3dLayer.h"
-#include "clients_gui/LocationsLayer.h"
-#include "clients_gui/AutomatsLayer.h"
-#include "clients_gui/IntelligenceList.h"
-#include "clients_gui/TooltipsLayer.h"
-#include "clients_gui/HelpSystem.h"
-#include "clients_gui/WatershedLayer.h"
-#include "clients_gui/resources.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/OptionVariant.h"
+#include "clients_kernel/Options.h"
 
 #include "graphics/DragMovementLayer.h"
+
+#include "preparation/FormationModel.h"
+#include "preparation/IntelligencesModel.h"
+#include "preparation/Model.h"
+#include "preparation/ModelChecker_ABC.h"
+#include "preparation/StaticModel.h"
+#include "preparation/Tools.h"
 
 #include "tools/ExerciseConfig.h"
 
@@ -222,6 +224,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::DrawerPanel* drawerPanel = new DrawerPanel( pCreationDockWnd, *pCreationPanel, *paramLayer, controllers, model.drawings_ );
     pCreationPanel->AddPanel( drawerPanel );
 
+    QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_ );
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
     ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_ );
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
@@ -230,12 +233,15 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     new gui::GisToolbar( this, controllers, staticModel_.detection_ );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
-    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *successFactorDialog, *factory, expiration, *help );
+    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
 
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
-    CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, prefDialog->GetPreferences(), *prefDialog, PreparationProfile::GetProfile() );
+    gui::TerrainPicker* picker = new gui::TerrainPicker( this );
+    gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
 
-    StatusBar* pStatus = new StatusBar( statusBar(), staticModel_.detection_, staticModel_.coordinateConverter_ );
+    CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *prefDialog, PreparationProfile::GetProfile() );
+
+    StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
@@ -263,14 +269,13 @@ MainWindow::~MainWindow()
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locations, WeatherLayer& weather, ::AgentsLayer& agents, GraphicPreferences& setup, PreferencesDialog& preferences, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locations, WeatherLayer& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
     Layer_ABC& objectCreationLayer  = *new MiscLayer< ObjectCreationPanel >( objects );
     Elevation2dLayer& elevation2d   = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster               = *new RasterLayer( controllers_.controller_ );
-    Layer_ABC& terrain              = *new TerrainLayer( controllers_, *glProxy_, setup );
     Layer_ABC& watershed            = *new WatershedLayer( controllers_, staticModel_.detection_ );
     Layer_ABC& elevation3d          = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
     Layer_ABC& grid                 = *new GridLayer( controllers_, *glProxy_ );
@@ -305,6 +310,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
 
     // ordre des evenements
+    forward_->Register( terrain );
     forward_->Register( parameters );
     forward_->Register( agents );
     forward_->Register( automats );

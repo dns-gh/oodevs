@@ -289,6 +289,13 @@
     </message>
 </context>
 <context>
+    <name>AgentPositions</name>
+    <message>
+        <source>Position:</source>
+        <translation type="unfinished">Position:</translation>
+    </message>
+</context>
+<context>
     <name>AtlasNature</name>
     <message>
         <source>Armored</source>
@@ -628,15 +635,15 @@
     <name>Fire</name>
     <message>
         <source>Fire</source>
-        <translation>Incendie</translation>
+        <translation type="obsolete">Incendie</translation>
     </message>
     <message>
         <source>Fire class:</source>
-        <translation>Classe d&apos;incendie</translation>
+        <translation type="obsolete">Classe d&apos;incendie</translation>
     </message>
     <message>
         <source>Fire temperature:</source>
-        <translation>Température du feu :</translation>
+        <translation type="obsolete">Température du feu :</translation>
     </message>
 </context>
 <context>
@@ -729,6 +736,13 @@
     <message>
         <source>Group %1</source>
         <translation>Groupe %1</translation>
+    </message>
+</context>
+<context>
+    <name>Lima</name>
+    <message>
+        <source>Phase line</source>
+        <translation>Lima</translation>
     </message>
 </context>
 <context>
@@ -1205,6 +1219,18 @@
         <source>Supply route</source>
         <translation>Route de ravitaillement</translation>
     </message>
+    <message>
+        <source>Fire</source>
+        <translation type="unfinished">Feu</translation>
+    </message>
+    <message>
+        <source>Fire class:</source>
+        <translation type="unfinished">Type de feu:</translation>
+    </message>
+    <message>
+        <source>Fire temperature:</source>
+        <translation type="unfinished">Température du feu:</translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
@@ -1348,6 +1374,13 @@
     <message>
         <source>Gauge</source>
         <translation>Jauge</translation>
+    </message>
+</context>
+<context>
+    <name>Stock</name>
+    <message>
+        <source>Stock resource attribute</source>
+        <translation>Attribut ressources en stock</translation>
     </message>
 </context>
 <context>

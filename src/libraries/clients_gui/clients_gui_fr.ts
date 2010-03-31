@@ -208,7 +208,7 @@
 <context>
     <name>HelpSystem</name>
     <message>
-        <source>help/en/User Guide.chm</source>
+        <source>help/en/Reference Guide.chm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1003,6 +1003,14 @@ Do you want to remove it?</source>
 <context>
     <name>gui::StatusBar</name>
     <message>
+        <source>Elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>---</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1017,10 +1025,6 @@ Do you want to remove it?</source>
     <message>
         <source>Lat:%1 Lon:%2</source>
         <translation type="unfinished">Lat:%1 Lon:%2</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

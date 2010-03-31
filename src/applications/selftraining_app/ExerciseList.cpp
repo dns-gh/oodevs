@@ -19,6 +19,9 @@
 #include "clients_gui/Tools.h"
 
 #include <qfileinfo.h>
+#include <qsettings.h>
+#include <qtextcodec.h>
+
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem.hpp>
@@ -30,6 +33,17 @@
 
 namespace bfs = boost::filesystem;
 
+
+namespace
+{
+    QString ReadLang()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ExerciseList constructor
 // Created: RDS 2008-08-27
@@ -40,6 +54,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
     , subDir_    ( subDir )
     , showBrief_ ( showBrief )
     , lister_    ( lister )
+    , language_  ( ReadLang() )
 {
     QHBox* box = new QHBox( this );
     box->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -114,7 +129,7 @@ namespace
 // -----------------------------------------------------------------------------
 void ExerciseList::SelectExercise( int index )
 {
-    const QString exercise = *exercisesList_.at( index ); 
+    const QString exercise = *exercisesList_.at( index );
     profiles_->Update( MakePath( subDir_, exercise.ascii() ) );
     if( showBrief_ )
     {
@@ -184,7 +199,7 @@ void ExerciseList::ReadBriefingText( xml::xistream& xis )
     std::string lang, text;
     xis >> xml::attribute( "lang", lang )
         >> text;
-    if( lang == tools::translate( "General", "Lang" ).ascii() )
+    if( lang == language_.ascii() )
     {
         briefingText_->setText( text.c_str() );
         briefingText_->show();
@@ -198,7 +213,7 @@ void ExerciseList::ReadBriefingText( xml::xistream& xis )
 void ExerciseList::SelectProfile( const Profile& profile )
 {
     if( exercises_->selectedItem() )
-        emit Select( BuildExercisePath(), profile.GetLogin() );
+        emit Select( BuildExercisePath(), profile );
 }
 
 // -----------------------------------------------------------------------------

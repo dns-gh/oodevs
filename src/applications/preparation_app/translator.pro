@@ -3,6 +3,7 @@ HEADERS =
 SOURCES = Application.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
+ExerciseDialog.cpp \
 FileToolbar.cpp \
 ImportOrbatDialog.cpp \
 LocalWeathersList.cpp \
@@ -11,21 +12,27 @@ MainWindow.cpp \
 Menu.cpp \
 ModelBuilder.cpp \
 ObjectCreationPanel.cpp \
-PositionEditor.cpp \
 PopulationListView.cpp \
 PopulationTypesListView.cpp \
 PopulationsPanel.cpp \
+PositionEditor.cpp \
 ProfileDialog.cpp \
 ProfileEditor.cpp \
 ProfileWizardDialog.cpp \
 PropertiesTableDisplayer.cpp \
 ScoreDialog.cpp \
 ScoreEditor.cpp \
+ScoreGaugeConfiguration.cpp \
 ScoreList.cpp \
 ScorePrimitivesLibrary.cpp \
 ScorePrimitivesPage.cpp \
 ScoreVariableCreationWizard.cpp \
 ScoreVariablesList.cpp \
+SuccessFactorConditionItem.cpp \
+SuccessFactorConditionsEditor.cpp \
+SuccessFactorDialog.cpp \
+SuccessFactorEditor.cpp \
+SuccessFactorList.cpp \
 TacticalListView.cpp \
 TemplateListView.cpp \
 TemplatesPanel.cpp \
@@ -36,4 +43,4 @@ WeatherPanel.cpp \
 WeatherWidget.cpp \
 main.cpp \
 
-TRANSLATIONS = preparation_app_fr.ts preparation_app_en.ts
+TRANSLATIONS = preparation_app_fr.ts

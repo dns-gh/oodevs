@@ -41,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Menu( QMainWindow* pParent, kernel::Controllers& controllers
-                 , QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, QDialog& successFactorDialog
+                 , QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog
                  , gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
     virtual ~Menu();
     //@}
@@ -54,7 +54,6 @@ public:
     private:
     //! @name Member data
     //@{
-    QPopupMenu*             fileMenu_;
     int                     saveMenuItem_;
     //@}
 };

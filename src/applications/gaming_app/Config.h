@@ -33,7 +33,6 @@ public:
     //@{
     void Connect( Network& network ) const;
     std::string GetLogin() const;
-    bool        NeedLogin() const;
     //@}
 
 private:
@@ -47,7 +46,6 @@ private:
     //@{
     std::string host_;
     std::string login_;
-    bool        needLogin_;
     //@}
 };
 

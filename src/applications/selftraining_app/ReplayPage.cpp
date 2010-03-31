@@ -15,6 +15,7 @@
 #include "CompositeProcessWrapper.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
+#include "SessionList.h"
 #include "frontend/commands.h"
 #include "frontend/CommandLineTools.h"
 #include "frontend/CreateSession.h"
@@ -41,16 +42,12 @@ ReplayPage::ReplayPage( QWidgetStack* pages, Page_ABC& previous, kernel::Control
         hbox->setBackgroundOrigin( QWidget::WindowOrigin );
         hbox->setSpacing( 10 );
         {
-            exercises_ = new ExerciseList( hbox, config, *lister_, "", false, false );
-            connect( exercises_, SIGNAL( Select( const QString&, const QString& ) ), this, SLOT( OnSelectExercise( const QString&, const QString& ) ) );
+            exercises_ = new ExerciseList( hbox, config, *lister_, "", false, true );
+            connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelectExercise( const QString&, const Profile& ) ) );
         }
         {
-            QVBox* vbox = new QVBox( hbox );
-            vbox->setSpacing( 5 );
-            vbox->setBackgroundOrigin( QWidget::WindowOrigin );
-            QLabel* label = new QLabel( tools::translate( "ReplayPage", "Session:" ) , vbox );
-            label->setBackgroundOrigin( QWidget::WindowOrigin );
-            sessionList_ = new QListBox( vbox );
+            sessions_ = new SessionList( hbox, config );
+            connect( sessions_, SIGNAL( Select( const QString& ) ), this, SLOT( OnSelectSession( const QString& ) ) );
         }
     }
     AddContent( mainBox );
@@ -81,21 +78,15 @@ void ReplayPage::Update()
 // -----------------------------------------------------------------------------
 void ReplayPage::StartExercise( const QString& exercise )
 {
-    if( exercise.isEmpty() || ! dialogs::KillRunningProcesses( this ) )
+    if( exercise.isEmpty() || session_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
         return;
-    QString session = "";  
-    if( QListBoxItem* sessionItem = sessionList_->selectedItem() )
-        session = sessionItem->text();
-    if( !session.isEmpty() )
-    {
-        const unsigned int port = lister_->GetPort( exercise );
-        ConfigureSession( exercise, session );
-        boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exercise, session, port, true ) );
-        boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise, port, true ) );
-        boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, replay, client ) );
-        progressPage_->Attach( process );
-        progressPage_->show();
-    }
+    const unsigned int port = lister_->GetPort( exercise );
+    ConfigureSession( exercise, session_ );
+    boost::shared_ptr< frontend::SpawnCommand > replay( new frontend::StartReplay( config_, exercise, session_, port, true ) );
+    boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinAnalysis( config_, exercise, profile_.GetLogin(), port, true ) );
+    boost::shared_ptr< frontend::Process_ABC >  process( new CompositeProcessWrapper( controllers_.controller_, replay, client ) );
+    progressPage_->Attach( process );
+    progressPage_->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -112,11 +103,24 @@ void ReplayPage::OnStart()
 // Name: ReplayPage::OnSelectExercise
 // Created: RDS 2008-09-02
 // -----------------------------------------------------------------------------
-void ReplayPage::OnSelectExercise( const QString& exercise, const QString& profile )
+void ReplayPage::OnSelectExercise( const QString& exercise, const Profile& profile )
 {
+    if( exercise_ != exercise )
+    {
+        session_ = "";
+        sessions_->Update( exercise );
+    }
     exercise_ = exercise;
-    sessionList_->clear(); 
-    sessionList_->insertStringList( frontend::commands::ListSessions( config_, exercise.ascii() ) );
+    profile_ = profile;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ReplayPage::OnSelectSession
+// Created: SBO 2009-12-13
+// -----------------------------------------------------------------------------
+void ReplayPage::OnSelectSession( const QString& session )
+{
+    session_ = session;
 }
 
 // -----------------------------------------------------------------------------

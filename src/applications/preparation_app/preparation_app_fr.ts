@@ -47,7 +47,7 @@
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
-        <translation>support@scalped.fr</translation>
+        <translation>sword-ot@masagroup.net</translation>
     </message>
     <message>
         <source>Unhandled error</source>
@@ -105,6 +105,73 @@
     <message>
         <source>Cancel</source>
         <translation>Annuler</translation>
+    </message>
+</context>
+<context>
+    <name>ExerciseDialog</name>
+    <message>
+        <source>Exercise</source>
+        <translation>Exercice</translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Briefing</source>
+        <translation>Briefing</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Langue</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>Anglais</translation>
+    </message>
+    <message>
+        <source>source</source>
+        <translation>source</translation>
+    </message>
+    <message>
+        <source>Files</source>
+        <translation>Fichiers</translation>
+    </message>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>File</source>
+        <translation>Fichier</translation>
+    </message>
+    <message>
+        <source>+</source>
+        <translation>+</translation>
+    </message>
+    <message>
+        <source>-</source>
+        <translation>-</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Franch</source>
+        <translation type="obsolete">Français</translation>
+    </message>
+    <message>
+        <source>French</source>
+        <translation>Français</translation>
     </message>
 </context>
 <context>
@@ -461,12 +528,24 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <source>Success factors...</source>
         <translation>Facteurs de réussite...</translation>
     </message>
+    <message>
+        <source>Properties...</source>
+        <translation>Propriétés...</translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>Confirmation</translation>
+    </message>
+    <message>
+        <source>Delete unit &apos;%1&apos; and all its subordinates?</source>
+        <translation>Supprimer l&apos;unité &quot;%1&quot; et ses subordonnés ?</translation>
     </message>
 </context>
 <context>
@@ -701,6 +780,45 @@ Voulez-vous sauvegarder malgré tout?</translation>
     </message>
 </context>
 <context>
+    <name>ScoreGaugeConfiguration</name>
+    <message>
+        <source>Representation type: </source>
+        <translation>Type de représentation: </translation>
+    </message>
+    <message>
+        <source>Value normalization</source>
+        <translation>Normalisation des valeurs</translation>
+    </message>
+    <message>
+        <source>Steps: </source>
+        <translation>Pas: </translation>
+    </message>
+    <message>
+        <source>Min: </source>
+        <translation>Min: </translation>
+    </message>
+    <message>
+        <source>Max: </source>
+        <translation>Max: </translation>
+    </message>
+    <message>
+        <source>Reverse</source>
+        <translation>Inverser</translation>
+    </message>
+    <message>
+        <source>Min</source>
+        <translation>Min</translation>
+    </message>
+    <message>
+        <source>Max</source>
+        <translation>Max</translation>
+    </message>
+    <message>
+        <source>Symbol</source>
+        <translation>Symbôle</translation>
+    </message>
+</context>
+<context>
     <name>ScoreList</name>
     <message>
         <source>Name</source>
@@ -829,6 +947,129 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Paste</source>
         <translation>Coller</translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorConditionItem</name>
+    <message>
+        <source>equals to</source>
+        <translation>égal à</translation>
+    </message>
+    <message>
+        <source>differs from</source>
+        <translation>différent de</translation>
+    </message>
+    <message>
+        <source>less than</source>
+        <translation>inférieur à</translation>
+    </message>
+    <message>
+        <source>less than or equal</source>
+        <translation>inférieur ou égal à</translation>
+    </message>
+    <message>
+        <source>greater than</source>
+        <translation>supérieur à</translation>
+    </message>
+    <message>
+        <source>greater than or equal</source>
+        <translation>supérieur ou égal à</translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorConditionsEditor</name>
+    <message>
+        <source>Actions must be executed when: </source>
+        <translation>Les actions sont exécutées lorsque: </translation>
+    </message>
+    <message>
+        <source>at least one condition is verified</source>
+        <translation>au moins une condition est vraie</translation>
+    </message>
+    <message>
+        <source>all conditions are verified</source>
+        <translation>toutes les conditions sont vraies</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Ajouter</translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorDialog</name>
+    <message>
+        <source>Success factors</source>
+        <translation>Facteur de succès</translation>
+    </message>
+    <message>
+        <source>Create new factor</source>
+        <translation>Créer un facteur</translation>
+    </message>
+    <message>
+        <source>Name: </source>
+        <translation>Nom: </translation>
+    </message>
+    <message>
+        <source>Create</source>
+        <translation>Créer</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorEditor</name>
+    <message>
+        <source>Success factor editor</source>
+        <translation>Editeur de facteur de succès</translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation>Information</translation>
+    </message>
+    <message>
+        <source>Name:</source>
+        <translation>Nom:</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profils</translation>
+    </message>
+    <message>
+        <source>Conditions</source>
+        <translation>Conditions</translation>
+    </message>
+    <message>
+        <source>Actions</source>
+        <translation>Actions</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Success Factor edition - %1 </source>
+        <translation>Edition de facteur de succès - %1 </translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorList</name>
+    <message>
+        <source>Name</source>
+        <translation>Nom</translation>
+    </message>
+    <message>
+        <source>Edit...</source>
+        <translation>Editer...</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
     </message>
 </context>
 <context>

@@ -12,7 +12,7 @@
 #include "Config.h"
 #include "ExerciseList.h"
 #include "frontend/commands.h"
-#pragma warning( push )
+#pragma warning( push, 0 )
 #pragma warning( disable: 4512 )
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>

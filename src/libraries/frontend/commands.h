@@ -22,6 +22,7 @@ namespace tools
 namespace zip
 {
     class izipfile;
+    class ozipfile;
 }
 
 namespace frontend
@@ -36,6 +37,9 @@ namespace frontend
         QStringList ListCheckpoints   ( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
         QStringList ListModels        ( const tools::GeneralConfig& config );
         QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model );
+        QStringList ListScripts       ( const tools::GeneralConfig& config, const std::string& exercise );
+        QStringList ListOrders        ( const tools::GeneralConfig& config, const std::string& exercise );
+
         QStringList ListPackageFiles  ( const std::string& filename );
 
         void        InstallPackageFile( zip::izipfile& archive, const std::string& filename, const std::string& destination );

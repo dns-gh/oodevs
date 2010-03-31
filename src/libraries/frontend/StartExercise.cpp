@@ -24,39 +24,48 @@ namespace
     class StartDispatcher : public SpawnCommand
     {
     public:
-        StartDispatcher( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach )
+        StartDispatcher( const tools::GeneralConfig& config, bool attach, const QString& dispatcher_path, const QString& exercise, const QString& session )
             : SpawnCommand( config, "dispatcher_app.exe", attach )
         {
-         //   SetWorkingDirectory( "./bin/" );
+            if( dispatcher_path.length() > 0 )
+                SetWorkingDirectory( dispatcher_path );
             AddRootDirArgument();
             AddExerciseArgument( exercise );
             AddSessionArgument( session );
         }
 
-        StartDispatcher( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach )
-            : SpawnCommand( config, "dispatcher_app.exe", attach )
+        void addArgument( const QString& arg ) 
         {
-           // SetWorkingDirectory( "./bin/" );
-            AddRootDirArgument();
-            AddExerciseArgument( exercise );
-            AddSessionArgument( session );
-            addArgument( "--checkpoint=" + checkpoint );
+            SpawnCommand::addArgument( arg );
         }
     };
+
+    bool HasEmbeddedDispatcher( const ConfigurationManipulator& config )
+    {
+        return config.GetValue< bool >( "session/config/simulation/dispatcher/@embedded" );
+    }
+
+    std::string GetEmbeddedDispatcherPath( const ConfigurationManipulator& config )
+    {
+        return config.GetValue< std::string >( "session/config/simulation/dispatcher/@path?" );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: StartExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool dispatcher, bool attach )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach )
     : SpawnCommand( config, "simulation_app.exe", attach )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() ) 
-    , configManipulator_( new ConfigurationManipulator( config_, exercise_, session_ ) )
+    , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
 {
-    if ( dispatcher )
-        dispatcher_.reset( new ::StartDispatcher( config, exercise, session, attach ) );
+    if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
+    {
+        std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
+        dispatcher_.reset( new ::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session ) );
+    }
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
@@ -66,14 +75,19 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // Name: StartExercise constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool dispatcher, bool attach )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach )
     : SpawnCommand( config, "simulation_app.exe", attach )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )
-    , configManipulator_( new ConfigurationManipulator( config_, exercise_, session_ ) )
+    , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
 {
-    if ( dispatcher )
-        dispatcher_.reset( new ::StartDispatcher( config, exercise, session, checkpoint, attach ) );
+    if( ! HasEmbeddedDispatcher( *configManipulator_ ) )
+    {
+        std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
+        std::auto_ptr< StartDispatcher > dispatcher( new ::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session ) );
+        dispatcher->addArgument( "--checkpoint=" + checkpoint );
+        dispatcher_ = dispatcher;
+    }
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );

@@ -30,7 +30,7 @@ FolkToolbar.cpp \
 HumansListView.cpp \
 IndicatorExportDialog.cpp \
 IndicatorPlot.cpp \
-IndicatorPlotFactory.cpp \
+IndicatorReportDialog.cpp \
 InfoCompositionDialog.cpp \
 InfoDock.cpp \
 InfoDotationsDialog.cpp \
@@ -92,4 +92,4 @@ UserProfileRights_ABC.cpp \
 UserProfileWidget.cpp \
 main.cpp \
 
-TRANSLATIONS = gaming_app_fr.ts gaming_app_en.ts
+TRANSLATIONS = gaming_app_fr.ts

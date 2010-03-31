@@ -50,6 +50,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgProfile_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgProfile_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgProfileDescriptionList_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgProfileDescriptionList_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgProfileDescription_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgProfileDescription_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgAuthenticationToClient_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgAuthenticationToClient_reflection_ = NULL;
@@ -67,9 +73,10 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       "AuthenticationToClient.proto");
   GOOGLE_CHECK(file != NULL);
   MsgAuthenticationResponse_descriptor_ = file->message_type(0);
-  static const int MsgAuthenticationResponse_offsets_[2] = {
+  static const int MsgAuthenticationResponse_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, error_code_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, profile_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationResponse, profiles_),
   };
   MsgAuthenticationResponse_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -250,7 +257,39 @@ void protobuf_AssignDesc_AuthenticationToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgProfile));
-  MsgAuthenticationToClient_descriptor_ = file->message_type(11);
+  MsgProfileDescriptionList_descriptor_ = file->message_type(11);
+  static const int MsgProfileDescriptionList_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescriptionList, elem_),
+  };
+  MsgProfileDescriptionList_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgProfileDescriptionList_descriptor_,
+      MsgProfileDescriptionList::default_instance_,
+      MsgProfileDescriptionList_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescriptionList, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescriptionList, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgProfileDescriptionList));
+  MsgProfileDescription_descriptor_ = file->message_type(12);
+  static const int MsgProfileDescription_offsets_[3] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescription, login_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescription, password_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescription, supervisor_),
+  };
+  MsgProfileDescription_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgProfileDescription_descriptor_,
+      MsgProfileDescription::default_instance_,
+      MsgProfileDescription_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescription, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgProfileDescription, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgProfileDescription));
+  MsgAuthenticationToClient_descriptor_ = file->message_type(13);
   static const int MsgAuthenticationToClient_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationToClient, context_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAuthenticationToClient, message_),
@@ -322,6 +361,10 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgProfile_descriptor_, &MsgProfile::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgProfileDescriptionList_descriptor_, &MsgProfileDescriptionList::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgProfileDescription_descriptor_, &MsgProfileDescription::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgAuthenticationToClient_descriptor_, &MsgAuthenticationToClient::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgAuthenticationToClient_Content_descriptor_, &MsgAuthenticationToClient_Content::default_instance());
@@ -352,6 +395,10 @@ void protobuf_ShutdownFile_AuthenticationToClient_2eproto() {
   delete PopulationList_reflection_;
   delete MsgProfile::default_instance_;
   delete MsgProfile_reflection_;
+  delete MsgProfileDescriptionList::default_instance_;
+  delete MsgProfileDescriptionList_reflection_;
+  delete MsgProfileDescription::default_instance_;
+  delete MsgProfileDescription_reflection_;
   delete MsgAuthenticationToClient::default_instance_;
   delete MsgAuthenticationToClient_reflection_;
   delete MsgAuthenticationToClient_Content::default_instance_;
@@ -367,72 +414,78 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
   ::Common::protobuf_AddDesc_Common_2eproto();
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\034AuthenticationToClient.proto\022\032MsgsAuth"
-    "enticationToClient\032\014Common.proto\"\326\001\n\031Msg"
+    "enticationToClient\032\014Common.proto\"\237\002\n\031Msg"
     "AuthenticationResponse\022S\n\nerror_code\030\001 \002"
     "(\0162?.MsgsAuthenticationToClient.MsgAuthe"
     "nticationResponse.ErrorCode\0227\n\007profile\030\002"
     " \001(\0132&.MsgsAuthenticationToClient.MsgPro"
-    "file\"+\n\tErrorCode\022\013\n\007success\020\000\022\021\n\rinvali"
-    "d_login\020\001\"M\n\022MsgProfileCreation\0227\n\007profi"
-    "le\030\001 \001(\0132&.MsgsAuthenticationToClient.Ms"
-    "gProfile\"\335\001\n\034MsgProfileCreationRequestAc"
-    "k\022\r\n\005login\030\001 \002(\t\022V\n\nerror_code\030\002 \002(\0162B.M"
-    "sgsAuthenticationToClient.MsgProfileCrea"
-    "tionRequestAck.ErrorCode\"V\n\tErrorCode\022\013\n"
-    "\007success\020\000\022\021\n\rinvalid_login\020\001\022\024\n\020invalid"
-    "_password\020\002\022\023\n\017duplicate_login\020\003\"\356\001\n\032Msg"
-    "ProfileUpdateRequestAck\022\r\n\005login\030\001 \002(\t\022T"
-    "\n\nerror_code\030\002 \002(\0162@.MsgsAuthenticationT"
-    "oClient.MsgProfileUpdateRequestAck.Error"
-    "Code\"k\n\tErrorCode\022\013\n\007success\020\000\022\023\n\017invali"
-    "d_profile\020\001\022\021\n\rinvalid_login\020\002\022\024\n\020invali"
-    "d_password\020\003\022\023\n\017duplicate_login\020\004\"Z\n\020Msg"
-    "ProfileUpdate\022\r\n\005login\030\001 \002(\t\0227\n\007profile\030"
-    "\002 \002(\0132&.MsgsAuthenticationToClient.MsgPr"
-    "ofile\"&\n\025MsgProfileDestruction\022\r\n\005login\030"
-    "\001 \001(\t\"\307\001\n\037MsgProfileDestructionRequestAc"
-    "k\022Y\n\nerror_code\030\001 \002(\0162E.MsgsAuthenticati"
-    "onToClient.MsgProfileDestructionRequestA"
-    "ck.ErrorCode\022\r\n\005login\030\002 \002(\t\":\n\tErrorCode"
-    "\022\013\n\007success\020\000\022\023\n\017invalid_profile\020\001\022\013\n\007fa"
-    "ilure\020\002\"3\n\rFormationList\022\"\n\004elem\030\001 \003(\0132\024"
-    ".Common.MsgFormation\")\n\010TeamList\022\035\n\004elem"
-    "\030\001 \003(\0132\017.Common.MsgTeam\"5\n\016PopulationLis"
-    "t\022#\n\004elem\030\001 \003(\0132\025.Common.MsgPopulation\"\326"
-    "\004\n\nMsgProfile\022\r\n\005login\030\001 \002(\t\022\020\n\010password"
-    "\030\002 \001(\t\022G\n\024read_only_formations\030\003 \001(\0132).M"
-    "sgsAuthenticationToClient.FormationList\022"
-    "H\n\025read_write_formations\030\004 \001(\0132).MsgsAut"
-    "henticationToClient.FormationList\0223\n\023rea"
-    "d_only_automates\030\005 \001(\0132\026.Common.MsgAutom"
-    "atList\0224\n\024read_write_automates\030\006 \001(\0132\026.C"
-    "ommon.MsgAutomatList\022=\n\017read_only_camps\030"
-    "\007 \001(\0132$.MsgsAuthenticationToClient.TeamL"
-    "ist\022>\n\020read_write_camps\030\010 \001(\0132$.MsgsAuth"
-    "enticationToClient.TeamList\022I\n\025read_only"
-    "_populations\030\t \001(\0132*.MsgsAuthenticationT"
-    "oClient.PopulationList\022J\n\026read_write_pop"
-    "ulations\030\n \001(\0132*.MsgsAuthenticationToCli"
-    "ent.PopulationList\022\023\n\013superviseur\030\013 \002(\010\""
-    "\345\005\n\031MsgAuthenticationToClient\022\022\n\007context"
-    "\030\001 \001(\005:\0010\022N\n\007message\030\002 \002(\0132=.MsgsAuthent"
-    "icationToClient.MsgAuthenticationToClien"
-    "t.Content\032\343\004\n\007Content\022V\n\027authentication_"
-    "response\030\001 \001(\01325.MsgsAuthenticationToCli"
-    "ent.MsgAuthenticationResponse\022H\n\020profile"
-    "_creation\030\002 \001(\0132..MsgsAuthenticationToCl"
-    "ient.MsgProfileCreation\022^\n\034profile_creat"
-    "ion_request_ack\030\003 \001(\01328.MsgsAuthenticati"
-    "onToClient.MsgProfileCreationRequestAck\022"
-    "D\n\016profile_update\030\004 \001(\0132,.MsgsAuthentica"
-    "tionToClient.MsgProfileUpdate\022Z\n\032profile"
-    "_update_request_ack\030\005 \001(\01326.MsgsAuthenti"
-    "cationToClient.MsgProfileUpdateRequestAc"
-    "k\022N\n\023profile_destruction\030\006 \001(\01321.MsgsAut"
-    "henticationToClient.MsgProfileDestructio"
-    "n\022d\n\037profile_destruction_request_ack\030\007 \001"
-    "(\0132;.MsgsAuthenticationToClient.MsgProfi"
-    "leDestructionRequestAck", 2663);
+    "file\022G\n\010profiles\030\003 \001(\01325.MsgsAuthenticat"
+    "ionToClient.MsgProfileDescriptionList\"+\n"
+    "\tErrorCode\022\013\n\007success\020\000\022\021\n\rinvalid_login"
+    "\020\001\"M\n\022MsgProfileCreation\0227\n\007profile\030\001 \001("
+    "\0132&.MsgsAuthenticationToClient.MsgProfil"
+    "e\"\335\001\n\034MsgProfileCreationRequestAck\022\r\n\005lo"
+    "gin\030\001 \002(\t\022V\n\nerror_code\030\002 \002(\0162B.MsgsAuth"
+    "enticationToClient.MsgProfileCreationReq"
+    "uestAck.ErrorCode\"V\n\tErrorCode\022\013\n\007succes"
+    "s\020\000\022\021\n\rinvalid_login\020\001\022\024\n\020invalid_passwo"
+    "rd\020\002\022\023\n\017duplicate_login\020\003\"\356\001\n\032MsgProfile"
+    "UpdateRequestAck\022\r\n\005login\030\001 \002(\t\022T\n\nerror"
+    "_code\030\002 \002(\0162@.MsgsAuthenticationToClient"
+    ".MsgProfileUpdateRequestAck.ErrorCode\"k\n"
+    "\tErrorCode\022\013\n\007success\020\000\022\023\n\017invalid_profi"
+    "le\020\001\022\021\n\rinvalid_login\020\002\022\024\n\020invalid_passw"
+    "ord\020\003\022\023\n\017duplicate_login\020\004\"Z\n\020MsgProfile"
+    "Update\022\r\n\005login\030\001 \002(\t\0227\n\007profile\030\002 \002(\0132&"
+    ".MsgsAuthenticationToClient.MsgProfile\"&"
+    "\n\025MsgProfileDestruction\022\r\n\005login\030\001 \001(\t\"\307"
+    "\001\n\037MsgProfileDestructionRequestAck\022Y\n\ner"
+    "ror_code\030\001 \002(\0162E.MsgsAuthenticationToCli"
+    "ent.MsgProfileDestructionRequestAck.Erro"
+    "rCode\022\r\n\005login\030\002 \002(\t\":\n\tErrorCode\022\013\n\007suc"
+    "cess\020\000\022\023\n\017invalid_profile\020\001\022\013\n\007failure\020\002"
+    "\"3\n\rFormationList\022\"\n\004elem\030\001 \003(\0132\024.Common"
+    ".MsgFormation\")\n\010TeamList\022\035\n\004elem\030\001 \003(\0132"
+    "\017.Common.MsgTeam\"5\n\016PopulationList\022#\n\004el"
+    "em\030\001 \003(\0132\025.Common.MsgPopulation\"\326\004\n\nMsgP"
+    "rofile\022\r\n\005login\030\001 \002(\t\022\020\n\010password\030\002 \001(\t\022"
+    "G\n\024read_only_formations\030\003 \001(\0132).MsgsAuth"
+    "enticationToClient.FormationList\022H\n\025read"
+    "_write_formations\030\004 \001(\0132).MsgsAuthentica"
+    "tionToClient.FormationList\0223\n\023read_only_"
+    "automates\030\005 \001(\0132\026.Common.MsgAutomatList\022"
+    "4\n\024read_write_automates\030\006 \001(\0132\026.Common.M"
+    "sgAutomatList\022=\n\017read_only_camps\030\007 \001(\0132$"
+    ".MsgsAuthenticationToClient.TeamList\022>\n\020"
+    "read_write_camps\030\010 \001(\0132$.MsgsAuthenticat"
+    "ionToClient.TeamList\022I\n\025read_only_popula"
+    "tions\030\t \001(\0132*.MsgsAuthenticationToClient"
+    ".PopulationList\022J\n\026read_write_population"
+    "s\030\n \001(\0132*.MsgsAuthenticationToClient.Pop"
+    "ulationList\022\023\n\013superviseur\030\013 \002(\010\"\\\n\031MsgP"
+    "rofileDescriptionList\022?\n\004elem\030\001 \003(\01321.Ms"
+    "gsAuthenticationToClient.MsgProfileDescr"
+    "iption\"L\n\025MsgProfileDescription\022\r\n\005login"
+    "\030\001 \002(\t\022\020\n\010password\030\002 \002(\010\022\022\n\nsupervisor\030\003"
+    " \002(\010\"\345\005\n\031MsgAuthenticationToClient\022\022\n\007co"
+    "ntext\030\001 \001(\005:\0010\022N\n\007message\030\002 \002(\0132=.MsgsAu"
+    "thenticationToClient.MsgAuthenticationTo"
+    "Client.Content\032\343\004\n\007Content\022V\n\027authentica"
+    "tion_response\030\001 \001(\01325.MsgsAuthentication"
+    "ToClient.MsgAuthenticationResponse\022H\n\020pr"
+    "ofile_creation\030\002 \001(\0132..MsgsAuthenticatio"
+    "nToClient.MsgProfileCreation\022^\n\034profile_"
+    "creation_request_ack\030\003 \001(\01328.MsgsAuthent"
+    "icationToClient.MsgProfileCreationReques"
+    "tAck\022D\n\016profile_update\030\004 \001(\0132,.MsgsAuthe"
+    "nticationToClient.MsgProfileUpdate\022Z\n\032pr"
+    "ofile_update_request_ack\030\005 \001(\01326.MsgsAut"
+    "henticationToClient.MsgProfileUpdateRequ"
+    "estAck\022N\n\023profile_destruction\030\006 \001(\01321.Ms"
+    "gsAuthenticationToClient.MsgProfileDestr"
+    "uction\022d\n\037profile_destruction_request_ac"
+    "k\030\007 \001(\0132;.MsgsAuthenticationToClient.Msg"
+    "ProfileDestructionRequestAck", 2908);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "AuthenticationToClient.proto", &protobuf_RegisterTypes);
   MsgAuthenticationResponse::default_instance_ = new MsgAuthenticationResponse();
@@ -446,6 +499,8 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
   TeamList::default_instance_ = new TeamList();
   PopulationList::default_instance_ = new PopulationList();
   MsgProfile::default_instance_ = new MsgProfile();
+  MsgProfileDescriptionList::default_instance_ = new MsgProfileDescriptionList();
+  MsgProfileDescription::default_instance_ = new MsgProfileDescription();
   MsgAuthenticationToClient::default_instance_ = new MsgAuthenticationToClient();
   MsgAuthenticationToClient_Content::default_instance_ = new MsgAuthenticationToClient_Content();
   MsgAuthenticationResponse::default_instance_->InitAsDefaultInstance();
@@ -459,6 +514,8 @@ void protobuf_AddDesc_AuthenticationToClient_2eproto() {
   TeamList::default_instance_->InitAsDefaultInstance();
   PopulationList::default_instance_->InitAsDefaultInstance();
   MsgProfile::default_instance_->InitAsDefaultInstance();
+  MsgProfileDescriptionList::default_instance_->InitAsDefaultInstance();
+  MsgProfileDescription::default_instance_->InitAsDefaultInstance();
   MsgAuthenticationToClient::default_instance_->InitAsDefaultInstance();
   MsgAuthenticationToClient_Content::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_AuthenticationToClient_2eproto);
@@ -497,6 +554,7 @@ const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse::ErrorCode_M
 #ifndef _MSC_VER
 const int MsgAuthenticationResponse::kErrorCodeFieldNumber;
 const int MsgAuthenticationResponse::kProfileFieldNumber;
+const int MsgAuthenticationResponse::kProfilesFieldNumber;
 #endif  // !_MSC_VER
 
 MsgAuthenticationResponse::MsgAuthenticationResponse() {
@@ -505,6 +563,7 @@ MsgAuthenticationResponse::MsgAuthenticationResponse() {
 
 void MsgAuthenticationResponse::InitAsDefaultInstance() {
   profile_ = const_cast< ::MsgsAuthenticationToClient::MsgProfile*>(&::MsgsAuthenticationToClient::MsgProfile::default_instance());
+  profiles_ = const_cast< ::MsgsAuthenticationToClient::MsgProfileDescriptionList*>(&::MsgsAuthenticationToClient::MsgProfileDescriptionList::default_instance());
 }
 
 MsgAuthenticationResponse::MsgAuthenticationResponse(const MsgAuthenticationResponse& from) {
@@ -516,6 +575,7 @@ void MsgAuthenticationResponse::SharedCtor() {
   _cached_size_ = 0;
   error_code_ = 0;
   profile_ = NULL;
+  profiles_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -526,6 +586,7 @@ MsgAuthenticationResponse::~MsgAuthenticationResponse() {
 void MsgAuthenticationResponse::SharedDtor() {
   if (this != default_instance_) {
     delete profile_;
+    delete profiles_;
   }
 }
 
@@ -549,6 +610,9 @@ void MsgAuthenticationResponse::Clear() {
     error_code_ = 0;
     if (_has_bit(1)) {
       if (profile_ != NULL) profile_->::MsgsAuthenticationToClient::MsgProfile::Clear();
+    }
+    if (_has_bit(2)) {
+      if (profiles_ != NULL) profiles_->::MsgsAuthenticationToClient::MsgProfileDescriptionList::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -587,6 +651,19 @@ bool MsgAuthenticationResponse::MergePartialFromCodedStream(
        parse_profile:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_profile()));
+        if (input->ExpectTag(26)) goto parse_profiles;
+        break;
+      }
+      
+      // optional .MsgsAuthenticationToClient.MsgProfileDescriptionList profiles = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_profiles:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_profiles()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -627,6 +704,12 @@ void MsgAuthenticationResponse::SerializeWithCachedSizes(
       2, this->profile(), output);
   }
   
+  // optional .MsgsAuthenticationToClient.MsgProfileDescriptionList profiles = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      3, this->profiles(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -646,6 +729,13 @@ void MsgAuthenticationResponse::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         2, this->profile(), target);
+  }
+  
+  // optional .MsgsAuthenticationToClient.MsgProfileDescriptionList profiles = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        3, this->profiles(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -670,6 +760,13 @@ int MsgAuthenticationResponse::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->profile());
+    }
+    
+    // optional .MsgsAuthenticationToClient.MsgProfileDescriptionList profiles = 3;
+    if (has_profiles()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->profiles());
     }
     
   }
@@ -703,6 +800,9 @@ void MsgAuthenticationResponse::MergeFrom(const MsgAuthenticationResponse& from)
     if (from._has_bit(1)) {
       mutable_profile()->::MsgsAuthenticationToClient::MsgProfile::MergeFrom(from.profile());
     }
+    if (from._has_bit(2)) {
+      mutable_profiles()->::MsgsAuthenticationToClient::MsgProfileDescriptionList::MergeFrom(from.profiles());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -725,6 +825,9 @@ bool MsgAuthenticationResponse::IsInitialized() const {
   if (has_profile()) {
     if (!this->profile().IsInitialized()) return false;
   }
+  if (has_profiles()) {
+    if (!this->profiles().IsInitialized()) return false;
+  }
   return true;
 }
 
@@ -732,6 +835,7 @@ void MsgAuthenticationResponse::Swap(MsgAuthenticationResponse* other) {
   if (other != this) {
     std::swap(error_code_, other->error_code_);
     std::swap(profile_, other->profile_);
+    std::swap(profiles_, other->profiles_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -3611,6 +3715,501 @@ void MsgProfile::Swap(MsgProfile* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgProfile_descriptor_;
   metadata.reflection = MsgProfile_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgProfileDescriptionList::kElemFieldNumber;
+#endif  // !_MSC_VER
+
+MsgProfileDescriptionList::MsgProfileDescriptionList() {
+  SharedCtor();
+}
+
+void MsgProfileDescriptionList::InitAsDefaultInstance() {
+}
+
+MsgProfileDescriptionList::MsgProfileDescriptionList(const MsgProfileDescriptionList& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgProfileDescriptionList::SharedCtor() {
+  _cached_size_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgProfileDescriptionList::~MsgProfileDescriptionList() {
+  SharedDtor();
+}
+
+void MsgProfileDescriptionList::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgProfileDescriptionList::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgProfileDescriptionList_descriptor_;
+}
+
+const MsgProfileDescriptionList& MsgProfileDescriptionList::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_AuthenticationToClient_2eproto();  return *default_instance_;
+}
+
+MsgProfileDescriptionList* MsgProfileDescriptionList::default_instance_ = NULL;
+
+MsgProfileDescriptionList* MsgProfileDescriptionList::New() const {
+  return new MsgProfileDescriptionList;
+}
+
+void MsgProfileDescriptionList::Clear() {
+  elem_.Clear();
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgProfileDescriptionList::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // repeated .MsgsAuthenticationToClient.MsgProfileDescription elem = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_elem:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+              input, add_elem()));
+        if (input->ExpectTag(10)) goto parse_elem;
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgProfileDescriptionList::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgProfileDescriptionList::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // repeated .MsgsAuthenticationToClient.MsgProfileDescription elem = 1;
+  for (int i = 0; i < this->elem_size(); i++) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      1, this->elem(i), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgProfileDescriptionList::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // repeated .MsgsAuthenticationToClient.MsgProfileDescription elem = 1;
+  for (int i = 0; i < this->elem_size(); i++) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        1, this->elem(i), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgProfileDescriptionList::ByteSize() const {
+  int total_size = 0;
+  
+  // repeated .MsgsAuthenticationToClient.MsgProfileDescription elem = 1;
+  total_size += 1 * this->elem_size();
+  for (int i = 0; i < this->elem_size(); i++) {
+    total_size +=
+      ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+        this->elem(i));
+  }
+  
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgProfileDescriptionList::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgProfileDescriptionList* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgProfileDescriptionList*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgProfileDescriptionList::MergeFrom(const MsgProfileDescriptionList& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  elem_.MergeFrom(from.elem_);
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgProfileDescriptionList::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgProfileDescriptionList::CopyFrom(const MsgProfileDescriptionList& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgProfileDescriptionList::IsInitialized() const {
+  
+  for (int i = 0; i < elem_size(); i++) {
+    if (!this->elem(i).IsInitialized()) return false;
+  }
+  return true;
+}
+
+void MsgProfileDescriptionList::Swap(MsgProfileDescriptionList* other) {
+  if (other != this) {
+    elem_.Swap(&other->elem_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgProfileDescriptionList::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgProfileDescriptionList_descriptor_;
+  metadata.reflection = MsgProfileDescriptionList_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+const ::std::string MsgProfileDescription::_default_login_;
+#ifndef _MSC_VER
+const int MsgProfileDescription::kLoginFieldNumber;
+const int MsgProfileDescription::kPasswordFieldNumber;
+const int MsgProfileDescription::kSupervisorFieldNumber;
+#endif  // !_MSC_VER
+
+MsgProfileDescription::MsgProfileDescription() {
+  SharedCtor();
+}
+
+void MsgProfileDescription::InitAsDefaultInstance() {
+}
+
+MsgProfileDescription::MsgProfileDescription(const MsgProfileDescription& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgProfileDescription::SharedCtor() {
+  _cached_size_ = 0;
+  login_ = const_cast< ::std::string*>(&_default_login_);
+  password_ = false;
+  supervisor_ = false;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgProfileDescription::~MsgProfileDescription() {
+  SharedDtor();
+}
+
+void MsgProfileDescription::SharedDtor() {
+  if (login_ != &_default_login_) {
+    delete login_;
+  }
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgProfileDescription::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgProfileDescription_descriptor_;
+}
+
+const MsgProfileDescription& MsgProfileDescription::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_AuthenticationToClient_2eproto();  return *default_instance_;
+}
+
+MsgProfileDescription* MsgProfileDescription::default_instance_ = NULL;
+
+MsgProfileDescription* MsgProfileDescription::New() const {
+  return new MsgProfileDescription;
+}
+
+void MsgProfileDescription::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (_has_bit(0)) {
+      if (login_ != &_default_login_) {
+        login_->clear();
+      }
+    }
+    password_ = false;
+    supervisor_ = false;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgProfileDescription::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required string login = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
+              input, this->mutable_login()));
+        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+          this->login().data(), this->login().length(),
+          ::google::protobuf::internal::WireFormat::PARSE);
+        if (input->ExpectTag(16)) goto parse_password;
+        break;
+      }
+      
+      // required bool password = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_password:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
+              input, &password_));
+        _set_bit(1);
+        if (input->ExpectTag(24)) goto parse_supervisor;
+        break;
+      }
+      
+      // required bool supervisor = 3;
+      case 3: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_supervisor:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
+              input, &supervisor_));
+        _set_bit(2);
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgProfileDescription::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgProfileDescription::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required string login = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->login().data(), this->login().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    ::google::protobuf::internal::WireFormatLite::WriteString(
+      1, this->login(), output);
+  }
+  
+  // required bool password = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->password(), output);
+  }
+  
+  // required bool supervisor = 3;
+  if (_has_bit(2)) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->supervisor(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgProfileDescription::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required string login = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
+      this->login().data(), this->login().length(),
+      ::google::protobuf::internal::WireFormat::SERIALIZE);
+    target =
+      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
+        1, this->login(), target);
+  }
+  
+  // required bool password = 2;
+  if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->password(), target);
+  }
+  
+  // required bool supervisor = 3;
+  if (_has_bit(2)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->supervisor(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgProfileDescription::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required string login = 1;
+    if (has_login()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::StringSize(
+          this->login());
+    }
+    
+    // required bool password = 2;
+    if (has_password()) {
+      total_size += 1 + 1;
+    }
+    
+    // required bool supervisor = 3;
+    if (has_supervisor()) {
+      total_size += 1 + 1;
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgProfileDescription::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgProfileDescription* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgProfileDescription*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgProfileDescription::MergeFrom(const MsgProfileDescription& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_login(from.login());
+    }
+    if (from._has_bit(1)) {
+      set_password(from.password());
+    }
+    if (from._has_bit(2)) {
+      set_supervisor(from.supervisor());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgProfileDescription::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgProfileDescription::CopyFrom(const MsgProfileDescription& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgProfileDescription::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+  
+  return true;
+}
+
+void MsgProfileDescription::Swap(MsgProfileDescription* other) {
+  if (other != this) {
+    std::swap(login_, other->login_);
+    std::swap(password_, other->password_);
+    std::swap(supervisor_, other->supervisor_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgProfileDescription::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgProfileDescription_descriptor_;
+  metadata.reflection = MsgProfileDescription_reflection_;
   return metadata;
 }
 

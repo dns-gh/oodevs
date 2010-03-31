@@ -28,13 +28,20 @@ namespace dispatcher
 // =============================================================================
 class Order_ABC
 {
-protected:
+
+public:
     //! @name Constructors/Destructor
     //@{
              Order_ABC( Model_ABC& model, unsigned int missionID, const Common::MsgMissionParameters& parameters );
     virtual ~Order_ABC();
     //@}
 
+    //! @name Accessors
+    //@{
+    unsigned int GetId() const;
+    //@}
+
+protected:
     //! @name Operations
     //@{
     void Send     ( Common::MsgMissionParameters& asn ) const;
@@ -53,7 +60,6 @@ private:
     void InitializeParameters( const Common::MsgMissionParameters& parameters );
     //@}
 
-private:
     //! @name Types
     //@{
     typedef std::vector< MissionParameter_ABC* > T_Parameters;

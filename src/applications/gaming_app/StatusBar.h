@@ -14,6 +14,11 @@
 #include "tools/ElementObserver_ABC.h"
 #include "gaming/Simulation.h"
 
+namespace gui
+{
+    class TerrainLayer;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -37,7 +42,7 @@ class StatusBar : public gui::StatusBar
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusBar( QStatusBar* bar, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter, kernel::Controllers& controllers, QDockWindow* profilingDock );
+             StatusBar( QStatusBar* bar, gui::TerrainPicker& picker, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter, kernel::Controllers& controllers, QDockWindow* profilingDock );
     virtual ~StatusBar();
     //@}
 

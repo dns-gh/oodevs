@@ -18,9 +18,10 @@ ScenarioEditPage.cpp \
 ScenarioLauncherPage.cpp \
 ScenarioPage.cpp \
 SelfTrainingPage.cpp \
+SessionList.cpp \
 SessionTray.cpp \
 TrayMenu.cpp \
 TutorialPage.cpp \
 main.cpp \
 
-TRANSLATIONS = selftraining_app_fr.ts selftraining_app_en.ts
+TRANSLATIONS = selftraining_app_fr.ts

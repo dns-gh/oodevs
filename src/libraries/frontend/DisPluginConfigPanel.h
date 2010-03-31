@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef __CrossbowPluginConfigPanel_h_
-#define __CrossbowPluginConfigPanel_h_
+#ifndef __DisPluginConfigPanel_h_
+#define __DisPluginConfigPanel_h_
 
-#include <qhbox.h>
+#include "PluginConfig_ABC.h"
 
 namespace tools
 {
@@ -18,36 +18,43 @@ namespace tools
 }
 
 class QLineEdit;
+class QSpinBox;
 class QCheckBox;
 class QGroupBox;
 
+namespace frontend
+{
+
 // =============================================================================
-/** @class  CrossbowPluginConfigPanel
-    @brief  CrossbowPluginConfigPanel
+/** @class  DisPluginConfigPanel
+    @brief  DisPluginConfigPanel
 */
 // Created: SBO 2008-03-05
 // =============================================================================
-class CrossbowPluginConfigPanel : public QHBox
+class DisPluginConfigPanel : public PluginConfig_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             CrossbowPluginConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
-    virtual ~CrossbowPluginConfigPanel();
+             DisPluginConfigPanel( QWidget* parent, const tools::GeneralConfig& config );
+    virtual ~DisPluginConfigPanel();
     //@}
 
     //! @name Operations
     //@{
-    bool IsChecked() const;
-    void Commit( const std::string& exercise, const std::string& session );
+    virtual void Commit( const std::string& exercise, const std::string& session );
     //@}
 
 private:
     //! @name Copy/Assignment
     //@{
-    CrossbowPluginConfigPanel( const CrossbowPluginConfigPanel& );            //!< Copy constructor
-    CrossbowPluginConfigPanel& operator=( const CrossbowPluginConfigPanel& ); //!< Assignment operator
+    DisPluginConfigPanel( const DisPluginConfigPanel& );            //!< Copy constructor
+    DisPluginConfigPanel& operator=( const DisPluginConfigPanel& ); //!< Assignment operator
+    //@}
+
+    //! @name Helpers
+    //@{
     //@}
 
 private:
@@ -55,11 +62,15 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     QGroupBox* box_;
-    
-    QLineEdit* geodatabase_;
-    QLineEdit* population_;
-    QLineEdit* shared_;
+    QCheckBox* tic_;
+    QLineEdit* server_;
+    QSpinBox*  port_;
+    QSpinBox*  site_;
+    QSpinBox*  application_;
+    QSpinBox*  exercise_;
     //@}
 };
 
-#endif // __CrossbowPluginConfigPanel_h_
+}
+
+#endif // __DisPluginConfigPanel_h_

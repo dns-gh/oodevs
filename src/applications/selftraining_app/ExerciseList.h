@@ -50,7 +50,7 @@ public:
 signals:
     //! @name Signals
     //@{
-    void Select( const QString& exercise, const QString& profile );
+    void Select( const QString& exercise, const Profile& profile );
     //@}
 
 public slots:
@@ -89,6 +89,7 @@ private:
     bool                         showBrief_;
     QStringList                  exercisesList_;
     const ExerciseLister_ABC&    lister_;
+    const QString                language_;
  //@}
 };
 

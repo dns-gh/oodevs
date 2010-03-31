@@ -17,9 +17,11 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #pragma warning( pop )
 
 namespace bfs = boost::filesystem;
+namespace bpt = boost::posix_time;
 
 using namespace frontend;
 
@@ -50,8 +52,16 @@ CreateSession::~CreateSession()
 void CreateSession::SetDefaultValues()
 {
     {
-        setter_->SetValue( "session/meta/date"     , session_ );
-        setter_->SetValue( "session/meta/name"     , "" );
+        try
+        {
+            bpt::from_iso_string( session_ );
+            setter_->SetValue( "session/meta/date", session_ );
+        }
+        catch( ... )
+        {
+            setter_->SetValue( "session/meta/date", bpt::to_iso_string( bpt::second_clock::local_time() ) );
+        }
+        setter_->SetValue( "session/meta/name"     , session_ );
         setter_->SetValue( "session/meta/comment"  , "" );
     }
     {

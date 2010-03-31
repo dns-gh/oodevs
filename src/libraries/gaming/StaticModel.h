@@ -46,7 +46,6 @@ namespace tools
 
 class RcEntityResolver_ABC;
 class ReportFactory;
-class ScoreDefinitions;
 class Simulation;
 class UrbanModel;
 
@@ -87,7 +86,6 @@ public:
     gui::DrawingTypes&               drawings_;
     indicators::Primitives&          indicators_;
     indicators::GaugeTypes&          gaugeTypes_;
-    ScoreDefinitions&                scores_;
     urban::StaticModel&              urbanTypes_;
     //@}
 

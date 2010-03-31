@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "TerrainLayer.h"
 #include "GraphicPreferences.h"
+#include "TerrainPicker.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -31,11 +32,13 @@ using namespace gui;
 // Name: TerrainLayer constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicPreferences& setup )
-    : controllers_  ( controllers )
-    , tools_        ( tools )
-    , setup_        ( setup )
+TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, GraphicPreferences& setup, TerrainPicker& picker )
+    : controllers_( controllers )
+    , tools_      ( tools )
+    , setup_      ( setup )
+    , picker_     ( picker )
 {
+    picker_.RegisterLayer( *this );
     controllers_.Register( *this );
 }
 
@@ -83,8 +86,8 @@ void TerrainLayer::Paint( const geometry::Rectangle2f& viewport )
     {
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
             glBindTexture( GL_TEXTURE_2D, 0 );
-            glDisable(GL_TEXTURE_GEN_S);
-            glDisable(GL_TEXTURE_GEN_T);
+            glDisable( GL_TEXTURE_GEN_S );
+            glDisable( GL_TEXTURE_GEN_T );
             if( layer_.get() )
                 layer_->Paint( viewport );
             else 
@@ -165,8 +168,10 @@ public:
     }
     virtual void DrawName( const geometry::Point2f& at, const std::string& name )
     {
-        glColor3f( 0, 0, 0 );
-        parent_.tools_.Print( name, at );
+        glPushAttrib( GL_CURRENT_BIT );
+            glColor3f( 0, 0, 0 );
+            parent_.tools_.Print( name, at );
+        glPopAttrib();
     }
 
 private:
@@ -209,4 +214,27 @@ void TerrainLayer::LoadGraphics()
     {
         // $$$$ AGE 2007-05-10:
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainLayer::HandleMouseMove
+// Created: SBO 2010-03-26
+// -----------------------------------------------------------------------------
+bool TerrainLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& /*point*/ )
+{
+    picker_.Pick( mouse->x(), mouse->y() );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainLayer::Pick
+// Created: SBO 2010-03-26
+// -----------------------------------------------------------------------------
+TerrainData TerrainLayer::Pick( int x, int y )
+{
+    if( layer_.get() )
+        return layer_->PickTerrain( x, y );
+    else if( noVBOlayer_.get() )
+        return noVBOlayer_->PickTerrain( x, y );
+    return TerrainData();
 }

@@ -36,7 +36,6 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     setMaximumHeight( 80 );
     QHBox* box = new QHBox( this );
     presetCombo_ = new QComboBox( box );
-    Reset();
 
     QToolButton* copyPreset = new QToolButton( box );
     copyPreset->setPixmap( MAKE_PIXMAP( copy ) );
@@ -64,6 +63,7 @@ GradientWidget::GradientWidget( QWidget* parent, GradientPreferences& preference
     connect( removePreset, SIGNAL( clicked() ), SLOT( OnPresetDeleted() ) );
 
     controllers_.Register( *this );
+    Reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -198,7 +198,7 @@ void GradientWidget::Reset()
         presetCombo_->insertItem( item.GetName() );
         presets_.push_back( new Gradient( item ) );
     }
-    Select( options_.GetOption( "Gradient", QString( "grey scale" ) ).To< QString >() );
+    Select( options_.GetOption( "Gradient", QString( "default" ) ).To< QString >() );
 }
 
 // -----------------------------------------------------------------------------

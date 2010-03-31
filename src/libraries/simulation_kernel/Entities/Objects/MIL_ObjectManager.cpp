@@ -10,7 +10,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "MIL_ObjectManager.h"
 #include "MIL_AgentServer.h"
 #include "MIL_ObjectFactory.h"
@@ -26,6 +25,7 @@
 #include "Network/NET_Publisher_ABC.h"
 #include <protocol/ClientSenders.h>
 #include <xeumeuleu/xml.h>
+#include <boost/serialization/export.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_ObjectManager )
 

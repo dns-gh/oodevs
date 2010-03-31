@@ -123,14 +123,14 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
     if( !profile )
     {
         authentication::AuthenticationResponse ack;
-        ack().set_error_code ( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_invalid_login );
+        ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_invalid_login );
+        profiles_->Send( ack() );
         ack.Send( client );
     }
     else
     {
         authentication::AuthenticationResponse ack;
-        ack().set_error_code       ( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
-        //ack.profilePresent = 1;
+        ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
         profile->Send( *ack().mutable_profile() );
         ack.Send( client );
         Profile::Delete( *ack().mutable_profile() );

@@ -66,6 +66,7 @@ public:
 public slots:
     //! @name Slots
     //@{
+	void OnConfirmDeletion( int result );
     void OnDelete();
     void OnCreate();
     void OnCreateFormation( int level );
@@ -103,6 +104,7 @@ private:
     kernel::SafePointer< kernel::Automat_ABC >        selectedAutomat_;
     kernel::SafePointer< kernel::Formation_ABC >      selectedFormation_;
     kernel::SafePointer< kernel::Entity_ABC >         toDelete_;
+    std::auto_ptr< QMessageBox >                      confirmation_;
     //@}
 };
 

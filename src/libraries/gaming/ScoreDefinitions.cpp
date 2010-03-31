@@ -43,21 +43,24 @@ void ScoreDefinitions::Purge()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ScoreDefinitions::Load
-// Created: SBO 2009-04-29
+// Name: ScoreDefinitions::Update
+// Created: SBO 2009-12-18
 // -----------------------------------------------------------------------------
-void ScoreDefinitions::Load( const std::string& file )
+void ScoreDefinitions::Update( const MsgsAarToClient::MsgAarInformation& asnMsg )
 {
     try
     {
-        xml::xifstream xis( file );
+        xml::xistringstream xis( asnMsg.information() );
         xis >> xml::start( "scores" )
                 >> xml::list( "score", *this, &ScoreDefinitions::ReadDefinition )
             >> xml::end();
     }
-    catch( ... ) {}
+    catch( std::exception& e )
+    {
+        std::cout << asnMsg.information() << std::endl << std::endl;
+        std::cout << "Error reading indicator definitions: " << e.what() << std::endl;
+    }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ScoreDefinitions::ReadDefinition

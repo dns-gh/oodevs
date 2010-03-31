@@ -116,9 +116,7 @@ void Reports::ClearTraces()
 void Reports::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     unsigned int displayed = 0;
-    for( T_Reports::const_reverse_iterator it = traces_.rbegin(); it != traces_.rend() && displayed++ < 5; ++it )
-    {
-        const Report& report = **it;
-        report.DisplayInTooltip( displayer );
-    }
+    for( T_Elements::const_reverse_iterator it = elements_.rbegin(); it != elements_.rend() && displayed++ < 5; ++it )
+        if( const Report* report = it->second )
+            report->DisplayInTooltip( displayer );
 }

@@ -155,3 +155,15 @@ QAction& Actions::InstallPackage()
     result.setToolTip( tools::translate( "Actions", "Install a data package" ) );
     return result;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Actions::CreatePackage
+// Created: JCR 2009-11-09
+// -----------------------------------------------------------------------------
+QAction& Actions::CreatePackage()
+{
+    QAction& result = CreateAction( tools::translate( "Actions", "Create package" ), "Create package" );
+    result.setIconSet( MAKE_PIXMAP( exercise_create ) );
+    result.setToolTip( tools::translate( "Actions", "Generate a data package (.otpack) easily exportable" ) );
+    return result;
+}

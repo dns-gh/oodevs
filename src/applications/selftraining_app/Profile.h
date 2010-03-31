@@ -25,16 +25,24 @@ class Profile
 {
 
 public:
+    //! @name Statics
+    //@{
+    static Profile Invalid;
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
+             Profile();
     explicit Profile( xml::xistream& xis );
     virtual ~Profile();
     //@}
 
     //! @name Accessors
     //@{
-    virtual QString GetLogin() const;
-    virtual bool IsSupervision() const;
+    QString GetLogin() const;
+    bool IsSupervision() const;
+    bool IsValid() const;
     //@}
 
 private:
@@ -42,6 +50,7 @@ private:
     //@{
     std::string login_;
     bool supervisor_;
+    bool valid_;
     //@}
 };
 

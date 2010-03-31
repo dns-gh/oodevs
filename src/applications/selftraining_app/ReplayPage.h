@@ -11,6 +11,7 @@
 #define __ReplayPage_h_
 
 #include "ContentPage.h"
+#include "Profile.h"
 
 namespace tools
 {
@@ -25,6 +26,7 @@ namespace kernel
 class ProgressPage;
 class ExerciseList;
 class DirectoryExerciseLister;
+class SessionList;
 
 // =============================================================================
 /** @class  ReplayPage
@@ -48,7 +50,8 @@ private slots:
     //! @name Operations
     //@{
     void OnStart();
-    void OnSelectExercise( const QString& exercise, const QString& profile );
+    void OnSelectExercise( const QString& exercise, const Profile& profile );
+    void OnSelectSession( const QString& session );
     //@}
 
 private:
@@ -72,7 +75,10 @@ private:
     kernel::Controllers&        controllers_;
     ProgressPage*               progressPage_;
     ExerciseList*               exercises_;
+    SessionList*                sessions_;
     QString                     exercise_;
+    Profile                     profile_;
+    QString                     session_;
     QListBox*                   sessionList_;
     std::auto_ptr< DirectoryExerciseLister > lister_;
     //@}

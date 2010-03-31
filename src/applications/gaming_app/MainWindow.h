@@ -41,6 +41,7 @@ namespace gui
     class LightingProxy;
     class GlSelector;
     class LocationsLayer;
+    class TerrainLayer;
 }
 
 class Services;
@@ -107,7 +108,8 @@ private:
     static std::string BuildRemotePath( std::string server, std::string path );
 
     void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::LocationsLayer& locationsLayer,
-                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, 
+                       gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
     //@}
 
     //! @name Copy/Assignment

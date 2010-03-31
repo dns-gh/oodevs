@@ -11,10 +11,11 @@
 
 #include "clients_gui_pch.h"
 #include "UnitListView.h"
-#include "clients_kernel/AgentTypes.h"
-#include "clients_kernel/AgentType.h"
-#include "clients_kernel/AutomatComposition.h"
+#include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentNature.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ComponentType.h"
 #include "ValuedDragObject.h"
@@ -152,7 +153,7 @@ void UnitListView::DisplayBy( const std::string& (kernel::AgentNature::*function
         ValuedListItem* item = new ValuedListItem( parentItem );
         item->SetNamed( type );
         item->setDragEnabled( true );
-        tools::Iterator< const ComponentType& > it( type.CreateIterator() );
+        tools::Iterator< const AgentComposition& > it( type.CreateIterator() );
         DeleteTail( ListView< UnitListView >::Display( it, item ) );
     }
 }
@@ -219,7 +220,7 @@ void UnitListView::DisplayByNature()
         ValuedListItem* item = new ValuedListItem( parentItem );
         item->SetNamed( type );
         item->setDragEnabled( true );
-        tools::Iterator< const ComponentType& > it( type.CreateIterator() );
+        tools::Iterator< const AgentComposition& > it( type.CreateIterator() );
         DeleteTail( ListView< UnitListView >::Display( it, item ) );
     }
     Sort( firstChild() );
@@ -258,10 +259,10 @@ void UnitListView::Sort( QListViewItem* item )
 // Name: UnitListView::Display
 // Created: SBO 2007-11-09
 // -----------------------------------------------------------------------------
-void UnitListView::Display( const ComponentType& type, ValuedListItem* item )
+void UnitListView::Display( const AgentComposition& type, ValuedListItem* item )
 {
-    item->SetFontColor( QColor( 100, 100, 100 ) ); 
-    item->Set( &type, type.GetName() );
+    item->SetFontColor( QColor( 100, 100, 100 ) );
+    item->Set( &type, type.GetType().GetName().c_str(), QString::number( type.GetCount() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -276,7 +277,7 @@ void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item
     else
         cnt = QString::number( type.GetMin() );
 
-    tools::Iterator< const ComponentType& > it( type.GetType().CreateIterator() );
+    tools::Iterator< const AgentComposition& > it( type.GetType().CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );
 
     item->Set( &type.GetType(), type.GetType().GetName().c_str(), cnt );

@@ -334,6 +334,17 @@ void Profile::Send( MsgsAuthenticationToClient::MsgProfile& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Profile::Send
+// Created: SBO 2009-12-18
+// -----------------------------------------------------------------------------
+void Profile::Send( MsgsAuthenticationToClient::MsgProfileDescription& asn ) const
+{
+    asn.set_login( strLogin_.c_str() );
+    asn.set_password( !strPassword_.empty() );
+    asn.set_supervisor( bSupervision_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Profile::Delete
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------

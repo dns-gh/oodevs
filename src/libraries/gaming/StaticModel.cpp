@@ -10,7 +10,7 @@
 #include "gaming_pch.h"
 #include "StaticModel.h"
 #include "reports/ReportFactory.h"
-#include "ScoreDefinitions.h"
+#include "SurfaceFactory.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/DetectionMap.h"
@@ -48,7 +48,6 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , drawings_           ( *new gui::DrawingTypes( controllers_.controller_ ) )
     , indicators_         ( *new indicators::Primitives() )
     , gaugeTypes_         ( *new indicators::GaugeTypes() )
-    , scores_             ( *new ScoreDefinitions( indicators_, gaugeTypes_ ) )
     , urbanTypes_         ( *new urban::StaticModel() )
 {
     // NOTHING
@@ -60,7 +59,6 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
-    delete &scores_;
     delete &gaugeTypes_;
     delete &indicators_;
     delete &drawings_;
@@ -90,7 +88,6 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     drawings_.Load( tools::GeneralConfig::BuildResourceChildFile( "DrawingTemplates.xml" ) );
     indicators_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
     gaugeTypes_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
-    scores_.Load( config.GetScoresFile() );
     controllers_.controller_.Update( ModelLoaded( config ) );
 }
 
@@ -100,7 +97,6 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
-    scores_.Purge();
     gaugeTypes_.Purge();
     indicators_.Purge();
     drawings_.Purge();
@@ -109,5 +105,3 @@ void StaticModel::Purge()
     objectTypes_.Purge();
     //urbanTypes_.Purge();
 }
-
-    

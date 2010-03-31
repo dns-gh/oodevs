@@ -58,6 +58,16 @@ void Lives::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
     controller_.Update( *this );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Lives::DoUpdate
+// Created: SBO 2009-11-23
+// -----------------------------------------------------------------------------
+void Lives::DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message )
+{
+    if( message.has_etat_op() )
+        life_ = message.etat_op() * 0.01f;
+    controller_.Update( *this );
+}
 
 // -----------------------------------------------------------------------------
 // Name: Lives::GetLife

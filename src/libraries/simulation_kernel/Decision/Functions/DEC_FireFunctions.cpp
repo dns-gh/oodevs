@@ -115,7 +115,6 @@ float DEC_FireFunctions::GetMinRangeToIndirectFire( const MIL_AgentPion& callerA
 {
     if( !pDotationCategory )
         return -1.f ;
-    
     const MT_Float rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMinRangeToIndirectFire( *pDotationCategory, true );
     if ( rRange == std::numeric_limits< MT_Float >::max() ) // Pas de possibilité de tir
         return  -1.f;

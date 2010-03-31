@@ -11,6 +11,7 @@
 #define __ScoreDefinitions_h_
 
 #include "tools/Resolver.h"
+#include "protocol/Aar.h"
 
 namespace indicators
 {
@@ -43,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& file );
+    void Update( const MsgsAarToClient::MsgAarInformation& asnMsg );
     void Purge();
     //@}
 

@@ -22,8 +22,11 @@
 */
 // Created: AGE 2006-10-24
 // =============================================================================
-class ADN_Nature_GUI : public gui::NatureEditionWidget, public ADN_Gfx_ABC
+class ADN_Nature_GUI : public gui::NatureEditionWidget
+                     , public ADN_Gfx_ABC
 {
+    Q_OBJECT;
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -36,6 +39,13 @@ private:
     //@{
     ADN_Nature_GUI( const ADN_Nature_GUI& );            //!< Copy constructor
     ADN_Nature_GUI& operator=( const ADN_Nature_GUI& ); //!< Assignement operator
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnTextChanged( const QString& );
+    void UpdateEnableState();
     //@}
 };
 

@@ -210,7 +210,6 @@ kernel::Team_ABC* TeamFactory::CreateTeam( xml::xistream& xis )
 kernel::Object_ABC* TeamFactory::CreateObject( const kernel::ObjectType& type, kernel::Team_ABC& team, const QString& name, const kernel::Location_ABC& location )
 {
     Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, result->GetType(), location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ObjectHierarchies( *result, &team ) );
     ObjectAttributesContainer& attributes = *new ObjectAttributesContainer();

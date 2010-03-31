@@ -13,6 +13,7 @@
 #include "PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include <boost/serialization/export.hpp>
 
 #include "simulation_kernel/AlgorithmsFactories.h"
 #include "TransportCapacityComputerFactory_ABC.h"

@@ -64,4 +64,3 @@ void NatureEditionWidget::setText( const QString& nature )
 {
     rootWidget_->SetNature( nature );
 }
-

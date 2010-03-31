@@ -44,7 +44,6 @@ public:
     virtual const CoordinateSystems& GetCoordSystem() const = 0;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const = 0;
 
-
     template< typename T >
     geometry::Point2f ConvertToXY( const T& latlong ) const
     {

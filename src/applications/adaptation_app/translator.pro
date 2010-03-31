@@ -12,6 +12,7 @@ ADN_ActiveProtectionsListView.cpp \
 ADN_AddElementCommand.inl \
 ADN_AiEngine_Data.cpp \
 ADN_AiEngine_GUI.cpp \
+ADN_App.cpp \
 ADN_AutomatLogCategory_ListView.cpp \
 ADN_AutomatLog_ListView.cpp \
 ADN_Automata_Data.cpp \
@@ -154,4 +155,4 @@ ADN_Wizard_FirstPage_Default.inl \
 ADN_Workspace.cpp \
 qtundo.cpp \
 
-TRANSLATIONS = adaptation_app_fr.ts adaptation_app_en.ts
+TRANSLATIONS = adaptation_app_fr.ts

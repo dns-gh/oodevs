@@ -4214,11 +4214,11 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Delay Parameters</source>
-        <translation type="unfinished">Paramètres de délai</translation>
+        <translation>Paramètres de délai</translation>
     </message>
     <message>
         <source>Communication Delay</source>
-        <translation type="unfinished">Délai de communication</translation>
+        <translation>Délai de communication</translation>
     </message>
 </context>
 <context>
@@ -8748,6 +8748,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>UrbanBlockBM</source>
         <translation>UrbanBlockBM</translation>
     </message>
+    <message>
+        <source>PathBM</source>
+        <translation>PathBM</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_Composantes_GUI</name>
@@ -9614,7 +9618,7 @@ Erreur: %3</translation>
     <name>Application</name>
     <message>
         <source>SWORD</source>
-        <translation type="obsolete">Sword</translation>
+        <translation>Sword</translation>
     </message>
 </context>
 <context>

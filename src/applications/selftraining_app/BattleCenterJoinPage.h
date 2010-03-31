@@ -11,6 +11,7 @@
 #define __BattleCenterJoinPage_h_
 
 #include "ContentPage.h"
+#include "Profile.h"
 
 namespace kernel
 {
@@ -43,7 +44,7 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void SelectExercise( const QString& exercise, const QString& profile );
+    void SelectExercise( const QString& exercise, const Profile& profile );
     void JoinExercise();
     void ReloadExerciseList();
     //@}
@@ -70,7 +71,7 @@ private:
     QSpinBox*                     port_;
     ExerciseList*                 exercises_;
     QString                       exercise_;
-    QString                       profile_;
+    Profile                       profile_;
     NetworkExerciseLister&        exerciseLister_;
     //@}
 };

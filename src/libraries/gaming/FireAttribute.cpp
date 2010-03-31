@@ -85,9 +85,9 @@ void FireAttribute::DoUpdate( const MsgsSimToClient::MsgObjectCreation& message 
 // -----------------------------------------------------------------------------
 void FireAttribute::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Fire", "Fire" ) )
-        .Display( tools::translate( "Fire", "Fire class:" ), fireClass_ )
-        .Display( tools::translate( "Fire", "Fire temperature:" ), heat_ );
+    displayer.Group( tools::translate( "Object", "Fire" ) )
+        .Display( tools::translate( "Object", "Fire class:" ), fireClass_ )
+        .Display( tools::translate( "Object", "Fire temperature:" ), heat_ );
 }
 
 // -----------------------------------------------------------------------------

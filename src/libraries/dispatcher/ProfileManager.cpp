@@ -134,6 +134,16 @@ void ProfileManager::Send( ClientPublisher_ABC& publisher ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfileManager::Send
+// Created: SBO 2009-12-18
+// -----------------------------------------------------------------------------
+void ProfileManager::Send( MsgsAuthenticationToClient::MsgAuthenticationResponse& message ) const
+{
+    for( CIT_ProfileMap it = profiles_.begin(); it != profiles_.end(); ++it )
+        it->second->Send( *message.mutable_profiles()->add_elem() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfileManager::Create
 // Created: SBO 2007-01-22
 // -----------------------------------------------------------------------------

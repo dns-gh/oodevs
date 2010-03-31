@@ -15,6 +15,11 @@
 #include <qmainwindow.h>
 #include "ADN_Callback.h"
 
+namespace tools
+{
+    class GeneralConfig;
+}
+
 class ADN_Workspace;
 class ADN_Config;
 class ADN_Table;
@@ -91,6 +96,7 @@ private:
     typedef T_ListViewRegistrationMap::iterator                    IT_ListViewRegistrationMap;
 
 private:
+    std::auto_ptr< tools::GeneralConfig > generalConfig_;
     const QString strAdminPassword_;
 
     ADN_Workspace&          workspace_;

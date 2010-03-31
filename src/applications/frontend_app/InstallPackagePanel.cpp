@@ -14,9 +14,12 @@
 #include "resources.h"
 #include "frontend/commands.h"
 #include "frontend/Config.h"
-#include "zipstream/zipstream.h"
 #include "clients_gui/Tools.h"
 #include <xeumeuleu/xml.h>
+#pragma warning( push, 0 )
+#pragma warning( disable: 4996 )
+#include <zipstream/zipstream.h>
+#pragma warning( pop )
 
 #include <qaction.h>
 #include <qcursor.h>
@@ -30,9 +33,11 @@
 #include <qtextedit.h>
 #include <qapplication.h>
 
+#pragma warning( push, 0 )
 #pragma warning( disable: 4127 4244 4245 )
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
+#pragma warning( pop )
 
 namespace bfs = boost::filesystem;
 
@@ -212,8 +217,9 @@ bool InstallPackagePanel::ReadContentFile()
         name_->setText( name.c_str() );
         description_->setText( description.c_str() );
     }
-    catch( xml::exception& )
+    catch( xml::exception& e )
     {
+        bubble_->ShowError( e.what() );
         return false;
     }
     return true;

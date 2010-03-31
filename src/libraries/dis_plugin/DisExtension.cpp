@@ -17,6 +17,7 @@
 #include "tic_plugin/Platform_ABC.h"
 #include "tic_plugin/PlatformAdapter.h"
 #include "dispatcher/Agent.h"
+#include "dispatcher/EntitySymbols_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ComponentType.h"
 #include "UdpNetwork.h"
@@ -37,6 +38,7 @@ DisExtension::DisExtension( const Time_ABC& time, IdentifierFactory_ABC& id, con
     , network_  ( network )
     , resolver_ ( resolver )
     , holder_   ( holder )
+    , forceId_  ( 0 )
     , exercise_ ( exercise )
     , lagAFrame_( lagAFrame )
     , adapted_  ( new plugins::tic::PlatformAdapter( holder_, converter ) )
@@ -53,16 +55,50 @@ DisExtension::~DisExtension()
     // NOTHING
 }
 
+namespace
+{
+    unsigned char ExtractForceId( const std::string& app6 )
+    {
+        if( app6.size() < 2 )
+            return 0;
+        switch( app6.at( 1 ) )
+        {
+        case 'f': case 'F': return 1;
+        case 'h': case 'H': return 2;
+        case 'n': case 'N': return 3;
+        }
+        return 0;
+    }
+
+    unsigned char ForceId( const dispatcher::Agent& entity )
+    {
+        if( const dispatcher::EntitySymbols_ABC* symbol = entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
+            return ExtractForceId( symbol->BuildSymbol( true ) );
+        return 0;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DisExtension::DoUpdate
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
 void DisExtension::DoUpdate( const MsgUnitAttributes& )
 {
+    forceId_ = ForceId( holder_ ); // $$$$ SBO 2009-12-11: doesn't need to be computed every time
     if( tic::TicExtension_ABC* extension = holder_.Retrieve< tic::TicExtension_ABC >() )
         extension->Accept( *this );
     else
         AddPlatform( *adapted_ );
+}
+
+namespace
+{
+    std::string MakeName( const dispatcher::Agent& entity, const plugins::tic::Platform_ABC& platform )
+    {
+        std::stringstream ss;
+        ss << entity.GetId() << "/" << platform.GetType().GetName();
+        return ss.str();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -76,7 +112,8 @@ void DisExtension::AddPlatform( const plugins::tic::Platform_ABC& platform )
         it = ids_.insert( std::make_pair( &platform, id_.CreateNewIdentifier() ) ).first;
 
     EntityStatePDU pdu( time_.GetTime(), exercise_, it->second );
-    pdu.SetEntityName( holder_.GetName().ascii() );
+    pdu.SetForceId   ( forceId_ );
+    pdu.SetEntityName( MakeName( holder_, platform ) );
     pdu.SetEntityType( resolver_.Find( platform.GetType() ) );
     switch( platform.GetState() )
     {

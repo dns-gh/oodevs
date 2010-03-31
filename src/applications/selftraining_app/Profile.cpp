@@ -11,6 +11,18 @@
 #include "Profile.h"
 #include <xeumeuleu/xml.h> 
 
+Profile Profile::Invalid;
+
+// -----------------------------------------------------------------------------
+// Name: Profile constructor
+// Created: SBO 2010-02-19
+// -----------------------------------------------------------------------------
+Profile::Profile()
+    : valid_( false )
+{
+    // NOTHING
+}
+
 // -----------------------------------------------------------------------------
 // Name: Profile constructor
 // Created: RDS 2008-09-10
@@ -18,6 +30,7 @@
 Profile::Profile( xml::xistream& xis )
     : login_( xml::attribute< std::string >( xis, "name" ) )
     , supervisor_( false )
+    , valid_( true )
 {
     xis >> xml::optional() >> xml::attribute( "supervision", supervisor_ );
 }
@@ -47,4 +60,13 @@ QString Profile::GetLogin() const
 bool Profile::IsSupervision() const
 {
     return supervisor_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Profile::IsValid
+// Created: SBO 2010-02-19
+// -----------------------------------------------------------------------------
+bool Profile::IsValid() const
+{
+    return valid_;
 }

@@ -49,7 +49,7 @@ void ProfileList::Update( const QString& exercise )
     {
         if( !exercise.isEmpty() )
             ReadProfiles( exercise.ascii() );
-        setSelected( 0, true );
+        emit highlighted( 0 );
     }
     catch( ... )
     {
@@ -102,4 +102,6 @@ void ProfileList::OnSelect( int index )
 {
     if( index < int( profiles_.size() ) )
         emit Select( profiles_[index] );
+    else
+        emit Select( Profile::Invalid );
 }

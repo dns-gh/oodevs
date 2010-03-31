@@ -157,11 +157,11 @@
     <name>Fire</name>
     <message>
         <source>Fire</source>
-        <translation>Incendie</translation>
+        <translation type="obsolete">Incendie</translation>
     </message>
     <message>
         <source>Fire class:</source>
-        <translation>Classe d&apos;incendie :</translation>
+        <translation type="obsolete">Classe d&apos;incendie :</translation>
     </message>
 </context>
 <context>
@@ -319,7 +319,7 @@
     <name>MedicalTreatment</name>
     <message>
         <source>Number of available beds:</source>
-        <translation>Nombre de lits disponibles :</translation>
+        <translation>Nombre de lits disponibles:</translation>
     </message>
     <message>
         <source></source>
@@ -339,7 +339,7 @@
     </message>
     <message>
         <source>Total number of beds:</source>
-        <translation>Nombre total de lits :</translation>
+        <translation>Nombre total de lits:</translation>
     </message>
     <message>
         <source>Medical Treatment types:</source>
@@ -399,11 +399,11 @@
     </message>
     <message>
         <source>NBC state:</source>
-        <translation>Etat NBC :</translation>
+        <translation>Etat NBC:</translation>
     </message>
     <message>
         <source>Danger:</source>
-        <translation>Danger :</translation>
+        <translation>Danger:</translation>
     </message>
 </context>
 <context>
@@ -560,15 +560,15 @@
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle type</source>
-        <translation>Info/Paramètres de démolition de cible/Type d&apos;obstacle</translation>
+        <translation>Info/Attributs de destruction/Type d&apos;obstacle</translation>
     </message>
     <message>
         <source>Info/Demolition target parameters/Obstacle activated</source>
-        <translation>Info/Paramètres de démolition de cible/Obstacle activé</translation>
+        <translation>Info/Attributs de destruction/Obstacle activé</translation>
     </message>
     <message>
         <source>Supply route</source>
-        <translation>Route de ravitaillement</translation>
+        <translation>Itinéraire logistique</translation>
     </message>
     <message>
         <source>Info/Construction/Dotation/Type</source>
@@ -576,11 +576,19 @@
     </message>
     <message>
         <source>Info/Construction/Dotation/Count</source>
-        <translation>Info/Construction/Dotation/Compte</translation>
+        <translation>Info/Construction/Dotation/Nombre</translation>
     </message>
     <message>
         <source>Info/Construction/Completion</source>
         <translation>Info/Construction/Réalisation</translation>
+    </message>
+    <message>
+        <source>Fire</source>
+        <translation>Feu</translation>
+    </message>
+    <message>
+        <source>Fire class:</source>
+        <translation>Classe de feu:</translation>
     </message>
 </context>
 <context>
@@ -672,6 +680,15 @@ Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
     </message>
 </context>
 <context>
+    <name>ScoresModel</name>
+    <message>
+        <source>Score definitions contain errors:
+Reason: %1.</source>
+        <translation>La définition des scores contient des erreurs:
+Détail: %1.</translation>
+    </message>
+</context>
+<context>
     <name>Stocks</name>
     <message>
         <source>Stocks</source>
@@ -680,6 +697,15 @@ Vous ne pourrez pas donner d&apos;ordres à ces unités en phase de conduite.
     <message>
         <source>Stocks/Stocks</source>
         <translation>Stocks/Stocks</translation>
+    </message>
+</context>
+<context>
+    <name>SuccessFactorsModel</name>
+    <message>
+        <source>Success factor definitions contain errors:
+Reason: %1.</source>
+        <translation>La définition des facteurs de succès contient des erreurs:
+Détail: %1.</translation>
     </message>
 </context>
 <context>

@@ -55,8 +55,8 @@ FireAttribute::~FireAttribute()
 // -----------------------------------------------------------------------------
 void FireAttribute::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Fire", "Fire" ) )
-        .Display( tools::translate( "Fire", "Fire class:" ), fireClass_ );
+    displayer.Group( tools::translate( "Object", "Fire" ) )
+        .Display( tools::translate( "Object", "Fire class:" ), fireClass_ );
 }
 
 

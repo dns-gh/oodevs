@@ -20,11 +20,13 @@ using namespace frontend;
 // Name: JoinAnalysis constructor
 // Created: AGE 2007-10-05
 // -----------------------------------------------------------------------------
-JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& exercise, unsigned port, bool attach )
+JoinAnalysis::JoinAnalysis( const tools::GeneralConfig& config, const QString& exercise, const QString& profile, unsigned port, bool attach )
     : SpawnCommand( config, "gaming_app.exe", attach )
 {
     AddRootDirArgument();
     AddExerciseArgument( exercise );
+    if( !profile.isEmpty() )
+        addArgument( "--login=\"" + profile +"\"" );
     const std::string host = "--host=localhost:"  // $$$$ AGE 2008-01-07: 
                            + boost::lexical_cast< std::string >( port );
     addArgument( host.c_str() );

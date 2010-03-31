@@ -29,5 +29,5 @@ IntelligenceKarmas::IntelligenceKarmas()
 // -----------------------------------------------------------------------------
 IntelligenceKarmas::~IntelligenceKarmas()
 {
-     // NOTHING
+    // NOTHING
 }

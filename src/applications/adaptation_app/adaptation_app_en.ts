@@ -4991,6 +4991,24 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
 </context>
 <context>
+    <name>Application</name>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Application</name>
+    <message>
+        <source>SWORD Officer Training</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SWORD</source>
+        <translation>SWORD Officer Training</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>d</source>

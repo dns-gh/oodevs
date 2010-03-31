@@ -11,6 +11,13 @@
 #include "DisExtensionFactory.h"
 #include "DisExtension.h"
 #include "dispatcher/Agent.h"
+#include "dispatcher/AgentSymbols.h"
+#include "dispatcher/Automat.h"
+#include "dispatcher/AutomatSymbols.h"
+#include "dispatcher/Formation.h"
+#include "dispatcher/FormationSymbols.h"
+#include "dispatcher/Side.h"
+#include "dispatcher/SideSymbols.h"
 #include <xeumeuleu/xml.h>
 
 using namespace plugins::dis;
@@ -49,8 +56,40 @@ DisExtensionFactory::~DisExtensionFactory()
 // -----------------------------------------------------------------------------
 void DisExtensionFactory::Create( dispatcher::Agent& entity )
 {
+    if( !entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
+        entity.Attach< dispatcher::EntitySymbols_ABC >( *new dispatcher::AgentSymbols( entity ) );
     std::auto_ptr< DisExtension > extension( new DisExtension( time_, *this, converter_, network_, resolver_, entity, exercise_, lag_ ) );
     entity.Attach( *extension.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisExtensionFactory::Create
+// Created: SBO 2008-02-13
+// -----------------------------------------------------------------------------
+void DisExtensionFactory::Create( dispatcher::Automat& entity )
+{
+    if( !entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
+        entity.Attach< dispatcher::EntitySymbols_ABC >( *new dispatcher::AutomatSymbols( entity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisExtensionFactory::Create
+// Created: SBO 2008-02-13
+// -----------------------------------------------------------------------------
+void DisExtensionFactory::Create( dispatcher::Formation& entity )
+{
+    if( !entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
+        entity.Attach< dispatcher::EntitySymbols_ABC >( *new dispatcher::FormationSymbols( entity ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DisExtensionFactory::Create
+// Created: SBO 2008-02-13
+// -----------------------------------------------------------------------------
+void DisExtensionFactory::Create( dispatcher::Side& entity )
+{
+    if( !entity.Retrieve< dispatcher::EntitySymbols_ABC >() )
+        entity.Attach< dispatcher::EntitySymbols_ABC >( *new dispatcher::SideSymbols( entity ) );
 }
 
 // -----------------------------------------------------------------------------

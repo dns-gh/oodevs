@@ -19,7 +19,7 @@ using namespace plugins::dis;
 // Created: AGE 2008-03-10
 // -----------------------------------------------------------------------------
 DisHeader::DisHeader( unsigned char exercise )
-     : protocolVersion_   ( 6 )
+     : protocolVersion_   ( 5 )
      , exerciseIdentifier_( exercise )
      , PDUType_           ( 0 )
      , protocolFamily_    ( 0 )

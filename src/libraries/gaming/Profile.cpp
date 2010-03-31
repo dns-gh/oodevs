@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "Profile.h"
+#include "AvailableProfile.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -34,14 +35,13 @@ using namespace kernel;
 // Name: Profile constructor
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std::string& profile, bool needLogin )
+Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std::string& profile )
     : controller_ ( controllers.controller_ )
     , publisher_  ( publisher )
     , login_      ( profile )
     , loggedIn_   ( false )
     , supervision_( false )
     , simulation_ ( true )
-    , needLogin_  ( needLogin )
 {
     controller_.Register( *this );
 }
@@ -61,15 +61,10 @@ Profile::~Profile()
 // -----------------------------------------------------------------------------
 void Profile::Login() const
 {
-    if( !needLogin_ )
-    {
-        authentication::AuthenticationRequest message;
-        message().set_login( login_.c_str() );
-        message().set_password( password_.c_str() );
-        message.Send( publisher_ );
-    }
-    else
-        controller_.Update( *this );
+    authentication::AuthenticationRequest message;
+    message().set_login( login_.c_str() );
+    message().set_password( password_.c_str() );
+    message.Send( publisher_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +73,6 @@ void Profile::Login() const
 // -----------------------------------------------------------------------------
 void Profile::Login( const std::string& login, const std::string& password ) const
 {
-    needLogin_ = false;
     login_    = login;
     password_ = password;
     Login();
@@ -112,6 +106,9 @@ void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationRespons
         controller_.Update( *(Profile_ABC*)this );
     }
     controller_.Update( *this );
+    if( !loggedIn_ && message.has_profiles() )
+        for( unsigned int i = 0; i < message.profiles().elem_size(); ++i )
+            controller_.Update( AvailableProfile( message.profiles().elem(i) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +132,6 @@ void Profile::Update( const Model& model, const MsgsAuthenticationToClient::MsgP
 // -----------------------------------------------------------------------------
 void Profile::Update( const MsgsAuthenticationToClient::MsgProfile& profile )
 {
-    needLogin_ = false;
     login_ = profile.login();
     if( profile.has_password()  )
         password_ = profile.password();
@@ -395,7 +391,6 @@ void Profile::Remove( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void Profile::Clean()
 {
-    needLogin_ = true;
     login_ = "";
     password_ = "";
     supervision_ = false;

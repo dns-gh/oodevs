@@ -239,11 +239,7 @@ MT_Vector2D MIL_PopulationConcentration::GetSafetyPosition( const MIL_AgentPion&
 MT_Float MIL_PopulationConcentration::GetPullingFlowsDensity() const
 {
     if( pSplittingObject_ )
-    {
-        const MT_Float rObjectPullingDensity = pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity();
-        if( rObjectPullingDensity != std::numeric_limits< MT_Float >::max() )
-            return rObjectPullingDensity;
-    }
+        return pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity();
     return rPullingFlowsDensity_;  
 }
 

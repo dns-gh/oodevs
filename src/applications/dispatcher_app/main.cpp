@@ -47,11 +47,19 @@ int Run( int argc, char** argv )
 //-----------------------------------------------------------------------------
 int main( int argc, char** argv )
 {
-    __try
+    /*__try
     {
         return Run( argc, argv );
     }
     __except( MT_CrashHandler::ContinueSearch( GetExceptionInformation() ) )
     {
+    }*/
+	try
+    {
+        return Run( argc, argv );
+    }
+    catch( std::exception& e )
+    {
+		MT_LOG_ERROR_MSG( e.what() );
     }
 }

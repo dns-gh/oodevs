@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ModelBuilder.h"
 #include "moc_ModelBuilder.cpp"
+#include "icons.h"
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/AgentsModel.h"
@@ -26,8 +27,35 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include <boost/bind.hpp>
+#include <boost/function.hpp>
 
 using namespace kernel;
+
+namespace
+{
+    class ConfirmationBox : public QMessageBox
+    {
+    private:
+        typedef boost::function1< void, int > T_Callback;
+    public:
+        ConfirmationBox( const QString& title, T_Callback callback )
+            : QMessageBox( title, "", QMessageBox::Warning, QMessageBox::Yes, QMessageBox::No | QMessageBox::Default, QMessageBox::NoButton )
+            , callback_( callback )
+        {
+            setIcon( MAKE_PIXMAP( csword ) );
+            hide();
+        }
+
+        virtual void done( int result )
+        {
+            callback_( result );
+            hide();
+        }
+    private:
+        T_Callback callback_;
+    };
+}
 
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder constructor
@@ -42,6 +70,7 @@ ModelBuilder::ModelBuilder( Controllers& controllers, Model& model )
     , selectedAutomat_( controllers )
     , selectedFormation_( controllers )
     , toDelete_( controllers )
+    , confirmation_( new ConfirmationBox( tr( "Confirmation" ), boost::bind( &ModelBuilder::OnConfirmDeletion, this, _1 ) ) )
 {
     controllers_.Register( *this );
 }
@@ -140,6 +169,19 @@ void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::
 void ModelBuilder::OnDelete()
 {
     if( toDelete_ )
+    {
+        confirmation_->setText( tr( "Delete unit '%1' and all its subordinates?" ).arg( toDelete_->GetName() ) );
+        confirmation_->show();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelBuilder::OnDelete
+// Created: SBO 2010-03-22
+// -----------------------------------------------------------------------------
+void ModelBuilder::OnConfirmDeletion( int result )
+{
+    if( result == QMessageBox::Yes && toDelete_ )
         DeleteEntity( *toDelete_ );
 }
 

@@ -10,14 +10,18 @@
 #ifndef __Gui_StatusBar_h_
 #define __Gui_StatusBar_h_
 
+#include "tools/ElementObserver_ABC.h"
+
 namespace kernel
 {
-    class DetectionMap;
+    class Controllers;
     class CoordinateConverter_ABC;
+    class DetectionMap;
 }
 
 namespace gui
 {
+    class TerrainPicker;
 
 // =============================================================================
 /** @class  StatusBar
@@ -32,7 +36,7 @@ class StatusBar : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             StatusBar( QStatusBar* bar, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter );
+             StatusBar( QStatusBar* bar, TerrainPicker& picker, const kernel::DetectionMap& detection, const kernel::CoordinateConverter_ABC& converter );
     virtual ~StatusBar();
     //@}
 
@@ -42,6 +46,7 @@ public slots:
     void OnMouseMove( const geometry::Point2f& position );
     void OnMouseMove( const geometry::Point3f& position );
 	void ParameterSelected( int index );
+    void TerrainPicked( const QString& type );
     //@}
 
 private:
@@ -53,9 +58,14 @@ private:
 
     //! @name Helpers
     //@{
-    static QString NotSet();
-	void Init();
-	void DisplayParameter( QLabel& label );
+    QLabel* AddField( QStatusBar* parent, unsigned int size, const QString& title, bool checked );
+    QLabel* AddField( QStatusBar* parent, unsigned int size, int id, bool checked );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::map< int, QLabel* > T_CoordinateFields;
+    typedef std::vector< QLabel* >   T_MenuFields;
     //@}
 
 private:
@@ -63,15 +73,13 @@ private:
     //@{
     const kernel::DetectionMap& detection_;
     const kernel::CoordinateConverter_ABC& converter_;
+    TerrainPicker& terrainPicker_;
 
-    QLabel* pPositionXY_;
+    T_CoordinateFields coordinateFields_;
+    T_MenuFields menuFields_;
 	QLabel* pElevation_;
-    QLabel* pPositionMgrs_;
-    QLabel* pPositionLatLong_;
-    QLabel* pPositionDms_;
-	QToolButton* pButtonBarParameters_;
+    QLabel* pTerrainType_;
 	QPopupMenu* pMenu_;
-    int ElevId_;
     //@}
 };
 

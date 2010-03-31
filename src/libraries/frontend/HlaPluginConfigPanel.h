@@ -10,7 +10,7 @@
 #ifndef __HlaPluginConfigPanel_h_
 #define __HlaPluginConfigPanel_h_
 
-#include <qhbox.h>
+#include "PluginConfig_ABC.h"
 
 namespace tools
 {
@@ -20,13 +20,16 @@ namespace tools
 class QLineEdit;
 class QGroupBox;
 
+namespace frontend
+{
+
 // =============================================================================
 /** @class  HlaPluginConfigPanel
     @brief  HlaPluginConfigPanel
 */
 // Created: SBO 2008-03-05
 // =============================================================================
-class HlaPluginConfigPanel : public QHBox
+class HlaPluginConfigPanel : public PluginConfig_ABC
 {
 
 public:
@@ -38,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( const std::string& exercise, const std::string& session );
+    virtual void Commit( const std::string& exercise, const std::string& session );
     //@}
 
 private:
@@ -61,5 +64,7 @@ private:
     QLineEdit* name_;
     //@}
 };
+
+}
 
 #endif // __HlaPluginConfigPanel_h_

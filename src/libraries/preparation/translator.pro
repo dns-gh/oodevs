@@ -29,7 +29,9 @@ ObstacleAttribute.cpp \
 Population.cpp \
 ProfileFactory.cpp \
 ProfilesModel.cpp \
+ScoresModel.cpp \
 Stocks.cpp \
+SuccessFactorsModel.cpp \
 SupplyRouteAttribute.cpp \
 SupplyStates.cpp \
 TacticalLine_ABC.cpp \
@@ -37,4 +39,4 @@ Tc2States.cpp \
 Team.cpp \
 TeamsModel.cpp \
 
-TRANSLATIONS = preparation_fr.ts preparation_en.ts
+TRANSLATIONS = preparation_fr.ts

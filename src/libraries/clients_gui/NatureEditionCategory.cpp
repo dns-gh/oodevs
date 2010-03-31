@@ -23,7 +23,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 NatureEditionCategory::NatureEditionCategory( QWidget* parent, const kernel::SymbolRule* rule )
     : QHBox( parent )
-    , rule_( rule  )
+    , rule_( rule )
     , current_( QString::null )
     , next_( 0 )
 {
@@ -33,7 +33,7 @@ NatureEditionCategory::NatureEditionCategory( QWidget* parent, const kernel::Sym
     box_->setSizePolicy( QSizePolicy::Minimum, QSizePolicy::Preferred );
     setStretchFactor( label_, 1 );
     setStretchFactor( box_, 1 );
-    setStretchFactor( new QWidget(this), 1 );
+    setStretchFactor( new QWidget( this ), 1 );
     rule_->Accept( *this );
 
     connect( box_, SIGNAL( activated( int ) ), this, SLOT( OnComboChange() ) );
@@ -54,10 +54,14 @@ NatureEditionCategory::~NatureEditionCategory()
 // -----------------------------------------------------------------------------
 void NatureEditionCategory::OnComboChange()
 {
-    current_ = box_->currentText();
-    delete next_; next_ = 0;
-    rule_->Accept( *this );
-    emit OnNatureChanged( next_ ? current_ : "" );
+    const QString current = box_->currentText();
+    if( current_ != current )
+    {
+        current_ = current;
+        delete next_; next_ = 0;
+        rule_->Accept( *this );
+        emit NatureChanged( current_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -117,13 +121,6 @@ QString NatureEditionCategory::GetNature() const
 // -----------------------------------------------------------------------------
 void NatureEditionCategory::SetNature( const QString& nature )
 {
-    if( nature.isEmpty() )
-    {
-        Select( tr( "undefined" ) );
-        if( next_ )
-            next_->SetNature( nature );
-        return;
-    }
     QStringList list = QStringList::split( "/", nature );
     Select( list.front() );
     list.pop_front();

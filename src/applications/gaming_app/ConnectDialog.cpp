@@ -78,16 +78,15 @@ void ConnectDialog::Validate()
     {
         network_.Connect( std::string( pHostNameComboBox_->currentText() ), unsigned short( pPortSpinBox_->value() ) );
         SaveConfig();
+        accept();
     }
-    catch ( std::exception& e )
+    catch( std::exception& e )
     {
-        logger_.Info() << "Non connecté à " << pHostNameComboBox_->currentText().ascii() << ":" << pPortSpinBox_->value() << "\n"
-                       << "Raison :" << "\n"
-                       << e.what();
+        logger_.Info() << tr( "Not connected to %1:%2\nReason: %3\n" ).arg( pHostNameComboBox_->currentText() )
+                                                                      .arg( pPortSpinBox_->value() )
+                                                                      .arg( e.what() );
         reject();
-        return;
     }
-    accept();
 }
 
 //-----------------------------------------------------------------------------

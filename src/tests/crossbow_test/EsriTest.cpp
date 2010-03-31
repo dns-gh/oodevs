@@ -7,7 +7,7 @@
 //
 // *****************************************************************************
 
-#include "plugins_test_pch.h"
+#include "crossbow_test_pch.h"
 #include "crossbow_plugin/ESRI.h"
 #include "crossbow_plugin/QueryBuilder.h"
 #include "crossbow_plugin/ConnectionDatabase.h"

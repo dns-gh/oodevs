@@ -41,6 +41,7 @@ class ObjectCreationPanel : public gui::InfoPanel_ABC
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor

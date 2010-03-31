@@ -12,6 +12,11 @@
 
 #include "Panel_ABC.h"
 
+namespace frontend
+{
+    class PluginConfig_ABC;
+}
+
 namespace tools
 {
     class GeneralConfig;
@@ -19,9 +24,6 @@ namespace tools
 
 class InfoBubble;
 class GameConfigPanel;
-class HlaPluginConfigPanel;
-class DisPluginConfigPanel;
-class CrossbowPluginConfigPanel;
 class QGroupBox;
 class QLineEdit;
 class QListBox;
@@ -65,6 +67,13 @@ private:
     //@{
     virtual void Update();
     QString BuildSessionDirectory();
+    template< typename T >
+    void AddPlugin( QTabWidget* tabs, const QString& name );
+    //@}
+
+    //! @name Helpers
+    //@{
+    typedef std::vector< frontend::PluginConfig_ABC* > T_Plugins;
     //@}
 
 protected:
@@ -74,15 +83,13 @@ protected:
     QGroupBox* listBox_;
     QListBox* list_;
     GameConfigPanel* configPanel_;
-    HlaPluginConfigPanel* hlaConfigPanel_;
-    DisPluginConfigPanel* disConfigPanel_;
-    CrossbowPluginConfigPanel* crossbowConfigPanel_;
     QLineEdit* sessionName_;
     QTextEdit* sessionComment_;
     QSpinBox* exerciseNumber_;
     InfoBubble* bubble_;
     QPushButton* okay_;
     std::string session_;
+    T_Plugins plugins_;
     //@}
 };
 

@@ -65,24 +65,23 @@ namespace
 // Name: Menu constructor
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
-Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, QDialog& successFactorDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
+Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog, gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help )
     : QMenuBar      ( pParent )
-    , fileMenu_     ( 0 )
     , saveMenuItem_ ( 0 )
 {
-    fileMenu_ = new QPopupMenu( this );
-    fileMenu_->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
-    fileMenu_->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
-    fileMenu_->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W );
-    fileMenu_->insertSeparator();
-    fileMenu_->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
-    fileMenu_->insertSeparator();
-    saveMenuItem_ = fileMenu_->insertItem( MAKE_ICON( save )  , tools::translate( "Menu", "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
-    fileMenu_->insertSeparator();
-    fileMenu_->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
-    insertItem( tools::translate( "Menu", "&File" ), fileMenu_ );
-
     QPopupMenu* menu = new QPopupMenu( this );
+    menu->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , CTRL + Key_N );
+    menu->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), CTRL + Key_O );
+    menu->insertItem( tools::translate( "Menu", "Close" ), parent(), SLOT( Close() ), CTRL + Key_W );
+    menu->insertSeparator();
+    menu->insertItem( tools::translate( "Menu", "&Import..." ), &importDialog, SLOT( exec() ), CTRL + Key_I );
+    menu->insertSeparator();
+    menu->insertItem( MAKE_ICON( save )  , tools::translate( "Menu", "&Save" )      , parent(), SLOT( Save() ), CTRL + Key_S );
+    menu->insertSeparator();
+    menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), CTRL + Key_Q );
+    insertItem( tools::translate( "Menu", "&File" ), menu );
+
+    menu = new QPopupMenu( this );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
@@ -125,6 +124,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     insertItem( tools::translate( "Menu", "&Display" ), menu );
 
     menu = new QPopupMenu( this );
+    menu->insertItem( tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
     insertItem( tools::translate( "Menu", "&Exercise" ), menu );

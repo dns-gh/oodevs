@@ -10,16 +10,17 @@
 #include "frontend_app_pch.h"
 #include "StartExercisePanel.h"
 #include "moc_StartExercisePanel.cpp"
-#include "InfoBubble.h"
-#include "GameConfigPanel.h"
-#include "HlaPluginConfigPanel.h"
-#include "DisPluginConfigPanel.h"
-#include "CrossbowPluginConfigPanel.h"
-#include "resources.h"
 #include "ActionsContext.h"
+#include "GameConfigPanel.h"
+#include "InfoBubble.h"
+#include "resources.h"
 #include "frontend/commands.h"
+#include "frontend/CrossbowPluginConfigPanel.h"
+#include "frontend/DisPluginConfigPanel.h"
+#include "frontend/HlaPluginConfigPanel.h"
 #include "frontend/StartExercise.h"
 #include "tools/GeneralConfig.h"
+
 #include <qaction.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
@@ -31,6 +32,7 @@
 #include <qtabwidget.h>
 #include <qtextedit.h>
 #include <qtimer.h>
+#include <boost/foreach.hpp>
 
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 )
@@ -64,14 +66,9 @@ StartExercisePanel::StartExercisePanel( QWidgetStack* widget, QAction& action, c
     configPanel_ = new GameConfigPanel( tabs, config );
     tabs->addTab( configPanel_, tr( "Options" ) );
 
-    hlaConfigPanel_ = new HlaPluginConfigPanel( tabs, config );
-    tabs->addTab( hlaConfigPanel_, tr( "HLA Export" ) );
-
-    disConfigPanel_ = new DisPluginConfigPanel( tabs, config );
-    tabs->addTab( disConfigPanel_, tr( "DIS Export" ) );
-
-    crossbowConfigPanel_ = new CrossbowPluginConfigPanel( tabs, config );
-    tabs->addTab( crossbowConfigPanel_, tr( "DB Export" ) );
+    AddPlugin< frontend::DisPluginConfigPanel >( tabs, tr( "DIS Export" ) );
+    AddPlugin< frontend::HlaPluginConfigPanel >( tabs, tr( "HLA Export" ) );
+    AddPlugin< frontend::CrossbowPluginConfigPanel >( tabs, tr( "DB Export" ) );
 
     {
         QHBox* sessionBox = new QHBox( group );
@@ -127,13 +124,13 @@ void StartExercisePanel::StartExercise()
 {
     if( list_->selectedItem() )
     {
-        configPanel_->Commit( list_->selectedItem()->text().ascii(), session_,
+        const QString exercise = list_->selectedItem()->text();
+        configPanel_->Commit( exercise.ascii(), session_,
                               sessionName_->text().ascii(), sessionComment_->text().ascii(), 
                               exerciseNumber_->value() );
-        hlaConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
-        disConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
-        crossbowConfigPanel_->Commit( list_->selectedItem()->text().ascii(), session_ );
-        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session_.c_str(), crossbowConfigPanel_->IsChecked(), false ) ) ;
+        BOOST_FOREACH( const T_Plugins::value_type& plugin, plugins_ )
+            plugin->Commit( exercise.ascii(), session_ );
+        Start( new ::StartExercise( config_, list_->selectedItem()->text(), session_.c_str(), false ) ) ;
         context_.Save( "exercise", list_ );
         context_.Save( "session", session_.c_str() );
         Update();
@@ -184,4 +181,16 @@ QString StartExercisePanel::BuildSessionDirectory()
     if( exercise.isEmpty() )
         return exercise;
     return config_.BuildSessionDir( exercise.ascii(), session_ ).c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: StartExercisePanel::AddPlugin
+// Created: SBO 2009-12-09
+// -----------------------------------------------------------------------------
+template< typename T >
+void StartExercisePanel::AddPlugin( QTabWidget* tabs, const QString& name )
+{
+    frontend::PluginConfig_ABC* plugin = new T( tabs, config_ );
+    tabs->addTab( plugin, name );
+    plugins_.push_back( plugin );
 }

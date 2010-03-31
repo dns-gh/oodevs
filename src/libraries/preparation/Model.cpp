@@ -15,6 +15,7 @@
 #include "KnowledgeGroupsModel.h"
 #include "AgentFactory.h"
 #include "AgentsModel.h"
+#include "Exercise.h"
 #include "FormationFactory.h"
 #include "FormationModel.h"
 #include "IdManager.h"
@@ -64,6 +65,8 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , scoreFactory_( *new ScoreFactory( controllers_.controller_, staticModel.indicators_, staticModel.gaugeTypes_ ) )
     , successFactorFactory_( *new SuccessFactorFactory( controllers_, *this, staticModel.successFactorActionTypes_ ) )
     , drawingFactory_( *new gui::DrawerFactory( controllers.controller_, staticModel.drawings_ ) ) 
+    , loaded_ ( false )
+    , exercise_( *new Exercise( controllers.controller_ ) )
     , teams_( *new TeamsModel( controllers, teamFactory_ ) )
     , knowledgeGroups_( *new KnowledgeGroupsModel( controllers, knowledgeGroupFactory_ ) ) // LTO
     , formations_( *new FormationModel( controllers, formationFactory_ ) )
@@ -75,7 +78,6 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel )
     , successFactors_( *new SuccessFactorsModel( successFactorFactory_ ) )
     , intelligences_( *new IntelligencesModel( controllers.controller_, staticModel.coordinateConverter_, idManager_, staticModel.levels_ ) )
     , drawings_( *new gui::DrawerModel( controllers, drawingFactory_ ) )
-    , loaded_ ( false )
 {
     // NOTHING
 }
@@ -122,6 +124,7 @@ void Model::Purge()
     formations_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
+    exercise_.Purge();
     idManager_.Reset();
     SetLoaded( false );
 }
@@ -148,6 +151,10 @@ namespace
 void Model::Load( const tools::ExerciseConfig& config )
 {
     {
+        xml::xifstream xis( config.GetExerciseFile() );
+        exercise_.Load( xis );
+    }
+    {
         const std::string orbatFile = config.GetOrbatFile() ; 
         if( bfs::exists( bfs::path( orbatFile, bfs::native ) ) )
         {
@@ -157,7 +164,7 @@ void Model::Load( const tools::ExerciseConfig& config )
         }
     }
     if( ! LoadOptional( config.GetWeatherFile(), weather_ ) )
-        controllers_.controller_.Update( weather_); 
+        controllers_.controller_.Update( weather_);
     LoadOptional( config.GetProfilesFile(), profiles_ );
     LoadOptional( config.GetScoresFile(), scores_ );
     LoadOptional( config.GetSuccessFactorsFile(), successFactors_ );
@@ -190,17 +197,18 @@ bool Model::Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker
                     && successFactors_.CheckValidity( checker );
     if( valid )
     {
-        xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
-
-        xos << start( "orbat" );
-        teams_.Serialize( xos );
-        xos << end();
-        UpdateName( config.GetOrbatFile() );
-
+        exercise_.Serialize( config.GetExerciseFile() );
+        {
+            xml::xofstream xos( config.GetOrbatFile(), xml::encoding( "ISO-8859-1" ) );
+            xos << start( "orbat" );
+            teams_.Serialize( xos );
+            xos << end();
+        }
         weather_.Serialize( config.GetWeatherFile() );
         profiles_.Serialize( config.GetProfilesFile() );
         scores_.Serialize( config.GetScoresFile() );
         successFactors_.Serialize( config );
+        UpdateName( config.GetOrbatFile() );
     }
     return valid;
 }

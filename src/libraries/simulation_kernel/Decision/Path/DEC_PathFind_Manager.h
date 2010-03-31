@@ -14,6 +14,12 @@
 
 #pragma warning( push, 1 )
 #pragma warning( disable : 4244 4275 )
+#pragma warning( push, 1 )
+#pragma warning( disable : 4244 4275 )
+#pragma warning( push, 1 )
+#pragma warning( disable : 4244 4275 )
+#pragma warning( push, 1 )
+#pragma warning( disable : 4244 4275 )
 #include "tools/thread/MessageQueue_ABC.h"
 #include <boost/thread/mutex.hpp>
 #include <boost/thread/condition.hpp>

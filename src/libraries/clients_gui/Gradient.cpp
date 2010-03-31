@@ -110,9 +110,9 @@ namespace
 
     Color MakeColor( const QColor& cFrom, const QColor& cEnd, Color result, float ratio ) 
     {
-        result.r = ( 1.f - ratio ) * cFrom.red() / 255.f   + ratio * cEnd.red() / 255.f;
-        result.g = ( 1.f - ratio ) * cFrom.green() / 255.f + ratio * cEnd.green() / 255.f;
-        result.b = ( 1.f - ratio ) * cFrom.blue() / 255.f  + ratio * cEnd.blue() / 255.f;
+        result.r = ( ( 1.f - ratio ) * cFrom.red() + ratio * cEnd.red() ) / 255.f;
+        result.g = ( ( 1.f - ratio ) * cFrom.green() + ratio * cEnd.green() ) / 255.f;
+        result.b = ( ( 1.f - ratio ) * cFrom.blue() + ratio * cEnd.blue() ) / 255.f;
         return result;
     }
 
@@ -124,7 +124,7 @@ namespace
         while( from != end )
         {
             *from = MakeColor( cFrom, cEnd, *from, ratio );
-            ratio +=increment;
+            ratio += increment;
             ++from;
         }
     }

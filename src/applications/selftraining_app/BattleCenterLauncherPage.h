@@ -10,22 +10,7 @@
 #ifndef __BattleCenterLauncherPage_h_
 #define __BattleCenterLauncherPage_h_
 
-#include "ContentPage.h"
-#include "DirectoryExerciseLister.h"
-
-namespace kernel
-{
-    class Controllers;
-}
-
-namespace tools
-{
-    class GeneralConfig;
-}
-
-class ProgressPage;
-class ExerciseList;
-class QSpinBox;
+#include "ScenarioLauncherPage.h"
 
 // =============================================================================
 /** @class  BattleCenterLauncherPage
@@ -33,7 +18,7 @@ class QSpinBox;
 */
 // Created: SBO 2008-10-15
 // =============================================================================
-class BattleCenterLauncherPage : public ContentPage
+class BattleCenterLauncherPage : public ScenarioLauncherPage
 {
     Q_OBJECT;
 
@@ -42,13 +27,6 @@ public:
     //@{
              BattleCenterLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config );
     virtual ~BattleCenterLauncherPage();
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void SelectExercise( const QString& exercise, const QString& profile );
-    void StartExercise();
     //@}
 
 private:
@@ -60,21 +38,12 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void Update();
+    virtual std::string BuildSessionName() const;
     //@}
 
 private:
     //! @name Member data
     //@{
-    const tools::GeneralConfig& config_;
-    kernel::Controllers&        controllers_;
-    ProgressPage*               progressPage_;
-    QLineEdit*                  host_;
-    QSpinBox*                   port_;
-    ExerciseList*               exercises_;
-    QString                     exercise_;
-    QString                     profile_;
-    DirectoryExerciseLister     lister_;
     //@}
 };
 

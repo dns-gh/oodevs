@@ -27,7 +27,7 @@
     </message>
     <message>
         <source>The FrontEnd is already running. Close ?</source>
-        <translation>SCALPED est déjà lancé. Fermer ? </translation>
+        <translation>L&apos;application est déjà lancée. Fermer ? </translation>
     </message>
     <message>
         <source>SWORD</source>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>sword-ot@masagroup.net</source>
-        <translation>support@scalped.fr</translation>
+        <translation>sword-ot@masagroup.net</translation>
     </message>
 </context>
 <context>
@@ -69,15 +69,19 @@
     <name>BattleCenterLauncherPage</name>
     <message>
         <source>Start multiplayer session</source>
-        <translation>Démarrer session multi-joueur</translation>
+        <translation type="obsolete">Démarrer session multi-joueur</translation>
     </message>
     <message>
         <source>Starting multiplayer session</source>
-        <translation>Démarrage session multi-joueur</translation>
+        <translation type="obsolete">Démarrage session multi-joueur</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Démarrer</translation>
+        <translation type="obsolete">Démarrer</translation>
+    </message>
+    <message>
+        <source>Multiplayer session</source>
+        <translation>Session multi-joueur</translation>
     </message>
 </context>
 <context>
@@ -142,7 +146,7 @@
     <name>General</name>
     <message>
         <source>Lang</source>
-        <translation>fr</translation>
+        <translation type="obsolete">fr</translation>
     </message>
 </context>
 <context>
@@ -220,6 +224,14 @@
         <source>Language: </source>
         <translation>Langue: </translation>
     </message>
+    <message>
+        <source>Data directory: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProcessDialogs</name>
@@ -285,7 +297,7 @@
     </message>
     <message>
         <source>Session:</source>
-        <translation>Session : </translation>
+        <translation type="obsolete">Session : </translation>
     </message>
     <message>
         <source>Checkpoint:</source>
@@ -387,7 +399,27 @@
     </message>
     <message>
         <source>Starting session</source>
-        <translation>Démarrage session</translation>
+        <translation type="obsolete">Démarrage session</translation>
+    </message>
+    <message>
+        <source>Starting %1</source>
+        <translation>Démarrage de %1</translation>
+    </message>
+    <message>
+        <source>DIS</source>
+        <translation>DIS</translation>
+    </message>
+    <message>
+        <source>HLA</source>
+        <translation>HLA</translation>
+    </message>
+    <message>
+        <source>Crossbow</source>
+        <translation>Crossbow</translation>
+    </message>
+    <message>
+        <source>General</source>
+        <translation>Général</translation>
     </message>
 </context>
 <context>
@@ -512,6 +544,13 @@
     <message>
         <source>Running session detected. Close ?</source>
         <translation type="obsolete">Une session est en cours. Fermer ? </translation>
+    </message>
+</context>
+<context>
+    <name>SessionList</name>
+    <message>
+        <source>Session:</source>
+        <translation>Session : </translation>
     </message>
 </context>
 <context>

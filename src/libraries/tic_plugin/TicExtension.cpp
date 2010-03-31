@@ -14,6 +14,7 @@
 #include "DiamondFormation.h"
 #include "PlatformVisitor_ABC.h"
 #include "dispatcher/Agent.h"
+#include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -107,14 +108,14 @@ void TicExtension::DoUpdate( const MsgUnitEnvironmentType& message )
 void TicExtension::CreatePlatforms( float timeStep )
 {
     const AgentType& type = holder_.type_;
-    tools::Iterator< const ComponentType& > it = type.CreateIterator();
+    tools::Iterator< const AgentComposition& > it = type.CreateIterator();
     while( it.HasMoreElements() )
     {
-        const ComponentType& component = it.NextElement();
-        unsigned count = type.GetComponentCount( component );
+        const AgentComposition& component = it.NextElement();
+        unsigned count = component.GetCount();
         while( count-- )
         {
-            platforms_.push_back( new Platform( component, timeStep ) );
+            platforms_.push_back( new Platform( component.GetType(), timeStep ) );
             sorted_.push_back( &platforms_.back() );
         }
     }

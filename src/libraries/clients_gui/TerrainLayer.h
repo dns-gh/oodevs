@@ -18,6 +18,8 @@
 
 class RawShapeLayer;
 class NoVBOShapeLayer;
+class TerrainData;
+
 namespace kernel
 {
     class Controllers;
@@ -28,6 +30,7 @@ namespace kernel
 namespace gui
 {
     class GraphicPreferences;
+    class TerrainPicker;
 
 // =============================================================================
 /** @class  TerrainLayer
@@ -44,7 +47,7 @@ class TerrainLayer : public Layer2d_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, GraphicPreferences& setup );
+             TerrainLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, GraphicPreferences& setup, TerrainPicker& picker );
     virtual ~TerrainLayer();
     //@}
 
@@ -54,6 +57,8 @@ public:
     virtual void Paint( const geometry::Rectangle2f& viewport );
     virtual void NotifyUpdated( const kernel::ModelLoaded& modelLoaded );
     virtual void Reset();
+    virtual bool HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& point );
+    TerrainData Pick( int x, int y );
     //@}
 
 private:
@@ -81,6 +86,7 @@ private:
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
     GraphicPreferences& setup_;
+    TerrainPicker& picker_;
 
     const std::string dataDirectory_;
     geometry::Rectangle2f world_;

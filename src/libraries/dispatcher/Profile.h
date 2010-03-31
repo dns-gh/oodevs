@@ -15,6 +15,7 @@
 namespace MsgsAuthenticationToClient
 {
     class MsgProfile;
+    class MsgProfileDescription;
 }
 namespace MsgsClientToSim
 {
@@ -83,7 +84,8 @@ public:
     //! @name Network
     //@{
     void Send        ( MsgsAuthenticationToClient::MsgProfile& asn ) const;
-           void SendCreation( ClientPublisher_ABC& publisher ) const;
+    void Send        ( MsgsAuthenticationToClient::MsgProfileDescription& asn ) const;
+    void SendCreation( ClientPublisher_ABC& publisher ) const;
     static void Delete   ( MsgsAuthenticationToClient::MsgProfile& asn );
     //@}
 

@@ -30,6 +30,7 @@ ReportFilterOptions::ReportFilterOptions( QWidget* pParent )
     connect( pDisplayEvents,    SIGNAL( toggled( bool ) ), this, SLOT( OnToggleEvents() ) );
     connect( pDisplayMessages,  SIGNAL( toggled( bool ) ), this, SLOT( OnToggleMessages() ) );
     connect( pDisplayWarnings,  SIGNAL( toggled( bool ) ), this, SLOT( OnToggleWarnings() ) );
+    Toggle( Report::eTrace );
 }
 
 // -----------------------------------------------------------------------------

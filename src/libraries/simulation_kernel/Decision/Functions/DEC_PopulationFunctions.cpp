@@ -136,9 +136,7 @@ int DEC_PopulationFunctions::DamageObject( int knowledgeId, double damageFactor 
 {
     MIL_Object_ABC* pObject = DEC_FunctionsTools::GetPopulationKnowledgeObjectFromDia( knowledgeId );
     if( !( pObject && (*pObject)().CanBePerceived() ) )
-    {
         return  (int)eQueryInvalid ;
-    }
 
     (*pObject)().Destroy( damageFactor );
     return (int)eQueryValid;

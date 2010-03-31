@@ -19,9 +19,10 @@ namespace MsgsSimToClient
 }
 namespace MsgsAuthenticationToClient
 {
-    enum MsgProfileCreationRequestAck_ErrorCode;
-    enum MsgProfileUpdateRequestAck_ErrorCode;
-    enum MsgProfileDestructionRequestAck_ErrorCode;
+    enum  MsgProfileCreationRequestAck_ErrorCode;
+    enum  MsgProfileUpdateRequestAck_ErrorCode;
+    enum  MsgProfileDestructionRequestAck_ErrorCode;
+    class MsgAuthenticationResponse;
 }
 
 namespace MsgsClientToAuthentication
@@ -63,6 +64,7 @@ public:
     Profile* Authenticate( const std::string& strName, const std::string& strPassword ) const;
 
     void Send( ClientPublisher_ABC& publisher ) const;
+    void Send( MsgsAuthenticationToClient::MsgAuthenticationResponse& message ) const;
     virtual void Receive( const MsgsSimToClient::MsgSimToClient& message );
 
     MsgsAuthenticationToClient::MsgProfileCreationRequestAck_ErrorCode    Create ( const MsgsClientToAuthentication::MsgProfileCreationRequest&    message );

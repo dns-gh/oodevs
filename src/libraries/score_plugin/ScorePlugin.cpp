@@ -10,17 +10,22 @@
 #include "score_plugin_pch.h"
 #include "ScorePlugin.h"
 #include "ScoresModel.h"
+#include "dispatcher/ClientPublisher_ABC.h"
 #include "dispatcher/CompositeRegistrable.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
 #include "protocol/protocol.h"
+#include "MT/MT_Logger/MT_Logger_lib.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include <boost/algorithm/string.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
-#include <xeumeuleu/xml.h>
+#include <fstream>
+#include <xeumeuleu/xml.hpp>
 
 #include "protocol/aarsenders.h"
+namespace bfs = boost::filesystem;
 
 using namespace plugins::score;
 
@@ -30,10 +35,11 @@ using namespace plugins::score;
 // -----------------------------------------------------------------------------
 ScorePlugin::ScorePlugin( tools::MessageDispatcher_ABC& dispatcher, dispatcher::LinkResolver_ABC& resolver, dispatcher::ClientPublisher_ABC& clients, const tools::ExerciseConfig& config, dispatcher::CompositeRegistrable& registrables )
     : resolver_( resolver )
+    , config_( config )
     , scores_( new ScoresModel( clients ) )
 {
     registrables.Add( new dispatcher::RegistrableProxy( *scores_ ) );
-    scores_->Load( config.GetScoresFile() );
+    scores_->Load( config_.GetScoresFile() );
     dispatcher.RegisterMessage( *this, &ScorePlugin::OnReceive );
 }
 
@@ -92,9 +98,20 @@ void ScorePlugin::OnReceive( const std::string& client, const MsgClientToAar& wr
 // Name: ScorePlugin::NotifyClientAuthenticated
 // Created: AGE 2008-08-04
 // -----------------------------------------------------------------------------
-void ScorePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& , dispatcher::Profile_ABC& )
+void ScorePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& client, dispatcher::Profile_ABC& )
 {
-    // NOTHING
+    std::string content;
+    aar::AarInformation message;
+    const std::string file = config_.GetScoresFile();
+    if( bfs::exists( bfs::path( file, bfs::native ) ) )
+    {
+        std::string line;
+        std::ifstream is( file.c_str() );
+        while( std::getline( is, line ) )
+            content += line;
+        message().set_information( content.c_str() );
+    }
+    message.Send( client );
 }
 
 // -----------------------------------------------------------------------------

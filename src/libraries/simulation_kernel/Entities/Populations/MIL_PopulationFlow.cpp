@@ -251,7 +251,7 @@ void MIL_PopulationFlow::NotifyMovingInsideObject( MIL_Object_ABC& object )
         return;
 
     const PopulationAttribute* attr = object.RetrieveAttribute< PopulationAttribute >();
-    if ( !attr || attr->GetDensity() == std::numeric_limits< MT_Float >::max() )
+    if( !attr )
         return;
     
     if( !pSplittingObject_ || attr->GetDensity() < pSplittingObject_->GetAttribute< PopulationAttribute >().GetDensity() )
@@ -276,8 +276,9 @@ MT_Float MIL_PopulationFlow::GetSpeedWithReinforcement( const TerrainData& /*env
     if( !CanObjectInteractWith( object ) )
         return GetMaxSpeed();
     
+    // $$$$ SBO 2009-12-13: object.RetrieveAttribute
     const PopulationAttribute* attr = (const_cast< MIL_Object_ABC* >( &object ))->RetrieveAttribute< PopulationAttribute >();
-    if( !attr || attr->GetDensity() == std::numeric_limits< MT_Float >::max() )
+    if( !attr )
         return GetMaxSpeed();
 
     if( pSourceConcentration_ && pSourceConcentration_->GetSplittingObject() == &object )

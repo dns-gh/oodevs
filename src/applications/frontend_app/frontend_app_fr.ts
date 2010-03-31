@@ -73,6 +73,14 @@
         <source>Install a data package</source>
         <translation>Installe un paquetage de données</translation>
     </message>
+    <message>
+        <source>Create package</source>
+        <translation>Créer un paquetage</translation>
+    </message>
+    <message>
+        <source>Generate a data package (.otpack) easily exportable</source>
+        <translation>Génére un paquetage de données (.otpak) facilement exportable</translation>
+    </message>
 </context>
 <context>
     <name>AdvancedButton</name>
@@ -138,64 +146,99 @@
     </message>
 </context>
 <context>
+    <name>CreatePackagePanel</name>
+    <message>
+        <source>Exercise to package:</source>
+        <translation>Exercice à packager:</translation>
+    </message>
+    <message>
+        <source>Package description:</source>
+        <translation>Description du paquetage:</translation>
+    </message>
+    <message>
+        <source>Package content:</source>
+        <translation>Contenu du paquetage:</translation>
+    </message>
+    <message>
+        <source>Select a package</source>
+        <translation>Sélectionnez un paquetage</translation>
+    </message>
+    <message>
+        <source>Overwrite File?</source>
+        <translation>Ecraser le fichier existant ?</translation>
+    </message>
+    <message>
+        <source>A file called %1 already exists. Do you want to overwrite it?</source>
+        <translation>Un fichier appelé %1 existe déjà. Voulez-vous l&apos;écraser ?</translation>
+    </message>
+    <message>
+        <source>Package has not been created.</source>
+        <translation>Le paquetage n&apos;a pas pu être créé.</translation>
+    </message>
+    <message>
+        <source>Package successfully created.</source>
+        <translation>Le paquetage a été créé avec succès.</translation>
+    </message>
+</context>
+<context>
     <name>CrossbowPluginConfigPanel</name>
     <message>
         <source>Enable Crossbow export</source>
-        <translation>Activer l'export Crossbow</translation>
+        <translation type="obsolete">Activer l&apos;export Crossbow</translation>
     </message>
     <message>
         <source>Format for gdb: filename.{gdb|mdb}</source>
-        <translation>Format pour gdb: nomdefichier.{gdb|mdb}</translation>
+        <translation type="obsolete">Format pour gdb: nomdefichier.{gdb|mdb}</translation>
     </message>
     <message>
         <source>Format for sde connection: sde://user:password@host:port/db_name.sword</source>
-        <translation>Format pour connectionsde: sde://user:password@host:port/db_name.sword</translation>
+        <translation type="obsolete">Format pour connectionsde: sde://user:password@host:port/db_name.sword</translation>
     </message>
     <message>
         <source>Geodatabase export:</source>
-        <translation>Export Geodatabase</translation>
+        <translation type="obsolete">Export Geodatabase</translation>
     </message>
     <message>
         <source>Geodatabase population export:</source>
-        <translation>Export de population Geodatabase:</translation>
+        <translation type="obsolete">Export de population Geodatabase:</translation>
     </message>
     <message>
         <source>Geodatabase order import:</source>
-        <translation>Import d'ordre Geodatabase</translation>
+        <translation type="obsolete">Import d&apos;ordre Geodatabase</translation>
     </message>
 </context>
 <context>
     <name>DisPluginConfigPanel</name>
     <message>
         <source>Enable DIS export</source>
-        <translation>Activer l'export DIS</translation>
+        <translation type="obsolete">Activer l&apos;export DIS</translation>
     </message>
     <message>
         <source>Disaggregate units:</source>
-        <translation>Désagréger les unités:</translation>
+        <translation type="obsolete">Désagréger les unités:</translation>
     </message>
     <message>
         <source>Host: </source>
-        <translation>Hote: </translation>
+        <translation type="obsolete">Hote: </translation>
     </message>
     <message>
         <source>Site Id: </source>
-        <translation>Id du site: </translation>
+        <translation type="obsolete">Id du site: </translation>
     </message>
     <message>
         <source>Application Id: </source>
-        <translation>Id de l'application: </translation>
+        <translation type="obsolete">Id de l&apos;application: </translation>
     </message>
     <message>
         <source>Exercise Id: </source>
-        <translation>Id de l'exercice: </translation>
+        <translation type="obsolete">Id de l&apos;exercice: </translation>
     </message>
 </context>
 <context>
     <name>EditExercisePanel</name>
     <message>
         <source>Choose the exercise to edit:</source>
-        <translation>Choisissez l'exercice à éditer</translation>
+        <translation>Choisissez l&apos;exercice à éditer</translation>
     </message>
     <message>
         <source>Edit exercise</source>
@@ -269,7 +312,7 @@
     </message>
     <message>
         <source>Pathfind threads:</source>
-        <translation>Nombre d'itinéraires</translation>
+        <translation>Nombre d&apos;itinéraires</translation>
     </message>
     <message>
         <source>Profile</source>
@@ -277,22 +320,22 @@
     </message>
     <message>
         <source>Check ODB Composition</source>
-        <translation>Vérifier la composition de l'ODB</translation>
+        <translation>Vérifier la composition de l&apos;ODB</translation>
     </message>
 </context>
 <context>
     <name>HlaPluginConfigPanel</name>
     <message>
         <source>Enable HLA RPR-FOM export</source>
-        <translation>Activer l'export HLA RPR_FOM</translation>
+        <translation type="obsolete">Activer l&apos;export HLA RPR_FOM</translation>
     </message>
     <message>
         <source>Federation: </source>
-        <translation>Fédération: </translation>
+        <translation type="obsolete">Fédération: </translation>
     </message>
     <message>
         <source>Federate name: </source>
-        <translation>Nom du fédéré: </translation>
+        <translation type="obsolete">Nom du fédéré: </translation>
     </message>
 </context>
 <context>
@@ -321,18 +364,18 @@ Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
         <source>Selected file is not a valid %1 package.</source>
-        <translation>Le fichier sélectionné n'est pas un paquetage %1 valide.</translation>
+        <translation>Le fichier sélectionné n&apos;est pas un paquetage %1 valide.</translation>
     </message>
 </context>
 <context>
     <name>JoinAnalysisPanel</name>
     <message>
         <source>Choose the analysis to join:</source>
-        <translation>Choisissez l'analyse à rejoindre:</translation>
+        <translation>Choisissez l&apos;analyse à rejoindre:</translation>
     </message>
     <message>
         <source>Exercise number:</source>
-        <translation>Numéro de l'exercice:</translation>
+        <translation>Numéro de l&apos;exercice:</translation>
     </message>
 </context>
 <context>
@@ -381,14 +424,14 @@ Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
         <source>The selected exercise as no checkpoint to restart.</source>
-        <translation>L'exercice sélectionné n'a pas de sauvegarde pour redémarrer.</translation>
+        <translation>L&apos;exercice sélectionné n&apos;a pas de sauvegarde pour redémarrer.</translation>
     </message>
 </context>
 <context>
     <name>StartAnalysisPanel</name>
     <message>
         <source>Choose the exercise to analyse:</source>
-        <translation>Choissez l'exercice à analyser:</translation>
+        <translation>Choissez l&apos;exercice à analyser:</translation>
     </message>
     <message>
         <source>Choose the session to analyse:</source>
@@ -400,11 +443,11 @@ Le paquetage sera installé dans: %1</translation>
     </message>
     <message>
         <source>Exercise number:</source>
-        <translation>Numéro de l'exercice:</translation>
+        <translation>Numéro de l&apos;exercice:</translation>
     </message>
     <message>
         <source>The selected exercise has no session to replay.</source>
-        <translation>L'exercice sélectionné n'a pas de session à rejouer.</translation>
+        <translation>L&apos;exercice sélectionné n&apos;a pas de session à rejouer.</translation>
     </message>
     <message>
         <source>Replay session: %1
@@ -431,7 +474,7 @@ Description: %3</translation>
     </message>
     <message>
         <source>DB Export</source>
-        <translation>Export DB</translation>
+        <translation>Export BDD</translation>
     </message>
     <message>
         <source>Session name:</source>
@@ -443,7 +486,7 @@ Description: %3</translation>
     </message>
     <message>
         <source>Exercise number:</source>
-        <translation>Numéro de l'exercice:</translation>
+        <translation>Numéro de l&apos;exercice:</translation>
     </message>
     <message>
         <source>The session will be created in directory &apos;%1&apos;</source>
@@ -470,7 +513,7 @@ Description: %3</translation>
     </message>
     <message>
         <source>Terrain generation tool was not found on your system.</source>
-        <translation>L'outil de génération de terrain n'a pas été trouvé sur votre système.</translation>
+        <translation>L&apos;outil de génération de terrain n&apos;a pas pu être trouvé sur votre système.</translation>
     </message>
     <message>
         <source>A terrain with this name already exists.</source>

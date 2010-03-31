@@ -10,14 +10,12 @@
 #ifndef __LoginDialog_h_
 #define __LoginDialog_h_
 
-namespace tools
-{
-    class ExerciseConfig;
-}
+#include "gaming/AvailableProfile.h"
+#include "tools/ElementObserver_ABC.h"
 
-namespace xml
+namespace kernel
 {
-    class xistream;
+    class Controllers;
 }
 
 class Profile;
@@ -30,14 +28,21 @@ class Network;
 // Created: AGE 2006-10-11
 // =============================================================================
 class LoginDialog : public QDialog
+                  , public tools::Observer_ABC
+                  , public tools::ElementObserver_ABC< AvailableProfile >
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LoginDialog( QWidget* pParent, const Profile& profile, Network& network, const tools::ExerciseConfig& config );
+             LoginDialog( QWidget* pParent, const Profile& profile, Network& network, kernel::Controllers& controllers );
     virtual ~LoginDialog();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void NotifyUpdated( const AvailableProfile& profile );
     //@}
 
 private slots:
@@ -57,18 +62,24 @@ private:
 
     //! @name Helpers
     //@{
-    void FillUsers( const tools::ExerciseConfig& config );
-    void ReadUser( xml::xistream& xis );
+    virtual void showEvent( QShowEvent* ev );
+    //@}
+
+    //! @name Types
+    //@{
+    typedef std::vector< AvailableProfile > T_Profiles;
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controllers& controllers_;
     const Profile& profile_;
     Network& network_;
     QIconView* users_;
     QHBox* passwordBox_;
     QLineEdit* password_;
+    T_Profiles profiles_;
     //@}
 };
 

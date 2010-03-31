@@ -11,8 +11,10 @@
 
 #include "SIM_Dispatcher.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
-
+#pragma warning( push )
+#pragma warning( disable : 4512 4244 )
 #include <boost/thread.hpp>
+#pragma warning( pop )
 
 // -----------------------------------------------------------------------------
 // Name: SIM_Dispatcher constructor

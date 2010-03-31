@@ -36,11 +36,11 @@ namespace gui
     class ColorStrategy;
     class CircularEventStrategy;
     class ExclusiveEventStrategy;
-    class GraphicPreferences;
     class LightingProxy;
     class GlSelector;
     class PreferencesDialog;
     class LocationsLayer;
+    class TerrainLayer;
 }
 
 class AgentsLayer;
@@ -103,7 +103,7 @@ private:
     //! @name Helpers
     //@{
     void LoadExercise();
-    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::LocationsLayer& locations, WeatherLayer& weather, AgentsLayer& agents, gui::GraphicPreferences& setup, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
+    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::LocationsLayer& locations, WeatherLayer& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

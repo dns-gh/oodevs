@@ -21,8 +21,9 @@ namespace tools
 
 namespace kernel
 {
-    class ComponentType;
+    class AgentComposition;
     class AgentNature;
+    class ComponentType;
     class DecisionalModel;
     class SymbolFactory;
 
@@ -50,7 +51,7 @@ public:
     std::string GetName() const;
     const DecisionalModel& GetDecisionalModel() const;
     const AgentNature& GetNature() const;
-    tools::Iterator< const ComponentType& > CreateIterator() const;
+    tools::Iterator< const AgentComposition& > CreateIterator() const;
     unsigned int GetComponentCount( const ComponentType& ) const;
 
     const std::string& GetSymbol() const;
@@ -72,7 +73,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::map< const ComponentType*, unsigned int > T_Components;
+    typedef std::vector< AgentComposition* > T_Components;
     //@}
 
     //! @name Helpers

@@ -26,7 +26,7 @@ using namespace gui;
 DotationsEditor::DotationsEditor( QWidget* parent, const tools::Resolver_ABC< DotationType, std::string >& dotationTypes, DotationsItem*& value )
     : QDialog( parent, "DotationsEditor", true )
     , dotationTypes_( dotationTypes )
-    , value_ ( value )
+    , value_ ( 0 )
 {
     setCaption( tr( "Dotations editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
@@ -69,10 +69,10 @@ DotationsEditor::~DotationsEditor()
 // -----------------------------------------------------------------------------
 void DotationsEditor::OnAccept()
 {
-    value_->Clear();
+    (*value_)->Clear();
     for( int i = 0; i < table_->numRows() - 1; ++i )
-        value_->AddDotation( dotationTypes_.Get( table_->text( i, 0 ).ascii() ), table_->text( i, 1 ).toUInt() );
-    value_->Update();
+        (*value_)->AddDotation( dotationTypes_.Get( table_->text( i, 0 ).ascii() ), table_->text( i, 1 ).toUInt() );
+    (*value_)->Update();
     accept();
 }
     
@@ -91,6 +91,7 @@ void DotationsEditor::OnReject()
 // -----------------------------------------------------------------------------
 void DotationsEditor::SetCurrentItem( DotationsItem*& dotations )
 {
+    value_ = &dotations;
     table_->setNumRows( 0 );
     tools::Iterator< const Dotation& > it = dotations->CreateIterator();
     while( it.HasMoreElements() )
@@ -107,7 +108,7 @@ void DotationsEditor::SetCurrentItem( DotationsItem*& dotations )
 // -----------------------------------------------------------------------------
 DotationsItem* DotationsEditor::GetValue()
 {
-    return value_;
+    return *value_;
 }
 
 // -----------------------------------------------------------------------------

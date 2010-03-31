@@ -189,6 +189,7 @@ void AgentKnowledge::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
              .Display( tools::translate( "AgentKnowledge", "Side:" ), team_  )
              .Display( tools::translate( "AgentKnowledge", "Nature:" ), currentNature_ )
              .Display( tools::translate( "AgentKnowledge", "Level:" ), nLevel_ )
+             .Display( tools::translate( "AgentKnowledge", "Operational state:" ), nEtatOps_ * Units::percentage )
              .Display( tools::translate( "AgentKnowledge", "Relevance:" ), nRelevance_ * Units::percentage );
 }
 

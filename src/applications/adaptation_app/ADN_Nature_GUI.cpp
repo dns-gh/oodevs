@@ -9,7 +9,10 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Nature_GUI.h"
+#include "moc_ADN_Nature_GUI.cpp"
 #include "ADN_Connector_String.h"
+#include "ADN_App.h"
+#include "ADN_MainWindow.h"
 
 using namespace gui;
 
@@ -19,8 +22,11 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 ADN_Nature_GUI::ADN_Nature_GUI( QWidget* parent )
     : NatureEditionWidget( parent, "resources/symbols.xml" ) // $$$$ AGE 2008-08-14: 
+    , ADN_Gfx_ABC()
 {
     pConnector_ = new ADN_Connector_String< ADN_Nature_GUI >( this );
+    connect( this, SIGNAL( textChanged( const QString& ) ), SLOT( OnTextChanged( const QString& ) ) );
+    connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL( OpenModeToggled() ), SLOT( UpdateEnableState() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -30,4 +36,23 @@ ADN_Nature_GUI::ADN_Nature_GUI( QWidget* parent )
 ADN_Nature_GUI::~ADN_Nature_GUI()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Nature_GUI::OnTextChanged
+// Created: SBO 2010-02-15
+// -----------------------------------------------------------------------------
+void ADN_Nature_GUI::OnTextChanged( const QString& value )
+{
+    static_cast< ADN_Connector_String< ADN_Nature_GUI >* >( pConnector_ )->SetDataChanged( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Nature_GUI::UpdateEnableState
+// Created: SBO 2010-02-15
+// -----------------------------------------------------------------------------
+void ADN_Nature_GUI::UpdateEnableState()
+{
+    if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
+        setEnabled( static_cast< ADN_Connector_String< ADN_Nature_GUI >* >( pConnector_ )->IsConnected() );
 }

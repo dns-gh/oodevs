@@ -9,12 +9,11 @@
 
 #include "clients_kernel_pch.h"
 #include "AgentType.h"
-#include <xeumeuleu/xml.h>
+#include "AgentComposition.h"
 #include "AgentNature.h"
 #include "SymbolFactory.h"
-#include "GlTools_ABC.h"
-#include "Viewport_ABC.h"
-#include <qgl.h>
+#include <xeumeuleu/xml.h>
+
 using namespace kernel;
 using namespace xml;
 
@@ -57,8 +56,7 @@ AgentType::~AgentType()
 // -----------------------------------------------------------------------------
 void AgentType::ReadEquipment( xml::xistream& xis, const tools::Resolver_ABC< ComponentType, std::string >& resolver )
 {
-    equipments_[ & resolver.Get( xml::attribute< std::string >( xis, "type" ) ) ]
-              += xml::attribute< unsigned int >( xis, "count" );
+    equipments_.push_back( new AgentComposition( xis, resolver ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,9 +99,9 @@ const AgentNature& AgentType::GetNature() const
 // Name: tools::Iterator< const ComponentType& > AgentType::CreateIterator
 // Created: SBO 2007-11-09
 // -----------------------------------------------------------------------------
-tools::Iterator< const ComponentType& > AgentType::CreateIterator() const
+tools::Iterator< const AgentComposition& > AgentType::CreateIterator() const
 {
-    return new tools::KeyIterator< const ComponentType&, T_Components >( equipments_ );
+    return new tools::SimpleIterator< const AgentComposition&, T_Components >( equipments_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,16 +171,4 @@ bool AgentType::IsLogisticMedical() const
     return type_ == "Pion LOG BLD Sante"
         || type_ == "Pion LOG BLT Sante"
         || IsTC2();
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentType::GetComponentCount
-// Created: AGE 2008-03-31
-// -----------------------------------------------------------------------------
-unsigned int AgentType::GetComponentCount( const ComponentType& type ) const
-{
-    T_Components::const_iterator it = equipments_.find( &type );
-    if( it != equipments_.end() )
-        return it->second;
-    return 0;
 }

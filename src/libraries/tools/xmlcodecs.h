@@ -31,7 +31,7 @@ namespace tools
             case 's': break; 
             case 'm': output *= (T)60  ; break;
             case 'h': output *= (T)3600; break;
-            default:            
+            default:
                 return false;
         }
         return true;

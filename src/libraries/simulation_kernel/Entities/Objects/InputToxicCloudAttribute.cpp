@@ -294,7 +294,7 @@ namespace
 void InputToxicCloudAttribute::LoadShape( const std::string& name )
 {
     const std::string fdir( filename_, 0, filename_.find_last_of( '/' ) );
-    gdal_ogr::OGR_Directory dir( "shp", fdir + "/propagation/" );
+    gdal_ogr::OGR_Directory dir( "", fdir + "/propagation" );
     Handler handler( field_, *quantities_, export_ );
     quantities_->Clear();
     export_.clear();

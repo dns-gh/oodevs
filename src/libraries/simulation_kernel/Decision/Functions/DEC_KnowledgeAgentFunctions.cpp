@@ -72,7 +72,6 @@ bool DEC_KnowledgeAgentFunctions::IsInDetectionCone( const MIL_AgentPion& caller
     return MT_Sector( vOrigin, *direction, angle * MT_PI / 180. ).IsInCone( pKnowledge->GetPosition(), rDist );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsPerceivedByAgent
 // Created: NLD 2004-04-06
@@ -81,7 +80,6 @@ bool DEC_KnowledgeAgentFunctions::IsPerceivedByAgent( const MIL_AgentPion& calle
 {
     return pKnowledge && pKnowledge->IsValid() && callerAgent.GetKnowledge().IsPerceived( pKnowledge->GetAgentKnown() );
 }
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsAnEnemy
 // Created: NLD 2004-04-06
@@ -92,7 +90,6 @@ int DEC_KnowledgeAgentFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, bo
         return int( eTristate_DontKnow );
     return int( pKnowledge->IsAnEnemy( callerAgent.GetArmy() ) );
 }
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsAFriend
 // Created: MGD 2010-01-26
@@ -136,7 +133,6 @@ bool DEC_KnowledgeAgentFunctions::KillOfficers( boost::shared_ptr< DEC_Knowledge
     }
     return false;
 }
-
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetOperationalState
 // Created: NLD 2004-04-14

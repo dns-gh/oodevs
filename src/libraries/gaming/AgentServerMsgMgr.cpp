@@ -38,6 +38,14 @@
 #include "UrbanModel.h"
 #include "UserProfilesModel.h"
 #include "UserProfile.h"
+#include "LogTools.h"
+#include "FolkModel.h"
+#include "AfterActionModel.h"
+#include "IntelligencesModel.h"
+#include "DrawingsModel.h"
+#include "ScoreDefinitions.h"
+#include "ScoreModel.h"
+#include "CommandHandler.h"
 #include "WeatherModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -1474,6 +1482,15 @@ void AgentServerMsgMgr::OnReceiveMsgActionCreateFireOrderAck( const MsgsSimToCli
 void AgentServerMsgMgr::OnReceiveMsgAarInformation( const MsgsAarToClient::MsgAarInformation& message )
 {
     GetModel().aar_.Update( message );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgIndicatorInformation
+// Created: SBO 2009-12-18
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgIndicatorInformation( const MsgsAarToClient::MsgAarInformation& asnMsg )
+{
+    GetModel().scoreDefinitions_.Update( asnMsg );
 }
 
 // -----------------------------------------------------------------------------

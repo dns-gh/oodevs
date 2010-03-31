@@ -9,6 +9,7 @@
 
 #include "dis_plugin_pch.h"
 #include "UdpNetwork.h"
+#include "MT/MT_Logger/MT_Logger_Lib.h"
 #include <boost/lexical_cast.hpp>
 #include <iostream>
 
@@ -25,9 +26,19 @@ UdpNetwork::UdpNetwork( const std::string& target, unsigned short port )
     , terminated_( false ) 
     , thread_    ( boost::bind( &UdpNetwork::Start, this ) )
 {
-    const i::udp::resolver::query query( i::udp::v4(), target, boost::lexical_cast< std::string >( port ) );
-    i::udp::resolver resolver( service_ );
-    target_ = *resolver.resolve(query);
+    try
+    {
+        const i::udp::resolver::query query( i::udp::v4(), target, boost::lexical_cast< std::string >( port ) );
+        i::udp::resolver resolver( service_ );
+        target_ = *resolver.resolve( query );
+        MT_LOG_INFO_MSG( "DIS - Starting on " + target_.address().to_string() );
+        i::multicast::enable_loopback option( true );
+        socket_.set_option( option );
+    }
+    catch( std::exception& e )
+    {
+        MT_LOG_ERROR_MSG( "DIS - " + std::string( e.what() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,4 +83,12 @@ void UdpNetwork::Stop()
     socket_.close();
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: UdpNetwork::Sent
+// Created: SBO 2009-11-29
+// -----------------------------------------------------------------------------
+void UdpNetwork::Sent( boost::shared_ptr< std::string > message, const boost::system::error_code& error )
+{
+    if( error )
+        MT_LOG_ERROR_MSG( "DIS - " + error.message() );
+}

@@ -65,6 +65,7 @@ void Dispatcher::Update()
     clientsNetworker_   ->Update();
     simulationNetworker_->Update();
     handler_->Update();
+    logger_->Update();
 }
 
 // -----------------------------------------------------------------------------

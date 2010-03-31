@@ -42,6 +42,8 @@ class FormationList;
 class TeamList;
 class PopulationList;
 class MsgProfile;
+class MsgProfileDescriptionList;
+class MsgProfileDescription;
 class MsgAuthenticationToClient;
 class MsgAuthenticationToClient_Content;
 
@@ -214,17 +216,25 @@ class MsgAuthenticationResponse : public ::google::protobuf::Message {
   inline const ::MsgsAuthenticationToClient::MsgProfile& profile() const;
   inline ::MsgsAuthenticationToClient::MsgProfile* mutable_profile();
   
+  // optional .MsgsAuthenticationToClient.MsgProfileDescriptionList profiles = 3;
+  inline bool has_profiles() const;
+  inline void clear_profiles();
+  static const int kProfilesFieldNumber = 3;
+  inline const ::MsgsAuthenticationToClient::MsgProfileDescriptionList& profiles() const;
+  inline ::MsgsAuthenticationToClient::MsgProfileDescriptionList* mutable_profiles();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   int error_code_;
   ::MsgsAuthenticationToClient::MsgProfile* profile_;
+  ::MsgsAuthenticationToClient::MsgProfileDescriptionList* profiles_;
   friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
   friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
   friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -1333,6 +1343,203 @@ class MsgProfile : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgProfileDescriptionList : public ::google::protobuf::Message {
+ public:
+  MsgProfileDescriptionList();
+  virtual ~MsgProfileDescriptionList();
+  
+  MsgProfileDescriptionList(const MsgProfileDescriptionList& from);
+  
+  inline MsgProfileDescriptionList& operator=(const MsgProfileDescriptionList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgProfileDescriptionList& default_instance();
+  void Swap(MsgProfileDescriptionList* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgProfileDescriptionList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgProfileDescriptionList& from);
+  void MergeFrom(const MsgProfileDescriptionList& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .MsgsAuthenticationToClient.MsgProfileDescription elem = 1;
+  inline int elem_size() const;
+  inline void clear_elem();
+  static const int kElemFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfileDescription >& elem() const;
+  inline ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfileDescription >* mutable_elem();
+  inline const ::MsgsAuthenticationToClient::MsgProfileDescription& elem(int index) const;
+  inline ::MsgsAuthenticationToClient::MsgProfileDescription* mutable_elem(int index);
+  inline ::MsgsAuthenticationToClient::MsgProfileDescription* add_elem();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfileDescription > elem_;
+  friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
+  friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
+  friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgProfileDescriptionList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgProfileDescription : public ::google::protobuf::Message {
+ public:
+  MsgProfileDescription();
+  virtual ~MsgProfileDescription();
+  
+  MsgProfileDescription(const MsgProfileDescription& from);
+  
+  inline MsgProfileDescription& operator=(const MsgProfileDescription& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgProfileDescription& default_instance();
+  void Swap(MsgProfileDescription* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgProfileDescription* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgProfileDescription& from);
+  void MergeFrom(const MsgProfileDescription& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required string login = 1;
+  inline bool has_login() const;
+  inline void clear_login();
+  static const int kLoginFieldNumber = 1;
+  inline const ::std::string& login() const;
+  inline void set_login(const ::std::string& value);
+  inline void set_login(const char* value);
+  inline void set_login(const char* value, size_t size);
+  inline ::std::string* mutable_login();
+  
+  // required bool password = 2;
+  inline bool has_password() const;
+  inline void clear_password();
+  static const int kPasswordFieldNumber = 2;
+  inline bool password() const;
+  inline void set_password(bool value);
+  
+  // required bool supervisor = 3;
+  inline bool has_supervisor() const;
+  inline void clear_supervisor();
+  static const int kSupervisorFieldNumber = 3;
+  inline bool supervisor() const;
+  inline void set_supervisor(bool value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::std::string* login_;
+  static const ::std::string _default_login_;
+  bool password_;
+  bool supervisor_;
+  friend void  protobuf_AddDesc_AuthenticationToClient_2eproto();
+  friend void protobuf_AssignDesc_AuthenticationToClient_2eproto();
+  friend void protobuf_ShutdownFile_AuthenticationToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgProfileDescription* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgAuthenticationToClient_Content : public ::google::protobuf::Message {
  public:
   MsgAuthenticationToClient_Content();
@@ -1605,6 +1812,23 @@ inline ::MsgsAuthenticationToClient::MsgProfile* MsgAuthenticationResponse::muta
   _set_bit(1);
   if (profile_ == NULL) profile_ = new ::MsgsAuthenticationToClient::MsgProfile;
   return profile_;
+}
+
+// optional .MsgsAuthenticationToClient.MsgProfileDescriptionList profiles = 3;
+inline bool MsgAuthenticationResponse::has_profiles() const {
+  return _has_bit(2);
+}
+inline void MsgAuthenticationResponse::clear_profiles() {
+  if (profiles_ != NULL) profiles_->::MsgsAuthenticationToClient::MsgProfileDescriptionList::Clear();
+  _clear_bit(2);
+}
+inline const ::MsgsAuthenticationToClient::MsgProfileDescriptionList& MsgAuthenticationResponse::profiles() const {
+  return profiles_ != NULL ? *profiles_ : *default_instance_->profiles_;
+}
+inline ::MsgsAuthenticationToClient::MsgProfileDescriptionList* MsgAuthenticationResponse::mutable_profiles() {
+  _set_bit(2);
+  if (profiles_ == NULL) profiles_ = new ::MsgsAuthenticationToClient::MsgProfileDescriptionList;
+  return profiles_;
 }
 
 // -------------------------------------------------------------------
@@ -2251,6 +2475,113 @@ inline bool MsgProfile::superviseur() const {
 inline void MsgProfile::set_superviseur(bool value) {
   _set_bit(10);
   superviseur_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgProfileDescriptionList
+
+// repeated .MsgsAuthenticationToClient.MsgProfileDescription elem = 1;
+inline int MsgProfileDescriptionList::elem_size() const {
+  return elem_.size();
+}
+inline void MsgProfileDescriptionList::clear_elem() {
+  elem_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfileDescription >&
+MsgProfileDescriptionList::elem() const {
+  return elem_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::MsgsAuthenticationToClient::MsgProfileDescription >*
+MsgProfileDescriptionList::mutable_elem() {
+  return &elem_;
+}
+inline const ::MsgsAuthenticationToClient::MsgProfileDescription& MsgProfileDescriptionList::elem(int index) const {
+  return elem_.Get(index);
+}
+inline ::MsgsAuthenticationToClient::MsgProfileDescription* MsgProfileDescriptionList::mutable_elem(int index) {
+  return elem_.Mutable(index);
+}
+inline ::MsgsAuthenticationToClient::MsgProfileDescription* MsgProfileDescriptionList::add_elem() {
+  return elem_.Add();
+}
+
+// -------------------------------------------------------------------
+
+// MsgProfileDescription
+
+// required string login = 1;
+inline bool MsgProfileDescription::has_login() const {
+  return _has_bit(0);
+}
+inline void MsgProfileDescription::clear_login() {
+  if (login_ != &_default_login_) {
+    login_->clear();
+  }
+  _clear_bit(0);
+}
+inline const ::std::string& MsgProfileDescription::login() const {
+  return *login_;
+}
+inline void MsgProfileDescription::set_login(const ::std::string& value) {
+  _set_bit(0);
+  if (login_ == &_default_login_) {
+    login_ = new ::std::string;
+  }
+  login_->assign(value);
+}
+inline void MsgProfileDescription::set_login(const char* value) {
+  _set_bit(0);
+  if (login_ == &_default_login_) {
+    login_ = new ::std::string;
+  }
+  login_->assign(value);
+}
+inline void MsgProfileDescription::set_login(const char* value, size_t size) {
+  _set_bit(0);
+  if (login_ == &_default_login_) {
+    login_ = new ::std::string;
+  }
+  login_->assign(reinterpret_cast<const char*>(value), size);
+}
+inline ::std::string* MsgProfileDescription::mutable_login() {
+  _set_bit(0);
+  if (login_ == &_default_login_) {
+    login_ = new ::std::string;
+  }
+  return login_;
+}
+
+// required bool password = 2;
+inline bool MsgProfileDescription::has_password() const {
+  return _has_bit(1);
+}
+inline void MsgProfileDescription::clear_password() {
+  password_ = false;
+  _clear_bit(1);
+}
+inline bool MsgProfileDescription::password() const {
+  return password_;
+}
+inline void MsgProfileDescription::set_password(bool value) {
+  _set_bit(1);
+  password_ = value;
+}
+
+// required bool supervisor = 3;
+inline bool MsgProfileDescription::has_supervisor() const {
+  return _has_bit(2);
+}
+inline void MsgProfileDescription::clear_supervisor() {
+  supervisor_ = false;
+  _clear_bit(2);
+}
+inline bool MsgProfileDescription::supervisor() const {
+  return supervisor_;
+}
+inline void MsgProfileDescription::set_supervisor(bool value) {
+  _set_bit(2);
+  supervisor_ = value;
 }
 
 // -------------------------------------------------------------------

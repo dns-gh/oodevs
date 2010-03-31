@@ -7,33 +7,45 @@
 //
 // *****************************************************************************
 
-#include "frontend_app_pch.h"
+#include "frontend_pch.h"
 #include "HlaPluginConfigPanel.h"
+#include "CreateSession.h"
 #include "tools/GeneralConfig.h"
-#include "frontend/CreateSession.h"
 #include "clients_gui/Tools.h"
 #include <qlineedit.h>
 #include <qgroupbox.h>
 #include <qlabel.h>
+
+using namespace frontend;
+
+namespace
+{
+    template< typename T >
+    T* Style( T* widget )
+    {
+        widget->setBackgroundOrigin( QWidget::WindowOrigin );
+        return widget;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: HlaPluginConfigPanel constructor
 // Created: SBO 2008-03-05
 // -----------------------------------------------------------------------------
 HlaPluginConfigPanel::HlaPluginConfigPanel( QWidget* parent, const tools::GeneralConfig& config )
-    : QHBox( parent )
+    : PluginConfig_ABC( parent )
     , config_( config )
 {
-    box_ = new QGroupBox( 2, Horizontal, tools::translate( "HlaPluginConfigPanel", "Enable HLA RPR-FOM export" ), this );
+    box_ = Style( new QGroupBox( 2, Horizontal, tools::translate( "HlaPluginConfigPanel", "Enable HLA RPR-FOM export" ), this ) );
     box_->setCheckable( true );
     box_->setChecked( false );
     {
-        new QLabel( tools::translate( "HlaPluginConfigPanel", "Federation: " ), box_ );
-        federation_ = new QLineEdit( "MyFederation", box_ );
+        Style( new QLabel( tools::translate( "HlaPluginConfigPanel", "Federation: " ), box_ ) );
+        federation_ = Style( new QLineEdit( "MyFederation", box_ ) );
     }
     {
-        new QLabel( tools::translate( "HlaPluginConfigPanel", "Federate name: " ), box_ );
-        name_ = new QLineEdit( tools::translate( "Application", "SWORD" ), box_ );
+        Style( new QLabel( tools::translate( "HlaPluginConfigPanel", "Federate name: " ), box_ ) );
+        name_ = Style( new QLineEdit( tools::translate( "Application", "SWORD" ), box_ ) );
     }
 }
 

@@ -5,8 +5,8 @@ ActivityTimePrototype_ABC.cpp \
 AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
-CoordinateSystemsPanel.cpp \
 ConstructionPrototype_ABC.cpp \
+CoordinateSystemsPanel.cpp \
 CrossingSitePrototype_ABC.cpp \
 DiplomacyDialog_ABC.cpp \
 DisplayToolbar.cpp \
@@ -57,4 +57,4 @@ UnitListView.cpp \
 UnitPreviewIcon.cpp \
 UnitsPanel.cpp \
 
-TRANSLATIONS = clients_gui_fr.ts clients_gui_en.ts
+TRANSLATIONS = clients_gui_fr.ts

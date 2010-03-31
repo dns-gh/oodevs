@@ -17,6 +17,7 @@
 namespace MsgsSimToClient
 {
     class MsgUnitAttributes;
+    class MsgUnitKnowledgeUpdate;
 }
 
 namespace kernel
@@ -32,6 +33,7 @@ namespace kernel
 // =============================================================================
 class Lives : public kernel::Extension_ABC
             , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitAttributes >
+            , public kernel::Updatable_ABC< MsgsSimToClient::MsgUnitKnowledgeUpdate >
             , public kernel::Drawable_ABC
 {
 
@@ -46,7 +48,7 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
-
+    virtual void DoUpdate( const MsgsSimToClient::MsgUnitKnowledgeUpdate& message );
     float GetLife() const;
     //@}
 
