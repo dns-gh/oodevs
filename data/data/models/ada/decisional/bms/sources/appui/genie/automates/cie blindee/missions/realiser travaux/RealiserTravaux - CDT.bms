@@ -125,6 +125,7 @@ node "BEH_Misc_Automate_GEN_GererTravaux"
     activations =
     {
         { "BEH_Mission_Automate_Gen_AssignerConstruireObjetA", {} },
+        { "ACT_Info_Trace", {} },
         { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
 
@@ -156,7 +157,10 @@ do
 ]]DEC_UserTypeList_Remove( self.listeGenObjetAConstruire, objetAConstruire )
                     end
                 else
-                    StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
+do
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Travaux finis: Assigner decrocher", } )
+                        StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
+                    end
                 end
 
             end
@@ -205,6 +209,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux"
         { "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets", {} },
         { "BEH_Misc_Automate_GEN_GererRenforcement", {} },
         { "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux", {} },
+        { "ACT_Info_Trace", {} },
         { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
 
@@ -261,7 +266,10 @@ do
                         --[[// cast
 ]]local groupe = pion
                         if( F_Pion_GeteEtatPhaseMission( groupe ) == eEtatPhaseMission_FinMission ) then
-                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
+                            do
+                                Activate( self.activations.ACT_Info_Trace, 1, { "Mission finie: Assigner decrocher", } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
+                            end
                         end
 
                     end
@@ -511,8 +519,10 @@ connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcemen
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux, "BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets", nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourConstruireObjets }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux, "BEH_Misc_Automate_GEN_GererRenforcement", nodes.BEH_Misc_Automate_GEN_GererRenforcement }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux, "BEH_Misc_Automate_GEN_GererFinRenforcementTravaux", nodes.BEH_Misc_Automate_GEN_GererFinRenforcementTravaux }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourTravaux, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererTravaux, "BEH_Mission_Automate_Gen_AssignerConstruireObjetA", nodes.BEH_Mission_Automate_Gen_AssignerConstruireObjetA }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererTravaux, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererTravaux, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_GEN_CDT_RealiserPlanObjets, "BEH_Misc_Automate_GEN_GererTravaux", nodes.BEH_Misc_Automate_GEN_GererTravaux }

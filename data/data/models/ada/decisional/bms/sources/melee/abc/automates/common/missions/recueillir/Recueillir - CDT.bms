@@ -65,6 +65,7 @@ node "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl"
 {
     activations =
     {
+        { "ACT_Info_Trace", {} },
         { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
 
@@ -76,7 +77,9 @@ node "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl"
         self.pointArrivee = self.pointArrivee or S_Geometrie_BarycentreZone( self.mission.zoneRegroupement_ )
         if( S_Dispositif_Automate_ABC_EstPEclEnDanger() ) then
             do
-                --[[// Donner décrocher des que problème
+                Activate( self.activations.ACT_Info_Trace, 1, { "Automate ABC: PEcl en danger: Decrocher.", } )
+                --[[//
+]]--[[// Donner décrocher des que problème
 ]]local listePionsEclairant = S_ObtenirPionsDe( eEtatEchelon_Eclairage, eEtatDestruction_None )
                 for _,pion in pairs( listePionsEclairant or {} ) do
                 local _continue = true
@@ -104,4 +107,5 @@ connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Recueillir, 
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Recueillir, "BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_", nodes.BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_ }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Recueillir, "BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl", nodes.BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Recueillir, "BEH_RC_Automate_GererConditionOperationnelle", nodes.BEH_RC_Automate_GererConditionOperationnelle }
+connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ABC_Recueillir_FaireDecrocherLePEcl, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }

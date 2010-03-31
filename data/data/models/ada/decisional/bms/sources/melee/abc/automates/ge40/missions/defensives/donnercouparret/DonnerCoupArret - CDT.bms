@@ -89,12 +89,20 @@ include "bit.lua"
 
 node "BEH_GTIA_Decrocher"
 {
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+    },
+
     create = function( self )
     end,
 
     activate = function( self )
                 if( S_Automate_EchelonEnDifficulte( eEtatEchelon_Premier ) ) then
-            g_bPhaseReceuil = true
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "Premier echelon en difficulte: Decrocher.", } )
+                g_bPhaseReceuil = true
+            end
         end
 
     end,
@@ -885,6 +893,7 @@ connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesPEclS
 connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesSE, "BEH_GTIA_AssignerMissionsDefensesSESoutenir", nodes.BEH_GTIA_AssignerMissionsDefensesSESoutenir }
 connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesSE, "ACT_GTIA_AssignerMissionDefense", nodes.ACT_GTIA_AssignerMissionDefense }
 connections[ #connections + 1 ] = { nodes.BEH_GTIA_AssignerMissionsDefensesSESoutenir, "ACT_GTIA_AssignerMissionDefense", nodes.ACT_GTIA_AssignerMissionDefense }
+connections[ #connections + 1 ] = { nodes.BEH_GTIA_Decrocher, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_GTIA_ORDRE_Decrocher, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
 connections[ #connections + 1 ] = { nodes.BEH_GTIA_OrganiserLesMoyensPourDonnerCAR, "BEH_GTIA_OrganiserMoyensVersPionsOp", nodes.BEH_GTIA_OrganiserMoyensVersPionsOp }
 connections[ #connections + 1 ] = { nodes.MIS_Automate_CDT_ABC_GTIA_DonnerCoupArret, "ACT_GTIA_AnalyserSituationPourMissionRetrograde", nodes.ACT_GTIA_AnalyserSituationPourMissionRetrograde }

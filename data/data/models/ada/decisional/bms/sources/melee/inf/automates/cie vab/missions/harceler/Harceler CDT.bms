@@ -101,6 +101,7 @@ node "BEH_Situation_Automate_INF_Harceler_GestionSituation"
     activations =
     {
         { "BEH_Situation_Automate_INF_FinDeMission_Sur", {} },
+        { "ACT_Info_Trace", {} },
         { "BEH_Mission_Automate_ABC_AssignerSoutenirA", {} },
         { "BEH_Mission_Automate_INF_AssignerAppuyerA", {} },
         { "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement", {} },
@@ -138,10 +139,11 @@ elseif switch_2 == "T_Mission_Pion_INF_DetruireEmbuscade"
                                         end
 
                                         local pPion = DIA_GetAt( selEnTete, 0 )
+                                        --[[// On reassigne la mission Appuye
+]]Activate( self.activations.ACT_Info_Trace, 1, { "Mission finie: Reassigne appuyer/soutenir", } )
                                          do
                                             local _continue = true
-                                            local switch_3 = --[[// On reassigne la mission Appuye
-]]x_pion:GetType()
+                                            local switch_3 = x_pion:GetType()
                                             local cases_switch_3 = {}
                                                 if switch_3 == "Peloton_AMX"
                                                 or switch_3 == "Peloton_XL" then
@@ -226,6 +228,7 @@ connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Harceler, "B
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, "BEH_Mission_Automate_AssignerStationnerA", nodes.BEH_Mission_Automate_AssignerStationnerA }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
 connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Harceler_GestionSituation, "BEH_Situation_Automate_INF_FinDeMission_Sur", nodes.BEH_Situation_Automate_INF_FinDeMission_Sur }
+connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Harceler_GestionSituation, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Harceler_GestionSituation, "BEH_Mission_Automate_ABC_AssignerSoutenirA", nodes.BEH_Mission_Automate_ABC_AssignerSoutenirA }
 connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Harceler_GestionSituation, "BEH_Mission_Automate_INF_AssignerAppuyerA", nodes.BEH_Mission_Automate_INF_AssignerAppuyerA }
 connections[ #connections + 1 ] = { nodes.BEH_Situation_Automate_INF_Harceler_GestionSituation, "BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement", nodes.BEH_Conduite_Automate_INF_Harceler_FaireRejoindrePositionRegroupement }

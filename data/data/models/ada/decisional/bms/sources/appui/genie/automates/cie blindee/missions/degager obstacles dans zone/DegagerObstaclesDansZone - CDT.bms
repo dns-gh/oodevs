@@ -123,6 +123,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles"
         { "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets", {} },
         { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", {} },
         { "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle", {} },
+        { "ACT_Info_Trace", {} },
         { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
 
@@ -180,7 +181,10 @@ do
                         --[[// cast
 ]]local groupe = pion
                         if( F_Pion_GeteEtatPhaseMission( groupe ) == eEtatPhaseMission_FinMission ) then
-                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
+                            do
+                                Activate( self.activations.ACT_Info_Trace, 1, { "Mission finie: Assigner decrocher", } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
+                            end
                         end
 
                     end
@@ -334,6 +338,7 @@ connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererReductionDe
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles, "BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets", nodes.BEH_Ordre_Automate_GEN_VerifierRenfortPourDetruireObjets }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles, "BEH_Misc_Automate_GEN_GererRenforcementObstacle", nodes.BEH_Misc_Automate_GEN_GererRenforcementObstacle }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles, "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle", nodes.BEH_Misc_Automate_GEN_GererFinRenforcementObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourDegagerObstacles, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_GEN_CDT_DegagerPlanObjets_, "BEH_Misc_Automate_GEN_GererReductionDesObstacles", nodes.BEH_Misc_Automate_GEN_GererReductionDesObstacles }

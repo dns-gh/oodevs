@@ -86,6 +86,7 @@ node "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE"
 {
     activations =
     {
+        { "ACT_Info_Trace", {} },
         { "BEH_Dispositif_Automate_ABC_AssignerSoutien", {} },
     },
 
@@ -108,7 +109,10 @@ do
 do
                         local pionEnSoutien = y
                         if( F_Pion_GeteEtatSoutien( pionEnDifficulte ) == eEtatSoutien_aucun ) then
-                            Activate( self.activations.BEH_Dispositif_Automate_ABC_AssignerSoutien, S_ForceSoutien( pionEnSoutien, pionEnDifficulte ), { pionEnSoutien, pionEnDifficulte, } )
+                            do
+                                Activate( self.activations.ACT_Info_Trace, 1, { "Pion en difficulte: Assigner soutien", } )
+                                Activate( self.activations.BEH_Dispositif_Automate_ABC_AssignerSoutien, S_ForceSoutien( pionEnSoutien, pionEnDifficulte ), { pionEnSoutien, pionEnDifficulte, } )
+                            end
                         end
 
                     end
@@ -166,6 +170,7 @@ node "BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE"
 {
     activations =
     {
+        { "ACT_Info_Trace", {} },
         { "BEH_Mission_Automate_AssignerSuivreA", {} },
     },
 
@@ -189,6 +194,7 @@ do
                 if( ( pionEnSoutien ~= 0 and pionEnSoutien ~= nil ) ) then
                     do
                         F_Pion_SeteEtatSoutien( pionEnRAS, eEtatSoutien_aucun )
+                        Activate( self.activations.ACT_Info_Trace, 1, { "Pion en RAS: Soutien reassigne a suivre", } )
                         Activate( self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, pionEnSoutien, pionEnRAS, } )
                     end
                 end
@@ -650,6 +656,7 @@ node "BEH_Dispositif_Automate_ABC_GererLeSEStatiqueSurLima_"
 
 connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_AssignerSoutien, "BEH_Mission_Automate_ABC_AssignerSoutenirA", nodes.BEH_Mission_Automate_ABC_AssignerSoutenirA }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE, "BEH_Dispositif_Automate_ABC_AssignerSoutien", nodes.BEH_Dispositif_Automate_ABC_AssignerSoutien }
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_GererLeDispositifRetrograde_, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_GererLeDispositifStatiqueSurLima_, "BEH_Dispositif_Automate_ABC_GererPionsDetruits_", nodes.BEH_Dispositif_Automate_ABC_GererPionsDetruits_ }
@@ -664,5 +671,6 @@ connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_GererLeSE_
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_GererLesAppuis_, "BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE", nodes.BEH_Dispositif_Automate_ABC_AssignerSoutienAuPE }
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_GererLesAppuis_, "BEH_Dispositif_Automate_ABC_GererMortier", nodes.BEH_Dispositif_Automate_ABC_GererMortier }
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_GererMortier, "BEH_Mission_Automate_INF_AssignerAppuyerA", nodes.BEH_Mission_Automate_INF_AssignerAppuyerA }
+connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Dispositif_Automate_ABC_RendreDisposnibleLeSE, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_AssignerMissionsSE, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }

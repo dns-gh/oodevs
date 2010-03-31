@@ -124,6 +124,7 @@ node "BEH_Misc_Automate_GEN_GererOuvertureDesObstacles"
     activations =
     {
         { "BEH_Mission_Automate_Gen_AssignerContournerObjetA", {} },
+        { "ACT_Info_Trace", {} },
         { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
 
@@ -179,7 +180,10 @@ do
 ]]local section = pion
                         --[[// plus d'objets à traiter
 ]]if( F_Pion_GeteEtatPhaseMission( section ) == eEtatPhaseMission_FinMission ) then
-                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
+                            do
+                                Activate( self.activations.ACT_Info_Trace, 1, { "Mission finie: Assigner decrocher", } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, pion, self.positionRegroupement, eEtatEchelon_Second, } )
+                            end
                         end
 
                     end
@@ -257,6 +261,7 @@ node "BEH_Misc_Automate_GEN_GererRenforcementsPourContournerObstacles"
         { "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets", {} },
         { "BEH_Misc_Automate_GEN_GererRenforcementObstacle", {} },
         { "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle", {} },
+        { "ACT_Info_Trace", {} },
         { "BEH_Mission_Automate_AssignerDecrocherA", {} },
     },
 
@@ -313,7 +318,10 @@ do
                         --[[// cast
 ]]local groupe = pion
                         if( F_Pion_GeteEtatPhaseMission( groupe ) == eEtatPhaseMission_FinMission ) then
-                            StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
+                            do
+                                Activate( self.activations.ACT_Info_Trace, 1, { "Mission finie: Assigner decrocher", } )
+                                StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerDecrocherA, 1, { ePhase_CDT, groupe, self.positionRegroupement, eEtatEchelon_Second, } )
+                            end
                         end
 
                     end
@@ -561,12 +569,14 @@ connections = connections or {}
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererFinRenforcementObjetPour, "ACT_Ordre_Automate_Interrompre", nodes.ACT_Ordre_Automate_Interrompre }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererFinRenforcementObstacle, "BEH_Misc_Automate_GEN_GererFinRenforcementObjetPour", nodes.BEH_Misc_Automate_GEN_GererFinRenforcementObjetPour }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererOuvertureDesObstacles, "BEH_Mission_Automate_Gen_AssignerContournerObjetA", nodes.BEH_Mission_Automate_Gen_AssignerContournerObjetA }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererOuvertureDesObstacles, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererOuvertureDesObstacles, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementObstacle, "BEH_Misc_Automate_GEN_GererRenforcementObstaclePour", nodes.BEH_Misc_Automate_GEN_GererRenforcementObstaclePour }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementObstaclePour, "BEH_Mission_Automate_GEN_RenforcerRepObjet", nodes.BEH_Mission_Automate_GEN_RenforcerRepObjet }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourContournerObstacles, "BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets", nodes.BEH_Objet_Automate_GEN_VerifierRenfortPourContournerObjets }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourContournerObstacles, "BEH_Misc_Automate_GEN_GererRenforcementObstacle", nodes.BEH_Misc_Automate_GEN_GererRenforcementObstacle }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourContournerObstacles, "BEH_Misc_Automate_GEN_GererFinRenforcementObstacle", nodes.BEH_Misc_Automate_GEN_GererFinRenforcementObstacle }
+connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourContournerObstacles, "ACT_Info_Trace", nodes.ACT_Info_Trace }
 connections[ #connections + 1 ] = { nodes.BEH_Misc_Automate_GEN_GererRenforcementsPourContournerObstacles, "BEH_Mission_Automate_AssignerDecrocherA", nodes.BEH_Mission_Automate_AssignerDecrocherA }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_GEN_CDT_OuvrirPlanObjets_, "BEH_Mission_Automate_AssignerFaireMouvementA", nodes.BEH_Mission_Automate_AssignerFaireMouvementA }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_GEN_CDT_OuvrirPlanObjets_, "BEH_Misc_Automate_GEN_GererOuvertureDesObstacles", nodes.BEH_Misc_Automate_GEN_GererOuvertureDesObstacles }
