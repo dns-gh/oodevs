@@ -11,7 +11,6 @@
 #define __Point_h_
 
 #include "Shape_ABC.h"
-#include "ESRI.h"
 
 namespace Common
 {
@@ -38,16 +37,20 @@ public:
     //@{
              Point();
     explicit Point( const Common::MsgCoordLatLong& coord );
-    explicit Point( IGeometryPtr geometry );
+    explicit Point( const OGRPoint& point );
     virtual ~Point();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     virtual void Serialize( std::ostream& geometry ) const;
     virtual void Serialize( Common::MsgLocation& message ) const;
     virtual void Serialize( Common::MsgCoordLatLong& message ) const;
+    //@}
+
+    //! @name 
+    //@{
+    virtual OGRPoint* Extract( OGRSpatialReference* spatialReference ) const;
     //@}
 
     //! @name 

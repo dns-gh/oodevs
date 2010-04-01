@@ -9,8 +9,8 @@
 
 #include "crossbow_plugin_pch.h"
 #include "WorkingSession.h"
-#include "Database_ABC.h"
-#include "QueryDatabaseSession.h"
+#include "Workspace_ABC.h"
+#include "QuerySessionData.h"
 #include "dispatcher/Config.h"
 
 #include <boost/filesystem/path.hpp>
@@ -23,9 +23,10 @@ namespace bfs = boost::filesystem;
 // Name: Constructor
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-WorkingSession::WorkingSession( const dispatcher::Config& config, Database_ABC& database )
+WorkingSession::WorkingSession( Workspace_ABC& workspace, const dispatcher::Config& config )
 {
-    QueryDatabaseSession querySession( database );
+    QuerySessionData querySession( workspace.GetDatabase( "flat" ) );
+
     LoadExercise( config, querySession );
     LoadSession( config, querySession );
 }
@@ -60,7 +61,7 @@ int WorkingSession::GetExercise() const
 // Name: WorkingSession::ReadExerciseName
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-void WorkingSession::LoadExercise( const dispatcher::Config& config, QueryDatabaseSession& database )
+void WorkingSession::LoadExercise( const dispatcher::Config& config, QuerySessionData& database )
 {
     bfs::path p( config.GetExerciseFile(), bfs::native );
     
@@ -80,7 +81,7 @@ void WorkingSession::LoadExercise( const dispatcher::Config& config, QueryDataba
 // Name: DatabasePublisher::ReadSessionName
 // Created: MPT 2009-07-27
 // -----------------------------------------------------------------------------
-void WorkingSession::LoadSession( const dispatcher::Config& config, QueryDatabaseSession& database )
+void WorkingSession::LoadSession( const dispatcher::Config& config, QuerySessionData& database )
 {
     bfs::path p( config.GetSessionDir(), bfs::native );
     session_.first = p.filename();

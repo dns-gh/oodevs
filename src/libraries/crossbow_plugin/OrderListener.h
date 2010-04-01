@@ -22,6 +22,7 @@ namespace plugins
 {
 namespace crossbow
 {
+    class Workspace_ABC;
     class Database_ABC;
     class Table_ABC;
     class Row_ABC;
@@ -41,7 +42,7 @@ class OrderListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderListener( Database_ABC& database, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
+             OrderListener( Workspace_ABC& workspace, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
     virtual ~OrderListener();
     //@}
 
@@ -59,6 +60,7 @@ private:
 
     //! @name Helpers
     //@{
+    void ListenRow( const Row_ABC& row );
     void Clean();
     void MarkProcessed( long orderid ) const;
     //@}

@@ -19,8 +19,8 @@ namespace plugins
 {
 namespace crossbow
 {
-    class Database_ABC;
-    class QueryDatabaseSession;
+    class Workspace_ABC;
+    class QuerySessionData;
 
 // =============================================================================
 /** @class  WorkingSession
@@ -33,7 +33,7 @@ class WorkingSession
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit WorkingSession( const dispatcher::Config& config, Database_ABC& database );
+            WorkingSession( Workspace_ABC& database, const dispatcher::Config& config );
     virtual ~WorkingSession();
     //@}
 
@@ -52,9 +52,10 @@ private:
 private:
     //! @name Types Helpers
     //@{
-    void LoadExercise( const dispatcher::Config& config, QueryDatabaseSession& database );
     int GetExercise() const;
-    void LoadSession( const dispatcher::Config& config, QueryDatabaseSession& database );
+
+	void LoadExercise( const dispatcher::Config& config, QuerySessionData& database );
+	void LoadSession( const dispatcher::Config& config, QuerySessionData& database );
     //@}
 
 private:

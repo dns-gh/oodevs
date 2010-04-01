@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "crossbow_plugin_pch.h"
+#include "protocol/protocol.h"
 #include "PointCollection.h"
 #include "Point.h"
-#include "protocol/protocol.h"
 
 using namespace plugins::crossbow;
 
@@ -35,21 +35,15 @@ PointCollection::PointCollection( const Common::MsgCoordLatLongList& message )
 
 // -----------------------------------------------------------------------------
 // Name: PointCollection constructor
-// Created: JCR 2007-11-06
+// Created: JCR 2010-03-02
 // -----------------------------------------------------------------------------
-PointCollection::PointCollection( IGeometryPtr geometry )
+PointCollection::PointCollection( const OGRLineString& geometry )
 {
-    IPointCollectionPtr points;
-    if( SUCCEEDED( geometry.QueryInterface( IID_IPointCollection, &points ) ) )
+    for( int i = 0; i < geometry.getNumPoints(); ++i )
     {
-        long count = 0;
-        points->get_PointCount( &count );
-        for( long i = 0; i < count; ++i )
-        {
-            IPointPtr point;
-            points->get_Point( i, &point );
-            points_.push_back( Point( point ) );
-        }
+        OGRPoint point;
+        geometry.getPoint( i, &point );
+        points_.push_back( crossbow::Point( point )  );
     }
 }
 
@@ -63,25 +57,25 @@ PointCollection::~PointCollection()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PointCollection::Serialize
-// Created: JCR 2007-08-31
+// Name: PointCollection::Extract
+// Created: JCR 2010-02-26
 // -----------------------------------------------------------------------------
-void PointCollection::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+OGRGeometry* PointCollection::Extract( OGRSpatialReference* spatialReference ) const
 {
-    geometry->putref_SpatialReference( spatialReference );
-    
-    IZAwarePtr zAwareness;
-    geometry.QueryInterface( IID_IZAware, &zAwareness );
-    zAwareness->put_ZAware( VARIANT_FALSE );
+    OGRLineString* points = new OGRLineString();
+    return Extract( points, spatialReference );
+}
 
-    IPointCollectionPtr points;
-    geometry.QueryInterface( IID_IPointCollection, &points );
+// -----------------------------------------------------------------------------
+// Name: PointCollection::Extract
+// Created: JCR 2010-02-27
+// -----------------------------------------------------------------------------
+OGRLineString* PointCollection::Extract( OGRLineString* points, OGRSpatialReference* spatialReference ) const
+{
+    points->assignSpatialReference( spatialReference );
     for( CIT_Points it = points_.begin(); it != points_.end(); ++it )
-    {
-        IPointPtr point( CLSID_Point );
-        it->Serialize( point, spatialReference );
-        points->AddPoint( point );
-    }
+        points->addPoint( it->Extract( spatialReference ) );
+    return points;
 }
 
 // -----------------------------------------------------------------------------

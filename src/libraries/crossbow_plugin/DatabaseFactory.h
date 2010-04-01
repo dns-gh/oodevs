@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __dispatcher_esri_DatabaseFactory_h_
-#define __dispatcher_esri_DatabaseFactory_h_
+#ifndef __crossbow_DatabaseFactory_h_
+#define __crossbow_DatabaseFactory_h_
 
 namespace dispatcher
 {
@@ -35,13 +35,22 @@ class DatabaseFactory
 public:
     //! @name Constructors/Destructor
     //@{
-             DatabaseFactory();
+            DatabaseFactory();
     virtual ~DatabaseFactory();
     //@}
 
     //! @name Operations
     //@{
-    Database_ABC& Create( const dispatcher::Config& config, const std::string& name );
+    std::auto_ptr< crossbow::Database_ABC > Create( const dispatcher::Config& config, const std::string& name ) const;
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    std::auto_ptr< crossbow::Database_ABC > CreateShapefile( const dispatcher::Config& config, const std::string& name ) const;
+    std::auto_ptr< crossbow::Database_ABC > CreatePgeo( const dispatcher::Config& config, const std::string& name ) const;
+    std::auto_ptr< crossbow::Database_ABC > CreatePostgreSQL( const std::string& name ) const;
+    std::auto_ptr< crossbow::Database_ABC > CreateSDE( const std::string& name ) const;
     //@}
 
 private:
@@ -55,4 +64,4 @@ private:
 }
 }
 
-#endif // __dispatcher_esri_DatabaseFactory_h_
+#endif // __crossbow_DatabaseFactory_h_

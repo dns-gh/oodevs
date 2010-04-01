@@ -10,9 +10,7 @@
 #ifndef __PointCollection_h_
 #define __PointCollection_h_
 
-
 #include "Shape_ABC.h"
-#include "ESRI.h"
 
 namespace Common
 {
@@ -42,7 +40,11 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( Common::MsgLocation& message ) const;
-    virtual void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
+    //@}
+
+    //! @name 
+    //@{
+    virtual OGRGeometry* Extract( OGRSpatialReference* spatialReference ) const;
     //@}
 
 protected:
@@ -50,11 +52,12 @@ protected:
     //@{
              PointCollection();
     explicit PointCollection( const Common::MsgCoordLatLongList& message );
-    explicit PointCollection( IGeometryPtr geometry );    
+    explicit PointCollection( const OGRLineString& geometry );
     //@}
     
     //! @name 
     //@{
+    virtual OGRLineString* Extract( OGRLineString* points, OGRSpatialReference* spatialReference ) const;
     virtual void Serialize( std::ostream& geometry ) const;
     //@}
 

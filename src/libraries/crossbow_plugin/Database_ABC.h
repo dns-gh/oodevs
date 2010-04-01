@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Database_ABC_h_
-#define __Database_ABC_h_
+#ifndef __crossbow_Database_ABC_h_
+#define __crossbow_Database_ABC_h_
 
 namespace plugins
 {
@@ -42,8 +42,7 @@ public:
     //@{    
     virtual Table_ABC&  OpenBufferedTable( const std::string& name, bool clear = true ) = 0;
     virtual Table_ABC*  OpenTable( const std::string& name ) = 0;
-    virtual void        ClearTable( const std::string& name ) = 0;
-    // virtual void ReleaseTable( const std::string& name ) = 0;
+    virtual void        ClearTable( const std::string& name, const std::string& filter ) = 0;
     //@}
 
     //! @name 

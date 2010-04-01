@@ -48,6 +48,7 @@ namespace plugins
 namespace crossbow
 {
     class OrderParameterTypeResolver;
+    class Workspace_ABC;
     class Database_ABC;
     class Row_ABC;
     class Table_ABC;
@@ -64,7 +65,7 @@ class OrderParameterSerializer
 public:
     //! @name Constructors/Destructor
     //@{
-             OrderParameterSerializer( Database_ABC& database, const dispatcher::Model_ABC& model );
+    explicit OrderParameterSerializer( Workspace_ABC& database, const dispatcher::Model_ABC& model );
     virtual ~OrderParameterSerializer();
     //@}
 
@@ -118,6 +119,7 @@ private:
     //! @name Member data
     //@{
     const dispatcher::Model_ABC& model_;
+    Database_ABC& geometryDb_;
     Database_ABC& database_;
     std::auto_ptr< OrderParameterTypeResolver > types_;
     //@}

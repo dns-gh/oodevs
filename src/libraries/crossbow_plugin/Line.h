@@ -37,15 +37,19 @@ public:
     //@{
              Line();
     explicit Line( const Common::MsgCoordLatLongList& message );
-    explicit Line( IGeometryPtr geometry );
+    explicit Line( const OGRLineString& line );
     virtual ~Line();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     void Serialize( std::ostream& geometry ) const;
     void Serialize( Common::MsgLocation& message ) const;
+    //@}
+
+    //! @name 
+    //@{
+    virtual OGRLineString* Extract( OGRSpatialReference* spatialReference ) const;
     //@}
 
 private:

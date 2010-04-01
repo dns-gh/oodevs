@@ -47,7 +47,7 @@ namespace plugins
 {
 namespace crossbow
 {
-    class DatabasePublisher;
+    class CrossbowPublisher;
 
 // =============================================================================
 /** @class  CrossbowPlugin
@@ -90,7 +90,7 @@ private:
 private:
     //! @name Member data
     //@{
-    std::auto_ptr< DatabasePublisher > databasePublisher_;
+    std::auto_ptr< CrossbowPublisher > crossbowPublisher_;
     std::auto_ptr< tools::ClientNetworker > clientNetworker_;
     std::auto_ptr< dispatcher::Plugin_ABC > messenger_;
     //@}

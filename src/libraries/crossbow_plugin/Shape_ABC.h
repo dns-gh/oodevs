@@ -10,7 +10,7 @@
 #ifndef __Shape_ABC_h_
 #define __Shape_ABC_h_
 
-#include "ESRI.h"
+#include <gdal/ogr_geometry.h>
 
 namespace Common
 {
@@ -40,9 +40,13 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const = 0;
     virtual void Serialize( std::ostream& geometry ) const = 0;
     virtual void Serialize( Common::MsgLocation& message ) const = 0;
+    //@}
+
+    //! @name 
+    //@{
+    virtual OGRGeometry* Extract( OGRSpatialReference* spatialReference ) const = 0;
     //@}
 };
 

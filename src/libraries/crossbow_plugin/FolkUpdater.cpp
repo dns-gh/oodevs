@@ -9,6 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "FolkUpdater.h"
+#include "Workspace_ABC.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
@@ -29,8 +30,8 @@ using namespace plugins::crossbow;
 // Name: FolkUpdater constructor
 // Created: JCR 2007-08-29
 // -----------------------------------------------------------------------------
-FolkUpdater::FolkUpdater( Database_ABC& database, const WorkingSession& session )
-    : database_ ( database )
+FolkUpdater::FolkUpdater( Workspace_ABC& workspace, const WorkingSession& session )
+    : database_ ( workspace.GetDatabase( "feature" ) )
     , updated_( 0 )
     , session_( session )
 {
@@ -124,6 +125,7 @@ void FolkUpdater::Commit( Table_ABC& table )
 {    
     Row_ABC* row = table.Find( "", true );
     int checkflush = 0;
+    table.BeginTransaction();
     for( CIT_Edges it = edges_.begin(); it != edges_.end() && row; ++it )
     {
         CommitEdge( *row, *it );
@@ -131,12 +133,12 @@ void FolkUpdater::Commit( Table_ABC& table )
         if ( ++checkflush >= 500 )
         {
             table.UpdateRow( *row );
+            // table.BeginTransaction();
             checkflush = 0;
         }
-        
-        //table.UpdateRow( *row );
         row = table.GetNextRow();
     }
+    table.EndTransaction();
 }
 
 // -----------------------------------------------------------------------------

@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Area_h_
-#define __Area_h_
+#ifndef __crossbow_Area_h_
+#define __crossbow_Area_h_
 
 #include "PointCollection.h"
 
@@ -35,15 +35,19 @@ public:
     //@{
              Area();
     explicit Area( const Common::MsgCoordLatLongList& message );
-    explicit Area( IGeometryPtr geometry );    
+    explicit Area( const OGRPolygon& area );
     virtual ~Area();
     //@}
 
     //! @name Operations
     //@{
-    void Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const;
     void Serialize( std::ostream& geometry ) const;
     void Serialize( Common::MsgLocation& message ) const;
+    //@}
+
+    //! @name 
+    //@{
+    virtual OGRPolygon* Extract( OGRSpatialReference* spatialReference ) const;
     //@}
 
 private:

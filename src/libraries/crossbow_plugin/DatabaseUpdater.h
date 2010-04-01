@@ -10,6 +10,7 @@
 #ifndef __crossbow_DatabaseUpdater_h_
 #define __crossbow_DatabaseUpdater_h_
 
+#include "DatabaseUpdater_ABC.h"
 namespace Common
 {
     class MsgFormationCreation;
@@ -46,27 +47,29 @@ namespace plugins
 {
 namespace crossbow
 {
+    class Workspace_ABC;
     class Database_ABC;
-    class ReportFactory;
-    
+    class WorkingSession;
+
 // =============================================================================
 /** @class  DatabaseUpdater
     @brief  DatabaseUpdater
 */
 // Created: JCR 2007-04-30
 // =============================================================================
-class DatabaseUpdater
+class DatabaseUpdater : public DatabaseUpdater_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             DatabaseUpdater( Database_ABC& database, const dispatcher::Model& model, const ReportFactory& reportFactory );
+             DatabaseUpdater( Workspace_ABC& workspace, const dispatcher::Model& model, const WorkingSession& session );
     virtual ~DatabaseUpdater();
     //@}
 
     //! @name 
     //@{
-    void Flush();    
+    void Flush();
+    void Clean();
     //@}
 
     //! @name Operators
@@ -79,14 +82,18 @@ public:
     void Update( const MsgsSimToClient::MsgReport& msg );
     void Update( const Common::MsgFormationCreation& message );
     void Update( const MsgsSimToClient::MsgAutomatCreation& message );
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeCreation& msg );
 
     void Update( const MsgsSimToClient::MsgUnitAttributes& msg );
     void Update( const MsgsSimToClient::MsgUnitKnowledgeUpdate& msg );
     void Update( const MsgsSimToClient::MsgAutomatAttributes& msg );
+    void Update( const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
 
     void DestroyUnit( const MsgsSimToClient::MsgUnitDestruction& msg );
     void Update( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg );
+    void DestroyUnitKnowledge( const MsgsSimToClient::MsgUnitKnowledgeDestruction& msg );
     void DestroyObject( const MsgsSimToClient::MsgObjectDestruction& msg ); // $$$$ SBO 2007-09-27: typedef bullshit
+    void DestroyObjectKnowledge( const MsgsSimToClient::MsgObjectKnowledgeDestruction& msg );
     //@}
 
 private:
@@ -96,12 +103,18 @@ private:
     DatabaseUpdater& operator=( const DatabaseUpdater& ); //!< Assignement operator
     //@}
 
+    //! @name 
+    //@{
+    void UpdateObjectKnowledgeGeometry( const std::string& tablename, const MsgsSimToClient::MsgObjectKnowledgeUpdate& msg );
+    //@}
+
 private:
     //! @name Member data
     //@{
-    Database_ABC&                database_;
-    const dispatcher::Model&     model_;
-    const ReportFactory&         reportFactory_;    
+    Database_ABC&               geometryDb_; 
+    Database_ABC&               flatDb_;
+    const dispatcher::Model&    model_;
+    const WorkingSession&       session_;
     //@}
 };
 

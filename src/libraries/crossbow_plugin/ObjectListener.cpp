@@ -9,6 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "ObjectListener.h"
+#include "Workspace_ABC.h"
 #include "Database_ABC.h"
 #include "QueryBuilder.h"
 #include "Table_ABC.h"
@@ -20,6 +21,8 @@
 #include "protocol/clientsenders.h"
 #include "protocol/simulationsenders.h"
 
+#include <boost/lexical_cast.hpp>
+
 using namespace plugins;
 using namespace plugins::crossbow;
 
@@ -27,13 +30,13 @@ using namespace plugins::crossbow;
 // Name: ObjectListener constructor
 // Created: SBO 2007-09-23
 // -----------------------------------------------------------------------------
-ObjectListener::ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
+ObjectListener::ObjectListener( Workspace_ABC& workspace, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
     : publisher_( publisher )
-    , database_  ( database )
+    , database_  ( workspace.GetDatabase( "geometry" ) )
     , session_ ( session )
 {
-    Clean();
     table_.reset( database_.OpenTable( "Create_TacticalObject_Point" ) );
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -51,11 +54,9 @@ ObjectListener::~ObjectListener()
 // -----------------------------------------------------------------------------
 void ObjectListener::Clean()
 {
-    std::stringstream clause;
-    clause << "session_id=" << session_.GetId();
     try
     {
-        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "TacticalObject_Point" ), clause.str() ) );
+        table_->DeleteRows( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
     }
     catch ( std::exception& e )
     {
@@ -107,6 +108,6 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     creation->set_team( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
     creation->set_type( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
     creation->set_name( "" );
-    row.GetShape().Serialize( *creation->mutable_location() );
+    row.GetGeometry().Serialize( *creation->mutable_location() );
     message.Send( publisher_ );
 }

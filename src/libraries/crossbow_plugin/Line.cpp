@@ -34,11 +34,11 @@ crossbow::Line::Line( const Common::MsgCoordLatLongList& message )
 }
 
 // -----------------------------------------------------------------------------
-// Name: Line constructor
-// Created: JCR 2007-11-06
+// Name: Area constructor
+// Created: JCR 2010-03-02
 // -----------------------------------------------------------------------------
-crossbow::Line::Line( IGeometryPtr geometry )
-    : PointCollection( geometry )
+crossbow::Line::Line( const OGRLineString& line )
+    : PointCollection( line )
 {
     // NOTHING
 }
@@ -53,14 +53,12 @@ crossbow::Line::~Line()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Line::UpdateGeometry
-// Created: JCR 2007-08-31
+// Name: Point::Extract
+// Created: JCR 2010-02-26
 // -----------------------------------------------------------------------------
-void crossbow::Line::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+OGRLineString* crossbow::Line::Extract( OGRSpatialReference* spatialReference ) const
 {
-    if( geometry == NULL )
-        geometry.CreateInstance( CLSID_Polyline );
-    PointCollection::Serialize( geometry, spatialReference );
+    return static_cast<OGRLineString*>( PointCollection::Extract( spatialReference ) );
 }
 
 // -----------------------------------------------------------------------------

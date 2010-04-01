@@ -10,18 +10,20 @@
 #include "crossbow_plugin_pch.h"
 #include "DatabaseEditor.h"
 
+#include <gdal/ogrsf_frmts.h>
+
 using namespace plugins::crossbow;
 
 // -----------------------------------------------------------------------------
 // Name: DatabaseEditor constructor
 // Created: JCR 2009-04-22
 // -----------------------------------------------------------------------------
-DatabaseEditor::DatabaseEditor( IWorkspacePtr spWorkspace )
-    : inTransaction_ ( false )
-    , editing_ ( false) 
+DatabaseEditor::DatabaseEditor( OGRLayer& layer )
+    : layer_ ( layer )
+    , useTransaction_ ( false) 
+    , inTransaction_ ( false )
 {
-    if( FAILED( spWorkspace->QueryInterface( IID_IWorkspaceEdit, (LPVOID*)&workspaceEdit_ ) ) || workspaceEdit_ == NULL )
-        throw std::runtime_error( "Cannot retrieve IWorkspaceEdit interface." );
+    useTransaction_ = ( /*cpl_port TRUE*/ 1 == layer.TestCapability( "Transactions" ) );
 }
     
 // -----------------------------------------------------------------------------
@@ -30,94 +32,7 @@ DatabaseEditor::DatabaseEditor( IWorkspacePtr spWorkspace )
 // -----------------------------------------------------------------------------
 DatabaseEditor::~DatabaseEditor()
 {
-    if( IsEditing() )
-    {
-        workspaceEdit_->StopEditOperation();
-        workspaceEdit_->StopEditing( VARIANT_TRUE );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DatabaseEditor::IsEditing
-// Created: JCR 2009-04-22
-// -----------------------------------------------------------------------------
-bool DatabaseEditor::IsEditing() const
-{
-    return editing_;
-    try
-    {
-        VARIANT_BOOL editing;
-        return SUCCEEDED( workspaceEdit_->IsBeingEdited( &editing ) ) && editing == VARIANT_TRUE;
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_INFO_MSG( e.what() );
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DatabaseEditor::Lock
-// Created: JCR 2009-04-22
-// -----------------------------------------------------------------------------
-void DatabaseEditor::Lock()
-{
-    try
-    {
-        if( ! IsEditing() )
-            editing_ = SUCCEEDED( workspaceEdit_->StartEditing( VARIANT_FALSE ) );
-
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_INFO_MSG( e.what() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DatabaseEditor::Lock
-// Created: JCR 2009-04-22
-// -----------------------------------------------------------------------------
-void DatabaseEditor::UnLock()
-{
-    try
-    {
-        StopEdit();
-        if( IsEditing() )
-            workspaceEdit_->StopEditing( VARIANT_TRUE );
-        editing_ = true;
-    }
-    catch( std::exception& e )
-    {
-        MT_LOG_INFO_MSG( e.what() );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DatabaseEditor::Lock
-// Created: JCR 2009-04-22
-// -----------------------------------------------------------------------------
-void DatabaseEditor::StartEdit()
-{    
-    if( !InTransaction() )
-    {
-        Lock();
-        workspaceEdit_->StartEditOperation();
-        BeginTransaction();
-    }
-}
-    
-// -----------------------------------------------------------------------------
-// Name: DatabaseEditor::Lock
-// Created: JCR 2009-04-22
-// -----------------------------------------------------------------------------
-void DatabaseEditor::StopEdit()
-{
-    if( InTransaction() )
-    {
-        workspaceEdit_->StopEditOperation();
-        EndTransaction();        
-    }
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +41,11 @@ void DatabaseEditor::StopEdit()
 // -----------------------------------------------------------------------------
 void DatabaseEditor::BeginTransaction()
 {
-    inTransaction_ = true;
+    if ( useTransaction_ && !InTransaction() )
+    {
+        layer_.StartTransaction();
+        inTransaction_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -135,7 +54,11 @@ void DatabaseEditor::BeginTransaction()
 // -----------------------------------------------------------------------------
 void DatabaseEditor::EndTransaction()
 {
-    inTransaction_ = false;
+    if ( useTransaction_ && InTransaction() )
+    {
+        layer_.CommitTransaction();
+        inTransaction_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------

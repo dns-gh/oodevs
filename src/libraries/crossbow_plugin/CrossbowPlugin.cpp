@@ -9,7 +9,7 @@
 
 #include "crossbow_plugin_pch.h"
 #include "CrossbowPlugin.h"
-#include "DatabasePublisher.h"
+#include "CrossbowPublisher.h"
 #include "messenger_plugin/MessengerPlugin.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "dispatcher/DefaultProfile.h"
@@ -92,7 +92,7 @@ namespace
 CrossbowPlugin::CrossbowPlugin( const dispatcher::Config& config, xml::xistream& xis, dispatcher::Model& model, 
                                 dispatcher::SimulationPublisher_ABC& publisher, dispatcher::ClientPublisher_ABC& /*clients*/, tools::MessageDispatcher_ABC& dispatcher, 
                                 dispatcher::LinkResolver_ABC& /*links*/, dispatcher::CompositeRegistrable& /*registrables*/ )
-    : databasePublisher_( new DatabasePublisher( config, model, publisher, xis ) )
+    : crossbowPublisher_( new CrossbowPublisher( config, model, publisher, xis ) )
     , clientNetworker_  ( new DummyClientNetworker() )
 {
     dispatcher.RegisterMessage( *this, &CrossbowPlugin::OnReceiveMessengerToClient );
@@ -127,7 +127,7 @@ void CrossbowPlugin::Update()
 // -----------------------------------------------------------------------------
 void CrossbowPlugin::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
 {
-    databasePublisher_->Receive( asnMsg );
+    crossbowPublisher_->Receive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +136,7 @@ void CrossbowPlugin::Receive( const MsgsSimToClient::MsgSimToClient& asnMsg )
 // -----------------------------------------------------------------------------
 void CrossbowPlugin::Send( const MsgsMessengerToClient::MsgMessengerToClient& asnMsg )
 {
-    databasePublisher_->Receive( asnMsg );
+    crossbowPublisher_->Receive( asnMsg );
 }
 
 // -----------------------------------------------------------------------------
@@ -145,7 +145,7 @@ void CrossbowPlugin::Send( const MsgsMessengerToClient::MsgMessengerToClient& as
 // -----------------------------------------------------------------------------
 void CrossbowPlugin::OnReceiveMessengerToClient( const std::string& /*link*/, const MsgsMessengerToClient::MsgMessengerToClient& message )
 {
-    databasePublisher_->Receive( message );
+    crossbowPublisher_->Receive( message );
 }
 
 // -----------------------------------------------------------------------------

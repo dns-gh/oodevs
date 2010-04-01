@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __Variant_h_
-#define __Variant_h_
+#ifndef __crossbow_FieldVariant_h_
+#define __crossbow_FieldVariant_h_
 
 #pragma warning( push )
 #pragma warning( disable : 4512 4702 )
@@ -23,4 +23,4 @@ namespace crossbow
 }
 }
 
-#endif // __Variant_h_
+#endif // __crossbow_FieldVariant_h_

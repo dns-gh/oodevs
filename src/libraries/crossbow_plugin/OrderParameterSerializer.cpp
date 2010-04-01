@@ -19,6 +19,7 @@
 #include "Shape_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
+#include "Workspace_ABC.h"
 #include "Database_ABC.h"
 #include "PointCollection.h"
 #include "Point.h"
@@ -30,6 +31,8 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/checked_delete.hpp>
+
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -73,9 +76,10 @@ namespace
 // Name: OrderParameterSerializer constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-OrderParameterSerializer::OrderParameterSerializer( Database_ABC& database, const dispatcher::Model_ABC& model )
+OrderParameterSerializer::OrderParameterSerializer( Workspace_ABC& workspace, const dispatcher::Model_ABC& model )
     : model_( model )
-    , database_( database )
+    , geometryDb_( workspace.GetDatabase( "geometry" ) )
+    , database_( workspace.GetDatabase( "flat" ) )
     , types_ ( new OrderParameterTypeResolver() )
 {
     MakeTypeRegistration( *types_ );
@@ -113,7 +117,7 @@ namespace
     {
         //message = new Container();
         //message->n 
-        int size = values.size();
+        //int size = values.size();
         if( !values.empty() )
         {
             //message.mutable_elem() = new typename FunctorWrapper::Element[ size ];
@@ -142,7 +146,7 @@ namespace
     {
         std::vector< std::string > values;
 
-        boost::split( values, value, boost::is_any_of( "," ) );
+        boost::split( values, value, boost::is_any_of( std::string( "," ) ) );
         SerializeList( message, values, FunctorWrapper< Element, std::vector< std::string >, Functor >( functor ) );
     }
 
@@ -240,15 +244,6 @@ void OrderParameterSerializer::Serialize( Common::MsgMissionParameter& message, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: OrderParameterSerializer::CleanLocation
-// Created: SBO 2007-05-31
-// -----------------------------------------------------------------------------
-void OrderParameterSerializer::CleanLocation( Common::MsgLocation*& message ) const
-{
-    delete message;
-}
-
-// -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::Clean
 // Updated: JCR 2009-10-15
 // Created: SBO 2007-05-31
@@ -289,16 +284,6 @@ void OrderParameterSerializer::Clean( Common::MsgMissionParameter& message ) con
         message.mutable_value()->mutable_missionobjective()->Clear();
     if( message.value().has_missionobjectivelist() )
         message.mutable_value()->mutable_missionobjectivelist()->Clear();
-
-    if( message.value().has_intelligencelist() )
-    {
-        if( message.mutable_value()->mutable_intelligencelist() )
-        {
-            message.mutable_value()->mutable_intelligencelist()->mutable_elem()->Clear();
-            message.mutable_value()->mutable_intelligencelist()->Clear();
-        }
-
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -357,7 +342,7 @@ void OrderParameterSerializer::SerializeLocation( LocationType& message, const R
 {
     if ( row == 0 )
         throw std::exception( "Cannot instanciate location parameter" );    
-    row->GetShape().Serialize( message );
+    row->GetGeometry().Serialize( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,10 +353,12 @@ void OrderParameterSerializer::SerializeLocation( LocationType& message, const R
 template< typename T >
 void OrderParameterSerializer::SerializeLocation( T& message, unsigned long parameterId, const std::string& tablename ) const
 {
-    std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
+    // std::auto_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
+    Table_ABC& table = geometryDb_.OpenBufferedTable( tablename, false );
     const std::string query( "parameter_id=" + boost::lexical_cast< std::string >( parameterId ) );
-    SerializeLocation( message, table->Find( query ) );
+    SerializeLocation( message, table.Find( query ) );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: OrderParameterSerializer::SerializeLocationList
@@ -382,9 +369,10 @@ void OrderParameterSerializer::SerializeLocationList( T& message, unsigned long 
 {
     typedef boost::function< void ( Common::MsgLocation&, const Common::MsgLocation* ) > Functor;
     std::vector< Common::MsgLocation* > locations;
-    boost::shared_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
+    boost::shared_ptr< Table_ABC > table( &geometryDb_.OpenBufferedTable( tablename, false ) );
     FillLocationlist( locations, table, parameterId );
     SerializeList( message, locations, FunctorWrapperList< Common::MsgLocation, Functor >( CopyLocation() ) );
+    std::for_each( locations.begin(), locations.end(), boost::checked_deleter< Common::MsgLocation >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -399,7 +387,7 @@ void OrderParameterSerializer::SerializeLocList( T& message, unsigned long param
     boost::shared_ptr< Table_ABC > table( database_.OpenTable( tablename ) );
     FillLocationlist( locations, table, parameterId );
     CopyLocation c;
-    for ( int i = 0; i < locations.size(); i++)
+    for ( unsigned int i = 0; i < locations.size(); i++)
         c( *message.mutable_elem( i )->mutable_location(), locations[ i ] );
 }
 

@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "crossbow_plugin_pch.h"
+#include "protocol/protocol.h"
 #include "Area.h"
 #include "Point.h"
-#include "protocol/protocol.h"
 
 using namespace plugins;
 
@@ -35,10 +35,10 @@ crossbow::Area::Area( const Common::MsgCoordLatLongList& message )
 
 // -----------------------------------------------------------------------------
 // Name: Area constructor
-// Created: JCR 2007-11-06
+// Created: JCR 2010-03-02
 // -----------------------------------------------------------------------------
-crossbow::Area::Area( IGeometryPtr geometry )
-    : PointCollection( geometry )
+crossbow::Area::Area( const OGRPolygon& area )
+    : PointCollection( *area.getExteriorRing() )
 {
     // NOTHING
 }
@@ -53,14 +53,18 @@ crossbow::Area::~Area()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Area::UpdateGeometry
-// Created: JCR 2007-08-31
+// Name: Point::Extract
+// Created: JCR 2010-02-26
 // -----------------------------------------------------------------------------
-void crossbow::Area::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+OGRPolygon* crossbow::Area::Extract( OGRSpatialReference* spatialReference ) const
 {
-    if( geometry == NULL )
-        geometry.CreateInstance( CLSID_Polygon );
-    PointCollection::Serialize( geometry, spatialReference );
+    OGRPolygon* geometry = new OGRPolygon();
+    
+    geometry->assignSpatialReference( spatialReference );
+    OGRLinearRing* ring = static_cast< OGRLinearRing* >( PointCollection::Extract( new OGRLinearRing(), spatialReference ) );
+    // ring->closeRing();
+    geometry->addRingDirectly( ring );
+    return geometry;
 }
 
 // -----------------------------------------------------------------------------

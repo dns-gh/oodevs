@@ -21,6 +21,7 @@ namespace plugins
 {
 namespace crossbow
 {
+    class Workspace_ABC;
     class Database_ABC;
     class Row_ABC;
     class Table_ABC;
@@ -38,7 +39,7 @@ class ObjectListener : public Listener_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
+             ObjectListener( Workspace_ABC& workspace, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session );
     virtual ~ObjectListener();
     //@}
 

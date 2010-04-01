@@ -10,6 +10,7 @@
 #ifndef __crossbow_QueryDatabaseUpdater_h_
 #define __crossbow_QueryDatabaseUpdater_h_
 
+#include "DatabaseUpdater_ABC.h"
 namespace Common
 {
     class MsgFormationCreation;
@@ -58,7 +59,7 @@ namespace crossbow
 */
 // Created: JCR 2009-04-27
 // =============================================================================
-class QueryDatabaseUpdater
+class QueryDatabaseUpdater : public DatabaseUpdater_ABC
 {
 public:
     //! @name Constructors/Destructor

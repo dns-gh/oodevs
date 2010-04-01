@@ -7,14 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef __Workspace_ABC_h_
-#define __Workspace_ABC_h_
+#ifndef __crossbow_Workspace_ABC_h_
+#define __crossbow_Workspace_ABC_h_
 
 namespace plugins
 {
 namespace crossbow
 {
-
+    class Database_ABC;
 // =============================================================================
 /** @class  Workspace_ABC
     @brief  Workspace base class: designed for COM initialization abstraction
@@ -23,12 +23,16 @@ namespace crossbow
 // =============================================================================
 class Workspace_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
              Workspace_ABC() {}
     virtual ~Workspace_ABC() {}
+    //@}
+
+    //! @name 
+    //@{
+    virtual Database_ABC& GetDatabase( const std::string& name ) = 0;
     //@}
 };
 

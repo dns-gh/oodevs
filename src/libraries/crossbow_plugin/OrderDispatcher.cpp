@@ -11,6 +11,7 @@
 #include "OrderDispatcher.h"
 #include "OrderTypes.h"
 #include "OrderParameterSerializer.h"
+#include "Workspace_ABC.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
@@ -23,6 +24,7 @@
 #include "protocol/simulationsenders.h"
 #include "protocol/clientsenders.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/noncopyable.hpp>
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -31,11 +33,11 @@ using namespace plugins::crossbow;
 // Name: OrderDispatcher constructor
 // Created: SBO 2007-05-31
 // -----------------------------------------------------------------------------
-OrderDispatcher::OrderDispatcher( Database_ABC& database, const OrderTypes& types, const dispatcher::Model& model )
+OrderDispatcher::OrderDispatcher( Workspace_ABC& workspace, const OrderTypes& types, const dispatcher::Model& model )
     : types_( types )
     , model_( model )
-    , database_ ( database )
-    , serializer_( new OrderParameterSerializer( database, model ) )
+    , database_ ( workspace.GetDatabase( "flat" ) )
+    , serializer_( new OrderParameterSerializer( workspace, model ) )
 {
     // Clean();
 }
@@ -101,6 +103,36 @@ namespace
                 << " for [" << id << "]" << std::endl;
         return ssError.str();
     }
+
+    template< typename AsnType > 
+    class scoped_asn : public boost::noncopyable
+    {
+    public:
+        explicit scoped_asn( OrderParameterSerializer& serializer ) : serializer_ ( serializer ) {}
+        ~scoped_asn()
+        {
+            CleanParameters( asn_().parametres );
+        }
+        typename AsnType::T_AsnMsgType& operator()() 
+        {
+            return asn_();
+        }
+        
+        void Send( dispatcher::SimulationPublisher_ABC& publisher )
+        {
+            asn_.Send( publisher );
+        }
+
+    private:
+        void CleanParameters( Common::MsgMissionParameters& parameters )
+        {
+            for( unsigned int i = 0; i < parameters.n; ++i )
+                serializer_.Clean( parameters.elem[i] );
+        }
+    private:
+        OrderParameterSerializer& serializer_;
+        AsnType asn_;
+    };
 }
 
 // -----------------------------------------------------------------------------

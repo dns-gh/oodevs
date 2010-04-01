@@ -20,8 +20,9 @@
 #include <boost/shared_ptr.hpp>
 #include <xeumeuleu/xml.hpp>
 
+#include <gdal/ogrsf_frmts.h>
+
 #include "MT/MT_Logger/MT_Logger_Lib.h"
-#include "ESRI.h"
 
 #undef max
 

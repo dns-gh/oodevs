@@ -98,7 +98,7 @@ void QueryDatabaseUpdater::Clean()
     {
         const std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
 
-        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "UnitForces" ), clause ) );
+		database_.Execute( DeleteQueryBuilder( database_.GetTableName( "UnitForces" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "KnowledgeUnits" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "BoundaryLimits" ), clause ) );
         database_.Execute( DeleteQueryBuilder( database_.GetTableName( "TacticalLines" ), clause ) );
@@ -165,6 +165,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgUnitKnowledgeCreati
         std::string a = tools::app6::GetAffiliation( realAgent->Get< dispatcher::EntitySymbols_ABC >().BuildSymbol() );
         builder.SetField( "observer_affiliation", InverseAffiliation( a ) );
     }
+
     builder.SetField( "symbol_id", FormatSymbol( "SUZP********---" ) ); // $$$$ SBO 2007-09-27: hard coded...
     builder.SetGeometry( Point() );
     database_.Execute( builder );
@@ -185,24 +186,21 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeCrea
     builder.SetField( "public_oid", msg.oid() );
     builder.SetField( "type", msg.type() );
     builder.SetField( "team_id", msg.team() );
+	builder.SetField( "session_id", session_.GetId() );
 
     if ( msg.attributes().has_construction() )
         builder.SetField( "state", msg.attributes().construction().percentage() );
-
-    if ( tools::app6::GetAffiliation( symbol ) != "U" )
-        builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
-    builder.SetField( "session_id", session_.GetId() );
-    
-    if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
-    {
-        tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
+	if ( tools::app6::GetAffiliation( symbol ) != "U" )
+		builder.SetField( "name",  std::string(knowledge->pObject_->GetName() ) );
+	if( const dispatcher::KnowledgeGroup* knowledgeGroup = model_.knowledgeGroups_.Find( msg.team() ) )
+	{
+		tools::app6::SetAffiliation( symbol, (unsigned int) knowledgeGroup->GetTeam().GetKarma().GetUId() );
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
-        tools::app6::SetAffiliation( symbol, (unsigned int) Common::EnumDiplomacy::unknown_diplo );
+        tools::app6::SetAffiliation( symbol, (unsigned int) Common::unknown_diplo );
 
     builder.SetField( "symbol_id", FormatSymbol( symbol ) );
-
     database_.Execute( builder );
 }
 
@@ -278,6 +276,25 @@ void QueryDatabaseUpdater::UpdateGeometry( QueryBuilder_ABC& builder, const Comm
     default:    break;
     }
 }
+// -----------------------------------------------------------------------------
+// Name: QueryDatabaseUpdater::Update
+// Created: SBO 2007-08-30
+// Modified: MPT 2009-09-30
+// -----------------------------------------------------------------------------
+void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
+{
+    InsertQueryBuilder builder( database_.GetTableName( GetObjectTable( msg.location() ) ) );
+    
+    builder.SetId( "id" );
+    builder.SetField( "public_oid", msg.oid() );
+    builder.SetField( "name", std::string( msg.name() ) );
+    builder.SetField( "type", std::string( msg.type() ) );
+	builder.SetField( "session_id", session_.GetId() );
+    UpdateSymbol( builder, model_.objects_, msg.oid() );
+    UpdateGeometry( builder, msg.location() );
+   
+    database_.Execute( builder );
+}
 
 // -----------------------------------------------------------------------------
 // Name: QueryDatabaseUpdater::Update
@@ -306,7 +323,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectKnowledgeUpda
         builder.SetField( "observer_affiliation", tools::app6::GetAffiliation( symbol ) );
     }
     else
-        tools::app6::SetAffiliation( symbol, (unsigned int) Common::EnumDiplomacy::unknown_diplo );
+        tools::app6::SetAffiliation( symbol, (unsigned int) Common::unknown_diplo );
 
     builder.SetField( "symbol_id", FormatSymbol( symbol ) );
     database_.Execute( builder );
@@ -337,34 +354,7 @@ void QueryDatabaseUpdater::UpdateObjectKnowledgeGeometry( const std::string& tab
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: QueryDatabaseUpdater::Update
-// Created: SBO 2007-08-30
-// Modified: MPT 2009-09-30
-// -----------------------------------------------------------------------------
-void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
-{
-    InsertQueryBuilder builder( database_.GetTableName( GetObjectTable( msg.location() ) ) );
-    
-    builder.SetId( "id" );
-    builder.SetField( "public_oid", msg.oid() );
-    builder.SetField( "name", std::string( msg.name() ) );
-    builder.SetField( "type", std::string( msg.type() ) );
-    builder.SetField( "session_id", session_.GetId() );
-    UpdateSymbol( builder, model_.objects_, msg.oid() );
-    UpdateGeometry( builder, msg.location() );
-   
-    database_.Execute( builder );
 
-    // retrieve object id for dumping attributes
-    /*std::stringstream query;
-    query << "public_oid=" << msg.oid ;
-    std::auto_ptr< Table_ABC > table( database_.OpenTable( GetObjectTable( msg.location ) ) );
-    Row_ABC* pRow = table->Find( query.str(), true );
-    FieldVariant res = pRow->GetField( "id" );
-    int objectId = boost::get<int>(res);
-    ObjectAttributeUpdater::UpdateObjectAttribute( database_, objectId, msg.attributes );*/
-}
 // $$$$ _RC_ FDS 2010-01-21: To Remove ???
 /*void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgObjectCreation& msg )
 {
@@ -461,7 +451,7 @@ void QueryDatabaseUpdater::Update( const MsgsSimToClient::MsgAutomatAttributes& 
     query << "public_oid=" << msg.oid() << " AND session_id=" << session_.GetId();
     builder.SetClause( query.str() );
     if( msg.has_etat_automate() )
-        builder.SetField( "engaged", ( msg.etat_automate() == Common::EnumAutomatMode::embraye ) ? -1 : 0 );        
+        builder.SetField( "engaged", ( msg.etat_automate() == Common::embraye ) ? -1 : 0 );        
     database_.Execute( builder );
 }
 

@@ -7,11 +7,12 @@
 //
 // *****************************************************************************
 
-#ifndef __plugin_crossbow_DatabaseEditor_h_
-#define __plugin_crossbow_DatabaseEditor_h_
+#ifndef __plugins_crossbow_DatabaseEditor_h_
+#define __plugins_crossbow_DatabaseEditor_h_
 
-#include "ESRI.h"
 #include "DatabaseEditor_ABC.h"
+
+class OGRLayer;
 
 namespace plugins
 {
@@ -30,16 +31,8 @@ class DatabaseEditor : public DatabaseEditor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DatabaseEditor( IWorkspacePtr spWorkspace );
+    explicit DatabaseEditor( OGRLayer& layer );
     virtual ~DatabaseEditor();
-    //@}
-
-    //! @name Operations
-    //@{
-    void Lock();
-    void UnLock();
-    void StartEdit();
-    void StopEdit();    
     //@}
 
     //! @name 
@@ -56,17 +49,12 @@ private:
     DatabaseEditor& operator=( const DatabaseEditor& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    bool IsEditing() const;
-    //@}
-
 private:
     //! @name Member data
     //@{
-    IWorkspaceEditPtr  workspaceEdit_;
-    bool               inTransaction_;
-    bool               editing_;
+    OGRLayer&  layer_;
+    bool       inTransaction_;
+    bool       useTransaction_;
     //@}
 };
 

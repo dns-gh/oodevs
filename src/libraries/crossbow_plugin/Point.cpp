@@ -35,15 +35,16 @@ crossbow::Point::Point( const Common::MsgCoordLatLong& coord )
     // NOTHING
 }
 
+
 // -----------------------------------------------------------------------------
 // Name: Point constructor
-// Created: SBO 2007-11-06
+// Created: SBO 2007-08-30
 // -----------------------------------------------------------------------------
-crossbow::Point::Point( IGeometryPtr geometry )
+crossbow::Point::Point( const OGRPoint& point )
+    : x_( point.getX() )
+    , y_( point.getY() )
 {
-    IPointPtr point;
-    if( SUCCEEDED( geometry.QueryInterface( IID_IPoint, &point ) ) )
-        point->QueryCoords( &x_, &y_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -56,23 +57,14 @@ crossbow::Point::~Point()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Point::UpdateGeometry
-// Created: SBO 2007-08-31
+// Name: Point::Extract
+// Created: JCR 2010-02-26
 // -----------------------------------------------------------------------------
-void crossbow::Point::Serialize( IGeometryPtr geometry, ISpatialReferencePtr spatialReference ) const
+OGRPoint* crossbow::Point::Extract( OGRSpatialReference* spatialReference ) const
 {
-    if( geometry == NULL )
-        geometry.CreateInstance( CLSID_Point );
-    geometry->putref_SpatialReference( spatialReference );
-
-    IZAwarePtr zAwareness;
-    geometry.QueryInterface( IID_IZAware, &zAwareness );
-    zAwareness->put_ZAware( VARIANT_FALSE );
-
-    IPointPtr point;
-    geometry.QueryInterface( IID_IPoint, &point );
-    point->PutCoords( x_, y_ );
-    point->put_Z( 0 );
+    OGRPoint* point = new OGRPoint( x_, y_ );
+    point->assignSpatialReference( spatialReference );
+    return point;
 }
 
 // -----------------------------------------------------------------------------
@@ -105,8 +97,8 @@ std::ostream& crossbow::Point::SerializeCoordinates( std::ostream& geometry, cha
 // -----------------------------------------------------------------------------
 void crossbow::Point::Serialize( Common::MsgCoordLatLong& message ) const
 {
-    message.set_latitude( y_ );
     message.set_longitude( x_ );
+    message.set_latitude( y_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,4 +110,5 @@ void crossbow::Point::Serialize( Common::MsgLocation& message ) const
     message.set_type( Common::MsgLocation_Geometry_point );
     message.mutable_coordinates()->mutable_elem( 0 )->set_latitude( y_ );
     message.mutable_coordinates()->mutable_elem( 0 )->set_longitude( x_ );
+    Serialize( *message.mutable_coordinates()->mutable_elem( 0 ) );
 }

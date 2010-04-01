@@ -36,10 +36,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void SetField( const std::string& name, const FieldVariant& value ) = 0;
-    virtual void SetShape( const Shape_ABC& value ) = 0;
+    virtual void SetField( const std::string& field, const FieldVariant& value ) = 0;
+    virtual void SetGeometry( const Shape_ABC& value ) = 0;
     virtual FieldVariant GetField( const std::string& name ) const = 0;
-    virtual Shape_ABC& GetShape() const = 0;
+    virtual Shape_ABC& GetGeometry() const = 0;
     virtual long GetID() const = 0;
     //@}
 };

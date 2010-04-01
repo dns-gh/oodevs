@@ -11,6 +11,7 @@
 #include "OrderListener.h"
 #include "OrderDispatcher.h"
 #include "QueryBuilder.h"
+#include "Workspace_ABC.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
@@ -26,15 +27,15 @@ using namespace plugins::crossbow;
 // Name: OrderListener constructor
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
-OrderListener::OrderListener( Database_ABC& database, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
+OrderListener::OrderListener( Workspace_ABC& workspace, const dispatcher::Model& model, const OrderTypes& types, dispatcher::SimulationPublisher_ABC& publisher, const WorkingSession& session )
     : publisher_ ( publisher )
-    , dispatcher_( new OrderDispatcher( database, types, model ) )
-    , database_  ( database )
+    , dispatcher_( new OrderDispatcher( workspace, types, model ) )
+    , database_  ( workspace.GetDatabase( "flat" ) )
     , ref_ ( 0 )
     , session_ ( session )
 {
-    Clean();
     table_.reset( database_.OpenTable( "Orders" ) );
+    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -54,8 +55,7 @@ void OrderListener::Clean()
 {
     try
     {
-        std::string clause( "session_id=" + boost::lexical_cast< std::string >( session_.GetId() ) );
-        database_.Execute( DeleteQueryBuilder( database_.GetTableName( "Orders" ), clause ) );
+        table_->DeleteRows( "session_id=" + boost::lexical_cast<std::string>( session_.GetId() ) );
     }
     catch ( std::exception& e )
     {
@@ -82,23 +82,10 @@ void OrderListener::Listen()
     {
         std::stringstream ss;
         ss << "id > " << ref_ << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
-        long orderid = -1;
         const Row_ABC* row = table_->Find( ss.str() );
         while( row != 0 )
         {
-            try
-            {
-                ref_ = row->GetID();
-                orderid = GetField< long >( *row, "id" );
-                dispatcher_->Dispatch( publisher_, *row );
-                MarkProcessed( orderid );
-            }
-            catch ( std::exception& ex )
-            {
-                if( orderid >= 0 )
-                    MarkProcessed( orderid );
-                MT_LOG_ERROR_MSG( "crossbow::Listen - unable to build order correctly: " << std::endl << ex.what() );
-            }
+            ListenRow( *row );
             row = table_->GetNextRow();
         }
     }
@@ -109,16 +96,39 @@ void OrderListener::Listen()
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderListener::ListenRow
+// Created: JCR 2010-02-27
+// -----------------------------------------------------------------------------
+void OrderListener::ListenRow( const Row_ABC& row )
+{
+    long orderid = -1;
+    try 
+    {
+        ref_ = row.GetID();
+        orderid = GetField< long >( row, "id" );
+        dispatcher_->Dispatch( publisher_, row );
+        MarkProcessed( orderid );
+    }
+    catch ( std::exception& ex )
+    {
+        if( orderid >= 0 )
+            MarkProcessed( orderid );
+        MT_LOG_ERROR_MSG( "crossbow::ListenRow - unable to build order correctly: " << std::endl << ex.what() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderListener::MarkProcessed
 // Created: SBO 2007-05-30
 // -----------------------------------------------------------------------------
 void OrderListener::MarkProcessed( long orderid ) const
 {
     std::stringstream ss;
-
     ss << "id = " << orderid << " AND checked=-1" << " AND session_id=" << session_.GetId(); // OBJECTID
-    UpdateQueryBuilder builder( database_.GetTableName( "Orders" ) );
-    builder.SetField( "checked", 0 );
-    builder.SetClause( ss.str() );
-    database_.Execute( builder );
+    
+    std::auto_ptr< Table_ABC > table( database_.OpenTable( "Orders" ) );
+    Row_ABC* row = table->Find( ss.str() );
+    if ( row == 0 )
+        throw std::runtime_error( "unable to process requested order: " + ss.str() );
+    row->SetField( "checked", FieldVariant( true ) );
 }

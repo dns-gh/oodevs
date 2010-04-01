@@ -24,7 +24,6 @@ using namespace plugins::crossbow;
 // -----------------------------------------------------------------------------
 StatusListener::StatusListener( Database_ABC& database, dispatcher::SimulationPublisher_ABC& publisher )
     : publisher_      ( publisher )
-//    , propertiesTable_( database.OpenTable( "SimulationProperties" ) )
     , database_       ( database )
     , paused_         ( false )
 {

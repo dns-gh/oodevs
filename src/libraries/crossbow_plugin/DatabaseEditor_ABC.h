@@ -31,14 +31,6 @@ public:
     virtual ~DatabaseEditor_ABC() {}
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void Lock() = 0;
-    virtual void UnLock() = 0;
-    virtual void StartEdit() = 0;
-    virtual void StopEdit() = 0;
-    //@}
-
     //! @name Transactions
     //@{
     virtual bool InTransaction() const = 0;

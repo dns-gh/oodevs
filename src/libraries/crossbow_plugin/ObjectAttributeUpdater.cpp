@@ -8,12 +8,12 @@
 // *****************************************************************************
 
 #include "crossbow_plugin_pch.h"
+#include "protocol/protocol.h"
 #include "ObjectAttributeUpdater.h"
 #include "QueryBuilder.h"
 #include "Database_ABC.h"
 #include "Table_ABC.h"
 #include "Row_ABC.h"
-#include "protocol/protocol.h"
 
 using namespace plugins;
 using namespace plugins::crossbow;
@@ -75,6 +75,7 @@ void ObjectAttributeUpdater::UpdateObjectAttribute( Database_ABC& db, long objec
     builder.SetId( "id" );
     builder.SetField( "object_id", objectId );    
     builder.SetField( "activated", obstacle.activated() ); // bool
+    // JSR
     builder.SetField( "type", obstacle.type() == Common::ObstacleType_DemolitionTargetType_preliminary ? "preliminary" : "reserved" );
     
     db.Execute( builder );

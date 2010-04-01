@@ -8,11 +8,11 @@
 // *****************************************************************************
 
 #include "crossbow_plugin_pch.h"
+#include "protocol/protocol.h"
 #include "ReportTemplate.h"
 #include "ReportFactory.h"
 
 #include <xeumeuleu/xml.h>
-#include "protocol/protocol.h"
 
 using namespace Common;
 

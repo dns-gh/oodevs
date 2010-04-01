@@ -21,6 +21,7 @@ namespace crossbow
 {    
     class Table_ABC;
     class Row_ABC;
+    class Workspace_ABC;
     class Database_ABC;
     class WorkingSession;
 
@@ -35,7 +36,7 @@ class FolkUpdater
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit FolkUpdater( Database_ABC& database, const WorkingSession& session );
+    explicit FolkUpdater( Workspace_ABC& workspace, const WorkingSession& session );
     virtual ~FolkUpdater();
     //@}
 
