@@ -63,16 +63,14 @@ void ProfileManager::ReadProfile( xml::xistream& xis )
     std::string strName;
     xis >> xml::attribute( "name", strName );
 
-    Profile*& pProfile = profiles_[ strName ];
-    if( pProfile )
+    if( profiles_.find( strName ) == profiles_.end() )
     {
-        MT_LOG_ERROR_MSG( "Profile '" << strName << "' already exists - new profile ignored" );
-    }
-    else
-    {
+        Profile*& pProfile = profiles_[ strName ];
         MT_LOG_INFO_MSG( "New profile loaded : '" << strName << "'" );
         pProfile = new Profile( model_, clients_, strName, xis );
     }
+    else
+        MT_LOG_ERROR_MSG( "Profile '" << strName << "' already exists - new profile ignored" );
 }
 
 // -----------------------------------------------------------------------------
