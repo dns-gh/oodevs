@@ -372,7 +372,7 @@
     <target name="application.dispatcher_dll.crossbow" description="build Sword Dispatcher dll with crossbow" depends="library.dispatcher,library.actions_static,library.clients_kernel,library.ENT,library.plugins.crossbow">
         <build-lib name="dispatcher_crossbow_dll" outtype="shared" mode="release" depends="boost,terrain,qt"
             pattern="dispatcher-crossbow-${platform}-mt" input="dispatcher_dll"
-            libs="HLA,libFedTime,masalloc,tools,libprotobuf,
+            libs="HLA,libFedTime,masalloc,tools,libprotobuf,gdal_i,
                   xerces-c_mt_static_2,Xerces-depdom_static_2,
                   MT_Tools,MT_Logger,MT_Memory,MT_IO,MT_Thread,
                   directia-${platform}-mt-4_5,
