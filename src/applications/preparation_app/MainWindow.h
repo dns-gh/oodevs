@@ -39,8 +39,8 @@ namespace gui
     class LightingProxy;
     class GlSelector;
     class PreferencesDialog;
-    class LocationsLayer;
     class TerrainLayer;
+    class Layer_ABC;
 }
 
 class AgentsLayer;
@@ -48,7 +48,6 @@ class Model;
 class ModelBuilder;
 class StaticModel;
 class ObjectCreationPanel;
-class WeatherLayer;
 class MapLayer_ABC;
 class Menu;
 class FileToolbar;
@@ -103,7 +102,7 @@ private:
     //! @name Helpers
     //@{
     void LoadExercise();
-    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::LocationsLayer& locations, WeatherLayer& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
+    void CreateLayers( ObjectCreationPanel& objects, gui::ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile );
     void closeEvent( QCloseEvent* pEvent );
     void WriteSettings();
     void ReadSettings();

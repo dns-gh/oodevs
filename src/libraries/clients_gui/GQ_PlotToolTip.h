@@ -6,29 +6,18 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: CBX 2003-08-18 $
-// $Archive: /Tools/Gui/build/Libraries/GQ_Widgets/src/GQ_PlotTooltip.h $
-// $Author: Cbx $
-// $Modtime: 10/01/05 16:02 $
-// $Revision: 2 $
-// $Workfile: GQ_PlotTooltip.h $
-//
-// *****************************************************************************
 
 #ifndef __GQ_PlotToolTip_h_
 #define __GQ_PlotToolTip_h_
 
-#ifdef __GNUG__
-#   pragma interface
-#endif
-
 #include <qtooltip.h>
-
-class GQ_Plot;
 
 class QRect;
 class QStringList;
+
+namespace gui
+{
+    class GQ_Plot;
 
 // =============================================================================
 /** @class  GQ_PlotToolTip
@@ -73,5 +62,7 @@ private:
      GQ_Plot& plot_;
     //@}
 };
+
+}
 
 #endif // __GQ_PlotToolTip_h_

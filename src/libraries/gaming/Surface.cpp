@@ -10,10 +10,10 @@
 #include "gaming_pch.h"
 
 #include "Surface.h"
-#include "VisionLine.h"
 #include "VisionMap.h"
 #include "clients_kernel/SensorType.h"
 #include "clients_kernel/DetectionMap.h"
+#include "clients_gui/VisionLine.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
@@ -148,7 +148,7 @@ bool Surface::IsInSector( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 E_PerceptionResult Surface::ComputePerception( const geometry::Point2f& point ) const
 {
-    VisionLine line( map_, origin_, point, height_ );
+    gui::VisionLine line( map_, origin_, point, height_ );
     float skyrock = std::numeric_limits< float >::infinity();
     while( ! line.IsDone() && skyrock > 0 )
     {

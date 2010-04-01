@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "StatisticsWidget.h"
-#include "GQ_PlotData.h"
+#include "clients_gui/GQ_PlotData.h"
 #include "gaming/Tools.h"
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
@@ -19,8 +19,8 @@
 // Created: SBO 2007-01-04
 // -----------------------------------------------------------------------------
 StatisticsWidget::StatisticsWidget( QWidget* parent )
-    : GQ_Plot( parent )
-    , data_( new GQ_PlotData( 0, *this ) )
+    : gui::GQ_Plot( parent )
+    , data_( new gui::GQ_PlotData( 0, *this ) )
     , yMax_( 0 )
     , visibleTicks_( 100 )
 {

@@ -10,9 +10,12 @@
 #ifndef __StatisticsWidget_h_
 #define __StatisticsWidget_h_
 
-#include "GQ_Plot.h"
+#include "clients_gui/GQ_Plot.h"
 
-class GQ_PlotData;
+namespace gui
+{
+    class GQ_PlotData;
+}
 
 // =============================================================================
 /** @class  StatisticsWidget
@@ -20,7 +23,7 @@ class GQ_PlotData;
 */
 // Created: SBO 2007-01-04
 // =============================================================================
-class StatisticsWidget : public GQ_Plot
+class StatisticsWidget : public gui::GQ_Plot
 {
 
 public:
@@ -53,7 +56,7 @@ private:
 private:
     //! @name Member data
     //@{
-    GQ_PlotData* data_;
+    gui::GQ_PlotData* data_;
     unsigned long yMax_;
     T_Values lastValues_;
     unsigned int visibleTicks_;

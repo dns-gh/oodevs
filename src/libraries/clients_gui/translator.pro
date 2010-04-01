@@ -53,6 +53,8 @@ StatusBar.cpp \
 SupplyRoutePrototype_ABC.cpp \
 TacticalLinesLayer.cpp \
 TerrainPreference.cpp \
+TerrainProfile.cpp \
+TerrainProfiler.cpp \
 UnitListView.cpp \
 UnitPreviewIcon.cpp \
 UnitsPanel.cpp \

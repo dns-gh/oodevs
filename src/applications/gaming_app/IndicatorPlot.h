@@ -10,7 +10,7 @@
 #ifndef __IndicatorPlot_h_
 #define __IndicatorPlot_h_
 
-#include "GQ_Plot.h"
+#include "clients_gui/GQ_Plot.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
@@ -29,7 +29,7 @@ class Simulation;
 */
 // Created: AGE 2007-09-26
 // =============================================================================
-class IndicatorPlot : public GQ_Plot
+class IndicatorPlot : public gui::GQ_Plot
                     , public tools::Observer_ABC
                     , public tools::ElementObserver_ABC< Simulation >
                     , public tools::ElementObserver_ABC< IndicatorRequest >
@@ -71,13 +71,13 @@ private:
     virtual void NotifyUpdated( const Simulation& simulation );
     virtual void NotifyUpdated( const IndicatorRequest& request );
     virtual void NotifyDeleted( const IndicatorRequest& request );
-    void UpdatePlot( GQ_PlotData* plot, const IndicatorRequest& request, unsigned int from );
+    void UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& request, unsigned int from );
     //@}
 
     //! @name Types
     //@{
-    typedef std::vector< GQ_PlotData* > T_Datas;
-    typedef std::map< const IndicatorRequest*, GQ_PlotData* > T_PlottedRequests;
+    typedef std::vector< gui::GQ_PlotData* > T_Datas;
+    typedef std::map< const IndicatorRequest*, gui::GQ_PlotData* > T_PlottedRequests;
     //@}
 
 private:
@@ -89,7 +89,7 @@ private:
     QDockWindow* dock_;
     IndicatorExportDialog& exportDialog_;
     T_Datas datas_;
-    GQ_PlotData* tickData_;
+    gui::GQ_PlotData* tickData_;
     T_PlottedRequests plots_;
     double min_;
     double max_;

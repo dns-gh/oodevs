@@ -6,27 +6,16 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: CBX 2003-08-18 $
-// $Archive: /Tools/Gui/build/Libraries/GQ_Widgets/src/GQ_PlotTooltip.cpp $
-// $Author: Cbx $
-// $Modtime: 10/01/05 16:00 $
-// $Revision: 4 $
-// $Workfile: GQ_PlotTooltip.cpp $
-//
-// *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "GQ_PlotToolTip.h"
 
 #include "GQ_Plot.h"
 
 #include <qrect.h>
 #include <qstringlist.h>
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotToolTip constructor

@@ -34,6 +34,9 @@ class QColorGroup;
 class QPainter;
 class QPoint;
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  GQ_PlotAxis
     @brief  GQ_PlotAxis
@@ -219,5 +222,7 @@ private:
     T_TickList ticks_;
     //@}
 };
+
+}
 
 #endif // __GQ_PlotAxis_h_

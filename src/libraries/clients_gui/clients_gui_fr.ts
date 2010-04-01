@@ -197,6 +197,10 @@
         <source>Change watershed color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show terrain profiler tool</source>
+        <translation>Affiche l&apos;outil de coupe de terrain</translation>
+    </message>
 </context>
 <context>
     <name>GraphicPreferences</name>
@@ -478,6 +482,40 @@
     <message>
         <source> px</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TerrainProfile</name>
+    <message>
+        <source>Altitude (m)</source>
+        <translation>Altitude (m)</translation>
+    </message>
+    <message>
+        <source>Distance (km)</source>
+        <translation>Distance (km)</translation>
+    </message>
+</context>
+<context>
+    <name>TerrainProfiler</name>
+    <message>
+        <source>Terrain profile</source>
+        <translation>Coupe de terrain</translation>
+    </message>
+    <message>
+        <source>Terrain profile from here</source>
+        <translation>Coupe de terrain depuis ici</translation>
+    </message>
+    <message>
+        <source>Terrain profile to here</source>
+        <translation>Coupe de terrain jusqu&apos;ici</translation>
+    </message>
+    <message>
+        <source>Terrain profile from unit</source>
+        <translation>Coupe de terrain depuis cette unité</translation>
+    </message>
+    <message>
+        <source>Terrain profile to unit</source>
+        <translation>Coupe de terrain jusqu&apos;à cette unité</translation>
     </message>
 </context>
 <context>

@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "GQ_PlotAxis.h"
 #include "moc_GQ_PlotAxis.cpp"
 
@@ -30,6 +30,8 @@
 
 #include <cassert>
 #include <cmath>
+
+using namespace gui;
 
 const unsigned int _defaultTickMultiples   [ 4 ] = {  1, 2, 5, 25  };
 const unsigned int _defaultMinutesMultiples[ 6 ] = {  1, 5, 10, 20, 15, 30 };

@@ -23,6 +23,7 @@ namespace kernel
 namespace gui
 {
     class ColorButton;
+    class TerrainProfilerLayer;
 
 // =============================================================================
 /** @class  GisToolbar
@@ -40,7 +41,8 @@ class GisToolbar : public QToolBar
 public:
     //! @name Constructors/Destructor
     //@{
-             GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection );
+             GisToolbar( QMainWindow* parent, kernel::Controllers& controllers
+                       , const kernel::DetectionMap& detection, TerrainProfilerLayer& layer );
     virtual ~GisToolbar();
     //@}
 
@@ -51,6 +53,7 @@ private slots:
     void OnModeChanged( int mode );
     void OnHeightChanged( int height );
     void OnColorChanged( const QColor& color );
+    void OnToggleCut( bool toggled );
     //@}
 
 private:
@@ -71,6 +74,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::DetectionMap& detection_;
+    QDockWindow* terrainProfiler_;
     QCheckBox* enabled_;
     QComboBox* mode_;
     QSpinBox* height_;

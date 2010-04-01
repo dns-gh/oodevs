@@ -16,7 +16,7 @@
 //
 // *****************************************************************************
 
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "GQ_Plot.h"
 #include "moc_GQ_Plot.cpp"
 
@@ -33,6 +33,8 @@
 #include <cassert>
 
 #pragma warning( disable : 4355 ) // $$$$ SBO 2008-05-14: 'this' : used in base member initializer list
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot constructor

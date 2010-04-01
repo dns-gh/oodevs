@@ -6,20 +6,14 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: CBX 2003-08-08 $
-// $Archive: /Tools/Gui/build/Libraries/GQ_Widgets/src/GQ_PlotDataBBox.h $
-// $Author: Cbx $
-// $Modtime: 10/01/05 16:02 $
-// $Revision: 4 $
-// $Workfile: GQ_PlotDataBBox.h $
-//
-// *****************************************************************************
 
 #ifndef __GQ_PlotDataBBox_h_
 #define __GQ_PlotDataBBox_h_
 
 #include <vector>
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  GQ_PlotDataBBox
@@ -186,6 +180,8 @@ GQ_PlotDataBBox::T_Point GQ_PlotDataBBox::Center() const
         return T_Point( 0.0, 0.0 );
 
     return T_Point( 0.5 * ( rXMin_ + rXMax_ ), 0.5 * ( rYMin_ + rYMax_ ) );
+}
+
 }
 
 #endif // __GQ_PlotDataBBox_h_

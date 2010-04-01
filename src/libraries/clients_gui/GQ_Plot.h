@@ -31,10 +31,12 @@
 #include <qpixmap.h>
 #include <qwidget.h>
 
-class GQ_PlotToolTip;
-
 class QLabel;
 class QStringList;
+
+namespace gui
+{
+    class GQ_PlotToolTip;
 
 // =============================================================================
 /** @class  GQ_Plot
@@ -257,5 +259,6 @@ GQ_PlotAxis& GQ_Plot::YAxis()
     return y_;
 }
 
+}
 
 #endif // __GQ_Plot_h_

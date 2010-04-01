@@ -6,18 +6,12 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: CBX 2003-08-19 $
-// $Archive: /Tools/Gui/build/Libraries/GQ_Widgets/src/GQ_ValueConvertor.h $
-// $Author: Cbx $
-// $Modtime: 11/10/04 19:27 $
-// $Revision: 4 $
-// $Workfile: GQ_ValueConvertor.h $
-//
-// *****************************************************************************
 
 #ifndef __GQ_ValueConvertor_h_
 #define __GQ_ValueConvertor_h_
+
+namespace gui
+{
 
 // =============================================================================
 /** @class  GQ_ValueConvertor
@@ -85,6 +79,8 @@ T_Output GQ_ValueConvertor< T_Input, T_Output >::GetConversion( T_Input inputVal
     Convert( inputValue, outputValue );
 
     return outputValue;
+}
+
 }
 
 #endif // __GQ_ValueConvertor_h_

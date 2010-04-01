@@ -7,19 +7,18 @@
 //
 // *****************************************************************************
 
-#include "gaming_pch.h"
+#include "clients_gui_pch.h"
 #include "VisionLine.h"
 #include "clients_kernel/DetectionMap.h"
 
-using namespace geometry;
-using namespace kernel;
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: VisionLine constructor
 // Created: AGE 2006-04-14
 // -----------------------------------------------------------------------------
-VisionLine::VisionLine( const DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height )
-    : DetectionMapIterator( map, from, to )
+VisionLine::VisionLine( const kernel::DetectionMap& map, const geometry::Point2f& from, const geometry::Point2f& to, float height )
+    : kernel::DetectionMapIterator( map, from, to )
     , fromAltitude_( map.ElevationAt( from ) + height )
     , toAltitude_( map.ElevationAt( to ) + 2.f )
     , totalDistance_( from.Distance( to ) + 0.1f )
@@ -44,9 +43,9 @@ VisionLine::~VisionLine()
 // -----------------------------------------------------------------------------
 void VisionLine::Increment()
 {
-    const Point2f current = CurrentPoint();
-    DetectionMapIterator::Increment();
-    const Point2f next = CurrentPoint();
+    const geometry::Point2f current = CurrentPoint();
+    kernel::DetectionMapIterator::Increment();
+    const geometry::Point2f next = CurrentPoint();
     length_ = current.Distance( next );
     advancedDistance_ += length_;
     const float alpha = advancedDistance_ / totalDistance_;
@@ -68,7 +67,7 @@ bool VisionLine::IsInGround() const
 // -----------------------------------------------------------------------------
 bool VisionLine::IsInTown() const
 {
-    return currentAltitude_ < Elevation() && DetectionMapIterator::IsInTown();
+    return currentAltitude_ < Elevation() && kernel::DetectionMapIterator::IsInTown();
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +76,7 @@ bool VisionLine::IsInTown() const
 // -----------------------------------------------------------------------------
 bool VisionLine::IsInForest() const
 {
-    return currentAltitude_ < Elevation() && DetectionMapIterator::IsInForest();
+    return currentAltitude_ < Elevation() && kernel::DetectionMapIterator::IsInForest();
 }
 
 // -----------------------------------------------------------------------------

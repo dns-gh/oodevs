@@ -31,11 +31,13 @@
 #include <qpen.h>
 #include <qpointarray.h>
 
-class GQ_Plot;
-
 class QPainter;
 class QPixmap;
 class QStringList;
+
+namespace gui
+{
+    class GQ_Plot;
 
 // =============================================================================
 /** @class  GQ_PlotData
@@ -275,6 +277,8 @@ inline
 const GQ_PlotDataBBox& GQ_PlotData::BBox() const
 {
     return bbox_;
+}
+
 }
 
 #endif // __GQ_PlotData_h_

@@ -26,7 +26,7 @@ using namespace kernel;
 // Created: AGE 2007-09-26
 // -----------------------------------------------------------------------------
 IndicatorPlot::IndicatorPlot( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, QDockWindow* dock, IndicatorExportDialog& exportDialog, bool interactive )
-    : GQ_Plot( parent, "IndicatorPlot" )
+    : gui::GQ_Plot( parent, "IndicatorPlot" )
     , controllers_( controllers )
     , publisher_( publisher )
     , interactive_( interactive )
@@ -99,7 +99,7 @@ void IndicatorPlot::Add( const IndicatorRequest& request )
     T_PlottedRequests::const_iterator it = plots_.find( &request );
     if( it != plots_.end() )
         return;
-    GQ_PlotData* data = new GQ_PlotData( datas_.size() + 1, *this );
+    gui::GQ_PlotData* data = new gui::GQ_PlotData( datas_.size() + 1, *this );
     data->SetLinePen( GetPlotColor( datas_.size() ) );
     UpdatePlot( data, request, 0 );
     RegisterPlotData( *data );
@@ -120,7 +120,7 @@ void IndicatorPlot::NotifyUpdated( const IndicatorRequest& request )
     T_PlottedRequests::const_iterator it = plots_.find( &request );
     if( it != plots_.end() )
     {
-        GQ_PlotData* data = it->second;
+        gui::GQ_PlotData* data = it->second;
         if( data->Data().size() < request.Result().size() )
             UpdatePlot( data, request, data->Data().size() - 1 );
         else if( data->Data().size() > request.Result().size() )
@@ -140,7 +140,7 @@ void IndicatorPlot::NotifyDeleted( const IndicatorRequest& request )
     T_PlottedRequests::iterator it = plots_.find( &request );
     if( it != plots_.end() )
     {
-        GQ_PlotData* data = it->second;
+        gui::GQ_PlotData* data = it->second;
         UnregisterPlotData( *data, true );
         T_Datas::iterator itD = std::find( datas_.begin(), datas_.end(), data );
         datas_.erase( itD );
@@ -154,7 +154,7 @@ void IndicatorPlot::NotifyDeleted( const IndicatorRequest& request )
 // Name: IndicatorPlot::UpdatePlot
 // Created: SBO 2009-04-30
 // -----------------------------------------------------------------------------
-void IndicatorPlot::UpdatePlot( GQ_PlotData* plot, const IndicatorRequest& request, unsigned int from )
+void IndicatorPlot::UpdatePlot( gui::GQ_PlotData* plot, const IndicatorRequest& request, unsigned int from )
 {
     for( unsigned int i = from; i < request.Result().size(); ++i )
     {
@@ -173,7 +173,7 @@ void IndicatorPlot::UpdatePlot( GQ_PlotData* plot, const IndicatorRequest& reque
 // -----------------------------------------------------------------------------
 void IndicatorPlot::hideEvent( QHideEvent* event )
 {
-    GQ_Plot::hideEvent( event );
+    gui::GQ_Plot::hideEvent( event );
     dock_->deleteLater();
 }
 
@@ -191,7 +191,7 @@ void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
         skip().set_tick( unsigned( tick ) );
         skip.Send( publisher_ );
     }
-    GQ_Plot::mouseReleaseEvent( e );
+    gui::GQ_Plot::mouseReleaseEvent( e );
 }
 
 // -----------------------------------------------------------------------------
@@ -224,7 +224,7 @@ void IndicatorPlot::NotifyUpdated( const Simulation& simulation )
 {
     if( ! tickData_ )
     {
-        tickData_ = new GQ_PlotData( 0, *this );
+        tickData_ = new gui::GQ_PlotData( 0, *this );
         RegisterPlotData( *tickData_ );
     }
     tickData_->SetLinePen( red );

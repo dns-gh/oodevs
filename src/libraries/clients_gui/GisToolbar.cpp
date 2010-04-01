@@ -11,22 +11,33 @@
 #include "GisToolbar.h"
 #include "moc_GisToolbar.cpp"
 #include "ColorButton.h"
+#include "TerrainProfiler.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/Units.h"
+#include "tools/GeneralConfig.h"
 
 using namespace gui;
+
+namespace
+{
+    QPixmap MakePixmap( const std::string& name )
+    {
+        return QImage( tools::GeneralConfig::BuildResourceChildFile( std::string( "images/gui/" ) + name + ".png" ).c_str() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: GisToolbar constructor
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
-GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection )
+GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, const kernel::DetectionMap& detection, TerrainProfilerLayer& layer )
     : QToolBar( parent, "gis tools" )
     , controllers_( controllers )
     , detection_( detection )
+    , terrainProfiler_( new TerrainProfiler( parent, controllers, detection, layer ) )
 {
     setLabel( tr( "GIS tools" ) );
     {
@@ -50,6 +61,14 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         connect( mode_, SIGNAL( activated( int ) ), SLOT( OnModeChanged( int ) ) );
         connect( height_, SIGNAL( valueChanged( int ) ), SLOT( OnHeightChanged( int ) ) );
         connect( color_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorChanged( const QColor& ) ) );
+
+        addSeparator();
+        QToolButton* button = new QToolButton( this );
+        button->setIconSet( MakePixmap( "gis_terrainprofiler" ) );
+        QToolTip::add( button, tr( "Show terrain profiler tool" ) );
+        button->setToggleButton( true );
+        connect( button, SIGNAL( toggled( bool ) ), SLOT( OnToggleCut( bool ) ) );
+        connect( terrainProfiler_, SIGNAL( visibilityChanged( bool ) ), button, SLOT( setOn( bool ) ) );
     }
     controllers_.Register( *this );
 }
@@ -142,4 +161,13 @@ void GisToolbar::OnHeightChanged( int height )
 void GisToolbar::OnColorChanged( const QColor& color )
 {
     controllers_.options_.Change( "WatershedColor", color.name() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GisToolbar::OnToggleCut
+// Created: SBO 2010-03-31
+// -----------------------------------------------------------------------------
+void GisToolbar::OnToggleCut( bool toggled )
+{
+    terrainProfiler_->setShown( toggled );
 }

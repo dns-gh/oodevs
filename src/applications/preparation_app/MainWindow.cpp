@@ -76,6 +76,7 @@
 #include "clients_gui/SymbolIcons.h"
 #include "clients_gui/TerrainLayer.h"
 #include "clients_gui/TerrainPicker.h"
+#include "clients_gui/TerrainProfilerLayer.h"
 #include "clients_gui/TooltipsLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/WatershedLayer.h"
@@ -230,7 +231,8 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this );
     new DisplayToolbar( this, controllers );
-    new gui::GisToolbar( this, controllers, staticModel_.detection_ );
+    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
+    new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
 
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *importDialog, *scoreDialog, *successFactorDialog, *exerciseDialog, *factory, expiration, *help );
@@ -239,7 +241,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
 
-    CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *prefDialog, PreparationProfile::GetProfile() );
+    CreateLayers( *objectCreationPanel, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer, *profilerLayer, *prefDialog, PreparationProfile::GetProfile() );
 
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -269,7 +271,7 @@ MainWindow::~MainWindow()
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, LocationsLayer& locations, WeatherLayer& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, PreferencesDialog& preferences, const Profile_ABC& profile )
+void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& parameters, gui::Layer_ABC& locations, gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile )
 {
     TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& automats             = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, agents );
@@ -306,6 +308,7 @@ void MainWindow::CreateLayers( ObjectCreationPanel& objects, ParametersLayer& pa
     glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
     glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );
     glProxy_->Register( locations );                                                                                locations           .SetPasses( "main" );
+    glProxy_->Register( profilerLayer );                                                                            profilerLayer       .SetPasses( "main" );
     glProxy_->Register( drawerLayer );                                                                              drawerLayer         .SetPasses( "main" );
     glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );
 

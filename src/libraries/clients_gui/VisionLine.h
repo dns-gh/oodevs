@@ -12,6 +12,9 @@
 
 #include "clients_kernel/DetectionMapIterator.h"
 
+namespace gui
+{
+
 // =============================================================================
 /** @class  VisionLine
     @brief  VisionLine
@@ -57,5 +60,7 @@ private:
     float length_;
     //@}
 };
+
+}
 
 #endif // __VisionLine_h_

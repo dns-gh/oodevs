@@ -121,6 +121,7 @@
 #include "clients_gui/GisToolbar.h"
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/TerrainPicker.h"
+#include "clients_gui/TerrainProfilerLayer.h"
 
 #include "tools/ExerciseConfig.h"
 
@@ -201,7 +202,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     new SIMControlToolbar( this, controllers, network, publisher, *pLogPanel_ );
     new DisplayToolbar( this, controllers );
     new EventToolbar( this, controllers, profile );
-    new gui::GisToolbar( this, controllers, staticModel_.detection_ );
+    gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
+    new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer );
 
     // A few layers
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
@@ -359,7 +361,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
     
-    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, *prefDialog, profile, publisher );
+    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, *profilerLayer, *prefDialog, profile, publisher );
 
     ::StatusBar* pStatus = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
@@ -381,7 +383,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, LocationsLayer& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
+void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
 {
     TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
@@ -434,6 +436,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
     glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );
     glProxy_->Register( locationsLayer );                                                                           locationsLayer      .SetPasses( "main" );
+    glProxy_->Register( profilerLayer );                                                                            profilerLayer       .SetPasses( "main" );
     glProxy_->Register( drawerLayer );                                                                              drawerLayer         .SetPasses( "main,miniviews" );
     glProxy_->Register( fogLayer );                                                                                 fogLayer            .SetPasses( "fog" );
     glProxy_->Register( tooltipLayer );                                                                             tooltipLayer        .SetPasses( "tooltip" );

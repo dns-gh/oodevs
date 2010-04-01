@@ -6,21 +6,8 @@
 // Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: CBX 2003-08-07 $
-// $Archive: /Tools/Gui/build/Libraries/GQ_Widgets/src/GQ_PlotData.cpp $
-// $Author: Cbx $
-// $Modtime: 10/01/05 16:02 $
-// $Revision: 12 $
-// $Workfile: GQ_PlotData.cpp $
-//
-// *****************************************************************************
 
-#ifdef __GNUG__
-#   pragma implementation
-#endif
-
-#include "gaming_app_pch.h"
+#include "clients_gui_pch.h"
 #include "GQ_PlotData.h"
 
 #include "moc_GQ_PlotData.cpp"
@@ -32,6 +19,8 @@
 #include <qstringlist.h>
 
 #include <cassert>
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData constructor
