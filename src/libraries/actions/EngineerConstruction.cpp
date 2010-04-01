@@ -171,11 +171,11 @@ void EngineerConstruction::CommitTo( Common::MsgPlannedWork& message ) const
         if( type == "location" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
         else if( type == "obstacletype" )
-            static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_type_obstacle, message, _1 ) );
+            static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_type_obstacle, boost::ref(message), _1 ) );
         else if( type == "density" )
-            static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_densite, message, _1 ) );
+            static_cast< const Numeric* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_densite, boost::ref(message), _1 ) );
         else if( type == "tc2" || type == "automat" )
-            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_tc2, message, _1 ) );
+            static_cast< const Automat* >( it->second )->CommitTo( boost::bind( &Common::MsgPlannedWork::set_tc2, boost::ref(message), _1 ) );
     }
 }
 
