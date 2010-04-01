@@ -17,10 +17,8 @@
 // Name: MeteoModel constructor
 // Created: HBD 2010-03-10
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv ) 
-    :  MeteoModel_ABC()
-    ,  converter_ ( conv )
-    ,  pGlobalMeteo_()
+MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter ) 
+    : converter_ ( converter )
 {
     PHY_Precipitation::Initialize();
     PHY_Lighting     ::Initialize();
@@ -32,15 +30,15 @@ MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv )
 // -----------------------------------------------------------------------------
 MeteoModel::~MeteoModel()
 {
-    PHY_Precipitation::Terminate();
     PHY_Lighting     ::Terminate();
+    PHY_Precipitation::Terminate();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel::UnregisterMeteo
 // Created: HBD 2010-03-10
 // -----------------------------------------------------------------------------
-void MeteoModel::UnregisterMeteo( PHY_Meteo& meteo)
+void MeteoModel::UnregisterMeteo( PHY_Meteo& meteo )
 {
    meteos_.remove( &meteo ); 
 }
@@ -61,10 +59,10 @@ const PHY_Lighting& MeteoModel::GetLighting() const
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg )
 {
-    if ( pGlobalMeteo_ )
+    if( pGlobalMeteo_.get() )
         pGlobalMeteo_->Update( msg.attributes() );
     else
-        pGlobalMeteo_ = new PHY_Meteo( msg.attributes(), this );
+        pGlobalMeteo_.reset( new PHY_Meteo( msg.attributes(), this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,10 +72,10 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg )
 {
-    geometry::Point2d vUpLeft = converter_.ConvertToGeo( geometry::Point2f( msg.top_left_coordinate().longitude(), 
-        msg.top_left_coordinate().latitude() ));
-    geometry::Point2d vDownRight = converter_.ConvertToGeo( geometry::Point2f( msg.bottom_right_coordinate().longitude(), 
-        msg.bottom_right_coordinate().latitude() ));
+    const geometry::Point2d topLeft = converter_.ConvertToGeo( 
+        geometry::Point2f( float( msg.top_left_coordinate().longitude() ), float( msg.top_left_coordinate().latitude() ) ) );
+    const geometry::Point2d bottomRight = converter_.ConvertToGeo( 
+        geometry::Point2f( float( msg.bottom_right_coordinate().longitude() ), float( msg.bottom_right_coordinate().latitude() ) ) );
 
     PHY_Meteo* pTmp = 0;
     if( msg.has_attributes() )
@@ -96,4 +94,3 @@ void MeteoModel::RegisterMeteo( PHY_Meteo& meteo )
 {
     meteos_.push_front( &meteo ); 
 }
-    

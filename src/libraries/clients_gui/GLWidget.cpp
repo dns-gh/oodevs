@@ -373,8 +373,8 @@ void GlWidget::DrawLine( const Point2f& from, const Point2f& to ) const
 {
     glEnable( GL_LINE_SMOOTH );
     glBegin( GL_LINES );
-        glVertex2f(  from.X(), from.Y() );
-        glVertex2f(  to.X()  , to.Y() );
+        glVertex2f( from.X(), from.Y() );
+        glVertex2f( to.X()  , to.Y() );
     glEnd();
 }
 
@@ -401,15 +401,11 @@ void GlWidget::DrawRectangle( const T_PointVector& points ) const
     if( points.size() > 1 )
     {
         glEnable( GL_LINE_SMOOTH );
-        glBegin( GL_LINES );
-        glVertex2f(  points.front().X(), points.front().Y() );
-        glVertex2f(  points.front().X(), points.back().Y() );
-        glVertex2f(  points.front().X(), points.back().Y() );
-        glVertex2f(  points.back().X(), points.back().Y() );
-        glVertex2f(  points.back().X(), points.back().Y() );
-        glVertex2f(  points.back().X(), points.front().Y() );
-        glVertex2f(  points.back().X(), points.front().Y() );
-        glVertex2f(  points.front().X(), points.front().Y() );
+        glBegin( GL_LINE_LOOP );
+            glVertex2f( points.front().X(), points.front().Y() );
+            glVertex2f( points.front().X(), points.back().Y() );
+            glVertex2f( points.back().X(), points.back().Y() );
+            glVertex2f( points.back().X(), points.front().Y() );
         glEnd();
     }
 }

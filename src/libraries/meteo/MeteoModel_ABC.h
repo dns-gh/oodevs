@@ -24,19 +24,30 @@ class MeteoModel_ABC : public MeteoManager_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MeteoModel_ABC() {};
-       virtual ~MeteoModel_ABC() {};
+             MeteoModel_ABC() {};
+    virtual ~MeteoModel_ABC() {};
     //@}
 
     //! @name Operations
     //@{
-    virtual const PHY_Lighting&  GetLighting     () const = 0;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg ) = 0;    
-    virtual void OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg ) = 0; 
+    virtual const PHY_Lighting& GetLighting() const = 0;
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message ) = 0;
+    virtual void OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& message ) = 0;
     //@}
+
 protected:
+    //! @name Operations
+    //@{
     virtual void RegisterMeteo  ( PHY_Meteo& ) = 0;
     virtual void UnregisterMeteo( PHY_Meteo& ) = 0;
+    //@}
+
+private:
+    //! @name Copy/Assignment
+    //@{
+    MeteoModel_ABC( const MeteoModel_ABC& );            //!< Copy constructor
+    MeteoModel_ABC& operator=( const MeteoModel_ABC& ); //!< Assignment operator
+    //@}
 };
 
 #endif // __MeteoModel_ABC_h_

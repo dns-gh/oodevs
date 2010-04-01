@@ -33,38 +33,44 @@ class MeteoModel : public MeteoModel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    MeteoModel( kernel::CoordinateConverter_ABC& conv );
+    explicit MeteoModel( kernel::CoordinateConverter_ABC& converter );
     virtual ~MeteoModel();
     //@}
 
     //! @name Operations
     //@{
-
-
-    virtual const PHY_Lighting&  GetLighting  () const;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg );    
-    virtual void OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg ); 
+    virtual const PHY_Lighting& GetLighting() const;
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message );
+    virtual void OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& message );
     //@}
 
 protected:
-
-    virtual void     RegisterMeteo ( PHY_Meteo& );
-    virtual void     UnregisterMeteo( PHY_Meteo& );
+    //! @name Operations
+    //@{
+    virtual void RegisterMeteo( PHY_Meteo& element );
+    virtual void UnregisterMeteo( PHY_Meteo& element );
+    //@}
 
 private:
+    //! @name Copy/Assignment
+    //@{
+    MeteoModel( const MeteoModel& );            //!< Copy constructor
+    MeteoModel& operator=( const MeteoModel& ); //!< Assignment operator
+    //@}
+
     //! @name Helpers
     //@{
     typedef std::list< PHY_Meteo* >     T_MeteoList;
     typedef T_MeteoList::const_iterator CIT_MeteoList;
     typedef T_MeteoList::iterator       IT_MeteoList;
-   //@}
+    //@}
 
 private:
     //! @name Member data
     //@{
-    PHY_Meteo*                        pGlobalMeteo_;
-    T_MeteoList                        meteos_; 
-    kernel::CoordinateConverter_ABC&  converter_;
+    kernel::CoordinateConverter_ABC& converter_;
+    std::auto_ptr< PHY_Meteo >       pGlobalMeteo_;
+    T_MeteoList                      meteos_; 
     //@}
 };
 
