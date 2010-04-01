@@ -79,26 +79,6 @@ private:
     //@{
     typedef std::vector< MsgsSimToClient::AutomatPerception > T_AutomatePerceptionVector;
 
-    //$$$ bullshit
-    struct T_Optionals
-    {
-      unsigned pertinencePresent : 1;
-      unsigned identification_levelPresent : 1;
-      unsigned max_identification_levelPresent : 1;
-      unsigned etat_opPresent : 1;
-      unsigned mortPresent : 1;
-      unsigned positionPresent : 1;
-      unsigned directionPresent : 1;
-      unsigned speedPresent : 1;
-      unsigned campPresent : 1;
-      unsigned nature_pcPresent : 1;
-      unsigned perception_par_compagniePresent : 1;
-      unsigned renduPresent : 1;
-      unsigned prisonnierPresent : 1;
-      unsigned refugie_pris_en_comptePresent : 1;
-    };
-    //@}
-
 public:
     //! @name Member data
     //@{
@@ -121,8 +101,6 @@ public:
     bool                                bSurrendered_;
     bool                                bPrisoner_;
     bool                                bRefugeeManaged_;
-
-    T_Optionals                         optionals_;
     //@}
 };
 

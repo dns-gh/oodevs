@@ -138,11 +138,8 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     SEND_ASN_ATTRIBUTE( message() ,  etat_op                  , nOperationalState_     );
     SEND_ASN_ATTRIBUTE( message() ,  mort                     , bDead_                 );
 
-    if( optionals_.positionPresent )
-    {
-        message().mutable_position()->set_latitude( position_.X() );
-        message().mutable_position()->set_longitude( position_.Y() );    
-    }   
+    message().mutable_position()->set_latitude( position_.X() );
+    message().mutable_position()->set_longitude( position_.Y() );
     message().mutable_direction()->set_heading( nDirection_ );
     SEND_ASN_ATTRIBUTE( message() ,  speed    , nSpeed_     );
 
@@ -154,9 +151,8 @@ void AgentKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 
     SEND_ASN_ATTRIBUTE( message() ,  nature_pc, bPC_ );
 
-    if( optionals_.perception_par_compagniePresent )
-        for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
-            *message().mutable_perception_par_compagnie()->add_elem() = automatePerceptions_[ i ];
+    for( unsigned int i = 0; i < automatePerceptions_.size(); ++i )
+        *message().mutable_perception_par_compagnie()->add_elem() = automatePerceptions_[ i ];
 
     SEND_ASN_ATTRIBUTE( message() ,  rendu                    , bSurrendered_          );
     SEND_ASN_ATTRIBUTE( message() ,  prisonnier               , bPrisoner_             );
