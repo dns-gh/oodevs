@@ -141,15 +141,35 @@ void MIL_KnowledgeGroup::CreateKnowledgesFromAgentPerception( const DEC_Knowledg
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 {
-    // LTO begin
-    if( GetParent() )
-        GetParent()->UnregisterKnowledgeGroup( *this );
-    else if( pArmy_ )
-    // LTO end
-        pArmy_->UnregisterKnowledgeGroup( *this );
+    Destroy();
+}
 
-    delete pKnowledgeBlackBoard_;
-    ids_.erase( nID_ );
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::Destroy
+// Created: LDC 2010-04-01
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::Destroy()
+{
+    if( pKnowledgeBlackBoard_)
+    {
+        // LTO begin
+        if( GetParent() )
+            GetParent()->UnregisterKnowledgeGroup( *this );
+        else if( pArmy_ )
+        // LTO end
+            pArmy_->UnregisterKnowledgeGroup( *this );
+
+        delete pKnowledgeBlackBoard_;
+        ids_.erase( nID_ );
+
+        // myself destruction
+        client::KnowledgeGroupDestruction msg;   
+        msg().set_oid( nID_ );
+        msg().set_oid_camp( pArmy_->GetID() );
+        msg.Send( NET_Publisher_ABC::Publisher() );
+
+        pKnowledgeBlackBoard_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +255,7 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 
     assert( pKnowledgeBlackBoard_ );
     pKnowledgeBlackBoard_->Update(currentTimeStep);
-    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::CleanKnowledges
@@ -303,19 +323,6 @@ void MIL_KnowledgeGroup::SendCreation() const
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         (**it).SendCreation();
     // LTO end
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::SendDestruction
-// Created: FDS 2010-03-30
-// -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::SendDestruction() const
-{
-    // myself destruction
-    client::KnowledgeGroupDestruction msg;   
-    msg().set_oid( nID_ );
-    msg().set_oid_camp( pArmy_->GetID() );
-//TODO FDS: Commentée car actuellement crash de la sim, en cours de debuggage//    msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
 // -----------------------------------------------------------------------------

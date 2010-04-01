@@ -113,6 +113,7 @@ public:
     void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message );
     void OnReceiveMsgKnowledgeGroupUpdate     ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
     // LTO end
+    void Destroy();
     //@}
 
 
@@ -135,7 +136,6 @@ public:
     //! @name Network
     //@{
     void SendCreation () const;
-    void SendDestruction() const;
     void SendFullState() const;
     void SendKnowledge() const;
     // LTO begin
@@ -163,8 +163,6 @@ private:
     bool OnReceiveMsgKnowledgeGroupSetType       ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
 
     void CreateKnowledgesFromAgentPerception( const DEC_Knowledge_Agent& agent );
-
-
     //@}
     
 private:

@@ -169,9 +169,9 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
     bHasChanged_ = ( jammers_.erase( &jammer ) == 1 );
 
     // delete copy of knowledge group used in jamming
-    if( CanCommunicate() )
+    if(  pJammingKnowledgeGroup_ && CanCommunicate() )
     {            
-        pJammingKnowledgeGroup_->SendDestruction();
+        pJammingKnowledgeGroup_->Destroy();
         delete pJammingKnowledgeGroup_;
         pJammingKnowledgeGroup_ = 0;
     }
