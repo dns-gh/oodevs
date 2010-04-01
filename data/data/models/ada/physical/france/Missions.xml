@@ -866,13 +866,13 @@
       <parameter dia-name="entities" name="entities" optional="false" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Valorize" dia-type="T_Mission_Pion_Valorize" id="2035" name="Valorize">
-      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.sword.military.tasks.RealizeTacticalObject" dia-type="T_Mission_Pion_RealizeTacticalObject" id="2036" name="GEN Realiser Travaux">
       <parameter dia-name="entities" name="entities" optional="false" type="GenObjectListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Activate" dia-type="T_Mission_Pion_Activate" id="2037" name="Activate">
-      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
   </units>
   <automats>
