@@ -111,6 +111,8 @@ void ScorePlugin::NotifyClientAuthenticated( dispatcher::ClientPublisher_ABC& cl
             content += line;
         message().set_information( content.c_str() );
     }
+    else
+        message().set_information( "" );
     message.Send( client );
 }
 
