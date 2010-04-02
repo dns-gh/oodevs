@@ -44,9 +44,9 @@ public:
 
     // @name Accessors 
     //@{
-          MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function ) const;
-          MIL_LimaOrder* FindLima             ( unsigned int nID ) const;
-          MIL_LimaOrder* FindNextScheduledLima() const;
+          virtual MIL_LimaOrder* FindLima             ( const MIL_LimaFunction& function ) const;
+          virtual MIL_LimaOrder* FindLima             ( unsigned int nID ) const;
+          virtual MIL_LimaOrder* FindNextScheduledLima() const;
     const T_LimaVector&  GetLimas             () const;
     const MT_Vector2D&   GetDirDanger         () const;
     const std::string&   GetMissionName       () const;

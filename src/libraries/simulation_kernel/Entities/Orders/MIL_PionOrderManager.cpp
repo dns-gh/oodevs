@@ -115,6 +115,42 @@ const MIL_Fuseau& MIL_PionOrderManager::GetFuseau() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PionOrderManager::FindLima
+// Created: LMT 2010-04-01
+// -----------------------------------------------------------------------------
+MIL_LimaOrder* MIL_PionOrderManager::FindLima( const MIL_LimaFunction& function ) const
+{
+    MIL_LimaOrder* lima = MIL_OrderManager_ABC::FindLima( function );
+    if( !lima )
+        lima = pion_.GetAutomate().GetOrderManager().FindLima( function );
+    return lima;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionOrderManager::FindLima
+// Created: LMT 2010-04-01
+// -----------------------------------------------------------------------------
+MIL_LimaOrder* MIL_PionOrderManager::FindLima( uint nID ) const
+{
+    MIL_LimaOrder* lima = MIL_OrderManager_ABC::FindLima( nID );
+    if( !lima )
+        lima = pion_.GetAutomate().GetOrderManager().FindLima( nID );
+    return lima;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PionOrderManager::FindNextScheduledLima
+// Created: LMT 2010-04-01
+// -----------------------------------------------------------------------------
+MIL_LimaOrder* MIL_PionOrderManager::FindNextScheduledLima() const
+{
+    MIL_LimaOrder* lima = MIL_OrderManager_ABC::FindNextScheduledLima();
+    if( !lima )
+        lima = pion_.GetAutomate().GetOrderManager().FindNextScheduledLima();
+    return lima;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PionOrderManager::IsMissionAvailable
 // Created: NLD 2006-11-23
 // -----------------------------------------------------------------------------

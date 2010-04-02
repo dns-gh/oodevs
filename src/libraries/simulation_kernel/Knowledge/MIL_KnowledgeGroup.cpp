@@ -141,7 +141,18 @@ void MIL_KnowledgeGroup::CreateKnowledgesFromAgentPerception( const DEC_Knowledg
 // -----------------------------------------------------------------------------
 MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
 {
-    Destroy();
+    if( pKnowledgeBlackBoard_)
+    {
+        // LTO begin
+        if( GetParent() )
+            GetParent()->UnregisterKnowledgeGroup( *this );
+        else if( pArmy_ )
+        // LTO end
+            pArmy_->UnregisterKnowledgeGroup( *this );
+
+        delete pKnowledgeBlackBoard_;
+        ids_.erase( nID_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
