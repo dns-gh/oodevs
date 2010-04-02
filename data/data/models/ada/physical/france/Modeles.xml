@@ -54,6 +54,7 @@
         <mission name="Build"/>
         <mission name="Valorize"/>
         <mission name="Activate"/>
+        <mission name="Bypass"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">

@@ -874,6 +874,9 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Activate" dia-type="T_Mission_Pion_Activate" id="2037" name="Activate">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Bypass" dia-type="T_Mission_Pion_Bypass" id="2038" name="Bypass">
+      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
