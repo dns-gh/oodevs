@@ -166,10 +166,12 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk( int currentTimeStep )
                 MIL_AgentPion& pion = **itPion;
                  // $$$$ FDS 2010-03-25: Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
                 if ( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
-                    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
-                else {  
-                    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgeFromAgentJamedPerception, this, _1, boost::ref( pion.GetKnowledgeGroup() ), boost::ref(currentTimeStep) ) );
-                    MT_LOG_INFO_MSG( MT_FormatString( "pion can not communicate : '%s' [%d]", pion.GetName().c_str(), pion.GetID() ) );
+                {
+                    if(  ! pBlackBoard_->GetKnowledgeGroup().IsJammedKnowledgeGroup() )
+                        pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
+               
+                }else {  
+                    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgeFromAgentJamedPerception, this, _1, boost::ref( pion.GetKnowledgeGroup() ), boost::ref(currentTimeStep) ) );                    
                 }
             }
         }

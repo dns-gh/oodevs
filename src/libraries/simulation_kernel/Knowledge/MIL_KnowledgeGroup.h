@@ -27,6 +27,7 @@ class DEC_KnowledgeBlackBoard_KnowledgeGroup;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_AgentPerception;
+class DEC_Knowledge_Population;
 class KnowledgeGroupFactory_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
@@ -130,6 +131,9 @@ public:
           MT_Float                                GetTimeToDiffuseToKnowledgeGroup() const;
           bool                                    IsEnabled() const;
           void                                    SetParent( MIL_KnowledgeGroup* pParent );
+          bool IsJammedKnowledgeGroup() const;
+          void Jam();
+
     // LTO end
     //@}
 
@@ -139,7 +143,7 @@ public:
     void SendFullState() const;
     void SendKnowledge() const;
     // LTO begin
-    void UpdateKnowledgeGroup() const;
+    void UpdateKnowledgeGroup();
     
     void MoveKnowledgeGroup( MIL_KnowledgeGroup *pNewParent );
     // LTO end
@@ -157,12 +161,15 @@ private:
     T_KnowledgeGroupVector  knowledgeGroups_; // LTO
     MT_Float                timeToDiffuse_; // LTO
     bool                    isActivated_; // LTO
+    bool                    hasBeenUpdated_;  
+    bool                    isJammedKnowledgeGroup_;
 
     bool OnReceiveMsgKnowledgeGroupEnable        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
     bool OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
     bool OnReceiveMsgKnowledgeGroupSetType       ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
 
     void CreateKnowledgesFromAgentPerception( const DEC_Knowledge_Agent& agent );
+    void CreateKnowledgesFromPopulationPerception( const DEC_Knowledge_Population& population );
     //@}
     
 private:

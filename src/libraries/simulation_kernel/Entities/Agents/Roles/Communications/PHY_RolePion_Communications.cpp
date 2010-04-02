@@ -153,8 +153,10 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 
     // $$$$ >>>> MODIF FDS 2010-03-17
     // Copie of Knowledge group for jamming use
-    if( !pJammingKnowledgeGroup_ && CanCommunicate() )
+    if( !pJammingKnowledgeGroup_ && CanCommunicate() ) {
         pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup() );
+        pJammingKnowledgeGroup_->Jam();
+    }
     // $$$$ <<<< MODIF FDS 2010-03-17
 
     bHasChanged_ = jammers_.insert( &jammer ).second;

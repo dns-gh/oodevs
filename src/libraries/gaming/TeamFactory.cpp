@@ -135,5 +135,10 @@ KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const MsgsSimToClient::Ms
 // -----------------------------------------------------------------------------
 void TeamFactory::DeleteKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message )
 {
+    Entity_ABC* knowledgeGroup = &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( message.oid() );
+
     model_.knowledgeGroups_.Remove( message.oid() ); // LTO
+    
+    if( knowledgeGroup )
+        delete knowledgeGroup;    
 }
