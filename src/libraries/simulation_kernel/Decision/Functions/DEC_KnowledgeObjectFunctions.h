@@ -38,6 +38,8 @@ public:
 
     static int  QueueForDecontamination           ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeAnimated                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static float GetConstructionLevel             ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
+    static float GetValorizationLevel             ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetAnimationLevel                ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static bool CanBeOccupied                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static void DecontaminateZone                 ( const MIL_AgentPion& callerAgent, const TER_Localisation* location );

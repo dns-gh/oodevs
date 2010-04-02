@@ -18,8 +18,10 @@
 #include "Entities/Objects/Object.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/AnimatorAttribute.h"
+#include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/DecontaminationCapacity.h"
+#include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/OccupantAttribute.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Objects/SupplyRouteAttribute.h"
@@ -345,4 +347,43 @@ int DEC_KnowledgeObjectFunctions::GetCurrentPerceptionLevel( const MIL_Agent_ABC
         return (int)pKnowledge->GetCurrentPerceptionLevel( callerAgent ).GetID();
     else
         return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetConstructionLevel
+// Created: MGD 2010-04-02
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeObjectFunctions::GetConstructionLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
+        {
+            const ConstructionAttribute* capacity = object->RetrieveAttribute< ConstructionAttribute >();
+            if( capacity )
+                return float(capacity->GetState());
+            else
+                return 1.f;
+        }
+    }
+    return 0.f;
+}
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::GetValorizationLevel
+// Created: MGD 2010-04-02
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
+        {
+            const MineAttribute* capacity = object->RetrieveAttribute< MineAttribute >();
+            if( capacity )
+                return float(capacity->GetState());
+            else
+                return 1.f;
+        }
+    }
+    return 0.f;
 }

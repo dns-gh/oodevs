@@ -555,6 +555,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif", &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre", &DEC_KnowledgeObjectFunctions::IsReservedObstacle );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstContourne", &DEC_KnowledgeObjectFunctions::IsBypassed );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauConstruction", &DEC_KnowledgeObjectFunctions::GetConstructionLevel );
+    brain.RegisterFunction( "DEC_ConnaissanceObjet_NiveauValorisation", &DEC_KnowledgeObjectFunctions::GetValorizationLevel );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstUnEnnemi",
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::IsAnEnemy, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_EstUnAllie",
