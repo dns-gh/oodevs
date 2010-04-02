@@ -42,11 +42,7 @@
     !ifndef DOCDIR
         !define DOCDIR "..\..\doc"
     !endif
-    
-    !ifndef OUTDOCDIR
-        !define OUTDOCDIR "..\..\out\documentation"
-    !endif
-    
+        
     !ifndef LIBRARIESDIR
         !define LIBRARIESDIR "..\..\src\libraries"
     !endif
