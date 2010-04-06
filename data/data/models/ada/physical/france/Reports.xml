@@ -367,4 +367,16 @@
     <parameter type="String"/>
   </report>
   <report id="263" message="activation obstacle de manoeuvre"/>
+  <report id="264" message="debut animation %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report id="265" message="$$$$ReportGGE"/>
+  <report id="266" message="fin animation %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report id="267" message="illumination de la cible"/>
+  <report id="268" message="debut degagement %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report id="269" message="fin degagement"/>
 </reports>
