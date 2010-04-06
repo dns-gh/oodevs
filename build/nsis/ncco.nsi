@@ -152,7 +152,7 @@ SectionEnd
 
 SectionGroup "Additional components"
     
-    !insertmacro OT.AddOptionalComponent "Terrain Generation"
+    !insertmacro OT.AddOptionalComponent "Terrain"
     
 SectionGroupEnd
 
@@ -231,7 +231,7 @@ SectionGroupEnd
 Section "Uninstall"
 
     !insertmacro OT.KillRunning
-    !insertmacro OT.UninstallAdditionalComponent "Terrain Generation"
+    !insertmacro OT.UninstallAdditionalComponent "Terrain"
     !insertmacro OT.Uninstall
 
 SectionEnd
