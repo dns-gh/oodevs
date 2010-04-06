@@ -34,7 +34,7 @@ class DISPATCHER_DLL_API DispatcherFacade
 public:
     //! @name Constructors/Destructor
     //@{
-             DispatcherFacade( int argc, char** argv );
+             DispatcherFacade( int argc, char** argv, int maxConnections );
     virtual ~DispatcherFacade();
     //@}
 

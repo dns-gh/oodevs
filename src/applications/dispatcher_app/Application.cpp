@@ -16,12 +16,12 @@
 // Name: Application constructor
 // Created: NLD 2006-10-10
 // -----------------------------------------------------------------------------
-Application::Application( int argc, char** argv )
+Application::Application( int argc, char** argv, int maxConnections )
 {
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "Sword Officer Training(tm) Dispatcher" );
     MT_LOG_STARTUP_MESSAGE( "----------------------------------------------------------------" );
-    dispatcher_.reset( new DispatcherFacade( argc, argv ) );
+    dispatcher_.reset( new DispatcherFacade( argc, argv, maxConnections ) );
 }
 
 // -----------------------------------------------------------------------------

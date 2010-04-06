@@ -99,8 +99,14 @@ void Profile::ReadList( const T& idList, T_Ids& ids )
 // -----------------------------------------------------------------------------
 void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message )
 {
-    loggedIn_ = ( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
-    if( message.has_profile()  )
+    if( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_too_many_connections )
+    {
+        throw std::exception( tools::translate( "Profile", "Too many connections" ).ascii() );
+    }
+    else
+    {
+        loggedIn_ = ( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
+        if( message.has_profile() )
     {
         Update( message.profile() );
         controller_.Update( *(Profile_ABC*)this );
@@ -109,6 +115,7 @@ void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationRespons
     if( !loggedIn_ && message.has_profiles() )
         for( unsigned int i = 0; i < message.profiles().elem_size(); ++i )
             controller_.Update( AvailableProfile( message.profiles().elem(i) ) );
+}
 }
 
 // -----------------------------------------------------------------------------

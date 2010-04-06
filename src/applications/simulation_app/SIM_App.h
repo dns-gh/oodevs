@@ -39,7 +39,7 @@ public:
 
     //! @name Constructors / Destructors 
     //@{
-    explicit SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow ); //!< win32 
+             SIM_App( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow, int maxConnections ); //!< win32 
     virtual ~SIM_App();
     //@}
     
@@ -75,6 +75,7 @@ private:
     static bool                        bCrashWithCoreDump_;
     static bool                        bUserInterrupt_;
     SIM_Dispatcher*                    pDispatcher_;
+    int                                maxConnections_;
     //@}
 
     //! @name UI members 

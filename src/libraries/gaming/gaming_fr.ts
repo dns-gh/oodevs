@@ -1333,6 +1333,10 @@
         <source>login</source>
         <translation type="obsolete">login</translation>
     </message>
+    <message>
+        <source>Too many connections</source>
+        <translation type="unfinished">Trop de clients connectés</translation>
+    </message>
 </context>
 <context>
     <name>Reinforcements</name>

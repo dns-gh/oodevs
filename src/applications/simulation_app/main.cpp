@@ -88,9 +88,20 @@ void SetLowFragmentationHeapAlgorithm()
 //-----------------------------------------------------------------------------
 int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdShow )
 {
+    int maxConnections = 1;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
+    try
+    {
+        FlexLmLicense license( "sword-dispatcher", 1.0f );
+        maxConnections = license.GetAuthorisedUsers();
+    }
+    catch( FlexLmLicense::LicenseError& error )
+    {
+        maxConnections = 1;
+    }
 #endif
+
     _mkdir( "./Debug" );
     MT_FileLogger           fileLogger     ( "./Debug/Sim.log" );
     MT_FileLogger           crashFileLogger( "./Debug/Crash " VERSION ".log", MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError, MT_Logger_ABC::eLogLayer_All );
@@ -114,7 +125,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     try
     {
         GOOGLE_PROTOBUF_VERIFY_VERSION;
-        SIM_App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow );
+        SIM_App app( hinstance, hPrevInstance, lpCmdLine, nCmdShow, maxConnections );
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         nResult = app.Execute();
     }

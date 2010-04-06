@@ -36,7 +36,7 @@ class Dispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Dispatcher( const Config& config );
+             Dispatcher( const Config& config, int maxConnections );
     virtual ~Dispatcher();
     //@}
 

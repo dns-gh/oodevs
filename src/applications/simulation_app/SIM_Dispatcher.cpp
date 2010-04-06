@@ -20,9 +20,9 @@
 // Name: SIM_Dispatcher constructor
 // Created: NLD 2006-10-04
 // -----------------------------------------------------------------------------
-SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv )
+SIM_Dispatcher::SIM_Dispatcher( int argc, char** argv, int maxConnections )
     : bRunning_  ( true ) 
-    , dispatcher_( argc, argv )
+    , dispatcher_( argc, argv, maxConnections )
 {
     // thread_.reset( new boost::thread( boost::bind( &SIM_Dispatcher::Run, this ) ) ); 
 }

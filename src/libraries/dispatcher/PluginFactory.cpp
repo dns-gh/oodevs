@@ -30,14 +30,14 @@ using namespace plugins;
 // Name: PluginFactory constructor
 // Created: SBO 2008-02-28
 // -----------------------------------------------------------------------------
-PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services )
+PluginFactory::PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services, int maxConnections )
     : config_      ( config )
     , model_       ( model )
     , simulation_  ( simulation )
     , clients_     ( clients )
     , handler_     ( handler )
     , registrables_( registrables )
-    , rights_      ( new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables ) )
+    , rights_      ( new RightsPlugin( model_, clients_, config_, clients_, handler_, clients_, registrables, maxConnections ) )
     , services_    ( services )
 {
     handler_.Add( rights_ );

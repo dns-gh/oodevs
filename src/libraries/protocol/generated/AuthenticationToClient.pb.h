@@ -49,11 +49,12 @@ class MsgAuthenticationToClient_Content;
 
 enum MsgAuthenticationResponse_ErrorCode {
   MsgAuthenticationResponse_ErrorCode_success = 0,
-  MsgAuthenticationResponse_ErrorCode_invalid_login = 1
+  MsgAuthenticationResponse_ErrorCode_invalid_login = 1,
+  MsgAuthenticationResponse_ErrorCode_too_many_connections = 2
 };
 bool MsgAuthenticationResponse_ErrorCode_IsValid(int value);
 const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse_ErrorCode_ErrorCode_MIN = MsgAuthenticationResponse_ErrorCode_success;
-const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse_ErrorCode_ErrorCode_MAX = MsgAuthenticationResponse_ErrorCode_invalid_login;
+const MsgAuthenticationResponse_ErrorCode MsgAuthenticationResponse_ErrorCode_ErrorCode_MAX = MsgAuthenticationResponse_ErrorCode_too_many_connections;
 
 const ::google::protobuf::EnumDescriptor* MsgAuthenticationResponse_ErrorCode_descriptor();
 inline const ::std::string& MsgAuthenticationResponse_ErrorCode_Name(MsgAuthenticationResponse_ErrorCode value) {
@@ -181,6 +182,7 @@ class MsgAuthenticationResponse : public ::google::protobuf::Message {
   typedef MsgAuthenticationResponse_ErrorCode ErrorCode;
   static const ErrorCode success = MsgAuthenticationResponse_ErrorCode_success;
   static const ErrorCode invalid_login = MsgAuthenticationResponse_ErrorCode_invalid_login;
+  static const ErrorCode too_many_connections = MsgAuthenticationResponse_ErrorCode_too_many_connections;
   static inline bool ErrorCode_IsValid(int value) {
     return MsgAuthenticationResponse_ErrorCode_IsValid(value);
   }

@@ -19,8 +19,18 @@
 //-----------------------------------------------------------------------------
 int Run( int argc, char** argv )
 {
+    int maxConnections = 1;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
     std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
+    try
+    {
+        std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword-dispatcher", 1.0f ) );
+        maxConnections = license->GetAuthorisedUsers();
+    }
+    catch( FlexLmLicense::LicenseError& error )
+    {
+        maxConnections = 1;
+    }
 #endif
 
     MT_ConsoleLogger        consoleLogger;
@@ -29,7 +39,7 @@ int Run( int argc, char** argv )
     int nResult = 0;
     try
     {
-        Application app( argc, argv );
+        Application app( argc, argv, maxConnections );
         nResult = app.Execute();
     }
     catch( std::exception& e )

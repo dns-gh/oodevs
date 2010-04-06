@@ -50,7 +50,7 @@ class RightsPlugin : public Plugin_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables );
+             RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables, int maxConnections );
     virtual ~RightsPlugin();
     //@}
 
@@ -95,6 +95,8 @@ private:
     LinkResolver_ABC& base_;
     std::auto_ptr< ProfileManager >  profiles_;
     T_Profiles                       authenticated_;
+    int                              maxConnections_;
+    int                              currentConnections_;
     //@}
 };
 

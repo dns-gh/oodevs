@@ -6,6 +6,7 @@ message MsgAuthenticationResponse {
     enum ErrorCode {
         success       = 0;
         invalid_login = 1;
+        too_many_connections = 2;
     }
     required ErrorCode  error_code              = 1;
     optional MsgProfile profile                 = 2;

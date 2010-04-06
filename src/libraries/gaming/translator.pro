@@ -43,6 +43,7 @@ Population.cpp \
 PopulationConcentrationKnowledge.cpp \
 PopulationFlowKnowledge.cpp \
 PopulationKnowledge.cpp \
+Profile.cpp \
 Reinforcements.cpp \
 Score.cpp \
 StockAttribute.cpp \

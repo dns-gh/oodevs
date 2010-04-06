@@ -58,7 +58,7 @@ Replayer::Replayer( const Config& config )
     handler_.AddHandler( clientsNetworker_ );
 
     // $$$$ AGE 2007-08-27: utiliser la PluginFactory => replay ESRI
-    RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_ );
+    RightsPlugin* rights = new RightsPlugin( *model_, *clientsNetworker_, config, *clientsNetworker_, handler_, *clientsNetworker_, registrables_, 0 );
     handler_.Add( rights  );
     handler_.Add( plugin_ );
     handler_.Add( new AarPlugin( *clientsNetworker_, *rights, config ) );

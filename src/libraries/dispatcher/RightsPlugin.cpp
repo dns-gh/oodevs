@@ -33,10 +33,12 @@ using namespace dispatcher;
 // Name: RightsPlugin constructor
 // Created: AGE 2007-08-24
 // -----------------------------------------------------------------------------
-RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables )
+RightsPlugin::RightsPlugin( Model& model, ClientPublisher_ABC& clients, const Config& config, tools::MessageDispatcher_ABC& clientCommands, Plugin_ABC& container, LinkResolver_ABC& base, dispatcher::CompositeRegistrable& registrables, int maxConnections )
     : profiles_( new ProfileManager( model, clients, config ) )
     , container_( container )
     , base_( base )
+    , maxConnections_( maxConnections )
+    , currentConnections_( 0 )
 {
     clientCommands.RegisterMessage( *this, &RightsPlugin::OnReceive );
     registrables.Add( new dispatcher::RegistrableProxy( *profiles_ ) );
@@ -88,6 +90,7 @@ void RightsPlugin::NotifyClientLeft( ClientPublisher_ABC& client )
         if( &GetPublisher( it->first ) == &client )
         {
             authenticated_.erase( it );
+            --currentConnections_;
             return;
         }
 }
@@ -119,6 +122,14 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
 {
     ClientPublisher_ABC& client = base_.GetPublisher( link );
 
+    if( maxConnections_ && maxConnections_ <= currentConnections_ )
+    {
+        authentication::AuthenticationResponse ack;
+        ack().set_error_code( MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_too_many_connections );
+        profiles_->Send( ack() );
+        ack.Send( client );
+        return;
+    }
     Profile* profile = profiles_->Authenticate( message.login(), message.password() );
     if( !profile )
     {
@@ -136,6 +147,7 @@ void RightsPlugin::OnReceiveMsgAuthenticationRequest( const std::string& link, c
         Profile::Delete( *ack().mutable_profile() );
         authenticated_[ link ] = profile;
         container_.NotifyClientAuthenticated( client, *profile );
+        ++currentConnections_;
     }
 }
 

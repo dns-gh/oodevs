@@ -42,7 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PluginFactory( const Config& config, Model& model, SimulationPublisher_ABC& simulation, ClientsNetworker& clients, 
-                            CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services );
+                            CompositePlugin& handler, CompositeRegistrable& registrables, const Services& services, int maxConnections );
     virtual ~PluginFactory();
     //@}
 

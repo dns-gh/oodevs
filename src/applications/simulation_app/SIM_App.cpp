@@ -43,9 +43,10 @@ static int    IconResourceArray[NUM_ICON_FOR_ANIMATION] = { IDI_ICON2, IDI_ICON1
 // Name: SIM_App constructor
 // Created: RDS 2008-07-08
 // -----------------------------------------------------------------------------
-SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */ )
+SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCmdLine, int /* nCmdShow */, int maxConnections )
     : pNetworkLogger_( 0 )
     , logger_        ( 0 )
+    , maxConnections_( maxConnections )
     , hWnd_             ( NULL )
     , hInstance_     ( hinstance )
     , pDispatcher_   ( 0 )
@@ -163,7 +164,7 @@ void SIM_App::RunDispatcher()
 {
     try
     {
-        pDispatcher_ = new SIM_Dispatcher( winArguments_.Argc(), const_cast< char** >( winArguments_.Argv() ) );
+        pDispatcher_ = new SIM_Dispatcher( winArguments_.Argc(), const_cast< char** >( winArguments_.Argv() ), maxConnections_ );
         pDispatcher_->Run();
     }
     catch( std::exception& e )

@@ -25,7 +25,7 @@ class SIM_Dispatcher
 public:
     //! @name Constructors/Destructor
     //@{
-             SIM_Dispatcher( int argc, char** argv );
+             SIM_Dispatcher( int argc, char** argv, int maxConnections );
     virtual ~SIM_Dispatcher();
     //@}
 

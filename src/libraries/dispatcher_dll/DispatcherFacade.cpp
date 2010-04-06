@@ -26,7 +26,7 @@ using namespace plugins;
 // Name: DispatcherFacade constructor
 // Created: AGE 2008-05-21
 // -----------------------------------------------------------------------------
-DispatcherFacade::DispatcherFacade( int argc, char** argv )
+DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
     : config_  ( new dispatcher::Config() )
 {
     MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
@@ -35,7 +35,7 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv )
 
     try
     {
-        dispatcher_.reset( new dispatcher::Dispatcher( *config_ ) );
+        dispatcher_.reset( new dispatcher::Dispatcher( *config_, maxConnections ) );
         dispatcher_->RegisterPluginFactory( *new hla::HlaPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new dis::DisPluginFactory() );
         dispatcher_->RegisterPluginFactory( *new tic::TicPluginFactory() );

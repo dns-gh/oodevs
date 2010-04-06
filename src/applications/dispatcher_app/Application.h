@@ -27,7 +27,7 @@ class Application
 public:
     //! @name Constructors/Destructor
     //@{
-             Application( int argc, char** argv );
+             Application( int argc, char** argv, int maxConnections );
     virtual ~Application();
     //@}
 
