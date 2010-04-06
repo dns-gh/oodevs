@@ -245,7 +245,7 @@ void MIL_Object_ABC::NotifyAgentPutOutside( MIL_Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void MIL_Object_ABC::UpdateState()
 {
-    if( bMarkedForDestruction_ )
+    if( IsMarkedForDestruction() )
         bReadyForDeletion_ = true;
 }
 

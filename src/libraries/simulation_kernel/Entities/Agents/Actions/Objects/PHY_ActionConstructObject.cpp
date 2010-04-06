@@ -30,7 +30,8 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const
     , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_preliminary ) ) 
 {    
     role_.SetCreator( *pObject_ );
-    pObject_->RetrieveAttribute< ConstructionAttribute >()->SetBuiltByGen();
+    pObject_->RetrieveAttribute< ConstructionAttribute >()->Set( 0. );//default construction is set to 100%
+    pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyBuildByGen();
     Callback( role_.GetInitialReturnCode() );
 }
 
@@ -49,6 +50,7 @@ PHY_ActionConstructObject::~PHY_ActionConstructObject()
 // -----------------------------------------------------------------------------
 void PHY_ActionConstructObject::StopAction()
 {
+    pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyStopBuildByGen();
     Callback( role_.GetFinalReturnCode() );
 }
 

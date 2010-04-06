@@ -42,7 +42,7 @@ ConstructionAttribute::ConstructionAttribute()
 ConstructionAttribute::ConstructionAttribute( const PHY_DotationCategory& dotation, unsigned int nFullNbrDotation )
     : nFullNbrDotation_( nFullNbrDotation )
     , nCurrentNbrDotation_( 0 )
-    , rConstructionPercentage_( 0. )
+    , rConstructionPercentage_( 1.0 )
     , dotation_( &dotation )
     , bBuildByGen_( false )
 {
@@ -305,10 +305,19 @@ bool ConstructionAttribute::NeedDestruction() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ConstructionAttribute::SetBuiltByGen
+// Name: ConstructionAttribute::NotifyBuildByGen
 // Created: MGD 2010-03-26
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::SetBuiltByGen()
+void ConstructionAttribute::NotifyBuildByGen()
 {
     bBuildByGen_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::NotifyStopBuildByGen
+// Created: MGD 2010-03-26
+// -----------------------------------------------------------------------------
+void ConstructionAttribute::NotifyStopBuildByGen()
+{
+    bBuildByGen_ = false;
 }

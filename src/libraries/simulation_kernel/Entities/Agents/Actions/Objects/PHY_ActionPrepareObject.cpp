@@ -30,8 +30,9 @@ PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, const std
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_( pion.GetRole< PHY_RoleAction_Objects >() )
     , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_reserved ) )
-{    
-    pObject_->RetrieveAttribute< ConstructionAttribute >()->SetBuiltByGen();
+{
+    pObject_->RetrieveAttribute< ConstructionAttribute >()->Set( 0. );
+    pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyBuildByGen();
     Callback( role_.GetInitialReturnCode() );
 }
 
@@ -50,6 +51,7 @@ PHY_ActionPrepareObject::~PHY_ActionPrepareObject()
 // -----------------------------------------------------------------------------
 void PHY_ActionPrepareObject::StopAction()
 {
+    pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyStopBuildByGen();
     Callback( role_.GetFinalReturnCode() );
 }
 

@@ -84,7 +84,9 @@ public:
     //@{
     void Build( MT_Float rDeltaPercentage );
     void Improve( MT_Float rDeltaPercentage );
-    void SetBuiltByGen();
+    void NotifyBuildByGen();
+    void NotifyStopBuildByGen();
+    void Set( MT_Float percentage );
     //@}
 
     //! @name Accessors
@@ -107,12 +109,7 @@ private:
     //@{
     typedef std::map< const PHY_DotationCategory*, std::pair< unsigned int, unsigned int > >    T_DotationProgress;
     //@}
-
-private:
-    //! @name 
-    //@{
-    void Set( MT_Float percentage );
-    //@}
+    
 
 private:
     //! @name Member data
