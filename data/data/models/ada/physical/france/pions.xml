@@ -10480,7 +10480,7 @@
     </postures>
     <nbc decontamination-delay="450s"/>
   </unit>
-  <unit decisional-model="net.masagroup.sword.military.roles.Genie" id="433" name="Proto Groupe GEN MPG" type="Pion GEN">
+  <unit decisional-model="net.masagroup.sword.military.roles.Genie" id="430" name="Proto Groupe GEN MPG" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
@@ -10497,10 +10497,10 @@
     </postures>
     <nbc decontamination-delay="450s"/>
   </unit>
-  <unit decisional-model="PC INF" id="430" name="Section PC INF Capteur Test" type="Pion INF">
+  <unit decisional-model="PC INF" id="431" name="Section PC INF Capteur Test" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
     <equipments>
-      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
+      <equipment count="3" crew="1" type="Moto CAGIVA 350"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="2" type="Officier"/>
@@ -10521,7 +10521,7 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="SAM" id="431" name="Section Test Capteur" type="Pion ASS">
+  <unit decisional-model="SAM" id="432" name="Section Test Capteur" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="2" crew="6" major="true" type="Equipe Test Capteur"/>
@@ -10549,7 +10549,7 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="PC ASS Tir" id="432" name="PC Batterie Test Capteur" type="Pion ASS">
+  <unit decisional-model="PC ASS Tir" id="433" name="PC Batterie Test Capteur" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="Equipement Test Capteur"/>
