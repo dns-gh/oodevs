@@ -10480,6 +10480,23 @@
     </postures>
     <nbc decontamination-delay="450s"/>
   </unit>
+  <unit decisional-model="net.masagroup.sword.military.roles.Genie" id="433" name="Proto Groupe GEN MPG" type="Pion GEN">
+    <nature atlas-nature="None" level="ooo" nature="combat/engineer/combat/mechanized"/>
+    <equipments>
+      <equipment count="2" crew="1" major="true" type="MPG"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="450s"/>
+  </unit>
   <unit decisional-model="PC INF" id="430" name="Section PC INF Capteur Test" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/infantry/motorized"/>
     <equipments>
