@@ -415,7 +415,7 @@
     </target>
 
     <target name="application.simulation_app.crossbow" description="build Sword Simulation executable" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.crossbow">
-        <build-app name="simulation_crossbow_app" depends="mt,terrain,boost,xerces,flexlm"
+        <build-app name="simulation_crossbow_app" depends="mt,terrain,boost,xerces,flexlm,qt"
             pattern="simulation_crossbow_app" input="simulation_app"
             libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_5,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
