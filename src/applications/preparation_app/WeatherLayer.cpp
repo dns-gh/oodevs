@@ -122,7 +122,7 @@ void WeatherLayer::StartEdition( LocalWeather& weather )
 // Name: WeatherLayer::Pick
 // Created: HBD 2010-04-06
 // -----------------------------------------------------------------------------
-const PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
+const weather::PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
 {
     return 0;
 }

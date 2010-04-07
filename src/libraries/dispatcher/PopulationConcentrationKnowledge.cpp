@@ -34,7 +34,7 @@ PopulationConcentrationKnowledge::PopulationConcentrationKnowledge( const kernel
     , position_           ( msg.position() )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
-    , nAttitude_          ( Common::EnumPopulationAttitude::agressive ) 
+    , nAttitude_          ( Common::agressive ) 
     , nRelevance_         ( 0 )
     , bPerceived_         ( false )
 {

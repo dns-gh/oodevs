@@ -7,38 +7,19 @@
 //
 // *****************************************************************************
 
-#ifndef __ReadDirections_h_
-#define __ReadDirections_h_
-
+#ifndef __weather_ReadDirections_h_
+#define __weather_ReadDirections_h_
 
 #include "MT_Tools/MT_Vector2D.h"
-#include "protocol/Protocol.h"
 
-// =============================================================================
-/** @class  ReadDirections
-    @brief  ReadDirections
-*/
-// Created: HBD 2010-03-10
-// =============================================================================
-class ReadDirections
+namespace Common
 {
+    class MsgHeading;
+}
 
-public:
-    //! @name Constructors/Destructor
-    //@{
-    ReadDirections() {};
-    virtual ~ReadDirections() {};
-    //@}
-   
-    static void ReadDirection( const Common::MsgHeading& asnDir, MT_Vector2D& vDir )
-    {
-        vDir = MT_Vector2D( 0, 1 ); // North vector
+namespace weather
+{
+    MT_Vector2D ReadDirection( const Common::MsgHeading& message );
+}
 
-        MT_Float rRadAngle = asnDir.heading() * MT_PI / 180.;
-        vDir.Rotate( rRadAngle );
-        vDir.Normalize();
-        assert( !vDir.IsZero() );
-    }
-};
-
-#endif // __ReadDirections_h_
+#endif // __weather_ReadDirections_h_

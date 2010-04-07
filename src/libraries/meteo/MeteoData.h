@@ -17,12 +17,20 @@ namespace Common
 {
     class MsgMeteoAttributes;
 }
-class MeteoModel_ABC;
 
 namespace dispatcher
 {
     class ClientPublisher_ABC;
 }
+
+namespace kernel
+{
+    class CoordinateConverter_ABC;
+}
+
+namespace weather
+{
+    class MeteoModel_ABC;
 
 // =============================================================================
 /** @class  MeteoData
@@ -36,7 +44,7 @@ class MeteoData: public PHY_Meteo
 public:
     //! @name Constructors/Destructor
     //@{
-    MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const Common::MsgMeteoAttributes&, MeteoModel_ABC* );
+             MeteoData( unsigned int id, const geometry::Point2f& upLeft, const geometry::Point2f& downRight, const Common::MsgMeteoAttributes& attributes, MeteoModel_ABC& model, kernel::CoordinateConverter_ABC& converter );
     virtual ~MeteoData();
     //@}
 
@@ -54,17 +62,14 @@ private:
     MeteoData& operator=( const MeteoData& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
-    //@{
-    //@}
-
 private:
     //! @name Member data
     //@{
+    kernel::CoordinateConverter_ABC& converter_;
     geometry::Rectangle2f rect_;
-    MeteoModel_ABC& listener_;
-
     //@}
 };
+
+}
 
 #endif // __MeteoData_h_

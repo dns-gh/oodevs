@@ -186,7 +186,7 @@ void MIL_OrderContext::ReadDirection( const Common::MsgMissionParameter& asn )
     if( !asn.value().has_heading() )
         throw NET_AsnException< MsgsSimToClient::OrderAck_ErrorCode >( MsgsSimToClient::OrderAck_ErrorCode_error_invalid_mission_parameters );
     if( !asn.null_value() )
-        ReadDirections::ReadDirection( asn.value().heading(), dirDanger_ );
+        dirDanger_ = weather::ReadDirection( asn.value().heading() );
 }
 
 // -----------------------------------------------------------------------------

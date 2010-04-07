@@ -33,11 +33,11 @@ namespace
     {
         switch( diplomacy )
         {
-        case Common::EnumDiplomacy::friend_diplo:
+        case Common::friend_diplo:
             return Karma::friend_;
-        case Common::EnumDiplomacy::enemy_diplo:
+        case Common::enemy_diplo:
             return Karma::enemy_;
-        case Common::EnumDiplomacy::neutral_diplo:
+        case Common::neutral_diplo:
             return Karma::neutral_;
         default:         
             return Karma::unknown_;

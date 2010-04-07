@@ -28,12 +28,12 @@ unsigned int     PHY_HumanWound::nMentalDiseaseRestingTime_ = 0;
 MT_Float PHY_HumanWound::rMentalDiseaseFactor_      = 0;
 
 //
-const PHY_HumanWound PHY_HumanWound::notWounded_( "NonBlesse", eNotWounded, Common::EnumHumanWound::non_blesse             );
-const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "U3"       , eWoundedU3 , Common::EnumHumanWound::blesse_urgence_3       );
-const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "U2"       , eWoundedU2 , Common::EnumHumanWound::blesse_urgence_2       );
-const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "U1"       , eWoundedU1 , Common::EnumHumanWound::blesse_urgence_1       );
-const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "UE"       , eWoundedUE , Common::EnumHumanWound::blesse_urgence_extreme );
-const PHY_HumanWound PHY_HumanWound::killed_    ( "Mort"     , eKilled    , Common::EnumHumanWound::mort                   );
+const PHY_HumanWound PHY_HumanWound::notWounded_( "NonBlesse", eNotWounded, Common::non_blesse             );
+const PHY_HumanWound PHY_HumanWound::woundedU3_ ( "U3"       , eWoundedU3 , Common::blesse_urgence_3       );
+const PHY_HumanWound PHY_HumanWound::woundedU2_ ( "U2"       , eWoundedU2 , Common::blesse_urgence_2       );
+const PHY_HumanWound PHY_HumanWound::woundedU1_ ( "U1"       , eWoundedU1 , Common::blesse_urgence_1       );
+const PHY_HumanWound PHY_HumanWound::woundedUE_ ( "UE"       , eWoundedUE , Common::blesse_urgence_extreme );
+const PHY_HumanWound PHY_HumanWound::killed_    ( "Mort"     , eKilled    , Common::mort                   );
 
 struct PHY_HumanWound::LoadingWrapper
 {

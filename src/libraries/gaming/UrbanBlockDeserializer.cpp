@@ -171,7 +171,7 @@ std::auto_ptr< ColorRGBA > UrbanBlockDeserializer::GetColor() const
     std::auto_ptr< ColorRGBA > color ( new ColorRGBA( message_.attributes().color().red(), 
                                 message_.attributes().color().green(), 
                                 message_.attributes().color().blue(), 
-                                message_.attributes().color().alpha() ) );    
+                                message_.attributes().color().alpha() ) );
     return color;
 }
 

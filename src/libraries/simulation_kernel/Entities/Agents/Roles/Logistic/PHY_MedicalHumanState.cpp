@@ -227,7 +227,7 @@ void PHY_MedicalHumanState::SendFullState() const
     else
     {
         asn().set_oid_pion_log_traitant( 0 );
-        asn().set_etat( Common::EnumLogMedicalHandlingStatus::termine );
+        asn().set_etat( Common::termine );
     }
 
     asn().set_blessure( pHuman_->GetWound().GetAsnID() );
@@ -258,7 +258,7 @@ void PHY_MedicalHumanState::SendChangedState() const
     else
     {
         asn().set_oid_pion_log_traitant( 0 );
-        asn().set_etat( Common::EnumLogMedicalHandlingStatus::termine );
+        asn().set_etat( Common::termine );
     }
     if( bHumanStateHasChanged_ )
     {

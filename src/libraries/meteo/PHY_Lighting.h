@@ -17,6 +17,9 @@
 #include "protocol/Protocol.h"
 #include "MT_tools/MT_Tools_Types.h"
 
+namespace weather
+{
+
 // =============================================================================
 // @class  PHY_Lighting
 // Created: JVT 2004-08-03
@@ -100,5 +103,7 @@ private:
 };
 
 #include "PHY_Lighting.inl"
+
+}
 
 #endif // __PHY_Lighting_h_

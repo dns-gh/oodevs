@@ -1,13 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JVT 03-08-05 $
-// $Archive: /MVW_v10/Build/SDK/MIL/src/Meteo/PHY_Meteo.cpp $
-// $Author: Jvt $
-// $Modtime: 29/10/04 10:35 $
-// $Revision: 2 $
-// $Workfile: PHY_Meteo.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
 #include "PHY_Meteo.h"
 #include "PHY_Lighting.h"
 #include "PHY_Precipitation.h"
@@ -19,11 +18,14 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
-
+#pragma warning( push, 0 )
+#pragma warning( disable: 4996 )
 #include <qstring.h>
+#pragma warning( pop )
 #include <xeumeuleu/xml.h>
 
-using namespace dispatcher;
+using namespace weather;
+
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo constructor
 // Created: JVT 03-08-05
@@ -55,7 +57,7 @@ PHY_Meteo::PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& l
         wind_.rWindSpeed_ = conversionFactor_ * /*MIL_Tools::ConvertSpeedMosToSim*/( wind_.rWindSpeed_ );
     if( nAngle < 0 || nAngle > 360 )
         xis.error( "meteo: DirectionVent not in [0..360]" );
-    ReadDirections::ReadDirection( heading, wind_.vWindDirection_ );
+    wind_.vWindDirection_ = ReadDirection( heading );
 
     std::string strVal;
     xis >> xml::start( "precipitation" )
@@ -86,15 +88,14 @@ PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgMeteoAttributes& asnMsg,
 // Created: HBD 2010-04-06
 // -----------------------------------------------------------------------------
 PHY_Meteo::PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation )
-: pLighting_     ( &light )
-, pPrecipitation_( &precipitation )
-, nRefCount_     ( 0 )
-, listener_      ( 0 )
-, id_            ( 0 )
+    : pLighting_     ( &light )
+    , pPrecipitation_( &precipitation )
+    , nRefCount_     ( 0 )
+    , listener_      ( 0 )
+    , id_            ( 0 )
 {
-
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_Meteo destructor
@@ -126,7 +127,7 @@ void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
     wind_.rWindSpeed_ = conversionFactor_ * msg.wind_speed();
 
     // Direction du vent
-    ReadDirections::ReadDirection( msg.wind_direction(), wind_.vWindDirection_ );
+    wind_.vWindDirection_ = weather::ReadDirection( msg.wind_direction() );
 
     // Précipitation
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
@@ -180,11 +181,11 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher) const
     client::ControlGlobalMeteo msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
     msg().set_oid( id_ );
-    att->set_wind_speed(  wind_.rWindSpeed_ / conversionFactor_ );
+    att->set_wind_speed( int( wind_.rWindSpeed_ / conversionFactor_ ) );
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( rDensiteCouvertureNuageuse_ );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     msg.Send( publisher );
@@ -194,7 +195,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher) const
 // Name: PHY_Meteo::SendFullUpdate
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::SendFullUpdate( ClientPublisher_ABC& publisher ) const
+void PHY_Meteo::SendFullUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
 {
     //NOTHING
 }

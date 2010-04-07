@@ -314,9 +314,9 @@ namespace
 {
     void MakeIntelligence( Common::MsgIntelligence& intel )
     {
-        intel.set_diplomacy( Common::EnumDiplomacy::enemy_diplo );
+        intel.set_diplomacy( Common::enemy_diplo );
         intel.set_embarked( true );
-        intel.set_level( Common::EnumNatureLevel::i );
+        intel.set_level( Common::i );
         intel.set_name( "MyName" );
         intel.set_nature( "my/nature" );
         intel.mutable_formation()->set_oid( 42 );

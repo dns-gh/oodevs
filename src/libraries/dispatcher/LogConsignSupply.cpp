@@ -18,7 +18,6 @@
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;
-//using namespace MsgsSimToClient;
 
 // -----------------------------------------------------------------------------
 // Name: LogConsignSupply constructor
@@ -32,7 +31,7 @@ LogConsignSupply::LogConsignSupply( const Model& model, const MsgsSimToClient::M
     , pTreatingAutomat_ ( 0 )
     , pConvoyingAutomat_( 0 )
     , pConvoy_          ( 0 )
-    , nState_           ( MsgsSimToClient::EnumLogSupplyHandlingStatus::convoi_deplacement_vers_point_chargement )
+    , nState_           ( MsgsSimToClient::convoi_deplacement_vers_point_chargement )
 {
     // NOTHING
 }

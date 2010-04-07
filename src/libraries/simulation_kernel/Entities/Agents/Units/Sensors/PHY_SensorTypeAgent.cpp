@@ -131,8 +131,8 @@ namespace
 PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistream& xis )
     : type_                ( type )
     , volumeFactors_       ( PHY_Volume       ::GetVolumes       ().size(), 0. )
-    , precipitationFactors_( PHY_Precipitation::GetPrecipitations().size(), 0. )
-    , lightingFactors_     ( PHY_Lighting     ::GetLightings     ().size(), 0. )
+    , precipitationFactors_( weather::PHY_Precipitation::GetPrecipitations().size(), 0. )
+    , lightingFactors_     ( weather::PHY_Lighting     ::GetLightings     ().size(), 0. )
     , postureSourceFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , postureTargetFactors_( PHY_Posture      ::GetPostures      ().size(), 0. )
     , environmentFactors_  ( PHY_RawVisionData::eNbrVisionObjects         , 0. )
@@ -148,8 +148,8 @@ PHY_SensorTypeAgent::PHY_SensorTypeAgent( const PHY_SensorType& type, xml::xistr
     xis >> xml::start( "distance-modifiers" );
 
     InitializeFactors( PHY_Volume       ::GetVolumes        (), "size-modifiers"  , volumeFactors_       , xis );
-    InitializeFactors( PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
-    InitializeFactors( PHY_Lighting     ::GetLightings      (), "visibility-modifiers"  , lightingFactors_     , xis );
+    InitializeFactors( weather::PHY_Precipitation::GetPrecipitations (), "precipitation-modifiers", precipitationFactors_, xis );
+    InitializeFactors( weather::PHY_Lighting     ::GetLightings      (), "visibility-modifiers"  , lightingFactors_     , xis );
     InitializeFactors( PHY_Posture      ::GetPostures       (), "source-posture-modifiers", postureSourceFactors_, xis );
     InitializeFactors( PHY_Posture      ::GetPostures       (), "target-posture-modifiers" , postureTargetFactors_, xis );
 

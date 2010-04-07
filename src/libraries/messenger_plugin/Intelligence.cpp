@@ -21,42 +21,42 @@ namespace
     Common::EnumNatureLevel ResolveLevel( const std::string& level )
     {
       if( level == "o" )
-          return Common::EnumNatureLevel::o ;
+          return Common::o ;
       if( level == "oo" )
-          return Common::EnumNatureLevel::oo ;
+          return Common::oo ;
       if( level == "ooo" )
-          return Common::EnumNatureLevel::ooo ;
+          return Common::ooo ;
       if( level == "i" )
-          return Common::EnumNatureLevel::i ;
+          return Common::i ;
       if( level == "ii" )
-          return Common::EnumNatureLevel::ii ;
+          return Common::ii ;
       if( level == "iii" )
-          return Common::EnumNatureLevel::iii ;
+          return Common::iii ;
       if( level == "x" )
-          return Common::EnumNatureLevel::x ;
+          return Common::x ;
       if( level == "xx" )
-          return Common::EnumNatureLevel::xx ;
+          return Common::xx ;
       if( level == "xxx" )
-          return Common::EnumNatureLevel::xxx ;
+          return Common::xxx ;
       if( level == "xxxx" )
-          return Common::EnumNatureLevel::xxxx ;
-      return Common::EnumNatureLevel::none_naturelevel;
+          return Common::xxxx ;
+      return Common::none_naturelevel;
     }
 
     std::string ResolveLevel( Common::EnumNatureLevel level )
     {
         switch( level )
         {
-        case Common::EnumNatureLevel::o: return "o";
-        case Common::EnumNatureLevel::oo: return "oo";
-        case Common::EnumNatureLevel::ooo: return "ooo";
-        case Common::EnumNatureLevel::i: return "i";
-        case Common::EnumNatureLevel::ii: return "ii";
-        case Common::EnumNatureLevel::iii: return "iii";
-        case Common::EnumNatureLevel::x: return "x";
-        case Common::EnumNatureLevel::xx: return "xx";
-        case Common::EnumNatureLevel::xxx: return "xxx";
-        case Common::EnumNatureLevel::xxxx: return "xxxx";
+        case Common::o: return "o";
+        case Common::oo: return "oo";
+        case Common::ooo: return "ooo";
+        case Common::i: return "i";
+        case Common::ii: return "ii";
+        case Common::iii: return "iii";
+        case Common::x: return "x";
+        case Common::xx: return "xx";
+        case Common::xxx: return "xxx";
+        case Common::xxxx: return "xxxx";
         default: return "";
         }
     }
@@ -64,22 +64,22 @@ namespace
     Common::EnumDiplomacy ResolveKarma( const std::string& karma )
     {
         if( karma == "friend" )
-            return Common::EnumDiplomacy::friend_diplo;
+            return Common::friend_diplo;
         if( karma == "enemy" )
-            return Common::EnumDiplomacy::enemy_diplo;
+            return Common::enemy_diplo;
         if( karma == "neutral" )
-            return Common::EnumDiplomacy::neutral_diplo;
-        return Common::EnumDiplomacy::unknown_diplo;
+            return Common::neutral_diplo;
+        return Common::unknown_diplo;
     }
 
     std::string ResolveKarma( Common::EnumDiplomacy karma )
     {
         switch( karma )
         {
-        case Common::EnumDiplomacy::friend_diplo: return "friend";
-        case Common::EnumDiplomacy::enemy_diplo: return "enemy";
-        case Common::EnumDiplomacy::neutral_diplo: return "neutral";
-        case Common::EnumDiplomacy::unknown_diplo:
+        case Common::friend_diplo: return "friend";
+        case Common::enemy_diplo: return "enemy";
+        case Common::neutral_diplo: return "neutral";
+        case Common::unknown_diplo:
         default: return "unknown";
         }
     }

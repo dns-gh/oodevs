@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeObstacle )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
     : attr_ ( 0 )
-    , obstacle_ ( E_ObstacleType::ObstacleType_DemolitionTargetType_preliminary )
+    , obstacle_ ( Common::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_( true )
 {
     // NOTHING
@@ -35,7 +35,7 @@ DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle()
 // -----------------------------------------------------------------------------
 DEC_Knowledge_ObjectAttributeObstacle::DEC_Knowledge_ObjectAttributeObstacle( const ObstacleAttribute& attr )
     : attr_ ( &attr )
-    , obstacle_ ( ( attr.IsActivable() ) ? E_ObstacleType::ObstacleType_DemolitionTargetType_reserved : E_ObstacleType::ObstacleType_DemolitionTargetType_preliminary )
+    , obstacle_ ( ( attr.IsActivable() ) ? Common::ObstacleType_DemolitionTargetType_reserved : Common::ObstacleType_DemolitionTargetType_preliminary )
     , bActivated_( attr.IsActivable() ? false : true )
 {
     // NOTHING
@@ -49,10 +49,6 @@ DEC_Knowledge_ObjectAttributeObstacle::~DEC_Knowledge_ObjectAttributeObstacle()
 {
     // NOTHING
 }
-
-// =============================================================================
-// CHECKPOINTS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeObstacle::serialize
@@ -75,10 +71,6 @@ void DEC_Knowledge_ObjectAttributeObstacle::Register( DEC_Knowledge_Object& knOb
 {
     knObject.AttachExtension( *this );
 }
-
-// =============================================================================
-// OPERATIONS
-// =============================================================================
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectAttributeObstacle::UpdateAttributes

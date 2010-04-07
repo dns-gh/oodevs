@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_Ephemeride.h"
 #include "MIL_AgentServer.h"
+#include "meteo/PHY_Lighting.h"
 #include <xeumeuleu/xml.h>
 #pragma warning( push, 1 )
 #include <boost/date_time/posix_time/posix_time.hpp>
@@ -19,29 +20,12 @@
 
 namespace bpt = boost::posix_time;
 
-
-//-----------------------------------------------------------------------------
-// Name: PHY_Ephemeride::UpdateNight
-// Created: JVT 03-08-07
-//-----------------------------------------------------------------------------
-bool PHY_Ephemeride::UpdateNight( unsigned int date )
-{
-    bpt::ptime         pdate( bpt::from_time_t( date ) );
-    bpt::time_duration time = pdate.time_of_day();
-    std::pair<int,int> currentTime( time.hours(), time.minutes() );
-
-    bool wasNight = bIsNight_;
-    bIsNight_ = currentTime < sunriseTime_ && !( currentTime < sunsetTime_ );
-    return bIsNight_ != wasNight;
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Ephemeride constructor
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
 PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
-    : pNightBase_( 0 )
-    , bIsNight_  ( false )
+    : bIsNight_( false )
 {
     std::string sunRise, sunSet, moon, date;
     xis >> xml::start( "ephemerides" )
@@ -70,7 +54,7 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
             xis.error( "Bad time format (use 00h00)" );
     }
     
-    pNightBase_ = PHY_Lighting::FindLighting( moon );
+    pNightBase_ = weather::PHY_Lighting::FindLighting( moon );
     if( !pNightBase_ )
         xis.error( "Unknown lighting '" + moon + "'" );
 
@@ -85,8 +69,29 @@ PHY_Ephemeride::PHY_Ephemeride( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 PHY_Ephemeride::~PHY_Ephemeride()
 {
-
+    // NOTHING
 }
 
+//-----------------------------------------------------------------------------
+// Name: PHY_Ephemeride::UpdateNight
+// Created: JVT 03-08-07
+//-----------------------------------------------------------------------------
+bool PHY_Ephemeride::UpdateNight( unsigned int date )
+{
+    bpt::ptime         pdate( bpt::from_time_t( date ) );
+    bpt::time_duration time = pdate.time_of_day();
+    std::pair<int,int> currentTime( time.hours(), time.minutes() );
 
+    bool wasNight = bIsNight_;
+    bIsNight_ = currentTime < sunriseTime_ && !( currentTime < sunsetTime_ );
+    return bIsNight_ != wasNight;
+}
 
+//-----------------------------------------------------------------------------
+// Name: PHY_Ephemeride::GetCurrentTimeBase
+// Created: JVT 03-08-07
+//-----------------------------------------------------------------------------
+const weather::PHY_Lighting& PHY_Ephemeride::GetLightingBase() const
+{
+    return bIsNight_ ? *pNightBase_ : weather::PHY_Lighting::jourSansNuage_;
+}

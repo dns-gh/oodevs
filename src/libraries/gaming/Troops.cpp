@@ -40,9 +40,9 @@ namespace
 {
     unsigned Humans::* Rank( Common::EnumHumanRank rank )
     {
-        if( rank == Common::EnumHumanRank::officier )
+        if( rank == Common::officier )
             return &Humans::officers_;
-        if( rank == Common::EnumHumanRank::sous_officer )
+        if( rank == Common::sous_officer )
             return &Humans::subOfficers_;
         return &Humans::troopers_;
     }
@@ -107,9 +107,9 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
     T_Differences differences;
     for( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ); ++i )
     {
-        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::officier )]     = int( humans_[i].officers_ );
-        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::sous_officer )] = int( humans_[i].subOfficers_ );
-        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::mdr )]          = int( humans_[i].troopers_ );
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::officier )]     = int( humans_[i].officers_ );
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::sous_officer )] = int( humans_[i].subOfficers_ );
+        differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::mdr )]          = int( humans_[i].troopers_ );
     }
     if( Troops* troops = const_cast< Troops* >( superior.Retrieve< Troops >() ) )
         troops->Update( differences );
@@ -120,9 +120,9 @@ void Troops::SetSuperior( const kernel::Entity_ABC& superior )
             differences.clear();
             for( unsigned int i = 0; i < unsigned int( kernel::eTroopHealthStateNbrStates ); ++i )
             {
-                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::officier )]     = -int( humans_[i].officers_ );
-                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::sous_officer )] = -int( humans_[i].subOfficers_ );
-                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::EnumHumanRank::mdr )]          = -int( humans_[i].troopers_ );
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::officier )]     = -int( humans_[i].officers_ );
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::sous_officer )] = -int( humans_[i].subOfficers_ );
+                differences[std::make_pair( (kernel::E_TroopHealthState)i, Common::mdr )]          = -int( humans_[i].troopers_ );
             }
             troops->Update( differences );
         }

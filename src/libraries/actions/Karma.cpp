@@ -25,11 +25,11 @@ namespace
     {
         switch( diplomacy )
         {
-        case Common::EnumDiplomacy::friend_diplo:
+        case Common::friend_diplo:
             return kernel::Karma::friend_;
-        case Common::EnumDiplomacy::enemy_diplo:
+        case Common::enemy_diplo:
             return kernel::Karma::enemy_;
-        case Common::EnumDiplomacy::neutral_diplo:
+        case Common::neutral_diplo:
             return kernel::Karma::neutral_;
         default:
             return kernel::Karma::unknown_;
@@ -40,13 +40,13 @@ namespace
     {
         
         if (karma == kernel::Karma::friend_)
-            return Common::EnumDiplomacy::friend_diplo;
+            return Common::friend_diplo;
         else if (karma == kernel::Karma::enemy_)
-            return Common::EnumDiplomacy::enemy_diplo;
+            return Common::enemy_diplo;
         else if (karma == kernel::Karma::neutral_)
-            return Common::EnumDiplomacy::neutral_diplo;
+            return Common::neutral_diplo;
         else
-            return Common::EnumDiplomacy::unknown_diplo;
+            return Common::unknown_diplo;
     }
 
     // Reverts diplomacy effect applied on karma => "diplomacy" karma

@@ -171,7 +171,7 @@ void FirePropagationCapacity::Propagate( Object& object )
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
     MT_Vector2D vPerpendicularToWind, vNormalizedWind;
 
-    const PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
+    const weather::PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
 
     //we normalize the wind vector and multiply it by length and width of the fire 
     vNormalizedWind.rX_ = attr.GetLength() * wind.vWindDirection_.rX_ / pow(wind.vWindDirection_.rY_ * wind.vWindDirection_.rY_ + wind.vWindDirection_.rX_ * wind.vWindDirection_.rX_ , 0.5);

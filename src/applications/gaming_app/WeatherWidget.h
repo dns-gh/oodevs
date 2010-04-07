@@ -20,7 +20,7 @@ namespace Common
 
 // =============================================================================
 /** @class  WeatherWidget
-@brief  WeatherWidget
+    @brief  WeatherWidget
 */
 // Created: SBO 2006-12-20
 // =============================================================================
@@ -31,7 +31,7 @@ class WeatherWidget : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-    WeatherWidget( QWidget* parent, const QString& title );
+             WeatherWidget( QWidget* parent, const QString& title );
     virtual ~WeatherWidget();
     //@}
 

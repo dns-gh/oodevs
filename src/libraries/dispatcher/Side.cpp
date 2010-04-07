@@ -34,10 +34,10 @@ Side::Side( const Model_ABC& model, const MsgsSimToClient::MsgTeamCreation& msg 
 {
     switch( nType_ )
     {
-        case Common::EnumDiplomacy::unknown_diplo: karma_ = kernel::Karma::unknown_; break;
-        case Common::EnumDiplomacy::friend_diplo : karma_ = kernel::Karma::friend_; break;
-        case Common::EnumDiplomacy::enemy_diplo  : karma_ = kernel::Karma::enemy_; break;
-        case Common::EnumDiplomacy::neutral_diplo: karma_ = kernel::Karma::neutral_; break;
+        case Common::unknown_diplo: karma_ = kernel::Karma::unknown_; break;
+        case Common::friend_diplo : karma_ = kernel::Karma::friend_; break;
+        case Common::enemy_diplo  : karma_ = kernel::Karma::enemy_; break;
+        case Common::neutral_diplo: karma_ = kernel::Karma::neutral_; break;
     }
 }
 

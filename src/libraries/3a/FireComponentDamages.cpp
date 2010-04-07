@@ -38,7 +38,7 @@ float FireComponentDamages::Extract( const MsgSimToClient& wrapper ) const
 {
     const MsgStopUnitFire& stop = wrapper.message().stop_unit_fire();
     float result = 0;
-    for( unsigned u = 0; u < stop.units_damages().elem_size(); ++u )
+    for( int u = 0; u < stop.units_damages().elem_size(); ++u )
     {
         const MsgUnitFireDamages& damages = stop.units_damages().elem( u );
         for( unsigned e = 0; e < damages.equipments().elem_size(); ++e )

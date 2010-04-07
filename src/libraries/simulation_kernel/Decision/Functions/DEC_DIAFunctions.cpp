@@ -216,7 +216,7 @@ int DEC_DIAFunctions::ListPoint_Size( std::vector< MT_Vector2D* > list )
 boost::shared_ptr< MT_Vector2D > DEC_DIAFunctions::ListPoint_GetAt( std::vector< MT_Vector2D* > list, int nId )
 {
     boost::shared_ptr< MT_Vector2D > position;
-    if( nId < list.size() )
+    if( nId < int( list.size() ) )
         position.reset( new MT_Vector2D( *list[ nId ] ) );
     return position;
 }

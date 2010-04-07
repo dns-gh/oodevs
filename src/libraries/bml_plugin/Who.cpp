@@ -72,7 +72,7 @@ namespace
         return attributes.has_etat_operationnel() 
             || attributes.has_dotation_eff_materiel() 
             || attributes.has_dotation_eff_personnel() 
-            ? EnumUnitVisibility::identified : -1;
+            ? identified : -1;
     }
 }
 
@@ -218,10 +218,10 @@ namespace
     {
         switch( status )
         {
-            case EnumOperationalStatus::detruit_tactiquement:
-            case EnumOperationalStatus::detruit_totalement:
+            case detruit_tactiquement:
+            case detruit_totalement:
                 return "NOP";
-            case EnumOperationalStatus::operationnel:
+            case operationnel:
                 return "OPR";
             default:
                 break;
@@ -236,7 +236,7 @@ namespace
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterHostility() const
 {
-    if( level_ > EnumUnitVisibility::detected )
+    if( level_ > detected )
     {
         if( agent_ )
             return Hostility( *agent_->automat_ );
@@ -251,7 +251,7 @@ std::string Who::GetFilterHostility() const
 // -----------------------------------------------------------------------------
 std::string Who::GetFilterOperationalState() const
 {
-    if( agent_ && level_ > EnumUnitVisibility::recognized )
+    if( agent_ && level_ > recognized )
         return OperationalState( agent_->nOperationalState_ );
     return "NKN";
 }

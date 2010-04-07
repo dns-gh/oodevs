@@ -31,7 +31,7 @@ PopulationFlow::PopulationFlow( const Population& population, const MsgsSimToCli
     , nSpeed_         ()
     , nNbrAliveHumans_( 0 )
     , nNbrDeadHumans_ ( 0 )
-    , nAttitude_      ( Common::EnumPopulationAttitude::agressive )    
+    , nAttitude_      ( Common::agressive )    
 {
 //    Attach< EntityPublisher_ABC >( *new EntityPublisher< PopulationFlow >( *this ) );
 }

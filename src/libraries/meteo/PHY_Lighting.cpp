@@ -12,6 +12,8 @@
 
 #include "PHY_Lighting.h"
 
+using namespace weather;
+
 PHY_Lighting::T_LightingMap PHY_Lighting::lightings_;
 
 PHY_Lighting PHY_Lighting::jourSansNuage_         ( "JourSansNuage"         , eJourSansNuage         , &jourPeuNuageux_         );

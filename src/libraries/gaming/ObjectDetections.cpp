@@ -44,7 +44,7 @@ ObjectDetections::~ObjectDetections()
 void ObjectDetections::DoUpdate( const MsgsSimToClient::MsgObjectDetection& message )
 {
     Object_ABC* object = & resolver_.Get( message.object_oid() );
-    if( message.visibility() == EnumUnitVisibility::invisible )
+    if( message.visibility() == Common::invisible )
         perceivedObjects_.erase( object );
     else
         perceivedObjects_.insert( object );

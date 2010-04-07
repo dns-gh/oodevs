@@ -56,7 +56,7 @@ public:
     static MT_Float ConvertSimToMinutes ( MT_Float ); // DeltaT       -> min
     
     static       MT_Float              GetAltitude( const MT_Vector2D& );
-    static const PHY_Meteo::sWindData& GetWind    ( const MT_Vector2D& );   
+    static const weather::PHY_Meteo::sWindData& GetWind    ( const MT_Vector2D& );   
     //@}
 
     //-------------------------------------------------------------------------

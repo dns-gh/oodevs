@@ -22,16 +22,19 @@ class PHY_RawVisionDataIterator : private boost::noncopyable
 {
 
 public:
-    PHY_RawVisionDataIterator( const MT_Vector3D& beginPos, const MT_Vector3D& endPos );
+    //! @name Constructors/Destructor
+    //@{
+             PHY_RawVisionDataIterator( const MT_Vector3D& beginPos, const MT_Vector3D& endPos );
     virtual ~PHY_RawVisionDataIterator() {}
+    //@}
 
     PHY_RawVisionDataIterator& operator ++ ();
     
     bool                       End             () const;
     MT_Float                   Length          () const;
     PHY_RawVisionData::envBits GetCurrentEnv   () const;
-    const PHY_Lighting&       GetLighting     () const;
-    const PHY_Precipitation&  GetPrecipitation() const;
+    const weather::PHY_Lighting&       GetLighting     () const;
+    const weather::PHY_Precipitation&  GetPrecipitation() const;
 
     const MT_Vector2D          GetPos()               const;
     void                       GetPos( MT_Vector2D& ) const;

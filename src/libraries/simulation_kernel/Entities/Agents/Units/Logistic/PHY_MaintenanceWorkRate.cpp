@@ -19,10 +19,10 @@
 
 PHY_MaintenanceWorkRate::T_WorkRateMap PHY_MaintenanceWorkRate::workRates_;
 
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", Common::EnumLogMaintenanceRegimeTravail::regime_1 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", Common::EnumLogMaintenanceRegimeTravail::regime_2 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", Common::EnumLogMaintenanceRegimeTravail::regime_3 );
-PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", Common::EnumLogMaintenanceRegimeTravail::regime_4 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r1_( "Regime1", Common::regime_1 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r2_( "Regime2", Common::regime_2 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r3_( "Regime3", Common::regime_3 );
+PHY_MaintenanceWorkRate PHY_MaintenanceWorkRate::r4_( "Regime4", Common::regime_4 );
 
 struct PHY_MaintenanceWorkRate::LoadingWrapper
 {

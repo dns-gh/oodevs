@@ -14,8 +14,12 @@
 
 #include "MIL.h"
 
-class PHY_Lighting;
-class PHY_Precipitation;
+namespace weather
+{
+    class PHY_Lighting;
+    class PHY_Precipitation;
+}
+
 class PHY_IndirectFireDotationClass;
 
 //*****************************************************************************
@@ -25,13 +29,16 @@ class PHY_AmmoEffect : private boost::noncopyable
 {
 
 public:
-     PHY_AmmoEffect( const PHY_IndirectFireDotationClass& ammoClass, PHY_AmmoEffect* pNextEffect );
+    //! @name Constructors/Destructor
+    //@{
+             PHY_AmmoEffect( const PHY_IndirectFireDotationClass& ammoClass, PHY_AmmoEffect* pNextEffect );
     virtual ~PHY_AmmoEffect();
+    //@}
 
     //! @name Accessors
     //@{
-    const PHY_Lighting&      GetLighting     ( const PHY_Lighting&      mainLighting      ) const;
-    const PHY_Precipitation& GetPrecipitation( const PHY_Precipitation& mainPrecipitation ) const;
+    const weather::PHY_Lighting&      GetLighting     ( const weather::PHY_Lighting&      mainLighting      ) const;
+    const weather::PHY_Precipitation& GetPrecipitation( const weather::PHY_Precipitation& mainPrecipitation ) const;
 
     bool            HandleAmmo      ( const PHY_IndirectFireDotationClass& ammoClass ) const;
     PHY_AmmoEffect* GetNextEffect   () const;

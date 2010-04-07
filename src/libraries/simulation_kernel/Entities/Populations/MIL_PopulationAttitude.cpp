@@ -21,10 +21,10 @@ MIL_PopulationAttitude::T_AttitudeMap MIL_PopulationAttitude::attitudes_;
 void MIL_PopulationAttitude::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing population attitudes" );
-    attitudes_[ "calme"     ] = new MIL_PopulationAttitude( "calme"    , eCalme    , Common::EnumPopulationAttitude::calme     );
-    attitudes_[ "agitee"    ] = new MIL_PopulationAttitude( "agitee"   , eAgitee   , Common::EnumPopulationAttitude::agitee    );
-    attitudes_[ "excitee"   ] = new MIL_PopulationAttitude( "excitee"  , eExcitee  , Common::EnumPopulationAttitude::excitee   );
-    attitudes_[ "agressive" ] = new MIL_PopulationAttitude( "agressive", eAgressive, Common::EnumPopulationAttitude::agressive );
+    attitudes_[ "calme"     ] = new MIL_PopulationAttitude( "calme"    , eCalme    , Common::calme     );
+    attitudes_[ "agitee"    ] = new MIL_PopulationAttitude( "agitee"   , eAgitee   , Common::agitee    );
+    attitudes_[ "excitee"   ] = new MIL_PopulationAttitude( "excitee"  , eExcitee  , Common::excitee   );
+    attitudes_[ "agressive" ] = new MIL_PopulationAttitude( "agressive", eAgressive, Common::agressive );
 }
 
 // -----------------------------------------------------------------------------

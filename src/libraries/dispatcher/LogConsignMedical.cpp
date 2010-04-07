@@ -31,7 +31,7 @@ LogConsignMedical::LogConsignMedical( const Model& model, const MsgsSimToClient:
     , nWound_           ( msg.blessure() )
     , bMentalDiseased_  ( msg.blesse_mental() != 0 )
     , bContaminated_    ( msg.contamine_nbc() != 0 )
-    , nState_           ( Common::EnumLogMedicalHandlingStatus::ambulance_ramassage_dechargement )
+    , nState_           ( Common::ambulance_ramassage_dechargement )
     , bDiagnosed_       ( false )
 {
     // NOTHING

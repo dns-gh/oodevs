@@ -98,7 +98,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , urbanObjects_( *new UrbanModel( controllers.controller_, static_.detection_ ) )
     , surfaceFactory_( *new SurfaceFactory( static_.coordinateConverter_, static_.detection_, static_.types_, urbanObjects_.GetUrbanBlockMap() ) )
     , notes_( *new NotesModel( controllers.controller_ ))  // LTO
-    , meteo_( *new MeteoModel(  static_.coordinateConverter_ ) )
+    , meteo_( *new MeteoModel( static_.coordinateConverter_ ) )
 {
     // NOTHING
 }

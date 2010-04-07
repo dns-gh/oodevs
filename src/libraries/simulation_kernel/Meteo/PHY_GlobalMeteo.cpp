@@ -21,19 +21,20 @@
 // Name: PHY_GlobalMeteo constructor
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
-PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor )
+PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor )
     : PHY_Meteo( id, xis, light, conversionFactor )
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_GlobalMeteo constructor
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
-PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, const Common::MsgMeteoAttributes& msg, MeteoManager_ABC* list )
+PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, const Common::MsgMeteoAttributes& msg, weather::MeteoManager_ABC* list )
     : PHY_Meteo( id, msg, list )
 {
-
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -55,11 +56,11 @@ void PHY_GlobalMeteo::SendCreation() const
     msg().set_oid( id_ );
 
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
-    att->set_wind_speed(  wind_.rWindSpeed_ / conversionFactor_ );
-    NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
-    att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
+    att->set_wind_speed( int( wind_.rWindSpeed_ / conversionFactor_ ) );
+    NET_ASN_Tools::WriteDirection( wind_.vWindDirection_, *( att->mutable_wind_direction() ) );
+    att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( rDensiteCouvertureNuageuse_ );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     msg.Send( NET_Publisher_ABC::Publisher() );

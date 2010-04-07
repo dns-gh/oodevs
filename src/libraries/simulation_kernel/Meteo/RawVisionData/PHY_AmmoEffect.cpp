@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoEffect.h"
-
 #include "meteo/PHY_Lighting.h"
 #include "Meteo/PHY_Precipitation.h"
 
@@ -33,15 +32,16 @@ PHY_AmmoEffect::PHY_AmmoEffect( const PHY_IndirectFireDotationClass& ammoClass, 
 //-----------------------------------------------------------------------------
 PHY_AmmoEffect::~PHY_AmmoEffect()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_AmmoEffect::GetLighting
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-const PHY_Lighting& PHY_AmmoEffect::GetLighting( const PHY_Lighting& mainLighting ) const
+const weather::PHY_Lighting& PHY_AmmoEffect::GetLighting( const weather::PHY_Lighting& mainLighting ) const
 {
-    return ammoClass_ == PHY_IndirectFireDotationClass::eclairant_ ? PHY_Lighting::eclairant_
+    return ammoClass_ == PHY_IndirectFireDotationClass::eclairant_ ? weather::PHY_Lighting::eclairant_
         : pNextEffect_ ? pNextEffect_->GetLighting( mainLighting )
         : mainLighting;
 }
@@ -50,9 +50,9 @@ const PHY_Lighting& PHY_AmmoEffect::GetLighting( const PHY_Lighting& mainLightin
 // Name: PHY_AmmoEffect::GetPrecipitation
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-const PHY_Precipitation& PHY_AmmoEffect::GetPrecipitation( const PHY_Precipitation& mainPrecipitation ) const
+const weather::PHY_Precipitation& PHY_AmmoEffect::GetPrecipitation( const weather::PHY_Precipitation& mainPrecipitation ) const
 {
-    return ammoClass_ == PHY_IndirectFireDotationClass::fumigene_ ? PHY_Precipitation::smoke_
+    return ammoClass_ == PHY_IndirectFireDotationClass::fumigene_ ? weather::PHY_Precipitation::smoke_
         : pNextEffect_ ? pNextEffect_->GetPrecipitation( mainPrecipitation )
         : mainPrecipitation;
 }

@@ -62,13 +62,13 @@ void AgentDetections::Draw( const geometry::Point2f& where, const kernel::Viewpo
     for( CIT_AgentDetections it = detections_.begin(); it != detections_.end(); ++it )
     {
         const Agent_ABC& agent = *it->first;
-        if( ! IsSameTeam( agent ) && it->second != Common::EnumUnitVisibility::invisible )
+        if( ! IsSameTeam( agent ) && it->second != Common::invisible )
         {
-            if( it->second == EnumUnitVisibility::recognized )
+            if( it->second == Common::recognized )
                 glColor4f( COLOR_RECO );
-            else if( it->second == EnumUnitVisibility::identified )
+            else if( it->second == Common::identified )
                 glColor4f( COLOR_IDENTIFIED );
-            else if( it->second == EnumUnitVisibility::recorded )
+            else if( it->second == Common::recorded )
                 glColor4f( COLOR_RECORDED );
             else
                 glColor4f( COLOR_DETECTED );

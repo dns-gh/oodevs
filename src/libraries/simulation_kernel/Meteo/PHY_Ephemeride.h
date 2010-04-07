@@ -14,7 +14,10 @@
 
 #include "MIL.h"
 
-#include "meteo/PHY_Lighting.h"
+namespace weather
+{
+    class PHY_Lighting;
+}
 
 namespace xml
 {
@@ -29,13 +32,16 @@ class PHY_Ephemeride : private boost::noncopyable
 {
     
 public:
+    //! @name Constructors/Destructor
+    //@{
     explicit PHY_Ephemeride( xml::xistream& xis );
     virtual ~PHY_Ephemeride();
+    //@}
 
-    //! @name 
+    //! @name Operations
     //@{
     bool                UpdateNight    ( unsigned int date );
-    const PHY_Lighting& GetLightingBase() const;
+    const weather::PHY_Lighting& GetLightingBase() const;
     bool                IsNight        () const;
     //@}
 
@@ -43,7 +49,7 @@ private:
     bool                  bIsNight_;
     std::pair< int, int > sunriseTime_;
     std::pair< int, int > sunsetTime_;
-    const PHY_Lighting*   pNightBase_;
+    const weather::PHY_Lighting*   pNightBase_;
 };
 
 #include "PHY_Ephemeride.inl"

@@ -30,7 +30,7 @@ const PHY_Ephemeride& PHY_MeteoDataManager::GetEphemeride() const
 // Created: HBD 2010-03-10  
 // -----------------------------------------------------------------------------
 inline
-const PHY_Lighting& PHY_MeteoDataManager::GetLighting() const
+const weather::PHY_Lighting& PHY_MeteoDataManager::GetLighting() const
 {
     assert( pEphemeride_ );
     return pEphemeride_->GetLightingBase();
@@ -41,7 +41,7 @@ const PHY_Lighting& PHY_MeteoDataManager::GetLighting() const
 // Created: NLD 2006-03-13
 // -----------------------------------------------------------------------------
 inline
-void PHY_MeteoDataManager::RegisterMeteo( PHY_Meteo& meteo )
+void PHY_MeteoDataManager::RegisterMeteo( weather::PHY_Meteo& meteo )
 {
     meteo.SetListener( this );
     meteo.Update( pEphemeride_->GetLightingBase() );
@@ -54,7 +54,7 @@ void PHY_MeteoDataManager::RegisterMeteo( PHY_Meteo& meteo )
 // Created: NLD 2006-03-13
 // -----------------------------------------------------------------------------
 inline
-void PHY_MeteoDataManager::UnregisterMeteo( PHY_Meteo& meteo )
+void PHY_MeteoDataManager::UnregisterMeteo( weather::PHY_Meteo& meteo )
 {
     if( meteos_.erase( &meteo ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );

@@ -38,9 +38,9 @@ AgentFireResult::AgentFireResult( const MsgsSimToClient::MsgUnitFireDamages& mes
         const MsgsSimToClient::UnitHumanFireDamage& fire = message.humans().elem( i );
 
         int Casualties::* table = & Casualties::troopers_;
-        if( fire.rank() == EnumHumanRank::officier )
+        if( fire.rank() == Common::officier )
             table = & Casualties::officers_;
-        else if( fire.rank() == EnumHumanRank::sous_officer )
+        else if( fire.rank() == Common::sous_officer )
             table = & Casualties::subOfficers_;
 
         casualties_[ eHumanWound_BlesseUrgence1 ].*table        = fire.wounded_u1_nbr();

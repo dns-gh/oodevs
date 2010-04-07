@@ -116,7 +116,7 @@ PHY_RawVisionData::envBits PHY_RawVisionData::GetVisionObject( const MT_Vector2D
 // Created: JVT 2004-10-29
 // -----------------------------------------------------------------------------
 inline
-const PHY_Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
+const weather::PHY_Meteo::sWindData& PHY_RawVisionData::GetWind( const MT_Vector2D& vPos ) const
 {
     return operator() ( vPos ).GetWind();    
 }
@@ -190,7 +190,7 @@ MT_Float PHY_RawVisionData::GetMaxAltitude() const
 // Created: JVT 2004-10-29
 // -----------------------------------------------------------------------------
 inline
-const PHY_Meteo::sWindData& PHY_RawVisionData::sCell::GetWind() const
+const weather::PHY_Meteo::sWindData& PHY_RawVisionData::sCell::GetWind() const
 {
     return pMeteo ? pMeteo->GetWind() : pGlobalMeteo_->GetWind();
 }

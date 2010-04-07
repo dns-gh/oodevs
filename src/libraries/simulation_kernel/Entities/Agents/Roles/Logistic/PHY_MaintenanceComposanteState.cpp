@@ -204,7 +204,7 @@ void PHY_MaintenanceComposanteState::SendFullState() const
     else
     {
         asn().set_oid_pion_log_traitant( 0 );
-        asn().set_etat( Common::EnumLogMaintenanceHandlingStatus::termine_maintenance );        
+        asn().set_etat( Common::termine_maintenance );        
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -232,7 +232,7 @@ void PHY_MaintenanceComposanteState::SendChangedState() const
     else
     {
         asn().set_oid_pion_log_traitant( 0 );
-        asn().set_etat( Common::EnumLogMaintenanceHandlingStatus::termine_maintenance );
+        asn().set_etat( Common::termine_maintenance );
     }
     asn.Send( NET_Publisher_ABC::Publisher() );
 }

@@ -22,31 +22,26 @@ namespace xml
     class xistream;
 }
 
-class MeteoManager_ABC;
-class PHY_Meteo;
-class PHY_Lighting;
-class PHY_RawVisionData_ABC;
-
 // =============================================================================
 /** @class  PHY_LocalMeteo
     @brief  PHY_LocalMeteo
 */
 // Created: SLG 2010-03-18
 // =============================================================================
-class PHY_LocalMeteo : public PHY_Meteo
+class PHY_LocalMeteo : public weather::PHY_Meteo
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-    explicit PHY_LocalMeteo( unsigned int id, const MsgsClientToSim::MsgControlLocalMeteo&, MeteoManager_ABC* list );
+             PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor );
+             PHY_LocalMeteo( unsigned int id, const MsgsClientToSim::MsgControlLocalMeteo& message, weather::MeteoManager_ABC* list );
     virtual ~PHY_LocalMeteo();
     //@}
 
     //! @name Operations
     //@{
-    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision_ );
+    virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision_ );
     //@}
 
 private:
@@ -70,7 +65,6 @@ private:
     MT_Vector2D upLeft_;
     MT_Vector2D downRight_;
     bool bIsPatched_;
-    MeteoManager_ABC* listener_;
     //@}
 };
 

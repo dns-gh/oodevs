@@ -77,7 +77,7 @@ void FireManager::ReceiveFire( const MsgStartUnitFire& fire )
 void FireManager::UpdateFireEffect( const MsgStartFireEffect& fire )
 {
     DetonationPDU pdu( EntityIdentifier( 1, 1, 1 ), time_.GetTime(), exercise_ );
-    pdu.SetBurst( 1, 1, fire.type() == EnumFireEffectType::fumigene ? BurstDescriptor::smoke : BurstDescriptor::illumination );
+    pdu.SetBurst( 1, 1, fire.type() == fumigene ? BurstDescriptor::smoke : BurstDescriptor::illumination );
     pdu.SetPosition( fire.location().coordinates().elem(0).latitude(), fire.location().coordinates().elem(0).longitude(), 0 );  // $$$$ AGE 2008-05-05: altitude
     network_.Send( pdu );
 }

@@ -544,7 +544,7 @@ void MIL_Automate::UpdateNetwork() const
 
         if( bAutomateModeChanged_ )
         {
-            msg().set_etat_automate( bEngaged_ ? EnumAutomatMode::embraye : EnumAutomatMode::debraye );
+            msg().set_etat_automate( bEngaged_ ? Common::embraye : Common::debraye );
         }
 
         GetRole< DEC_AutomateDecision >().SendChangedState( msg );
@@ -898,7 +898,7 @@ void MIL_Automate::SendFullState() const
     client::AutomatAttributes asn;
     asn().set_oid( nID_ );
 //    asn().set_etat_automatePresent( 1 );
-    asn().set_etat_automate( bEngaged_ ? Common::EnumAutomatMode::embraye : Common::EnumAutomatMode::debraye );
+    asn().set_etat_automate( bEngaged_ ? Common::embraye : Common::debraye );
     GetRole< DEC_AutomateDecision >().SendFullState( asn );
     asn.Send( NET_Publisher_ABC::Publisher() );
 
@@ -953,8 +953,8 @@ void MIL_Automate::OnReceiveMsgSetAutomateMode( const MsgsClientToSim::MsgSetAut
         throw NET_AsnException< MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode >( MsgsSimToClient::MsgSetAutomatModeAck_ErrorCode_error_not_allowed );
     switch( asnMsg.mode() )
     {
-        case Common::EnumAutomatMode::debraye: Disengage(); break;
-        case Common::EnumAutomatMode::embraye: Engage   (); break;
+        case Common::debraye: Disengage(); break;
+        case Common::embraye: Engage   (); break;
         default:
             assert( false );
     };

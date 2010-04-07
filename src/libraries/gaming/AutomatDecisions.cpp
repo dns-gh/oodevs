@@ -55,7 +55,7 @@ AutomatDecisions::~AutomatDecisions()
 void AutomatDecisions::DoUpdate( const MsgsSimToClient::MsgAutomatAttributes& message )
 {
     if( message.has_etat_automate()  )
-        bEmbraye_ = ( message.etat_automate() == EnumAutomatMode::embraye );
+        bEmbraye_ = ( message.etat_automate() == embraye );
     controller_.Update( *this );
 }
 
@@ -145,7 +145,7 @@ void AutomatDecisions::Engage() const
 {
     simulation::SetAutomatMode message;
     message().set_oid( agent_.GetId() );
-    message().set_mode( EnumAutomatMode::embraye );
+    message().set_mode( embraye );
     message.Send( publisher_, 0 );
 }
 
@@ -157,7 +157,7 @@ void AutomatDecisions::Disengage() const
 {
     simulation::SetAutomatMode message;
     message().set_oid( agent_.GetId() );
-    message().set_mode( EnumAutomatMode::debraye );
+    message().set_mode( debraye );
     message.Send( publisher_, 0 );
 }
 

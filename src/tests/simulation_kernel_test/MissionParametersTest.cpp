@@ -301,14 +301,14 @@ namespace
 {
     void FillRlyehLocation( MsgLocation& asnIn )
     {        
-        asnIn.set_type( MsgLocation_Geometry::MsgLocation_Geometry_point );
+        asnIn.set_type( Common::MsgLocation_Geometry_point );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 48.52f );
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     }
 
     void CompareLocationToRlyeh( MsgLocation& asnOut )
     {        
-        BOOST_CHECK_EQUAL( MsgLocation_Geometry::MsgLocation_Geometry_point, asnOut.type() );
+        BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_point, asnOut.type() );
         BOOST_CHECK_EQUAL( 1, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 48.52, asnOut.coordinates().elem(0).latitude(), 1. );
         BOOST_CHECK_CLOSE( 2.17, asnOut.coordinates().elem(0).longitude(), 1. );
@@ -317,7 +317,7 @@ namespace
     
     void FillPolygonLocation( MsgLocation& asnIn, float offset )
     {        
-        asnIn.set_type( MsgLocation_Geometry::MsgLocation_Geometry_polygon );
+        asnIn.set_type( Common::MsgLocation_Geometry_polygon );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 50.f + offset );
         asnIn.mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f + offset );
         asnIn.mutable_coordinates()->add_elem()->set_latitude( 49.52f + offset );
@@ -328,7 +328,7 @@ namespace
 
     void CompareLocationToPolygon( MsgLocation& asnOut, float offset )
     {        
-        BOOST_CHECK_EQUAL( MsgLocation_Geometry::MsgLocation_Geometry_polygon, asnOut.type() );
+        BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_polygon, asnOut.type() );
         BOOST_CHECK_EQUAL( 4, asnOut.coordinates().elem_size() );
         BOOST_CHECK_CLOSE( 50. + offset, asnOut.coordinates().elem(0).latitude(), 1. );
         BOOST_CHECK_CLOSE( 2.17 + offset, asnOut.coordinates().elem(0).longitude(), 1. );
@@ -402,13 +402,13 @@ BOOST_AUTO_TEST_CASE( TestMIL_LogMaintenancePrioritiesParameter_ToASN )
 {
     PHY_HumanWound::Initialize();
     MsgLogMedicalPriorities asnIn;
-    asnIn.add_elem( EnumHumanWound ::blesse_urgence_2 );
+    asnIn.add_elem( Common::blesse_urgence_2 );
     MIL_LogMedicalPrioritiesParameter param( asnIn );
     asnIn.clear_elem();
     MsgLogMedicalPriorities asnOut;
     BOOST_CHECK_EQUAL( true, param.ToMedicalPriorities( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( EnumHumanWound ::blesse_urgence_2, asnOut.elem(0) );
+    BOOST_CHECK_EQUAL( Common::blesse_urgence_2, asnOut.elem(0) );
     asnOut.clear_elem();
 }
 
@@ -501,7 +501,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_ToASN )
 {
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MsgPath asnIn;
-    asnIn.mutable_location()->set_type( MsgLocation_Geometry::MsgLocation_Geometry_line );
+    asnIn.mutable_location()->set_type( Common::MsgLocation_Geometry_line );
     asnIn.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 48.52f );
     asnIn.mutable_location()->mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     asnIn.mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 49.52f );
@@ -510,7 +510,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathParameter_ToASN )
     asnIn.mutable_location()->mutable_coordinates()->clear_elem();
     MsgPath asnOut;
     BOOST_CHECK_EQUAL( true, param.ToPath( asnOut ) );
-    BOOST_CHECK_EQUAL( MsgLocation_Geometry::MsgLocation_Geometry_line , asnOut.location().type() );
+    BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_line , asnOut.location().type() );
     BOOST_CHECK_EQUAL( 2, asnOut.location().coordinates().elem_size() );
     BOOST_CHECK_CLOSE( 48.52, asnOut.location().coordinates().elem(0).latitude(), 1. );
     BOOST_CHECK_CLOSE( 2.17, asnOut.location().coordinates().elem(0).longitude(), 1. );
@@ -529,7 +529,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathListParameter_ToASN )
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MsgPathList asnIn;
 
-    asnIn.add_elem()->mutable_location()->set_type( MsgLocation_Geometry::MsgLocation_Geometry_line );
+    asnIn.add_elem()->mutable_location()->set_type( Common::MsgLocation_Geometry_line );
     asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 48.52f );
     asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->mutable_elem(0)->set_longitude( 2.17f );
     asnIn.mutable_elem(0)->mutable_location()->mutable_coordinates()->add_elem()->set_latitude( 49.52f );
@@ -539,7 +539,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PathListParameter_ToASN )
     MsgPathList asnOut;
     BOOST_CHECK_EQUAL( true, param.ToPathList( asnOut ) );
     BOOST_CHECK_EQUAL( 1, asnOut.elem_size() );
-    BOOST_CHECK_EQUAL( MsgLocation_Geometry::MsgLocation_Geometry_line, asnOut.elem(0).location().type() );
+    BOOST_CHECK_EQUAL( Common::MsgLocation_Geometry_line, asnOut.elem(0).location().type() );
     BOOST_CHECK_EQUAL( 2, asnOut.elem(0).location().coordinates().elem_size() );
     BOOST_CHECK_CLOSE( 48.52, asnOut.elem(0).location().coordinates().elem(0).latitude(), 1. );
     BOOST_CHECK_CLOSE( 2.17, asnOut.elem(0).location().coordinates().elem(0).longitude(), 1. );

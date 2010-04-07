@@ -73,18 +73,15 @@ void TerrainPicker::OnTimeOut()
         emit TerrainPicked( data.ToString().c_str() );
     }
     if( weather_ )
-    {
-        const PHY_Meteo* meteo = weather_->Pick( terrainCoordinates_ );
-        if ( meteo )
-            emit WeatherPicked(  meteo->GetLighting().GetName().c_str(), meteo->GetPrecipitation().GetName().c_str() );
-    }
+        if( const weather::PHY_Meteo* weather = weather_->Pick( terrainCoordinates_ ) )
+            emit WeatherPicked( weather->GetLighting().GetName().c_str(), weather->GetPrecipitation().GetName().c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TerrainPicker::RegisterLayer
 // Created: HBD 2010-04-01
 // -----------------------------------------------------------------------------
-void TerrainPicker::RegisterLayer( WeatherLayer_ABC& meteo )
+void TerrainPicker::RegisterLayer( WeatherLayer_ABC& weather )
 {
-    weather_ = &meteo;
+    weather_ = &weather;
 }

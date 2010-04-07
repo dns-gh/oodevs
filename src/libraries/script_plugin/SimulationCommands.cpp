@@ -114,6 +114,6 @@ void SimulationCommands::Engage( unsigned automat, bool engage )
 {
     simulation::SetAutomatMode mode;
     mode().set_oid( automat );
-    mode().set_mode( engage ? EnumAutomatMode::embraye : EnumAutomatMode::debraye );
+    mode().set_mode( engage ? Common::embraye : Common::debraye );
     mode.Send( publisher_,0 );
 }

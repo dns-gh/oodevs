@@ -33,8 +33,8 @@ class PHY_IndirectFireDotationClass;
 // Created: JVT 02-10-21
 // Last modified: JVT 04-03-25
 //*****************************************************************************
-class PHY_MeteoDataManager : private boost::noncopyable,
-                             public MeteoManager_ABC
+class PHY_MeteoDataManager : private boost::noncopyable
+                           , public weather::MeteoManager_ABC
 {
     friend class PHY_Meteo; // For UnregisterMeteo
 
@@ -46,7 +46,7 @@ public:
     //@{
     virtual const PHY_RawVisionData& GetRawVisionData() const;
     virtual const PHY_Ephemeride&    GetEphemeride   () const;
-    virtual const PHY_Lighting&      GetLighting     () const;
+    virtual const weather::PHY_Lighting& GetLighting () const;
     virtual      void                Update          ( unsigned int date );
     void SendStateToNewClient();
     //@}
@@ -66,8 +66,8 @@ public:
 private:
     //! @name Registration
     //@{
-    virtual void RegisterMeteo          ( PHY_Meteo& meteo );
-    virtual void UnregisterMeteo        ( PHY_Meteo& meteo );
+    virtual void RegisterMeteo  ( weather::PHY_Meteo& meteo );
+    virtual void UnregisterMeteo( weather::PHY_Meteo& meteo );
     //@}
 
     //! @name Helpers
@@ -79,9 +79,9 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< PHY_Meteo* >       T_MeteoSet;
-    typedef T_MeteoSet::const_iterator   CIT_MeteoSet;
-    typedef T_MeteoSet::iterator         IT_MeteoSet;
+    typedef std::set< weather::PHY_Meteo* > T_MeteoSet;
+    typedef T_MeteoSet::const_iterator    CIT_MeteoSet;
+    typedef T_MeteoSet::iterator           IT_MeteoSet;
     //@}
 
 private:

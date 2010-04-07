@@ -58,6 +58,7 @@
 #include "NotesPanel.h"
 #include "IndicatorExportDialog.h"
 #include "IndicatorPlotFactory.h"
+#include "WeatherLayer.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -121,7 +122,6 @@
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
-#include "WeatherLayer.h"
 
 #include "tools/ExerciseConfig.h"
 
@@ -360,7 +360,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
-    gui::WeatherLayer* meteoLayer        = new WeatherLayer( controllers_, *glProxy_, *picker, model_.meteo_ );
+    gui::Layer_ABC* meteoLayer = new ::WeatherLayer( controllers_, *glProxy_, *picker, model_.meteo_ );
     
     CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, * meteoLayer,   *profilerLayer, *prefDialog, profile, publisher );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
@@ -384,7 +384,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain,
-                              gui::WeatherLayer& meteo, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
+                              gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
 {
 
 
@@ -422,7 +422,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( elevation3d );
     glProxy_->Register( grid );                                                                                     grid                .SetPasses( "main,miniviews" );
     glProxy_->Register( folkLayer );                preferences.AddLayer( tr( "Folk" ), folkLayer );                folkLayer           .SetPasses( "main,miniviews" );
-    glProxy_->Register( meteo );                                                                                    meteo               .SetPasses( "main,miniviews" );
+    glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main,miniviews" );
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main,miniviews" );
     glProxy_->Register( intelligences );            preferences.AddLayer( tr( "Intelligence" ), intelligences );    intelligences       .SetPasses( "main,miniviews" );
     glProxy_->Register( objectKnowledges );                                                                         objectKnowledges    .SetPasses( "main,miniviews" );
@@ -460,7 +460,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );
-    forward_->Register( meteo );
+    forward_->Register( weather );
     forward_->SetDefault( defaultLayer );
 }
 

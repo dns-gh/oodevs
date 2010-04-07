@@ -25,13 +25,12 @@ AmmoEffect::AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, Cont
     , id_( message.effect_oid() )
     , type_( message.type() )
     , ellipse_( message.location(), converter )
-    , meteo_( PHY_Lighting::jourSansNuage_, PHY_Precipitation::none_ )
-
+    , meteo_( weather::PHY_Lighting::jourSansNuage_, weather::PHY_Precipitation::none_ )
 {
-    if ( type_ == eclairant )
-        meteo_.Update( PHY_Lighting::eclairant_ );
+    if( type_ == eclairant )
+        meteo_.Update( weather::PHY_Lighting::eclairant_ );
     else
-        meteo_.Update( PHY_Precipitation::smoke_  );
+        meteo_.Update( weather::PHY_Precipitation::smoke_  );
     controller_.Create( *this );
 }
 
@@ -50,7 +49,7 @@ AmmoEffect::~AmmoEffect()
 // -----------------------------------------------------------------------------
 void AmmoEffect::Draw( const GlTools_ABC& tools ) const
 {
-    if( type_ == EnumFireEffectType::fumigene )
+    if( type_ == Common::fumigene )
         glColor4f( COLOR_SMOKE );
     else
         glColor4f( COLOR_LIGHT );
@@ -70,7 +69,7 @@ bool AmmoEffect::IsInside( const geometry::Point2f& point ) const
 // Name: AmmoEffect::GetMeteo
 // Created: HBD 2010-04-06
 // -----------------------------------------------------------------------------
-const PHY_Meteo& AmmoEffect::GetMeteo() const
+const weather::PHY_Meteo& AmmoEffect::GetMeteo() const
 {
     return meteo_;
 }

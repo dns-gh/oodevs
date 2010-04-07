@@ -32,7 +32,7 @@ namespace bpt = boost::posix_time;
 // Name: PHY_LocalMeteo constructor
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor )
     : PHY_Meteo( id, xis, light, conversionFactor )
     , bIsPatched_( false )
 {
@@ -51,7 +51,7 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const PHY_L
 // Name: PHY_LocalMeteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const MsgsClientToSim::MsgControlLocalMeteo& msg, MeteoManager_ABC* list )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const MsgsClientToSim::MsgControlLocalMeteo& msg, weather::MeteoManager_ABC* list )
     : PHY_Meteo( id, msg.attributes(), list )
 {
     NET_ASN_Tools::ReadPoint( msg.top_left_coordinate(),      upLeft_    );
@@ -69,12 +69,11 @@ PHY_LocalMeteo::~PHY_LocalMeteo()
     //NTOHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_LocalMeteo::UpdateMeteoPatch
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-void PHY_LocalMeteo::UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision_ )
+void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision_ )
 {
     bool bNeedToBePatched = ( date > startTime_ &&  date < endTime_ );
     if( !bIsPatched_ && bNeedToBePatched )
@@ -101,11 +100,11 @@ void PHY_LocalMeteo::SendCreation() const
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
     msg().set_oid( id_ );
 
-    att->set_wind_speed(  wind_.rWindSpeed_ / conversionFactor_ );
+    att->set_wind_speed( int( wind_.rWindSpeed_ / conversionFactor_ ) );
     NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( rDensiteCouvertureNuageuse_ );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
 

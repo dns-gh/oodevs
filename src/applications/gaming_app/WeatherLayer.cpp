@@ -18,13 +18,12 @@
 #include "meteo/PHY_Precipitation.h"
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: WeatherLayer constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-WeatherLayer::WeatherLayer( Controllers& controllers, const GlTools_ABC& tools, TerrainPicker& picker, const MeteoModel& meteoModel )
+WeatherLayer::WeatherLayer( Controllers& controllers, const GlTools_ABC& tools, gui::TerrainPicker& picker, const MeteoModel& meteoModel )
     : picker_ ( picker )
     , controllers_( controllers )
     , tools_( tools )
@@ -61,7 +60,7 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& )
 // Name: WeatherLayer::Pick
 // Created: HBD 2010-03-30
 // -----------------------------------------------------------------------------
-const PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
+const weather::PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
 {
     for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
         if ( (*it)->IsInside( terrainCoordinates ) )

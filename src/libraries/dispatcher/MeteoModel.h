@@ -11,9 +11,7 @@
 #define __MeteoModel_h_
 
 #include "meteo/MeteoModel_ABC.h"
-#include "protocol/Protocol.h"
 #include <list>
-
     
 namespace kernel
 {
@@ -21,7 +19,6 @@ namespace kernel
     class CoordinateConverter;
     class ModelVisitor_ABC;
 }
-class PHY_Meteo;
 
 namespace dispatcher 
 {
@@ -32,38 +29,45 @@ namespace dispatcher
 */
 // Created: HBD 2010-03-23
 // =============================================================================
-class MeteoModel : public MeteoModel_ABC
+class MeteoModel : public weather::MeteoModel_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             MeteoModel( kernel::CoordinateConverter_ABC& conv );
+    explicit MeteoModel( kernel::CoordinateConverter_ABC& conv );
     virtual ~MeteoModel();
     //@}
 
-    virtual const PHY_Lighting&  GetLighting  () const;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg ); 
-    virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& msg );
-    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& msg );
+    //! @name Operations
+    //@{
+    virtual const weather::PHY_Lighting& GetLighting() const;
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message ); 
+    virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& message );
+    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message );
     void Accept( kernel::ModelVisitor_ABC& visitor );
     //@}
 
 protected:
-
-    virtual void     RegisterMeteo ( PHY_Meteo& );
-    virtual void     UnregisterMeteo( PHY_Meteo& );
+    //! @name Operations
+    //@{
+    virtual void RegisterMeteo  ( weather::PHY_Meteo& weather );
+    virtual void UnregisterMeteo( weather::PHY_Meteo& weather );
+    //@}
 
 private:
-
-   typedef std::list< PHY_Meteo* >     T_MeteoList;
-   typedef T_MeteoList::iterator CIT_MeteoList;
+    //! @name Types
+    //@{
+   typedef std::list< weather::PHY_Meteo* > T_MeteoList;
+   typedef T_MeteoList::iterator          CIT_MeteoList;
+    //@}
 
 private:
     //! @name Member data
     //@{
-    PHY_Meteo*                        pGlobalMeteo_;
-    T_MeteoList                        meteos_;    // Including global meteo
+    kernel::CoordinateConverter_ABC& converter_;
+    weather::PHY_Meteo* pGlobalMeteo_;
+    T_MeteoList         meteos_;    // Including global meteo
     //@}
 };
 }

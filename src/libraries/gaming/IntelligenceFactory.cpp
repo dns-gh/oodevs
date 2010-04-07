@@ -66,12 +66,12 @@ namespace
     EnumDiplomacy ConvertToDiplomacy( const Karma& karma )
     {
         if( karma == Karma::friend_ )
-            return Common::EnumDiplomacy::friend_diplo;
+            return Common::friend_diplo;
         if( karma == Karma::enemy_ )
-            return Common::EnumDiplomacy::enemy_diplo;
+            return Common::enemy_diplo;
         if( karma == Karma::neutral_ )
-            return Common::EnumDiplomacy::neutral_diplo;
-        return Common::EnumDiplomacy::unknown_diplo;
+            return Common::neutral_diplo;
+        return Common::unknown_diplo;
     }
 }
 

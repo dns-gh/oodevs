@@ -64,7 +64,7 @@ void WeatherWidget::Commit( Common::MsgMeteoAttributes& att ) const
     att.set_cloud_floor( cloudFloor_->value() );
     att.set_cloud_ceiling( cloudDensity_->value() );
     att.set_cloud_density( cloudDensity_->value() );
-    const PHY_Precipitation* precipitation = PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).ascii() );
-    att.set_precipitation( Common::EnumPrecipitationType::brouillard );
+    const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).ascii() );
+    att.set_precipitation( Common::brouillard );
     att.set_temperature( 0 );
 }

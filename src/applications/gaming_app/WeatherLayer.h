@@ -13,28 +13,27 @@
 #include "clients_gui/WeatherLayer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 
-
-
 namespace kernel
 {
     class Controllers;
     class GlTools_ABC;
 }
 
-class PHY_Meteo;
-class MeteoModel;
-class AmmoEffect;
-
 namespace gui
 {
     class TerrainPicker;
+}
+
+class AmmoEffect;
+class MeteoModel;
+
 // =============================================================================
 /** @class  WeatherLayer
     @brief  WeatherLayer
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class WeatherLayer : public WeatherLayer_ABC
+class WeatherLayer : public gui::WeatherLayer_ABC
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< AmmoEffect >
 {
@@ -47,8 +46,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual void                Paint( const geometry::Rectangle2f& );
-    const PHY_Meteo*            Pick ( const geometry::Point2f& terrainCoordinates ) const;
+    virtual void                      Paint( const geometry::Rectangle2f& );
+    virtual const weather::PHY_Meteo* Pick ( const geometry::Point2f& terrainCoordinates ) const;
     //@}
 
 private:
@@ -60,27 +59,26 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyCreated( const AmmoEffect& );
-    virtual void NotifyDeleted( const AmmoEffect& );
+    virtual void NotifyCreated( const AmmoEffect& effect );
+    virtual void NotifyDeleted( const AmmoEffect& effect );
     //@}
 
     //! @name Types
     //@{
     typedef std::vector< const AmmoEffect* >  T_Effects;
     typedef T_Effects::iterator              IT_Effects;
-    typedef T_Effects::const_iterator              CIT_Effects;
+    typedef T_Effects::const_iterator       CIT_Effects;
     //@}
 
 private:
     //! @name Member data
     //@{
-    TerrainPicker&       picker_; 
+    gui::TerrainPicker&       picker_;
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
     T_Effects effects_;
     const MeteoModel& meteoModel_; 
     //@}
 };
-}
 
 #endif // __WeatherLayer_h_

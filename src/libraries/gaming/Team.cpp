@@ -27,10 +27,10 @@ Team::Team( const MsgsSimToClient::MsgTeamCreation& message, Controller& control
     
     switch( message.type() )
     {
-        case EnumDiplomacy::unknown_diplo   : karma_ = kernel::Karma::unknown_; break;
-        case EnumDiplomacy::friend_diplo    : karma_ = kernel::Karma::friend_;  break;
-        case EnumDiplomacy::enemy_diplo     : karma_ = kernel::Karma::enemy_;   break;
-        case EnumDiplomacy::neutral_diplo   : karma_ = kernel::Karma::neutral_; break;
+        case Common::unknown_diplo: karma_ = kernel::Karma::unknown_; break;
+        case Common::friend_diplo : karma_ = kernel::Karma::friend_;  break;
+        case Common::enemy_diplo  : karma_ = kernel::Karma::enemy_;   break;
+        case Common::neutral_diplo: karma_ = kernel::Karma::neutral_; break;
     }
 
     CreateDictionary( controller );

@@ -22,7 +22,11 @@ namespace gui
     class ExclusiveEventStrategy;
 }
 
-class PHY_Meteo;
+namespace weather
+{
+    class PHY_Meteo;
+}
+
 class LocalWeather;
 
 // =============================================================================
@@ -47,7 +51,7 @@ public:
     void SetPosition( const LocalWeather& weather );
     void StartEdition( LocalWeather& weather );
 
-    const PHY_Meteo* Pick ( const geometry::Point2f& terrainCoordinates ) const;
+    const weather::PHY_Meteo* Pick( const geometry::Point2f& terrainCoordinates ) const;
     //@}
 
 private:

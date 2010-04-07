@@ -58,7 +58,7 @@ void MIL_NBCType::Initialize( xml::xistream& xis )
         >> xml::end();
 
     //We set the propagation angle in radian
-    propagationAngle_ *= ( MT_PI / 180. );
+    propagationAngle_ *= unsigned int( MT_PI / 180. );
 
     for( CIT_NBCTypeMap it = nbcAgentTypes_.begin(); it != nbcAgentTypes_.end(); ++it )
         if( ! ids.insert( it->second->GetID() ).second )
@@ -180,9 +180,9 @@ const MIL_NBCType* MIL_NBCType::Find( uint nID )
 int MIL_NBCType::ComputeAgentConcentrationEvolution( bool bHasASource , int concentration ) const
 {
     if( bHasASource )
-        return ( concentration + concentrationIncreaseRate_ );
+        return int( concentration + concentrationIncreaseRate_ );
     else
-        return ( concentration - concentrationDecreaseRate_ );
+        return int( concentration - concentrationDecreaseRate_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -46,7 +46,7 @@ void MissionParameterPath::Serialize( MsgMissionParameter& parameter ) const
     parameter.set_null_value( 0 );
 
 //    parameter.mutable_value()->mutable_path() = new MsgPath();
-    parameter.mutable_value()->mutable_path()->mutable_location()->set_type( MsgLocation_Geometry::MsgLocation_Geometry_line );
+    parameter.mutable_value()->mutable_path()->mutable_location()->set_type( MsgLocation_Geometry_line );
     points_->Serialize( *parameter.mutable_value()->mutable_path()->mutable_location()->mutable_coordinates() );
 }
 

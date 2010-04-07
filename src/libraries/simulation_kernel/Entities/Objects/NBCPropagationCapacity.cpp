@@ -119,7 +119,7 @@ void NBCPropagationCapacity::Update( Object& object, float time )
     MT_Vector2D vOrigin( object.GetLocalisation().ComputeBarycenter() );
 
     //We retrieve the wind data
-    const PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
+    const weather::PHY_Meteo::sWindData& wind = MIL_Tools::GetWind( vOrigin );
     MT_Vector2D vNormalizedWind , vPerpendicularToWind;
 
     //The normalized vector which indicates the wind direction

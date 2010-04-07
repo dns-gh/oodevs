@@ -30,23 +30,20 @@ PHY_RawVisionData::envBits PHY_RawVisionDataIterator::GetCurrentEnv() const
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
 inline
-const PHY_Lighting& PHY_RawVisionDataIterator::GetLighting() const
+const weather::PHY_Lighting& PHY_RawVisionDataIterator::GetLighting() const
 {
     return pCurrentCell_->GetLighting();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::GetPrecipitation
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
 inline
-const PHY_Precipitation& PHY_RawVisionDataIterator::GetPrecipitation() const
+const weather::PHY_Precipitation& PHY_RawVisionDataIterator::GetPrecipitation() const
 {
     return pCurrentCell_->GetPrecipitation();
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator
@@ -58,12 +55,10 @@ MT_Float PHY_RawVisionDataIterator::Length() const
     return rLenght_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::End
 // Created: JVT 03-04-02
 //-----------------------------------------------------------------------------
-extern MT_Float rRemainingLength_;
 inline
 bool PHY_RawVisionDataIterator::End() const
 {
@@ -94,7 +89,6 @@ void PHY_RawVisionDataIterator::ToRealSpace( int& nX, int& nY ) const
     if ( bSwap_ ) std::swap( nX, nY );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::ToRealSpace
 // Created: JVT 03-06-23
@@ -105,8 +99,6 @@ void PHY_RawVisionDataIterator::OffsetToRealSpace( int& dX, int& dY ) const
 {
     bSwapOffset_ ? ToRealSpace( dY, dX ) : ToRealSpace( dX, dY );
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::ToAlgorithmSpace
@@ -132,7 +124,6 @@ void PHY_RawVisionDataIterator::ToAlgorithmSpace( int& nX, int& nY ) const
     if ( bNegY_ ) nY = -nY;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::GetPos
 // Created: JVT 03-06-24
@@ -146,7 +137,6 @@ const MT_Vector2D PHY_RawVisionDataIterator::GetPos() const
     return res;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionDataIterator::GetPos
 // Created: JVT 03-06-24
@@ -159,4 +149,3 @@ void PHY_RawVisionDataIterator::GetPos( MT_Vector2D& res ) const
     ToRealSpace( res.rX_, res.rY_ );
     res *= data_.GetCellSize();
 }
-

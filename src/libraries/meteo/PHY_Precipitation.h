@@ -17,6 +17,9 @@
 #include "protocol/ClientSenders.h"
 #include "MT_tools/MT_Tools_Types.h"
 
+namespace weather
+{
+
 // =============================================================================
 // @class  PHY_Precipitation
 // Created: JVT 2004-08-03
@@ -74,18 +77,28 @@ private:
     //@}
 
 private:
+    //! @name Constructors/Destructors
+    //@{
      PHY_Precipitation( const std::string& strName, E_Precipitation nType, Common::EnumPrecipitationType nAsnID );
     ~PHY_Precipitation();
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     const std::string                 strName_;
     const E_Precipitation             nType_;
     const Common::EnumPrecipitationType nAsnID_;
+    //@}
 
-private:
+    //! @name Static data
+    //@{
     static T_PrecipitationMap precipitations_;
+    //@}
 };
 
 #include "PHY_Precipitation.inl"
+
+}
 
 #endif // __PHY_Precipitation_h_

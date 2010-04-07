@@ -646,13 +646,13 @@ void MIL_Army::OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& as
     if( !pArmy2 || *pArmy2 == *this )
         throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
-    if( asnMsg.diplomatie() == Common::EnumDiplomacy::unknown_diplo )
+    if( asnMsg.diplomatie() == Common::unknown_diplo )
         nDiplomacy = eUnknown;
-    else if( asnMsg.diplomatie() == Common::EnumDiplomacy::friend_diplo )
+    else if( asnMsg.diplomatie() == Common::friend_diplo )
         nDiplomacy = eFriend;
-    else if( asnMsg.diplomatie() == Common::EnumDiplomacy::enemy_diplo )
+    else if( asnMsg.diplomatie() == Common::enemy_diplo )
         nDiplomacy = eEnemy;
-    else if( asnMsg.diplomatie() == Common::EnumDiplomacy::neutral_diplo )
+    else if( asnMsg.diplomatie() == Common::neutral_diplo )
         nDiplomacy = eNeutral;
     diplomacies_[ pArmy2 ] = nDiplomacy;
 }

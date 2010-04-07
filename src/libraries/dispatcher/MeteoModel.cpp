@@ -12,6 +12,7 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "meteo/PHY_Meteo.h"
 #include "meteo/MeteoData.h"
+#include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "dispatcher/EntityPublisher.h"
@@ -22,12 +23,13 @@ using namespace dispatcher;
 // Name: MeteoModel constructor 
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv )  
-  :  MeteoModel_ABC( conv )
-  , pGlobalMeteo_()
+MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter )
+  : MeteoModel_ABC()
+  , converter_( converter )
+  , pGlobalMeteo_( 0 )
 {
-    PHY_Precipitation::Initialize();
-    PHY_Lighting     ::Initialize();
+    weather::PHY_Precipitation::Initialize();
+    weather::PHY_Lighting     ::Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -36,15 +38,15 @@ MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv )
 // -----------------------------------------------------------------------------
 MeteoModel::~MeteoModel()
 {
-    PHY_Precipitation::Terminate();
-    PHY_Lighting     ::Terminate();
+    weather::PHY_Lighting     ::Terminate();
+    weather::PHY_Precipitation::Terminate();
 }
 
 // ----------------------------------------------------                                                                                                                                  -------------------------
 // Name: MeteoModel::GetLighting
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-const PHY_Lighting& MeteoModel::GetLighting() const
+const weather::PHY_Lighting& MeteoModel::GetLighting() const
 {
    return pGlobalMeteo_->GetLighting();
 }
@@ -59,8 +61,8 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
         pGlobalMeteo_->Update( msg.attributes() );
     else
     {
-        pGlobalMeteo_ = new PHY_Meteo( msg.oid(), msg.attributes(), this );
-       pGlobalMeteo_->Attach< EntityPublisher_ABC >( *new EntityPublisher< PHY_Meteo >( *pGlobalMeteo_ ) );
+        pGlobalMeteo_ = new weather::PHY_Meteo( msg.oid(), msg.attributes(), this );
+        pGlobalMeteo_->Attach< EntityPublisher_ABC >( *new EntityPublisher< weather::PHY_Meteo >( *pGlobalMeteo_ ) );
     }
  }
 
@@ -77,8 +79,8 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgContr
 
     if( msg.has_attributes() )
     {
-        MeteoData* pTmp = new MeteoData( msg.oid(), vUpLeft, vDownRight, msg.attributes(), this );
-        pTmp->Attach< EntityPublisher_ABC >( *new EntityPublisher< MeteoData >( *pTmp ) );
+        weather::MeteoData* pTmp = new weather::MeteoData( msg.oid(), vUpLeft, vDownRight, msg.attributes(), *this, converter_ );
+        pTmp->Attach< EntityPublisher_ABC >( *new EntityPublisher< weather::MeteoData >( *pTmp ) );
         RegisterMeteo( *pTmp );
     }
 }
@@ -90,15 +92,13 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgContr
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message )
 {
-    PHY_Meteo* toDel = 0;
     for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.oid() )
         {
-            toDel = *it;
-            break;
+            UnregisterMeteo( **it );
+            delete *it;
+            return;
         }
-       UnregisterMeteo( *toDel ); 
-        delete toDel;
 }
 
 
@@ -106,18 +106,18 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgCo
 // Name: MeteoModel::RegisterMeteo
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-void MeteoModel::RegisterMeteo( PHY_Meteo& meteo )
+void MeteoModel::RegisterMeteo( weather::PHY_Meteo& meteo )
 {
-   meteos_.push_front( &meteo ); 
+    meteos_.push_front( &meteo ); 
 }
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel::UnregisterMeteo
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-void MeteoModel::UnregisterMeteo( PHY_Meteo& meteo )
+void MeteoModel::UnregisterMeteo( weather::PHY_Meteo& meteo )
 {
-  meteos_.remove( &meteo ); 
+    meteos_.remove( &meteo );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,8 +128,6 @@ void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
 {
     for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
         visitor.Visit( **it );
-
-    if ( pGlobalMeteo_)
+    if( pGlobalMeteo_)
         visitor.Visit( *pGlobalMeteo_ );
 }
-

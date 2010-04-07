@@ -32,7 +32,7 @@ PopulationFlowKnowledge::PopulationFlowKnowledge( const kernel::PopulationKnowle
     , nSpeed_             ( 0 )
     , nNbrAliveHumans_    ( 0 )
     , nNbrDeadHumans_     ( 0 )
-    , nAttitude_          ( Common::EnumPopulationAttitude::agressive ) 
+    , nAttitude_          ( Common::agressive ) 
     , bPerceived_         ( false )
 {
     optionals_.vitessePresent            = 0;

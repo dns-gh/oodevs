@@ -78,7 +78,7 @@ namespace extractors
         bool IsCreation( const MsgSimToClient& wrapper ) const
         { 
             return wrapper.message().has_start_unit_fire() && 
-                   wrapper.message().start_unit_fire().type() == MsgStartUnitFire_type::direct; 
+                   wrapper.message().start_unit_fire().type() == Common::direct; 
         }
         NumericValue Extract( const MsgSimToClient& wrapper ) const
         { 
@@ -95,7 +95,7 @@ namespace extractors
         bool IsCreation( const MsgSimToClient& wrapper ) const
         { 
             return wrapper.message().has_start_unit_fire() && 
-                   wrapper.message().start_unit_fire().type() == MsgStartUnitFire_type::indirect; 
+                   wrapper.message().start_unit_fire().type() == Common::indirect; 
         }
         NumericValue Extract( const MsgSimToClient& wrapper ) const
         { 

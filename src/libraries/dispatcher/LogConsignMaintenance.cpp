@@ -15,9 +15,6 @@
 #include "Agent.h"
 #include "protocol/clientsenders.h"
 
-////using namespace Common;
-//using namespace MsgsSimToClient;
-
 using namespace dispatcher;
 
 // -----------------------------------------------------------------------------
@@ -32,7 +29,7 @@ LogConsignMaintenance::LogConsignMaintenance( const Model& model, const MsgsSimT
     , nEquipmentType_   ( msg.type_equipement() )
     , nBreakdownType_   ( msg.type_panne() )
     , pTreatingAgent_   ( 0 )
-    , nState_           ( Common::EnumLogMaintenanceHandlingStatus::attente_disponibilite_pieces )
+    , nState_           ( Common::attente_disponibilite_pieces )
     , bDiagnosed_       ( false )
 {
     // NOTHING

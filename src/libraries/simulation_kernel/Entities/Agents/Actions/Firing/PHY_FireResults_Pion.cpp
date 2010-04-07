@@ -31,7 +31,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     client::StartUnitFire asnMsg;
     asnMsg().set_fire_oid       ( nID_ );
     asnMsg().set_firer_oid      ( firer.GetID() );
-    asnMsg().set_type           ( Common::MsgStartUnitFire_type::direct );
+    asnMsg().set_type           ( Common::direct );
     asnMsg().mutable_target()->set_unit( target.GetID() );    
     
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -49,7 +49,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MI
     client::StartUnitFire asnMsg;
     asnMsg().set_fire_oid( nID_ );
     asnMsg().set_firer_oid( firer.GetID() );
-    asnMsg().set_type( Common::MsgStartUnitFire_type::direct );
+    asnMsg().set_type( Common::direct );
     asnMsg().mutable_target()->set_population( target.GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
@@ -66,7 +66,7 @@ PHY_FireResults_Pion::PHY_FireResults_Pion( const MIL_Agent_ABC& firer, const MT
     client::StartUnitFire asnMsg;    
     asnMsg().set_fire_oid( nID_ );
     asnMsg().set_firer_oid( firer.GetID() );
-    asnMsg().set_type( Common::MsgStartUnitFire_type::indirect );
+    asnMsg().set_type( Common::indirect );
     asnMsg().set_ammunition( dotationCategory.GetMosID() );
     NET_ASN_Tools::WritePoint( targetPosition, *asnMsg().mutable_target()->mutable_position() );
 

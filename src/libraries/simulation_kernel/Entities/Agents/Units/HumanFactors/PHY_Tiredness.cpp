@@ -16,9 +16,9 @@
 
 PHY_Tiredness::T_TirednessMap PHY_Tiredness::tirednesses_;
 
-const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , Common::EnumUnitTiredness::normal , 1. );
-const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, Common::EnumUnitTiredness::fatigue, 1. );
-const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , Common::EnumUnitTiredness::epuise , 1. );
+const PHY_Tiredness PHY_Tiredness::normal_ ( "Normal" , eNormal , Common::normal , 1. );
+const PHY_Tiredness PHY_Tiredness::fatigue_( "Fatigue", eFatigue, Common::fatigue, 1. );
+const PHY_Tiredness PHY_Tiredness::epuise_ ( "Epuise" , eEpuise , Common::epuise , 1. );
 
 struct PHY_Tiredness::LoadingWrapper
 {

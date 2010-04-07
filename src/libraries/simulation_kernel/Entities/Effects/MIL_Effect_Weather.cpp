@@ -78,7 +78,7 @@ void MIL_Effect_Weather::SendMsgStartEffect() const
     client::StartFireEffect asnMsg;
 
     asnMsg().set_effect_oid( nID_ );
-    asnMsg().set_type( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? Common::EnumFireEffectType::fumigene : Common::EnumFireEffectType::eclairant );
+    asnMsg().set_type( ammoCategory_ == PHY_IndirectFireDotationClass::fumigene_ ? Common::fumigene : Common::eclairant );
     NET_ASN_Tools::WriteEllipse( surface_, *asnMsg().mutable_location() );
 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );

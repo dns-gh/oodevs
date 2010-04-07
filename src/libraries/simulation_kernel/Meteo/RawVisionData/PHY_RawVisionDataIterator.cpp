@@ -10,9 +10,7 @@
 //*****************************************************************************
 
 #include "simulation_kernel_pch.h"
-
 #include "PHY_RawVisionDataIterator.h"
-
 #include "MIL_AgentServer.h"
 #include "Meteo/PHY_MeteoDataManager.h"
 

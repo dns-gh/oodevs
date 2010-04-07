@@ -11,6 +11,7 @@
 #define __SuccessFactorActions_h_
 
 #include "tools/Resolver.h"
+#include "SuccessFactorAction.h"
 
 namespace xml
 {

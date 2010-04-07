@@ -12,7 +12,10 @@
 
 #include "geometry/Types.h"
 
-class PHY_Meteo;
+namespace weather
+{
+    class PHY_Meteo;
+
 // =============================================================================
 /** @class  PHY_RawVisionData_ABC
     @brief  PHY_RawVisionData_ABC
@@ -31,25 +34,11 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterMeteoPatch   ( const geometry::Point2d&, const geometry::Point2d&, PHY_Meteo* ) = 0;
-    virtual void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&, PHY_Meteo* ) = 0;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_RawVisionData_ABC( const PHY_RawVisionData_ABC& );            //!< Copy constructor
-    PHY_RawVisionData_ABC& operator=( const PHY_RawVisionData_ABC& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
+    virtual void RegisterMeteoPatch  ( const geometry::Point2d& topLeft, const geometry::Point2d& bottomRight, PHY_Meteo* weather ) = 0;
+    virtual void UnregisterMeteoPatch( const geometry::Point2d& topleft, const geometry::Point2d& bottomRight, PHY_Meteo* weather ) = 0;
     //@}
 };
+
+}
 
 #endif // __PHY_RawVisionData_ABC_h_

@@ -13,10 +13,10 @@
 #include "PHY_AmmoDotationClass.h"
 #include "protocol/protocol.h"
 
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , Common::EnumAmmunitionFamily::obus        );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, Common::EnumAmmunitionFamily::missile_air );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol, Common::EnumAmmunitionFamily::missile_sol );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille , Common::EnumAmmunitionFamily::mitraille   );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , Common::obus        );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, Common::missile_air );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol, Common::missile_sol );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille , Common::mitraille   );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 

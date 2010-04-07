@@ -101,7 +101,7 @@ bool MIL_IntelligenceOrder::IsEmbarked() const
 // -----------------------------------------------------------------------------
 bool MIL_IntelligenceOrder::IsEnemy() const
 {
-    return diplomacy_ == Common::EnumDiplomacy::enemy_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
+    return diplomacy_ == Common::enemy_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +110,7 @@ bool MIL_IntelligenceOrder::IsEnemy() const
 // -----------------------------------------------------------------------------
 bool MIL_IntelligenceOrder::IsFriend() const
 {
-    return diplomacy_ == Common::EnumDiplomacy::friend_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
+    return diplomacy_ == Common::friend_diplo; // $$$$ SBO 2007-12-06: should depend upon caller
 }
 
 // -----------------------------------------------------------------------------

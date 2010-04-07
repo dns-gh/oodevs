@@ -7,6 +7,7 @@
 #include "PHY_Ephemeride.h"
 #include "meteo/PHY_GlobalMeteo.h"
 #include "meteo/PHY_LocalMeteo.h"
+#include "meteo/PHY_Lighting.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -28,8 +29,8 @@ PHY_MeteoDataManager::PHY_MeteoDataManager( MIL_Config& config )
     , meteos_      ()
     , pRawData_    ( 0 )
 {
-    PHY_Precipitation::Initialize();
-    PHY_Lighting     ::Initialize();
+    weather::PHY_Precipitation::Initialize();
+    weather::PHY_Lighting     ::Initialize();
 
     std::string fileName = config.GetWeatherFile();
 
@@ -55,8 +56,8 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
     pGlobalMeteo_->DecRef();
     assert( meteos_.size() == 1 );
 
-    PHY_Lighting     ::Terminate();
-    PHY_Precipitation::Terminate();
+    weather::PHY_Lighting     ::Terminate();
+    weather::PHY_Precipitation::Terminate();
 }
 
 // -----------------------------------------------------------------------------
@@ -90,7 +91,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    PHY_Meteo* pMeteo = new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
+    weather::PHY_Meteo* pMeteo = new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
     RegisterMeteo( *pMeteo );
 }
 
@@ -124,10 +125,10 @@ void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const MsgsClientToSim::MsgCon
 
     NET_ASN_Tools::ReadPoint( msg.top_left_coordinate(),      vUpLeft    );
     NET_ASN_Tools::ReadPoint( msg.bottom_right_coordinate() , vDownRight );
-    PHY_Meteo* pTmp = 0;
+    weather::PHY_Meteo* pTmp = 0;
     if( msg.has_attributes() )
     {
-        pTmp = new PHY_LocalMeteo(idManager_.GetFreeId(), msg, this );
+        pTmp = new PHY_LocalMeteo( idManager_.GetFreeId(), msg, this );
         RegisterMeteo( *pTmp );
     }
     assert( pRawData_ );

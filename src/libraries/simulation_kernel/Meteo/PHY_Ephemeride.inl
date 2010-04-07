@@ -14,17 +14,6 @@
 // Created: JVT 03-08-07
 //-----------------------------------------------------------------------------
 inline
-const PHY_Lighting& PHY_Ephemeride::GetLightingBase() const
-{
-    assert( pNightBase_ );
-    return bIsNight_ ? *pNightBase_ : PHY_Lighting::jourSansNuage_;
-}
-
-//-----------------------------------------------------------------------------
-// Name: PHY_Ephemeride::GetCurrentTimeBase
-// Created: JVT 03-08-07
-//-----------------------------------------------------------------------------
-inline
 bool PHY_Ephemeride::IsNight() const
 {
     return bIsNight_;

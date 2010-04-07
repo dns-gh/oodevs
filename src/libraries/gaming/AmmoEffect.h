@@ -10,12 +10,9 @@
 #ifndef __AmmoEffect_h_
 #define __AmmoEffect_h_
 
-
 #include "MSEllipse.h"
 #include "protocol/Protocol.h"
 #include "meteo/PHY_Meteo.h"
-using namespace Common;
-
 
 namespace kernel
 {
@@ -36,7 +33,7 @@ class AmmoEffect
 public:
     //! @name Constructors/Destructor
     //@{
-    AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+             AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
     virtual ~AmmoEffect();
     //@}
 
@@ -44,7 +41,7 @@ public:
     //@{
     virtual void Draw( const kernel::GlTools_ABC& tools ) const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
-    virtual const PHY_Meteo& GetMeteo() const;
+    virtual const weather::PHY_Meteo& GetMeteo() const;
     //@}
 
 private:
@@ -59,9 +56,9 @@ private:
     //@{
     kernel::Controller& controller_;
     unsigned long id_;
-    EnumFireEffectType type_;
+    Common::EnumFireEffectType type_;
     MSEllipse ellipse_;
-    PHY_Meteo meteo_;
+    weather::PHY_Meteo meteo_;
     //@}
 };
 

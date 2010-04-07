@@ -111,11 +111,11 @@ Report* ReportFactory::CreateReport( const kernel::Entity_ABC& agent, const Msgs
     if( !report )
         return 0;
     Report::E_Type type = Report::eRC;
-    if( message.type() == MsgsSimToClient::EnumReportType::message )
+    if( message.type() == MsgsSimToClient::message )
         type = Report::eMessage;
-    else if( message.type() == MsgsSimToClient::EnumReportType::evenement_exceptionnel )
+    else if( message.type() == MsgsSimToClient::evenement_exceptionnel )
         type = Report::eEvent;
-    else if( message.type() == MsgsSimToClient::EnumReportType::warning )
+    else if( message.type() == MsgsSimToClient::warning )
         type = Report::eWarning;
     return new Report( agent, type, report->RenderMessage( message.parametres() ), GetTime( message.time() ) );
 }

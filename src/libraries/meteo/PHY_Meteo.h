@@ -23,34 +23,39 @@ namespace Common
     class MsgMeteoAttributes;
 }
 
-namespace xml
-{
-    class xistream;
-}
-namespace kernel
-{
-    class ActionController;
-    class ModelVisitor_ABC;
-};
-
-class PHY_Precipitation;
-class PHY_Lighting;
-class MeteoManager_ABC;
-class PHY_RawVisionData_ABC;
-class Publisher_ABC;
-
 namespace dispatcher
 {
     class ClientPublisher_ABC;
 }
 
-//*****************************************************************************
+namespace kernel
+{
+    class ActionController;
+    class ModelVisitor_ABC;
+}
+
+namespace xml
+{
+    class xistream;
+}
+
+class Publisher_ABC;
+
+namespace weather
+{
+    class MeteoManager_ABC;
+    class PHY_Lighting;
+    class PHY_Precipitation;
+    class PHY_RawVisionData_ABC;
+
+// =============================================================================
+/** @class  PHY_Meteo
+    @brief  PHY_Meteo
+*/
 // Created: JVT 03-08-05
-// Last modified: JVT 03-08-07
-//*****************************************************************************
+// =============================================================================
 class PHY_Meteo : public kernel::Entity_ABC
                 , private boost::noncopyable
-                
 {
 
 public:
@@ -61,13 +66,15 @@ public:
     };
 
 public:
-    PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-    PHY_Meteo( unsigned int id, const Common::MsgMeteoAttributes&, MeteoManager_ABC* listener );
-    PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation );
+    //! @name Constructors/Destructors
+    //@{
+             PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
+             PHY_Meteo( unsigned int id, const Common::MsgMeteoAttributes&, MeteoManager_ABC* listener );
+             PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation );
+    virtual ~PHY_Meteo();
+    //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Creation / destruction */
-    //-------------------------------------------------------------------------
+    //! @name Operations
     //@{
     void IncRef();
     void IncRef( unsigned int );
@@ -76,9 +83,7 @@ public:
     void SetListener( MeteoManager_ABC* );
     //@}
 
-    //-------------------------------------------------------------------------
-    /** @name Accessors */
-    //-------------------------------------------------------------------------
+    //! @name Accessors
     //@{
     const PHY_Precipitation& GetPrecipitation() const;
     const PHY_Lighting&      GetLighting     () const;
@@ -90,10 +95,10 @@ public:
     virtual void Update( const Common::MsgMeteoAttributes& asn );
     virtual void Update( const PHY_Lighting& /*PHY_Ephemeride&*/ );
     virtual void Update( const PHY_Precipitation& precipitation);
-    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision_ );
-    virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
-    virtual void SendDestruction  ( dispatcher::ClientPublisher_ABC& publisher ) const;
-    virtual void SendFullUpdate ( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision );
+    virtual void SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate( dispatcher::ClientPublisher_ABC& publisher ) const;
     virtual void SendCreation() const;
     virtual bool IsInside( const geometry::Point2f& point ) const;
     virtual void Select( kernel::ActionController& controller ) const;
@@ -103,12 +108,10 @@ public:
     virtual QString GetName() const;
     virtual unsigned long GetId() const;
     //@}
-
-public:
-    virtual ~PHY_Meteo();
-
    
 protected:
+    //! @name Member data
+    //@{
     int                      nPlancherCouvertureNuageuse_;
     int                      nPlafondCouvertureNuageuse_;
     MT_Float                 rDensiteCouvertureNuageuse_;
@@ -118,11 +121,17 @@ protected:
     unsigned int nRefCount_;
     int conversionFactor_;
     unsigned int id_;
+    //@}
 
 private:
+    //! @name Member data
+    //@{
     MeteoManager_ABC* listener_;
+    //@}
 };
 
 #include "PHY_Meteo.inl"
+
+}
 
 #endif // __PHY_Meteo_h_

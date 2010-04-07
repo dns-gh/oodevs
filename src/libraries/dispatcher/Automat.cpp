@@ -42,10 +42,10 @@ Automat::Automat( Model_ABC& model, const MsgsSimToClient::MsgAutomatCreation& m
     , pLogMaintenance_  ( 0 )
     , pLogMedical_      ( 0 )
     , pLogSupply_       ( 0 )
-    , nAutomatState_    ( Common::EnumAutomatMode::debraye )
+    , nAutomatState_    ( Common::debraye )
     , nForceRatioState_ ( MsgsSimToClient::ForceRatio_Value_neutre )
-    , nCloseCombatState_( Common::EnumMeetingEngagementStatus::etat_fixe )
-    , nOperationalState_( Common::EnumOperationalStatus::detruit_totalement )
+    , nCloseCombatState_( Common::etat_fixe )
+    , nOperationalState_( Common::detruit_totalement )
     , nRoe_             ( MsgsSimToClient::RulesOfEngagement_Value_tir_interdit )
     , order_            ( 0 )
 {
@@ -350,7 +350,7 @@ const kernel::AutomatType& Automat::GetType() const
 // -----------------------------------------------------------------------------
 bool Automat::IsEngaged() const
 {
-    return nAutomatState_ == Common::EnumAutomatMode::embraye;
+    return nAutomatState_ == Common::embraye;
 }
 
 // -----------------------------------------------------------------------------

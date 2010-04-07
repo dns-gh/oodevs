@@ -64,16 +64,10 @@ private:
     //@}
 
 private:
-    //! @name Type
-    //@{
-    typedef Common::ObstacleType_DemolitionTargetType E_ObstacleType;
-    //@}
-
-private:
     //! @name Member data
     //@{
     const ObstacleAttribute* attr_;
-    E_ObstacleType  obstacle_;
+    Common::ObstacleType_DemolitionTargetType obstacle_;
     bool            bActivated_;
     //@}
 };

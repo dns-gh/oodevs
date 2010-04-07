@@ -16,23 +16,22 @@
 #include "simulation_terrain/TER_Localisation.h"
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
-
 #include "MT_Tools/MT_Rect.h"
 #include "MT_Tools/MT_Ellipse.h"
 #include <xeumeuleu/xml.h>
 #include "tools/InputBinaryStream.h"
 
       PHY_RawVisionData::sCell PHY_RawVisionData::emptyCell_;
-const PHY_Meteo*               PHY_RawVisionData::sCell::pGlobalMeteo_;
+const weather::PHY_Meteo*      PHY_RawVisionData::sCell::pGlobalMeteo_;
 
 
 //-----------------------------------------------------------------------------
 // Name: PHY_RawVisionData::sCell::GetPrecipitation
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
-const PHY_Precipitation& PHY_RawVisionData::sCell::GetPrecipitation() const
+const weather::PHY_Precipitation& PHY_RawVisionData::sCell::GetPrecipitation() const
 { 
-    const PHY_Precipitation& mainPrecipitation = pMeteo ? pMeteo->GetPrecipitation() : pGlobalMeteo_->GetPrecipitation();
+    const weather::PHY_Precipitation& mainPrecipitation = pMeteo ? pMeteo->GetPrecipitation() : pGlobalMeteo_->GetPrecipitation();
     return pEffects ? pEffects->GetPrecipitation( mainPrecipitation ) : mainPrecipitation;
 }
 
@@ -41,9 +40,9 @@ const PHY_Precipitation& PHY_RawVisionData::sCell::GetPrecipitation() const
 // Name: PHY_RawVisionData::GetLighting
 // Created: JVT 04-03-24
 //-----------------------------------------------------------------------------
-const PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
+const weather::PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 {
-    const PHY_Lighting& mainLighting = pMeteo ? pMeteo->GetLighting() : pGlobalMeteo_->GetLighting();
+    const weather::PHY_Lighting& mainLighting = pMeteo ? pMeteo->GetLighting() : pGlobalMeteo_->GetLighting();
     return pEffects ? pEffects->GetLighting( mainLighting ) : mainLighting; 
 }
 
@@ -52,7 +51,7 @@ const PHY_Lighting& PHY_RawVisionData::sCell::GetLighting() const
 // Created: JVT 02-11-05
 // Last modified: JVT 03-08-08
 //-----------------------------------------------------------------------------
-PHY_RawVisionData::PHY_RawVisionData( PHY_Meteo& globalMeteo, MIL_Config& config )
+PHY_RawVisionData::PHY_RawVisionData( weather::PHY_Meteo& globalMeteo, MIL_Config& config )
     : ppCells_( 0 )
     , nNbrCol_( 0 )
     , nNbrRow_( 0 )
@@ -89,7 +88,7 @@ PHY_RawVisionData::~PHY_RawVisionData()
 // Created: JVT 03-08-06
 // Last modified: JVT 03-08-18
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, PHY_Meteo* pMeteo )
+void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, weather::PHY_Meteo* pMeteo )
 {
     assert( ppCells_ );
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
@@ -125,7 +124,7 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
 // Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
 // Created: SLG 2010-03-19
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, PHY_Meteo* pMeteo )
+void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, weather::PHY_Meteo* pMeteo )
 {
     assert( ppCells_ );
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
