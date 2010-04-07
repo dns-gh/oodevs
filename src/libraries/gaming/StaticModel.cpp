@@ -13,6 +13,7 @@
 #include "SurfaceFactory.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
@@ -42,6 +43,7 @@ StaticModel::StaticModel( Controllers& controllers, const RcEntityResolver_ABC& 
     , detection_          ( *new DetectionMap() )
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
+    , magicActionType_    ( *new MagicActionType() )
     , levels_             ( *new FormationLevels() )
     , reportFactory_      ( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, &simu ) )
     , atlasNatures_       ( *new AtlasNatures() )
@@ -66,6 +68,7 @@ StaticModel::~StaticModel()
     delete &reportFactory_;
     delete &levels_;
     delete &objectTypes_;
+    delete &magicActionType_;
     delete &types_;
     delete &detection_;
     delete &coordinateConverter_;
@@ -89,6 +92,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
     indicators_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
     gaugeTypes_.Load( tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
     controllers_.controller_.Update( ModelLoaded( config ) );
+    magicActionType_.Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -103,5 +107,6 @@ void StaticModel::Purge()
     reportFactory_.Purge();
     types_.Purge();
     objectTypes_.Purge();
+    magicActionType_.Clean();
     //urbanTypes_.Purge();
 }

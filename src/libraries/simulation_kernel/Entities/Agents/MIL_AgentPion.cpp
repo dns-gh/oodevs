@@ -671,26 +671,39 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgMagicMove
+// Name: MIL_AgentPion::OnReceiveMsgMagicActionMoveTo
 // Created: NLD 2005-08-18
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgMagicMove( const MT_Vector2D& vPosition )
+void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MT_Vector2D& vPosition )
 {
     MagicMove( vPosition );
     UpdatePhysicalState();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::OnReceiveMsgMagicMove
+// Name: MIL_AgentPion::OnReceiveMsgMagicActionMoveTo
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgMagicMove( const Common::MsgMagicActionMoveTo& asn )
+void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& asn )
 {
     if( pAutomate_->IsEngaged() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_automate_embraye );
 
+    if( !asn.has_parametres() || asn.parametres().elem_size() != 1)
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    
+    const Common::MsgMissionParameter& parametre = asn.parametres().elem( 0 );
+    if( !parametre.has_value() || !parametre.value().has_point() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    const Common::MsgPoint& point = parametre.value().point();
+
+    if( point.location().type() != Common::MsgLocation_Geometry_point 
+        || point.location().coordinates().elem_size() != 1 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
     MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( asn.move_to(), vPosTmp );
+    MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
 
     MagicMove( vPosTmp );
     UpdatePhysicalState();
@@ -862,9 +875,7 @@ void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army_ABC>& armies )
 {
-    if( asnMsg.action().has_move_to                    () ) 
-        OnReceiveMsgMagicMove                  ( asnMsg.action().move_to() );
-    else if( asnMsg.action().has_recompletement_personnel   () ) 
+    if( asnMsg.action().has_recompletement_personnel   () ) 
         OnReceiveMsgResupplyHumans             (); 
     else if( asnMsg.action().has_recompletement_ressources  () ) 
         OnReceiveMsgResupplyResources          (); 

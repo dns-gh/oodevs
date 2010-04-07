@@ -311,11 +311,14 @@ void UnitMagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
     {
         MsgCoordLatLong utm;
         static_.coordinateConverter_.ConvertToGeo( point, utm );
-        simulation::UnitMagicAction message;
+        simulation::MagicActionMoveTo message;
         message().set_oid( selectedEntity_->GetId() );
-        *message().mutable_action()->mutable_move_to()->mutable_move_to() = utm;
-        message.Send( publisher_, 56 );
+        Common::MsgLocation* location = message().mutable_parametres()->add_elem()->mutable_value()->mutable_point()->mutable_location();
+        location->set_type( MsgLocation_Geometry_point );
+        *location->mutable_coordinates()->add_elem() = utm;
+        message.Send( publisher_ );
         const_cast< kernel::Entity_ABC& >( *selectedEntity_ ).Update( message() );
+        message().clear_parametres();
     }
 }
 

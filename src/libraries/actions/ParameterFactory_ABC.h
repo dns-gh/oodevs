@@ -45,6 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity ) const = 0;
+    virtual actions::Parameter_ABC* CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const = 0;
     //@}
 };
 

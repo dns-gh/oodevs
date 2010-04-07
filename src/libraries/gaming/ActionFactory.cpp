@@ -13,9 +13,14 @@
 #include "actions/AutomatMission.h"
 #include "actions/PopulationMission.h"
 #include "actions/FragOrder.h"
+#include "actions/MagicAction.h"
+#include "actions/UnitMagicAction.h"
+#include "actions/UnitMagicActionTeleport.h"
+#include "actions/ObjectMagicAction.h"
 #include "actions/Parameter_ABC.h"
 #include "Model.h"
 #include "AgentsModel.h"
+#include "ObjectsModel.h"
 #include "ActionTiming.h"
 #include "ParameterFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -38,12 +43,16 @@ using namespace xml;
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 ActionFactory::ActionFactory( Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
-                            , const tools::Resolver_ABC< MissionType >& missions, const tools::Resolver_ABC< FragOrderType >& fragOrders, const Simulation& simulation )
+                            , const tools::Resolver_ABC< MissionType >& missions
+                            , const tools::Resolver_ABC< FragOrderType >& fragOrders
+                            , const kernel::MagicActionType& magicAction
+                            , const Simulation& simulation )
     : controllers_( controllers )
     , factory_( factory )
     , model_( model )
     , missions_( missions )
     , fragOrders_( fragOrders )
+    , magicAction_( magicAction )
     , simulation_( simulation )
 {
     // NOTHING
@@ -168,8 +177,11 @@ void ActionFactory::AddParameters( actions::Action_ABC& action, const OrderType&
     {
         if( i >= message.elem_size() )
             throw std::runtime_error( __FUNCTION__ " Mission parameter count does not match mission definition" );
-        if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), action.GetEntity() ) )
-            action.AddParameter( *newParam );
+
+        actions::ActionWithTarget_ABC* actionWithTarget = dynamic_cast< actions::ActionWithTarget_ABC* >( &action );
+        if( actionWithTarget )
+            if( actions::Parameter_ABC* newParam = factory_.CreateParameter( it.NextElement(), message.elem( i++ ), actionWithTarget->GetEntity() ) )
+                actionWithTarget->AddParameter( *newParam );
     }
 }
 
@@ -185,6 +197,12 @@ actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
         return CreateMission( xis );
     if( type == "fragorder" )
         return CreateFragOrder( xis );
+    if( type == "magic" )
+        return CreateMagicAction( xis );
+    if( type == "magicunit" )
+        return CreateUnitMagicAction( xis );
+    if( type == "magicobject" )
+        return CreateObjectMagicAction( xis );
     return 0;
 }
 
@@ -199,6 +217,11 @@ namespace
     void ThrowTargetNotFound( unsigned long id )
     {
         throw std::exception( tools::translate( "ActionFactory", "Unable to find executing entity '%1'." ).arg( id ) );
+    }
+
+    void ThrowMagicIdNotFound( const std::string& id )
+    {
+        throw std::exception( tools::translate( "ActionFactory", "Magic action type '%1' unknown." ).arg( id.c_str() ) );
     }
 }
 
@@ -258,6 +281,108 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateMagicAction
+// Created: JSR 2010-04-02
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis ) const
+{
+    const std::string id = xml::attribute< std::string >( xis, "id" );
+
+    std::auto_ptr< actions::MagicAction > action;
+    if( id == "global_meteo" )
+    {
+        // $$$$ JSR 2010-04-07: TODO
+        // action.reset( new actions::MagicActionGlobalMeteo( xis, controllers_.controller_, magicAction_ ) );
+    }
+    // $$$$ JSR 2010-04-07: TODO
+    // else
+    //    ...
+    else
+        ThrowMagicIdNotFound( id );
+
+    action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Polish();
+
+    tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
+    xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it );
+    if( it.HasMoreElements() )
+        ThrowMissingParameter( *action, it.NextElement() );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateUnitMagicAction
+// Created: JSR 2010-04-02
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) const
+{
+    const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
+    const std::string id = xml::attribute< std::string >( xis, "id" );
+
+    std::auto_ptr< actions::UnitMagicAction > action;
+    const kernel::Entity_ABC* target = model_.agents_.FindAgent( targetid );
+    if( !target )
+        target = model_.agents_.FindAutomat( targetid );
+    if( !target )
+        target = model_.agents_.FindPopulation( targetid );
+    if( !target )
+        ThrowTargetNotFound( targetid );
+
+    if( id == "unit_teleport" )
+        action.reset( new actions::UnitMagicActionTeleport( xis, controllers_.controller_, magicAction_, *target ) );
+    // $$$$ JSR 2010-04-07: TODO
+    // else
+    //    ...
+    else
+        ThrowMagicIdNotFound( id );
+
+    action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Polish();
+
+    tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
+    xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
+    if( it.HasMoreElements() )
+        ThrowMissingParameter( *action, it.NextElement() );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateObjectMagicAction
+// Created: JSR 2010-04-02
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis ) const
+{
+    const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
+    const std::string id = xml::attribute< std::string >( xis, "id" );
+
+    // JSR target = object or unit? (creation/update)
+    std::auto_ptr< actions::ObjectMagicAction > action;
+    /*const kernel::Object_ABC* target = &model_.objects_.GetObject( targetid );
+    if( !target )
+        ThrowTargetNotFound( targetid );*/
+
+    if( id == "object_creation" )
+    {
+    // JSR TODO   action.reset( new actions::ObjectMagicActionCreation( xis, controllers_.controller_, magicAction, *target ) );
+    }
+    // JSR TODO
+    // else
+    //    ...
+    else
+        ThrowMagicIdNotFound( id );
+
+    action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Polish();
+
+    tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
+    // JSR TODO
+    // xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
+    if( it.HasMoreElements() )
+        ThrowMissingParameter( *action, it.NextElement() );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionFactory::ReadParameter
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
@@ -268,6 +393,27 @@ void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& acti
         if( !it.HasMoreElements() )
             throw std::exception( tools::translate( "ActionFactory", "too many parameters provided" ) );
         std::auto_ptr< actions::Parameter_ABC > param( factory_.CreateParameter( it.NextElement(), xis, entity ) );
+        action.AddParameter( *param );
+        param.release();
+    }
+    catch( std::exception& e )
+    {
+        throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): %3." )
+                                .arg( action.GetName() ).arg( action.GetId() ).arg( e.what() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::ReadParameter
+// Created: JSR 2010-04-02
+// -----------------------------------------------------------------------------
+void ActionFactory::ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it ) const
+{
+    try
+    {
+        if( !it.HasMoreElements() )
+            throw std::exception( tools::translate( "ActionFactory", "too many parameters provided" ) );
+        std::auto_ptr< actions::Parameter_ABC > param( factory_.CreateParameter( it.NextElement(), xis ) );
         action.AddParameter( *param );
         param.release();
     }

@@ -47,7 +47,8 @@ namespace MsgsClientToSim
     class MsgPopulationMagicAction;
     class MsgSetAutomatMode;
     class MsgUnitCreationRequest;
-    class MsgUnitMagicAction;    
+    class MsgUnitMagicAction;
+    class MsgMagicActionMoveTo;
     class MsgKnowledgeGroupCreationRequest;
     class MsgKnowledgeGroupUpdateRequest;
     class MsgMagicActionCreateFireOrder;
@@ -165,6 +166,7 @@ public:
     void OnReceiveMsgUnitChangeSuperior          ( const Common::MsgUnitChangeSuperior&                     message, unsigned int nCtx );
     void OnReceiveMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgLogSupplyChangeQuotas&         message, unsigned int nCtx );
     void OnReceiveMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgLogSupplyPushFlow&             message, unsigned int nCtx );
+    void OnReceiveMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgMagicActionMoveTo&             message, unsigned int nCtx );
     // LTO begin
     void OnReceiveMsgKnowledgeGroupCreation      ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message, unsigned int nCtx );
     void OnReceiveMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest&   message, unsigned int nCtx );

@@ -1016,6 +1016,31 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::Ms
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::OnReceiveMsgMagicActionMoveTo
+// Created: JSR 2010-04-07
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& message, unsigned int nCtx )
+{
+    client::UnitMagicActionAck ack;
+    ack().set_oid( message.oid() );
+    ack().set_error_code( MsgsSimToClient::UnitActionAck_ErrorCode_no_error );
+    try
+    {
+        if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
+            pAutomate->OnReceiveMsgMagicActionMoveTo( message );
+        else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
+            pPion->OnReceiveMsgMagicActionMoveTo( message );
+        else
+            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
+    }
+    catch( NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >& e )
+    {
+        ack().set_error_code( e.GetErrorID() );
+    }
+    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation
 // Created: FHD 2009-12-15: 
 // LTO

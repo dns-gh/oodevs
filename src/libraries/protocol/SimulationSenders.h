@@ -38,6 +38,7 @@ GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, ControlLocalMeteo        
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, ControlToggleVisionCones           , control_toggle_vision_cones )
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, ObjectMagicAction                  , object_magic_action )
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, UnitMagicAction                    , unit_magic_action )
+GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, MagicActionMoveTo                  , magic_action_move_to )
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, PopulationMagicAction              , population_magic_action )
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, FragOrder                          , frag_order )
 GENERATE_ASN_MSG_SENDER( ClientToSim, MsgsClientToSim, SetAutomatMode                     , set_automat_mode )

@@ -246,6 +246,8 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return true;
     if( message.has_population_magic_action() )
         return true;
+    if( message.has_magic_action_move_to() )
+        return true;
     if( message.has_change_diplomacy() )
         return true;
     if( message.has_automat_change_knowledge_group() )

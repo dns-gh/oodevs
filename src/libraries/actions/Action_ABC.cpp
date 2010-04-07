@@ -29,10 +29,9 @@ const QString Action_ABC::typeName_ = "action";
 // Name: Action_ABC constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target )
+Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType& type )
     : controller_( controller )
     , type_( type )
-    , target_( target )
     , id_( ++idManager_ )
     , name_( type_.GetName().c_str() )
 {
@@ -43,10 +42,9 @@ Action_ABC::Action_ABC( kernel::Controller& controller, const kernel::OrderType&
 // Name: Action_ABC constructor
 // Created: SBO 2008-05-28
 // -----------------------------------------------------------------------------
-Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target )
+Action_ABC::Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type )
     : controller_( controller )
     , type_( type )
-    , target_( target )
     , id_( ++idManager_ )
     , name_( xml::attribute< std::string >( xis, "name", type_.GetName() ).c_str() )
 {
@@ -109,15 +107,6 @@ const kernel::OrderType& Action_ABC::GetType() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Action_ABC::GetEntity
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-const kernel::Entity_ABC& Action_ABC::GetEntity() const
-{
-    return target_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: Action_ABC::AddParameter
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
@@ -157,8 +146,7 @@ void Action_ABC::Display( kernel::Displayer_ABC& displayer ) const
 void Action_ABC::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "id", type_.GetId() )
-        << xml::attribute( "name", name_ )
-        << xml::attribute( "target", target_.GetId() );
+        << xml::attribute( "name", name_ );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         xos << xml::start( "parameter" );

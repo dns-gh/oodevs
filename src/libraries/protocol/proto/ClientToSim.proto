@@ -90,18 +90,17 @@ message MsgMagicActionPartialRecovery {
 }
 
 message MsgUnitMagicAction_action {
-   optional Common.MsgMagicActionMoveTo                 move_to                     = 1;
-   optional MsgMagicActionPartialRecovery               recompletement_partiel      = 2;
-   optional Common.MsgMagicActionChangeHumanFactors     change_facteurs_humains     = 3;
-   optional int32                                       se_rendre                   = 4;
-   optional int32                                       destruction_totale          = 5;
-   optional int32                                       destruction_composante      = 6;
-   optional int32                                       annuler_reddition           = 7;
-   optional int32                                       recuperer_transporteurs     = 8;
-   optional int32                                       recompletement_total        = 9;
-   optional int32                                       recompletement_personnel    = 10;
-   optional int32                                       recompletement_equipement   = 11;
-   optional int32                                       recompletement_ressources   = 12;
+   optional MsgMagicActionPartialRecovery               recompletement_partiel      = 1;
+   optional Common.MsgMagicActionChangeHumanFactors     change_facteurs_humains     = 2;
+   optional int32                                       se_rendre                   = 3;
+   optional int32                                       destruction_totale          = 4;
+   optional int32                                       destruction_composante      = 5;
+   optional int32                                       annuler_reddition           = 6;
+   optional int32                                       recuperer_transporteurs     = 7;
+   optional int32                                       recompletement_total        = 8;
+   optional int32                                       recompletement_personnel    = 9;
+   optional int32                                       recompletement_equipement   = 10;
+   optional int32                                       recompletement_ressources   = 11;
 }
 
 message MsgUnitMagicAction {
@@ -150,6 +149,11 @@ message MsgPopulationMagicAction_action {
 message MsgPopulationMagicAction {
    required uint32                          oid    = 1;
    required MsgPopulationMagicAction_action action = 2;
+}
+
+message MsgMagicActionMoveTo {
+   required int32                       oid                 = 1;
+   required Common.MsgMissionParameters parametres          = 2;
 }
 
 message MsgLogSupplyPushFlow {
@@ -218,6 +222,7 @@ message MsgClientToSim {
        optional MsgKnowledgeGroupCreationRequest       knowledge_group_creation_request     = 27;   
        optional MsgKnowledgeGroupUpdateRequest         knowledge_group_update_request       = 28;
        optional MsgMagicActionCreateFireOrder          create_fire_order                    = 29;   
+       optional MsgMagicActionMoveTo                   magic_action_move_to                 = 30;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

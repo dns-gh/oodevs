@@ -59,6 +59,7 @@ class MsgObjectMagicAction;
 class MsgMagicActionCreateFireOrder;
 class MsgPopulationMagicAction_action;
 class MsgPopulationMagicAction;
+class MsgMagicActionMoveTo;
 class MsgLogSupplyPushFlow;
 class MsgLogSupplyChangeQuotas;
 class MsgControlCheckPointSetFrequency;
@@ -1971,87 +1972,80 @@ class MsgUnitMagicAction_action : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // optional .Common.MsgMagicActionMoveTo move_to = 1;
-  inline bool has_move_to() const;
-  inline void clear_move_to();
-  static const int kMoveToFieldNumber = 1;
-  inline const ::Common::MsgMagicActionMoveTo& move_to() const;
-  inline ::Common::MsgMagicActionMoveTo* mutable_move_to();
-  
-  // optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 2;
+  // optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 1;
   inline bool has_recompletement_partiel() const;
   inline void clear_recompletement_partiel();
-  static const int kRecompletementPartielFieldNumber = 2;
+  static const int kRecompletementPartielFieldNumber = 1;
   inline const ::MsgsClientToSim::MsgMagicActionPartialRecovery& recompletement_partiel() const;
   inline ::MsgsClientToSim::MsgMagicActionPartialRecovery* mutable_recompletement_partiel();
   
-  // optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 3;
+  // optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 2;
   inline bool has_change_facteurs_humains() const;
   inline void clear_change_facteurs_humains();
-  static const int kChangeFacteursHumainsFieldNumber = 3;
+  static const int kChangeFacteursHumainsFieldNumber = 2;
   inline const ::Common::MsgMagicActionChangeHumanFactors& change_facteurs_humains() const;
   inline ::Common::MsgMagicActionChangeHumanFactors* mutable_change_facteurs_humains();
   
-  // optional int32 se_rendre = 4;
+  // optional int32 se_rendre = 3;
   inline bool has_se_rendre() const;
   inline void clear_se_rendre();
-  static const int kSeRendreFieldNumber = 4;
+  static const int kSeRendreFieldNumber = 3;
   inline ::google::protobuf::int32 se_rendre() const;
   inline void set_se_rendre(::google::protobuf::int32 value);
   
-  // optional int32 destruction_totale = 5;
+  // optional int32 destruction_totale = 4;
   inline bool has_destruction_totale() const;
   inline void clear_destruction_totale();
-  static const int kDestructionTotaleFieldNumber = 5;
+  static const int kDestructionTotaleFieldNumber = 4;
   inline ::google::protobuf::int32 destruction_totale() const;
   inline void set_destruction_totale(::google::protobuf::int32 value);
   
-  // optional int32 destruction_composante = 6;
+  // optional int32 destruction_composante = 5;
   inline bool has_destruction_composante() const;
   inline void clear_destruction_composante();
-  static const int kDestructionComposanteFieldNumber = 6;
+  static const int kDestructionComposanteFieldNumber = 5;
   inline ::google::protobuf::int32 destruction_composante() const;
   inline void set_destruction_composante(::google::protobuf::int32 value);
   
-  // optional int32 annuler_reddition = 7;
+  // optional int32 annuler_reddition = 6;
   inline bool has_annuler_reddition() const;
   inline void clear_annuler_reddition();
-  static const int kAnnulerRedditionFieldNumber = 7;
+  static const int kAnnulerRedditionFieldNumber = 6;
   inline ::google::protobuf::int32 annuler_reddition() const;
   inline void set_annuler_reddition(::google::protobuf::int32 value);
   
-  // optional int32 recuperer_transporteurs = 8;
+  // optional int32 recuperer_transporteurs = 7;
   inline bool has_recuperer_transporteurs() const;
   inline void clear_recuperer_transporteurs();
-  static const int kRecupererTransporteursFieldNumber = 8;
+  static const int kRecupererTransporteursFieldNumber = 7;
   inline ::google::protobuf::int32 recuperer_transporteurs() const;
   inline void set_recuperer_transporteurs(::google::protobuf::int32 value);
   
-  // optional int32 recompletement_total = 9;
+  // optional int32 recompletement_total = 8;
   inline bool has_recompletement_total() const;
   inline void clear_recompletement_total();
-  static const int kRecompletementTotalFieldNumber = 9;
+  static const int kRecompletementTotalFieldNumber = 8;
   inline ::google::protobuf::int32 recompletement_total() const;
   inline void set_recompletement_total(::google::protobuf::int32 value);
   
-  // optional int32 recompletement_personnel = 10;
+  // optional int32 recompletement_personnel = 9;
   inline bool has_recompletement_personnel() const;
   inline void clear_recompletement_personnel();
-  static const int kRecompletementPersonnelFieldNumber = 10;
+  static const int kRecompletementPersonnelFieldNumber = 9;
   inline ::google::protobuf::int32 recompletement_personnel() const;
   inline void set_recompletement_personnel(::google::protobuf::int32 value);
   
-  // optional int32 recompletement_equipement = 11;
+  // optional int32 recompletement_equipement = 10;
   inline bool has_recompletement_equipement() const;
   inline void clear_recompletement_equipement();
-  static const int kRecompletementEquipementFieldNumber = 11;
+  static const int kRecompletementEquipementFieldNumber = 10;
   inline ::google::protobuf::int32 recompletement_equipement() const;
   inline void set_recompletement_equipement(::google::protobuf::int32 value);
   
-  // optional int32 recompletement_ressources = 12;
+  // optional int32 recompletement_ressources = 11;
   inline bool has_recompletement_ressources() const;
   inline void clear_recompletement_ressources();
-  static const int kRecompletementRessourcesFieldNumber = 12;
+  static const int kRecompletementRessourcesFieldNumber = 11;
   inline ::google::protobuf::int32 recompletement_ressources() const;
   inline void set_recompletement_ressources(::google::protobuf::int32 value);
   
@@ -2059,7 +2053,6 @@ class MsgUnitMagicAction_action : public ::google::protobuf::Message {
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MsgMagicActionMoveTo* move_to_;
   ::MsgsClientToSim::MsgMagicActionPartialRecovery* recompletement_partiel_;
   ::Common::MsgMagicActionChangeHumanFactors* change_facteurs_humains_;
   ::google::protobuf::int32 se_rendre_;
@@ -2075,7 +2068,7 @@ class MsgUnitMagicAction_action : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(12 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2922,6 +2915,101 @@ class MsgPopulationMagicAction : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgPopulationMagicAction* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgMagicActionMoveTo : public ::google::protobuf::Message {
+ public:
+  MsgMagicActionMoveTo();
+  virtual ~MsgMagicActionMoveTo();
+  
+  MsgMagicActionMoveTo(const MsgMagicActionMoveTo& from);
+  
+  inline MsgMagicActionMoveTo& operator=(const MsgMagicActionMoveTo& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgMagicActionMoveTo& default_instance();
+  void Swap(MsgMagicActionMoveTo* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgMagicActionMoveTo* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgMagicActionMoveTo& from);
+  void MergeFrom(const MsgMagicActionMoveTo& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 oid = 1;
+  inline bool has_oid() const;
+  inline void clear_oid();
+  static const int kOidFieldNumber = 1;
+  inline ::google::protobuf::int32 oid() const;
+  inline void set_oid(::google::protobuf::int32 value);
+  
+  // required .Common.MsgMissionParameters parametres = 2;
+  inline bool has_parametres() const;
+  inline void clear_parametres();
+  static const int kParametresFieldNumber = 2;
+  inline const ::Common::MsgMissionParameters& parametres() const;
+  inline ::Common::MsgMissionParameters* mutable_parametres();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 oid_;
+  ::Common::MsgMissionParameters* parametres_;
+  friend void  protobuf_AddDesc_ClientToSim_2eproto();
+  friend void protobuf_AssignDesc_ClientToSim_2eproto();
+  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgMagicActionMoveTo* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -3791,6 +3879,13 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   inline const ::MsgsClientToSim::MsgMagicActionCreateFireOrder& create_fire_order() const;
   inline ::MsgsClientToSim::MsgMagicActionCreateFireOrder* mutable_create_fire_order();
   
+  // optional .MsgsClientToSim.MsgMagicActionMoveTo magic_action_move_to = 30;
+  inline bool has_magic_action_move_to() const;
+  inline void clear_magic_action_move_to();
+  static const int kMagicActionMoveToFieldNumber = 30;
+  inline const ::MsgsClientToSim::MsgMagicActionMoveTo& magic_action_move_to() const;
+  inline ::MsgsClientToSim::MsgMagicActionMoveTo* mutable_magic_action_move_to();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -3824,11 +3919,12 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   ::MsgsClientToSim::MsgKnowledgeGroupCreationRequest* knowledge_group_creation_request_;
   ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest* knowledge_group_update_request_;
   ::MsgsClientToSim::MsgMagicActionCreateFireOrder* create_fire_order_;
+  ::MsgsClientToSim::MsgMagicActionMoveTo* magic_action_move_to_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(29 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(30 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4744,198 +4840,181 @@ inline ::MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfStockRecovery* MsgM
 
 // MsgUnitMagicAction_action
 
-// optional .Common.MsgMagicActionMoveTo move_to = 1;
-inline bool MsgUnitMagicAction_action::has_move_to() const {
-  return _has_bit(0);
-}
-inline void MsgUnitMagicAction_action::clear_move_to() {
-  if (move_to_ != NULL) move_to_->::Common::MsgMagicActionMoveTo::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::MsgMagicActionMoveTo& MsgUnitMagicAction_action::move_to() const {
-  return move_to_ != NULL ? *move_to_ : *default_instance_->move_to_;
-}
-inline ::Common::MsgMagicActionMoveTo* MsgUnitMagicAction_action::mutable_move_to() {
-  _set_bit(0);
-  if (move_to_ == NULL) move_to_ = new ::Common::MsgMagicActionMoveTo;
-  return move_to_;
-}
-
-// optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 2;
+// optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 1;
 inline bool MsgUnitMagicAction_action::has_recompletement_partiel() const {
-  return _has_bit(1);
+  return _has_bit(0);
 }
 inline void MsgUnitMagicAction_action::clear_recompletement_partiel() {
   if (recompletement_partiel_ != NULL) recompletement_partiel_->::MsgsClientToSim::MsgMagicActionPartialRecovery::Clear();
-  _clear_bit(1);
+  _clear_bit(0);
 }
 inline const ::MsgsClientToSim::MsgMagicActionPartialRecovery& MsgUnitMagicAction_action::recompletement_partiel() const {
   return recompletement_partiel_ != NULL ? *recompletement_partiel_ : *default_instance_->recompletement_partiel_;
 }
 inline ::MsgsClientToSim::MsgMagicActionPartialRecovery* MsgUnitMagicAction_action::mutable_recompletement_partiel() {
-  _set_bit(1);
+  _set_bit(0);
   if (recompletement_partiel_ == NULL) recompletement_partiel_ = new ::MsgsClientToSim::MsgMagicActionPartialRecovery;
   return recompletement_partiel_;
 }
 
-// optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 3;
+// optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 2;
 inline bool MsgUnitMagicAction_action::has_change_facteurs_humains() const {
-  return _has_bit(2);
+  return _has_bit(1);
 }
 inline void MsgUnitMagicAction_action::clear_change_facteurs_humains() {
   if (change_facteurs_humains_ != NULL) change_facteurs_humains_->::Common::MsgMagicActionChangeHumanFactors::Clear();
-  _clear_bit(2);
+  _clear_bit(1);
 }
 inline const ::Common::MsgMagicActionChangeHumanFactors& MsgUnitMagicAction_action::change_facteurs_humains() const {
   return change_facteurs_humains_ != NULL ? *change_facteurs_humains_ : *default_instance_->change_facteurs_humains_;
 }
 inline ::Common::MsgMagicActionChangeHumanFactors* MsgUnitMagicAction_action::mutable_change_facteurs_humains() {
-  _set_bit(2);
+  _set_bit(1);
   if (change_facteurs_humains_ == NULL) change_facteurs_humains_ = new ::Common::MsgMagicActionChangeHumanFactors;
   return change_facteurs_humains_;
 }
 
-// optional int32 se_rendre = 4;
+// optional int32 se_rendre = 3;
 inline bool MsgUnitMagicAction_action::has_se_rendre() const {
-  return _has_bit(3);
+  return _has_bit(2);
 }
 inline void MsgUnitMagicAction_action::clear_se_rendre() {
   se_rendre_ = 0;
-  _clear_bit(3);
+  _clear_bit(2);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::se_rendre() const {
   return se_rendre_;
 }
 inline void MsgUnitMagicAction_action::set_se_rendre(::google::protobuf::int32 value) {
-  _set_bit(3);
+  _set_bit(2);
   se_rendre_ = value;
 }
 
-// optional int32 destruction_totale = 5;
+// optional int32 destruction_totale = 4;
 inline bool MsgUnitMagicAction_action::has_destruction_totale() const {
-  return _has_bit(4);
+  return _has_bit(3);
 }
 inline void MsgUnitMagicAction_action::clear_destruction_totale() {
   destruction_totale_ = 0;
-  _clear_bit(4);
+  _clear_bit(3);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::destruction_totale() const {
   return destruction_totale_;
 }
 inline void MsgUnitMagicAction_action::set_destruction_totale(::google::protobuf::int32 value) {
-  _set_bit(4);
+  _set_bit(3);
   destruction_totale_ = value;
 }
 
-// optional int32 destruction_composante = 6;
+// optional int32 destruction_composante = 5;
 inline bool MsgUnitMagicAction_action::has_destruction_composante() const {
-  return _has_bit(5);
+  return _has_bit(4);
 }
 inline void MsgUnitMagicAction_action::clear_destruction_composante() {
   destruction_composante_ = 0;
-  _clear_bit(5);
+  _clear_bit(4);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::destruction_composante() const {
   return destruction_composante_;
 }
 inline void MsgUnitMagicAction_action::set_destruction_composante(::google::protobuf::int32 value) {
-  _set_bit(5);
+  _set_bit(4);
   destruction_composante_ = value;
 }
 
-// optional int32 annuler_reddition = 7;
+// optional int32 annuler_reddition = 6;
 inline bool MsgUnitMagicAction_action::has_annuler_reddition() const {
-  return _has_bit(6);
+  return _has_bit(5);
 }
 inline void MsgUnitMagicAction_action::clear_annuler_reddition() {
   annuler_reddition_ = 0;
-  _clear_bit(6);
+  _clear_bit(5);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::annuler_reddition() const {
   return annuler_reddition_;
 }
 inline void MsgUnitMagicAction_action::set_annuler_reddition(::google::protobuf::int32 value) {
-  _set_bit(6);
+  _set_bit(5);
   annuler_reddition_ = value;
 }
 
-// optional int32 recuperer_transporteurs = 8;
+// optional int32 recuperer_transporteurs = 7;
 inline bool MsgUnitMagicAction_action::has_recuperer_transporteurs() const {
-  return _has_bit(7);
+  return _has_bit(6);
 }
 inline void MsgUnitMagicAction_action::clear_recuperer_transporteurs() {
   recuperer_transporteurs_ = 0;
-  _clear_bit(7);
+  _clear_bit(6);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::recuperer_transporteurs() const {
   return recuperer_transporteurs_;
 }
 inline void MsgUnitMagicAction_action::set_recuperer_transporteurs(::google::protobuf::int32 value) {
-  _set_bit(7);
+  _set_bit(6);
   recuperer_transporteurs_ = value;
 }
 
-// optional int32 recompletement_total = 9;
+// optional int32 recompletement_total = 8;
 inline bool MsgUnitMagicAction_action::has_recompletement_total() const {
-  return _has_bit(8);
+  return _has_bit(7);
 }
 inline void MsgUnitMagicAction_action::clear_recompletement_total() {
   recompletement_total_ = 0;
-  _clear_bit(8);
+  _clear_bit(7);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::recompletement_total() const {
   return recompletement_total_;
 }
 inline void MsgUnitMagicAction_action::set_recompletement_total(::google::protobuf::int32 value) {
-  _set_bit(8);
+  _set_bit(7);
   recompletement_total_ = value;
 }
 
-// optional int32 recompletement_personnel = 10;
+// optional int32 recompletement_personnel = 9;
 inline bool MsgUnitMagicAction_action::has_recompletement_personnel() const {
-  return _has_bit(9);
+  return _has_bit(8);
 }
 inline void MsgUnitMagicAction_action::clear_recompletement_personnel() {
   recompletement_personnel_ = 0;
-  _clear_bit(9);
+  _clear_bit(8);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::recompletement_personnel() const {
   return recompletement_personnel_;
 }
 inline void MsgUnitMagicAction_action::set_recompletement_personnel(::google::protobuf::int32 value) {
-  _set_bit(9);
+  _set_bit(8);
   recompletement_personnel_ = value;
 }
 
-// optional int32 recompletement_equipement = 11;
+// optional int32 recompletement_equipement = 10;
 inline bool MsgUnitMagicAction_action::has_recompletement_equipement() const {
-  return _has_bit(10);
+  return _has_bit(9);
 }
 inline void MsgUnitMagicAction_action::clear_recompletement_equipement() {
   recompletement_equipement_ = 0;
-  _clear_bit(10);
+  _clear_bit(9);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::recompletement_equipement() const {
   return recompletement_equipement_;
 }
 inline void MsgUnitMagicAction_action::set_recompletement_equipement(::google::protobuf::int32 value) {
-  _set_bit(10);
+  _set_bit(9);
   recompletement_equipement_ = value;
 }
 
-// optional int32 recompletement_ressources = 12;
+// optional int32 recompletement_ressources = 11;
 inline bool MsgUnitMagicAction_action::has_recompletement_ressources() const {
-  return _has_bit(11);
+  return _has_bit(10);
 }
 inline void MsgUnitMagicAction_action::clear_recompletement_ressources() {
   recompletement_ressources_ = 0;
-  _clear_bit(11);
+  _clear_bit(10);
 }
 inline ::google::protobuf::int32 MsgUnitMagicAction_action::recompletement_ressources() const {
   return recompletement_ressources_;
 }
 inline void MsgUnitMagicAction_action::set_recompletement_ressources(::google::protobuf::int32 value) {
-  _set_bit(11);
+  _set_bit(10);
   recompletement_ressources_ = value;
 }
 
@@ -5417,6 +5496,43 @@ inline ::MsgsClientToSim::MsgPopulationMagicAction_action* MsgPopulationMagicAct
   _set_bit(1);
   if (action_ == NULL) action_ = new ::MsgsClientToSim::MsgPopulationMagicAction_action;
   return action_;
+}
+
+// -------------------------------------------------------------------
+
+// MsgMagicActionMoveTo
+
+// required int32 oid = 1;
+inline bool MsgMagicActionMoveTo::has_oid() const {
+  return _has_bit(0);
+}
+inline void MsgMagicActionMoveTo::clear_oid() {
+  oid_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgMagicActionMoveTo::oid() const {
+  return oid_;
+}
+inline void MsgMagicActionMoveTo::set_oid(::google::protobuf::int32 value) {
+  _set_bit(0);
+  oid_ = value;
+}
+
+// required .Common.MsgMissionParameters parametres = 2;
+inline bool MsgMagicActionMoveTo::has_parametres() const {
+  return _has_bit(1);
+}
+inline void MsgMagicActionMoveTo::clear_parametres() {
+  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+  _clear_bit(1);
+}
+inline const ::Common::MsgMissionParameters& MsgMagicActionMoveTo::parametres() const {
+  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+}
+inline ::Common::MsgMissionParameters* MsgMagicActionMoveTo::mutable_parametres() {
+  _set_bit(1);
+  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
+  return parametres_;
 }
 
 // -------------------------------------------------------------------
@@ -6248,6 +6364,23 @@ inline ::MsgsClientToSim::MsgMagicActionCreateFireOrder* MsgClientToSim_Content:
   _set_bit(28);
   if (create_fire_order_ == NULL) create_fire_order_ = new ::MsgsClientToSim::MsgMagicActionCreateFireOrder;
   return create_fire_order_;
+}
+
+// optional .MsgsClientToSim.MsgMagicActionMoveTo magic_action_move_to = 30;
+inline bool MsgClientToSim_Content::has_magic_action_move_to() const {
+  return _has_bit(29);
+}
+inline void MsgClientToSim_Content::clear_magic_action_move_to() {
+  if (magic_action_move_to_ != NULL) magic_action_move_to_->::MsgsClientToSim::MsgMagicActionMoveTo::Clear();
+  _clear_bit(29);
+}
+inline const ::MsgsClientToSim::MsgMagicActionMoveTo& MsgClientToSim_Content::magic_action_move_to() const {
+  return magic_action_move_to_ != NULL ? *magic_action_move_to_ : *default_instance_->magic_action_move_to_;
+}
+inline ::MsgsClientToSim::MsgMagicActionMoveTo* MsgClientToSim_Content::mutable_magic_action_move_to() {
+  _set_bit(29);
+  if (magic_action_move_to_ == NULL) magic_action_move_to_ = new ::MsgsClientToSim::MsgMagicActionMoveTo;
+  return magic_action_move_to_;
 }
 
 // -------------------------------------------------------------------

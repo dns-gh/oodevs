@@ -3,18 +3,19 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ActionFragOrder_h_
-#define __ActionFragOrder_h_
+#ifndef __UnitMagicActionTeleport_h_
+#define __UnitMagicActionTeleport_h_
 
-#include "ActionWithTarget_ABC.h"
+#include "UnitMagicAction.h"
 
 namespace kernel
 {
-    class FragOrderType;
+    class Entity_ABC;
+    class MagicActionType;
     class Controller;
 }
 
@@ -27,38 +28,39 @@ namespace actions
 {
 
 // =============================================================================
-/** @class  FragOrder
-    @brief  FragOrder
+/** @class  UnitMagicActionTeleport
+    @brief  UnitMagicActionTeleport
 */
-// Created: SBO 2007-03-19
+// Created: JSR 2010-04-06
 // =============================================================================
-class FragOrder : public ActionWithTarget_ABC
+class UnitMagicActionTeleport : public UnitMagicAction
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, bool registered );
-             FragOrder( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders, const kernel::Entity_ABC& entity );
-    virtual ~FragOrder();
+    UnitMagicActionTeleport( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity );
+    virtual ~UnitMagicActionTeleport();
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void Publish( Publisher_ABC& publisher ) const;
-    virtual void Polish();
-    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
+    //@}
+
+private:
+
+    //! @name Helpers
+    //@{
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
-    bool registered_;
     //@}
 };
 
 }
 
-#endif // __ActionFragOrder_h_
+#endif // __UnitMagicActionTeleport_h_

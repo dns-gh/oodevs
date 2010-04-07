@@ -43,9 +43,9 @@ namespace
 // Created: SBO 2007-03-19
 // -----------------------------------------------------------------------------
 FragOrder::FragOrder( const Entity_ABC& entity, const FragOrderType& fragOrder, Controller& controller, bool registered )
-    : Action_ABC ( controller, fragOrder, entity )
-    , controller_( controller )
-    , registered_( registered )
+    : ActionWithTarget_ABC( controller, fragOrder, entity )
+    , controller_         ( controller )
+    , registered_         ( registered )
 {
     // NOTHING
 }
@@ -55,9 +55,9 @@ FragOrder::FragOrder( const Entity_ABC& entity, const FragOrderType& fragOrder, 
 // Created: SBO 2007-06-26
 // -----------------------------------------------------------------------------
 FragOrder::FragOrder( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< FragOrderType >& fragOrders, const Entity_ABC& entity )
-    : Action_ABC ( xis, controller, ResolveType( xis, fragOrders, entity ), entity )
-    , controller_( controller )
-    , registered_( true )
+    : ActionWithTarget_ABC( xis, controller, ResolveType( xis, fragOrders, entity ), entity )
+    , controller_         ( controller )
+    , registered_         ( true )
 {
     // NOTHING
 }
@@ -89,7 +89,7 @@ void FragOrder::Polish()
 void FragOrder::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "type", "fragorder" );
-    Action_ABC::Serialize( xos );
+    ActionWithTarget_ABC::Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------

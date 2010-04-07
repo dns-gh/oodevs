@@ -39,12 +39,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    MissionType( const MissionType& );            //!< Copy constructor
-    MissionType& operator=( const MissionType& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void Read( xml::xistream& xis );

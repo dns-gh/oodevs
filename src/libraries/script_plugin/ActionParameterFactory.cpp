@@ -328,3 +328,18 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     param->Set( true ); // $$$$ SBO 2007-10-11: ...
     return param.release();
 }
+
+#pragma warning( push )
+#pragma warning( disable : 4702 )
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateParameter
+// Created: JSR 2010-04-02
+// -----------------------------------------------------------------------------
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter&, xml::xistream& ) const
+{
+    throw std::runtime_error( "ActionParameterFactory::CreateParameter without entity should not be called" );
+    return 0;
+}
+
+#pragma warning( pop )

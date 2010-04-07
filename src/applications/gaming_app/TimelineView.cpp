@@ -12,7 +12,7 @@
 #include "TimelineMarker.h"
 #include "TimelineActionItem.h"
 #include "TimelineRuler.h"
-#include "actions/Action_ABC.h"
+#include "actions/ActionWithTarget_ABC.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
@@ -66,14 +66,23 @@ TimelineView::~TimelineView()
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyCreated( const Action_ABC& action )
 {
-    const kernel::Entity_ABC* entity = &action.GetEntity();
-    T_Entities::iterator it = std::find( entities_.begin(), entities_.end(), entity );
-    if( it == entities_.end() )
+    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
+    if( actionWithTarget )
     {
-        entities_.push_back( entity );
-        canvas()->resize( canvas()->width(), canvas()->height() + rowHeight_ );
+        const kernel::Entity_ABC* entity = &actionWithTarget->GetEntity();
+        T_Entities::iterator it = std::find( entities_.begin(), entities_.end(), entity );
+        if( it == entities_.end() )
+        {
+            entities_.push_back( entity );
+            canvas()->resize( canvas()->width(), canvas()->height() + rowHeight_ );
+        }
+        actions_[ entity ][ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action, actionPalette_ );
     }
-    actions_[ entity ][ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action, actionPalette_ );
+    else
+    {
+        // $$$$ JSR 2010-04-07: TODO
+    }
+
     Update();
 }
 
@@ -83,19 +92,27 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyDeleted( const Action_ABC& action )
 {
-    T_EntityActions::iterator it = actions_.find( &action.GetEntity() );
-    if( it != actions_.end() )
+    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
+    if( actionWithTarget )
     {
-        T_Actions::iterator itAction = it->second.find( &action );
-        if( itAction != it->second.end() )
+        T_EntityActions::iterator it = actions_.find( &actionWithTarget->GetEntity() );
+        if( it != actions_.end() )
         {
-            if( itAction->second == selectedItem_ )
-                ClearSelection();
-            delete itAction->second;
-            it->second.erase( itAction );
-            if( it->second.empty() )
-                NotifyDeleted( *it->first );
+            T_Actions::iterator itAction = it->second.find( &action );
+            if( itAction != it->second.end() )
+            {
+                if( itAction->second == selectedItem_ )
+                    ClearSelection();
+                delete itAction->second;
+                it->second.erase( itAction );
+                if( it->second.empty() )
+                    NotifyDeleted( *it->first );
+            }
         }
+    }
+    else
+    {
+        // $$$$ JSR 2010-04-07: TODO
     }
 }
 

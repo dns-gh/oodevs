@@ -11,7 +11,7 @@
 #include "ActionsListView.h"
 #include "moc_ActionsListView.cpp"
 #include "clients_kernel/Controllers.h"
-#include "actions/Action_ABC.h"
+#include "actions/ActionWithTarget_ABC.h"
 #include "actions/Parameter_ABC.h"
 #include "gaming/ActionTiming.h"
 #include "icons.h"
@@ -78,7 +78,10 @@ void ActionsListView::Display( QListViewItem* item, const actions::Action_ABC& a
     }
     item->setPixmap( 2, mission_ );
     item->setText( 2, action.GetName() );
-    item->setText( 3, tr( "Target: %1" ).arg( action.GetEntity().GetName() ) );
+
+    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
+    if( actionWithTarget )
+        item->setText( 3, tr( "Target: %1" ).arg( actionWithTarget->GetEntity().GetName() ) );
 }
 
 // -----------------------------------------------------------------------------

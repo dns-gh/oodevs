@@ -31,6 +31,7 @@ namespace kernel
     class Controllers;
     class OrderType;
     class OrderParameter;
+    class MagicActionType;
 }
 
 class Model;
@@ -51,7 +52,8 @@ public:
     //@{
              ActionFactory( kernel::Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
                           , const tools::Resolver_ABC< kernel::MissionType >& missions
-                          , const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders, const Simulation& simulation );
+                          , const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders
+                          , const kernel::MagicActionType& magicAction, const Simulation& simulation );
     virtual ~ActionFactory();
     //@}
 
@@ -79,9 +81,13 @@ private:
     //@{
     actions::Action_ABC* CreateMission( xml::xistream& xis ) const;
     actions::Action_ABC* CreateFragOrder( xml::xistream& xis ) const;
+    actions::Action_ABC* CreateMagicAction( xml::xistream& xis ) const;
+    actions::Action_ABC* CreateUnitMagicAction( xml::xistream& xis ) const;
+    actions::Action_ABC* CreateObjectMagicAction( xml::xistream& xis ) const;
 
     void AddParameters( actions::Action_ABC& action, const kernel::OrderType& order, const Common::MsgMissionParameters& message ) const;
     void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it, const kernel::Entity_ABC& entity ) const;
+    void ReadParameter( xml::xistream& xis, actions::Action_ABC& action, tools::Iterator< const kernel::OrderParameter& >& it ) const;
     //@}
 
 private:
@@ -92,6 +98,7 @@ private:
     const Model& model_;
     const tools::Resolver_ABC< kernel::MissionType >& missions_;
     const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders_;
+    const kernel::MagicActionType& magicAction_;
     const Simulation& simulation_;
     //@}
 };

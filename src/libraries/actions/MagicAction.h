@@ -3,50 +3,45 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ActionFragOrder_h_
-#define __ActionFragOrder_h_
+#ifndef __MagicAction_h_
+#define __MagicAction_h_
 
-#include "ActionWithTarget_ABC.h"
+#include "Action_ABC.h"
 
 namespace kernel
 {
-    class FragOrderType;
+    class MagicActionType;
     class Controller;
-}
-
-namespace xml
-{
-    class xistream;
+    class ModelVisitor_ABC;
 }
 
 namespace actions
 {
 
 // =============================================================================
-/** @class  FragOrder
-    @brief  FragOrder
+/** @class  MagicAction
+    @brief  MagicAction
 */
-// Created: SBO 2007-03-19
+// Created: JSR 2010-04-02
 // =============================================================================
-class FragOrder : public ActionWithTarget_ABC
+class MagicAction : public Action_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             FragOrder( const kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::Controller& controller, bool registered );
-             FragOrder( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders, const kernel::Entity_ABC& entity );
-    virtual ~FragOrder();
+             MagicAction( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
+             MagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic );
+    virtual ~MagicAction();
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void Publish( Publisher_ABC& publisher ) const;
     virtual void Polish();
     virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
@@ -61,4 +56,4 @@ private:
 
 }
 
-#endif // __ActionFragOrder_h_
+#endif // __MagicAction_h_

@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "TimelineListView.h"
 #include "moc_TimelineListView.cpp"
-#include "actions/Action_ABC.h"
+#include "actions/ActionWithTarget_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_gui/ValuedListItem.h"
@@ -76,11 +76,19 @@ TimelineListView::~TimelineListView()
 // -----------------------------------------------------------------------------
 void TimelineListView::NotifyCreated( const Action_ABC& action )
 {
-    const kernel::Entity_ABC& entity = action.GetEntity();
-    gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
-    if( !item )
-        item = new TimeLineEntityListItem( this, lastItem() );
-    item->Set( &entity, QString::number( item->text( 0 ).toInt() + 1 ), entity.GetName() );
+    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
+    if( actionWithTarget )
+    {
+        const kernel::Entity_ABC& entity = actionWithTarget->GetEntity();
+        gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
+        if( !item )
+            item = new TimeLineEntityListItem( this, lastItem() );
+        item->Set( &entity, QString::number( item->text( 0 ).toInt() + 1 ), entity.GetName() );
+    }
+    else
+    {
+        // $$$$ JSR 2010-04-07: TODO
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -89,14 +97,22 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineListView::NotifyDeleted( const Action_ABC& action )
 {
-    const kernel::Entity_ABC& entity = action.GetEntity();
-    if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
+    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
+    if( actionWithTarget )
     {
-        const int actions = item->text( 0 ).toInt();
-        if( actions == 1 )
-            delete item;
-        else
-            item->setText( 0, QString::number( actions - 1 ) );
+        const kernel::Entity_ABC& entity = actionWithTarget->GetEntity();
+        if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
+        {
+            const int actions = item->text( 0 ).toInt();
+            if( actions == 1 )
+                delete item;
+            else
+                item->setText( 0, QString::number( actions - 1 ) );
+        }
+    }
+    else
+    {
+        // $$$$ JSR 2010-04-07: TODO
     }
 }
 

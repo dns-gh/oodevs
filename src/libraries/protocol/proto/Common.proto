@@ -541,10 +541,6 @@ message MsgMagicActionChangeHumanFactors {
    optional EnumUnitExperience          experience          = 3;
 }
 
-message MsgMagicActionMoveTo {
-   required MsgCoordLatLong             move_to             = 1;
-}
-
 message MsgMagicActionPopulationMoveTo {
    required MsgCoordLatLong             coord               = 1;
 }

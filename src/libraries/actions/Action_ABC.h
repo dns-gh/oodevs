@@ -58,8 +58,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             Action_ABC( kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target );
-             Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type, const kernel::Entity_ABC& target );
+             Action_ABC( kernel::Controller& controller, const kernel::OrderType& type );
+             Action_ABC( xml::xistream& xis, kernel::Controller& controller, const kernel::OrderType& type );
     virtual ~Action_ABC();
     //@}
 
@@ -69,7 +69,6 @@ public:
     virtual unsigned long GetId() const;
     virtual QString GetName() const;
 
-    virtual const kernel::Entity_ABC& GetEntity() const;
     virtual const kernel::OrderType& GetType() const;
     virtual void AddParameter( Parameter_ABC& parameter );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
@@ -93,18 +92,10 @@ protected:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Action_ABC( const Action_ABC& );            //!< Copy constructor
-    Action_ABC& operator=( const Action_ABC& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
     const kernel::OrderType& type_;
-    const kernel::Entity_ABC& target_;
     unsigned long id_;
     QString name_;
 

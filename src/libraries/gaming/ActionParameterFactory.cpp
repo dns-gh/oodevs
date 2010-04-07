@@ -198,6 +198,43 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     if( type != expected )
         ThrowUnexpected( parameter, xis );
     std::auto_ptr< actions::Parameter_ABC > param;
+    
+    bool found = DoCreateParameter( parameter, xis, type, param );
+    if( found == false )
+        found = DoCreateParameter( parameter, xis, entity, type, param );
+
+    if( found == false )
+        throw std::runtime_error( "Unknown parameter type '" + type + "'" );
+
+    param->Set( true ); // $$$$ SBO 2007-10-11: ...
+    return param.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateParameter
+// Created: JSR 2010-04-02
+// -----------------------------------------------------------------------------
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis ) const
+{
+    std::string expected = boost::algorithm::to_lower_copy( parameter.GetType() );
+    std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    if( type != expected )
+        ThrowUnexpected( parameter, xis );
+    std::auto_ptr< actions::Parameter_ABC > param;
+    
+    if( DoCreateParameter( parameter, xis, type, param ) == false )
+        throw std::runtime_error( "Unknown parameter type '" + type + "'" );
+
+    param->Set( true ); // $$$$ SBO 2007-10-11: ...
+    return param.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::DoCreateParameter
+// Created: JSR 2010-04-02
+// -----------------------------------------------------------------------------
+bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const
+{
     if( type == "bool" )
         param.reset( new actions::parameters::Bool( parameter, xis ) );
     else if( type == "numeric" )
@@ -242,16 +279,6 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         param.reset( new actions::parameters::EngineerConstruction( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis, controller_ ) );
     else if( type == "genobjectlist" )
         param.reset( new actions::parameters::EngineerConstructionList( parameter, converter_, staticModel_.objectTypes_, model_.agents_, xis, controller_ ) );
-    else if( type == "agentknowledge" )
-        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "populationknowledge" )
-        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "objectknowledge" )
-        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "agentknowledgelist" )
-        param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
-    else if( type == "objectknowledgelist" )
-        param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity, controller_ ) );
     else if( type == "natureatlas" )
         param.reset( new actions::parameters::AtlasNature( parameter, xis, staticModel_.atlasNatures_ ) );
     else if( type == "objective" )
@@ -267,7 +294,29 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     else if( type == "urbanblockbm" )
         param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
     else
-        throw std::runtime_error( "Unknown parameter type '" + type + "'" );
-    param->Set( true ); // $$$$ SBO 2007-10-11: ...
-    return param.release();
+        return false;
+
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::DoCreateParameter
+// Created: JSR 2010-04-02
+// -----------------------------------------------------------------------------
+bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const
+{
+    if( type == "agentknowledge" )
+        param.reset( new actions::parameters::AgentKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "populationknowledge" )
+        param.reset( new actions::parameters::PopulationKnowledge( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "objectknowledge" )
+        param.reset( new actions::parameters::ObjectKnowledge( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "agentknowledgelist" )
+        param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "objectknowledgelist" )
+        param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity, controller_ ) );
+    else
+        return false;
+
+    return true;
 }

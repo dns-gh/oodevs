@@ -981,19 +981,7 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUn
 // -----------------------------------------------------------------------------
 void MIL_Automate::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army_ABC >& armies )
 {
-    if( asnMsg.action().has_move_to() )
-    {
-        MT_Vector2D vPosTmp;
-        MIL_Tools::ConvertCoordMosToSim( asnMsg.action().move_to().move_to(), vPosTmp );
-
-        const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
-        for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-            (**itPion).OnReceiveMsgMagicMove( (**itPion).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
-
-        GetRole< DEC_AutomateDecision >().Reset( GetName() );
-        orderManager_.CancelMission();
-    }
-    else if( asnMsg.action().has_se_rendre() )
+    if( asnMsg.action().has_se_rendre() )
     {
         const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( asnMsg.action().se_rendre() );
         if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
@@ -1016,6 +1004,37 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMa
     else
         pPionPC_->OnReceiveMsgUnitMagicAction( asnMsg, armies );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReceiveMsgMagicActionMoveTo
+// Created: JSR 2010-04-07
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& msg )
+{
+    if( !msg.has_parametres() || msg.parametres().elem_size() != 1)
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    
+    const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
+    if( !parametre.has_value() || !parametre.value().has_point() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    const Common::MsgPoint& point = parametre.value().point();
+
+    if( point.location().type() != Common::MsgLocation_Geometry_point 
+        || point.location().coordinates().elem_size() != 1 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    MT_Vector2D vPosTmp;
+    MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
+
+    const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+        (**itPion).OnReceiveMsgMagicActionMoveTo( (**itPion).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
+
+    GetRole< DEC_AutomateDecision >().Reset( GetName() );
+    orderManager_.CancelMission();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgChangeKnowledgeGroup

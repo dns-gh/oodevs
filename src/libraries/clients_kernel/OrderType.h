@@ -34,6 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit OrderType( xml::xistream& xis );
+    explicit OrderType( );
     virtual ~OrderType();
     //@}
 
@@ -44,13 +45,6 @@ public:
     std::string GetDoctrineInformation() const;
     std::string GetUsageInformation() const;
     void AddParameter( const OrderParameter& parameter );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    OrderType( const OrderType& );            //!< Copy constructor
-    OrderType& operator=( const OrderType& ); //!< Assignment operator
     //@}
 
 protected:

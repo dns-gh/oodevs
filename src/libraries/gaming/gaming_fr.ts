@@ -44,6 +44,10 @@
         <source>too many parameters provided</source>
         <translation>Trop de paramètres</translation>
     </message>
+    <message>
+        <source>Magic action type &apos;%1&apos; unknown.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActionParameter</name>

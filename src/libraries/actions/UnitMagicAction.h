@@ -3,52 +3,47 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2010 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ActionMission_h_
-#define __ActionMission_h_
+#ifndef __UnitMagicAction_h_
+#define __UnitMagicAction_h_
 
 #include "ActionWithTarget_ABC.h"
 
 namespace kernel
 {
-    class MissionType;
+    class MagicActionType;
     class Controller;
-    class GlTooltip_ABC;
-}
-
-namespace xml
-{
-    class xistream;
+    class ModelVisitor_ABC;
 }
 
 namespace actions
 {
-
+    
 // =============================================================================
-/** @class  Mission
-    @brief  Mission
+/** @class  UnitMagicAction
+    @brief  UnitMagicAction
 */
-// Created: SBO 2007-03-12
+// Created: JSR 2010-04-02
 // =============================================================================
-class Mission : public ActionWithTarget_ABC
+class UnitMagicAction : public ActionWithTarget_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             Mission( const kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::Controller& controller, bool registered = true );
-             Mission( xml::xistream& xis, kernel::Controller& controller, const tools::Resolver_ABC< kernel::MissionType >& missions, const kernel::Entity_ABC& entity );
-    virtual ~Mission();
+             UnitMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
+             UnitMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity );
+    virtual ~UnitMagicAction();
     //@}
 
     //! @name Operations
     //@{
     virtual void Serialize( xml::xostream& xos ) const;
-    virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Polish();
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const;
     //@}
 
 private:
@@ -56,10 +51,9 @@ private:
     //@{
     kernel::Controller& controller_;
     bool registered_;
-    mutable std::auto_ptr< kernel::GlTooltip_ABC > tooltip_;
     //@}
 };
 
 }
 
-#endif // __ActionMission_h_
+#endif // __UnitMagicAction_h_

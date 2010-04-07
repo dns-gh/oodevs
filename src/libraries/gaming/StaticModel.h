@@ -19,6 +19,7 @@ namespace kernel
 {
     class AgentTypes;
     class ObjectTypes;
+    class MagicActionType;
     class DetectionMap;
     class Controllers;
     class CoordinateConverter_ABC;
@@ -80,6 +81,7 @@ public:
     kernel::DetectionMap&            detection_;
     kernel::AgentTypes&              types_;
     kernel::ObjectTypes&             objectTypes_;
+    kernel::MagicActionType&         magicActionType_;
     kernel::FormationLevels&         levels_;
     kernel::AtlasNatures&            atlasNatures_;
     ReportFactory&                   reportFactory_;

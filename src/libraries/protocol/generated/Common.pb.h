@@ -94,7 +94,6 @@ class MsgShape;
 class MsgChatTarget;
 class MsgTextMessage;
 class MsgMagicActionChangeHumanFactors;
-class MsgMagicActionMoveTo;
 class MsgMagicActionPopulationMoveTo;
 class MsgMagicActionPopulationChangeAttitude_beneficiaire;
 class MsgMagicActionPopulationChangeAttitude;
@@ -7014,93 +7013,6 @@ class MsgMagicActionChangeHumanFactors : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgMagicActionMoveTo : public ::google::protobuf::Message {
- public:
-  MsgMagicActionMoveTo();
-  virtual ~MsgMagicActionMoveTo();
-  
-  MsgMagicActionMoveTo(const MsgMagicActionMoveTo& from);
-  
-  inline MsgMagicActionMoveTo& operator=(const MsgMagicActionMoveTo& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMagicActionMoveTo& default_instance();
-  void Swap(MsgMagicActionMoveTo* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgMagicActionMoveTo* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMagicActionMoveTo& from);
-  void MergeFrom(const MsgMagicActionMoveTo& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.MsgCoordLatLong move_to = 1;
-  inline bool has_move_to() const;
-  inline void clear_move_to();
-  static const int kMoveToFieldNumber = 1;
-  inline const ::Common::MsgCoordLatLong& move_to() const;
-  inline ::Common::MsgCoordLatLong* mutable_move_to();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::MsgCoordLatLong* move_to_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgMagicActionMoveTo* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgMagicActionPopulationMoveTo : public ::google::protobuf::Message {
  public:
   MsgMagicActionPopulationMoveTo();
@@ -13401,27 +13313,6 @@ inline void MsgMagicActionChangeHumanFactors::set_experience(Common::EnumUnitExp
   GOOGLE_DCHECK(Common::EnumUnitExperience_IsValid(value));
   _set_bit(2);
   experience_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgMagicActionMoveTo
-
-// required .Common.MsgCoordLatLong move_to = 1;
-inline bool MsgMagicActionMoveTo::has_move_to() const {
-  return _has_bit(0);
-}
-inline void MsgMagicActionMoveTo::clear_move_to() {
-  if (move_to_ != NULL) move_to_->::Common::MsgCoordLatLong::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::MsgCoordLatLong& MsgMagicActionMoveTo::move_to() const {
-  return move_to_ != NULL ? *move_to_ : *default_instance_->move_to_;
-}
-inline ::Common::MsgCoordLatLong* MsgMagicActionMoveTo::mutable_move_to() {
-  _set_bit(0);
-  if (move_to_ == NULL) move_to_ = new ::Common::MsgCoordLatLong;
-  return move_to_;
 }
 
 // -------------------------------------------------------------------

@@ -111,6 +111,8 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx ); 
     else if( wrapper.message().has_object_magic_action() )
         workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx ); 
+    else if( wrapper.message().has_magic_action_move_to() )
+        workspace.GetEntityManager        ().OnReceiveMsgMagicActionMoveTo              ( wrapper.message().magic_action_move_to()               , nCtx ); 
     else if( wrapper.message().has_change_diplomacy() )
         workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy                ( wrapper.message().change_diplomacy()                   , nCtx ); 
     else if( wrapper.message().has_automat_change_knowledge_group() )

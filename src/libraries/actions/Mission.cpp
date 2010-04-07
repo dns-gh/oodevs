@@ -40,9 +40,9 @@ namespace
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
 Mission::Mission( const Entity_ABC& entity, const MissionType& mission, Controller& controller, bool registered /* = true */ )
-    : Action_ABC( controller, mission, entity )
-    , controller_( controller )
-    , registered_( registered )
+    : ActionWithTarget_ABC( controller, mission, entity )
+    , controller_         ( controller )
+    , registered_         ( registered )
 {
     // NOTHING
 }
@@ -52,9 +52,9 @@ Mission::Mission( const Entity_ABC& entity, const MissionType& mission, Controll
 // Created: SBO 2007-05-16
 // -----------------------------------------------------------------------------
 Mission::Mission( xml::xistream& xis, Controller& controller, const tools::Resolver_ABC< MissionType >& missions, const Entity_ABC& entity )
-    : Action_ABC( xis, controller, ResolveType( xis, missions, entity ), entity )
-    , controller_( controller )
-    , registered_( true )
+    : ActionWithTarget_ABC( xis, controller, ResolveType( xis, missions, entity ), entity )
+    , controller_         ( controller )
+    , registered_         ( true )
 {
     // NOTHING
 }
@@ -86,7 +86,7 @@ void Mission::Polish()
 void Mission::Serialize( xml::xostream& xos ) const
 {
     xos << xml::attribute( "type", "mission" );
-    Action_ABC::Serialize( xos );
+    ActionWithTarget_ABC::Serialize( xos );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,5 +103,5 @@ void Mission::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& 
         displayer.Display( "", GetName() );
     }
     tooltip_->Draw( where );
-    Action_ABC::Draw( where, viewport, tools );
+    ActionWithTarget_ABC::Draw( where, viewport, tools );
 }
