@@ -370,7 +370,9 @@
   <report id="264" message="debut animation %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report id="265" message="$$$$ReportGGE"/>
+  <report id="265" message="tir direct sur la cible : %1">
+      <parameter type="AgentKnowledge"/>
+  </report>
   <report id="266" message="fin animation %1">
     <parameter type="ObjectKnowledge"/>
   </report>
@@ -379,4 +381,39 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report id="269" message="fin degagement"/>
+  <report id="270" message="tir direct impossible"/>
+  <report id="271" message="tir indirect sur la cible : %1">
+      <parameter type="AgentKnowledge"/>
+  </report>
+  <report id="272" message="pas de capacité de tir"/>
+  <report id="273" message="type de munition invalide"/>
+  <report id="274" message="tir indirect impossible"/>
+  <report id="275" message="Cible non perçue"/>
+  <report id="276" message="Cible tactiquement détruite : %1">
+      <parameter type="AgentKnowledge"/>
+  </report>
+  <report id="277" message="Vision verrouillee et radar active"/>
+  <report id="278" message="Debut de reconnaissance du bloc urabin"/>
+  <report id="279" message="Fin de reconnaissance du bloc urabin"/>
+  <report id="280" message="Debut de reconnaissance de la position"/>
+  <report id="281" message="Fin de reconnaissance de la position"/>
+  <report id="282" message="Fin du tir direct sur la cible : %1">
+        <parameter type="AgentKnowledge"/>
+  </report>     
+  <report id="283" message="Debut des travaux pour l'objet : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report> 
+  <report id="284" message="Fin des travaux pour l'objet : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report> 
+  <report id="285" message="Fin du tir indirect sur la cible : %1">
+    <parameter type="AgentKnowledge"/>
+  </report> 
+    <report id="286" message="Debut de neutralisation de la cible : %1">
+    <parameter type="AgentKnowledge"/>
+  </report> 
+    <report id="287" message="Fin de neutralisation de la cible : %1">
+    <parameter type="AgentKnowledge"/>
+  </report> 
+  <report id="288" message="Vision verrouillee"/>
 </reports>
