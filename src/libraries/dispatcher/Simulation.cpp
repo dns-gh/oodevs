@@ -11,7 +11,7 @@
 
 #include "Simulation.h"
 
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "tools/MessageSender_ABC.h"
 #include "MessageHandler_ABC.h"
 #include "protocol/simulationsenders.h"

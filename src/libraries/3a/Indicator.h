@@ -10,7 +10,7 @@
 #ifndef __Indicator_h_
 #define __Indicator_h_
 
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Functions.h"
 #include "Result_ABC.h"
 

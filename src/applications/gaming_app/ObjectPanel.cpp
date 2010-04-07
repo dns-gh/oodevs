@@ -17,7 +17,7 @@
 #include "clients_gui/SpinBoxDisplayer.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/simulationsenders.h"
 
 using namespace kernel;

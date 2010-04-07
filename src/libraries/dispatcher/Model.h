@@ -45,7 +45,6 @@ namespace dispatcher
     class LogConsignSupply;
     class LogConsignMedical;
     class SimulationModel;
-    class ClientPublisher_ABC;
     class Fire;
     class PopulationFire;
     class FireEffect;

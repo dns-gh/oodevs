@@ -14,7 +14,7 @@
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Automat.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Fire.h"
 #include "FireEffect.h"
 #include "FolkModel.h"
@@ -340,8 +340,10 @@ void Model::Update( const MsgsSimToClient::MsgSimToClient& wrapper )
         Destroy( urbanKnowledges_, wrapper.message().urban_knowledge_destruction().oid() ); 
     if( wrapper.message().has_control_global_meteo() )
         meteoModel_->OnReceiveMsgGlobalMeteo( wrapper.message().control_global_meteo() );
-    if( wrapper.message().has_control_local_meteo() )
-        meteoModel_->OnReceiveMsgLocalMeteo( wrapper.message().control_local_meteo() );
+    if( wrapper.message().has_control_local_meteo_creation() )
+        meteoModel_->OnReceiveMsgLocalMeteoCreation( wrapper.message().control_local_meteo_creation() );
+    if( wrapper.message().has_control_local_meteo_destruction() )
+        meteoModel_->OnReceiveMsgLocalMeteoDestruction( wrapper.message().control_local_meteo_destruction() );
     if( wrapper.message().has_urban_creation() )
         CreateUpdate< UrbanObject >( urbanBlocks_, wrapper.message().urban_creation() );
 
@@ -484,6 +486,7 @@ void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
     reports_               .Apply( boost::bind( &Report::Accept, _1, boost::ref( visitor ) ) );
     urbanBlocks_           .Apply( boost::bind( &UrbanObject::Accept, _1, boost::ref( visitor ) ) );
     urbanKnowledges_       .Apply( boost::bind( &UrbanKnowledge::Accept, _1, boost::ref( visitor ) ) );
+    meteoModel_->Accept( visitor );
 }
 
 // -----------------------------------------------------------------------------

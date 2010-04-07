@@ -230,7 +230,7 @@
     </target>
 	
     <target name="library.meteo" description="build meteo static library" depends="library.protocol,library.clients_kernel">
-        <build-lib name="meteo" pattern="lib${ant.project.name}_meteo-${platform}-mt@{suffix}" suffix="-gd"/>
+        <build-lib name="meteo"  depends="qt"  pattern="lib${ant.project.name}_meteo-${platform}-mt@{suffix}" suffix="-gd"/>
     </target>
 
 	
@@ -323,11 +323,12 @@
     </target>
 
     <target name="application.simulation_app.nocrossbow" description="build Sword Simulation executable without crossbow" depends="library.dispatcher,library.simulation_kernel,application.dispatcher_dll.nocrossbow">
-        <build-app name="simulation_app" depends="mt,terrain,boost,xerces,flexlm"
+        <build-app name="simulation_app" depends="mt,terrain,boost,xerces,flexlm,qt"
             libs="HLA,libFedTime,masalloc,libprotobuf,directia-${platform}-mt-4_5,library-${platform}-mt,
                   gdal_i,gdal_ogr,geodata,
                   population-${platform}-mt@{suffix},
                   dispatcher-${platform}-mt@{suffix},
+				  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -383,8 +384,8 @@
                   lib${ant.project.name}_dis_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_tic_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_bml_plugin-${platform}-mt@{suffix},
-                         lib${ant.project.name}_reports-${platform}-mt@{suffix},
-                         lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix},
+                  lib${ant.project.name}_reports-${platform}-mt@{suffix},
+                  lib${ant.project.name}_logger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_messenger_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_script_plugin-${platform}-mt@{suffix},
                   lib${ant.project.name}_3a-${platform}-mt@{suffix},
@@ -420,6 +421,7 @@
                   gdal_i,gdal_ogr,geodata,
                   population-${platform}-mt@{suffix},
                   dispatcher-crossbow-${platform}-mt@{suffix},
+				  lib${ant.project.name}_clients_kernel-${platform}-mt@{suffix},
                   lib${ant.project.name}_tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_MT_Tools-${platform}-mt@{suffix},
                   lib${ant.project.name}_protocol-${platform}-mt@{suffix},
@@ -509,6 +511,7 @@
                          lib${ant.project.name}_protocol-${platform}-mt,
                          lib${ant.project.name}_indicators-${platform}-mt,
                          lib${ant.project.name}_preparation-${platform}-mt,
+                         lib${ant.project.name}_meteo-${platform}-mt,
                          lib${ant.project.name}_tools-${platform}-mt">
             <syslibset libs="gdi32,psapi,dbghelp,htmlhelp,advapi32"/>
         </build-app>

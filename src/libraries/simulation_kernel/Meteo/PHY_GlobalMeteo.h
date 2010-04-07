@@ -21,6 +21,7 @@ class MeteoManager_ABC;
 class PHY_Meteo;
 class PHY_Lighting;
 class PHY_RawVisionData_ABC;
+class Publisher_ABC;
 
 // =============================================================================
 /** @class  PHY_GlobalMeteo
@@ -34,14 +35,14 @@ class PHY_GlobalMeteo : public PHY_Meteo
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_GlobalMeteo(  xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-             explicit PHY_GlobalMeteo( const Common::MsgMeteoAttributes&, MeteoManager_ABC* list );
+             PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
+             PHY_GlobalMeteo( unsigned int id, const Common::MsgMeteoAttributes&, MeteoManager_ABC* list );
     virtual ~PHY_GlobalMeteo();
     //@}
     //! @name Operations
     //@{
-    void SendRegisterGlobal();
-    void SendUnregisterGlobal();
+    virtual void SendCreation() const;
+
     //@}
 
 private:

@@ -15,7 +15,7 @@
 #include "Limit.h"
 #include "Lima.h"
 #include "IdManager.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "tools/Iterator.h"
 #include <xeumeuleu/xml.h>
 

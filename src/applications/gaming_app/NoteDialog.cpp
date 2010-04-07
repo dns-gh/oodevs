@@ -12,7 +12,7 @@
 #include "moc_NoteDialog.cpp"
 #include "gaming/Tools.h"
 #include "gaming/Note.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include "gaming/Simulation.h"
 

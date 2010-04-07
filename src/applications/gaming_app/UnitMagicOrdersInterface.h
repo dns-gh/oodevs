@@ -15,7 +15,7 @@
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
 {

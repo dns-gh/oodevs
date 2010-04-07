@@ -10,7 +10,7 @@
 #include "score_plugin_pch.h"
 #include "ScorePlugin.h"
 #include "ScoresModel.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/CompositeRegistrable.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"

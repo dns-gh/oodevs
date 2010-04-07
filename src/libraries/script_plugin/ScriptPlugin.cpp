@@ -11,7 +11,7 @@
 #include "ScriptPlugin.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Model.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/Profile_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter.h"

@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "Side.h"
 
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Formation.h"
 #include "KnowledgeGroup.h"
 #include "Model.h"

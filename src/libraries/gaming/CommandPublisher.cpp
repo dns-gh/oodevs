@@ -12,7 +12,7 @@
 #include "Services.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "protocol/MessengerSenders.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace Common;
 

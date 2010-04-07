@@ -40,6 +40,7 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const kernel::GlTools_ABC& tools ) const;
+    virtual bool IsInside( geometry::Point2f point ) const;
     //@}
 
 private:

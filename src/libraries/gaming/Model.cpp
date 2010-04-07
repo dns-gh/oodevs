@@ -170,4 +170,5 @@ void Model::Purge()
     objects_.Purge();
     knowledgeGroups_.Purge();
     teams_.Purge();
+    meteo_.Purge();
 }

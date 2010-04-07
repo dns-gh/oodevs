@@ -20,7 +20,7 @@
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/simulationsenders.h"
 
 using namespace kernel;

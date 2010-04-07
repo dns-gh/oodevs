@@ -56,7 +56,7 @@
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_gui/Drawing_ABC.h"
 #include "MeteoModel.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/AarSenders.h"
 #include "tools/MessageDispatcher_ABC.h"
@@ -1888,8 +1888,10 @@ void AgentServerMsgMgr::OnReceiveMsgSimToClient( const std::string& , const Msgs
         OnReceiveMsgActionCreateFireOrderAck( wrapper.message().action_create_fire_order_ack(), wrapper.context() );
     else if( wrapper.message().has_control_global_meteo() )
         OnReceiveMsgControlMeteoGlobal        ( wrapper.message().control_global_meteo() ); 
-    else if( wrapper.message().has_control_local_meteo() )
-        OnReceiveMsgControlMeteoLocal         ( wrapper.message().control_local_meteo() );     
+    else if( wrapper.message().has_control_local_meteo_creation() )
+        OnReceiveMsgControlMeteoLocalCreation ( wrapper.message().control_local_meteo_creation() );     
+    else if( wrapper.message().has_control_local_meteo_destruction() )
+        OnReceiveMsgControlMeteoLocalDestruction( wrapper.message().control_local_meteo_destruction() );     
     else
         UnhandledMessage( &wrapper.message() );
 }
@@ -2107,7 +2109,17 @@ void AgentServerMsgMgr::OnReceiveMsgControlMeteoGlobal( const MsgsSimToClient::M
 // Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoLocal
 // Created: HBD 2010-03-16
 // -----------------------------------------------------------------------------
-void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocal( const MsgsSimToClient::MsgControlLocalMeteo& message )
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& message )
 {
-      GetModel().meteo_.OnReceiveMsgLocalMeteo( message );
+      GetModel().meteo_.OnReceiveMsgLocalMeteoCreation( message );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalDestruction
+// Created: HBD 2010-04-02
+// -----------------------------------------------------------------------------
+void AgentServerMsgMgr::OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message )
+{
+      GetModel().meteo_.OnReceiveMsgLocalMeteoDestruction( message );
+}
+

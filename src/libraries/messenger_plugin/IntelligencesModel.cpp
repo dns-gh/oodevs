@@ -11,7 +11,7 @@
 #include "IntelligencesModel.h"
 #include "IdManager.h"
 #include "Intelligence.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include <boost/bind.hpp>
 //#include "protocol/protocol.h"
 #include "protocol/MessengerSenders.h"

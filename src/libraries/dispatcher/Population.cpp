@@ -11,7 +11,7 @@
 #include "Population.h"
 #include "Model.h"
 #include "Side.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "PopulationConcentration.h"
 #include "PopulationFlow.h"
 #include "clients_kernel/ModelVisitor_ABC.h"

@@ -1175,12 +1175,19 @@ message MsgKnowledgeGroupDestruction {
 //meteo 
 message MsgControlGlobalMeteo {
    required Common.MsgMeteoAttributes attributes = 1;
+   required uint32 oid                           = 2;
 }
 
-message MsgControlLocalMeteo {
-   optional Common.MsgCoordLatLong top_left_coordinate     = 1;
-   optional Common.MsgCoordLatLong bottom_right_coordinate = 2;
-   optional Common.MsgMeteoAttributes     attributes              = 3;
+message MsgControlLocalMeteoCreation {
+   required uint32 oid                                     = 1;
+   optional Common.MsgCoordLatLong top_left_coordinate     = 2;
+   optional Common.MsgCoordLatLong bottom_right_coordinate = 3;
+   optional Common.MsgMeteoAttributes     attributes       = 4;
+
+}
+
+message MsgControlLocalMeteoDestruction {
+   required uint32 oid                                     = 1;
 }
 
 // Message container
@@ -1307,7 +1314,8 @@ message MsgSimToClient {
         optional MsgKnowledgeGroupDestruction                   knowledge_group_destruction                    = 119;        
         optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 120;
         optional MsgControlGlobalMeteo			                control_global_meteo						   = 121;
-        optional MsgControlLocalMeteo		                    control_local_meteo							   = 122;
+        optional MsgControlLocalMeteoCreation		            control_local_meteo_creation				   = 122;
+        optional MsgControlLocalMeteoDestruction		        control_local_meteo_destruction 			   = 123;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

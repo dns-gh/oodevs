@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "AgentLogMedical.h"
 #include "Model.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Automat.h"
 #include "Agent.h"
 #include "protocol/clientsenders.h"

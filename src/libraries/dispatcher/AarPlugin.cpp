@@ -14,7 +14,7 @@
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
 #include "tools/MessageDispatcher_ABC.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Services.h"
 #include <boost/algorithm/string.hpp>
 #include <xeumeuleu/xml.h>

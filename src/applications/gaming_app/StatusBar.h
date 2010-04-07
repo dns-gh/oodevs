@@ -23,6 +23,10 @@ namespace kernel
 {
     class Controllers;
 }
+namespace gui
+{
+    class TerrainPicker;
+}
 
 // =============================================================================
 /** @class  StatusBar
@@ -51,6 +55,7 @@ private slots:
     //@{
     void OnLag();
     void OnCheckPoint();
+    void WeatherPicked( const QString&, const QString& );
     //@}
 
 private:
@@ -71,6 +76,7 @@ private:
 private:
     //! @name Member data
     //@{
+    gui::TerrainPicker& picker_;
     kernel::Controllers& controllers_;
     bool lastSimulationStatus_;
     QPushButton* pSpeed_;
@@ -78,6 +84,8 @@ private:
     QPushButton* pTick_;
     QTimer* pLagTimer_;
     QLabel* checkPoint_;
+    QLabel* precipitationType_;
+    QLabel* lightingType_;
     QTimer* checkPointTimer_;
     QPixmap tickred_;
     QPixmap tickoff_;

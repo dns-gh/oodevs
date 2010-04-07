@@ -19,6 +19,7 @@ namespace kernel
 {
     class CoordinateConverter_ABC;
     class CoordinateConverter;
+    class ModelVisitor_ABC;
 }
 class PHY_Meteo;
 
@@ -41,10 +42,11 @@ public:
     virtual ~MeteoModel();
     //@}
 
-
     virtual const PHY_Lighting&  GetLighting  () const;
     virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& msg ); 
-    virtual void OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg );
+    virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& msg );
+    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& msg );
+    void Accept( kernel::ModelVisitor_ABC& visitor );
     //@}
 
 protected:
@@ -62,7 +64,6 @@ private:
     //@{
     PHY_Meteo*                        pGlobalMeteo_;
     T_MeteoList                        meteos_;    // Including global meteo
-    kernel::CoordinateConverter_ABC&  converter_;
     //@}
 };
 }

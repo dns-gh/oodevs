@@ -11,7 +11,7 @@
 #include "FolkModel.h"
 
 #include "clients_kernel/ModelVisitor_ABC.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 
 using namespace dispatcher;

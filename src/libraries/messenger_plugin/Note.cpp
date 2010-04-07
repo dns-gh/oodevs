@@ -10,7 +10,7 @@
 #include "messenger_plugin_pch.h"
 #include "Note.h"
 
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 
 using namespace plugins::messenger;

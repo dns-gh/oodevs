@@ -10,7 +10,7 @@
 #ifndef __ActionPublisher_h_
 #define __ActionPublisher_h_
 
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 
 // =============================================================================

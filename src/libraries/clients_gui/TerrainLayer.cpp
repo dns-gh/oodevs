@@ -220,9 +220,9 @@ void TerrainLayer::LoadGraphics()
 // Name: TerrainLayer::HandleMouseMove
 // Created: SBO 2010-03-26
 // -----------------------------------------------------------------------------
-bool TerrainLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& /*point*/ )
+bool TerrainLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f& terrainCoordinates )
 {
-    picker_.Pick( mouse->x(), mouse->y() );
+    picker_.Pick( mouse->x(), mouse->y(), terrainCoordinates );
     return false;
 }
 

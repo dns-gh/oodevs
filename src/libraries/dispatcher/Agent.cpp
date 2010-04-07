@@ -20,7 +20,7 @@
 #include "AgentLogMaintenance.h"
 #include "AgentLogSupply.h"
 #include "AgentOrder.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"

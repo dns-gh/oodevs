@@ -13,7 +13,7 @@
 #include "3a/IdentifierValue.h"
 #include "3a/AarFacade.h"
 #include "3a/Task.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.h>
 #include <geocoord/geodetic.h>
 #include <geocoord/mgrs.h>

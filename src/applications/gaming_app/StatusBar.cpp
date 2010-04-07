@@ -12,6 +12,7 @@
 #include "moc_StatusBar.cpp"
 #include "clients_kernel/Controllers.h"
 #include "icons.h"
+#include "clients_gui/TerrainPicker.h"
 
 using namespace kernel;
 
@@ -38,6 +39,7 @@ namespace
 // -----------------------------------------------------------------------------
 StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const DetectionMap& detection, const CoordinateConverter_ABC& converter, Controllers& controllers, QDockWindow* profilingDock )
     : gui::StatusBar( parent, picker, detection, converter )
+    , picker_( picker )
     , lastSimulationStatus_( false )
     , controllers_( controllers )
     , tickred_( MAKE_PIXMAP( tickred ) )
@@ -47,6 +49,9 @@ StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const Dete
     checkPoint_ = new QLabel( parent );
     checkPoint_->setMinimumWidth( 20 );
     checkPoint_->setAlignment( Qt::AlignCenter );
+
+    precipitationType_ = new QLabel( parent );
+    lightingType_ = new QLabel( parent );
 
     pSpeed_ = new MyButton( "---", parent );
     pSpeed_->setMinimumWidth( 50 );
@@ -65,10 +70,13 @@ StatusBar::StatusBar( QStatusBar* parent, gui::TerrainPicker& picker, const Dete
     parent->addWidget( checkPoint_, 0, true );
     parent->addWidget( pSpeed_, 0, true );
     parent->addWidget( pTime_, 0, true );
-	parent->addWidget( pTick_, 0, true );
+    parent->addWidget( pTick_, 0, true );
+    parent->addWidget( precipitationType_, 0, true );
+    parent->addWidget( lightingType_, 0, true );
 
     connect( pLagTimer_, SIGNAL( timeout() ), SLOT( OnLag() ) );
     connect( checkPointTimer_, SIGNAL( timeout() ), SLOT( OnCheckPoint() ) );
+    connect( &picker_, SIGNAL( WeatherPicked( const QString&, const QString& ) ), SLOT( WeatherPicked( const QString&, const QString& ) ) );
 
     controllers_.Register( *this );
 }
@@ -160,4 +168,14 @@ void StatusBar::OnCheckPoint()
     static QPixmap pixmaps[3] = { MAKE_PIXMAP( checkpoint1 ), MAKE_PIXMAP( checkpoint2 ), MAKE_PIXMAP( checkpoint3 ) };
     checkPoint_->setPixmap( pixmaps[i] );
     i = (i + 1) % 3;
+}
+
+// -----------------------------------------------------------------------------
+// Name: StatusBar::WeatherPicked
+// Created: HBD 2010-03-30
+// -----------------------------------------------------------------------------
+void StatusBar::WeatherPicked( const QString& lightingType, const QString& precipitationType )
+{
+    precipitationType_->setText( lightingType );
+    lightingType_->setText( precipitationType );
 }

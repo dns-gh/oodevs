@@ -24,7 +24,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "protocol/simulationsenders.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace kernel;
 using namespace gui;

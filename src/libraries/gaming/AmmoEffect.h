@@ -13,8 +13,9 @@
 
 #include "MSEllipse.h"
 #include "protocol/Protocol.h"
-
+#include "meteo/PHY_Meteo.h"
 using namespace Common;
+
 
 namespace kernel
 {
@@ -42,6 +43,8 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const kernel::GlTools_ABC& tools ) const;
+    virtual bool IsInside( const geometry::Point2f& point ) const;
+    virtual const PHY_Meteo& GetMeteo() const;
     //@}
 
 private:
@@ -58,6 +61,7 @@ private:
     unsigned long id_;
     EnumFireEffectType type_;
     MSEllipse ellipse_;
+    PHY_Meteo meteo_;
     //@}
 };
 

@@ -12,7 +12,7 @@
 
 #include "Agent.h"
 #include "AutomatOrder.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "DotationQuota.h"
 #include "Formation.h"
 #include "KnowledgeGroup.h"

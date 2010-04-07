@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "AgentOrder.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Agent.h"
 #include "protocol/clientsenders.h"
 

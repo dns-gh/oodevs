@@ -12,6 +12,7 @@
 #include "preparation/LocalWeather.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_gui/ExclusiveEventStrategy.h"
+#include "meteo/PHY_Meteo.h"
 
 // -----------------------------------------------------------------------------
 // Name: WeatherLayer constructor
@@ -115,4 +116,13 @@ void WeatherLayer::StartEdition( LocalWeather& weather )
     eventStrategy_.TakeExclusiveFocus( *this );
     isEditing_ = true;
     firstPointSet_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherLayer::Pick
+// Created: HBD 2010-04-06
+// -----------------------------------------------------------------------------
+const PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
+{
+    return 0;
 }

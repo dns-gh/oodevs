@@ -8,39 +8,46 @@
 // *****************************************************************************
 
 #include "gaming_app_pch.h"
-#include "MeteoLayer.h"
+#include "WeatherLayer.h"
+#include "clients_gui/TerrainPicker.h"
 #include "gaming/AmmoEffect.h"
+#include "gaming/MeteoModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "meteo/PHY_Lighting.h"
+#include "meteo/PHY_Precipitation.h"
 
 using namespace kernel;
 using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: MeteoLayer constructor
+// Name: WeatherLayer constructor
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-MeteoLayer::MeteoLayer( Controllers& controllers, const GlTools_ABC& tools )
-    : controllers_( controllers )
+WeatherLayer::WeatherLayer( Controllers& controllers, const GlTools_ABC& tools, TerrainPicker& picker, const MeteoModel& meteoModel )
+    : picker_ ( picker )
+    , controllers_( controllers )
     , tools_( tools )
+    , meteoModel_( meteoModel )
 {
     controllers_.Register( *this );
+    picker.RegisterLayer( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MeteoLayer destructor
+// Name: WeatherLayer destructor  
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-MeteoLayer::~MeteoLayer()
+WeatherLayer::~WeatherLayer()
 {
     controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MeteoLayer::Paint
+// Name: WeatherLayer::Paint
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void MeteoLayer::Paint( const geometry::Rectangle2f& )
+void WeatherLayer::Paint( const geometry::Rectangle2f& )
 {
     if( !ShouldDrawPass() )
         return;
@@ -51,19 +58,31 @@ void MeteoLayer::Paint( const geometry::Rectangle2f& )
 }
 
 // -----------------------------------------------------------------------------
-// Name: MeteoLayer::NotifyCreated
+// Name: WeatherLayer::Pick
+// Created: HBD 2010-03-30
+// -----------------------------------------------------------------------------
+const PHY_Meteo* WeatherLayer::Pick( const geometry::Point2f& terrainCoordinates ) const
+{
+    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
+        if ( (*it)->IsInside( terrainCoordinates ) )
+            return &(*it)->GetMeteo();
+    return meteoModel_.GetMeteo( terrainCoordinates );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherLayer::NotifyCreated
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void MeteoLayer::NotifyCreated( const AmmoEffect& effect )
+void WeatherLayer::NotifyCreated( const AmmoEffect& effect )
 {
     effects_.push_back( & effect );
 }
 
 // -----------------------------------------------------------------------------
-// Name: MeteoLayer::NotifyDeleted
+// Name: WeatherLayer::NotifyDeleted
 // Created: AGE 2006-04-04
 // -----------------------------------------------------------------------------
-void MeteoLayer::NotifyDeleted( const AmmoEffect& effect )
+void WeatherLayer::NotifyDeleted( const AmmoEffect& effect )
 {
     IT_Effects it = std::find( effects_.begin(), effects_.end(), &effect );
     if( it != effects_.end() )

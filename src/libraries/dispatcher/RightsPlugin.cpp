@@ -12,7 +12,7 @@
 #include "tools/MessageDispatcher_ABC.h"
 #include "LinkResolver_ABC.h"
 #include "Profile_ABC.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "ProfileManager.h"
 #include "Profile.h"
 #include "DefaultProfile.h"

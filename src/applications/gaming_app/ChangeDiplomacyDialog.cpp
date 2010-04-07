@@ -13,7 +13,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "protocol/simulationsenders.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 // -----------------------------------------------------------------------------
 // Name: ChangeDiplomacyDialog constructor
 // Created: SBO 2008-12-09

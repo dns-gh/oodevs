@@ -11,6 +11,8 @@
 #include "AmmoEffect.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "meteo/PHY_Lighting.h"
+#include "meteo/PHY_Precipitation.h"
 
 using namespace kernel;
 
@@ -23,7 +25,13 @@ AmmoEffect::AmmoEffect( const MsgsSimToClient::MsgStartFireEffect& message, Cont
     , id_( message.effect_oid() )
     , type_( message.type() )
     , ellipse_( message.location(), converter )
+    , meteo_( PHY_Lighting::jourSansNuage_, PHY_Precipitation::none_ )
+
 {
+    if ( type_ == eclairant )
+        meteo_.Update( PHY_Lighting::eclairant_ );
+    else
+        meteo_.Update( PHY_Precipitation::smoke_  );
     controller_.Create( *this );
 }
 
@@ -47,4 +55,22 @@ void AmmoEffect::Draw( const GlTools_ABC& tools ) const
     else
         glColor4f( COLOR_LIGHT );
     ellipse_.Draw( tools );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AmmoEffect::IsInside
+// Created: HBD 2010-04-06
+// -----------------------------------------------------------------------------
+bool AmmoEffect::IsInside( const geometry::Point2f& point ) const
+{
+    return ellipse_.IsInside( point );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AmmoEffect::GetMeteo
+// Created: HBD 2010-04-06
+// -----------------------------------------------------------------------------
+const PHY_Meteo& AmmoEffect::GetMeteo() const
+{
+    return meteo_;
 }

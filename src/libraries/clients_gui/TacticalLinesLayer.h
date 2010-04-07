@@ -78,7 +78,7 @@ protected:
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     virtual void VisitLines     ( const T_PointVector& points );
-    virtual void VisitRectangle ( const T_PointVector& points ) {};
+    virtual void VisitRectangle ( const T_PointVector& /*points*/ ) {};
     virtual void VisitPolygon   ( const T_PointVector& ) {};
     virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector& ) {};
     virtual void VisitCircle    ( const geometry::Point2f& , float ) {};

@@ -16,7 +16,7 @@
 #include "gaming/Note.h"
 #include "gaming/Simulation.h"
 #include "gaming/NotesModel.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 
 #include <qmessagebox.h>

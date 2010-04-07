@@ -16,7 +16,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 #include "tools/iterator.h"

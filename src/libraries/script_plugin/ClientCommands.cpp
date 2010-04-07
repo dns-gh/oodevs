@@ -9,7 +9,7 @@
 
 #include "script_plugin_pch.h"
 #include "ClientCommands.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "directia/Brain.h"
 #include "protocol/MessengerSenders.h"

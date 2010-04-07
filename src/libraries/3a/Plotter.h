@@ -10,7 +10,7 @@
 #ifndef __Plotter_h_
 #define __Plotter_h_
 
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Functions.h"
 #include "Result_ABC.h"
 #include "protocol/AarSenders.h"

@@ -10,7 +10,7 @@
 #ifndef __ClientsNetworker_h_
 #define __ClientsNetworker_h_
 
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "MessageHandler_ABC.h"
 #include "LinkResolver_ABC.h"
 #include "tools/ServerNetworker.h"

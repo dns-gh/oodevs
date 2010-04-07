@@ -11,7 +11,7 @@
 #include "PopulationFlowKnowledge.h"
 #include "Population.h"
 #include "PopulationFlow.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "EntityPublisher.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"

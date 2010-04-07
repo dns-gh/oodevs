@@ -11,7 +11,7 @@
 #include "SaverFacade.h"
 #include "Saver.h"
 #include "Savable_ABC.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Model.h"
 #include "Side.h"
 #include "Visitors.h"

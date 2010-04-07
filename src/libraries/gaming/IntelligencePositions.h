@@ -13,7 +13,7 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
 {

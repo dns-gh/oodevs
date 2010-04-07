@@ -12,7 +12,7 @@
 
 #include "protocol/Protocol.h"
 #include "protocol/Aarsenders.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
 {

@@ -11,7 +11,7 @@
 #define __AgentServerMsgMgr_h_
 
 #include "clients_kernel/Types.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 namespace MsgsDispatcherToClient
 {
@@ -219,7 +219,8 @@ namespace kernel
 namespace MsgsSimToClient
 {
   class MsgControlGlobalMeteo;
-  class MsgControlLocalMeteo;
+  class MsgControlLocalMeteoCreation;
+  class MsgControlLocalMeteoDestruction;
 }
 
 class Model;
@@ -297,7 +298,8 @@ private:
     void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                            message );
     void OnReceiveMsgAuthenticationResponse      ( const MsgsAuthenticationToClient::MsgAuthenticationResponse& message );
     void OnReceiveMsgControlMeteoGlobal          ( const MsgsSimToClient::MsgControlGlobalMeteo&                message );
-    void OnReceiveMsgControlMeteoLocal           ( const MsgsSimToClient::MsgControlLocalMeteo&                 message );
+    void OnReceiveMsgControlMeteoLocalCreation   ( const MsgsSimToClient::MsgControlLocalMeteoCreation&         message );
+    void OnReceiveMsgControlMeteoLocalDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction&      message );
 
     // Profiles
     void OnReceiveMsgProfileCreation             ( const MsgsAuthenticationToClient::MsgProfileCreation&                message );

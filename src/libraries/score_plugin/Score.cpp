@@ -9,7 +9,7 @@
 
 #include "score_plugin_pch.h"
 #include "Score.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/aarsenders.h"       //from_game_asn
 
 using namespace MsgsClientToSim;

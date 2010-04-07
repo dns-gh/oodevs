@@ -39,8 +39,8 @@ class PHY_LocalMeteo : public PHY_Meteo
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_LocalMeteo( xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-    explicit PHY_LocalMeteo( const MsgsClientToSim::MsgControlLocalMeteo&, MeteoManager_ABC* list );
+             PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
+    explicit PHY_LocalMeteo( unsigned int id, const MsgsClientToSim::MsgControlLocalMeteo&, MeteoManager_ABC* list );
     virtual ~PHY_LocalMeteo();
     //@}
 
@@ -58,8 +58,8 @@ private:
 
     //! @name Helpers
     //@{
-    void SendRegisterLocal();
-    void SendUnregisterLocal();
+    virtual void SendCreation() const;
+    virtual void SendDestruction() ;
     //@}
 
 private:

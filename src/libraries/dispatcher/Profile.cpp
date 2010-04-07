@@ -12,12 +12,12 @@
 #include "Profile.h"
 
 #include "Model.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Automat.h"
 #include "Side.h"
 #include "Formation.h"
 #include "Population.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include <xeumeuleu/xml.h>
 #include "MT/MT_Logger/MT_Logger_lib.h"
 

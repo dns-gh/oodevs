@@ -11,7 +11,7 @@
 #include "AutomatMission.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Entity_ABC.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/simulationsenders.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 

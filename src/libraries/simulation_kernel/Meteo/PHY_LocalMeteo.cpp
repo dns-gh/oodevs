@@ -13,11 +13,11 @@
 #include "meteo/PHY_Lighting.h"
 #include "meteo/MeteoManager_ABC.h"
 #include "Network/NET_ASN_Tools.h"
+#include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "Meteo/PHY_RawVisionData_ABC.h"
 #include "meteo/PHY_Precipitation.h"
 #include "Network/NET_ASN_Tools.h"
-#include "Network/NET_Publisher_ABC.h"
 #include "protocol/Protocol.h"
 #include "protocol/ClientSenders.h"
 #include <xeumeuleu/xml.h>
@@ -32,8 +32,8 @@ namespace bpt = boost::posix_time;
 // Name: PHY_LocalMeteo constructor
 // Created: SLG 2010-03-18
 // -----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( xml::xistream& xis, const PHY_Lighting& light, int conversionFactor )
-    : PHY_Meteo( xis, light, conversionFactor )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor )
+    : PHY_Meteo( id, xis, light, conversionFactor )
     , bIsPatched_( false )
 {
     std::string strStartTime, strEndTime, strTopLeftPos, strTopRightPos;
@@ -51,8 +51,8 @@ PHY_LocalMeteo::PHY_LocalMeteo( xml::xistream& xis, const PHY_Lighting& light, i
 // Name: PHY_LocalMeteo constructor
 // Created: JVT 03-08-05
 //-----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( const MsgsClientToSim::MsgControlLocalMeteo& msg, MeteoManager_ABC* list )
-    : PHY_Meteo( msg.attributes(), list )
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const MsgsClientToSim::MsgControlLocalMeteo& msg, MeteoManager_ABC* list )
+    : PHY_Meteo( id, msg.attributes(), list )
 {
     NET_ASN_Tools::ReadPoint( msg.top_left_coordinate(),      upLeft_    );
     NET_ASN_Tools::ReadPoint( msg.bottom_right_coordinate() , downRight_ );
@@ -81,24 +81,25 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVisi
     {
         dataVision_.RegisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
         bIsPatched_ = true;
-        SendRegisterLocal();
+        SendCreation();
     }
     else if( bIsPatched_ && !bNeedToBePatched )
     {
         dataVision_.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_), this );
         bIsPatched_ = false;
-        SendUnregisterLocal();
+        SendDestruction();
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_LocalMeteo::SendRegisterLocal
+// Name: PHY_LocalMeteo::SendRegister
 // Created: HBD 2010-03-24
 // -----------------------------------------------------------------------------
-void PHY_LocalMeteo::SendRegisterLocal()
+void PHY_LocalMeteo::SendCreation() const
 {
-    client::ControlLocalMeteo msg;
+    client::ControlLocalMeteoCreation msg;
     Common::MsgMeteoAttributes* att = msg().mutable_attributes();
+    msg().set_oid( id_ );
 
     att->set_wind_speed(  wind_.rWindSpeed_ / conversionFactor_ );
     NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
@@ -119,29 +120,9 @@ void PHY_LocalMeteo::SendRegisterLocal()
     msg.Send( NET_Publisher_ABC::Publisher() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: PHY_LocalMeteo::SendUnregistreLocal
-// Created: HBD 2010-03-24
-// -----------------------------------------------------------------------------
-void PHY_LocalMeteo::SendUnregisterLocal()
+void PHY_LocalMeteo::SendDestruction() 
 {
-    client::ControlLocalMeteo msg;
-    Common::MsgMeteoAttributes* att = msg().mutable_attributes();
-
-    att->set_wind_speed(  wind_.rWindSpeed_ / conversionFactor_ );
-    NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
-    att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
-    att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( rDensiteCouvertureNuageuse_ );
-    att->set_precipitation( pPrecipitation_->GetAsnID() );
-    att->set_temperature( 0 );
-
-    Common::MsgCoordLatLong longlat;
-    MIL_Tools::ConvertCoordSimToMos( downRight_, longlat);
-    msg().mutable_bottom_right_coordinate()->set_latitude( longlat.latitude()  );
-    msg().mutable_bottom_right_coordinate()->set_longitude( longlat.longitude()  );
-    MIL_Tools::ConvertCoordSimToMos( upLeft_, longlat);
-    msg().mutable_top_left_coordinate()->set_latitude( longlat.latitude()  );
-    msg().mutable_top_left_coordinate()->set_longitude( longlat.longitude()  );
+    client::ControlLocalMeteoDestruction msg;
+    msg().set_oid( id_ );
     msg.Send( NET_Publisher_ABC::Publisher() );
 }

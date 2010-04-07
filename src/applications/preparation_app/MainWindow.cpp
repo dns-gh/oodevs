@@ -215,7 +215,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     ObjectCreationPanel* objectCreationPanel = new ObjectCreationPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_, model.teams_, *paramLayer, *glProxy_ );
     pCreationPanel->AddPanel( objectCreationPanel );
 
-    WeatherLayer* weatherLayer = new WeatherLayer( *glProxy_, *eventStrategy_ );
+    ::WeatherLayer* weatherLayer = new ::WeatherLayer( *glProxy_, *eventStrategy_ );
     WeatherPanel* weatherPanel = new WeatherPanel( pCreationDockWnd, *pCreationPanel, controllers, staticModel_.coordinateConverter_, *weatherLayer );
     pCreationPanel->AddPanel( weatherPanel );
 

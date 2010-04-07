@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "ObjectKnowledge.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Model.h"
 #include "ConstructionAttribute.h"
 #include "ObstacleAttribute.h"

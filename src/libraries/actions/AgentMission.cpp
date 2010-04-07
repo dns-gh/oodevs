@@ -14,7 +14,7 @@
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "protocol/Protocol.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace Common;

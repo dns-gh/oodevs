@@ -15,6 +15,7 @@
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 
+MIL_IDManager PHY_MeteoDataManager::idManager_;
 
 //-----------------------------------------------------------------------------
 // Name: PHY_MeteoDataManager constructor
@@ -65,7 +66,7 @@ PHY_MeteoDataManager::~PHY_MeteoDataManager()
 void PHY_MeteoDataManager::InitializeGlobalMeteo( xml::xistream& xis )
 {
     xis >> xml::start( "theater" );
-    pGlobalMeteo_ = new PHY_GlobalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
+    pGlobalMeteo_ = new PHY_GlobalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
     pGlobalMeteo_->IncRef();
     pGlobalMeteo_->SetListener( this );
     RegisterMeteo( *pGlobalMeteo_ );
@@ -89,7 +90,7 @@ void PHY_MeteoDataManager::InitializeLocalMeteos( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 {
-    PHY_Meteo* pMeteo = new PHY_LocalMeteo( xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
+    PHY_Meteo* pMeteo = new PHY_LocalMeteo( idManager_.GetFreeId(), xis, pEphemeride_->GetLightingBase(), MIL_Tools::ConvertSpeedMosToSim( 1. ) );
     RegisterMeteo( *pMeteo );
 }
 
@@ -126,7 +127,7 @@ void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const MsgsClientToSim::MsgCon
     PHY_Meteo* pTmp = 0;
     if( msg.has_attributes() )
     {
-        pTmp = new PHY_LocalMeteo( msg, this );
+        pTmp = new PHY_LocalMeteo(idManager_.GetFreeId(), msg, this );
         RegisterMeteo( *pTmp );
     }
     assert( pRawData_ );
@@ -147,6 +148,8 @@ void PHY_MeteoDataManager::RegisterWeatherEffect( const MT_Ellipse& surface, con
 {
     assert( pRawData_ );
     pRawData_->RegisterWeatherEffect( surface, ammoCategory );
+    //TODO HBD: Envoi d'un message pour la creation d'un weatherEffect.
+
 }
 
 // -----------------------------------------------------------------------------
@@ -157,6 +160,7 @@ void PHY_MeteoDataManager::UnregisterWeatherEffect( const MT_Ellipse& surface, c
 {
     assert( pRawData_ );
     pRawData_->UnregisterWeatherEffect( surface, ammoCategory );
+    //TODO HBD: Envoi d'un message pour la destruction d'un weatherEffect.
 }
 
 //-----------------------------------------------------------------------------
@@ -173,7 +177,6 @@ void PHY_MeteoDataManager::Update( unsigned int date )
         for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
             (*it)->Update( pEphemeride_->GetLightingBase() );
     }   
-
     for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
         (*it)->UpdateMeteoPatch( date, *pRawData_ );
 }
@@ -184,5 +187,6 @@ void PHY_MeteoDataManager::Update( unsigned int date )
 // -----------------------------------------------------------------------------
 void PHY_MeteoDataManager::SendStateToNewClient()
 {
-    pGlobalMeteo_->SendRegisterGlobal();
+    for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+      (*it)->SendCreation();
 }

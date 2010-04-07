@@ -10,6 +10,7 @@
 #include "meteo/PHY_Precipitation.h"
 #include "meteo/PHY_Meteo.h"
 #include "PHY_Ephemeride.h"
+#include "Tools/MIL_IDManager.h"
 
 namespace MsgsClientToSim
 {
@@ -95,6 +96,7 @@ private:
     PHY_GlobalMeteo*         pGlobalMeteo_;
     T_MeteoSet               meteos_;
     PHY_RawVisionData*       pRawData_; 
+    static MIL_IDManager idManager_;
 };
 
 

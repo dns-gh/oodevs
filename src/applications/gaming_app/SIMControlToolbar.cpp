@@ -19,7 +19,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/resources.h"
 #include "gaming/statusicons.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/simulationsenders.h"
 
 

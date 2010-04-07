@@ -7,11 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __MeteoLayer_h_
-#define __MeteoLayer_h_
+#ifndef __WeatherLayer_h_
+#define __WeatherLayer_h_
 
-#include "clients_gui/Layer_ABC.h"
+#include "clients_gui/WeatherLayer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+
+
 
 namespace kernel
 {
@@ -19,36 +21,41 @@ namespace kernel
     class GlTools_ABC;
 }
 
+class PHY_Meteo;
+class MeteoModel;
 class AmmoEffect;
 
+namespace gui
+{
+    class TerrainPicker;
 // =============================================================================
-/** @class  MeteoLayer
-    @brief  MeteoLayer
+/** @class  WeatherLayer
+    @brief  WeatherLayer
 */
 // Created: AGE 2006-04-04
 // =============================================================================
-class MeteoLayer : public gui::Layer_ABC
-                 , public tools::Observer_ABC
-                 , public tools::ElementObserver_ABC< AmmoEffect >
+class WeatherLayer : public WeatherLayer_ABC
+                   , public tools::Observer_ABC
+                   , public tools::ElementObserver_ABC< AmmoEffect >
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-             MeteoLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools );
-    virtual ~MeteoLayer();
+             WeatherLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::TerrainPicker& picker, const MeteoModel& meteoModel );
+    virtual ~WeatherLayer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void Paint( const geometry::Rectangle2f& );
+    virtual void                Paint( const geometry::Rectangle2f& );
+    const PHY_Meteo*            Pick ( const geometry::Point2f& terrainCoordinates ) const;
     //@}
 
 private:
     //! @name Copy/Assignement
     //@{
-    MeteoLayer( const MeteoLayer& );            //!< Copy constructor
-    MeteoLayer& operator=( const MeteoLayer& ); //!< Assignement operator
+    WeatherLayer( const WeatherLayer& );            //!< Copy constructor
+    WeatherLayer& operator=( const WeatherLayer& ); //!< Assignement operator
     //@}
 
     //! @name Helpers
@@ -61,15 +68,19 @@ private:
     //@{
     typedef std::vector< const AmmoEffect* >  T_Effects;
     typedef T_Effects::iterator              IT_Effects;
+    typedef T_Effects::const_iterator              CIT_Effects;
     //@}
 
 private:
     //! @name Member data
     //@{
+    TerrainPicker&       picker_; 
     kernel::Controllers& controllers_;
     const kernel::GlTools_ABC& tools_;
     T_Effects effects_;
+    const MeteoModel& meteoModel_; 
     //@}
 };
+}
 
-#endif // __MeteoLayer_h_
+#endif // __WeatherLayer_h_

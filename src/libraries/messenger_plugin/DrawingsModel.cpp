@@ -12,7 +12,7 @@
 #include "IdManager.h"
 #include "Drawing.h"
 #include "DrawingProxy.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/Config.h"
 #include "dispatcher/Position.h"
 #include "directia/Brain.h"

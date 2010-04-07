@@ -15,6 +15,7 @@
 namespace dispatcher
 {
     class ClientPublisher_ABC;
+  
 
 // =============================================================================
 /** @class  EntityPublisher_ABC

@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "PopulationKnowledge.h"
 #include "Model.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
 #include "clients_kernel/ModelVisitor_ABC.h"

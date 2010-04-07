@@ -13,9 +13,10 @@
 #define __PHY_Meteo_h_
 
 #include <boost/noncopyable.hpp>
+#include "clients_kernel/Entity_ABC.h"
 #include "MT_Tools/MT_Tools_Types.h"
 #include "MT_Tools/MT_Vector2D.h"
-
+#include "geometry/Types.h"
 
 namespace Common
 {
@@ -26,18 +27,30 @@ namespace xml
 {
     class xistream;
 }
-
+namespace kernel
+{
+    class ActionController;
+    class ModelVisitor_ABC;
+};
 
 class PHY_Precipitation;
 class PHY_Lighting;
 class MeteoManager_ABC;
 class PHY_RawVisionData_ABC;
+class Publisher_ABC;
+
+namespace dispatcher
+{
+    class ClientPublisher_ABC;
+}
 
 //*****************************************************************************
 // Created: JVT 03-08-05
 // Last modified: JVT 03-08-07
 //*****************************************************************************
-class PHY_Meteo : private boost::noncopyable
+class PHY_Meteo : public kernel::Entity_ABC
+                , private boost::noncopyable
+                
 {
 
 public:
@@ -48,8 +61,9 @@ public:
     };
 
 public:
-             PHY_Meteo( xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
-    explicit PHY_Meteo( const Common::MsgMeteoAttributes&, MeteoManager_ABC* listener );
+    PHY_Meteo( unsigned int id, xml::xistream& xis, const PHY_Lighting& light, int conversionFactor );
+    PHY_Meteo( unsigned int id, const Common::MsgMeteoAttributes&, MeteoManager_ABC* listener );
+    PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation );
 
     //-------------------------------------------------------------------------
     /** @name Creation / destruction */
@@ -73,13 +87,25 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const Common::MsgMeteoAttributes& asn );
-    void Update( const PHY_Lighting& /*PHY_Ephemeride&*/ );
+    virtual void Update( const Common::MsgMeteoAttributes& asn );
+    virtual void Update( const PHY_Lighting& /*PHY_Ephemeride&*/ );
+    virtual void Update( const PHY_Precipitation& precipitation);
     virtual void UpdateMeteoPatch( int date, PHY_RawVisionData_ABC& dataVision_ );
-     //@}
+    virtual void SendCreation   ( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void SendDestruction  ( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void SendFullUpdate ( dispatcher::ClientPublisher_ABC& publisher ) const;
+    virtual void SendCreation() const;
+    virtual bool IsInside( const geometry::Point2f& point ) const;
+    virtual void Select( kernel::ActionController& controller ) const;
+    virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
+    virtual void Activate( kernel::ActionController& controller ) const;
+    virtual void Accept( kernel::ModelVisitor_ABC& visitor ) const ;
+    virtual QString GetName() const;
+    virtual unsigned long GetId() const;
+    //@}
 
 public:
-    ~PHY_Meteo();
+    virtual ~PHY_Meteo();
 
    
 protected:
@@ -89,9 +115,11 @@ protected:
     sWindData                wind_;
     const PHY_Lighting*      pLighting_;
     const PHY_Precipitation* pPrecipitation_;
-
     unsigned int nRefCount_;
     int conversionFactor_;
+    unsigned int id_;
+
+private:
     MeteoManager_ABC* listener_;
 };
 

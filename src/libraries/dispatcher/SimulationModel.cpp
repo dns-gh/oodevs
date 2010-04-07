@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "SimulationModel.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 #include "protocol/replaysenders.h"
 

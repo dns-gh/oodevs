@@ -16,7 +16,7 @@
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 namespace MsgsMessengerToClient
 {

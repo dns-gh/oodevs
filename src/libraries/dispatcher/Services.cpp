@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "Services.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/DispatcherSenders.h"
 
 using namespace dispatcher;

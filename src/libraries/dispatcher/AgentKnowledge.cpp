@@ -11,7 +11,7 @@
 #include "Agent.h"
 #include "AgentKnowledge.h"
 #include "Model.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "KnowledgeGroup.h"
 #include "Side.h"
 #include "clients_kernel/ModelVisitor_ABC.h"

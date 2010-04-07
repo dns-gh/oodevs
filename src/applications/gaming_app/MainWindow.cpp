@@ -25,7 +25,6 @@
 #include "PopulationsLayer.h"
 #include "AgentKnowledgesLayer.h"
 #include "PopulationKnowledgesLayer.h"
-#include "MeteoLayer.h"
 #include "ObjectsLayer.h"
 #include "ObjectKnowledgesLayer.h"
 #include "LimitsLayer.h"
@@ -122,6 +121,7 @@
 #include "clients_gui/WatershedLayer.h"
 #include "clients_gui/TerrainPicker.h"
 #include "clients_gui/TerrainProfilerLayer.h"
+#include "WeatherLayer.h"
 
 #include "tools/ExerciseConfig.h"
 
@@ -360,12 +360,12 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // $$$$ AGE 2006-08-22: prefDialog->GetPreferences()
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
+    gui::WeatherLayer* meteoLayer        = new WeatherLayer( controllers_, *glProxy_, *picker, model_.meteo_ );
     
-    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, *profilerLayer, *prefDialog, profile, publisher );
-
-    ::StatusBar* pStatus = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
-    connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
-    connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
+    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, * meteoLayer,   *profilerLayer, *prefDialog, profile, publisher );
+    ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
+    connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
+    connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
 
     ReadSettings();
@@ -383,8 +383,11 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
+void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain,
+                              gui::WeatherLayer& meteo, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, Publisher_ABC& publisher )
 {
+
+
     TooltipsLayer_ABC& tooltipLayer = *new TooltipsLayer( *glProxy_ );
     Layer_ABC& missionsLayer        = *new MiscLayer< MissionPanel >( missions );
     Layer_ABC& creationsLayer       = *new MiscLayer< CreationPanels >( creationPanels );
@@ -402,7 +405,6 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& objectKnowledges     = *new ObjectKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
-    Layer_ABC& meteo                = *new MeteoLayer( controllers_, *glProxy_ );
     Layer_ABC& defaultLayer         = *new DefaultLayer( controllers_ );
     Layer_ABC& logoLayer            = *new LogoLayer( *glProxy_, QImage( config_.BuildResourceChildFile( "logo.png" ).c_str() ), 0.7f );
     Layer_ABC& formationLayer       = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
@@ -458,6 +460,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     forward_->Register( drawerLayer );
     forward_->Register( metrics );
     forward_->Register( elevation3d );
+    forward_->Register( meteo );
     forward_->SetDefault( defaultLayer );
 }
 

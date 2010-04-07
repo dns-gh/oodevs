@@ -15,7 +15,7 @@
 #include "Model.h"
 #include "Synchroniser.h"
 #include "ReplaySynchronisations.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace dispatcher;

@@ -19,7 +19,7 @@
 #include "Tools.h"
 #include "protocol/Protocol.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace kernel;
 using namespace Common;

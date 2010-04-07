@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "ReplayPlugin.h"
 #include "Loader.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Model.h"
 #include "ReplayExtensionFactory.h"
 

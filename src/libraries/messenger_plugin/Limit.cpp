@@ -9,7 +9,7 @@
 
 #include "messenger_plugin_pch.h"
 #include "Limit.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 #include <xeumeuleu/xml.h>
 

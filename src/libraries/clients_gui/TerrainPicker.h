@@ -13,6 +13,7 @@
 namespace gui
 {
     class TerrainLayer;
+    class WeatherLayer_ABC;
 
 // =============================================================================
 /** @class  TerrainPicker
@@ -34,13 +35,15 @@ public:
     //! @name Operations
     //@{
     void RegisterLayer( TerrainLayer& terrain );
-    void Pick( int x, int y );
+    void RegisterLayer( WeatherLayer_ABC& terrain );
+    void Pick( int x, int y, const geometry::Point2f& terrainCoordinates );
     //@}
 
 signals:
     //! @name Signals
     //@{
     void TerrainPicked( const QString& type );
+    void WeatherPicked( const QString& precipitation, const QString& lighting );
     //@}
 
 private slots:
@@ -60,9 +63,11 @@ private:
     //! @name Member data
     //@{
     TerrainLayer* terrain_;
+    WeatherLayer_ABC* weather_;
     QTimer* timer_;
     int x_;
     int y_;
+    geometry::Point2f terrainCoordinates_;
     //@}
 };
 

@@ -11,7 +11,7 @@
 #include "Synchroniser.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "EntityPublisher_ABC.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Model.h"
 //#include "protocol/protocol.h"
 

@@ -19,7 +19,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "gaming/KnowledgeGroup.h"
 #include "gaming/StaticModel.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;

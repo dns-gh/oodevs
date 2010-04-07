@@ -3,10 +3,10 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)    
 //
 // *****************************************************************************
-
+    
 #include "actions_pch.h"
 #include "FragOrder.h"
 #include "clients_kernel/Tools.h"
@@ -14,7 +14,7 @@
 #include "clients_kernel/FragOrderType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "protocol/simulationsenders.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include <xeumeuleu/xml.h>
 

@@ -10,7 +10,7 @@
 #ifndef __NoopPublisher_h_
 #define __NoopPublisher_h_
 
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "SimulationPublisher_ABC.h"
 
 //using namespace MsgsClientToSim;

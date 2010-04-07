@@ -39,9 +39,12 @@ public:
 
     //! @name Operations
     //@{
-    virtual const PHY_Lighting& GetLighting() const;
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message );
-    virtual void OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& message );
+    virtual const PHY_Lighting&  GetLighting() const;
+    virtual void OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGlobalMeteo& message );    
+    virtual void OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message );    
+    virtual void OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& message );
+    const PHY_Meteo* GetMeteo( const geometry::Point2f& point ) const;
+    void Purge();
     //@}
 
 protected:
@@ -65,10 +68,11 @@ private:
     typedef T_MeteoList::iterator       IT_MeteoList;
     //@}
 
+    //@}
+
 private:
     //! @name Member data
     //@{
-    kernel::CoordinateConverter_ABC& converter_;
     std::auto_ptr< PHY_Meteo >       pGlobalMeteo_;
     T_MeteoList                      meteos_; 
     //@}

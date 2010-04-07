@@ -10,7 +10,7 @@
 #include "dispatcher_pch.h"
 #include "UrbanKnowledge.h"
 #include "Automat.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Model_ABC.h"
 #include "Side.h"
 #include "UrbanObject.h"

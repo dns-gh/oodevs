@@ -18,7 +18,7 @@
 #include "dispatcher/SimulationPublisher_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include "protocol/protocol.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.h>
 

@@ -141,7 +141,8 @@ GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient , ActionCreateFireOrderAck
 // LTO end
 
 GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ControlGlobalMeteo                            , control_global_meteo                              )
-GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ControlLocalMeteo                             , control_local_meteo                               )
+GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ControlLocalMeteoCreation                     , control_local_meteo_creation                      )
+GENERATE_ASN_MSG_SENDER( SimToClient, MsgsSimToClient, ControlLocalMeteoDestruction                  , control_local_meteo_destruction                   )
 }
 
 #endif // __protocol_ClientSenders_h_

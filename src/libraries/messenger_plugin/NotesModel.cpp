@@ -16,7 +16,7 @@
 #include "IdManager.h"
 #include "Note.h"
 #include "dispatcher/Config.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "MT/MT_Logger/MT_Logger_lib.h"
 #include <boost/algorithm/string.hpp>
 #include <boost/bind.hpp>

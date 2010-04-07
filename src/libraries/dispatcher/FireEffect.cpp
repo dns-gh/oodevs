@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "FireEffect.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 
 #include "protocol/clientsenders.h"

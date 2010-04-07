@@ -22,7 +22,7 @@
 #include "SupplyRouteAttribute.h"
 #include "LogisticAttribute.h"
 #include "ToxicCloudAttribute.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "protocol/clientsenders.h"

@@ -15,7 +15,7 @@
 #include "DrawingsModel.h"
 #include "NotesModel.h" // LTO
 #include "Chat.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
 #include "protocol/MessengerSenders.h"

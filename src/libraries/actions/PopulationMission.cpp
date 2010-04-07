@@ -13,7 +13,7 @@
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/OrderType.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/Publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace Common;
 

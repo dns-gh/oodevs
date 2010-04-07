@@ -14,7 +14,7 @@
 #include "Model.h"
 #include "ClientsNetworker.h"
 #include "Config.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 //#include "tools/AsnMessageDecoder.h"
 //#include "tools/AsnMessageEncoder.h"
 #include "protocol/Protocol.h"

@@ -16,7 +16,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "protocol/simulationsenders.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace kernel;
 

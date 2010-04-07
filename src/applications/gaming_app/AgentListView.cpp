@@ -18,7 +18,7 @@
 #include "gaming/KnowledgeGroupHierarchies.h" // LTO
 #include "icons.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/publisher_ABC.h"
+#include "protocol/ServerPublisher_ABC.h"
 
 using namespace kernel;
 

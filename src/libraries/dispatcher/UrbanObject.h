@@ -80,7 +80,6 @@ public:
     Localisation                localisation_;
     unsigned long               id_;
     T_UrbanObjectAttributes     attributes_;
-
 };
 
 }

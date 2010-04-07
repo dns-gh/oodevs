@@ -11,7 +11,7 @@
 #include "Chat.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "dispatcher/Profile_ABC.h"
-#include "dispatcher/ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
 
 using namespace plugins::messenger;

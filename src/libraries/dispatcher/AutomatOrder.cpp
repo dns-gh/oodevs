@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "AutomatOrder.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Automat.h"
 
 #include "protocol/clientsenders.h"

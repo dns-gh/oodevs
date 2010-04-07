@@ -544,9 +544,12 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgControlGlobalMeteo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgControlGlobalMeteo_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgControlLocalMeteo_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* MsgControlLocalMeteoCreation_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgControlLocalMeteo_reflection_ = NULL;
+  MsgControlLocalMeteoCreation_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MsgControlLocalMeteoDestruction_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MsgControlLocalMeteoDestruction_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgSimToClient_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgSimToClient_reflection_ = NULL;
@@ -3498,8 +3501,9 @@ void protobuf_AssignDesc_SimToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgKnowledgeGroupDestruction));
   MsgControlGlobalMeteo_descriptor_ = file->message_type(165);
-  static const int MsgControlGlobalMeteo_offsets_[1] = {
+  static const int MsgControlGlobalMeteo_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlGlobalMeteo, attributes_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlGlobalMeteo, oid_),
   };
   MsgControlGlobalMeteo_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -3512,24 +3516,40 @@ void protobuf_AssignDesc_SimToClient_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlGlobalMeteo));
-  MsgControlLocalMeteo_descriptor_ = file->message_type(166);
-  static const int MsgControlLocalMeteo_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, top_left_coordinate_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, bottom_right_coordinate_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, attributes_),
+  MsgControlLocalMeteoCreation_descriptor_ = file->message_type(166);
+  static const int MsgControlLocalMeteoCreation_offsets_[4] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoCreation, oid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoCreation, top_left_coordinate_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoCreation, bottom_right_coordinate_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoCreation, attributes_),
   };
-  MsgControlLocalMeteo_reflection_ =
+  MsgControlLocalMeteoCreation_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgControlLocalMeteo_descriptor_,
-      MsgControlLocalMeteo::default_instance_,
-      MsgControlLocalMeteo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, _unknown_fields_),
+      MsgControlLocalMeteoCreation_descriptor_,
+      MsgControlLocalMeteoCreation::default_instance_,
+      MsgControlLocalMeteoCreation_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoCreation, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoCreation, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgControlLocalMeteo));
-  MsgSimToClient_descriptor_ = file->message_type(167);
+      sizeof(MsgControlLocalMeteoCreation));
+  MsgControlLocalMeteoDestruction_descriptor_ = file->message_type(167);
+  static const int MsgControlLocalMeteoDestruction_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoDestruction, oid_),
+  };
+  MsgControlLocalMeteoDestruction_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MsgControlLocalMeteoDestruction_descriptor_,
+      MsgControlLocalMeteoDestruction::default_instance_,
+      MsgControlLocalMeteoDestruction_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoDestruction, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteoDestruction, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MsgControlLocalMeteoDestruction));
+  MsgSimToClient_descriptor_ = file->message_type(168);
   static const int MsgSimToClient_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient, context_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient, message_),
@@ -3546,7 +3566,7 @@ void protobuf_AssignDesc_SimToClient_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgSimToClient));
   MsgSimToClient_Content_descriptor_ = MsgSimToClient_descriptor_->nested_type(0);
-  static const int MsgSimToClient_Content_offsets_[122] = {
+  static const int MsgSimToClient_Content_offsets_[123] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, unit_order_ack_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, automat_order_ack_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, population_order_ack_),
@@ -3668,7 +3688,8 @@ void protobuf_AssignDesc_SimToClient_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, knowledge_group_destruction_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, action_create_fire_order_ack_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, control_global_meteo_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, control_local_meteo_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, control_local_meteo_creation_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSimToClient_Content, control_local_meteo_destruction_),
   };
   MsgSimToClient_Content_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -4039,7 +4060,9 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgControlGlobalMeteo_descriptor_, &MsgControlGlobalMeteo::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgControlLocalMeteo_descriptor_, &MsgControlLocalMeteo::default_instance());
+    MsgControlLocalMeteoCreation_descriptor_, &MsgControlLocalMeteoCreation::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MsgControlLocalMeteoDestruction_descriptor_, &MsgControlLocalMeteoDestruction::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgSimToClient_descriptor_, &MsgSimToClient::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -4391,8 +4414,10 @@ void protobuf_ShutdownFile_SimToClient_2eproto() {
   delete MsgKnowledgeGroupDestruction_reflection_;
   delete MsgControlGlobalMeteo::default_instance_;
   delete MsgControlGlobalMeteo_reflection_;
-  delete MsgControlLocalMeteo::default_instance_;
-  delete MsgControlLocalMeteo_reflection_;
+  delete MsgControlLocalMeteoCreation::default_instance_;
+  delete MsgControlLocalMeteoCreation_reflection_;
+  delete MsgControlLocalMeteoDestruction::default_instance_;
+  delete MsgControlLocalMeteoDestruction_reflection_;
   delete MsgSimToClient::default_instance_;
   delete MsgSimToClient_reflection_;
   delete MsgSimToClient_Content::default_instance_;
@@ -5034,255 +5059,259 @@ void protobuf_AddDesc_SimToClient_2eproto() {
     " \002(\r\022@\n\nerror_code\030\002 \002(\0162,.MsgsSimToClie"
     "nt.KnowledgeGroupAck.ErrorCode\"=\n\034MsgKno"
     "wledgeGroupDestruction\022\013\n\003oid\030\001 \002(\r\022\020\n\010o"
-    "id_camp\030\002 \002(\r\"G\n\025MsgControlGlobalMeteo\022."
+    "id_camp\030\002 \002(\r\"T\n\025MsgControlGlobalMeteo\022."
     "\n\nattributes\030\001 \002(\0132\032.Common.MsgMeteoAttr"
-    "ibutes\"\266\001\n\024MsgControlLocalMeteo\0224\n\023top_l"
-    "eft_coordinate\030\001 \001(\0132\027.Common.MsgCoordLa"
-    "tLong\0228\n\027bottom_right_coordinate\030\002 \001(\0132\027"
-    ".Common.MsgCoordLatLong\022.\n\nattributes\030\003 "
-    "\001(\0132\032.Common.MsgMeteoAttributes\"\362G\n\016MsgS"
-    "imToClient\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007messag"
-    "e\030\002 \002(\0132\'.MsgsSimToClient.MsgSimToClient"
-    ".Content\032\221G\n\007Content\0228\n\016unit_order_ack\030\001"
-    " \001(\0132 .MsgsSimToClient.MsgUnitOrderAck\022>"
-    "\n\021automat_order_ack\030\002 \001(\0132#.MsgsSimToCli"
-    "ent.MsgAutomatOrderAck\022D\n\024population_ord"
-    "er_ack\030\003 \001(\0132&.MsgsSimToClient.MsgPopula"
-    "tionOrderAck\0228\n\016frag_order_ack\030\004 \001(\0132 .M"
-    "sgsSimToClient.MsgFragOrderAck\022C\n\024set_au"
-    "tomat_mode_ack\030\005 \001(\0132%.MsgsSimToClient.M"
-    "sgSetAutomatModeAck\022M\n\031unit_creation_req"
-    "uest_ack\030\006 \001(\0132*.MsgsSimToClient.MsgUnit"
-    "CreationRequestAck\022E\n\025unit_magic_action_"
-    "ack\030\007 \001(\0132&.MsgsSimToClient.MsgUnitMagic"
-    "ActionAck\022I\n\027object_magic_action_ack\030\010 \001"
-    "(\0132(.MsgsSimToClient.MsgObjectMagicActio"
-    "nAck\022Q\n\033population_magic_action_ack\030\t \001("
-    "\0132,.MsgsSimToClient.MsgPopulationMagicAc"
-    "tionAck\022D\n\024change_diplomacy_ack\030\n \001(\0132&."
-    "MsgsSimToClient.MsgChangeDiplomacyAck\022^\n"
-    "\"automat_change_knowledge_group_ack\030\013 \001("
-    "\01322.MsgsSimToClient.MsgAutomatChangeKnow"
-    "ledgeGroupAck\022\\\n!automat_change_logistic"
-    "_links_ack\030\014 \001(\01321.MsgsSimToClient.MsgAu"
-    "tomatChangeLogisticLinksAck\022Q\n\033automat_c"
-    "hange_superior_ack\030\r \001(\0132,.MsgsSimToClie"
-    "nt.MsgAutomatChangeSuperiorAck\022K\n\030unit_c"
-    "hange_superior_ack\030\016 \001(\0132).MsgsSimToClie"
-    "nt.MsgUnitChangeSuperiorAck\022J\n\030log_suppl"
-    "y_push_flow_ack\030\017 \001(\0132(.MsgsSimToClient."
-    "MsgLogSupplyPushFlowAck\022R\n\034log_supply_ch"
-    "ange_quotas_ack\030\020 \001(\0132,.MsgsSimToClient."
-    "MsgLogSupplyChangeQuotasAck\022C\n\023control_i"
-    "nformation\030\021 \001(\0132&.MsgsSimToClient.MsgCo"
-    "ntrolInformation\022V\n\035control_profiling_in"
-    "formation\030\022 \001(\0132/.MsgsSimToClient.MsgCon"
-    "trolProfilingInformation\022@\n\022control_begi"
-    "n_tick\030\023 \001(\0132$.MsgsSimToClient.MsgContro"
-    "lBeginTick\022<\n\020control_end_tick\030\024 \001(\0132\".M"
-    "sgsSimToClient.MsgControlEndTick\022<\n\020cont"
-    "rol_stop_ack\030\025 \001(\0132\".MsgsSimToClient.Msg"
-    "ControlStopAck\022>\n\021control_pause_ack\030\026 \001("
-    "\0132#.MsgsSimToClient.MsgControlPauseAck\022@"
-    "\n\022control_resume_ack\030\027 \001(\0132$.MsgsSimToCl"
-    "ient.MsgControlResumeAck\022V\n\036control_chan"
-    "ge_time_factor_ack\030\030 \001(\0132..MsgsSimToClie"
-    "nt.MsgControlChangeTimeFactorAck\022R\n\034cont"
-    "rol_date_time_change_ack\030\031 \001(\0132,.MsgsSim"
-    "ToClient.MsgControlDatetimeChangeAck\022Q\n\033"
-    "control_checkpoint_save_end\030\032 \001(\0132,.Msgs"
-    "SimToClient.MsgControlCheckPointSaveEnd\022"
-    "8\n\022formation_creation\030\033 \001(\0132\034.Common.Msg"
-    "FormationCreation\0227\n\rside_creation\030\034 \001(\013"
-    "2 .MsgsSimToClient.MsgTeamCreation\022=\n\020au"
-    "tomat_creation\030\035 \001(\0132#.MsgsSimToClient.M"
-    "sgAutomatCreation\022A\n\022automat_attributes\030"
-    "\036 \001(\0132%.MsgsSimToClient.MsgAutomatAttrib"
-    "utes\0227\n\runit_creation\030\037 \001(\0132 .MsgsSimToC"
-    "lient.MsgUnitCreation\022;\n\017unit_attributes"
-    "\030  \001(\0132\".MsgsSimToClient.MsgUnitAttribut"
-    "es\0227\n\runit_pathfind\030! \001(\0132 .MsgsSimToCli"
-    "ent.MsgUnitPathFind\022=\n\020unit_destruction\030"
-    "\" \001(\0132#.MsgsSimToClient.MsgUnitDestructi"
-    "on\022F\n\025unit_environment_type\030# \001(\0132\'.Msgs"
-    "SimToClient.MsgUnitEnvironmentType\0224\n\020ch"
-    "ange_diplomacy\030$ \001(\0132\032.Common.MsgChangeD"
-    "iplomacy\022;\n\024unit_change_superior\030% \001(\0132\035"
-    ".Common.MsgUnitChangeSuperior\022L\n\035automat"
-    "_change_logistic_links\030& \001(\0132%.Common.Ms"
-    "gAutomatChangeLogisticLinks\022N\n\036automat_c"
-    "hange_knowledge_group\030\' \001(\0132&.Common.Msg"
-    "AutomatChangeKnowledgeGroup\022A\n\027automat_c"
-    "hange_superior\030( \001(\0132 .Common.MsgAutomat"
-    "ChangeSuperior\022J\n\027unit_knowledge_creatio"
-    "n\030) \001(\0132).MsgsSimToClient.MsgUnitKnowled"
-    "geCreation\022F\n\025unit_knowledge_update\030* \001("
-    "\0132\'.MsgsSimToClient.MsgUnitKnowledgeUpda"
-    "te\022P\n\032unit_knowledge_destruction\030+ \001(\0132,"
-    ".MsgsSimToClient.MsgUnitKnowledgeDestruc"
-    "tion\022:\n\017start_unit_fire\030, \001(\0132!.MsgsSimT"
-    "oClient.MsgStartUnitFire\0228\n\016stop_unit_fi"
-    "re\030- \001(\0132 .MsgsSimToClient.MsgStopUnitFi"
-    "re\022F\n\025start_population_fire\030. \001(\0132\'.Msgs"
-    "SimToClient.MsgStartPopulationFire\022D\n\024st"
-    "op_population_fire\030/ \001(\0132&.MsgsSimToClie"
-    "nt.MsgStopPopulationFire\0220\n\texplosion\0300 "
-    "\001(\0132\035.MsgsSimToClient.MsgExplosion\022>\n\021st"
-    "art_fire_effect\0301 \001(\0132#.MsgsSimToClient."
-    "MsgStartFireEffect\022<\n\020stop_fire_effect\0302"
-    " \001(\0132\".MsgsSimToClient.MsgStopFireEffect"
-    "\022*\n\006report\0303 \001(\0132\032.MsgsSimToClient.MsgRe"
-    "port\022?\n\021invalidate_report\0304 \001(\0132$.MsgsSi"
-    "mToClient.MsgInvalidateReport\022(\n\005trace\0305"
-    " \001(\0132\031.MsgsSimToClient.MsgTrace\022=\n\020decis"
-    "ional_state\0306 \001(\0132#.MsgsSimToClient.MsgD"
-    "ecisionalState\0225\n\014debug_points\0307 \001(\0132\037.M"
-    "sgsSimToClient.MsgDebugPoints\022>\n\021unit_vi"
-    "sion_cones\0308 \001(\0132#.MsgsSimToClient.MsgUn"
-    "itVisionCones\0229\n\016unit_detection\0309 \001(\0132!."
-    "MsgsSimToClient.MsgUnitDetection\022=\n\020obje"
-    "ct_detection\030: \001(\0132#.MsgsSimToClient.Msg"
-    "ObjectDetection\022`\n\"population_concentrat"
-    "ion_detection\030; \001(\01324.MsgsSimToClient.Ms"
-    "gPopulationConcentrationDetection\022N\n\031pop"
-    "ulation_flow_detection\030< \001(\0132+.MsgsSimTo"
-    "Client.MsgPopulationFlowDetection\022(\n\nuni"
-    "t_order\030= \001(\0132\024.Common.MsgUnitOrder\022.\n\ra"
-    "utomat_order\030> \001(\0132\027.Common.MsgAutomatOr"
-    "der\0224\n\020population_order\030? \001(\0132\032.Common.M"
-    "sgPopulationOrder\022;\n\017object_creation\030@ \001"
-    "(\0132\".MsgsSimToClient.MsgObjectCreation\022A"
-    "\n\022object_destruction\030A \001(\0132%.MsgsSimToCl"
-    "ient.MsgObjectDestruction\0227\n\robject_upda"
-    "te\030B \001(\0132 .MsgsSimToClient.MsgObjectUpda"
-    "te\022N\n\031object_knowledge_creation\030C \001(\0132+."
-    "MsgsSimToClient.MsgObjectKnowledgeCreati"
-    "on\022J\n\027object_knowledge_update\030D \001(\0132).Ms"
-    "gsSimToClient.MsgObjectKnowledgeUpdate\022T"
-    "\n\034object_knowledge_destruction\030E \001(\0132..M"
-    "sgsSimToClient.MsgObjectKnowledgeDestruc"
-    "tion\022U\n\035log_medical_handling_creation\030F "
-    "\001(\0132..MsgsSimToClient.MsgLogMedicalHandl"
-    "ingCreation\022Q\n\033log_medical_handling_upda"
-    "te\030G \001(\0132,.MsgsSimToClient.MsgLogMedical"
-    "HandlingUpdate\022[\n log_medical_handling_d"
-    "estruction\030H \001(\01321.MsgsSimToClient.MsgLo"
-    "gMedicalHandlingDestruction\022>\n\021log_medic"
-    "al_state\030I \001(\0132#.MsgsSimToClient.MsgLogM"
-    "edicalState\022]\n!log_maintenance_handling_"
-    "creation\030J \001(\01322.MsgsSimToClient.MsgLogM"
-    "aintenanceHandlingCreation\022Y\n\037log_mainte"
-    "nance_handling_update\030K \001(\01320.MsgsSimToC"
-    "lient.MsgLogMaintenanceHandlingUpdate\022c\n"
-    "$log_maintenance_handling_destruction\030L "
-    "\001(\01325.MsgsSimToClient.MsgLogMaintenanceH"
-    "andlingDestruction\022F\n\025log_maintenance_st"
-    "ate\030M \001(\0132\'.MsgsSimToClient.MsgLogMainte"
-    "nanceState\022S\n\034log_supply_handling_creati"
-    "on\030N \001(\0132-.MsgsSimToClient.MsgLogSupplyH"
-    "andlingCreation\022O\n\032log_supply_handling_u"
-    "pdate\030O \001(\0132+.MsgsSimToClient.MsgLogSupp"
-    "lyHandlingUpdate\022Y\n\037log_supply_handling_"
-    "destruction\030P \001(\01320.MsgsSimToClient.MsgL"
-    "ogSupplyHandlingDestruction\022<\n\020log_suppl"
-    "y_state\030Q \001(\0132\".MsgsSimToClient.MsgLogSu"
-    "pplyState\022>\n\021log_supply_quotas\030R \001(\0132#.M"
-    "sgsSimToClient.MsgLogSupplyQuotas\022C\n\023pop"
-    "ulation_creation\030S \001(\0132&.MsgsSimToClient"
-    ".MsgPopulationCreation\022?\n\021population_upd"
-    "ate\030T \001(\0132$.MsgsSimToClient.MsgPopulatio"
-    "nUpdate\022^\n!population_concentration_crea"
-    "tion\030U \001(\01323.MsgsSimToClient.MsgPopulati"
-    "onConcentrationCreation\022d\n$population_co"
-    "ncentration_destruction\030V \001(\01326.MsgsSimT"
-    "oClient.MsgPopulationConcentrationDestru"
-    "ction\022Z\n\037population_concentration_update"
-    "\030W \001(\01321.MsgsSimToClient.MsgPopulationCo"
-    "ncentrationUpdate\022L\n\030population_flow_cre"
-    "ation\030X \001(\0132*.MsgsSimToClient.MsgPopulat"
-    "ionFlowCreation\022R\n\033population_flow_destr"
-    "uction\030Y \001(\0132-.MsgsSimToClient.MsgPopula"
-    "tionFlowDestruction\022H\n\026population_flow_u"
-    "pdate\030Z \001(\0132(.MsgsSimToClient.MsgPopulat"
-    "ionFlowUpdate\022V\n\035population_knowledge_cr"
-    "eation\030[ \001(\0132/.MsgsSimToClient.MsgPopula"
-    "tionKnowledgeCreation\022R\n\033population_know"
-    "ledge_update\030\\ \001(\0132-.MsgsSimToClient.Msg"
-    "PopulationKnowledgeUpdate\022\\\n population_"
-    "knowledge_destruction\030] \001(\01322.MsgsSimToC"
-    "lient.MsgPopulationKnowledgeDestruction\022"
-    "q\n+population_concentration_knowledge_cr"
-    "eation\030^ \001(\0132<.MsgsSimToClient.MsgPopula"
-    "tionConcentrationKnowledgeCreation\022w\n.po"
-    "pulation_concentration_knowledge_destruc"
-    "tion\030_ \001(\0132?.MsgsSimToClient.MsgPopulati"
-    "onConcentrationKnowledgeDestruction\022m\n)p"
-    "opulation_concentration_knowledge_update"
-    "\030` \001(\0132:.MsgsSimToClient.MsgPopulationCo"
-    "ncentrationKnowledgeUpdate\022_\n\"population"
-    "_flow_knowledge_creation\030a \001(\01323.MsgsSim"
-    "ToClient.MsgPopulationFlowKnowledgeCreat"
-    "ion\022e\n%population_flow_knowledge_destruc"
-    "tion\030b \001(\01326.MsgsSimToClient.MsgPopulati"
-    "onFlowKnowledgeDestruction\022[\n population"
-    "_flow_knowledge_update\030c \001(\01321.MsgsSimTo"
-    "Client.MsgPopulationFlowKnowledgeUpdate\022"
-    "7\n\rfolk_creation\030d \001(\0132 .MsgsSimToClient"
-    ".MsgFolkCreation\022>\n\021folk_graph_update\030e "
-    "\001(\0132#.MsgsSimToClient.MsgFolkGraphUpdate"
-    "\022K\n\030control_global_meteo_ack\030f \001(\0132).Msg"
-    "sSimToClient.MsgControlGlobalMeteoAck\022I\n"
-    "\027control_local_meteo_ack\030g \001(\0132(.MsgsSim"
-    "ToClient.MsgControlLocalMeteoAck\022U\n\035cont"
-    "rol_checkpoint_save_begin\030h \001(\0132..MsgsSi"
-    "mToClient.MsgControlCheckPointSaveBegin\022"
-    "b\n$control_checkpoint_set_frequency_ack\030"
-    "i \001(\01324.MsgsSimToClient.MsgControlCheckP"
-    "ointSetFrequencyAck\022X\n\037control_checkpoin"
-    "t_save_now_ack\030j \001(\0132/.MsgsSimToClient.M"
-    "sgControlCheckPointSaveNowAck\022Z\n control"
-    "_send_current_state_begin\030k \001(\01320.MsgsSi"
-    "mToClient.MsgControlSendCurrentStateBegi"
-    "n\022V\n\036control_send_current_state_end\030l \001("
-    "\0132..MsgsSimToClient.MsgControlSendCurren"
-    "tStateEnd\0229\n\016urban_creation\030m \001(\0132!.Msgs"
-    "SimToClient.MsgUrbanCreation\022L\n\030urban_kn"
-    "owledge_creation\030n \001(\0132*.MsgsSimToClient"
-    ".MsgUrbanKnowledgeCreation\022H\n\026urban_know"
-    "ledge_update\030o \001(\0132(.MsgsSimToClient.Msg"
-    "UrbanKnowledgeUpdate\022R\n\033urban_knowledge_"
-    "destruction\030p \001(\0132-.MsgsSimToClient.MsgU"
-    "rbanKnowledgeDestruction\022-\n\016stock_resour"
-    "ce\030q \001(\0132\025.Common.StockResource\022;\n\017urban"
-    "_detection\030r \001(\0132\".MsgsSimToClient.MsgUr"
-    "banDetection\022L\n\030knowledge_group_creation"
-    "\030s \001(\0132*.MsgsSimToClient.MsgKnowledgeGro"
-    "upCreation\022H\n\026knowledge_group_update\030t \001"
-    "(\0132(.MsgsSimToClient.MsgKnowledgeGroupUp"
-    "date\022S\n\034knowledge_group_creation_ack\030u \001"
-    "(\0132-.MsgsSimToClient.MsgKnowledgeGroupCr"
-    "eationAck\022O\n\032knowledge_group_update_ack\030"
-    "v \001(\0132+.MsgsSimToClient.MsgKnowledgeGrou"
-    "pUpdateAck\022R\n\033knowledge_group_destructio"
-    "n\030w \001(\0132-.MsgsSimToClient.MsgKnowledgeGr"
-    "oupDestruction\022R\n\034action_create_fire_ord"
-    "er_ack\030x \001(\0132,.MsgsSimToClient.MsgAction"
-    "CreateFireOrderAck\022D\n\024control_global_met"
-    "eo\030y \001(\0132&.MsgsSimToClient.MsgControlGlo"
-    "balMeteo\022B\n\023control_local_meteo\030z \001(\0132%."
-    "MsgsSimToClient.MsgControlLocalMeteo*\217\002\n"
-    "\033EnumLogSupplyHandlingStatus\022\035\n\031convoi_e"
-    "n_attente_camions\020\001\022\027\n\023convoi_constituti"
-    "on\020\002\022,\n(convoi_deplacement_vers_point_ch"
-    "argement\020\003\022\025\n\021convoi_chargement\020\004\022.\n*con"
-    "voi_deplacement_vers_point_dechargement\020"
-    "\005\022\027\n\023convoi_dechargement\020\006\022\035\n\031convoi_dep"
-    "lacement_retour\020\007\022\013\n\007termine\020\010*V\n\033EnumUn"
-    "itIdentificationLevel\022\016\n\nidentifiee\020\000\022\014\n"
-    "\010reconnue\020\001\022\014\n\010detectee\020\002\022\013\n\007signale\020\003*W"
-    "\n\016EnumReportType\022\013\n\007message\020\000\022\017\n\013operati"
-    "onel\020\001\022\032\n\026evenement_exceptionnel\020\002\022\013\n\007wa"
-    "rning\020\003", 35007);
+    "ibutes\022\013\n\003oid\030\002 \002(\r\"\313\001\n\034MsgControlLocalM"
+    "eteoCreation\022\013\n\003oid\030\001 \002(\r\0224\n\023top_left_co"
+    "ordinate\030\002 \001(\0132\027.Common.MsgCoordLatLong\022"
+    "8\n\027bottom_right_coordinate\030\003 \001(\0132\027.Commo"
+    "n.MsgCoordLatLong\022.\n\nattributes\030\004 \001(\0132\032."
+    "Common.MsgMeteoAttributes\".\n\037MsgControlL"
+    "ocalMeteoDestruction\022\013\n\003oid\030\001 \002(\r\"\336H\n\016Ms"
+    "gSimToClient\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007mess"
+    "age\030\002 \002(\0132\'.MsgsSimToClient.MsgSimToClie"
+    "nt.Content\032\375G\n\007Content\0228\n\016unit_order_ack"
+    "\030\001 \001(\0132 .MsgsSimToClient.MsgUnitOrderAck"
+    "\022>\n\021automat_order_ack\030\002 \001(\0132#.MsgsSimToC"
+    "lient.MsgAutomatOrderAck\022D\n\024population_o"
+    "rder_ack\030\003 \001(\0132&.MsgsSimToClient.MsgPopu"
+    "lationOrderAck\0228\n\016frag_order_ack\030\004 \001(\0132 "
+    ".MsgsSimToClient.MsgFragOrderAck\022C\n\024set_"
+    "automat_mode_ack\030\005 \001(\0132%.MsgsSimToClient"
+    ".MsgSetAutomatModeAck\022M\n\031unit_creation_r"
+    "equest_ack\030\006 \001(\0132*.MsgsSimToClient.MsgUn"
+    "itCreationRequestAck\022E\n\025unit_magic_actio"
+    "n_ack\030\007 \001(\0132&.MsgsSimToClient.MsgUnitMag"
+    "icActionAck\022I\n\027object_magic_action_ack\030\010"
+    " \001(\0132(.MsgsSimToClient.MsgObjectMagicAct"
+    "ionAck\022Q\n\033population_magic_action_ack\030\t "
+    "\001(\0132,.MsgsSimToClient.MsgPopulationMagic"
+    "ActionAck\022D\n\024change_diplomacy_ack\030\n \001(\0132"
+    "&.MsgsSimToClient.MsgChangeDiplomacyAck\022"
+    "^\n\"automat_change_knowledge_group_ack\030\013 "
+    "\001(\01322.MsgsSimToClient.MsgAutomatChangeKn"
+    "owledgeGroupAck\022\\\n!automat_change_logist"
+    "ic_links_ack\030\014 \001(\01321.MsgsSimToClient.Msg"
+    "AutomatChangeLogisticLinksAck\022Q\n\033automat"
+    "_change_superior_ack\030\r \001(\0132,.MsgsSimToCl"
+    "ient.MsgAutomatChangeSuperiorAck\022K\n\030unit"
+    "_change_superior_ack\030\016 \001(\0132).MsgsSimToCl"
+    "ient.MsgUnitChangeSuperiorAck\022J\n\030log_sup"
+    "ply_push_flow_ack\030\017 \001(\0132(.MsgsSimToClien"
+    "t.MsgLogSupplyPushFlowAck\022R\n\034log_supply_"
+    "change_quotas_ack\030\020 \001(\0132,.MsgsSimToClien"
+    "t.MsgLogSupplyChangeQuotasAck\022C\n\023control"
+    "_information\030\021 \001(\0132&.MsgsSimToClient.Msg"
+    "ControlInformation\022V\n\035control_profiling_"
+    "information\030\022 \001(\0132/.MsgsSimToClient.MsgC"
+    "ontrolProfilingInformation\022@\n\022control_be"
+    "gin_tick\030\023 \001(\0132$.MsgsSimToClient.MsgCont"
+    "rolBeginTick\022<\n\020control_end_tick\030\024 \001(\0132\""
+    ".MsgsSimToClient.MsgControlEndTick\022<\n\020co"
+    "ntrol_stop_ack\030\025 \001(\0132\".MsgsSimToClient.M"
+    "sgControlStopAck\022>\n\021control_pause_ack\030\026 "
+    "\001(\0132#.MsgsSimToClient.MsgControlPauseAck"
+    "\022@\n\022control_resume_ack\030\027 \001(\0132$.MsgsSimTo"
+    "Client.MsgControlResumeAck\022V\n\036control_ch"
+    "ange_time_factor_ack\030\030 \001(\0132..MsgsSimToCl"
+    "ient.MsgControlChangeTimeFactorAck\022R\n\034co"
+    "ntrol_date_time_change_ack\030\031 \001(\0132,.MsgsS"
+    "imToClient.MsgControlDatetimeChangeAck\022Q"
+    "\n\033control_checkpoint_save_end\030\032 \001(\0132,.Ms"
+    "gsSimToClient.MsgControlCheckPointSaveEn"
+    "d\0228\n\022formation_creation\030\033 \001(\0132\034.Common.M"
+    "sgFormationCreation\0227\n\rside_creation\030\034 \001"
+    "(\0132 .MsgsSimToClient.MsgTeamCreation\022=\n\020"
+    "automat_creation\030\035 \001(\0132#.MsgsSimToClient"
+    ".MsgAutomatCreation\022A\n\022automat_attribute"
+    "s\030\036 \001(\0132%.MsgsSimToClient.MsgAutomatAttr"
+    "ibutes\0227\n\runit_creation\030\037 \001(\0132 .MsgsSimT"
+    "oClient.MsgUnitCreation\022;\n\017unit_attribut"
+    "es\030  \001(\0132\".MsgsSimToClient.MsgUnitAttrib"
+    "utes\0227\n\runit_pathfind\030! \001(\0132 .MsgsSimToC"
+    "lient.MsgUnitPathFind\022=\n\020unit_destructio"
+    "n\030\" \001(\0132#.MsgsSimToClient.MsgUnitDestruc"
+    "tion\022F\n\025unit_environment_type\030# \001(\0132\'.Ms"
+    "gsSimToClient.MsgUnitEnvironmentType\0224\n\020"
+    "change_diplomacy\030$ \001(\0132\032.Common.MsgChang"
+    "eDiplomacy\022;\n\024unit_change_superior\030% \001(\013"
+    "2\035.Common.MsgUnitChangeSuperior\022L\n\035autom"
+    "at_change_logistic_links\030& \001(\0132%.Common."
+    "MsgAutomatChangeLogisticLinks\022N\n\036automat"
+    "_change_knowledge_group\030\' \001(\0132&.Common.M"
+    "sgAutomatChangeKnowledgeGroup\022A\n\027automat"
+    "_change_superior\030( \001(\0132 .Common.MsgAutom"
+    "atChangeSuperior\022J\n\027unit_knowledge_creat"
+    "ion\030) \001(\0132).MsgsSimToClient.MsgUnitKnowl"
+    "edgeCreation\022F\n\025unit_knowledge_update\030* "
+    "\001(\0132\'.MsgsSimToClient.MsgUnitKnowledgeUp"
+    "date\022P\n\032unit_knowledge_destruction\030+ \001(\013"
+    "2,.MsgsSimToClient.MsgUnitKnowledgeDestr"
+    "uction\022:\n\017start_unit_fire\030, \001(\0132!.MsgsSi"
+    "mToClient.MsgStartUnitFire\0228\n\016stop_unit_"
+    "fire\030- \001(\0132 .MsgsSimToClient.MsgStopUnit"
+    "Fire\022F\n\025start_population_fire\030. \001(\0132\'.Ms"
+    "gsSimToClient.MsgStartPopulationFire\022D\n\024"
+    "stop_population_fire\030/ \001(\0132&.MsgsSimToCl"
+    "ient.MsgStopPopulationFire\0220\n\texplosion\030"
+    "0 \001(\0132\035.MsgsSimToClient.MsgExplosion\022>\n\021"
+    "start_fire_effect\0301 \001(\0132#.MsgsSimToClien"
+    "t.MsgStartFireEffect\022<\n\020stop_fire_effect"
+    "\0302 \001(\0132\".MsgsSimToClient.MsgStopFireEffe"
+    "ct\022*\n\006report\0303 \001(\0132\032.MsgsSimToClient.Msg"
+    "Report\022?\n\021invalidate_report\0304 \001(\0132$.Msgs"
+    "SimToClient.MsgInvalidateReport\022(\n\005trace"
+    "\0305 \001(\0132\031.MsgsSimToClient.MsgTrace\022=\n\020dec"
+    "isional_state\0306 \001(\0132#.MsgsSimToClient.Ms"
+    "gDecisionalState\0225\n\014debug_points\0307 \001(\0132\037"
+    ".MsgsSimToClient.MsgDebugPoints\022>\n\021unit_"
+    "vision_cones\0308 \001(\0132#.MsgsSimToClient.Msg"
+    "UnitVisionCones\0229\n\016unit_detection\0309 \001(\0132"
+    "!.MsgsSimToClient.MsgUnitDetection\022=\n\020ob"
+    "ject_detection\030: \001(\0132#.MsgsSimToClient.M"
+    "sgObjectDetection\022`\n\"population_concentr"
+    "ation_detection\030; \001(\01324.MsgsSimToClient."
+    "MsgPopulationConcentrationDetection\022N\n\031p"
+    "opulation_flow_detection\030< \001(\0132+.MsgsSim"
+    "ToClient.MsgPopulationFlowDetection\022(\n\nu"
+    "nit_order\030= \001(\0132\024.Common.MsgUnitOrder\022.\n"
+    "\rautomat_order\030> \001(\0132\027.Common.MsgAutomat"
+    "Order\0224\n\020population_order\030? \001(\0132\032.Common"
+    ".MsgPopulationOrder\022;\n\017object_creation\030@"
+    " \001(\0132\".MsgsSimToClient.MsgObjectCreation"
+    "\022A\n\022object_destruction\030A \001(\0132%.MsgsSimTo"
+    "Client.MsgObjectDestruction\0227\n\robject_up"
+    "date\030B \001(\0132 .MsgsSimToClient.MsgObjectUp"
+    "date\022N\n\031object_knowledge_creation\030C \001(\0132"
+    "+.MsgsSimToClient.MsgObjectKnowledgeCrea"
+    "tion\022J\n\027object_knowledge_update\030D \001(\0132)."
+    "MsgsSimToClient.MsgObjectKnowledgeUpdate"
+    "\022T\n\034object_knowledge_destruction\030E \001(\0132."
+    ".MsgsSimToClient.MsgObjectKnowledgeDestr"
+    "uction\022U\n\035log_medical_handling_creation\030"
+    "F \001(\0132..MsgsSimToClient.MsgLogMedicalHan"
+    "dlingCreation\022Q\n\033log_medical_handling_up"
+    "date\030G \001(\0132,.MsgsSimToClient.MsgLogMedic"
+    "alHandlingUpdate\022[\n log_medical_handling"
+    "_destruction\030H \001(\01321.MsgsSimToClient.Msg"
+    "LogMedicalHandlingDestruction\022>\n\021log_med"
+    "ical_state\030I \001(\0132#.MsgsSimToClient.MsgLo"
+    "gMedicalState\022]\n!log_maintenance_handlin"
+    "g_creation\030J \001(\01322.MsgsSimToClient.MsgLo"
+    "gMaintenanceHandlingCreation\022Y\n\037log_main"
+    "tenance_handling_update\030K \001(\01320.MsgsSimT"
+    "oClient.MsgLogMaintenanceHandlingUpdate\022"
+    "c\n$log_maintenance_handling_destruction\030"
+    "L \001(\01325.MsgsSimToClient.MsgLogMaintenanc"
+    "eHandlingDestruction\022F\n\025log_maintenance_"
+    "state\030M \001(\0132\'.MsgsSimToClient.MsgLogMain"
+    "tenanceState\022S\n\034log_supply_handling_crea"
+    "tion\030N \001(\0132-.MsgsSimToClient.MsgLogSuppl"
+    "yHandlingCreation\022O\n\032log_supply_handling"
+    "_update\030O \001(\0132+.MsgsSimToClient.MsgLogSu"
+    "pplyHandlingUpdate\022Y\n\037log_supply_handlin"
+    "g_destruction\030P \001(\01320.MsgsSimToClient.Ms"
+    "gLogSupplyHandlingDestruction\022<\n\020log_sup"
+    "ply_state\030Q \001(\0132\".MsgsSimToClient.MsgLog"
+    "SupplyState\022>\n\021log_supply_quotas\030R \001(\0132#"
+    ".MsgsSimToClient.MsgLogSupplyQuotas\022C\n\023p"
+    "opulation_creation\030S \001(\0132&.MsgsSimToClie"
+    "nt.MsgPopulationCreation\022?\n\021population_u"
+    "pdate\030T \001(\0132$.MsgsSimToClient.MsgPopulat"
+    "ionUpdate\022^\n!population_concentration_cr"
+    "eation\030U \001(\01323.MsgsSimToClient.MsgPopula"
+    "tionConcentrationCreation\022d\n$population_"
+    "concentration_destruction\030V \001(\01326.MsgsSi"
+    "mToClient.MsgPopulationConcentrationDest"
+    "ruction\022Z\n\037population_concentration_upda"
+    "te\030W \001(\01321.MsgsSimToClient.MsgPopulation"
+    "ConcentrationUpdate\022L\n\030population_flow_c"
+    "reation\030X \001(\0132*.MsgsSimToClient.MsgPopul"
+    "ationFlowCreation\022R\n\033population_flow_des"
+    "truction\030Y \001(\0132-.MsgsSimToClient.MsgPopu"
+    "lationFlowDestruction\022H\n\026population_flow"
+    "_update\030Z \001(\0132(.MsgsSimToClient.MsgPopul"
+    "ationFlowUpdate\022V\n\035population_knowledge_"
+    "creation\030[ \001(\0132/.MsgsSimToClient.MsgPopu"
+    "lationKnowledgeCreation\022R\n\033population_kn"
+    "owledge_update\030\\ \001(\0132-.MsgsSimToClient.M"
+    "sgPopulationKnowledgeUpdate\022\\\n populatio"
+    "n_knowledge_destruction\030] \001(\01322.MsgsSimT"
+    "oClient.MsgPopulationKnowledgeDestructio"
+    "n\022q\n+population_concentration_knowledge_"
+    "creation\030^ \001(\0132<.MsgsSimToClient.MsgPopu"
+    "lationConcentrationKnowledgeCreation\022w\n."
+    "population_concentration_knowledge_destr"
+    "uction\030_ \001(\0132?.MsgsSimToClient.MsgPopula"
+    "tionConcentrationKnowledgeDestruction\022m\n"
+    ")population_concentration_knowledge_upda"
+    "te\030` \001(\0132:.MsgsSimToClient.MsgPopulation"
+    "ConcentrationKnowledgeUpdate\022_\n\"populati"
+    "on_flow_knowledge_creation\030a \001(\01323.MsgsS"
+    "imToClient.MsgPopulationFlowKnowledgeCre"
+    "ation\022e\n%population_flow_knowledge_destr"
+    "uction\030b \001(\01326.MsgsSimToClient.MsgPopula"
+    "tionFlowKnowledgeDestruction\022[\n populati"
+    "on_flow_knowledge_update\030c \001(\01321.MsgsSim"
+    "ToClient.MsgPopulationFlowKnowledgeUpdat"
+    "e\0227\n\rfolk_creation\030d \001(\0132 .MsgsSimToClie"
+    "nt.MsgFolkCreation\022>\n\021folk_graph_update\030"
+    "e \001(\0132#.MsgsSimToClient.MsgFolkGraphUpda"
+    "te\022K\n\030control_global_meteo_ack\030f \001(\0132).M"
+    "sgsSimToClient.MsgControlGlobalMeteoAck\022"
+    "I\n\027control_local_meteo_ack\030g \001(\0132(.MsgsS"
+    "imToClient.MsgControlLocalMeteoAck\022U\n\035co"
+    "ntrol_checkpoint_save_begin\030h \001(\0132..Msgs"
+    "SimToClient.MsgControlCheckPointSaveBegi"
+    "n\022b\n$control_checkpoint_set_frequency_ac"
+    "k\030i \001(\01324.MsgsSimToClient.MsgControlChec"
+    "kPointSetFrequencyAck\022X\n\037control_checkpo"
+    "int_save_now_ack\030j \001(\0132/.MsgsSimToClient"
+    ".MsgControlCheckPointSaveNowAck\022Z\n contr"
+    "ol_send_current_state_begin\030k \001(\01320.Msgs"
+    "SimToClient.MsgControlSendCurrentStateBe"
+    "gin\022V\n\036control_send_current_state_end\030l "
+    "\001(\0132..MsgsSimToClient.MsgControlSendCurr"
+    "entStateEnd\0229\n\016urban_creation\030m \001(\0132!.Ms"
+    "gsSimToClient.MsgUrbanCreation\022L\n\030urban_"
+    "knowledge_creation\030n \001(\0132*.MsgsSimToClie"
+    "nt.MsgUrbanKnowledgeCreation\022H\n\026urban_kn"
+    "owledge_update\030o \001(\0132(.MsgsSimToClient.M"
+    "sgUrbanKnowledgeUpdate\022R\n\033urban_knowledg"
+    "e_destruction\030p \001(\0132-.MsgsSimToClient.Ms"
+    "gUrbanKnowledgeDestruction\022-\n\016stock_reso"
+    "urce\030q \001(\0132\025.Common.StockResource\022;\n\017urb"
+    "an_detection\030r \001(\0132\".MsgsSimToClient.Msg"
+    "UrbanDetection\022L\n\030knowledge_group_creati"
+    "on\030s \001(\0132*.MsgsSimToClient.MsgKnowledgeG"
+    "roupCreation\022H\n\026knowledge_group_update\030t"
+    " \001(\0132(.MsgsSimToClient.MsgKnowledgeGroup"
+    "Update\022S\n\034knowledge_group_creation_ack\030u"
+    " \001(\0132-.MsgsSimToClient.MsgKnowledgeGroup"
+    "CreationAck\022O\n\032knowledge_group_update_ac"
+    "k\030v \001(\0132+.MsgsSimToClient.MsgKnowledgeGr"
+    "oupUpdateAck\022R\n\033knowledge_group_destruct"
+    "ion\030w \001(\0132-.MsgsSimToClient.MsgKnowledge"
+    "GroupDestruction\022R\n\034action_create_fire_o"
+    "rder_ack\030x \001(\0132,.MsgsSimToClient.MsgActi"
+    "onCreateFireOrderAck\022D\n\024control_global_m"
+    "eteo\030y \001(\0132&.MsgsSimToClient.MsgControlG"
+    "lobalMeteo\022S\n\034control_local_meteo_creati"
+    "on\030z \001(\0132-.MsgsSimToClient.MsgControlLoc"
+    "alMeteoCreation\022Y\n\037control_local_meteo_d"
+    "estruction\030{ \001(\01320.MsgsSimToClient.MsgCo"
+    "ntrolLocalMeteoDestruction*\217\002\n\033EnumLogSu"
+    "pplyHandlingStatus\022\035\n\031convoi_en_attente_"
+    "camions\020\001\022\027\n\023convoi_constitution\020\002\022,\n(co"
+    "nvoi_deplacement_vers_point_chargement\020\003"
+    "\022\025\n\021convoi_chargement\020\004\022.\n*convoi_deplac"
+    "ement_vers_point_dechargement\020\005\022\027\n\023convo"
+    "i_dechargement\020\006\022\035\n\031convoi_deplacement_r"
+    "etour\020\007\022\013\n\007termine\020\010*V\n\033EnumUnitIdentifi"
+    "cationLevel\022\016\n\nidentifiee\020\000\022\014\n\010reconnue\020"
+    "\001\022\014\n\010detectee\020\002\022\013\n\007signale\020\003*W\n\016EnumRepo"
+    "rtType\022\013\n\007message\020\000\022\017\n\013operationel\020\001\022\032\n\026"
+    "evenement_exceptionnel\020\002\022\013\n\007warning\020\003", 35197);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "SimToClient.proto", &protobuf_RegisterTypes);
   OrderAck::default_instance_ = new OrderAck();
@@ -5456,7 +5485,8 @@ void protobuf_AddDesc_SimToClient_2eproto() {
   MsgKnowledgeGroupUpdateAck::default_instance_ = new MsgKnowledgeGroupUpdateAck();
   MsgKnowledgeGroupDestruction::default_instance_ = new MsgKnowledgeGroupDestruction();
   MsgControlGlobalMeteo::default_instance_ = new MsgControlGlobalMeteo();
-  MsgControlLocalMeteo::default_instance_ = new MsgControlLocalMeteo();
+  MsgControlLocalMeteoCreation::default_instance_ = new MsgControlLocalMeteoCreation();
+  MsgControlLocalMeteoDestruction::default_instance_ = new MsgControlLocalMeteoDestruction();
   MsgSimToClient::default_instance_ = new MsgSimToClient();
   MsgSimToClient_Content::default_instance_ = new MsgSimToClient_Content();
   OrderAck::default_instance_->InitAsDefaultInstance();
@@ -5630,7 +5660,8 @@ void protobuf_AddDesc_SimToClient_2eproto() {
   MsgKnowledgeGroupUpdateAck::default_instance_->InitAsDefaultInstance();
   MsgKnowledgeGroupDestruction::default_instance_->InitAsDefaultInstance();
   MsgControlGlobalMeteo::default_instance_->InitAsDefaultInstance();
-  MsgControlLocalMeteo::default_instance_->InitAsDefaultInstance();
+  MsgControlLocalMeteoCreation::default_instance_->InitAsDefaultInstance();
+  MsgControlLocalMeteoDestruction::default_instance_->InitAsDefaultInstance();
   MsgSimToClient::default_instance_->InitAsDefaultInstance();
   MsgSimToClient_Content::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_SimToClient_2eproto);
@@ -55669,6 +55700,7 @@ void MsgKnowledgeGroupDestruction::Swap(MsgKnowledgeGroupDestruction* other) {
 
 #ifndef _MSC_VER
 const int MsgControlGlobalMeteo::kAttributesFieldNumber;
+const int MsgControlGlobalMeteo::kOidFieldNumber;
 #endif  // !_MSC_VER
 
 MsgControlGlobalMeteo::MsgControlGlobalMeteo() {
@@ -55687,6 +55719,7 @@ MsgControlGlobalMeteo::MsgControlGlobalMeteo(const MsgControlGlobalMeteo& from) 
 void MsgControlGlobalMeteo::SharedCtor() {
   _cached_size_ = 0;
   attributes_ = NULL;
+  oid_ = 0u;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -55720,6 +55753,7 @@ void MsgControlGlobalMeteo::Clear() {
     if (_has_bit(0)) {
       if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
     }
+    oid_ = 0u;
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
@@ -55739,6 +55773,20 @@ bool MsgControlGlobalMeteo::MergePartialFromCodedStream(
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_attributes()));
+        if (input->ExpectTag(16)) goto parse_oid;
+        break;
+      }
+      
+      // required uint32 oid = 2;
+      case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_oid:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &oid_));
+        _set_bit(1);
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -55773,6 +55821,11 @@ void MsgControlGlobalMeteo::SerializeWithCachedSizes(
       1, this->attributes(), output);
   }
   
+  // required uint32 oid = 2;
+  if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->oid(), output);
+  }
+  
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
@@ -55786,6 +55839,11 @@ void MsgControlGlobalMeteo::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         1, this->attributes(), target);
+  }
+  
+  // required uint32 oid = 2;
+  if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->oid(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -55804,6 +55862,13 @@ int MsgControlGlobalMeteo::ByteSize() const {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->attributes());
+    }
+    
+    // required uint32 oid = 2;
+    if (has_oid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->oid());
     }
     
   }
@@ -55834,6 +55899,9 @@ void MsgControlGlobalMeteo::MergeFrom(const MsgControlGlobalMeteo& from) {
     if (from._has_bit(0)) {
       mutable_attributes()->::Common::MsgMeteoAttributes::MergeFrom(from.attributes());
     }
+    if (from._has_bit(1)) {
+      set_oid(from.oid());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
@@ -55851,7 +55919,7 @@ void MsgControlGlobalMeteo::CopyFrom(const MsgControlGlobalMeteo& from) {
 }
 
 bool MsgControlGlobalMeteo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
   if (has_attributes()) {
     if (!this->attributes().IsInitialized()) return false;
@@ -55862,6 +55930,7 @@ bool MsgControlGlobalMeteo::IsInitialized() const {
 void MsgControlGlobalMeteo::Swap(MsgControlGlobalMeteo* other) {
   if (other != this) {
     std::swap(attributes_, other->attributes_);
+    std::swap(oid_, other->oid_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -55880,39 +55949,41 @@ void MsgControlGlobalMeteo::Swap(MsgControlGlobalMeteo* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgControlLocalMeteo::kTopLeftCoordinateFieldNumber;
-const int MsgControlLocalMeteo::kBottomRightCoordinateFieldNumber;
-const int MsgControlLocalMeteo::kAttributesFieldNumber;
+const int MsgControlLocalMeteoCreation::kOidFieldNumber;
+const int MsgControlLocalMeteoCreation::kTopLeftCoordinateFieldNumber;
+const int MsgControlLocalMeteoCreation::kBottomRightCoordinateFieldNumber;
+const int MsgControlLocalMeteoCreation::kAttributesFieldNumber;
 #endif  // !_MSC_VER
 
-MsgControlLocalMeteo::MsgControlLocalMeteo() {
+MsgControlLocalMeteoCreation::MsgControlLocalMeteoCreation() {
   SharedCtor();
 }
 
-void MsgControlLocalMeteo::InitAsDefaultInstance() {
+void MsgControlLocalMeteoCreation::InitAsDefaultInstance() {
   top_left_coordinate_ = const_cast< ::Common::MsgCoordLatLong*>(&::Common::MsgCoordLatLong::default_instance());
   bottom_right_coordinate_ = const_cast< ::Common::MsgCoordLatLong*>(&::Common::MsgCoordLatLong::default_instance());
   attributes_ = const_cast< ::Common::MsgMeteoAttributes*>(&::Common::MsgMeteoAttributes::default_instance());
 }
 
-MsgControlLocalMeteo::MsgControlLocalMeteo(const MsgControlLocalMeteo& from) {
+MsgControlLocalMeteoCreation::MsgControlLocalMeteoCreation(const MsgControlLocalMeteoCreation& from) {
   SharedCtor();
   MergeFrom(from);
 }
 
-void MsgControlLocalMeteo::SharedCtor() {
+void MsgControlLocalMeteoCreation::SharedCtor() {
   _cached_size_ = 0;
+  oid_ = 0u;
   top_left_coordinate_ = NULL;
   bottom_right_coordinate_ = NULL;
   attributes_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-MsgControlLocalMeteo::~MsgControlLocalMeteo() {
+MsgControlLocalMeteoCreation::~MsgControlLocalMeteoCreation() {
   SharedDtor();
 }
 
-void MsgControlLocalMeteo::SharedDtor() {
+void MsgControlLocalMeteoCreation::SharedDtor() {
   if (this != default_instance_) {
     delete top_left_coordinate_;
     delete bottom_right_coordinate_;
@@ -55920,30 +55991,31 @@ void MsgControlLocalMeteo::SharedDtor() {
   }
 }
 
-const ::google::protobuf::Descriptor* MsgControlLocalMeteo::descriptor() {
+const ::google::protobuf::Descriptor* MsgControlLocalMeteoCreation::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return MsgControlLocalMeteo_descriptor_;
+  return MsgControlLocalMeteoCreation_descriptor_;
 }
 
-const MsgControlLocalMeteo& MsgControlLocalMeteo::default_instance() {
+const MsgControlLocalMeteoCreation& MsgControlLocalMeteoCreation::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_SimToClient_2eproto();  return *default_instance_;
 }
 
-MsgControlLocalMeteo* MsgControlLocalMeteo::default_instance_ = NULL;
+MsgControlLocalMeteoCreation* MsgControlLocalMeteoCreation::default_instance_ = NULL;
 
-MsgControlLocalMeteo* MsgControlLocalMeteo::New() const {
-  return new MsgControlLocalMeteo;
+MsgControlLocalMeteoCreation* MsgControlLocalMeteoCreation::New() const {
+  return new MsgControlLocalMeteoCreation;
 }
 
-void MsgControlLocalMeteo::Clear() {
+void MsgControlLocalMeteoCreation::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (_has_bit(0)) {
+    oid_ = 0u;
+    if (_has_bit(1)) {
       if (top_left_coordinate_ != NULL) top_left_coordinate_->::Common::MsgCoordLatLong::Clear();
     }
-    if (_has_bit(1)) {
+    if (_has_bit(2)) {
       if (bottom_right_coordinate_ != NULL) bottom_right_coordinate_->::Common::MsgCoordLatLong::Clear();
     }
-    if (_has_bit(2)) {
+    if (_has_bit(3)) {
       if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
     }
   }
@@ -55951,26 +56023,40 @@ void MsgControlLocalMeteo::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool MsgControlLocalMeteo::MergePartialFromCodedStream(
+bool MsgControlLocalMeteoCreation::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+      // required uint32 oid = 1;
       case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &oid_));
+        _set_bit(0);
+        if (input->ExpectTag(18)) goto parse_top_left_coordinate;
+        break;
+      }
+      
+      // optional .Common.MsgCoordLatLong top_left_coordinate = 2;
+      case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
+       parse_top_left_coordinate:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_top_left_coordinate()));
-        if (input->ExpectTag(18)) goto parse_bottom_right_coordinate;
+        if (input->ExpectTag(26)) goto parse_bottom_right_coordinate;
         break;
       }
       
-      // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
-      case 2: {
+      // optional .Common.MsgCoordLatLong bottom_right_coordinate = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -55978,12 +56064,12 @@ bool MsgControlLocalMeteo::MergePartialFromCodedStream(
        parse_bottom_right_coordinate:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_bottom_right_coordinate()));
-        if (input->ExpectTag(26)) goto parse_attributes;
+        if (input->ExpectTag(34)) goto parse_attributes;
         break;
       }
       
-      // optional .Common.MsgMeteoAttributes attributes = 3;
-      case 3: {
+      // optional .Common.MsgMeteoAttributes attributes = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -56011,30 +56097,35 @@ bool MsgControlLocalMeteo::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void MsgControlLocalMeteo::SerializeWithCachedSizes(
+void MsgControlLocalMeteoCreation::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
   if (raw_buffer != NULL) {
-    MsgControlLocalMeteo::SerializeWithCachedSizesToArray(raw_buffer);
+    MsgControlLocalMeteoCreation::SerializeWithCachedSizesToArray(raw_buffer);
     return;
   }
   
-  // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+  // required uint32 oid = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->top_left_coordinate(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
   }
   
-  // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+  // optional .Common.MsgCoordLatLong top_left_coordinate = 2;
   if (_has_bit(1)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->bottom_right_coordinate(), output);
+      2, this->top_left_coordinate(), output);
   }
   
-  // optional .Common.MsgMeteoAttributes attributes = 3;
+  // optional .Common.MsgCoordLatLong bottom_right_coordinate = 3;
   if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      3, this->attributes(), output);
+      3, this->bottom_right_coordinate(), output);
+  }
+  
+  // optional .Common.MsgMeteoAttributes attributes = 4;
+  if (_has_bit(3)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      4, this->attributes(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -56043,27 +56134,32 @@ void MsgControlLocalMeteo::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* MsgControlLocalMeteo::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MsgControlLocalMeteoCreation::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+  // required uint32 oid = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->top_left_coordinate(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
   }
   
-  // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+  // optional .Common.MsgCoordLatLong top_left_coordinate = 2;
   if (_has_bit(1)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->bottom_right_coordinate(), target);
+        2, this->top_left_coordinate(), target);
   }
   
-  // optional .Common.MsgMeteoAttributes attributes = 3;
+  // optional .Common.MsgCoordLatLong bottom_right_coordinate = 3;
   if (_has_bit(2)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->attributes(), target);
+        3, this->bottom_right_coordinate(), target);
+  }
+  
+  // optional .Common.MsgMeteoAttributes attributes = 4;
+  if (_has_bit(3)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        4, this->attributes(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -56073,25 +56169,32 @@ void MsgControlLocalMeteo::SerializeWithCachedSizes(
   return target;
 }
 
-int MsgControlLocalMeteo::ByteSize() const {
+int MsgControlLocalMeteoCreation::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .Common.MsgCoordLatLong top_left_coordinate = 1;
+    // required uint32 oid = 1;
+    if (has_oid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->oid());
+    }
+    
+    // optional .Common.MsgCoordLatLong top_left_coordinate = 2;
     if (has_top_left_coordinate()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->top_left_coordinate());
     }
     
-    // optional .Common.MsgCoordLatLong bottom_right_coordinate = 2;
+    // optional .Common.MsgCoordLatLong bottom_right_coordinate = 3;
     if (has_bottom_right_coordinate()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->bottom_right_coordinate());
     }
     
-    // optional .Common.MsgMeteoAttributes attributes = 3;
+    // optional .Common.MsgMeteoAttributes attributes = 4;
     if (has_attributes()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -56108,10 +56211,10 @@ int MsgControlLocalMeteo::ByteSize() const {
   return total_size;
 }
 
-void MsgControlLocalMeteo::MergeFrom(const ::google::protobuf::Message& from) {
+void MsgControlLocalMeteoCreation::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const MsgControlLocalMeteo* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgControlLocalMeteo*>(
+  const MsgControlLocalMeteoCreation* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgControlLocalMeteoCreation*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -56120,35 +56223,39 @@ void MsgControlLocalMeteo::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void MsgControlLocalMeteo::MergeFrom(const MsgControlLocalMeteo& from) {
+void MsgControlLocalMeteoCreation::MergeFrom(const MsgControlLocalMeteoCreation& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      mutable_top_left_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.top_left_coordinate());
+      set_oid(from.oid());
     }
     if (from._has_bit(1)) {
-      mutable_bottom_right_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.bottom_right_coordinate());
+      mutable_top_left_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.top_left_coordinate());
     }
     if (from._has_bit(2)) {
+      mutable_bottom_right_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.bottom_right_coordinate());
+    }
+    if (from._has_bit(3)) {
       mutable_attributes()->::Common::MsgMeteoAttributes::MergeFrom(from.attributes());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void MsgControlLocalMeteo::CopyFrom(const ::google::protobuf::Message& from) {
+void MsgControlLocalMeteoCreation::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MsgControlLocalMeteo::CopyFrom(const MsgControlLocalMeteo& from) {
+void MsgControlLocalMeteoCreation::CopyFrom(const MsgControlLocalMeteoCreation& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgControlLocalMeteo::IsInitialized() const {
+bool MsgControlLocalMeteoCreation::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
   if (has_top_left_coordinate()) {
     if (!this->top_left_coordinate().IsInitialized()) return false;
@@ -56162,8 +56269,9 @@ bool MsgControlLocalMeteo::IsInitialized() const {
   return true;
 }
 
-void MsgControlLocalMeteo::Swap(MsgControlLocalMeteo* other) {
+void MsgControlLocalMeteoCreation::Swap(MsgControlLocalMeteoCreation* other) {
   if (other != this) {
+    std::swap(oid_, other->oid_);
     std::swap(top_left_coordinate_, other->top_left_coordinate_);
     std::swap(bottom_right_coordinate_, other->bottom_right_coordinate_);
     std::swap(attributes_, other->attributes_);
@@ -56173,11 +56281,214 @@ void MsgControlLocalMeteo::Swap(MsgControlLocalMeteo* other) {
   }
 }
 
-::google::protobuf::Metadata MsgControlLocalMeteo::GetMetadata() const {
+::google::protobuf::Metadata MsgControlLocalMeteoCreation::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgControlLocalMeteo_descriptor_;
-  metadata.reflection = MsgControlLocalMeteo_reflection_;
+  metadata.descriptor = MsgControlLocalMeteoCreation_descriptor_;
+  metadata.reflection = MsgControlLocalMeteoCreation_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int MsgControlLocalMeteoDestruction::kOidFieldNumber;
+#endif  // !_MSC_VER
+
+MsgControlLocalMeteoDestruction::MsgControlLocalMeteoDestruction() {
+  SharedCtor();
+}
+
+void MsgControlLocalMeteoDestruction::InitAsDefaultInstance() {
+}
+
+MsgControlLocalMeteoDestruction::MsgControlLocalMeteoDestruction(const MsgControlLocalMeteoDestruction& from) {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void MsgControlLocalMeteoDestruction::SharedCtor() {
+  _cached_size_ = 0;
+  oid_ = 0u;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+MsgControlLocalMeteoDestruction::~MsgControlLocalMeteoDestruction() {
+  SharedDtor();
+}
+
+void MsgControlLocalMeteoDestruction::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+const ::google::protobuf::Descriptor* MsgControlLocalMeteoDestruction::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgControlLocalMeteoDestruction_descriptor_;
+}
+
+const MsgControlLocalMeteoDestruction& MsgControlLocalMeteoDestruction::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_SimToClient_2eproto();  return *default_instance_;
+}
+
+MsgControlLocalMeteoDestruction* MsgControlLocalMeteoDestruction::default_instance_ = NULL;
+
+MsgControlLocalMeteoDestruction* MsgControlLocalMeteoDestruction::New() const {
+  return new MsgControlLocalMeteoDestruction;
+}
+
+void MsgControlLocalMeteoDestruction::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    oid_ = 0u;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool MsgControlLocalMeteoDestruction::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // required uint32 oid = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
+              input, &oid_));
+        _set_bit(0);
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+      
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void MsgControlLocalMeteoDestruction::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
+  if (raw_buffer != NULL) {
+    MsgControlLocalMeteoDestruction::SerializeWithCachedSizesToArray(raw_buffer);
+    return;
+  }
+  
+  // required uint32 oid = 1;
+  if (_has_bit(0)) {
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
+  }
+  
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* MsgControlLocalMeteoDestruction::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // required uint32 oid = 1;
+  if (_has_bit(0)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
+  }
+  
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int MsgControlLocalMeteoDestruction::ByteSize() const {
+  int total_size = 0;
+  
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // required uint32 oid = 1;
+    if (has_oid()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::UInt32Size(
+          this->oid());
+    }
+    
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  _cached_size_ = total_size;
+  return total_size;
+}
+
+void MsgControlLocalMeteoDestruction::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const MsgControlLocalMeteoDestruction* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgControlLocalMeteoDestruction*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void MsgControlLocalMeteoDestruction::MergeFrom(const MsgControlLocalMeteoDestruction& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from._has_bit(0)) {
+      set_oid(from.oid());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void MsgControlLocalMeteoDestruction::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void MsgControlLocalMeteoDestruction::CopyFrom(const MsgControlLocalMeteoDestruction& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool MsgControlLocalMeteoDestruction::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
+  
+  return true;
+}
+
+void MsgControlLocalMeteoDestruction::Swap(MsgControlLocalMeteoDestruction* other) {
+  if (other != this) {
+    std::swap(oid_, other->oid_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata MsgControlLocalMeteoDestruction::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = MsgControlLocalMeteoDestruction_descriptor_;
+  metadata.reflection = MsgControlLocalMeteoDestruction_reflection_;
   return metadata;
 }
 
@@ -56306,7 +56617,8 @@ const int MsgSimToClient_Content::kKnowledgeGroupUpdateAckFieldNumber;
 const int MsgSimToClient_Content::kKnowledgeGroupDestructionFieldNumber;
 const int MsgSimToClient_Content::kActionCreateFireOrderAckFieldNumber;
 const int MsgSimToClient_Content::kControlGlobalMeteoFieldNumber;
-const int MsgSimToClient_Content::kControlLocalMeteoFieldNumber;
+const int MsgSimToClient_Content::kControlLocalMeteoCreationFieldNumber;
+const int MsgSimToClient_Content::kControlLocalMeteoDestructionFieldNumber;
 #endif  // !_MSC_VER
 
 MsgSimToClient_Content::MsgSimToClient_Content() {
@@ -56435,7 +56747,8 @@ void MsgSimToClient_Content::InitAsDefaultInstance() {
   knowledge_group_destruction_ = const_cast< ::MsgsSimToClient::MsgKnowledgeGroupDestruction*>(&::MsgsSimToClient::MsgKnowledgeGroupDestruction::default_instance());
   action_create_fire_order_ack_ = const_cast< ::MsgsSimToClient::MsgActionCreateFireOrderAck*>(&::MsgsSimToClient::MsgActionCreateFireOrderAck::default_instance());
   control_global_meteo_ = const_cast< ::MsgsSimToClient::MsgControlGlobalMeteo*>(&::MsgsSimToClient::MsgControlGlobalMeteo::default_instance());
-  control_local_meteo_ = const_cast< ::MsgsSimToClient::MsgControlLocalMeteo*>(&::MsgsSimToClient::MsgControlLocalMeteo::default_instance());
+  control_local_meteo_creation_ = const_cast< ::MsgsSimToClient::MsgControlLocalMeteoCreation*>(&::MsgsSimToClient::MsgControlLocalMeteoCreation::default_instance());
+  control_local_meteo_destruction_ = const_cast< ::MsgsSimToClient::MsgControlLocalMeteoDestruction*>(&::MsgsSimToClient::MsgControlLocalMeteoDestruction::default_instance());
 }
 
 MsgSimToClient_Content::MsgSimToClient_Content(const MsgSimToClient_Content& from) {
@@ -56566,7 +56879,8 @@ void MsgSimToClient_Content::SharedCtor() {
   knowledge_group_destruction_ = NULL;
   action_create_fire_order_ack_ = NULL;
   control_global_meteo_ = NULL;
-  control_local_meteo_ = NULL;
+  control_local_meteo_creation_ = NULL;
+  control_local_meteo_destruction_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -56697,7 +57011,8 @@ void MsgSimToClient_Content::SharedDtor() {
     delete knowledge_group_destruction_;
     delete action_create_fire_order_ack_;
     delete control_global_meteo_;
-    delete control_local_meteo_;
+    delete control_local_meteo_creation_;
+    delete control_local_meteo_destruction_;
   }
 }
 
@@ -57112,7 +57427,10 @@ void MsgSimToClient_Content::Clear() {
       if (control_global_meteo_ != NULL) control_global_meteo_->::MsgsSimToClient::MsgControlGlobalMeteo::Clear();
     }
     if (_has_bit(121)) {
-      if (control_local_meteo_ != NULL) control_local_meteo_->::MsgsSimToClient::MsgControlLocalMeteo::Clear();
+      if (control_local_meteo_creation_ != NULL) control_local_meteo_creation_->::MsgsSimToClient::MsgControlLocalMeteoCreation::Clear();
+    }
+    if (_has_bit(122)) {
+      if (control_local_meteo_destruction_ != NULL) control_local_meteo_destruction_->::MsgsSimToClient::MsgControlLocalMeteoDestruction::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -58693,19 +59011,32 @@ bool MsgSimToClient_Content::MergePartialFromCodedStream(
        parse_control_global_meteo:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_global_meteo()));
-        if (input->ExpectTag(978)) goto parse_control_local_meteo;
+        if (input->ExpectTag(978)) goto parse_control_local_meteo_creation;
         break;
       }
       
-      // optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 122;
+      // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 122;
       case 122: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_control_local_meteo:
+       parse_control_local_meteo_creation:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_control_local_meteo()));
+             input, mutable_control_local_meteo_creation()));
+        if (input->ExpectTag(986)) goto parse_control_local_meteo_destruction;
+        break;
+      }
+      
+      // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 123;
+      case 123: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+          goto handle_uninterpreted;
+        }
+       parse_control_local_meteo_destruction:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+             input, mutable_control_local_meteo_destruction()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -59460,10 +59791,16 @@ void MsgSimToClient_Content::SerializeWithCachedSizes(
       121, this->control_global_meteo(), output);
   }
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 122;
+  // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 122;
   if (_has_bit(121)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      122, this->control_local_meteo(), output);
+      122, this->control_local_meteo_creation(), output);
+  }
+  
+  // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 123;
+  if (_has_bit(122)) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      123, this->control_local_meteo_destruction(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -60321,11 +60658,18 @@ void MsgSimToClient_Content::SerializeWithCachedSizes(
         121, this->control_global_meteo(), target);
   }
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 122;
+  // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 122;
   if (_has_bit(121)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        122, this->control_local_meteo(), target);
+        122, this->control_local_meteo_creation(), target);
+  }
+  
+  // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 123;
+  if (_has_bit(122)) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        123, this->control_local_meteo_destruction(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -61216,11 +61560,18 @@ int MsgSimToClient_Content::ByteSize() const {
           this->control_global_meteo());
     }
     
-    // optional .MsgsSimToClient.MsgControlLocalMeteo control_local_meteo = 122;
-    if (has_control_local_meteo()) {
+    // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 122;
+    if (has_control_local_meteo_creation()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->control_local_meteo());
+          this->control_local_meteo_creation());
+    }
+    
+    // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 123;
+    if (has_control_local_meteo_destruction()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->control_local_meteo_destruction());
     }
     
   }
@@ -61642,7 +61993,10 @@ void MsgSimToClient_Content::MergeFrom(const MsgSimToClient_Content& from) {
       mutable_control_global_meteo()->::MsgsSimToClient::MsgControlGlobalMeteo::MergeFrom(from.control_global_meteo());
     }
     if (from._has_bit(121)) {
-      mutable_control_local_meteo()->::MsgsSimToClient::MsgControlLocalMeteo::MergeFrom(from.control_local_meteo());
+      mutable_control_local_meteo_creation()->::MsgsSimToClient::MsgControlLocalMeteoCreation::MergeFrom(from.control_local_meteo_creation());
+    }
+    if (from._has_bit(122)) {
+      mutable_control_local_meteo_destruction()->::MsgsSimToClient::MsgControlLocalMeteoDestruction::MergeFrom(from.control_local_meteo_destruction());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -61989,8 +62343,11 @@ bool MsgSimToClient_Content::IsInitialized() const {
   if (has_control_global_meteo()) {
     if (!this->control_global_meteo().IsInitialized()) return false;
   }
-  if (has_control_local_meteo()) {
-    if (!this->control_local_meteo().IsInitialized()) return false;
+  if (has_control_local_meteo_creation()) {
+    if (!this->control_local_meteo_creation().IsInitialized()) return false;
+  }
+  if (has_control_local_meteo_destruction()) {
+    if (!this->control_local_meteo_destruction().IsInitialized()) return false;
   }
   return true;
 }
@@ -62118,7 +62475,8 @@ void MsgSimToClient_Content::Swap(MsgSimToClient_Content* other) {
     std::swap(knowledge_group_destruction_, other->knowledge_group_destruction_);
     std::swap(action_create_fire_order_ack_, other->action_create_fire_order_ack_);
     std::swap(control_global_meteo_, other->control_global_meteo_);
-    std::swap(control_local_meteo_, other->control_local_meteo_);
+    std::swap(control_local_meteo_creation_, other->control_local_meteo_creation_);
+    std::swap(control_local_meteo_destruction_, other->control_local_meteo_destruction_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_has_bits_[1], other->_has_bits_[1]);
     std::swap(_has_bits_[2], other->_has_bits_[2]);

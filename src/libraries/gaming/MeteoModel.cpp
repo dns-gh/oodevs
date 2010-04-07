@@ -12,13 +12,15 @@
 #include "clients_kernel/CoordinateConverter.h"
 #include "meteo/PHY_Meteo.h"
 #include "meteo/PHY_Precipitation.h"
+#include "meteo/MeteoData.h"
 
 // -----------------------------------------------------------------------------
 // Name: MeteoModel constructor
 // Created: HBD 2010-03-10
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter ) 
-    : converter_ ( converter )
+MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& conv ) 
+    :  MeteoModel_ABC( conv )
+    ,  pGlobalMeteo_()
 {
     PHY_Precipitation::Initialize();
     PHY_Lighting     ::Initialize();
@@ -62,7 +64,7 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
     if( pGlobalMeteo_.get() )
         pGlobalMeteo_->Update( msg.attributes() );
     else
-        pGlobalMeteo_.reset( new PHY_Meteo( msg.attributes(), this ) );
+        pGlobalMeteo_.reset( new PHY_Meteo( msg.oid(),msg.attributes(), this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,20 +72,19 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalMeteo& msg )
+void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& msg )
 {
-    const geometry::Point2d topLeft = converter_.ConvertToGeo( 
-        geometry::Point2f( float( msg.top_left_coordinate().longitude() ), float( msg.top_left_coordinate().latitude() ) ) );
-    const geometry::Point2d bottomRight = converter_.ConvertToGeo( 
-        geometry::Point2f( float( msg.bottom_right_coordinate().longitude() ), float( msg.bottom_right_coordinate().latitude() ) ) );
+    const geometry::Point2f topLeft = converter_.ConvertFromGeo( 
+        geometry::Point2d( float( msg.top_left_coordinate().longitude() ), float( msg.top_left_coordinate().latitude() ) ) );
+    const geometry::Point2f bottomRight = converter_.ConvertFromGeo( 
+        geometry::Point2d( float( msg.bottom_right_coordinate().longitude() ), float( msg.bottom_right_coordinate().latitude() ) ) );
 
     PHY_Meteo* pTmp = 0;
     if( msg.has_attributes() )
     {
-        pTmp = new PHY_Meteo( msg.attributes(), this );
+        pTmp = new MeteoData( msg.oid(), topLeft, bottomRight, msg.attributes(), this );
         RegisterMeteo( *pTmp );
     }
-  // RegisterMeteoPatch( vUpLeft, vDownRight, pTmp );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,4 +94,49 @@ void MeteoModel::OnReceiveMsgLocalMeteo( const MsgsSimToClient::MsgControlLocalM
 void MeteoModel::RegisterMeteo( PHY_Meteo& meteo )
 {
     meteos_.push_front( &meteo ); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: MeteoModel::GetMeteo
+// Created: HBD 2010-03-30
+// -----------------------------------------------------------------------------
+const PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) const
+{
+    for( CIT_MeteoList it = meteos_.begin(); it != meteos_.end(); ++it )
+        if( (*it)->IsInside( point ) )
+            return *it;
+    return pGlobalMeteo_.get();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MeteoModel::OnReceiveMsgGlobalMeteoDestruction
+// Created: HBD 2010-04-02
+// -----------------------------------------------------------------------------
+void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message )
+{
+    PHY_Meteo* toDel = 0;
+    for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
+        if( (*it)->GetId() == message.oid() )
+        {
+            toDel = *it;
+            break;
+         }
+    meteos_.remove( toDel );
+    delete toDel;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MeteoModel::Purge
+// Created: HBD 2010-04-02
+// -----------------------------------------------------------------------------
+void MeteoModel::Purge()
+{
+    for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); )
+    {
+        PHY_Meteo* toDel = *it;
+        ++it;
+        meteos_.remove( toDel );
+        delete toDel;
+    }
+        pGlobalMeteo_.reset();
 }

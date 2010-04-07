@@ -9,7 +9,7 @@
 
 #include "dispatcher_pch.h"
 #include "PopulationOrder.h"
-#include "ClientPublisher_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "Population.h"
 
 #include "protocol/clientsenders.h"
