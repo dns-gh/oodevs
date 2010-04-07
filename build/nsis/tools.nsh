@@ -66,7 +66,8 @@
         SectionIn RO
         SetOutPath "${INSTDATADIR}\data\models\${DataSet}\decisional"
         !insertmacro UNINSTALL.LOG_OPEN_INSTALL
-        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional"
+        File /r /x ".svn" "${DATADIR}\data\models\${DataSet}\decisional\*"
+		RMDir /r "${INSTDATADIR}\data\models\${DataSet}\decisional\Sources"
         !insertmacro UNINSTALL.LOG_CLOSE_INSTALL
     SectionEnd
     
