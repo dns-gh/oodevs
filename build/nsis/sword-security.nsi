@@ -72,7 +72,6 @@ Section "!${PRODUCT_NAME}"
     File /oname=dispatcher_app.exe "${OUTDIR}\release\applications\dispatcher_crossbow_app\dispatcher_crossbow_app.exe"
 
     SetOutPath "$INSTDIR\applications"
-    File "${OUTDIR}\generation_app\*.exe"
     File "${RUNDIR}\gradients.xml"
     File "${RUNDIR}\preferences.xml"
     File "${RUNDIR}\functions.xml"
