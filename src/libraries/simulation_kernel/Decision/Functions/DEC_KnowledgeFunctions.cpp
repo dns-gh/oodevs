@@ -200,6 +200,16 @@ void DEC_KnowledgeFunctions::GetDestroyableKnowledge( const directia::Brain& bra
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetIdentifiableKnowledge
+// Created: PSN & GGE 2010-03-25
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeFunctions::GetIdentifiableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
+{
+    //Agents //@TODO Add private tools function
+    knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Platoon" ), pion.GetKnowledgeGroup().GetKnowledge().GetEnemies(), true );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetNearbyRefugees
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------

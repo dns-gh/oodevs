@@ -23,6 +23,7 @@
         <mission name="DestroyAgents"/>
         <mission name="NeutralizeAgents"/>
         <mission name="ObserveAndReconnoiterPoint"/>
+        <mission name="MoveObserveReconnoiter"/>
         <mission name="ObserveAndReconnoiterUrbanBlock"/>
         <mission name="ObservePoint"/>
         <mission name="ObserveUrbanBlock"/>
@@ -37,7 +38,10 @@
         <mission name="Safeguard"/>
         <mission name="Flee"/>
         <mission name="SelfProtect"/>
+        <mission name="MoveAlong"/>
         <mission name="StayClose"/>
+        <mission name="ReconnoiterPath"/>
+        <mission name="MoveOnPath"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">
@@ -55,6 +59,7 @@
         <mission name="Valorize"/>
         <mission name="Activate"/>
         <mission name="Bypass"/>
+        <mission name="RemoveObstacle"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">

@@ -631,7 +631,9 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 		boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MT_Vector2D>, float )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1, _2, _3 ) ) );	
 	brain.RegisterFunction( "DEC_Connaissances_Destroyable",
         boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetDestroyableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );//@TODO MGD same function than Observable for the moment
-	brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion", 
+	brain.RegisterFunction( "DEC_Connaissances_Identifiable",
+        boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetIdentifiableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );//@TODO MGD same function than Observable for the moment
+    brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesParPion", 
         boost::function< T_ConstKnowledgeAgentVector( const DEC_Decision_ABC* ) >( boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedByPion< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercuesDansFuseau", boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInFuseau, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesDansFuseau", boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau, boost::ref( GetPion() ) ) );

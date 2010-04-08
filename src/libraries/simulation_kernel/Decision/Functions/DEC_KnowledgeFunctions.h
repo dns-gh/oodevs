@@ -48,7 +48,8 @@ public:
 	static void GetUrbanBlockKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );   
 	static void GetUrbanBlockKnowledgeInCercle( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table, boost::shared_ptr< MT_Vector2D > center, float radius );
 	static void GetDestroyableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
-
+	static void GetIdentifiableKnowledge( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table );
+    
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SortAccordingToUnloadedEnemies( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
     template< typename T > static std::vector< boost::shared_ptr< TER_Localisation > > SortAccordingToLoadedEnemies  ( const T& caller, const std::vector< boost::shared_ptr< TER_Localisation > >& locations );
 
