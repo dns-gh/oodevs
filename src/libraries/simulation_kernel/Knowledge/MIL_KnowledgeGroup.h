@@ -28,10 +28,14 @@ class DEC_Knowledge_Object;
 class DEC_Knowledge_Agent;
 class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_Population;
+class DEC_Knowledge_PopulationCollision;
+class DEC_Knowledge_PopulationPerception;
 class KnowledgeGroupFactory_ABC;
+class MIL_Agent_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
 class MIL_Object_ABC;
+class MIL_Population;
 
 // LTO begin
 class KnowledgeGroupFactory_ABC;
@@ -132,7 +136,7 @@ public:
           void                                    SetParent( MIL_KnowledgeGroup* pParent );
     // LTO end
           bool IsJammedKnowledgeGroup() const;
-          void Jam();
+          void Jam( const MIL_Agent_ABC& pion );
     //@}
 
     //! @name Network
@@ -143,6 +147,7 @@ public:
     // LTO begin
     void UpdateKnowledgeGroup();
     void MoveKnowledgeGroup( MIL_KnowledgeGroup *pNewParent );
+    void ApplyOnKnowledgesPopulationPerception();
     // LTO end
 
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
@@ -162,6 +167,7 @@ private:
     bool                    isActivated_; // LTO
     bool                    hasBeenUpdated_;  
     bool                    isJammedKnowledgeGroup_;
+    const MIL_Agent_ABC*    jamedPion_;
 
     bool OnReceiveMsgKnowledgeGroupEnable        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
     bool OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
@@ -169,6 +175,10 @@ private:
 
     void CreateKnowledgesFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgesFromPopulationPerception( const DEC_Knowledge_Population& population );
+
+    DEC_Knowledge_Population& GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown ) const;
+    void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision );
+    void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception );
     //@}
     
 private:

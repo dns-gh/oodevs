@@ -72,71 +72,6 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Prepare()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationKnowledgeSynthetizer::GetKnowledgeToUpdate
-// Created: NLD 2004-03-19
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Population& DEC_KS_PopulationKnowledgeSynthetizer::GetKnowledgeToUpdate( MIL_Population& populationKnown ) const
-{
-    assert( pBlackBoard_ );
-    DEC_Knowledge_Population* pKnowledge = pBlackBoard_->GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
-    if( pKnowledge )
-        return *pKnowledge;
-    
-    return pBlackBoard_->GetKnowledgePopulationContainer().CreateKnowledgePopulation( pBlackBoard_->GetKnowledgeGroup(), populationKnown );
-}
- 
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationKnowledgeSynthetizer::GetKnowledgeToJamedUpdate
-// Created: FDS 2010-04-06
-// -----------------------------------------------------------------------------
-DEC_Knowledge_Population& DEC_KS_PopulationKnowledgeSynthetizer::GetKnowledgeToJamedUpdate( MIL_Population& populationKnown, const MIL_KnowledgeGroup& knowledgeGroup ) const
-{
-    DEC_Knowledge_Population* pKnowledge = knowledgeGroup.GetKnowledge().GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
-    if( pKnowledge )
-        return *pKnowledge;
-    
-    return knowledgeGroup.GetKnowledge().GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, populationKnown );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception
-// Created: NLD 2004-03-16
-// -----------------------------------------------------------------------------
-void DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception( const DEC_Knowledge_PopulationPerception& perception )
-{
-    GetKnowledgeToUpdate( perception.GetPopulationPerceived() ).Update( perception );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromJamedPerception
-// Created: FDS 2010-04-06
-// -----------------------------------------------------------------------------
-void DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromJamedPerception( const DEC_Knowledge_PopulationPerception& perception, const MIL_KnowledgeGroup& knowledgeGroup )
-{
-    GetKnowledgeToJamedUpdate( perception.GetPopulationPerceived(), knowledgeGroup ).Update( perception );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision
-// Created: NLD 2005-10-28
-// -----------------------------------------------------------------------------
-void DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision( const DEC_Knowledge_PopulationCollision& collision )
-{
-    GetKnowledgeToUpdate( collision.GetPopulation() ).Update( collision );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromJamedCollision
-// Created: FDS 2010-04-06
-// -----------------------------------------------------------------------------
-void DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromJamedCollision( const DEC_Knowledge_PopulationCollision& collision, const MIL_KnowledgeGroup& knowledgeGroup )
-{
-    GetKnowledgeToJamedUpdate( collision.GetPopulation(), knowledgeGroup ).Update( collision );
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KS_PopulationKnowledgeSynthetizer::Talk
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
@@ -144,42 +79,14 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
 {
     assert( pBlackBoard_ );
 
-    // $$$$ _RC_ FDS 2010-04-07: Ne fonctionne pas, crash de l'optimiseur. 
-    // boost::function< void ( DEC_Knowledge_PopulationPerception& ) > methodPerception = boost::bind( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception, this );
-    // boost::function< void ( DEC_Knowledge_PopulationCollision& ) > methodCollision   = boost::bind( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision, this );
+    pBlackBoard_->ApplyOnKnowledgesPopulationPerception(); 
 
-    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationPerception > methodPerception( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception, *this );
-    class_mem_fun_void_const_t< DEC_KS_PopulationKnowledgeSynthetizer, DEC_Knowledge_PopulationCollision  > methodCollision ( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision , *this );
-
-    // Synthèse de la perception des subordonnés
-    // Ajout automatique de la connaissance de chaque subordonné    
-    const MIL_KnowledgeGroup::T_AutomateVector& automates = pBlackBoard_->GetKnowledgeGroup().GetAutomates();
-    for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
-    {
-        const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
-        for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
-        {
-            MIL_AgentPion& pion = **itPion;
-            if( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
-            {
-                if(  ! pBlackBoard_->GetKnowledgeGroup().IsJammedKnowledgeGroup() )
-                { 
-                    pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( methodPerception );
-                    pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( methodCollision  );
-                }
-            }
-            else
-            {
-                // $$$$ _RC_ FDS 2010-04-07: encore un soucis, les connaissances du pion brouillé, passe au pion non brouillé, étrange !!
-                pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( boost::bind( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromJamedPerception, this, _1, boost::ref( pion.GetKnowledgeGroup() ) )  );
-                pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( boost::bind( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromJamedCollision, this, _1, boost::ref( pion.GetKnowledgeGroup() ) )  );
-            }
-        }
-    }
-    
-    // Relevance
+    // si le group de connaissance est un group brouillé, aucune connaissance ne lui est transmise
     if( ! pBlackBoard_->GetKnowledgeGroup().IsJammedKnowledgeGroup() )
+    {    
+        // Relevance
         pBlackBoard_->GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( boost::bind( &DEC_Knowledge_Population::UpdateRelevance, _1 ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

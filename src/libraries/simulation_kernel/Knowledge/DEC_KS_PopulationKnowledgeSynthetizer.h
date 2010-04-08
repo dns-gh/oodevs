@@ -51,13 +51,6 @@ private:
     //@{
     void                      CleanKnowledgePopulation      ( DEC_Knowledge_Population& knowledge );
 
-    void                      UpdateKnowledgesFromPerception( const DEC_Knowledge_PopulationPerception& perception );
-    void                      UpdateKnowledgesFromCollision ( const DEC_Knowledge_PopulationCollision&  collision  );
-    DEC_Knowledge_Population& GetKnowledgeToUpdate          ( MIL_Population& populationKnown ) const;
-
-    void                      UpdateKnowledgesFromJamedPerception( const DEC_Knowledge_PopulationPerception& perception, const MIL_KnowledgeGroup& knowledgeGroup );
-    void                      UpdateKnowledgesFromJamedCollision ( const DEC_Knowledge_PopulationCollision&  collision, const MIL_KnowledgeGroup& knowledgeGroup  );
-    DEC_Knowledge_Population& GetKnowledgeToJamedUpdate          ( MIL_Population& populationKnown, const MIL_KnowledgeGroup& knowledgeGroup ) const;
     //@}
 
 private:

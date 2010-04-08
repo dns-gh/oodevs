@@ -14,14 +14,19 @@
 #include "KnowledgeGroupFactory_ABC.h" // LTO
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h" // LTO
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulation.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_AgentPerception.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include "Knowledge/DEC_Knowledge_PopulationCollision.h"
 #include "Knowledge/DEC_Knowledge_PopulationPerception.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -54,6 +59,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( false )
     , isJammedKnowledgeGroup_ ( false )
+    , jamedPion_           ( 0 ) // LTO
 {
     idManager_.Lock( nID );
     pArmy_->RegisterKnowledgeGroup( *this );
@@ -77,6 +83,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , isActivated_          ( true ) // LTO
     , hasBeenUpdated_       ( true )
     , isJammedKnowledgeGroup_ ( false )
+    , jamedPion_           ( 0 ) // LTO
 {
     idManager_.Lock( nID_ );
     if( pParent_ )
@@ -105,6 +112,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( false )
     , isJammedKnowledgeGroup_ ( false )
+    , jamedPion_           ( 0 ) // LTO
 {
     // NOTHING
 }
@@ -125,6 +133,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source )
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( true )
     , isJammedKnowledgeGroup_ ( false )
+    , jamedPion_           ( 0 ) // LTO
 {   
     
     ids_.insert( nID_ );
@@ -749,9 +758,10 @@ bool MIL_KnowledgeGroup::IsJammedKnowledgeGroup() const
 // Name: MIL_KnowledgeGroup::SetJammedKnowledgeGroup
 // Created: FDS 2010-04-01
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::Jam()
+void MIL_KnowledgeGroup::Jam( const MIL_Agent_ABC& pion )
 {
     isJammedKnowledgeGroup_ = true;
+    jamedPion_              = &pion;
     pKnowledgeBlackBoard_->Jam();
 }
 
@@ -762,4 +772,78 @@ void MIL_KnowledgeGroup::Jam()
 boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
 {
     return pKnowledgeBlackBoard_->CreateKnowledgeObject( teamKnowing, objectKnown );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception
+// Created: FDS 2010-04-08
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception()
+{
+    // $$$$ _RC_ FDS 2010-04-07: Ne fonctionne pas, crash de l'optimiseur. 
+    // boost::function< void ( DEC_Knowledge_PopulationPerception& ) > methodPerception = boost::bind( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromPerception, this );
+    // boost::function< void ( DEC_Knowledge_PopulationCollision& ) > methodCollision   = boost::bind( & DEC_KS_PopulationKnowledgeSynthetizer::UpdateKnowledgesFromCollision, this );
+
+    class_mem_fun_void_const_t< MIL_KnowledgeGroup, DEC_Knowledge_PopulationPerception > methodPerception( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, *this );
+    class_mem_fun_void_const_t< MIL_KnowledgeGroup, DEC_Knowledge_PopulationCollision  > methodCollision ( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision , *this );
+
+    if( ! IsJammedKnowledgeGroup() )
+    {
+        
+        const MIL_KnowledgeGroup::T_AutomateVector& automates = GetAutomates();
+        for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = automates.begin(); itAutomate != automates.end(); ++itAutomate )
+        {
+            const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
+            for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+            {
+                MIL_AgentPion& pion = **itPion;
+                if( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+                {
+                    pion.GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( methodPerception );
+                    pion.GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( methodCollision  );
+                }
+            }
+        }
+    }
+    else
+    {
+        if( jamedPion_ )
+        {
+            jamedPion_->GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( methodPerception );
+            jamedPion_->GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( methodCollision  );
+        }
+    }
+
+   // pKnowledgeBlackBoard_->SendFullState(); 
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate
+// Created: FDS 2010-04-08
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population& MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown ) const
+{
+    DEC_Knowledge_Population* pKnowledge = pKnowledgeBlackBoard_->GetKnowledgePopulationContainer().GetKnowledgePopulation( populationKnown );
+    if( pKnowledge )
+        return *pKnowledge;
+    
+    return pKnowledgeBlackBoard_->GetKnowledgePopulationContainer().CreateKnowledgePopulation( *this, populationKnown );
+}
+ 
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception
+// Created: FDS 2010-04-08
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception )
+{
+    GetPopulationKnowledgeToUpdate( perception.GetPopulationPerceived() ).Update( perception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision
+// Created: FDS 2010-04-08
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision )
+{
+    GetPopulationKnowledgeToUpdate( collision.GetPopulation() ).Update( collision );
 }
