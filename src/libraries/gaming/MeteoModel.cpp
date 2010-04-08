@@ -115,11 +115,13 @@ const weather::PHY_Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point )
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgControlLocalMeteoDestruction& message )
 {
-    for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); )
         if( (*it)->GetId() == message.oid() )
         {
-            meteos_.remove( *it );
-            delete *it;
+            weather::PHY_Meteo* meteo = *it;
+            ++it;
+            meteos_.remove( meteo );
+            delete meteo;
             return;
         }
 }

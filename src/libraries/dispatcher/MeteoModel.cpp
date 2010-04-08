@@ -95,8 +95,10 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgCo
     for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.oid() )
         {
-            UnregisterMeteo( **it );
-            delete *it;
+            weather::PHY_Meteo* meteo = *it;
+            ++it;
+            meteos_.remove( meteo );
+            delete meteo;
             return;
         }
 }
