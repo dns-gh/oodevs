@@ -53,7 +53,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , timeToDiffuse_       ( 0 ) // LTO
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( false )
-    , isJammedKnowledgeGroup_ ( false ) // LTO
+    , isJammedKnowledgeGroup_ ( false )
 {
     idManager_.Lock( nID );
     pArmy_->RegisterKnowledgeGroup( *this );
@@ -76,7 +76,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , timeToDiffuse_        ( 0 ) // LTO
     , isActivated_          ( true ) // LTO
     , hasBeenUpdated_       ( true )
-    , isJammedKnowledgeGroup_ ( false ) // LTO
+    , isJammedKnowledgeGroup_ ( false )
 {
     idManager_.Lock( nID_ );
     if( pParent_ )
@@ -104,7 +104,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , timeToDiffuse_        ( 0 ) // LTO
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( false )
-    , isJammedKnowledgeGroup_ ( false ) // LTO
+    , isJammedKnowledgeGroup_ ( false )
 {
     // NOTHING
 }
@@ -124,7 +124,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source )
     , timeToDiffuse_        ( 0 ) // LTO
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( true )
-    , isJammedKnowledgeGroup_ ( false ) // LTO
+    , isJammedKnowledgeGroup_ ( false )
 {   
     
     ids_.insert( nID_ );
@@ -231,7 +231,8 @@ void MIL_KnowledgeGroup::load( MIL_CheckPointInArchive& file, const unsigned int
          >> automates_
          >> knowledgeGroups_ // LTO
          >> timeToDiffuse_ // LTO
-         >> isActivated_; // LTO
+         >> isActivated_ // LTO
+         >> isJammedKnowledgeGroup_;
     
     idManager_.Lock( nID_ );
          
@@ -256,7 +257,8 @@ void MIL_KnowledgeGroup::save( MIL_CheckPointOutArchive& file, const unsigned in
          << automates_
          << knowledgeGroups_ // LTO
          << timeToDiffuse_ // LTO
-         << isActivated_; // LTO
+         << isActivated_ // LTO
+         << isJammedKnowledgeGroup_;
 }
 
 // -----------------------------------------------------------------------------
@@ -352,8 +354,10 @@ void MIL_KnowledgeGroup::SendCreation() const
     // LTO begin
     if( pParent_ )
         msg().set_oid_parent( pParent_->GetID() );
+    // LTO end
     msg.Send( NET_Publisher_ABC::Publisher() );
     //SLG : @TODO MGD Move to factory
+    // LTO begin
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
         (**it).SendCreation();
     // LTO end
@@ -748,4 +752,14 @@ bool MIL_KnowledgeGroup::IsJammedKnowledgeGroup() const
 void MIL_KnowledgeGroup::Jam()
 {
     isJammedKnowledgeGroup_ = true;
+    pKnowledgeBlackBoard_->Jam();
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
+{
+    return pKnowledgeBlackBoard_->CreateKnowledgeObject( teamKnowing, objectKnown );
 }

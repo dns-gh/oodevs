@@ -41,6 +41,24 @@ bool PHY_RoleHLA_Communications::CanCommunicate() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::UpdateKnowledgesFromObjectPerception
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_Communications::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleHLA_Communications::UpdateKnowledgesFromObjectCollision
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+void PHY_RoleHLA_Communications::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleHLA_Communications::Jam
 // Created: AGE 2004-11-09
 // -----------------------------------------------------------------------------

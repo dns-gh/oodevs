@@ -39,3 +39,12 @@ void EntityCommunications::ChangeSuperior( kernel::Entity_ABC& superior )
 {
     EntityHierarchies< CommunicationHierarchies >::ChangeSuperior( &superior );
 }
+
+// -----------------------------------------------------------------------------
+// Name: EntityCommunications::CanCommunicate
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+bool EntityCommunications::CanCommunicate() const
+{
+    return true;
+}

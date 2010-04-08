@@ -31,6 +31,7 @@ class DEC_Knowledge_Population;
 class KnowledgeGroupFactory_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
+class MIL_Object_ABC;
 
 // LTO begin
 class KnowledgeGroupFactory_ABC;
@@ -68,8 +69,8 @@ public:
     //@}
 
 public:
-    MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int nID, MIL_Army_ABC& army ); // LTO
-    MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
+    MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int nID, MIL_Army_ABC& army );
+    MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
     MIL_KnowledgeGroup();
     MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source );
 
@@ -110,10 +111,8 @@ public:
 
     //! @name Operations
     //@{
-    // LTO begin
     void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message );
     void OnReceiveMsgKnowledgeGroupUpdate     ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
-    // LTO end
     void Destroy();
     //@}
 
@@ -131,10 +130,9 @@ public:
           MT_Float                                GetTimeToDiffuseToKnowledgeGroup() const;
           bool                                    IsEnabled() const;
           void                                    SetParent( MIL_KnowledgeGroup* pParent );
+    // LTO end
           bool IsJammedKnowledgeGroup() const;
           void Jam();
-
-    // LTO end
     //@}
 
     //! @name Network
@@ -144,10 +142,11 @@ public:
     void SendKnowledge() const;
     // LTO begin
     void UpdateKnowledgeGroup();
-    
     void MoveKnowledgeGroup( MIL_KnowledgeGroup *pNewParent );
     // LTO end
 
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    
     //@}
     
 private:

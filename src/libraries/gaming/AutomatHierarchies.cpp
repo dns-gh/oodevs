@@ -62,3 +62,12 @@ void AutomatHierarchies::AddSuperiorToDictionary( PropertiesDictionary& dico, En
 {
     dico.Register( *(const CommunicationHierarchies*)this, tools::translate( "AutomatHierarchies", "Hierarchies/Superior" ), superior );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::CanCommunicate
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+bool AutomatHierarchies::CanCommunicate() const
+{
+    return true;
+}

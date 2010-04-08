@@ -60,6 +60,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual bool CanCommunicate() const;
     virtual void DoUpdate( const MsgsSimToClient::MsgAutomatCreation& message );
     virtual void DoUpdate( const Common::MsgAutomatChangeKnowledgeGroup& message );
     virtual void AddSuperiorToDictionary( kernel::PropertiesDictionary& dico, kernel::Entity_ABC* const& superior ) const;

@@ -58,8 +58,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , nAttributesUpdated_               ( eAttr_AllAttributes )
     , pOwnerArmy_                       ( &objectKnown.GetArmy() )    
     , localisation_                     ( )
-    , avoidanceLocalisation_            ( )
-//    , bReservedObstacleActivated_       ( objectKnown.IsReservedObstacleActivated() ) //$$$ A CHIER ....              
+    , avoidanceLocalisation_            ( )            
     , pCurrentPerceptionLevel_          ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_         ( &PHY_PerceptionLevel::notSeen_ )
     , pMaxPerceptionLevel_              ( &PHY_PerceptionLevel::notSeen_ )
@@ -97,6 +96,32 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , bValid_                          ( true )
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object constructor
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy )
+    : DEC_Knowledge_ABC                 ()
+    , pArmyKnowing_                     ( copy.pArmyKnowing_ )
+    , pObjectKnown_                     ( copy.pObjectKnown_ )
+    , pObjectType_                      ( copy.pObjectType_ )
+    , nID_                              ( copy.idManager_.GetFreeId() )
+    , nAttributesUpdated_               ( copy.eAttr_AllAttributes )
+    , pOwnerArmy_                       ( copy.pOwnerArmy_ )    
+    , localisation_                     ( copy.localisation_ )
+    , avoidanceLocalisation_            ( copy.avoidanceLocalisation_ )            
+    , pCurrentPerceptionLevel_          ( copy.pCurrentPerceptionLevel_ )
+    , pPreviousPerceptionLevel_         ( copy.pPreviousPerceptionLevel_ )
+    , pMaxPerceptionLevel_              ( copy.pMaxPerceptionLevel_ )
+    , perceptionPerAutomateSet_         ( copy.perceptionPerAutomateSet_ )
+    , previousPerceptionPerAutomateSet_ ( copy.previousPerceptionPerAutomateSet_ )
+    , nTimeLastUpdate_                  ( copy.nTimeLastUpdate_ )
+    , rRelevance_                       ( copy.rRelevance_ )
+    , bValid_                           ( copy.bValid_ )
+{
+    SendMsgCreation();
 }
 
 // -----------------------------------------------------------------------------

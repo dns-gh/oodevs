@@ -282,7 +282,8 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
 
     xos     << xml::start( "communication" );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        it->second->WriteODB( xos );
+        if( !it->second->IsJammedKnowledgeGroup() )
+            it->second->WriteODB( xos );
     xos     << xml::end();
     
     xos     << xml::start( "tactical" );
@@ -494,7 +495,7 @@ void MIL_Army::CleanKnowledges()
 bool MIL_Army::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
     for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        if( itKnowledgeGroup->second->IsPerceived( knowledge ) )
+        if( !itKnowledgeGroup->second->IsJammedKnowledgeGroup() && itKnowledgeGroup->second->IsPerceived( knowledge ) )
             return true;
     return false;
 }

@@ -29,6 +29,7 @@
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "DEC_Knowledge_Object.h"
+#include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "DEC_Knowledge_Population.h"
@@ -411,10 +412,11 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
     T_KnowledgeObjectCollisionVector objectsColliding;
     GetObjectsColliding( objectsColliding );
 
-    container.clear(); container.reserve( objectsColliding.size() );
+    container.clear();
+    container.reserve( objectsColliding.size() );
     for ( CIT_KnowledgeObjectCollisionVector itObjectColliding = objectsColliding.begin(); itObjectColliding != objectsColliding.end(); ++itObjectColliding )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pPion_->GetArmy().GetKnowledge().GetKnowledgeObject( **itObjectColliding );
+        boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
         assert( pKnowledge && pKnowledge->IsValid() );
         container.push_back( pKnowledge );
     }
@@ -552,7 +554,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const
 {
-    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn.oid() );
+    return pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( asn.oid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -561,7 +563,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::Res
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_AgentPion::ResolveKnowledgeObject( unsigned int nID ) const
 {
-    return pPion_->GetKnowledgeGroup().GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
+    return pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( nID );
 }
 
 // -----------------------------------------------------------------------------

@@ -23,6 +23,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Communications/PHY_RoleInterface_Communications.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_ObjectKnowledgeSynthetizer )
@@ -122,8 +123,22 @@ void DEC_KS_ObjectKnowledgeSynthetizer::SynthetizeSubordinatesPerception()
             for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
             {
                 MIL_AgentPion& pion = **itPion;
-                pion.GetKnowledge().GetKnowledgeObjectPerceptionContainer().ApplyOnKnowledgesObjectPerception( methodUpdateKnowledgesFromObjectPerception );
-                pion.GetKnowledge().GetKnowledgeObjectCollisionContainer ().ApplyOnKnowledgesObjectCollision ( methodUpdateKnowledgesFromObjectCollision  );
+                PHY_RoleInterface_Communications& communication = pion.Get< PHY_RoleInterface_Communications >();
+                DEC_KnowledgeBlackBoard_AgentPion& blackboard = pion.GetKnowledge();
+                DEC_BlackBoard_CanContainKnowledgeObjectPerception& perceptions = blackboard.GetKnowledgeObjectPerceptionContainer();
+                DEC_BlackBoard_CanContainKnowledgeObjectCollision& collisions = blackboard.GetKnowledgeObjectCollisionContainer ();
+                if ( communication.CanCommunicate() )
+                {
+                    perceptions.ApplyOnKnowledgesObjectPerception( methodUpdateKnowledgesFromObjectPerception );
+                    collisions.ApplyOnKnowledgesObjectCollision ( methodUpdateKnowledgesFromObjectCollision  );
+                }
+                else
+                {
+                    class_mem_fun_void_const_t< PHY_RoleInterface_Communications, DEC_Knowledge_ObjectPerception> methodUpdateAgentKnowledgesFromObjectPerception( & PHY_RoleInterface_Communications::UpdateKnowledgesFromObjectPerception, communication );
+                    class_mem_fun_void_const_t< PHY_RoleInterface_Communications, DEC_Knowledge_ObjectCollision > methodUpdateAgentKnowledgesFromObjectCollision ( & PHY_RoleInterface_Communications::UpdateKnowledgesFromObjectCollision , communication );
+                    perceptions.ApplyOnKnowledgesObjectPerception( methodUpdateAgentKnowledgesFromObjectPerception );
+                    collisions.ApplyOnKnowledgesObjectCollision ( methodUpdateAgentKnowledgesFromObjectCollision  );
+                }
             }
         }
     }

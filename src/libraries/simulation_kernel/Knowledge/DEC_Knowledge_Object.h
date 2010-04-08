@@ -48,6 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown );
+             DEC_Knowledge_Object( const DEC_Knowledge_Object& copy );
              DEC_Knowledge_Object();
     virtual ~DEC_Knowledge_Object();
     //@}

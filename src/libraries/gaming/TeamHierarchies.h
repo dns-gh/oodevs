@@ -46,6 +46,8 @@ public:
              TeamHierarchies( kernel::Controller& controller, kernel::Team_ABC& holder, KnowledgeGroupFactory_ABC& factory );
     virtual ~TeamHierarchies();
     //@}
+    
+    virtual bool CanCommunicate() const;
 
 private:
     //! @name Operations

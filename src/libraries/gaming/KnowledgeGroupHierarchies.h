@@ -41,6 +41,7 @@ public:
 
     //! @name Operations 
     //@{
+    virtual bool CanCommunicate() const;
     virtual void DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupUpdate& updateMessage );
     //@}
 

@@ -81,3 +81,12 @@ void AgentHierarchiesCommunication::DoUpdate( const Common::MsgUnitChangeSuperio
     else
         UpdateSuperior( GetAutomatResolver().Get( message.oid_automate() ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: AgentHierarchiesCommunication::CanCommunicate
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+bool AgentHierarchiesCommunication::CanCommunicate() const
+{
+    return !jammed_;
+}

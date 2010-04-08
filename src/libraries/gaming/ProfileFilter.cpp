@@ -128,7 +128,6 @@ const kernel::Entity_ABC* ProfileFilter::GetFilter() const
 // -----------------------------------------------------------------------------
 bool ProfileFilter::IsInHierarchy( const kernel::Entity_ABC& entity ) const
 {
-    QString name = entity.GetName();
     if( ! entity_ || entity_ == &entity )
         return true;
 
@@ -244,6 +243,24 @@ bool ProfileFilter::IsObjectOfSameTeam( const kernel::Entity_ABC& entity ) const
     if( !hierarchy )
         return false;
     if( hierarchy->GetSuperior() == &(hierarchy->GetTop()) )
-        return hierarchy->GetSuperior() == &(entity_->Get< kernel::TacticalHierarchies >().GetTop());
+    {
+        const kernel::TacticalHierarchies* tacticalSuperior = entity_->Retrieve< kernel::TacticalHierarchies >();
+        if( tacticalSuperior )
+            return hierarchy->GetSuperior() == &( tacticalSuperior->GetTop() );
+    }
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfileFilter::CanGetKnowledgeFrom
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+bool ProfileFilter::CanGetKnowledgeFrom( const kernel::Entity_ABC& entity ) const
+{
+    if( cHierarchies_ && !cHierarchies_->CanCommunicate() )
+    {
+        return( entity.Retrieve< kernel::CommunicationHierarchies >() == cHierarchies_ );
+    }
+    
+    return IsKnown( entity );
 }

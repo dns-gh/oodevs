@@ -66,3 +66,12 @@ void TeamHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGroupDestruct
     if( Find( message.oid() ) )
         factory_.DeleteKnowledgeGroup( message ); // LTO
 }
+
+// -----------------------------------------------------------------------------
+// Name: TeamHierarchies::CanCommunicate
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+bool TeamHierarchies::CanCommunicate() const
+{
+    return true;
+}

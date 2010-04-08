@@ -11,9 +11,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
+#include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Object.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include <boost/serialization/export.hpp>
 
@@ -36,6 +37,24 @@ DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObj
 {
     while( !knowledgeObjectFromIDMap_.empty() )
         DestroyKnowledgeObject( *knowledgeObjectFromIDMap_.begin()->second );            
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject constructor
+// Created: LDC 2010-04-06
+// Copies army's object blackboard.
+// -----------------------------------------------------------------------------
+DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army )
+{
+    DEC_BlackBoard_CanContainKnowledgeObject& copy = army.GetKnowledge().GetKnowledgeObjectContainer();
+    for( CIT_KnowledgeObjectMap it = copy.objectMap_.begin(); it != copy.objectMap_.end(); ++it )
+    {
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second) ) );   
+        if( ! objectMap_.insert( std::make_pair( it->first, knowledge ) ).second )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+        if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
+            throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    }
 }
 
 // =============================================================================
@@ -106,7 +125,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& f
 // Name: DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const MIL_Army& teamKnowing, MIL_Object_ABC& objectKnown )
+boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
 {
     boost::shared_ptr< DEC_Knowledge_Object > knowledge = objectKnown.CreateKnowledge( teamKnowing );
    

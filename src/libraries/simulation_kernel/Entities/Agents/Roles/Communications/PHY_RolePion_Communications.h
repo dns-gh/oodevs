@@ -63,9 +63,12 @@ public:
     void Clean     ();
     //@}
 
-    //! @name Main @TODO MGD REMOVE
+    //! @name Main
     //@{
     virtual bool CanCommunicate() const;
+    
+    virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
+    virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
     //@}
 
     //! @name Notifications
@@ -80,7 +83,7 @@ public:
     //! @name Algoritms visitors
     //@{
     virtual void Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const;
-    virtual void Execute(moving::SpeedComputer_ABC& algorithm) const;
+    virtual void Execute( moving::SpeedComputer_ABC& algorithm) const;
     //@}
 
     //! @name Network
@@ -91,7 +94,7 @@ public:
 
     //! @name Accessors
     //@{
-        MIL_KnowledgeGroup& GetKnowledgeGroup() const;
+    MIL_KnowledgeGroup& GetKnowledgeGroup() const;
     //@}
 
 public:

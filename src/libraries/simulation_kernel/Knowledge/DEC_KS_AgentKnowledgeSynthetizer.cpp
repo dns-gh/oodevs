@@ -153,7 +153,7 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk( int currentTimeStep )
     assert( pBlackBoard_ );
 
     {
-        boost::function< void ( const DEC_Knowledge_AgentPerception& ) > functor    = boost::bind( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
+        boost::function< void ( const DEC_Knowledge_AgentPerception& ) > functor = boost::bind( & DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromAgentPerception, this, _1, boost::ref(currentTimeStep) );
 
         // Synthèse de la perception des subordonnés
         // Ajout automatique de la connaissance de chaque subordonné    
@@ -167,12 +167,11 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk( int currentTimeStep )
                  // $$$$ FDS 2010-03-25: Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
                 if ( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
                 {
-                    if(  ! pBlackBoard_->GetKnowledgeGroup().IsJammedKnowledgeGroup() )
+                    if( ! pBlackBoard_->GetKnowledgeGroup().IsJammedKnowledgeGroup() )
                         pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( functor );
-               
-                }else {  
-                    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgeFromAgentJamedPerception, this, _1, boost::ref( pion.GetKnowledgeGroup() ), boost::ref(currentTimeStep) ) );
                 }
+                else
+                    pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgeFromAgentJamedPerception, this, _1, boost::ref( pion.GetKnowledgeGroup() ), boost::ref(currentTimeStep) ) );                    
             }
         }
     }
@@ -187,18 +186,18 @@ void DEC_KS_AgentKnowledgeSynthetizer::Talk( int currentTimeStep )
             innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( functor );
     }
 
-    // LTO begin
-    //mis à jour des groupes de connaissances fils avec un délai
+        // LTO begin
+        //mis à jour des groupes de connaissances fils avec un délai
     //boost::function< void ( const DEC_Knowledge_Agent& ) > functorChildren = boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
-    MIL_KnowledgeGroup* pParent = knowledgeGroup.GetParent();
+        MIL_KnowledgeGroup* pParent = knowledgeGroup.GetParent();
 
-    if ( pBlackBoard_->GetKnowledgeGroup().GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
-    {
-        if ( pParent && pParent->IsEnabled() && knowledgeGroup.IsEnabled() )
+        if ( pBlackBoard_->GetKnowledgeGroup().GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
+        {
+            if ( pParent && pParent->IsEnabled() && knowledgeGroup.IsEnabled() )
             pParent->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) ) );
-        pBlackBoard_->GetKnowledgeGroup().RefreshTimeToDiffuseToKnowledgeGroup();
-    }
-    // LTO end
+            pBlackBoard_->GetKnowledgeGroup().RefreshTimeToDiffuseToKnowledgeGroup();
+        }
+        // LTO end
 
     if( ! pBlackBoard_->GetKnowledgeGroup().IsJammedKnowledgeGroup() )
     {

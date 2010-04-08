@@ -193,6 +193,7 @@ namespace
         MOCK_METHOD( RemoveSubordinate, 1 );
         MOCK_METHOD( UnregisterSubordinate, 1 );
         MOCK_METHOD( UnregisterParent, 0 );
+        MOCK_METHOD( CanCommunicate, 0 );
         MOCK_METHOD( RetrieveHierarchies, 1 );
     };
 }

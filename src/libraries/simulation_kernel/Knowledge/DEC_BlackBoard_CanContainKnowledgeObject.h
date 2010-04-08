@@ -17,7 +17,7 @@
 
 class DEC_Knowledge_Object;
 class MIL_Object_ABC;
-class MIL_Army;
+class MIL_Army_ABC;
 
 // =============================================================================
 /** @class  DEC_BlackBoard_CanContainKnowledgeObject
@@ -30,7 +30,8 @@ class DEC_BlackBoard_CanContainKnowledgeObject : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_BlackBoard_CanContainKnowledgeObject();
+             DEC_BlackBoard_CanContainKnowledgeObject();
+    explicit DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army );
     virtual ~DEC_BlackBoard_CanContainKnowledgeObject();
     //@}
 
@@ -44,7 +45,7 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army& teamKnowing, MIL_Object_ABC& objectKnown );
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
     
     void                  DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
 

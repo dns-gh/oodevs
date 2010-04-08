@@ -20,6 +20,9 @@ namespace client
 }
 
 class MIL_Object_ABC;
+class DEC_Knowledge_ObjectPerception;
+class DEC_Knowledge_ObjectCollision;
+    
 
 // =============================================================================
 // @class  PHY_RoleInterface_Communications
@@ -43,7 +46,9 @@ public:
     virtual void Unjam         ( const MIL_Object_ABC& jammer ) = 0;
     virtual void ActivateBlackout  () = 0;
     virtual void DeactivateBlackout() = 0;
-
+    virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception ) = 0;
+    virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision ) = 0;
+    
     //@}
 
     //! @name Operations

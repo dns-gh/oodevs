@@ -25,12 +25,15 @@ namespace Common
 
 class MIL_KnowledgeGroup;
 class DEC_BlackBoard_CanContainKnowledgeAgent;
+class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_BlackBoard_CanContainKnowledgePopulation;
 class DEC_KS_AgentKnowledgeSynthetizer;
 class DEC_KS_PopulationKnowledgeSynthetizer;
 class DEC_KS_Sharing;
+class DEC_Knowledge_Object;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationPerception;
+class MIL_Army_ABC;
 class MIL_Object_ABC;
 class TER_Polygon;
 
@@ -64,6 +67,11 @@ public:
     DEC_BlackBoard_CanContainKnowledgePopulation& GetKnowledgePopulationContainer() const;
     //@}
 
+    //! @name Operations
+    //@{
+    void Jam();
+    //@}
+
     //! @name Network
     //@{
     virtual void SendFullState   () const;
@@ -78,6 +86,7 @@ public:
 
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const;
     virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       uint                   nID ) const;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > ResolveKnowledgeObject(       MIL_Object_ABC&        object ) const;
 
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation( const Common::MsgPopulationKnowledge& asn ) const;
     virtual DEC_Knowledge_Population* ResolveKnowledgePopulation(       unsigned int                       nID ) const;
@@ -107,7 +116,6 @@ public:
           void                         GetRefugeesInCircle         ( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
           void                         GetSurrenderedAgentsInCircle( T_ConstKnowledgeAgentVector& container, const MT_Vector2D& center, MT_Float rRadius ) const;
 
-         
     // Knowledge populations
     DEC_Knowledge_Population*    GetKnowledgePopulation      ( const DEC_Knowledge_PopulationCollision&  collision  ) const;
     DEC_Knowledge_Population*    GetKnowledgePopulation      ( const DEC_Knowledge_PopulationPerception& perception ) const;
@@ -116,9 +124,11 @@ public:
     void                         GetPopulations              ( T_KnowledgePopulationVector&      container ) const;
      //@}
 
+
     //! @name Tools
     //@{
     void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
+    boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
     //@}
 
 private:
@@ -127,6 +137,7 @@ private:
     // Containers
     DEC_BlackBoard_CanContainKnowledgeAgent*       pKnowledgeAgentContainer_;
     DEC_BlackBoard_CanContainKnowledgePopulation*  pKnowledgePopulationContainer_;
+    DEC_BlackBoard_CanContainKnowledgeObject*      pKnowledgeObjectContainer_;
 
     // Knowledge sources
     DEC_KS_AgentKnowledgeSynthetizer*       pKsAgentKnowledgeSynthetizer_;

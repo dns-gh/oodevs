@@ -85,7 +85,7 @@ public:
     const Model&                        model_;
     const KnowledgeGroup&               knowledgeGroup_;
     const Agent&                        agent_;
-    const Common::MsgUnitType&          type_;
+    const Common::MsgUnitType           type_;
 
     unsigned int                        nRelevance_;
     MsgsSimToClient::EnumUnitIdentificationLevel   nPerceptionLevel_;

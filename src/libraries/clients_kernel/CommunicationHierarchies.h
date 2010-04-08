@@ -31,9 +31,11 @@ public:
              CommunicationHierarchies() {};
     virtual ~CommunicationHierarchies() {};
     //@}
-    // LTO begin
+
     //! @name Accessors
     //@{
+    virtual bool CanCommunicate() const = 0;
+    // LTO begin
     virtual const Entity_ABC* GetSuperior() const = 0;
     virtual const Entity_ABC& GetEntity() const = 0;
     virtual tools::Iterator< const Entity_ABC& > CreateSubordinateIterator() const = 0; 

@@ -80,6 +80,7 @@ public:
     //@{
     virtual bool IsVisible   ( const kernel::Entity_ABC& entity ) const;
     virtual bool IsKnown     ( const kernel::Entity_ABC& /*entity*/ ) const { return true; };
+    virtual bool CanGetKnowledgeFrom( const kernel::Entity_ABC& entity ) const { return true; };
     virtual bool CanBeOrdered( const kernel::Entity_ABC& entity ) const;
     virtual bool CanDoMagic  ( const kernel::Entity_ABC& entity ) const;
     //@}

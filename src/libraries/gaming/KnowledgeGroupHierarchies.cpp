@@ -57,3 +57,12 @@ void KnowledgeGroupHierarchies::DoUpdate( const MsgsSimToClient::MsgKnowledgeGro
             ChangeSuperior( const_cast< kernel::Entity_ABC* >( top ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupHierarchies::CanCommunicate
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+bool KnowledgeGroupHierarchies::CanCommunicate() const
+{
+    return true;
+}

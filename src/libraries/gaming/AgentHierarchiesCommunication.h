@@ -49,6 +49,7 @@ public:
     virtual ~AgentHierarchiesCommunication();
     //@}
 
+    virtual bool CanCommunicate() const;
     void DoUpdate( const MsgsSimToClient::MsgUnitCreation& message );
     virtual void DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message );
     void DoUpdate( const Common::MsgUnitChangeSuperior& message );

@@ -36,6 +36,8 @@ public:
     virtual void Unjam         ( const MIL_Object_ABC& jammer );
     virtual void ActivateBlackout  ();
     virtual void DeactivateBlackout();
+    virtual void UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception );
+    virtual void UpdateKnowledgesFromObjectCollision ( const DEC_Knowledge_ObjectCollision& collision );
 
     virtual MT_Float ModifySpeed( MT_Float rSpeed ) const;
     //@}

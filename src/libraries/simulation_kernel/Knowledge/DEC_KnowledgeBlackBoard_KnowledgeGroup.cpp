@@ -14,10 +14,12 @@
 #include "DEC_KnowledgeBlackBoard_Army.h"
 #include "DEC_Knowledge_Agent.h"
 #include "DEC_Knowledge_AgentPerception.h"
+#include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_PopulationCollision.h"
 #include "DEC_Knowledge_PopulationPerception.h"
-#include "DEC_BlackBoard_CanContainKnowledgeAgent.h"  
+#include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "DEC_KS_AgentKnowledgeSynthetizer.h"
 #include "DEC_KS_PopulationKnowledgeSynthetizer.h"
@@ -37,6 +39,7 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( 
     : pKnowledgeGroup_                  ( &knowledgeGroup )
     , pKnowledgeAgentContainer_         ( new DEC_BlackBoard_CanContainKnowledgeAgent     ( knowledgeGroup ) )
     , pKnowledgePopulationContainer_    ( new DEC_BlackBoard_CanContainKnowledgePopulation() )
+    , pKnowledgeObjectContainer_        ( 0 )
     , pKsAgentKnowledgeSynthetizer_     ( new DEC_KS_AgentKnowledgeSynthetizer            ( *this ) )      
     , pKsPopulationKnowledgeSynthetizer_( new DEC_KS_PopulationKnowledgeSynthetizer       ( *this ) )
     , pKsSharing_                       ( new DEC_KS_Sharing                              ( *this ) )
@@ -52,6 +55,7 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
     : pKnowledgeGroup_                  ( 0 )
     , pKnowledgeAgentContainer_         ( 0 )
     , pKnowledgePopulationContainer_    ( 0 )
+    , pKnowledgeObjectContainer_        ( 0 )
     , pKsAgentKnowledgeSynthetizer_     ( 0 )      
     , pKsPopulationKnowledgeSynthetizer_( 0 )
     , pKsSharing_                       ( 0 )
@@ -66,7 +70,8 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
 DEC_KnowledgeBlackBoard_KnowledgeGroup::~DEC_KnowledgeBlackBoard_KnowledgeGroup()
 {
     delete pKnowledgeAgentContainer_;         
-    delete pKnowledgePopulationContainer_;    
+    delete pKnowledgePopulationContainer_;   
+    delete pKnowledgeObjectContainer_; 
     delete pKsAgentKnowledgeSynthetizer_;     
     delete pKsPopulationKnowledgeSynthetizer_;
     delete pKsSharing_;                       
@@ -80,12 +85,25 @@ template< typename Archive >
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_KnowledgeBlackBoard_ABC >( *this )
-            & pKnowledgeGroup_                  
-            & pKnowledgeAgentContainer_         
-            & pKnowledgePopulationContainer_    
+            & pKnowledgeGroup_
+            & pKnowledgeAgentContainer_
+            & pKnowledgePopulationContainer_
+            & pKnowledgeObjectContainer_
             & pKsAgentKnowledgeSynthetizer_     
             & pKsPopulationKnowledgeSynthetizer_
             & pKsSharing_;
+}
+
+namespace
+{
+class ObjectStateToNewClientSender
+    {
+    public:
+        void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            knowledge->SendStateToNewClient();
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -96,6 +114,11 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendFullState() const
 {
     pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( std::mem_fun_ref( & DEC_Knowledge_Agent     ::SendStateToNewClient ) );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::SendStateToNewClient ) );
+    if( pKnowledgeObjectContainer_ )
+    {
+        ObjectStateToNewClientSender functor;
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject    ( functor );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -106,6 +129,11 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendChangedState() const
 {
     pKnowledgeAgentContainer_     ->ApplyOnKnowledgesAgent     ( std::mem_fun_ref( & DEC_Knowledge_Agent     ::UpdateOnNetwork ) );
     pKnowledgePopulationContainer_->ApplyOnKnowledgesPopulation( std::mem_fun_ref( & DEC_Knowledge_Population::UpdateOnNetwork ) );
+    if( pKnowledgeObjectContainer_ )
+    {
+        ObjectStateToNewClientSender functor;
+        pKnowledgeObjectContainer_->ApplyOnKnowledgesObject    ( functor );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -436,7 +464,7 @@ boost::shared_ptr< DEC_Knowledge_Agent > DEC_KnowledgeBlackBoard_KnowledgeGroup:
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( const Common::MsgObjectKnowledge& asn ) const
 {
-    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( asn.oid() );
+    return ResolveKnowledgeObject( asn.oid() );
 }
 
 // -----------------------------------------------------------------------------
@@ -445,7 +473,20 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( unsigned int nID ) const
 {
+    if( pKnowledgeObjectContainer_ )
+        return pKnowledgeObjectContainer_->GetKnowledgeObjectFromID( nID );
     return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObjectFromID( nID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::ResolveKnowledgeObject( MIL_Object_ABC&        object ) const
+{
+    if( pKnowledgeObjectContainer_ )
+        return pKnowledgeObjectContainer_->GetKnowledgeObject( object );
+    return pKnowledgeGroup_->GetArmy().GetKnowledge().GetKnowledgeObject( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -523,3 +564,22 @@ DEC_BlackBoard_CanContainKnowledgePopulation& DEC_KnowledgeBlackBoard_KnowledgeG
     assert( pKnowledgePopulationContainer_ );
     return *pKnowledgePopulationContainer_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::Jam
+// Created: LDC 2010-04-06
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::Jam()
+{
+    pKnowledgeObjectContainer_ = new DEC_BlackBoard_CanContainKnowledgeObject( pKnowledgeGroup_->GetArmy() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
+{
+    return pKnowledgeObjectContainer_->CreateKnowledgeObject( teamKnowing, objectKnown );
+}
+    

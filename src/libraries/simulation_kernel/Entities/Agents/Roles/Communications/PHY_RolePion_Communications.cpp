@@ -15,11 +15,17 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/knowledge/KnowledgeGroupFactory.h"
-#include "simulation_kernel/knowledge/MIL_KnowledgeGroup.h"
+#include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
+#include "simulation_kernel/Knowledge/DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
+#include "simulation_kernel/Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
+#include "simulation_kernel/Knowledge/DEC_Knowledge_ObjectCollision.h"
+#include "simulation_kernel/Knowledge/DEC_Knowledge_ObjectPerception.h"
+#include "simulation_kernel/Knowledge/KnowledgeGroupFactory.h"
+#include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include "simulation_kernel/SpeedComputer_ABC.h"
+#include "simulation_kernel/WeaponReloadingComputer_ABC.h"
 #include <xeumeuleu/xml.h>
 
 MT_Float PHY_RolePion_Communications::rCoefSpeedModificator_         = 0.;
@@ -302,3 +308,32 @@ void PHY_RolePion_Communications::Execute( firing::WeaponReloadingComputer_ABC& 
     if( !jammers_.empty() )
         algorithm.AddModifier( rCoefReloadingTimeModificator_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::UpdateKnowledgesFromObjectPerception( const DEC_Knowledge_ObjectPerception& perception )
+{
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( perception.GetObjectPerceived() );
+
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_.GetArmy(), perception.GetObjectPerceived() );
+
+    pKnowledge->Update( perception );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision
+// Created: LDC 2010-04-07
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC_Knowledge_ObjectCollision& collision )
+{
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( collision.GetObject() );
+
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_.GetArmy(), collision.GetObject() );
+
+    pKnowledge->Update( collision );
+}
+
