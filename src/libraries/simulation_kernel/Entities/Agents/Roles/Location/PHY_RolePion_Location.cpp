@@ -489,11 +489,19 @@ bool PHY_RolePion_Location::HasLocationChanged() const
     return bPositionHasChanged_ || bDirectionHasChanged_ || bHeightHasChanged_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::NotifyTerrainPutInsideObject
+// Created: SLG 2010-03-31
+// -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object )
 {
     pion_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutInsideObject, object );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::NotifyTerrainPutOutsideObject
+// Created: SLG 2010-03-31
+// -----------------------------------------------------------------------------
 void PHY_RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object )
 {
     pion_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );

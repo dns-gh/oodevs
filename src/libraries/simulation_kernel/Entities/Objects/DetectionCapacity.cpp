@@ -16,8 +16,16 @@
 #include "DetectorAttribute.h"
 #include "Object.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Knowledge/KnowledgeVisitor_ABC.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
@@ -166,6 +174,32 @@ void DetectionCapacity::Instanciate( Object& object ) const
     object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
 
+namespace
+{
+    class KnowledgeCreation : public KnowledgeVisitor_ABC
+    {
+    public:
+        KnowledgeCreation( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& perceptionLevel )
+            : agent_( agent ), perceptionLevel_( perceptionLevel )
+        {}
+        virtual ~KnowledgeCreation()
+        {}
+        virtual void visit( const MIL_KnowledgeGroup& knowledgeGroup )
+        {
+            std::vector<MIL_Automate* > automates = knowledgeGroup.GetAutomates();
+            if( !automates.empty() )
+            {
+                MIL_Agent_ABC& pion = automates.front()->GetPionPC();
+                PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >( pion ).GetRole< PHY_RoleInterface_Perceiver >();
+                role.NotifyExternalPerception( agent_, perceptionLevel_ );
+            }
+        }
+    private:
+        MIL_Agent_ABC& agent_; 
+        const PHY_PerceptionLevel& perceptionLevel_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: DetectionCapacity::ProcessAgentInside
 // Created: SLG 2010-02-11
@@ -194,9 +228,23 @@ void DetectionCapacity::ProcessAgentInside( Object& object, MIL_Agent_ABC& agent
             else if( it->second + rDetectionTime_ < currentTime )
                 role.NotifyExternalPerception( agent, PHY_PerceptionLevel::detected_ );
         }
-        else
+        else if( !detector )
         {
-            // SLG TODO when object is created by magic action : put agent in blackboard of all army's knowledgeGroup
+            if( it->second + rIdentificationTime_ < currentTime )
+            {
+                KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::identified_ );
+                object.GetArmy().ApplyOnKnowledgeGroup( knowledgeCreation );
+            }
+            else if( it->second + rRecognitionTime_ < currentTime )
+            {
+                KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::recognized_ );
+                object.GetArmy().ApplyOnKnowledgeGroup( knowledgeCreation );
+            }
+            else if( it->second + rDetectionTime_ < currentTime )
+            {
+                KnowledgeCreation knowledgeCreation( agent, PHY_PerceptionLevel::detected_ );
+                object.GetArmy().ApplyOnKnowledgeGroup( knowledgeCreation );
+            }
         }
 
     }

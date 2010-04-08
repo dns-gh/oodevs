@@ -92,6 +92,8 @@ public:
     //@{
     virtual void UpdateKnowledges(int currentTimeStep);
     virtual void CleanKnowledges ();
+    virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& );
+
     //@}
 
     //! @name Hierarchy
@@ -116,7 +118,7 @@ public:
     E_Tristate IsAFriend  ( const MIL_Army_ABC& army )                   const;
     E_Tristate IsAnEnemy  ( const DEC_Knowledge_Population & knowledge ) const;
     E_Tristate IsAnEnemy  ( const MIL_Army_ABC& army )                   const;
-    E_Tristate IsNeutral  ( const MIL_Army_ABC& army )                   const;
+    E_Tristate IsNeutral ( const MIL_Army_ABC& army )                   const;
     //@}
 
     //! @name Accessors

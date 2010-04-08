@@ -20,6 +20,7 @@ class DEC_Knowledge_Object;
 class DEC_KnowledgeBlackBoard_Army;
 class MIL_KnowledgeGroup;
 class MIL_Formation;
+class KnowledgeVisitor_ABC;
 
 namespace Common
 {
@@ -95,6 +96,7 @@ public:
 
     virtual void InitializeDiplomacy( xml::xistream& xis ) = 0;
     virtual void OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& msg ) = 0;
+    virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& ) = 0;
     //@}
 
     //! @name Accessors

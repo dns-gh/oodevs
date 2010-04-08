@@ -100,7 +100,7 @@ public:
           bool                           IsPrisoner               () const;
           bool                           IsRefugeeManaged         () const;
           bool                           IsDead                   () const;
-          unsigned int                           GetID                    () const;
+          unsigned int                   GetID                    () const;
           MT_Float                       GetAltitude              () const;
     const MT_Vector2D&                   GetPosition              () const;
     const MT_Vector2D&                   GetDirection             () const;

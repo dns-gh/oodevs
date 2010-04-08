@@ -15,6 +15,7 @@
 #include "Knowledge/MIL_KnowledgeGroup.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
+#include "Knowledge/KnowledgeVisitor_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -785,4 +786,16 @@ MIL_Army_ABC::E_Diplomacy MIL_Army::GetDiplomacy( const MIL_Army_ABC& otherArmy 
 const std::string& MIL_Army::GetName() const
 {
     return strName_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::ApplyOnKnowledgeGroup
+// Created: SLG 2010-04-07
+// -----------------------------------------------------------------------------
+void MIL_Army::ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& fct )
+{
+    for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
+    {
+        fct.visit( *(it->second ) );
+    }
 }
