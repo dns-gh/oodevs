@@ -182,6 +182,17 @@ void ChangeLogisticLinksDialog::Validate()
     {
         simulation::AutomatChangeLogisticLinks message;
         message().set_oid( selected_->GetId() );
+
+        int id;
+        if( SetId( *tc2Combo_, id ) )
+            message().set_oid_tc2( id );
+        if( SetId( *maintenanceCombo_, id ) )
+            message().set_oid_maintenance( id );
+        if( SetId( *medicalCombo_, id ) )
+            message().set_oid_sante( id );
+        if( SetId( *supplyCombo_, id ) )
+            message().set_oid_ravitaillement( id );
+
 	    message.Send( publisher_ );
     }
     Reject();
