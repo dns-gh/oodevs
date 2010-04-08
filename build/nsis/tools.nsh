@@ -326,7 +326,7 @@ FunctionEnd
         SetOutPath "$INSTDIR\installation files"
         File "${OUTDIR}\SWORD ${ComponentName}_${PLATFORM}.exe"
         WriteRegStr ${INSTDIR_REG_ROOT} "Software\${COMPANY_NAME}\${PRODUCT_NAME}\Common\Components\${ComponentName}" "RootDirectory" "$INSTDIR\${ComponentName}\applications"
-        ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /DLANG=$LANGUAGE /DPRODUCT_NAME=${PRODUCT_NAME} /DINSTDIR_REG_ROOT=${INSTDIR_REG_ROOT} /D=$INSTDIR\${ComponentName}'
+        ExecWait '"$INSTDIR\installation files\SWORD ${ComponentName}_${PLATFORM}.exe" /S /LANG=$LANGUAGE /$MultiUser.InstallMode /D=$INSTDIR\${ComponentName}'
     SectionEnd
 
 !macroend
