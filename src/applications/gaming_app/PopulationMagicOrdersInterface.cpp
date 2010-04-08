@@ -11,12 +11,22 @@
 #include "PopulationMagicOrdersInterface.h"
 #include "moc_PopulationMagicOrdersInterface.cpp"
 
+#include "actions/ActionsModel.h"
+#include "actions/UnitMagicActionTeleport.h"
+#include "actions/Point.h"
+
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Point.h"
+
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "gaming/tools.h"
 #include "protocol/simulationsenders.h"
@@ -25,6 +35,7 @@
 using namespace Common;
 using namespace kernel;
 using namespace gui;
+using namespace actions;
 
 namespace
 {
@@ -63,11 +74,14 @@ namespace
 // Name: PopulationMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, ParametersLayer& layer, const Profile_ABC& profile )
+PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ParametersLayer& layer, const Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
     , static_( staticModel )
+    , simulation_( simulation )
     , profile_( profile )
     , selectedEntity_( controllers )
     , magicMove_( false )
@@ -115,7 +129,21 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
 void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
 {
     if( magicMove_ && location.IsValid() )
-        location.Accept( *this );
+    {
+        if( selectedEntity_ )
+        {
+            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
+            UnitMagicActionTeleport* action = new UnitMagicActionTeleport( *selectedEntity_, actionType, controllers_.controller_, true );
+
+            tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+            while( it.HasMoreElements() )
+                action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Polish();
+            actionsModel_.Register( action->GetId(), *action );
+            actionsModel_.Publish( *action, actionPublisher_ );
+        }
+    }
     controllers_.Unregister( *magicMoveLocation_ );
     magicMove_ = false;
 }
@@ -221,23 +249,4 @@ void PopulationMagicOrdersInterface::AddValuedMagic( QPopupMenu* parent, Context
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
     connect( valueEditor, SIGNAL( returnPressed() ), this, slot );
     connect( valueEditor, SIGNAL( returnPressed() ), menu, SLOT( hide() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PopulationMagicOrdersInterface::VisitPoint
-// Created: SBO 2007-05-04
-// -----------------------------------------------------------------------------
-void PopulationMagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
-{
-    if( selectedEntity_ )
-    {
-        MsgCoordLatLong utm;
-        static_.coordinateConverter_.ConvertToGeo( point, utm );
-        simulation::PopulationMagicAction message;
-        message().set_oid( selectedEntity_->GetId() );
-
-        *message().mutable_action()->mutable_move_to()->mutable_coord() = utm;
-        message.Send( publisher_, 56 );
-        const_cast< Entity_ABC& >( *selectedEntity_ ).Update( message() );
-    }
 }

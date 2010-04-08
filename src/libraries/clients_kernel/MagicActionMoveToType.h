@@ -7,39 +7,37 @@
 //
 // *****************************************************************************
 
-#ifndef __MagicActionType_h_
-#define __MagicActionType_h_
+#ifndef __MagicActionMoveToType_h_
+#define __MagicActionMoveToType_h_
 
-#include "OrderType.h"
+#include "MagicActionType.h"
 
 namespace kernel
 {
-    class OrderContext;
 
 // =============================================================================
-/** @class  MagicActionType
-    @brief  MagicActionType
+/** @class  MagicActionMoveToType
+    @brief  MagicActionMoveToType
 */
-// Created: JSR 2010-04-02
+// Created: JSR 2010-04-08
 // =============================================================================
-class MagicActionType : public OrderType
+class MagicActionMoveToType : public MagicActionType
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MagicActionType();
-    virtual ~MagicActionType();
+    explicit MagicActionMoveToType();
+    virtual ~MagicActionMoveToType();
     //@}
 
 private:
     //! @name Operations
     //@{
-    virtual void Initialize() = 0;
-    void Clean();
+    virtual void Initialize();
     //@}
 };
 
 }
 
-#endif // __MagicActionType_h_
+#endif // __MagicActionMoveToType_h_

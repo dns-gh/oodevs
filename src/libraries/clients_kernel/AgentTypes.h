@@ -34,6 +34,7 @@ namespace kernel
     class MagicOrderType;
     class SymbolFactory;
     class KnowledgeGroupType;
+    class MagicActionType;
 
 // =============================================================================
 /** @class  AgentTypes
@@ -54,6 +55,7 @@ class AgentTypes : public tools::Resolver< AgentType >
                  , public tools::Resolver< MissionType >
                  , public tools::Resolver< FragOrderType >
                  , public tools::Resolver< FragOrderType, std::string >
+                 , public tools::Resolver< MagicActionType, std::string >
 {
 
 public:
@@ -106,6 +108,8 @@ private:
     void ReadMissions( xml::xistream& xis, const std::string& name, T_MissionResolver& missions );
     void ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const OrderContext& context );
     void ReadFragOrderType( xml::xistream& xis );
+
+    void CreateMagicActionTypes();
     //@}
 
 private:

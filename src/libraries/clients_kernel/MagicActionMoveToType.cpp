@@ -8,34 +8,37 @@
 // *****************************************************************************
 
 #include "clients_kernel_pch.h"
-#include "MagicActionType.h"
+#include "MagicActionMoveToType.h"
 #include "OrderParameter.h"
 
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
-// Name: MagicActionType constructor
-// Created: JSR 2010-04-02
+// Name: MagicActionMoveToType constructor
+// Created: JSR 2010-04-08
 // -----------------------------------------------------------------------------
-MagicActionType::MagicActionType()
-    : OrderType()
+MagicActionMoveToType::MagicActionMoveToType()
+    : MagicActionType()
 {
+    name_ = "teleport";
+    Initialize();
 }
 
 // -----------------------------------------------------------------------------
-// Name: MagicActionType destructor
-// Created: JSR 2010-04-02
+// Name: MagicActionMoveToType destructor
+// Created: JSR 2010-04-08
 // -----------------------------------------------------------------------------
-MagicActionType::~MagicActionType()
+MagicActionMoveToType::~MagicActionMoveToType()
 {
-    Clean();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: MagicActionType::Clean
-// Created: JSR 2010-04-06
+// Name: MagicActionMoveToType::Initialize
+// Created: JSR 2010-04-08
 // -----------------------------------------------------------------------------
-void MagicActionType::Clean()
+void MagicActionMoveToType::Initialize()
 {
-    DeleteAll();
+    OrderParameter* param = new OrderParameter( "Location", "Point", false );
+    Register( Count(), *param );
 }

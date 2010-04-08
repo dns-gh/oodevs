@@ -18,6 +18,7 @@
 #include "FileLoader.h"
 #include "FragOrderType.h"
 #include "KnowledgeGroupType.h"
+#include "MagicActionMoveToType.h"
 #include "MissionFactory.h"
 #include "MissionType.h"
 #include "OrderContext.h"
@@ -66,6 +67,8 @@ void AgentTypes::Load( const tools::ExerciseConfig& config )
         .Load( "automats", boost::bind( &AgentTypes::ReadAutomats, this, _1 ) )
         .Load( "populations", boost::bind( &AgentTypes::ReadPopulations, this, _1 ) )
         .Load( "knowledge-groups", boost::bind( &AgentTypes::ReadKnowledgeGroups, this, _1 ) );
+
+    CreateMagicActionTypes();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,6 +96,7 @@ void AgentTypes::Purge()
     tools::Resolver< ComponentType >::DeleteAll();
     tools::Resolver< ComponentType, std::string >::Clear();
     tools::Resolver< SensorType, std::string >::DeleteAll();
+    tools::Resolver< MagicActionType, std::string >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -320,4 +324,14 @@ void AgentTypes::ReadKnowledgeGroupType( xml::xistream& xis )
 {
     KnowledgeGroupType* type = new KnowledgeGroupType( xis );
     tools::Resolver< KnowledgeGroupType, std::string >::Register( type->GetName(), *type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentTypes::CreateMagicActionTypes
+// Created: JSR 2010-04-08
+// -----------------------------------------------------------------------------
+void AgentTypes::CreateMagicActionTypes()
+{
+    MagicActionMoveToType* moveto = new MagicActionMoveToType();
+    tools::Resolver< MagicActionType, std::string >::Register( moveto->GetName(), *moveto );
 }

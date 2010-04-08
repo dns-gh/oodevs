@@ -53,7 +53,8 @@ public:
              ActionFactory( kernel::Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
                           , const tools::Resolver_ABC< kernel::MissionType >& missions
                           , const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders
-                          , const kernel::MagicActionType& magicAction, const Simulation& simulation );
+                          , const tools::Resolver_ABC< kernel::MagicActionType, std::string >& magicActions
+                          , const Simulation& simulation );
     virtual ~ActionFactory();
     //@}
 
@@ -98,7 +99,7 @@ private:
     const Model& model_;
     const tools::Resolver_ABC< kernel::MissionType >& missions_;
     const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders_;
-    const kernel::MagicActionType& magicAction_;
+    const tools::Resolver_ABC< kernel::MagicActionType, std::string >& magicActions_;
     const Simulation& simulation_;
     //@}
 };

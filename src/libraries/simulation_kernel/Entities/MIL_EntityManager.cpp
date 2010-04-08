@@ -1030,6 +1030,8 @@ void MIL_EntityManager::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::Ms
             pAutomate->OnReceiveMsgMagicActionMoveTo( message );
         else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
             pPion->OnReceiveMsgMagicActionMoveTo( message );
+        else if( MIL_Population* pPopulation = populationFactory_->Find( message.oid() ) )
+            pPopulation->OnReceiveMsgPopulationMagicActionMoveTo( message );
         else
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
     }

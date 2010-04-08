@@ -20,6 +20,11 @@ namespace MsgsClientToSim
     class MsgMagicActionUpdateObject;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Entity_ABC;
@@ -29,6 +34,8 @@ namespace kernel
 }
 
 class Publisher_ABC;
+class ActionPublisher;
+class Simulation;
 
 // =============================================================================
 /** @class  ObjectMagicOrdersInterface
@@ -45,7 +52,7 @@ class ObjectMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile );
+             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~ObjectMagicOrdersInterface();
     //@}
 
@@ -83,6 +90,9 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const Simulation& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     //@}

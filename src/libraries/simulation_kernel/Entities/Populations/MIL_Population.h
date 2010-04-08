@@ -28,6 +28,7 @@ namespace MsgsClientToSim
 {
     class MsgFragOrder;
     class MsgPopulationMagicAction;
+    class MsgMagicActionMoveTo;
 }
 
 namespace xml
@@ -149,7 +150,8 @@ public:
     void SendFullState        () const;
     void UpdateNetwork        ();
 
-    void OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::MsgPopulationMagicAction& asnMsg );
+    void OnReceiveMsgPopulationMagicAction      ( const MsgsClientToSim::MsgPopulationMagicAction& asnMsg );
+    void OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& asn );
     //@}
 
     //! @name CheckPoints
@@ -189,7 +191,6 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveMsgMagicMove     ( const Common::MsgMagicActionPopulationMoveTo& asn );
     void OnReceiveMsgDestroyAll    ();
     void OnReceiveMsgChangeAttitude( const Common::MsgMagicActionPopulationChangeAttitude& asn );
     void OnReceiveMsgKill          ( const Common::MsgMagicActionPopulationKill& asn );

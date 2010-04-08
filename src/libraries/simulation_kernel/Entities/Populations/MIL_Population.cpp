@@ -869,9 +869,7 @@ void MIL_Population::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder&
 // -----------------------------------------------------------------------------
 void MIL_Population::OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::MsgPopulationMagicAction& asnMsg )
 {
-    if( asnMsg.action().has_move_to() )
-        OnReceiveMsgMagicMove     ( asnMsg.action().move_to() );
-    else if( asnMsg.action().has_destruction_totale())
+    if( asnMsg.action().has_destruction_totale())
         OnReceiveMsgDestroyAll    ();
     else if( asnMsg.action().has_change_attitude())
         OnReceiveMsgChangeAttitude( asnMsg.action().change_attitude() );
@@ -884,13 +882,26 @@ void MIL_Population::OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::M
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_Population::OnReceiveMsgMagicMove
-// Created: SBO 2005-10-25
+// Name: MIL_Population::OnReceiveMsgPopulationMagicActionMoveTo
+// Created: JSR 2010-04-08
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgMagicMove( const Common::MsgMagicActionPopulationMoveTo& asn )
+void MIL_Population::OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& asn )
 {
+    if( !asn.has_parametres() || asn.parametres().elem_size() != 1 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    
+    const Common::MsgMissionParameter& parametre = asn.parametres().elem( 0 );
+    if( !parametre.has_value() || !parametre.value().has_point() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    const Common::MsgPoint& point = parametre.value().point();
+
+    if( point.location().type() != Common::MsgLocation_Geometry_point 
+        || point.location().coordinates().elem_size() != 1 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
     MT_Vector2D vPosTmp;
-    MIL_Tools::ConvertCoordMosToSim( asn.coord(), vPosTmp );
+    MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), vPosTmp );
 
    // merge all concentrations into new
     T_ConcentrationVector concentrations = concentrations_;

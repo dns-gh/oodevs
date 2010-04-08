@@ -25,7 +25,14 @@ namespace kernel
     class KnowledgeGroup_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 class Publisher_ABC;
+class ActionPublisher;
+class Simulation;
 
 // =============================================================================
 /** @class  KnowledgeGroupMagicOrdersInterface
@@ -42,7 +49,7 @@ class KnowledgeGroupMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroupMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroupMagicOrdersInterface();
     //@}
 
@@ -83,6 +90,9 @@ private:
     const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& knowledgeGroupTypes_;
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const Simulation& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedEntity_;
     T_Items items_;

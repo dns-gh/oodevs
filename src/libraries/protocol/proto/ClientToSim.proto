@@ -140,10 +140,9 @@ message MsgMagicActionCreateFireOrder {
 
 message MsgPopulationMagicAction_action {
    optional Common.MsgMagicActionPopulationChangeAttitude   change_attitude     = 1;
-   optional Common.MsgMagicActionPopulationMoveTo           move_to             = 2;
-   optional bool                                            destruction_totale  = 3;
-   optional Common.MsgMagicActionPopulationKill             tuer                = 4;
-   optional Common.MsgMagicActionPopulationResurrect        ressusciter         = 5;
+   optional bool                                            destruction_totale  = 2;
+   optional Common.MsgMagicActionPopulationKill             tuer                = 3;
+   optional Common.MsgMagicActionPopulationResurrect        ressusciter         = 4;
 }
 
 message MsgPopulationMagicAction {

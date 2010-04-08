@@ -12,6 +12,8 @@
 
 #include "tools/Resolver.h"
 
+class Publisher_ABC;
+
 namespace kernel
 {
     class Entity_ABC;
@@ -55,6 +57,7 @@ public:
     void Purge();
     void Load( const std::string& filename );
     void Save( const std::string& filename ) const;
+    void Publish( const Action_ABC& action, Publisher_ABC& publisher );
 
     bool IsRecording() const;
     void EnableRecording( bool enabled );

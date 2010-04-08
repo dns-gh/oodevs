@@ -28,6 +28,11 @@ namespace kernel
     class Formation_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace gui
 {
     class LocationCreator;
@@ -37,6 +42,8 @@ namespace gui
 class StaticModel;
 
 class Publisher_ABC;
+class ActionPublisher;
+class Simulation;
 
 // =============================================================================
 /** @class  UnitMagicOrdersInterface
@@ -52,14 +59,13 @@ class UnitMagicOrdersInterface : public QObject
                                , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                                , public tools::ElementObserver_ABC< kernel::Team_ABC >
                                , public gui::ShapeHandler_ABC
-                               , private kernel::LocationVisitor_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
     virtual ~UnitMagicOrdersInterface();
     //@}
 
@@ -96,13 +102,6 @@ private:
     void ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id );
     void FillCommonOrders( QPopupMenu* magicMenu );
 
-    virtual void VisitLines     ( const T_PointVector& ) {};
-    virtual void VisitRectangle ( const T_PointVector& ) {};
-    virtual void VisitPolygon   ( const T_PointVector& ) {};
-    virtual void VisitCircle    ( const geometry::Point2f& , float ) {};
-    virtual void VisitPoint     ( const geometry::Point2f& point );
-    virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector& ) {};
-
     void AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
@@ -119,7 +118,10 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
+    const Simulation& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;

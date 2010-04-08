@@ -58,7 +58,5 @@ void UnitMissionInterface::Publish()
         if( const AutomatDecisions* decisions = automat->Retrieve< AutomatDecisions >() )
             if( decisions->IsEmbraye() )
                 decisions->Disengage();
-    action->Publish( publisher_ );
-    if( ! model_.IsRecording() )
-        model_.Destroy( *action );
+    model_.Publish( *action, publisher_ );
 }

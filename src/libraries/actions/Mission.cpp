@@ -85,7 +85,8 @@ void Mission::Polish()
 // -----------------------------------------------------------------------------
 void Mission::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "type", "mission" );
+    xos << xml::attribute( "id", GetType().GetId() )
+        << xml::attribute( "type", "mission" );
     ActionWithTarget_ABC::Serialize( xos );
 }
 

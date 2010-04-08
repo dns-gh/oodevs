@@ -50,7 +50,5 @@ void PopulationMissionInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), mission_ );
     CommitTo( *action );
-    action->Publish( publisher_ );
-    if( ! model_.IsRecording() )
-        model_.Destroy( *action );
+    model_.Publish( *action, publisher_ );
 }

@@ -53,11 +53,16 @@ protected:
     void ReadDescriptions( xml::xistream& xis );
     //@}
 
+protected:
+    //! @name Member data
+    //@{
+    std::string name_;
+    //@}
+
 private:
     //! @name Member data
     //@{
     unsigned long id_;
-    std::string name_;
     std::string doctrine_;
     std::string usage_;
     //@}

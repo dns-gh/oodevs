@@ -24,6 +24,11 @@ namespace kernel
     class Population_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace gui
 {
     class LocationCreator;
@@ -32,6 +37,8 @@ namespace gui
 
 class StaticModel;
 class Publisher_ABC;
+class ActionPublisher;
+class Simulation;
 
 // =============================================================================
 /** @class  PopulationMagicOrdersInterface
@@ -43,14 +50,13 @@ class PopulationMagicOrdersInterface : public QObject
                                      , public tools::Observer_ABC
                                      , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                                      , public gui::ShapeHandler_ABC
-                                     , private kernel::LocationVisitor_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             PopulationMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
     virtual ~PopulationMagicOrdersInterface();
     //@}
 
@@ -81,12 +87,6 @@ private:
     //@{
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
     void AddValuedMagic( QPopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
-    virtual void VisitLines     ( const T_PointVector& ) {};
-    virtual void VisitRectangle ( const T_PointVector& ) {};
-    virtual void VisitPolygon   ( const T_PointVector& ) {};
-    virtual void VisitCircle    ( const geometry::Point2f& , float ) {};
-    virtual void VisitPoint     ( const geometry::Point2f& point );
-    virtual void VisitPath      ( const geometry::Point2f& , const T_PointVector& ) {};
     //@}
 
 private:
@@ -94,7 +94,10 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
+    const Simulation& simulation_; 
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool magicMove_;

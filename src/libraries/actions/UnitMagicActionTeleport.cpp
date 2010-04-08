@@ -18,6 +18,16 @@ using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: UnitMagicActionTeleport constructor
+// Created: JSR 2010-04-07
+// -----------------------------------------------------------------------------
+UnitMagicActionTeleport::UnitMagicActionTeleport( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /*= true*/ )
+    : UnitMagicAction( entity, magic, controller, registered )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicActionTeleport constructor
 // Created: JSR 2010-04-06
 // -----------------------------------------------------------------------------
 UnitMagicActionTeleport::UnitMagicActionTeleport( xml::xistream& xis, kernel::Controller& controller, const MagicActionType& magic, const kernel::Entity_ABC& entity )
@@ -41,6 +51,7 @@ UnitMagicActionTeleport::~UnitMagicActionTeleport()
 // -----------------------------------------------------------------------------
 void UnitMagicActionTeleport::Serialize( xml::xostream& xos ) const
 {
+    xos << xml::attribute( "id", "unit_teleport" );
     UnitMagicAction::Serialize( xos );
 }
 

@@ -55,6 +55,7 @@ class AutomatDecisions;
 class PopulationDecisions;
 class StaticModel;
 class Publisher_ABC;
+class ActionPublisher;
 class MissionInterfaceFactory;
 class MissionInterfaceBuilder;
 class Simulation;
@@ -75,7 +76,7 @@ class MissionPanel : public QDockWindow
 public:
     //! @name Constructors/Destructor
     //@{
-    MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
+    MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ActionPublisher& actionPublisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
                          , kernel::AgentKnowledgeConverter_ABC& knowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const Simulation& simulation );
     virtual ~MissionPanel();
     //@}

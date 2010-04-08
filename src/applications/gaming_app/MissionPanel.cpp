@@ -43,13 +43,13 @@ using namespace kernel;
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, ActionPublisher& actionPublisher, gui::ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
                           , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const Simulation& simulation )
     : QDockWindow              ( QDockWindow::OutsideDock, pParent, "mission" )
     , controllers_             ( controllers )
     , static_                  ( model )
     , actionsModel_            ( actionsModel )
-    , publisher_               ( new ActionPublisher( publisher, controllers ) )
+    , publisher_               ( &actionPublisher )
     , layer_                   ( layer )
     , converter_               ( static_.coordinateConverter_ )
     , tools_                   ( tools )

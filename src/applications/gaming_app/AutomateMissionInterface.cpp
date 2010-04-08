@@ -52,7 +52,5 @@ void AutomateMissionInterface::Publish()
     if( const AutomatDecisions* decisions = GetEntity().Retrieve< AutomatDecisions >() )
         if( ! decisions->IsEmbraye() )
             decisions->Engage();
-    action->Publish( publisher_ );
-    if( ! model_.IsRecording() )
-        model_.Destroy( *action );
+    model_.Publish( *action, publisher_ );
 }

@@ -88,7 +88,8 @@ void FragOrder::Polish()
 // -----------------------------------------------------------------------------
 void FragOrder::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "type", "fragorder" );
+    xos << xml::attribute( "id", GetType().GetId() )
+        << xml::attribute( "type", "fragorder" );
     ActionWithTarget_ABC::Serialize( xos );
 }
 

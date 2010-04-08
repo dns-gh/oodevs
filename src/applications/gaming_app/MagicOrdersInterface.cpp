@@ -22,12 +22,12 @@
 // Name: MagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
+MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
 {
-    new UnitMagicOrdersInterface( parent, controllers, publisher, staticModel, layer, profile );
-    new PopulationMagicOrdersInterface( parent, controllers, publisher, staticModel, layer, profile );
-    new ObjectMagicOrdersInterface( parent, controllers, publisher, profile );
-    new KnowledgeGroupMagicOrdersInterface( parent, controllers, publisher, profile, staticModel.types_ ); // LTO
+    new UnitMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, layer, profile );
+    new PopulationMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, layer, profile );
+    new ObjectMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, simulation, profile );
+    new KnowledgeGroupMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, simulation, profile, staticModel.types_ ); // LTO
 }
 
 // -----------------------------------------------------------------------------

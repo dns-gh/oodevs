@@ -67,6 +67,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 
+#include "gaming/ActionPublisher.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
@@ -159,6 +160,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
+
+    ActionPublisher& actionPublisher = *new ActionPublisher( publisher, controllers_ );
 
     lighting_ = new SimulationLighting( controllers, this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_ );
@@ -262,7 +265,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     pInfoDockWnd_->hide();
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, actionPublisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
@@ -309,7 +312,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     pCreationWnd->setCaption( tr( "Creation" ) );
     setDockEnabled( pCreationWnd, Qt::DockTop, false );
 
-    new MagicOrdersInterface( this, controllers_, publisher, staticModel_, *paramLayer, profile );
+    new MagicOrdersInterface( this, controllers_, publisher, actionPublisher, model_.actions_, staticModel_, simulation, *paramLayer, profile );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     FolkToolbar* folkToolbar = new FolkToolbar( this, controllers, model.folk_ );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );

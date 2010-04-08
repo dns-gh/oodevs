@@ -39,6 +39,7 @@ class UnitMagicActionTeleport : public UnitMagicAction
 public:
     //! @name Constructors/Destructor
     //@{
+    UnitMagicActionTeleport( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
     UnitMagicActionTeleport( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity );
     virtual ~UnitMagicActionTeleport();
     //@}

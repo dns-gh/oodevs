@@ -11,6 +11,10 @@
 #include "UnitMagicOrdersInterface.h"
 #include "moc_UnitMagicOrdersInterface.cpp"
 
+#include "actions/ActionsModel.h"
+#include "actions/UnitMagicActionTeleport.h"
+#include "actions/Point.h"
+
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -23,7 +27,12 @@
 #include "clients_kernel/AgentExtensions.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Point.h"
 
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
@@ -36,16 +45,20 @@
 using namespace Common;
 using namespace kernel;
 using namespace gui;
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: UnitMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
+UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
     , static_( staticModel )
+    , simulation_( simulation )
     , profile_( profile )
     , selectedEntity_( controllers )
     , magicMove_( false )
@@ -140,7 +153,21 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Team_ABC& entity
 void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
 {
     if( magicMove_ && location.IsValid() )
-        location.Accept( *this );
+    {
+        if( selectedEntity_ )
+        {
+            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
+            UnitMagicActionTeleport* action = new UnitMagicActionTeleport( *selectedEntity_, actionType, controllers_.controller_, true );
+
+            tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+            while( it.HasMoreElements() )
+                action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Polish();
+            actionsModel_.Register( action->GetId(), *action );
+            actionsModel_.Publish( *action, actionPublisher_ );
+        }
+    }
     controllers_.Unregister( *magicMoveLocation_ );
     magicMove_ = false;
 }
@@ -299,27 +326,6 @@ void UnitMagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
     AddMagic( tr( "Recover - Equipments" ), MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementEquipementFieldNumber, magicMenu );
     AddMagic( tr( "Recover - Resources" ),  MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementRessourcesFieldNumber, magicMenu );
     AddMagic( tr( "Destroy - All" ),        MsgsClientToSim::MsgUnitMagicAction_action::kDestructionTotaleFieldNumber,        magicMenu );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UnitMagicOrdersInterface::VisitPoint
-// Created: SBO 2007-05-04
-// -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::VisitPoint( const geometry::Point2f& point )
-{
-    if( selectedEntity_ )
-    {
-        MsgCoordLatLong utm;
-        static_.coordinateConverter_.ConvertToGeo( point, utm );
-        simulation::MagicActionMoveTo message;
-        message().set_oid( selectedEntity_->GetId() );
-        Common::MsgLocation* location = message().mutable_parametres()->add_elem()->mutable_value()->mutable_point()->mutable_location();
-        location->set_type( MsgLocation_Geometry_point );
-        *location->mutable_coordinates()->add_elem() = utm;
-        message.Send( publisher_ );
-        const_cast< kernel::Entity_ABC& >( *selectedEntity_ ).Update( message() );
-        message().clear_parametres();
-    }
 }
 
 namespace

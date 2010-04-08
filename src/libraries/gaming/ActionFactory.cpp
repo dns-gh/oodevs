@@ -45,14 +45,14 @@ using namespace xml;
 ActionFactory::ActionFactory( Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
                             , const tools::Resolver_ABC< MissionType >& missions
                             , const tools::Resolver_ABC< FragOrderType >& fragOrders
-                            , const kernel::MagicActionType& magicAction
+                            , const tools::Resolver_ABC< kernel::MagicActionType, std::string >& magicActions
                             , const Simulation& simulation )
     : controllers_( controllers )
     , factory_( factory )
     , model_( model )
     , missions_( missions )
     , fragOrders_( fragOrders )
-    , magicAction_( magicAction )
+    , magicActions_( magicActions )
     , simulation_( simulation )
 {
     // NOTHING
@@ -292,7 +292,7 @@ actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis ) cons
     if( id == "global_meteo" )
     {
         // $$$$ JSR 2010-04-07: TODO
-        // action.reset( new actions::MagicActionGlobalMeteo( xis, controllers_.controller_, magicAction_ ) );
+        // action.reset( new actions::MagicActionGlobalMeteo( xis, controllers_.controller_, magicActions_.Get( "move_to" ) ) );
     }
     // $$$$ JSR 2010-04-07: TODO
     // else
@@ -329,7 +329,7 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) 
         ThrowTargetNotFound( targetid );
 
     if( id == "unit_teleport" )
-        action.reset( new actions::UnitMagicActionTeleport( xis, controllers_.controller_, magicAction_, *target ) );
+        action.reset( new actions::UnitMagicActionTeleport( xis, controllers_.controller_, magicActions_.Get( "teleport" ), *target ) );
     // $$$$ JSR 2010-04-07: TODO
     // else
     //    ...

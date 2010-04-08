@@ -131,6 +131,18 @@ void ActionsModel::Save( const std::string& filename ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsModel::Publish
+// Created: JSR 2010-04-07
+// -----------------------------------------------------------------------------
+void ActionsModel::Publish( const Action_ABC& action, Publisher_ABC& publisher )
+{
+    action.Publish( publisher );
+    if( ! IsRecording() )
+        Destroy( action );
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: ActionsModel::IsRecording
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------

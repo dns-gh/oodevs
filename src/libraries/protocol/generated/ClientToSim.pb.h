@@ -2764,31 +2764,24 @@ class MsgPopulationMagicAction_action : public ::google::protobuf::Message {
   inline const ::Common::MsgMagicActionPopulationChangeAttitude& change_attitude() const;
   inline ::Common::MsgMagicActionPopulationChangeAttitude* mutable_change_attitude();
   
-  // optional .Common.MsgMagicActionPopulationMoveTo move_to = 2;
-  inline bool has_move_to() const;
-  inline void clear_move_to();
-  static const int kMoveToFieldNumber = 2;
-  inline const ::Common::MsgMagicActionPopulationMoveTo& move_to() const;
-  inline ::Common::MsgMagicActionPopulationMoveTo* mutable_move_to();
-  
-  // optional bool destruction_totale = 3;
+  // optional bool destruction_totale = 2;
   inline bool has_destruction_totale() const;
   inline void clear_destruction_totale();
-  static const int kDestructionTotaleFieldNumber = 3;
+  static const int kDestructionTotaleFieldNumber = 2;
   inline bool destruction_totale() const;
   inline void set_destruction_totale(bool value);
   
-  // optional .Common.MsgMagicActionPopulationKill tuer = 4;
+  // optional .Common.MsgMagicActionPopulationKill tuer = 3;
   inline bool has_tuer() const;
   inline void clear_tuer();
-  static const int kTuerFieldNumber = 4;
+  static const int kTuerFieldNumber = 3;
   inline const ::Common::MsgMagicActionPopulationKill& tuer() const;
   inline ::Common::MsgMagicActionPopulationKill* mutable_tuer();
   
-  // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 5;
+  // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 4;
   inline bool has_ressusciter() const;
   inline void clear_ressusciter();
-  static const int kRessusciterFieldNumber = 5;
+  static const int kRessusciterFieldNumber = 4;
   inline const ::Common::MsgMagicActionPopulationResurrect& ressusciter() const;
   inline ::Common::MsgMagicActionPopulationResurrect* mutable_ressusciter();
   
@@ -2797,7 +2790,6 @@ class MsgPopulationMagicAction_action : public ::google::protobuf::Message {
   mutable int _cached_size_;
   
   ::Common::MsgMagicActionPopulationChangeAttitude* change_attitude_;
-  ::Common::MsgMagicActionPopulationMoveTo* move_to_;
   bool destruction_totale_;
   ::Common::MsgMagicActionPopulationKill* tuer_;
   ::Common::MsgMagicActionPopulationResurrect* ressusciter_;
@@ -2805,7 +2797,7 @@ class MsgPopulationMagicAction_action : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -5394,69 +5386,52 @@ inline ::Common::MsgMagicActionPopulationChangeAttitude* MsgPopulationMagicActio
   return change_attitude_;
 }
 
-// optional .Common.MsgMagicActionPopulationMoveTo move_to = 2;
-inline bool MsgPopulationMagicAction_action::has_move_to() const {
-  return _has_bit(1);
-}
-inline void MsgPopulationMagicAction_action::clear_move_to() {
-  if (move_to_ != NULL) move_to_->::Common::MsgMagicActionPopulationMoveTo::Clear();
-  _clear_bit(1);
-}
-inline const ::Common::MsgMagicActionPopulationMoveTo& MsgPopulationMagicAction_action::move_to() const {
-  return move_to_ != NULL ? *move_to_ : *default_instance_->move_to_;
-}
-inline ::Common::MsgMagicActionPopulationMoveTo* MsgPopulationMagicAction_action::mutable_move_to() {
-  _set_bit(1);
-  if (move_to_ == NULL) move_to_ = new ::Common::MsgMagicActionPopulationMoveTo;
-  return move_to_;
-}
-
-// optional bool destruction_totale = 3;
+// optional bool destruction_totale = 2;
 inline bool MsgPopulationMagicAction_action::has_destruction_totale() const {
-  return _has_bit(2);
+  return _has_bit(1);
 }
 inline void MsgPopulationMagicAction_action::clear_destruction_totale() {
   destruction_totale_ = false;
-  _clear_bit(2);
+  _clear_bit(1);
 }
 inline bool MsgPopulationMagicAction_action::destruction_totale() const {
   return destruction_totale_;
 }
 inline void MsgPopulationMagicAction_action::set_destruction_totale(bool value) {
-  _set_bit(2);
+  _set_bit(1);
   destruction_totale_ = value;
 }
 
-// optional .Common.MsgMagicActionPopulationKill tuer = 4;
+// optional .Common.MsgMagicActionPopulationKill tuer = 3;
 inline bool MsgPopulationMagicAction_action::has_tuer() const {
-  return _has_bit(3);
+  return _has_bit(2);
 }
 inline void MsgPopulationMagicAction_action::clear_tuer() {
   if (tuer_ != NULL) tuer_->::Common::MsgMagicActionPopulationKill::Clear();
-  _clear_bit(3);
+  _clear_bit(2);
 }
 inline const ::Common::MsgMagicActionPopulationKill& MsgPopulationMagicAction_action::tuer() const {
   return tuer_ != NULL ? *tuer_ : *default_instance_->tuer_;
 }
 inline ::Common::MsgMagicActionPopulationKill* MsgPopulationMagicAction_action::mutable_tuer() {
-  _set_bit(3);
+  _set_bit(2);
   if (tuer_ == NULL) tuer_ = new ::Common::MsgMagicActionPopulationKill;
   return tuer_;
 }
 
-// optional .Common.MsgMagicActionPopulationResurrect ressusciter = 5;
+// optional .Common.MsgMagicActionPopulationResurrect ressusciter = 4;
 inline bool MsgPopulationMagicAction_action::has_ressusciter() const {
-  return _has_bit(4);
+  return _has_bit(3);
 }
 inline void MsgPopulationMagicAction_action::clear_ressusciter() {
   if (ressusciter_ != NULL) ressusciter_->::Common::MsgMagicActionPopulationResurrect::Clear();
-  _clear_bit(4);
+  _clear_bit(3);
 }
 inline const ::Common::MsgMagicActionPopulationResurrect& MsgPopulationMagicAction_action::ressusciter() const {
   return ressusciter_ != NULL ? *ressusciter_ : *default_instance_->ressusciter_;
 }
 inline ::Common::MsgMagicActionPopulationResurrect* MsgPopulationMagicAction_action::mutable_ressusciter() {
-  _set_bit(4);
+  _set_bit(3);
   if (ressusciter_ == NULL) ressusciter_ = new ::Common::MsgMagicActionPopulationResurrect;
   return ressusciter_;
 }

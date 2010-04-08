@@ -566,9 +566,8 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMagicActionCreateFireOrder));
   MsgPopulationMagicAction_action_descriptor_ = file->message_type(16);
-  static const int MsgPopulationMagicAction_action_offsets_[5] = {
+  static const int MsgPopulationMagicAction_action_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction_action, change_attitude_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction_action, move_to_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction_action, destruction_totale_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction_action, tuer_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction_action, ressusciter_),
@@ -1044,87 +1043,85 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
     "gicAction_action\"r\n\035MsgMagicActionCreate"
     "FireOrder\022\033\n\023oid_targetKnowledge\030\001 \002(\005\022\026"
     "\n\016oid_agentForCr\030\002 \002(\005\022\020\n\010munition\030\003 \002(\005"
-    "\022\n\n\002it\030\004 \002(\005\"\263\002\n\037MsgPopulationMagicActio"
+    "\022\n\n\002it\030\004 \002(\005\"\372\001\n\037MsgPopulationMagicActio"
     "n_action\022G\n\017change_attitude\030\001 \001(\0132..Comm"
     "on.MsgMagicActionPopulationChangeAttitud"
-    "e\0227\n\007move_to\030\002 \001(\0132&.Common.MsgMagicActi"
-    "onPopulationMoveTo\022\032\n\022destruction_totale"
-    "\030\003 \001(\010\0222\n\004tuer\030\004 \001(\0132$.Common.MsgMagicAc"
-    "tionPopulationKill\022>\n\013ressusciter\030\005 \001(\0132"
-    ").Common.MsgMagicActionPopulationResurre"
-    "ct\"i\n\030MsgPopulationMagicAction\022\013\n\003oid\030\001 "
-    "\002(\r\022@\n\006action\030\002 \002(\01320.MsgsClientToSim.Ms"
-    "gPopulationMagicAction_action\"U\n\024MsgMagi"
-    "cActionMoveTo\022\013\n\003oid\030\001 \002(\005\0220\n\nparametres"
-    "\030\002 \002(\0132\034.Common.MsgMissionParameters\"m\n\024"
-    "MsgLogSupplyPushFlow\022\023\n\013oid_donneur\030\001 \002("
-    "\r\022\024\n\014oid_receveur\030\002 \002(\r\022*\n\006stocks\030\003 \002(\0132"
-    "\032.Common.SeqOfDotationStock\"q\n\030MsgLogSup"
-    "plyChangeQuotas\022\023\n\013oid_donneur\030\001 \002(\r\022\024\n\014"
-    "oid_receveur\030\002 \002(\r\022*\n\006quotas\030\003 \002(\0132\032.Com"
-    "mon.SeqOfDotationQuota\"5\n MsgControlChec"
-    "kPointSetFrequency\022\021\n\tfrequency\030\001 \002(\005\"3\n"
-    "\033MsgControlToggleVisionCones\022\024\n\014vision_c"
-    "ones\030\001 \002(\010\"V\n MsgKnowledgeGroupCreationR"
-    "equest\022\020\n\010oid_camp\030\001 \002(\r\022\022\n\noid_parent\030\002"
-    " \001(\r\022\014\n\004type\030\003 \002(\t\"r\n\036MsgKnowledgeGroupU"
-    "pdateRequest\022\013\n\003oid\030\001 \002(\r\022\020\n\010oid_camp\030\002 "
-    "\001(\r\022\022\n\noid_parent\030\003 \001(\r\022\017\n\007enabled\030\004 \001(\010"
-    "\022\014\n\004type\030\005 \001(\t\"\341\020\n\016MsgClientToSim\022\022\n\007con"
-    "text\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'.MsgsCli"
-    "entToSim.MsgClientToSim.Content\032\200\020\n\007Cont"
-    "ent\022,\n\014control_stop\030\001 \001(\0132\026.Common.MsgCo"
-    "ntrolStop\022.\n\rcontrol_pause\030\002 \001(\0132\027.Commo"
-    "n.MsgControlPause\0220\n\016control_resume\030\003 \001("
-    "\0132\030.Common.MsgControlResume\022F\n\032control_c"
-    "hange_time_factor\030\004 \001(\0132\".Common.MsgCont"
-    "rolChangeTimeFactor\022K\n\030control_date_time"
-    "_change\030\005 \001(\0132).MsgsClientToSim.MsgContr"
-    "olDatetimeChange\022D\n\024control_global_meteo"
-    "\030\006 \001(\0132&.MsgsClientToSim.MsgControlGloba"
-    "lMeteo\022B\n\023control_local_meteo\030\007 \001(\0132%.Ms"
-    "gsClientToSim.MsgControlLocalMeteo\022Q\n\033co"
-    "ntrol_checkpoint_save_now\030\010 \001(\0132,.MsgsCl"
-    "ientToSim.MsgControlCheckPointSaveNow\022[\n"
-    " control_checkpoint_set_frequency\030\t \001(\0132"
-    "1.MsgsClientToSim.MsgControlCheckPointSe"
-    "tFrequency\022Q\n\033control_toggle_vision_cone"
-    "s\030\n \001(\0132,.MsgsClientToSim.MsgControlTogg"
-    "leVisionCones\022(\n\nunit_order\030\013 \001(\0132\024.Comm"
-    "on.MsgUnitOrder\022.\n\rautomat_order\030\014 \001(\0132\027"
-    ".Common.MsgAutomatOrder\0224\n\020population_or"
-    "der\030\r \001(\0132\032.Common.MsgPopulationOrder\0221\n"
-    "\nfrag_order\030\016 \001(\0132\035.MsgsClientToSim.MsgF"
-    "ragOrder\022<\n\020set_automat_mode\030\017 \001(\0132\".Msg"
-    "sClientToSim.MsgSetAutomatMode\022F\n\025unit_c"
-    "reation_request\030\020 \001(\0132\'.MsgsClientToSim."
-    "MsgUnitCreationRequest\022>\n\021unit_magic_act"
-    "ion\030\021 \001(\0132#.MsgsClientToSim.MsgUnitMagic"
-    "Action\022B\n\023object_magic_action\030\022 \001(\0132%.Ms"
-    "gsClientToSim.MsgObjectMagicAction\022J\n\027po"
-    "pulation_magic_action\030\023 \001(\0132).MsgsClient"
-    "ToSim.MsgPopulationMagicAction\0224\n\020change"
-    "_diplomacy\030\024 \001(\0132\032.Common.MsgChangeDiplo"
-    "macy\022N\n\036automat_change_knowledge_group\030\025"
-    " \001(\0132&.Common.MsgAutomatChangeKnowledgeG"
-    "roup\022L\n\035automat_change_logistic_links\030\026 "
-    "\001(\0132%.Common.MsgAutomatChangeLogisticLin"
-    "ks\022A\n\027automat_change_superior\030\027 \001(\0132 .Co"
-    "mmon.MsgAutomatChangeSuperior\022;\n\024unit_ch"
-    "ange_superior\030\030 \001(\0132\035.Common.MsgUnitChan"
-    "geSuperior\022C\n\024log_supply_push_flow\030\031 \001(\013"
-    "2%.MsgsClientToSim.MsgLogSupplyPushFlow\022"
-    "K\n\030log_supply_change_quotas\030\032 \001(\0132).Msgs"
-    "ClientToSim.MsgLogSupplyChangeQuotas\022[\n "
-    "knowledge_group_creation_request\030\033 \001(\01321"
-    ".MsgsClientToSim.MsgKnowledgeGroupCreati"
-    "onRequest\022W\n\036knowledge_group_update_requ"
-    "est\030\034 \001(\0132/.MsgsClientToSim.MsgKnowledge"
-    "GroupUpdateRequest\022I\n\021create_fire_order\030"
-    "\035 \001(\0132..MsgsClientToSim.MsgMagicActionCr"
-    "eateFireOrder\022C\n\024magic_action_move_to\030\036 "
-    "\001(\0132%.MsgsClientToSim.MsgMagicActionMove"
-    "To", 6922);
+    "e\022\032\n\022destruction_totale\030\002 \001(\010\0222\n\004tuer\030\003 "
+    "\001(\0132$.Common.MsgMagicActionPopulationKil"
+    "l\022>\n\013ressusciter\030\004 \001(\0132).Common.MsgMagic"
+    "ActionPopulationResurrect\"i\n\030MsgPopulati"
+    "onMagicAction\022\013\n\003oid\030\001 \002(\r\022@\n\006action\030\002 \002"
+    "(\01320.MsgsClientToSim.MsgPopulationMagicA"
+    "ction_action\"U\n\024MsgMagicActionMoveTo\022\013\n\003"
+    "oid\030\001 \002(\005\0220\n\nparametres\030\002 \002(\0132\034.Common.M"
+    "sgMissionParameters\"m\n\024MsgLogSupplyPushF"
+    "low\022\023\n\013oid_donneur\030\001 \002(\r\022\024\n\014oid_receveur"
+    "\030\002 \002(\r\022*\n\006stocks\030\003 \002(\0132\032.Common.SeqOfDot"
+    "ationStock\"q\n\030MsgLogSupplyChangeQuotas\022\023"
+    "\n\013oid_donneur\030\001 \002(\r\022\024\n\014oid_receveur\030\002 \002("
+    "\r\022*\n\006quotas\030\003 \002(\0132\032.Common.SeqOfDotation"
+    "Quota\"5\n MsgControlCheckPointSetFrequenc"
+    "y\022\021\n\tfrequency\030\001 \002(\005\"3\n\033MsgControlToggle"
+    "VisionCones\022\024\n\014vision_cones\030\001 \002(\010\"V\n Msg"
+    "KnowledgeGroupCreationRequest\022\020\n\010oid_cam"
+    "p\030\001 \002(\r\022\022\n\noid_parent\030\002 \001(\r\022\014\n\004type\030\003 \002("
+    "\t\"r\n\036MsgKnowledgeGroupUpdateRequest\022\013\n\003o"
+    "id\030\001 \002(\r\022\020\n\010oid_camp\030\002 \001(\r\022\022\n\noid_parent"
+    "\030\003 \001(\r\022\017\n\007enabled\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\341\020"
+    "\n\016MsgClientToSim\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007"
+    "message\030\002 \002(\0132\'.MsgsClientToSim.MsgClien"
+    "tToSim.Content\032\200\020\n\007Content\022,\n\014control_st"
+    "op\030\001 \001(\0132\026.Common.MsgControlStop\022.\n\rcont"
+    "rol_pause\030\002 \001(\0132\027.Common.MsgControlPause"
+    "\0220\n\016control_resume\030\003 \001(\0132\030.Common.MsgCon"
+    "trolResume\022F\n\032control_change_time_factor"
+    "\030\004 \001(\0132\".Common.MsgControlChangeTimeFact"
+    "or\022K\n\030control_date_time_change\030\005 \001(\0132).M"
+    "sgsClientToSim.MsgControlDatetimeChange\022"
+    "D\n\024control_global_meteo\030\006 \001(\0132&.MsgsClie"
+    "ntToSim.MsgControlGlobalMeteo\022B\n\023control"
+    "_local_meteo\030\007 \001(\0132%.MsgsClientToSim.Msg"
+    "ControlLocalMeteo\022Q\n\033control_checkpoint_"
+    "save_now\030\010 \001(\0132,.MsgsClientToSim.MsgCont"
+    "rolCheckPointSaveNow\022[\n control_checkpoi"
+    "nt_set_frequency\030\t \001(\01321.MsgsClientToSim"
+    ".MsgControlCheckPointSetFrequency\022Q\n\033con"
+    "trol_toggle_vision_cones\030\n \001(\0132,.MsgsCli"
+    "entToSim.MsgControlToggleVisionCones\022(\n\n"
+    "unit_order\030\013 \001(\0132\024.Common.MsgUnitOrder\022."
+    "\n\rautomat_order\030\014 \001(\0132\027.Common.MsgAutoma"
+    "tOrder\0224\n\020population_order\030\r \001(\0132\032.Commo"
+    "n.MsgPopulationOrder\0221\n\nfrag_order\030\016 \001(\013"
+    "2\035.MsgsClientToSim.MsgFragOrder\022<\n\020set_a"
+    "utomat_mode\030\017 \001(\0132\".MsgsClientToSim.MsgS"
+    "etAutomatMode\022F\n\025unit_creation_request\030\020"
+    " \001(\0132\'.MsgsClientToSim.MsgUnitCreationRe"
+    "quest\022>\n\021unit_magic_action\030\021 \001(\0132#.MsgsC"
+    "lientToSim.MsgUnitMagicAction\022B\n\023object_"
+    "magic_action\030\022 \001(\0132%.MsgsClientToSim.Msg"
+    "ObjectMagicAction\022J\n\027population_magic_ac"
+    "tion\030\023 \001(\0132).MsgsClientToSim.MsgPopulati"
+    "onMagicAction\0224\n\020change_diplomacy\030\024 \001(\0132"
+    "\032.Common.MsgChangeDiplomacy\022N\n\036automat_c"
+    "hange_knowledge_group\030\025 \001(\0132&.Common.Msg"
+    "AutomatChangeKnowledgeGroup\022L\n\035automat_c"
+    "hange_logistic_links\030\026 \001(\0132%.Common.MsgA"
+    "utomatChangeLogisticLinks\022A\n\027automat_cha"
+    "nge_superior\030\027 \001(\0132 .Common.MsgAutomatCh"
+    "angeSuperior\022;\n\024unit_change_superior\030\030 \001"
+    "(\0132\035.Common.MsgUnitChangeSuperior\022C\n\024log"
+    "_supply_push_flow\030\031 \001(\0132%.MsgsClientToSi"
+    "m.MsgLogSupplyPushFlow\022K\n\030log_supply_cha"
+    "nge_quotas\030\032 \001(\0132).MsgsClientToSim.MsgLo"
+    "gSupplyChangeQuotas\022[\n knowledge_group_c"
+    "reation_request\030\033 \001(\01321.MsgsClientToSim."
+    "MsgKnowledgeGroupCreationRequest\022W\n\036know"
+    "ledge_group_update_request\030\034 \001(\0132/.MsgsC"
+    "lientToSim.MsgKnowledgeGroupUpdateReques"
+    "t\022I\n\021create_fire_order\030\035 \001(\0132..MsgsClien"
+    "tToSim.MsgMagicActionCreateFireOrder\022C\n\024"
+    "magic_action_move_to\030\036 \001(\0132%.MsgsClientT"
+    "oSim.MsgMagicActionMoveTo", 6865);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
@@ -8348,7 +8345,6 @@ void MsgMagicActionCreateFireOrder::Swap(MsgMagicActionCreateFireOrder* other) {
 
 #ifndef _MSC_VER
 const int MsgPopulationMagicAction_action::kChangeAttitudeFieldNumber;
-const int MsgPopulationMagicAction_action::kMoveToFieldNumber;
 const int MsgPopulationMagicAction_action::kDestructionTotaleFieldNumber;
 const int MsgPopulationMagicAction_action::kTuerFieldNumber;
 const int MsgPopulationMagicAction_action::kRessusciterFieldNumber;
@@ -8360,7 +8356,6 @@ MsgPopulationMagicAction_action::MsgPopulationMagicAction_action() {
 
 void MsgPopulationMagicAction_action::InitAsDefaultInstance() {
   change_attitude_ = const_cast< ::Common::MsgMagicActionPopulationChangeAttitude*>(&::Common::MsgMagicActionPopulationChangeAttitude::default_instance());
-  move_to_ = const_cast< ::Common::MsgMagicActionPopulationMoveTo*>(&::Common::MsgMagicActionPopulationMoveTo::default_instance());
   tuer_ = const_cast< ::Common::MsgMagicActionPopulationKill*>(&::Common::MsgMagicActionPopulationKill::default_instance());
   ressusciter_ = const_cast< ::Common::MsgMagicActionPopulationResurrect*>(&::Common::MsgMagicActionPopulationResurrect::default_instance());
 }
@@ -8373,7 +8368,6 @@ MsgPopulationMagicAction_action::MsgPopulationMagicAction_action(const MsgPopula
 void MsgPopulationMagicAction_action::SharedCtor() {
   _cached_size_ = 0;
   change_attitude_ = NULL;
-  move_to_ = NULL;
   destruction_totale_ = false;
   tuer_ = NULL;
   ressusciter_ = NULL;
@@ -8387,7 +8381,6 @@ MsgPopulationMagicAction_action::~MsgPopulationMagicAction_action() {
 void MsgPopulationMagicAction_action::SharedDtor() {
   if (this != default_instance_) {
     delete change_attitude_;
-    delete move_to_;
     delete tuer_;
     delete ressusciter_;
   }
@@ -8413,14 +8406,11 @@ void MsgPopulationMagicAction_action::Clear() {
     if (_has_bit(0)) {
       if (change_attitude_ != NULL) change_attitude_->::Common::MsgMagicActionPopulationChangeAttitude::Clear();
     }
-    if (_has_bit(1)) {
-      if (move_to_ != NULL) move_to_->::Common::MsgMagicActionPopulationMoveTo::Clear();
-    }
     destruction_totale_ = false;
-    if (_has_bit(3)) {
+    if (_has_bit(2)) {
       if (tuer_ != NULL) tuer_->::Common::MsgMagicActionPopulationKill::Clear();
     }
-    if (_has_bit(4)) {
+    if (_has_bit(3)) {
       if (ressusciter_ != NULL) ressusciter_->::Common::MsgMagicActionPopulationResurrect::Clear();
     }
   }
@@ -8442,25 +8432,12 @@ bool MsgPopulationMagicAction_action::MergePartialFromCodedStream(
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_change_attitude()));
-        if (input->ExpectTag(18)) goto parse_move_to;
+        if (input->ExpectTag(16)) goto parse_destruction_totale;
         break;
       }
       
-      // optional .Common.MsgMagicActionPopulationMoveTo move_to = 2;
+      // optional bool destruction_totale = 2;
       case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_move_to:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_move_to()));
-        if (input->ExpectTag(24)) goto parse_destruction_totale;
-        break;
-      }
-      
-      // optional bool destruction_totale = 3;
-      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -8468,13 +8445,13 @@ bool MsgPopulationMagicAction_action::MergePartialFromCodedStream(
        parse_destruction_totale:
         DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
               input, &destruction_totale_));
-        _set_bit(2);
-        if (input->ExpectTag(34)) goto parse_tuer;
+        _set_bit(1);
+        if (input->ExpectTag(26)) goto parse_tuer;
         break;
       }
       
-      // optional .Common.MsgMagicActionPopulationKill tuer = 4;
-      case 4: {
+      // optional .Common.MsgMagicActionPopulationKill tuer = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -8482,12 +8459,12 @@ bool MsgPopulationMagicAction_action::MergePartialFromCodedStream(
        parse_tuer:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_tuer()));
-        if (input->ExpectTag(42)) goto parse_ressusciter;
+        if (input->ExpectTag(34)) goto parse_ressusciter;
         break;
       }
       
-      // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 5;
-      case 5: {
+      // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 4;
+      case 4: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -8529,27 +8506,21 @@ void MsgPopulationMagicAction_action::SerializeWithCachedSizes(
       1, this->change_attitude(), output);
   }
   
-  // optional .Common.MsgMagicActionPopulationMoveTo move_to = 2;
+  // optional bool destruction_totale = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->move_to(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteBool(2, this->destruction_totale(), output);
   }
   
-  // optional bool destruction_totale = 3;
+  // optional .Common.MsgMagicActionPopulationKill tuer = 3;
   if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->destruction_totale(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
+      3, this->tuer(), output);
   }
   
-  // optional .Common.MsgMagicActionPopulationKill tuer = 4;
+  // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 4;
   if (_has_bit(3)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      4, this->tuer(), output);
-  }
-  
-  // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 5;
-  if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      5, this->ressusciter(), output);
+      4, this->ressusciter(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -8567,30 +8538,23 @@ void MsgPopulationMagicAction_action::SerializeWithCachedSizes(
         1, this->change_attitude(), target);
   }
   
-  // optional .Common.MsgMagicActionPopulationMoveTo move_to = 2;
+  // optional bool destruction_totale = 2;
   if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(2, this->destruction_totale(), target);
+  }
+  
+  // optional .Common.MsgMagicActionPopulationKill tuer = 3;
+  if (_has_bit(2)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->move_to(), target);
+        3, this->tuer(), target);
   }
   
-  // optional bool destruction_totale = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->destruction_totale(), target);
-  }
-  
-  // optional .Common.MsgMagicActionPopulationKill tuer = 4;
+  // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 4;
   if (_has_bit(3)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        4, this->tuer(), target);
-  }
-  
-  // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 5;
-  if (_has_bit(4)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->ressusciter(), target);
+        4, this->ressusciter(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -8611,26 +8575,19 @@ int MsgPopulationMagicAction_action::ByteSize() const {
           this->change_attitude());
     }
     
-    // optional .Common.MsgMagicActionPopulationMoveTo move_to = 2;
-    if (has_move_to()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->move_to());
-    }
-    
-    // optional bool destruction_totale = 3;
+    // optional bool destruction_totale = 2;
     if (has_destruction_totale()) {
       total_size += 1 + 1;
     }
     
-    // optional .Common.MsgMagicActionPopulationKill tuer = 4;
+    // optional .Common.MsgMagicActionPopulationKill tuer = 3;
     if (has_tuer()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->tuer());
     }
     
-    // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 5;
+    // optional .Common.MsgMagicActionPopulationResurrect ressusciter = 4;
     if (has_ressusciter()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -8666,15 +8623,12 @@ void MsgPopulationMagicAction_action::MergeFrom(const MsgPopulationMagicAction_a
       mutable_change_attitude()->::Common::MsgMagicActionPopulationChangeAttitude::MergeFrom(from.change_attitude());
     }
     if (from._has_bit(1)) {
-      mutable_move_to()->::Common::MsgMagicActionPopulationMoveTo::MergeFrom(from.move_to());
-    }
-    if (from._has_bit(2)) {
       set_destruction_totale(from.destruction_totale());
     }
-    if (from._has_bit(3)) {
+    if (from._has_bit(2)) {
       mutable_tuer()->::Common::MsgMagicActionPopulationKill::MergeFrom(from.tuer());
     }
-    if (from._has_bit(4)) {
+    if (from._has_bit(3)) {
       mutable_ressusciter()->::Common::MsgMagicActionPopulationResurrect::MergeFrom(from.ressusciter());
     }
   }
@@ -8698,9 +8652,6 @@ bool MsgPopulationMagicAction_action::IsInitialized() const {
   if (has_change_attitude()) {
     if (!this->change_attitude().IsInitialized()) return false;
   }
-  if (has_move_to()) {
-    if (!this->move_to().IsInitialized()) return false;
-  }
   if (has_tuer()) {
     if (!this->tuer().IsInitialized()) return false;
   }
@@ -8713,7 +8664,6 @@ bool MsgPopulationMagicAction_action::IsInitialized() const {
 void MsgPopulationMagicAction_action::Swap(MsgPopulationMagicAction_action* other) {
   if (other != this) {
     std::swap(change_attitude_, other->change_attitude_);
-    std::swap(move_to_, other->move_to_);
     std::swap(destruction_totale_, other->destruction_totale_);
     std::swap(tuer_, other->tuer_);
     std::swap(ressusciter_, other->ressusciter_);
