@@ -825,7 +825,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception()
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
 {
-    if( IsJammedKnowledgeGroup() )
+    if( ! IsJammedKnowledgeGroup() )
     {
         // Synthèse de la perception des subordonnés
         // Ajout automatique de la connaissance de chaque subordonné    
