@@ -18,6 +18,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
+#include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulation.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
@@ -817,6 +818,60 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception()
    // pKnowledgeBlackBoard_->SendFullState(); 
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception
+// Created: FDS 2010-04-09
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
+{
+    if( IsJammedKnowledgeGroup() )
+    {
+        // Synthèse de la perception des subordonnés
+        // Ajout automatique de la connaissance de chaque subordonné    
+        for( MIL_KnowledgeGroup::CIT_AutomateVector itAutomate = GetAutomates().begin(); itAutomate != GetAutomates().end(); ++itAutomate )
+        {
+            const MIL_Automate::T_PionVector& pions = (**itAutomate).GetPions();
+            for( MIL_Automate::CIT_PionVector itPion = pions.begin(); itPion != pions.end(); ++itPion )
+            {
+                MIL_AgentPion& pion = **itPion;
+                 // $$$$ FDS 2010-03-25: Les perceptions des subordonnées sont envoyées uniquement dans le cas ou celui ci peut communiquer.
+                if ( pion.GetRole< PHY_RolePion_Communications >().CanCommunicate() )
+                {
+                        pion.GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) ) );
+                }
+            }
+        }
+
+        // mis à jour des groupes de connaissances parents
+        for( MIL_KnowledgeGroup::CIT_KnowledgeGroupVector itKG( GetKnowledgeGroups().begin() ); itKG != GetKnowledgeGroups().end(); ++itKG )
+        {
+            const MIL_KnowledgeGroup& innerKg = **itKG;
+            if ( innerKg.IsEnabled() && IsEnabled() )
+                innerKg.GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) ) );
+        }
+
+        // LTO begin
+        //mis à jour des groupes de connaissances fils avec un délai
+        //boost::function< void ( const DEC_Knowledge_Agent& ) > functorChildren = boost::bind( &DEC_KS_AgentKnowledgeSynthetizer::UpdateKnowledgesFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) );
+        MIL_KnowledgeGroup* pParent = GetParent();
+        if ( GetTimeToDiffuseToKnowledgeGroup() < currentTimeStep )
+        {
+            if ( pParent && pParent->IsEnabled() && IsEnabled() )
+                pParent->GetKnowledge().GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup, this, _1, boost::ref(currentTimeStep) ) );
+            RefreshTimeToDiffuseToKnowledgeGroup();
+        }
+        // LTO end
+    }
+    else
+    {
+        if( jamedPion_ )
+        {
+            jamedPion_->GetKnowledge().GetKnowledgeAgentPerceptionContainer().ApplyOnKnowledgesAgentPerception( boost::bind( & MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception, this, _1, boost::ref(currentTimeStep) ) );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::GetPopulationKnowledgeToUpdate
 // Created: FDS 2010-04-08
@@ -846,4 +901,40 @@ void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception( const DEC_Know
 void MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision )
 {
     GetPopulationKnowledgeToUpdate( collision.GetPopulation() ).Update( collision );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception
+// Created: NLD 2004-03-16
+// -----------------------------------------------------------------------------
+inline
+void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep )
+{
+    if( perception.IsAvailable() )
+        GetAgentKnowledgeToUpdate( perception.GetAgentPerceived() ).Update( perception, currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup
+// Created: SLG 2009-11-26
+// LTO
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep )
+{
+    if( agentKnowledge.IsValid() )
+        GetAgentKnowledgeToUpdate( agentKnowledge.GetAgentKnown() ).Update( agentKnowledge, currentTimeStep );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate
+// Created: NLD 2004-03-19
+// -----------------------------------------------------------------------------
+inline
+DEC_Knowledge_Agent& MIL_KnowledgeGroup::GetAgentKnowledgeToUpdate( MIL_Agent_ABC& agentKnown ) const
+{
+    boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge = GetKnowledge().GetKnowledgeAgentContainer().GetKnowledgeAgent( agentKnown );
+    if( pKnowledge.get() )
+        return *pKnowledge;
+    
+    return GetKnowledge().GetKnowledgeAgentContainer().CreateKnowledgeAgent( *this, agentKnown );
 }

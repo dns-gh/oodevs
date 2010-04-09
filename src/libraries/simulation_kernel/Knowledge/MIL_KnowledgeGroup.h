@@ -148,6 +148,7 @@ public:
     void UpdateKnowledgeGroup();
     void MoveKnowledgeGroup( MIL_KnowledgeGroup *pNewParent );
     void ApplyOnKnowledgesPopulationPerception();
+    void ApplyOnKnowledgesAgentPerception( int currentTimeStep );
     // LTO end
 
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
@@ -179,7 +180,10 @@ private:
     DEC_Knowledge_Population& GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown ) const;
     void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision );
     void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception );
-    //@}
+    DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( MIL_Agent_ABC& agentKnown ) const;
+    void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
+    void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
+        //@}
     
 private:
     static std::set< unsigned int > ids_;

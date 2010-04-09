@@ -591,3 +591,12 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPopulationPercepti
 {
     GetKnowledgeGroup().ApplyOnKnowledgesPopulationPerception();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesAgentPerception
+// Created: FDS 2010-04-09
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
+{
+    GetKnowledgeGroup().ApplyOnKnowledgesAgentPerception( currentTimeStep );
+}

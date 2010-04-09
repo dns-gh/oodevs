@@ -81,7 +81,6 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
 
     pBlackBoard_->ApplyOnKnowledgesPopulationPerception(); 
 
-    // si le group de connaissance est un group brouillé, aucune connaissance ne lui est transmise
     if( ! pBlackBoard_->GetKnowledgeGroup().IsJammedKnowledgeGroup() )
     {    
         // Relevance
