@@ -582,8 +582,6 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 {
     return pKnowledgeObjectContainer_->CreateKnowledgeObject( teamKnowing, objectKnown );
 }
-    
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception
