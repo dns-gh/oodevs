@@ -850,7 +850,7 @@
     package
     ============================================================================
     -->
-    <target name="package" description="package the installers" depends="package.defense,package.security,package.eval,package.france,package.stress"/>
+    <target name="package" description="package the installers" depends="package.defense,package.security,package.scipio-v1-stab,package.france,package.stress"/>
 
     <target name="package.defense" description="package the standard installer: worldwide, no license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
@@ -879,6 +879,17 @@
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
     </target>
+	
+    <target name="package.scipio-v1-stab" description="package the beta installer of scipio v1.stab: scipio-1.9.2, 3 months license">
+        <nsis todir="${dist.dir}/current/${platform}" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
+            <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
+            <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
+            <arg value="/DEVALUATION=1"/>
+            <arg value="/DAPP_MODEL=scipio-1.9.2"/>
+            <arg value="/X!include sword-defense.nsh"/>
+        </nsis>
+    </target>
+
 
     <target name="package.stress" description="package the french version of installer for stress test: france, 3 months license">
         <nsis todir="${dist.dir}/current/${platform}/france" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
