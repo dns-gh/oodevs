@@ -94,12 +94,13 @@ private:
     Publisher_ABC& publisher_;
     const kernel::GlTools_ABC& tools_;
     LocationSerializer serializer_;
-    WeatherWidget* localWeather_;
+    WeatherWidget* weather_;
     QDateTimeEdit* startTime_;
     QDateTimeEdit* endTime_;
     QButton* positionBtn_;
     kernel::Location_ABC* location_;
     bool bLocationDisplay_;
+    bool isGlobal_;
     //@}
 };
 

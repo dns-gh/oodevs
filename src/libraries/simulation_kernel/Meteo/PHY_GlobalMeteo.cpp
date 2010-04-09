@@ -22,7 +22,8 @@
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
 PHY_GlobalMeteo::PHY_GlobalMeteo( unsigned int id, xml::xistream& xis, const weather::PHY_Lighting& light, int conversionFactor )
-    : PHY_Meteo( id, xis, light, conversionFactor )
+    : PHY_Meteo( id, xis, light, conversionFactor ),
+    _isChanged( false )
 {
     // NOTHING
 }
@@ -47,6 +48,29 @@ PHY_GlobalMeteo::~PHY_GlobalMeteo()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_GlobalMeteo::Update
+// Created: JSR 2010-04-09
+// -----------------------------------------------------------------------------
+void PHY_GlobalMeteo::Update( const Common::MsgMeteoAttributes& asn )
+{
+    _isChanged = true;
+    PHY_Meteo::Update( asn );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_GlobalMeteo::UpdateMeteoPatch
+// Created: JSR 2010-04-09
+// -----------------------------------------------------------------------------
+void PHY_GlobalMeteo::UpdateMeteoPatch( int /*date*/, weather::PHY_RawVisionData_ABC& /*dataVision*/ )
+{
+    if( _isChanged )
+    {
+        _isChanged = false;
+        SendCreation();
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_GlobalMeteo::SendRegister
 // Created: HBD 2010-03-25
 // -----------------------------------------------------------------------------
@@ -60,7 +84,7 @@ void PHY_GlobalMeteo::SendCreation() const
     NET_ASN_Tools::WriteDirection( wind_.vWindDirection_, *( att->mutable_wind_direction() ) );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ ) );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     msg.Send( NET_Publisher_ABC::Publisher() );

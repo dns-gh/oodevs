@@ -185,7 +185,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher) const
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ ) );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     msg.Send( publisher );

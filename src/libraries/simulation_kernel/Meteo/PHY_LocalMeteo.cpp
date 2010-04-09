@@ -104,7 +104,7 @@ void PHY_LocalMeteo::SendCreation() const
     NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ ) );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
 

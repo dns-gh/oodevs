@@ -46,6 +46,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Update( const Common::MsgMeteoAttributes& asn );
+    virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision );
     virtual void SendCreation() const;
     //@}
 
@@ -54,6 +56,12 @@ private:
     //@{
     PHY_GlobalMeteo( const PHY_GlobalMeteo& );            //!< Copy constructor
     PHY_GlobalMeteo& operator=( const PHY_GlobalMeteo& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool _isChanged;
     //@}
 };
 

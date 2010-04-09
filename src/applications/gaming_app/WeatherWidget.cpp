@@ -62,7 +62,7 @@ void WeatherWidget::Commit( Common::MsgMeteoAttributes& att ) const
     att.mutable_wind_direction()->set_heading( windDirection_->value() );
     att.set_wind_speed( windSpeed_->value() );
     att.set_cloud_floor( cloudFloor_->value() );
-    att.set_cloud_ceiling( cloudDensity_->value() );
+    att.set_cloud_ceiling( cloudCeiling_->value() );
     att.set_cloud_density( cloudDensity_->value() );
     const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).ascii() );
     att.set_precipitation( precipitation->GetAsnID() );

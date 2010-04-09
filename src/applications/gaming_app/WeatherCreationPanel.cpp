@@ -30,11 +30,12 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
     , tools_            ( tools )
     , location_         ( 0 )
     , serializer_       ( model.coordinateConverter_ )
+    , isGlobal_         ( false )
 {
     
     QGroupBox* localGroup = new QGroupBox( 1, Qt::Horizontal, tr( "Weather" ), this );
     QVBox* localWeatherBox = new QVBox( localGroup );
-    localWeather_ = new WeatherWidget( localWeatherBox, tr( "Weather parameters" ) );
+    weather_ = new WeatherWidget( localWeatherBox, tr( "Weather parameters" ) );
 
     QGroupBox* parametersGroup = new QGroupBox( 2, Qt::Horizontal, tr( "Time and Position Parameters" ), localWeatherBox );
     new QLabel( tr( "Start time:" ), parametersGroup );
@@ -43,7 +44,7 @@ WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC
     endTime_ = new QDateTimeEdit( parametersGroup );
 
     QCheckBox* weatherType = new QCheckBox( tr( "Set as global weather" ), parametersGroup );
-    weatherType->setChecked( false );
+    weatherType->setChecked( isGlobal_ );
     
     positionBtn_ = new QPushButton( tr( "Set location" ), parametersGroup );
 
@@ -93,7 +94,7 @@ void WeatherCreationPanel::StartEditingLocation()
 // -----------------------------------------------------------------------------
 bool WeatherCreationPanel::CheckValidity()
 {
-    return ( ( startTime_->dateTime() < endTime_->dateTime() ) && location_ );
+    return ( isGlobal_ || ( ( startTime_->dateTime() < endTime_->dateTime() ) && location_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -104,19 +105,29 @@ void WeatherCreationPanel::Commit()
 {
     if( CheckValidity() )
     {
-        simulation::ControlLocalMeteo message;
-        Common::MsgMeteoAttributes* att = message().mutable_attributes();
-        localWeather_->Commit( *att );
+        if( isGlobal_ )
+        {
+            simulation::ControlGlobalMeteo message;
+            Common::MsgMeteoAttributes* att = message().mutable_attributes();
+            weather_->Commit( *att );
+            message.Send( publisher_ );
+        }
+        else
+        {
+            simulation::ControlLocalMeteo message;
+            Common::MsgMeteoAttributes* att = message().mutable_attributes();
+            weather_->Commit( *att );
 
-        Common::MsgLocation longlat;
-        serializer_.Serialize( *location_, longlat );
-        message().mutable_start_time()->set_data( startTime_->dateTime().toString( "yyyyMMddThhmmss" ).ascii() );
-        message().mutable_end_time()->set_data( endTime_->dateTime().toString( "yyyyMMddThhmmss" ).ascii() );
-        message().mutable_bottom_right_coordinate()->set_latitude( longlat.coordinates().elem( 0 ).latitude()  );
-        message().mutable_bottom_right_coordinate()->set_longitude( longlat.coordinates().elem( 0 ).longitude()  );
-        message().mutable_top_left_coordinate()->set_latitude( longlat.coordinates().elem( 1 ).latitude()  );
-        message().mutable_top_left_coordinate()->set_longitude( longlat.coordinates().elem( 1 ).longitude()  );
-        message.Send( publisher_ );
+            Common::MsgLocation longlat;
+            serializer_.Serialize( *location_, longlat );
+            message().mutable_start_time()->set_data( startTime_->dateTime().toString( "yyyyMMddThhmmss" ).ascii() );
+            message().mutable_end_time()->set_data( endTime_->dateTime().toString( "yyyyMMddThhmmss" ).ascii() );
+            message().mutable_bottom_right_coordinate()->set_latitude( longlat.coordinates().elem( 0 ).latitude()  );
+            message().mutable_bottom_right_coordinate()->set_longitude( longlat.coordinates().elem( 0 ).longitude()  );
+            message().mutable_top_left_coordinate()->set_latitude( longlat.coordinates().elem( 1 ).latitude()  );
+            message().mutable_top_left_coordinate()->set_longitude( longlat.coordinates().elem( 1 ).longitude()  );
+            message.Send( publisher_ );
+        }
         Reset();
     }
 }
@@ -133,9 +144,17 @@ void WeatherCreationPanel::OnToogleWeatherType( bool value )
         ResetLocation();
         layer_.SelectRaster( *this );
         positionBtn_->setEnabled( false );
+        startTime_->setEnabled( false );
+        endTime_->setEnabled( false );
+        isGlobal_ = true;
     }
     else
+    {
         positionBtn_->setEnabled( true );
+        startTime_->setEnabled( true );
+        endTime_->setEnabled( true );
+        isGlobal_ = false;
+    }
 }
 // -----------------------------------------------------------------------------
 // Name: WeatherCreationPanel::Reset
