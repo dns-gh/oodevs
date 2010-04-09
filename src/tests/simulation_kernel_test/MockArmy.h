@@ -61,6 +61,7 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendFullState )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SendKnowledge )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( FindKnowledgeGroup )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( ApplyOnKnowledgeGroup )
     {
     }
     virtual ~MockArmy() {}
@@ -110,6 +111,7 @@ public:
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendFullState );   
     MOCKPP_VOID_CONST_CHAINABLE0     ( MockArmy, SendKnowledge );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockArmy, MIL_KnowledgeGroup*, FindKnowledgeGroup, unsigned int, MIL_KnowledgeGroup*, , unsigned int );
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, ApplyOnKnowledgeGroup, KnowledgeVisitor_ABC&, , KnowledgeVisitor_ABC );
 };
 
 BOOST_CLASS_EXPORT_KEY( MockArmy )
