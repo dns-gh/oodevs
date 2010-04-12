@@ -16,13 +16,14 @@
       <Knowledges>
         <Knowledge>net.masagroup.sword.military.world.Area</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Company</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.DestroyingArea</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.EngineerObject</Knowledge>
+        <Knowledge>net.masagroup.sword.military.world.FragOrder</Knowledge>  
         <Knowledge>net.masagroup.sword.military.world.Object</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Point</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.Platoon</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.PlatoonAlly</Knowledge>
         <Knowledge>net.masagroup.sword.military.world.UrbanBlock</Knowledge>
-        <Knowledge>net.masagroup.sword.military.world.FragOrder</Knowledge>
       </Knowledges>
     </BMDatabase>
 </decisional>
