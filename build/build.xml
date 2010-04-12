@@ -880,13 +880,12 @@
         </nsis>
     </target>
 	
-    <target name="package.scipio-v1-stab" description="package the beta installer of scipio v1.stab: scipio-1.9.2, 3 months license">
-        <nsis todir="${dist.dir}/current/${platform}/v1.stab" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
+    <target name="package.scipio-v1-stab" description="package the installer of scipio v1.stab (3-month license)">
+        <nsis todir="${dist.dir}/current/${platform}/v1.stab" name="scipio-v1-stab" script="scipio-v1-stab.nsi" nsh="scipio-config.nsh">
             <arg value="/DAPP_VERSION_MAJOR=${version.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.minor}"/>
             <arg value="/DEVALUATION=1"/>
-            <arg value="/DAPP_MODEL=scipio-1.9.2"/>
-            <arg value="/X!include sword-defense.nsh"/>
+            <arg value="/X!include scipio-v1-stab.nsh"/>
         </nsis>
     </target>
 
