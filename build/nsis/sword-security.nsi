@@ -100,6 +100,7 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\dispatcher-crossbow-${PLATFORM}-mt.dll"
     File "${RUNDIR}\directia-${PLATFORM}-mt-4_5.dll"
     File "${RUNDIR}\lua-${PLATFORM}-mt-5_1_4.dll"
+	File /x "*-gd-*" /x "*-gd.*" /x "*unittest*.*" /x "*debugger*.*" "${RUNDIR}\*.plugin"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File /nonfatal "${RUNDIR}\*.manifest"
     File "resources\*.ico"
@@ -127,6 +128,7 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\vrf.dll"
     File "${RUNDIR}\xerces-c_2_6.dll"
     File "${RUNDIR}\zlib_ogdi31.dll"
+    File "${RUNDIR}\library-vc80-mt.dll"
     
     ; evaluation licence
     !ifdef EVALUATION

@@ -104,6 +104,8 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\msvcr71.dll"
     File "${RUNDIR}\gssapi32.dll"
     File "${RUNDIR}\library-vc80-mt.dll"
+	File /x "*-gd-*" /x "*-gd.*" /x "*unittest*.*" /x "*debugger*.*" "${RUNDIR}\*.plugin"
+
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
     

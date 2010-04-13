@@ -850,7 +850,7 @@
     package
     ============================================================================
     -->
-    <target name="package" description="package the installers" depends="package.defense,package.security,package.scipio-v1-stab,package.france,package.stress"/>
+    <target name="package" description="package the installers" depends="package.defense,package.scipio-v1-stab,package.security,package.france,package.stress"/>
 
     <target name="package.defense" description="package the standard installer: worldwide, no license">
         <nsis todir="${dist.dir}/current/${platform}" name="sword-defense" script="sword-defense.nsi" nsh="config.nsh">
