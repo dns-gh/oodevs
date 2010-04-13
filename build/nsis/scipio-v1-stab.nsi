@@ -103,6 +103,7 @@ Section "!${PRODUCT_NAME}"
     File "${RUNDIR}\libxslt.dll"
     File "${RUNDIR}\msvcr71.dll"
     File "${RUNDIR}\gssapi32.dll"
+    File "${RUNDIR}\library-vc80-mt.dll"
     File /r /x ".svn" /x "*.qm" "${RUNDIR}\resources"
     File "resources\*.ico"
     
