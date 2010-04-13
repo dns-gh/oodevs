@@ -11,7 +11,7 @@ SetCompressor lzma
 XPStyle on
 
 ;..................................................................................................
-!define PRODUCT_NAME ""SWORD""
+!define PRODUCT_NAME "SWORD"
 !define COMPANY_NAME "MASA Group"
 
 ;........................................
