@@ -16,12 +16,9 @@ namespace {
 const ::google::protobuf::Descriptor* MsgControlDatetimeChange_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgControlDatetimeChange_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgControlGlobalMeteo_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* MsgControlMeteo_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgControlGlobalMeteo_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgControlLocalMeteo_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgControlLocalMeteo_reflection_ = NULL;
+  MsgControlMeteo_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgControlCheckPointSaveNow_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgControlCheckPointSaveNow_reflection_ = NULL;
@@ -70,12 +67,10 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgUnitMagicAction_action_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgUnitMagicAction_action_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgUnitMagicAction_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgUnitMagicAction_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* MsgUnitMagicAction_Type_descriptor_ = NULL;
 const ::google::protobuf::Descriptor* MsgMagicActionCreateObject_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgMagicActionCreateObject_reflection_ = NULL;
@@ -97,9 +92,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgPopulationMagicAction_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgPopulationMagicAction_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgMagicActionMoveTo_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgMagicActionMoveTo_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgLogSupplyPushFlow_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgLogSupplyPushFlow_reflection_ = NULL;
@@ -149,41 +141,22 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlDatetimeChange));
-  MsgControlGlobalMeteo_descriptor_ = file->message_type(1);
-  static const int MsgControlGlobalMeteo_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlGlobalMeteo, attributes_),
+  MsgControlMeteo_descriptor_ = file->message_type(1);
+  static const int MsgControlMeteo_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlMeteo, parametres_),
   };
-  MsgControlGlobalMeteo_reflection_ =
+  MsgControlMeteo_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgControlGlobalMeteo_descriptor_,
-      MsgControlGlobalMeteo::default_instance_,
-      MsgControlGlobalMeteo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlGlobalMeteo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlGlobalMeteo, _unknown_fields_),
+      MsgControlMeteo_descriptor_,
+      MsgControlMeteo::default_instance_,
+      MsgControlMeteo_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlMeteo, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlMeteo, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgControlGlobalMeteo));
-  MsgControlLocalMeteo_descriptor_ = file->message_type(2);
-  static const int MsgControlLocalMeteo_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, start_time_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, end_time_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, top_left_coordinate_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, bottom_right_coordinate_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, attributes_),
-  };
-  MsgControlLocalMeteo_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgControlLocalMeteo_descriptor_,
-      MsgControlLocalMeteo::default_instance_,
-      MsgControlLocalMeteo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlLocalMeteo, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgControlLocalMeteo));
-  MsgControlCheckPointSaveNow_descriptor_ = file->message_type(3);
+      sizeof(MsgControlMeteo));
+  MsgControlCheckPointSaveNow_descriptor_ = file->message_type(2);
   static const int MsgControlCheckPointSaveNow_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlCheckPointSaveNow, name_),
   };
@@ -198,7 +171,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlCheckPointSaveNow));
-  MsgFragOrder_descriptor_ = file->message_type(4);
+  MsgFragOrder_descriptor_ = file->message_type(3);
   static const int MsgFragOrder_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFragOrder, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFragOrder, frag_order_),
@@ -215,7 +188,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgFragOrder));
-  MsgSetAutomatMode_descriptor_ = file->message_type(5);
+  MsgSetAutomatMode_descriptor_ = file->message_type(4);
   static const int MsgSetAutomatMode_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSetAutomatMode, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSetAutomatMode, mode_),
@@ -231,7 +204,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgSetAutomatMode));
-  MsgUnitCreationRequest_descriptor_ = file->message_type(6);
+  MsgUnitCreationRequest_descriptor_ = file->message_type(5);
   static const int MsgUnitCreationRequest_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, type_pion_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, oid_automate_),
@@ -248,7 +221,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUnitCreationRequest));
-  MagicActionChangeHumanFactors_descriptor_ = file->message_type(7);
+  MagicActionChangeHumanFactors_descriptor_ = file->message_type(6);
   static const int MagicActionChangeHumanFactors_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MagicActionChangeHumanFactors, fatigue_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MagicActionChangeHumanFactors, moral_),
@@ -265,7 +238,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MagicActionChangeHumanFactors));
-  MsgMagicActionPartialRecovery_descriptor_ = file->message_type(8);
+  MsgMagicActionPartialRecovery_descriptor_ = file->message_type(7);
   static const int MsgMagicActionPartialRecovery_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPartialRecovery, equipements_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPartialRecovery, personnels_),
@@ -439,35 +412,11 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery));
-  MsgUnitMagicAction_action_descriptor_ = file->message_type(9);
-  static const int MsgUnitMagicAction_action_offsets_[11] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, recompletement_partiel_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, change_facteurs_humains_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, se_rendre_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, destruction_totale_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, destruction_composante_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, annuler_reddition_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, recuperer_transporteurs_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, recompletement_total_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, recompletement_personnel_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, recompletement_equipement_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, recompletement_ressources_),
-  };
-  MsgUnitMagicAction_action_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgUnitMagicAction_action_descriptor_,
-      MsgUnitMagicAction_action::default_instance_,
-      MsgUnitMagicAction_action_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction_action, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgUnitMagicAction_action));
-  MsgUnitMagicAction_descriptor_ = file->message_type(10);
-  static const int MsgUnitMagicAction_offsets_[2] = {
+  MsgUnitMagicAction_descriptor_ = file->message_type(8);
+  static const int MsgUnitMagicAction_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, oid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, action_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, parametres_),
   };
   MsgUnitMagicAction_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -480,7 +429,8 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUnitMagicAction));
-  MsgMagicActionCreateObject_descriptor_ = file->message_type(11);
+  MsgUnitMagicAction_Type_descriptor_ = MsgUnitMagicAction_descriptor_->enum_type(0);
+  MsgMagicActionCreateObject_descriptor_ = file->message_type(9);
   static const int MsgMagicActionCreateObject_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, location_),
@@ -499,7 +449,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMagicActionCreateObject));
-  MsgMagicActionUpdateObject_descriptor_ = file->message_type(12);
+  MsgMagicActionUpdateObject_descriptor_ = file->message_type(10);
   static const int MsgMagicActionUpdateObject_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionUpdateObject, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionUpdateObject, attributes_),
@@ -515,7 +465,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMagicActionUpdateObject));
-  MsgObjectMagicAction_action_descriptor_ = file->message_type(13);
+  MsgObjectMagicAction_action_descriptor_ = file->message_type(11);
   static const int MsgObjectMagicAction_action_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction_action, create_object_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction_action, update_object_),
@@ -532,7 +482,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectMagicAction_action));
-  MsgObjectMagicAction_descriptor_ = file->message_type(14);
+  MsgObjectMagicAction_descriptor_ = file->message_type(12);
   static const int MsgObjectMagicAction_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction, action_),
   };
@@ -547,7 +497,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectMagicAction));
-  MsgMagicActionCreateFireOrder_descriptor_ = file->message_type(15);
+  MsgMagicActionCreateFireOrder_descriptor_ = file->message_type(13);
   static const int MsgMagicActionCreateFireOrder_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateFireOrder, oid_targetknowledge_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateFireOrder, oid_agentforcr_),
@@ -565,7 +515,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMagicActionCreateFireOrder));
-  MsgPopulationMagicAction_action_descriptor_ = file->message_type(16);
+  MsgPopulationMagicAction_action_descriptor_ = file->message_type(14);
   static const int MsgPopulationMagicAction_action_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction_action, change_attitude_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction_action, destruction_totale_),
@@ -583,7 +533,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPopulationMagicAction_action));
-  MsgPopulationMagicAction_descriptor_ = file->message_type(17);
+  MsgPopulationMagicAction_descriptor_ = file->message_type(15);
   static const int MsgPopulationMagicAction_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationMagicAction, action_),
@@ -599,23 +549,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPopulationMagicAction));
-  MsgMagicActionMoveTo_descriptor_ = file->message_type(18);
-  static const int MsgMagicActionMoveTo_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionMoveTo, oid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionMoveTo, parametres_),
-  };
-  MsgMagicActionMoveTo_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgMagicActionMoveTo_descriptor_,
-      MsgMagicActionMoveTo::default_instance_,
-      MsgMagicActionMoveTo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionMoveTo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionMoveTo, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgMagicActionMoveTo));
-  MsgLogSupplyPushFlow_descriptor_ = file->message_type(19);
+  MsgLogSupplyPushFlow_descriptor_ = file->message_type(16);
   static const int MsgLogSupplyPushFlow_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyPushFlow, oid_donneur_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyPushFlow, oid_receveur_),
@@ -632,7 +566,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLogSupplyPushFlow));
-  MsgLogSupplyChangeQuotas_descriptor_ = file->message_type(20);
+  MsgLogSupplyChangeQuotas_descriptor_ = file->message_type(17);
   static const int MsgLogSupplyChangeQuotas_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyChangeQuotas, oid_donneur_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyChangeQuotas, oid_receveur_),
@@ -649,7 +583,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLogSupplyChangeQuotas));
-  MsgControlCheckPointSetFrequency_descriptor_ = file->message_type(21);
+  MsgControlCheckPointSetFrequency_descriptor_ = file->message_type(18);
   static const int MsgControlCheckPointSetFrequency_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlCheckPointSetFrequency, frequency_),
   };
@@ -664,7 +598,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlCheckPointSetFrequency));
-  MsgControlToggleVisionCones_descriptor_ = file->message_type(22);
+  MsgControlToggleVisionCones_descriptor_ = file->message_type(19);
   static const int MsgControlToggleVisionCones_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlToggleVisionCones, vision_cones_),
   };
@@ -679,7 +613,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlToggleVisionCones));
-  MsgKnowledgeGroupCreationRequest_descriptor_ = file->message_type(23);
+  MsgKnowledgeGroupCreationRequest_descriptor_ = file->message_type(20);
   static const int MsgKnowledgeGroupCreationRequest_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, oid_camp_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, oid_parent_),
@@ -696,7 +630,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgKnowledgeGroupCreationRequest));
-  MsgKnowledgeGroupUpdateRequest_descriptor_ = file->message_type(24);
+  MsgKnowledgeGroupUpdateRequest_descriptor_ = file->message_type(21);
   static const int MsgKnowledgeGroupUpdateRequest_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, oid_camp_),
@@ -715,7 +649,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgKnowledgeGroupUpdateRequest));
-  MsgClientToSim_descriptor_ = file->message_type(25);
+  MsgClientToSim_descriptor_ = file->message_type(22);
   static const int MsgClientToSim_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim, context_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim, message_),
@@ -732,14 +666,13 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientToSim));
   MsgClientToSim_Content_descriptor_ = MsgClientToSim_descriptor_->nested_type(0);
-  static const int MsgClientToSim_Content_offsets_[30] = {
+  static const int MsgClientToSim_Content_offsets_[28] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_stop_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_pause_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_resume_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_change_time_factor_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_date_time_change_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_global_meteo_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_local_meteo_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_meteo_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_checkpoint_save_now_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_checkpoint_set_frequency_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_toggle_vision_cones_),
@@ -762,7 +695,6 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, knowledge_group_creation_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, knowledge_group_update_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, create_fire_order_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, magic_action_move_to_),
   };
   MsgClientToSim_Content_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -790,9 +722,7 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgControlDatetimeChange_descriptor_, &MsgControlDatetimeChange::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgControlGlobalMeteo_descriptor_, &MsgControlGlobalMeteo::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgControlLocalMeteo_descriptor_, &MsgControlLocalMeteo::default_instance());
+    MsgControlMeteo_descriptor_, &MsgControlMeteo::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgControlCheckPointSaveNow_descriptor_, &MsgControlCheckPointSaveNow::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -826,8 +756,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery_descriptor_, &MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgUnitMagicAction_action_descriptor_, &MsgUnitMagicAction_action::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgUnitMagicAction_descriptor_, &MsgUnitMagicAction::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgMagicActionCreateObject_descriptor_, &MsgMagicActionCreateObject::default_instance());
@@ -843,8 +771,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
     MsgPopulationMagicAction_action_descriptor_, &MsgPopulationMagicAction_action::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgPopulationMagicAction_descriptor_, &MsgPopulationMagicAction::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgMagicActionMoveTo_descriptor_, &MsgMagicActionMoveTo::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgLogSupplyPushFlow_descriptor_, &MsgLogSupplyPushFlow::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -868,10 +794,8 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void protobuf_ShutdownFile_ClientToSim_2eproto() {
   delete MsgControlDatetimeChange::default_instance_;
   delete MsgControlDatetimeChange_reflection_;
-  delete MsgControlGlobalMeteo::default_instance_;
-  delete MsgControlGlobalMeteo_reflection_;
-  delete MsgControlLocalMeteo::default_instance_;
-  delete MsgControlLocalMeteo_reflection_;
+  delete MsgControlMeteo::default_instance_;
+  delete MsgControlMeteo_reflection_;
   delete MsgControlCheckPointSaveNow::default_instance_;
   delete MsgControlCheckPointSaveNow_reflection_;
   delete MsgFragOrder::default_instance_;
@@ -904,8 +828,6 @@ void protobuf_ShutdownFile_ClientToSim_2eproto() {
   delete MsgMagicActionPartialRecovery_SeqOfStockRecovery_reflection_;
   delete MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery::default_instance_;
   delete MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery_reflection_;
-  delete MsgUnitMagicAction_action::default_instance_;
-  delete MsgUnitMagicAction_action_reflection_;
   delete MsgUnitMagicAction::default_instance_;
   delete MsgUnitMagicAction_reflection_;
   delete MsgMagicActionCreateObject::default_instance_;
@@ -922,8 +844,6 @@ void protobuf_ShutdownFile_ClientToSim_2eproto() {
   delete MsgPopulationMagicAction_action_reflection_;
   delete MsgPopulationMagicAction::default_instance_;
   delete MsgPopulationMagicAction_reflection_;
-  delete MsgMagicActionMoveTo::default_instance_;
-  delete MsgMagicActionMoveTo_reflection_;
   delete MsgLogSupplyPushFlow::default_instance_;
   delete MsgLogSupplyPushFlow_reflection_;
   delete MsgLogSupplyChangeQuotas::default_instance_;
@@ -952,181 +872,164 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\021ClientToSim.proto\022\017MsgsClientToSim\032\014Co"
     "mmon.proto\"B\n\030MsgControlDatetimeChange\022&"
-    "\n\tdate_time\030\001 \002(\0132\023.Common.MsgDateTime\"G"
-    "\n\025MsgControlGlobalMeteo\022.\n\nattributes\030\001 "
-    "\002(\0132\032.Common.MsgMeteoAttributes\"\206\002\n\024MsgC"
-    "ontrolLocalMeteo\022\'\n\nstart_time\030\001 \002(\0132\023.C"
-    "ommon.MsgDateTime\022%\n\010end_time\030\002 \002(\0132\023.Co"
-    "mmon.MsgDateTime\0224\n\023top_left_coordinate\030"
-    "\003 \002(\0132\027.Common.MsgCoordLatLong\0228\n\027bottom"
-    "_right_coordinate\030\004 \002(\0132\027.Common.MsgCoor"
-    "dLatLong\022.\n\nattributes\030\005 \002(\0132\032.Common.Ms"
-    "gMeteoAttributes\"+\n\033MsgControlCheckPoint"
-    "SaveNow\022\014\n\004name\030\001 \001(\t\"a\n\014MsgFragOrder\022\013\n"
-    "\003oid\030\001 \002(\r\022\022\n\nfrag_order\030\002 \002(\r\0220\n\nparame"
-    "tres\030\003 \001(\0132\034.Common.MsgMissionParameters"
-    "\"G\n\021MsgSetAutomatMode\022\013\n\003oid\030\001 \002(\005\022%\n\004mo"
-    "de\030\002 \002(\0162\027.Common.EnumAutomatMode\"l\n\026Msg"
-    "UnitCreationRequest\022\021\n\ttype_pion\030\001 \002(\r\022\024"
-    "\n\014oid_automate\030\002 \002(\r\022)\n\010position\030\003 \002(\0132\027"
-    ".Common.MsgCoordLatLong\"\242\001\n\035MagicActionC"
-    "hangeHumanFactors\022*\n\007fatigue\030\001 \001(\0162\031.Com"
-    "mon.EnumUnitTiredness\022%\n\005moral\030\002 \001(\0162\026.C"
-    "ommon.EnumUnitMorale\022.\n\nexperience\030\003 \001(\016"
-    "2\032.Common.EnumUnitExperience\"\255\014\n\035MsgMagi"
-    "cActionPartialRecovery\022Z\n\013equipements\030\001 "
-    "\001(\0132E.MsgsClientToSim.MsgMagicActionPart"
-    "ialRecovery.SeqOfEquipmentRecovery\022U\n\npe"
-    "rsonnels\030\002 \001(\0132A.MsgsClientToSim.MsgMagi"
-    "cActionPartialRecovery.SeqOfHumanRecover"
-    "y\022W\n\tdotations\030\003 \001(\0132D.MsgsClientToSim.M"
-    "sgMagicActionPartialRecovery.SeqOfDotati"
-    "onRecovery\022a\n\tmunitions\030\004 \001(\0132N.MsgsClie"
+    "\n\tdate_time\030\001 \002(\0132\023.Common.MsgDateTime\"C"
+    "\n\017MsgControlMeteo\0220\n\nparametres\030\001 \002(\0132\034."
+    "Common.MsgMissionParameters\"+\n\033MsgContro"
+    "lCheckPointSaveNow\022\014\n\004name\030\001 \001(\t\"a\n\014MsgF"
+    "ragOrder\022\013\n\003oid\030\001 \002(\r\022\022\n\nfrag_order\030\002 \002("
+    "\r\0220\n\nparametres\030\003 \001(\0132\034.Common.MsgMissio"
+    "nParameters\"G\n\021MsgSetAutomatMode\022\013\n\003oid\030"
+    "\001 \002(\005\022%\n\004mode\030\002 \002(\0162\027.Common.EnumAutomat"
+    "Mode\"l\n\026MsgUnitCreationRequest\022\021\n\ttype_p"
+    "ion\030\001 \002(\r\022\024\n\014oid_automate\030\002 \002(\r\022)\n\010posit"
+    "ion\030\003 \002(\0132\027.Common.MsgCoordLatLong\"\242\001\n\035M"
+    "agicActionChangeHumanFactors\022*\n\007fatigue\030"
+    "\001 \001(\0162\031.Common.EnumUnitTiredness\022%\n\005mora"
+    "l\030\002 \001(\0162\026.Common.EnumUnitMorale\022.\n\nexper"
+    "ience\030\003 \001(\0162\032.Common.EnumUnitExperience\""
+    "\255\014\n\035MsgMagicActionPartialRecovery\022Z\n\013equ"
+    "ipements\030\001 \001(\0132E.MsgsClientToSim.MsgMagi"
+    "cActionPartialRecovery.SeqOfEquipmentRec"
+    "overy\022U\n\npersonnels\030\002 \001(\0132A.MsgsClientTo"
+    "Sim.MsgMagicActionPartialRecovery.SeqOfH"
+    "umanRecovery\022W\n\tdotations\030\003 \001(\0132D.MsgsCl"
+    "ientToSim.MsgMagicActionPartialRecovery."
+    "SeqOfDotationRecovery\022a\n\tmunitions\030\004 \001(\013"
+    "2N.MsgsClientToSim.MsgMagicActionPartial"
+    "Recovery.SeqOfAmmunitionDotationRecovery"
+    "\022Q\n\006stocks\030\005 \001(\0132A.MsgsClientToSim.MsgMa"
+    "gicActionPartialRecovery.SeqOfStockRecov"
+    "ery\032\342\001\n\026SeqOfEquipmentRecovery\022e\n\004elem\030\001"
+    " \003(\0132W.MsgsClientToSim.MsgMagicActionPar"
+    "tialRecovery.SeqOfEquipmentRecovery.Equi"
+    "pmentRecovery\032a\n\021EquipmentRecovery\0221\n\017ty"
+    "pe_equipement\030\001 \002(\0132\030.Common.MsgEquipmen"
+    "tType\022\031\n\021nombre_disponible\030\002 \002(\005\032\304\001\n\022Seq"
+    "OfHumanRecovery\022]\n\004elem\030\001 \003(\0132O.MsgsClie"
     "ntToSim.MsgMagicActionPartialRecovery.Se"
-    "qOfAmmunitionDotationRecovery\022Q\n\006stocks\030"
-    "\005 \001(\0132A.MsgsClientToSim.MsgMagicActionPa"
-    "rtialRecovery.SeqOfStockRecovery\032\342\001\n\026Seq"
-    "OfEquipmentRecovery\022e\n\004elem\030\001 \003(\0132W.Msgs"
-    "ClientToSim.MsgMagicActionPartialRecover"
-    "y.SeqOfEquipmentRecovery.EquipmentRecove"
-    "ry\032a\n\021EquipmentRecovery\0221\n\017type_equipeme"
-    "nt\030\001 \002(\0132\030.Common.MsgEquipmentType\022\031\n\021no"
-    "mbre_disponible\030\002 \002(\005\032\304\001\n\022SeqOfHumanReco"
-    "very\022]\n\004elem\030\001 \003(\0132O.MsgsClientToSim.Msg"
-    "MagicActionPartialRecovery.SeqOfHumanRec"
-    "overy.HumanRecovery\032O\n\rHumanRecovery\022#\n\004"
-    "rang\030\001 \002(\0162\025.Common.EnumHumanRank\022\031\n\021nom"
-    "bre_disponible\030\002 \002(\005\032\333\001\n\025SeqOfDotationRe"
-    "covery\022c\n\004elem\030\001 \003(\0132U.MsgsClientToSim.M"
-    "sgMagicActionPartialRecovery.SeqOfDotati"
-    "onRecovery.DotationRecovery\032]\n\020DotationR"
-    "ecovery\0224\n\020famille_dotation\030\001 \002(\0162\032.Comm"
-    "on.EnumDotationFamily\022\023\n\013pourcentage\030\002 \002"
-    "(\005\032\205\002\n\037SeqOfAmmunitionDotationRecovery\022w"
-    "\n\004elem\030\001 \003(\0132i.MsgsClientToSim.MsgMagicA"
-    "ctionPartialRecovery.SeqOfAmmunitionDota"
-    "tionRecovery.AmmunitionDotationRecovery\032"
-    "i\n\032AmmunitionDotationRecovery\0226\n\020famille"
-    "_munition\030\001 \002(\0162\034.Common.EnumAmmunitionF"
-    "amily\022\023\n\013pourcentage\030\002 \002(\r\032\267\001\n\022SeqOfStoc"
-    "kRecovery\022]\n\004elem\030\001 \003(\0132O.MsgsClientToSi"
-    "m.MsgMagicActionPartialRecovery.SeqOfSto"
-    "ckRecovery.StockRecovery\032B\n\rStockRecover"
-    "y\022\024\n\014ressource_id\030\001 \002(\r\022\033\n\023quantite_disp"
-    "onible\030\002 \002(\005\"\307\003\n\031MsgUnitMagicAction_acti"
-    "on\022N\n\026recompletement_partiel\030\001 \001(\0132..Msg"
+    "qOfHumanRecovery.HumanRecovery\032O\n\rHumanR"
+    "ecovery\022#\n\004rang\030\001 \002(\0162\025.Common.EnumHuman"
+    "Rank\022\031\n\021nombre_disponible\030\002 \002(\005\032\333\001\n\025SeqO"
+    "fDotationRecovery\022c\n\004elem\030\001 \003(\0132U.MsgsCl"
+    "ientToSim.MsgMagicActionPartialRecovery."
+    "SeqOfDotationRecovery.DotationRecovery\032]"
+    "\n\020DotationRecovery\0224\n\020famille_dotation\030\001"
+    " \002(\0162\032.Common.EnumDotationFamily\022\023\n\013pour"
+    "centage\030\002 \002(\005\032\205\002\n\037SeqOfAmmunitionDotatio"
+    "nRecovery\022w\n\004elem\030\001 \003(\0132i.MsgsClientToSi"
+    "m.MsgMagicActionPartialRecovery.SeqOfAmm"
+    "unitionDotationRecovery.AmmunitionDotati"
+    "onRecovery\032i\n\032AmmunitionDotationRecovery"
+    "\0226\n\020famille_munition\030\001 \002(\0162\034.Common.Enum"
+    "AmmunitionFamily\022\023\n\013pourcentage\030\002 \002(\r\032\267\001"
+    "\n\022SeqOfStockRecovery\022]\n\004elem\030\001 \003(\0132O.Msg"
     "sClientToSim.MsgMagicActionPartialRecove"
-    "ry\022I\n\027change_facteurs_humains\030\002 \001(\0132(.Co"
-    "mmon.MsgMagicActionChangeHumanFactors\022\021\n"
-    "\tse_rendre\030\003 \001(\005\022\032\n\022destruction_totale\030\004"
-    " \001(\005\022\036\n\026destruction_composante\030\005 \001(\005\022\031\n\021"
-    "annuler_reddition\030\006 \001(\005\022\037\n\027recuperer_tra"
-    "nsporteurs\030\007 \001(\005\022\034\n\024recompletement_total"
-    "\030\010 \001(\005\022 \n\030recompletement_personnel\030\t \001(\005"
-    "\022!\n\031recompletement_equipement\030\n \001(\005\022!\n\031r"
-    "ecompletement_ressources\030\013 \001(\005\"]\n\022MsgUni"
-    "tMagicAction\022\013\n\003oid\030\001 \002(\r\022:\n\006action\030\002 \002("
-    "\0132*.MsgsClientToSim.MsgUnitMagicAction_a"
-    "ction\"\236\001\n\032MsgMagicActionCreateObject\022\014\n\004"
-    "type\030\001 \002(\t\022%\n\010location\030\002 \002(\0132\023.Common.Ms"
-    "gLocation\022\014\n\004name\030\003 \002(\t\022\014\n\004team\030\004 \002(\005\022/\n"
-    "\nattributes\030\005 \002(\0132\033.Common.MsgObjectAttr"
-    "ibutes\"Z\n\032MsgMagicActionUpdateObject\022\013\n\003"
-    "oid\030\001 \002(\005\022/\n\nattributes\030\002 \002(\0132\033.Common.M"
-    "sgObjectAttributes\"\275\001\n\033MsgObjectMagicAct"
-    "ion_action\022B\n\rcreate_object\030\001 \001(\0132+.Msgs"
-    "ClientToSim.MsgMagicActionCreateObject\022B"
-    "\n\rupdate_object\030\002 \001(\0132+.MsgsClientToSim."
-    "MsgMagicActionUpdateObject\022\026\n\016destroy_ob"
-    "ject\030\003 \001(\005\"T\n\024MsgObjectMagicAction\022<\n\006ac"
-    "tion\030\001 \002(\0132,.MsgsClientToSim.MsgObjectMa"
-    "gicAction_action\"r\n\035MsgMagicActionCreate"
-    "FireOrder\022\033\n\023oid_targetKnowledge\030\001 \002(\005\022\026"
-    "\n\016oid_agentForCr\030\002 \002(\005\022\020\n\010munition\030\003 \002(\005"
-    "\022\n\n\002it\030\004 \002(\005\"\372\001\n\037MsgPopulationMagicActio"
-    "n_action\022G\n\017change_attitude\030\001 \001(\0132..Comm"
-    "on.MsgMagicActionPopulationChangeAttitud"
-    "e\022\032\n\022destruction_totale\030\002 \001(\010\0222\n\004tuer\030\003 "
-    "\001(\0132$.Common.MsgMagicActionPopulationKil"
-    "l\022>\n\013ressusciter\030\004 \001(\0132).Common.MsgMagic"
-    "ActionPopulationResurrect\"i\n\030MsgPopulati"
-    "onMagicAction\022\013\n\003oid\030\001 \002(\r\022@\n\006action\030\002 \002"
-    "(\01320.MsgsClientToSim.MsgPopulationMagicA"
-    "ction_action\"U\n\024MsgMagicActionMoveTo\022\013\n\003"
-    "oid\030\001 \002(\005\0220\n\nparametres\030\002 \002(\0132\034.Common.M"
-    "sgMissionParameters\"m\n\024MsgLogSupplyPushF"
-    "low\022\023\n\013oid_donneur\030\001 \002(\r\022\024\n\014oid_receveur"
-    "\030\002 \002(\r\022*\n\006stocks\030\003 \002(\0132\032.Common.SeqOfDot"
-    "ationStock\"q\n\030MsgLogSupplyChangeQuotas\022\023"
-    "\n\013oid_donneur\030\001 \002(\r\022\024\n\014oid_receveur\030\002 \002("
-    "\r\022*\n\006quotas\030\003 \002(\0132\032.Common.SeqOfDotation"
-    "Quota\"5\n MsgControlCheckPointSetFrequenc"
-    "y\022\021\n\tfrequency\030\001 \002(\005\"3\n\033MsgControlToggle"
-    "VisionCones\022\024\n\014vision_cones\030\001 \002(\010\"V\n Msg"
-    "KnowledgeGroupCreationRequest\022\020\n\010oid_cam"
-    "p\030\001 \002(\r\022\022\n\noid_parent\030\002 \001(\r\022\014\n\004type\030\003 \002("
-    "\t\"r\n\036MsgKnowledgeGroupUpdateRequest\022\013\n\003o"
-    "id\030\001 \002(\r\022\020\n\010oid_camp\030\002 \001(\r\022\022\n\noid_parent"
-    "\030\003 \001(\r\022\017\n\007enabled\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\341\020"
-    "\n\016MsgClientToSim\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007"
-    "message\030\002 \002(\0132\'.MsgsClientToSim.MsgClien"
-    "tToSim.Content\032\200\020\n\007Content\022,\n\014control_st"
-    "op\030\001 \001(\0132\026.Common.MsgControlStop\022.\n\rcont"
-    "rol_pause\030\002 \001(\0132\027.Common.MsgControlPause"
-    "\0220\n\016control_resume\030\003 \001(\0132\030.Common.MsgCon"
-    "trolResume\022F\n\032control_change_time_factor"
-    "\030\004 \001(\0132\".Common.MsgControlChangeTimeFact"
-    "or\022K\n\030control_date_time_change\030\005 \001(\0132).M"
-    "sgsClientToSim.MsgControlDatetimeChange\022"
-    "D\n\024control_global_meteo\030\006 \001(\0132&.MsgsClie"
-    "ntToSim.MsgControlGlobalMeteo\022B\n\023control"
-    "_local_meteo\030\007 \001(\0132%.MsgsClientToSim.Msg"
-    "ControlLocalMeteo\022Q\n\033control_checkpoint_"
-    "save_now\030\010 \001(\0132,.MsgsClientToSim.MsgCont"
-    "rolCheckPointSaveNow\022[\n control_checkpoi"
-    "nt_set_frequency\030\t \001(\01321.MsgsClientToSim"
-    ".MsgControlCheckPointSetFrequency\022Q\n\033con"
-    "trol_toggle_vision_cones\030\n \001(\0132,.MsgsCli"
-    "entToSim.MsgControlToggleVisionCones\022(\n\n"
-    "unit_order\030\013 \001(\0132\024.Common.MsgUnitOrder\022."
-    "\n\rautomat_order\030\014 \001(\0132\027.Common.MsgAutoma"
-    "tOrder\0224\n\020population_order\030\r \001(\0132\032.Commo"
-    "n.MsgPopulationOrder\0221\n\nfrag_order\030\016 \001(\013"
-    "2\035.MsgsClientToSim.MsgFragOrder\022<\n\020set_a"
-    "utomat_mode\030\017 \001(\0132\".MsgsClientToSim.MsgS"
-    "etAutomatMode\022F\n\025unit_creation_request\030\020"
-    " \001(\0132\'.MsgsClientToSim.MsgUnitCreationRe"
-    "quest\022>\n\021unit_magic_action\030\021 \001(\0132#.MsgsC"
-    "lientToSim.MsgUnitMagicAction\022B\n\023object_"
-    "magic_action\030\022 \001(\0132%.MsgsClientToSim.Msg"
-    "ObjectMagicAction\022J\n\027population_magic_ac"
-    "tion\030\023 \001(\0132).MsgsClientToSim.MsgPopulati"
-    "onMagicAction\0224\n\020change_diplomacy\030\024 \001(\0132"
-    "\032.Common.MsgChangeDiplomacy\022N\n\036automat_c"
-    "hange_knowledge_group\030\025 \001(\0132&.Common.Msg"
-    "AutomatChangeKnowledgeGroup\022L\n\035automat_c"
-    "hange_logistic_links\030\026 \001(\0132%.Common.MsgA"
-    "utomatChangeLogisticLinks\022A\n\027automat_cha"
-    "nge_superior\030\027 \001(\0132 .Common.MsgAutomatCh"
-    "angeSuperior\022;\n\024unit_change_superior\030\030 \001"
-    "(\0132\035.Common.MsgUnitChangeSuperior\022C\n\024log"
-    "_supply_push_flow\030\031 \001(\0132%.MsgsClientToSi"
-    "m.MsgLogSupplyPushFlow\022K\n\030log_supply_cha"
-    "nge_quotas\030\032 \001(\0132).MsgsClientToSim.MsgLo"
-    "gSupplyChangeQuotas\022[\n knowledge_group_c"
-    "reation_request\030\033 \001(\01321.MsgsClientToSim."
-    "MsgKnowledgeGroupCreationRequest\022W\n\036know"
-    "ledge_group_update_request\030\034 \001(\0132/.MsgsC"
-    "lientToSim.MsgKnowledgeGroupUpdateReques"
-    "t\022I\n\021create_fire_order\030\035 \001(\0132..MsgsClien"
-    "tToSim.MsgMagicActionCreateFireOrder\022C\n\024"
-    "magic_action_move_to\030\036 \001(\0132%.MsgsClientT"
-    "oSim.MsgMagicActionMoveTo", 6865);
+    "ry.SeqOfStockRecovery.StockRecovery\032B\n\rS"
+    "tockRecovery\022\024\n\014ressource_id\030\001 \002(\r\022\033\n\023qu"
+    "antite_disponible\030\002 \002(\005\"\217\003\n\022MsgUnitMagic"
+    "Action\022\013\n\003oid\030\001 \002(\r\0226\n\004type\030\002 \002(\0162(.Msgs"
+    "ClientToSim.MsgUnitMagicAction.Type\0220\n\np"
+    "arametres\030\003 \002(\0132\034.Common.MsgMissionParam"
+    "eters\"\201\002\n\004Type\022\013\n\007move_to\020\000\022\020\n\014surrender"
+    "_to\020\001\022\024\n\020cancel_surrender\020\002\022\030\n\024recover_t"
+    "ransporters\020\003\022\025\n\021destroy_component\020\004\022\017\n\013"
+    "recover_all\020\005\022\022\n\016recover_troops\020\006\022\026\n\022rec"
+    "over_equipments\020\007\022\025\n\021recover_resources\020\010"
+    "\022\017\n\013destroy_all\020\t\022\030\n\024change_human_factor"
+    "s\020\n\022\024\n\020partial_recovery\020\013\"\236\001\n\032MsgMagicAc"
+    "tionCreateObject\022\014\n\004type\030\001 \002(\t\022%\n\010locati"
+    "on\030\002 \002(\0132\023.Common.MsgLocation\022\014\n\004name\030\003 "
+    "\002(\t\022\014\n\004team\030\004 \002(\005\022/\n\nattributes\030\005 \002(\0132\033."
+    "Common.MsgObjectAttributes\"Z\n\032MsgMagicAc"
+    "tionUpdateObject\022\013\n\003oid\030\001 \002(\005\022/\n\nattribu"
+    "tes\030\002 \002(\0132\033.Common.MsgObjectAttributes\"\275"
+    "\001\n\033MsgObjectMagicAction_action\022B\n\rcreate"
+    "_object\030\001 \001(\0132+.MsgsClientToSim.MsgMagic"
+    "ActionCreateObject\022B\n\rupdate_object\030\002 \001("
+    "\0132+.MsgsClientToSim.MsgMagicActionUpdate"
+    "Object\022\026\n\016destroy_object\030\003 \001(\005\"T\n\024MsgObj"
+    "ectMagicAction\022<\n\006action\030\001 \002(\0132,.MsgsCli"
+    "entToSim.MsgObjectMagicAction_action\"r\n\035"
+    "MsgMagicActionCreateFireOrder\022\033\n\023oid_tar"
+    "getKnowledge\030\001 \002(\005\022\026\n\016oid_agentForCr\030\002 \002"
+    "(\005\022\020\n\010munition\030\003 \002(\005\022\n\n\002it\030\004 \002(\005\"\372\001\n\037Msg"
+    "PopulationMagicAction_action\022G\n\017change_a"
+    "ttitude\030\001 \001(\0132..Common.MsgMagicActionPop"
+    "ulationChangeAttitude\022\032\n\022destruction_tot"
+    "ale\030\002 \001(\010\0222\n\004tuer\030\003 \001(\0132$.Common.MsgMagi"
+    "cActionPopulationKill\022>\n\013ressusciter\030\004 \001"
+    "(\0132).Common.MsgMagicActionPopulationResu"
+    "rrect\"i\n\030MsgPopulationMagicAction\022\013\n\003oid"
+    "\030\001 \002(\r\022@\n\006action\030\002 \002(\01320.MsgsClientToSim"
+    ".MsgPopulationMagicAction_action\"m\n\024MsgL"
+    "ogSupplyPushFlow\022\023\n\013oid_donneur\030\001 \002(\r\022\024\n"
+    "\014oid_receveur\030\002 \002(\r\022*\n\006stocks\030\003 \002(\0132\032.Co"
+    "mmon.SeqOfDotationStock\"q\n\030MsgLogSupplyC"
+    "hangeQuotas\022\023\n\013oid_donneur\030\001 \002(\r\022\024\n\014oid_"
+    "receveur\030\002 \002(\r\022*\n\006quotas\030\003 \002(\0132\032.Common."
+    "SeqOfDotationQuota\"5\n MsgControlCheckPoi"
+    "ntSetFrequency\022\021\n\tfrequency\030\001 \002(\005\"3\n\033Msg"
+    "ControlToggleVisionCones\022\024\n\014vision_cones"
+    "\030\001 \002(\010\"V\n MsgKnowledgeGroupCreationReque"
+    "st\022\020\n\010oid_camp\030\001 \002(\r\022\022\n\noid_parent\030\002 \001(\r"
+    "\022\014\n\004type\030\003 \002(\t\"r\n\036MsgKnowledgeGroupUpdat"
+    "eRequest\022\013\n\003oid\030\001 \002(\r\022\020\n\010oid_camp\030\002 \001(\r\022"
+    "\022\n\noid_parent\030\003 \001(\r\022\017\n\007enabled\030\004 \001(\010\022\014\n\004"
+    "type\030\005 \001(\t\"\313\017\n\016MsgClientToSim\022\022\n\007context"
+    "\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'.MsgsClientT"
+    "oSim.MsgClientToSim.Content\032\352\016\n\007Content\022"
+    ",\n\014control_stop\030\001 \001(\0132\026.Common.MsgContro"
+    "lStop\022.\n\rcontrol_pause\030\002 \001(\0132\027.Common.Ms"
+    "gControlPause\0220\n\016control_resume\030\003 \001(\0132\030."
+    "Common.MsgControlResume\022F\n\032control_chang"
+    "e_time_factor\030\004 \001(\0132\".Common.MsgControlC"
+    "hangeTimeFactor\022K\n\030control_date_time_cha"
+    "nge\030\005 \001(\0132).MsgsClientToSim.MsgControlDa"
+    "tetimeChange\0227\n\rcontrol_meteo\030\006 \001(\0132 .Ms"
+    "gsClientToSim.MsgControlMeteo\022Q\n\033control"
+    "_checkpoint_save_now\030\007 \001(\0132,.MsgsClientT"
+    "oSim.MsgControlCheckPointSaveNow\022[\n cont"
+    "rol_checkpoint_set_frequency\030\010 \001(\01321.Msg"
+    "sClientToSim.MsgControlCheckPointSetFreq"
+    "uency\022Q\n\033control_toggle_vision_cones\030\t \001"
+    "(\0132,.MsgsClientToSim.MsgControlToggleVis"
+    "ionCones\022(\n\nunit_order\030\n \001(\0132\024.Common.Ms"
+    "gUnitOrder\022.\n\rautomat_order\030\013 \001(\0132\027.Comm"
+    "on.MsgAutomatOrder\0224\n\020population_order\030\014"
+    " \001(\0132\032.Common.MsgPopulationOrder\0221\n\nfrag"
+    "_order\030\r \001(\0132\035.MsgsClientToSim.MsgFragOr"
+    "der\022<\n\020set_automat_mode\030\016 \001(\0132\".MsgsClie"
+    "ntToSim.MsgSetAutomatMode\022F\n\025unit_creati"
+    "on_request\030\017 \001(\0132\'.MsgsClientToSim.MsgUn"
+    "itCreationRequest\022>\n\021unit_magic_action\030\021"
+    " \001(\0132#.MsgsClientToSim.MsgUnitMagicActio"
+    "n\022B\n\023object_magic_action\030\022 \001(\0132%.MsgsCli"
+    "entToSim.MsgObjectMagicAction\022J\n\027populat"
+    "ion_magic_action\030\023 \001(\0132).MsgsClientToSim"
+    ".MsgPopulationMagicAction\0224\n\020change_dipl"
+    "omacy\030\024 \001(\0132\032.Common.MsgChangeDiplomacy\022"
+    "N\n\036automat_change_knowledge_group\030\025 \001(\0132"
+    "&.Common.MsgAutomatChangeKnowledgeGroup\022"
+    "L\n\035automat_change_logistic_links\030\026 \001(\0132%"
+    ".Common.MsgAutomatChangeLogisticLinks\022A\n"
+    "\027automat_change_superior\030\027 \001(\0132 .Common."
+    "MsgAutomatChangeSuperior\022;\n\024unit_change_"
+    "superior\030\030 \001(\0132\035.Common.MsgUnitChangeSup"
+    "erior\022C\n\024log_supply_push_flow\030\031 \001(\0132%.Ms"
+    "gsClientToSim.MsgLogSupplyPushFlow\022K\n\030lo"
+    "g_supply_change_quotas\030\032 \001(\0132).MsgsClien"
+    "tToSim.MsgLogSupplyChangeQuotas\022[\n knowl"
+    "edge_group_creation_request\030\033 \001(\01321.Msgs"
+    "ClientToSim.MsgKnowledgeGroupCreationReq"
+    "uest\022W\n\036knowledge_group_update_request\030\034"
+    " \001(\0132/.MsgsClientToSim.MsgKnowledgeGroup"
+    "UpdateRequest\022I\n\021create_fire_order\030\035 \001(\013"
+    "2..MsgsClientToSim.MsgMagicActionCreateF"
+    "ireOrder", 6208);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
-  MsgControlGlobalMeteo::default_instance_ = new MsgControlGlobalMeteo();
-  MsgControlLocalMeteo::default_instance_ = new MsgControlLocalMeteo();
+  MsgControlMeteo::default_instance_ = new MsgControlMeteo();
   MsgControlCheckPointSaveNow::default_instance_ = new MsgControlCheckPointSaveNow();
   MsgFragOrder::default_instance_ = new MsgFragOrder();
   MsgSetAutomatMode::default_instance_ = new MsgSetAutomatMode();
@@ -1143,7 +1046,6 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery_AmmunitionDotationRecovery::default_instance_ = new MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery_AmmunitionDotationRecovery();
   MsgMagicActionPartialRecovery_SeqOfStockRecovery::default_instance_ = new MsgMagicActionPartialRecovery_SeqOfStockRecovery();
   MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery::default_instance_ = new MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery();
-  MsgUnitMagicAction_action::default_instance_ = new MsgUnitMagicAction_action();
   MsgUnitMagicAction::default_instance_ = new MsgUnitMagicAction();
   MsgMagicActionCreateObject::default_instance_ = new MsgMagicActionCreateObject();
   MsgMagicActionUpdateObject::default_instance_ = new MsgMagicActionUpdateObject();
@@ -1152,7 +1054,6 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   MsgMagicActionCreateFireOrder::default_instance_ = new MsgMagicActionCreateFireOrder();
   MsgPopulationMagicAction_action::default_instance_ = new MsgPopulationMagicAction_action();
   MsgPopulationMagicAction::default_instance_ = new MsgPopulationMagicAction();
-  MsgMagicActionMoveTo::default_instance_ = new MsgMagicActionMoveTo();
   MsgLogSupplyPushFlow::default_instance_ = new MsgLogSupplyPushFlow();
   MsgLogSupplyChangeQuotas::default_instance_ = new MsgLogSupplyChangeQuotas();
   MsgControlCheckPointSetFrequency::default_instance_ = new MsgControlCheckPointSetFrequency();
@@ -1162,8 +1063,7 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   MsgClientToSim::default_instance_ = new MsgClientToSim();
   MsgClientToSim_Content::default_instance_ = new MsgClientToSim_Content();
   MsgControlDatetimeChange::default_instance_->InitAsDefaultInstance();
-  MsgControlGlobalMeteo::default_instance_->InitAsDefaultInstance();
-  MsgControlLocalMeteo::default_instance_->InitAsDefaultInstance();
+  MsgControlMeteo::default_instance_->InitAsDefaultInstance();
   MsgControlCheckPointSaveNow::default_instance_->InitAsDefaultInstance();
   MsgFragOrder::default_instance_->InitAsDefaultInstance();
   MsgSetAutomatMode::default_instance_->InitAsDefaultInstance();
@@ -1180,7 +1080,6 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery_AmmunitionDotationRecovery::default_instance_->InitAsDefaultInstance();
   MsgMagicActionPartialRecovery_SeqOfStockRecovery::default_instance_->InitAsDefaultInstance();
   MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery::default_instance_->InitAsDefaultInstance();
-  MsgUnitMagicAction_action::default_instance_->InitAsDefaultInstance();
   MsgUnitMagicAction::default_instance_->InitAsDefaultInstance();
   MsgMagicActionCreateObject::default_instance_->InitAsDefaultInstance();
   MsgMagicActionUpdateObject::default_instance_->InitAsDefaultInstance();
@@ -1189,7 +1088,6 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   MsgMagicActionCreateFireOrder::default_instance_->InitAsDefaultInstance();
   MsgPopulationMagicAction_action::default_instance_->InitAsDefaultInstance();
   MsgPopulationMagicAction::default_instance_->InitAsDefaultInstance();
-  MsgMagicActionMoveTo::default_instance_->InitAsDefaultInstance();
   MsgLogSupplyPushFlow::default_instance_->InitAsDefaultInstance();
   MsgLogSupplyChangeQuotas::default_instance_->InitAsDefaultInstance();
   MsgControlCheckPointSetFrequency::default_instance_->InitAsDefaultInstance();
@@ -1424,77 +1322,77 @@ void MsgControlDatetimeChange::Swap(MsgControlDatetimeChange* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgControlGlobalMeteo::kAttributesFieldNumber;
+const int MsgControlMeteo::kParametresFieldNumber;
 #endif  // !_MSC_VER
 
-MsgControlGlobalMeteo::MsgControlGlobalMeteo() {
+MsgControlMeteo::MsgControlMeteo() {
   SharedCtor();
 }
 
-void MsgControlGlobalMeteo::InitAsDefaultInstance() {
-  attributes_ = const_cast< ::Common::MsgMeteoAttributes*>(&::Common::MsgMeteoAttributes::default_instance());
+void MsgControlMeteo::InitAsDefaultInstance() {
+  parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
 }
 
-MsgControlGlobalMeteo::MsgControlGlobalMeteo(const MsgControlGlobalMeteo& from) {
+MsgControlMeteo::MsgControlMeteo(const MsgControlMeteo& from) {
   SharedCtor();
   MergeFrom(from);
 }
 
-void MsgControlGlobalMeteo::SharedCtor() {
+void MsgControlMeteo::SharedCtor() {
   _cached_size_ = 0;
-  attributes_ = NULL;
+  parametres_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-MsgControlGlobalMeteo::~MsgControlGlobalMeteo() {
+MsgControlMeteo::~MsgControlMeteo() {
   SharedDtor();
 }
 
-void MsgControlGlobalMeteo::SharedDtor() {
+void MsgControlMeteo::SharedDtor() {
   if (this != default_instance_) {
-    delete attributes_;
+    delete parametres_;
   }
 }
 
-const ::google::protobuf::Descriptor* MsgControlGlobalMeteo::descriptor() {
+const ::google::protobuf::Descriptor* MsgControlMeteo::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return MsgControlGlobalMeteo_descriptor_;
+  return MsgControlMeteo_descriptor_;
 }
 
-const MsgControlGlobalMeteo& MsgControlGlobalMeteo::default_instance() {
+const MsgControlMeteo& MsgControlMeteo::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
 }
 
-MsgControlGlobalMeteo* MsgControlGlobalMeteo::default_instance_ = NULL;
+MsgControlMeteo* MsgControlMeteo::default_instance_ = NULL;
 
-MsgControlGlobalMeteo* MsgControlGlobalMeteo::New() const {
-  return new MsgControlGlobalMeteo;
+MsgControlMeteo* MsgControlMeteo::New() const {
+  return new MsgControlMeteo;
 }
 
-void MsgControlGlobalMeteo::Clear() {
+void MsgControlMeteo::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (_has_bit(0)) {
-      if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
+      if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool MsgControlGlobalMeteo::MergePartialFromCodedStream(
+bool MsgControlMeteo::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Common.MsgMeteoAttributes attributes = 1;
+      // required .Common.MsgMissionParameters parametres = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_attributes()));
+             input, mutable_parametres()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1515,18 +1413,18 @@ bool MsgControlGlobalMeteo::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void MsgControlGlobalMeteo::SerializeWithCachedSizes(
+void MsgControlMeteo::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
   if (raw_buffer != NULL) {
-    MsgControlGlobalMeteo::SerializeWithCachedSizesToArray(raw_buffer);
+    MsgControlMeteo::SerializeWithCachedSizesToArray(raw_buffer);
     return;
   }
   
-  // required .Common.MsgMeteoAttributes attributes = 1;
+  // required .Common.MsgMissionParameters parametres = 1;
   if (_has_bit(0)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->attributes(), output);
+      1, this->parametres(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -1535,13 +1433,13 @@ void MsgControlGlobalMeteo::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* MsgControlGlobalMeteo::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MsgControlMeteo::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required .Common.MsgMeteoAttributes attributes = 1;
+  // required .Common.MsgMissionParameters parametres = 1;
   if (_has_bit(0)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        1, this->attributes(), target);
+        1, this->parametres(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -1551,15 +1449,15 @@ void MsgControlGlobalMeteo::SerializeWithCachedSizes(
   return target;
 }
 
-int MsgControlGlobalMeteo::ByteSize() const {
+int MsgControlMeteo::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Common.MsgMeteoAttributes attributes = 1;
-    if (has_attributes()) {
+    // required .Common.MsgMissionParameters parametres = 1;
+    if (has_parametres()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->attributes());
+          this->parametres());
     }
     
   }
@@ -1572,10 +1470,10 @@ int MsgControlGlobalMeteo::ByteSize() const {
   return total_size;
 }
 
-void MsgControlGlobalMeteo::MergeFrom(const ::google::protobuf::Message& from) {
+void MsgControlMeteo::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const MsgControlGlobalMeteo* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgControlGlobalMeteo*>(
+  const MsgControlMeteo* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgControlMeteo*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1584,451 +1482,51 @@ void MsgControlGlobalMeteo::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void MsgControlGlobalMeteo::MergeFrom(const MsgControlGlobalMeteo& from) {
+void MsgControlMeteo::MergeFrom(const MsgControlMeteo& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      mutable_attributes()->::Common::MsgMeteoAttributes::MergeFrom(from.attributes());
+      mutable_parametres()->::Common::MsgMissionParameters::MergeFrom(from.parametres());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void MsgControlGlobalMeteo::CopyFrom(const ::google::protobuf::Message& from) {
+void MsgControlMeteo::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MsgControlGlobalMeteo::CopyFrom(const MsgControlGlobalMeteo& from) {
+void MsgControlMeteo::CopyFrom(const MsgControlMeteo& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgControlGlobalMeteo::IsInitialized() const {
+bool MsgControlMeteo::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
   
-  if (has_attributes()) {
-    if (!this->attributes().IsInitialized()) return false;
+  if (has_parametres()) {
+    if (!this->parametres().IsInitialized()) return false;
   }
   return true;
 }
 
-void MsgControlGlobalMeteo::Swap(MsgControlGlobalMeteo* other) {
+void MsgControlMeteo::Swap(MsgControlMeteo* other) {
   if (other != this) {
-    std::swap(attributes_, other->attributes_);
+    std::swap(parametres_, other->parametres_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata MsgControlGlobalMeteo::GetMetadata() const {
+::google::protobuf::Metadata MsgControlMeteo::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgControlGlobalMeteo_descriptor_;
-  metadata.reflection = MsgControlGlobalMeteo_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgControlLocalMeteo::kStartTimeFieldNumber;
-const int MsgControlLocalMeteo::kEndTimeFieldNumber;
-const int MsgControlLocalMeteo::kTopLeftCoordinateFieldNumber;
-const int MsgControlLocalMeteo::kBottomRightCoordinateFieldNumber;
-const int MsgControlLocalMeteo::kAttributesFieldNumber;
-#endif  // !_MSC_VER
-
-MsgControlLocalMeteo::MsgControlLocalMeteo() {
-  SharedCtor();
-}
-
-void MsgControlLocalMeteo::InitAsDefaultInstance() {
-  start_time_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
-  end_time_ = const_cast< ::Common::MsgDateTime*>(&::Common::MsgDateTime::default_instance());
-  top_left_coordinate_ = const_cast< ::Common::MsgCoordLatLong*>(&::Common::MsgCoordLatLong::default_instance());
-  bottom_right_coordinate_ = const_cast< ::Common::MsgCoordLatLong*>(&::Common::MsgCoordLatLong::default_instance());
-  attributes_ = const_cast< ::Common::MsgMeteoAttributes*>(&::Common::MsgMeteoAttributes::default_instance());
-}
-
-MsgControlLocalMeteo::MsgControlLocalMeteo(const MsgControlLocalMeteo& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgControlLocalMeteo::SharedCtor() {
-  _cached_size_ = 0;
-  start_time_ = NULL;
-  end_time_ = NULL;
-  top_left_coordinate_ = NULL;
-  bottom_right_coordinate_ = NULL;
-  attributes_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgControlLocalMeteo::~MsgControlLocalMeteo() {
-  SharedDtor();
-}
-
-void MsgControlLocalMeteo::SharedDtor() {
-  if (this != default_instance_) {
-    delete start_time_;
-    delete end_time_;
-    delete top_left_coordinate_;
-    delete bottom_right_coordinate_;
-    delete attributes_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgControlLocalMeteo::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgControlLocalMeteo_descriptor_;
-}
-
-const MsgControlLocalMeteo& MsgControlLocalMeteo::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgControlLocalMeteo* MsgControlLocalMeteo::default_instance_ = NULL;
-
-MsgControlLocalMeteo* MsgControlLocalMeteo::New() const {
-  return new MsgControlLocalMeteo;
-}
-
-void MsgControlLocalMeteo::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (_has_bit(0)) {
-      if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
-    }
-    if (_has_bit(1)) {
-      if (end_time_ != NULL) end_time_->::Common::MsgDateTime::Clear();
-    }
-    if (_has_bit(2)) {
-      if (top_left_coordinate_ != NULL) top_left_coordinate_->::Common::MsgCoordLatLong::Clear();
-    }
-    if (_has_bit(3)) {
-      if (bottom_right_coordinate_ != NULL) bottom_right_coordinate_->::Common::MsgCoordLatLong::Clear();
-    }
-    if (_has_bit(4)) {
-      if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgControlLocalMeteo::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Common.MsgDateTime start_time = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_start_time()));
-        if (input->ExpectTag(18)) goto parse_end_time;
-        break;
-      }
-      
-      // required .Common.MsgDateTime end_time = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_end_time:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_end_time()));
-        if (input->ExpectTag(26)) goto parse_top_left_coordinate;
-        break;
-      }
-      
-      // required .Common.MsgCoordLatLong top_left_coordinate = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_top_left_coordinate:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_top_left_coordinate()));
-        if (input->ExpectTag(34)) goto parse_bottom_right_coordinate;
-        break;
-      }
-      
-      // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_bottom_right_coordinate:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_bottom_right_coordinate()));
-        if (input->ExpectTag(42)) goto parse_attributes;
-        break;
-      }
-      
-      // required .Common.MsgMeteoAttributes attributes = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_attributes:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_attributes()));
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgControlLocalMeteo::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgControlLocalMeteo::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required .Common.MsgDateTime start_time = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->start_time(), output);
-  }
-  
-  // required .Common.MsgDateTime end_time = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->end_time(), output);
-  }
-  
-  // required .Common.MsgCoordLatLong top_left_coordinate = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      3, this->top_left_coordinate(), output);
-  }
-  
-  // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
-  if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      4, this->bottom_right_coordinate(), output);
-  }
-  
-  // required .Common.MsgMeteoAttributes attributes = 5;
-  if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      5, this->attributes(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgControlLocalMeteo::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required .Common.MsgDateTime start_time = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->start_time(), target);
-  }
-  
-  // required .Common.MsgDateTime end_time = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->end_time(), target);
-  }
-  
-  // required .Common.MsgCoordLatLong top_left_coordinate = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        3, this->top_left_coordinate(), target);
-  }
-  
-  // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
-  if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        4, this->bottom_right_coordinate(), target);
-  }
-  
-  // required .Common.MsgMeteoAttributes attributes = 5;
-  if (_has_bit(4)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->attributes(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgControlLocalMeteo::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Common.MsgDateTime start_time = 1;
-    if (has_start_time()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->start_time());
-    }
-    
-    // required .Common.MsgDateTime end_time = 2;
-    if (has_end_time()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->end_time());
-    }
-    
-    // required .Common.MsgCoordLatLong top_left_coordinate = 3;
-    if (has_top_left_coordinate()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->top_left_coordinate());
-    }
-    
-    // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
-    if (has_bottom_right_coordinate()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->bottom_right_coordinate());
-    }
-    
-    // required .Common.MsgMeteoAttributes attributes = 5;
-    if (has_attributes()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->attributes());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgControlLocalMeteo::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgControlLocalMeteo* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgControlLocalMeteo*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgControlLocalMeteo::MergeFrom(const MsgControlLocalMeteo& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      mutable_start_time()->::Common::MsgDateTime::MergeFrom(from.start_time());
-    }
-    if (from._has_bit(1)) {
-      mutable_end_time()->::Common::MsgDateTime::MergeFrom(from.end_time());
-    }
-    if (from._has_bit(2)) {
-      mutable_top_left_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.top_left_coordinate());
-    }
-    if (from._has_bit(3)) {
-      mutable_bottom_right_coordinate()->::Common::MsgCoordLatLong::MergeFrom(from.bottom_right_coordinate());
-    }
-    if (from._has_bit(4)) {
-      mutable_attributes()->::Common::MsgMeteoAttributes::MergeFrom(from.attributes());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgControlLocalMeteo::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgControlLocalMeteo::CopyFrom(const MsgControlLocalMeteo& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgControlLocalMeteo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
-  
-  if (has_start_time()) {
-    if (!this->start_time().IsInitialized()) return false;
-  }
-  if (has_end_time()) {
-    if (!this->end_time().IsInitialized()) return false;
-  }
-  if (has_top_left_coordinate()) {
-    if (!this->top_left_coordinate().IsInitialized()) return false;
-  }
-  if (has_bottom_right_coordinate()) {
-    if (!this->bottom_right_coordinate().IsInitialized()) return false;
-  }
-  if (has_attributes()) {
-    if (!this->attributes().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgControlLocalMeteo::Swap(MsgControlLocalMeteo* other) {
-  if (other != this) {
-    std::swap(start_time_, other->start_time_);
-    std::swap(end_time_, other->end_time_);
-    std::swap(top_left_coordinate_, other->top_left_coordinate_);
-    std::swap(bottom_right_coordinate_, other->bottom_right_coordinate_);
-    std::swap(attributes_, other->attributes_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgControlLocalMeteo::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgControlLocalMeteo_descriptor_;
-  metadata.reflection = MsgControlLocalMeteo_reflection_;
+  metadata.descriptor = MsgControlMeteo_descriptor_;
+  metadata.reflection = MsgControlMeteo_reflection_;
   return metadata;
 }
 
@@ -6004,612 +5502,50 @@ void MsgMagicActionPartialRecovery::Swap(MsgMagicActionPartialRecovery* other) {
 
 // ===================================================================
 
+const ::google::protobuf::EnumDescriptor* MsgUnitMagicAction_Type_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgUnitMagicAction_Type_descriptor_;
+}
+bool MsgUnitMagicAction_Type_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 10:
+    case 11:
+      return true;
+    default:
+      return false;
+  }
+}
+
 #ifndef _MSC_VER
-const int MsgUnitMagicAction_action::kRecompletementPartielFieldNumber;
-const int MsgUnitMagicAction_action::kChangeFacteursHumainsFieldNumber;
-const int MsgUnitMagicAction_action::kSeRendreFieldNumber;
-const int MsgUnitMagicAction_action::kDestructionTotaleFieldNumber;
-const int MsgUnitMagicAction_action::kDestructionComposanteFieldNumber;
-const int MsgUnitMagicAction_action::kAnnulerRedditionFieldNumber;
-const int MsgUnitMagicAction_action::kRecupererTransporteursFieldNumber;
-const int MsgUnitMagicAction_action::kRecompletementTotalFieldNumber;
-const int MsgUnitMagicAction_action::kRecompletementPersonnelFieldNumber;
-const int MsgUnitMagicAction_action::kRecompletementEquipementFieldNumber;
-const int MsgUnitMagicAction_action::kRecompletementRessourcesFieldNumber;
-#endif  // !_MSC_VER
-
-MsgUnitMagicAction_action::MsgUnitMagicAction_action() {
-  SharedCtor();
-}
-
-void MsgUnitMagicAction_action::InitAsDefaultInstance() {
-  recompletement_partiel_ = const_cast< ::MsgsClientToSim::MsgMagicActionPartialRecovery*>(&::MsgsClientToSim::MsgMagicActionPartialRecovery::default_instance());
-  change_facteurs_humains_ = const_cast< ::Common::MsgMagicActionChangeHumanFactors*>(&::Common::MsgMagicActionChangeHumanFactors::default_instance());
-}
-
-MsgUnitMagicAction_action::MsgUnitMagicAction_action(const MsgUnitMagicAction_action& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgUnitMagicAction_action::SharedCtor() {
-  _cached_size_ = 0;
-  recompletement_partiel_ = NULL;
-  change_facteurs_humains_ = NULL;
-  se_rendre_ = 0;
-  destruction_totale_ = 0;
-  destruction_composante_ = 0;
-  annuler_reddition_ = 0;
-  recuperer_transporteurs_ = 0;
-  recompletement_total_ = 0;
-  recompletement_personnel_ = 0;
-  recompletement_equipement_ = 0;
-  recompletement_ressources_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgUnitMagicAction_action::~MsgUnitMagicAction_action() {
-  SharedDtor();
-}
-
-void MsgUnitMagicAction_action::SharedDtor() {
-  if (this != default_instance_) {
-    delete recompletement_partiel_;
-    delete change_facteurs_humains_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgUnitMagicAction_action::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgUnitMagicAction_action_descriptor_;
-}
-
-const MsgUnitMagicAction_action& MsgUnitMagicAction_action::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgUnitMagicAction_action* MsgUnitMagicAction_action::default_instance_ = NULL;
-
-MsgUnitMagicAction_action* MsgUnitMagicAction_action::New() const {
-  return new MsgUnitMagicAction_action;
-}
-
-void MsgUnitMagicAction_action::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (_has_bit(0)) {
-      if (recompletement_partiel_ != NULL) recompletement_partiel_->::MsgsClientToSim::MsgMagicActionPartialRecovery::Clear();
-    }
-    if (_has_bit(1)) {
-      if (change_facteurs_humains_ != NULL) change_facteurs_humains_->::Common::MsgMagicActionChangeHumanFactors::Clear();
-    }
-    se_rendre_ = 0;
-    destruction_totale_ = 0;
-    destruction_composante_ = 0;
-    annuler_reddition_ = 0;
-    recuperer_transporteurs_ = 0;
-    recompletement_total_ = 0;
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    recompletement_personnel_ = 0;
-    recompletement_equipement_ = 0;
-    recompletement_ressources_ = 0;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgUnitMagicAction_action::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_recompletement_partiel()));
-        if (input->ExpectTag(18)) goto parse_change_facteurs_humains;
-        break;
-      }
-      
-      // optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_change_facteurs_humains:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_change_facteurs_humains()));
-        if (input->ExpectTag(24)) goto parse_se_rendre;
-        break;
-      }
-      
-      // optional int32 se_rendre = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_se_rendre:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &se_rendre_));
-        _set_bit(2);
-        if (input->ExpectTag(32)) goto parse_destruction_totale;
-        break;
-      }
-      
-      // optional int32 destruction_totale = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_destruction_totale:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &destruction_totale_));
-        _set_bit(3);
-        if (input->ExpectTag(40)) goto parse_destruction_composante;
-        break;
-      }
-      
-      // optional int32 destruction_composante = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_destruction_composante:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &destruction_composante_));
-        _set_bit(4);
-        if (input->ExpectTag(48)) goto parse_annuler_reddition;
-        break;
-      }
-      
-      // optional int32 annuler_reddition = 6;
-      case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_annuler_reddition:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &annuler_reddition_));
-        _set_bit(5);
-        if (input->ExpectTag(56)) goto parse_recuperer_transporteurs;
-        break;
-      }
-      
-      // optional int32 recuperer_transporteurs = 7;
-      case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_recuperer_transporteurs:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &recuperer_transporteurs_));
-        _set_bit(6);
-        if (input->ExpectTag(64)) goto parse_recompletement_total;
-        break;
-      }
-      
-      // optional int32 recompletement_total = 8;
-      case 8: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_recompletement_total:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &recompletement_total_));
-        _set_bit(7);
-        if (input->ExpectTag(72)) goto parse_recompletement_personnel;
-        break;
-      }
-      
-      // optional int32 recompletement_personnel = 9;
-      case 9: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_recompletement_personnel:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &recompletement_personnel_));
-        _set_bit(8);
-        if (input->ExpectTag(80)) goto parse_recompletement_equipement;
-        break;
-      }
-      
-      // optional int32 recompletement_equipement = 10;
-      case 10: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_recompletement_equipement:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &recompletement_equipement_));
-        _set_bit(9);
-        if (input->ExpectTag(88)) goto parse_recompletement_ressources;
-        break;
-      }
-      
-      // optional int32 recompletement_ressources = 11;
-      case 11: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_recompletement_ressources:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &recompletement_ressources_));
-        _set_bit(10);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgUnitMagicAction_action::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgUnitMagicAction_action::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->recompletement_partiel(), output);
-  }
-  
-  // optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->change_facteurs_humains(), output);
-  }
-  
-  // optional int32 se_rendre = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->se_rendre(), output);
-  }
-  
-  // optional int32 destruction_totale = 4;
-  if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->destruction_totale(), output);
-  }
-  
-  // optional int32 destruction_composante = 5;
-  if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(5, this->destruction_composante(), output);
-  }
-  
-  // optional int32 annuler_reddition = 6;
-  if (_has_bit(5)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(6, this->annuler_reddition(), output);
-  }
-  
-  // optional int32 recuperer_transporteurs = 7;
-  if (_has_bit(6)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(7, this->recuperer_transporteurs(), output);
-  }
-  
-  // optional int32 recompletement_total = 8;
-  if (_has_bit(7)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->recompletement_total(), output);
-  }
-  
-  // optional int32 recompletement_personnel = 9;
-  if (_has_bit(8)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(9, this->recompletement_personnel(), output);
-  }
-  
-  // optional int32 recompletement_equipement = 10;
-  if (_has_bit(9)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(10, this->recompletement_equipement(), output);
-  }
-  
-  // optional int32 recompletement_ressources = 11;
-  if (_has_bit(10)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(11, this->recompletement_ressources(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgUnitMagicAction_action::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->recompletement_partiel(), target);
-  }
-  
-  // optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->change_facteurs_humains(), target);
-  }
-  
-  // optional int32 se_rendre = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->se_rendre(), target);
-  }
-  
-  // optional int32 destruction_totale = 4;
-  if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->destruction_totale(), target);
-  }
-  
-  // optional int32 destruction_composante = 5;
-  if (_has_bit(4)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(5, this->destruction_composante(), target);
-  }
-  
-  // optional int32 annuler_reddition = 6;
-  if (_has_bit(5)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(6, this->annuler_reddition(), target);
-  }
-  
-  // optional int32 recuperer_transporteurs = 7;
-  if (_has_bit(6)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(7, this->recuperer_transporteurs(), target);
-  }
-  
-  // optional int32 recompletement_total = 8;
-  if (_has_bit(7)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->recompletement_total(), target);
-  }
-  
-  // optional int32 recompletement_personnel = 9;
-  if (_has_bit(8)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(9, this->recompletement_personnel(), target);
-  }
-  
-  // optional int32 recompletement_equipement = 10;
-  if (_has_bit(9)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(10, this->recompletement_equipement(), target);
-  }
-  
-  // optional int32 recompletement_ressources = 11;
-  if (_has_bit(10)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(11, this->recompletement_ressources(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgUnitMagicAction_action::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 1;
-    if (has_recompletement_partiel()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->recompletement_partiel());
-    }
-    
-    // optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 2;
-    if (has_change_facteurs_humains()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->change_facteurs_humains());
-    }
-    
-    // optional int32 se_rendre = 3;
-    if (has_se_rendre()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->se_rendre());
-    }
-    
-    // optional int32 destruction_totale = 4;
-    if (has_destruction_totale()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->destruction_totale());
-    }
-    
-    // optional int32 destruction_composante = 5;
-    if (has_destruction_composante()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->destruction_composante());
-    }
-    
-    // optional int32 annuler_reddition = 6;
-    if (has_annuler_reddition()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->annuler_reddition());
-    }
-    
-    // optional int32 recuperer_transporteurs = 7;
-    if (has_recuperer_transporteurs()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->recuperer_transporteurs());
-    }
-    
-    // optional int32 recompletement_total = 8;
-    if (has_recompletement_total()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->recompletement_total());
-    }
-    
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional int32 recompletement_personnel = 9;
-    if (has_recompletement_personnel()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->recompletement_personnel());
-    }
-    
-    // optional int32 recompletement_equipement = 10;
-    if (has_recompletement_equipement()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->recompletement_equipement());
-    }
-    
-    // optional int32 recompletement_ressources = 11;
-    if (has_recompletement_ressources()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->recompletement_ressources());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgUnitMagicAction_action::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgUnitMagicAction_action* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgUnitMagicAction_action*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgUnitMagicAction_action::MergeFrom(const MsgUnitMagicAction_action& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      mutable_recompletement_partiel()->::MsgsClientToSim::MsgMagicActionPartialRecovery::MergeFrom(from.recompletement_partiel());
-    }
-    if (from._has_bit(1)) {
-      mutable_change_facteurs_humains()->::Common::MsgMagicActionChangeHumanFactors::MergeFrom(from.change_facteurs_humains());
-    }
-    if (from._has_bit(2)) {
-      set_se_rendre(from.se_rendre());
-    }
-    if (from._has_bit(3)) {
-      set_destruction_totale(from.destruction_totale());
-    }
-    if (from._has_bit(4)) {
-      set_destruction_composante(from.destruction_composante());
-    }
-    if (from._has_bit(5)) {
-      set_annuler_reddition(from.annuler_reddition());
-    }
-    if (from._has_bit(6)) {
-      set_recuperer_transporteurs(from.recuperer_transporteurs());
-    }
-    if (from._has_bit(7)) {
-      set_recompletement_total(from.recompletement_total());
-    }
-  }
-  if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    if (from._has_bit(8)) {
-      set_recompletement_personnel(from.recompletement_personnel());
-    }
-    if (from._has_bit(9)) {
-      set_recompletement_equipement(from.recompletement_equipement());
-    }
-    if (from._has_bit(10)) {
-      set_recompletement_ressources(from.recompletement_ressources());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgUnitMagicAction_action::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgUnitMagicAction_action::CopyFrom(const MsgUnitMagicAction_action& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgUnitMagicAction_action::IsInitialized() const {
-  
-  if (has_recompletement_partiel()) {
-    if (!this->recompletement_partiel().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgUnitMagicAction_action::Swap(MsgUnitMagicAction_action* other) {
-  if (other != this) {
-    std::swap(recompletement_partiel_, other->recompletement_partiel_);
-    std::swap(change_facteurs_humains_, other->change_facteurs_humains_);
-    std::swap(se_rendre_, other->se_rendre_);
-    std::swap(destruction_totale_, other->destruction_totale_);
-    std::swap(destruction_composante_, other->destruction_composante_);
-    std::swap(annuler_reddition_, other->annuler_reddition_);
-    std::swap(recuperer_transporteurs_, other->recuperer_transporteurs_);
-    std::swap(recompletement_total_, other->recompletement_total_);
-    std::swap(recompletement_personnel_, other->recompletement_personnel_);
-    std::swap(recompletement_equipement_, other->recompletement_equipement_);
-    std::swap(recompletement_ressources_, other->recompletement_ressources_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgUnitMagicAction_action::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgUnitMagicAction_action_descriptor_;
-  metadata.reflection = MsgUnitMagicAction_action_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
+const MsgUnitMagicAction_Type MsgUnitMagicAction::move_to;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::surrender_to;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::cancel_surrender;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::recover_transporters;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::destroy_component;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::recover_all;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::recover_troops;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::recover_equipments;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::recover_resources;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::destroy_all;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::change_human_factors;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::partial_recovery;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::Type_MIN;
+const MsgUnitMagicAction_Type MsgUnitMagicAction::Type_MAX;
+#endif  // _MSC_VER
 #ifndef _MSC_VER
 const int MsgUnitMagicAction::kOidFieldNumber;
-const int MsgUnitMagicAction::kActionFieldNumber;
+const int MsgUnitMagicAction::kTypeFieldNumber;
+const int MsgUnitMagicAction::kParametresFieldNumber;
 #endif  // !_MSC_VER
 
 MsgUnitMagicAction::MsgUnitMagicAction() {
@@ -6617,7 +5553,7 @@ MsgUnitMagicAction::MsgUnitMagicAction() {
 }
 
 void MsgUnitMagicAction::InitAsDefaultInstance() {
-  action_ = const_cast< ::MsgsClientToSim::MsgUnitMagicAction_action*>(&::MsgsClientToSim::MsgUnitMagicAction_action::default_instance());
+  parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
 }
 
 MsgUnitMagicAction::MsgUnitMagicAction(const MsgUnitMagicAction& from) {
@@ -6628,7 +5564,8 @@ MsgUnitMagicAction::MsgUnitMagicAction(const MsgUnitMagicAction& from) {
 void MsgUnitMagicAction::SharedCtor() {
   _cached_size_ = 0;
   oid_ = 0u;
-  action_ = NULL;
+  type_ = 0;
+  parametres_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -6638,7 +5575,7 @@ MsgUnitMagicAction::~MsgUnitMagicAction() {
 
 void MsgUnitMagicAction::SharedDtor() {
   if (this != default_instance_) {
-    delete action_;
+    delete parametres_;
   }
 }
 
@@ -6660,8 +5597,9 @@ MsgUnitMagicAction* MsgUnitMagicAction::New() const {
 void MsgUnitMagicAction::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     oid_ = 0u;
-    if (_has_bit(1)) {
-      if (action_ != NULL) action_->::MsgsClientToSim::MsgUnitMagicAction_action::Clear();
+    type_ = 0;
+    if (_has_bit(2)) {
+      if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -6683,19 +5621,37 @@ bool MsgUnitMagicAction::MergePartialFromCodedStream(
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &oid_));
         _set_bit(0);
-        if (input->ExpectTag(18)) goto parse_action;
+        if (input->ExpectTag(16)) goto parse_type;
         break;
       }
       
-      // required .MsgsClientToSim.MsgUnitMagicAction_action action = 2;
+      // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
       case 2: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_type:
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (::MsgsClientToSim::MsgUnitMagicAction_Type_IsValid(value)) {
+          set_type(static_cast< ::MsgsClientToSim::MsgUnitMagicAction_Type >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(2, value);
+        }
+        if (input->ExpectTag(26)) goto parse_parametres;
+        break;
+      }
+      
+      // required .Common.MsgMissionParameters parametres = 3;
+      case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_action:
+       parse_parametres:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_action()));
+             input, mutable_parametres()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -6729,10 +5685,16 @@ void MsgUnitMagicAction::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
   }
   
-  // required .MsgsClientToSim.MsgUnitMagicAction_action action = 2;
+  // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
   if (_has_bit(1)) {
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      2, this->type(), output);
+  }
+  
+  // required .Common.MsgMissionParameters parametres = 3;
+  if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->action(), output);
+      3, this->parametres(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -6748,11 +5710,17 @@ void MsgUnitMagicAction::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
   }
   
-  // required .MsgsClientToSim.MsgUnitMagicAction_action action = 2;
+  // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
   if (_has_bit(1)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      2, this->type(), target);
+  }
+  
+  // required .Common.MsgMissionParameters parametres = 3;
+  if (_has_bit(2)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        2, this->action(), target);
+        3, this->parametres(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -6773,11 +5741,17 @@ int MsgUnitMagicAction::ByteSize() const {
           this->oid());
     }
     
-    // required .MsgsClientToSim.MsgUnitMagicAction_action action = 2;
-    if (has_action()) {
+    // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
+    if (has_type()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
+    }
+    
+    // required .Common.MsgMissionParameters parametres = 3;
+    if (has_parametres()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->action());
+          this->parametres());
     }
     
   }
@@ -6809,7 +5783,10 @@ void MsgUnitMagicAction::MergeFrom(const MsgUnitMagicAction& from) {
       set_oid(from.oid());
     }
     if (from._has_bit(1)) {
-      mutable_action()->::MsgsClientToSim::MsgUnitMagicAction_action::MergeFrom(from.action());
+      set_type(from.type());
+    }
+    if (from._has_bit(2)) {
+      mutable_parametres()->::Common::MsgMissionParameters::MergeFrom(from.parametres());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -6828,10 +5805,10 @@ void MsgUnitMagicAction::CopyFrom(const MsgUnitMagicAction& from) {
 }
 
 bool MsgUnitMagicAction::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
+  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
   
-  if (has_action()) {
-    if (!this->action().IsInitialized()) return false;
+  if (has_parametres()) {
+    if (!this->parametres().IsInitialized()) return false;
   }
   return true;
 }
@@ -6839,7 +5816,8 @@ bool MsgUnitMagicAction::IsInitialized() const {
 void MsgUnitMagicAction::Swap(MsgUnitMagicAction* other) {
   if (other != this) {
     std::swap(oid_, other->oid_);
-    std::swap(action_, other->action_);
+    std::swap(type_, other->type_);
+    std::swap(parametres_, other->parametres_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
@@ -8935,256 +7913,6 @@ void MsgPopulationMagicAction::Swap(MsgPopulationMagicAction* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MsgMagicActionMoveTo::kOidFieldNumber;
-const int MsgMagicActionMoveTo::kParametresFieldNumber;
-#endif  // !_MSC_VER
-
-MsgMagicActionMoveTo::MsgMagicActionMoveTo() {
-  SharedCtor();
-}
-
-void MsgMagicActionMoveTo::InitAsDefaultInstance() {
-  parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
-}
-
-MsgMagicActionMoveTo::MsgMagicActionMoveTo(const MsgMagicActionMoveTo& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgMagicActionMoveTo::SharedCtor() {
-  _cached_size_ = 0;
-  oid_ = 0;
-  parametres_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgMagicActionMoveTo::~MsgMagicActionMoveTo() {
-  SharedDtor();
-}
-
-void MsgMagicActionMoveTo::SharedDtor() {
-  if (this != default_instance_) {
-    delete parametres_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgMagicActionMoveTo::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgMagicActionMoveTo_descriptor_;
-}
-
-const MsgMagicActionMoveTo& MsgMagicActionMoveTo::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgMagicActionMoveTo* MsgMagicActionMoveTo::default_instance_ = NULL;
-
-MsgMagicActionMoveTo* MsgMagicActionMoveTo::New() const {
-  return new MsgMagicActionMoveTo;
-}
-
-void MsgMagicActionMoveTo::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0;
-    if (_has_bit(1)) {
-      if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgMagicActionMoveTo::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 oid = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &oid_));
-        _set_bit(0);
-        if (input->ExpectTag(18)) goto parse_parametres;
-        break;
-      }
-      
-      // required .Common.MsgMissionParameters parametres = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_parametres:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_parametres()));
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgMagicActionMoveTo::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgMagicActionMoveTo::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required int32 oid = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->oid(), output);
-  }
-  
-  // required .Common.MsgMissionParameters parametres = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->parametres(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgMagicActionMoveTo::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required int32 oid = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->oid(), target);
-  }
-  
-  // required .Common.MsgMissionParameters parametres = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->parametres(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgMagicActionMoveTo::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 oid = 1;
-    if (has_oid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->oid());
-    }
-    
-    // required .Common.MsgMissionParameters parametres = 2;
-    if (has_parametres()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->parametres());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgMagicActionMoveTo::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgMagicActionMoveTo* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMagicActionMoveTo*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgMagicActionMoveTo::MergeFrom(const MsgMagicActionMoveTo& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_oid(from.oid());
-    }
-    if (from._has_bit(1)) {
-      mutable_parametres()->::Common::MsgMissionParameters::MergeFrom(from.parametres());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgMagicActionMoveTo::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgMagicActionMoveTo::CopyFrom(const MsgMagicActionMoveTo& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgMagicActionMoveTo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
-  
-  if (has_parametres()) {
-    if (!this->parametres().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgMagicActionMoveTo::Swap(MsgMagicActionMoveTo* other) {
-  if (other != this) {
-    std::swap(oid_, other->oid_);
-    std::swap(parametres_, other->parametres_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgMagicActionMoveTo::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgMagicActionMoveTo_descriptor_;
-  metadata.reflection = MsgMagicActionMoveTo_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
 const int MsgLogSupplyPushFlow::kOidDonneurFieldNumber;
 const int MsgLogSupplyPushFlow::kOidReceveurFieldNumber;
 const int MsgLogSupplyPushFlow::kStocksFieldNumber;
@@ -10840,8 +9568,7 @@ const int MsgClientToSim_Content::kControlPauseFieldNumber;
 const int MsgClientToSim_Content::kControlResumeFieldNumber;
 const int MsgClientToSim_Content::kControlChangeTimeFactorFieldNumber;
 const int MsgClientToSim_Content::kControlDateTimeChangeFieldNumber;
-const int MsgClientToSim_Content::kControlGlobalMeteoFieldNumber;
-const int MsgClientToSim_Content::kControlLocalMeteoFieldNumber;
+const int MsgClientToSim_Content::kControlMeteoFieldNumber;
 const int MsgClientToSim_Content::kControlCheckpointSaveNowFieldNumber;
 const int MsgClientToSim_Content::kControlCheckpointSetFrequencyFieldNumber;
 const int MsgClientToSim_Content::kControlToggleVisionConesFieldNumber;
@@ -10864,7 +9591,6 @@ const int MsgClientToSim_Content::kLogSupplyChangeQuotasFieldNumber;
 const int MsgClientToSim_Content::kKnowledgeGroupCreationRequestFieldNumber;
 const int MsgClientToSim_Content::kKnowledgeGroupUpdateRequestFieldNumber;
 const int MsgClientToSim_Content::kCreateFireOrderFieldNumber;
-const int MsgClientToSim_Content::kMagicActionMoveToFieldNumber;
 #endif  // !_MSC_VER
 
 MsgClientToSim_Content::MsgClientToSim_Content() {
@@ -10877,8 +9603,7 @@ void MsgClientToSim_Content::InitAsDefaultInstance() {
   control_resume_ = const_cast< ::Common::MsgControlResume*>(&::Common::MsgControlResume::default_instance());
   control_change_time_factor_ = const_cast< ::Common::MsgControlChangeTimeFactor*>(&::Common::MsgControlChangeTimeFactor::default_instance());
   control_date_time_change_ = const_cast< ::MsgsClientToSim::MsgControlDatetimeChange*>(&::MsgsClientToSim::MsgControlDatetimeChange::default_instance());
-  control_global_meteo_ = const_cast< ::MsgsClientToSim::MsgControlGlobalMeteo*>(&::MsgsClientToSim::MsgControlGlobalMeteo::default_instance());
-  control_local_meteo_ = const_cast< ::MsgsClientToSim::MsgControlLocalMeteo*>(&::MsgsClientToSim::MsgControlLocalMeteo::default_instance());
+  control_meteo_ = const_cast< ::MsgsClientToSim::MsgControlMeteo*>(&::MsgsClientToSim::MsgControlMeteo::default_instance());
   control_checkpoint_save_now_ = const_cast< ::MsgsClientToSim::MsgControlCheckPointSaveNow*>(&::MsgsClientToSim::MsgControlCheckPointSaveNow::default_instance());
   control_checkpoint_set_frequency_ = const_cast< ::MsgsClientToSim::MsgControlCheckPointSetFrequency*>(&::MsgsClientToSim::MsgControlCheckPointSetFrequency::default_instance());
   control_toggle_vision_cones_ = const_cast< ::MsgsClientToSim::MsgControlToggleVisionCones*>(&::MsgsClientToSim::MsgControlToggleVisionCones::default_instance());
@@ -10901,7 +9626,6 @@ void MsgClientToSim_Content::InitAsDefaultInstance() {
   knowledge_group_creation_request_ = const_cast< ::MsgsClientToSim::MsgKnowledgeGroupCreationRequest*>(&::MsgsClientToSim::MsgKnowledgeGroupCreationRequest::default_instance());
   knowledge_group_update_request_ = const_cast< ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest*>(&::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest::default_instance());
   create_fire_order_ = const_cast< ::MsgsClientToSim::MsgMagicActionCreateFireOrder*>(&::MsgsClientToSim::MsgMagicActionCreateFireOrder::default_instance());
-  magic_action_move_to_ = const_cast< ::MsgsClientToSim::MsgMagicActionMoveTo*>(&::MsgsClientToSim::MsgMagicActionMoveTo::default_instance());
 }
 
 MsgClientToSim_Content::MsgClientToSim_Content(const MsgClientToSim_Content& from) {
@@ -10916,8 +9640,7 @@ void MsgClientToSim_Content::SharedCtor() {
   control_resume_ = NULL;
   control_change_time_factor_ = NULL;
   control_date_time_change_ = NULL;
-  control_global_meteo_ = NULL;
-  control_local_meteo_ = NULL;
+  control_meteo_ = NULL;
   control_checkpoint_save_now_ = NULL;
   control_checkpoint_set_frequency_ = NULL;
   control_toggle_vision_cones_ = NULL;
@@ -10940,7 +9663,6 @@ void MsgClientToSim_Content::SharedCtor() {
   knowledge_group_creation_request_ = NULL;
   knowledge_group_update_request_ = NULL;
   create_fire_order_ = NULL;
-  magic_action_move_to_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -10955,8 +9677,7 @@ void MsgClientToSim_Content::SharedDtor() {
     delete control_resume_;
     delete control_change_time_factor_;
     delete control_date_time_change_;
-    delete control_global_meteo_;
-    delete control_local_meteo_;
+    delete control_meteo_;
     delete control_checkpoint_save_now_;
     delete control_checkpoint_set_frequency_;
     delete control_toggle_vision_cones_;
@@ -10979,7 +9700,6 @@ void MsgClientToSim_Content::SharedDtor() {
     delete knowledge_group_creation_request_;
     delete knowledge_group_update_request_;
     delete create_fire_order_;
-    delete magic_action_move_to_;
   }
 }
 
@@ -11016,85 +9736,79 @@ void MsgClientToSim_Content::Clear() {
       if (control_date_time_change_ != NULL) control_date_time_change_->::MsgsClientToSim::MsgControlDatetimeChange::Clear();
     }
     if (_has_bit(5)) {
-      if (control_global_meteo_ != NULL) control_global_meteo_->::MsgsClientToSim::MsgControlGlobalMeteo::Clear();
+      if (control_meteo_ != NULL) control_meteo_->::MsgsClientToSim::MsgControlMeteo::Clear();
     }
     if (_has_bit(6)) {
-      if (control_local_meteo_ != NULL) control_local_meteo_->::MsgsClientToSim::MsgControlLocalMeteo::Clear();
+      if (control_checkpoint_save_now_ != NULL) control_checkpoint_save_now_->::MsgsClientToSim::MsgControlCheckPointSaveNow::Clear();
     }
     if (_has_bit(7)) {
-      if (control_checkpoint_save_now_ != NULL) control_checkpoint_save_now_->::MsgsClientToSim::MsgControlCheckPointSaveNow::Clear();
+      if (control_checkpoint_set_frequency_ != NULL) control_checkpoint_set_frequency_->::MsgsClientToSim::MsgControlCheckPointSetFrequency::Clear();
     }
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (_has_bit(8)) {
-      if (control_checkpoint_set_frequency_ != NULL) control_checkpoint_set_frequency_->::MsgsClientToSim::MsgControlCheckPointSetFrequency::Clear();
-    }
-    if (_has_bit(9)) {
       if (control_toggle_vision_cones_ != NULL) control_toggle_vision_cones_->::MsgsClientToSim::MsgControlToggleVisionCones::Clear();
     }
-    if (_has_bit(10)) {
+    if (_has_bit(9)) {
       if (unit_order_ != NULL) unit_order_->::Common::MsgUnitOrder::Clear();
     }
-    if (_has_bit(11)) {
+    if (_has_bit(10)) {
       if (automat_order_ != NULL) automat_order_->::Common::MsgAutomatOrder::Clear();
     }
-    if (_has_bit(12)) {
+    if (_has_bit(11)) {
       if (population_order_ != NULL) population_order_->::Common::MsgPopulationOrder::Clear();
     }
-    if (_has_bit(13)) {
+    if (_has_bit(12)) {
       if (frag_order_ != NULL) frag_order_->::MsgsClientToSim::MsgFragOrder::Clear();
     }
-    if (_has_bit(14)) {
+    if (_has_bit(13)) {
       if (set_automat_mode_ != NULL) set_automat_mode_->::MsgsClientToSim::MsgSetAutomatMode::Clear();
     }
-    if (_has_bit(15)) {
+    if (_has_bit(14)) {
       if (unit_creation_request_ != NULL) unit_creation_request_->::MsgsClientToSim::MsgUnitCreationRequest::Clear();
+    }
+    if (_has_bit(15)) {
+      if (unit_magic_action_ != NULL) unit_magic_action_->::MsgsClientToSim::MsgUnitMagicAction::Clear();
     }
   }
   if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (_has_bit(16)) {
-      if (unit_magic_action_ != NULL) unit_magic_action_->::MsgsClientToSim::MsgUnitMagicAction::Clear();
-    }
-    if (_has_bit(17)) {
       if (object_magic_action_ != NULL) object_magic_action_->::MsgsClientToSim::MsgObjectMagicAction::Clear();
     }
-    if (_has_bit(18)) {
+    if (_has_bit(17)) {
       if (population_magic_action_ != NULL) population_magic_action_->::MsgsClientToSim::MsgPopulationMagicAction::Clear();
     }
-    if (_has_bit(19)) {
+    if (_has_bit(18)) {
       if (change_diplomacy_ != NULL) change_diplomacy_->::Common::MsgChangeDiplomacy::Clear();
     }
-    if (_has_bit(20)) {
+    if (_has_bit(19)) {
       if (automat_change_knowledge_group_ != NULL) automat_change_knowledge_group_->::Common::MsgAutomatChangeKnowledgeGroup::Clear();
     }
-    if (_has_bit(21)) {
+    if (_has_bit(20)) {
       if (automat_change_logistic_links_ != NULL) automat_change_logistic_links_->::Common::MsgAutomatChangeLogisticLinks::Clear();
     }
-    if (_has_bit(22)) {
+    if (_has_bit(21)) {
       if (automat_change_superior_ != NULL) automat_change_superior_->::Common::MsgAutomatChangeSuperior::Clear();
     }
-    if (_has_bit(23)) {
+    if (_has_bit(22)) {
       if (unit_change_superior_ != NULL) unit_change_superior_->::Common::MsgUnitChangeSuperior::Clear();
+    }
+    if (_has_bit(23)) {
+      if (log_supply_push_flow_ != NULL) log_supply_push_flow_->::MsgsClientToSim::MsgLogSupplyPushFlow::Clear();
     }
   }
   if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     if (_has_bit(24)) {
-      if (log_supply_push_flow_ != NULL) log_supply_push_flow_->::MsgsClientToSim::MsgLogSupplyPushFlow::Clear();
-    }
-    if (_has_bit(25)) {
       if (log_supply_change_quotas_ != NULL) log_supply_change_quotas_->::MsgsClientToSim::MsgLogSupplyChangeQuotas::Clear();
     }
-    if (_has_bit(26)) {
+    if (_has_bit(25)) {
       if (knowledge_group_creation_request_ != NULL) knowledge_group_creation_request_->::MsgsClientToSim::MsgKnowledgeGroupCreationRequest::Clear();
     }
-    if (_has_bit(27)) {
+    if (_has_bit(26)) {
       if (knowledge_group_update_request_ != NULL) knowledge_group_update_request_->::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest::Clear();
     }
-    if (_has_bit(28)) {
+    if (_has_bit(27)) {
       if (create_fire_order_ != NULL) create_fire_order_->::MsgsClientToSim::MsgMagicActionCreateFireOrder::Clear();
-    }
-    if (_has_bit(29)) {
-      if (magic_action_move_to_ != NULL) magic_action_move_to_->::MsgsClientToSim::MsgMagicActionMoveTo::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -11167,38 +9881,25 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_date_time_change:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_date_time_change()));
-        if (input->ExpectTag(50)) goto parse_control_global_meteo;
+        if (input->ExpectTag(50)) goto parse_control_meteo;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgControlGlobalMeteo control_global_meteo = 6;
+      // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
       case 6: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_control_global_meteo:
+       parse_control_meteo:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_control_global_meteo()));
-        if (input->ExpectTag(58)) goto parse_control_local_meteo;
+             input, mutable_control_meteo()));
+        if (input->ExpectTag(58)) goto parse_control_checkpoint_save_now;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgControlLocalMeteo control_local_meteo = 7;
+      // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
       case 7: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_control_local_meteo:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_control_local_meteo()));
-        if (input->ExpectTag(66)) goto parse_control_checkpoint_save_now;
-        break;
-      }
-      
-      // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 8;
-      case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11206,12 +9907,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_checkpoint_save_now:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_checkpoint_save_now()));
-        if (input->ExpectTag(74)) goto parse_control_checkpoint_set_frequency;
+        if (input->ExpectTag(66)) goto parse_control_checkpoint_set_frequency;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 9;
-      case 9: {
+      // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
+      case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11219,12 +9920,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_checkpoint_set_frequency:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_checkpoint_set_frequency()));
-        if (input->ExpectTag(82)) goto parse_control_toggle_vision_cones;
+        if (input->ExpectTag(74)) goto parse_control_toggle_vision_cones;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 10;
-      case 10: {
+      // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
+      case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11232,12 +9933,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_toggle_vision_cones:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_toggle_vision_cones()));
-        if (input->ExpectTag(90)) goto parse_unit_order;
+        if (input->ExpectTag(82)) goto parse_unit_order;
         break;
       }
       
-      // optional .Common.MsgUnitOrder unit_order = 11;
-      case 11: {
+      // optional .Common.MsgUnitOrder unit_order = 10;
+      case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11245,12 +9946,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_unit_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_unit_order()));
-        if (input->ExpectTag(98)) goto parse_automat_order;
+        if (input->ExpectTag(90)) goto parse_automat_order;
         break;
       }
       
-      // optional .Common.MsgAutomatOrder automat_order = 12;
-      case 12: {
+      // optional .Common.MsgAutomatOrder automat_order = 11;
+      case 11: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11258,12 +9959,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_automat_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_automat_order()));
-        if (input->ExpectTag(106)) goto parse_population_order;
+        if (input->ExpectTag(98)) goto parse_population_order;
         break;
       }
       
-      // optional .Common.MsgPopulationOrder population_order = 13;
-      case 13: {
+      // optional .Common.MsgPopulationOrder population_order = 12;
+      case 12: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11271,12 +9972,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_population_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_population_order()));
-        if (input->ExpectTag(114)) goto parse_frag_order;
+        if (input->ExpectTag(106)) goto parse_frag_order;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgFragOrder frag_order = 14;
-      case 14: {
+      // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
+      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11284,12 +9985,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_frag_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_frag_order()));
-        if (input->ExpectTag(122)) goto parse_set_automat_mode;
+        if (input->ExpectTag(114)) goto parse_set_automat_mode;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 15;
-      case 15: {
+      // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
+      case 14: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11297,12 +9998,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_set_automat_mode:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_set_automat_mode()));
-        if (input->ExpectTag(130)) goto parse_unit_creation_request;
+        if (input->ExpectTag(122)) goto parse_unit_creation_request;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 16;
-      case 16: {
+      // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
+      case 15: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -11479,19 +10180,6 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_create_fire_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_create_fire_order()));
-        if (input->ExpectTag(242)) goto parse_magic_action_move_to;
-        break;
-      }
-      
-      // optional .MsgsClientToSim.MsgMagicActionMoveTo magic_action_move_to = 30;
-      case 30: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_magic_action_move_to:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_magic_action_move_to()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -11550,154 +10238,142 @@ void MsgClientToSim_Content::SerializeWithCachedSizes(
       5, this->control_date_time_change(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlGlobalMeteo control_global_meteo = 6;
+  // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
   if (_has_bit(5)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      6, this->control_global_meteo(), output);
+      6, this->control_meteo(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlLocalMeteo control_local_meteo = 7;
+  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
   if (_has_bit(6)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      7, this->control_local_meteo(), output);
+      7, this->control_checkpoint_save_now(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 8;
+  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
   if (_has_bit(7)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      8, this->control_checkpoint_save_now(), output);
+      8, this->control_checkpoint_set_frequency(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 9;
+  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
   if (_has_bit(8)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      9, this->control_checkpoint_set_frequency(), output);
+      9, this->control_toggle_vision_cones(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 10;
+  // optional .Common.MsgUnitOrder unit_order = 10;
   if (_has_bit(9)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      10, this->control_toggle_vision_cones(), output);
+      10, this->unit_order(), output);
   }
   
-  // optional .Common.MsgUnitOrder unit_order = 11;
+  // optional .Common.MsgAutomatOrder automat_order = 11;
   if (_has_bit(10)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      11, this->unit_order(), output);
+      11, this->automat_order(), output);
   }
   
-  // optional .Common.MsgAutomatOrder automat_order = 12;
+  // optional .Common.MsgPopulationOrder population_order = 12;
   if (_has_bit(11)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      12, this->automat_order(), output);
+      12, this->population_order(), output);
   }
   
-  // optional .Common.MsgPopulationOrder population_order = 13;
+  // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
   if (_has_bit(12)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      13, this->population_order(), output);
+      13, this->frag_order(), output);
   }
   
-  // optional .MsgsClientToSim.MsgFragOrder frag_order = 14;
+  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
   if (_has_bit(13)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      14, this->frag_order(), output);
+      14, this->set_automat_mode(), output);
   }
   
-  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 15;
+  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
   if (_has_bit(14)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      15, this->set_automat_mode(), output);
-  }
-  
-  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 16;
-  if (_has_bit(15)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      16, this->unit_creation_request(), output);
+      15, this->unit_creation_request(), output);
   }
   
   // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 17;
-  if (_has_bit(16)) {
+  if (_has_bit(15)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       17, this->unit_magic_action(), output);
   }
   
   // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 18;
-  if (_has_bit(17)) {
+  if (_has_bit(16)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       18, this->object_magic_action(), output);
   }
   
   // optional .MsgsClientToSim.MsgPopulationMagicAction population_magic_action = 19;
-  if (_has_bit(18)) {
+  if (_has_bit(17)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       19, this->population_magic_action(), output);
   }
   
   // optional .Common.MsgChangeDiplomacy change_diplomacy = 20;
-  if (_has_bit(19)) {
+  if (_has_bit(18)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       20, this->change_diplomacy(), output);
   }
   
   // optional .Common.MsgAutomatChangeKnowledgeGroup automat_change_knowledge_group = 21;
-  if (_has_bit(20)) {
+  if (_has_bit(19)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       21, this->automat_change_knowledge_group(), output);
   }
   
   // optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 22;
-  if (_has_bit(21)) {
+  if (_has_bit(20)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       22, this->automat_change_logistic_links(), output);
   }
   
   // optional .Common.MsgAutomatChangeSuperior automat_change_superior = 23;
-  if (_has_bit(22)) {
+  if (_has_bit(21)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       23, this->automat_change_superior(), output);
   }
   
   // optional .Common.MsgUnitChangeSuperior unit_change_superior = 24;
-  if (_has_bit(23)) {
+  if (_has_bit(22)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       24, this->unit_change_superior(), output);
   }
   
   // optional .MsgsClientToSim.MsgLogSupplyPushFlow log_supply_push_flow = 25;
-  if (_has_bit(24)) {
+  if (_has_bit(23)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       25, this->log_supply_push_flow(), output);
   }
   
   // optional .MsgsClientToSim.MsgLogSupplyChangeQuotas log_supply_change_quotas = 26;
-  if (_has_bit(25)) {
+  if (_has_bit(24)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       26, this->log_supply_change_quotas(), output);
   }
   
   // optional .MsgsClientToSim.MsgKnowledgeGroupCreationRequest knowledge_group_creation_request = 27;
-  if (_has_bit(26)) {
+  if (_has_bit(25)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       27, this->knowledge_group_creation_request(), output);
   }
   
   // optional .MsgsClientToSim.MsgKnowledgeGroupUpdateRequest knowledge_group_update_request = 28;
-  if (_has_bit(27)) {
+  if (_has_bit(26)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       28, this->knowledge_group_update_request(), output);
   }
   
   // optional .MsgsClientToSim.MsgMagicActionCreateFireOrder create_fire_order = 29;
-  if (_has_bit(28)) {
+  if (_has_bit(27)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
       29, this->create_fire_order(), output);
-  }
-  
-  // optional .MsgsClientToSim.MsgMagicActionMoveTo magic_action_move_to = 30;
-  if (_has_bit(29)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      30, this->magic_action_move_to(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -11743,179 +10419,165 @@ void MsgClientToSim_Content::SerializeWithCachedSizes(
         5, this->control_date_time_change(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlGlobalMeteo control_global_meteo = 6;
+  // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
   if (_has_bit(5)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        6, this->control_global_meteo(), target);
+        6, this->control_meteo(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlLocalMeteo control_local_meteo = 7;
+  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
   if (_has_bit(6)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        7, this->control_local_meteo(), target);
+        7, this->control_checkpoint_save_now(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 8;
+  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
   if (_has_bit(7)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        8, this->control_checkpoint_save_now(), target);
+        8, this->control_checkpoint_set_frequency(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 9;
+  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
   if (_has_bit(8)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        9, this->control_checkpoint_set_frequency(), target);
+        9, this->control_toggle_vision_cones(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 10;
+  // optional .Common.MsgUnitOrder unit_order = 10;
   if (_has_bit(9)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        10, this->control_toggle_vision_cones(), target);
+        10, this->unit_order(), target);
   }
   
-  // optional .Common.MsgUnitOrder unit_order = 11;
+  // optional .Common.MsgAutomatOrder automat_order = 11;
   if (_has_bit(10)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        11, this->unit_order(), target);
+        11, this->automat_order(), target);
   }
   
-  // optional .Common.MsgAutomatOrder automat_order = 12;
+  // optional .Common.MsgPopulationOrder population_order = 12;
   if (_has_bit(11)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        12, this->automat_order(), target);
+        12, this->population_order(), target);
   }
   
-  // optional .Common.MsgPopulationOrder population_order = 13;
+  // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
   if (_has_bit(12)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        13, this->population_order(), target);
+        13, this->frag_order(), target);
   }
   
-  // optional .MsgsClientToSim.MsgFragOrder frag_order = 14;
+  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
   if (_has_bit(13)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        14, this->frag_order(), target);
+        14, this->set_automat_mode(), target);
   }
   
-  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 15;
+  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
   if (_has_bit(14)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        15, this->set_automat_mode(), target);
-  }
-  
-  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 16;
-  if (_has_bit(15)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        16, this->unit_creation_request(), target);
+        15, this->unit_creation_request(), target);
   }
   
   // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 17;
-  if (_has_bit(16)) {
+  if (_has_bit(15)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         17, this->unit_magic_action(), target);
   }
   
   // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 18;
-  if (_has_bit(17)) {
+  if (_has_bit(16)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         18, this->object_magic_action(), target);
   }
   
   // optional .MsgsClientToSim.MsgPopulationMagicAction population_magic_action = 19;
-  if (_has_bit(18)) {
+  if (_has_bit(17)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         19, this->population_magic_action(), target);
   }
   
   // optional .Common.MsgChangeDiplomacy change_diplomacy = 20;
-  if (_has_bit(19)) {
+  if (_has_bit(18)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         20, this->change_diplomacy(), target);
   }
   
   // optional .Common.MsgAutomatChangeKnowledgeGroup automat_change_knowledge_group = 21;
-  if (_has_bit(20)) {
+  if (_has_bit(19)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         21, this->automat_change_knowledge_group(), target);
   }
   
   // optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 22;
-  if (_has_bit(21)) {
+  if (_has_bit(20)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         22, this->automat_change_logistic_links(), target);
   }
   
   // optional .Common.MsgAutomatChangeSuperior automat_change_superior = 23;
-  if (_has_bit(22)) {
+  if (_has_bit(21)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         23, this->automat_change_superior(), target);
   }
   
   // optional .Common.MsgUnitChangeSuperior unit_change_superior = 24;
-  if (_has_bit(23)) {
+  if (_has_bit(22)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         24, this->unit_change_superior(), target);
   }
   
   // optional .MsgsClientToSim.MsgLogSupplyPushFlow log_supply_push_flow = 25;
-  if (_has_bit(24)) {
+  if (_has_bit(23)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         25, this->log_supply_push_flow(), target);
   }
   
   // optional .MsgsClientToSim.MsgLogSupplyChangeQuotas log_supply_change_quotas = 26;
-  if (_has_bit(25)) {
+  if (_has_bit(24)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         26, this->log_supply_change_quotas(), target);
   }
   
   // optional .MsgsClientToSim.MsgKnowledgeGroupCreationRequest knowledge_group_creation_request = 27;
-  if (_has_bit(26)) {
+  if (_has_bit(25)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         27, this->knowledge_group_creation_request(), target);
   }
   
   // optional .MsgsClientToSim.MsgKnowledgeGroupUpdateRequest knowledge_group_update_request = 28;
-  if (_has_bit(27)) {
+  if (_has_bit(26)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         28, this->knowledge_group_update_request(), target);
   }
   
   // optional .MsgsClientToSim.MsgMagicActionCreateFireOrder create_fire_order = 29;
-  if (_has_bit(28)) {
+  if (_has_bit(27)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
         29, this->create_fire_order(), target);
-  }
-  
-  // optional .MsgsClientToSim.MsgMagicActionMoveTo magic_action_move_to = 30;
-  if (_has_bit(29)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        30, this->magic_action_move_to(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -11964,87 +10626,78 @@ int MsgClientToSim_Content::ByteSize() const {
           this->control_date_time_change());
     }
     
-    // optional .MsgsClientToSim.MsgControlGlobalMeteo control_global_meteo = 6;
-    if (has_control_global_meteo()) {
+    // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
+    if (has_control_meteo()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->control_global_meteo());
+          this->control_meteo());
     }
     
-    // optional .MsgsClientToSim.MsgControlLocalMeteo control_local_meteo = 7;
-    if (has_control_local_meteo()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->control_local_meteo());
-    }
-    
-    // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 8;
+    // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
     if (has_control_checkpoint_save_now()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->control_checkpoint_save_now());
     }
     
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 9;
+    // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
     if (has_control_checkpoint_set_frequency()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->control_checkpoint_set_frequency());
     }
     
-    // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 10;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
     if (has_control_toggle_vision_cones()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->control_toggle_vision_cones());
     }
     
-    // optional .Common.MsgUnitOrder unit_order = 11;
+    // optional .Common.MsgUnitOrder unit_order = 10;
     if (has_unit_order()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->unit_order());
     }
     
-    // optional .Common.MsgAutomatOrder automat_order = 12;
+    // optional .Common.MsgAutomatOrder automat_order = 11;
     if (has_automat_order()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->automat_order());
     }
     
-    // optional .Common.MsgPopulationOrder population_order = 13;
+    // optional .Common.MsgPopulationOrder population_order = 12;
     if (has_population_order()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->population_order());
     }
     
-    // optional .MsgsClientToSim.MsgFragOrder frag_order = 14;
+    // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
     if (has_frag_order()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->frag_order());
     }
     
-    // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 15;
+    // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
     if (has_set_automat_mode()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->set_automat_mode());
     }
     
-    // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 16;
+    // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
     if (has_unit_creation_request()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->unit_creation_request());
     }
     
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 17;
     if (has_unit_magic_action()) {
       total_size += 2 +
@@ -12052,6 +10705,8 @@ int MsgClientToSim_Content::ByteSize() const {
           this->unit_magic_action());
     }
     
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 18;
     if (has_object_magic_action()) {
       total_size += 2 +
@@ -12101,8 +10756,6 @@ int MsgClientToSim_Content::ByteSize() const {
           this->unit_change_superior());
     }
     
-  }
-  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     // optional .MsgsClientToSim.MsgLogSupplyPushFlow log_supply_push_flow = 25;
     if (has_log_supply_push_flow()) {
       total_size += 2 +
@@ -12110,6 +10763,8 @@ int MsgClientToSim_Content::ByteSize() const {
           this->log_supply_push_flow());
     }
     
+  }
+  if (_has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     // optional .MsgsClientToSim.MsgLogSupplyChangeQuotas log_supply_change_quotas = 26;
     if (has_log_supply_change_quotas()) {
       total_size += 2 +
@@ -12136,13 +10791,6 @@ int MsgClientToSim_Content::ByteSize() const {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->create_fire_order());
-    }
-    
-    // optional .MsgsClientToSim.MsgMagicActionMoveTo magic_action_move_to = 30;
-    if (has_magic_action_move_to()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->magic_action_move_to());
     }
     
   }
@@ -12186,85 +10834,79 @@ void MsgClientToSim_Content::MergeFrom(const MsgClientToSim_Content& from) {
       mutable_control_date_time_change()->::MsgsClientToSim::MsgControlDatetimeChange::MergeFrom(from.control_date_time_change());
     }
     if (from._has_bit(5)) {
-      mutable_control_global_meteo()->::MsgsClientToSim::MsgControlGlobalMeteo::MergeFrom(from.control_global_meteo());
+      mutable_control_meteo()->::MsgsClientToSim::MsgControlMeteo::MergeFrom(from.control_meteo());
     }
     if (from._has_bit(6)) {
-      mutable_control_local_meteo()->::MsgsClientToSim::MsgControlLocalMeteo::MergeFrom(from.control_local_meteo());
+      mutable_control_checkpoint_save_now()->::MsgsClientToSim::MsgControlCheckPointSaveNow::MergeFrom(from.control_checkpoint_save_now());
     }
     if (from._has_bit(7)) {
-      mutable_control_checkpoint_save_now()->::MsgsClientToSim::MsgControlCheckPointSaveNow::MergeFrom(from.control_checkpoint_save_now());
+      mutable_control_checkpoint_set_frequency()->::MsgsClientToSim::MsgControlCheckPointSetFrequency::MergeFrom(from.control_checkpoint_set_frequency());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from._has_bit(8)) {
-      mutable_control_checkpoint_set_frequency()->::MsgsClientToSim::MsgControlCheckPointSetFrequency::MergeFrom(from.control_checkpoint_set_frequency());
-    }
-    if (from._has_bit(9)) {
       mutable_control_toggle_vision_cones()->::MsgsClientToSim::MsgControlToggleVisionCones::MergeFrom(from.control_toggle_vision_cones());
     }
-    if (from._has_bit(10)) {
+    if (from._has_bit(9)) {
       mutable_unit_order()->::Common::MsgUnitOrder::MergeFrom(from.unit_order());
     }
-    if (from._has_bit(11)) {
+    if (from._has_bit(10)) {
       mutable_automat_order()->::Common::MsgAutomatOrder::MergeFrom(from.automat_order());
     }
-    if (from._has_bit(12)) {
+    if (from._has_bit(11)) {
       mutable_population_order()->::Common::MsgPopulationOrder::MergeFrom(from.population_order());
     }
-    if (from._has_bit(13)) {
+    if (from._has_bit(12)) {
       mutable_frag_order()->::MsgsClientToSim::MsgFragOrder::MergeFrom(from.frag_order());
     }
-    if (from._has_bit(14)) {
+    if (from._has_bit(13)) {
       mutable_set_automat_mode()->::MsgsClientToSim::MsgSetAutomatMode::MergeFrom(from.set_automat_mode());
     }
-    if (from._has_bit(15)) {
+    if (from._has_bit(14)) {
       mutable_unit_creation_request()->::MsgsClientToSim::MsgUnitCreationRequest::MergeFrom(from.unit_creation_request());
+    }
+    if (from._has_bit(15)) {
+      mutable_unit_magic_action()->::MsgsClientToSim::MsgUnitMagicAction::MergeFrom(from.unit_magic_action());
     }
   }
   if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from._has_bit(16)) {
-      mutable_unit_magic_action()->::MsgsClientToSim::MsgUnitMagicAction::MergeFrom(from.unit_magic_action());
-    }
-    if (from._has_bit(17)) {
       mutable_object_magic_action()->::MsgsClientToSim::MsgObjectMagicAction::MergeFrom(from.object_magic_action());
     }
-    if (from._has_bit(18)) {
+    if (from._has_bit(17)) {
       mutable_population_magic_action()->::MsgsClientToSim::MsgPopulationMagicAction::MergeFrom(from.population_magic_action());
     }
-    if (from._has_bit(19)) {
+    if (from._has_bit(18)) {
       mutable_change_diplomacy()->::Common::MsgChangeDiplomacy::MergeFrom(from.change_diplomacy());
     }
-    if (from._has_bit(20)) {
+    if (from._has_bit(19)) {
       mutable_automat_change_knowledge_group()->::Common::MsgAutomatChangeKnowledgeGroup::MergeFrom(from.automat_change_knowledge_group());
     }
-    if (from._has_bit(21)) {
+    if (from._has_bit(20)) {
       mutable_automat_change_logistic_links()->::Common::MsgAutomatChangeLogisticLinks::MergeFrom(from.automat_change_logistic_links());
     }
-    if (from._has_bit(22)) {
+    if (from._has_bit(21)) {
       mutable_automat_change_superior()->::Common::MsgAutomatChangeSuperior::MergeFrom(from.automat_change_superior());
     }
-    if (from._has_bit(23)) {
+    if (from._has_bit(22)) {
       mutable_unit_change_superior()->::Common::MsgUnitChangeSuperior::MergeFrom(from.unit_change_superior());
+    }
+    if (from._has_bit(23)) {
+      mutable_log_supply_push_flow()->::MsgsClientToSim::MsgLogSupplyPushFlow::MergeFrom(from.log_supply_push_flow());
     }
   }
   if (from._has_bits_[24 / 32] & (0xffu << (24 % 32))) {
     if (from._has_bit(24)) {
-      mutable_log_supply_push_flow()->::MsgsClientToSim::MsgLogSupplyPushFlow::MergeFrom(from.log_supply_push_flow());
-    }
-    if (from._has_bit(25)) {
       mutable_log_supply_change_quotas()->::MsgsClientToSim::MsgLogSupplyChangeQuotas::MergeFrom(from.log_supply_change_quotas());
     }
-    if (from._has_bit(26)) {
+    if (from._has_bit(25)) {
       mutable_knowledge_group_creation_request()->::MsgsClientToSim::MsgKnowledgeGroupCreationRequest::MergeFrom(from.knowledge_group_creation_request());
     }
-    if (from._has_bit(27)) {
+    if (from._has_bit(26)) {
       mutable_knowledge_group_update_request()->::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest::MergeFrom(from.knowledge_group_update_request());
     }
-    if (from._has_bit(28)) {
+    if (from._has_bit(27)) {
       mutable_create_fire_order()->::MsgsClientToSim::MsgMagicActionCreateFireOrder::MergeFrom(from.create_fire_order());
-    }
-    if (from._has_bit(29)) {
-      mutable_magic_action_move_to()->::MsgsClientToSim::MsgMagicActionMoveTo::MergeFrom(from.magic_action_move_to());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -12290,11 +10932,8 @@ bool MsgClientToSim_Content::IsInitialized() const {
   if (has_control_date_time_change()) {
     if (!this->control_date_time_change().IsInitialized()) return false;
   }
-  if (has_control_global_meteo()) {
-    if (!this->control_global_meteo().IsInitialized()) return false;
-  }
-  if (has_control_local_meteo()) {
-    if (!this->control_local_meteo().IsInitialized()) return false;
+  if (has_control_meteo()) {
+    if (!this->control_meteo().IsInitialized()) return false;
   }
   if (has_control_checkpoint_set_frequency()) {
     if (!this->control_checkpoint_set_frequency().IsInitialized()) return false;
@@ -12359,9 +10998,6 @@ bool MsgClientToSim_Content::IsInitialized() const {
   if (has_create_fire_order()) {
     if (!this->create_fire_order().IsInitialized()) return false;
   }
-  if (has_magic_action_move_to()) {
-    if (!this->magic_action_move_to().IsInitialized()) return false;
-  }
   return true;
 }
 
@@ -12372,8 +11008,7 @@ void MsgClientToSim_Content::Swap(MsgClientToSim_Content* other) {
     std::swap(control_resume_, other->control_resume_);
     std::swap(control_change_time_factor_, other->control_change_time_factor_);
     std::swap(control_date_time_change_, other->control_date_time_change_);
-    std::swap(control_global_meteo_, other->control_global_meteo_);
-    std::swap(control_local_meteo_, other->control_local_meteo_);
+    std::swap(control_meteo_, other->control_meteo_);
     std::swap(control_checkpoint_save_now_, other->control_checkpoint_save_now_);
     std::swap(control_checkpoint_set_frequency_, other->control_checkpoint_set_frequency_);
     std::swap(control_toggle_vision_cones_, other->control_toggle_vision_cones_);
@@ -12396,7 +11031,6 @@ void MsgClientToSim_Content::Swap(MsgClientToSim_Content* other) {
     std::swap(knowledge_group_creation_request_, other->knowledge_group_creation_request_);
     std::swap(knowledge_group_update_request_, other->knowledge_group_update_request_);
     std::swap(create_fire_order_, other->create_fire_order_);
-    std::swap(magic_action_move_to_, other->magic_action_move_to_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

@@ -684,8 +684,11 @@ void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MT_Vector2D& vPosition 
 // Name: MIL_AgentPion::OnReceiveMsgMagicActionMoveTo
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& asn )
+void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn )
 {
+    if( asn.type() != MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
     if( pAutomate_->IsEngaged() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_automate_embraye );
 
@@ -713,30 +716,33 @@ void MIL_AgentPion::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgMag
 // Name: MIL_AgentPion::OnReceiveMsgChangeHumanFactors
 // Created: NLD 2004-11-29
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const Common::MsgMagicActionChangeHumanFactors& asn )
+void  MIL_AgentPion::OnReceiveMsgChangeHumanFactors( const Common::MsgMissionParameters& msg )
 {
-    if( asn.has_experience() )
+    if( msg.elem( 0 ).has_value() && msg.elem( 0 ).value().has_enumeration() )
     {
-        const PHY_Experience* pExperience = PHY_Experience::Find( asn.experience() );
-        if( !pExperience )
+        Common::EnumUnitTiredness tiredness = ( Common::EnumUnitTiredness ) msg.elem( 0 ).value().enumeration();
+        const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( tiredness );
+        if( !pTiredness )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-        GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
+        GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
     }
 
-    if( asn.has_moral() )
+    if( msg.elem( 1 ).has_value() && msg.elem( 1 ).value().has_enumeration() )
     {
-        const PHY_Morale* pMoral = PHY_Morale::Find( asn.moral() );
+        Common::EnumUnitMorale morale = ( Common::EnumUnitMorale ) msg.elem( 1 ).value().enumeration();
+        const PHY_Morale* pMoral = PHY_Morale::Find( morale );
         if( !pMoral )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
         GetRole< PHY_RolePion_HumanFactors >().SetMorale( *pMoral );
     }
 
-    if( asn.has_fatigue() )
+    if( msg.elem( 2 ).has_value() && msg.elem( 2 ).value().has_enumeration() )
     {
-        const PHY_Tiredness* pTiredness = PHY_Tiredness::Find( asn.fatigue() );
-        if( !pTiredness )
+        Common::EnumUnitExperience experience = ( Common::EnumUnitExperience ) msg.elem( 2 ).value().enumeration();
+        const PHY_Experience* pExperience = PHY_Experience::Find( experience );
+        if( !pExperience )
             throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-        GetRole< PHY_RolePion_HumanFactors >().SetTiredness( *pTiredness );
+        GetRole< PHY_RolePion_HumanFactors >().SetExperience( *pExperience );
     }
 }
 
@@ -871,40 +877,50 @@ void  MIL_AgentPion::OnReceiveMsgRecoverHumansTransporters()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgUnitMagicAction
-// Created: NLD 2004-09-07
+// Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army_ABC>& armies )
+void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies )
 {
-    if( asnMsg.action().has_recompletement_personnel   () ) 
-        OnReceiveMsgResupplyHumans             (); 
-    else if( asnMsg.action().has_recompletement_ressources  () ) 
-        OnReceiveMsgResupplyResources          (); 
-    else if( asnMsg.action().has_recompletement_equipement  () ) 
-        OnReceiveMsgResupplyEquipement         (); 
-    else if( asnMsg.action().has_recompletement_total       () ) 
-        OnReceiveMsgResupplyAll                (); 
-    else if( asnMsg.action().has_recompletement_partiel     () ) 
-        OnReceiveMsgResupply                   ( asnMsg.action().recompletement_partiel() );
-    else if( asnMsg.action().has_change_facteurs_humains    () ) 
-        OnReceiveMsgChangeHumanFactors         ( asnMsg.action().change_facteurs_humains() );
-    else if( asnMsg.action().has_destruction_totale         () ) 
-        OnReceiveMsgDestroyAll                 (); 
-    else if( asnMsg.action().has_destruction_composante     () ) 
-        OnReceiveMsgDestroyComponent           (); 
-    else if( asnMsg.action().has_recuperer_transporteurs    () ) 
-        OnReceiveMsgRecoverHumansTransporters  (); 
-    else if( asnMsg.action().has_se_rendre                  () )
+    switch( msg.type() )
     {
-        pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, armies );
+    case MsgsClientToSim::MsgUnitMagicAction_Type_surrender_to:
+        pAutomate_->OnReceiveMsgUnitMagicAction( msg, armies );
         return;
-    }
-    else if( asnMsg.action().has_annuler_reddition() )
-    {
-        pAutomate_->OnReceiveMsgUnitMagicAction( asnMsg, armies );
+    case MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender:
+        pAutomate_->OnReceiveMsgUnitMagicAction( msg, armies );
         return;
-    }
-    else
+    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_transporters:
+        OnReceiveMsgRecoverHumansTransporters(); 
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_destroy_component:
+        OnReceiveMsgDestroyComponent(); 
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_all:
+        OnReceiveMsgResupplyAll(); 
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops:
+        OnReceiveMsgResupplyHumans(); 
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments:
+        OnReceiveMsgResupplyEquipement(); 
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources:
+        OnReceiveMsgResupplyResources(); 
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all:
+        OnReceiveMsgDestroyAll(); 
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_change_human_factors:
+        OnReceiveMsgChangeHumanFactors( msg.parametres() );
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_partial_recovery:
+        // $$$$ JSR 2010-04-14: TODO
+        // OnReceiveMsgResupply                   ( asnMsg.action().recompletement_partiel() );
+        break;
+    default:
         assert( false );
+        break;
+    }
 
     UpdatePhysicalState();
 }

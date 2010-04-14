@@ -43,6 +43,7 @@
 #include "actions/IntelligenceList.h"
 #include "actions/DateTime.h"
 #include "actions/UrbanBlock.h"
+#include "actions/Army.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
@@ -175,6 +176,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         return new actions::parameters::DateTime( parameter, message.value().datetime() );
     if( message.value().has_urbanblock() )
         return new actions::parameters::UrbanBlock( parameter, message.value().urbanblock() );
+    if( message.value().has_army() )
+        return new actions::parameters::Army( parameter, message.value().army(), model_.teams_, controller_ );
     return 0;
 }
 
@@ -273,6 +276,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::AgentList( parameter, xis, model_.agents_, controller_ ) );
     else if( type == "automatelist" )
         param.reset( new actions::parameters::AutomatList( parameter, xis, model_.agents_, controller_ ) );
+    else if( type == "army" )
+        param.reset( new actions::parameters::Army( parameter, xis, model_.teams_, controller_ ) );
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" )

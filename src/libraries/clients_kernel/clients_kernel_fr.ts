@@ -208,43 +208,43 @@
     </message>
     <message>
         <source>JourSansNuage</source>
-        <translation>Jour sans nuage</translation>
+        <translation>JourSansNuage</translation>
     </message>
     <message>
         <source>JourPeuNuageux</source>
-        <translation>Jour peu nuageux</translation>
+        <translation>JourPeuNuageux</translation>
     </message>
     <message>
         <source>JourMoyennementNuageux</source>
-        <translation>Jour moyennement nuageux</translation>
+        <translation>JourMoyennementNuageux</translation>
     </message>
     <message>
         <source>JourAssezNuageux</source>
-        <translation>Jour assez nuageux</translation>
+        <translation>JourAssezNuageux</translation>
     </message>
     <message>
         <source>JourTresNuageux</source>
-        <translation>Jour très nuageux</translation>
+        <translation>JourTresNuageux</translation>
     </message>
     <message>
         <source>NuitPleineLune</source>
-        <translation>Nuit pleine lune</translation>
+        <translation>NuitPleineLune</translation>
     </message>
     <message>
         <source>NuitTroisQuartDeLune</source>
-        <translation>Nuit trois quart de lune</translation>
+        <translation>NuitTroisQuartDeLune</translation>
     </message>
     <message>
         <source>NuitDemiLune</source>
-        <translation>Nuit demi-lune</translation>
+        <translation>NuitDemiLune</translation>
     </message>
     <message>
         <source>NuitQuartDeLune</source>
-        <translation>Nuit quart de lune</translation>
+        <translation>NuitQuartDeLune</translation>
     </message>
     <message>
         <source>NuitNouvelleLune</source>
-        <translation>Nuit nouvelle lune</translation>
+        <translation>NuitNouvelleLune</translation>
     </message>
     <message>
         <source>Eclairant</source>
@@ -252,11 +252,11 @@
     </message>
     <message>
         <source>PasDePrecipitation</source>
-        <translation>Pas de précipitation</translation>
+        <translation>PasDePrecipitation</translation>
     </message>
     <message>
         <source>TempeteDeSable</source>
-        <translation>Tempête de sable</translation>
+        <translation>TempeteDeSable</translation>
     </message>
     <message>
         <source>Brouillard</source>
@@ -276,7 +276,7 @@
     </message>
     <message>
         <source>Fumigene</source>
-        <translation>Fumigène</translation>
+        <translation>Fumigene</translation>
     </message>
 </context>
 <context>

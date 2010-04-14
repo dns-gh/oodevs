@@ -455,6 +455,19 @@ message MsgUrbanKnowledge {
     required uint32 oid = 1;
 }
 
+message MsgSupply {
+    required uint32 type     = 1;
+    required int32  quantity = 2;
+}
+
+message MsgSupplyList {
+    repeated MsgSupply supply = 1;
+}
+
+message MsgSuppliesList {
+    repeated MsgSupplyList supplies = 1;
+}
+
 message MsgMissionParameter {
     message Value {
         optional bool                        aBool                       = 1;
@@ -494,6 +507,8 @@ message MsgMissionParameter {
         optional MsgLimasOrder               limasOrder                  = 35;
         optional MsgIntelligenceList         intelligenceList            = 36;
         optional MsgUrbanBlock               urbanBlock                  = 37;
+        optional int32                       army                        = 38;
+        optional MsgSuppliesList             supplies                    = 39;
     }
     optional bool  null_value = 1 [default = false];
     optional Value value      = 2;
@@ -533,12 +548,6 @@ message MsgTextMessage {
    required MsgChatTarget               source              = 1;
    required MsgChatTarget               target              = 2;
    required string                      message             = 3;
-}
-
-message MsgMagicActionChangeHumanFactors {
-   optional EnumUnitTiredness           fatigue             = 1;
-   optional EnumUnitMorale              moral               = 2;
-   optional EnumUnitExperience          experience          = 3;
 }
 
 message MsgMagicActionPopulationChangeAttitude_beneficiaire {

@@ -977,40 +977,47 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUn
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgUnitMagicAction
-// Created: NLD 2004-09-07
+// Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& asnMsg, const tools::Resolver< MIL_Army_ABC >& armies )
+void MIL_Automate::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies )
 {
-    if( asnMsg.action().has_se_rendre() )
+    switch( msg.type() )
     {
-        const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( asnMsg.action().se_rendre() );
-        if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
-        else if( IsSurrendered() )
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_unit_surrendered );
-        else
+    case MsgsClientToSim::MsgUnitMagicAction_Type_surrender_to:
         {
-            Surrender( *pSurrenderedToArmy );
-            for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
-                (**itPion).OnReceiveMagicSurrender();
+            const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parametres().elem(0).value().army() );
+            if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
+                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+            else if( IsSurrendered() )
+                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_unit_surrendered );
+            else
+            {
+                Surrender( *pSurrenderedToArmy );
+                for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
+                    (**itPion).OnReceiveMagicSurrender();
+            }
         }
-    }
-    else if( asnMsg.action().has_annuler_reddition() )
-    {
+        break;
+    case MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender:
         CancelSurrender();
         for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
             (**itPion).OnReceiveMagicCancelSurrender();
+        break;
+    default:
+        pPionPC_->OnReceiveMsgUnitMagicAction( msg, armies );
+        break;
     }
-    else
-        pPionPC_->OnReceiveMsgUnitMagicAction( asnMsg, armies );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgMagicActionMoveTo
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& msg )
+void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
+    if( msg.type() != MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
     if( !msg.has_parametres() || msg.parametres().elem_size() != 1)
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
     

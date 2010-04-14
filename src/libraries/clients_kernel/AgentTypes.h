@@ -55,6 +55,7 @@ class AgentTypes : public tools::Resolver< AgentType >
                  , public tools::Resolver< MissionType >
                  , public tools::Resolver< FragOrderType >
                  , public tools::Resolver< FragOrderType, std::string >
+                 , public tools::Resolver< MagicActionType >
                  , public tools::Resolver< MagicActionType, std::string >
 {
 
@@ -109,6 +110,7 @@ private:
     void ReadMissionType( xml::xistream& xis, T_MissionResolver& missions, const OrderContext& context );
     void ReadFragOrderType( xml::xistream& xis );
 
+    void RegisterActionType( MagicActionType& actionType );
     void CreateMagicActionTypes();
     //@}
 

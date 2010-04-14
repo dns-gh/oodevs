@@ -47,18 +47,31 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, xml::xistream& xis, const weath
     endTime_ = ( bpt::from_iso_string( strEndTime ) - bpt::from_time_t( 0 ) ).total_seconds();
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: PHY_LocalMeteo constructor
-// Created: JVT 03-08-05
-//-----------------------------------------------------------------------------
-PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const MsgsClientToSim::MsgControlLocalMeteo& msg, weather::MeteoManager_ABC* list )
-    : PHY_Meteo( id, msg.attributes(), list )
+// Created: JSR 2010-04-12
+// -----------------------------------------------------------------------------
+PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const Common::MsgMissionParameters& msg, weather::MeteoManager_ABC* list )
+    : PHY_Meteo( id, msg, list )
+    , bIsPatched_( false )
 {
-    NET_ASN_Tools::ReadPoint( msg.top_left_coordinate(),      upLeft_    );
-    NET_ASN_Tools::ReadPoint( msg.bottom_right_coordinate() , downRight_ );
-    startTime_ = ( bpt::from_iso_string( msg.start_time().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
-    endTime_ = ( bpt::from_iso_string( msg.end_time().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+    const Common::MsgMissionParameter& startTime = msg.elem( 7 );
+    if( !startTime.has_value() || !startTime.value().has_datetime() )
+        throw std::exception( "Meteo : bad attribute for StartTime" );
+    startTime_ = ( bpt::from_iso_string( startTime.value().datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+
+    const Common::MsgMissionParameter& endTime = msg.elem( 8 );
+    if( !endTime.has_value() || !endTime.value().has_datetime() )
+        throw std::exception( "Meteo : bad attribute for EndTime" );
+    endTime_ = ( bpt::from_iso_string( endTime.value().datetime().data() ) - bpt::from_time_t( 0 ) ).total_seconds();
+
+    const Common::MsgMissionParameter& location = msg.elem( 9 );
+    if( !location.has_value() || !location.value().has_location() )
+        throw std::exception( "Meteo : bad attribute for Location" );
+    NET_ASN_Tools::ReadPoint( location.value().location().coordinates().elem( 0 ), upLeft_    );
+    NET_ASN_Tools::ReadPoint( location.value().location().coordinates().elem( 1 ), downRight_ );
 }
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_LocalMeteo destructor
@@ -66,7 +79,7 @@ PHY_LocalMeteo::PHY_LocalMeteo( unsigned int id, const MsgsClientToSim::MsgContr
 // -----------------------------------------------------------------------------
 PHY_LocalMeteo::~PHY_LocalMeteo()
 {
-    //NTOHING
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -104,7 +117,7 @@ void PHY_LocalMeteo::SendCreation() const
     NET_ASN_Tools::WriteDirection(wind_.vWindDirection_, *(att->mutable_wind_direction()) );
     att->set_cloud_floor (nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. ) );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
 

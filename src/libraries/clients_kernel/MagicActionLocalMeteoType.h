@@ -7,28 +7,27 @@
 //
 // *****************************************************************************
 
-#ifndef __MagicActionMoveToType_h_
-#define __MagicActionMoveToType_h_
+#ifndef __MagicActionLocalMeteoType_h_
+#define __MagicActionLocalMeteoType_h_
 
-#include "MagicActionType.h"
+#include "MagicActionMeteoType.h"
 
 namespace kernel
 {
 
 // =============================================================================
-/** @class  MagicActionMoveToType
-    @brief  MagicActionMoveToType
+/** @class  MagicActionLocalMeteoType
+    @brief  MagicActionLocalMeteoType
 */
-// Created: JSR 2010-04-08
+// Created: JSR 2010-04-09
 // =============================================================================
-class MagicActionMoveToType : public MagicActionType
+class MagicActionLocalMeteoType : public MagicActionMeteoType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MagicActionMoveToType();
-    virtual ~MagicActionMoveToType();
+    explicit MagicActionLocalMeteoType();
+    virtual ~MagicActionLocalMeteoType();
     //@}
 
 private:
@@ -40,4 +39,4 @@ private:
 
 }
 
-#endif // __MagicActionMoveToType_h_
+#endif // __MagicActionLocalMeteoType_h_

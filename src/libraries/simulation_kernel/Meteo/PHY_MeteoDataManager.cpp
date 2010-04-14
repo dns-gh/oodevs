@@ -104,37 +104,22 @@ void PHY_MeteoDataManager::ReadPatchLocal( xml::xistream& xis )
 // Created: NLD 2003-08-04
 // Last modified: JVT 03-08-05
 // -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgGlobalMeteo( const MsgsClientToSim::MsgControlGlobalMeteo& asnMsg )
+void PHY_MeteoDataManager::OnReceiveMsgMeteo( const MsgsClientToSim::MsgControlMeteo& asnMsg )
 {
-    assert( pGlobalMeteo_ );
-    pGlobalMeteo_->Update( asnMsg.attributes() );
-    
-    client::ControlGlobalMeteoAck asnReplyMsg;
-    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_MeteoDataManager::OnReceiveMsgLocalMeteo
-// Created: NLD 2003-08-04
-// Last modified: HBD 10-03-12
-// -----------------------------------------------------------------------------
-void PHY_MeteoDataManager::OnReceiveMsgLocalMeteo( const MsgsClientToSim::MsgControlLocalMeteo& msg )
-{
-    MT_Vector2D vUpLeft;
-    MT_Vector2D vDownRight;
-
-    NET_ASN_Tools::ReadPoint( msg.top_left_coordinate(),      vUpLeft    );
-    NET_ASN_Tools::ReadPoint( msg.bottom_right_coordinate() , vDownRight );
-    weather::PHY_Meteo* pTmp = 0;
-    if( msg.has_attributes() )
+    if( asnMsg.parametres().elem_size() == 7 )
     {
-        pTmp = new PHY_LocalMeteo( idManager_.GetFreeId(), msg, this );
-        RegisterMeteo( *pTmp );
+        assert( pGlobalMeteo_ );
+        pGlobalMeteo_->Update( asnMsg.parametres() );
+        client::ControlGlobalMeteoAck asnReplyMsg;
+        asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
     }
-    assert( pRawData_ );
-
-    client::ControlLocalMeteoAck replyMsg;
-    replyMsg.Send( NET_Publisher_ABC::Publisher() );
+    else if( asnMsg.parametres().elem_size() > 7 )
+    {
+        weather::PHY_Meteo* meteo = new PHY_LocalMeteo( idManager_.GetFreeId(), asnMsg.parametres(), this );
+        RegisterMeteo( *meteo );
+        client::ControlLocalMeteoAck replyMsg;
+        replyMsg.Send( NET_Publisher_ABC::Publisher() );
+    }
 }
 
 //=============================================================================

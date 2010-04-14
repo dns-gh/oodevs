@@ -8,63 +8,63 @@
 // *****************************************************************************
 
 #include "actions_pch.h"
-#include "UnitMagicActionTeleport.h"
+#include "MagicActionMeteo.h"
 #include "protocol/simulationsenders.h"
 #include "Parameter_ABC.h"
 #include "protocol/publisher_ABC.h"
+#include "actions/Numeric.h"
+#include "clients_kernel/OrderType.h"
 
 using namespace kernel;
 using namespace actions;
+using namespace parameters;
 
 // -----------------------------------------------------------------------------
-// Name: UnitMagicActionTeleport constructor
-// Created: JSR 2010-04-07
+// Name: MagicActionMeteo constructor
+// Created: JSR 2010-04-09
 // -----------------------------------------------------------------------------
-UnitMagicActionTeleport::UnitMagicActionTeleport( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /*= true*/ )
-    : UnitMagicAction( entity, magic, controller, registered )
+MagicActionMeteo::MagicActionMeteo( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /*= true*/ )
+    : MagicAction( magic, controller, registered )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMagicActionTeleport constructor
-// Created: JSR 2010-04-06
+// Name: MagicActionMeteo constructor
+// Created: JSR 2010-04-09
 // -----------------------------------------------------------------------------
-UnitMagicActionTeleport::UnitMagicActionTeleport( xml::xistream& xis, kernel::Controller& controller, const MagicActionType& magic, const kernel::Entity_ABC& entity )
-    : UnitMagicAction( xis, controller, magic, entity )
+MagicActionMeteo::MagicActionMeteo( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic )
+    : MagicAction( xis, controller, magic )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMagicActionTeleport destructor
-// Created: JSR 2010-04-06
+// Name: MagicActionMeteo destructor
+// Created: JSR 2010-04-09
 // -----------------------------------------------------------------------------
-UnitMagicActionTeleport::~UnitMagicActionTeleport()
+MagicActionMeteo::~MagicActionMeteo()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UnitMagicActionTeleport::Serialize
-// Created: JSR 2010-04-06
+// Name: MagicActionMeteo::Serialize
+// Created: JSR 2010-04-09
 // -----------------------------------------------------------------------------
-void UnitMagicActionTeleport::Serialize( xml::xostream& xos ) const
+void MagicActionMeteo::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "id", "unit_teleport" );
-    UnitMagicAction::Serialize( xos );
+    xos << xml::attribute( "id", GetType().GetName() );
+    MagicAction::Serialize( xos );
 }
-
 // -----------------------------------------------------------------------------
-// Name: UnitMagicActionTeleport::Publish
-// Created: JSR 2010-04-06
+// Name: MagicActionMeteo::Publish
+// Created: JSR 2010-04-09
 // -----------------------------------------------------------------------------
-void UnitMagicActionTeleport::Publish( Publisher_ABC& publisher ) const
+void MagicActionMeteo::Publish( Publisher_ABC& publisher ) const
 {
-    simulation::MagicActionMoveTo message;
-    message().set_oid( GetEntity().GetId() );
+    simulation::ControlMeteo message;
     CommitTo( *message().mutable_parametres() );
     message.Send( publisher );
-    const_cast< kernel::Entity_ABC& >( GetEntity() ).Update( message() );
     message().Clear();
 }

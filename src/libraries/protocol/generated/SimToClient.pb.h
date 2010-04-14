@@ -39,6 +39,7 @@ class MsgFragOrderAck;
 class MsgSetAutomatModeAck;
 class UnitActionAck;
 class MsgUnitCreationRequestAck;
+class MsgMagicActionAck;
 class MsgUnitMagicActionAck;
 class MsgObjectMagicActionAck;
 class MsgPopulationMagicActionAck;
@@ -275,6 +276,24 @@ inline bool UnitActionAck_ErrorCode_Parse(
     const ::std::string& name, UnitActionAck_ErrorCode* value) {
   return ::google::protobuf::internal::ParseNamedEnum<UnitActionAck_ErrorCode>(
     UnitActionAck_ErrorCode_descriptor(), name, value);
+}
+enum MsgMagicActionAck_ErrorCode {
+  MsgMagicActionAck_ErrorCode_no_error = 0,
+  MsgMagicActionAck_ErrorCode_error_invalid_attribute = 1
+};
+bool MsgMagicActionAck_ErrorCode_IsValid(int value);
+const MsgMagicActionAck_ErrorCode MsgMagicActionAck_ErrorCode_ErrorCode_MIN = MsgMagicActionAck_ErrorCode_no_error;
+const MsgMagicActionAck_ErrorCode MsgMagicActionAck_ErrorCode_ErrorCode_MAX = MsgMagicActionAck_ErrorCode_error_invalid_attribute;
+
+const ::google::protobuf::EnumDescriptor* MsgMagicActionAck_ErrorCode_descriptor();
+inline const ::std::string& MsgMagicActionAck_ErrorCode_Name(MsgMagicActionAck_ErrorCode value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgMagicActionAck_ErrorCode_descriptor(), value);
+}
+inline bool MsgMagicActionAck_ErrorCode_Parse(
+    const ::std::string& name, MsgMagicActionAck_ErrorCode* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgMagicActionAck_ErrorCode>(
+    MsgMagicActionAck_ErrorCode_descriptor(), name, value);
 }
 enum MsgObjectMagicActionAck_ErrorCode {
   MsgObjectMagicActionAck_ErrorCode_no_error = 0,
@@ -1458,6 +1477,115 @@ class MsgUnitCreationRequestAck : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgUnitCreationRequestAck* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgMagicActionAck : public ::google::protobuf::Message {
+ public:
+  MsgMagicActionAck();
+  virtual ~MsgMagicActionAck();
+  
+  MsgMagicActionAck(const MsgMagicActionAck& from);
+  
+  inline MsgMagicActionAck& operator=(const MsgMagicActionAck& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgMagicActionAck& default_instance();
+  void Swap(MsgMagicActionAck* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgMagicActionAck* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgMagicActionAck& from);
+  void MergeFrom(const MsgMagicActionAck& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  typedef MsgMagicActionAck_ErrorCode ErrorCode;
+  static const ErrorCode no_error = MsgMagicActionAck_ErrorCode_no_error;
+  static const ErrorCode error_invalid_attribute = MsgMagicActionAck_ErrorCode_error_invalid_attribute;
+  static inline bool ErrorCode_IsValid(int value) {
+    return MsgMagicActionAck_ErrorCode_IsValid(value);
+  }
+  static const ErrorCode ErrorCode_MIN =
+    MsgMagicActionAck_ErrorCode_ErrorCode_MIN;
+  static const ErrorCode ErrorCode_MAX =
+    MsgMagicActionAck_ErrorCode_ErrorCode_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  ErrorCode_descriptor() {
+    return MsgMagicActionAck_ErrorCode_descriptor();
+  }
+  static inline const ::std::string& ErrorCode_Name(ErrorCode value) {
+    return MsgMagicActionAck_ErrorCode_Name(value);
+  }
+  static inline bool ErrorCode_Parse(const ::std::string& name,
+      ErrorCode* value) {
+    return MsgMagicActionAck_ErrorCode_Parse(name, value);
+  }
+  
+  // accessors -------------------------------------------------------
+  
+  // required .MsgsSimToClient.MsgMagicActionAck.ErrorCode error_code = 1;
+  inline bool has_error_code() const;
+  inline void clear_error_code();
+  static const int kErrorCodeFieldNumber = 1;
+  inline ::MsgsSimToClient::MsgMagicActionAck_ErrorCode error_code() const;
+  inline void set_error_code(::MsgsSimToClient::MsgMagicActionAck_ErrorCode value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  int error_code_;
+  friend void  protobuf_AddDesc_SimToClient_2eproto();
+  friend void protobuf_AssignDesc_SimToClient_2eproto();
+  friend void protobuf_ShutdownFile_SimToClient_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgMagicActionAck* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -19367,822 +19495,829 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   inline const ::MsgsSimToClient::MsgUnitCreationRequestAck& unit_creation_request_ack() const;
   inline ::MsgsSimToClient::MsgUnitCreationRequestAck* mutable_unit_creation_request_ack();
   
-  // optional .MsgsSimToClient.MsgUnitMagicActionAck unit_magic_action_ack = 7;
+  // optional .MsgsSimToClient.MsgMagicActionAck magic_action_ack = 7;
+  inline bool has_magic_action_ack() const;
+  inline void clear_magic_action_ack();
+  static const int kMagicActionAckFieldNumber = 7;
+  inline const ::MsgsSimToClient::MsgMagicActionAck& magic_action_ack() const;
+  inline ::MsgsSimToClient::MsgMagicActionAck* mutable_magic_action_ack();
+  
+  // optional .MsgsSimToClient.MsgUnitMagicActionAck unit_magic_action_ack = 8;
   inline bool has_unit_magic_action_ack() const;
   inline void clear_unit_magic_action_ack();
-  static const int kUnitMagicActionAckFieldNumber = 7;
+  static const int kUnitMagicActionAckFieldNumber = 8;
   inline const ::MsgsSimToClient::MsgUnitMagicActionAck& unit_magic_action_ack() const;
   inline ::MsgsSimToClient::MsgUnitMagicActionAck* mutable_unit_magic_action_ack();
   
-  // optional .MsgsSimToClient.MsgObjectMagicActionAck object_magic_action_ack = 8;
+  // optional .MsgsSimToClient.MsgObjectMagicActionAck object_magic_action_ack = 9;
   inline bool has_object_magic_action_ack() const;
   inline void clear_object_magic_action_ack();
-  static const int kObjectMagicActionAckFieldNumber = 8;
+  static const int kObjectMagicActionAckFieldNumber = 9;
   inline const ::MsgsSimToClient::MsgObjectMagicActionAck& object_magic_action_ack() const;
   inline ::MsgsSimToClient::MsgObjectMagicActionAck* mutable_object_magic_action_ack();
   
-  // optional .MsgsSimToClient.MsgPopulationMagicActionAck population_magic_action_ack = 9;
+  // optional .MsgsSimToClient.MsgPopulationMagicActionAck population_magic_action_ack = 10;
   inline bool has_population_magic_action_ack() const;
   inline void clear_population_magic_action_ack();
-  static const int kPopulationMagicActionAckFieldNumber = 9;
+  static const int kPopulationMagicActionAckFieldNumber = 10;
   inline const ::MsgsSimToClient::MsgPopulationMagicActionAck& population_magic_action_ack() const;
   inline ::MsgsSimToClient::MsgPopulationMagicActionAck* mutable_population_magic_action_ack();
   
-  // optional .MsgsSimToClient.MsgChangeDiplomacyAck change_diplomacy_ack = 10;
+  // optional .MsgsSimToClient.MsgChangeDiplomacyAck change_diplomacy_ack = 11;
   inline bool has_change_diplomacy_ack() const;
   inline void clear_change_diplomacy_ack();
-  static const int kChangeDiplomacyAckFieldNumber = 10;
+  static const int kChangeDiplomacyAckFieldNumber = 11;
   inline const ::MsgsSimToClient::MsgChangeDiplomacyAck& change_diplomacy_ack() const;
   inline ::MsgsSimToClient::MsgChangeDiplomacyAck* mutable_change_diplomacy_ack();
   
-  // optional .MsgsSimToClient.MsgAutomatChangeKnowledgeGroupAck automat_change_knowledge_group_ack = 11;
+  // optional .MsgsSimToClient.MsgAutomatChangeKnowledgeGroupAck automat_change_knowledge_group_ack = 12;
   inline bool has_automat_change_knowledge_group_ack() const;
   inline void clear_automat_change_knowledge_group_ack();
-  static const int kAutomatChangeKnowledgeGroupAckFieldNumber = 11;
+  static const int kAutomatChangeKnowledgeGroupAckFieldNumber = 12;
   inline const ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck& automat_change_knowledge_group_ack() const;
   inline ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck* mutable_automat_change_knowledge_group_ack();
   
-  // optional .MsgsSimToClient.MsgAutomatChangeLogisticLinksAck automat_change_logistic_links_ack = 12;
+  // optional .MsgsSimToClient.MsgAutomatChangeLogisticLinksAck automat_change_logistic_links_ack = 13;
   inline bool has_automat_change_logistic_links_ack() const;
   inline void clear_automat_change_logistic_links_ack();
-  static const int kAutomatChangeLogisticLinksAckFieldNumber = 12;
+  static const int kAutomatChangeLogisticLinksAckFieldNumber = 13;
   inline const ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck& automat_change_logistic_links_ack() const;
   inline ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck* mutable_automat_change_logistic_links_ack();
   
-  // optional .MsgsSimToClient.MsgAutomatChangeSuperiorAck automat_change_superior_ack = 13;
+  // optional .MsgsSimToClient.MsgAutomatChangeSuperiorAck automat_change_superior_ack = 14;
   inline bool has_automat_change_superior_ack() const;
   inline void clear_automat_change_superior_ack();
-  static const int kAutomatChangeSuperiorAckFieldNumber = 13;
+  static const int kAutomatChangeSuperiorAckFieldNumber = 14;
   inline const ::MsgsSimToClient::MsgAutomatChangeSuperiorAck& automat_change_superior_ack() const;
   inline ::MsgsSimToClient::MsgAutomatChangeSuperiorAck* mutable_automat_change_superior_ack();
   
-  // optional .MsgsSimToClient.MsgUnitChangeSuperiorAck unit_change_superior_ack = 14;
+  // optional .MsgsSimToClient.MsgUnitChangeSuperiorAck unit_change_superior_ack = 15;
   inline bool has_unit_change_superior_ack() const;
   inline void clear_unit_change_superior_ack();
-  static const int kUnitChangeSuperiorAckFieldNumber = 14;
+  static const int kUnitChangeSuperiorAckFieldNumber = 15;
   inline const ::MsgsSimToClient::MsgUnitChangeSuperiorAck& unit_change_superior_ack() const;
   inline ::MsgsSimToClient::MsgUnitChangeSuperiorAck* mutable_unit_change_superior_ack();
   
-  // optional .MsgsSimToClient.MsgLogSupplyPushFlowAck log_supply_push_flow_ack = 15;
+  // optional .MsgsSimToClient.MsgLogSupplyPushFlowAck log_supply_push_flow_ack = 16;
   inline bool has_log_supply_push_flow_ack() const;
   inline void clear_log_supply_push_flow_ack();
-  static const int kLogSupplyPushFlowAckFieldNumber = 15;
+  static const int kLogSupplyPushFlowAckFieldNumber = 16;
   inline const ::MsgsSimToClient::MsgLogSupplyPushFlowAck& log_supply_push_flow_ack() const;
   inline ::MsgsSimToClient::MsgLogSupplyPushFlowAck* mutable_log_supply_push_flow_ack();
   
-  // optional .MsgsSimToClient.MsgLogSupplyChangeQuotasAck log_supply_change_quotas_ack = 16;
+  // optional .MsgsSimToClient.MsgLogSupplyChangeQuotasAck log_supply_change_quotas_ack = 17;
   inline bool has_log_supply_change_quotas_ack() const;
   inline void clear_log_supply_change_quotas_ack();
-  static const int kLogSupplyChangeQuotasAckFieldNumber = 16;
+  static const int kLogSupplyChangeQuotasAckFieldNumber = 17;
   inline const ::MsgsSimToClient::MsgLogSupplyChangeQuotasAck& log_supply_change_quotas_ack() const;
   inline ::MsgsSimToClient::MsgLogSupplyChangeQuotasAck* mutable_log_supply_change_quotas_ack();
   
-  // optional .MsgsSimToClient.MsgControlInformation control_information = 17;
+  // optional .MsgsSimToClient.MsgControlInformation control_information = 18;
   inline bool has_control_information() const;
   inline void clear_control_information();
-  static const int kControlInformationFieldNumber = 17;
+  static const int kControlInformationFieldNumber = 18;
   inline const ::MsgsSimToClient::MsgControlInformation& control_information() const;
   inline ::MsgsSimToClient::MsgControlInformation* mutable_control_information();
   
-  // optional .MsgsSimToClient.MsgControlProfilingInformation control_profiling_information = 18;
+  // optional .MsgsSimToClient.MsgControlProfilingInformation control_profiling_information = 19;
   inline bool has_control_profiling_information() const;
   inline void clear_control_profiling_information();
-  static const int kControlProfilingInformationFieldNumber = 18;
+  static const int kControlProfilingInformationFieldNumber = 19;
   inline const ::MsgsSimToClient::MsgControlProfilingInformation& control_profiling_information() const;
   inline ::MsgsSimToClient::MsgControlProfilingInformation* mutable_control_profiling_information();
   
-  // optional .MsgsSimToClient.MsgControlBeginTick control_begin_tick = 19;
+  // optional .MsgsSimToClient.MsgControlBeginTick control_begin_tick = 20;
   inline bool has_control_begin_tick() const;
   inline void clear_control_begin_tick();
-  static const int kControlBeginTickFieldNumber = 19;
+  static const int kControlBeginTickFieldNumber = 20;
   inline const ::MsgsSimToClient::MsgControlBeginTick& control_begin_tick() const;
   inline ::MsgsSimToClient::MsgControlBeginTick* mutable_control_begin_tick();
   
-  // optional .MsgsSimToClient.MsgControlEndTick control_end_tick = 20;
+  // optional .MsgsSimToClient.MsgControlEndTick control_end_tick = 21;
   inline bool has_control_end_tick() const;
   inline void clear_control_end_tick();
-  static const int kControlEndTickFieldNumber = 20;
+  static const int kControlEndTickFieldNumber = 21;
   inline const ::MsgsSimToClient::MsgControlEndTick& control_end_tick() const;
   inline ::MsgsSimToClient::MsgControlEndTick* mutable_control_end_tick();
   
-  // optional .MsgsSimToClient.MsgControlStopAck control_stop_ack = 21;
+  // optional .MsgsSimToClient.MsgControlStopAck control_stop_ack = 22;
   inline bool has_control_stop_ack() const;
   inline void clear_control_stop_ack();
-  static const int kControlStopAckFieldNumber = 21;
+  static const int kControlStopAckFieldNumber = 22;
   inline const ::MsgsSimToClient::MsgControlStopAck& control_stop_ack() const;
   inline ::MsgsSimToClient::MsgControlStopAck* mutable_control_stop_ack();
   
-  // optional .MsgsSimToClient.MsgControlPauseAck control_pause_ack = 22;
+  // optional .MsgsSimToClient.MsgControlPauseAck control_pause_ack = 23;
   inline bool has_control_pause_ack() const;
   inline void clear_control_pause_ack();
-  static const int kControlPauseAckFieldNumber = 22;
+  static const int kControlPauseAckFieldNumber = 23;
   inline const ::MsgsSimToClient::MsgControlPauseAck& control_pause_ack() const;
   inline ::MsgsSimToClient::MsgControlPauseAck* mutable_control_pause_ack();
   
-  // optional .MsgsSimToClient.MsgControlResumeAck control_resume_ack = 23;
+  // optional .MsgsSimToClient.MsgControlResumeAck control_resume_ack = 24;
   inline bool has_control_resume_ack() const;
   inline void clear_control_resume_ack();
-  static const int kControlResumeAckFieldNumber = 23;
+  static const int kControlResumeAckFieldNumber = 24;
   inline const ::MsgsSimToClient::MsgControlResumeAck& control_resume_ack() const;
   inline ::MsgsSimToClient::MsgControlResumeAck* mutable_control_resume_ack();
   
-  // optional .MsgsSimToClient.MsgControlChangeTimeFactorAck control_change_time_factor_ack = 24;
+  // optional .MsgsSimToClient.MsgControlChangeTimeFactorAck control_change_time_factor_ack = 25;
   inline bool has_control_change_time_factor_ack() const;
   inline void clear_control_change_time_factor_ack();
-  static const int kControlChangeTimeFactorAckFieldNumber = 24;
+  static const int kControlChangeTimeFactorAckFieldNumber = 25;
   inline const ::MsgsSimToClient::MsgControlChangeTimeFactorAck& control_change_time_factor_ack() const;
   inline ::MsgsSimToClient::MsgControlChangeTimeFactorAck* mutable_control_change_time_factor_ack();
   
-  // optional .MsgsSimToClient.MsgControlDatetimeChangeAck control_date_time_change_ack = 25;
+  // optional .MsgsSimToClient.MsgControlDatetimeChangeAck control_date_time_change_ack = 26;
   inline bool has_control_date_time_change_ack() const;
   inline void clear_control_date_time_change_ack();
-  static const int kControlDateTimeChangeAckFieldNumber = 25;
+  static const int kControlDateTimeChangeAckFieldNumber = 26;
   inline const ::MsgsSimToClient::MsgControlDatetimeChangeAck& control_date_time_change_ack() const;
   inline ::MsgsSimToClient::MsgControlDatetimeChangeAck* mutable_control_date_time_change_ack();
   
-  // optional .MsgsSimToClient.MsgControlCheckPointSaveEnd control_checkpoint_save_end = 26;
+  // optional .MsgsSimToClient.MsgControlCheckPointSaveEnd control_checkpoint_save_end = 27;
   inline bool has_control_checkpoint_save_end() const;
   inline void clear_control_checkpoint_save_end();
-  static const int kControlCheckpointSaveEndFieldNumber = 26;
+  static const int kControlCheckpointSaveEndFieldNumber = 27;
   inline const ::MsgsSimToClient::MsgControlCheckPointSaveEnd& control_checkpoint_save_end() const;
   inline ::MsgsSimToClient::MsgControlCheckPointSaveEnd* mutable_control_checkpoint_save_end();
   
-  // optional .Common.MsgFormationCreation formation_creation = 27;
+  // optional .Common.MsgFormationCreation formation_creation = 28;
   inline bool has_formation_creation() const;
   inline void clear_formation_creation();
-  static const int kFormationCreationFieldNumber = 27;
+  static const int kFormationCreationFieldNumber = 28;
   inline const ::Common::MsgFormationCreation& formation_creation() const;
   inline ::Common::MsgFormationCreation* mutable_formation_creation();
   
-  // optional .MsgsSimToClient.MsgTeamCreation side_creation = 28;
+  // optional .MsgsSimToClient.MsgTeamCreation side_creation = 29;
   inline bool has_side_creation() const;
   inline void clear_side_creation();
-  static const int kSideCreationFieldNumber = 28;
+  static const int kSideCreationFieldNumber = 29;
   inline const ::MsgsSimToClient::MsgTeamCreation& side_creation() const;
   inline ::MsgsSimToClient::MsgTeamCreation* mutable_side_creation();
   
-  // optional .MsgsSimToClient.MsgAutomatCreation automat_creation = 29;
+  // optional .MsgsSimToClient.MsgAutomatCreation automat_creation = 30;
   inline bool has_automat_creation() const;
   inline void clear_automat_creation();
-  static const int kAutomatCreationFieldNumber = 29;
+  static const int kAutomatCreationFieldNumber = 30;
   inline const ::MsgsSimToClient::MsgAutomatCreation& automat_creation() const;
   inline ::MsgsSimToClient::MsgAutomatCreation* mutable_automat_creation();
   
-  // optional .MsgsSimToClient.MsgAutomatAttributes automat_attributes = 30;
+  // optional .MsgsSimToClient.MsgAutomatAttributes automat_attributes = 31;
   inline bool has_automat_attributes() const;
   inline void clear_automat_attributes();
-  static const int kAutomatAttributesFieldNumber = 30;
+  static const int kAutomatAttributesFieldNumber = 31;
   inline const ::MsgsSimToClient::MsgAutomatAttributes& automat_attributes() const;
   inline ::MsgsSimToClient::MsgAutomatAttributes* mutable_automat_attributes();
   
-  // optional .MsgsSimToClient.MsgUnitCreation unit_creation = 31;
+  // optional .MsgsSimToClient.MsgUnitCreation unit_creation = 32;
   inline bool has_unit_creation() const;
   inline void clear_unit_creation();
-  static const int kUnitCreationFieldNumber = 31;
+  static const int kUnitCreationFieldNumber = 32;
   inline const ::MsgsSimToClient::MsgUnitCreation& unit_creation() const;
   inline ::MsgsSimToClient::MsgUnitCreation* mutable_unit_creation();
   
-  // optional .MsgsSimToClient.MsgUnitAttributes unit_attributes = 32;
+  // optional .MsgsSimToClient.MsgUnitAttributes unit_attributes = 33;
   inline bool has_unit_attributes() const;
   inline void clear_unit_attributes();
-  static const int kUnitAttributesFieldNumber = 32;
+  static const int kUnitAttributesFieldNumber = 33;
   inline const ::MsgsSimToClient::MsgUnitAttributes& unit_attributes() const;
   inline ::MsgsSimToClient::MsgUnitAttributes* mutable_unit_attributes();
   
-  // optional .MsgsSimToClient.MsgUnitPathFind unit_pathfind = 33;
+  // optional .MsgsSimToClient.MsgUnitPathFind unit_pathfind = 34;
   inline bool has_unit_pathfind() const;
   inline void clear_unit_pathfind();
-  static const int kUnitPathfindFieldNumber = 33;
+  static const int kUnitPathfindFieldNumber = 34;
   inline const ::MsgsSimToClient::MsgUnitPathFind& unit_pathfind() const;
   inline ::MsgsSimToClient::MsgUnitPathFind* mutable_unit_pathfind();
   
-  // optional .MsgsSimToClient.MsgUnitDestruction unit_destruction = 34;
+  // optional .MsgsSimToClient.MsgUnitDestruction unit_destruction = 35;
   inline bool has_unit_destruction() const;
   inline void clear_unit_destruction();
-  static const int kUnitDestructionFieldNumber = 34;
+  static const int kUnitDestructionFieldNumber = 35;
   inline const ::MsgsSimToClient::MsgUnitDestruction& unit_destruction() const;
   inline ::MsgsSimToClient::MsgUnitDestruction* mutable_unit_destruction();
   
-  // optional .MsgsSimToClient.MsgUnitEnvironmentType unit_environment_type = 35;
+  // optional .MsgsSimToClient.MsgUnitEnvironmentType unit_environment_type = 36;
   inline bool has_unit_environment_type() const;
   inline void clear_unit_environment_type();
-  static const int kUnitEnvironmentTypeFieldNumber = 35;
+  static const int kUnitEnvironmentTypeFieldNumber = 36;
   inline const ::MsgsSimToClient::MsgUnitEnvironmentType& unit_environment_type() const;
   inline ::MsgsSimToClient::MsgUnitEnvironmentType* mutable_unit_environment_type();
   
-  // optional .Common.MsgChangeDiplomacy change_diplomacy = 36;
+  // optional .Common.MsgChangeDiplomacy change_diplomacy = 37;
   inline bool has_change_diplomacy() const;
   inline void clear_change_diplomacy();
-  static const int kChangeDiplomacyFieldNumber = 36;
+  static const int kChangeDiplomacyFieldNumber = 37;
   inline const ::Common::MsgChangeDiplomacy& change_diplomacy() const;
   inline ::Common::MsgChangeDiplomacy* mutable_change_diplomacy();
   
-  // optional .Common.MsgUnitChangeSuperior unit_change_superior = 37;
+  // optional .Common.MsgUnitChangeSuperior unit_change_superior = 38;
   inline bool has_unit_change_superior() const;
   inline void clear_unit_change_superior();
-  static const int kUnitChangeSuperiorFieldNumber = 37;
+  static const int kUnitChangeSuperiorFieldNumber = 38;
   inline const ::Common::MsgUnitChangeSuperior& unit_change_superior() const;
   inline ::Common::MsgUnitChangeSuperior* mutable_unit_change_superior();
   
-  // optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 38;
+  // optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 39;
   inline bool has_automat_change_logistic_links() const;
   inline void clear_automat_change_logistic_links();
-  static const int kAutomatChangeLogisticLinksFieldNumber = 38;
+  static const int kAutomatChangeLogisticLinksFieldNumber = 39;
   inline const ::Common::MsgAutomatChangeLogisticLinks& automat_change_logistic_links() const;
   inline ::Common::MsgAutomatChangeLogisticLinks* mutable_automat_change_logistic_links();
   
-  // optional .Common.MsgAutomatChangeKnowledgeGroup automat_change_knowledge_group = 39;
+  // optional .Common.MsgAutomatChangeKnowledgeGroup automat_change_knowledge_group = 40;
   inline bool has_automat_change_knowledge_group() const;
   inline void clear_automat_change_knowledge_group();
-  static const int kAutomatChangeKnowledgeGroupFieldNumber = 39;
+  static const int kAutomatChangeKnowledgeGroupFieldNumber = 40;
   inline const ::Common::MsgAutomatChangeKnowledgeGroup& automat_change_knowledge_group() const;
   inline ::Common::MsgAutomatChangeKnowledgeGroup* mutable_automat_change_knowledge_group();
   
-  // optional .Common.MsgAutomatChangeSuperior automat_change_superior = 40;
+  // optional .Common.MsgAutomatChangeSuperior automat_change_superior = 41;
   inline bool has_automat_change_superior() const;
   inline void clear_automat_change_superior();
-  static const int kAutomatChangeSuperiorFieldNumber = 40;
+  static const int kAutomatChangeSuperiorFieldNumber = 41;
   inline const ::Common::MsgAutomatChangeSuperior& automat_change_superior() const;
   inline ::Common::MsgAutomatChangeSuperior* mutable_automat_change_superior();
   
-  // optional .MsgsSimToClient.MsgUnitKnowledgeCreation unit_knowledge_creation = 41;
+  // optional .MsgsSimToClient.MsgUnitKnowledgeCreation unit_knowledge_creation = 42;
   inline bool has_unit_knowledge_creation() const;
   inline void clear_unit_knowledge_creation();
-  static const int kUnitKnowledgeCreationFieldNumber = 41;
+  static const int kUnitKnowledgeCreationFieldNumber = 42;
   inline const ::MsgsSimToClient::MsgUnitKnowledgeCreation& unit_knowledge_creation() const;
   inline ::MsgsSimToClient::MsgUnitKnowledgeCreation* mutable_unit_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgUnitKnowledgeUpdate unit_knowledge_update = 42;
+  // optional .MsgsSimToClient.MsgUnitKnowledgeUpdate unit_knowledge_update = 43;
   inline bool has_unit_knowledge_update() const;
   inline void clear_unit_knowledge_update();
-  static const int kUnitKnowledgeUpdateFieldNumber = 42;
+  static const int kUnitKnowledgeUpdateFieldNumber = 43;
   inline const ::MsgsSimToClient::MsgUnitKnowledgeUpdate& unit_knowledge_update() const;
   inline ::MsgsSimToClient::MsgUnitKnowledgeUpdate* mutable_unit_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgUnitKnowledgeDestruction unit_knowledge_destruction = 43;
+  // optional .MsgsSimToClient.MsgUnitKnowledgeDestruction unit_knowledge_destruction = 44;
   inline bool has_unit_knowledge_destruction() const;
   inline void clear_unit_knowledge_destruction();
-  static const int kUnitKnowledgeDestructionFieldNumber = 43;
+  static const int kUnitKnowledgeDestructionFieldNumber = 44;
   inline const ::MsgsSimToClient::MsgUnitKnowledgeDestruction& unit_knowledge_destruction() const;
   inline ::MsgsSimToClient::MsgUnitKnowledgeDestruction* mutable_unit_knowledge_destruction();
   
-  // optional .MsgsSimToClient.MsgStartUnitFire start_unit_fire = 44;
+  // optional .MsgsSimToClient.MsgStartUnitFire start_unit_fire = 45;
   inline bool has_start_unit_fire() const;
   inline void clear_start_unit_fire();
-  static const int kStartUnitFireFieldNumber = 44;
+  static const int kStartUnitFireFieldNumber = 45;
   inline const ::MsgsSimToClient::MsgStartUnitFire& start_unit_fire() const;
   inline ::MsgsSimToClient::MsgStartUnitFire* mutable_start_unit_fire();
   
-  // optional .MsgsSimToClient.MsgStopUnitFire stop_unit_fire = 45;
+  // optional .MsgsSimToClient.MsgStopUnitFire stop_unit_fire = 46;
   inline bool has_stop_unit_fire() const;
   inline void clear_stop_unit_fire();
-  static const int kStopUnitFireFieldNumber = 45;
+  static const int kStopUnitFireFieldNumber = 46;
   inline const ::MsgsSimToClient::MsgStopUnitFire& stop_unit_fire() const;
   inline ::MsgsSimToClient::MsgStopUnitFire* mutable_stop_unit_fire();
   
-  // optional .MsgsSimToClient.MsgStartPopulationFire start_population_fire = 46;
+  // optional .MsgsSimToClient.MsgStartPopulationFire start_population_fire = 47;
   inline bool has_start_population_fire() const;
   inline void clear_start_population_fire();
-  static const int kStartPopulationFireFieldNumber = 46;
+  static const int kStartPopulationFireFieldNumber = 47;
   inline const ::MsgsSimToClient::MsgStartPopulationFire& start_population_fire() const;
   inline ::MsgsSimToClient::MsgStartPopulationFire* mutable_start_population_fire();
   
-  // optional .MsgsSimToClient.MsgStopPopulationFire stop_population_fire = 47;
+  // optional .MsgsSimToClient.MsgStopPopulationFire stop_population_fire = 48;
   inline bool has_stop_population_fire() const;
   inline void clear_stop_population_fire();
-  static const int kStopPopulationFireFieldNumber = 47;
+  static const int kStopPopulationFireFieldNumber = 48;
   inline const ::MsgsSimToClient::MsgStopPopulationFire& stop_population_fire() const;
   inline ::MsgsSimToClient::MsgStopPopulationFire* mutable_stop_population_fire();
   
-  // optional .MsgsSimToClient.MsgExplosion explosion = 48;
+  // optional .MsgsSimToClient.MsgExplosion explosion = 49;
   inline bool has_explosion() const;
   inline void clear_explosion();
-  static const int kExplosionFieldNumber = 48;
+  static const int kExplosionFieldNumber = 49;
   inline const ::MsgsSimToClient::MsgExplosion& explosion() const;
   inline ::MsgsSimToClient::MsgExplosion* mutable_explosion();
   
-  // optional .MsgsSimToClient.MsgStartFireEffect start_fire_effect = 49;
+  // optional .MsgsSimToClient.MsgStartFireEffect start_fire_effect = 50;
   inline bool has_start_fire_effect() const;
   inline void clear_start_fire_effect();
-  static const int kStartFireEffectFieldNumber = 49;
+  static const int kStartFireEffectFieldNumber = 50;
   inline const ::MsgsSimToClient::MsgStartFireEffect& start_fire_effect() const;
   inline ::MsgsSimToClient::MsgStartFireEffect* mutable_start_fire_effect();
   
-  // optional .MsgsSimToClient.MsgStopFireEffect stop_fire_effect = 50;
+  // optional .MsgsSimToClient.MsgStopFireEffect stop_fire_effect = 51;
   inline bool has_stop_fire_effect() const;
   inline void clear_stop_fire_effect();
-  static const int kStopFireEffectFieldNumber = 50;
+  static const int kStopFireEffectFieldNumber = 51;
   inline const ::MsgsSimToClient::MsgStopFireEffect& stop_fire_effect() const;
   inline ::MsgsSimToClient::MsgStopFireEffect* mutable_stop_fire_effect();
   
-  // optional .MsgsSimToClient.MsgReport report = 51;
+  // optional .MsgsSimToClient.MsgReport report = 52;
   inline bool has_report() const;
   inline void clear_report();
-  static const int kReportFieldNumber = 51;
+  static const int kReportFieldNumber = 52;
   inline const ::MsgsSimToClient::MsgReport& report() const;
   inline ::MsgsSimToClient::MsgReport* mutable_report();
   
-  // optional .MsgsSimToClient.MsgInvalidateReport invalidate_report = 52;
+  // optional .MsgsSimToClient.MsgInvalidateReport invalidate_report = 53;
   inline bool has_invalidate_report() const;
   inline void clear_invalidate_report();
-  static const int kInvalidateReportFieldNumber = 52;
+  static const int kInvalidateReportFieldNumber = 53;
   inline const ::MsgsSimToClient::MsgInvalidateReport& invalidate_report() const;
   inline ::MsgsSimToClient::MsgInvalidateReport* mutable_invalidate_report();
   
-  // optional .MsgsSimToClient.MsgTrace trace = 53;
+  // optional .MsgsSimToClient.MsgTrace trace = 54;
   inline bool has_trace() const;
   inline void clear_trace();
-  static const int kTraceFieldNumber = 53;
+  static const int kTraceFieldNumber = 54;
   inline const ::MsgsSimToClient::MsgTrace& trace() const;
   inline ::MsgsSimToClient::MsgTrace* mutable_trace();
   
-  // optional .MsgsSimToClient.MsgDecisionalState decisional_state = 54;
+  // optional .MsgsSimToClient.MsgDecisionalState decisional_state = 55;
   inline bool has_decisional_state() const;
   inline void clear_decisional_state();
-  static const int kDecisionalStateFieldNumber = 54;
+  static const int kDecisionalStateFieldNumber = 55;
   inline const ::MsgsSimToClient::MsgDecisionalState& decisional_state() const;
   inline ::MsgsSimToClient::MsgDecisionalState* mutable_decisional_state();
   
-  // optional .MsgsSimToClient.MsgDebugPoints debug_points = 55;
+  // optional .MsgsSimToClient.MsgDebugPoints debug_points = 56;
   inline bool has_debug_points() const;
   inline void clear_debug_points();
-  static const int kDebugPointsFieldNumber = 55;
+  static const int kDebugPointsFieldNumber = 56;
   inline const ::MsgsSimToClient::MsgDebugPoints& debug_points() const;
   inline ::MsgsSimToClient::MsgDebugPoints* mutable_debug_points();
   
-  // optional .MsgsSimToClient.MsgUnitVisionCones unit_vision_cones = 56;
+  // optional .MsgsSimToClient.MsgUnitVisionCones unit_vision_cones = 57;
   inline bool has_unit_vision_cones() const;
   inline void clear_unit_vision_cones();
-  static const int kUnitVisionConesFieldNumber = 56;
+  static const int kUnitVisionConesFieldNumber = 57;
   inline const ::MsgsSimToClient::MsgUnitVisionCones& unit_vision_cones() const;
   inline ::MsgsSimToClient::MsgUnitVisionCones* mutable_unit_vision_cones();
   
-  // optional .MsgsSimToClient.MsgUnitDetection unit_detection = 57;
+  // optional .MsgsSimToClient.MsgUnitDetection unit_detection = 58;
   inline bool has_unit_detection() const;
   inline void clear_unit_detection();
-  static const int kUnitDetectionFieldNumber = 57;
+  static const int kUnitDetectionFieldNumber = 58;
   inline const ::MsgsSimToClient::MsgUnitDetection& unit_detection() const;
   inline ::MsgsSimToClient::MsgUnitDetection* mutable_unit_detection();
   
-  // optional .MsgsSimToClient.MsgObjectDetection object_detection = 58;
+  // optional .MsgsSimToClient.MsgObjectDetection object_detection = 59;
   inline bool has_object_detection() const;
   inline void clear_object_detection();
-  static const int kObjectDetectionFieldNumber = 58;
+  static const int kObjectDetectionFieldNumber = 59;
   inline const ::MsgsSimToClient::MsgObjectDetection& object_detection() const;
   inline ::MsgsSimToClient::MsgObjectDetection* mutable_object_detection();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationDetection population_concentration_detection = 59;
+  // optional .MsgsSimToClient.MsgPopulationConcentrationDetection population_concentration_detection = 60;
   inline bool has_population_concentration_detection() const;
   inline void clear_population_concentration_detection();
-  static const int kPopulationConcentrationDetectionFieldNumber = 59;
+  static const int kPopulationConcentrationDetectionFieldNumber = 60;
   inline const ::MsgsSimToClient::MsgPopulationConcentrationDetection& population_concentration_detection() const;
   inline ::MsgsSimToClient::MsgPopulationConcentrationDetection* mutable_population_concentration_detection();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowDetection population_flow_detection = 60;
+  // optional .MsgsSimToClient.MsgPopulationFlowDetection population_flow_detection = 61;
   inline bool has_population_flow_detection() const;
   inline void clear_population_flow_detection();
-  static const int kPopulationFlowDetectionFieldNumber = 60;
+  static const int kPopulationFlowDetectionFieldNumber = 61;
   inline const ::MsgsSimToClient::MsgPopulationFlowDetection& population_flow_detection() const;
   inline ::MsgsSimToClient::MsgPopulationFlowDetection* mutable_population_flow_detection();
   
-  // optional .Common.MsgUnitOrder unit_order = 61;
+  // optional .Common.MsgUnitOrder unit_order = 62;
   inline bool has_unit_order() const;
   inline void clear_unit_order();
-  static const int kUnitOrderFieldNumber = 61;
+  static const int kUnitOrderFieldNumber = 62;
   inline const ::Common::MsgUnitOrder& unit_order() const;
   inline ::Common::MsgUnitOrder* mutable_unit_order();
   
-  // optional .Common.MsgAutomatOrder automat_order = 62;
+  // optional .Common.MsgAutomatOrder automat_order = 63;
   inline bool has_automat_order() const;
   inline void clear_automat_order();
-  static const int kAutomatOrderFieldNumber = 62;
+  static const int kAutomatOrderFieldNumber = 63;
   inline const ::Common::MsgAutomatOrder& automat_order() const;
   inline ::Common::MsgAutomatOrder* mutable_automat_order();
   
-  // optional .Common.MsgPopulationOrder population_order = 63;
+  // optional .Common.MsgPopulationOrder population_order = 64;
   inline bool has_population_order() const;
   inline void clear_population_order();
-  static const int kPopulationOrderFieldNumber = 63;
+  static const int kPopulationOrderFieldNumber = 64;
   inline const ::Common::MsgPopulationOrder& population_order() const;
   inline ::Common::MsgPopulationOrder* mutable_population_order();
   
-  // optional .MsgsSimToClient.MsgObjectCreation object_creation = 64;
+  // optional .MsgsSimToClient.MsgObjectCreation object_creation = 65;
   inline bool has_object_creation() const;
   inline void clear_object_creation();
-  static const int kObjectCreationFieldNumber = 64;
+  static const int kObjectCreationFieldNumber = 65;
   inline const ::MsgsSimToClient::MsgObjectCreation& object_creation() const;
   inline ::MsgsSimToClient::MsgObjectCreation* mutable_object_creation();
   
-  // optional .MsgsSimToClient.MsgObjectDestruction object_destruction = 65;
+  // optional .MsgsSimToClient.MsgObjectDestruction object_destruction = 66;
   inline bool has_object_destruction() const;
   inline void clear_object_destruction();
-  static const int kObjectDestructionFieldNumber = 65;
+  static const int kObjectDestructionFieldNumber = 66;
   inline const ::MsgsSimToClient::MsgObjectDestruction& object_destruction() const;
   inline ::MsgsSimToClient::MsgObjectDestruction* mutable_object_destruction();
   
-  // optional .MsgsSimToClient.MsgObjectUpdate object_update = 66;
+  // optional .MsgsSimToClient.MsgObjectUpdate object_update = 67;
   inline bool has_object_update() const;
   inline void clear_object_update();
-  static const int kObjectUpdateFieldNumber = 66;
+  static const int kObjectUpdateFieldNumber = 67;
   inline const ::MsgsSimToClient::MsgObjectUpdate& object_update() const;
   inline ::MsgsSimToClient::MsgObjectUpdate* mutable_object_update();
   
-  // optional .MsgsSimToClient.MsgObjectKnowledgeCreation object_knowledge_creation = 67;
+  // optional .MsgsSimToClient.MsgObjectKnowledgeCreation object_knowledge_creation = 68;
   inline bool has_object_knowledge_creation() const;
   inline void clear_object_knowledge_creation();
-  static const int kObjectKnowledgeCreationFieldNumber = 67;
+  static const int kObjectKnowledgeCreationFieldNumber = 68;
   inline const ::MsgsSimToClient::MsgObjectKnowledgeCreation& object_knowledge_creation() const;
   inline ::MsgsSimToClient::MsgObjectKnowledgeCreation* mutable_object_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgObjectKnowledgeUpdate object_knowledge_update = 68;
+  // optional .MsgsSimToClient.MsgObjectKnowledgeUpdate object_knowledge_update = 69;
   inline bool has_object_knowledge_update() const;
   inline void clear_object_knowledge_update();
-  static const int kObjectKnowledgeUpdateFieldNumber = 68;
+  static const int kObjectKnowledgeUpdateFieldNumber = 69;
   inline const ::MsgsSimToClient::MsgObjectKnowledgeUpdate& object_knowledge_update() const;
   inline ::MsgsSimToClient::MsgObjectKnowledgeUpdate* mutable_object_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgObjectKnowledgeDestruction object_knowledge_destruction = 69;
+  // optional .MsgsSimToClient.MsgObjectKnowledgeDestruction object_knowledge_destruction = 70;
   inline bool has_object_knowledge_destruction() const;
   inline void clear_object_knowledge_destruction();
-  static const int kObjectKnowledgeDestructionFieldNumber = 69;
+  static const int kObjectKnowledgeDestructionFieldNumber = 70;
   inline const ::MsgsSimToClient::MsgObjectKnowledgeDestruction& object_knowledge_destruction() const;
   inline ::MsgsSimToClient::MsgObjectKnowledgeDestruction* mutable_object_knowledge_destruction();
   
-  // optional .MsgsSimToClient.MsgLogMedicalHandlingCreation log_medical_handling_creation = 70;
+  // optional .MsgsSimToClient.MsgLogMedicalHandlingCreation log_medical_handling_creation = 71;
   inline bool has_log_medical_handling_creation() const;
   inline void clear_log_medical_handling_creation();
-  static const int kLogMedicalHandlingCreationFieldNumber = 70;
+  static const int kLogMedicalHandlingCreationFieldNumber = 71;
   inline const ::MsgsSimToClient::MsgLogMedicalHandlingCreation& log_medical_handling_creation() const;
   inline ::MsgsSimToClient::MsgLogMedicalHandlingCreation* mutable_log_medical_handling_creation();
   
-  // optional .MsgsSimToClient.MsgLogMedicalHandlingUpdate log_medical_handling_update = 71;
+  // optional .MsgsSimToClient.MsgLogMedicalHandlingUpdate log_medical_handling_update = 72;
   inline bool has_log_medical_handling_update() const;
   inline void clear_log_medical_handling_update();
-  static const int kLogMedicalHandlingUpdateFieldNumber = 71;
+  static const int kLogMedicalHandlingUpdateFieldNumber = 72;
   inline const ::MsgsSimToClient::MsgLogMedicalHandlingUpdate& log_medical_handling_update() const;
   inline ::MsgsSimToClient::MsgLogMedicalHandlingUpdate* mutable_log_medical_handling_update();
   
-  // optional .MsgsSimToClient.MsgLogMedicalHandlingDestruction log_medical_handling_destruction = 72;
+  // optional .MsgsSimToClient.MsgLogMedicalHandlingDestruction log_medical_handling_destruction = 73;
   inline bool has_log_medical_handling_destruction() const;
   inline void clear_log_medical_handling_destruction();
-  static const int kLogMedicalHandlingDestructionFieldNumber = 72;
+  static const int kLogMedicalHandlingDestructionFieldNumber = 73;
   inline const ::MsgsSimToClient::MsgLogMedicalHandlingDestruction& log_medical_handling_destruction() const;
   inline ::MsgsSimToClient::MsgLogMedicalHandlingDestruction* mutable_log_medical_handling_destruction();
   
-  // optional .MsgsSimToClient.MsgLogMedicalState log_medical_state = 73;
+  // optional .MsgsSimToClient.MsgLogMedicalState log_medical_state = 74;
   inline bool has_log_medical_state() const;
   inline void clear_log_medical_state();
-  static const int kLogMedicalStateFieldNumber = 73;
+  static const int kLogMedicalStateFieldNumber = 74;
   inline const ::MsgsSimToClient::MsgLogMedicalState& log_medical_state() const;
   inline ::MsgsSimToClient::MsgLogMedicalState* mutable_log_medical_state();
   
-  // optional .MsgsSimToClient.MsgLogMaintenanceHandlingCreation log_maintenance_handling_creation = 74;
+  // optional .MsgsSimToClient.MsgLogMaintenanceHandlingCreation log_maintenance_handling_creation = 75;
   inline bool has_log_maintenance_handling_creation() const;
   inline void clear_log_maintenance_handling_creation();
-  static const int kLogMaintenanceHandlingCreationFieldNumber = 74;
+  static const int kLogMaintenanceHandlingCreationFieldNumber = 75;
   inline const ::MsgsSimToClient::MsgLogMaintenanceHandlingCreation& log_maintenance_handling_creation() const;
   inline ::MsgsSimToClient::MsgLogMaintenanceHandlingCreation* mutable_log_maintenance_handling_creation();
   
-  // optional .MsgsSimToClient.MsgLogMaintenanceHandlingUpdate log_maintenance_handling_update = 75;
+  // optional .MsgsSimToClient.MsgLogMaintenanceHandlingUpdate log_maintenance_handling_update = 76;
   inline bool has_log_maintenance_handling_update() const;
   inline void clear_log_maintenance_handling_update();
-  static const int kLogMaintenanceHandlingUpdateFieldNumber = 75;
+  static const int kLogMaintenanceHandlingUpdateFieldNumber = 76;
   inline const ::MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& log_maintenance_handling_update() const;
   inline ::MsgsSimToClient::MsgLogMaintenanceHandlingUpdate* mutable_log_maintenance_handling_update();
   
-  // optional .MsgsSimToClient.MsgLogMaintenanceHandlingDestruction log_maintenance_handling_destruction = 76;
+  // optional .MsgsSimToClient.MsgLogMaintenanceHandlingDestruction log_maintenance_handling_destruction = 77;
   inline bool has_log_maintenance_handling_destruction() const;
   inline void clear_log_maintenance_handling_destruction();
-  static const int kLogMaintenanceHandlingDestructionFieldNumber = 76;
+  static const int kLogMaintenanceHandlingDestructionFieldNumber = 77;
   inline const ::MsgsSimToClient::MsgLogMaintenanceHandlingDestruction& log_maintenance_handling_destruction() const;
   inline ::MsgsSimToClient::MsgLogMaintenanceHandlingDestruction* mutable_log_maintenance_handling_destruction();
   
-  // optional .MsgsSimToClient.MsgLogMaintenanceState log_maintenance_state = 77;
+  // optional .MsgsSimToClient.MsgLogMaintenanceState log_maintenance_state = 78;
   inline bool has_log_maintenance_state() const;
   inline void clear_log_maintenance_state();
-  static const int kLogMaintenanceStateFieldNumber = 77;
+  static const int kLogMaintenanceStateFieldNumber = 78;
   inline const ::MsgsSimToClient::MsgLogMaintenanceState& log_maintenance_state() const;
   inline ::MsgsSimToClient::MsgLogMaintenanceState* mutable_log_maintenance_state();
   
-  // optional .MsgsSimToClient.MsgLogSupplyHandlingCreation log_supply_handling_creation = 78;
+  // optional .MsgsSimToClient.MsgLogSupplyHandlingCreation log_supply_handling_creation = 79;
   inline bool has_log_supply_handling_creation() const;
   inline void clear_log_supply_handling_creation();
-  static const int kLogSupplyHandlingCreationFieldNumber = 78;
+  static const int kLogSupplyHandlingCreationFieldNumber = 79;
   inline const ::MsgsSimToClient::MsgLogSupplyHandlingCreation& log_supply_handling_creation() const;
   inline ::MsgsSimToClient::MsgLogSupplyHandlingCreation* mutable_log_supply_handling_creation();
   
-  // optional .MsgsSimToClient.MsgLogSupplyHandlingUpdate log_supply_handling_update = 79;
+  // optional .MsgsSimToClient.MsgLogSupplyHandlingUpdate log_supply_handling_update = 80;
   inline bool has_log_supply_handling_update() const;
   inline void clear_log_supply_handling_update();
-  static const int kLogSupplyHandlingUpdateFieldNumber = 79;
+  static const int kLogSupplyHandlingUpdateFieldNumber = 80;
   inline const ::MsgsSimToClient::MsgLogSupplyHandlingUpdate& log_supply_handling_update() const;
   inline ::MsgsSimToClient::MsgLogSupplyHandlingUpdate* mutable_log_supply_handling_update();
   
-  // optional .MsgsSimToClient.MsgLogSupplyHandlingDestruction log_supply_handling_destruction = 80;
+  // optional .MsgsSimToClient.MsgLogSupplyHandlingDestruction log_supply_handling_destruction = 81;
   inline bool has_log_supply_handling_destruction() const;
   inline void clear_log_supply_handling_destruction();
-  static const int kLogSupplyHandlingDestructionFieldNumber = 80;
+  static const int kLogSupplyHandlingDestructionFieldNumber = 81;
   inline const ::MsgsSimToClient::MsgLogSupplyHandlingDestruction& log_supply_handling_destruction() const;
   inline ::MsgsSimToClient::MsgLogSupplyHandlingDestruction* mutable_log_supply_handling_destruction();
   
-  // optional .MsgsSimToClient.MsgLogSupplyState log_supply_state = 81;
+  // optional .MsgsSimToClient.MsgLogSupplyState log_supply_state = 82;
   inline bool has_log_supply_state() const;
   inline void clear_log_supply_state();
-  static const int kLogSupplyStateFieldNumber = 81;
+  static const int kLogSupplyStateFieldNumber = 82;
   inline const ::MsgsSimToClient::MsgLogSupplyState& log_supply_state() const;
   inline ::MsgsSimToClient::MsgLogSupplyState* mutable_log_supply_state();
   
-  // optional .MsgsSimToClient.MsgLogSupplyQuotas log_supply_quotas = 82;
+  // optional .MsgsSimToClient.MsgLogSupplyQuotas log_supply_quotas = 83;
   inline bool has_log_supply_quotas() const;
   inline void clear_log_supply_quotas();
-  static const int kLogSupplyQuotasFieldNumber = 82;
+  static const int kLogSupplyQuotasFieldNumber = 83;
   inline const ::MsgsSimToClient::MsgLogSupplyQuotas& log_supply_quotas() const;
   inline ::MsgsSimToClient::MsgLogSupplyQuotas* mutable_log_supply_quotas();
   
-  // optional .MsgsSimToClient.MsgPopulationCreation population_creation = 83;
+  // optional .MsgsSimToClient.MsgPopulationCreation population_creation = 84;
   inline bool has_population_creation() const;
   inline void clear_population_creation();
-  static const int kPopulationCreationFieldNumber = 83;
+  static const int kPopulationCreationFieldNumber = 84;
   inline const ::MsgsSimToClient::MsgPopulationCreation& population_creation() const;
   inline ::MsgsSimToClient::MsgPopulationCreation* mutable_population_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationUpdate population_update = 84;
+  // optional .MsgsSimToClient.MsgPopulationUpdate population_update = 85;
   inline bool has_population_update() const;
   inline void clear_population_update();
-  static const int kPopulationUpdateFieldNumber = 84;
+  static const int kPopulationUpdateFieldNumber = 85;
   inline const ::MsgsSimToClient::MsgPopulationUpdate& population_update() const;
   inline ::MsgsSimToClient::MsgPopulationUpdate* mutable_population_update();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationCreation population_concentration_creation = 85;
+  // optional .MsgsSimToClient.MsgPopulationConcentrationCreation population_concentration_creation = 86;
   inline bool has_population_concentration_creation() const;
   inline void clear_population_concentration_creation();
-  static const int kPopulationConcentrationCreationFieldNumber = 85;
+  static const int kPopulationConcentrationCreationFieldNumber = 86;
   inline const ::MsgsSimToClient::MsgPopulationConcentrationCreation& population_concentration_creation() const;
   inline ::MsgsSimToClient::MsgPopulationConcentrationCreation* mutable_population_concentration_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationDestruction population_concentration_destruction = 86;
+  // optional .MsgsSimToClient.MsgPopulationConcentrationDestruction population_concentration_destruction = 87;
   inline bool has_population_concentration_destruction() const;
   inline void clear_population_concentration_destruction();
-  static const int kPopulationConcentrationDestructionFieldNumber = 86;
+  static const int kPopulationConcentrationDestructionFieldNumber = 87;
   inline const ::MsgsSimToClient::MsgPopulationConcentrationDestruction& population_concentration_destruction() const;
   inline ::MsgsSimToClient::MsgPopulationConcentrationDestruction* mutable_population_concentration_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationUpdate population_concentration_update = 87;
+  // optional .MsgsSimToClient.MsgPopulationConcentrationUpdate population_concentration_update = 88;
   inline bool has_population_concentration_update() const;
   inline void clear_population_concentration_update();
-  static const int kPopulationConcentrationUpdateFieldNumber = 87;
+  static const int kPopulationConcentrationUpdateFieldNumber = 88;
   inline const ::MsgsSimToClient::MsgPopulationConcentrationUpdate& population_concentration_update() const;
   inline ::MsgsSimToClient::MsgPopulationConcentrationUpdate* mutable_population_concentration_update();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowCreation population_flow_creation = 88;
+  // optional .MsgsSimToClient.MsgPopulationFlowCreation population_flow_creation = 89;
   inline bool has_population_flow_creation() const;
   inline void clear_population_flow_creation();
-  static const int kPopulationFlowCreationFieldNumber = 88;
+  static const int kPopulationFlowCreationFieldNumber = 89;
   inline const ::MsgsSimToClient::MsgPopulationFlowCreation& population_flow_creation() const;
   inline ::MsgsSimToClient::MsgPopulationFlowCreation* mutable_population_flow_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowDestruction population_flow_destruction = 89;
+  // optional .MsgsSimToClient.MsgPopulationFlowDestruction population_flow_destruction = 90;
   inline bool has_population_flow_destruction() const;
   inline void clear_population_flow_destruction();
-  static const int kPopulationFlowDestructionFieldNumber = 89;
+  static const int kPopulationFlowDestructionFieldNumber = 90;
   inline const ::MsgsSimToClient::MsgPopulationFlowDestruction& population_flow_destruction() const;
   inline ::MsgsSimToClient::MsgPopulationFlowDestruction* mutable_population_flow_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowUpdate population_flow_update = 90;
+  // optional .MsgsSimToClient.MsgPopulationFlowUpdate population_flow_update = 91;
   inline bool has_population_flow_update() const;
   inline void clear_population_flow_update();
-  static const int kPopulationFlowUpdateFieldNumber = 90;
+  static const int kPopulationFlowUpdateFieldNumber = 91;
   inline const ::MsgsSimToClient::MsgPopulationFlowUpdate& population_flow_update() const;
   inline ::MsgsSimToClient::MsgPopulationFlowUpdate* mutable_population_flow_update();
   
-  // optional .MsgsSimToClient.MsgPopulationKnowledgeCreation population_knowledge_creation = 91;
+  // optional .MsgsSimToClient.MsgPopulationKnowledgeCreation population_knowledge_creation = 92;
   inline bool has_population_knowledge_creation() const;
   inline void clear_population_knowledge_creation();
-  static const int kPopulationKnowledgeCreationFieldNumber = 91;
+  static const int kPopulationKnowledgeCreationFieldNumber = 92;
   inline const ::MsgsSimToClient::MsgPopulationKnowledgeCreation& population_knowledge_creation() const;
   inline ::MsgsSimToClient::MsgPopulationKnowledgeCreation* mutable_population_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationKnowledgeUpdate population_knowledge_update = 92;
+  // optional .MsgsSimToClient.MsgPopulationKnowledgeUpdate population_knowledge_update = 93;
   inline bool has_population_knowledge_update() const;
   inline void clear_population_knowledge_update();
-  static const int kPopulationKnowledgeUpdateFieldNumber = 92;
+  static const int kPopulationKnowledgeUpdateFieldNumber = 93;
   inline const ::MsgsSimToClient::MsgPopulationKnowledgeUpdate& population_knowledge_update() const;
   inline ::MsgsSimToClient::MsgPopulationKnowledgeUpdate* mutable_population_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgPopulationKnowledgeDestruction population_knowledge_destruction = 93;
+  // optional .MsgsSimToClient.MsgPopulationKnowledgeDestruction population_knowledge_destruction = 94;
   inline bool has_population_knowledge_destruction() const;
   inline void clear_population_knowledge_destruction();
-  static const int kPopulationKnowledgeDestructionFieldNumber = 93;
+  static const int kPopulationKnowledgeDestructionFieldNumber = 94;
   inline const ::MsgsSimToClient::MsgPopulationKnowledgeDestruction& population_knowledge_destruction() const;
   inline ::MsgsSimToClient::MsgPopulationKnowledgeDestruction* mutable_population_knowledge_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeCreation population_concentration_knowledge_creation = 94;
+  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeCreation population_concentration_knowledge_creation = 95;
   inline bool has_population_concentration_knowledge_creation() const;
   inline void clear_population_concentration_knowledge_creation();
-  static const int kPopulationConcentrationKnowledgeCreationFieldNumber = 94;
+  static const int kPopulationConcentrationKnowledgeCreationFieldNumber = 95;
   inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& population_concentration_knowledge_creation() const;
   inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation* mutable_population_concentration_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeDestruction population_concentration_knowledge_destruction = 95;
+  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeDestruction population_concentration_knowledge_destruction = 96;
   inline bool has_population_concentration_knowledge_destruction() const;
   inline void clear_population_concentration_knowledge_destruction();
-  static const int kPopulationConcentrationKnowledgeDestructionFieldNumber = 95;
+  static const int kPopulationConcentrationKnowledgeDestructionFieldNumber = 96;
   inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& population_concentration_knowledge_destruction() const;
   inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction* mutable_population_concentration_knowledge_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeUpdate population_concentration_knowledge_update = 96;
+  // optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeUpdate population_concentration_knowledge_update = 97;
   inline bool has_population_concentration_knowledge_update() const;
   inline void clear_population_concentration_knowledge_update();
-  static const int kPopulationConcentrationKnowledgeUpdateFieldNumber = 96;
+  static const int kPopulationConcentrationKnowledgeUpdateFieldNumber = 97;
   inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& population_concentration_knowledge_update() const;
   inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate* mutable_population_concentration_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeCreation population_flow_knowledge_creation = 97;
+  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeCreation population_flow_knowledge_creation = 98;
   inline bool has_population_flow_knowledge_creation() const;
   inline void clear_population_flow_knowledge_creation();
-  static const int kPopulationFlowKnowledgeCreationFieldNumber = 97;
+  static const int kPopulationFlowKnowledgeCreationFieldNumber = 98;
   inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& population_flow_knowledge_creation() const;
   inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation* mutable_population_flow_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeDestruction population_flow_knowledge_destruction = 98;
+  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeDestruction population_flow_knowledge_destruction = 99;
   inline bool has_population_flow_knowledge_destruction() const;
   inline void clear_population_flow_knowledge_destruction();
-  static const int kPopulationFlowKnowledgeDestructionFieldNumber = 98;
+  static const int kPopulationFlowKnowledgeDestructionFieldNumber = 99;
   inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& population_flow_knowledge_destruction() const;
   inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction* mutable_population_flow_knowledge_destruction();
   
-  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeUpdate population_flow_knowledge_update = 99;
+  // optional .MsgsSimToClient.MsgPopulationFlowKnowledgeUpdate population_flow_knowledge_update = 100;
   inline bool has_population_flow_knowledge_update() const;
   inline void clear_population_flow_knowledge_update();
-  static const int kPopulationFlowKnowledgeUpdateFieldNumber = 99;
+  static const int kPopulationFlowKnowledgeUpdateFieldNumber = 100;
   inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& population_flow_knowledge_update() const;
   inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate* mutable_population_flow_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgFolkCreation folk_creation = 100;
+  // optional .MsgsSimToClient.MsgFolkCreation folk_creation = 101;
   inline bool has_folk_creation() const;
   inline void clear_folk_creation();
-  static const int kFolkCreationFieldNumber = 100;
+  static const int kFolkCreationFieldNumber = 101;
   inline const ::MsgsSimToClient::MsgFolkCreation& folk_creation() const;
   inline ::MsgsSimToClient::MsgFolkCreation* mutable_folk_creation();
   
-  // optional .MsgsSimToClient.MsgFolkGraphUpdate folk_graph_update = 101;
+  // optional .MsgsSimToClient.MsgFolkGraphUpdate folk_graph_update = 102;
   inline bool has_folk_graph_update() const;
   inline void clear_folk_graph_update();
-  static const int kFolkGraphUpdateFieldNumber = 101;
+  static const int kFolkGraphUpdateFieldNumber = 102;
   inline const ::MsgsSimToClient::MsgFolkGraphUpdate& folk_graph_update() const;
   inline ::MsgsSimToClient::MsgFolkGraphUpdate* mutable_folk_graph_update();
   
-  // optional .MsgsSimToClient.MsgControlGlobalMeteoAck control_global_meteo_ack = 102;
+  // optional .MsgsSimToClient.MsgControlGlobalMeteoAck control_global_meteo_ack = 103;
   inline bool has_control_global_meteo_ack() const;
   inline void clear_control_global_meteo_ack();
-  static const int kControlGlobalMeteoAckFieldNumber = 102;
+  static const int kControlGlobalMeteoAckFieldNumber = 103;
   inline const ::MsgsSimToClient::MsgControlGlobalMeteoAck& control_global_meteo_ack() const;
   inline ::MsgsSimToClient::MsgControlGlobalMeteoAck* mutable_control_global_meteo_ack();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteoAck control_local_meteo_ack = 103;
+  // optional .MsgsSimToClient.MsgControlLocalMeteoAck control_local_meteo_ack = 104;
   inline bool has_control_local_meteo_ack() const;
   inline void clear_control_local_meteo_ack();
-  static const int kControlLocalMeteoAckFieldNumber = 103;
+  static const int kControlLocalMeteoAckFieldNumber = 104;
   inline const ::MsgsSimToClient::MsgControlLocalMeteoAck& control_local_meteo_ack() const;
   inline ::MsgsSimToClient::MsgControlLocalMeteoAck* mutable_control_local_meteo_ack();
   
-  // optional .MsgsSimToClient.MsgControlCheckPointSaveBegin control_checkpoint_save_begin = 104;
+  // optional .MsgsSimToClient.MsgControlCheckPointSaveBegin control_checkpoint_save_begin = 105;
   inline bool has_control_checkpoint_save_begin() const;
   inline void clear_control_checkpoint_save_begin();
-  static const int kControlCheckpointSaveBeginFieldNumber = 104;
+  static const int kControlCheckpointSaveBeginFieldNumber = 105;
   inline const ::MsgsSimToClient::MsgControlCheckPointSaveBegin& control_checkpoint_save_begin() const;
   inline ::MsgsSimToClient::MsgControlCheckPointSaveBegin* mutable_control_checkpoint_save_begin();
   
-  // optional .MsgsSimToClient.MsgControlCheckPointSetFrequencyAck control_checkpoint_set_frequency_ack = 105;
+  // optional .MsgsSimToClient.MsgControlCheckPointSetFrequencyAck control_checkpoint_set_frequency_ack = 106;
   inline bool has_control_checkpoint_set_frequency_ack() const;
   inline void clear_control_checkpoint_set_frequency_ack();
-  static const int kControlCheckpointSetFrequencyAckFieldNumber = 105;
+  static const int kControlCheckpointSetFrequencyAckFieldNumber = 106;
   inline const ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck& control_checkpoint_set_frequency_ack() const;
   inline ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck* mutable_control_checkpoint_set_frequency_ack();
   
-  // optional .MsgsSimToClient.MsgControlCheckPointSaveNowAck control_checkpoint_save_now_ack = 106;
+  // optional .MsgsSimToClient.MsgControlCheckPointSaveNowAck control_checkpoint_save_now_ack = 107;
   inline bool has_control_checkpoint_save_now_ack() const;
   inline void clear_control_checkpoint_save_now_ack();
-  static const int kControlCheckpointSaveNowAckFieldNumber = 106;
+  static const int kControlCheckpointSaveNowAckFieldNumber = 107;
   inline const ::MsgsSimToClient::MsgControlCheckPointSaveNowAck& control_checkpoint_save_now_ack() const;
   inline ::MsgsSimToClient::MsgControlCheckPointSaveNowAck* mutable_control_checkpoint_save_now_ack();
   
-  // optional .MsgsSimToClient.MsgControlSendCurrentStateBegin control_send_current_state_begin = 107;
+  // optional .MsgsSimToClient.MsgControlSendCurrentStateBegin control_send_current_state_begin = 108;
   inline bool has_control_send_current_state_begin() const;
   inline void clear_control_send_current_state_begin();
-  static const int kControlSendCurrentStateBeginFieldNumber = 107;
+  static const int kControlSendCurrentStateBeginFieldNumber = 108;
   inline const ::MsgsSimToClient::MsgControlSendCurrentStateBegin& control_send_current_state_begin() const;
   inline ::MsgsSimToClient::MsgControlSendCurrentStateBegin* mutable_control_send_current_state_begin();
   
-  // optional .MsgsSimToClient.MsgControlSendCurrentStateEnd control_send_current_state_end = 108;
+  // optional .MsgsSimToClient.MsgControlSendCurrentStateEnd control_send_current_state_end = 109;
   inline bool has_control_send_current_state_end() const;
   inline void clear_control_send_current_state_end();
-  static const int kControlSendCurrentStateEndFieldNumber = 108;
+  static const int kControlSendCurrentStateEndFieldNumber = 109;
   inline const ::MsgsSimToClient::MsgControlSendCurrentStateEnd& control_send_current_state_end() const;
   inline ::MsgsSimToClient::MsgControlSendCurrentStateEnd* mutable_control_send_current_state_end();
   
-  // optional .MsgsSimToClient.MsgUrbanCreation urban_creation = 109;
+  // optional .MsgsSimToClient.MsgUrbanCreation urban_creation = 110;
   inline bool has_urban_creation() const;
   inline void clear_urban_creation();
-  static const int kUrbanCreationFieldNumber = 109;
+  static const int kUrbanCreationFieldNumber = 110;
   inline const ::MsgsSimToClient::MsgUrbanCreation& urban_creation() const;
   inline ::MsgsSimToClient::MsgUrbanCreation* mutable_urban_creation();
   
-  // optional .MsgsSimToClient.MsgUrbanKnowledgeCreation urban_knowledge_creation = 110;
+  // optional .MsgsSimToClient.MsgUrbanKnowledgeCreation urban_knowledge_creation = 111;
   inline bool has_urban_knowledge_creation() const;
   inline void clear_urban_knowledge_creation();
-  static const int kUrbanKnowledgeCreationFieldNumber = 110;
+  static const int kUrbanKnowledgeCreationFieldNumber = 111;
   inline const ::MsgsSimToClient::MsgUrbanKnowledgeCreation& urban_knowledge_creation() const;
   inline ::MsgsSimToClient::MsgUrbanKnowledgeCreation* mutable_urban_knowledge_creation();
   
-  // optional .MsgsSimToClient.MsgUrbanKnowledgeUpdate urban_knowledge_update = 111;
+  // optional .MsgsSimToClient.MsgUrbanKnowledgeUpdate urban_knowledge_update = 112;
   inline bool has_urban_knowledge_update() const;
   inline void clear_urban_knowledge_update();
-  static const int kUrbanKnowledgeUpdateFieldNumber = 111;
+  static const int kUrbanKnowledgeUpdateFieldNumber = 112;
   inline const ::MsgsSimToClient::MsgUrbanKnowledgeUpdate& urban_knowledge_update() const;
   inline ::MsgsSimToClient::MsgUrbanKnowledgeUpdate* mutable_urban_knowledge_update();
   
-  // optional .MsgsSimToClient.MsgUrbanKnowledgeDestruction urban_knowledge_destruction = 112;
+  // optional .MsgsSimToClient.MsgUrbanKnowledgeDestruction urban_knowledge_destruction = 113;
   inline bool has_urban_knowledge_destruction() const;
   inline void clear_urban_knowledge_destruction();
-  static const int kUrbanKnowledgeDestructionFieldNumber = 112;
+  static const int kUrbanKnowledgeDestructionFieldNumber = 113;
   inline const ::MsgsSimToClient::MsgUrbanKnowledgeDestruction& urban_knowledge_destruction() const;
   inline ::MsgsSimToClient::MsgUrbanKnowledgeDestruction* mutable_urban_knowledge_destruction();
   
-  // optional .Common.StockResource stock_resource = 113;
+  // optional .Common.StockResource stock_resource = 114;
   inline bool has_stock_resource() const;
   inline void clear_stock_resource();
-  static const int kStockResourceFieldNumber = 113;
+  static const int kStockResourceFieldNumber = 114;
   inline const ::Common::StockResource& stock_resource() const;
   inline ::Common::StockResource* mutable_stock_resource();
   
-  // optional .MsgsSimToClient.MsgUrbanDetection urban_detection = 114;
+  // optional .MsgsSimToClient.MsgUrbanDetection urban_detection = 115;
   inline bool has_urban_detection() const;
   inline void clear_urban_detection();
-  static const int kUrbanDetectionFieldNumber = 114;
+  static const int kUrbanDetectionFieldNumber = 115;
   inline const ::MsgsSimToClient::MsgUrbanDetection& urban_detection() const;
   inline ::MsgsSimToClient::MsgUrbanDetection* mutable_urban_detection();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 115;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 116;
   inline bool has_knowledge_group_creation() const;
   inline void clear_knowledge_group_creation();
-  static const int kKnowledgeGroupCreationFieldNumber = 115;
+  static const int kKnowledgeGroupCreationFieldNumber = 116;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupCreation& knowledge_group_creation() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupCreation* mutable_knowledge_group_creation();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupUpdate knowledge_group_update = 116;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupUpdate knowledge_group_update = 117;
   inline bool has_knowledge_group_update() const;
   inline void clear_knowledge_group_update();
-  static const int kKnowledgeGroupUpdateFieldNumber = 116;
+  static const int kKnowledgeGroupUpdateFieldNumber = 117;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdate& knowledge_group_update() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupUpdate* mutable_knowledge_group_update();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupCreationAck knowledge_group_creation_ack = 117;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupCreationAck knowledge_group_creation_ack = 118;
   inline bool has_knowledge_group_creation_ack() const;
   inline void clear_knowledge_group_creation_ack();
-  static const int kKnowledgeGroupCreationAckFieldNumber = 117;
+  static const int kKnowledgeGroupCreationAckFieldNumber = 118;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupCreationAck& knowledge_group_creation_ack() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupCreationAck* mutable_knowledge_group_creation_ack();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupUpdateAck knowledge_group_update_ack = 118;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupUpdateAck knowledge_group_update_ack = 119;
   inline bool has_knowledge_group_update_ack() const;
   inline void clear_knowledge_group_update_ack();
-  static const int kKnowledgeGroupUpdateAckFieldNumber = 118;
+  static const int kKnowledgeGroupUpdateAckFieldNumber = 119;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck& knowledge_group_update_ack() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* mutable_knowledge_group_update_ack();
   
-  // optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 119;
+  // optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 120;
   inline bool has_knowledge_group_destruction() const;
   inline void clear_knowledge_group_destruction();
-  static const int kKnowledgeGroupDestructionFieldNumber = 119;
+  static const int kKnowledgeGroupDestructionFieldNumber = 120;
   inline const ::MsgsSimToClient::MsgKnowledgeGroupDestruction& knowledge_group_destruction() const;
   inline ::MsgsSimToClient::MsgKnowledgeGroupDestruction* mutable_knowledge_group_destruction();
   
-  // optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 120;
+  // optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 121;
   inline bool has_action_create_fire_order_ack() const;
   inline void clear_action_create_fire_order_ack();
-  static const int kActionCreateFireOrderAckFieldNumber = 120;
+  static const int kActionCreateFireOrderAckFieldNumber = 121;
   inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& action_create_fire_order_ack() const;
   inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* mutable_action_create_fire_order_ack();
   
-  // optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 121;
+  // optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 122;
   inline bool has_control_global_meteo() const;
   inline void clear_control_global_meteo();
-  static const int kControlGlobalMeteoFieldNumber = 121;
+  static const int kControlGlobalMeteoFieldNumber = 122;
   inline const ::MsgsSimToClient::MsgControlGlobalMeteo& control_global_meteo() const;
   inline ::MsgsSimToClient::MsgControlGlobalMeteo* mutable_control_global_meteo();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 122;
+  // optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 123;
   inline bool has_control_local_meteo_creation() const;
   inline void clear_control_local_meteo_creation();
-  static const int kControlLocalMeteoCreationFieldNumber = 122;
+  static const int kControlLocalMeteoCreationFieldNumber = 123;
   inline const ::MsgsSimToClient::MsgControlLocalMeteoCreation& control_local_meteo_creation() const;
   inline ::MsgsSimToClient::MsgControlLocalMeteoCreation* mutable_control_local_meteo_creation();
   
-  // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 123;
+  // optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 124;
   inline bool has_control_local_meteo_destruction() const;
   inline void clear_control_local_meteo_destruction();
-  static const int kControlLocalMeteoDestructionFieldNumber = 123;
+  static const int kControlLocalMeteoDestructionFieldNumber = 124;
   inline const ::MsgsSimToClient::MsgControlLocalMeteoDestruction& control_local_meteo_destruction() const;
   inline ::MsgsSimToClient::MsgControlLocalMeteoDestruction* mutable_control_local_meteo_destruction();
   
@@ -20196,6 +20331,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   ::MsgsSimToClient::MsgFragOrderAck* frag_order_ack_;
   ::MsgsSimToClient::MsgSetAutomatModeAck* set_automat_mode_ack_;
   ::MsgsSimToClient::MsgUnitCreationRequestAck* unit_creation_request_ack_;
+  ::MsgsSimToClient::MsgMagicActionAck* magic_action_ack_;
   ::MsgsSimToClient::MsgUnitMagicActionAck* unit_magic_action_ack_;
   ::MsgsSimToClient::MsgObjectMagicActionAck* object_magic_action_ack_;
   ::MsgsSimToClient::MsgPopulationMagicActionAck* population_magic_action_ack_;
@@ -20317,7 +20453,7 @@ class MsgSimToClient_Content : public ::google::protobuf::Message {
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(123 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(124 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -20648,6 +20784,27 @@ inline void MsgUnitCreationRequestAck::set_error(::MsgsSimToClient::UnitActionAc
   GOOGLE_DCHECK(::MsgsSimToClient::UnitActionAck_ErrorCode_IsValid(value));
   _set_bit(0);
   error_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgMagicActionAck
+
+// required .MsgsSimToClient.MsgMagicActionAck.ErrorCode error_code = 1;
+inline bool MsgMagicActionAck::has_error_code() const {
+  return _has_bit(0);
+}
+inline void MsgMagicActionAck::clear_error_code() {
+  error_code_ = 0;
+  _clear_bit(0);
+}
+inline ::MsgsSimToClient::MsgMagicActionAck_ErrorCode MsgMagicActionAck::error_code() const {
+  return static_cast< ::MsgsSimToClient::MsgMagicActionAck_ErrorCode >(error_code_);
+}
+inline void MsgMagicActionAck::set_error_code(::MsgsSimToClient::MsgMagicActionAck_ErrorCode value) {
+  GOOGLE_DCHECK(::MsgsSimToClient::MsgMagicActionAck_ErrorCode_IsValid(value));
+  _set_bit(0);
+  error_code_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -30778,1991 +30935,2008 @@ inline ::MsgsSimToClient::MsgUnitCreationRequestAck* MsgSimToClient_Content::mut
   return unit_creation_request_ack_;
 }
 
-// optional .MsgsSimToClient.MsgUnitMagicActionAck unit_magic_action_ack = 7;
-inline bool MsgSimToClient_Content::has_unit_magic_action_ack() const {
+// optional .MsgsSimToClient.MsgMagicActionAck magic_action_ack = 7;
+inline bool MsgSimToClient_Content::has_magic_action_ack() const {
   return _has_bit(6);
+}
+inline void MsgSimToClient_Content::clear_magic_action_ack() {
+  if (magic_action_ack_ != NULL) magic_action_ack_->::MsgsSimToClient::MsgMagicActionAck::Clear();
+  _clear_bit(6);
+}
+inline const ::MsgsSimToClient::MsgMagicActionAck& MsgSimToClient_Content::magic_action_ack() const {
+  return magic_action_ack_ != NULL ? *magic_action_ack_ : *default_instance_->magic_action_ack_;
+}
+inline ::MsgsSimToClient::MsgMagicActionAck* MsgSimToClient_Content::mutable_magic_action_ack() {
+  _set_bit(6);
+  if (magic_action_ack_ == NULL) magic_action_ack_ = new ::MsgsSimToClient::MsgMagicActionAck;
+  return magic_action_ack_;
+}
+
+// optional .MsgsSimToClient.MsgUnitMagicActionAck unit_magic_action_ack = 8;
+inline bool MsgSimToClient_Content::has_unit_magic_action_ack() const {
+  return _has_bit(7);
 }
 inline void MsgSimToClient_Content::clear_unit_magic_action_ack() {
   if (unit_magic_action_ack_ != NULL) unit_magic_action_ack_->::MsgsSimToClient::MsgUnitMagicActionAck::Clear();
-  _clear_bit(6);
+  _clear_bit(7);
 }
 inline const ::MsgsSimToClient::MsgUnitMagicActionAck& MsgSimToClient_Content::unit_magic_action_ack() const {
   return unit_magic_action_ack_ != NULL ? *unit_magic_action_ack_ : *default_instance_->unit_magic_action_ack_;
 }
 inline ::MsgsSimToClient::MsgUnitMagicActionAck* MsgSimToClient_Content::mutable_unit_magic_action_ack() {
-  _set_bit(6);
+  _set_bit(7);
   if (unit_magic_action_ack_ == NULL) unit_magic_action_ack_ = new ::MsgsSimToClient::MsgUnitMagicActionAck;
   return unit_magic_action_ack_;
 }
 
-// optional .MsgsSimToClient.MsgObjectMagicActionAck object_magic_action_ack = 8;
+// optional .MsgsSimToClient.MsgObjectMagicActionAck object_magic_action_ack = 9;
 inline bool MsgSimToClient_Content::has_object_magic_action_ack() const {
-  return _has_bit(7);
+  return _has_bit(8);
 }
 inline void MsgSimToClient_Content::clear_object_magic_action_ack() {
   if (object_magic_action_ack_ != NULL) object_magic_action_ack_->::MsgsSimToClient::MsgObjectMagicActionAck::Clear();
-  _clear_bit(7);
+  _clear_bit(8);
 }
 inline const ::MsgsSimToClient::MsgObjectMagicActionAck& MsgSimToClient_Content::object_magic_action_ack() const {
   return object_magic_action_ack_ != NULL ? *object_magic_action_ack_ : *default_instance_->object_magic_action_ack_;
 }
 inline ::MsgsSimToClient::MsgObjectMagicActionAck* MsgSimToClient_Content::mutable_object_magic_action_ack() {
-  _set_bit(7);
+  _set_bit(8);
   if (object_magic_action_ack_ == NULL) object_magic_action_ack_ = new ::MsgsSimToClient::MsgObjectMagicActionAck;
   return object_magic_action_ack_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationMagicActionAck population_magic_action_ack = 9;
+// optional .MsgsSimToClient.MsgPopulationMagicActionAck population_magic_action_ack = 10;
 inline bool MsgSimToClient_Content::has_population_magic_action_ack() const {
-  return _has_bit(8);
+  return _has_bit(9);
 }
 inline void MsgSimToClient_Content::clear_population_magic_action_ack() {
   if (population_magic_action_ack_ != NULL) population_magic_action_ack_->::MsgsSimToClient::MsgPopulationMagicActionAck::Clear();
-  _clear_bit(8);
+  _clear_bit(9);
 }
 inline const ::MsgsSimToClient::MsgPopulationMagicActionAck& MsgSimToClient_Content::population_magic_action_ack() const {
   return population_magic_action_ack_ != NULL ? *population_magic_action_ack_ : *default_instance_->population_magic_action_ack_;
 }
 inline ::MsgsSimToClient::MsgPopulationMagicActionAck* MsgSimToClient_Content::mutable_population_magic_action_ack() {
-  _set_bit(8);
+  _set_bit(9);
   if (population_magic_action_ack_ == NULL) population_magic_action_ack_ = new ::MsgsSimToClient::MsgPopulationMagicActionAck;
   return population_magic_action_ack_;
 }
 
-// optional .MsgsSimToClient.MsgChangeDiplomacyAck change_diplomacy_ack = 10;
+// optional .MsgsSimToClient.MsgChangeDiplomacyAck change_diplomacy_ack = 11;
 inline bool MsgSimToClient_Content::has_change_diplomacy_ack() const {
-  return _has_bit(9);
+  return _has_bit(10);
 }
 inline void MsgSimToClient_Content::clear_change_diplomacy_ack() {
   if (change_diplomacy_ack_ != NULL) change_diplomacy_ack_->::MsgsSimToClient::MsgChangeDiplomacyAck::Clear();
-  _clear_bit(9);
+  _clear_bit(10);
 }
 inline const ::MsgsSimToClient::MsgChangeDiplomacyAck& MsgSimToClient_Content::change_diplomacy_ack() const {
   return change_diplomacy_ack_ != NULL ? *change_diplomacy_ack_ : *default_instance_->change_diplomacy_ack_;
 }
 inline ::MsgsSimToClient::MsgChangeDiplomacyAck* MsgSimToClient_Content::mutable_change_diplomacy_ack() {
-  _set_bit(9);
+  _set_bit(10);
   if (change_diplomacy_ack_ == NULL) change_diplomacy_ack_ = new ::MsgsSimToClient::MsgChangeDiplomacyAck;
   return change_diplomacy_ack_;
 }
 
-// optional .MsgsSimToClient.MsgAutomatChangeKnowledgeGroupAck automat_change_knowledge_group_ack = 11;
+// optional .MsgsSimToClient.MsgAutomatChangeKnowledgeGroupAck automat_change_knowledge_group_ack = 12;
 inline bool MsgSimToClient_Content::has_automat_change_knowledge_group_ack() const {
-  return _has_bit(10);
+  return _has_bit(11);
 }
 inline void MsgSimToClient_Content::clear_automat_change_knowledge_group_ack() {
   if (automat_change_knowledge_group_ack_ != NULL) automat_change_knowledge_group_ack_->::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck::Clear();
-  _clear_bit(10);
+  _clear_bit(11);
 }
 inline const ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck& MsgSimToClient_Content::automat_change_knowledge_group_ack() const {
   return automat_change_knowledge_group_ack_ != NULL ? *automat_change_knowledge_group_ack_ : *default_instance_->automat_change_knowledge_group_ack_;
 }
 inline ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck* MsgSimToClient_Content::mutable_automat_change_knowledge_group_ack() {
-  _set_bit(10);
+  _set_bit(11);
   if (automat_change_knowledge_group_ack_ == NULL) automat_change_knowledge_group_ack_ = new ::MsgsSimToClient::MsgAutomatChangeKnowledgeGroupAck;
   return automat_change_knowledge_group_ack_;
 }
 
-// optional .MsgsSimToClient.MsgAutomatChangeLogisticLinksAck automat_change_logistic_links_ack = 12;
+// optional .MsgsSimToClient.MsgAutomatChangeLogisticLinksAck automat_change_logistic_links_ack = 13;
 inline bool MsgSimToClient_Content::has_automat_change_logistic_links_ack() const {
-  return _has_bit(11);
+  return _has_bit(12);
 }
 inline void MsgSimToClient_Content::clear_automat_change_logistic_links_ack() {
   if (automat_change_logistic_links_ack_ != NULL) automat_change_logistic_links_ack_->::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck::Clear();
-  _clear_bit(11);
+  _clear_bit(12);
 }
 inline const ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck& MsgSimToClient_Content::automat_change_logistic_links_ack() const {
   return automat_change_logistic_links_ack_ != NULL ? *automat_change_logistic_links_ack_ : *default_instance_->automat_change_logistic_links_ack_;
 }
 inline ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck* MsgSimToClient_Content::mutable_automat_change_logistic_links_ack() {
-  _set_bit(11);
+  _set_bit(12);
   if (automat_change_logistic_links_ack_ == NULL) automat_change_logistic_links_ack_ = new ::MsgsSimToClient::MsgAutomatChangeLogisticLinksAck;
   return automat_change_logistic_links_ack_;
 }
 
-// optional .MsgsSimToClient.MsgAutomatChangeSuperiorAck automat_change_superior_ack = 13;
+// optional .MsgsSimToClient.MsgAutomatChangeSuperiorAck automat_change_superior_ack = 14;
 inline bool MsgSimToClient_Content::has_automat_change_superior_ack() const {
-  return _has_bit(12);
+  return _has_bit(13);
 }
 inline void MsgSimToClient_Content::clear_automat_change_superior_ack() {
   if (automat_change_superior_ack_ != NULL) automat_change_superior_ack_->::MsgsSimToClient::MsgAutomatChangeSuperiorAck::Clear();
-  _clear_bit(12);
+  _clear_bit(13);
 }
 inline const ::MsgsSimToClient::MsgAutomatChangeSuperiorAck& MsgSimToClient_Content::automat_change_superior_ack() const {
   return automat_change_superior_ack_ != NULL ? *automat_change_superior_ack_ : *default_instance_->automat_change_superior_ack_;
 }
 inline ::MsgsSimToClient::MsgAutomatChangeSuperiorAck* MsgSimToClient_Content::mutable_automat_change_superior_ack() {
-  _set_bit(12);
+  _set_bit(13);
   if (automat_change_superior_ack_ == NULL) automat_change_superior_ack_ = new ::MsgsSimToClient::MsgAutomatChangeSuperiorAck;
   return automat_change_superior_ack_;
 }
 
-// optional .MsgsSimToClient.MsgUnitChangeSuperiorAck unit_change_superior_ack = 14;
+// optional .MsgsSimToClient.MsgUnitChangeSuperiorAck unit_change_superior_ack = 15;
 inline bool MsgSimToClient_Content::has_unit_change_superior_ack() const {
-  return _has_bit(13);
+  return _has_bit(14);
 }
 inline void MsgSimToClient_Content::clear_unit_change_superior_ack() {
   if (unit_change_superior_ack_ != NULL) unit_change_superior_ack_->::MsgsSimToClient::MsgUnitChangeSuperiorAck::Clear();
-  _clear_bit(13);
+  _clear_bit(14);
 }
 inline const ::MsgsSimToClient::MsgUnitChangeSuperiorAck& MsgSimToClient_Content::unit_change_superior_ack() const {
   return unit_change_superior_ack_ != NULL ? *unit_change_superior_ack_ : *default_instance_->unit_change_superior_ack_;
 }
 inline ::MsgsSimToClient::MsgUnitChangeSuperiorAck* MsgSimToClient_Content::mutable_unit_change_superior_ack() {
-  _set_bit(13);
+  _set_bit(14);
   if (unit_change_superior_ack_ == NULL) unit_change_superior_ack_ = new ::MsgsSimToClient::MsgUnitChangeSuperiorAck;
   return unit_change_superior_ack_;
 }
 
-// optional .MsgsSimToClient.MsgLogSupplyPushFlowAck log_supply_push_flow_ack = 15;
+// optional .MsgsSimToClient.MsgLogSupplyPushFlowAck log_supply_push_flow_ack = 16;
 inline bool MsgSimToClient_Content::has_log_supply_push_flow_ack() const {
-  return _has_bit(14);
+  return _has_bit(15);
 }
 inline void MsgSimToClient_Content::clear_log_supply_push_flow_ack() {
   if (log_supply_push_flow_ack_ != NULL) log_supply_push_flow_ack_->::MsgsSimToClient::MsgLogSupplyPushFlowAck::Clear();
-  _clear_bit(14);
+  _clear_bit(15);
 }
 inline const ::MsgsSimToClient::MsgLogSupplyPushFlowAck& MsgSimToClient_Content::log_supply_push_flow_ack() const {
   return log_supply_push_flow_ack_ != NULL ? *log_supply_push_flow_ack_ : *default_instance_->log_supply_push_flow_ack_;
 }
 inline ::MsgsSimToClient::MsgLogSupplyPushFlowAck* MsgSimToClient_Content::mutable_log_supply_push_flow_ack() {
-  _set_bit(14);
+  _set_bit(15);
   if (log_supply_push_flow_ack_ == NULL) log_supply_push_flow_ack_ = new ::MsgsSimToClient::MsgLogSupplyPushFlowAck;
   return log_supply_push_flow_ack_;
 }
 
-// optional .MsgsSimToClient.MsgLogSupplyChangeQuotasAck log_supply_change_quotas_ack = 16;
+// optional .MsgsSimToClient.MsgLogSupplyChangeQuotasAck log_supply_change_quotas_ack = 17;
 inline bool MsgSimToClient_Content::has_log_supply_change_quotas_ack() const {
-  return _has_bit(15);
+  return _has_bit(16);
 }
 inline void MsgSimToClient_Content::clear_log_supply_change_quotas_ack() {
   if (log_supply_change_quotas_ack_ != NULL) log_supply_change_quotas_ack_->::MsgsSimToClient::MsgLogSupplyChangeQuotasAck::Clear();
-  _clear_bit(15);
+  _clear_bit(16);
 }
 inline const ::MsgsSimToClient::MsgLogSupplyChangeQuotasAck& MsgSimToClient_Content::log_supply_change_quotas_ack() const {
   return log_supply_change_quotas_ack_ != NULL ? *log_supply_change_quotas_ack_ : *default_instance_->log_supply_change_quotas_ack_;
 }
 inline ::MsgsSimToClient::MsgLogSupplyChangeQuotasAck* MsgSimToClient_Content::mutable_log_supply_change_quotas_ack() {
-  _set_bit(15);
+  _set_bit(16);
   if (log_supply_change_quotas_ack_ == NULL) log_supply_change_quotas_ack_ = new ::MsgsSimToClient::MsgLogSupplyChangeQuotasAck;
   return log_supply_change_quotas_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlInformation control_information = 17;
+// optional .MsgsSimToClient.MsgControlInformation control_information = 18;
 inline bool MsgSimToClient_Content::has_control_information() const {
-  return _has_bit(16);
+  return _has_bit(17);
 }
 inline void MsgSimToClient_Content::clear_control_information() {
   if (control_information_ != NULL) control_information_->::MsgsSimToClient::MsgControlInformation::Clear();
-  _clear_bit(16);
+  _clear_bit(17);
 }
 inline const ::MsgsSimToClient::MsgControlInformation& MsgSimToClient_Content::control_information() const {
   return control_information_ != NULL ? *control_information_ : *default_instance_->control_information_;
 }
 inline ::MsgsSimToClient::MsgControlInformation* MsgSimToClient_Content::mutable_control_information() {
-  _set_bit(16);
+  _set_bit(17);
   if (control_information_ == NULL) control_information_ = new ::MsgsSimToClient::MsgControlInformation;
   return control_information_;
 }
 
-// optional .MsgsSimToClient.MsgControlProfilingInformation control_profiling_information = 18;
+// optional .MsgsSimToClient.MsgControlProfilingInformation control_profiling_information = 19;
 inline bool MsgSimToClient_Content::has_control_profiling_information() const {
-  return _has_bit(17);
+  return _has_bit(18);
 }
 inline void MsgSimToClient_Content::clear_control_profiling_information() {
   if (control_profiling_information_ != NULL) control_profiling_information_->::MsgsSimToClient::MsgControlProfilingInformation::Clear();
-  _clear_bit(17);
+  _clear_bit(18);
 }
 inline const ::MsgsSimToClient::MsgControlProfilingInformation& MsgSimToClient_Content::control_profiling_information() const {
   return control_profiling_information_ != NULL ? *control_profiling_information_ : *default_instance_->control_profiling_information_;
 }
 inline ::MsgsSimToClient::MsgControlProfilingInformation* MsgSimToClient_Content::mutable_control_profiling_information() {
-  _set_bit(17);
+  _set_bit(18);
   if (control_profiling_information_ == NULL) control_profiling_information_ = new ::MsgsSimToClient::MsgControlProfilingInformation;
   return control_profiling_information_;
 }
 
-// optional .MsgsSimToClient.MsgControlBeginTick control_begin_tick = 19;
+// optional .MsgsSimToClient.MsgControlBeginTick control_begin_tick = 20;
 inline bool MsgSimToClient_Content::has_control_begin_tick() const {
-  return _has_bit(18);
+  return _has_bit(19);
 }
 inline void MsgSimToClient_Content::clear_control_begin_tick() {
   if (control_begin_tick_ != NULL) control_begin_tick_->::MsgsSimToClient::MsgControlBeginTick::Clear();
-  _clear_bit(18);
+  _clear_bit(19);
 }
 inline const ::MsgsSimToClient::MsgControlBeginTick& MsgSimToClient_Content::control_begin_tick() const {
   return control_begin_tick_ != NULL ? *control_begin_tick_ : *default_instance_->control_begin_tick_;
 }
 inline ::MsgsSimToClient::MsgControlBeginTick* MsgSimToClient_Content::mutable_control_begin_tick() {
-  _set_bit(18);
+  _set_bit(19);
   if (control_begin_tick_ == NULL) control_begin_tick_ = new ::MsgsSimToClient::MsgControlBeginTick;
   return control_begin_tick_;
 }
 
-// optional .MsgsSimToClient.MsgControlEndTick control_end_tick = 20;
+// optional .MsgsSimToClient.MsgControlEndTick control_end_tick = 21;
 inline bool MsgSimToClient_Content::has_control_end_tick() const {
-  return _has_bit(19);
+  return _has_bit(20);
 }
 inline void MsgSimToClient_Content::clear_control_end_tick() {
   if (control_end_tick_ != NULL) control_end_tick_->::MsgsSimToClient::MsgControlEndTick::Clear();
-  _clear_bit(19);
+  _clear_bit(20);
 }
 inline const ::MsgsSimToClient::MsgControlEndTick& MsgSimToClient_Content::control_end_tick() const {
   return control_end_tick_ != NULL ? *control_end_tick_ : *default_instance_->control_end_tick_;
 }
 inline ::MsgsSimToClient::MsgControlEndTick* MsgSimToClient_Content::mutable_control_end_tick() {
-  _set_bit(19);
+  _set_bit(20);
   if (control_end_tick_ == NULL) control_end_tick_ = new ::MsgsSimToClient::MsgControlEndTick;
   return control_end_tick_;
 }
 
-// optional .MsgsSimToClient.MsgControlStopAck control_stop_ack = 21;
+// optional .MsgsSimToClient.MsgControlStopAck control_stop_ack = 22;
 inline bool MsgSimToClient_Content::has_control_stop_ack() const {
-  return _has_bit(20);
+  return _has_bit(21);
 }
 inline void MsgSimToClient_Content::clear_control_stop_ack() {
   if (control_stop_ack_ != NULL) control_stop_ack_->::MsgsSimToClient::MsgControlStopAck::Clear();
-  _clear_bit(20);
+  _clear_bit(21);
 }
 inline const ::MsgsSimToClient::MsgControlStopAck& MsgSimToClient_Content::control_stop_ack() const {
   return control_stop_ack_ != NULL ? *control_stop_ack_ : *default_instance_->control_stop_ack_;
 }
 inline ::MsgsSimToClient::MsgControlStopAck* MsgSimToClient_Content::mutable_control_stop_ack() {
-  _set_bit(20);
+  _set_bit(21);
   if (control_stop_ack_ == NULL) control_stop_ack_ = new ::MsgsSimToClient::MsgControlStopAck;
   return control_stop_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlPauseAck control_pause_ack = 22;
+// optional .MsgsSimToClient.MsgControlPauseAck control_pause_ack = 23;
 inline bool MsgSimToClient_Content::has_control_pause_ack() const {
-  return _has_bit(21);
+  return _has_bit(22);
 }
 inline void MsgSimToClient_Content::clear_control_pause_ack() {
   if (control_pause_ack_ != NULL) control_pause_ack_->::MsgsSimToClient::MsgControlPauseAck::Clear();
-  _clear_bit(21);
+  _clear_bit(22);
 }
 inline const ::MsgsSimToClient::MsgControlPauseAck& MsgSimToClient_Content::control_pause_ack() const {
   return control_pause_ack_ != NULL ? *control_pause_ack_ : *default_instance_->control_pause_ack_;
 }
 inline ::MsgsSimToClient::MsgControlPauseAck* MsgSimToClient_Content::mutable_control_pause_ack() {
-  _set_bit(21);
+  _set_bit(22);
   if (control_pause_ack_ == NULL) control_pause_ack_ = new ::MsgsSimToClient::MsgControlPauseAck;
   return control_pause_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlResumeAck control_resume_ack = 23;
+// optional .MsgsSimToClient.MsgControlResumeAck control_resume_ack = 24;
 inline bool MsgSimToClient_Content::has_control_resume_ack() const {
-  return _has_bit(22);
+  return _has_bit(23);
 }
 inline void MsgSimToClient_Content::clear_control_resume_ack() {
   if (control_resume_ack_ != NULL) control_resume_ack_->::MsgsSimToClient::MsgControlResumeAck::Clear();
-  _clear_bit(22);
+  _clear_bit(23);
 }
 inline const ::MsgsSimToClient::MsgControlResumeAck& MsgSimToClient_Content::control_resume_ack() const {
   return control_resume_ack_ != NULL ? *control_resume_ack_ : *default_instance_->control_resume_ack_;
 }
 inline ::MsgsSimToClient::MsgControlResumeAck* MsgSimToClient_Content::mutable_control_resume_ack() {
-  _set_bit(22);
+  _set_bit(23);
   if (control_resume_ack_ == NULL) control_resume_ack_ = new ::MsgsSimToClient::MsgControlResumeAck;
   return control_resume_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlChangeTimeFactorAck control_change_time_factor_ack = 24;
+// optional .MsgsSimToClient.MsgControlChangeTimeFactorAck control_change_time_factor_ack = 25;
 inline bool MsgSimToClient_Content::has_control_change_time_factor_ack() const {
-  return _has_bit(23);
+  return _has_bit(24);
 }
 inline void MsgSimToClient_Content::clear_control_change_time_factor_ack() {
   if (control_change_time_factor_ack_ != NULL) control_change_time_factor_ack_->::MsgsSimToClient::MsgControlChangeTimeFactorAck::Clear();
-  _clear_bit(23);
+  _clear_bit(24);
 }
 inline const ::MsgsSimToClient::MsgControlChangeTimeFactorAck& MsgSimToClient_Content::control_change_time_factor_ack() const {
   return control_change_time_factor_ack_ != NULL ? *control_change_time_factor_ack_ : *default_instance_->control_change_time_factor_ack_;
 }
 inline ::MsgsSimToClient::MsgControlChangeTimeFactorAck* MsgSimToClient_Content::mutable_control_change_time_factor_ack() {
-  _set_bit(23);
+  _set_bit(24);
   if (control_change_time_factor_ack_ == NULL) control_change_time_factor_ack_ = new ::MsgsSimToClient::MsgControlChangeTimeFactorAck;
   return control_change_time_factor_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlDatetimeChangeAck control_date_time_change_ack = 25;
+// optional .MsgsSimToClient.MsgControlDatetimeChangeAck control_date_time_change_ack = 26;
 inline bool MsgSimToClient_Content::has_control_date_time_change_ack() const {
-  return _has_bit(24);
+  return _has_bit(25);
 }
 inline void MsgSimToClient_Content::clear_control_date_time_change_ack() {
   if (control_date_time_change_ack_ != NULL) control_date_time_change_ack_->::MsgsSimToClient::MsgControlDatetimeChangeAck::Clear();
-  _clear_bit(24);
+  _clear_bit(25);
 }
 inline const ::MsgsSimToClient::MsgControlDatetimeChangeAck& MsgSimToClient_Content::control_date_time_change_ack() const {
   return control_date_time_change_ack_ != NULL ? *control_date_time_change_ack_ : *default_instance_->control_date_time_change_ack_;
 }
 inline ::MsgsSimToClient::MsgControlDatetimeChangeAck* MsgSimToClient_Content::mutable_control_date_time_change_ack() {
-  _set_bit(24);
+  _set_bit(25);
   if (control_date_time_change_ack_ == NULL) control_date_time_change_ack_ = new ::MsgsSimToClient::MsgControlDatetimeChangeAck;
   return control_date_time_change_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlCheckPointSaveEnd control_checkpoint_save_end = 26;
+// optional .MsgsSimToClient.MsgControlCheckPointSaveEnd control_checkpoint_save_end = 27;
 inline bool MsgSimToClient_Content::has_control_checkpoint_save_end() const {
-  return _has_bit(25);
+  return _has_bit(26);
 }
 inline void MsgSimToClient_Content::clear_control_checkpoint_save_end() {
   if (control_checkpoint_save_end_ != NULL) control_checkpoint_save_end_->::MsgsSimToClient::MsgControlCheckPointSaveEnd::Clear();
-  _clear_bit(25);
+  _clear_bit(26);
 }
 inline const ::MsgsSimToClient::MsgControlCheckPointSaveEnd& MsgSimToClient_Content::control_checkpoint_save_end() const {
   return control_checkpoint_save_end_ != NULL ? *control_checkpoint_save_end_ : *default_instance_->control_checkpoint_save_end_;
 }
 inline ::MsgsSimToClient::MsgControlCheckPointSaveEnd* MsgSimToClient_Content::mutable_control_checkpoint_save_end() {
-  _set_bit(25);
+  _set_bit(26);
   if (control_checkpoint_save_end_ == NULL) control_checkpoint_save_end_ = new ::MsgsSimToClient::MsgControlCheckPointSaveEnd;
   return control_checkpoint_save_end_;
 }
 
-// optional .Common.MsgFormationCreation formation_creation = 27;
+// optional .Common.MsgFormationCreation formation_creation = 28;
 inline bool MsgSimToClient_Content::has_formation_creation() const {
-  return _has_bit(26);
+  return _has_bit(27);
 }
 inline void MsgSimToClient_Content::clear_formation_creation() {
   if (formation_creation_ != NULL) formation_creation_->::Common::MsgFormationCreation::Clear();
-  _clear_bit(26);
+  _clear_bit(27);
 }
 inline const ::Common::MsgFormationCreation& MsgSimToClient_Content::formation_creation() const {
   return formation_creation_ != NULL ? *formation_creation_ : *default_instance_->formation_creation_;
 }
 inline ::Common::MsgFormationCreation* MsgSimToClient_Content::mutable_formation_creation() {
-  _set_bit(26);
+  _set_bit(27);
   if (formation_creation_ == NULL) formation_creation_ = new ::Common::MsgFormationCreation;
   return formation_creation_;
 }
 
-// optional .MsgsSimToClient.MsgTeamCreation side_creation = 28;
+// optional .MsgsSimToClient.MsgTeamCreation side_creation = 29;
 inline bool MsgSimToClient_Content::has_side_creation() const {
-  return _has_bit(27);
+  return _has_bit(28);
 }
 inline void MsgSimToClient_Content::clear_side_creation() {
   if (side_creation_ != NULL) side_creation_->::MsgsSimToClient::MsgTeamCreation::Clear();
-  _clear_bit(27);
+  _clear_bit(28);
 }
 inline const ::MsgsSimToClient::MsgTeamCreation& MsgSimToClient_Content::side_creation() const {
   return side_creation_ != NULL ? *side_creation_ : *default_instance_->side_creation_;
 }
 inline ::MsgsSimToClient::MsgTeamCreation* MsgSimToClient_Content::mutable_side_creation() {
-  _set_bit(27);
+  _set_bit(28);
   if (side_creation_ == NULL) side_creation_ = new ::MsgsSimToClient::MsgTeamCreation;
   return side_creation_;
 }
 
-// optional .MsgsSimToClient.MsgAutomatCreation automat_creation = 29;
+// optional .MsgsSimToClient.MsgAutomatCreation automat_creation = 30;
 inline bool MsgSimToClient_Content::has_automat_creation() const {
-  return _has_bit(28);
+  return _has_bit(29);
 }
 inline void MsgSimToClient_Content::clear_automat_creation() {
   if (automat_creation_ != NULL) automat_creation_->::MsgsSimToClient::MsgAutomatCreation::Clear();
-  _clear_bit(28);
+  _clear_bit(29);
 }
 inline const ::MsgsSimToClient::MsgAutomatCreation& MsgSimToClient_Content::automat_creation() const {
   return automat_creation_ != NULL ? *automat_creation_ : *default_instance_->automat_creation_;
 }
 inline ::MsgsSimToClient::MsgAutomatCreation* MsgSimToClient_Content::mutable_automat_creation() {
-  _set_bit(28);
+  _set_bit(29);
   if (automat_creation_ == NULL) automat_creation_ = new ::MsgsSimToClient::MsgAutomatCreation;
   return automat_creation_;
 }
 
-// optional .MsgsSimToClient.MsgAutomatAttributes automat_attributes = 30;
+// optional .MsgsSimToClient.MsgAutomatAttributes automat_attributes = 31;
 inline bool MsgSimToClient_Content::has_automat_attributes() const {
-  return _has_bit(29);
+  return _has_bit(30);
 }
 inline void MsgSimToClient_Content::clear_automat_attributes() {
   if (automat_attributes_ != NULL) automat_attributes_->::MsgsSimToClient::MsgAutomatAttributes::Clear();
-  _clear_bit(29);
+  _clear_bit(30);
 }
 inline const ::MsgsSimToClient::MsgAutomatAttributes& MsgSimToClient_Content::automat_attributes() const {
   return automat_attributes_ != NULL ? *automat_attributes_ : *default_instance_->automat_attributes_;
 }
 inline ::MsgsSimToClient::MsgAutomatAttributes* MsgSimToClient_Content::mutable_automat_attributes() {
-  _set_bit(29);
+  _set_bit(30);
   if (automat_attributes_ == NULL) automat_attributes_ = new ::MsgsSimToClient::MsgAutomatAttributes;
   return automat_attributes_;
 }
 
-// optional .MsgsSimToClient.MsgUnitCreation unit_creation = 31;
+// optional .MsgsSimToClient.MsgUnitCreation unit_creation = 32;
 inline bool MsgSimToClient_Content::has_unit_creation() const {
-  return _has_bit(30);
+  return _has_bit(31);
 }
 inline void MsgSimToClient_Content::clear_unit_creation() {
   if (unit_creation_ != NULL) unit_creation_->::MsgsSimToClient::MsgUnitCreation::Clear();
-  _clear_bit(30);
+  _clear_bit(31);
 }
 inline const ::MsgsSimToClient::MsgUnitCreation& MsgSimToClient_Content::unit_creation() const {
   return unit_creation_ != NULL ? *unit_creation_ : *default_instance_->unit_creation_;
 }
 inline ::MsgsSimToClient::MsgUnitCreation* MsgSimToClient_Content::mutable_unit_creation() {
-  _set_bit(30);
+  _set_bit(31);
   if (unit_creation_ == NULL) unit_creation_ = new ::MsgsSimToClient::MsgUnitCreation;
   return unit_creation_;
 }
 
-// optional .MsgsSimToClient.MsgUnitAttributes unit_attributes = 32;
+// optional .MsgsSimToClient.MsgUnitAttributes unit_attributes = 33;
 inline bool MsgSimToClient_Content::has_unit_attributes() const {
-  return _has_bit(31);
+  return _has_bit(32);
 }
 inline void MsgSimToClient_Content::clear_unit_attributes() {
   if (unit_attributes_ != NULL) unit_attributes_->::MsgsSimToClient::MsgUnitAttributes::Clear();
-  _clear_bit(31);
+  _clear_bit(32);
 }
 inline const ::MsgsSimToClient::MsgUnitAttributes& MsgSimToClient_Content::unit_attributes() const {
   return unit_attributes_ != NULL ? *unit_attributes_ : *default_instance_->unit_attributes_;
 }
 inline ::MsgsSimToClient::MsgUnitAttributes* MsgSimToClient_Content::mutable_unit_attributes() {
-  _set_bit(31);
+  _set_bit(32);
   if (unit_attributes_ == NULL) unit_attributes_ = new ::MsgsSimToClient::MsgUnitAttributes;
   return unit_attributes_;
 }
 
-// optional .MsgsSimToClient.MsgUnitPathFind unit_pathfind = 33;
+// optional .MsgsSimToClient.MsgUnitPathFind unit_pathfind = 34;
 inline bool MsgSimToClient_Content::has_unit_pathfind() const {
-  return _has_bit(32);
+  return _has_bit(33);
 }
 inline void MsgSimToClient_Content::clear_unit_pathfind() {
   if (unit_pathfind_ != NULL) unit_pathfind_->::MsgsSimToClient::MsgUnitPathFind::Clear();
-  _clear_bit(32);
+  _clear_bit(33);
 }
 inline const ::MsgsSimToClient::MsgUnitPathFind& MsgSimToClient_Content::unit_pathfind() const {
   return unit_pathfind_ != NULL ? *unit_pathfind_ : *default_instance_->unit_pathfind_;
 }
 inline ::MsgsSimToClient::MsgUnitPathFind* MsgSimToClient_Content::mutable_unit_pathfind() {
-  _set_bit(32);
+  _set_bit(33);
   if (unit_pathfind_ == NULL) unit_pathfind_ = new ::MsgsSimToClient::MsgUnitPathFind;
   return unit_pathfind_;
 }
 
-// optional .MsgsSimToClient.MsgUnitDestruction unit_destruction = 34;
+// optional .MsgsSimToClient.MsgUnitDestruction unit_destruction = 35;
 inline bool MsgSimToClient_Content::has_unit_destruction() const {
-  return _has_bit(33);
+  return _has_bit(34);
 }
 inline void MsgSimToClient_Content::clear_unit_destruction() {
   if (unit_destruction_ != NULL) unit_destruction_->::MsgsSimToClient::MsgUnitDestruction::Clear();
-  _clear_bit(33);
+  _clear_bit(34);
 }
 inline const ::MsgsSimToClient::MsgUnitDestruction& MsgSimToClient_Content::unit_destruction() const {
   return unit_destruction_ != NULL ? *unit_destruction_ : *default_instance_->unit_destruction_;
 }
 inline ::MsgsSimToClient::MsgUnitDestruction* MsgSimToClient_Content::mutable_unit_destruction() {
-  _set_bit(33);
+  _set_bit(34);
   if (unit_destruction_ == NULL) unit_destruction_ = new ::MsgsSimToClient::MsgUnitDestruction;
   return unit_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgUnitEnvironmentType unit_environment_type = 35;
+// optional .MsgsSimToClient.MsgUnitEnvironmentType unit_environment_type = 36;
 inline bool MsgSimToClient_Content::has_unit_environment_type() const {
-  return _has_bit(34);
+  return _has_bit(35);
 }
 inline void MsgSimToClient_Content::clear_unit_environment_type() {
   if (unit_environment_type_ != NULL) unit_environment_type_->::MsgsSimToClient::MsgUnitEnvironmentType::Clear();
-  _clear_bit(34);
+  _clear_bit(35);
 }
 inline const ::MsgsSimToClient::MsgUnitEnvironmentType& MsgSimToClient_Content::unit_environment_type() const {
   return unit_environment_type_ != NULL ? *unit_environment_type_ : *default_instance_->unit_environment_type_;
 }
 inline ::MsgsSimToClient::MsgUnitEnvironmentType* MsgSimToClient_Content::mutable_unit_environment_type() {
-  _set_bit(34);
+  _set_bit(35);
   if (unit_environment_type_ == NULL) unit_environment_type_ = new ::MsgsSimToClient::MsgUnitEnvironmentType;
   return unit_environment_type_;
 }
 
-// optional .Common.MsgChangeDiplomacy change_diplomacy = 36;
+// optional .Common.MsgChangeDiplomacy change_diplomacy = 37;
 inline bool MsgSimToClient_Content::has_change_diplomacy() const {
-  return _has_bit(35);
+  return _has_bit(36);
 }
 inline void MsgSimToClient_Content::clear_change_diplomacy() {
   if (change_diplomacy_ != NULL) change_diplomacy_->::Common::MsgChangeDiplomacy::Clear();
-  _clear_bit(35);
+  _clear_bit(36);
 }
 inline const ::Common::MsgChangeDiplomacy& MsgSimToClient_Content::change_diplomacy() const {
   return change_diplomacy_ != NULL ? *change_diplomacy_ : *default_instance_->change_diplomacy_;
 }
 inline ::Common::MsgChangeDiplomacy* MsgSimToClient_Content::mutable_change_diplomacy() {
-  _set_bit(35);
+  _set_bit(36);
   if (change_diplomacy_ == NULL) change_diplomacy_ = new ::Common::MsgChangeDiplomacy;
   return change_diplomacy_;
 }
 
-// optional .Common.MsgUnitChangeSuperior unit_change_superior = 37;
+// optional .Common.MsgUnitChangeSuperior unit_change_superior = 38;
 inline bool MsgSimToClient_Content::has_unit_change_superior() const {
-  return _has_bit(36);
+  return _has_bit(37);
 }
 inline void MsgSimToClient_Content::clear_unit_change_superior() {
   if (unit_change_superior_ != NULL) unit_change_superior_->::Common::MsgUnitChangeSuperior::Clear();
-  _clear_bit(36);
+  _clear_bit(37);
 }
 inline const ::Common::MsgUnitChangeSuperior& MsgSimToClient_Content::unit_change_superior() const {
   return unit_change_superior_ != NULL ? *unit_change_superior_ : *default_instance_->unit_change_superior_;
 }
 inline ::Common::MsgUnitChangeSuperior* MsgSimToClient_Content::mutable_unit_change_superior() {
-  _set_bit(36);
+  _set_bit(37);
   if (unit_change_superior_ == NULL) unit_change_superior_ = new ::Common::MsgUnitChangeSuperior;
   return unit_change_superior_;
 }
 
-// optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 38;
+// optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 39;
 inline bool MsgSimToClient_Content::has_automat_change_logistic_links() const {
-  return _has_bit(37);
+  return _has_bit(38);
 }
 inline void MsgSimToClient_Content::clear_automat_change_logistic_links() {
   if (automat_change_logistic_links_ != NULL) automat_change_logistic_links_->::Common::MsgAutomatChangeLogisticLinks::Clear();
-  _clear_bit(37);
+  _clear_bit(38);
 }
 inline const ::Common::MsgAutomatChangeLogisticLinks& MsgSimToClient_Content::automat_change_logistic_links() const {
   return automat_change_logistic_links_ != NULL ? *automat_change_logistic_links_ : *default_instance_->automat_change_logistic_links_;
 }
 inline ::Common::MsgAutomatChangeLogisticLinks* MsgSimToClient_Content::mutable_automat_change_logistic_links() {
-  _set_bit(37);
+  _set_bit(38);
   if (automat_change_logistic_links_ == NULL) automat_change_logistic_links_ = new ::Common::MsgAutomatChangeLogisticLinks;
   return automat_change_logistic_links_;
 }
 
-// optional .Common.MsgAutomatChangeKnowledgeGroup automat_change_knowledge_group = 39;
+// optional .Common.MsgAutomatChangeKnowledgeGroup automat_change_knowledge_group = 40;
 inline bool MsgSimToClient_Content::has_automat_change_knowledge_group() const {
-  return _has_bit(38);
+  return _has_bit(39);
 }
 inline void MsgSimToClient_Content::clear_automat_change_knowledge_group() {
   if (automat_change_knowledge_group_ != NULL) automat_change_knowledge_group_->::Common::MsgAutomatChangeKnowledgeGroup::Clear();
-  _clear_bit(38);
+  _clear_bit(39);
 }
 inline const ::Common::MsgAutomatChangeKnowledgeGroup& MsgSimToClient_Content::automat_change_knowledge_group() const {
   return automat_change_knowledge_group_ != NULL ? *automat_change_knowledge_group_ : *default_instance_->automat_change_knowledge_group_;
 }
 inline ::Common::MsgAutomatChangeKnowledgeGroup* MsgSimToClient_Content::mutable_automat_change_knowledge_group() {
-  _set_bit(38);
+  _set_bit(39);
   if (automat_change_knowledge_group_ == NULL) automat_change_knowledge_group_ = new ::Common::MsgAutomatChangeKnowledgeGroup;
   return automat_change_knowledge_group_;
 }
 
-// optional .Common.MsgAutomatChangeSuperior automat_change_superior = 40;
+// optional .Common.MsgAutomatChangeSuperior automat_change_superior = 41;
 inline bool MsgSimToClient_Content::has_automat_change_superior() const {
-  return _has_bit(39);
+  return _has_bit(40);
 }
 inline void MsgSimToClient_Content::clear_automat_change_superior() {
   if (automat_change_superior_ != NULL) automat_change_superior_->::Common::MsgAutomatChangeSuperior::Clear();
-  _clear_bit(39);
+  _clear_bit(40);
 }
 inline const ::Common::MsgAutomatChangeSuperior& MsgSimToClient_Content::automat_change_superior() const {
   return automat_change_superior_ != NULL ? *automat_change_superior_ : *default_instance_->automat_change_superior_;
 }
 inline ::Common::MsgAutomatChangeSuperior* MsgSimToClient_Content::mutable_automat_change_superior() {
-  _set_bit(39);
+  _set_bit(40);
   if (automat_change_superior_ == NULL) automat_change_superior_ = new ::Common::MsgAutomatChangeSuperior;
   return automat_change_superior_;
 }
 
-// optional .MsgsSimToClient.MsgUnitKnowledgeCreation unit_knowledge_creation = 41;
+// optional .MsgsSimToClient.MsgUnitKnowledgeCreation unit_knowledge_creation = 42;
 inline bool MsgSimToClient_Content::has_unit_knowledge_creation() const {
-  return _has_bit(40);
+  return _has_bit(41);
 }
 inline void MsgSimToClient_Content::clear_unit_knowledge_creation() {
   if (unit_knowledge_creation_ != NULL) unit_knowledge_creation_->::MsgsSimToClient::MsgUnitKnowledgeCreation::Clear();
-  _clear_bit(40);
+  _clear_bit(41);
 }
 inline const ::MsgsSimToClient::MsgUnitKnowledgeCreation& MsgSimToClient_Content::unit_knowledge_creation() const {
   return unit_knowledge_creation_ != NULL ? *unit_knowledge_creation_ : *default_instance_->unit_knowledge_creation_;
 }
 inline ::MsgsSimToClient::MsgUnitKnowledgeCreation* MsgSimToClient_Content::mutable_unit_knowledge_creation() {
-  _set_bit(40);
+  _set_bit(41);
   if (unit_knowledge_creation_ == NULL) unit_knowledge_creation_ = new ::MsgsSimToClient::MsgUnitKnowledgeCreation;
   return unit_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgUnitKnowledgeUpdate unit_knowledge_update = 42;
+// optional .MsgsSimToClient.MsgUnitKnowledgeUpdate unit_knowledge_update = 43;
 inline bool MsgSimToClient_Content::has_unit_knowledge_update() const {
-  return _has_bit(41);
+  return _has_bit(42);
 }
 inline void MsgSimToClient_Content::clear_unit_knowledge_update() {
   if (unit_knowledge_update_ != NULL) unit_knowledge_update_->::MsgsSimToClient::MsgUnitKnowledgeUpdate::Clear();
-  _clear_bit(41);
+  _clear_bit(42);
 }
 inline const ::MsgsSimToClient::MsgUnitKnowledgeUpdate& MsgSimToClient_Content::unit_knowledge_update() const {
   return unit_knowledge_update_ != NULL ? *unit_knowledge_update_ : *default_instance_->unit_knowledge_update_;
 }
 inline ::MsgsSimToClient::MsgUnitKnowledgeUpdate* MsgSimToClient_Content::mutable_unit_knowledge_update() {
-  _set_bit(41);
+  _set_bit(42);
   if (unit_knowledge_update_ == NULL) unit_knowledge_update_ = new ::MsgsSimToClient::MsgUnitKnowledgeUpdate;
   return unit_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgUnitKnowledgeDestruction unit_knowledge_destruction = 43;
+// optional .MsgsSimToClient.MsgUnitKnowledgeDestruction unit_knowledge_destruction = 44;
 inline bool MsgSimToClient_Content::has_unit_knowledge_destruction() const {
-  return _has_bit(42);
+  return _has_bit(43);
 }
 inline void MsgSimToClient_Content::clear_unit_knowledge_destruction() {
   if (unit_knowledge_destruction_ != NULL) unit_knowledge_destruction_->::MsgsSimToClient::MsgUnitKnowledgeDestruction::Clear();
-  _clear_bit(42);
+  _clear_bit(43);
 }
 inline const ::MsgsSimToClient::MsgUnitKnowledgeDestruction& MsgSimToClient_Content::unit_knowledge_destruction() const {
   return unit_knowledge_destruction_ != NULL ? *unit_knowledge_destruction_ : *default_instance_->unit_knowledge_destruction_;
 }
 inline ::MsgsSimToClient::MsgUnitKnowledgeDestruction* MsgSimToClient_Content::mutable_unit_knowledge_destruction() {
-  _set_bit(42);
+  _set_bit(43);
   if (unit_knowledge_destruction_ == NULL) unit_knowledge_destruction_ = new ::MsgsSimToClient::MsgUnitKnowledgeDestruction;
   return unit_knowledge_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgStartUnitFire start_unit_fire = 44;
+// optional .MsgsSimToClient.MsgStartUnitFire start_unit_fire = 45;
 inline bool MsgSimToClient_Content::has_start_unit_fire() const {
-  return _has_bit(43);
+  return _has_bit(44);
 }
 inline void MsgSimToClient_Content::clear_start_unit_fire() {
   if (start_unit_fire_ != NULL) start_unit_fire_->::MsgsSimToClient::MsgStartUnitFire::Clear();
-  _clear_bit(43);
+  _clear_bit(44);
 }
 inline const ::MsgsSimToClient::MsgStartUnitFire& MsgSimToClient_Content::start_unit_fire() const {
   return start_unit_fire_ != NULL ? *start_unit_fire_ : *default_instance_->start_unit_fire_;
 }
 inline ::MsgsSimToClient::MsgStartUnitFire* MsgSimToClient_Content::mutable_start_unit_fire() {
-  _set_bit(43);
+  _set_bit(44);
   if (start_unit_fire_ == NULL) start_unit_fire_ = new ::MsgsSimToClient::MsgStartUnitFire;
   return start_unit_fire_;
 }
 
-// optional .MsgsSimToClient.MsgStopUnitFire stop_unit_fire = 45;
+// optional .MsgsSimToClient.MsgStopUnitFire stop_unit_fire = 46;
 inline bool MsgSimToClient_Content::has_stop_unit_fire() const {
-  return _has_bit(44);
+  return _has_bit(45);
 }
 inline void MsgSimToClient_Content::clear_stop_unit_fire() {
   if (stop_unit_fire_ != NULL) stop_unit_fire_->::MsgsSimToClient::MsgStopUnitFire::Clear();
-  _clear_bit(44);
+  _clear_bit(45);
 }
 inline const ::MsgsSimToClient::MsgStopUnitFire& MsgSimToClient_Content::stop_unit_fire() const {
   return stop_unit_fire_ != NULL ? *stop_unit_fire_ : *default_instance_->stop_unit_fire_;
 }
 inline ::MsgsSimToClient::MsgStopUnitFire* MsgSimToClient_Content::mutable_stop_unit_fire() {
-  _set_bit(44);
+  _set_bit(45);
   if (stop_unit_fire_ == NULL) stop_unit_fire_ = new ::MsgsSimToClient::MsgStopUnitFire;
   return stop_unit_fire_;
 }
 
-// optional .MsgsSimToClient.MsgStartPopulationFire start_population_fire = 46;
+// optional .MsgsSimToClient.MsgStartPopulationFire start_population_fire = 47;
 inline bool MsgSimToClient_Content::has_start_population_fire() const {
-  return _has_bit(45);
+  return _has_bit(46);
 }
 inline void MsgSimToClient_Content::clear_start_population_fire() {
   if (start_population_fire_ != NULL) start_population_fire_->::MsgsSimToClient::MsgStartPopulationFire::Clear();
-  _clear_bit(45);
+  _clear_bit(46);
 }
 inline const ::MsgsSimToClient::MsgStartPopulationFire& MsgSimToClient_Content::start_population_fire() const {
   return start_population_fire_ != NULL ? *start_population_fire_ : *default_instance_->start_population_fire_;
 }
 inline ::MsgsSimToClient::MsgStartPopulationFire* MsgSimToClient_Content::mutable_start_population_fire() {
-  _set_bit(45);
+  _set_bit(46);
   if (start_population_fire_ == NULL) start_population_fire_ = new ::MsgsSimToClient::MsgStartPopulationFire;
   return start_population_fire_;
 }
 
-// optional .MsgsSimToClient.MsgStopPopulationFire stop_population_fire = 47;
+// optional .MsgsSimToClient.MsgStopPopulationFire stop_population_fire = 48;
 inline bool MsgSimToClient_Content::has_stop_population_fire() const {
-  return _has_bit(46);
+  return _has_bit(47);
 }
 inline void MsgSimToClient_Content::clear_stop_population_fire() {
   if (stop_population_fire_ != NULL) stop_population_fire_->::MsgsSimToClient::MsgStopPopulationFire::Clear();
-  _clear_bit(46);
+  _clear_bit(47);
 }
 inline const ::MsgsSimToClient::MsgStopPopulationFire& MsgSimToClient_Content::stop_population_fire() const {
   return stop_population_fire_ != NULL ? *stop_population_fire_ : *default_instance_->stop_population_fire_;
 }
 inline ::MsgsSimToClient::MsgStopPopulationFire* MsgSimToClient_Content::mutable_stop_population_fire() {
-  _set_bit(46);
+  _set_bit(47);
   if (stop_population_fire_ == NULL) stop_population_fire_ = new ::MsgsSimToClient::MsgStopPopulationFire;
   return stop_population_fire_;
 }
 
-// optional .MsgsSimToClient.MsgExplosion explosion = 48;
+// optional .MsgsSimToClient.MsgExplosion explosion = 49;
 inline bool MsgSimToClient_Content::has_explosion() const {
-  return _has_bit(47);
+  return _has_bit(48);
 }
 inline void MsgSimToClient_Content::clear_explosion() {
   if (explosion_ != NULL) explosion_->::MsgsSimToClient::MsgExplosion::Clear();
-  _clear_bit(47);
+  _clear_bit(48);
 }
 inline const ::MsgsSimToClient::MsgExplosion& MsgSimToClient_Content::explosion() const {
   return explosion_ != NULL ? *explosion_ : *default_instance_->explosion_;
 }
 inline ::MsgsSimToClient::MsgExplosion* MsgSimToClient_Content::mutable_explosion() {
-  _set_bit(47);
+  _set_bit(48);
   if (explosion_ == NULL) explosion_ = new ::MsgsSimToClient::MsgExplosion;
   return explosion_;
 }
 
-// optional .MsgsSimToClient.MsgStartFireEffect start_fire_effect = 49;
+// optional .MsgsSimToClient.MsgStartFireEffect start_fire_effect = 50;
 inline bool MsgSimToClient_Content::has_start_fire_effect() const {
-  return _has_bit(48);
+  return _has_bit(49);
 }
 inline void MsgSimToClient_Content::clear_start_fire_effect() {
   if (start_fire_effect_ != NULL) start_fire_effect_->::MsgsSimToClient::MsgStartFireEffect::Clear();
-  _clear_bit(48);
+  _clear_bit(49);
 }
 inline const ::MsgsSimToClient::MsgStartFireEffect& MsgSimToClient_Content::start_fire_effect() const {
   return start_fire_effect_ != NULL ? *start_fire_effect_ : *default_instance_->start_fire_effect_;
 }
 inline ::MsgsSimToClient::MsgStartFireEffect* MsgSimToClient_Content::mutable_start_fire_effect() {
-  _set_bit(48);
+  _set_bit(49);
   if (start_fire_effect_ == NULL) start_fire_effect_ = new ::MsgsSimToClient::MsgStartFireEffect;
   return start_fire_effect_;
 }
 
-// optional .MsgsSimToClient.MsgStopFireEffect stop_fire_effect = 50;
+// optional .MsgsSimToClient.MsgStopFireEffect stop_fire_effect = 51;
 inline bool MsgSimToClient_Content::has_stop_fire_effect() const {
-  return _has_bit(49);
+  return _has_bit(50);
 }
 inline void MsgSimToClient_Content::clear_stop_fire_effect() {
   if (stop_fire_effect_ != NULL) stop_fire_effect_->::MsgsSimToClient::MsgStopFireEffect::Clear();
-  _clear_bit(49);
+  _clear_bit(50);
 }
 inline const ::MsgsSimToClient::MsgStopFireEffect& MsgSimToClient_Content::stop_fire_effect() const {
   return stop_fire_effect_ != NULL ? *stop_fire_effect_ : *default_instance_->stop_fire_effect_;
 }
 inline ::MsgsSimToClient::MsgStopFireEffect* MsgSimToClient_Content::mutable_stop_fire_effect() {
-  _set_bit(49);
+  _set_bit(50);
   if (stop_fire_effect_ == NULL) stop_fire_effect_ = new ::MsgsSimToClient::MsgStopFireEffect;
   return stop_fire_effect_;
 }
 
-// optional .MsgsSimToClient.MsgReport report = 51;
+// optional .MsgsSimToClient.MsgReport report = 52;
 inline bool MsgSimToClient_Content::has_report() const {
-  return _has_bit(50);
+  return _has_bit(51);
 }
 inline void MsgSimToClient_Content::clear_report() {
   if (report_ != NULL) report_->::MsgsSimToClient::MsgReport::Clear();
-  _clear_bit(50);
+  _clear_bit(51);
 }
 inline const ::MsgsSimToClient::MsgReport& MsgSimToClient_Content::report() const {
   return report_ != NULL ? *report_ : *default_instance_->report_;
 }
 inline ::MsgsSimToClient::MsgReport* MsgSimToClient_Content::mutable_report() {
-  _set_bit(50);
+  _set_bit(51);
   if (report_ == NULL) report_ = new ::MsgsSimToClient::MsgReport;
   return report_;
 }
 
-// optional .MsgsSimToClient.MsgInvalidateReport invalidate_report = 52;
+// optional .MsgsSimToClient.MsgInvalidateReport invalidate_report = 53;
 inline bool MsgSimToClient_Content::has_invalidate_report() const {
-  return _has_bit(51);
+  return _has_bit(52);
 }
 inline void MsgSimToClient_Content::clear_invalidate_report() {
   if (invalidate_report_ != NULL) invalidate_report_->::MsgsSimToClient::MsgInvalidateReport::Clear();
-  _clear_bit(51);
+  _clear_bit(52);
 }
 inline const ::MsgsSimToClient::MsgInvalidateReport& MsgSimToClient_Content::invalidate_report() const {
   return invalidate_report_ != NULL ? *invalidate_report_ : *default_instance_->invalidate_report_;
 }
 inline ::MsgsSimToClient::MsgInvalidateReport* MsgSimToClient_Content::mutable_invalidate_report() {
-  _set_bit(51);
+  _set_bit(52);
   if (invalidate_report_ == NULL) invalidate_report_ = new ::MsgsSimToClient::MsgInvalidateReport;
   return invalidate_report_;
 }
 
-// optional .MsgsSimToClient.MsgTrace trace = 53;
+// optional .MsgsSimToClient.MsgTrace trace = 54;
 inline bool MsgSimToClient_Content::has_trace() const {
-  return _has_bit(52);
+  return _has_bit(53);
 }
 inline void MsgSimToClient_Content::clear_trace() {
   if (trace_ != NULL) trace_->::MsgsSimToClient::MsgTrace::Clear();
-  _clear_bit(52);
+  _clear_bit(53);
 }
 inline const ::MsgsSimToClient::MsgTrace& MsgSimToClient_Content::trace() const {
   return trace_ != NULL ? *trace_ : *default_instance_->trace_;
 }
 inline ::MsgsSimToClient::MsgTrace* MsgSimToClient_Content::mutable_trace() {
-  _set_bit(52);
+  _set_bit(53);
   if (trace_ == NULL) trace_ = new ::MsgsSimToClient::MsgTrace;
   return trace_;
 }
 
-// optional .MsgsSimToClient.MsgDecisionalState decisional_state = 54;
+// optional .MsgsSimToClient.MsgDecisionalState decisional_state = 55;
 inline bool MsgSimToClient_Content::has_decisional_state() const {
-  return _has_bit(53);
+  return _has_bit(54);
 }
 inline void MsgSimToClient_Content::clear_decisional_state() {
   if (decisional_state_ != NULL) decisional_state_->::MsgsSimToClient::MsgDecisionalState::Clear();
-  _clear_bit(53);
+  _clear_bit(54);
 }
 inline const ::MsgsSimToClient::MsgDecisionalState& MsgSimToClient_Content::decisional_state() const {
   return decisional_state_ != NULL ? *decisional_state_ : *default_instance_->decisional_state_;
 }
 inline ::MsgsSimToClient::MsgDecisionalState* MsgSimToClient_Content::mutable_decisional_state() {
-  _set_bit(53);
+  _set_bit(54);
   if (decisional_state_ == NULL) decisional_state_ = new ::MsgsSimToClient::MsgDecisionalState;
   return decisional_state_;
 }
 
-// optional .MsgsSimToClient.MsgDebugPoints debug_points = 55;
+// optional .MsgsSimToClient.MsgDebugPoints debug_points = 56;
 inline bool MsgSimToClient_Content::has_debug_points() const {
-  return _has_bit(54);
+  return _has_bit(55);
 }
 inline void MsgSimToClient_Content::clear_debug_points() {
   if (debug_points_ != NULL) debug_points_->::MsgsSimToClient::MsgDebugPoints::Clear();
-  _clear_bit(54);
+  _clear_bit(55);
 }
 inline const ::MsgsSimToClient::MsgDebugPoints& MsgSimToClient_Content::debug_points() const {
   return debug_points_ != NULL ? *debug_points_ : *default_instance_->debug_points_;
 }
 inline ::MsgsSimToClient::MsgDebugPoints* MsgSimToClient_Content::mutable_debug_points() {
-  _set_bit(54);
+  _set_bit(55);
   if (debug_points_ == NULL) debug_points_ = new ::MsgsSimToClient::MsgDebugPoints;
   return debug_points_;
 }
 
-// optional .MsgsSimToClient.MsgUnitVisionCones unit_vision_cones = 56;
+// optional .MsgsSimToClient.MsgUnitVisionCones unit_vision_cones = 57;
 inline bool MsgSimToClient_Content::has_unit_vision_cones() const {
-  return _has_bit(55);
+  return _has_bit(56);
 }
 inline void MsgSimToClient_Content::clear_unit_vision_cones() {
   if (unit_vision_cones_ != NULL) unit_vision_cones_->::MsgsSimToClient::MsgUnitVisionCones::Clear();
-  _clear_bit(55);
+  _clear_bit(56);
 }
 inline const ::MsgsSimToClient::MsgUnitVisionCones& MsgSimToClient_Content::unit_vision_cones() const {
   return unit_vision_cones_ != NULL ? *unit_vision_cones_ : *default_instance_->unit_vision_cones_;
 }
 inline ::MsgsSimToClient::MsgUnitVisionCones* MsgSimToClient_Content::mutable_unit_vision_cones() {
-  _set_bit(55);
+  _set_bit(56);
   if (unit_vision_cones_ == NULL) unit_vision_cones_ = new ::MsgsSimToClient::MsgUnitVisionCones;
   return unit_vision_cones_;
 }
 
-// optional .MsgsSimToClient.MsgUnitDetection unit_detection = 57;
+// optional .MsgsSimToClient.MsgUnitDetection unit_detection = 58;
 inline bool MsgSimToClient_Content::has_unit_detection() const {
-  return _has_bit(56);
+  return _has_bit(57);
 }
 inline void MsgSimToClient_Content::clear_unit_detection() {
   if (unit_detection_ != NULL) unit_detection_->::MsgsSimToClient::MsgUnitDetection::Clear();
-  _clear_bit(56);
+  _clear_bit(57);
 }
 inline const ::MsgsSimToClient::MsgUnitDetection& MsgSimToClient_Content::unit_detection() const {
   return unit_detection_ != NULL ? *unit_detection_ : *default_instance_->unit_detection_;
 }
 inline ::MsgsSimToClient::MsgUnitDetection* MsgSimToClient_Content::mutable_unit_detection() {
-  _set_bit(56);
+  _set_bit(57);
   if (unit_detection_ == NULL) unit_detection_ = new ::MsgsSimToClient::MsgUnitDetection;
   return unit_detection_;
 }
 
-// optional .MsgsSimToClient.MsgObjectDetection object_detection = 58;
+// optional .MsgsSimToClient.MsgObjectDetection object_detection = 59;
 inline bool MsgSimToClient_Content::has_object_detection() const {
-  return _has_bit(57);
+  return _has_bit(58);
 }
 inline void MsgSimToClient_Content::clear_object_detection() {
   if (object_detection_ != NULL) object_detection_->::MsgsSimToClient::MsgObjectDetection::Clear();
-  _clear_bit(57);
+  _clear_bit(58);
 }
 inline const ::MsgsSimToClient::MsgObjectDetection& MsgSimToClient_Content::object_detection() const {
   return object_detection_ != NULL ? *object_detection_ : *default_instance_->object_detection_;
 }
 inline ::MsgsSimToClient::MsgObjectDetection* MsgSimToClient_Content::mutable_object_detection() {
-  _set_bit(57);
+  _set_bit(58);
   if (object_detection_ == NULL) object_detection_ = new ::MsgsSimToClient::MsgObjectDetection;
   return object_detection_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationDetection population_concentration_detection = 59;
+// optional .MsgsSimToClient.MsgPopulationConcentrationDetection population_concentration_detection = 60;
 inline bool MsgSimToClient_Content::has_population_concentration_detection() const {
-  return _has_bit(58);
+  return _has_bit(59);
 }
 inline void MsgSimToClient_Content::clear_population_concentration_detection() {
   if (population_concentration_detection_ != NULL) population_concentration_detection_->::MsgsSimToClient::MsgPopulationConcentrationDetection::Clear();
-  _clear_bit(58);
+  _clear_bit(59);
 }
 inline const ::MsgsSimToClient::MsgPopulationConcentrationDetection& MsgSimToClient_Content::population_concentration_detection() const {
   return population_concentration_detection_ != NULL ? *population_concentration_detection_ : *default_instance_->population_concentration_detection_;
 }
 inline ::MsgsSimToClient::MsgPopulationConcentrationDetection* MsgSimToClient_Content::mutable_population_concentration_detection() {
-  _set_bit(58);
+  _set_bit(59);
   if (population_concentration_detection_ == NULL) population_concentration_detection_ = new ::MsgsSimToClient::MsgPopulationConcentrationDetection;
   return population_concentration_detection_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowDetection population_flow_detection = 60;
+// optional .MsgsSimToClient.MsgPopulationFlowDetection population_flow_detection = 61;
 inline bool MsgSimToClient_Content::has_population_flow_detection() const {
-  return _has_bit(59);
+  return _has_bit(60);
 }
 inline void MsgSimToClient_Content::clear_population_flow_detection() {
   if (population_flow_detection_ != NULL) population_flow_detection_->::MsgsSimToClient::MsgPopulationFlowDetection::Clear();
-  _clear_bit(59);
+  _clear_bit(60);
 }
 inline const ::MsgsSimToClient::MsgPopulationFlowDetection& MsgSimToClient_Content::population_flow_detection() const {
   return population_flow_detection_ != NULL ? *population_flow_detection_ : *default_instance_->population_flow_detection_;
 }
 inline ::MsgsSimToClient::MsgPopulationFlowDetection* MsgSimToClient_Content::mutable_population_flow_detection() {
-  _set_bit(59);
+  _set_bit(60);
   if (population_flow_detection_ == NULL) population_flow_detection_ = new ::MsgsSimToClient::MsgPopulationFlowDetection;
   return population_flow_detection_;
 }
 
-// optional .Common.MsgUnitOrder unit_order = 61;
+// optional .Common.MsgUnitOrder unit_order = 62;
 inline bool MsgSimToClient_Content::has_unit_order() const {
-  return _has_bit(60);
+  return _has_bit(61);
 }
 inline void MsgSimToClient_Content::clear_unit_order() {
   if (unit_order_ != NULL) unit_order_->::Common::MsgUnitOrder::Clear();
-  _clear_bit(60);
+  _clear_bit(61);
 }
 inline const ::Common::MsgUnitOrder& MsgSimToClient_Content::unit_order() const {
   return unit_order_ != NULL ? *unit_order_ : *default_instance_->unit_order_;
 }
 inline ::Common::MsgUnitOrder* MsgSimToClient_Content::mutable_unit_order() {
-  _set_bit(60);
+  _set_bit(61);
   if (unit_order_ == NULL) unit_order_ = new ::Common::MsgUnitOrder;
   return unit_order_;
 }
 
-// optional .Common.MsgAutomatOrder automat_order = 62;
+// optional .Common.MsgAutomatOrder automat_order = 63;
 inline bool MsgSimToClient_Content::has_automat_order() const {
-  return _has_bit(61);
+  return _has_bit(62);
 }
 inline void MsgSimToClient_Content::clear_automat_order() {
   if (automat_order_ != NULL) automat_order_->::Common::MsgAutomatOrder::Clear();
-  _clear_bit(61);
+  _clear_bit(62);
 }
 inline const ::Common::MsgAutomatOrder& MsgSimToClient_Content::automat_order() const {
   return automat_order_ != NULL ? *automat_order_ : *default_instance_->automat_order_;
 }
 inline ::Common::MsgAutomatOrder* MsgSimToClient_Content::mutable_automat_order() {
-  _set_bit(61);
+  _set_bit(62);
   if (automat_order_ == NULL) automat_order_ = new ::Common::MsgAutomatOrder;
   return automat_order_;
 }
 
-// optional .Common.MsgPopulationOrder population_order = 63;
+// optional .Common.MsgPopulationOrder population_order = 64;
 inline bool MsgSimToClient_Content::has_population_order() const {
-  return _has_bit(62);
+  return _has_bit(63);
 }
 inline void MsgSimToClient_Content::clear_population_order() {
   if (population_order_ != NULL) population_order_->::Common::MsgPopulationOrder::Clear();
-  _clear_bit(62);
+  _clear_bit(63);
 }
 inline const ::Common::MsgPopulationOrder& MsgSimToClient_Content::population_order() const {
   return population_order_ != NULL ? *population_order_ : *default_instance_->population_order_;
 }
 inline ::Common::MsgPopulationOrder* MsgSimToClient_Content::mutable_population_order() {
-  _set_bit(62);
+  _set_bit(63);
   if (population_order_ == NULL) population_order_ = new ::Common::MsgPopulationOrder;
   return population_order_;
 }
 
-// optional .MsgsSimToClient.MsgObjectCreation object_creation = 64;
+// optional .MsgsSimToClient.MsgObjectCreation object_creation = 65;
 inline bool MsgSimToClient_Content::has_object_creation() const {
-  return _has_bit(63);
+  return _has_bit(64);
 }
 inline void MsgSimToClient_Content::clear_object_creation() {
   if (object_creation_ != NULL) object_creation_->::MsgsSimToClient::MsgObjectCreation::Clear();
-  _clear_bit(63);
+  _clear_bit(64);
 }
 inline const ::MsgsSimToClient::MsgObjectCreation& MsgSimToClient_Content::object_creation() const {
   return object_creation_ != NULL ? *object_creation_ : *default_instance_->object_creation_;
 }
 inline ::MsgsSimToClient::MsgObjectCreation* MsgSimToClient_Content::mutable_object_creation() {
-  _set_bit(63);
+  _set_bit(64);
   if (object_creation_ == NULL) object_creation_ = new ::MsgsSimToClient::MsgObjectCreation;
   return object_creation_;
 }
 
-// optional .MsgsSimToClient.MsgObjectDestruction object_destruction = 65;
+// optional .MsgsSimToClient.MsgObjectDestruction object_destruction = 66;
 inline bool MsgSimToClient_Content::has_object_destruction() const {
-  return _has_bit(64);
+  return _has_bit(65);
 }
 inline void MsgSimToClient_Content::clear_object_destruction() {
   if (object_destruction_ != NULL) object_destruction_->::MsgsSimToClient::MsgObjectDestruction::Clear();
-  _clear_bit(64);
+  _clear_bit(65);
 }
 inline const ::MsgsSimToClient::MsgObjectDestruction& MsgSimToClient_Content::object_destruction() const {
   return object_destruction_ != NULL ? *object_destruction_ : *default_instance_->object_destruction_;
 }
 inline ::MsgsSimToClient::MsgObjectDestruction* MsgSimToClient_Content::mutable_object_destruction() {
-  _set_bit(64);
+  _set_bit(65);
   if (object_destruction_ == NULL) object_destruction_ = new ::MsgsSimToClient::MsgObjectDestruction;
   return object_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgObjectUpdate object_update = 66;
+// optional .MsgsSimToClient.MsgObjectUpdate object_update = 67;
 inline bool MsgSimToClient_Content::has_object_update() const {
-  return _has_bit(65);
+  return _has_bit(66);
 }
 inline void MsgSimToClient_Content::clear_object_update() {
   if (object_update_ != NULL) object_update_->::MsgsSimToClient::MsgObjectUpdate::Clear();
-  _clear_bit(65);
+  _clear_bit(66);
 }
 inline const ::MsgsSimToClient::MsgObjectUpdate& MsgSimToClient_Content::object_update() const {
   return object_update_ != NULL ? *object_update_ : *default_instance_->object_update_;
 }
 inline ::MsgsSimToClient::MsgObjectUpdate* MsgSimToClient_Content::mutable_object_update() {
-  _set_bit(65);
+  _set_bit(66);
   if (object_update_ == NULL) object_update_ = new ::MsgsSimToClient::MsgObjectUpdate;
   return object_update_;
 }
 
-// optional .MsgsSimToClient.MsgObjectKnowledgeCreation object_knowledge_creation = 67;
+// optional .MsgsSimToClient.MsgObjectKnowledgeCreation object_knowledge_creation = 68;
 inline bool MsgSimToClient_Content::has_object_knowledge_creation() const {
-  return _has_bit(66);
+  return _has_bit(67);
 }
 inline void MsgSimToClient_Content::clear_object_knowledge_creation() {
   if (object_knowledge_creation_ != NULL) object_knowledge_creation_->::MsgsSimToClient::MsgObjectKnowledgeCreation::Clear();
-  _clear_bit(66);
+  _clear_bit(67);
 }
 inline const ::MsgsSimToClient::MsgObjectKnowledgeCreation& MsgSimToClient_Content::object_knowledge_creation() const {
   return object_knowledge_creation_ != NULL ? *object_knowledge_creation_ : *default_instance_->object_knowledge_creation_;
 }
 inline ::MsgsSimToClient::MsgObjectKnowledgeCreation* MsgSimToClient_Content::mutable_object_knowledge_creation() {
-  _set_bit(66);
+  _set_bit(67);
   if (object_knowledge_creation_ == NULL) object_knowledge_creation_ = new ::MsgsSimToClient::MsgObjectKnowledgeCreation;
   return object_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgObjectKnowledgeUpdate object_knowledge_update = 68;
+// optional .MsgsSimToClient.MsgObjectKnowledgeUpdate object_knowledge_update = 69;
 inline bool MsgSimToClient_Content::has_object_knowledge_update() const {
-  return _has_bit(67);
+  return _has_bit(68);
 }
 inline void MsgSimToClient_Content::clear_object_knowledge_update() {
   if (object_knowledge_update_ != NULL) object_knowledge_update_->::MsgsSimToClient::MsgObjectKnowledgeUpdate::Clear();
-  _clear_bit(67);
+  _clear_bit(68);
 }
 inline const ::MsgsSimToClient::MsgObjectKnowledgeUpdate& MsgSimToClient_Content::object_knowledge_update() const {
   return object_knowledge_update_ != NULL ? *object_knowledge_update_ : *default_instance_->object_knowledge_update_;
 }
 inline ::MsgsSimToClient::MsgObjectKnowledgeUpdate* MsgSimToClient_Content::mutable_object_knowledge_update() {
-  _set_bit(67);
+  _set_bit(68);
   if (object_knowledge_update_ == NULL) object_knowledge_update_ = new ::MsgsSimToClient::MsgObjectKnowledgeUpdate;
   return object_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgObjectKnowledgeDestruction object_knowledge_destruction = 69;
+// optional .MsgsSimToClient.MsgObjectKnowledgeDestruction object_knowledge_destruction = 70;
 inline bool MsgSimToClient_Content::has_object_knowledge_destruction() const {
-  return _has_bit(68);
+  return _has_bit(69);
 }
 inline void MsgSimToClient_Content::clear_object_knowledge_destruction() {
   if (object_knowledge_destruction_ != NULL) object_knowledge_destruction_->::MsgsSimToClient::MsgObjectKnowledgeDestruction::Clear();
-  _clear_bit(68);
+  _clear_bit(69);
 }
 inline const ::MsgsSimToClient::MsgObjectKnowledgeDestruction& MsgSimToClient_Content::object_knowledge_destruction() const {
   return object_knowledge_destruction_ != NULL ? *object_knowledge_destruction_ : *default_instance_->object_knowledge_destruction_;
 }
 inline ::MsgsSimToClient::MsgObjectKnowledgeDestruction* MsgSimToClient_Content::mutable_object_knowledge_destruction() {
-  _set_bit(68);
+  _set_bit(69);
   if (object_knowledge_destruction_ == NULL) object_knowledge_destruction_ = new ::MsgsSimToClient::MsgObjectKnowledgeDestruction;
   return object_knowledge_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgLogMedicalHandlingCreation log_medical_handling_creation = 70;
+// optional .MsgsSimToClient.MsgLogMedicalHandlingCreation log_medical_handling_creation = 71;
 inline bool MsgSimToClient_Content::has_log_medical_handling_creation() const {
-  return _has_bit(69);
+  return _has_bit(70);
 }
 inline void MsgSimToClient_Content::clear_log_medical_handling_creation() {
   if (log_medical_handling_creation_ != NULL) log_medical_handling_creation_->::MsgsSimToClient::MsgLogMedicalHandlingCreation::Clear();
-  _clear_bit(69);
+  _clear_bit(70);
 }
 inline const ::MsgsSimToClient::MsgLogMedicalHandlingCreation& MsgSimToClient_Content::log_medical_handling_creation() const {
   return log_medical_handling_creation_ != NULL ? *log_medical_handling_creation_ : *default_instance_->log_medical_handling_creation_;
 }
 inline ::MsgsSimToClient::MsgLogMedicalHandlingCreation* MsgSimToClient_Content::mutable_log_medical_handling_creation() {
-  _set_bit(69);
+  _set_bit(70);
   if (log_medical_handling_creation_ == NULL) log_medical_handling_creation_ = new ::MsgsSimToClient::MsgLogMedicalHandlingCreation;
   return log_medical_handling_creation_;
 }
 
-// optional .MsgsSimToClient.MsgLogMedicalHandlingUpdate log_medical_handling_update = 71;
+// optional .MsgsSimToClient.MsgLogMedicalHandlingUpdate log_medical_handling_update = 72;
 inline bool MsgSimToClient_Content::has_log_medical_handling_update() const {
-  return _has_bit(70);
+  return _has_bit(71);
 }
 inline void MsgSimToClient_Content::clear_log_medical_handling_update() {
   if (log_medical_handling_update_ != NULL) log_medical_handling_update_->::MsgsSimToClient::MsgLogMedicalHandlingUpdate::Clear();
-  _clear_bit(70);
+  _clear_bit(71);
 }
 inline const ::MsgsSimToClient::MsgLogMedicalHandlingUpdate& MsgSimToClient_Content::log_medical_handling_update() const {
   return log_medical_handling_update_ != NULL ? *log_medical_handling_update_ : *default_instance_->log_medical_handling_update_;
 }
 inline ::MsgsSimToClient::MsgLogMedicalHandlingUpdate* MsgSimToClient_Content::mutable_log_medical_handling_update() {
-  _set_bit(70);
+  _set_bit(71);
   if (log_medical_handling_update_ == NULL) log_medical_handling_update_ = new ::MsgsSimToClient::MsgLogMedicalHandlingUpdate;
   return log_medical_handling_update_;
 }
 
-// optional .MsgsSimToClient.MsgLogMedicalHandlingDestruction log_medical_handling_destruction = 72;
+// optional .MsgsSimToClient.MsgLogMedicalHandlingDestruction log_medical_handling_destruction = 73;
 inline bool MsgSimToClient_Content::has_log_medical_handling_destruction() const {
-  return _has_bit(71);
+  return _has_bit(72);
 }
 inline void MsgSimToClient_Content::clear_log_medical_handling_destruction() {
   if (log_medical_handling_destruction_ != NULL) log_medical_handling_destruction_->::MsgsSimToClient::MsgLogMedicalHandlingDestruction::Clear();
-  _clear_bit(71);
+  _clear_bit(72);
 }
 inline const ::MsgsSimToClient::MsgLogMedicalHandlingDestruction& MsgSimToClient_Content::log_medical_handling_destruction() const {
   return log_medical_handling_destruction_ != NULL ? *log_medical_handling_destruction_ : *default_instance_->log_medical_handling_destruction_;
 }
 inline ::MsgsSimToClient::MsgLogMedicalHandlingDestruction* MsgSimToClient_Content::mutable_log_medical_handling_destruction() {
-  _set_bit(71);
+  _set_bit(72);
   if (log_medical_handling_destruction_ == NULL) log_medical_handling_destruction_ = new ::MsgsSimToClient::MsgLogMedicalHandlingDestruction;
   return log_medical_handling_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgLogMedicalState log_medical_state = 73;
+// optional .MsgsSimToClient.MsgLogMedicalState log_medical_state = 74;
 inline bool MsgSimToClient_Content::has_log_medical_state() const {
-  return _has_bit(72);
+  return _has_bit(73);
 }
 inline void MsgSimToClient_Content::clear_log_medical_state() {
   if (log_medical_state_ != NULL) log_medical_state_->::MsgsSimToClient::MsgLogMedicalState::Clear();
-  _clear_bit(72);
+  _clear_bit(73);
 }
 inline const ::MsgsSimToClient::MsgLogMedicalState& MsgSimToClient_Content::log_medical_state() const {
   return log_medical_state_ != NULL ? *log_medical_state_ : *default_instance_->log_medical_state_;
 }
 inline ::MsgsSimToClient::MsgLogMedicalState* MsgSimToClient_Content::mutable_log_medical_state() {
-  _set_bit(72);
+  _set_bit(73);
   if (log_medical_state_ == NULL) log_medical_state_ = new ::MsgsSimToClient::MsgLogMedicalState;
   return log_medical_state_;
 }
 
-// optional .MsgsSimToClient.MsgLogMaintenanceHandlingCreation log_maintenance_handling_creation = 74;
+// optional .MsgsSimToClient.MsgLogMaintenanceHandlingCreation log_maintenance_handling_creation = 75;
 inline bool MsgSimToClient_Content::has_log_maintenance_handling_creation() const {
-  return _has_bit(73);
+  return _has_bit(74);
 }
 inline void MsgSimToClient_Content::clear_log_maintenance_handling_creation() {
   if (log_maintenance_handling_creation_ != NULL) log_maintenance_handling_creation_->::MsgsSimToClient::MsgLogMaintenanceHandlingCreation::Clear();
-  _clear_bit(73);
+  _clear_bit(74);
 }
 inline const ::MsgsSimToClient::MsgLogMaintenanceHandlingCreation& MsgSimToClient_Content::log_maintenance_handling_creation() const {
   return log_maintenance_handling_creation_ != NULL ? *log_maintenance_handling_creation_ : *default_instance_->log_maintenance_handling_creation_;
 }
 inline ::MsgsSimToClient::MsgLogMaintenanceHandlingCreation* MsgSimToClient_Content::mutable_log_maintenance_handling_creation() {
-  _set_bit(73);
+  _set_bit(74);
   if (log_maintenance_handling_creation_ == NULL) log_maintenance_handling_creation_ = new ::MsgsSimToClient::MsgLogMaintenanceHandlingCreation;
   return log_maintenance_handling_creation_;
 }
 
-// optional .MsgsSimToClient.MsgLogMaintenanceHandlingUpdate log_maintenance_handling_update = 75;
+// optional .MsgsSimToClient.MsgLogMaintenanceHandlingUpdate log_maintenance_handling_update = 76;
 inline bool MsgSimToClient_Content::has_log_maintenance_handling_update() const {
-  return _has_bit(74);
+  return _has_bit(75);
 }
 inline void MsgSimToClient_Content::clear_log_maintenance_handling_update() {
   if (log_maintenance_handling_update_ != NULL) log_maintenance_handling_update_->::MsgsSimToClient::MsgLogMaintenanceHandlingUpdate::Clear();
-  _clear_bit(74);
+  _clear_bit(75);
 }
 inline const ::MsgsSimToClient::MsgLogMaintenanceHandlingUpdate& MsgSimToClient_Content::log_maintenance_handling_update() const {
   return log_maintenance_handling_update_ != NULL ? *log_maintenance_handling_update_ : *default_instance_->log_maintenance_handling_update_;
 }
 inline ::MsgsSimToClient::MsgLogMaintenanceHandlingUpdate* MsgSimToClient_Content::mutable_log_maintenance_handling_update() {
-  _set_bit(74);
+  _set_bit(75);
   if (log_maintenance_handling_update_ == NULL) log_maintenance_handling_update_ = new ::MsgsSimToClient::MsgLogMaintenanceHandlingUpdate;
   return log_maintenance_handling_update_;
 }
 
-// optional .MsgsSimToClient.MsgLogMaintenanceHandlingDestruction log_maintenance_handling_destruction = 76;
+// optional .MsgsSimToClient.MsgLogMaintenanceHandlingDestruction log_maintenance_handling_destruction = 77;
 inline bool MsgSimToClient_Content::has_log_maintenance_handling_destruction() const {
-  return _has_bit(75);
+  return _has_bit(76);
 }
 inline void MsgSimToClient_Content::clear_log_maintenance_handling_destruction() {
   if (log_maintenance_handling_destruction_ != NULL) log_maintenance_handling_destruction_->::MsgsSimToClient::MsgLogMaintenanceHandlingDestruction::Clear();
-  _clear_bit(75);
+  _clear_bit(76);
 }
 inline const ::MsgsSimToClient::MsgLogMaintenanceHandlingDestruction& MsgSimToClient_Content::log_maintenance_handling_destruction() const {
   return log_maintenance_handling_destruction_ != NULL ? *log_maintenance_handling_destruction_ : *default_instance_->log_maintenance_handling_destruction_;
 }
 inline ::MsgsSimToClient::MsgLogMaintenanceHandlingDestruction* MsgSimToClient_Content::mutable_log_maintenance_handling_destruction() {
-  _set_bit(75);
+  _set_bit(76);
   if (log_maintenance_handling_destruction_ == NULL) log_maintenance_handling_destruction_ = new ::MsgsSimToClient::MsgLogMaintenanceHandlingDestruction;
   return log_maintenance_handling_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgLogMaintenanceState log_maintenance_state = 77;
+// optional .MsgsSimToClient.MsgLogMaintenanceState log_maintenance_state = 78;
 inline bool MsgSimToClient_Content::has_log_maintenance_state() const {
-  return _has_bit(76);
+  return _has_bit(77);
 }
 inline void MsgSimToClient_Content::clear_log_maintenance_state() {
   if (log_maintenance_state_ != NULL) log_maintenance_state_->::MsgsSimToClient::MsgLogMaintenanceState::Clear();
-  _clear_bit(76);
+  _clear_bit(77);
 }
 inline const ::MsgsSimToClient::MsgLogMaintenanceState& MsgSimToClient_Content::log_maintenance_state() const {
   return log_maintenance_state_ != NULL ? *log_maintenance_state_ : *default_instance_->log_maintenance_state_;
 }
 inline ::MsgsSimToClient::MsgLogMaintenanceState* MsgSimToClient_Content::mutable_log_maintenance_state() {
-  _set_bit(76);
+  _set_bit(77);
   if (log_maintenance_state_ == NULL) log_maintenance_state_ = new ::MsgsSimToClient::MsgLogMaintenanceState;
   return log_maintenance_state_;
 }
 
-// optional .MsgsSimToClient.MsgLogSupplyHandlingCreation log_supply_handling_creation = 78;
+// optional .MsgsSimToClient.MsgLogSupplyHandlingCreation log_supply_handling_creation = 79;
 inline bool MsgSimToClient_Content::has_log_supply_handling_creation() const {
-  return _has_bit(77);
+  return _has_bit(78);
 }
 inline void MsgSimToClient_Content::clear_log_supply_handling_creation() {
   if (log_supply_handling_creation_ != NULL) log_supply_handling_creation_->::MsgsSimToClient::MsgLogSupplyHandlingCreation::Clear();
-  _clear_bit(77);
+  _clear_bit(78);
 }
 inline const ::MsgsSimToClient::MsgLogSupplyHandlingCreation& MsgSimToClient_Content::log_supply_handling_creation() const {
   return log_supply_handling_creation_ != NULL ? *log_supply_handling_creation_ : *default_instance_->log_supply_handling_creation_;
 }
 inline ::MsgsSimToClient::MsgLogSupplyHandlingCreation* MsgSimToClient_Content::mutable_log_supply_handling_creation() {
-  _set_bit(77);
+  _set_bit(78);
   if (log_supply_handling_creation_ == NULL) log_supply_handling_creation_ = new ::MsgsSimToClient::MsgLogSupplyHandlingCreation;
   return log_supply_handling_creation_;
 }
 
-// optional .MsgsSimToClient.MsgLogSupplyHandlingUpdate log_supply_handling_update = 79;
+// optional .MsgsSimToClient.MsgLogSupplyHandlingUpdate log_supply_handling_update = 80;
 inline bool MsgSimToClient_Content::has_log_supply_handling_update() const {
-  return _has_bit(78);
+  return _has_bit(79);
 }
 inline void MsgSimToClient_Content::clear_log_supply_handling_update() {
   if (log_supply_handling_update_ != NULL) log_supply_handling_update_->::MsgsSimToClient::MsgLogSupplyHandlingUpdate::Clear();
-  _clear_bit(78);
+  _clear_bit(79);
 }
 inline const ::MsgsSimToClient::MsgLogSupplyHandlingUpdate& MsgSimToClient_Content::log_supply_handling_update() const {
   return log_supply_handling_update_ != NULL ? *log_supply_handling_update_ : *default_instance_->log_supply_handling_update_;
 }
 inline ::MsgsSimToClient::MsgLogSupplyHandlingUpdate* MsgSimToClient_Content::mutable_log_supply_handling_update() {
-  _set_bit(78);
+  _set_bit(79);
   if (log_supply_handling_update_ == NULL) log_supply_handling_update_ = new ::MsgsSimToClient::MsgLogSupplyHandlingUpdate;
   return log_supply_handling_update_;
 }
 
-// optional .MsgsSimToClient.MsgLogSupplyHandlingDestruction log_supply_handling_destruction = 80;
+// optional .MsgsSimToClient.MsgLogSupplyHandlingDestruction log_supply_handling_destruction = 81;
 inline bool MsgSimToClient_Content::has_log_supply_handling_destruction() const {
-  return _has_bit(79);
+  return _has_bit(80);
 }
 inline void MsgSimToClient_Content::clear_log_supply_handling_destruction() {
   if (log_supply_handling_destruction_ != NULL) log_supply_handling_destruction_->::MsgsSimToClient::MsgLogSupplyHandlingDestruction::Clear();
-  _clear_bit(79);
+  _clear_bit(80);
 }
 inline const ::MsgsSimToClient::MsgLogSupplyHandlingDestruction& MsgSimToClient_Content::log_supply_handling_destruction() const {
   return log_supply_handling_destruction_ != NULL ? *log_supply_handling_destruction_ : *default_instance_->log_supply_handling_destruction_;
 }
 inline ::MsgsSimToClient::MsgLogSupplyHandlingDestruction* MsgSimToClient_Content::mutable_log_supply_handling_destruction() {
-  _set_bit(79);
+  _set_bit(80);
   if (log_supply_handling_destruction_ == NULL) log_supply_handling_destruction_ = new ::MsgsSimToClient::MsgLogSupplyHandlingDestruction;
   return log_supply_handling_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgLogSupplyState log_supply_state = 81;
+// optional .MsgsSimToClient.MsgLogSupplyState log_supply_state = 82;
 inline bool MsgSimToClient_Content::has_log_supply_state() const {
-  return _has_bit(80);
+  return _has_bit(81);
 }
 inline void MsgSimToClient_Content::clear_log_supply_state() {
   if (log_supply_state_ != NULL) log_supply_state_->::MsgsSimToClient::MsgLogSupplyState::Clear();
-  _clear_bit(80);
+  _clear_bit(81);
 }
 inline const ::MsgsSimToClient::MsgLogSupplyState& MsgSimToClient_Content::log_supply_state() const {
   return log_supply_state_ != NULL ? *log_supply_state_ : *default_instance_->log_supply_state_;
 }
 inline ::MsgsSimToClient::MsgLogSupplyState* MsgSimToClient_Content::mutable_log_supply_state() {
-  _set_bit(80);
+  _set_bit(81);
   if (log_supply_state_ == NULL) log_supply_state_ = new ::MsgsSimToClient::MsgLogSupplyState;
   return log_supply_state_;
 }
 
-// optional .MsgsSimToClient.MsgLogSupplyQuotas log_supply_quotas = 82;
+// optional .MsgsSimToClient.MsgLogSupplyQuotas log_supply_quotas = 83;
 inline bool MsgSimToClient_Content::has_log_supply_quotas() const {
-  return _has_bit(81);
+  return _has_bit(82);
 }
 inline void MsgSimToClient_Content::clear_log_supply_quotas() {
   if (log_supply_quotas_ != NULL) log_supply_quotas_->::MsgsSimToClient::MsgLogSupplyQuotas::Clear();
-  _clear_bit(81);
+  _clear_bit(82);
 }
 inline const ::MsgsSimToClient::MsgLogSupplyQuotas& MsgSimToClient_Content::log_supply_quotas() const {
   return log_supply_quotas_ != NULL ? *log_supply_quotas_ : *default_instance_->log_supply_quotas_;
 }
 inline ::MsgsSimToClient::MsgLogSupplyQuotas* MsgSimToClient_Content::mutable_log_supply_quotas() {
-  _set_bit(81);
+  _set_bit(82);
   if (log_supply_quotas_ == NULL) log_supply_quotas_ = new ::MsgsSimToClient::MsgLogSupplyQuotas;
   return log_supply_quotas_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationCreation population_creation = 83;
+// optional .MsgsSimToClient.MsgPopulationCreation population_creation = 84;
 inline bool MsgSimToClient_Content::has_population_creation() const {
-  return _has_bit(82);
+  return _has_bit(83);
 }
 inline void MsgSimToClient_Content::clear_population_creation() {
   if (population_creation_ != NULL) population_creation_->::MsgsSimToClient::MsgPopulationCreation::Clear();
-  _clear_bit(82);
+  _clear_bit(83);
 }
 inline const ::MsgsSimToClient::MsgPopulationCreation& MsgSimToClient_Content::population_creation() const {
   return population_creation_ != NULL ? *population_creation_ : *default_instance_->population_creation_;
 }
 inline ::MsgsSimToClient::MsgPopulationCreation* MsgSimToClient_Content::mutable_population_creation() {
-  _set_bit(82);
+  _set_bit(83);
   if (population_creation_ == NULL) population_creation_ = new ::MsgsSimToClient::MsgPopulationCreation;
   return population_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationUpdate population_update = 84;
+// optional .MsgsSimToClient.MsgPopulationUpdate population_update = 85;
 inline bool MsgSimToClient_Content::has_population_update() const {
-  return _has_bit(83);
+  return _has_bit(84);
 }
 inline void MsgSimToClient_Content::clear_population_update() {
   if (population_update_ != NULL) population_update_->::MsgsSimToClient::MsgPopulationUpdate::Clear();
-  _clear_bit(83);
+  _clear_bit(84);
 }
 inline const ::MsgsSimToClient::MsgPopulationUpdate& MsgSimToClient_Content::population_update() const {
   return population_update_ != NULL ? *population_update_ : *default_instance_->population_update_;
 }
 inline ::MsgsSimToClient::MsgPopulationUpdate* MsgSimToClient_Content::mutable_population_update() {
-  _set_bit(83);
+  _set_bit(84);
   if (population_update_ == NULL) population_update_ = new ::MsgsSimToClient::MsgPopulationUpdate;
   return population_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationCreation population_concentration_creation = 85;
+// optional .MsgsSimToClient.MsgPopulationConcentrationCreation population_concentration_creation = 86;
 inline bool MsgSimToClient_Content::has_population_concentration_creation() const {
-  return _has_bit(84);
+  return _has_bit(85);
 }
 inline void MsgSimToClient_Content::clear_population_concentration_creation() {
   if (population_concentration_creation_ != NULL) population_concentration_creation_->::MsgsSimToClient::MsgPopulationConcentrationCreation::Clear();
-  _clear_bit(84);
+  _clear_bit(85);
 }
 inline const ::MsgsSimToClient::MsgPopulationConcentrationCreation& MsgSimToClient_Content::population_concentration_creation() const {
   return population_concentration_creation_ != NULL ? *population_concentration_creation_ : *default_instance_->population_concentration_creation_;
 }
 inline ::MsgsSimToClient::MsgPopulationConcentrationCreation* MsgSimToClient_Content::mutable_population_concentration_creation() {
-  _set_bit(84);
+  _set_bit(85);
   if (population_concentration_creation_ == NULL) population_concentration_creation_ = new ::MsgsSimToClient::MsgPopulationConcentrationCreation;
   return population_concentration_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationDestruction population_concentration_destruction = 86;
+// optional .MsgsSimToClient.MsgPopulationConcentrationDestruction population_concentration_destruction = 87;
 inline bool MsgSimToClient_Content::has_population_concentration_destruction() const {
-  return _has_bit(85);
+  return _has_bit(86);
 }
 inline void MsgSimToClient_Content::clear_population_concentration_destruction() {
   if (population_concentration_destruction_ != NULL) population_concentration_destruction_->::MsgsSimToClient::MsgPopulationConcentrationDestruction::Clear();
-  _clear_bit(85);
+  _clear_bit(86);
 }
 inline const ::MsgsSimToClient::MsgPopulationConcentrationDestruction& MsgSimToClient_Content::population_concentration_destruction() const {
   return population_concentration_destruction_ != NULL ? *population_concentration_destruction_ : *default_instance_->population_concentration_destruction_;
 }
 inline ::MsgsSimToClient::MsgPopulationConcentrationDestruction* MsgSimToClient_Content::mutable_population_concentration_destruction() {
-  _set_bit(85);
+  _set_bit(86);
   if (population_concentration_destruction_ == NULL) population_concentration_destruction_ = new ::MsgsSimToClient::MsgPopulationConcentrationDestruction;
   return population_concentration_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationUpdate population_concentration_update = 87;
+// optional .MsgsSimToClient.MsgPopulationConcentrationUpdate population_concentration_update = 88;
 inline bool MsgSimToClient_Content::has_population_concentration_update() const {
-  return _has_bit(86);
+  return _has_bit(87);
 }
 inline void MsgSimToClient_Content::clear_population_concentration_update() {
   if (population_concentration_update_ != NULL) population_concentration_update_->::MsgsSimToClient::MsgPopulationConcentrationUpdate::Clear();
-  _clear_bit(86);
+  _clear_bit(87);
 }
 inline const ::MsgsSimToClient::MsgPopulationConcentrationUpdate& MsgSimToClient_Content::population_concentration_update() const {
   return population_concentration_update_ != NULL ? *population_concentration_update_ : *default_instance_->population_concentration_update_;
 }
 inline ::MsgsSimToClient::MsgPopulationConcentrationUpdate* MsgSimToClient_Content::mutable_population_concentration_update() {
-  _set_bit(86);
+  _set_bit(87);
   if (population_concentration_update_ == NULL) population_concentration_update_ = new ::MsgsSimToClient::MsgPopulationConcentrationUpdate;
   return population_concentration_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowCreation population_flow_creation = 88;
+// optional .MsgsSimToClient.MsgPopulationFlowCreation population_flow_creation = 89;
 inline bool MsgSimToClient_Content::has_population_flow_creation() const {
-  return _has_bit(87);
+  return _has_bit(88);
 }
 inline void MsgSimToClient_Content::clear_population_flow_creation() {
   if (population_flow_creation_ != NULL) population_flow_creation_->::MsgsSimToClient::MsgPopulationFlowCreation::Clear();
-  _clear_bit(87);
+  _clear_bit(88);
 }
 inline const ::MsgsSimToClient::MsgPopulationFlowCreation& MsgSimToClient_Content::population_flow_creation() const {
   return population_flow_creation_ != NULL ? *population_flow_creation_ : *default_instance_->population_flow_creation_;
 }
 inline ::MsgsSimToClient::MsgPopulationFlowCreation* MsgSimToClient_Content::mutable_population_flow_creation() {
-  _set_bit(87);
+  _set_bit(88);
   if (population_flow_creation_ == NULL) population_flow_creation_ = new ::MsgsSimToClient::MsgPopulationFlowCreation;
   return population_flow_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowDestruction population_flow_destruction = 89;
+// optional .MsgsSimToClient.MsgPopulationFlowDestruction population_flow_destruction = 90;
 inline bool MsgSimToClient_Content::has_population_flow_destruction() const {
-  return _has_bit(88);
+  return _has_bit(89);
 }
 inline void MsgSimToClient_Content::clear_population_flow_destruction() {
   if (population_flow_destruction_ != NULL) population_flow_destruction_->::MsgsSimToClient::MsgPopulationFlowDestruction::Clear();
-  _clear_bit(88);
+  _clear_bit(89);
 }
 inline const ::MsgsSimToClient::MsgPopulationFlowDestruction& MsgSimToClient_Content::population_flow_destruction() const {
   return population_flow_destruction_ != NULL ? *population_flow_destruction_ : *default_instance_->population_flow_destruction_;
 }
 inline ::MsgsSimToClient::MsgPopulationFlowDestruction* MsgSimToClient_Content::mutable_population_flow_destruction() {
-  _set_bit(88);
+  _set_bit(89);
   if (population_flow_destruction_ == NULL) population_flow_destruction_ = new ::MsgsSimToClient::MsgPopulationFlowDestruction;
   return population_flow_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowUpdate population_flow_update = 90;
+// optional .MsgsSimToClient.MsgPopulationFlowUpdate population_flow_update = 91;
 inline bool MsgSimToClient_Content::has_population_flow_update() const {
-  return _has_bit(89);
+  return _has_bit(90);
 }
 inline void MsgSimToClient_Content::clear_population_flow_update() {
   if (population_flow_update_ != NULL) population_flow_update_->::MsgsSimToClient::MsgPopulationFlowUpdate::Clear();
-  _clear_bit(89);
+  _clear_bit(90);
 }
 inline const ::MsgsSimToClient::MsgPopulationFlowUpdate& MsgSimToClient_Content::population_flow_update() const {
   return population_flow_update_ != NULL ? *population_flow_update_ : *default_instance_->population_flow_update_;
 }
 inline ::MsgsSimToClient::MsgPopulationFlowUpdate* MsgSimToClient_Content::mutable_population_flow_update() {
-  _set_bit(89);
+  _set_bit(90);
   if (population_flow_update_ == NULL) population_flow_update_ = new ::MsgsSimToClient::MsgPopulationFlowUpdate;
   return population_flow_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationKnowledgeCreation population_knowledge_creation = 91;
+// optional .MsgsSimToClient.MsgPopulationKnowledgeCreation population_knowledge_creation = 92;
 inline bool MsgSimToClient_Content::has_population_knowledge_creation() const {
-  return _has_bit(90);
+  return _has_bit(91);
 }
 inline void MsgSimToClient_Content::clear_population_knowledge_creation() {
   if (population_knowledge_creation_ != NULL) population_knowledge_creation_->::MsgsSimToClient::MsgPopulationKnowledgeCreation::Clear();
-  _clear_bit(90);
+  _clear_bit(91);
 }
 inline const ::MsgsSimToClient::MsgPopulationKnowledgeCreation& MsgSimToClient_Content::population_knowledge_creation() const {
   return population_knowledge_creation_ != NULL ? *population_knowledge_creation_ : *default_instance_->population_knowledge_creation_;
 }
 inline ::MsgsSimToClient::MsgPopulationKnowledgeCreation* MsgSimToClient_Content::mutable_population_knowledge_creation() {
-  _set_bit(90);
+  _set_bit(91);
   if (population_knowledge_creation_ == NULL) population_knowledge_creation_ = new ::MsgsSimToClient::MsgPopulationKnowledgeCreation;
   return population_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationKnowledgeUpdate population_knowledge_update = 92;
+// optional .MsgsSimToClient.MsgPopulationKnowledgeUpdate population_knowledge_update = 93;
 inline bool MsgSimToClient_Content::has_population_knowledge_update() const {
-  return _has_bit(91);
+  return _has_bit(92);
 }
 inline void MsgSimToClient_Content::clear_population_knowledge_update() {
   if (population_knowledge_update_ != NULL) population_knowledge_update_->::MsgsSimToClient::MsgPopulationKnowledgeUpdate::Clear();
-  _clear_bit(91);
+  _clear_bit(92);
 }
 inline const ::MsgsSimToClient::MsgPopulationKnowledgeUpdate& MsgSimToClient_Content::population_knowledge_update() const {
   return population_knowledge_update_ != NULL ? *population_knowledge_update_ : *default_instance_->population_knowledge_update_;
 }
 inline ::MsgsSimToClient::MsgPopulationKnowledgeUpdate* MsgSimToClient_Content::mutable_population_knowledge_update() {
-  _set_bit(91);
+  _set_bit(92);
   if (population_knowledge_update_ == NULL) population_knowledge_update_ = new ::MsgsSimToClient::MsgPopulationKnowledgeUpdate;
   return population_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationKnowledgeDestruction population_knowledge_destruction = 93;
+// optional .MsgsSimToClient.MsgPopulationKnowledgeDestruction population_knowledge_destruction = 94;
 inline bool MsgSimToClient_Content::has_population_knowledge_destruction() const {
-  return _has_bit(92);
+  return _has_bit(93);
 }
 inline void MsgSimToClient_Content::clear_population_knowledge_destruction() {
   if (population_knowledge_destruction_ != NULL) population_knowledge_destruction_->::MsgsSimToClient::MsgPopulationKnowledgeDestruction::Clear();
-  _clear_bit(92);
+  _clear_bit(93);
 }
 inline const ::MsgsSimToClient::MsgPopulationKnowledgeDestruction& MsgSimToClient_Content::population_knowledge_destruction() const {
   return population_knowledge_destruction_ != NULL ? *population_knowledge_destruction_ : *default_instance_->population_knowledge_destruction_;
 }
 inline ::MsgsSimToClient::MsgPopulationKnowledgeDestruction* MsgSimToClient_Content::mutable_population_knowledge_destruction() {
-  _set_bit(92);
+  _set_bit(93);
   if (population_knowledge_destruction_ == NULL) population_knowledge_destruction_ = new ::MsgsSimToClient::MsgPopulationKnowledgeDestruction;
   return population_knowledge_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeCreation population_concentration_knowledge_creation = 94;
+// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeCreation population_concentration_knowledge_creation = 95;
 inline bool MsgSimToClient_Content::has_population_concentration_knowledge_creation() const {
-  return _has_bit(93);
+  return _has_bit(94);
 }
 inline void MsgSimToClient_Content::clear_population_concentration_knowledge_creation() {
   if (population_concentration_knowledge_creation_ != NULL) population_concentration_knowledge_creation_->::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation::Clear();
-  _clear_bit(93);
+  _clear_bit(94);
 }
 inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation& MsgSimToClient_Content::population_concentration_knowledge_creation() const {
   return population_concentration_knowledge_creation_ != NULL ? *population_concentration_knowledge_creation_ : *default_instance_->population_concentration_knowledge_creation_;
 }
 inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation* MsgSimToClient_Content::mutable_population_concentration_knowledge_creation() {
-  _set_bit(93);
+  _set_bit(94);
   if (population_concentration_knowledge_creation_ == NULL) population_concentration_knowledge_creation_ = new ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeCreation;
   return population_concentration_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeDestruction population_concentration_knowledge_destruction = 95;
+// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeDestruction population_concentration_knowledge_destruction = 96;
 inline bool MsgSimToClient_Content::has_population_concentration_knowledge_destruction() const {
-  return _has_bit(94);
+  return _has_bit(95);
 }
 inline void MsgSimToClient_Content::clear_population_concentration_knowledge_destruction() {
   if (population_concentration_knowledge_destruction_ != NULL) population_concentration_knowledge_destruction_->::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction::Clear();
-  _clear_bit(94);
+  _clear_bit(95);
 }
 inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction& MsgSimToClient_Content::population_concentration_knowledge_destruction() const {
   return population_concentration_knowledge_destruction_ != NULL ? *population_concentration_knowledge_destruction_ : *default_instance_->population_concentration_knowledge_destruction_;
 }
 inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction* MsgSimToClient_Content::mutable_population_concentration_knowledge_destruction() {
-  _set_bit(94);
+  _set_bit(95);
   if (population_concentration_knowledge_destruction_ == NULL) population_concentration_knowledge_destruction_ = new ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeDestruction;
   return population_concentration_knowledge_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeUpdate population_concentration_knowledge_update = 96;
+// optional .MsgsSimToClient.MsgPopulationConcentrationKnowledgeUpdate population_concentration_knowledge_update = 97;
 inline bool MsgSimToClient_Content::has_population_concentration_knowledge_update() const {
-  return _has_bit(95);
+  return _has_bit(96);
 }
 inline void MsgSimToClient_Content::clear_population_concentration_knowledge_update() {
   if (population_concentration_knowledge_update_ != NULL) population_concentration_knowledge_update_->::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate::Clear();
-  _clear_bit(95);
+  _clear_bit(96);
 }
 inline const ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate& MsgSimToClient_Content::population_concentration_knowledge_update() const {
   return population_concentration_knowledge_update_ != NULL ? *population_concentration_knowledge_update_ : *default_instance_->population_concentration_knowledge_update_;
 }
 inline ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate* MsgSimToClient_Content::mutable_population_concentration_knowledge_update() {
-  _set_bit(95);
+  _set_bit(96);
   if (population_concentration_knowledge_update_ == NULL) population_concentration_knowledge_update_ = new ::MsgsSimToClient::MsgPopulationConcentrationKnowledgeUpdate;
   return population_concentration_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeCreation population_flow_knowledge_creation = 97;
+// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeCreation population_flow_knowledge_creation = 98;
 inline bool MsgSimToClient_Content::has_population_flow_knowledge_creation() const {
-  return _has_bit(96);
+  return _has_bit(97);
 }
 inline void MsgSimToClient_Content::clear_population_flow_knowledge_creation() {
   if (population_flow_knowledge_creation_ != NULL) population_flow_knowledge_creation_->::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation::Clear();
-  _clear_bit(96);
+  _clear_bit(97);
 }
 inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation& MsgSimToClient_Content::population_flow_knowledge_creation() const {
   return population_flow_knowledge_creation_ != NULL ? *population_flow_knowledge_creation_ : *default_instance_->population_flow_knowledge_creation_;
 }
 inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation* MsgSimToClient_Content::mutable_population_flow_knowledge_creation() {
-  _set_bit(96);
+  _set_bit(97);
   if (population_flow_knowledge_creation_ == NULL) population_flow_knowledge_creation_ = new ::MsgsSimToClient::MsgPopulationFlowKnowledgeCreation;
   return population_flow_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeDestruction population_flow_knowledge_destruction = 98;
+// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeDestruction population_flow_knowledge_destruction = 99;
 inline bool MsgSimToClient_Content::has_population_flow_knowledge_destruction() const {
-  return _has_bit(97);
+  return _has_bit(98);
 }
 inline void MsgSimToClient_Content::clear_population_flow_knowledge_destruction() {
   if (population_flow_knowledge_destruction_ != NULL) population_flow_knowledge_destruction_->::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction::Clear();
-  _clear_bit(97);
+  _clear_bit(98);
 }
 inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction& MsgSimToClient_Content::population_flow_knowledge_destruction() const {
   return population_flow_knowledge_destruction_ != NULL ? *population_flow_knowledge_destruction_ : *default_instance_->population_flow_knowledge_destruction_;
 }
 inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction* MsgSimToClient_Content::mutable_population_flow_knowledge_destruction() {
-  _set_bit(97);
+  _set_bit(98);
   if (population_flow_knowledge_destruction_ == NULL) population_flow_knowledge_destruction_ = new ::MsgsSimToClient::MsgPopulationFlowKnowledgeDestruction;
   return population_flow_knowledge_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeUpdate population_flow_knowledge_update = 99;
+// optional .MsgsSimToClient.MsgPopulationFlowKnowledgeUpdate population_flow_knowledge_update = 100;
 inline bool MsgSimToClient_Content::has_population_flow_knowledge_update() const {
-  return _has_bit(98);
+  return _has_bit(99);
 }
 inline void MsgSimToClient_Content::clear_population_flow_knowledge_update() {
   if (population_flow_knowledge_update_ != NULL) population_flow_knowledge_update_->::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate::Clear();
-  _clear_bit(98);
+  _clear_bit(99);
 }
 inline const ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate& MsgSimToClient_Content::population_flow_knowledge_update() const {
   return population_flow_knowledge_update_ != NULL ? *population_flow_knowledge_update_ : *default_instance_->population_flow_knowledge_update_;
 }
 inline ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate* MsgSimToClient_Content::mutable_population_flow_knowledge_update() {
-  _set_bit(98);
+  _set_bit(99);
   if (population_flow_knowledge_update_ == NULL) population_flow_knowledge_update_ = new ::MsgsSimToClient::MsgPopulationFlowKnowledgeUpdate;
   return population_flow_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgFolkCreation folk_creation = 100;
+// optional .MsgsSimToClient.MsgFolkCreation folk_creation = 101;
 inline bool MsgSimToClient_Content::has_folk_creation() const {
-  return _has_bit(99);
+  return _has_bit(100);
 }
 inline void MsgSimToClient_Content::clear_folk_creation() {
   if (folk_creation_ != NULL) folk_creation_->::MsgsSimToClient::MsgFolkCreation::Clear();
-  _clear_bit(99);
+  _clear_bit(100);
 }
 inline const ::MsgsSimToClient::MsgFolkCreation& MsgSimToClient_Content::folk_creation() const {
   return folk_creation_ != NULL ? *folk_creation_ : *default_instance_->folk_creation_;
 }
 inline ::MsgsSimToClient::MsgFolkCreation* MsgSimToClient_Content::mutable_folk_creation() {
-  _set_bit(99);
+  _set_bit(100);
   if (folk_creation_ == NULL) folk_creation_ = new ::MsgsSimToClient::MsgFolkCreation;
   return folk_creation_;
 }
 
-// optional .MsgsSimToClient.MsgFolkGraphUpdate folk_graph_update = 101;
+// optional .MsgsSimToClient.MsgFolkGraphUpdate folk_graph_update = 102;
 inline bool MsgSimToClient_Content::has_folk_graph_update() const {
-  return _has_bit(100);
+  return _has_bit(101);
 }
 inline void MsgSimToClient_Content::clear_folk_graph_update() {
   if (folk_graph_update_ != NULL) folk_graph_update_->::MsgsSimToClient::MsgFolkGraphUpdate::Clear();
-  _clear_bit(100);
+  _clear_bit(101);
 }
 inline const ::MsgsSimToClient::MsgFolkGraphUpdate& MsgSimToClient_Content::folk_graph_update() const {
   return folk_graph_update_ != NULL ? *folk_graph_update_ : *default_instance_->folk_graph_update_;
 }
 inline ::MsgsSimToClient::MsgFolkGraphUpdate* MsgSimToClient_Content::mutable_folk_graph_update() {
-  _set_bit(100);
+  _set_bit(101);
   if (folk_graph_update_ == NULL) folk_graph_update_ = new ::MsgsSimToClient::MsgFolkGraphUpdate;
   return folk_graph_update_;
 }
 
-// optional .MsgsSimToClient.MsgControlGlobalMeteoAck control_global_meteo_ack = 102;
+// optional .MsgsSimToClient.MsgControlGlobalMeteoAck control_global_meteo_ack = 103;
 inline bool MsgSimToClient_Content::has_control_global_meteo_ack() const {
-  return _has_bit(101);
+  return _has_bit(102);
 }
 inline void MsgSimToClient_Content::clear_control_global_meteo_ack() {
   if (control_global_meteo_ack_ != NULL) control_global_meteo_ack_->::MsgsSimToClient::MsgControlGlobalMeteoAck::Clear();
-  _clear_bit(101);
+  _clear_bit(102);
 }
 inline const ::MsgsSimToClient::MsgControlGlobalMeteoAck& MsgSimToClient_Content::control_global_meteo_ack() const {
   return control_global_meteo_ack_ != NULL ? *control_global_meteo_ack_ : *default_instance_->control_global_meteo_ack_;
 }
 inline ::MsgsSimToClient::MsgControlGlobalMeteoAck* MsgSimToClient_Content::mutable_control_global_meteo_ack() {
-  _set_bit(101);
+  _set_bit(102);
   if (control_global_meteo_ack_ == NULL) control_global_meteo_ack_ = new ::MsgsSimToClient::MsgControlGlobalMeteoAck;
   return control_global_meteo_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteoAck control_local_meteo_ack = 103;
+// optional .MsgsSimToClient.MsgControlLocalMeteoAck control_local_meteo_ack = 104;
 inline bool MsgSimToClient_Content::has_control_local_meteo_ack() const {
-  return _has_bit(102);
+  return _has_bit(103);
 }
 inline void MsgSimToClient_Content::clear_control_local_meteo_ack() {
   if (control_local_meteo_ack_ != NULL) control_local_meteo_ack_->::MsgsSimToClient::MsgControlLocalMeteoAck::Clear();
-  _clear_bit(102);
+  _clear_bit(103);
 }
 inline const ::MsgsSimToClient::MsgControlLocalMeteoAck& MsgSimToClient_Content::control_local_meteo_ack() const {
   return control_local_meteo_ack_ != NULL ? *control_local_meteo_ack_ : *default_instance_->control_local_meteo_ack_;
 }
 inline ::MsgsSimToClient::MsgControlLocalMeteoAck* MsgSimToClient_Content::mutable_control_local_meteo_ack() {
-  _set_bit(102);
+  _set_bit(103);
   if (control_local_meteo_ack_ == NULL) control_local_meteo_ack_ = new ::MsgsSimToClient::MsgControlLocalMeteoAck;
   return control_local_meteo_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlCheckPointSaveBegin control_checkpoint_save_begin = 104;
+// optional .MsgsSimToClient.MsgControlCheckPointSaveBegin control_checkpoint_save_begin = 105;
 inline bool MsgSimToClient_Content::has_control_checkpoint_save_begin() const {
-  return _has_bit(103);
+  return _has_bit(104);
 }
 inline void MsgSimToClient_Content::clear_control_checkpoint_save_begin() {
   if (control_checkpoint_save_begin_ != NULL) control_checkpoint_save_begin_->::MsgsSimToClient::MsgControlCheckPointSaveBegin::Clear();
-  _clear_bit(103);
+  _clear_bit(104);
 }
 inline const ::MsgsSimToClient::MsgControlCheckPointSaveBegin& MsgSimToClient_Content::control_checkpoint_save_begin() const {
   return control_checkpoint_save_begin_ != NULL ? *control_checkpoint_save_begin_ : *default_instance_->control_checkpoint_save_begin_;
 }
 inline ::MsgsSimToClient::MsgControlCheckPointSaveBegin* MsgSimToClient_Content::mutable_control_checkpoint_save_begin() {
-  _set_bit(103);
+  _set_bit(104);
   if (control_checkpoint_save_begin_ == NULL) control_checkpoint_save_begin_ = new ::MsgsSimToClient::MsgControlCheckPointSaveBegin;
   return control_checkpoint_save_begin_;
 }
 
-// optional .MsgsSimToClient.MsgControlCheckPointSetFrequencyAck control_checkpoint_set_frequency_ack = 105;
+// optional .MsgsSimToClient.MsgControlCheckPointSetFrequencyAck control_checkpoint_set_frequency_ack = 106;
 inline bool MsgSimToClient_Content::has_control_checkpoint_set_frequency_ack() const {
-  return _has_bit(104);
+  return _has_bit(105);
 }
 inline void MsgSimToClient_Content::clear_control_checkpoint_set_frequency_ack() {
   if (control_checkpoint_set_frequency_ack_ != NULL) control_checkpoint_set_frequency_ack_->::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck::Clear();
-  _clear_bit(104);
+  _clear_bit(105);
 }
 inline const ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck& MsgSimToClient_Content::control_checkpoint_set_frequency_ack() const {
   return control_checkpoint_set_frequency_ack_ != NULL ? *control_checkpoint_set_frequency_ack_ : *default_instance_->control_checkpoint_set_frequency_ack_;
 }
 inline ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck* MsgSimToClient_Content::mutable_control_checkpoint_set_frequency_ack() {
-  _set_bit(104);
+  _set_bit(105);
   if (control_checkpoint_set_frequency_ack_ == NULL) control_checkpoint_set_frequency_ack_ = new ::MsgsSimToClient::MsgControlCheckPointSetFrequencyAck;
   return control_checkpoint_set_frequency_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlCheckPointSaveNowAck control_checkpoint_save_now_ack = 106;
+// optional .MsgsSimToClient.MsgControlCheckPointSaveNowAck control_checkpoint_save_now_ack = 107;
 inline bool MsgSimToClient_Content::has_control_checkpoint_save_now_ack() const {
-  return _has_bit(105);
+  return _has_bit(106);
 }
 inline void MsgSimToClient_Content::clear_control_checkpoint_save_now_ack() {
   if (control_checkpoint_save_now_ack_ != NULL) control_checkpoint_save_now_ack_->::MsgsSimToClient::MsgControlCheckPointSaveNowAck::Clear();
-  _clear_bit(105);
+  _clear_bit(106);
 }
 inline const ::MsgsSimToClient::MsgControlCheckPointSaveNowAck& MsgSimToClient_Content::control_checkpoint_save_now_ack() const {
   return control_checkpoint_save_now_ack_ != NULL ? *control_checkpoint_save_now_ack_ : *default_instance_->control_checkpoint_save_now_ack_;
 }
 inline ::MsgsSimToClient::MsgControlCheckPointSaveNowAck* MsgSimToClient_Content::mutable_control_checkpoint_save_now_ack() {
-  _set_bit(105);
+  _set_bit(106);
   if (control_checkpoint_save_now_ack_ == NULL) control_checkpoint_save_now_ack_ = new ::MsgsSimToClient::MsgControlCheckPointSaveNowAck;
   return control_checkpoint_save_now_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlSendCurrentStateBegin control_send_current_state_begin = 107;
+// optional .MsgsSimToClient.MsgControlSendCurrentStateBegin control_send_current_state_begin = 108;
 inline bool MsgSimToClient_Content::has_control_send_current_state_begin() const {
-  return _has_bit(106);
+  return _has_bit(107);
 }
 inline void MsgSimToClient_Content::clear_control_send_current_state_begin() {
   if (control_send_current_state_begin_ != NULL) control_send_current_state_begin_->::MsgsSimToClient::MsgControlSendCurrentStateBegin::Clear();
-  _clear_bit(106);
+  _clear_bit(107);
 }
 inline const ::MsgsSimToClient::MsgControlSendCurrentStateBegin& MsgSimToClient_Content::control_send_current_state_begin() const {
   return control_send_current_state_begin_ != NULL ? *control_send_current_state_begin_ : *default_instance_->control_send_current_state_begin_;
 }
 inline ::MsgsSimToClient::MsgControlSendCurrentStateBegin* MsgSimToClient_Content::mutable_control_send_current_state_begin() {
-  _set_bit(106);
+  _set_bit(107);
   if (control_send_current_state_begin_ == NULL) control_send_current_state_begin_ = new ::MsgsSimToClient::MsgControlSendCurrentStateBegin;
   return control_send_current_state_begin_;
 }
 
-// optional .MsgsSimToClient.MsgControlSendCurrentStateEnd control_send_current_state_end = 108;
+// optional .MsgsSimToClient.MsgControlSendCurrentStateEnd control_send_current_state_end = 109;
 inline bool MsgSimToClient_Content::has_control_send_current_state_end() const {
-  return _has_bit(107);
+  return _has_bit(108);
 }
 inline void MsgSimToClient_Content::clear_control_send_current_state_end() {
   if (control_send_current_state_end_ != NULL) control_send_current_state_end_->::MsgsSimToClient::MsgControlSendCurrentStateEnd::Clear();
-  _clear_bit(107);
+  _clear_bit(108);
 }
 inline const ::MsgsSimToClient::MsgControlSendCurrentStateEnd& MsgSimToClient_Content::control_send_current_state_end() const {
   return control_send_current_state_end_ != NULL ? *control_send_current_state_end_ : *default_instance_->control_send_current_state_end_;
 }
 inline ::MsgsSimToClient::MsgControlSendCurrentStateEnd* MsgSimToClient_Content::mutable_control_send_current_state_end() {
-  _set_bit(107);
+  _set_bit(108);
   if (control_send_current_state_end_ == NULL) control_send_current_state_end_ = new ::MsgsSimToClient::MsgControlSendCurrentStateEnd;
   return control_send_current_state_end_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanCreation urban_creation = 109;
+// optional .MsgsSimToClient.MsgUrbanCreation urban_creation = 110;
 inline bool MsgSimToClient_Content::has_urban_creation() const {
-  return _has_bit(108);
+  return _has_bit(109);
 }
 inline void MsgSimToClient_Content::clear_urban_creation() {
   if (urban_creation_ != NULL) urban_creation_->::MsgsSimToClient::MsgUrbanCreation::Clear();
-  _clear_bit(108);
+  _clear_bit(109);
 }
 inline const ::MsgsSimToClient::MsgUrbanCreation& MsgSimToClient_Content::urban_creation() const {
   return urban_creation_ != NULL ? *urban_creation_ : *default_instance_->urban_creation_;
 }
 inline ::MsgsSimToClient::MsgUrbanCreation* MsgSimToClient_Content::mutable_urban_creation() {
-  _set_bit(108);
+  _set_bit(109);
   if (urban_creation_ == NULL) urban_creation_ = new ::MsgsSimToClient::MsgUrbanCreation;
   return urban_creation_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanKnowledgeCreation urban_knowledge_creation = 110;
+// optional .MsgsSimToClient.MsgUrbanKnowledgeCreation urban_knowledge_creation = 111;
 inline bool MsgSimToClient_Content::has_urban_knowledge_creation() const {
-  return _has_bit(109);
+  return _has_bit(110);
 }
 inline void MsgSimToClient_Content::clear_urban_knowledge_creation() {
   if (urban_knowledge_creation_ != NULL) urban_knowledge_creation_->::MsgsSimToClient::MsgUrbanKnowledgeCreation::Clear();
-  _clear_bit(109);
+  _clear_bit(110);
 }
 inline const ::MsgsSimToClient::MsgUrbanKnowledgeCreation& MsgSimToClient_Content::urban_knowledge_creation() const {
   return urban_knowledge_creation_ != NULL ? *urban_knowledge_creation_ : *default_instance_->urban_knowledge_creation_;
 }
 inline ::MsgsSimToClient::MsgUrbanKnowledgeCreation* MsgSimToClient_Content::mutable_urban_knowledge_creation() {
-  _set_bit(109);
+  _set_bit(110);
   if (urban_knowledge_creation_ == NULL) urban_knowledge_creation_ = new ::MsgsSimToClient::MsgUrbanKnowledgeCreation;
   return urban_knowledge_creation_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanKnowledgeUpdate urban_knowledge_update = 111;
+// optional .MsgsSimToClient.MsgUrbanKnowledgeUpdate urban_knowledge_update = 112;
 inline bool MsgSimToClient_Content::has_urban_knowledge_update() const {
-  return _has_bit(110);
+  return _has_bit(111);
 }
 inline void MsgSimToClient_Content::clear_urban_knowledge_update() {
   if (urban_knowledge_update_ != NULL) urban_knowledge_update_->::MsgsSimToClient::MsgUrbanKnowledgeUpdate::Clear();
-  _clear_bit(110);
+  _clear_bit(111);
 }
 inline const ::MsgsSimToClient::MsgUrbanKnowledgeUpdate& MsgSimToClient_Content::urban_knowledge_update() const {
   return urban_knowledge_update_ != NULL ? *urban_knowledge_update_ : *default_instance_->urban_knowledge_update_;
 }
 inline ::MsgsSimToClient::MsgUrbanKnowledgeUpdate* MsgSimToClient_Content::mutable_urban_knowledge_update() {
-  _set_bit(110);
+  _set_bit(111);
   if (urban_knowledge_update_ == NULL) urban_knowledge_update_ = new ::MsgsSimToClient::MsgUrbanKnowledgeUpdate;
   return urban_knowledge_update_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanKnowledgeDestruction urban_knowledge_destruction = 112;
+// optional .MsgsSimToClient.MsgUrbanKnowledgeDestruction urban_knowledge_destruction = 113;
 inline bool MsgSimToClient_Content::has_urban_knowledge_destruction() const {
-  return _has_bit(111);
+  return _has_bit(112);
 }
 inline void MsgSimToClient_Content::clear_urban_knowledge_destruction() {
   if (urban_knowledge_destruction_ != NULL) urban_knowledge_destruction_->::MsgsSimToClient::MsgUrbanKnowledgeDestruction::Clear();
-  _clear_bit(111);
+  _clear_bit(112);
 }
 inline const ::MsgsSimToClient::MsgUrbanKnowledgeDestruction& MsgSimToClient_Content::urban_knowledge_destruction() const {
   return urban_knowledge_destruction_ != NULL ? *urban_knowledge_destruction_ : *default_instance_->urban_knowledge_destruction_;
 }
 inline ::MsgsSimToClient::MsgUrbanKnowledgeDestruction* MsgSimToClient_Content::mutable_urban_knowledge_destruction() {
-  _set_bit(111);
+  _set_bit(112);
   if (urban_knowledge_destruction_ == NULL) urban_knowledge_destruction_ = new ::MsgsSimToClient::MsgUrbanKnowledgeDestruction;
   return urban_knowledge_destruction_;
 }
 
-// optional .Common.StockResource stock_resource = 113;
+// optional .Common.StockResource stock_resource = 114;
 inline bool MsgSimToClient_Content::has_stock_resource() const {
-  return _has_bit(112);
+  return _has_bit(113);
 }
 inline void MsgSimToClient_Content::clear_stock_resource() {
   if (stock_resource_ != NULL) stock_resource_->::Common::StockResource::Clear();
-  _clear_bit(112);
+  _clear_bit(113);
 }
 inline const ::Common::StockResource& MsgSimToClient_Content::stock_resource() const {
   return stock_resource_ != NULL ? *stock_resource_ : *default_instance_->stock_resource_;
 }
 inline ::Common::StockResource* MsgSimToClient_Content::mutable_stock_resource() {
-  _set_bit(112);
+  _set_bit(113);
   if (stock_resource_ == NULL) stock_resource_ = new ::Common::StockResource;
   return stock_resource_;
 }
 
-// optional .MsgsSimToClient.MsgUrbanDetection urban_detection = 114;
+// optional .MsgsSimToClient.MsgUrbanDetection urban_detection = 115;
 inline bool MsgSimToClient_Content::has_urban_detection() const {
-  return _has_bit(113);
+  return _has_bit(114);
 }
 inline void MsgSimToClient_Content::clear_urban_detection() {
   if (urban_detection_ != NULL) urban_detection_->::MsgsSimToClient::MsgUrbanDetection::Clear();
-  _clear_bit(113);
+  _clear_bit(114);
 }
 inline const ::MsgsSimToClient::MsgUrbanDetection& MsgSimToClient_Content::urban_detection() const {
   return urban_detection_ != NULL ? *urban_detection_ : *default_instance_->urban_detection_;
 }
 inline ::MsgsSimToClient::MsgUrbanDetection* MsgSimToClient_Content::mutable_urban_detection() {
-  _set_bit(113);
+  _set_bit(114);
   if (urban_detection_ == NULL) urban_detection_ = new ::MsgsSimToClient::MsgUrbanDetection;
   return urban_detection_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 115;
+// optional .MsgsSimToClient.MsgKnowledgeGroupCreation knowledge_group_creation = 116;
 inline bool MsgSimToClient_Content::has_knowledge_group_creation() const {
-  return _has_bit(114);
+  return _has_bit(115);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_creation() {
   if (knowledge_group_creation_ != NULL) knowledge_group_creation_->::MsgsSimToClient::MsgKnowledgeGroupCreation::Clear();
-  _clear_bit(114);
+  _clear_bit(115);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupCreation& MsgSimToClient_Content::knowledge_group_creation() const {
   return knowledge_group_creation_ != NULL ? *knowledge_group_creation_ : *default_instance_->knowledge_group_creation_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupCreation* MsgSimToClient_Content::mutable_knowledge_group_creation() {
-  _set_bit(114);
+  _set_bit(115);
   if (knowledge_group_creation_ == NULL) knowledge_group_creation_ = new ::MsgsSimToClient::MsgKnowledgeGroupCreation;
   return knowledge_group_creation_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupUpdate knowledge_group_update = 116;
+// optional .MsgsSimToClient.MsgKnowledgeGroupUpdate knowledge_group_update = 117;
 inline bool MsgSimToClient_Content::has_knowledge_group_update() const {
-  return _has_bit(115);
+  return _has_bit(116);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_update() {
   if (knowledge_group_update_ != NULL) knowledge_group_update_->::MsgsSimToClient::MsgKnowledgeGroupUpdate::Clear();
-  _clear_bit(115);
+  _clear_bit(116);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdate& MsgSimToClient_Content::knowledge_group_update() const {
   return knowledge_group_update_ != NULL ? *knowledge_group_update_ : *default_instance_->knowledge_group_update_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupUpdate* MsgSimToClient_Content::mutable_knowledge_group_update() {
-  _set_bit(115);
+  _set_bit(116);
   if (knowledge_group_update_ == NULL) knowledge_group_update_ = new ::MsgsSimToClient::MsgKnowledgeGroupUpdate;
   return knowledge_group_update_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupCreationAck knowledge_group_creation_ack = 117;
+// optional .MsgsSimToClient.MsgKnowledgeGroupCreationAck knowledge_group_creation_ack = 118;
 inline bool MsgSimToClient_Content::has_knowledge_group_creation_ack() const {
-  return _has_bit(116);
+  return _has_bit(117);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_creation_ack() {
   if (knowledge_group_creation_ack_ != NULL) knowledge_group_creation_ack_->::MsgsSimToClient::MsgKnowledgeGroupCreationAck::Clear();
-  _clear_bit(116);
+  _clear_bit(117);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupCreationAck& MsgSimToClient_Content::knowledge_group_creation_ack() const {
   return knowledge_group_creation_ack_ != NULL ? *knowledge_group_creation_ack_ : *default_instance_->knowledge_group_creation_ack_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupCreationAck* MsgSimToClient_Content::mutable_knowledge_group_creation_ack() {
-  _set_bit(116);
+  _set_bit(117);
   if (knowledge_group_creation_ack_ == NULL) knowledge_group_creation_ack_ = new ::MsgsSimToClient::MsgKnowledgeGroupCreationAck;
   return knowledge_group_creation_ack_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupUpdateAck knowledge_group_update_ack = 118;
+// optional .MsgsSimToClient.MsgKnowledgeGroupUpdateAck knowledge_group_update_ack = 119;
 inline bool MsgSimToClient_Content::has_knowledge_group_update_ack() const {
-  return _has_bit(117);
+  return _has_bit(118);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_update_ack() {
   if (knowledge_group_update_ack_ != NULL) knowledge_group_update_ack_->::MsgsSimToClient::MsgKnowledgeGroupUpdateAck::Clear();
-  _clear_bit(117);
+  _clear_bit(118);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck& MsgSimToClient_Content::knowledge_group_update_ack() const {
   return knowledge_group_update_ack_ != NULL ? *knowledge_group_update_ack_ : *default_instance_->knowledge_group_update_ack_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck* MsgSimToClient_Content::mutable_knowledge_group_update_ack() {
-  _set_bit(117);
+  _set_bit(118);
   if (knowledge_group_update_ack_ == NULL) knowledge_group_update_ack_ = new ::MsgsSimToClient::MsgKnowledgeGroupUpdateAck;
   return knowledge_group_update_ack_;
 }
 
-// optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 119;
+// optional .MsgsSimToClient.MsgKnowledgeGroupDestruction knowledge_group_destruction = 120;
 inline bool MsgSimToClient_Content::has_knowledge_group_destruction() const {
-  return _has_bit(118);
+  return _has_bit(119);
 }
 inline void MsgSimToClient_Content::clear_knowledge_group_destruction() {
   if (knowledge_group_destruction_ != NULL) knowledge_group_destruction_->::MsgsSimToClient::MsgKnowledgeGroupDestruction::Clear();
-  _clear_bit(118);
+  _clear_bit(119);
 }
 inline const ::MsgsSimToClient::MsgKnowledgeGroupDestruction& MsgSimToClient_Content::knowledge_group_destruction() const {
   return knowledge_group_destruction_ != NULL ? *knowledge_group_destruction_ : *default_instance_->knowledge_group_destruction_;
 }
 inline ::MsgsSimToClient::MsgKnowledgeGroupDestruction* MsgSimToClient_Content::mutable_knowledge_group_destruction() {
-  _set_bit(118);
+  _set_bit(119);
   if (knowledge_group_destruction_ == NULL) knowledge_group_destruction_ = new ::MsgsSimToClient::MsgKnowledgeGroupDestruction;
   return knowledge_group_destruction_;
 }
 
-// optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 120;
+// optional .MsgsSimToClient.MsgActionCreateFireOrderAck action_create_fire_order_ack = 121;
 inline bool MsgSimToClient_Content::has_action_create_fire_order_ack() const {
-  return _has_bit(119);
+  return _has_bit(120);
 }
 inline void MsgSimToClient_Content::clear_action_create_fire_order_ack() {
   if (action_create_fire_order_ack_ != NULL) action_create_fire_order_ack_->::MsgsSimToClient::MsgActionCreateFireOrderAck::Clear();
-  _clear_bit(119);
+  _clear_bit(120);
 }
 inline const ::MsgsSimToClient::MsgActionCreateFireOrderAck& MsgSimToClient_Content::action_create_fire_order_ack() const {
   return action_create_fire_order_ack_ != NULL ? *action_create_fire_order_ack_ : *default_instance_->action_create_fire_order_ack_;
 }
 inline ::MsgsSimToClient::MsgActionCreateFireOrderAck* MsgSimToClient_Content::mutable_action_create_fire_order_ack() {
-  _set_bit(119);
+  _set_bit(120);
   if (action_create_fire_order_ack_ == NULL) action_create_fire_order_ack_ = new ::MsgsSimToClient::MsgActionCreateFireOrderAck;
   return action_create_fire_order_ack_;
 }
 
-// optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 121;
+// optional .MsgsSimToClient.MsgControlGlobalMeteo control_global_meteo = 122;
 inline bool MsgSimToClient_Content::has_control_global_meteo() const {
-  return _has_bit(120);
+  return _has_bit(121);
 }
 inline void MsgSimToClient_Content::clear_control_global_meteo() {
   if (control_global_meteo_ != NULL) control_global_meteo_->::MsgsSimToClient::MsgControlGlobalMeteo::Clear();
-  _clear_bit(120);
+  _clear_bit(121);
 }
 inline const ::MsgsSimToClient::MsgControlGlobalMeteo& MsgSimToClient_Content::control_global_meteo() const {
   return control_global_meteo_ != NULL ? *control_global_meteo_ : *default_instance_->control_global_meteo_;
 }
 inline ::MsgsSimToClient::MsgControlGlobalMeteo* MsgSimToClient_Content::mutable_control_global_meteo() {
-  _set_bit(120);
+  _set_bit(121);
   if (control_global_meteo_ == NULL) control_global_meteo_ = new ::MsgsSimToClient::MsgControlGlobalMeteo;
   return control_global_meteo_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 122;
+// optional .MsgsSimToClient.MsgControlLocalMeteoCreation control_local_meteo_creation = 123;
 inline bool MsgSimToClient_Content::has_control_local_meteo_creation() const {
-  return _has_bit(121);
+  return _has_bit(122);
 }
 inline void MsgSimToClient_Content::clear_control_local_meteo_creation() {
   if (control_local_meteo_creation_ != NULL) control_local_meteo_creation_->::MsgsSimToClient::MsgControlLocalMeteoCreation::Clear();
-  _clear_bit(121);
+  _clear_bit(122);
 }
 inline const ::MsgsSimToClient::MsgControlLocalMeteoCreation& MsgSimToClient_Content::control_local_meteo_creation() const {
   return control_local_meteo_creation_ != NULL ? *control_local_meteo_creation_ : *default_instance_->control_local_meteo_creation_;
 }
 inline ::MsgsSimToClient::MsgControlLocalMeteoCreation* MsgSimToClient_Content::mutable_control_local_meteo_creation() {
-  _set_bit(121);
+  _set_bit(122);
   if (control_local_meteo_creation_ == NULL) control_local_meteo_creation_ = new ::MsgsSimToClient::MsgControlLocalMeteoCreation;
   return control_local_meteo_creation_;
 }
 
-// optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 123;
+// optional .MsgsSimToClient.MsgControlLocalMeteoDestruction control_local_meteo_destruction = 124;
 inline bool MsgSimToClient_Content::has_control_local_meteo_destruction() const {
-  return _has_bit(122);
+  return _has_bit(123);
 }
 inline void MsgSimToClient_Content::clear_control_local_meteo_destruction() {
   if (control_local_meteo_destruction_ != NULL) control_local_meteo_destruction_->::MsgsSimToClient::MsgControlLocalMeteoDestruction::Clear();
-  _clear_bit(122);
+  _clear_bit(123);
 }
 inline const ::MsgsSimToClient::MsgControlLocalMeteoDestruction& MsgSimToClient_Content::control_local_meteo_destruction() const {
   return control_local_meteo_destruction_ != NULL ? *control_local_meteo_destruction_ : *default_instance_->control_local_meteo_destruction_;
 }
 inline ::MsgsSimToClient::MsgControlLocalMeteoDestruction* MsgSimToClient_Content::mutable_control_local_meteo_destruction() {
-  _set_bit(122);
+  _set_bit(123);
   if (control_local_meteo_destruction_ == NULL) control_local_meteo_destruction_ = new ::MsgsSimToClient::MsgControlLocalMeteoDestruction;
   return control_local_meteo_destruction_;
 }
@@ -32822,6 +32996,10 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgSetAutomat
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::UnitActionAck_ErrorCode>() {
   return ::MsgsSimToClient::UnitActionAck_ErrorCode_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgMagicActionAck_ErrorCode>() {
+  return ::MsgsSimToClient::MsgMagicActionAck_ErrorCode_descriptor();
 }
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode>() {

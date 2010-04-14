@@ -51,7 +51,7 @@ PHY_GlobalMeteo::~PHY_GlobalMeteo()
 // Name: PHY_GlobalMeteo::Update
 // Created: JSR 2010-04-09
 // -----------------------------------------------------------------------------
-void PHY_GlobalMeteo::Update( const Common::MsgMeteoAttributes& asn )
+void PHY_GlobalMeteo::Update( const Common::MsgMissionParameters& asn )
 {
     _isChanged = true;
     PHY_Meteo::Update( asn );
@@ -84,7 +84,7 @@ void PHY_GlobalMeteo::SendCreation() const
     NET_ASN_Tools::WriteDirection( wind_.vWindDirection_, *( att->mutable_wind_direction() ) );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. ) );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     msg.Send( NET_Publisher_ABC::Publisher() );

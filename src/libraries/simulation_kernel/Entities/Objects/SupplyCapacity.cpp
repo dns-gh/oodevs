@@ -103,10 +103,10 @@ void SupplyCapacity::ProcessAgentEntering( Object& object, MIL_Agent_ABC& agent 
         MIL_AgentPion* pion = dynamic_cast< MIL_AgentPion* >( &agent );
         if( pion )
         {
-            MsgsClientToSim::MsgUnitMagicAction asnMsg;
-            asnMsg.mutable_action()->set_recompletement_ressources( 1 );
-            //@TODO MGD replace asn by action in general, temp hack with an empty resolver because this magic action dont't use armies
-            pion->OnReceiveMsgUnitMagicAction( asnMsg, tools::Resolver< MIL_Army_ABC >() );
+            MsgsClientToSim::MsgUnitMagicAction msg;
+            msg.set_type( MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources );
+            //@TODO MGD replace msg by action in general, temp hack with an empty resolver because this magic action dont't use armies
+            pion->OnReceiveMsgUnitMagicAction( msg, tools::Resolver< MIL_Army_ABC >() );
         }
     }
 }

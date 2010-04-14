@@ -10,23 +10,41 @@
 #include "gaming_app_pch.h"
 #include "WeatherCreationPanel.h"
 #include "moc_WeatherCreationPanel.cpp"
+#include "actions/MagicActionMeteo.h"
+#include "actions/ActionsModel.h"
+#include "actions/Numeric.h"
+#include "actions/DateTime.h"
+#include "actions/Location.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ParametersLayer.h"
+#include "gaming/ActionPublisher.h"
 #include "gaming/StaticModel.h"
+#include "gaming/ActionTiming.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "WeatherWidget.h"
+
+using namespace kernel;
+using namespace actions;
+using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: WeatherCreationPanel constructor
 // Created: SLG 2010-03-24
 // -----------------------------------------------------------------------------
-WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
+WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
     : gui::InfoPanel_ABC( parent, panel, tr( "Weathers" ), "WeatherCreationPanel" )
     , controllers_      ( controllers )
     , layer_            ( layer )
     , publisher_        ( publisher )
+    , actionPublisher_  ( actionPublisher )
+    , actionsModel_     ( actionsModel )
+    , model_            ( model )
+    , simulation_       ( simulation )
     , tools_            ( tools )
     , location_         ( 0 )
     , serializer_       ( model.coordinateConverter_ )
@@ -104,30 +122,33 @@ bool WeatherCreationPanel::CheckValidity()
 void WeatherCreationPanel::Commit()
 {
     if( CheckValidity() )
-    {
-        if( isGlobal_ )
-        {
-            simulation::ControlGlobalMeteo message;
-            Common::MsgMeteoAttributes* att = message().mutable_attributes();
-            weather_->Commit( *att );
-            message.Send( publisher_ );
-        }
-        else
-        {
-            simulation::ControlLocalMeteo message;
-            Common::MsgMeteoAttributes* att = message().mutable_attributes();
-            weather_->Commit( *att );
+    {      
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( model_.types_ ).Get( isGlobal_? "global_meteo" : "local_meteo" );
+        MagicActionMeteo* action = new MagicActionMeteo( actionType, controllers_.controller_, true );
 
-            Common::MsgLocation longlat;
-            serializer_.Serialize( *location_, longlat );
-            message().mutable_start_time()->set_data( startTime_->dateTime().toString( "yyyyMMddThhmmss" ).ascii() );
-            message().mutable_end_time()->set_data( endTime_->dateTime().toString( "yyyyMMddThhmmss" ).ascii() );
-            message().mutable_bottom_right_coordinate()->set_latitude( longlat.coordinates().elem( 0 ).latitude()  );
-            message().mutable_bottom_right_coordinate()->set_longitude( longlat.coordinates().elem( 0 ).longitude()  );
-            message().mutable_top_left_coordinate()->set_latitude( longlat.coordinates().elem( 1 ).latitude()  );
-            message().mutable_top_left_coordinate()->set_longitude( longlat.coordinates().elem( 1 ).longitude()  );
-            message.Send( publisher_ );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const OrderParameter& parameter = it.NextElement();
+
+            if( parameter.GetName() == "StartTime" || parameter.GetName() == "EndTime" || parameter.GetName() == "Location" )
+            {
+                if( isGlobal_ )
+                    continue;
+                if( parameter.GetName() == "StartTime" )
+                    action->AddParameter( *new DateTime( parameter, startTime_->dateTime() ) );
+                else if( parameter.GetName() == "EndTime" )
+                    action->AddParameter( *new DateTime( parameter, endTime_->dateTime() ) );
+                else if( parameter.GetName() == "Location" )
+                    action->AddParameter( *new Location( parameter, model_.coordinateConverter_ , *location_ ) );
+            }
+            else
+                action->AddParameter( weather_->CreateParameter( parameter ) );
         }
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Polish();
+        actionsModel_.Register( action->GetId(), *action );
+        actionsModel_.Publish( *action, actionPublisher_ );
         Reset();
     }
 }

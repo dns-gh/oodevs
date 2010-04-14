@@ -556,7 +556,8 @@ void LogisticSupplyRecompletionDialog::Validate()
     FillAmmunitions( magicAction );
     FillSupplies( magicAction );
 
-    *message().mutable_action()->mutable_recompletement_partiel() = magicAction;   // $$$$ _RC_ FDS 2010-01-27: Je ne comprends pas cette innitialisation ???
+    // $$$$ JSR 2010-04-14: TODO
+    //*message().mutable_action()->mutable_recompletement_partiel() = magicAction;   // $$$$ _RC_ FDS 2010-01-27: Je ne comprends pas cette innitialisation ???
 
     message.Send( publisher_ );
     magicAction.Clear();    

@@ -16,6 +16,11 @@ namespace kernel
     class Profile_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace tools
 {
     class ExerciseConfig;
@@ -25,6 +30,8 @@ class Model;
 class StaticModel;
 class Publisher_ABC;
 class CommandHandler;
+class ActionPublisher;
+class Simulation;
 
 // =============================================================================
 /** @class  Dialogs
@@ -38,7 +45,7 @@ class Dialogs : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config );
+             Dialogs( QWidget* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config );
     virtual ~Dialogs();
     //@}
 };

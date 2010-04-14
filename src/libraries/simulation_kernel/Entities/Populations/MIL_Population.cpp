@@ -885,8 +885,11 @@ void MIL_Population::OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::M
 // Name: MIL_Population::OnReceiveMsgPopulationMagicActionMoveTo
 // Created: JSR 2010-04-08
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& asn )
+void MIL_Population::OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn )
 {
+    if( asn.type() != MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
     if( !asn.has_parametres() || asn.parametres().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
     

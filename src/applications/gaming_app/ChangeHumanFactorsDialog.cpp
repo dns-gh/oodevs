@@ -10,14 +10,22 @@
 #include "gaming_app_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
+#include "actions/ActionsModel.h"
+#include "actions/UnitMagicAction.h"
+#include "actions/Enumeration.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/tools.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
+#include "gaming/StaticModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -25,6 +33,7 @@
 
 using namespace kernel;
 using namespace gui;
+using namespace actions;
 
 namespace 
 {
@@ -40,10 +49,14 @@ namespace
 // Name: ChangeHumanFactorsDialog constructor
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, const Profile_ABC& profile )
+ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const Profile_ABC& profile )
     : QDialog( pParent, tr( "Human factors" ) )
     , controllers_( controllers )
+    , static_( staticModel )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , simulation_( simulation )
     , profile_( profile )
     , selected_( controllers )
 {
@@ -151,7 +164,7 @@ void ChangeHumanFactorsDialog::Validate()
 void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
 {
     if( entity.Retrieve< HumanFactors_ABC >() )
-        SendMessage( entity.GetId(), tiredness, moral, experience );
+        SendAction( entity, tiredness, moral, experience );
     const Hierarchies* h = entity.Retrieve< CommunicationHierarchies >();
     if( !h )
         h = entity.Retrieve< TacticalHierarchies >();
@@ -167,9 +180,9 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, En
 // Name: ChangeHumanFactorsDialog::SendMessage
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-void ChangeHumanFactorsDialog::SendMessage( unsigned int id, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
+void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
 {
-    simulation::UnitMagicAction message;
+    /*simulation::UnitMagicAction message;
     message().set_oid( id );
 
     Common::MsgMagicActionChangeHumanFactors magicAction;
@@ -178,7 +191,17 @@ void ChangeHumanFactorsDialog::SendMessage( unsigned int id, EnumUnitTiredness t
     magicAction.set_fatigue    ( tiredness );
     magicAction.set_moral      ( moral );
     magicAction.set_experience ( experience );
-    message.Send( publisher_ );
+    message.Send( publisher_ );*/
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_human_factors" );
+    UnitMagicAction* action = new UnitMagicAction( entity, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) tiredness ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) moral ) );
+    action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) experience ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Polish();
+    actionsModel_.Register( action->GetId(), *action );
+    actionsModel_.Publish( *action, actionPublisher_ );
 }
 
 // -----------------------------------------------------------------------------

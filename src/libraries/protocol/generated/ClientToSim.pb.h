@@ -32,8 +32,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto();
 void protobuf_ShutdownFile_ClientToSim_2eproto();
 
 class MsgControlDatetimeChange;
-class MsgControlGlobalMeteo;
-class MsgControlLocalMeteo;
+class MsgControlMeteo;
 class MsgControlCheckPointSaveNow;
 class MsgFragOrder;
 class MsgSetAutomatMode;
@@ -50,7 +49,6 @@ class MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery;
 class MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery_AmmunitionDotationRecovery;
 class MsgMagicActionPartialRecovery_SeqOfStockRecovery;
 class MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery;
-class MsgUnitMagicAction_action;
 class MsgUnitMagicAction;
 class MsgMagicActionCreateObject;
 class MsgMagicActionUpdateObject;
@@ -59,7 +57,6 @@ class MsgObjectMagicAction;
 class MsgMagicActionCreateFireOrder;
 class MsgPopulationMagicAction_action;
 class MsgPopulationMagicAction;
-class MsgMagicActionMoveTo;
 class MsgLogSupplyPushFlow;
 class MsgLogSupplyChangeQuotas;
 class MsgControlCheckPointSetFrequency;
@@ -69,6 +66,34 @@ class MsgKnowledgeGroupUpdateRequest;
 class MsgClientToSim;
 class MsgClientToSim_Content;
 
+enum MsgUnitMagicAction_Type {
+  MsgUnitMagicAction_Type_move_to = 0,
+  MsgUnitMagicAction_Type_surrender_to = 1,
+  MsgUnitMagicAction_Type_cancel_surrender = 2,
+  MsgUnitMagicAction_Type_recover_transporters = 3,
+  MsgUnitMagicAction_Type_destroy_component = 4,
+  MsgUnitMagicAction_Type_recover_all = 5,
+  MsgUnitMagicAction_Type_recover_troops = 6,
+  MsgUnitMagicAction_Type_recover_equipments = 7,
+  MsgUnitMagicAction_Type_recover_resources = 8,
+  MsgUnitMagicAction_Type_destroy_all = 9,
+  MsgUnitMagicAction_Type_change_human_factors = 10,
+  MsgUnitMagicAction_Type_partial_recovery = 11
+};
+bool MsgUnitMagicAction_Type_IsValid(int value);
+const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MIN = MsgUnitMagicAction_Type_move_to;
+const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MAX = MsgUnitMagicAction_Type_partial_recovery;
+
+const ::google::protobuf::EnumDescriptor* MsgUnitMagicAction_Type_descriptor();
+inline const ::std::string& MsgUnitMagicAction_Type_Name(MsgUnitMagicAction_Type value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgUnitMagicAction_Type_descriptor(), value);
+}
+inline bool MsgUnitMagicAction_Type_Parse(
+    const ::std::string& name, MsgUnitMagicAction_Type* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgUnitMagicAction_Type>(
+    MsgUnitMagicAction_Type_descriptor(), name, value);
+}
 // ===================================================================
 
 class MsgControlDatetimeChange : public ::google::protobuf::Message {
@@ -158,14 +183,14 @@ class MsgControlDatetimeChange : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgControlGlobalMeteo : public ::google::protobuf::Message {
+class MsgControlMeteo : public ::google::protobuf::Message {
  public:
-  MsgControlGlobalMeteo();
-  virtual ~MsgControlGlobalMeteo();
+  MsgControlMeteo();
+  virtual ~MsgControlMeteo();
   
-  MsgControlGlobalMeteo(const MsgControlGlobalMeteo& from);
+  MsgControlMeteo(const MsgControlMeteo& from);
   
-  inline MsgControlGlobalMeteo& operator=(const MsgControlGlobalMeteo& from) {
+  inline MsgControlMeteo& operator=(const MsgControlMeteo& from) {
     CopyFrom(from);
     return *this;
   }
@@ -179,16 +204,16 @@ class MsgControlGlobalMeteo : public ::google::protobuf::Message {
   }
   
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgControlGlobalMeteo& default_instance();
-  void Swap(MsgControlGlobalMeteo* other);
+  static const MsgControlMeteo& default_instance();
+  void Swap(MsgControlMeteo* other);
   
   // implements Message ----------------------------------------------
   
-  MsgControlGlobalMeteo* New() const;
+  MsgControlMeteo* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgControlGlobalMeteo& from);
-  void MergeFrom(const MsgControlGlobalMeteo& from);
+  void CopyFrom(const MsgControlMeteo& from);
+  void MergeFrom(const MsgControlMeteo& from);
   void Clear();
   bool IsInitialized() const;
   
@@ -211,18 +236,18 @@ class MsgControlGlobalMeteo : public ::google::protobuf::Message {
   
   // accessors -------------------------------------------------------
   
-  // required .Common.MsgMeteoAttributes attributes = 1;
-  inline bool has_attributes() const;
-  inline void clear_attributes();
-  static const int kAttributesFieldNumber = 1;
-  inline const ::Common::MsgMeteoAttributes& attributes() const;
-  inline ::Common::MsgMeteoAttributes* mutable_attributes();
+  // required .Common.MsgMissionParameters parametres = 1;
+  inline bool has_parametres() const;
+  inline void clear_parametres();
+  static const int kParametresFieldNumber = 1;
+  inline const ::Common::MsgMissionParameters& parametres() const;
+  inline ::Common::MsgMissionParameters* mutable_parametres();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::Common::MsgMeteoAttributes* attributes_;
+  ::Common::MsgMissionParameters* parametres_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
@@ -241,126 +266,7 @@ class MsgControlGlobalMeteo : public ::google::protobuf::Message {
   }
   
   void InitAsDefaultInstance();
-  static MsgControlGlobalMeteo* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgControlLocalMeteo : public ::google::protobuf::Message {
- public:
-  MsgControlLocalMeteo();
-  virtual ~MsgControlLocalMeteo();
-  
-  MsgControlLocalMeteo(const MsgControlLocalMeteo& from);
-  
-  inline MsgControlLocalMeteo& operator=(const MsgControlLocalMeteo& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgControlLocalMeteo& default_instance();
-  void Swap(MsgControlLocalMeteo* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgControlLocalMeteo* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgControlLocalMeteo& from);
-  void MergeFrom(const MsgControlLocalMeteo& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.MsgDateTime start_time = 1;
-  inline bool has_start_time() const;
-  inline void clear_start_time();
-  static const int kStartTimeFieldNumber = 1;
-  inline const ::Common::MsgDateTime& start_time() const;
-  inline ::Common::MsgDateTime* mutable_start_time();
-  
-  // required .Common.MsgDateTime end_time = 2;
-  inline bool has_end_time() const;
-  inline void clear_end_time();
-  static const int kEndTimeFieldNumber = 2;
-  inline const ::Common::MsgDateTime& end_time() const;
-  inline ::Common::MsgDateTime* mutable_end_time();
-  
-  // required .Common.MsgCoordLatLong top_left_coordinate = 3;
-  inline bool has_top_left_coordinate() const;
-  inline void clear_top_left_coordinate();
-  static const int kTopLeftCoordinateFieldNumber = 3;
-  inline const ::Common::MsgCoordLatLong& top_left_coordinate() const;
-  inline ::Common::MsgCoordLatLong* mutable_top_left_coordinate();
-  
-  // required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
-  inline bool has_bottom_right_coordinate() const;
-  inline void clear_bottom_right_coordinate();
-  static const int kBottomRightCoordinateFieldNumber = 4;
-  inline const ::Common::MsgCoordLatLong& bottom_right_coordinate() const;
-  inline ::Common::MsgCoordLatLong* mutable_bottom_right_coordinate();
-  
-  // required .Common.MsgMeteoAttributes attributes = 5;
-  inline bool has_attributes() const;
-  inline void clear_attributes();
-  static const int kAttributesFieldNumber = 5;
-  inline const ::Common::MsgMeteoAttributes& attributes() const;
-  inline ::Common::MsgMeteoAttributes* mutable_attributes();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::Common::MsgDateTime* start_time_;
-  ::Common::MsgDateTime* end_time_;
-  ::Common::MsgCoordLatLong* top_left_coordinate_;
-  ::Common::MsgCoordLatLong* bottom_right_coordinate_;
-  ::Common::MsgMeteoAttributes* attributes_;
-  friend void  protobuf_AddDesc_ClientToSim_2eproto();
-  friend void protobuf_AssignDesc_ClientToSim_2eproto();
-  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgControlLocalMeteo* default_instance_;
+  static MsgControlMeteo* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -1919,173 +1825,6 @@ class MsgMagicActionPartialRecovery : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgUnitMagicAction_action : public ::google::protobuf::Message {
- public:
-  MsgUnitMagicAction_action();
-  virtual ~MsgUnitMagicAction_action();
-  
-  MsgUnitMagicAction_action(const MsgUnitMagicAction_action& from);
-  
-  inline MsgUnitMagicAction_action& operator=(const MsgUnitMagicAction_action& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgUnitMagicAction_action& default_instance();
-  void Swap(MsgUnitMagicAction_action* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgUnitMagicAction_action* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgUnitMagicAction_action& from);
-  void MergeFrom(const MsgUnitMagicAction_action& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 1;
-  inline bool has_recompletement_partiel() const;
-  inline void clear_recompletement_partiel();
-  static const int kRecompletementPartielFieldNumber = 1;
-  inline const ::MsgsClientToSim::MsgMagicActionPartialRecovery& recompletement_partiel() const;
-  inline ::MsgsClientToSim::MsgMagicActionPartialRecovery* mutable_recompletement_partiel();
-  
-  // optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 2;
-  inline bool has_change_facteurs_humains() const;
-  inline void clear_change_facteurs_humains();
-  static const int kChangeFacteursHumainsFieldNumber = 2;
-  inline const ::Common::MsgMagicActionChangeHumanFactors& change_facteurs_humains() const;
-  inline ::Common::MsgMagicActionChangeHumanFactors* mutable_change_facteurs_humains();
-  
-  // optional int32 se_rendre = 3;
-  inline bool has_se_rendre() const;
-  inline void clear_se_rendre();
-  static const int kSeRendreFieldNumber = 3;
-  inline ::google::protobuf::int32 se_rendre() const;
-  inline void set_se_rendre(::google::protobuf::int32 value);
-  
-  // optional int32 destruction_totale = 4;
-  inline bool has_destruction_totale() const;
-  inline void clear_destruction_totale();
-  static const int kDestructionTotaleFieldNumber = 4;
-  inline ::google::protobuf::int32 destruction_totale() const;
-  inline void set_destruction_totale(::google::protobuf::int32 value);
-  
-  // optional int32 destruction_composante = 5;
-  inline bool has_destruction_composante() const;
-  inline void clear_destruction_composante();
-  static const int kDestructionComposanteFieldNumber = 5;
-  inline ::google::protobuf::int32 destruction_composante() const;
-  inline void set_destruction_composante(::google::protobuf::int32 value);
-  
-  // optional int32 annuler_reddition = 6;
-  inline bool has_annuler_reddition() const;
-  inline void clear_annuler_reddition();
-  static const int kAnnulerRedditionFieldNumber = 6;
-  inline ::google::protobuf::int32 annuler_reddition() const;
-  inline void set_annuler_reddition(::google::protobuf::int32 value);
-  
-  // optional int32 recuperer_transporteurs = 7;
-  inline bool has_recuperer_transporteurs() const;
-  inline void clear_recuperer_transporteurs();
-  static const int kRecupererTransporteursFieldNumber = 7;
-  inline ::google::protobuf::int32 recuperer_transporteurs() const;
-  inline void set_recuperer_transporteurs(::google::protobuf::int32 value);
-  
-  // optional int32 recompletement_total = 8;
-  inline bool has_recompletement_total() const;
-  inline void clear_recompletement_total();
-  static const int kRecompletementTotalFieldNumber = 8;
-  inline ::google::protobuf::int32 recompletement_total() const;
-  inline void set_recompletement_total(::google::protobuf::int32 value);
-  
-  // optional int32 recompletement_personnel = 9;
-  inline bool has_recompletement_personnel() const;
-  inline void clear_recompletement_personnel();
-  static const int kRecompletementPersonnelFieldNumber = 9;
-  inline ::google::protobuf::int32 recompletement_personnel() const;
-  inline void set_recompletement_personnel(::google::protobuf::int32 value);
-  
-  // optional int32 recompletement_equipement = 10;
-  inline bool has_recompletement_equipement() const;
-  inline void clear_recompletement_equipement();
-  static const int kRecompletementEquipementFieldNumber = 10;
-  inline ::google::protobuf::int32 recompletement_equipement() const;
-  inline void set_recompletement_equipement(::google::protobuf::int32 value);
-  
-  // optional int32 recompletement_ressources = 11;
-  inline bool has_recompletement_ressources() const;
-  inline void clear_recompletement_ressources();
-  static const int kRecompletementRessourcesFieldNumber = 11;
-  inline ::google::protobuf::int32 recompletement_ressources() const;
-  inline void set_recompletement_ressources(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::MsgsClientToSim::MsgMagicActionPartialRecovery* recompletement_partiel_;
-  ::Common::MsgMagicActionChangeHumanFactors* change_facteurs_humains_;
-  ::google::protobuf::int32 se_rendre_;
-  ::google::protobuf::int32 destruction_totale_;
-  ::google::protobuf::int32 destruction_composante_;
-  ::google::protobuf::int32 annuler_reddition_;
-  ::google::protobuf::int32 recuperer_transporteurs_;
-  ::google::protobuf::int32 recompletement_total_;
-  ::google::protobuf::int32 recompletement_personnel_;
-  ::google::protobuf::int32 recompletement_equipement_;
-  ::google::protobuf::int32 recompletement_ressources_;
-  friend void  protobuf_AddDesc_ClientToSim_2eproto();
-  friend void protobuf_AssignDesc_ClientToSim_2eproto();
-  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(11 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgUnitMagicAction_action* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgUnitMagicAction : public ::google::protobuf::Message {
  public:
   MsgUnitMagicAction();
@@ -2137,6 +1876,38 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
+  typedef MsgUnitMagicAction_Type Type;
+  static const Type move_to = MsgUnitMagicAction_Type_move_to;
+  static const Type surrender_to = MsgUnitMagicAction_Type_surrender_to;
+  static const Type cancel_surrender = MsgUnitMagicAction_Type_cancel_surrender;
+  static const Type recover_transporters = MsgUnitMagicAction_Type_recover_transporters;
+  static const Type destroy_component = MsgUnitMagicAction_Type_destroy_component;
+  static const Type recover_all = MsgUnitMagicAction_Type_recover_all;
+  static const Type recover_troops = MsgUnitMagicAction_Type_recover_troops;
+  static const Type recover_equipments = MsgUnitMagicAction_Type_recover_equipments;
+  static const Type recover_resources = MsgUnitMagicAction_Type_recover_resources;
+  static const Type destroy_all = MsgUnitMagicAction_Type_destroy_all;
+  static const Type change_human_factors = MsgUnitMagicAction_Type_change_human_factors;
+  static const Type partial_recovery = MsgUnitMagicAction_Type_partial_recovery;
+  static inline bool Type_IsValid(int value) {
+    return MsgUnitMagicAction_Type_IsValid(value);
+  }
+  static const Type Type_MIN =
+    MsgUnitMagicAction_Type_Type_MIN;
+  static const Type Type_MAX =
+    MsgUnitMagicAction_Type_Type_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  Type_descriptor() {
+    return MsgUnitMagicAction_Type_descriptor();
+  }
+  static inline const ::std::string& Type_Name(Type value) {
+    return MsgUnitMagicAction_Type_Name(value);
+  }
+  static inline bool Type_Parse(const ::std::string& name,
+      Type* value) {
+    return MsgUnitMagicAction_Type_Parse(name, value);
+  }
+  
   // accessors -------------------------------------------------------
   
   // required uint32 oid = 1;
@@ -2146,24 +1917,32 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   inline ::google::protobuf::uint32 oid() const;
   inline void set_oid(::google::protobuf::uint32 value);
   
-  // required .MsgsClientToSim.MsgUnitMagicAction_action action = 2;
-  inline bool has_action() const;
-  inline void clear_action();
-  static const int kActionFieldNumber = 2;
-  inline const ::MsgsClientToSim::MsgUnitMagicAction_action& action() const;
-  inline ::MsgsClientToSim::MsgUnitMagicAction_action* mutable_action();
+  // required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 2;
+  inline ::MsgsClientToSim::MsgUnitMagicAction_Type type() const;
+  inline void set_type(::MsgsClientToSim::MsgUnitMagicAction_Type value);
+  
+  // required .Common.MsgMissionParameters parametres = 3;
+  inline bool has_parametres() const;
+  inline void clear_parametres();
+  static const int kParametresFieldNumber = 3;
+  inline const ::Common::MsgMissionParameters& parametres() const;
+  inline ::Common::MsgMissionParameters* mutable_parametres();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
   ::google::protobuf::uint32 oid_;
-  ::MsgsClientToSim::MsgUnitMagicAction_action* action_;
+  int type_;
+  ::Common::MsgMissionParameters* parametres_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2910,101 +2689,6 @@ class MsgPopulationMagicAction : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class MsgMagicActionMoveTo : public ::google::protobuf::Message {
- public:
-  MsgMagicActionMoveTo();
-  virtual ~MsgMagicActionMoveTo();
-  
-  MsgMagicActionMoveTo(const MsgMagicActionMoveTo& from);
-  
-  inline MsgMagicActionMoveTo& operator=(const MsgMagicActionMoveTo& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMagicActionMoveTo& default_instance();
-  void Swap(MsgMagicActionMoveTo* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgMagicActionMoveTo* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMagicActionMoveTo& from);
-  void MergeFrom(const MsgMagicActionMoveTo& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 oid = 1;
-  inline bool has_oid() const;
-  inline void clear_oid();
-  static const int kOidFieldNumber = 1;
-  inline ::google::protobuf::int32 oid() const;
-  inline void set_oid(::google::protobuf::int32 value);
-  
-  // required .Common.MsgMissionParameters parametres = 2;
-  inline bool has_parametres() const;
-  inline void clear_parametres();
-  static const int kParametresFieldNumber = 2;
-  inline const ::Common::MsgMissionParameters& parametres() const;
-  inline ::Common::MsgMissionParameters* mutable_parametres();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 oid_;
-  ::Common::MsgMissionParameters* parametres_;
-  friend void  protobuf_AddDesc_ClientToSim_2eproto();
-  friend void protobuf_AssignDesc_ClientToSim_2eproto();
-  friend void protobuf_ShutdownFile_ClientToSim_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgMagicActionMoveTo* default_instance_;
-};
-// -------------------------------------------------------------------
-
 class MsgLogSupplyPushFlow : public ::google::protobuf::Message {
  public:
   MsgLogSupplyPushFlow();
@@ -3703,80 +3387,73 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   inline const ::MsgsClientToSim::MsgControlDatetimeChange& control_date_time_change() const;
   inline ::MsgsClientToSim::MsgControlDatetimeChange* mutable_control_date_time_change();
   
-  // optional .MsgsClientToSim.MsgControlGlobalMeteo control_global_meteo = 6;
-  inline bool has_control_global_meteo() const;
-  inline void clear_control_global_meteo();
-  static const int kControlGlobalMeteoFieldNumber = 6;
-  inline const ::MsgsClientToSim::MsgControlGlobalMeteo& control_global_meteo() const;
-  inline ::MsgsClientToSim::MsgControlGlobalMeteo* mutable_control_global_meteo();
+  // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
+  inline bool has_control_meteo() const;
+  inline void clear_control_meteo();
+  static const int kControlMeteoFieldNumber = 6;
+  inline const ::MsgsClientToSim::MsgControlMeteo& control_meteo() const;
+  inline ::MsgsClientToSim::MsgControlMeteo* mutable_control_meteo();
   
-  // optional .MsgsClientToSim.MsgControlLocalMeteo control_local_meteo = 7;
-  inline bool has_control_local_meteo() const;
-  inline void clear_control_local_meteo();
-  static const int kControlLocalMeteoFieldNumber = 7;
-  inline const ::MsgsClientToSim::MsgControlLocalMeteo& control_local_meteo() const;
-  inline ::MsgsClientToSim::MsgControlLocalMeteo* mutable_control_local_meteo();
-  
-  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 8;
+  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
   inline bool has_control_checkpoint_save_now() const;
   inline void clear_control_checkpoint_save_now();
-  static const int kControlCheckpointSaveNowFieldNumber = 8;
+  static const int kControlCheckpointSaveNowFieldNumber = 7;
   inline const ::MsgsClientToSim::MsgControlCheckPointSaveNow& control_checkpoint_save_now() const;
   inline ::MsgsClientToSim::MsgControlCheckPointSaveNow* mutable_control_checkpoint_save_now();
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 9;
+  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
   inline bool has_control_checkpoint_set_frequency() const;
   inline void clear_control_checkpoint_set_frequency();
-  static const int kControlCheckpointSetFrequencyFieldNumber = 9;
+  static const int kControlCheckpointSetFrequencyFieldNumber = 8;
   inline const ::MsgsClientToSim::MsgControlCheckPointSetFrequency& control_checkpoint_set_frequency() const;
   inline ::MsgsClientToSim::MsgControlCheckPointSetFrequency* mutable_control_checkpoint_set_frequency();
   
-  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 10;
+  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
   inline bool has_control_toggle_vision_cones() const;
   inline void clear_control_toggle_vision_cones();
-  static const int kControlToggleVisionConesFieldNumber = 10;
+  static const int kControlToggleVisionConesFieldNumber = 9;
   inline const ::MsgsClientToSim::MsgControlToggleVisionCones& control_toggle_vision_cones() const;
   inline ::MsgsClientToSim::MsgControlToggleVisionCones* mutable_control_toggle_vision_cones();
   
-  // optional .Common.MsgUnitOrder unit_order = 11;
+  // optional .Common.MsgUnitOrder unit_order = 10;
   inline bool has_unit_order() const;
   inline void clear_unit_order();
-  static const int kUnitOrderFieldNumber = 11;
+  static const int kUnitOrderFieldNumber = 10;
   inline const ::Common::MsgUnitOrder& unit_order() const;
   inline ::Common::MsgUnitOrder* mutable_unit_order();
   
-  // optional .Common.MsgAutomatOrder automat_order = 12;
+  // optional .Common.MsgAutomatOrder automat_order = 11;
   inline bool has_automat_order() const;
   inline void clear_automat_order();
-  static const int kAutomatOrderFieldNumber = 12;
+  static const int kAutomatOrderFieldNumber = 11;
   inline const ::Common::MsgAutomatOrder& automat_order() const;
   inline ::Common::MsgAutomatOrder* mutable_automat_order();
   
-  // optional .Common.MsgPopulationOrder population_order = 13;
+  // optional .Common.MsgPopulationOrder population_order = 12;
   inline bool has_population_order() const;
   inline void clear_population_order();
-  static const int kPopulationOrderFieldNumber = 13;
+  static const int kPopulationOrderFieldNumber = 12;
   inline const ::Common::MsgPopulationOrder& population_order() const;
   inline ::Common::MsgPopulationOrder* mutable_population_order();
   
-  // optional .MsgsClientToSim.MsgFragOrder frag_order = 14;
+  // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
   inline bool has_frag_order() const;
   inline void clear_frag_order();
-  static const int kFragOrderFieldNumber = 14;
+  static const int kFragOrderFieldNumber = 13;
   inline const ::MsgsClientToSim::MsgFragOrder& frag_order() const;
   inline ::MsgsClientToSim::MsgFragOrder* mutable_frag_order();
   
-  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 15;
+  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
   inline bool has_set_automat_mode() const;
   inline void clear_set_automat_mode();
-  static const int kSetAutomatModeFieldNumber = 15;
+  static const int kSetAutomatModeFieldNumber = 14;
   inline const ::MsgsClientToSim::MsgSetAutomatMode& set_automat_mode() const;
   inline ::MsgsClientToSim::MsgSetAutomatMode* mutable_set_automat_mode();
   
-  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 16;
+  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
   inline bool has_unit_creation_request() const;
   inline void clear_unit_creation_request();
-  static const int kUnitCreationRequestFieldNumber = 16;
+  static const int kUnitCreationRequestFieldNumber = 15;
   inline const ::MsgsClientToSim::MsgUnitCreationRequest& unit_creation_request() const;
   inline ::MsgsClientToSim::MsgUnitCreationRequest* mutable_unit_creation_request();
   
@@ -3871,13 +3548,6 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   inline const ::MsgsClientToSim::MsgMagicActionCreateFireOrder& create_fire_order() const;
   inline ::MsgsClientToSim::MsgMagicActionCreateFireOrder* mutable_create_fire_order();
   
-  // optional .MsgsClientToSim.MsgMagicActionMoveTo magic_action_move_to = 30;
-  inline bool has_magic_action_move_to() const;
-  inline void clear_magic_action_move_to();
-  static const int kMagicActionMoveToFieldNumber = 30;
-  inline const ::MsgsClientToSim::MsgMagicActionMoveTo& magic_action_move_to() const;
-  inline ::MsgsClientToSim::MsgMagicActionMoveTo* mutable_magic_action_move_to();
-  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -3887,8 +3557,7 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   ::Common::MsgControlResume* control_resume_;
   ::Common::MsgControlChangeTimeFactor* control_change_time_factor_;
   ::MsgsClientToSim::MsgControlDatetimeChange* control_date_time_change_;
-  ::MsgsClientToSim::MsgControlGlobalMeteo* control_global_meteo_;
-  ::MsgsClientToSim::MsgControlLocalMeteo* control_local_meteo_;
+  ::MsgsClientToSim::MsgControlMeteo* control_meteo_;
   ::MsgsClientToSim::MsgControlCheckPointSaveNow* control_checkpoint_save_now_;
   ::MsgsClientToSim::MsgControlCheckPointSetFrequency* control_checkpoint_set_frequency_;
   ::MsgsClientToSim::MsgControlToggleVisionCones* control_toggle_vision_cones_;
@@ -3911,12 +3580,11 @@ class MsgClientToSim_Content : public ::google::protobuf::Message {
   ::MsgsClientToSim::MsgKnowledgeGroupCreationRequest* knowledge_group_creation_request_;
   ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest* knowledge_group_update_request_;
   ::MsgsClientToSim::MsgMagicActionCreateFireOrder* create_fire_order_;
-  ::MsgsClientToSim::MsgMagicActionMoveTo* magic_action_move_to_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(30 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(28 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -4058,112 +3726,23 @@ inline ::Common::MsgDateTime* MsgControlDatetimeChange::mutable_date_time() {
 
 // -------------------------------------------------------------------
 
-// MsgControlGlobalMeteo
+// MsgControlMeteo
 
-// required .Common.MsgMeteoAttributes attributes = 1;
-inline bool MsgControlGlobalMeteo::has_attributes() const {
+// required .Common.MsgMissionParameters parametres = 1;
+inline bool MsgControlMeteo::has_parametres() const {
   return _has_bit(0);
 }
-inline void MsgControlGlobalMeteo::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
+inline void MsgControlMeteo::clear_parametres() {
+  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
   _clear_bit(0);
 }
-inline const ::Common::MsgMeteoAttributes& MsgControlGlobalMeteo::attributes() const {
-  return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
+inline const ::Common::MsgMissionParameters& MsgControlMeteo::parametres() const {
+  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
 }
-inline ::Common::MsgMeteoAttributes* MsgControlGlobalMeteo::mutable_attributes() {
+inline ::Common::MsgMissionParameters* MsgControlMeteo::mutable_parametres() {
   _set_bit(0);
-  if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
-  return attributes_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgControlLocalMeteo
-
-// required .Common.MsgDateTime start_time = 1;
-inline bool MsgControlLocalMeteo::has_start_time() const {
-  return _has_bit(0);
-}
-inline void MsgControlLocalMeteo::clear_start_time() {
-  if (start_time_ != NULL) start_time_->::Common::MsgDateTime::Clear();
-  _clear_bit(0);
-}
-inline const ::Common::MsgDateTime& MsgControlLocalMeteo::start_time() const {
-  return start_time_ != NULL ? *start_time_ : *default_instance_->start_time_;
-}
-inline ::Common::MsgDateTime* MsgControlLocalMeteo::mutable_start_time() {
-  _set_bit(0);
-  if (start_time_ == NULL) start_time_ = new ::Common::MsgDateTime;
-  return start_time_;
-}
-
-// required .Common.MsgDateTime end_time = 2;
-inline bool MsgControlLocalMeteo::has_end_time() const {
-  return _has_bit(1);
-}
-inline void MsgControlLocalMeteo::clear_end_time() {
-  if (end_time_ != NULL) end_time_->::Common::MsgDateTime::Clear();
-  _clear_bit(1);
-}
-inline const ::Common::MsgDateTime& MsgControlLocalMeteo::end_time() const {
-  return end_time_ != NULL ? *end_time_ : *default_instance_->end_time_;
-}
-inline ::Common::MsgDateTime* MsgControlLocalMeteo::mutable_end_time() {
-  _set_bit(1);
-  if (end_time_ == NULL) end_time_ = new ::Common::MsgDateTime;
-  return end_time_;
-}
-
-// required .Common.MsgCoordLatLong top_left_coordinate = 3;
-inline bool MsgControlLocalMeteo::has_top_left_coordinate() const {
-  return _has_bit(2);
-}
-inline void MsgControlLocalMeteo::clear_top_left_coordinate() {
-  if (top_left_coordinate_ != NULL) top_left_coordinate_->::Common::MsgCoordLatLong::Clear();
-  _clear_bit(2);
-}
-inline const ::Common::MsgCoordLatLong& MsgControlLocalMeteo::top_left_coordinate() const {
-  return top_left_coordinate_ != NULL ? *top_left_coordinate_ : *default_instance_->top_left_coordinate_;
-}
-inline ::Common::MsgCoordLatLong* MsgControlLocalMeteo::mutable_top_left_coordinate() {
-  _set_bit(2);
-  if (top_left_coordinate_ == NULL) top_left_coordinate_ = new ::Common::MsgCoordLatLong;
-  return top_left_coordinate_;
-}
-
-// required .Common.MsgCoordLatLong bottom_right_coordinate = 4;
-inline bool MsgControlLocalMeteo::has_bottom_right_coordinate() const {
-  return _has_bit(3);
-}
-inline void MsgControlLocalMeteo::clear_bottom_right_coordinate() {
-  if (bottom_right_coordinate_ != NULL) bottom_right_coordinate_->::Common::MsgCoordLatLong::Clear();
-  _clear_bit(3);
-}
-inline const ::Common::MsgCoordLatLong& MsgControlLocalMeteo::bottom_right_coordinate() const {
-  return bottom_right_coordinate_ != NULL ? *bottom_right_coordinate_ : *default_instance_->bottom_right_coordinate_;
-}
-inline ::Common::MsgCoordLatLong* MsgControlLocalMeteo::mutable_bottom_right_coordinate() {
-  _set_bit(3);
-  if (bottom_right_coordinate_ == NULL) bottom_right_coordinate_ = new ::Common::MsgCoordLatLong;
-  return bottom_right_coordinate_;
-}
-
-// required .Common.MsgMeteoAttributes attributes = 5;
-inline bool MsgControlLocalMeteo::has_attributes() const {
-  return _has_bit(4);
-}
-inline void MsgControlLocalMeteo::clear_attributes() {
-  if (attributes_ != NULL) attributes_->::Common::MsgMeteoAttributes::Clear();
-  _clear_bit(4);
-}
-inline const ::Common::MsgMeteoAttributes& MsgControlLocalMeteo::attributes() const {
-  return attributes_ != NULL ? *attributes_ : *default_instance_->attributes_;
-}
-inline ::Common::MsgMeteoAttributes* MsgControlLocalMeteo::mutable_attributes() {
-  _set_bit(4);
-  if (attributes_ == NULL) attributes_ = new ::Common::MsgMeteoAttributes;
-  return attributes_;
+  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
+  return parametres_;
 }
 
 // -------------------------------------------------------------------
@@ -4830,188 +4409,6 @@ inline ::MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfStockRecovery* MsgM
 
 // -------------------------------------------------------------------
 
-// MsgUnitMagicAction_action
-
-// optional .MsgsClientToSim.MsgMagicActionPartialRecovery recompletement_partiel = 1;
-inline bool MsgUnitMagicAction_action::has_recompletement_partiel() const {
-  return _has_bit(0);
-}
-inline void MsgUnitMagicAction_action::clear_recompletement_partiel() {
-  if (recompletement_partiel_ != NULL) recompletement_partiel_->::MsgsClientToSim::MsgMagicActionPartialRecovery::Clear();
-  _clear_bit(0);
-}
-inline const ::MsgsClientToSim::MsgMagicActionPartialRecovery& MsgUnitMagicAction_action::recompletement_partiel() const {
-  return recompletement_partiel_ != NULL ? *recompletement_partiel_ : *default_instance_->recompletement_partiel_;
-}
-inline ::MsgsClientToSim::MsgMagicActionPartialRecovery* MsgUnitMagicAction_action::mutable_recompletement_partiel() {
-  _set_bit(0);
-  if (recompletement_partiel_ == NULL) recompletement_partiel_ = new ::MsgsClientToSim::MsgMagicActionPartialRecovery;
-  return recompletement_partiel_;
-}
-
-// optional .Common.MsgMagicActionChangeHumanFactors change_facteurs_humains = 2;
-inline bool MsgUnitMagicAction_action::has_change_facteurs_humains() const {
-  return _has_bit(1);
-}
-inline void MsgUnitMagicAction_action::clear_change_facteurs_humains() {
-  if (change_facteurs_humains_ != NULL) change_facteurs_humains_->::Common::MsgMagicActionChangeHumanFactors::Clear();
-  _clear_bit(1);
-}
-inline const ::Common::MsgMagicActionChangeHumanFactors& MsgUnitMagicAction_action::change_facteurs_humains() const {
-  return change_facteurs_humains_ != NULL ? *change_facteurs_humains_ : *default_instance_->change_facteurs_humains_;
-}
-inline ::Common::MsgMagicActionChangeHumanFactors* MsgUnitMagicAction_action::mutable_change_facteurs_humains() {
-  _set_bit(1);
-  if (change_facteurs_humains_ == NULL) change_facteurs_humains_ = new ::Common::MsgMagicActionChangeHumanFactors;
-  return change_facteurs_humains_;
-}
-
-// optional int32 se_rendre = 3;
-inline bool MsgUnitMagicAction_action::has_se_rendre() const {
-  return _has_bit(2);
-}
-inline void MsgUnitMagicAction_action::clear_se_rendre() {
-  se_rendre_ = 0;
-  _clear_bit(2);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::se_rendre() const {
-  return se_rendre_;
-}
-inline void MsgUnitMagicAction_action::set_se_rendre(::google::protobuf::int32 value) {
-  _set_bit(2);
-  se_rendre_ = value;
-}
-
-// optional int32 destruction_totale = 4;
-inline bool MsgUnitMagicAction_action::has_destruction_totale() const {
-  return _has_bit(3);
-}
-inline void MsgUnitMagicAction_action::clear_destruction_totale() {
-  destruction_totale_ = 0;
-  _clear_bit(3);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::destruction_totale() const {
-  return destruction_totale_;
-}
-inline void MsgUnitMagicAction_action::set_destruction_totale(::google::protobuf::int32 value) {
-  _set_bit(3);
-  destruction_totale_ = value;
-}
-
-// optional int32 destruction_composante = 5;
-inline bool MsgUnitMagicAction_action::has_destruction_composante() const {
-  return _has_bit(4);
-}
-inline void MsgUnitMagicAction_action::clear_destruction_composante() {
-  destruction_composante_ = 0;
-  _clear_bit(4);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::destruction_composante() const {
-  return destruction_composante_;
-}
-inline void MsgUnitMagicAction_action::set_destruction_composante(::google::protobuf::int32 value) {
-  _set_bit(4);
-  destruction_composante_ = value;
-}
-
-// optional int32 annuler_reddition = 6;
-inline bool MsgUnitMagicAction_action::has_annuler_reddition() const {
-  return _has_bit(5);
-}
-inline void MsgUnitMagicAction_action::clear_annuler_reddition() {
-  annuler_reddition_ = 0;
-  _clear_bit(5);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::annuler_reddition() const {
-  return annuler_reddition_;
-}
-inline void MsgUnitMagicAction_action::set_annuler_reddition(::google::protobuf::int32 value) {
-  _set_bit(5);
-  annuler_reddition_ = value;
-}
-
-// optional int32 recuperer_transporteurs = 7;
-inline bool MsgUnitMagicAction_action::has_recuperer_transporteurs() const {
-  return _has_bit(6);
-}
-inline void MsgUnitMagicAction_action::clear_recuperer_transporteurs() {
-  recuperer_transporteurs_ = 0;
-  _clear_bit(6);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::recuperer_transporteurs() const {
-  return recuperer_transporteurs_;
-}
-inline void MsgUnitMagicAction_action::set_recuperer_transporteurs(::google::protobuf::int32 value) {
-  _set_bit(6);
-  recuperer_transporteurs_ = value;
-}
-
-// optional int32 recompletement_total = 8;
-inline bool MsgUnitMagicAction_action::has_recompletement_total() const {
-  return _has_bit(7);
-}
-inline void MsgUnitMagicAction_action::clear_recompletement_total() {
-  recompletement_total_ = 0;
-  _clear_bit(7);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::recompletement_total() const {
-  return recompletement_total_;
-}
-inline void MsgUnitMagicAction_action::set_recompletement_total(::google::protobuf::int32 value) {
-  _set_bit(7);
-  recompletement_total_ = value;
-}
-
-// optional int32 recompletement_personnel = 9;
-inline bool MsgUnitMagicAction_action::has_recompletement_personnel() const {
-  return _has_bit(8);
-}
-inline void MsgUnitMagicAction_action::clear_recompletement_personnel() {
-  recompletement_personnel_ = 0;
-  _clear_bit(8);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::recompletement_personnel() const {
-  return recompletement_personnel_;
-}
-inline void MsgUnitMagicAction_action::set_recompletement_personnel(::google::protobuf::int32 value) {
-  _set_bit(8);
-  recompletement_personnel_ = value;
-}
-
-// optional int32 recompletement_equipement = 10;
-inline bool MsgUnitMagicAction_action::has_recompletement_equipement() const {
-  return _has_bit(9);
-}
-inline void MsgUnitMagicAction_action::clear_recompletement_equipement() {
-  recompletement_equipement_ = 0;
-  _clear_bit(9);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::recompletement_equipement() const {
-  return recompletement_equipement_;
-}
-inline void MsgUnitMagicAction_action::set_recompletement_equipement(::google::protobuf::int32 value) {
-  _set_bit(9);
-  recompletement_equipement_ = value;
-}
-
-// optional int32 recompletement_ressources = 11;
-inline bool MsgUnitMagicAction_action::has_recompletement_ressources() const {
-  return _has_bit(10);
-}
-inline void MsgUnitMagicAction_action::clear_recompletement_ressources() {
-  recompletement_ressources_ = 0;
-  _clear_bit(10);
-}
-inline ::google::protobuf::int32 MsgUnitMagicAction_action::recompletement_ressources() const {
-  return recompletement_ressources_;
-}
-inline void MsgUnitMagicAction_action::set_recompletement_ressources(::google::protobuf::int32 value) {
-  _set_bit(10);
-  recompletement_ressources_ = value;
-}
-
-// -------------------------------------------------------------------
-
 // MsgUnitMagicAction
 
 // required uint32 oid = 1;
@@ -5030,21 +4427,38 @@ inline void MsgUnitMagicAction::set_oid(::google::protobuf::uint32 value) {
   oid_ = value;
 }
 
-// required .MsgsClientToSim.MsgUnitMagicAction_action action = 2;
-inline bool MsgUnitMagicAction::has_action() const {
+// required .MsgsClientToSim.MsgUnitMagicAction.Type type = 2;
+inline bool MsgUnitMagicAction::has_type() const {
   return _has_bit(1);
 }
-inline void MsgUnitMagicAction::clear_action() {
-  if (action_ != NULL) action_->::MsgsClientToSim::MsgUnitMagicAction_action::Clear();
+inline void MsgUnitMagicAction::clear_type() {
+  type_ = 0;
   _clear_bit(1);
 }
-inline const ::MsgsClientToSim::MsgUnitMagicAction_action& MsgUnitMagicAction::action() const {
-  return action_ != NULL ? *action_ : *default_instance_->action_;
+inline ::MsgsClientToSim::MsgUnitMagicAction_Type MsgUnitMagicAction::type() const {
+  return static_cast< ::MsgsClientToSim::MsgUnitMagicAction_Type >(type_);
 }
-inline ::MsgsClientToSim::MsgUnitMagicAction_action* MsgUnitMagicAction::mutable_action() {
+inline void MsgUnitMagicAction::set_type(::MsgsClientToSim::MsgUnitMagicAction_Type value) {
+  GOOGLE_DCHECK(::MsgsClientToSim::MsgUnitMagicAction_Type_IsValid(value));
   _set_bit(1);
-  if (action_ == NULL) action_ = new ::MsgsClientToSim::MsgUnitMagicAction_action;
-  return action_;
+  type_ = value;
+}
+
+// required .Common.MsgMissionParameters parametres = 3;
+inline bool MsgUnitMagicAction::has_parametres() const {
+  return _has_bit(2);
+}
+inline void MsgUnitMagicAction::clear_parametres() {
+  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+  _clear_bit(2);
+}
+inline const ::Common::MsgMissionParameters& MsgUnitMagicAction::parametres() const {
+  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+}
+inline ::Common::MsgMissionParameters* MsgUnitMagicAction::mutable_parametres() {
+  _set_bit(2);
+  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
+  return parametres_;
 }
 
 // -------------------------------------------------------------------
@@ -5475,43 +4889,6 @@ inline ::MsgsClientToSim::MsgPopulationMagicAction_action* MsgPopulationMagicAct
 
 // -------------------------------------------------------------------
 
-// MsgMagicActionMoveTo
-
-// required int32 oid = 1;
-inline bool MsgMagicActionMoveTo::has_oid() const {
-  return _has_bit(0);
-}
-inline void MsgMagicActionMoveTo::clear_oid() {
-  oid_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgMagicActionMoveTo::oid() const {
-  return oid_;
-}
-inline void MsgMagicActionMoveTo::set_oid(::google::protobuf::int32 value) {
-  _set_bit(0);
-  oid_ = value;
-}
-
-// required .Common.MsgMissionParameters parametres = 2;
-inline bool MsgMagicActionMoveTo::has_parametres() const {
-  return _has_bit(1);
-}
-inline void MsgMagicActionMoveTo::clear_parametres() {
-  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
-  _clear_bit(1);
-}
-inline const ::Common::MsgMissionParameters& MsgMagicActionMoveTo::parametres() const {
-  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
-}
-inline ::Common::MsgMissionParameters* MsgMagicActionMoveTo::mutable_parametres() {
-  _set_bit(1);
-  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
-  return parametres_;
-}
-
-// -------------------------------------------------------------------
-
 // MsgLogSupplyPushFlow
 
 // required uint32 oid_donneur = 1;
@@ -5933,429 +5310,395 @@ inline ::MsgsClientToSim::MsgControlDatetimeChange* MsgClientToSim_Content::muta
   return control_date_time_change_;
 }
 
-// optional .MsgsClientToSim.MsgControlGlobalMeteo control_global_meteo = 6;
-inline bool MsgClientToSim_Content::has_control_global_meteo() const {
+// optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
+inline bool MsgClientToSim_Content::has_control_meteo() const {
   return _has_bit(5);
 }
-inline void MsgClientToSim_Content::clear_control_global_meteo() {
-  if (control_global_meteo_ != NULL) control_global_meteo_->::MsgsClientToSim::MsgControlGlobalMeteo::Clear();
+inline void MsgClientToSim_Content::clear_control_meteo() {
+  if (control_meteo_ != NULL) control_meteo_->::MsgsClientToSim::MsgControlMeteo::Clear();
   _clear_bit(5);
 }
-inline const ::MsgsClientToSim::MsgControlGlobalMeteo& MsgClientToSim_Content::control_global_meteo() const {
-  return control_global_meteo_ != NULL ? *control_global_meteo_ : *default_instance_->control_global_meteo_;
+inline const ::MsgsClientToSim::MsgControlMeteo& MsgClientToSim_Content::control_meteo() const {
+  return control_meteo_ != NULL ? *control_meteo_ : *default_instance_->control_meteo_;
 }
-inline ::MsgsClientToSim::MsgControlGlobalMeteo* MsgClientToSim_Content::mutable_control_global_meteo() {
+inline ::MsgsClientToSim::MsgControlMeteo* MsgClientToSim_Content::mutable_control_meteo() {
   _set_bit(5);
-  if (control_global_meteo_ == NULL) control_global_meteo_ = new ::MsgsClientToSim::MsgControlGlobalMeteo;
-  return control_global_meteo_;
+  if (control_meteo_ == NULL) control_meteo_ = new ::MsgsClientToSim::MsgControlMeteo;
+  return control_meteo_;
 }
 
-// optional .MsgsClientToSim.MsgControlLocalMeteo control_local_meteo = 7;
-inline bool MsgClientToSim_Content::has_control_local_meteo() const {
-  return _has_bit(6);
-}
-inline void MsgClientToSim_Content::clear_control_local_meteo() {
-  if (control_local_meteo_ != NULL) control_local_meteo_->::MsgsClientToSim::MsgControlLocalMeteo::Clear();
-  _clear_bit(6);
-}
-inline const ::MsgsClientToSim::MsgControlLocalMeteo& MsgClientToSim_Content::control_local_meteo() const {
-  return control_local_meteo_ != NULL ? *control_local_meteo_ : *default_instance_->control_local_meteo_;
-}
-inline ::MsgsClientToSim::MsgControlLocalMeteo* MsgClientToSim_Content::mutable_control_local_meteo() {
-  _set_bit(6);
-  if (control_local_meteo_ == NULL) control_local_meteo_ = new ::MsgsClientToSim::MsgControlLocalMeteo;
-  return control_local_meteo_;
-}
-
-// optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 8;
+// optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
 inline bool MsgClientToSim_Content::has_control_checkpoint_save_now() const {
-  return _has_bit(7);
+  return _has_bit(6);
 }
 inline void MsgClientToSim_Content::clear_control_checkpoint_save_now() {
   if (control_checkpoint_save_now_ != NULL) control_checkpoint_save_now_->::MsgsClientToSim::MsgControlCheckPointSaveNow::Clear();
-  _clear_bit(7);
+  _clear_bit(6);
 }
 inline const ::MsgsClientToSim::MsgControlCheckPointSaveNow& MsgClientToSim_Content::control_checkpoint_save_now() const {
   return control_checkpoint_save_now_ != NULL ? *control_checkpoint_save_now_ : *default_instance_->control_checkpoint_save_now_;
 }
 inline ::MsgsClientToSim::MsgControlCheckPointSaveNow* MsgClientToSim_Content::mutable_control_checkpoint_save_now() {
-  _set_bit(7);
+  _set_bit(6);
   if (control_checkpoint_save_now_ == NULL) control_checkpoint_save_now_ = new ::MsgsClientToSim::MsgControlCheckPointSaveNow;
   return control_checkpoint_save_now_;
 }
 
-// optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 9;
+// optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
 inline bool MsgClientToSim_Content::has_control_checkpoint_set_frequency() const {
-  return _has_bit(8);
+  return _has_bit(7);
 }
 inline void MsgClientToSim_Content::clear_control_checkpoint_set_frequency() {
   if (control_checkpoint_set_frequency_ != NULL) control_checkpoint_set_frequency_->::MsgsClientToSim::MsgControlCheckPointSetFrequency::Clear();
-  _clear_bit(8);
+  _clear_bit(7);
 }
 inline const ::MsgsClientToSim::MsgControlCheckPointSetFrequency& MsgClientToSim_Content::control_checkpoint_set_frequency() const {
   return control_checkpoint_set_frequency_ != NULL ? *control_checkpoint_set_frequency_ : *default_instance_->control_checkpoint_set_frequency_;
 }
 inline ::MsgsClientToSim::MsgControlCheckPointSetFrequency* MsgClientToSim_Content::mutable_control_checkpoint_set_frequency() {
-  _set_bit(8);
+  _set_bit(7);
   if (control_checkpoint_set_frequency_ == NULL) control_checkpoint_set_frequency_ = new ::MsgsClientToSim::MsgControlCheckPointSetFrequency;
   return control_checkpoint_set_frequency_;
 }
 
-// optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 10;
+// optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
 inline bool MsgClientToSim_Content::has_control_toggle_vision_cones() const {
-  return _has_bit(9);
+  return _has_bit(8);
 }
 inline void MsgClientToSim_Content::clear_control_toggle_vision_cones() {
   if (control_toggle_vision_cones_ != NULL) control_toggle_vision_cones_->::MsgsClientToSim::MsgControlToggleVisionCones::Clear();
-  _clear_bit(9);
+  _clear_bit(8);
 }
 inline const ::MsgsClientToSim::MsgControlToggleVisionCones& MsgClientToSim_Content::control_toggle_vision_cones() const {
   return control_toggle_vision_cones_ != NULL ? *control_toggle_vision_cones_ : *default_instance_->control_toggle_vision_cones_;
 }
 inline ::MsgsClientToSim::MsgControlToggleVisionCones* MsgClientToSim_Content::mutable_control_toggle_vision_cones() {
-  _set_bit(9);
+  _set_bit(8);
   if (control_toggle_vision_cones_ == NULL) control_toggle_vision_cones_ = new ::MsgsClientToSim::MsgControlToggleVisionCones;
   return control_toggle_vision_cones_;
 }
 
-// optional .Common.MsgUnitOrder unit_order = 11;
+// optional .Common.MsgUnitOrder unit_order = 10;
 inline bool MsgClientToSim_Content::has_unit_order() const {
-  return _has_bit(10);
+  return _has_bit(9);
 }
 inline void MsgClientToSim_Content::clear_unit_order() {
   if (unit_order_ != NULL) unit_order_->::Common::MsgUnitOrder::Clear();
-  _clear_bit(10);
+  _clear_bit(9);
 }
 inline const ::Common::MsgUnitOrder& MsgClientToSim_Content::unit_order() const {
   return unit_order_ != NULL ? *unit_order_ : *default_instance_->unit_order_;
 }
 inline ::Common::MsgUnitOrder* MsgClientToSim_Content::mutable_unit_order() {
-  _set_bit(10);
+  _set_bit(9);
   if (unit_order_ == NULL) unit_order_ = new ::Common::MsgUnitOrder;
   return unit_order_;
 }
 
-// optional .Common.MsgAutomatOrder automat_order = 12;
+// optional .Common.MsgAutomatOrder automat_order = 11;
 inline bool MsgClientToSim_Content::has_automat_order() const {
-  return _has_bit(11);
+  return _has_bit(10);
 }
 inline void MsgClientToSim_Content::clear_automat_order() {
   if (automat_order_ != NULL) automat_order_->::Common::MsgAutomatOrder::Clear();
-  _clear_bit(11);
+  _clear_bit(10);
 }
 inline const ::Common::MsgAutomatOrder& MsgClientToSim_Content::automat_order() const {
   return automat_order_ != NULL ? *automat_order_ : *default_instance_->automat_order_;
 }
 inline ::Common::MsgAutomatOrder* MsgClientToSim_Content::mutable_automat_order() {
-  _set_bit(11);
+  _set_bit(10);
   if (automat_order_ == NULL) automat_order_ = new ::Common::MsgAutomatOrder;
   return automat_order_;
 }
 
-// optional .Common.MsgPopulationOrder population_order = 13;
+// optional .Common.MsgPopulationOrder population_order = 12;
 inline bool MsgClientToSim_Content::has_population_order() const {
-  return _has_bit(12);
+  return _has_bit(11);
 }
 inline void MsgClientToSim_Content::clear_population_order() {
   if (population_order_ != NULL) population_order_->::Common::MsgPopulationOrder::Clear();
-  _clear_bit(12);
+  _clear_bit(11);
 }
 inline const ::Common::MsgPopulationOrder& MsgClientToSim_Content::population_order() const {
   return population_order_ != NULL ? *population_order_ : *default_instance_->population_order_;
 }
 inline ::Common::MsgPopulationOrder* MsgClientToSim_Content::mutable_population_order() {
-  _set_bit(12);
+  _set_bit(11);
   if (population_order_ == NULL) population_order_ = new ::Common::MsgPopulationOrder;
   return population_order_;
 }
 
-// optional .MsgsClientToSim.MsgFragOrder frag_order = 14;
+// optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
 inline bool MsgClientToSim_Content::has_frag_order() const {
-  return _has_bit(13);
+  return _has_bit(12);
 }
 inline void MsgClientToSim_Content::clear_frag_order() {
   if (frag_order_ != NULL) frag_order_->::MsgsClientToSim::MsgFragOrder::Clear();
-  _clear_bit(13);
+  _clear_bit(12);
 }
 inline const ::MsgsClientToSim::MsgFragOrder& MsgClientToSim_Content::frag_order() const {
   return frag_order_ != NULL ? *frag_order_ : *default_instance_->frag_order_;
 }
 inline ::MsgsClientToSim::MsgFragOrder* MsgClientToSim_Content::mutable_frag_order() {
-  _set_bit(13);
+  _set_bit(12);
   if (frag_order_ == NULL) frag_order_ = new ::MsgsClientToSim::MsgFragOrder;
   return frag_order_;
 }
 
-// optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 15;
+// optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
 inline bool MsgClientToSim_Content::has_set_automat_mode() const {
-  return _has_bit(14);
+  return _has_bit(13);
 }
 inline void MsgClientToSim_Content::clear_set_automat_mode() {
   if (set_automat_mode_ != NULL) set_automat_mode_->::MsgsClientToSim::MsgSetAutomatMode::Clear();
-  _clear_bit(14);
+  _clear_bit(13);
 }
 inline const ::MsgsClientToSim::MsgSetAutomatMode& MsgClientToSim_Content::set_automat_mode() const {
   return set_automat_mode_ != NULL ? *set_automat_mode_ : *default_instance_->set_automat_mode_;
 }
 inline ::MsgsClientToSim::MsgSetAutomatMode* MsgClientToSim_Content::mutable_set_automat_mode() {
-  _set_bit(14);
+  _set_bit(13);
   if (set_automat_mode_ == NULL) set_automat_mode_ = new ::MsgsClientToSim::MsgSetAutomatMode;
   return set_automat_mode_;
 }
 
-// optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 16;
+// optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
 inline bool MsgClientToSim_Content::has_unit_creation_request() const {
-  return _has_bit(15);
+  return _has_bit(14);
 }
 inline void MsgClientToSim_Content::clear_unit_creation_request() {
   if (unit_creation_request_ != NULL) unit_creation_request_->::MsgsClientToSim::MsgUnitCreationRequest::Clear();
-  _clear_bit(15);
+  _clear_bit(14);
 }
 inline const ::MsgsClientToSim::MsgUnitCreationRequest& MsgClientToSim_Content::unit_creation_request() const {
   return unit_creation_request_ != NULL ? *unit_creation_request_ : *default_instance_->unit_creation_request_;
 }
 inline ::MsgsClientToSim::MsgUnitCreationRequest* MsgClientToSim_Content::mutable_unit_creation_request() {
-  _set_bit(15);
+  _set_bit(14);
   if (unit_creation_request_ == NULL) unit_creation_request_ = new ::MsgsClientToSim::MsgUnitCreationRequest;
   return unit_creation_request_;
 }
 
 // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 17;
 inline bool MsgClientToSim_Content::has_unit_magic_action() const {
-  return _has_bit(16);
+  return _has_bit(15);
 }
 inline void MsgClientToSim_Content::clear_unit_magic_action() {
   if (unit_magic_action_ != NULL) unit_magic_action_->::MsgsClientToSim::MsgUnitMagicAction::Clear();
-  _clear_bit(16);
+  _clear_bit(15);
 }
 inline const ::MsgsClientToSim::MsgUnitMagicAction& MsgClientToSim_Content::unit_magic_action() const {
   return unit_magic_action_ != NULL ? *unit_magic_action_ : *default_instance_->unit_magic_action_;
 }
 inline ::MsgsClientToSim::MsgUnitMagicAction* MsgClientToSim_Content::mutable_unit_magic_action() {
-  _set_bit(16);
+  _set_bit(15);
   if (unit_magic_action_ == NULL) unit_magic_action_ = new ::MsgsClientToSim::MsgUnitMagicAction;
   return unit_magic_action_;
 }
 
 // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 18;
 inline bool MsgClientToSim_Content::has_object_magic_action() const {
-  return _has_bit(17);
+  return _has_bit(16);
 }
 inline void MsgClientToSim_Content::clear_object_magic_action() {
   if (object_magic_action_ != NULL) object_magic_action_->::MsgsClientToSim::MsgObjectMagicAction::Clear();
-  _clear_bit(17);
+  _clear_bit(16);
 }
 inline const ::MsgsClientToSim::MsgObjectMagicAction& MsgClientToSim_Content::object_magic_action() const {
   return object_magic_action_ != NULL ? *object_magic_action_ : *default_instance_->object_magic_action_;
 }
 inline ::MsgsClientToSim::MsgObjectMagicAction* MsgClientToSim_Content::mutable_object_magic_action() {
-  _set_bit(17);
+  _set_bit(16);
   if (object_magic_action_ == NULL) object_magic_action_ = new ::MsgsClientToSim::MsgObjectMagicAction;
   return object_magic_action_;
 }
 
 // optional .MsgsClientToSim.MsgPopulationMagicAction population_magic_action = 19;
 inline bool MsgClientToSim_Content::has_population_magic_action() const {
-  return _has_bit(18);
+  return _has_bit(17);
 }
 inline void MsgClientToSim_Content::clear_population_magic_action() {
   if (population_magic_action_ != NULL) population_magic_action_->::MsgsClientToSim::MsgPopulationMagicAction::Clear();
-  _clear_bit(18);
+  _clear_bit(17);
 }
 inline const ::MsgsClientToSim::MsgPopulationMagicAction& MsgClientToSim_Content::population_magic_action() const {
   return population_magic_action_ != NULL ? *population_magic_action_ : *default_instance_->population_magic_action_;
 }
 inline ::MsgsClientToSim::MsgPopulationMagicAction* MsgClientToSim_Content::mutable_population_magic_action() {
-  _set_bit(18);
+  _set_bit(17);
   if (population_magic_action_ == NULL) population_magic_action_ = new ::MsgsClientToSim::MsgPopulationMagicAction;
   return population_magic_action_;
 }
 
 // optional .Common.MsgChangeDiplomacy change_diplomacy = 20;
 inline bool MsgClientToSim_Content::has_change_diplomacy() const {
-  return _has_bit(19);
+  return _has_bit(18);
 }
 inline void MsgClientToSim_Content::clear_change_diplomacy() {
   if (change_diplomacy_ != NULL) change_diplomacy_->::Common::MsgChangeDiplomacy::Clear();
-  _clear_bit(19);
+  _clear_bit(18);
 }
 inline const ::Common::MsgChangeDiplomacy& MsgClientToSim_Content::change_diplomacy() const {
   return change_diplomacy_ != NULL ? *change_diplomacy_ : *default_instance_->change_diplomacy_;
 }
 inline ::Common::MsgChangeDiplomacy* MsgClientToSim_Content::mutable_change_diplomacy() {
-  _set_bit(19);
+  _set_bit(18);
   if (change_diplomacy_ == NULL) change_diplomacy_ = new ::Common::MsgChangeDiplomacy;
   return change_diplomacy_;
 }
 
 // optional .Common.MsgAutomatChangeKnowledgeGroup automat_change_knowledge_group = 21;
 inline bool MsgClientToSim_Content::has_automat_change_knowledge_group() const {
-  return _has_bit(20);
+  return _has_bit(19);
 }
 inline void MsgClientToSim_Content::clear_automat_change_knowledge_group() {
   if (automat_change_knowledge_group_ != NULL) automat_change_knowledge_group_->::Common::MsgAutomatChangeKnowledgeGroup::Clear();
-  _clear_bit(20);
+  _clear_bit(19);
 }
 inline const ::Common::MsgAutomatChangeKnowledgeGroup& MsgClientToSim_Content::automat_change_knowledge_group() const {
   return automat_change_knowledge_group_ != NULL ? *automat_change_knowledge_group_ : *default_instance_->automat_change_knowledge_group_;
 }
 inline ::Common::MsgAutomatChangeKnowledgeGroup* MsgClientToSim_Content::mutable_automat_change_knowledge_group() {
-  _set_bit(20);
+  _set_bit(19);
   if (automat_change_knowledge_group_ == NULL) automat_change_knowledge_group_ = new ::Common::MsgAutomatChangeKnowledgeGroup;
   return automat_change_knowledge_group_;
 }
 
 // optional .Common.MsgAutomatChangeLogisticLinks automat_change_logistic_links = 22;
 inline bool MsgClientToSim_Content::has_automat_change_logistic_links() const {
-  return _has_bit(21);
+  return _has_bit(20);
 }
 inline void MsgClientToSim_Content::clear_automat_change_logistic_links() {
   if (automat_change_logistic_links_ != NULL) automat_change_logistic_links_->::Common::MsgAutomatChangeLogisticLinks::Clear();
-  _clear_bit(21);
+  _clear_bit(20);
 }
 inline const ::Common::MsgAutomatChangeLogisticLinks& MsgClientToSim_Content::automat_change_logistic_links() const {
   return automat_change_logistic_links_ != NULL ? *automat_change_logistic_links_ : *default_instance_->automat_change_logistic_links_;
 }
 inline ::Common::MsgAutomatChangeLogisticLinks* MsgClientToSim_Content::mutable_automat_change_logistic_links() {
-  _set_bit(21);
+  _set_bit(20);
   if (automat_change_logistic_links_ == NULL) automat_change_logistic_links_ = new ::Common::MsgAutomatChangeLogisticLinks;
   return automat_change_logistic_links_;
 }
 
 // optional .Common.MsgAutomatChangeSuperior automat_change_superior = 23;
 inline bool MsgClientToSim_Content::has_automat_change_superior() const {
-  return _has_bit(22);
+  return _has_bit(21);
 }
 inline void MsgClientToSim_Content::clear_automat_change_superior() {
   if (automat_change_superior_ != NULL) automat_change_superior_->::Common::MsgAutomatChangeSuperior::Clear();
-  _clear_bit(22);
+  _clear_bit(21);
 }
 inline const ::Common::MsgAutomatChangeSuperior& MsgClientToSim_Content::automat_change_superior() const {
   return automat_change_superior_ != NULL ? *automat_change_superior_ : *default_instance_->automat_change_superior_;
 }
 inline ::Common::MsgAutomatChangeSuperior* MsgClientToSim_Content::mutable_automat_change_superior() {
-  _set_bit(22);
+  _set_bit(21);
   if (automat_change_superior_ == NULL) automat_change_superior_ = new ::Common::MsgAutomatChangeSuperior;
   return automat_change_superior_;
 }
 
 // optional .Common.MsgUnitChangeSuperior unit_change_superior = 24;
 inline bool MsgClientToSim_Content::has_unit_change_superior() const {
-  return _has_bit(23);
+  return _has_bit(22);
 }
 inline void MsgClientToSim_Content::clear_unit_change_superior() {
   if (unit_change_superior_ != NULL) unit_change_superior_->::Common::MsgUnitChangeSuperior::Clear();
-  _clear_bit(23);
+  _clear_bit(22);
 }
 inline const ::Common::MsgUnitChangeSuperior& MsgClientToSim_Content::unit_change_superior() const {
   return unit_change_superior_ != NULL ? *unit_change_superior_ : *default_instance_->unit_change_superior_;
 }
 inline ::Common::MsgUnitChangeSuperior* MsgClientToSim_Content::mutable_unit_change_superior() {
-  _set_bit(23);
+  _set_bit(22);
   if (unit_change_superior_ == NULL) unit_change_superior_ = new ::Common::MsgUnitChangeSuperior;
   return unit_change_superior_;
 }
 
 // optional .MsgsClientToSim.MsgLogSupplyPushFlow log_supply_push_flow = 25;
 inline bool MsgClientToSim_Content::has_log_supply_push_flow() const {
-  return _has_bit(24);
+  return _has_bit(23);
 }
 inline void MsgClientToSim_Content::clear_log_supply_push_flow() {
   if (log_supply_push_flow_ != NULL) log_supply_push_flow_->::MsgsClientToSim::MsgLogSupplyPushFlow::Clear();
-  _clear_bit(24);
+  _clear_bit(23);
 }
 inline const ::MsgsClientToSim::MsgLogSupplyPushFlow& MsgClientToSim_Content::log_supply_push_flow() const {
   return log_supply_push_flow_ != NULL ? *log_supply_push_flow_ : *default_instance_->log_supply_push_flow_;
 }
 inline ::MsgsClientToSim::MsgLogSupplyPushFlow* MsgClientToSim_Content::mutable_log_supply_push_flow() {
-  _set_bit(24);
+  _set_bit(23);
   if (log_supply_push_flow_ == NULL) log_supply_push_flow_ = new ::MsgsClientToSim::MsgLogSupplyPushFlow;
   return log_supply_push_flow_;
 }
 
 // optional .MsgsClientToSim.MsgLogSupplyChangeQuotas log_supply_change_quotas = 26;
 inline bool MsgClientToSim_Content::has_log_supply_change_quotas() const {
-  return _has_bit(25);
+  return _has_bit(24);
 }
 inline void MsgClientToSim_Content::clear_log_supply_change_quotas() {
   if (log_supply_change_quotas_ != NULL) log_supply_change_quotas_->::MsgsClientToSim::MsgLogSupplyChangeQuotas::Clear();
-  _clear_bit(25);
+  _clear_bit(24);
 }
 inline const ::MsgsClientToSim::MsgLogSupplyChangeQuotas& MsgClientToSim_Content::log_supply_change_quotas() const {
   return log_supply_change_quotas_ != NULL ? *log_supply_change_quotas_ : *default_instance_->log_supply_change_quotas_;
 }
 inline ::MsgsClientToSim::MsgLogSupplyChangeQuotas* MsgClientToSim_Content::mutable_log_supply_change_quotas() {
-  _set_bit(25);
+  _set_bit(24);
   if (log_supply_change_quotas_ == NULL) log_supply_change_quotas_ = new ::MsgsClientToSim::MsgLogSupplyChangeQuotas;
   return log_supply_change_quotas_;
 }
 
 // optional .MsgsClientToSim.MsgKnowledgeGroupCreationRequest knowledge_group_creation_request = 27;
 inline bool MsgClientToSim_Content::has_knowledge_group_creation_request() const {
-  return _has_bit(26);
+  return _has_bit(25);
 }
 inline void MsgClientToSim_Content::clear_knowledge_group_creation_request() {
   if (knowledge_group_creation_request_ != NULL) knowledge_group_creation_request_->::MsgsClientToSim::MsgKnowledgeGroupCreationRequest::Clear();
-  _clear_bit(26);
+  _clear_bit(25);
 }
 inline const ::MsgsClientToSim::MsgKnowledgeGroupCreationRequest& MsgClientToSim_Content::knowledge_group_creation_request() const {
   return knowledge_group_creation_request_ != NULL ? *knowledge_group_creation_request_ : *default_instance_->knowledge_group_creation_request_;
 }
 inline ::MsgsClientToSim::MsgKnowledgeGroupCreationRequest* MsgClientToSim_Content::mutable_knowledge_group_creation_request() {
-  _set_bit(26);
+  _set_bit(25);
   if (knowledge_group_creation_request_ == NULL) knowledge_group_creation_request_ = new ::MsgsClientToSim::MsgKnowledgeGroupCreationRequest;
   return knowledge_group_creation_request_;
 }
 
 // optional .MsgsClientToSim.MsgKnowledgeGroupUpdateRequest knowledge_group_update_request = 28;
 inline bool MsgClientToSim_Content::has_knowledge_group_update_request() const {
-  return _has_bit(27);
+  return _has_bit(26);
 }
 inline void MsgClientToSim_Content::clear_knowledge_group_update_request() {
   if (knowledge_group_update_request_ != NULL) knowledge_group_update_request_->::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest::Clear();
-  _clear_bit(27);
+  _clear_bit(26);
 }
 inline const ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& MsgClientToSim_Content::knowledge_group_update_request() const {
   return knowledge_group_update_request_ != NULL ? *knowledge_group_update_request_ : *default_instance_->knowledge_group_update_request_;
 }
 inline ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest* MsgClientToSim_Content::mutable_knowledge_group_update_request() {
-  _set_bit(27);
+  _set_bit(26);
   if (knowledge_group_update_request_ == NULL) knowledge_group_update_request_ = new ::MsgsClientToSim::MsgKnowledgeGroupUpdateRequest;
   return knowledge_group_update_request_;
 }
 
 // optional .MsgsClientToSim.MsgMagicActionCreateFireOrder create_fire_order = 29;
 inline bool MsgClientToSim_Content::has_create_fire_order() const {
-  return _has_bit(28);
+  return _has_bit(27);
 }
 inline void MsgClientToSim_Content::clear_create_fire_order() {
   if (create_fire_order_ != NULL) create_fire_order_->::MsgsClientToSim::MsgMagicActionCreateFireOrder::Clear();
-  _clear_bit(28);
+  _clear_bit(27);
 }
 inline const ::MsgsClientToSim::MsgMagicActionCreateFireOrder& MsgClientToSim_Content::create_fire_order() const {
   return create_fire_order_ != NULL ? *create_fire_order_ : *default_instance_->create_fire_order_;
 }
 inline ::MsgsClientToSim::MsgMagicActionCreateFireOrder* MsgClientToSim_Content::mutable_create_fire_order() {
-  _set_bit(28);
+  _set_bit(27);
   if (create_fire_order_ == NULL) create_fire_order_ = new ::MsgsClientToSim::MsgMagicActionCreateFireOrder;
   return create_fire_order_;
-}
-
-// optional .MsgsClientToSim.MsgMagicActionMoveTo magic_action_move_to = 30;
-inline bool MsgClientToSim_Content::has_magic_action_move_to() const {
-  return _has_bit(29);
-}
-inline void MsgClientToSim_Content::clear_magic_action_move_to() {
-  if (magic_action_move_to_ != NULL) magic_action_move_to_->::MsgsClientToSim::MsgMagicActionMoveTo::Clear();
-  _clear_bit(29);
-}
-inline const ::MsgsClientToSim::MsgMagicActionMoveTo& MsgClientToSim_Content::magic_action_move_to() const {
-  return magic_action_move_to_ != NULL ? *magic_action_move_to_ : *default_instance_->magic_action_move_to_;
-}
-inline ::MsgsClientToSim::MsgMagicActionMoveTo* MsgClientToSim_Content::mutable_magic_action_move_to() {
-  _set_bit(29);
-  if (magic_action_move_to_ == NULL) magic_action_move_to_ = new ::MsgsClientToSim::MsgMagicActionMoveTo;
-  return magic_action_move_to_;
 }
 
 // -------------------------------------------------------------------
@@ -6402,6 +5745,10 @@ inline ::MsgsClientToSim::MsgClientToSim_Content* MsgClientToSim::mutable_messag
 namespace google {
 namespace protobuf {
 
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsClientToSim::MsgUnitMagicAction_Type>() {
+  return ::MsgsClientToSim::MsgUnitMagicAction_Type_descriptor();
+}
 
 }  // namespace google
 }  // namespace protobuf

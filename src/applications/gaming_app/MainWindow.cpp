@@ -165,7 +165,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 
     lighting_ = new SimulationLighting( controllers, this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_ );
-    new Dialogs( this, controllers, model_, staticModel, publisher, profile, network.GetCommands(), config );
+    new Dialogs( this, controllers, model_, staticModel, publisher, actionPublisher, model_.actions_, simulation, profile, network.GetCommands(), config );
     new VisionConesToggler( controllers, publisher, this );
 
     glProxy_ = new GlProxy();
@@ -305,7 +305,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     QDockWindow* pCreationWnd = new QDockWindow( this, "creation" );
     moveDockWindow( pCreationWnd, Qt::DockRight );
     pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, publisher, *paramLayer, *glProxy_, *symbols, *strategy_, model_.drawings_ );
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, publisher, actionPublisher, model_.actions_, simulation, *paramLayer, *glProxy_, *symbols, *strategy_, model_.drawings_ );
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setResizeEnabled( true );
     pCreationWnd->setCloseMode( QDockWindow::Always );

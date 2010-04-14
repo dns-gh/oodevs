@@ -57,12 +57,12 @@ protected:
     //! @name Member data
     //@{
     std::string name_;
+    unsigned long id_;
     //@}
 
 private:
     //! @name Member data
     //@{
-    unsigned long id_;
     std::string doctrine_;
     std::string usage_;
     //@}

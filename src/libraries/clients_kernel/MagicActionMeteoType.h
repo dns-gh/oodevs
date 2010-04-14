@@ -7,40 +7,36 @@
 //
 // *****************************************************************************
 
-#ifndef __MagicActionType_h_
-#define __MagicActionType_h_
+#ifndef __MagicActionMeteoType_h_
+#define __MagicActionMeteoType_h_
 
-#include "OrderType.h"
+#include "MagicActionType.h"
 
 namespace kernel
 {
-    class OrderContext;
 
 // =============================================================================
-/** @class  MagicActionType
-    @brief  MagicActionType
+/** @class  MagicActionMeteoType
+    @brief  MagicActionMeteoType
 */
-// Created: JSR 2010-04-02
+// Created: JSR 2010-04-09
 // =============================================================================
-class MagicActionType : public OrderType
+class MagicActionMeteoType : public MagicActionType
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MagicActionType();
-    explicit MagicActionType( const std::string& name, unsigned long id );
-    virtual ~MagicActionType();
+    explicit MagicActionMeteoType();
+    virtual ~MagicActionMeteoType();
     //@}
 
-private:
+protected:
     //! @name Operations
     //@{
-    void Clean();
     virtual void Initialize();
     //@}
 };
 
 }
 
-#endif // __MagicActionType_h_
+#endif // __MagicActionMeteoType_h_

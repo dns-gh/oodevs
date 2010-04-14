@@ -131,13 +131,15 @@ void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const MsgsSimToClient::MsgCo
 // -----------------------------------------------------------------------------
 void MeteoModel::Purge()
 {
-    if( meteos_.empty() )
-        return;
-    for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
+    if( !meteos_.empty() )
     {
-        weather::PHY_Meteo* toDel = *it;
-        delete toDel;
-    }
+        for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
+        {
+            weather::PHY_Meteo* toDel = *it;
+            delete toDel;
+        }
     meteos_.clear();
+    }
+
     pGlobalMeteo_.reset();
 }

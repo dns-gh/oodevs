@@ -20,7 +20,7 @@
 
 namespace Common
 {
-    class MsgMagicActionChangeHumanFactors;
+    class MsgMissionParameters;
     class MsgUnitChangeSuperior;
     class MsgUnitOrder;
 }
@@ -30,7 +30,6 @@ namespace MsgsClientToSim
     class MsgMagicActionPartialRecovery;
     class MsgUnitFragOrder;
     class MsgUnitMagicAction;
-    class MsgMagicActionMoveTo;
 }
 
 namespace xml
@@ -137,7 +136,7 @@ public:
     void SendKnowledge() const;
 
     void OnReceiveMsgUnitMagicAction  ( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies );
-    void OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& asn );
+    void OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
     void OnReceiveMsgOrder            ( const Common::MsgUnitOrder& msg ); 
     void OnReceiveMsgFragOrder        ( const MsgsClientToSim::MsgFragOrder& msg );
     void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const Common::MsgUnitChangeSuperior& msg );
@@ -169,7 +168,7 @@ private:
 
     //! @name Magic actions
     //@{
-    void OnReceiveMsgChangeHumanFactors       ( const Common::MsgMagicActionChangeHumanFactors& asn );
+    void OnReceiveMsgChangeHumanFactors       ( const Common::MsgMissionParameters& msg );
     void OnReceiveMsgResupplyHumans           ();
     void OnReceiveMsgResupplyResources        ();
     void OnReceiveMsgResupplyEquipement       ();

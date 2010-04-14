@@ -53,6 +53,7 @@ public:
     std::string GetType() const;
     bool IsOptional() const;
     const OrderParameterValue& GetValue( unsigned int id ) const;
+    void AddValue( int id, const std::string& name );
     virtual void Accept( OrderParameterValueVisitor_ABC& visitor ) const;
     //@}
 

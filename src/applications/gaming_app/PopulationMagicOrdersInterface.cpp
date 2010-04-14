@@ -12,7 +12,7 @@
 #include "moc_PopulationMagicOrdersInterface.cpp"
 
 #include "actions/ActionsModel.h"
-#include "actions/UnitMagicActionTeleport.h"
+#include "actions/UnitMagicAction.h"
 #include "actions/Point.h"
 
 #include "clients_gui/LocationCreator.h"
@@ -133,7 +133,7 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
         if( selectedEntity_ )
         {
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
-            UnitMagicActionTeleport* action = new UnitMagicActionTeleport( *selectedEntity_, actionType, controllers_.controller_, true );
+            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
 
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             while( it.HasMoreElements() )

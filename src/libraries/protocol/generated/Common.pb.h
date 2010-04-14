@@ -87,13 +87,15 @@ class MsgEquipmentType;
 class MsgDotationType;
 class MsgUrbanBlock;
 class MsgUrbanKnowledge;
+class MsgSupply;
+class MsgSupplyList;
+class MsgSuppliesList;
 class MsgMissionParameter;
 class MsgMissionParameter_Value;
 class MsgMissionParameters;
 class MsgShape;
 class MsgChatTarget;
 class MsgTextMessage;
-class MsgMagicActionChangeHumanFactors;
 class MsgMagicActionPopulationChangeAttitude_beneficiaire;
 class MsgMagicActionPopulationChangeAttitude;
 class MsgMagicActionPopulationKill;
@@ -6022,6 +6024,281 @@ class MsgUrbanKnowledge : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
+class MsgSupply : public ::google::protobuf::Message {
+ public:
+  MsgSupply();
+  virtual ~MsgSupply();
+  
+  MsgSupply(const MsgSupply& from);
+  
+  inline MsgSupply& operator=(const MsgSupply& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgSupply& default_instance();
+  void Swap(MsgSupply* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgSupply* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgSupply& from);
+  void MergeFrom(const MsgSupply& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required uint32 type = 1;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 1;
+  inline ::google::protobuf::uint32 type() const;
+  inline void set_type(::google::protobuf::uint32 value);
+  
+  // required int32 quantity = 2;
+  inline bool has_quantity() const;
+  inline void clear_quantity();
+  static const int kQuantityFieldNumber = 2;
+  inline ::google::protobuf::int32 quantity() const;
+  inline void set_quantity(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::uint32 type_;
+  ::google::protobuf::int32 quantity_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgSupply* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgSupplyList : public ::google::protobuf::Message {
+ public:
+  MsgSupplyList();
+  virtual ~MsgSupplyList();
+  
+  MsgSupplyList(const MsgSupplyList& from);
+  
+  inline MsgSupplyList& operator=(const MsgSupplyList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgSupplyList& default_instance();
+  void Swap(MsgSupplyList* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgSupplyList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgSupplyList& from);
+  void MergeFrom(const MsgSupplyList& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .Common.MsgSupply supply = 1;
+  inline int supply_size() const;
+  inline void clear_supply();
+  static const int kSupplyFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgSupply >& supply() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::MsgSupply >* mutable_supply();
+  inline const ::Common::MsgSupply& supply(int index) const;
+  inline ::Common::MsgSupply* mutable_supply(int index);
+  inline ::Common::MsgSupply* add_supply();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::Common::MsgSupply > supply_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgSupplyList* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgSuppliesList : public ::google::protobuf::Message {
+ public:
+  MsgSuppliesList();
+  virtual ~MsgSuppliesList();
+  
+  MsgSuppliesList(const MsgSuppliesList& from);
+  
+  inline MsgSuppliesList& operator=(const MsgSuppliesList& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgSuppliesList& default_instance();
+  void Swap(MsgSuppliesList* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgSuppliesList* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgSuppliesList& from);
+  void MergeFrom(const MsgSuppliesList& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // repeated .Common.MsgSupplyList supplies = 1;
+  inline int supplies_size() const;
+  inline void clear_supplies();
+  static const int kSuppliesFieldNumber = 1;
+  inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgSupplyList >& supplies() const;
+  inline ::google::protobuf::RepeatedPtrField< ::Common::MsgSupplyList >* mutable_supplies();
+  inline const ::Common::MsgSupplyList& supplies(int index) const;
+  inline ::Common::MsgSupplyList* mutable_supplies(int index);
+  inline ::Common::MsgSupplyList* add_supplies();
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::RepeatedPtrField< ::Common::MsgSupplyList > supplies_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgSuppliesList* default_instance_;
+};
+// -------------------------------------------------------------------
+
 class MsgMissionParameter_Value : public ::google::protobuf::Message {
  public:
   MsgMissionParameter_Value();
@@ -6337,6 +6614,20 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   inline const ::Common::MsgUrbanBlock& urbanblock() const;
   inline ::Common::MsgUrbanBlock* mutable_urbanblock();
   
+  // optional int32 army = 38;
+  inline bool has_army() const;
+  inline void clear_army();
+  static const int kArmyFieldNumber = 38;
+  inline ::google::protobuf::int32 army() const;
+  inline void set_army(::google::protobuf::int32 value);
+  
+  // optional .Common.MsgSuppliesList supplies = 39;
+  inline bool has_supplies() const;
+  inline void clear_supplies();
+  static const int kSuppliesFieldNumber = 39;
+  inline const ::Common::MsgSuppliesList& supplies() const;
+  inline ::Common::MsgSuppliesList* mutable_supplies();
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -6379,11 +6670,13 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   ::Common::MsgLimasOrder* limasorder_;
   ::Common::MsgIntelligenceList* intelligencelist_;
   ::Common::MsgUrbanBlock* urbanblock_;
+  ::google::protobuf::int32 army_;
+  ::Common::MsgSuppliesList* supplies_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(37 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(39 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -6906,109 +7199,6 @@ class MsgTextMessage : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgTextMessage* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgMagicActionChangeHumanFactors : public ::google::protobuf::Message {
- public:
-  MsgMagicActionChangeHumanFactors();
-  virtual ~MsgMagicActionChangeHumanFactors();
-  
-  MsgMagicActionChangeHumanFactors(const MsgMagicActionChangeHumanFactors& from);
-  
-  inline MsgMagicActionChangeHumanFactors& operator=(const MsgMagicActionChangeHumanFactors& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMagicActionChangeHumanFactors& default_instance();
-  void Swap(MsgMagicActionChangeHumanFactors* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgMagicActionChangeHumanFactors* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMagicActionChangeHumanFactors& from);
-  void MergeFrom(const MsgMagicActionChangeHumanFactors& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // optional .Common.EnumUnitTiredness fatigue = 1;
-  inline bool has_fatigue() const;
-  inline void clear_fatigue();
-  static const int kFatigueFieldNumber = 1;
-  inline Common::EnumUnitTiredness fatigue() const;
-  inline void set_fatigue(Common::EnumUnitTiredness value);
-  
-  // optional .Common.EnumUnitMorale moral = 2;
-  inline bool has_moral() const;
-  inline void clear_moral();
-  static const int kMoralFieldNumber = 2;
-  inline Common::EnumUnitMorale moral() const;
-  inline void set_moral(Common::EnumUnitMorale value);
-  
-  // optional .Common.EnumUnitExperience experience = 3;
-  inline bool has_experience() const;
-  inline void clear_experience();
-  static const int kExperienceFieldNumber = 3;
-  inline Common::EnumUnitExperience experience() const;
-  inline void set_experience(Common::EnumUnitExperience value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  int fatigue_;
-  int moral_;
-  int experience_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgMagicActionChangeHumanFactors* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -12181,6 +12371,100 @@ inline void MsgUrbanKnowledge::set_oid(::google::protobuf::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// MsgSupply
+
+// required uint32 type = 1;
+inline bool MsgSupply::has_type() const {
+  return _has_bit(0);
+}
+inline void MsgSupply::clear_type() {
+  type_ = 0u;
+  _clear_bit(0);
+}
+inline ::google::protobuf::uint32 MsgSupply::type() const {
+  return type_;
+}
+inline void MsgSupply::set_type(::google::protobuf::uint32 value) {
+  _set_bit(0);
+  type_ = value;
+}
+
+// required int32 quantity = 2;
+inline bool MsgSupply::has_quantity() const {
+  return _has_bit(1);
+}
+inline void MsgSupply::clear_quantity() {
+  quantity_ = 0;
+  _clear_bit(1);
+}
+inline ::google::protobuf::int32 MsgSupply::quantity() const {
+  return quantity_;
+}
+inline void MsgSupply::set_quantity(::google::protobuf::int32 value) {
+  _set_bit(1);
+  quantity_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgSupplyList
+
+// repeated .Common.MsgSupply supply = 1;
+inline int MsgSupplyList::supply_size() const {
+  return supply_.size();
+}
+inline void MsgSupplyList::clear_supply() {
+  supply_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgSupply >&
+MsgSupplyList::supply() const {
+  return supply_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::MsgSupply >*
+MsgSupplyList::mutable_supply() {
+  return &supply_;
+}
+inline const ::Common::MsgSupply& MsgSupplyList::supply(int index) const {
+  return supply_.Get(index);
+}
+inline ::Common::MsgSupply* MsgSupplyList::mutable_supply(int index) {
+  return supply_.Mutable(index);
+}
+inline ::Common::MsgSupply* MsgSupplyList::add_supply() {
+  return supply_.Add();
+}
+
+// -------------------------------------------------------------------
+
+// MsgSuppliesList
+
+// repeated .Common.MsgSupplyList supplies = 1;
+inline int MsgSuppliesList::supplies_size() const {
+  return supplies_.size();
+}
+inline void MsgSuppliesList::clear_supplies() {
+  supplies_.Clear();
+}
+inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgSupplyList >&
+MsgSuppliesList::supplies() const {
+  return supplies_;
+}
+inline ::google::protobuf::RepeatedPtrField< ::Common::MsgSupplyList >*
+MsgSuppliesList::mutable_supplies() {
+  return &supplies_;
+}
+inline const ::Common::MsgSupplyList& MsgSuppliesList::supplies(int index) const {
+  return supplies_.Get(index);
+}
+inline ::Common::MsgSupplyList* MsgSuppliesList::mutable_supplies(int index) {
+  return supplies_.Mutable(index);
+}
+inline ::Common::MsgSupplyList* MsgSuppliesList::add_supplies() {
+  return supplies_.Add();
+}
+
+// -------------------------------------------------------------------
+
 // MsgMissionParameter_Value
 
 // optional bool aBool = 1;
@@ -12833,6 +13117,39 @@ inline ::Common::MsgUrbanBlock* MsgMissionParameter_Value::mutable_urbanblock() 
   return urbanblock_;
 }
 
+// optional int32 army = 38;
+inline bool MsgMissionParameter_Value::has_army() const {
+  return _has_bit(37);
+}
+inline void MsgMissionParameter_Value::clear_army() {
+  army_ = 0;
+  _clear_bit(37);
+}
+inline ::google::protobuf::int32 MsgMissionParameter_Value::army() const {
+  return army_;
+}
+inline void MsgMissionParameter_Value::set_army(::google::protobuf::int32 value) {
+  _set_bit(37);
+  army_ = value;
+}
+
+// optional .Common.MsgSuppliesList supplies = 39;
+inline bool MsgMissionParameter_Value::has_supplies() const {
+  return _has_bit(38);
+}
+inline void MsgMissionParameter_Value::clear_supplies() {
+  if (supplies_ != NULL) supplies_->::Common::MsgSuppliesList::Clear();
+  _clear_bit(38);
+}
+inline const ::Common::MsgSuppliesList& MsgMissionParameter_Value::supplies() const {
+  return supplies_ != NULL ? *supplies_ : *default_instance_->supplies_;
+}
+inline ::Common::MsgSuppliesList* MsgMissionParameter_Value::mutable_supplies() {
+  _set_bit(38);
+  if (supplies_ == NULL) supplies_ = new ::Common::MsgSuppliesList;
+  return supplies_;
+}
+
 // -------------------------------------------------------------------
 
 // MsgMissionParameter
@@ -13170,61 +13487,6 @@ inline ::std::string* MsgTextMessage::mutable_message() {
     message_ = new ::std::string;
   }
   return message_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgMagicActionChangeHumanFactors
-
-// optional .Common.EnumUnitTiredness fatigue = 1;
-inline bool MsgMagicActionChangeHumanFactors::has_fatigue() const {
-  return _has_bit(0);
-}
-inline void MsgMagicActionChangeHumanFactors::clear_fatigue() {
-  fatigue_ = 0;
-  _clear_bit(0);
-}
-inline Common::EnumUnitTiredness MsgMagicActionChangeHumanFactors::fatigue() const {
-  return static_cast< Common::EnumUnitTiredness >(fatigue_);
-}
-inline void MsgMagicActionChangeHumanFactors::set_fatigue(Common::EnumUnitTiredness value) {
-  GOOGLE_DCHECK(Common::EnumUnitTiredness_IsValid(value));
-  _set_bit(0);
-  fatigue_ = value;
-}
-
-// optional .Common.EnumUnitMorale moral = 2;
-inline bool MsgMagicActionChangeHumanFactors::has_moral() const {
-  return _has_bit(1);
-}
-inline void MsgMagicActionChangeHumanFactors::clear_moral() {
-  moral_ = 0;
-  _clear_bit(1);
-}
-inline Common::EnumUnitMorale MsgMagicActionChangeHumanFactors::moral() const {
-  return static_cast< Common::EnumUnitMorale >(moral_);
-}
-inline void MsgMagicActionChangeHumanFactors::set_moral(Common::EnumUnitMorale value) {
-  GOOGLE_DCHECK(Common::EnumUnitMorale_IsValid(value));
-  _set_bit(1);
-  moral_ = value;
-}
-
-// optional .Common.EnumUnitExperience experience = 3;
-inline bool MsgMagicActionChangeHumanFactors::has_experience() const {
-  return _has_bit(2);
-}
-inline void MsgMagicActionChangeHumanFactors::clear_experience() {
-  experience_ = 0;
-  _clear_bit(2);
-}
-inline Common::EnumUnitExperience MsgMagicActionChangeHumanFactors::experience() const {
-  return static_cast< Common::EnumUnitExperience >(experience_);
-}
-inline void MsgMagicActionChangeHumanFactors::set_experience(Common::EnumUnitExperience value) {
-  GOOGLE_DCHECK(Common::EnumUnitExperience_IsValid(value));
-  _set_bit(2);
-  experience_ = value;
 }
 
 // -------------------------------------------------------------------

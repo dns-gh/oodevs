@@ -12,8 +12,9 @@
 #include "moc_UnitMagicOrdersInterface.cpp"
 
 #include "actions/ActionsModel.h"
-#include "actions/UnitMagicActionTeleport.h"
+#include "actions/UnitMagicAction.h"
 #include "actions/Point.h"
+#include "actions/Army.h"
 
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
@@ -157,11 +158,9 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
         if( selectedEntity_ )
         {
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
-            UnitMagicActionTeleport* action = new UnitMagicActionTeleport( *selectedEntity_, actionType, controllers_.controller_, true );
-
+            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-            while( it.HasMoreElements() )
-                action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
+            action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
             action->Polish();
             actionsModel_.Register( action->GetId(), *action );
@@ -176,26 +175,41 @@ namespace
 {
     struct MagicFunctor
     {
-        MagicFunctor( Publisher_ABC& publisher, int id ) : publisher_( publisher ), id_( id ) {};
+        MagicFunctor( Publisher_ABC& publisher, const StaticModel& staticModel, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, int id ) 
+            : publisher_( publisher )
+            , static_( staticModel )
+            , controllers_( controllers )
+            , actionPublisher_( actionPublisher )
+            , actionsModel_( actionsModel)
+            , simulation_( simulation )
+            , id_( id )
+        {}
+
         void operator()( const Agent_ABC& agent ) const
         {
-            simulation::UnitMagicAction magicAction;
-            magicAction().set_oid( agent.GetId() );
-            const google::protobuf::Reflection* reflect = magicAction().mutable_action()->GetReflection();
-            const google::protobuf::Descriptor* descriptor = magicAction().mutable_action()->GetDescriptor();
-            const google::protobuf::FieldDescriptor* field = descriptor->FindFieldByNumber( id_ );
-            reflect->SetInt32(magicAction().mutable_action(), field, 1);
-            magicAction.Send( publisher_ );
+            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType >& > ( static_.types_ ).Get( id_ );
+            UnitMagicAction* action = new UnitMagicAction( agent, actionType, controllers_.controller_, true );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->Polish();
+            actionsModel_.Register( action->GetId(), *action );
+            actionsModel_.Publish( *action, actionPublisher_ );
         }
     private:
         MagicFunctor& operator=( const MagicFunctor& );
         Publisher_ABC& publisher_;
+        const StaticModel& static_;
+        Controllers& controllers_;
+        ActionPublisher& actionPublisher_;
+        actions::ActionsModel& actionsModel_;
+        const Simulation& simulation_;
         int id_;
     };
 
     struct RecursiveMagicFunctor : public MagicFunctor
     {
-        RecursiveMagicFunctor( Publisher_ABC& publisher, int id ) : MagicFunctor( publisher, id ) {};
+        RecursiveMagicFunctor( Publisher_ABC& publisher, const StaticModel& staticModel, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, int id )
+            : MagicFunctor( publisher, staticModel, controllers, actionPublisher, actionsModel, simulation, id )
+        {}
         void operator()( const Entity_ABC& entity ) const
         {
             if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &entity ) )
@@ -235,10 +249,7 @@ void UnitMagicOrdersInterface::DestroyComponent()
 {
     if( selectedEntity_ )
     {
-        simulation::UnitMagicAction magicAction;
-        magicAction().set_oid( selectedEntity_->GetId() );
-        magicAction().mutable_action()->set_destruction_composante( 1 );
-        magicAction.Send( publisher_ );
+        CreateAndPublish( "destroy_component" );
     }
 }
 
@@ -263,10 +274,7 @@ void UnitMagicOrdersInterface::RecoverHumanTransporters()
 {
     if( selectedEntity_ )
     {
-        simulation::UnitMagicAction magicAction;
-        magicAction().set_oid( selectedEntity_ ->GetId() );
-        magicAction().mutable_action()->set_recuperer_transporteurs( 1 );
-        magicAction.Send( publisher_ );
+        CreateAndPublish( "recover_transporters" );
     }
 }
 
@@ -274,15 +282,18 @@ void UnitMagicOrdersInterface::RecoverHumanTransporters()
 // Name: UnitMagicOrdersInterface::SurrenderTo
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::SurrenderTo( int id )
+void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
 {
     if( selectedEntity_ )
     {
-        simulation::UnitMagicAction magicAction;
-        magicAction().set_oid( selectedEntity_->GetId() );
-
-        magicAction().mutable_action()->set_se_rendre( id );
-        magicAction.Send( publisher_ );
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "surrender" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->Polish();
+        actionsModel_.Register( action->GetId(), *action );
+        actionsModel_.Publish( *action, actionPublisher_ );
     }
 }
 
@@ -311,7 +322,7 @@ int UnitMagicOrdersInterface::AddMagic( const QString& label, const char* slot, 
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id )
 {
-    RecursiveMagicFunctor functor( publisher_, id );
+    RecursiveMagicFunctor functor( publisher_, static_, controllers_, actionPublisher_, actionsModel_, simulation_, id);
     functor( entity );
 }
 
@@ -321,11 +332,25 @@ void UnitMagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entit
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::FillCommonOrders( QPopupMenu* magicMenu )
 {
-    AddMagic( tr( "Recover - All" ),        MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementTotalFieldNumber,      magicMenu );
-    AddMagic( tr( "Recover - Troops" ),     MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementPersonnelFieldNumber,  magicMenu );
-    AddMagic( tr( "Recover - Equipments" ), MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementEquipementFieldNumber, magicMenu );
-    AddMagic( tr( "Recover - Resources" ),  MsgsClientToSim::MsgUnitMagicAction_action::kRecompletementRessourcesFieldNumber, magicMenu );
-    AddMagic( tr( "Destroy - All" ),        MsgsClientToSim::MsgUnitMagicAction_action::kDestructionTotaleFieldNumber,        magicMenu );
+    AddMagic( tr( "Recover - All" ),        MsgsClientToSim::MsgUnitMagicAction_Type_recover_all,      magicMenu );
+    AddMagic( tr( "Recover - Troops" ),     MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops,  magicMenu );
+    AddMagic( tr( "Recover - Equipments" ), MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments, magicMenu );
+    AddMagic( tr( "Recover - Resources" ),  MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources, magicMenu );
+    AddMagic( tr( "Destroy - All" ),        MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all,        magicMenu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::CreateAndPublish
+// Created: JSR 2010-04-13
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr )
+{
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( actionStr );
+    UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Polish();
+    actionsModel_.Register( action->GetId(), *action );
+    actionsModel_.Publish( *action, actionPublisher_ );
 }
 
 namespace
@@ -354,14 +379,14 @@ namespace
 void UnitMagicOrdersInterface::AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity )
 {
     if( IsSurrendered( entity ) )
-        AddMagic( tr( "Cancel surrender" ), MsgsClientToSim::MsgUnitMagicAction_action::kAnnulerRedditionFieldNumber, parent );
+        AddMagic( tr( "Cancel surrender" ), MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender, parent );
     else
     {
         const kernel::Entity_ABC& team = entity.Get< kernel::TacticalHierarchies >().GetTop();
         QPopupMenu* menu = new QPopupMenu( parent );
         for( CIT_Teams it = teams_.begin(); it != teams_.end(); ++it )
             if( *it != &team )
-                menu->insertItem( (*it)->GetName(), this, SLOT( SurrenderTo( int ) ), 0, (*it)->GetId() );
+                menu->insertItem( (*it)->GetName(), this, SLOT( SurrenderTo( int ) ), 0, ( int ) *it );
         if( menu->count() )
             parent->insertItem( tr( "Surrender to" ), menu );
     }

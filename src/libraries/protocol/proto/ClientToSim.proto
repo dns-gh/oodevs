@@ -6,16 +6,8 @@ message MsgControlDatetimeChange {
    required Common.MsgDateTime date_time = 1;
 }
 
-message MsgControlGlobalMeteo {
-   required Common.MsgMeteoAttributes attributes = 1;
-}
-
-message MsgControlLocalMeteo {
-   required Common.MsgDateTime start_time = 1;
-   required Common.MsgDateTime end_time = 2; 
-   required Common.MsgCoordLatLong top_left_coordinate     = 3;
-   required Common.MsgCoordLatLong bottom_right_coordinate = 4;
-   required Common.MsgMeteoAttributes     attributes              = 5;  
+message MsgControlMeteo {
+   required Common.MsgMissionParameters parametres = 1;
 }
 
 message MsgControlCheckPointSaveNow {
@@ -89,23 +81,24 @@ message MsgMagicActionPartialRecovery {
     optional SeqOfStockRecovery              stocks      = 5;
 }
 
-message MsgUnitMagicAction_action {
-   optional MsgMagicActionPartialRecovery               recompletement_partiel      = 1;
-   optional Common.MsgMagicActionChangeHumanFactors     change_facteurs_humains     = 2;
-   optional int32                                       se_rendre                   = 3;
-   optional int32                                       destruction_totale          = 4;
-   optional int32                                       destruction_composante      = 5;
-   optional int32                                       annuler_reddition           = 6;
-   optional int32                                       recuperer_transporteurs     = 7;
-   optional int32                                       recompletement_total        = 8;
-   optional int32                                       recompletement_personnel    = 9;
-   optional int32                                       recompletement_equipement   = 10;
-   optional int32                                       recompletement_ressources   = 11;
-}
-
 message MsgUnitMagicAction {
-   required uint32                    oid    = 1;
-   required MsgUnitMagicAction_action action = 2;
+   enum Type {
+        move_to              = 0;
+        surrender_to         = 1;
+        cancel_surrender     = 2;
+        recover_transporters = 3;
+        destroy_component    = 4;
+        recover_all          = 5;
+        recover_troops       = 6;
+        recover_equipments   = 7;
+        recover_resources    = 8;
+        destroy_all          = 9;
+        change_human_factors = 10;
+        partial_recovery     = 11;
+    }
+   required uint32                      oid        = 1;
+   required Type                        type       = 2;
+   required Common.MsgMissionParameters parametres = 3;
 }
 
 message MsgMagicActionCreateObject {
@@ -150,11 +143,6 @@ message MsgPopulationMagicAction {
    required MsgPopulationMagicAction_action action = 2;
 }
 
-message MsgMagicActionMoveTo {
-   required int32                       oid                 = 1;
-   required Common.MsgMissionParameters parametres          = 2;
-}
-
 message MsgLogSupplyPushFlow {
    required uint32                    oid_donneur  = 1;
    required uint32                    oid_receveur = 2;
@@ -197,17 +185,16 @@ message MsgClientToSim {
        optional Common.MsgControlResume                control_resume                       = 3;
        optional Common.MsgControlChangeTimeFactor      control_change_time_factor           = 4;
        optional MsgControlDatetimeChange               control_date_time_change             = 5;
-       optional MsgControlGlobalMeteo                  control_global_meteo                 = 6;
-       optional MsgControlLocalMeteo                   control_local_meteo                  = 7;
-       optional MsgControlCheckPointSaveNow            control_checkpoint_save_now          = 8;
-       optional MsgControlCheckPointSetFrequency       control_checkpoint_set_frequency     = 9;
-       optional MsgControlToggleVisionCones            control_toggle_vision_cones          = 10;
-       optional Common.MsgUnitOrder                    unit_order                           = 11;
-       optional Common.MsgAutomatOrder                 automat_order                        = 12;
-       optional Common.MsgPopulationOrder              population_order                     = 13;
-       optional MsgFragOrder                           frag_order                           = 14;
-       optional MsgSetAutomatMode                      set_automat_mode                     = 15;
-       optional MsgUnitCreationRequest                 unit_creation_request                = 16;
+       optional MsgControlMeteo                        control_meteo                        = 6;
+       optional MsgControlCheckPointSaveNow            control_checkpoint_save_now          = 7;
+       optional MsgControlCheckPointSetFrequency       control_checkpoint_set_frequency     = 8;
+       optional MsgControlToggleVisionCones            control_toggle_vision_cones          = 9;
+       optional Common.MsgUnitOrder                    unit_order                           = 10;
+       optional Common.MsgAutomatOrder                 automat_order                        = 11;
+       optional Common.MsgPopulationOrder              population_order                     = 12;
+       optional MsgFragOrder                           frag_order                           = 13;
+       optional MsgSetAutomatMode                      set_automat_mode                     = 14;
+       optional MsgUnitCreationRequest                 unit_creation_request                = 15;
        optional MsgUnitMagicAction                     unit_magic_action                    = 17;
        optional MsgObjectMagicAction                   object_magic_action                  = 18;
        optional MsgPopulationMagicAction               population_magic_action              = 19;
@@ -221,7 +208,6 @@ message MsgClientToSim {
        optional MsgKnowledgeGroupCreationRequest       knowledge_group_creation_request     = 27;   
        optional MsgKnowledgeGroupUpdateRequest         knowledge_group_update_request       = 28;
        optional MsgMagicActionCreateFireOrder          create_fire_order                    = 29;   
-       optional MsgMagicActionMoveTo                   magic_action_move_to                 = 30;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

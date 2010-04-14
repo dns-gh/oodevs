@@ -7,14 +7,13 @@
 //
 // *****************************************************************************
 
-#ifndef __UnitMagicActionTeleport_h_
-#define __UnitMagicActionTeleport_h_
+#ifndef __MagicActionMeteo_h_
+#define __MagicActionMeteo_h_
 
-#include "UnitMagicAction.h"
+#include "MagicAction.h"
 
 namespace kernel
 {
-    class Entity_ABC;
     class MagicActionType;
     class Controller;
 }
@@ -28,20 +27,20 @@ namespace actions
 {
 
 // =============================================================================
-/** @class  UnitMagicActionTeleport
-    @brief  UnitMagicActionTeleport
+/** @class  MagicActionMeteo
+    @brief  MagicActionMeteo
 */
-// Created: JSR 2010-04-06
+// Created: JSR 2010-04-09
 // =============================================================================
-class UnitMagicActionTeleport : public UnitMagicAction
+class MagicActionMeteo : public MagicAction
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    UnitMagicActionTeleport( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
-    UnitMagicActionTeleport( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity );
-    virtual ~UnitMagicActionTeleport();
+    MagicActionMeteo( const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered = true );
+    MagicActionMeteo( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic );
+    virtual ~MagicActionMeteo();
     //@}
 
     //! @name Operations
@@ -49,19 +48,8 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void Publish( Publisher_ABC& publisher ) const;
     //@}
-
-private:
-
-    //! @name Helpers
-    //@{
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    //@}
 };
 
 }
 
-#endif // __UnitMagicActionTeleport_h_
+#endif // __MagicActionMeteo_h_

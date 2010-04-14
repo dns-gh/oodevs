@@ -28,7 +28,7 @@ namespace MsgsClientToSim
 {
     class MsgFragOrder;
     class MsgPopulationMagicAction;
-    class MsgMagicActionMoveTo;
+    class MsgUnitMagicAction;
 }
 
 namespace xml
@@ -151,7 +151,7 @@ public:
     void UpdateNetwork        ();
 
     void OnReceiveMsgPopulationMagicAction      ( const MsgsClientToSim::MsgPopulationMagicAction& asnMsg );
-    void OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& asn );
+    void OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
     //@}
 
     //! @name CheckPoints

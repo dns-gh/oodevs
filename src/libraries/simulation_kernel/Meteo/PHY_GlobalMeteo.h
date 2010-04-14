@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Update( const Common::MsgMeteoAttributes& asn );
+    virtual void Update( const Common::MsgMissionParameters& asn );
     virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision );
     virtual void SendCreation() const;
     //@}

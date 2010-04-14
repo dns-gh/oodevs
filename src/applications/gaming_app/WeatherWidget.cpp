@@ -10,6 +10,9 @@
 #include "gaming_app_pch.h"
 #include "WeatherWidget.h"
 #include "moc_WeatherWidget.cpp"
+#include "actions/Numeric.h"
+#include "actions/Direction.h"
+#include "actions/Enumeration.h"
 #include "preparation/Weather.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
@@ -17,6 +20,8 @@
 #include "meteo/PHY_Precipitation.h"
 
 using namespace kernel;
+using namespace actions;
+using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: WeatherWidget constructor
@@ -68,3 +73,47 @@ void WeatherWidget::Commit( Common::MsgMeteoAttributes& att ) const
     att.set_precipitation( precipitation->GetAsnID() );
     att.set_temperature( 0 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: WeatherWidget::Commit
+// Created: JSR 2010-04-12
+// -----------------------------------------------------------------------------
+void WeatherWidget::Commit( Common::MsgMissionParameters& att ) const
+{    
+    att.add_elem()->mutable_value()->set_areal( 0 ); // Temperature
+    att.add_elem()->mutable_value()->set_areal( ( float) windSpeed_->value() );
+    att.add_elem()->mutable_value()->mutable_heading()->set_heading( windDirection_->value() );
+    att.add_elem()->mutable_value()->set_areal( ( float) cloudFloor_->value() );
+    att.add_elem()->mutable_value()->set_areal( ( float) cloudCeiling_->value() );
+    att.add_elem()->mutable_value()->set_areal( ( float) cloudDensity_->value() );
+    const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).ascii() );
+    att.add_elem()->mutable_value()->set_enumeration( precipitation->GetAsnID() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherWidget::CreateParameter
+// Created: JSR 2010-04-12
+// -----------------------------------------------------------------------------
+Parameter_ABC& WeatherWidget::CreateParameter( const OrderParameter& parameter )
+{
+    if( parameter.GetName() == "Temperature" )
+        return *new Numeric( parameter, 0 );
+    else if( parameter.GetName() == "WindSpeed" )
+        return *new Numeric( parameter, ( float) windSpeed_->value() );
+    else if( parameter.GetName() == "WindDirection" )
+        return *new Direction( parameter, windDirection_->value() );
+    else if( parameter.GetName() == "CloudFloor" )
+        return *new Numeric( parameter, ( float) cloudFloor_->value() );
+    else if( parameter.GetName() == "CloudCeiling" )
+        return *new Numeric( parameter, ( float) cloudCeiling_->value() );
+    else if( parameter.GetName() == "CloudDensity" )
+        return *new Numeric( parameter, ( float) cloudDensity_->value() );
+    else if( parameter.GetName() == "Precipitation" )
+    {
+        //const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).ascii() );
+        return *new Enumeration( parameter, type_->GetValue() /*precipitation->GetAsnID()*/ );
+    }
+    else
+        throw std::exception( "Weather Widget : bad parameter type" );
+}
+

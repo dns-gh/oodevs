@@ -100,6 +100,16 @@ void OrderParameter::ReadValue( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderParameter::AddValue
+// Created: JSR 2010-04-09
+// -----------------------------------------------------------------------------
+void OrderParameter::AddValue( int id, const std::string& name )
+{
+    OrderParameterValue value( id, name );
+    values_.insert( std::make_pair( value.GetId(), value ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderParameter::Accept
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------

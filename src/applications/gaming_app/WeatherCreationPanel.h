@@ -32,9 +32,16 @@ namespace gui
     class ShapeHandler_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 class StaticModel;
 class Publisher_ABC;
 class WeatherWidget;
+class ActionPublisher;
+class Simulation;
 
 // =============================================================================
 /** @class  WeatherCreationPanel
@@ -51,7 +58,7 @@ class WeatherCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+    WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~WeatherCreationPanel();
     //@}
 
@@ -92,6 +99,10 @@ private:
     kernel::Controllers& controllers_;
     gui::ParametersLayer& layer_;
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& model_;
+    const Simulation& simulation_;
     const kernel::GlTools_ABC& tools_;
     LocationSerializer serializer_;
     WeatherWidget* weather_;

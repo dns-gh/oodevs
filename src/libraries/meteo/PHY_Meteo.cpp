@@ -18,6 +18,7 @@
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
+
 #pragma warning( push, 0 )
 #pragma warning( disable: 4996 )
 #include <qstring.h>
@@ -85,6 +86,20 @@ PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgMeteoAttributes& asnMsg,
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Meteo constructor
+// Created: JSR 2010-04-12
+// -----------------------------------------------------------------------------
+PHY_Meteo::PHY_Meteo( unsigned int id, const Common::MsgMissionParameters& asnMsg, MeteoManager_ABC* listener )
+    : pLighting_     ( &PHY_Lighting::jourSansNuage_ )
+    , pPrecipitation_( &PHY_Precipitation::none_ )
+    , nRefCount_     ( 0 )
+    , listener_      ( listener )
+    , id_            ( id )
+{
+    Update( asnMsg );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Meteo constructor
 // Created: HBD 2010-04-06
 // -----------------------------------------------------------------------------
 PHY_Meteo::PHY_Meteo( const PHY_Lighting& light, PHY_Precipitation& precipitation )
@@ -131,6 +146,58 @@ void PHY_Meteo::Update( const Common::MsgMeteoAttributes& msg )
 
     // Précipitation
     pPrecipitation_ = PHY_Precipitation::FindPrecipitation( msg.precipitation() );
+    if( !pPrecipitation_ )
+        pPrecipitation_ = &PHY_Precipitation::none_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Meteo::Update
+// Created: NLD 2004-08-31
+// -----------------------------------------------------------------------------
+void PHY_Meteo::Update( const Common::MsgMissionParameters& msg )
+{
+    // Temperature
+    const Common::MsgMissionParameter& temperature = msg.elem( 0 );
+    if( !temperature.has_value() || !temperature.value().has_areal() )
+        throw std::exception( "Meteo : bad attribute for temperature" );
+    // TODO
+    // temperature_ = parametre.value().areal();
+
+    // Vitesse du vent
+    const Common::MsgMissionParameter& windSpeed = msg.elem( 1 );
+    if( !windSpeed.has_value() || !windSpeed.value().has_areal() )
+        throw std::exception( "Meteo : bad attribute for windSpeed" );
+    wind_.rWindSpeed_ = conversionFactor_ * windSpeed.value().areal();
+
+    // Direction du vent
+    const Common::MsgMissionParameter& windDirection = msg.elem( 2 );
+    if( !windDirection.has_value() || !windDirection.value().has_heading() )
+        throw std::exception( "Meteo : bad attribute for windDirection" );
+    wind_.vWindDirection_ = weather::ReadDirection( windDirection.value().heading() );
+
+    // Plancher de couverture nuageuse
+    const Common::MsgMissionParameter& cloudFloor = msg.elem( 3 );
+    if( !cloudFloor.has_value() || !cloudFloor.value().has_areal() )
+        throw std::exception( "Meteo : bad attribute for cloudFloor" );
+    nPlancherCouvertureNuageuse_ = (int) cloudFloor.value().areal();
+
+    // Plafond de couverture nuageuse
+    const Common::MsgMissionParameter& cloudCeiling = msg.elem( 4 );
+    if( !cloudCeiling.has_value() || !cloudCeiling.value().has_areal() )
+        throw std::exception( "Meteo : bad attribute for cloudCeiling" );
+    nPlafondCouvertureNuageuse_ = (int) cloudCeiling.value().areal();
+
+    // Densite moyenne de couverture nuageuse
+    const Common::MsgMissionParameter& cloudDensity = msg.elem( 5 );
+    if( !cloudDensity.has_value() || !cloudDensity.value().has_areal() )
+        throw std::exception( "Meteo : bad attribute for cloudDensity" );
+    rDensiteCouvertureNuageuse_ = std::min( std::max( (int) cloudDensity.value().areal(), 0 ), 100 ) / 100.;
+
+     // Précipitation
+    const Common::MsgMissionParameter& precipitation = msg.elem( 6 );
+    if( !precipitation.has_value() || !precipitation.value().has_enumeration() )
+        throw std::exception( "Meteo : bad attribute for precipitation" );
+    pPrecipitation_ = PHY_Precipitation::FindPrecipitation( (Common::EnumPrecipitationType ) precipitation.value().enumeration() );
     if( !pPrecipitation_ )
         pPrecipitation_ = &PHY_Precipitation::none_;
 }
@@ -185,7 +252,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher) const
     att->mutable_wind_direction()->set_heading( 0 );
     att->set_cloud_floor( nPlancherCouvertureNuageuse_ );
     att->set_cloud_ceiling( nPlafondCouvertureNuageuse_ );
-    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. ) );
+    att->set_cloud_density( int( rDensiteCouvertureNuageuse_ * 100. + 0.01 ) );
     att->set_precipitation( pPrecipitation_->GetAsnID() );
     att->set_temperature( 0 );
     msg.Send( publisher );
@@ -195,7 +262,7 @@ void PHY_Meteo::SendCreation( dispatcher::ClientPublisher_ABC& publisher) const
 // Name: PHY_Meteo::SendFullUpdate
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::SendFullUpdate( dispatcher::ClientPublisher_ABC& publisher ) const
+void PHY_Meteo::SendFullUpdate( dispatcher::ClientPublisher_ABC& ) const
 {
     //NOTHING
 }
@@ -204,7 +271,7 @@ void PHY_Meteo::SendFullUpdate( dispatcher::ClientPublisher_ABC& publisher ) con
 // Name: PHY_Meteo::Select
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::Select( kernel::ActionController& controller ) const
+void PHY_Meteo::Select( kernel::ActionController& ) const
 {
     //NOTHING
 }
@@ -213,7 +280,7 @@ void PHY_Meteo::Select( kernel::ActionController& controller ) const
 // Name: PHY_Meteo::ContextMenu
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::ContextMenu( kernel::ActionController& controller, const QPoint& where ) const
+void PHY_Meteo::ContextMenu( kernel::ActionController& , const QPoint& ) const
 {
     //NOTHING
 }
@@ -222,7 +289,7 @@ void PHY_Meteo::ContextMenu( kernel::ActionController& controller, const QPoint&
 // Name: PHY_Meteo::Activate
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::Activate( kernel::ActionController& controller ) const
+void PHY_Meteo::Activate( kernel::ActionController& ) const
 {
     //NOTHING
 }
@@ -267,7 +334,7 @@ void PHY_Meteo::SendCreation() const
 // Name: PHY_Meteo::SendDestruction
 // Created: HBD 2010-03-31
 // -----------------------------------------------------------------------------
-void PHY_Meteo::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) const
+void PHY_Meteo::SendDestruction( dispatcher::ClientPublisher_ABC& ) const
 {
     //NOTHING
 }
@@ -277,7 +344,7 @@ void PHY_Meteo::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) co
 // Name: PHY_Meteo::IsInside
 // Created: HBD 2010-04-01
 // -----------------------------------------------------------------------------
-bool PHY_Meteo::IsInside( const geometry::Point2f& point ) const
+bool PHY_Meteo::IsInside( const geometry::Point2f& ) const
 {
     return true;
 }

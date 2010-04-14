@@ -14,8 +14,8 @@
 #include "actions/PopulationMission.h"
 #include "actions/FragOrder.h"
 #include "actions/MagicAction.h"
+#include "actions/MagicActionMeteo.h"
 #include "actions/UnitMagicAction.h"
-#include "actions/UnitMagicActionTeleport.h"
 #include "actions/ObjectMagicAction.h"
 #include "actions/Parameter_ABC.h"
 #include "Model.h"
@@ -290,10 +290,9 @@ actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis ) cons
 
     std::auto_ptr< actions::MagicAction > action;
     if( id == "global_meteo" )
-    {
-        // $$$$ JSR 2010-04-07: TODO
-        // action.reset( new actions::MagicActionGlobalMeteo( xis, controllers_.controller_, magicActions_.Get( "move_to" ) ) );
-    }
+        action.reset( new actions::MagicActionMeteo( xis, controllers_.controller_, magicActions_.Get( "global_meteo" ) ) );
+    else if( id == "local_meteo" )
+        action.reset( new actions::MagicActionMeteo( xis, controllers_.controller_, magicActions_.Get( "local_meteo" ) ) );
     // $$$$ JSR 2010-04-07: TODO
     // else
     //    ...
@@ -328,13 +327,9 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) 
     if( !target )
         ThrowTargetNotFound( targetid );
 
-    if( id == "unit_teleport" )
-        action.reset( new actions::UnitMagicActionTeleport( xis, controllers_.controller_, magicActions_.Get( "teleport" ), *target ) );
-    // $$$$ JSR 2010-04-07: TODO
-    // else
-    //    ...
-    else
-        ThrowMagicIdNotFound( id );
+    action.reset( new actions::UnitMagicAction( xis, controllers_.controller_, magicActions_.Get( id ), *target ) );
+    /*else
+        ThrowMagicIdNotFound( id );*/
 
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();

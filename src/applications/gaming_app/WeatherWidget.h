@@ -16,6 +16,17 @@
 namespace Common
 {
     class MsgMeteoAttributes;
+    class MsgMissionParameters;
+}
+
+namespace actions
+{
+    class Parameter_ABC;
+}
+
+namespace kernel
+{
+    class OrderParameter;
 }
 
 // =============================================================================
@@ -38,6 +49,8 @@ public:
     //! @name Operations
     //@{
     void Commit( Common::MsgMeteoAttributes& att ) const;
+    void Commit( Common::MsgMissionParameters& att ) const;
+    actions::Parameter_ABC& CreateParameter( const kernel::OrderParameter& parameter );
     //@}
 
 private:

@@ -29,7 +29,15 @@ namespace kernel
     class Team_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 class Publisher_ABC;
+class StaticModel;
+class ActionPublisher;
+class Simulation;
 
 // =============================================================================
 /** @class  ChangeHumanFactorsDialog
@@ -52,7 +60,7 @@ class ChangeHumanFactorsDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile );
+             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~ChangeHumanFactorsDialog();
     //@}
 
@@ -82,7 +90,7 @@ private:
     //! @name Helpers
     //@{
     void DoContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
-    void SendMessage( unsigned int id, EnumUnitTiredness, EnumUnitMorale, EnumUnitExperience );
+    void SendAction( const kernel::Entity_ABC& entity, EnumUnitTiredness, EnumUnitMorale, EnumUnitExperience );
     void SendMessage( const kernel::Entity_ABC& entity, EnumUnitTiredness, EnumUnitMorale, EnumUnitExperience );
     virtual void Call( const E_UnitTiredness& fatigue );
     virtual void Call( const E_UnitMorale& morale );
@@ -93,7 +101,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    const StaticModel& static_;
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const Simulation& simulation_;
     const kernel::Profile_ABC& profile_;
 
     kernel::SafePointer< kernel::Entity_ABC > selected_;

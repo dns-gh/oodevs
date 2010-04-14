@@ -25,6 +25,17 @@ OrderParameterValue::OrderParameterValue( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderParameterValue constructor
+// Created: JSR 2010-04-09
+// -----------------------------------------------------------------------------
+OrderParameterValue::OrderParameterValue( int id, const std::string& name )
+    : id_( id )
+    , name_( name )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: OrderParameterValue destructor
 // Created: SBO 2007-04-23
 // -----------------------------------------------------------------------------

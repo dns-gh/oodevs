@@ -212,9 +212,7 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return bSupervision_;
     if( message.has_control_date_time_change() )
         return bSupervision_;
-    if( message.has_control_global_meteo() )
-        return bSupervision_;
-    if( message.has_control_local_meteo() )
+    if( message.has_control_meteo() )
         return bSupervision_;
     if( message.has_control_checkpoint_save_now() )
         return bSupervision_;
@@ -245,8 +243,6 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
     if( message.has_object_magic_action() )
         return true;
     if( message.has_population_magic_action() )
-        return true;
-    if( message.has_magic_action_move_to() )
         return true;
     if( message.has_change_diplomacy() )
         return true;

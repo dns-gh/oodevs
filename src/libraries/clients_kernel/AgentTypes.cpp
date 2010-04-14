@@ -10,6 +10,7 @@
 #include "clients_kernel_pch.h"
 #include "AgentTypes.h"
 
+#include "protocol/protocol.h"
 #include "AgentType.h"
 #include "AutomatType.h"
 #include "ComponentType.h"
@@ -18,7 +19,9 @@
 #include "FileLoader.h"
 #include "FragOrderType.h"
 #include "KnowledgeGroupType.h"
-#include "MagicActionMoveToType.h"
+//#include "MagicActionMoveToType.h"
+#include "MagicActionMeteoType.h"
+#include "MagicActionLocalMeteoType.h"
 #include "MissionFactory.h"
 #include "MissionType.h"
 #include "OrderContext.h"
@@ -96,7 +99,8 @@ void AgentTypes::Purge()
     tools::Resolver< ComponentType >::DeleteAll();
     tools::Resolver< ComponentType, std::string >::Clear();
     tools::Resolver< SensorType, std::string >::DeleteAll();
-    tools::Resolver< MagicActionType, std::string >::DeleteAll();
+    tools::Resolver< MagicActionType >::DeleteAll();
+    tools::Resolver< MagicActionType, std::string >::Clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -327,11 +331,39 @@ void AgentTypes::ReadKnowledgeGroupType( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: AgentTypes::RegisterActionType
+// Created: JSR 2010-04-13
+// -----------------------------------------------------------------------------
+void AgentTypes::RegisterActionType( MagicActionType& actionType )
+{
+    tools::Resolver< MagicActionType, std::string >::Register( actionType.GetName(), actionType );
+    tools::Resolver< MagicActionType >::Register( actionType.GetId(), actionType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: AgentTypes::CreateMagicActionTypes
 // Created: JSR 2010-04-08
 // -----------------------------------------------------------------------------
 void AgentTypes::CreateMagicActionTypes()
 {
-    MagicActionMoveToType* moveto = new MagicActionMoveToType();
-    tools::Resolver< MagicActionType, std::string >::Register( moveto->GetName(), *moveto );
+    //RegisterActionType( *new MagicActionMoveToType() );
+    RegisterActionType( *new MagicActionType( "teleport", MsgsClientToSim::MsgUnitMagicAction_Type_move_to ) );
+    RegisterActionType( *new MagicActionType( "surrender", MsgsClientToSim::MsgUnitMagicAction_Type_surrender_to ) );
+    RegisterActionType( *new MagicActionType( "cancel_surrender", MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender ) );
+    RegisterActionType( *new MagicActionType( "recover_transporters", MsgsClientToSim::MsgUnitMagicAction_Type_recover_transporters) );
+    RegisterActionType( *new MagicActionType( "destroy_component", MsgsClientToSim::MsgUnitMagicAction_Type_destroy_component ) );
+    RegisterActionType( *new MagicActionType( "recover_all", MsgsClientToSim::MsgUnitMagicAction_Type_recover_all ) );
+    RegisterActionType( *new MagicActionType( "recover_troops", MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops ) );
+    RegisterActionType( *new MagicActionType( "recover_equipments", MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments ) );
+    RegisterActionType( *new MagicActionType( "recover_resources", MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources ) );
+    RegisterActionType( *new MagicActionType( "destroy_all", MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all ) );
+    RegisterActionType( *new MagicActionType( "change_human_factors", MsgsClientToSim::MsgUnitMagicAction_Type_change_human_factors ) );
+
+    // $$$$ JSR 2010-04-14: TODO à remettre quand ces types auront des id
+    // RegisterActionType( *new MagicActionMeteoType() );
+    // RegisterActionType( *new MagicActionLocalMeteoType() );
+    MagicActionMeteoType* meteo = new MagicActionMeteoType();
+    tools::Resolver< MagicActionType, std::string >::Register( meteo->GetName(), *meteo );
+    MagicActionLocalMeteoType* localmeteo = new MagicActionLocalMeteoType();
+    tools::Resolver< MagicActionType, std::string >::Register( localmeteo->GetName(), *localmeteo );
 }

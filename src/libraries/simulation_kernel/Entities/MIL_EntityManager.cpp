@@ -669,7 +669,7 @@ void MIL_EntityManager::OnReceiveMsgAutomatOrder( const Common::MsgAutomatOrder&
 
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::OnReceiveMsgUnitMagicAction
-// Created: NLD 2004-09-06
+// Created: JSR 2010-04-13
 // -----------------------------------------------------------------------------
 void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
@@ -678,12 +678,20 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
     ack().set_error_code( MsgsSimToClient::UnitActionAck_ErrorCode_no_error );
     try
     {
-        if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
-            pAutomate->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
-        else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
-            pPion->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
-        else
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
+        switch( message.type() )
+        {
+        case MsgsClientToSim::MsgUnitMagicAction_Type_move_to :
+            OnReceiveMsgMagicActionMoveTo( message, nCtx );
+            break;
+        default:
+            if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
+                pAutomate->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
+            else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
+                pPion->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
+            else
+                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
+            break;
+        }
     }
     catch( NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >& e )
     {
@@ -1019,27 +1027,16 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::Ms
 // Name: MIL_EntityManager::OnReceiveMsgMagicActionMoveTo
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgMagicActionMoveTo& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
 {
-    client::UnitMagicActionAck ack;
-    ack().set_oid( message.oid() );
-    ack().set_error_code( MsgsSimToClient::UnitActionAck_ErrorCode_no_error );
-    try
-    {
-        if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
-            pAutomate->OnReceiveMsgMagicActionMoveTo( message );
-        else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
-            pPion->OnReceiveMsgMagicActionMoveTo( message );
-        else if( MIL_Population* pPopulation = populationFactory_->Find( message.oid() ) )
-            pPopulation->OnReceiveMsgPopulationMagicActionMoveTo( message );
-        else
-            throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
-    }
-    catch( NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
+    if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
+        pAutomate->OnReceiveMsgMagicActionMoveTo( message );
+    else if( MIL_AgentPion* pPion = FindAgentPion( message.oid() ) )
+        pPion->OnReceiveMsgMagicActionMoveTo( message );
+    else if( MIL_Population* pPopulation = populationFactory_->Find( message.oid() ) )
+        pPopulation->OnReceiveMsgPopulationMagicActionMoveTo( message );
+    else
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
 }
 
 // -----------------------------------------------------------------------------

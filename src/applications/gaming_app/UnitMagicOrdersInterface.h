@@ -101,6 +101,7 @@ private:
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
     void ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id );
     void FillCommonOrders( QPopupMenu* magicMenu );
+    void CreateAndPublish( const std::string& actionType );
 
     void AddSurrenderMenu( QPopupMenu* parent, const kernel::Entity_ABC& entity );
     virtual void NotifyCreated( const kernel::Team_ABC& team );

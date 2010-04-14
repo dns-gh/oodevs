@@ -14,8 +14,7 @@
 
 namespace MsgsClientToSim
 {
-    class MsgControlGlobalMeteo;
-    class MsgControlLocalMeteo;
+    class MsgControlMeteo;
 }
 
 namespace xml
@@ -59,8 +58,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void OnReceiveMsgGlobalMeteo( const MsgsClientToSim::MsgControlGlobalMeteo& msg );
-    virtual void OnReceiveMsgLocalMeteo ( const MsgsClientToSim::MsgControlLocalMeteo&  msg );
+    virtual void OnReceiveMsgMeteo( const MsgsClientToSim::MsgControlMeteo& msg );
     //@}
 
 private:
