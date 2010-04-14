@@ -415,7 +415,7 @@ void MIL_Automate::WriteODB( xml::xostream& xos ) const
     
     xos << xml::attribute( "id", nID_ )
         << xml::attribute( "engaged", bEngaged_ )
-        << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetID() )
+        << xml::attribute( "knowledge-group", pKnowledgeGroup_->GetId() )
         << xml::attribute( "type", pType_->GetName() );
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
@@ -871,7 +871,7 @@ void MIL_Automate::SendCreation() const
     asn().set_oid( nID_ );
     asn().set_type_automate( pType_->GetID() );
     asn().set_oid_camp( GetArmy().GetID() );
-    asn().set_oid_groupe_connaissance( GetKnowledgeGroup().GetID() );
+    asn().set_oid_groupe_connaissance( GetKnowledgeGroup().GetId() );
     asn().set_nom( GetName() );
 
     assert( pParentAutomate_ || pParentFormation_ );

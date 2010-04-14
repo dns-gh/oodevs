@@ -194,7 +194,7 @@ void PHY_RolePion_Communications::SendFullState( client::UnitAttributes& msg ) c
     msg().mutable_communications()->set_jammed( !jammers_.empty() );
     
     if( !jammers_.empty() )
-        msg().mutable_communications()->set_knowledge_group( GetKnowledgeGroup().GetID() );
+        msg().mutable_communications()->set_knowledge_group( GetKnowledgeGroup().GetId() );
     else
         msg().mutable_communications()->set_knowledge_group( 0 );
 

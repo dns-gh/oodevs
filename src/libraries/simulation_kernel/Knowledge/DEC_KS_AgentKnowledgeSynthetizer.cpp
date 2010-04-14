@@ -13,16 +13,9 @@
 #include "DEC_KS_AgentKnowledgeSynthetizer.h"
 
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
-#include "DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
-#include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
-#include "DEC_Knowledge_AgentPerception.h"
 #include "DEC_Knowledge_Agent.h"
 #include "MIL_KnowledgeGroup.h"
-#include "Entities/Automates/MIL_Automate.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "simulation_kernel/MIL_AgentServer.h" // LTO
-#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h" // LTO
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
  

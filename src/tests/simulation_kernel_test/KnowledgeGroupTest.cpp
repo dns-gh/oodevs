@@ -65,10 +65,10 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
     
     MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
-    msg.set_oid( group2.GetID() );
+    msg.set_oid( group2.GetId() );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 1 ) );
     msg.set_oid_camp( army.GetID() );
-    msg.set_oid_parent( group1.GetID() );
+    msg.set_oid_parent( group1.GetId() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
     MIL_KnowledgeGroup group2( xis3, army, &group1, mockKnowledgeGroupFactory );
     
     MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
-    msg.set_oid( group2.GetID() );
+    msg.set_oid( group2.GetId() );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 10 ) );
     msg.set_oid_camp( army.GetID() );
     msg.set_oid_parent( 0 );
@@ -170,10 +170,10 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     MIL_KnowledgeGroup group2( xis3, army, 0, mockKnowledgeGroupFactory );
     
     MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
-    msg.set_oid( group2.GetID() );
+    msg.set_oid( group2.GetId() );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 20 ) );
     msg.set_oid_camp( army.GetID() );
-    msg.set_oid_parent( group1.GetID() );
+    msg.set_oid_parent( group1.GetId() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -222,7 +222,7 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
 
     // prepare message    
     MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
-    msg.set_oid( groupArmy.GetID() );
+    msg.set_oid( groupArmy.GetId() );
     const MIL_KnowledgeGroupType &kgType_new = *MIL_KnowledgeGroupType::FindType("TOTO");
     msg.set_type( kgType_new.GetName().c_str() );
 

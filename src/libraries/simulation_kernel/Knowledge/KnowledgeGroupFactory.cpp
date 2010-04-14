@@ -55,7 +55,7 @@ KnowledgeGroupFactory::~KnowledgeGroupFactory()
 MIL_KnowledgeGroup& KnowledgeGroupFactory::Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent )
 {
     MIL_KnowledgeGroup& knowledgeGroup = *new MIL_KnowledgeGroup( xis, army, parent, *this );
-    Register( knowledgeGroup.GetID(), knowledgeGroup );
+    Register( knowledgeGroup.GetId(), knowledgeGroup );
     return knowledgeGroup;
 }
 

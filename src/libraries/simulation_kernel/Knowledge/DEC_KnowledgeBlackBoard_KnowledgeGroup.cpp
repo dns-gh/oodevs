@@ -21,8 +21,9 @@
 #include "DEC_BlackBoard_CanContainKnowledgeAgent.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObject.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
-#include "DEC_KS_AgentKnowledgeSynthetizer.h"
-#include "DEC_KS_PopulationKnowledgeSynthetizer.h"
+#include "DEC_KS_KnowledgeSynthetizer.h"
+//#include "DEC_KS_AgentKnowledgeSynthetizer.h"
+//#include "DEC_KS_PopulationKnowledgeSynthetizer.h"
 #include "DEC_KS_Sharing.h"
 #include "MIL_KnowledgeGroup.h"
 #include "Decision/DEC_Tools.h"
@@ -40,8 +41,9 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup( 
     , pKnowledgeAgentContainer_         ( new DEC_BlackBoard_CanContainKnowledgeAgent     ( knowledgeGroup ) )
     , pKnowledgePopulationContainer_    ( new DEC_BlackBoard_CanContainKnowledgePopulation() )
     , pKnowledgeObjectContainer_        ( 0 )
-    , pKsAgentKnowledgeSynthetizer_     ( new DEC_KS_AgentKnowledgeSynthetizer            ( *this ) )      
-    , pKsPopulationKnowledgeSynthetizer_( new DEC_KS_PopulationKnowledgeSynthetizer       ( *this ) )
+    , pKsKnowledgeSynthetizer_          ( new DEC_KS_KnowledgeSynthetizer            ( *this ) )      
+//    , pKsAgentKnowledgeSynthetizer_     ( new DEC_KS_AgentKnowledgeSynthetizer            ( *this ) )      
+//    , pKsPopulationKnowledgeSynthetizer_( new DEC_KS_PopulationKnowledgeSynthetizer       ( *this ) )
     , pKsSharing_                       ( new DEC_KS_Sharing                              ( *this ) )
 {
     // NOTHING
@@ -56,8 +58,9 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::DEC_KnowledgeBlackBoard_KnowledgeGroup()
     , pKnowledgeAgentContainer_         ( 0 )
     , pKnowledgePopulationContainer_    ( 0 )
     , pKnowledgeObjectContainer_        ( 0 )
-    , pKsAgentKnowledgeSynthetizer_     ( 0 )      
-    , pKsPopulationKnowledgeSynthetizer_( 0 )
+    , pKsKnowledgeSynthetizer_          ( 0 )      
+//    , pKsAgentKnowledgeSynthetizer_     ( 0 )      
+//    , pKsPopulationKnowledgeSynthetizer_( 0 )
     , pKsSharing_                       ( 0 )
 {
     // NOTHING
@@ -72,8 +75,9 @@ DEC_KnowledgeBlackBoard_KnowledgeGroup::~DEC_KnowledgeBlackBoard_KnowledgeGroup(
     delete pKnowledgeAgentContainer_;         
     delete pKnowledgePopulationContainer_;   
     delete pKnowledgeObjectContainer_; 
-    delete pKsAgentKnowledgeSynthetizer_;     
-    delete pKsPopulationKnowledgeSynthetizer_;
+    delete pKsKnowledgeSynthetizer_;     
+//    delete pKsAgentKnowledgeSynthetizer_;     
+//    delete pKsPopulationKnowledgeSynthetizer_;
     delete pKsSharing_;                       
 }
 
@@ -89,8 +93,9 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::serialize( Archive& archive, const 
             & pKnowledgeAgentContainer_
             & pKnowledgePopulationContainer_
             & pKnowledgeObjectContainer_
-            & pKsAgentKnowledgeSynthetizer_     
-            & pKsPopulationKnowledgeSynthetizer_
+            & pKsKnowledgeSynthetizer_     
+//            & pKsAgentKnowledgeSynthetizer_     
+//            & pKsPopulationKnowledgeSynthetizer_
             & pKsSharing_;
 }
 
@@ -584,19 +589,28 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeBlackBoard_KnowledgeGroup
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPerception
 // Created: FDS 2010-04-08
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception()
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
 {
-    GetKnowledgeGroup().ApplyOnKnowledgesPopulationPerception();
+    GetKnowledgeGroup().ApplyOnKnowledgesPerception( currentTimeStep );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesAgentPerception
-// Created: FDS 2010-04-09
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent
+// Created: FDS 2010-04-12
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_KnowledgeGroup::ApplyOnKnowledgesAgentPerception( int currentTimeStep )
+DEC_Knowledge_Agent& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& perceived )
 {
-    GetKnowledgeGroup().ApplyOnKnowledgesAgentPerception( currentTimeStep );
+    return GetKnowledgeAgentContainer().CreateKnowledgeAgent( knowledgeGroup, perceived );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation
+// Created: FDS 2010-04-12
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Population& DEC_KnowledgeBlackBoard_KnowledgeGroup::CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& perceived )
+{
+    return GetKnowledgePopulationContainer().CreateKnowledgePopulation( knowledgeGroup, perceived );    
 }

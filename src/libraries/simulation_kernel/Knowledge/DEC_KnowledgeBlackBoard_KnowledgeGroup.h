@@ -27,14 +27,16 @@ class MIL_KnowledgeGroup;
 class DEC_BlackBoard_CanContainKnowledgeAgent;
 class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_BlackBoard_CanContainKnowledgePopulation;
-class DEC_KS_AgentKnowledgeSynthetizer;
-class DEC_KS_PopulationKnowledgeSynthetizer;
+//class DEC_KS_AgentKnowledgeSynthetizer;
+//class DEC_KS_PopulationKnowledgeSynthetizer;
+class DEC_KS_KnowledgeSynthetizer;
 class DEC_KS_Sharing;
 class DEC_Knowledge_Object;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_PopulationPerception;
 class MIL_Army_ABC;
 class MIL_Object_ABC;
+class MIL_Population;
 class TER_Polygon;
 
 // =============================================================================
@@ -99,6 +101,10 @@ public:
     //@{
 
     // Knowledge agents
+    DEC_Knowledge_Agent& CreateKnowledgeAgent( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Agent_ABC& agentKnown );
+    DEC_Knowledge_Population& CreateKnowledgePopulation( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& perceived );
+
+
           bool                         IsKnown                     ( const MIL_Agent_ABC& agent ) const;
           boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgent           ( const DEC_Knowledge_AgentPerception& perception ) const;
           boost::shared_ptr< DEC_Knowledge_Agent > GetKnowledgeAgentFromID     ( unsigned int nID ) const;
@@ -129,8 +135,20 @@ public:
     //@{
     void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
-    void ApplyOnKnowledgesPopulationPerception();
-    void ApplyOnKnowledgesAgentPerception( int currentTimeStep );
+    void ApplyOnKnowledgesPerception( int currentTimeStep );
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesAgent( UnaryFunction fct ) const
+    {
+        GetKnowledgeAgentContainer().ApplyOnKnowledgesAgent( fct );
+    }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesPopulation( UnaryFunction fct ) const
+    {
+        GetKnowledgePopulationContainer().ApplyOnKnowledgesPopulation( fct );
+    }
+
     //@}
 
 private:
@@ -142,8 +160,10 @@ private:
     DEC_BlackBoard_CanContainKnowledgeObject*      pKnowledgeObjectContainer_;
 
     // Knowledge sources
-    DEC_KS_AgentKnowledgeSynthetizer*       pKsAgentKnowledgeSynthetizer_;
-    DEC_KS_PopulationKnowledgeSynthetizer*  pKsPopulationKnowledgeSynthetizer_;
+    DEC_KS_KnowledgeSynthetizer*                    pKsKnowledgeSynthetizer_;
+
+//    DEC_KS_AgentKnowledgeSynthetizer*       pKsAgentKnowledgeSynthetizer_;
+//    DEC_KS_PopulationKnowledgeSynthetizer*  pKsPopulationKnowledgeSynthetizer_;
     DEC_KS_Sharing*                         pKsSharing_;
 
     //! @name Queries caches

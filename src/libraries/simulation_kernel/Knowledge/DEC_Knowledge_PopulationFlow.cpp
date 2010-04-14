@@ -343,7 +343,7 @@ void DEC_Knowledge_PopulationFlow::SendFullState() const
 
     asnMsg().set_oid_connaissance_flux( nID_ );
     asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur      ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
+    asnMsg().set_oid_groupe_possesseur      ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
    
 
     asnMsg().set_est_percu    (  ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
@@ -389,7 +389,7 @@ void DEC_Knowledge_PopulationFlow::UpdateOnNetwork() const
 
     asnMsg().set_oid_connaissance_flux       ( nID_ );
     asnMsg().set_oid_connaissance_population ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur       ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
+    asnMsg().set_oid_groupe_possesseur       ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
 
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
     {
@@ -460,7 +460,7 @@ void DEC_Knowledge_PopulationFlow::SendMsgCreation() const
 
     asnMsg().set_oid_connaissance_flux       ( nID_ );
     asnMsg().set_oid_connaissance_population ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur       ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
+    asnMsg().set_oid_groupe_possesseur       ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg().set_oid_flux_reel               ( pFlowKnown_ ? pFlowKnown_->GetID() : 0 );
 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -478,7 +478,7 @@ void DEC_Knowledge_PopulationFlow::SendMsgDestruction() const
 
     asnMsg().set_oid_connaissance_flux( nID_ );
     asnMsg().set_oid_connaissance_population( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur      ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
+    asnMsg().set_oid_groupe_possesseur      ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 

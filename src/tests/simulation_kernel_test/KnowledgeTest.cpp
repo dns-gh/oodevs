@@ -13,6 +13,7 @@
 #include "MockArmy.h"
 #include "MockRoleLocation.h"
 #include "MockKnowledgeGroupFactory.h"
+#include "MockNET_Publisher_ABC.h"
 #include "MT_Tools/MT_Profiler.h"
 #include "Tools/MIL_Config.h"
 
@@ -59,6 +60,7 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
 {
+    MockNET_Publisher_ABC mockPublisher;
     MockArmy army;
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
     
@@ -66,6 +68,8 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("GTIA");
   
     MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
+    MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue( 42u ) );
+
     MIL_KnowledgeGroup groupArmy( kgType, 1, army );
 
     xml::xistringstream xis2( "<root id='2' type='GTIA'/>" );
@@ -76,6 +80,16 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     xis3 >> xml::start( "root" );
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
 
+
+    xml::xistringstream xis4( "<root id='4' type='GTIA'/>" );
+    xis4 >> xml::start( "root" );
+    mockPublisher.Send_mocker.expects( mockpp::once() );
+    MIL_KnowledgeGroup groupJammed1( group1 );
+//    MIL_KnowledgeGroup groupJammed1( xis4, army, 0, mockKnowledgeGroupFactory );
+    MockAgent jammedAgent;
+    MOCKPP_CHAINER_FOR( MockArmy, GetKnowledgeShadow )( &army ).expects( mockpp::once() );
+    groupJammed1.JamTest( jammedAgent );
+
     MockAgent mockAgent;
     
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& bb1 = group1.GetKnowledge();
@@ -83,17 +97,33 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     
     MOCKPP_CHAINER_FOR( MockAgent, BelongsTo )( &mockAgent ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( true ) );
     MOCKPP_CHAINER_FOR( MockAgent, GetTypeShadow )( &mockAgent ).expects( mockpp::once() );
-    
+
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( group1, mockAgent, 0.5 ) );
    
     MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgent ).expects( mockpp::once() ).will( mockpp::returnValue( knowledge ) );
     DEC_Knowledge_Agent& obj = test1.CreateKnowledgeAgent( group1, mockAgent );
     BOOST_CHECK_EQUAL( &obj, knowledge.get() );
 
+
+    MockAgent mockAgentJammed1;
+    MOCKPP_CHAINER_FOR( MockAgent, BelongsTo )( &mockAgentJammed1 ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( true ) );
+    MOCKPP_CHAINER_FOR( MockAgent, GetTypeShadow )( &mockAgentJammed1 ).expects( mockpp::once() );
+    boost::shared_ptr< DEC_Knowledge_Agent > knowledgeJammed1( new DEC_Knowledge_Agent( groupJammed1, mockAgentJammed1, 0.5 ) );
+    MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgentJammed1 ).expects( mockpp::once() ).will( mockpp::returnValue( knowledgeJammed1 ) );
+    
+    const DEC_KnowledgeBlackBoard_KnowledgeGroup& bbjammed1 = groupJammed1.GetKnowledge();
+    DEC_BlackBoard_CanContainKnowledgeAgent& testjammed1 = bbjammed1.GetKnowledgeAgentContainer();
+
+    DEC_Knowledge_Agent& objJammed1 = testjammed1.CreateKnowledgeAgent( groupJammed1, mockAgentJammed1 );
+    BOOST_CHECK_EQUAL( &objJammed1, knowledgeJammed1.get() );
+    BOOST_CHECK_EQUAL( true, testjammed1.HasKnowledgeAgent( mockAgentJammed1 ) );
+
     BOOST_CHECK_EQUAL( true, test1.HasKnowledgeAgent( mockAgent ) );
     const DEC_KnowledgeBlackBoard_KnowledgeGroup& bb2 = group2.GetKnowledge();
     DEC_BlackBoard_CanContainKnowledgeAgent& test2 = bb2.GetKnowledgeAgentContainer();
     BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgent ) );
+    BOOST_CHECK_EQUAL( false, test1.HasKnowledgeAgent( mockAgentJammed1 ) );
+    BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgentJammed1 ) );
 
     MockRoleLocation* mockRoleLocation = new MockRoleLocation();
  
@@ -107,17 +137,35 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     mockAgent.RegisterRole( *mockRoleLocation );
 
     group1.UpdateKnowledges( 1 );
+    groupJammed1.UpdateKnowledges( 1 );
     group2.UpdateKnowledges( 1 );
     MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgent ).expects( mockpp::once() ).will( mockpp::returnValue( knowledge ) );
+    MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgentJammed1 ).expects( mockpp::once() ).will( mockpp::returnValue( knowledgeJammed1 ) );    
     groupArmy.UpdateKnowledges( 1 );
     BOOST_CHECK_EQUAL( true, test3.HasKnowledgeAgent( mockAgent ) );
     BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgent ) );
+    
+    BOOST_CHECK_EQUAL( false, testjammed1.HasKnowledgeAgent( mockAgent ) );
+    BOOST_CHECK_EQUAL( true, testjammed1.HasKnowledgeAgent( mockAgentJammed1 ) );
+    BOOST_CHECK_EQUAL( false, test1.HasKnowledgeAgent( mockAgentJammed1 ) );
+    BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgentJammed1 ) );
+    BOOST_CHECK_EQUAL( false, test3.HasKnowledgeAgent( mockAgentJammed1 ) );
+
 
     group1.UpdateKnowledges( 200 );
+    groupJammed1.UpdateKnowledges( 200 );
     MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgent ).expects( mockpp::once() ).will( mockpp::returnValue( knowledge ) );
+    MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgentJammed1 ).expects( mockpp::once() ).will( mockpp::returnValue( knowledgeJammed1 ) );    
     group2.UpdateKnowledges( 200 );
     groupArmy.UpdateKnowledges( 200 );
     BOOST_CHECK_EQUAL( true, test2.HasKnowledgeAgent( mockAgent ) );
+
+    BOOST_CHECK_EQUAL( false, testjammed1.HasKnowledgeAgent( mockAgent ) );
+    BOOST_CHECK_EQUAL( true, testjammed1.HasKnowledgeAgent( mockAgentJammed1 ) );
+    BOOST_CHECK_EQUAL( false, test1.HasKnowledgeAgent( mockAgentJammed1 ) );
+    BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgentJammed1 ) );
+    BOOST_CHECK_EQUAL( false, test3.HasKnowledgeAgent( mockAgentJammed1 ) );
+
 
     MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::atLeastOnce() );
 }

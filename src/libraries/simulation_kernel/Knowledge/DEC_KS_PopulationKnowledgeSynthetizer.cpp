@@ -13,17 +13,9 @@
 #include "DEC_KS_PopulationKnowledgeSynthetizer.h"
 
 #include "DEC_BlackBoard_CanContainKnowledgePopulation.h"
-#include "DEC_BlackBoard_CanContainKnowledgePopulationCollision.h"
-#include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "DEC_Knowledge_Population.h"
-#include "DEC_Knowledge_PopulationCollision.h"
-#include "DEC_Knowledge_PopulationPerception.h"
 #include "DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
 #include "MIL_KnowledgeGroup.h"
-#include "Entities/Agents/MIL_AgentPion.h"
-#include "Entities/Agents/Roles/Communications/PHY_RolePion_Communications.h"
-#include "Entities/Automates/MIL_Automate.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
@@ -75,11 +67,11 @@ void DEC_KS_PopulationKnowledgeSynthetizer::Prepare()
 // Name: DEC_KS_PopulationKnowledgeSynthetizer::Talk
 // Created: NLD 2004-03-12
 // -----------------------------------------------------------------------------
-void DEC_KS_PopulationKnowledgeSynthetizer::Talk( int /*currentTimeStep*/ )
+void DEC_KS_PopulationKnowledgeSynthetizer::Talk( int currentTimeStep )
 {
     assert( pBlackBoard_ );
 
-    pBlackBoard_->ApplyOnKnowledgesPopulationPerception(); 
+    pBlackBoard_->ApplyOnKnowledgesPopulationPerception( currentTimeStep ); 
 
     if( ! pBlackBoard_->GetKnowledgeGroup().IsJammedKnowledgeGroup() )
     {    

@@ -73,8 +73,8 @@ public:
     //@}
 
 public:
-    MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int nID, MIL_Army_ABC& army );
-    MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* pParent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
+    MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
+    MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
     MIL_KnowledgeGroup();
     MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source );
 
@@ -97,8 +97,8 @@ public:
     void InitializeKnowledgeGroup( xml::xistream& xis, KnowledgeGroupFactory_ABC& knowledgeGroupFactory );
     void RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup );
     void UnregisterKnowledgeGroup( const MIL_KnowledgeGroup& knowledgeGroup );
-    MIL_KnowledgeGroup* FindKnowledgeGroup ( uint nID ) const;
-    void SetType( MIL_KnowledgeGroupType *pType ){ pType_ = pType; }
+    MIL_KnowledgeGroup* FindKnowledgeGroup ( unsigned int id ) const;
+    void SetType( MIL_KnowledgeGroupType *type ){ type_ = type; }
     void RefreshTimeToDiffuseToKnowledgeGroup();
     // LTO end
     void RegisterAutomate  ( MIL_Automate& automate );
@@ -123,7 +123,7 @@ public:
 
     //! @name Accessors
     //@{
-          unsigned int                            GetID       () const;
+          unsigned int                            GetId       () const;
     const MIL_KnowledgeGroupType&                 GetType     () const;
           MIL_Army_ABC&                           GetArmy     () const;
     const T_AutomateVector&                       GetAutomates() const;
@@ -133,10 +133,11 @@ public:
           MIL_KnowledgeGroup*                     GetParent   () const;
           MT_Float                                GetTimeToDiffuseToKnowledgeGroup() const;
           bool                                    IsEnabled() const;
-          void                                    SetParent( MIL_KnowledgeGroup* pParent );
+          void                                    SetParent( MIL_KnowledgeGroup* parent );
     // LTO end
-          bool IsJammedKnowledgeGroup() const;
+          bool IsJammed() const;
           void Jam( const MIL_Agent_ABC& pion );
+          void JamTest( const MIL_Agent_ABC& pion );
     //@}
 
     //! @name Network
@@ -146,47 +147,64 @@ public:
     void SendKnowledge() const;
     // LTO begin
     void UpdateKnowledgeGroup();
-    void MoveKnowledgeGroup( MIL_KnowledgeGroup *pNewParent );
-    void ApplyOnKnowledgesPopulationPerception();
-    void ApplyOnKnowledgesAgentPerception( int currentTimeStep );
+    void MoveKnowledgeGroup( MIL_KnowledgeGroup *newParent );
+    void ApplyOnKnowledgesPerception( int currentTimeStep );
     // LTO end
 
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject ( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
+    DEC_Knowledge_Agent& CreateKnowledgeAgent ( MIL_Agent_ABC& perceived );
+    DEC_Knowledge_Population& CreateKnowledgePopulation( MIL_Population& perceived );
     
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesAgent( UnaryFunction fct ) const
+    {
+        GetKnowledge().ApplyOnKnowledgesAgent( fct );
+    }
+
+    template < class UnaryFunction >
+    void ApplyOnKnowledgesPopulation( UnaryFunction fct ) const
+    {
+        GetKnowledge().ApplyOnKnowledgesPopulation( fct );
+    }
     //@}
     
 private:
-    const MIL_KnowledgeGroupType* pType_;
-    uint                    nID_;
-    MIL_Army_ABC*           pArmy_;
-    MIL_KnowledgeGroup*     pParent_; // LTO
 
-    DEC_KnowledgeBlackBoard_KnowledgeGroup* pKnowledgeBlackBoard_;
+
+
+    const MIL_KnowledgeGroupType* type_;
+    uint                    id_;
+    MIL_Army_ABC*           army_;
+    MIL_KnowledgeGroup*     parent_; // LTO
+
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
     T_AutomateVector        automates_;
     T_KnowledgeGroupVector  knowledgeGroups_; // LTO
     MT_Float                timeToDiffuse_; // LTO
     bool                    isActivated_; // LTO
     bool                    hasBeenUpdated_;  
-    bool                    isJammedKnowledgeGroup_;
-    const MIL_Agent_ABC*    jamedPion_;
+    bool                    isJammed_;
+    const MIL_Agent_ABC*    jammedPion_;
 
     bool OnReceiveMsgKnowledgeGroupEnable        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
     bool OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
     bool OnReceiveMsgKnowledgeGroupSetType       ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
 
-    void CreateKnowledgesFromAgentPerception( const DEC_Knowledge_Agent& agent );
-    void CreateKnowledgesFromPopulationPerception( const DEC_Knowledge_Population& population );
+    void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
+    void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );
 
-    DEC_Knowledge_Population& GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown ) const;
-    void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision );
-    void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception );
-    DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( MIL_Agent_ABC& agentKnown ) const;
+    void ApplyOnKnowledgesPopulationPerception( int currentTimeStep );
+    void ApplyOnKnowledgesAgentPerception( int currentTimeStep );
+    DEC_Knowledge_Population& GetPopulationKnowledgeToUpdate( MIL_Population& populationKnown );
+    void UpdatePopulationKnowledgeFromCollision( const DEC_Knowledge_PopulationCollision& collision, int currentTimeStep  );
+    void UpdatePopulationKnowledgeFromPerception( const DEC_Knowledge_PopulationPerception& perception, int currentTimeStep  );
+    DEC_Knowledge_Agent& GetAgentKnowledgeToUpdate( MIL_Agent_ABC& agentKnown );
     void UpdateAgentKnowledgeFromAgentPerception( const DEC_Knowledge_AgentPerception& perception, int currentTimeStep );
     void UpdateAgentKnowledgeFromParentKnowledgeGroup( const DEC_Knowledge_Agent& agentKnowledge, int currentTimeStep );
         //@}
     
 private:
-    static std::set< unsigned int > ids_;
+//    static std::set< unsigned int > ids_;
     static MIL_IDManager idManager_;
 };
 

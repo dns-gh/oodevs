@@ -441,7 +441,7 @@ void DEC_Knowledge_Agent::SendChangedState()
 
     client::UnitKnowledgeUpdate asnMsg;
     asnMsg().set_oid( nID_ );
-    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
     
     if( bRelevanceUpdated_ )
     {
@@ -486,7 +486,7 @@ void DEC_Knowledge_Agent::SendFullState()
 
     client::UnitKnowledgeUpdate asnMsg;
     asnMsg().set_oid( nID_ );
-    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
     
     asnMsg().set_pertinence( (int)( rRelevance_ * 100. ) );
     rLastRelevanceSent_ = rRelevance_;
@@ -563,7 +563,7 @@ void DEC_Knowledge_Agent::SendMsgCreation() const
 
     client::UnitKnowledgeCreation asnMsg;
     asnMsg().set_oid                  ( nID_ );
-    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
     asnMsg().set_oid_unite_reelle     ( pAgentKnown_->GetID() );    
     asnMsg().mutable_type_unite()->set_type( pAgentKnown_->GetType().GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -579,7 +579,7 @@ void DEC_Knowledge_Agent::SendMsgDestruction() const
     {    
         client::UnitKnowledgeDestruction asnMsg;
         asnMsg().set_oid                  ( nID_ );
-        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetID() );
+        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_->GetId() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }

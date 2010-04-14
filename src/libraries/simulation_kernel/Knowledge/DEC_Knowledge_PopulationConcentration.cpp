@@ -265,7 +265,7 @@ void DEC_Knowledge_PopulationConcentration::SendMsgCreation() const
 
     asnMsg().set_oid_connaissance_concentration( nID_ );
     asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
+    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     asnMsg().set_oid_concentration_reelle      ( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
 
     NET_ASN_Tools::WritePoint( position_, *asnMsg().mutable_position() );
@@ -285,7 +285,7 @@ void DEC_Knowledge_PopulationConcentration::SendMsgDestruction() const
 
     asnMsg().set_oid_connaissance_concentration( nID_ );
     asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() ); 
+    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() ); 
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
@@ -301,7 +301,7 @@ void DEC_Knowledge_PopulationConcentration::SendFullState()
 
     asnMsg().set_oid_connaissance_concentration( nID_ );
     asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );   
-    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
+    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
     
     asnMsg().set_est_percu                ( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
     asnMsg().set_oid_concentration_reelle ( pConcentrationKnown_ ? pConcentrationKnown_->GetID() : 0 );
@@ -336,7 +336,7 @@ void DEC_Knowledge_PopulationConcentration::UpdateOnNetwork()
 
     asnMsg().set_oid_connaissance_concentration( nID_ );
     asnMsg().set_oid_connaissance_population   ( pPopulationKnowledge_->GetID() );
-    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetID() );
+    asnMsg().set_oid_groupe_possesseur         ( pPopulationKnowledge_->GetKnowledgeGroup().GetId() );
 
     if( *pPreviousPerceptionLevel_ != *pCurrentPerceptionLevel_ )
     {

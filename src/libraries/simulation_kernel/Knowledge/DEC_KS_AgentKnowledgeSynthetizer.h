@@ -15,10 +15,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
-class DEC_Knowledge_AgentPerception;
 class DEC_Knowledge_Agent;
-class MIL_KnowledgeGroup;
-class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  DEC_KS_AgentKnowledgeSynthetizer

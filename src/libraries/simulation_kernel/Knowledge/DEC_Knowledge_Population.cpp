@@ -393,7 +393,7 @@ void DEC_Knowledge_Population::SendMsgCreation() const
     client::PopulationKnowledgeCreation asnMsg;
 
     asnMsg().set_oid_connaissance     ( nID_ );
-    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetID() );
+    asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetId() );
     asnMsg().set_oid_population_reelle( pPopulationKnown_->GetID() );
     asnMsg().set_camp                 ( GetArmy()         .GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
@@ -410,7 +410,7 @@ void DEC_Knowledge_Population::SendMsgDestruction() const
         client::PopulationKnowledgeDestruction asnMsg;
 
         asnMsg().set_oid_connaissance     ( nID_ );
-        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetID() );
+        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetId() );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
 }
@@ -425,7 +425,7 @@ void DEC_Knowledge_Population::UpdateOnNetwork() const
     {
         client::PopulationKnowledgeUpdate asnMsg;
         asnMsg().set_oid_connaissance     ( nID_ );
-        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetID() );
+        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetId() );
         asnMsg().set_etat_domination       ( (unsigned int)( rDominationState_ * 100. ) );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }
@@ -449,7 +449,7 @@ void DEC_Knowledge_Population::SendStateToNewClient() const
     {
         client::PopulationKnowledgeUpdate asnMsg;
         asnMsg().set_oid_connaissance     ( nID_ );
-        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetID() );
+        asnMsg().set_oid_groupe_possesseur( pKnowledgeGroup_ ->GetId() );
         asnMsg().set_etat_domination      ( (unsigned int)( rDominationState_ * 100. ) );
         asnMsg.Send( NET_Publisher_ABC::Publisher() );
     }

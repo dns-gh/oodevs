@@ -15,10 +15,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 
 class DEC_KnowledgeBlackBoard_KnowledgeGroup;
-class DEC_Knowledge_PopulationPerception;
 class DEC_Knowledge_Population;
-class MIL_KnowledgeGroup;
-class MIL_Population;
 
 // =============================================================================
 // Created: NLD 2004-03-11

@@ -282,7 +282,7 @@ void MIL_Army::WriteODB( xml::xostream& xos ) const
 
     xos     << xml::start( "communication" );
     for( CIT_KnowledgeGroupMap it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it )
-        if( !it->second->IsJammedKnowledgeGroup() )
+        if( !it->second->IsJammed() )
             it->second->WriteODB( xos );
     xos     << xml::end();
     
@@ -450,7 +450,7 @@ void MIL_Army::ReadSubordinate( xml::xistream& xis, AutomateFactory_ABC& automat
 // -----------------------------------------------------------------------------
 void MIL_Army::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 {
-    if( ! knowledgeGroups_.insert( std::make_pair( knowledgeGroup.GetID(), &knowledgeGroup ) ).second )
+    if( ! knowledgeGroups_.insert( std::make_pair( knowledgeGroup.GetId(), &knowledgeGroup ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
 }
 
@@ -460,7 +460,7 @@ void MIL_Army::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 // -----------------------------------------------------------------------------
 void MIL_Army::UnregisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGroup )
 {
-    if( knowledgeGroups_.erase( knowledgeGroup.GetID() ) != 1 )
+    if( knowledgeGroups_.erase( knowledgeGroup.GetId() ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
@@ -495,7 +495,7 @@ void MIL_Army::CleanKnowledges()
 bool MIL_Army::IsPerceived( const DEC_Knowledge_Object& knowledge ) const
 {
     for( CIT_KnowledgeGroupMap itKnowledgeGroup = knowledgeGroups_.begin(); itKnowledgeGroup != knowledgeGroups_.end(); ++itKnowledgeGroup )
-        if( !itKnowledgeGroup->second->IsJammedKnowledgeGroup() && itKnowledgeGroup->second->IsPerceived( knowledge ) )
+        if( !itKnowledgeGroup->second->IsJammed() && itKnowledgeGroup->second->IsPerceived( knowledge ) )
             return true;
     return false;
 }
