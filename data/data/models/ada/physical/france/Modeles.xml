@@ -38,7 +38,7 @@
         <mission name="Safeguard"/>
         <mission name="Flee"/>
         <mission name="SelfProtect"/>
-        <!--<mission name="MoveAlong"/>-->
+        <mission name="MoveAlong"/>
         <mission name="StayClose"/>
         <mission name="ReconnoiterPath"/>
         <mission name="MoveOnPath"/>
