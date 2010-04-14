@@ -416,4 +416,5 @@
     <parameter type="AgentKnowledge"/>
   </report>
   <report id="288" message="Vision verrouillee"/>
+  <report id="289" message="debut de construction objet"/>
 </reports>
