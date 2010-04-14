@@ -774,7 +774,7 @@ void MIL_KnowledgeGroup::Jam( const MIL_Agent_ABC& pion )
 void MIL_KnowledgeGroup::JamTest( const MIL_Agent_ABC& pion )
 {
     isJammed_    = true;
-    jammedPion_  = &pion;
+//    jammedPion_  = &pion;  // $$$$ _RC_ FDS 2010-04-14: Pb avec le mockAgent qui renvoi throw à la place de knowledge
 }
 
 // -----------------------------------------------------------------------------
