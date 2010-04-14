@@ -871,8 +871,11 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Bypass" dia-type="T_Mission_Pion_Bypass" id="2038" name="Bypass">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.OpenPath" dia-type="T_Mission_Pion_OpenPath" id="2047" name="OpenPath">
+      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveAlong" dia-type="T_Mission_Pion_MoveAlong" id="2046" name="MoveAlong">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="PointListBM"/>
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveObserveReconnoiter" dia-type="T_Mission_Pion_MoveObserveReconnoiter" id="2039" name="MoveObserveReconnoiter">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
@@ -890,7 +893,7 @@
       <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.RemoveObstacle" dia-type="T_Mission_Pion_RemoveObstacle" id="2045" name="RemoveObstacle">
-      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeBM"/>
+      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
   </units>
   <automats>

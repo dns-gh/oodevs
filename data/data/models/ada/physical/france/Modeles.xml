@@ -38,7 +38,7 @@
         <mission name="Safeguard"/>
         <mission name="Flee"/>
         <mission name="SelfProtect"/>
-        <mission name="MoveAlong"/>
+        <!--<mission name="MoveAlong"/>-->
         <mission name="StayClose"/>
         <mission name="ReconnoiterPath"/>
         <mission name="MoveOnPath"/>
@@ -60,6 +60,7 @@
         <mission name="Activate"/>
         <mission name="Bypass"/>
         <mission name="RemoveObstacle"/>
+        <mission name="OpenPath"/>
       </missions>
     </unit>
     <unit dia-type="PatrouilleAIR" file="Air\Pions\Patrouille Assaut\model.bms" name="Patrouille AIR Assaut">

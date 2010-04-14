@@ -32,6 +32,7 @@
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Decision/DEC_Tools.h"
+#include "Entities/Agents/Actions/Objects/PHY_RoleAction_Objects_DataComputer.h"
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::Recon
@@ -386,4 +387,19 @@ float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC
         }
     }
     return 0.f;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::EstimatedWorkTime
+// Created: GGE & PSN 2010-04-09
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{   
+    if( pKnowledge && pKnowledge->IsValid() )
+        if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
+        {
+            PHY_RoleAction_Objects_DataComputer dataComputer( pion, PHY_RoleAction_Objects_DataComputerPionData::eDestroy, *object );
+            return dataComputer.ComputeWorkTime();
+        }
+    return -1.0f;
 }

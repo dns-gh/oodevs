@@ -27,7 +27,7 @@ class PHY_RoleAction_Objects_DataComputer : public OnComponentFunctor_ABC
 {
 
 public:
-     PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );
+             PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );
     virtual ~PHY_RoleAction_Objects_DataComputer();
 
 
@@ -38,6 +38,7 @@ public:
     void     RecoverDotations                ( const PHY_DotationCategory& category, unsigned int nNbr );
 
     MT_Float ComputeDeltaPercentage          ();
+    MT_Float ComputeWorkTime				 ();
 
     void     operator()                      ( PHY_ComposantePion& composante );
     //@}
@@ -63,7 +64,6 @@ private:
     //@}
 
 private:
-          MIL_AgentPion&                                            pion_;
     const PHY_RoleAction_Objects_DataComputerPionData::E_Operation  operation_;
     const MIL_Object_ABC&                                       object_;
           T_PionDataVector                                          pionsData_;
