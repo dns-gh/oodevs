@@ -19,6 +19,8 @@
 #include "clients_gui/Tools.h"
 
 #include <qfileinfo.h>
+#include <qheader.h>
+#include <qlistview.h>
 #include <qsettings.h>
 #include <qtextcodec.h>
 
@@ -42,6 +44,25 @@ namespace
         settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
+
+    bool IsDirectory( const QListViewItem* item )
+    {
+        return item->text( 1 ).startsWith( "/" );
+    }
+
+    class MyListViewItem : public QListViewItem
+    {
+    public:
+        explicit MyListViewItem( QListView* parent ) : QListViewItem( parent ) {}
+        explicit MyListViewItem( QListViewItem* parent ) : QListViewItem( parent ) {}
+
+        virtual QString key( int column, bool /*ascending*/ ) const
+        {
+            if( column == 1 )
+                return text( IsDirectory( this ) ? 1 : 0 );
+            return text( column );
+        }
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +87,12 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         leftBox->setBackgroundOrigin( QWidget::WindowOrigin );
         QLabel* label = new QLabel( tools::translate( "ExerciseList", "Exercise:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
-        exercises_ = new QListBox( leftBox );
+        exercises_ = new QListView( leftBox );
+        exercises_->addColumn( "exercise" );
+        exercises_->addColumn( "fullpath", 0 );
+        exercises_->header()->hide();
+        exercises_->setAllColumnsShowFocus( true );
+        exercises_->setSortColumn( 1 );
 
         label = new QLabel( tools::translate( "ExerciseList", "Profile:" ), leftBox );
         label->setBackgroundOrigin( QWidget::WindowOrigin );
@@ -77,7 +103,7 @@ ExerciseList::ExerciseList( QWidget* parent, const tools::GeneralConfig& config,
         profiles_->setShown( showProfile );
 
         connect( profiles_ , SIGNAL( Select( const Profile& ) ), this, SLOT( SelectProfile( const Profile& ) ) );
-        connect( exercises_, SIGNAL( highlighted( int ) ), this, SLOT( SelectExercise( int ) ) );
+        connect( exercises_, SIGNAL( currentChanged( QListViewItem* ) ), this, SLOT( SelectExercise( QListViewItem* ) ) );
     }
     
     if( showBrief ) 
@@ -127,9 +153,9 @@ namespace
 // Name: ExerciseList::SelectExercise
 // Created: RDS 2008-08-27
 // -----------------------------------------------------------------------------
-void ExerciseList::SelectExercise( int index )
+void ExerciseList::SelectExercise( QListViewItem* item )
 {
-    const QString exercise = *exercisesList_.at( index );
+    const QString exercise( item ? item->text( 1 ) : "" );
     profiles_->Update( MakePath( subDir_, exercise.ascii() ) );
     if( showBrief_ )
     {
@@ -142,8 +168,8 @@ void ExerciseList::SelectExercise( int index )
             xis >> xml::start( "exercise" )
                     >> xml::optional() >> xml::start( "meta" )
                         >> xml::optional() >> xml::start( "briefing" )
-                            >> xml::optional() >> xml::content("image", image )
-                            >> xml::list( "text", *this, &ExerciseList::ReadBriefingText );
+                            >> xml::optional()  >> xml::content( "image", image )
+                                >> xml::list( "text", *this, &ExerciseList::ReadBriefingText );
             const std::string imagePath = config_.GetExerciseDir( MakePath( exercise.ascii(), image ).ascii() );
             const QImage pix( imagePath.c_str() );
             briefingImage_->setPixmap( pix );
@@ -153,6 +179,7 @@ void ExerciseList::SelectExercise( int index )
             // $$$$ SBO 2008-10-07: error in exercise.xml meta, just don't show briefing
         }
     }
+    emit Select( BuildExercisePath(), Profile() );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,11 +209,9 @@ QString ExerciseList::GetExerciseDisplayName( const QString& exercise ) const
 // -----------------------------------------------------------------------------
 QString ExerciseList::BuildExercisePath() const
 {
-    if( exercises_->selectedItem() )
-    {
-        const QString exercise( *exercisesList_.at( exercises_->index( exercises_->selectedItem() ) ) );
-        return MakePath( subDir_, exercise.ascii() );
-    }
+    QListViewItem* item = exercises_->currentItem();
+    if( item && !IsDirectory( item ) )
+        return MakePath( subDir_, item->text( 1 ).ascii() );
     return "";
 }
 
@@ -212,7 +237,7 @@ void ExerciseList::ReadBriefingText( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ExerciseList::SelectProfile( const Profile& profile )
 {
-    if( exercises_->selectedItem() )
+    if( exercises_->currentItem() )
         emit Select( BuildExercisePath(), profile );
 }
 
@@ -233,16 +258,59 @@ void ExerciseList::customEvent( QCustomEvent* e )
 {
     if( e->type() == 4242 )
     {
-        static const QImage pix( "resources/images/selftraining/mission.png" );
-        lister_.ListExercises( exercisesList_ );
+        QStringList exercises;
+        lister_.ListExercises( exercises );
         exercises_->clear();
-        for( QStringList::iterator it = exercisesList_.begin(); it != exercisesList_.end(); ++it )
-            exercises_->insertItem( pix, GetExerciseDisplayName( *it ) );
-        exercises_->setSelected( 0, true );
+        for( QStringList::iterator it = exercises.begin(); it != exercises.end(); ++it )
+            AddExerciseEntry( *it );
+        exercises_->sort();
+        exercises_->setCurrentItem( exercises_->firstChild() );
     }
     else if( e->type() == 4243 )
     {
         profiles_->clear();
         exercises_->clear();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseList::AddExerciseEntry
+// Created: SBO 2010-04-14
+// -----------------------------------------------------------------------------
+void ExerciseList::AddExerciseEntry( const QString& exercise )
+{
+    static const QImage directory( "resources/images/selftraining/directory.png" );
+    static const QImage mission( "resources/images/selftraining/mission.png" );
+
+    QStringList path( QStringList::split( '/', exercise ) );
+    QStringList complete;
+    QListViewItem* parent = 0;
+    for( QStringList::iterator it( path.begin() ); it != path.end(); ++it )
+    {
+        complete.append( *it );
+        const QString current( complete.join( "/" ) );
+        QListViewItem* item = exercises_->findItem( "/" + current, 1 );
+        if( !item )
+        {
+            if( parent )
+                item = new MyListViewItem( parent );
+            else
+                item = new MyListViewItem( exercises_ );
+            item->setText( 0, GetExerciseDisplayName( *it ) );
+            item->setText( 1, complete.size() < path.size() ? "/" + current : current );
+            item->setPixmap( 0, directory );
+        }
+        parent = item;
+    }
+    if( parent )
+        parent->setPixmap( 0, mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseList::Exists
+// Created: SBO 2010-04-15
+// -----------------------------------------------------------------------------
+bool ExerciseList::Exists( const QString& exercise ) const
+{
+    return exercises_->findItem( exercise, Qt::ExactMatch ) != 0;
 }

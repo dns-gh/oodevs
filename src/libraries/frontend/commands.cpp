@@ -33,12 +33,22 @@ namespace frontend
             if( ! bfs::exists( root ) )
                 return result;
 
-            bfs::directory_iterator end;
-            for( bfs::directory_iterator it( root ); it != end; ++it )
+            bfs::recursive_directory_iterator end;
+            for( bfs::recursive_directory_iterator it( root ); it != end; ++it )
             {
                 const bfs::path child = *it;
                 if( v( child ) )
-                    result.append( child.leaf().c_str() );
+                {
+                    QStringList entry;
+                    bfs::path p( child );
+                    for( int i = it.level(); i >= 0; --i )
+                    {
+                        entry.push_front( p.leaf().c_str() );
+                        p = p.parent_path();
+                    }
+                    result.append( entry.join( "/" ) );
+                    it.no_push();
+                }
             }
             return result;
         }

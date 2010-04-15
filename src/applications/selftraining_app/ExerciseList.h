@@ -23,6 +23,8 @@ namespace xml
 class ProfileList;
 class Profile;
 class ExerciseLister_ABC;
+class QListView;
+class QListViewItem;
 
 // =============================================================================
 /** @class  ExerciseList
@@ -38,13 +40,13 @@ class ExerciseList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir = "", bool showBrief = true, bool showProfile =true );
+             ExerciseList( QWidget* parent, const tools::GeneralConfig& config, const ExerciseLister_ABC& lister, const std::string& subDir = "", bool showBrief = true, bool showProfile = true );
     virtual ~ExerciseList();
     //@}
 
-    //! @name Accessors
+    //! @name Operations
     //@{
-    const QString GetHighlight() const;
+    bool Exists( const QString& exercise ) const;
     //@}
 
 signals:
@@ -57,9 +59,14 @@ public slots:
     //! @name Slots
     //@{
     void Update();
-    void SelectExercise( int index );
-    void SelectProfile( const Profile& profile );
     void Clear();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void SelectExercise( QListViewItem* item );
+    void SelectProfile( const Profile& profile );
     //@}
 
 private:
@@ -74,7 +81,8 @@ private:
     virtual void customEvent( QCustomEvent* e );
     QString BuildExercisePath() const;
     void ReadBriefingText( xml::xistream& xis );
-    QString GetExerciseDisplayName( const QString& exercise ) const ; 
+    QString GetExerciseDisplayName( const QString& exercise ) const;
+    void AddExerciseEntry( const QString& exercise );
     //@}
 
 private:
@@ -82,12 +90,11 @@ private:
     //@{
     const tools::GeneralConfig&  config_;
     const std::string            subDir_;
-    QListBox*                    exercises_;
+    QListView*                   exercises_;
     QLabel*                      briefingImage_;
     QTextEdit*                   briefingText_;
     ProfileList*                 profiles_;
     bool                         showBrief_;
-    QStringList                  exercisesList_;
     const ExerciseLister_ABC&    lister_;
     const QString                language_;
  //@}

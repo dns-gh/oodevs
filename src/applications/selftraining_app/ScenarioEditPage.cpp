@@ -10,6 +10,7 @@
 #include "selftraining_app_pch.h"
 #include "ScenarioEditPage.h"
 #include "moc_ScenarioEditPage.cpp"
+#include "ExerciseList.h"
 #include "ProgressPage.h"
 #include "ProcessWrapper.h"
 #include "frontend/commands.h" 
@@ -27,6 +28,7 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
     : ContentPage( pages, tools::translate( "ScenarioEditPage", "Scenario" ), previous )
     , config_( config )
     , controllers_( controllers )
+    , lister_( config_, "" )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioEditPage", "Editing exercise" ), controllers ) )
 {
     QVBox* box = new QVBox( this );
@@ -46,11 +48,8 @@ ScenarioEditPage::ScenarioEditPage( QWidgetStack* pages, Page_ABC& previous, con
         connect( button, SIGNAL( clicked() ), this, SLOT( CreateExercise() ) );
     }
     {
-        QGroupBox* vbox = new QGroupBox( 1, Qt::Horizontal, box );
-        vbox->setBackgroundOrigin( QWidget::WindowOrigin );
-        QLabel* label = new QLabel( tools::translate( "ScenarioEditPage", "Select exercise to edit:" ), vbox );
-        label->setBackgroundOrigin( QWidget::WindowOrigin );
-        editExerciseList_ = new QListBox( vbox );
+        exercises_ = new ExerciseList( box, config_, lister_, "", true, false );
+        connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelect( const QString&, const Profile& ) ) );
     }
     AddContent( box ); 
     AddNextButton( tools::translate( "ScenarioEditPage", "Edit" ), *this, SLOT( EditExercise() ) );
@@ -86,8 +85,7 @@ void ScenarioEditPage::Update()
     if( editModelList_->count() == 2 )
         editModelList_->setCurrentItem( 1 );
     editModelList_->setShown( editModelList_->count() > 2 );
-    editExerciseList_->clear();
-    editExerciseList_->insertStringList( frontend::commands::ListExercises( config_ ) );
+    exercises_->Update();
 }
 
 // -----------------------------------------------------------------------------
@@ -98,7 +96,7 @@ void ScenarioEditPage::CreateExercise()
 {
     if( editTerrainList_->currentItem() > 0 && editModelList_->currentItem() > 0 )
     {
-        if( editName_->text().isEmpty() || editExerciseList_->findItem( editName_->text(), Qt::ExactMatch ) )
+        if( editName_->text().isEmpty() || exercises_->Exists( editName_->text() ) )
             return;
         const std::string terrain = editTerrainList_->currentText().ascii();
         const QStringList model = QStringList::split( "/", editModelList_->currentText() );
@@ -113,8 +111,8 @@ void ScenarioEditPage::CreateExercise()
 // -----------------------------------------------------------------------------
 void ScenarioEditPage::EditExercise()
 {
-    if( editExerciseList_->selectedItem() )
-        Edit( editExerciseList_->selectedItem()->text() );
+    if( !exercise_.isEmpty() )
+        Edit( exercise_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,4 +125,13 @@ void ScenarioEditPage::Edit( const QString& exercise )
     boost::shared_ptr< frontend::Process_ABC >  process( new ProcessWrapper( controllers_.controller_, command ) );
     progressPage_->Attach( process );
     progressPage_->show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::OnSelect
+// Created: SBO 2010-04-15
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::OnSelect( const QString& exercise, const Profile& )
+{
+    exercise_ = exercise;
 }

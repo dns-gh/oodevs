@@ -14,8 +14,8 @@
 
 namespace kernel
 {
-    class MagicActionType;
     class Controller;
+    class MagicActionType;
     class ModelVisitor_ABC;
 }
 

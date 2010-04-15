@@ -332,7 +332,7 @@
     </message>
     <message>
         <source>Select exercise to edit:</source>
-        <translation>Sélectionner l&apos;exercice à éditer:</translation>
+        <translation type="obsolete">Sélectionner l&apos;exercice à éditer:</translation>
     </message>
     <message>
         <source>Select the terrain</source>

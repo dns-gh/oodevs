@@ -10,7 +10,8 @@
 #ifndef __ScenarioEditPage_h_
 #define __ScenarioEditPage_h_
 
-#include "ContentPage.h" 
+#include "ContentPage.h"
+#include "DirectoryExerciseLister.h"
 
 namespace tools
 {
@@ -22,6 +23,8 @@ namespace kernel
     class Controllers; 
 }
 
+class ExerciseList;
+class Profile;
 class ProgressPage;
 
 // =============================================================================
@@ -48,6 +51,7 @@ private slots:
     void Update();
     void CreateExercise();
     void EditExercise();
+    void OnSelect( const QString& exercise, const Profile& profile );
     //@}
 
 private:
@@ -67,8 +71,10 @@ private:
     //@{
     const tools::GeneralConfig& config_;
     kernel::Controllers& controllers_;
+    DirectoryExerciseLister lister_;
     ProgressPage* progressPage_;
-    QListBox*  editExerciseList_;
+    ExerciseList* exercises_;
+    QString exercise_;
     QComboBox* editTerrainList_;
     QComboBox* editModelList_;
     QLineEdit* editName_;
