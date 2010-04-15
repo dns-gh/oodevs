@@ -62,6 +62,37 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Popula
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlow constructor
+// Created: LDC 2010-04-13
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const DEC_Knowledge_PopulationFlow& knowledge )
+    : pPopulationKnowledge_    ( &populationKnowledge )
+    , pFlowKnown_              ( knowledge.pFlowKnown_ )
+    , nID_                     ( idManager_.GetFreeId() )
+    , direction_               ( knowledge.direction_ )
+    , rSpeed_                  ( knowledge.rSpeed_ )
+    , flowParts_               ()
+    , rNbrAliveHumans_         ( knowledge.rNbrAliveHumans_ )
+    , rNbrDeadHumans_          ( knowledge.rNbrDeadHumans_ )
+    , pAttitude_               ( knowledge.pAttitude_ )
+    , bHumansUpdated_          ( knowledge.bHumansUpdated_ )
+    , bAttitudeUpdated_        ( knowledge.bAttitudeUpdated_ )
+    , bRealFlowUpdated_        ( knowledge.bRealFlowUpdated_ )
+    , bFlowPartsUpdated_       ( knowledge.bFlowPartsUpdated_ )
+    , bSpeedUpdated_           ( knowledge.bSpeedUpdated_ )
+    , bDirectionUpdated_       ( knowledge.bDirectionUpdated_ )
+    , pPreviousPerceptionLevel_( knowledge.pPreviousPerceptionLevel_ )
+    , pCurrentPerceptionLevel_ ( knowledge.pCurrentPerceptionLevel_ )
+    , bReconAttributesValid_   ( knowledge.bReconAttributesValid_ )
+{
+    for( CIT_FlowPartMap it = flowParts_.begin(); it != flowParts_.end(); ++it )
+    {
+        flowParts_[ it->first ] = new DEC_Knowledge_PopulationFlowPart( *it->second );
+    }
+    SendMsgCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlow constructor
 // Created: JVT 2005-03-17
 // -----------------------------------------------------------------------------
 DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
@@ -84,6 +115,7 @@ DEC_Knowledge_PopulationFlow::DEC_Knowledge_PopulationFlow()
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , bReconAttributesValid_   ( false )
 {
+    //NOTHING
 }
 
 // -----------------------------------------------------------------------------

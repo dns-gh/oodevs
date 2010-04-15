@@ -516,3 +516,19 @@ void DEC_Knowledge_Population::Recon()
 {
     bIsRecon_ = true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Population::CopyFrom
+// Created: LDC 2010-04-13
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Population::CopyFrom( const DEC_Knowledge_Population& knowledge )
+{
+    for( CIT_ConcentrationMap it = knowledge.concentrations_.begin(); it != knowledge.concentrations_.end(); ++it )
+        concentrations_[ it->first ] = new DEC_Knowledge_PopulationConcentration( *this, *it->second );
+    for( CIT_FlowMap it = flows_.begin(); it != flows_.end(); ++it )
+        flows_[ it->first ] = new DEC_Knowledge_PopulationFlow( *this, *it->second );
+    bIsRecon_ = knowledge.bIsRecon_;
+    bReconAttributesValid_ = knowledge.bReconAttributesValid_;
+    rDominationState_ = knowledge.rDominationState_;
+    bDecStateUpdated_ = knowledge.bDecStateUpdated_;
+}

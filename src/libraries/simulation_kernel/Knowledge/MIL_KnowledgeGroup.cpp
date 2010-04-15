@@ -55,10 +55,10 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , army_                   ( &army )
     , parent_                 ( 0 ) // LTO
     , knowledgeBlackBoard_    ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
-    , automates_              ()
-    , timeToDiffuse_          ( 0 ) // LTO
-    , isActivated_            ( true ) // LTO
-    , hasBeenUpdated_         ( false )
+    , automates_           ()
+    , timeToDiffuse_       ( 0 ) // LTO
+    , isActivated_         ( true ) // LTO
+    , hasBeenUpdated_      ( false )
     , isJammed_               ( false )// LTO
     , jammedPion_             ( 0 ) // LTO
 {
@@ -79,10 +79,10 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , army_                   ( &army )
     , parent_                 ( parent ) // LTO
     , knowledgeBlackBoard_    ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
-    , automates_              ()
-    , timeToDiffuse_          ( 0 ) // LTO
-    , isActivated_            ( true ) // LTO
-    , hasBeenUpdated_         ( true )
+    , automates_            ()
+    , timeToDiffuse_        ( 0 ) // LTO
+    , isActivated_          ( true ) // LTO
+    , hasBeenUpdated_       ( true )
     , isJammed_               ( false )// LTO
     , jammedPion_             ( 0 ) // LTO
 {
@@ -108,10 +108,10 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , army_                   ( 0 )
     , parent_                 ( 0 ) // LTO
     , knowledgeBlackBoard_    ( 0 )
-    , automates_              ()
-    , timeToDiffuse_          ( 0 ) // LTO
-    , isActivated_            ( true ) // LTO
-    , hasBeenUpdated_         ( false )
+    , automates_           ()
+    , timeToDiffuse_        ( 0 ) // LTO
+    , isActivated_         ( true ) // LTO
+    , hasBeenUpdated_      ( false )
     , isJammed_               ( false ) // LTO
     , jammedPion_             ( 0 ) // LTO
 {
@@ -128,10 +128,10 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source )
     , army_                   ( source.army_ )
     , parent_                 ( 0 ) // LTO
     , knowledgeBlackBoard_    ( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
-    , automates_              ()
-    , timeToDiffuse_          ( 0 )    // LTO
-    , isActivated_            ( true ) // LTO
-    , hasBeenUpdated_         ( true ) 
+    , automates_           ()
+    , timeToDiffuse_        ( 0 ) // LTO
+    , isActivated_         ( true ) // LTO
+    , hasBeenUpdated_      ( true )
     , isJammed_               ( false ) // LTO
     , jammedPion_             ( 0 ) // LTO
 {   
@@ -152,7 +152,8 @@ void MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception( const DEC_Knowledge
 {
     if( agent.IsValid() )
     {
-        CreateKnowledgeAgent( agent.GetAgentKnown() );
+        DEC_Knowledge_Agent& knowledge = CreateKnowledgeAgent( agent.GetAgentKnown() );
+        knowledge.CopyFrom( agent );
     }
 }
 
@@ -162,7 +163,8 @@ void MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception( const DEC_Knowledge
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population )
 {
-    CreateKnowledgePopulation( population.GetPopulationKnown() );
+    DEC_Knowledge_Population& knowledge = CreateKnowledgePopulation( population.GetPopulationKnown() );
+    knowledge.CopyFrom( population );
 }
 
 // -----------------------------------------------------------------------------
@@ -801,7 +803,7 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPerception( int currentTimeStep )
 // Created: FDS 2010-04-08
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeStep )
-{
+    {
     if( ! IsJammed() )
     {        
         const MIL_KnowledgeGroup::T_AutomateVector& automates = GetAutomates();

@@ -1118,3 +1118,23 @@ bool DEC_Knowledge_Agent::IsValid() const
 {
     return bValid_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::CopyFrom
+// Created: LDC 2010-04-13
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Agent::CopyFrom( const DEC_Knowledge_Agent& agent )
+{         
+    dataDetection_.Update( agent.dataDetection_ );
+    dataRecognition_.Update( agent.dataRecognition_ );
+    dataIdentification_.Update( agent.dataIdentification_ );
+
+    nTimeLastUpdate_ = agent.nTimeLastUpdate_;
+    pCurrentPerceptionLevel_ = agent.pCurrentPerceptionLevel_;
+    pPreviousPerceptionLevel_ = agent.pPreviousPerceptionLevel_;
+    pMaxPerceptionLevel_ = agent.pMaxPerceptionLevel_;
+    rRelevance_ = agent.rRelevance_;
+    nTimeExtrapolationEnd_ = agent.nTimeExtrapolationEnd_;
+    bLocked_ = agent.bLocked_;
+    bValid_ = agent.bValid_;
+}

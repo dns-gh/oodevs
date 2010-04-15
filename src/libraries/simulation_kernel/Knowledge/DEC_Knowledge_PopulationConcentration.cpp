@@ -75,7 +75,33 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration()
     , pCurrentPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
     , bReconAttributesValid_    ( false )
 {
+    //NOTHING
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationConcentration constructor
+// Created: LDC 2010-04-13
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const DEC_Knowledge_PopulationConcentration& concentration )
+    : pPopulationKnowledge_     ( &populationKnowledge )
+    , pConcentrationKnown_      ( concentration.pConcentrationKnown_ )
+    , nID_                      ( idManager_.GetFreeId() )
+    , nTimeLastUpdate_          ( concentration.nTimeLastUpdate_ )
+    , position_                 ( concentration.position_ )
+    , rNbrAliveHumans_          ( concentration.rNbrAliveHumans_ )
+    , rNbrDeadHumans_           ( concentration.rNbrDeadHumans_ )
+    , pAttitude_                ( concentration.pAttitude_ ) 
+    , bHumansUpdated_           ( concentration.bHumansUpdated_ )
+    , bAttitudeUpdated_         ( concentration.bAttitudeUpdated_ )
+    , bRealConcentrationUpdated_( concentration.bRealConcentrationUpdated_ )
+    , bRelevanceUpdated_        ( concentration.bRelevanceUpdated_ )
+    , rRelevance_               ( concentration.rRelevance_ )
+    , pPreviousPerceptionLevel_ ( concentration.pPreviousPerceptionLevel_ )
+    , pCurrentPerceptionLevel_  ( concentration.pCurrentPerceptionLevel_ )
+    , bReconAttributesValid_    ( concentration.bReconAttributesValid_ )
+{
+    SendMsgCreation();
+}             
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationConcentration destructor

@@ -159,13 +159,24 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 
     // $$$$ >>>> MODIF FDS 2010-03-17
     // Copie of Knowledge group for jamming use
-    if( !pJammingKnowledgeGroup_ && CanCommunicate() ) {
-        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup() );
-        pJammingKnowledgeGroup_->Jam( entity_ );
-    }
+    if( CanCommunicate() )
+        CopyKnowledgeGroup();
     // $$$$ <<<< MODIF FDS 2010-03-17
 
     bHasChanged_ = jammers_.insert( &jammer ).second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Communications::CopyKnowledgeGroup
+// Created: LDC 2010-04-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Communications::CopyKnowledgeGroup()
+{
+    if( !pJammingKnowledgeGroup_ )
+    {
+        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup() );
+        pJammingKnowledgeGroup_->Jam( entity_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -178,7 +189,7 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
 
     // delete copy of knowledge group used in jamming
     if(  pJammingKnowledgeGroup_ && CanCommunicate() )
-    {            
+    {
         pJammingKnowledgeGroup_->Destroy();
         delete pJammingKnowledgeGroup_;
         pJammingKnowledgeGroup_ = 0;
@@ -249,6 +260,7 @@ void PHY_RolePion_Communications::ActivateBlackout()
 {
     if( bBlackoutActivated_ )
         return;
+    CopyKnowledgeGroup();
     bBlackoutActivated_ = true;
     bHasChanged_        = true;
 }
@@ -262,6 +274,12 @@ void PHY_RolePion_Communications::DeactivateBlackout()
     if( !bBlackoutActivated_ )
         return;
     bBlackoutActivated_ = false;
+    if( jammers_.empty() )
+    {
+        pJammingKnowledgeGroup_->Destroy();
+        delete pJammingKnowledgeGroup_;
+        pJammingKnowledgeGroup_ = 0;
+    }
     bHasChanged_        = true;
 }
 

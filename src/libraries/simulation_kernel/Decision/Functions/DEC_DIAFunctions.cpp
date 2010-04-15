@@ -163,6 +163,16 @@ void DEC_DIAFunctions::CopyKnowledgeObjectToKnowledgeObjectListMission( boost::s
     pMission->AppendToParameter( parameter, pKnowledgeObjectSource );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_DIAFunctions::CopyGenObjectToGenObjectListMission
+// Created: LDC 2010-04-14
+// -----------------------------------------------------------------------------
+void DEC_DIAFunctions::CopyGenObjectToGenObjectListMission( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< DEC_Gen_Object > pGenObjectSource )
+{
+    assert( pGenObjectSource );
+    pMission->AppendToParameter( parameter, pGenObjectSource );
+}
+
 // =============================================================================
 // TIME MANAGEMENT
 // =============================================================================

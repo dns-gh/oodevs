@@ -94,8 +94,8 @@ public:
     virtual std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > GetListeEnisTirAutorise();
     virtual void SetListeEnisTirAutorise( const std::vector< boost::shared_ptr< DEC_Knowledge_Agent > >& );
     virtual std::vector<DEC_Decision_ABC*> GetListePionsCoordination();
-    virtual int GetObjMisEnCours();
-    virtual void SetObjMisEnCours( int );
+    virtual DEC_Knowledge_Object* GetObjMisEnCours();
+    virtual void SetObjMisEnCours( DEC_Knowledge_Object* );
     virtual boost::shared_ptr< MT_Vector2D > GetObjectifCourant();
     virtual int GetPlotRavitaillementAssigne();
     virtual void SetPlotRavitaillementAssigne( int );

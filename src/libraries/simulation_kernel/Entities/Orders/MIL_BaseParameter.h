@@ -105,6 +105,7 @@ public:
     
     virtual void Append( boost::shared_ptr< TER_Localisation > pLocation );
     virtual void Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowledgeObject );
+    virtual void Append( boost::shared_ptr< DEC_Gen_Object > pKnowledgeObject );
     //@}
 
 private:

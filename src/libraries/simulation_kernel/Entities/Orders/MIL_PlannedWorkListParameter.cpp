@@ -16,6 +16,15 @@
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PlannedWorkListParameter constructor
+// Created: LDC 2010-04-14
+// -----------------------------------------------------------------------------
+MIL_PlannedWorkListParameter::MIL_PlannedWorkListParameter()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlannedWorkListParameter constructor
 // Created: LDC 2009-06-05
 // -----------------------------------------------------------------------------
 MIL_PlannedWorkListParameter::MIL_PlannedWorkListParameter( const Common::MsgPlannedWorkList& asn, const MIL_EntityManager_ABC& entityManager )
@@ -78,4 +87,13 @@ bool MIL_PlannedWorkListParameter::ToGenObjectList( std::vector< boost::shared_p
 {
     value = plannedWorkList_;
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PlannedWorkListParameter::Append
+// Created: LDC 2010-04-14
+// -----------------------------------------------------------------------------
+void MIL_PlannedWorkListParameter::Append( boost::shared_ptr< DEC_Gen_Object > pGenObject )
+{
+    plannedWorkList_.push_back( pGenObject );
 }

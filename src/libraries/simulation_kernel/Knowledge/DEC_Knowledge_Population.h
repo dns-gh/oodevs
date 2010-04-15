@@ -73,6 +73,8 @@ public:
     void Recon      ();
     void Secure     ( const MIL_AgentPion& pionSecuring );
     void Exterminate( const MIL_AgentPion& exterminator, MT_Float rSurface );
+
+    void CopyFrom( const DEC_Knowledge_Population& knowledge );
     //@}
 
     //! @name Accessors

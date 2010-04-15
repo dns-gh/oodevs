@@ -28,6 +28,7 @@ class MIL_PlannedWorkListParameter : public MIL_BaseParameter
 public:
     //! @name Constructors/Destructor
     //@{
+             MIL_PlannedWorkListParameter();
              MIL_PlannedWorkListParameter( const Common::MsgPlannedWorkList&, const MIL_EntityManager_ABC& entityManager );
     explicit MIL_PlannedWorkListParameter( const std::vector< boost::shared_ptr< DEC_Gen_Object > >& plannedWorkList );
     virtual ~MIL_PlannedWorkListParameter();
@@ -42,6 +43,7 @@ public:
     //@{
     virtual bool ToGenObjectList( Common::MsgPlannedWorkList& ) const;
     virtual bool ToGenObjectList( std::vector< boost::shared_ptr< DEC_Gen_Object > >& ) const;
+    virtual void Append( boost::shared_ptr< DEC_Gen_Object > pGenObject );
     //@}
 
 private:

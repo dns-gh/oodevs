@@ -37,6 +37,20 @@ DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_PopulationFlowPart constructor
+// Created: LDC 2010-04-13
+// -----------------------------------------------------------------------------
+DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart( const DEC_Knowledge_PopulationFlowPart& part )
+    : shape_             ( part.shape_ )
+    , rRelevance_        ( part.rRelevance_ )
+    , rLastRelevanceSent_( part.rLastRelevanceSent_ )
+    , bPerceived_        ( part.bPerceived_ )
+    , nTimeLastUpdate_   ( part.nTimeLastUpdate_ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_PopulationFlowPart destructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------

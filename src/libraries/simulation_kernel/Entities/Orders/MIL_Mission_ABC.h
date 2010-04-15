@@ -13,6 +13,7 @@
 #include "MIL_OrderContext.h"
 #include <boost/shared_ptr.hpp>
 
+class DEC_Gen_Object;
 class DEC_KnowledgeResolver_ABC;
 class DEC_Knowledge_Object;
 class MIL_AgentPion;
@@ -69,6 +70,7 @@ public:
             void           SetParameter         ( const std::string& name, boost::shared_ptr< MIL_MissionParameter_ABC > param );
             void           AppendToParameter    ( const std::string& name, boost::shared_ptr< TER_Localisation > pLocation );
             void           AppendToParameter    ( const std::string& name, boost::shared_ptr< DEC_Knowledge_Object > pObjectKnowledge );
+            void           AppendToParameter    ( const std::string& name, boost::shared_ptr< DEC_Gen_Object > pGenObject );
     //@}
 
     //! @name Parameters Management

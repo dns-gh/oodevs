@@ -77,6 +77,7 @@ public:
     bool Clean      () const;
     void Invalidate ();
     bool IsValid    () const;
+    void CopyFrom   ( const DEC_Knowledge_Agent& agent );
     //@}
 
     //! @name Relevance management

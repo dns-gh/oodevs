@@ -108,6 +108,7 @@ private:
     //! @name Tools
     //@{
     bool HasChanged() const;
+    void CopyKnowledgeGroup();
     //@}
 
     MIL_Agent_ABC&  entity_;

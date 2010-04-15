@@ -32,6 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationConcentration& concentrationKnown );
+             DEC_Knowledge_PopulationConcentration( DEC_Knowledge_Population& populationKnowledge, const DEC_Knowledge_PopulationConcentration& );
              DEC_Knowledge_PopulationConcentration();
     virtual ~DEC_Knowledge_PopulationConcentration();
     //@}

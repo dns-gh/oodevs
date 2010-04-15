@@ -34,6 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const MIL_PopulationFlow& flowKnown );
+             DEC_Knowledge_PopulationFlow( DEC_Knowledge_Population& populationKnowledge, const DEC_Knowledge_PopulationFlow& knowledge );
              DEC_Knowledge_PopulationFlow();
     virtual ~DEC_Knowledge_PopulationFlow();
     //@}

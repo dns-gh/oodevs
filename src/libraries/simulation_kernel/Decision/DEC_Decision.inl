@@ -694,9 +694,9 @@ std::vector<DEC_Decision_ABC*> DEC_Decision<T>::GetListePionsCoordination()
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
 template <class T>
-int DEC_Decision<T>::GetObjMisEnCours()
+DEC_Knowledge_Object* DEC_Decision<T>::GetObjMisEnCours()
 {
-    return GetScalarVariable<int>( "myself.objMisEnCours_" );
+    return GetVariable< DEC_Knowledge_Object* >( "myself.objMisEnCours_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -704,7 +704,7 @@ int DEC_Decision<T>::GetObjMisEnCours()
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::SetObjMisEnCours( int value )
+void DEC_Decision<T>::SetObjMisEnCours( DEC_Knowledge_Object* value )
 {
     SetVariable( "myself.objMisEnCours_", value );
 }

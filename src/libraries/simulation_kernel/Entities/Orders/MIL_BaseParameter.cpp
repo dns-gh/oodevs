@@ -594,3 +594,12 @@ void MIL_BaseParameter::Append( boost::shared_ptr< DEC_Knowledge_Object > pKnowl
 {
     throw std::runtime_error( "Trying to append a knowledge object. Incompatible types." );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::Append
+// Created: LDC 2010-04-14
+// -----------------------------------------------------------------------------
+void MIL_BaseParameter::Append( boost::shared_ptr< DEC_Gen_Object > pKnowledgeObject )
+{
+    throw std::runtime_error( "Trying to append a gen object. Incompatible types." );
+}
