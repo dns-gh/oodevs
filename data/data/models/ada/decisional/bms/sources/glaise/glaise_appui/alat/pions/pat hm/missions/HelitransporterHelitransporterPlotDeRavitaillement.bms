@@ -1,0 +1,310 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/alat/pions/pat hm/missions/HelitransporterHelitransporterPlotDeRavitaillement.bms"] = true
+
+include "bit.lua"
+
+
+--[[//------------------------------------------------------------------------------
+]]--[[// HelitransporterHelitransporterPlotDeRavitaillement :
+]]--[[// ----------------------------------------------------
+]]--[[// - Detruire les variables persistentes aux halts
+]]--[[// - Si crash sur avarie carburant, alors, faire fin mission
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Maj_Pion_ALAT_ParametresRecompletement", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "ACT_Maj_Pions_ObjectifEsquive", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePion", {} },
+        { "BEH_Log_Pion_ALAT_SeRecompleterSurTC2", {} },
+        { "BEH_Dep_Pion_ALAT_RejoindrePoint", {} },
+        { "ACT_Log_Pion_ALAT_RealiserPlotLogistique", {} },
+        { "ACT_Maj_Pion_PasserEnTirSurRiposte", {} },
+        { "BEH_Manoeuvre_Pion_AllerStationner", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhase = self.ePhase or eRejoindre
+        local TC2 = DEC_Pion_TC2()
+        local pionTC2 = nil
+        if( TC2 ~= nil ) then
+            pionTC2 = DEC_Pion_PionPCDeAutomate( TC2 )
+        else
+do
+                DEC_Trace( "Mission Impossible : pas de TC2" )
+                DEC_Warning( eRC_MissionImpossible )
+                                self.params.__returnValue = eActionImpossible
+                Halt( self )
+                do return end
+
+            end
+--[[//debut mission
+]]        end
+
+        Activate( self.activations.ACT_Info_Trace, 1, { "Mission ALAT : Helitransporter Heliporter un Plot de Ravitaillement", } )
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                myself.plotsRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_Copie_Point( self._namedParams.mission.positionRegroupement_, myself.pointRegroupement_ )
+            end
+        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                if( self.ePhase ~= eFinMission and self.ePhase ~= eSExfiltrer ) then
+                    do
+                        self.ePhase = eSExfiltrer
+                        self.eEtat = eActionEnCours
+                    end
+                end
+
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+        Activate( self.activations.ACT_Maj_Pion_ALAT_ParametresRecompletement, 1, { self._namedParams.mission.porteeAction_, ePolyvalent, } )
+         do
+            local _continue = true
+            local switch_1 = --[[//Corps de la mission
+]]--[[//-------------------
+]]self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_RejointUnite, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.ePhase = eAttendre
+                                                        do return end
+
+                        end
+                    end
+
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Trace( "Impossible de rejoindre le TC2" )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt( self )
+                                do return end
+
+                            end
+
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { pionTC2:DEC_Agent_Position(), } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )--[[//permet de sortir du fuseau
+]]
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePion, 1, setmetatable( { pionTC2, eProgressionDefaut, eTypeItiInfiltration, 6000, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eAttendre then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEmbarquement, } )
+                    --[[//modélise le chargement du plot de ravitaillement
+]]--[[//ainsi que le recompletement
+]]if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eHelitransporter
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Trace( "Impossible de ravitailler" )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt( self )
+                                do return end
+
+                            end
+
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt( self )
+                            do return end
+
+                        end
+--[[//se ravitailler sur le TC2
+]]                    end
+
+                    Activate( self.activations.ACT_Info_Trace, 1, { "Ravitaillement et Embarquement du plot de Ravitaillement", } )
+                    Activate( self.activations.BEH_Log_Pion_ALAT_SeRecompleterSurTC2, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                                cases_switch_1[2] = true
+elseif switch_1 == eHelitransporter then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportEnCours, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.ePhase = eDebarquer
+                                                        do return end
+
+                        end
+                    end
+
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Trace( "Impossible de rejoindre point débraquement" )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt( self )
+                                do return end
+
+                            end
+
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.mission.pointDebarquement_, } )
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.mission.pointDebarquement_, eProgressionDefaut, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                                cases_switch_1[3] = true
+elseif switch_1 == eDebarquer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_TransportDebarquement, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.ePhase = eSExfiltrer
+                                                        do return end
+
+                        end
+                    end
+
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Trace( "Problème lors de la creation du plot" )
+                                self.ePhase = eSExfiltrer
+                                                                do return end
+
+                            end
+
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_Log_Pion_ALAT_RealiserPlotLogistique, 1, setmetatable( { myself:DEC_Agent_Position(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                                cases_switch_1[4] = true
+elseif switch_1 == eSExfiltrer then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnExfiltration, } )
+                    if( not DEC_Agent_AutomateEstEmbraye() ) then
+                        Activate( self.activations.ACT_Maj_Pion_PasserEnTirSurRiposte, 1, {} )
+                    end
+
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eFinMission
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    if( self.eEtat == eActionImpossible ) then
+                        do
+                                                        do
+                                DEC_Trace( "Impossible de rejoindre plot de ravitaillement" )
+                                DEC_Warning( eRC_MissionImpossible )
+                                                                self.params.__returnValue = eActionImpossible
+                                Halt( self )
+                                do return end
+
+                            end
+
+                                                        self.params.__returnValue = eActionImpossible
+                            Halt( self )
+                            do return end
+
+                        end
+                    end
+
+                    Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_Pion_AllerStationner, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self._namedParams.mission.positionRegroupement_, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                                cases_switch_1[5] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt( self )
+                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                                cases_switch_1[6] = true
+                end
+            end
+
+    end,
+
+    destroy = function( self )
+                DIA_Clear( myself.plotsRavitaillement_ )
+        F_Pion_SetobjectifEsquive( myself, nil )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "ACT_Maj_Pion_ALAT_ParametresRecompletement", nodes.ACT_Maj_Pion_ALAT_ParametresRecompletement }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "ACT_Maj_Pions_ObjectifEsquive", nodes.ACT_Maj_Pions_ObjectifEsquive }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "BEH_Dep_Pion_ALAT_RejoindrePion", nodes.BEH_Dep_Pion_ALAT_RejoindrePion }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "BEH_Log_Pion_ALAT_SeRecompleterSurTC2", nodes.BEH_Log_Pion_ALAT_SeRecompleterSurTC2 }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "BEH_Dep_Pion_ALAT_RejoindrePoint", nodes.BEH_Dep_Pion_ALAT_RejoindrePoint }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "ACT_Log_Pion_ALAT_RealiserPlotLogistique", nodes.ACT_Log_Pion_ALAT_RealiserPlotLogistique }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "ACT_Maj_Pion_PasserEnTirSurRiposte", nodes.ACT_Maj_Pion_PasserEnTirSurRiposte }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "BEH_Manoeuvre_Pion_AllerStationner", nodes.BEH_Manoeuvre_Pion_AllerStationner }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_ALAT_HeliporterHelitransporterPlotRavitaillement, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

@@ -1,0 +1,117 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_melee/inf/pions/common/missions/Decrocher.bms"] = true
+
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_Decrocher
+]]--[[//
+]]--[[// Commentaires: BUT: au niveau de la patrouille, renseigner en permanence sur
+]]--[[//               un eni sans se laisser accrocher NI identifier. Au niveau de
+]]--[[//               de la patrouille, pas d'opportunité d'ouverture du feu.
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_Decrocher"
+{
+    activations =
+    {
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", {} },
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_RC", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Lima_GererLR", {} },
+        { "BEH_Lima_Pion_INF_GererLIA", {} },
+        { "BEH_Manoeuvre_RompreContact", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+                self.eEtat = self.eEtat or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+            end
+        end
+
+        Activate( self.activations.ACT_Misc_Pion_INF_MAJ_PositionRegroupement, 1, { self._namedParams.mission.pointRegroupement_, } )
+        Activate( self.activations.BEH_Ordre_Inopine, 1, {} )
+         do
+            local _continue = true
+            local switch_1 = --[[//=============================================================================
+]]--[[// SQUELETTE DE LA MISSION        
+]]--[[//=============================================================================
+]]self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[//-----------------------------------------------------------------------------
+]]--[[// Preparation de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]Activate( self.activations.ACT_RC, 1, { eRC_PreparationMission, } )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    self.ePhaseMission = eDecrocher
+                    _continue = false
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Decrocher
+]]--[[//-----------------------------------------------------------------------------
+]]                cases_switch_1[1] = true
+elseif switch_1 == eDecrocher then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_Decroche, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Lima_GererLR, 1, {} )
+                    Activate( self.activations.BEH_Lima_Pion_INF_GererLIA, 1, {} )
+                    Activate( self.activations.BEH_Manoeuvre_RompreContact, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                --[[//-----------------------------------------------------------------------------
+]]--[[// Fin de la mission
+]]--[[//-----------------------------------------------------------------------------
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    _continue = false
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
+
+    end,
+
+    destroy = function( self )
+            end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_Decrocher = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_MOT_DesactiveSauvegarde", nodes.BEH_MOT_DesactiveSauvegarde }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "ACT_Misc_Pion_INF_MAJ_PositionRegroupement", nodes.ACT_Misc_Pion_INF_MAJ_PositionRegroupement }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_Lima_GererLR", nodes.BEH_Lima_GererLR }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_Lima_Pion_INF_GererLIA", nodes.BEH_Lima_Pion_INF_GererLIA }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_Decrocher, "BEH_Manoeuvre_RompreContact", nodes.BEH_Manoeuvre_RompreContact }

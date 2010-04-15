@@ -479,7 +479,7 @@ node "ACT_Misc_Pion_MILICE_MAJ_PositionRegroupement"
             end,
 
     destroy = function( self )
-                myself.ptRegroupement_ = 0
+                myself.ptRegroupement_ = nil
     end,
 
 }

@@ -32,7 +32,7 @@ do
 
                     if _continue then
                     pionBuffer = x
-                    if( ( pionBuffer:GetobjectifCourant_() == 0 or pionBuffer:GetobjectifCourant_() == nil ) ) then
+                    if( pionBuffer:GetobjectifCourant_() == nil ) then
                         _continue = false
                     end
 

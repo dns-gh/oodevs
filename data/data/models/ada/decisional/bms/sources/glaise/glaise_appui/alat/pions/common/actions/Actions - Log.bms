@@ -1,0 +1,96 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - Log.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Realiser un plot logistique
+]]--[[//------------------------------------------------------------------------------
+]]node "ACT_Log_Pion_ALAT_RealiserPlotLogistique"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.point = self.params[1]
+    end,
+
+    select = function( self )
+                self.bInterompu = self.bInterompu or false
+        self.eEtatConstruction = self.eEtatConstruction or nil
+        self.repPlotLogistique = self.repPlotLogistique or nil
+        self.localisation = self.localisation or nil
+        self.actionCreerPlot = self.actionCreerPlot or 0
+        assert( ( self._namedParams.point ~= 0 and self._namedParams.point ~= nil ), "ALAT : Realiser plot log position invalide" )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init --> commencer à construire l'objet
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                self.localisation = DEC_Geometrie_ConvertirPointEnLocalisation( self._namedParams.point )
+                self.actionCreerPlot = DEC_StartCreerObjet( self.repPlotLogistique, eTypeObjectPlotRavitaillement, gNullID, self.localisation, "", -1 )
+                actionCallbacks[ self.actionCreerPlot ] = function( arg ) self.eEtatConstruction = arg end
+                actionKnowledgeCallbacks[ self.actionCreerPlot ] = function( arg ) self.repPlotLogistique = arg end
+
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Si interrompu, reprendre
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        if( self.bInterompu ) then
+            do
+                self.bInterompu = false
+                DEC_Trace( "Reprise construction plot" )
+                DEC_ReprendAction( self.actionCreerPlot )
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Regarder le retour de l'action physique
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+         do
+            local _continue = true
+            local switch_1 = self.eEtatConstruction
+            local cases_switch_1 = {}
+                if switch_1 == eActionObjetTerminee then
+                    DEC_StopAction( self.actionCreerPlot )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt( self )
+                    do return end
+
+                                end
+                if cases_switch_1[1] or switch_1 == eActionObjetManqueDotation then
+                    DEC_StopAction( self.actionCreerPlot )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt( self )
+                    do return end
+
+                                end
+                if cases_switch_1[2] or switch_1 == eActionObjetImpossible then
+                    DEC_StopAction( self.actionCreerPlot )
+                    DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> objet impossible " )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt( self )
+                    do return end
+
+                                end
+                if cases_switch_1[3] or switch_1 == eActionObjetPasDeCapacite then
+                    DEC_StopAction( self.actionCreerPlot )
+                    DEC_Trace( "ACT_ALAT_RealiserPlotRavitaillement --> pas de capacite " )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt( self )
+                    do return end
+
+                                end
+            end
+
+    end,
+
+    deselect = function( self )
+                self.bInterompu = true
+        DEC_PauseAction( self.actionCreerPlot )
+    end,
+
+    destroy = function( self )
+                DEC_StopAction( self.actionCreerPlot )
+    end,
+
+}
+

@@ -137,7 +137,7 @@ node "BEH_Misc_Automate_GEN_GererTravaux"
 
     activate = function( self )
         --[[// Copie? --> oui
-]]self.listeGenObjetAConstruire = self.listeGenObjetAConstruire or self._namedParams.travaux
+]]self.listeGenObjetAConstruire = self.listeGenObjetAConstruire or DEC_Copie_Liste( self._namedParams.travaux )
         self.positionRegroupement = self.positionRegroupement or S_Geometrie_BarycentreZone( self._namedParams.zoneRegroupement )
         --[[//-------------------------------------------------------------------------
 ]]--[[// Assignation des missions

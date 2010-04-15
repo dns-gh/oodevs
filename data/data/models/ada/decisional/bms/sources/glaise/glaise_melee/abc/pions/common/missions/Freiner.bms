@@ -1,0 +1,150 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_melee/abc/pions/common/missions/Freiner.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-09-24 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Common/Missions/Freiner.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 22/08/05 16:07 $
+]]--[[// $Revision: 25 $
+]]--[[// $Workfile: Freiner.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// MISSION INTERNE, SERT A L'AUTOMATE
+]]
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Pion_ABC_Freiner
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//              
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Mission_Pion_ABC_Freiner"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "BEH_MAJ_Pion_ABC_AgressiviteTir", {} },
+        { "BEH_MOT_DesactiveSauvegarde", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_Pion_ABC_RejoindreFuseau", {} },
+        { "ACT_Dep_ModulationVitesse", {} },
+        { "BEH_Dep_SePosterFaceADirectionDangereuse", {} },
+        { "BEH_Lima_GererLCAR", {} },
+        { "BEH_Dep_ProgressionSur", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params[1]
+        self._namedParams.rPH = self.params[2]
+        self._namedParams.eNiveauIdentificationEni = self.params[3]
+    end,
+
+    activate = function( self )
+        self.eEtat = self.eEtat or eActionEnCours
+        self.eEtatRecueil = self.eEtatRecueil or eActionEnCours
+        self.ePhaseMission = self.ePhaseMission or ePreparerMission
+        self.bLRPassee = self.bLRPassee or false
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhaseMission = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+--[[//-----------------------------------------------------------------------------
+]]--[[// Agressivite
+]]--[[//-----------------------------------------------------------------------------
+]]        end
+
+        Activate( self.activations.BEH_MAJ_Pion_ABC_AgressiviteTir, 1, { self._namedParams.rPH, } )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                StartActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, 1, {} )
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.ePhaseMission
+            local cases_switch_1 = {}
+                if switch_1 == ePreparerMission then
+                    --[[// 1) Preparation de la mission
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_DebutMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eJalonner
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Pion_ABC_RejoindreFuseau, 1, setmetatable( { eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                --[[//---------------------------------------------------------------------
+]]--[[// Progression tactique
+]]--[[//---------------------------------------------------------------------
+]]                cases_switch_1[1] = true
+elseif switch_1 == eProgresser then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnFreinage, } )
+                    --[[// Vitesse et direction observation st différentes du default (vers cur)
+]]Activate( self.activations.ACT_Dep_ModulationVitesse, 1.1, { 1, } )
+                    Activate( self.activations.BEH_Dep_SePosterFaceADirectionDangereuse, 1.1, {} )
+                    --[[// Deplacement
+]]if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhaseMission = eFinMission
+                                                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Lima_GererLCAR, 1.1, { not DEC_Agent_AutomateEstEmbraye(), bPosteInitiale, } )
+                    Activate( self.activations.BEH_Dep_ProgressionSur, 1, setmetatable( { self._namedParams.mission.itineraire_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                --[[//---------------------------------------------------------------------
+]]--[[// Fin de la mission
+]]--[[//---------------------------------------------------------------------
+]]                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    StopActivateOverride( self, self.activations.BEH_MOT_DesactiveSauvegarde, {} )--[[// reprendre sauvegarde
+]]
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    _continue = false
+                                cases_switch_1[3] = true
+
+                else
+                                end
+            end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "BEH_MAJ_Pion_ABC_AgressiviteTir", nodes.BEH_MAJ_Pion_ABC_AgressiviteTir }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "BEH_MOT_DesactiveSauvegarde", nodes.BEH_MOT_DesactiveSauvegarde }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "BEH_Dep_Pion_ABC_RejoindreFuseau", nodes.BEH_Dep_Pion_ABC_RejoindreFuseau }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "ACT_Dep_ModulationVitesse", nodes.ACT_Dep_ModulationVitesse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "BEH_Dep_SePosterFaceADirectionDangereuse", nodes.BEH_Dep_SePosterFaceADirectionDangereuse }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "BEH_Lima_GererLCAR", nodes.BEH_Lima_GererLCAR }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Pion_ABC_Freiner, "BEH_Dep_ProgressionSur", nodes.BEH_Dep_ProgressionSur }

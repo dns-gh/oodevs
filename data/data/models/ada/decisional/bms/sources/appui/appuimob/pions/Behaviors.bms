@@ -54,6 +54,11 @@ include "Common/Pions/Behaviors.bms"
 ]]include "Common/Pions/MissionsGeneriques.bms"
 
 
+include "Appui/AppuiMob/Pions/Actions.bms"
+
+include "Appui/AppuiMob/Pions/Missions/Missions.bms"
+
+
 --[[// *****************************************************************************
 ]]--[[// Comportement par défaut contrôlé par le moteur PHY
 ]]--[[//

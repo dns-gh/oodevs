@@ -732,7 +732,7 @@ elseif switch_1 == ePhase_CDT then
         --[[// Mission
 ]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
         --[[// travaux etc.
-]]DEC_UserTypeList_PushBack_Mission( self.missionPion, "travaux_", self._namedParams.objet )
+]]DEC_GenObjectList_PushBack_Mission( self.missionPion, "travaux_", self._namedParams.objet )
         --[[// Echelon
 ]]F_Pion_SeteEtatEchelon( self._namedParams.pionGenie, self._namedParams.eEtatEchelon )
         --[[//-------------------------------------------------------------------------

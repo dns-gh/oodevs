@@ -140,7 +140,7 @@ node "BEH_Defaut"
                 Activate( self.activations.ACT_Maj_Pion_PasserEnTirLibre, 1, {} )--[[//ROE par defaut pour cette mission
 ]]
                 F_Pion_SetobjectifEsquive( myself, nil )
-                myself.ptRegroupement_ = 0
+                myself.ptRegroupement_ = nil
                 --[[// Init variables
 ]]F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Second )
                 F_Pion_SeteTypeContact( myself, eTypeContact_Defaut )

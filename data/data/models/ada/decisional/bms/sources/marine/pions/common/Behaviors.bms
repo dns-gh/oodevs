@@ -4,10 +4,6 @@ includedFiles["sources/marine/pions/common/Behaviors.bms"] = true
 --[[//génériques pions SCIPIO
 ]]include "Common/Pions/Behaviors.bms"
 
---[[//Missions génériques des pions SCIPIO
-]]include "Common/Pions/MissionsGeneriques.bms"
-
-
 --[[//inclusion des actions communes aux pions de la Marine
 ]]include "Marine/Pions/Common/Actions.bms"
 
@@ -20,6 +16,13 @@ include "Marine/Pions/Common/Behaviors/Behaviors - Mot.bms"
 include "Marine/Pions/Common/Behaviors/Behaviors - Eni.bms"
 
 
+--[[//Missions génériques des pions SCIPIO
+]]include "Common/Pions/MissionsGeneriques.bms"
+
+
+--[[//missions generiques aux pions de la Marine
+]]--[[//include "Marine\Pions\Common\MissionsGeneriques.bms"
+]]
 --[[// -----------------------------------------------------------------------------
 ]]--[[// Comportement par défaut.
 ]]--[[//

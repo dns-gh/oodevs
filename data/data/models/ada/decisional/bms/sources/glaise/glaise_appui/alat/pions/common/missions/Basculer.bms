@@ -1,0 +1,116 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/alat/pions/common/missions/Basculer.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MIS_Pion_LOG_PreparerBascule()
+]]--[[//
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Pion_LOG_PreparerBascule"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Obs_EtablirVisionCur", {} },
+        { "ACT_MAJ_EtatPhaseMission", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_Pion_ALAT_SePoser", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        --[[//persistent T_PionModeleDEC  pionPC  = DEC_Pion_PionPCDeAutomate( mission.automatePourBascule_ );
+]]self.ePhase = self.ePhase or eRejoindrePosition
+        self.eEtat = self.eEtat or eActionEnCours
+        if( ModuleBegins() ) then
+            do
+                DEC_SetMission( myself, self._namedParams.mission )
+            end
+--[[/*if( mission.resterSurPlace_ )
+            ePhase = eSeMettreEnPlace;*/]]        end
+
+        self.eEtatOrdreFinMission = self.eEtatOrdreFinMission or eActionEnCours
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreFinMission = v else rawset( t, k, v ) end end } ) )
+        if( self.eEtatOrdreFinMission == eActionHalt ) then
+            do
+                self.ePhase = eFinMission
+                self.eEtat = eActionEnCours
+                self.eEtatOrdreFinMission = eActionEnCours
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eRejoindrePosition then
+                    --[[// Progression jusqu'au lieu de rendez-vous
+]]if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                self.ePhase = eSeMettreEnPlace
+                                _continue = false
+                            end
+
+                        end
+                    end
+
+                        if _continue then
+                        Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
+                        --[[//behavior BEH_Dep_Pion_ALAT_RejoindrePion( pionPC , eProgressionDefaut, eTypeItiInfiltration, 6000 ) return in eEtat;
+]]Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_ProgressionVersLocalisation, } )
+                        Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self._namedParams.mission.positionDeploiement_, eProgressionDirect, eTypeItiMouvement, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                        _continue = false
+                    end
+                --[[// Renforce l'unité amie
+]]                cases_switch_1[1] = true
+elseif switch_1 == eSeMettreEnPlace then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_EnAppui, } )
+                    self.ePhase = eFinMission
+                    _continue = false--[[/*if( DEC_Pion_ChangeAutomate( mission.automatePourBascule_ ) )
+                DEC_RC( eRC_ReussiteRenforcement, myself, mission.automatePourBascule_ );
+            else
+                DEC_RC( eRC_EchecRenforcement, myself, mission.automatePourBascule_ );
+
+            ePhase = eFinMission;*/]]
+                                cases_switch_1[2] = true
+elseif switch_1 == eFinMission then
+                    Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
+                    if( self.eEtat == eActionEffectuee ) then
+                        do
+                            self.eEtat = eActionEnCours
+                                                        do
+                                DIA_Clear( myself.plotsRavitaillement_ )
+                                F_Pion_SetobjectifEsquive( myself, nil )
+                                DEC_FinMission()
+                                                                self.params.__returnValue = eActionEffectuee
+                                Halt( self )
+                                do return end
+
+                            end
+
+                        end
+                    end
+
+                    Activate( self.activations.BEH_Dep_Pion_ALAT_SePoser, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+                    _continue = false
+                                cases_switch_1[3] = true
+                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_LOG_PreparerBascule = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_PreparerBascule, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_PreparerBascule, "ACT_Obs_EtablirVisionCur", nodes.ACT_Obs_EtablirVisionCur }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_PreparerBascule, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_PreparerBascule, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_PreparerBascule, "BEH_Dep_Pion_ALAT_SePoser", nodes.BEH_Dep_Pion_ALAT_SePoser }

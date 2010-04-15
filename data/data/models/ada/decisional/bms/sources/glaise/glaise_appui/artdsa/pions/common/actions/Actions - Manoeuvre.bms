@@ -1,0 +1,22 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/artdsa/pions/common/actions/Actions - Manoeuvre.bms"] = true
+
+node "ACT_Pions_ASA_SeDeployer"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+                DEC_Elongation( M_POLY_DOCTRINE_ELONGATION_DEPLOIEMENT() )
+    end,
+
+    deselect = function( self )
+                DEC_Elongation( 1 )
+    end,
+
+    destroy = function( self )
+                DEC_Elongation( 1 )
+    end,
+
+}
+

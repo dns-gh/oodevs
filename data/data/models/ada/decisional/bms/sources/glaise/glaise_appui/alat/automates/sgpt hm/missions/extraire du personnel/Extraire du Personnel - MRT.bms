@@ -1,0 +1,20 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/alat/automates/sgpt hm/missions/extraire du personnel/Extraire du Personnel - MRT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[//
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_ExtraireDuPersonnel"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_ExtraireDuPersonnel = { "mission" }

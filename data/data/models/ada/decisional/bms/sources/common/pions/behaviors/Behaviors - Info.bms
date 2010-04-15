@@ -650,7 +650,7 @@ node "BEH_Info_Pion_RendreCompteSurSituationDeplacement"
             local switch_1 = --[[//-----------------------------------------------------------------------------
 ]]--[[// Suivant l'état du deplcement
 ]]--[[//-----------------------------------------------------------------------------
-]]myself.eEtatDeplacement_
+]]F_Pion_GeteEtatDeplacement( myself )
             local cases_switch_1 = {}
                 if switch_1 == eEtatDeplacement_aucun then
                     _continue = false--[[// Pas d'instance de deplacement

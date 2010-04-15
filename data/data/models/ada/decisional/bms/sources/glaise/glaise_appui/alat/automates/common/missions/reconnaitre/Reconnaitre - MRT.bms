@@ -1,0 +1,154 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/reconnaitre/Reconnaitre - MRT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Reconnaitre :
+]]--[[// -------------
+]]--[[//
+]]--[[// Commentaires :
+]]--[[//                  - 3 pions font la mission reconnaitre le contour de l'eni
+]]--[[//                    en ayant chacun une partie du fuseau d'escadrille
+]]--[[//
+]]--[[//                  - le ou les pions de reserve suivent les unités qui 
+]]--[[//                    reconnaissent.Elles vont être utiles dans la manoeuvre de 
+]]--[[//                    roque des pieces pour ravitaillement.
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_Reconnaitre"
+{
+    activations =
+    {
+        { "BEH_ROE_Automate_TirRestreint", {} },
+        { "BEH_Ordre_Automate_Poursuivre_", {} },
+        { "BEH_Medo_Automate_ControleCreationMission", {} },
+        { "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.ePhase = self.ePhase or eMRT_AssignerMissions
+        self.eEtatMissionsReconnaitre = self.eEtatMissionsReconnaitre or eActionEnCours
+        self.affectationFuseauOk = self.affectationFuseauOk or false
+        self.selPions = self.selPions or DEC_Automate_PionsSansPC()
+        self.listePionsReserve = self.listePionsReserve or {}
+        self.listeHAH = self.listeHAH or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHAH" )
+        self.listeTigre = self.listeTigre or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleTigre" )
+        self.listeHAPCanons = self.listeHAPCanons or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHAC" )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHAM" )
+        self.listeHR = self.listeHR or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHR" )
+        self.listePatrouillesPeutFaireMissionReconnaitre = self.listePatrouillesPeutFaireMissionReconnaitre or S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( self.listeHAH, self.listeTigre ), self.listeHAPCanons ), self.listeHAM ), self.listeHR )
+        self.listeReconnaitreLeContourEni = self.listeReconnaitreLeContourEni or {}
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                --[[// -----------------------------------------------------------------
+]]--[[// Vérifier les moyens, determiner les patrouilles qui vont aller 
+]]--[[// reconnaitre le contour de l'ennemi
+]]--[[// -----------------------------------------------------------------
+]]local nbPionsPouvantReconnaire = #( self.listePatrouillesPeutFaireMissionReconnaitre )
+                --[[//1 pion de reserve pour 3 qui peuvent reconnaitre
+]]local nbPionsReserve = nbPionsPouvantReconnaire / 3
+                for _,x in pairs( --[[//construction de la liste des pions en reserve
+]]self.listePatrouillesPeutFaireMissionReconnaitre or {} ) do
+                local _continue = true
+                    do
+                        if( nbPionsReserve < 1 ) then
+                            _continue = false
+                        end
+
+                            if _continue then
+                            DIA_PushBack( self.listePionsReserve, x )
+                                                        nbPionsReserve = nbPionsReserve - 1
+                        end
+                    end
+--[[//les autres vont faire la mission reconnaire contour eni           
+]]--[[//Ceux qui peuvent faire la mission et qui ne sont pas en reserve
+]]
+                end
+
+                self.listeReconnaitreLeContourEni = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePatrouillesPeutFaireMissionReconnaitre, self.listePionsReserve )
+                if( DIA_IsListEmpty( self.listeReconnaitreLeContourEni ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt( self )
+                        do return end
+
+                    end
+                end
+
+                Activate( self.activations.BEH_ROE_Automate_TirRestreint, 1, {} )
+                Activate( self.activations.BEH_Ordre_Automate_Poursuivre_, 1, {} )
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.ePhase
+            local cases_switch_1 = {}
+                if switch_1 == eMRT_AssignerMissions then
+                    --[[// GESTION DES ERREURS / CONTROLE VALIDITE MRT
+]]if( self.eEtatMissionsReconnaitre == eActionImpossible ) then
+                        do
+                            self.ePhase = eMRT_MissionImpossible
+                                                        do return end
+
+                        end
+                    end
+
+                    if( self.eEtatMissionsReconnaitre == eActionEffectuee ) then
+                        do
+                            self.ePhase = eMRT_Valider
+                                                        do return end
+
+                        end
+                    end
+
+                    if( not self.affectationFuseauOk ) then
+                        do
+                            DEC_MRT_AffecteFuseaux( self.listeReconnaitreLeContourEni )
+                            self.affectationFuseauOk = true
+                        end
+--[[// Reconnaitre le contour ennemi : controle de creation mission
+]]                    end
+
+                    Activate( self.activations.BEH_Medo_Automate_ControleCreationMission, 1, setmetatable( { #( self.listeReconnaitreLeContourEni ), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatMissionsReconnaitre = v else rawset( t, k, v ) end end } ) )
+                    --[[// Reconnaitre le contour ennemi : ordre de creation des missions
+]]if( not DIA_IsListEmpty( self.listeReconnaitreLeContourEni ) ) then
+                        Activate( self.activations.BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe, 1, { ePhase_MRT, self.listeReconnaitreLeContourEni, self._namedParams.mission.pointRegroupement_, self._namedParams.mission.porteeAction_, self._namedParams.mission.ambianceMission_, self._namedParams.mission.plotsRavitaillement_, self._namedParams.mission.ravitaillementDebutMission_, } )
+                    end
+
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eMRT_MissionImpossible then
+                    DEC_Trace( "MISSION IMPOSSIBLE" )
+                    DEC_RC( eRC_MissionImpossible )
+                                        self.params.__returnValue = eActionImpossible
+                    Halt( self )
+                    do return end
+
+                                end
+                if cases_switch_1[2] or switch_1 == eMRT_Valider then
+                    DEC_MRT_Valide()
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt( self )
+                    do return end
+
+                                end
+            end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Reconnaitre = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Reconnaitre, "BEH_ROE_Automate_TirRestreint", nodes.BEH_ROE_Automate_TirRestreint }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Reconnaitre, "BEH_Ordre_Automate_Poursuivre_", nodes.BEH_Ordre_Automate_Poursuivre_ }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Reconnaitre, "BEH_Medo_Automate_ControleCreationMission", nodes.BEH_Medo_Automate_ControleCreationMission }
+connections[ #connections + 1 ] = { nodes.MIS_Automate_MRT_ALAT_Reconnaitre, "BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe", nodes.BEH_Medo_Automate_ALAT_AssignerMissionsReconnaitreContourEniAListe }

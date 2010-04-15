@@ -46,7 +46,7 @@ includedFiles["sources/appui/trans/pions/actions/Actions - Dep.bms"] = true
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Deplacement en cours
 ]]--[[//-----------------------------------------------------------------------------
-]]myself.eEtatDeplacement_ = eEtatDeplacement_EnCours
+]]F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_EnCours )
                     _continue = false
                 --[[//-----------------------------------------------------------------------------
 ]]--[[// Plus de carburant

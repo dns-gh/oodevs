@@ -1,0 +1,109 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_common/pions/actions/Actions - Embarquement.bms"] = true
+
+
+
+--[[// ****************************************************************************
+]]--[[// ACT_Transport_Pion_Embarquer
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//                Embarque les composantes 
+]]--[[// ****************************************************************************
+]]node "ACT_Transport_Pion_Embarquer"
+{
+    actuators =
+    {
+        deplacement = 1,
+        debarquement = 1,
+    },
+
+    create = function( self )
+    end,
+
+    select = function( self )
+                self.bReprise = self.bReprise or false
+        self.eEtat_EmbDeb = self.eEtat_EmbDeb or eActionEmbDeb_EnCours
+        self.actionID = self.actionID or 0
+        if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Embarquement : debut" )
+                self.actionID = DEC_StartEmbarquement(  )
+                actionCallbacks[ self.actionID ] = function( arg ) self.eEtat_EmbDeb = arg end
+
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.eEtat_EmbDeb
+            local cases_switch_1 = {}
+                if switch_1 == eActionEmbDeb_EnCours then
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionEmbDeb_ErreurEmbDebEnMemeTemps
+                or switch_1 == eActionEmbDeb_PasDeTransporteurs then
+                    DEC_Trace( "Embarquement : ignore transporteur" )
+                    DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt( self )
+                    do return end
+
+                                end
+                if cases_switch_1[2] or switch_1 == eActionEmbDeb_Termine then
+                    DEC_Trace( "Embarquement : fin" )
+                    DEC_StopAction( self.actionID )
+                                        self.params.__returnValue = eActionEffectuee
+                    Halt( self )
+                    do return end
+
+                                end
+            end
+
+        if( self.bReprise ) then
+            do
+                DEC_Trace( "Embarquement : reprise" )
+                self.eEtat_EmbDeb = eActionEmbDeb_EnCours
+                DEC_ReprendAction( self.actionID )
+                self.bReprise = false
+            end
+        end
+
+--[[// arret de l'embarquement
+]]--[[// arret de l'embarquement
+]]    end,
+
+    deselect = function( self )
+                DEC_Trace( "Embarquement : interruption " )
+        DEC_PauseAction( self.actionID )
+        self.bReprise = true
+    end,
+
+    destroy = function( self )
+                DEC_StopAction( self.actionID )
+    end,
+
+}
+
+--[[// ****************************************************************************
+]]--[[// ACT_Transport_MaintenirEtat
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//               Bloque toute nouvelle action de debarquement ou embarquement
+]]--[[// ****************************************************************************
+]]node "ACT_Transport_MaintenirEtat"
+{
+    actuators =
+    {
+        debarquement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.eEtat = self.params[1]
+    end,
+
+    select = function( self )
+    end,
+
+}
+

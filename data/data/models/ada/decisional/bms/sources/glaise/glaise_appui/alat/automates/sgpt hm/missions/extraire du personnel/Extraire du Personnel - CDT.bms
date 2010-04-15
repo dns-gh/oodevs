@@ -1,0 +1,27 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/alat/automates/sgpt hm/missions/extraire du personnel/Extraire du Personnel - CDT.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// Conduite de la mission Automate Extraire du Personnel :
+]]--[[// -------------------------------------------------------
+]]--[[//
+]]--[[// Ce que doit faire l'automate dans cette mission.
+]]--[[//
+]]--[[// - Gestion des ordres de conduite des subordonnés
+]]--[[// - Controle des motivations des pions (synchronisation et gestion de la 
+]]--[[//   situation tactique)
+]]--[[//------------------------------------------------------------------------------
+]]node "MIS_Automate_CDT_ALAT_ExtraireDuPersonnel"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_CDT_ALAT_ExtraireDuPersonnel = { "mission" }

@@ -43,10 +43,6 @@ includedFiles["sources/common/Fonctions - RC.bms"] = true
                 _returnValue = eRC_DebutMission
                 _continue = false
                         cases_switch_1[1] = true
-elseif switch_1 == eEtatPhaseMission_PreparationMission then
-                _returnValue = eRC_PreparationMission
-                _continue = false
-                        cases_switch_1[2] = true
 elseif switch_1 == eEtatPhaseMission_RejointUnite then
                 _returnValue = eRC_RejointUnite
                 _continue = false

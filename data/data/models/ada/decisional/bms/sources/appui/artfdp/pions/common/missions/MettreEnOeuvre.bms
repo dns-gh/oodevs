@@ -59,6 +59,65 @@ do
 
     end,
 
+--[[//Modifié par LLS pour Artillerie avec SIC le 23/10/2008
+]]}
+
+node "BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_RC", {} },
+        { "BEH_Tir_Pion_ASS_AppliquerFeux", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+        { "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC", {} },
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.bAutorise_Inopine = self.params[1]
+        self._namedParams.zoneTir2 = self.params[2]
+    end,
+
+    activate = function( self )
+        --[[// Prise en charge de l'ordre d'application des feux
+]]--[[//---------------------------------------------------------------------	
+]]local selOrder = DEC_GetCategory( "ordres_recus" )
+        self.ptZoneCanon = self.ptZoneCanon or nil--[[//Variable représentant le point de barycentre d'une zone d'implantation canon parmi la liste des zones
+]]
+        for _,x_ordre in pairs( selOrder or {} ) do
+        local _continue = true
+do
+                local repOrdreCond = x_ordre
+                if( repOrdreCond:GetType() == "Rep_OrderConduite_Pion_AppliquerFeux" ) then
+                    do
+                        if( self._namedParams.bAutorise_Inopine or F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_PretPourConduiteTir ) then
+                            do
+                                local repOrdre_Tir = repOrdreCond
+                                Activate( self.activations.ACT_Info_Trace, 1, { "Ordre : AppliquerFeux", } )
+                                Activate( self.activations.ACT_RC, 1, { eRC_ReceptionOrdreDeFeu, } )
+                                StartActivateOverride( self, self.activations.BEH_Tir_Pion_ASS_AppliquerFeux, 10, { repOrdre_Tir:Getmunitions_(), repOrdre_Tir:GetnbIT_(), repOrdre_Tir:Getcible_(), } )
+                                --[[//Calcul du point de barycentre de la zone d'implantation canon
+]]--[[//E_ValiditeRequete eValide = eRequeteValide;
+]]--[[//T_Localisation locZone2 = DEC_ConnaissanceObjet_Localisation(zoneTir2, eValide);
+]]--[[//ptZoneCanon = DEC_Geometrie_CalculerBarycentreLocalisation(locZone2);
+]]self.ptZoneCanon = S_Obj_Position( self._namedParams.zoneTir2 )
+                                StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self.ptZoneCanon, eProgressionDirect, eTypeItiMouvement, } )
+                                StartActivateOverride( self, self.activations.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC, 2.1, { self.ptZoneCanon, } )
+                            end
+                        end
+
+                    end
+                end
+
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { repOrdreCond, } )
+            end
+
+        end
+
+    end,
+
 }
 
 node "BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission"
@@ -209,14 +268,39 @@ elseif switch_1 == eFinMission then
 
     end,
 
+--[[// *****************************************************************************
+]]--[[// ACT_Pion_ASS_DebarquerLanceur
+]]--[[//
+]]--[[// Commentaires:lancer par la mission 'MettreEnOeuvre"
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "ACT_Pion_ASS_DebarquerLanceur"
+{
+    create = function( self )
+    end,
+
+    select = function( self )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Init
+]]--[[//-----------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            do
+                DEC_LaisserTransporteursSansDelai()
+            end
+        end
+
+    end,
+
+}
+
 --[[// ============================================================================
 ]]--[[// $Created : JCR : 24/10/2005 11:37
 ]]--[[// Installation sur une position ..
 ]]--[[// Met a jour la phase de mission
 ]]--[[// ============================================================================
-]]}
-
-node "BEH_Pion_ASS_InstallationSurZone"
+]]node "BEH_Pion_ASS_InstallationSurZone"
 {
     activations =
     {
@@ -389,6 +473,50 @@ node "BEH_Info_Pion_ASS_GererDisponibiliteAuTir"
     end,
 
 --[[// ============================================================================
+]]--[[// $Created : JCR : 24/03/2005 14:12
+]]--[[// 
+]]--[[// ============================================================================
+]]}
+
+node "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC"
+{
+    activations =
+    {
+        { "ACT_Info_Trace", {} },
+        { "ACT_Misc_Delai", {} },
+        { "ACT_RC", {} },
+        { "BEH_Dep_ProgressionVers", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ptCentre = self.params[1]
+    end,
+
+    activate = function( self )
+        self.ptTir = self.ptTir or nil
+        self.eAction = self.eAction or eActionDebut
+        if( myself.eEtatTir_Indirect_ == eActionTirIndirect_EnCours ) then
+            do
+                Activate( self.activations.ACT_Info_Trace, 1, { "Declenchement tir indirect : sauvegarde SIC", } )
+                StartActivateOverride( self, self.activations.ACT_Misc_Delai, 1, setmetatable( { 1, M_DELAI_SAUVEGARDE_TIR(), }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+            end
+        end
+
+        if( self.eAction == eActionEffectuee ) then
+            do
+                self.ptTir = DEC_Geometrie_PositionAleatoireSurCercle( self._namedParams.ptCentre, 2000 )
+                Activate( self.activations.ACT_RC, 1, { eRC_ChangementDePosition, } )
+                Activate( self.activations.ACT_Info_Trace, 1, { "Changement position : ART SIC", } )
+                --[[//start behavior BEH_Dep_ProgressionVers( ptTir, eProgressionDirect, eTypeItiMouvement );			
+]]StartActivateOverride( self, self.activations.BEH_Dep_ProgressionVers, 1, { self._namedParams.ptCentre, eProgressionDirect, eTypeItiMouvement, } )
+                self.eAction = eActionEnCours
+            end
+        end
+
+    end,
+
+--[[// ============================================================================
 ]]--[[// $Created : JCR : 23/03/2005 16:04
 ]]--[[// Apres reception des ordres de tir, on applique les feux sur la position
 ]]--[[// ============================================================================
@@ -514,6 +642,10 @@ connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_Apr
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC, "ACT_Misc_Delai", nodes.ACT_Misc_Delai }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
 connections[ #connections + 1 ] = { nodes.BEH_Dep_Pion_ASS_SePosterPourTirer, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }
 connections[ #connections + 1 ] = { nodes.BEH_Info_Pion_ASS_GererDisponibiliteAuTir, "ACT_Info_Pion_ASS_DisponibiliteAuTir", nodes.ACT_Info_Pion_ASS_DisponibiliteAuTir }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_AssurerMiseEnOeuvre_Mission, "ACT_RC", nodes.ACT_RC }
@@ -530,6 +662,12 @@ connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux,
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "ACT_RC", nodes.ACT_RC }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "BEH_Tir_Pion_ASS_AppliquerFeux", nodes.BEH_Tir_Pion_ASS_AppliquerFeux }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, "ACT_Info_Trace", nodes.ACT_Info_Trace }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, "ACT_RC", nodes.ACT_RC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, "BEH_Tir_Pion_ASS_AppliquerFeux", nodes.BEH_Tir_Pion_ASS_AppliquerFeux }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, "BEH_Dep_ProgressionVers", nodes.BEH_Dep_ProgressionVers }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, "BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC", nodes.BEH_Dep_Pion_ASS_ChangerDePosition_ApresTir_SIC }
+connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_GererOrdre_AppliquerFeux_SIC, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_InstallationSurPosition, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_InstallationSurPosition, "ACT_MAJ_EtatPhaseMission", nodes.ACT_MAJ_EtatPhaseMission }
 connections[ #connections + 1 ] = { nodes.BEH_Pion_ASS_InstallationSurZone, "ACT_Obs_EtablirVisionFaceADir", nodes.ACT_Obs_EtablirVisionFaceADir }

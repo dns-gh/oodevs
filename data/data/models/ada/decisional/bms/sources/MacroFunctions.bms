@@ -623,6 +623,16 @@ function DEC_StartPreparerObjet( knowledge, type, localisation )
     return DEC_StartPrepareObject( type, localisation )
 end
 
+function DEC_Copie_Liste( source )
+    local destination = {}
+    if source then
+        for i,j in pairs( source ) do
+            destination[i] = j
+        end
+    end
+    return destination
+end
+
 function DEC_Copie_ListePoints( source, destination )
     for i,j in pairs( source ) do
         destination[i] = j
@@ -636,7 +646,7 @@ end
 function DEC_Copie_ListeLocalisations( source, destination )
     for i,j in pairs( source ) do
         destination[i] = j
-    end
+end
 end
 
 function DEC_UserTypeList_Contient( list, element )

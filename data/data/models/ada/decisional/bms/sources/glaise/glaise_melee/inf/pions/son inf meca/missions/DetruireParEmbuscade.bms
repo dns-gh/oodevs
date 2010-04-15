@@ -1,0 +1,3 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_melee/inf/pions/son inf meca/missions/DetruireParEmbuscade.bms"] = true
+

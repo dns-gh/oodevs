@@ -39,8 +39,8 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 DEC_SetMission( myself, self._namedParams.mission )
-                myself.eEtatAmbiance_ = eEtatAmbiance_Vitesse
-                myself.eEtatEchelon_ = eEtatEchelon_Premier
+                F_Pion_SeteEtatAmbiance( myself, eEtatAmbiance_Vitesse )
+                F_Pion_SeteEtatEchelon( myself, eEtatEchelon_Premier )
             end
         end
 
@@ -70,7 +70,7 @@ include "bit.lua"
                                 cases_switch_1[1] = true
 elseif switch_1 == eFinMission then
                     Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_FinMission, } )
-                    if( myself.eEtatPhaseMission_ == eEtatPhaseMission_FinMission ) then
+                    if( F_Pion_GeteEtatPhaseMission( myself ) == eEtatPhaseMission_FinMission ) then
                         do
                             DEC_FinMission()
                                                         self.params.__returnValue = eActionEffectuee

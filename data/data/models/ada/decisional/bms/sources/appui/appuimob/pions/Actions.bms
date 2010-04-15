@@ -1,0 +1,218 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/appui/appuimob/pions/Actions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: SDE 02-11-22 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Appui/AppuiMob/Pions/Actions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 20/06/05 11:04 $
+]]--[[// $Revision: 16 $
+]]--[[// $Workfile: Actions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[// ----------------------------------------------------------------------------
+]]--[[// ACT_Transport_Pion_LOG_Transport
+]]--[[//
+]]--[[//
+]]--[[// ----------------------------------------------------------------------------
+]]node "ACT_Transport_Pion_LOG_Transport"
+{
+    actuators =
+    {
+        transporter = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.selListPions = self.params[1]
+    end,
+
+    select = function( self )
+        --[[// Pas d'unitées prêtes
+]]        if( #( self._namedParams.selListPions ) <= 0 ) then
+            self.params.__returnValue = eActionEnCours
+            Halt( self )
+            do return end
+        end
+
+        if( ModuleBegins() ) then
+            do
+                                do
+                end
+
+                DEC_Transport_AjouterPions( self._namedParams.selListPions, false )
+            end
+        end
+
+        if( not DEC_Transport_EstTermine() ) then
+            self.params.__returnValue = eActionEnCours
+            do return end
+        else
+            self.params.__returnValue = eActionEffectuee
+            do return end
+        end
+
+    end,
+
+    deselect = function( self )
+                do
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Transport_Annuler()
+    end,
+
+}
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// ACT_Transport_Pion_LOG_Embarquer
+]]--[[//
+]]--[[//
+]]--[[// ----------------------------------------------------------------------------
+]]node "ACT_Transport_Pion_LOG_Embarquer"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+--[[// Pas de déplacement pendant embarquement ou débarquement
+]]    create = function( self )
+    end,
+
+    select = function( self )
+                self.eActionTransport = self.eActionTransport or nil
+        self.actionPt = self.actionPt or 0
+        self.bPause = self.bPause or false
+        if( ModuleBegins() ) then
+            do
+                                do
+                end
+
+                self.actionPt = DEC_Transport_StartEmbarquer( self.eActionTransport )
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.eActionTransport
+            local cases_switch_1 = {}
+                if switch_1 == eActionTransport_Running then
+                                        self.params.__returnValue = eActionEnCours
+                    do return end
+
+                                end
+                if cases_switch_1[1] or switch_1 == eActionTransport_Finished then
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
+                    DEC_Trace( "Erreur durant le transport" )
+                                        self.params.__returnValue = eActionImpossible
+                    do return end
+
+                                end
+            end
+
+        if( self.bPause ) then
+            do
+                self.bPause = false
+                DEC_ReprendAction( self.actionPt )
+                                self.params.__returnValue = eActionEnCours
+                do return end
+
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPt )
+        self.bPause = true
+    end,
+
+    destroy = function( self )
+                DEC_StopAction( self.actionPt )
+    end,
+
+}
+
+--[[// ----------------------------------------------------------------------------
+]]--[[// ACT_Transport_Pion_LOG_Debarquer
+]]--[[//
+]]--[[//
+]]--[[// ----------------------------------------------------------------------------
+]]node "ACT_Transport_Pion_LOG_Debarquer"
+{
+    actuators =
+    {
+        deplacement = 1,
+    },
+
+--[[// Pas de déplacement pendant embarquement ou débarquement
+]]    create = function( self )
+    end,
+
+    select = function( self )
+                self.eActionTransport = self.eActionTransport or nil
+        self.actionPt = self.actionPt or 0
+        self.bPause = self.bPause or false
+        if( ModuleBegins() ) then
+            do
+                                do
+                end
+
+                self.actionPt = DEC_Transport_StartDebarquer( self.eActionTransport )
+            end
+        end
+
+         do
+            local _continue = true
+            local switch_1 = self.eActionTransport
+            local cases_switch_1 = {}
+                if switch_1 == eActionTransport_Running then
+                                        self.params.__returnValue = eActionEnCours
+                    do return end
+
+                                end
+                if cases_switch_1[1] or switch_1 == eActionTransport_Finished then
+                                        self.params.__returnValue = eActionEffectuee
+                    do return end
+
+                                end
+                if cases_switch_1[2] or switch_1 == eActionTransport_Impossible then
+                    DEC_Trace( "Erreur durant le transport" )
+                                        self.params.__returnValue = eActionImpossible
+                    do return end
+
+                                end
+            end
+
+        if( self.bPause ) then
+            do
+                self.bPause = false
+                DEC_ReprendAction( self.actionPt )
+                                self.params.__returnValue = eActionEnCours
+                do return end
+
+            end
+        end
+
+    end,
+
+    deselect = function( self )
+                DEC_PauseAction( self.actionPt )
+        self.bPause = true
+    end,
+
+    destroy = function( self )
+                DEC_StopAction( self.actionPt )
+    end,
+
+}
+

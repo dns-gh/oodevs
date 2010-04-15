@@ -1,0 +1,156 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_common/pions/behaviors/Behaviors - Ordre.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_Inopine
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "BEH_Ordre_Inopine"
+{
+    activations =
+    {
+        { "ACT_Ordre_Suppression", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+        --[[// =============================================================================
+]]--[[// Pour l'automate
+]]--[[// =============================================================================
+]]        if( myself.bOrdreInterrompreMission_ ) then
+            do
+                --[[//quand on a recu l'ordre "Interompre", si on était posté, on
+]]--[[//doit remettre la variable d'etat VE_SePoster à 0
+]]--[[// poursuivre si en poste
+]]SetStateVariable( "VE_SePoster", 0 )
+                DEC_Trace( " --------- Ordre interruption mission ---------" )
+                                self.params.__returnValue = eActionHalt
+                Halt( self )
+                do return end
+
+            end
+--[[// =============================================================================
+]]--[[// Reception d'un ordre de l'ANIBAS
+]]--[[// =============================================================================
+]]        end
+
+        local ordres_recus = DEC_GetCategory( "ordres_recus" )
+        for _,x in pairs( ordres_recus or {} ) do
+        local _continue = true
+do
+                local ordre = x
+                local repOrdre = ordre
+                 do
+                    local _continue = true
+                    local switch_1 = repOrdre:GetType()
+                    local cases_switch_1 = {}
+                        if switch_1 == "Rep_OrderConduite_Interrompre" then
+                            --[[// ----------------------------------------------------------------------------
+]]--[[// Fin mission
+]]--[[// ----------------------------------------------------------------------------
+]]DEC_Trace( "======= Ordre --> Interruption mission =====" )
+                            --[[// poursuivre si en poste
+]]SetStateVariable( "VE_SePoster", 0 )
+                            Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
+                                                        self.params.__returnValue = eActionHalt
+                            do return end
+
+                        --[[// ----------------------------------------------------------------------------
+]]--[[// Attendre (coordination)
+]]--[[// ----------------------------------------------------------------------------
+]]                        end
+                        if cases_switch_1[1] or switch_1 == "Rep_OrderConduite_AttendreSePoster" then
+                            DEC_Trace( "======= Ordre --> ATTENDRE =====" )
+                            SetStateVariable( "VE_SePoster", 2 )
+                            _continue = false
+                        --[[// ----------------------------------------------------------------------------
+]]--[[// Poursuivre (coordination)
+]]--[[// ----------------------------------------------------------------------------
+]]                        cases_switch_1[2] = true
+elseif switch_1 == "Rep_OrderConduite_Deboucher"
+                        or switch_1 == "Rep_OrderConduite_Poursuivre" then
+                            DEC_Trace( "======= Ordre --> POURSUIVRE =====" )
+                            SetStateVariable( "VE_SePoster", 0 )
+                            _continue = false
+                        --[[// ----------------------------------------------------------------------------
+]]--[[// Inconnu (dans la cadre de ce comportement, peut être pris en compte patr 
+]]--[[// un autre comportement ( ex: NBC)
+]]--[[// ----------------------------------------------------------------------------
+]]                        cases_switch_1[3] = true
+
+                        else
+                            _continue = false
+                                                end
+                    end
+--[[//suppression de l'ordre
+]]
+                Activate( self.activations.ACT_Ordre_Suppression, 1, { ordre, } )
+            end
+
+        end
+
+    end,
+
+    destroy = function( self )
+                SetStateVariable( "VE_SePoster", 0 )
+    end,
+
+--[[// *****************************************************************************
+]]--[[// BEH_Ordre_SePoster_EnAttente
+]]--[[//
+]]--[[//Commentaires :
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Ordre_SePoster_EnAttente"
+{
+    activations =
+    {
+        { "ACT_Dep_SePoster", {} },
+    },
+
+    create = function( self )
+    end,
+
+    activate = function( self )
+                if( ModuleBegins() ) then
+            do
+                DEC_Trace( "Se poste en attente d'ordre." )
+                SetStateVariable( "VE_SePoster", 2 )
+                Activate( self.activations.ACT_Dep_SePoster, 1, {} )--[[// On force le poste au premier tour
+]]
+                                self.params.__returnValue = eActionEnCours
+                do return end
+
+            end
+        end
+
+        if( ( GetStateVariable( "VE_SePoster" ) == 0 or GetStateVariable( "VE_SePoster" ) == nil ) ) then
+            do
+                DEC_Trace( "Conduite 'poursuivre' recu." )
+                                self.params.__returnValue = eActionEffectuee
+                do return end
+
+            end
+        end
+
+    end,
+
+    destroy = function( self )
+                DEC_Trace( "Conduite 'poursuivre' recu." )
+        SetStateVariable( "VE_SePoster", 0 )
+                self.params.__returnValue = eActionEffectuee
+        do return end
+
+    end,
+
+}
+
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_Inopine, "ACT_Ordre_Suppression", nodes.ACT_Ordre_Suppression }
+connections[ #connections + 1 ] = { nodes.BEH_Ordre_SePoster_EnAttente, "ACT_Dep_SePoster", nodes.ACT_Dep_SePoster }

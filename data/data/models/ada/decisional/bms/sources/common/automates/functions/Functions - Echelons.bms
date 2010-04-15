@@ -361,7 +361,7 @@ function S_PionsAuContact( eEtatEchelon )
     local _continue = true
 do
             local pion = x
-            if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon and pion:GeteEtatFeu_() == eEtatFeu_Executer ) then
+            if( F_Pion_GeteEtatEchelon( pion ) == eEtatEchelon and F_Pion_GeteEtatFeu( pion ) == eEtatFeu_Executer ) then
                 _returnValue = true
             end
 

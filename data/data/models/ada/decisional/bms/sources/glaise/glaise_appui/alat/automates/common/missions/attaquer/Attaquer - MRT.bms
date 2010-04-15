@@ -1,0 +1,50 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/attaquer/Attaquer - MRT.bms"] = true
+
+--[[// -----------------------------------------------------------------------------
+]]--[[// Quand on attaque, cela revient a freiner sans menager ses moyens.
+]]--[[// pour le moment, nous n'avons pas de mission pion attaquer => on freiner.
+]]--[[// nouvelle mission a implementer pour les pions
+]]--[[// -----------------------------------------------------------------------------
+]]node "MIS_Automate_MRT_ALAT_Attaquer"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
+        self.listeHAH = self.listeHAH or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleHAH" )
+        self.listeTigre = self.listeTigre or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleTigre" )
+        self.listeHAPCanons = self.listeHAPCanons or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleHAC" )
+        self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleHAM" )
+        self.listeAttaquer = self.listeAttaquer or S_Liste_Concatene( S_Liste_Concatene( self.listeHAH, self.listeTigre ), self.listeHAPCanons )
+        if( ModuleBegins() ) then
+            do
+                myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
+                DEC_SetMission( myself, self._namedParams.mission )
+                if( DIA_IsListEmpty( self.listeAttaquer ) ) then
+                    do
+                        DEC_Warning( eRC_MissionImpossibleUnitesSubordonneesNonOperationnelles )
+                                                self.params.__returnValue = eActionImpossible
+                        Halt( self )
+                        do return end
+
+                    end
+                end
+
+            end
+        end
+
+        DEC_MRT_Valide()
+                self.params.__returnValue = eActionEffectuee
+        Halt( self )
+        do return end
+
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Automate_MRT_ALAT_Attaquer = { "mission" }

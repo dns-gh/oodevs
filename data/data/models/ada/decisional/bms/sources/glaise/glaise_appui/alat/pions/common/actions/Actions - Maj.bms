@@ -1,0 +1,84 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/alat/pions/common/actions/Actions - Maj.bms"] = true
+
+--[[//------------------------------------------------------------------------------
+]]--[[// MAJ de l'objectif courant
+]]--[[// 
+]]--[[// Commentaires:  
+]]--[[//------------------------------------------------------------------------------
+]]node "ACT_Maj_Pions_ObjectifCourant"
+{
+    actuators =
+    {
+        objectifCourant = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.objectif = self.params[1]
+    end,
+
+    select = function( self )
+                myself.objectifCourant_ = self._namedParams.objectif
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                myself.objectifCourant_ = nil
+    end,
+
+}
+
+--[[//------------------------------------------------------------------------------ 
+]]--[[// MAJ des paramètres de ravitaillement
+]]--[[// 
+]]--[[// Commentaires: permet de gerer les recompletement partiels dans l'alat
+]]--[[//------------------------------------------------------------------------------
+]]node "ACT_Maj_Pion_ALAT_ParametresRecompletement"
+{
+    actuators =
+    {
+        parametresRecompletement = 1,
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.porteeAction = self.params[1]
+        self._namedParams.ambianceMission = self.params[2]
+    end,
+
+    select = function( self )
+        myself.porteeAction_ = self._namedParams.porteeAction
+        myself.ambianceMission_ = self._namedParams.ambianceMission
+    end,
+
+}
+
+node "Act_AbonnerPionAAppui"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.pion = self.params[1]
+    end,
+
+    select = function( self )
+                if( ModuleBegins() ) then
+            DIA_PushBack( self._namedParams.pion:GetselUnitesEnAppui_(), myself )
+        end
+
+    end,
+
+    deselect = function( self )
+            end,
+
+    destroy = function( self )
+                if( DIA_Contains( self._namedParams.pion:GetselUnitesEnAppui_(), myself ) ) then
+            DIA_Remove( self._namedParams.pion:GetselUnitesEnAppui_(), myself )
+        end
+
+    end,
+
+}
+

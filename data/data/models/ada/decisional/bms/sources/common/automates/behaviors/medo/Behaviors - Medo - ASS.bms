@@ -172,6 +172,59 @@ elseif switch_1 == eActionHalt
         Activate( self.activations.ACT_Mission_Automate_ASS_DLOAcquerirObjectifsA, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pion, self._namedParams.zone, self._namedParams.uniteAAppuyer, self._namedParams.eEtatEchelon, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
     end,
 
+--[[// *****************************************************************************
+]]--[[// BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA
+]]--[[// 
+]]--[[// Commentaires: Ajouter par LLS le 23/10/2008
+]]--[[//
+]]--[[// *****************************************************************************
+]]}
+
+node "BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA"
+{
+    activations =
+    {
+        { "ACT_Mission_Automate_ControleCreation_EnCours", {} },
+        { "ACT_Mission_Automate_ControleCreation_NOK", {} },
+        { "ACT_Mission_Automate_ControleCreation_OK", {} },
+        { "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pPion = self.params[2]
+        self._namedParams.zoneImplantationTir1 = self.params[3]
+        self._namedParams.zoneImplantationTir2 = self.params[4]
+    end,
+
+    activate = function( self )
+        self.eActionCreation = self.eActionCreation or eActionEnCours
+        local rForce = 1 / GetActivity()
+         do
+            local _continue = true
+            local switch_1 = self.eActionCreation
+            local cases_switch_1 = {}
+                if switch_1 == eActionEnCours then
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_EnCours, rForce, {} )
+                    _continue = false
+                                cases_switch_1[1] = true
+elseif switch_1 == eActionHalt
+                or switch_1 == eActionImpossible then
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_NOK, rForce, {} )
+                                        do return end
+
+                                end
+                if cases_switch_1[2] or switch_1 == eActionEffectuee then
+                    Activate( self.activations.ACT_Mission_Automate_ControleCreation_OK, -rForce, {} )
+                                        do return end
+
+                                end
+            end
+
+        Activate( self.activations.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones, rForce, setmetatable( { self._namedParams.ePhase, self._namedParams.pPion, self._namedParams.zoneImplantationTir1, self._namedParams.zoneImplantationTir2, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eActionCreation = v else rawset( t, k, v ) end end } ) )
+    end,
+
 }
 
 connections = connections or {}
@@ -179,6 +232,10 @@ connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AcquerirObjec
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AcquerirObjectifsA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AcquerirObjectifsA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AcquerirObjectifsA, "ACT_Mission_Automate_ASS_AcquerirObjectifsA", nodes.ACT_Mission_Automate_ASS_AcquerirObjectifsA }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }
+connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2ZonesA, "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones", nodes.ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, "ACT_Mission_Automate_ControleCreation_EnCours", nodes.ACT_Mission_Automate_ControleCreation_EnCours }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, "ACT_Mission_Automate_ControleCreation_NOK", nodes.ACT_Mission_Automate_ControleCreation_NOK }
 connections[ #connections + 1 ] = { nodes.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, "ACT_Mission_Automate_ControleCreation_OK", nodes.ACT_Mission_Automate_ControleCreation_OK }

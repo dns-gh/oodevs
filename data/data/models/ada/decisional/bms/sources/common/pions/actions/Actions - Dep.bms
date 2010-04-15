@@ -47,7 +47,7 @@ include "bit.lua"
                     --[[//-----------------------------------------------------------------------------
 ]]--[[// Deplacement en cours
 ]]--[[//-----------------------------------------------------------------------------
-]]myself.eEtatDeplacement_ = eEtatDeplacement_EnCours
+]]F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_EnCours )
                     do
                     end
 
@@ -367,15 +367,15 @@ elseif switch_1 == eEtatActionDeplacement_DejaEnDeplacement then
 --[[// pour laisser un tic au moteur...pour MAJ itineraire
 ]]        end
 
-        myself.eEtatDeplacement_ = eEtatDeplacement_PosteFaceAObstacle
+        F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_PosteFaceAObstacle )
     end,
 
     deselect = function( self )
-                myself.eEtatDeplacement_ = eEtatDeplacement_aucun
+                F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_aucun )
     end,
 
     destroy = function( self )
-                myself.eEtatDeplacement_ = eEtatDeplacement_aucun
+                F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_aucun )
     end,
 
 }

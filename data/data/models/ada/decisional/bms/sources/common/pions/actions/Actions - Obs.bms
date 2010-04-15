@@ -135,7 +135,7 @@ end
             RegisterPerception_ReconnaissancePoint_Callback( self.pPtObj, function () self.bRecoMaxObj = true end )
         end
 
-        myself.eEtatDeplacement_ = eEtatDeplacement_EnReco
+         F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_EnReco )
         if( self.bRecoMax ) then
             self.params.__returnValue = eActionEffectuee
         end
@@ -144,7 +144,7 @@ end
 
     deselect = function( self )
         self.bInit = false
-        myself.eEtatDeplacement_ = eEtatDeplacement_aucun
+         F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_aucun )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPt )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         DEC_Perception_DesactiverReconnaissancePoint( self.pPt )
@@ -152,7 +152,7 @@ end
     end,
 
     destroy = function( self )
-        myself.eEtatDeplacement_ = eEtatDeplacement_aucun
+        F_Pion_SeteEtatDeplacement( myself, eEtatDeplacement_aucun )
         DEC_Trace( "<< fin reconnaissance" )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPtObj )
         RemovePerception_ReconnaissancePoint_Callback ( self.pPt )

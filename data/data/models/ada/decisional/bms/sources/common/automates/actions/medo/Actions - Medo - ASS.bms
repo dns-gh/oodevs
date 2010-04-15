@@ -246,4 +246,88 @@ elseif switch_1 == ePhase_CDT then
 }
 
 --[[//-----------------------------------------------------------------------------	
+]]--[[//Ajout LLS pour Batterie de reco + tir pour version artillerie pour SCIPIO version SIC
+]]--[[//23/10/2008
+]]--[[// *****************************************************************************
+]]--[[// ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones
+]]--[[// 
+]]--[[// Commentaires:
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "ACT_Mission_Automate_ASS_AssignerAssurerMiseEnOeuvre2Zones"
+{
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.ePhase = self.params[1]
+        self._namedParams.pion = self.params[2]
+        self._namedParams.zoneImplantationTir1 = self.params[3]
+        self._namedParams.zoneImplantationTir2 = self.params[4]
+    end,
+
+    select = function( self )
+        self.missionPion = self.missionPion or nil--[[//-----------------------------------------------------------------------------
+]]--[[// Cree la Mission
+]]--[[//-----------------------------------------------------------------------------	
+]]
+        if( ModuleBegins() ) then
+            do
+                 do
+                    local _continue = true
+                    local switch_1 = self._namedParams.ePhase
+                    local cases_switch_1 = {}
+                        if switch_1 == ePhase_MRT then
+                                                    local misMRT = DEC_MRT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_AssurerMiseEnOeuvre2Zones" )
+                            self.missionPion = misMRT
+                            _continue = false
+                                                cases_switch_1[1] = true
+elseif switch_1 == ePhase_CDT then
+                                                    local misCDT = DEC_CDT_CreerMissionPion( self._namedParams.pion, "T_Mission_Pion_ASS_AssurerMiseEnOeuvre2Zones" )
+                            self.missionPion = misCDT
+                            _continue = false
+                                                cases_switch_1[2] = true
+
+                        else
+                            assert( false, "parametre invalide : ePhase" )
+                        end
+                    end
+
+            end
+        end
+
+        if( self.missionPion == nil ) then
+            self.params.__returnValue = eActionImpossible
+            do return end
+        end
+
+        --[[//-----------------------------------------------------------------------------		
+]]if( ModuleBegins() ) then
+            do
+            end
+        else
+            self.params.__returnValue = eActionEffectuee
+            do return end
+        end
+
+        --[[// Infos globales	    
+]]S_Misc_Copie_MissionPion_Mission( DEC_GetMission( myself ), self.missionPion )
+        --[[//Insertion des données des deux zones d'implantation de tir dans les paramètres de la mission
+]]DEC_AssignMissionParameter( self.missionPion, "zoneImplantation1_", self._namedParams.zoneImplantationTir1 )
+        DEC_AssignMissionParameter( self.missionPion, "zoneImplantation2_", self._namedParams.zoneImplantationTir2 )
+        --[[// Marquage échelon
+]]F_Pion_SeteEtatEchelon( self._namedParams.pion, eEtatEchelon_Premier )
+        --[[//-----------------------------------------------------------------------------
+]]--[[// Envoie la mission si l'on se trouve dans la conduite
+]]--[[//-----------------------------------------------------------------------------
+]]if( self._namedParams.ePhase == ePhase_CDT ) then
+            DEC_CDT_DonnerMissionPion_Mission( self.missionPion )
+        end
+
+                self.params.__returnValue = eActionEffectuee
+        do return end
+
+    end,
+
+}
+
+--[[//-----------------------------------------------------------------------------
 ]]

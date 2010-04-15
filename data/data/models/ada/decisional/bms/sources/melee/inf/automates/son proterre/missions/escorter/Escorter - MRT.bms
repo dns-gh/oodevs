@@ -58,7 +58,7 @@ includedFiles["sources/melee/inf/automates/son proterre/missions/escorter/Escort
 ]]--[[//-----------------------------------------------------------------------------
 ]]        end
 
-        Activate( self.activations.BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique, 1, { eMission_Automate_INF_EscorterUnite, } )
+        Activate( self.activations.BEH_Medo_Automate_INF_DonnerLesOrdresPourMissionDynamique, 1, { "T_Mission_Automate_INF_EscorterUnite", } )
     end,
 
 --[[// *****************************************************************************

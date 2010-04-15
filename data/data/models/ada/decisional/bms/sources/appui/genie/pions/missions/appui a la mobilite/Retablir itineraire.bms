@@ -153,7 +153,7 @@ node "BEH_Objet_Pion_GEN_ReduireObstacle"
 ]]        if( not DEC_ConnaissanceObjet_EstValide( self._namedParams.obj ) ) then
             do
                 --[[// hum hum
-]]myself.objMisEnCours_ = 0
+]]myself.objMisEnCours_ = nil
                                 Halt( self )
                 do return end
 
@@ -192,7 +192,7 @@ do
 ]]    end,
 
     destroy = function( self )
-                myself.objMisEnCours_ = 0
+                myself.objMisEnCours_ = nil
     end,
 
 }

@@ -66,28 +66,6 @@ do
 
 }
 
-node "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA"
-{
-    activations =
-    {
-        { "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", {} },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.pPion = self.params[1]
-        self._namedParams.ptZone = self.params[2]
-    end,
-
-    activate = function( self )
-        if( ModuleBegins() ) then
-            StartActivateOverride( self, self.activations.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.ptZone, } )
-        end
-
-    end,
-
-}
-
 node "BEH_Conduite_Automate_ASS_FaireSuivreDispositif"
 {
     activations =
@@ -134,31 +112,7 @@ do
 
 }
 
-node "BEH_Conduite_Automate_ASS_SuivreA"
-{
-    activations =
-    {
-        { "BEH_Mission_Automate_AssignerSuivreA", {} },
-    },
-
-    create = function( self )
-        self._namedParams = {}
-        self._namedParams.pPion = self.params[1]
-        self._namedParams.pAAppuyer = self.params[2]
-    end,
-
-    activate = function( self )
-        if( ModuleBegins() ) then
-            StartActivateOverride( self, self.activations.BEH_Mission_Automate_AssignerSuivreA, 1, { ePhase_CDT, self._namedParams.pPion, self._namedParams.pAAppuyer, } )
-        end
-
-    end,
-
-}
-
 connections = connections or {}
-connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA, "BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA", nodes.BEH_Mission_Automate_ASS_AssignerReconnaitreZoneDeploiementA }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_FaireSuivreDispositif, "BEH_Conduite_Automate_ASS_SuivreA", nodes.BEH_Conduite_Automate_ASS_SuivreA }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement, "BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA", nodes.BEH_Conduite_Automate_ASS_AssignerReconnaitreZoneDeploiementA }
 connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_ReconnaitreZonesDeploiement, "BEH_Conduite_Automate_ASS_FaireSuivreDispositif", nodes.BEH_Conduite_Automate_ASS_FaireSuivreDispositif }
-connections[ #connections + 1 ] = { nodes.BEH_Conduite_Automate_ASS_SuivreA, "BEH_Mission_Automate_AssignerSuivreA", nodes.BEH_Mission_Automate_AssignerSuivreA }

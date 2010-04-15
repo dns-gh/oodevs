@@ -1,0 +1,58 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/log/pions/missions/Evacuer.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// MIS_Pion_LOG_Evacuer
+]]--[[//
+]]--[[// Commentaires: 
+]]--[[//
+]]--[[// *****************************************************************************
+]]node "MIS_Pion_LOG_Evacuer"
+{
+    activations =
+    {
+        { "BEH_Ordre_Inopine", {} },
+        { "ACT_Misc_Pion_LOG_ActiverMaintenance", {} },
+    },
+
+    create = function( self )
+        self._namedParams = {}
+        self._namedParams.mission = self.params.mission
+    end,
+
+    activate = function( self )
+        self.eEtatOrdreConduite = self.eEtatOrdreConduite or eActionEnCours
+        --[[//------------------------------------------------------------------------
+]]--[[// Initialisation de la mission
+]]--[[//------------------------------------------------------------------------
+]]if( ModuleBegins() ) then
+            DEC_SetMission( myself, self._namedParams.mis )
+        end
+
+        --[[//-------------------------------------------------------------------------
+]]--[[//ordre de conuite inopine
+]]--[[//-------------------------------------------------------------------------
+]]if( self.eEtatOrdreConduite == eActionHalt ) then
+            do
+                self.eEtatOrdreConduite = eActionEnCours
+                DEC_FinMission()
+                                Halt( self )
+                do return end
+
+            end
+        end
+
+        Activate( self.activations.BEH_Ordre_Inopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatOrdreConduite = v else rawset( t, k, v ) end end } ) )
+        Activate( self.activations.ACT_Misc_Pion_LOG_ActiverMaintenance, 1, {} )--[[//-------------------------------------------------------------------------
+]]--[[// Activation de la chaîne
+]]--[[//-------------------------------------------------------------------------
+]]
+    end,
+
+}
+
+eventmanager_plugin = eventmanager_plugin or {}
+eventmanager_plugin.MIS_Pion_LOG_Evacuer = { "mission" }
+connections = connections or {}
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Evacuer, "BEH_Ordre_Inopine", nodes.BEH_Ordre_Inopine }
+connections[ #connections + 1 ] = { nodes.MIS_Pion_LOG_Evacuer, "ACT_Misc_Pion_LOG_ActiverMaintenance", nodes.ACT_Misc_Pion_LOG_ActiverMaintenance }

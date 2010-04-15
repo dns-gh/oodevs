@@ -211,7 +211,7 @@ includedFiles["sources/melee/inf/pions/common/Actions.bms"] = true
             end,
 
     destroy = function( self )
-                myself.ptRegroupement_ = 0
+                myself.ptRegroupement_ = nil
     end,
 
 }

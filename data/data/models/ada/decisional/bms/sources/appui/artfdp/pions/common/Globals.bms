@@ -20,7 +20,6 @@ include "Appui/ArtFdp/Pions/Common/Parameters.bms"
 
 include "Appui/ArtFdp/Pions/Common/Globals Poly.bms"
 
-
 --[[// Delai apres lequel le pion fait un mouvement de sauvegarde soit apres un tir
 ]]--[[// en presence de contre-batterie M_DELAI_SAUVEGARDE_TIR(), soit comme mvt
 ]]--[[// de sauvegarde M_DELAI_SAUVEGARDE().
