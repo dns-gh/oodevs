@@ -182,16 +182,6 @@ void ChangeHumanFactorsDialog::SendMessage( const kernel::Entity_ABC& entity, En
 // -----------------------------------------------------------------------------
 void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, EnumUnitTiredness tiredness, EnumUnitMorale moral, EnumUnitExperience experience )
 {
-    /*simulation::UnitMagicAction message;
-    message().set_oid( id );
-
-    Common::MsgMagicActionChangeHumanFactors magicAction;
-    *message().mutable_action()->mutable_change_facteurs_humains() = magicAction;     // $$$$ _RC_ FDS 2010-01-27: Pas trés clair pour moi ???
- 
-    magicAction.set_fatigue    ( tiredness );
-    magicAction.set_moral      ( moral );
-    magicAction.set_experience ( experience );
-    message.Send( publisher_ );*/
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_human_factors" );
     UnitMagicAction* action = new UnitMagicAction( entity, actionType, controllers_.controller_, true );
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();

@@ -27,7 +27,6 @@ namespace Common
 
 namespace MsgsClientToSim
 {
-    class MsgMagicActionPartialRecovery;
     class MsgUnitFragOrder;
     class MsgUnitMagicAction;
 }
@@ -173,7 +172,7 @@ private:
     void OnReceiveMsgResupplyResources        ();
     void OnReceiveMsgResupplyEquipement       ();
     void OnReceiveMsgResupplyAll              ();
-    void OnReceiveMsgResupply                 ( const MsgsClientToSim::MsgMagicActionPartialRecovery& asn );
+    void OnReceiveMsgResupply                 ( const Common::MsgMissionParameters& msg );
     void OnReceiveMsgDestroyAll               ();
     void OnReceiveMsgDestroyComponent         ();
     void OnReceiveMsgRecoverHumansTransporters();

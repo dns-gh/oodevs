@@ -32,7 +32,7 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model,
     new ChangeLogisticLinksDialog( parent, controllers, publisher, profile  );
     new LogisticSupplyChangeQuotasDialog( parent, controllers, publisher, model, profile  );
     new LogisticSupplyPushFlowDialog( parent, controllers, publisher, model.agents_, profile  );
-    new LogisticSupplyRecompletionDialog( parent, controllers, publisher, staticModel, profile );
+    new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, publisher, actionPublisher, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, publisher, actionPublisher, actionsModel, simulation, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
 }

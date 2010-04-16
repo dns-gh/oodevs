@@ -62,6 +62,10 @@
 #include "actions/MedicalPriorities.h"
 #include "actions/IntelligenceList.h"
 #include "actions/UrbanBlock.h"
+#include "actions/Army.h"
+#include "actions/Quantity.h"
+#include "actions/Identifier.h"
+#include "actions/ParameterList.h"
 
 #include <xeumeuleu/xml.h>
 #pragma warning( push, 0 )
@@ -69,6 +73,7 @@
 #pragma warning( pop )
 
 using namespace plugins::script;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::Adapters
@@ -231,6 +236,17 @@ ActionParameterFactory::~ActionParameterFactory()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateListParameter
+// Created: JSR 2010-04-15
+// -----------------------------------------------------------------------------
+void ActionParameterFactory::CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list, const kernel::Entity_ABC& entity ) const
+{
+    const std::string name = xml::attribute< std::string >( xis, "name" );
+    const std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    list.AddParameter( *CreateParameter( OrderParameter( name, type, false), xis, entity ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::CreateParameter
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------
@@ -291,6 +307,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         param.reset( new actions::parameters::AgentList( parameter, xis, adapters_->agents_, controller_ ) );
     else if( type == "automatelist" )
         param.reset( new actions::parameters::AutomatList( parameter, xis, adapters_->automats_, controller_ ) );
+    else if( type == "army" )
+        param.reset( new actions::parameters::Army( parameter, xis, adapters_->teams_, controller_ ) );
     else if( type == "agentlistbm" )
         param.reset( new actions::parameters::AgentList( parameter, xis, adapters_->agents_, controller_ ) );
     else if( type == "automatelistbm" )
@@ -323,6 +341,16 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         param.reset( new actions::parameters::MaintenancePriorities( parameter, *objects_, xis ) );
     else if( type == "urbanblockbm" )
         param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
+    else if( type == "quantity" )
+        param.reset( new actions::parameters::Quantity( parameter, xis ) );
+    else if( type == "identifier" )
+        param.reset( new actions::parameters::Identifier( parameter, xis ) );
+    else if( type == "list" )
+    {
+        actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( parameter );
+        param.reset( parameterList );
+        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, entity );
+    }
     else
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
     param->Set( true ); // $$$$ SBO 2007-10-11: ...

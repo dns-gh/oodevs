@@ -89,4 +89,17 @@ void MagicActionType::Initialize()
         experience->AddValue( eUnitExperience_Conscrit, tools::ToString( eUnitExperience_Conscrit ).ascii() );
         Register( Count(), *experience );
     }
+    else if( name_ == "partial_recovery" )
+    {
+        OrderParameter* equipments = new OrderParameter( "Equipments", "list", true );
+        Register( Count(), *equipments );
+        OrderParameter* humans = new OrderParameter( "Humans", "list", true );
+        Register( Count(), *humans );
+        OrderParameter* dotations = new OrderParameter( "Dotations", "list", true );
+        Register( Count(), *dotations );
+        OrderParameter* ammo = new OrderParameter( "Ammo", "list", true );
+        Register( Count(), *ammo );
+        OrderParameter* stocks = new OrderParameter( "Stocks", "list", true );
+        Register( Count(), *stocks );
+    }
 }

@@ -10,6 +10,11 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
+#include "actions/ActionsModel.h"
+#include "actions/UnitMagicAction.h"
+#include "actions/ParameterList.h"
+#include "actions/Quantity.h"
+#include "actions/Identifier.h"
 #include "gaming/Dotations.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
@@ -18,6 +23,8 @@
 #include "gaming/SupplyStates.h"
 #include "gaming/Troops.h"
 #include "gaming/tools.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -25,19 +32,17 @@
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/MagicActionType.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"       
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
-
 using namespace kernel;
 using namespace gui;
-
-namespace MsgsClientToSim
-{
-    class MsgMagicActionPartialRecovery;
-}
+using namespace actions;
+using namespace parameters;
 
 class SpinTableItem : public QTableItem
 {
@@ -89,11 +94,14 @@ private:
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, const kernel::Profile_ABC& profile )
+LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
     : QDialog( parent, tr( "Recompletion" ) )
     , controllers_( controllers )
-    , publisher_( publisher )
     , static_( staticModel )
+    , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , simulation_( simulation )
     , profile_( profile )
     , selected_( controllers )
 {
@@ -252,9 +260,9 @@ void LogisticSupplyRecompletionDialog::InitializePersonal()
     if( const Troops* troops = selected_->Retrieve< Troops >() )
     {
         personalsTable_->setNumRows( 0 );
-        AddPersonal( 0, tr( "officers" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
-        AddPersonal( 1, tr( "warrant-officers" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
-        AddPersonal( 2, tr( "private" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
+        AddPersonal( Common::officier, tr( "officers" ), troops->humans_[ eTroopHealthStateTotal ].officers_ );
+        AddPersonal( Common::sous_officer, tr( "warrant-officers" ), troops->humans_[ eTroopHealthStateTotal ].subOfficers_ );
+        AddPersonal( Common::mdr, tr( "private" ), troops->humans_[ eTroopHealthStateTotal ].troopers_ );
         personalsTable_->setMinimumHeight( personalsTable_->rowHeight( 0 ) * 5 );
     }
 }
@@ -303,10 +311,10 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
 void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
 {
     munitionsFamilyTable_->setNumRows( 0 );
-    AddAmmunition( 0, tr( "Shell" ) );          //eAmmunitionFamily_Obus
-    AddAmmunition( 1, tr( "Air missile" ) );    //eAmmunitionFamily_MissileAir
-    AddAmmunition( 2, tr( "Ground missile" ) ); //eAmmunitionFamily_MissileSol
-    AddAmmunition( 3, tr( "Bullet" ) );         //eAmmunitionFamily_Mitraille
+    AddAmmunition( Common::obus, tr( "Shell" ) );          //eAmmunitionFamily_Obus
+    AddAmmunition( Common::missile_sol, tr( "Ground missile" ) ); //eAmmunitionFamily_MissileSol
+    AddAmmunition( Common::missile_air, tr( "Air missile" ) );    //eAmmunitionFamily_MissileAir
+    AddAmmunition( Common::mitraille, tr( "Bullet" ) );         //eAmmunitionFamily_Mitraille
     munitionsFamilyTable_->setMinimumHeight( munitionsFamilyTable_->rowHeight( 0 ) * 5 );
 }
 
@@ -368,11 +376,19 @@ void LogisticSupplyRecompletionDialog::Show()
     show();
 }
 
+namespace
+{
+    std::string CreateName( const std::string& str, int& index )
+    {
+        return QString( (str + " %1" ).c_str() ).arg( index++ ).ascii();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillPersonal
-// Created: AGE 2006-05-02
+// Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillPersonal( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
 {
     uint nNbrPersonals = 0;
     for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
@@ -384,53 +400,47 @@ void LogisticSupplyRecompletionDialog::FillPersonal( MsgsClientToSim::MsgMagicAc
 
     if( nNbrPersonals > 0 )
     {   
-//        action.mutable_personnels()->set_n( nNbrPersonals );
-
-//        MsgHumanRecovery* pAsnPersonnel = new MsgHumanRecovery[ nNbrPersonals ];
-//        action.mutable_personnels()->mutable_elem() = pAsnPersonnel;
-//        unsigned int nAsnIdx = 0;
+        int index = 1;
         for( int nRow = 0; nRow < personalsTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pPersonnelItemCheckBox = static_cast< QCheckTableItem* >( personalsTable_->item( nRow, 0 ) );
             QTableItem*      pNbrItem               = personalsTable_->item( nRow, 2 );
             if( !pPersonnelItemCheckBox->isChecked() )
                 continue;
-            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfHumanRecovery_HumanRecovery& personnel = *action.mutable_personnels()->add_elem();
-            personnel.set_rang( ( EnumHumanRank )nRow );
-            personnel.set_nombre_disponible( pNbrItem->text().toUInt() );
+
+            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Human", index ) , "list", false ) );
+            list.AddParameter( *personalList );
+            personalList->AddParameter( *new Identifier( OrderParameter( "Rank", "identifier", false ), nRow ) );
+            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pNbrItem->text().toInt() ) );
         }
     }
 }
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillEquipments
-// Created: AGE 2006-05-02
+// Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillEquipments( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::ParameterList& list )
 {
     if( equipmentsTable_->numRows() > 1 )
     {
-//        uint nAsnIdx = 0;
-//        MsgEquipmentRecovery* pAsnEquipement = new MsgEquipmentRecovery[ equipmentsTable_->numRows() - 1 ];
+        int index = 1;
         for( int nRow = 0; nRow < equipmentsTable_->numRows() - 1; ++nRow )
         {
             QComboTableItem* pEquipementItem  = static_cast< QComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
             QTableItem*      pNbrItem         = equipmentsTable_->item( nRow, 1 );
 
-            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfEquipmentRecovery_EquipmentRecovery& equipement = *action.mutable_equipements()->add_elem();
-            equipement.mutable_type_equipement()->set_equipment( equipments_[ pEquipementItem->currentText() ]->type_.GetId() );
-            equipement.set_nombre_disponible( pNbrItem->text().toUInt() );
+            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Equipment", index ), "list", false ) );
+            list.AddParameter( *personalList );
+            personalList->AddParameter( *new Identifier( OrderParameter( "equipment", "identifier", false ), equipments_[ pEquipementItem->currentText() ]->type_.GetId() ) );
+            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pNbrItem->text().toInt() ) );
         }
-//        action.mutable_equipements()->set_n( equipmentsTable_->numRows() - 1 );
-//        action.mutable_equipements()->mutable_elem() = pAsnEquipement;
     }
 }
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillDotations
-// Created: AGE 2006-05-02
+// Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillDotations( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::ParameterList& list )
 {
     unsigned int nNbrDotations = 0;
     for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
@@ -441,10 +451,7 @@ void LogisticSupplyRecompletionDialog::FillDotations( MsgsClientToSim::MsgMagicA
     }
     if( nNbrDotations > 0 )
     {   
-//        action.mutable_dotations()->set_n( nNbrDotations );
-//        MsgDotationRecovery* pAsnDotations = new MsgDotationRecovery[ nNbrDotations ];
-//        action.mutable_dotations()->mutable_elem() = pAsnDotations;
-//        uint nAsnIdx = 0;
+        int index = 1;
         for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pDotationItemCheckBox = static_cast< QCheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
@@ -455,18 +462,18 @@ void LogisticSupplyRecompletionDialog::FillDotations( MsgsClientToSim::MsgMagicA
             if( !pDotationItemCheckBox->isChecked() )
                 continue;
 
-            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfDotationRecovery_DotationRecovery& dotation = *action.mutable_dotations()->add_elem();
-            dotation.set_famille_dotation( ( EnumDotationFamily )tools::DotationFamilyFromString( pDotationItem->text() ) );
-            dotation.set_pourcentage( pPercentageItem->text().toUInt() );
+            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Dotation", index ), "list", false ) );
+            list.AddParameter( *personalList );
+            personalList->AddParameter( *new Identifier( OrderParameter( "dotation", "identifier", false ), tools::DotationFamilyFromString( pDotationItem->text() ) ) );
+            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pPercentageItem->text().toInt() ) );
         }
     } 
 }
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillAmmunitions
-// Created: AGE 2006-05-02
+// Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillAmmunitions( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::ParameterList& list )
 {
     uint nNbrMunitions = 0;
     for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
@@ -478,10 +485,7 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( MsgsClientToSim::MsgMagi
     }
     if( nNbrMunitions > 0 )
     {   
-//        action.mutable_munitions().set_n( nNbrMunitions );
-//        MsgsClientToSim::AmmunitionDotationRecovery* pAsnMunitions = new MsgAmmunitionDotationRecovery[ nNbrMunitions ];
-//        action.mutable_munitions()->mutable_elem() = pAsnMunitions;
-//        uint nAsnIdx = 0;
+        int index = 1;
         for( int nRow = 0; nRow < munitionsFamilyTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pMunitionItemCheckBox = static_cast< QCheckTableItem* >( munitionsFamilyTable_->item( nRow, 0 ) );
@@ -491,18 +495,18 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( MsgsClientToSim::MsgMagi
             if( !pMunitionItemCheckBox->isChecked() )
                 continue;
 
-            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery_AmmunitionDotationRecovery& munition = *action.mutable_munitions()->add_elem();
-            munition.set_famille_munition( ( EnumAmmunitionFamily )nRow ); // $$$$ SBO 2008-06-16: should use munition family
-            munition.set_pourcentage( pPercentageItem->text().toUInt() );
+            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Ammo", index ), "list", false ) );
+            list.AddParameter( *personalList );
+            personalList->AddParameter( *new Identifier( OrderParameter( "ammo", "identifier", false ), nRow ) );
+            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pPercentageItem->text().toInt() ) );
         }
-    }   
+    }
 }
-
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyRecompletionDialog::FillSupplies
-// Created: AGE 2006-05-02
+// Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void LogisticSupplyRecompletionDialog::FillSupplies( MsgsClientToSim::MsgMagicActionPartialRecovery& action )
+void LogisticSupplyRecompletionDialog::FillSupplies( actions::parameters::ParameterList& list )
 {
     unsigned int nNbrResources = 0;
     for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
@@ -514,9 +518,7 @@ void LogisticSupplyRecompletionDialog::FillSupplies( MsgsClientToSim::MsgMagicAc
     }
     if( nNbrResources > 0 )
     {   
-//        action.mutable_stocks()->set_n( nNbrResources );
-//        MsgsClientToSim::StockRecovery* pAsnStocks = new StockRecovery[ nNbrResources ];
-//        action.mutable_stocks()->add_elem() = pAsnStocks;
+        int index = 1;
         for( int nRow = 0; nRow < stockTable_->numRows(); ++nRow )
         {
             QCheckTableItem* pItemCheckBox = static_cast< QCheckTableItem* >( stockTable_->item( nRow, 0 ) );
@@ -530,11 +532,12 @@ void LogisticSupplyRecompletionDialog::FillSupplies( MsgsClientToSim::MsgMagicAc
             assert( pItem );            
             assert( pQttyItem );
 
-            MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery& stock = *action.mutable_stocks()->add_elem();
-            stock.set_ressource_id       ( stocks_[ pItem->text() ]->type_->GetId() );
-            stock.set_quantite_disponible( pQttyItem->text().toUInt() );
+            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Stock", index ), "list", false ) );
+            list.AddParameter( *personalList );
+            personalList->AddParameter( *new Identifier( OrderParameter( "stock", "identifier", false ), stocks_[ pItem->text() ]->type_->GetId() ) );
+            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pQttyItem->text().toInt() ) );
         }
-    } 
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -545,22 +548,34 @@ void LogisticSupplyRecompletionDialog::Validate()
 {
     if( ! selected_ )
         return;
+    
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "partial_recovery" );
+    UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
+    
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    parameters::ParameterList* equipments = new parameters::ParameterList( it.NextElement() );
+    parameters::ParameterList* humans = new parameters::ParameterList( it.NextElement() );
+    parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
+    parameters::ParameterList* ammo = new parameters::ParameterList( it.NextElement() );
+    parameters::ParameterList* stocks = new parameters::ParameterList( it.NextElement() );
+    
+    action->AddParameter( *equipments );
+    action->AddParameter( *humans );
+    action->AddParameter( *dotations );
+    action->AddParameter( *ammo );
+    action->AddParameter( *stocks );
 
-    simulation::UnitMagicAction message;
-    message().set_oid( selected_->GetId() );
+    FillEquipments( *equipments );
+    FillPersonal( *humans );
+    FillDotations( *dotations );
+    FillAmmunitions( *ammo );
+    FillSupplies( *stocks );
 
-    MsgsClientToSim::MsgMagicActionPartialRecovery magicAction;
-    FillPersonal( magicAction );
-    FillEquipments( magicAction );
-    FillDotations( magicAction );
-    FillAmmunitions( magicAction );
-    FillSupplies( magicAction );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Polish();
+    actionsModel_.Register( action->GetId(), *action );
+    actionsModel_.Publish( *action, actionPublisher_ );
 
-    // $$$$ JSR 2010-04-14: TODO
-    //*message().mutable_action()->mutable_recompletement_partiel() = magicAction;   // $$$$ _RC_ FDS 2010-01-27: Je ne comprends pas cette innitialisation ???
-
-    message.Send( publisher_ );
-    magicAction.Clear();    
     selected_ = 0;
     hide();
 }

@@ -28,6 +28,8 @@ namespace actions
         class PopulationKnowledge;
         class DotationType;
         class Army;
+        class Quantity;
+        class Identifier;
     }
 
 // =============================================================================
@@ -63,6 +65,8 @@ public:
     virtual void Visit( const parameters::PopulationKnowledge& ) {}
     virtual void Visit( const parameters::DotationType&        ) {}
     virtual void Visit( const parameters::Army&                ) {}
+    virtual void Visit( const parameters::Quantity&            ) {}
+    virtual void Visit( const parameters::Identifier&          ) {}
     //@}
 };
 

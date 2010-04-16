@@ -31,6 +31,14 @@ namespace dispatcher
     class Model;
 }
 
+namespace actions
+{
+    namespace parameters
+    {
+        class ParameterList;
+    }
+}
+
 namespace plugins
 {
 namespace script
@@ -67,6 +75,7 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list, const kernel::Entity_ABC& entity ) const;
     struct Adapters;
     struct AgentConverter;
     struct ObjectConverter;

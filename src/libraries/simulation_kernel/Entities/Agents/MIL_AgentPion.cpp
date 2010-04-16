@@ -794,67 +794,77 @@ void MIL_AgentPion::OnReceiveMsgResupplyAll()
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReceiveMsgResupply
-// Created: NLD 2005-07-27
+// Created: JSR 2010-04-15
 // -----------------------------------------------------------------------------
-void  MIL_AgentPion::OnReceiveMsgResupply( const MsgsClientToSim::MsgMagicActionPartialRecovery& asn )
+void MIL_AgentPion::OnReceiveMsgResupply( const Common::MsgMissionParameters& msg )
 {
-    if( asn.has_equipements() )
+    if( msg.elem( 0 ).has_value() ) // Equipments
     {
         PHY_RolePion_Composantes& roleComposantes = GetRole< PHY_RolePion_Composantes >();
-        for( int i = 0; i < asn.equipements().elem_size(); ++i )
+        for( int i = 0; i < msg.elem( 0 ).value().list_size(); ++i )
         {
-            const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfEquipmentRecovery_EquipmentRecovery& asnEquipement = asn.equipements().elem( i );
-            const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( asnEquipement.type_equipement() );
+            Common::MsgEquipmentType type;
+            type.set_equipment( msg.elem( 0 ).value().list( i ).list( 0 ).identifier() );
+            int number = msg.elem( 0 ).value().list( i ).list( 1 ).quantity();
+            const PHY_ComposanteTypePion* pComposanteType = PHY_ComposanteTypePion::Find( type );
             if( pComposanteType )
-                roleComposantes.ChangeComposantesAvailability( *pComposanteType, asnEquipement.nombre_disponible() );
+                roleComposantes.ChangeComposantesAvailability( *pComposanteType, number );
         }
     }
 
-    if( asn.has_personnels() )
+    if( msg.elem( 1 ).has_value() ) // Humans
     {
         human::PHY_RolePion_Humans& roleHumans = GetRole< human::PHY_RolePion_Humans >();
-        for( int i = 0 ; i < asn.personnels().elem_size(); ++i )
+        for( int i = 0 ; i < msg.elem( 1 ).value().list_size(); ++i )
         {
-            const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfHumanRecovery_HumanRecovery& asnPersonnel = asn.personnels().elem( i );
-            const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( asnPersonnel.rang() );
+            unsigned int rank = msg.elem( 1 ).value().list( i ).list( 0 ).identifier();
+            int number = msg.elem( 1 ).value().list( i ).list( 1 ).quantity();
+            const PHY_HumanRank* pHumanRank = PHY_HumanRank::Find( rank );
             if( pHumanRank )
-                roleHumans.ChangeHumansAvailability( *pHumanRank, asnPersonnel.nombre_disponible() ); 
+                roleHumans.ChangeHumansAvailability( *pHumanRank, number ); 
         }
     }
     
-    if( asn.has_dotations() )
+    if( msg.elem( 2 ).has_value() ) // Dotations
     {
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
-        for( int i = 0; i < asn.dotations().elem_size(); ++i )
+        for( int i = 0; i < msg.elem( 2 ).value().list_size(); ++i )
         {
-            const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfDotationRecovery_DotationRecovery& asnDotation = asn.dotations().elem( i );
-            const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( asnDotation.famille_dotation() ); 
+            unsigned int dotation = msg.elem( 2 ).value().list( i ).list( 0 ).identifier();
+            int number = msg.elem( 2 ).value().list( i ).list( 1 ).quantity();
+            const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotation ); 
             if( pDotationType )
-                roleDotations.ResupplyDotations( *pDotationType, asnDotation.pourcentage() / 100. );
+                roleDotations.ResupplyDotations( *pDotationType, number / 100. );
         }
     }
 
-    if( asn.has_munitions() )
+    if( msg.elem( 3 ).has_value() ) // Ammunition
     {
         dotation::PHY_RolePion_Dotations& roleDotations = GetRole< dotation::PHY_RolePion_Dotations >();
-        for( int i = 0; i < asn.munitions().elem_size(); ++i )
+        for( int i = 0; i < msg.elem( 3 ).value().list_size(); ++i )
         {
-            const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfAmmunitionDotationRecovery_AmmunitionDotationRecovery& asnMunition = asn.munitions().elem( i );
-            const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( asnMunition.famille_munition() ); 
+            unsigned int munition = msg.elem( 3 ).value().list( i ).list( 0 ).identifier();
+            int number = msg.elem( 3 ).value().list( i ).list( 1 ).quantity();
+            const PHY_AmmoDotationClass* pAmmoClass = PHY_AmmoDotationClass::Find( munition ); 
             if( pAmmoClass )
-                roleDotations.ResupplyDotations( *pAmmoClass, asnMunition.pourcentage() / 100. );
+                roleDotations.ResupplyDotations( *pAmmoClass, number / 100. );
         }
     }
 
-    if( asn.has_stocks() )
+    if( msg.elem( 4 ).has_value() ) // stocks
+    {
         if( PHY_RoleInterface_Supply* roleSupply = RetrieveRole< PHY_RoleInterface_Supply >() )
-            for( int i = 0; i < asn.stocks().elem_size(); ++i )
+        {
+            for( int i = 0; i < msg.elem( 4 ).value().list_size(); ++i )
             {
-                const MsgsClientToSim::MsgMagicActionPartialRecovery_SeqOfStockRecovery_StockRecovery& asnStock = asn.stocks().elem( i );
-                const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id() );
+                unsigned int stock = msg.elem( 4 ).value().list( i ).list( 0 ).identifier();
+                int number = msg.elem( 4 ).value().list( i ).list( 1 ).quantity();
+                const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( stock );
                 if( pDotationCategory )
-                    roleSupply->ResupplyStocks( *pDotationCategory, asnStock.quantite_disponible() );
+                    roleSupply->ResupplyStocks( *pDotationCategory, number );
             }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -914,8 +924,7 @@ void MIL_AgentPion::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitM
         OnReceiveMsgChangeHumanFactors( msg.parametres() );
         break;
     case MsgsClientToSim::MsgUnitMagicAction_Type_partial_recovery:
-        // $$$$ JSR 2010-04-14: TODO
-        // OnReceiveMsgResupply                   ( asnMsg.action().recompletement_partiel() );
+        OnReceiveMsgResupply( msg.parametres() );
         break;
     default:
         assert( false );

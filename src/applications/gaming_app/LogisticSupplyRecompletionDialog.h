@@ -20,15 +20,21 @@ namespace kernel
     class Profile_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+    namespace parameters
+    {
+        class ParameterList;
+    }
+}
+
 class StaticModel;
 class Equipment;
 class Dotation;
 class Publisher_ABC;
-
-namespace MsgsClientToSim
-{
-    class MsgMagicActionPartialRecovery;
-}
+class ActionPublisher;
+class Simulation;
 
 //=============================================================================
 // Created:  SBO 2005-07-27 
@@ -42,7 +48,7 @@ class LogisticSupplyRecompletionDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& staticModel, const kernel::Profile_ABC& profile );
+             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyRecompletionDialog();
     //@}
 
@@ -84,11 +90,11 @@ private:
     void AddPersonal( unsigned pos, const QString& label, unsigned max );
     void AddAmmunition( unsigned pos, const QString& label );
 
-    void FillPersonal   ( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
-    void FillEquipments ( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
-    void FillDotations  ( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
-    void FillAmmunitions( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
-    void FillSupplies   ( MsgsClientToSim::MsgMagicActionPartialRecovery& action );
+    void FillPersonal   ( actions::parameters::ParameterList& list );
+    void FillEquipments ( actions::parameters::ParameterList& list );
+    void FillDotations  ( actions::parameters::ParameterList& list );
+    void FillAmmunitions( actions::parameters::ParameterList& list );
+    void FillSupplies   ( actions::parameters::ParameterList& list );
 
     QStringList FilterEquipmentList() const;
     //@}
@@ -110,8 +116,11 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Publisher_ABC& publisher_;
     const StaticModel& static_;
+    Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const Simulation& simulation_;
     const kernel::Profile_ABC& profile_;
 
     kernel::SafePointer< kernel::Agent_ABC > selected_;

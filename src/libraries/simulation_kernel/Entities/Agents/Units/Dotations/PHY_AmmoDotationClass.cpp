@@ -13,10 +13,10 @@
 #include "PHY_AmmoDotationClass.h"
 #include "protocol/protocol.h"
 
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , eObus      , Common::obus        );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", eMissileAir, Common::missile_air );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", eMissileSol, Common::missile_sol );
-const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , eMitraille , Common::mitraille   );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::obus_      ( "Obus"      , Common::obus        );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileAir_( "MissileAir", Common::missile_air );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::missileSol_( "MissileSol", Common::missile_sol );
+const PHY_AmmoDotationClass PHY_AmmoDotationClass::mitraille_ ( "Mitraille" , Common::mitraille   );
 
 PHY_AmmoDotationClass::T_TypeMap PHY_AmmoDotationClass::types_;
 
@@ -47,9 +47,8 @@ void PHY_AmmoDotationClass::Terminate()
 // Name: PHY_AmmoDotationClass constructor
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, E_Type nType, Common::EnumAmmunitionFamily nAsnID )
+PHY_AmmoDotationClass::PHY_AmmoDotationClass( const std::string& strName, Common::EnumAmmunitionFamily nAsnID )
     : strName_( strName )
-    , nType_  ( nType   )
     , nAsnID_ ( nAsnID  )
 {
     // NOTHING
@@ -110,7 +109,7 @@ const PHY_AmmoDotationClass* PHY_AmmoDotationClass::Find( Common::EnumAmmunition
 // -----------------------------------------------------------------------------
 int PHY_AmmoDotationClass::GetID() const
 {
-    return nType_;
+    return (int) nAsnID_;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +136,7 @@ const std::string& PHY_AmmoDotationClass::GetName() const
 // -----------------------------------------------------------------------------
 bool PHY_AmmoDotationClass::operator==( const PHY_AmmoDotationClass& rhs ) const
 {
-    return nType_ == rhs.nType_;
+    return nAsnID_ == rhs.nAsnID_;
 }
 
 // -----------------------------------------------------------------------------
@@ -146,5 +145,5 @@ bool PHY_AmmoDotationClass::operator==( const PHY_AmmoDotationClass& rhs ) const
 // -----------------------------------------------------------------------------
 bool PHY_AmmoDotationClass::operator!=( const PHY_AmmoDotationClass& rhs ) const
 {
-    return nType_ != rhs.nType_;
+    return nAsnID_ != rhs.nAsnID_;
 }

@@ -32,55 +32,6 @@ message MsgUnitCreationRequest {
 }
 
 // Magic Action
-message MagicActionChangeHumanFactors {
-   optional Common.EnumUnitTiredness    fatigue    = 1;
-   optional Common.EnumUnitMorale       moral      = 2;
-   optional Common.EnumUnitExperience   experience = 3;
-}
-
-message MsgMagicActionPartialRecovery {
-    message SeqOfEquipmentRecovery {
-        message EquipmentRecovery {
-           required Common.MsgEquipmentType type_equipement   = 1;
-           required int32                   nombre_disponible = 2;
-        }
-        repeated EquipmentRecovery elem = 1;
-    }
-    message SeqOfHumanRecovery {
-        message HumanRecovery {
-           required Common.EnumHumanRank rang              = 1;
-           required int32                nombre_disponible = 2;
-        }
-        repeated HumanRecovery elem = 1;
-    }
-    message SeqOfDotationRecovery {
-        message DotationRecovery {
-           required Common.EnumDotationFamily   famille_dotation    = 1;
-           required int32                       pourcentage         = 2;
-        }
-        repeated DotationRecovery elem = 1;
-    }
-    message SeqOfAmmunitionDotationRecovery {
-        message AmmunitionDotationRecovery {
-           required Common.EnumAmmunitionFamily famille_munition = 1;
-           required uint32                      pourcentage      = 2;
-        }
-        repeated AmmunitionDotationRecovery elem = 1;
-    }
-    message SeqOfStockRecovery {
-        message StockRecovery {
-           required uint32 ressource_id        = 1;
-           required int32  quantite_disponible = 2;
-        }
-        repeated StockRecovery elem = 1;
-    }
-    optional SeqOfEquipmentRecovery          equipements = 1;
-    optional SeqOfHumanRecovery              personnels  = 2;
-    optional SeqOfDotationRecovery           dotations   = 3;
-    optional SeqOfAmmunitionDotationRecovery munitions   = 4;
-    optional SeqOfStockRecovery              stocks      = 5;
-}
-
 message MsgUnitMagicAction {
    enum Type {
         move_to              = 0;

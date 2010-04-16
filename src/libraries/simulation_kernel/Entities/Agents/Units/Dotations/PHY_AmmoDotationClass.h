@@ -62,23 +62,14 @@ private:
     //@{
     typedef std::map< int, const PHY_AmmoDotationClass* > T_TypeMap;
     typedef T_TypeMap::const_iterator                     CIT_TypeMap;
-
-    enum E_Type
-    {
-        eObus = 0, 
-        eMissileSol,
-        eMissileAir,
-        eMitraille,
-    };
     //@}
 
 private:
-     PHY_AmmoDotationClass( const std::string& strName, E_Type nType, Common::EnumAmmunitionFamily nAsnID );
+     PHY_AmmoDotationClass( const std::string& strName, Common::EnumAmmunitionFamily nAsnID );
     virtual ~PHY_AmmoDotationClass();
 
 private:
     const std::string               strName_;
-    const E_Type                    nType_;
     const Common::EnumAmmunitionFamily nAsnID_;
 
 private:

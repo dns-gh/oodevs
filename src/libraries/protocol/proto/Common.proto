@@ -12,8 +12,8 @@ enum EnumDotationFamily {
 
 enum EnumAmmunitionFamily {
    obus                                             = 0;
-   missile_air                                      = 1;
-   missile_sol                                      = 2;
+   missile_sol                                      = 1;
+   missile_air                                      = 2;
    mitraille                                        = 3;
 }
 
@@ -455,19 +455,6 @@ message MsgUrbanKnowledge {
     required uint32 oid = 1;
 }
 
-message MsgSupply {
-    required uint32 type     = 1;
-    required int32  quantity = 2;
-}
-
-message MsgSupplyList {
-    repeated MsgSupply supply = 1;
-}
-
-message MsgSuppliesList {
-    repeated MsgSupplyList supplies = 1;
-}
-
 message MsgMissionParameter {
     message Value {
         optional bool                        aBool                       = 1;
@@ -508,7 +495,9 @@ message MsgMissionParameter {
         optional MsgIntelligenceList         intelligenceList            = 36;
         optional MsgUrbanBlock               urbanBlock                  = 37;
         optional int32                       army                        = 38;
-        optional MsgSuppliesList             supplies                    = 39;
+        optional uint32                      identifier                  = 39;
+        optional int32                       quantity                    = 40;
+        repeated Value                       list                        = 41;
     }
     optional bool  null_value = 1 [default = false];
     optional Value value      = 2;

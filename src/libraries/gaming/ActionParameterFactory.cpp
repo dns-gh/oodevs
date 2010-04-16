@@ -44,6 +44,9 @@
 #include "actions/DateTime.h"
 #include "actions/UrbanBlock.h"
 #include "actions/Army.h"
+#include "actions/Quantity.h"
+#include "actions/Identifier.h"
+#include "actions/ParameterList.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
@@ -65,6 +68,7 @@
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
 
+using namespace xml;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
@@ -178,6 +182,12 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         return new actions::parameters::UrbanBlock( parameter, message.value().urbanblock() );
     if( message.value().has_army() )
         return new actions::parameters::Army( parameter, message.value().army(), model_.teams_, controller_ );
+    if( message.value().has_quantity() )
+        return new actions::parameters::Quantity( parameter, message.value().quantity() );
+    if( message.value().has_identifier() )
+        return new actions::parameters::Identifier( parameter, message.value().identifier() );
+    if( message.value().list_size() )
+        return new actions::parameters::ParameterList( parameter );
     return 0;
 }
 
@@ -202,9 +212,9 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         ThrowUnexpected( parameter, xis );
     std::auto_ptr< actions::Parameter_ABC > param;
     
-    bool found = DoCreateParameter( parameter, xis, type, param );
+    bool found = DoCreateParameter( parameter, xis, entity, type, param );
     if( found == false )
-        found = DoCreateParameter( parameter, xis, entity, type, param );
+        found = DoCreateParameter( parameter, xis, type, param );
 
     if( found == false )
         throw std::runtime_error( "Unknown parameter type '" + type + "'" );
@@ -230,6 +240,28 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
 
     param->Set( true ); // $$$$ SBO 2007-10-11: ...
     return param.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateListParameter
+// Created: JSR 2010-04-15
+// -----------------------------------------------------------------------------
+void ActionParameterFactory::CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list ) const
+{
+    const std::string name = xml::attribute< std::string >( xis, "name" );
+    const std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    list.AddParameter( *CreateParameter( OrderParameter( name, type, false), xis ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateListParameter
+// Created: JSR 2010-04-15
+// -----------------------------------------------------------------------------
+void ActionParameterFactory::CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list, const kernel::Entity_ABC& entity ) const
+{
+    const std::string name = xml::attribute< std::string >( xis, "name" );
+    const std::string type = boost::algorithm::to_lower_copy( xml::attribute< std::string >( xis, "type" ) );
+    list.AddParameter( *CreateParameter( OrderParameter( name, type, false), xis, entity ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -298,6 +330,16 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::DateTime( parameter, xis ) );
     else if( type == "urbanblockbm" )
         param.reset( new actions::parameters::UrbanBlock( parameter, xis ) );
+    else if( type == "quantity" )
+        param.reset( new actions::parameters::Quantity( parameter, xis ) );
+    else if( type == "identifier" )
+        param.reset( new actions::parameters::Identifier( parameter, xis ) );
+    else if( type == "list" )
+    {
+        actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( parameter );
+        param.reset( parameterList );
+        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList );
+    }
     else
         return false;
 
@@ -320,6 +362,12 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::AgentKnowledgeList( parameter, xis, model_.agents_, agentKnowledgeConverter_, entity, controller_ ) );
     else if( type == "objectknowledgelist" )
         param.reset( new actions::parameters::ObjectKnowledgeList( parameter, xis, model_.objects_, objectKnowledgeConverter_, entity, controller_ ) );
+    else if( type == "list" )
+    {
+        actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( parameter );
+        param.reset( parameterList );
+        xis >> xml::list( "parameter", *this, &ActionParameterFactory::CreateListParameter, *parameterList, entity );
+    }
     else
         return false;
 

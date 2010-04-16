@@ -24,6 +24,14 @@ namespace kernel
     class ObjectKnowledgeConverter_ABC;
 }
 
+namespace actions
+{
+    namespace parameters
+    {
+        class ParameterList;
+    }
+}
+
 class Model;
 class StaticModel;
 
@@ -61,6 +69,8 @@ private:
 
     //! @name Helpers
     //@{
+    void CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list ) const;
+    void CreateListParameter( xml::xistream& xis, actions::parameters::ParameterList& list, const kernel::Entity_ABC& entity ) const;
     bool DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     bool DoCreateParameter( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::Entity_ABC& entity, const std::string& type, std::auto_ptr< actions::Parameter_ABC >& param ) const;
     //@}
