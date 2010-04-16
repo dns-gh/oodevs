@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_PopulationCollision.h"
 
 #include "DEC_Knowledge_Population.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -26,7 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationCollision )
 // Name: DEC_Knowledge_PopulationCollision constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_AgentPion& agentColliding, MIL_Population& population )
+DEC_Knowledge_PopulationCollision::DEC_Knowledge_PopulationCollision( const MIL_Agent_ABC& agentColliding, MIL_Population& population )
     : DEC_Knowledge_ABC      ()
     , pAgentColliding_       ( &agentColliding )
     , pPopulation_           ( &population )
@@ -72,7 +72,7 @@ template< typename Archive >
 void DEC_Knowledge_PopulationCollision::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         & const_cast< MIL_AgentPion*& >( pAgentColliding_ )
+         & const_cast< MIL_Agent_ABC*& >( pAgentColliding_ )
          & pPopulation_
          & flows_
          & concentrations_
@@ -202,7 +202,7 @@ MIL_Population& DEC_Knowledge_PopulationCollision::GetPopulation() const
 // Name: DEC_Knowledge_PopulationCollision::GetAgentColliding
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& DEC_Knowledge_PopulationCollision::GetAgentColliding() const
+const MIL_Agent_ABC& DEC_Knowledge_PopulationCollision::GetAgentColliding() const
 {
     assert( pAgentColliding_ );
     return *pAgentColliding_;

@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectCollision.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "CheckPoints/MIL_CheckPointSerializationHelpers.h"
 
@@ -21,7 +21,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectCollision )
 // Name: DEC_Knowledge_ObjectCollision constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( const MIL_AgentPion& agentColliding, MIL_Object_ABC& object )
+DEC_Knowledge_ObjectCollision::DEC_Knowledge_ObjectCollision( const MIL_Agent_ABC& agentColliding, MIL_Object_ABC& object )
     : DEC_Knowledge_ABC()
     , pAgentColliding_ ( &agentColliding )
     , pObject_         ( &object )
@@ -62,7 +62,7 @@ template< typename Archive >
 void DEC_Knowledge_ObjectCollision::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< DEC_Knowledge_ABC >( *this )
-         & const_cast< MIL_AgentPion*& >( pAgentColliding_ )
+         & const_cast< MIL_Agent_ABC*& >( pAgentColliding_ )
          & pObject_
          & vPosition_
          & bIsValid_;    
@@ -110,7 +110,7 @@ MIL_Object_ABC& DEC_Knowledge_ObjectCollision::GetObject() const
 // Name: DEC_Knowledge_ObjectCollision::GetAgentColliding
 // Created: NLD 2004-05-03
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& DEC_Knowledge_ObjectCollision::GetAgentColliding() const
+const MIL_Agent_ABC& DEC_Knowledge_ObjectCollision::GetAgentColliding() const
 {
     assert( pAgentColliding_ );
     return *pAgentColliding_;   

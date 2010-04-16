@@ -23,7 +23,7 @@
 
 class DEC_Knowledge_Agent;
 class DEC_Agent_PathClass;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // Created: NLD 2004-04-06
@@ -34,7 +34,7 @@ class DEC_Path_KnowledgeAgent
 public:
     //! @name Constructors/Destructor
     //@{
-     DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion );
+     DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion );
     virtual ~DEC_Path_KnowledgeAgent();
     //@}
 

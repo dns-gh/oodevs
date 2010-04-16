@@ -17,7 +17,7 @@
 
 class DEC_Knowledge_ObjectCollision;
 class MIL_Object_ABC;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  DEC_BlackBoard_CanContainKnowledgeObjectCollision
@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_ObjectCollision& CreateKnowledgeObjectCollision ( const MIL_AgentPion& agentColliding, MIL_Object_ABC& objectCollision );
+    DEC_Knowledge_ObjectCollision& CreateKnowledgeObjectCollision ( const MIL_Agent_ABC& agentColliding, MIL_Object_ABC& objectCollision );
     void                           DestroyKnowledgeObjectCollision( DEC_Knowledge_ObjectCollision& knowledge );
     //@}
 

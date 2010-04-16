@@ -18,6 +18,7 @@
 class DEC_Knowledge_Object;
 class MIL_Object_ABC;
 class MIL_Army_ABC;
+class MIL_KnowledgeGroup;
 
 // =============================================================================
 /** @class  DEC_BlackBoard_CanContainKnowledgeObject
@@ -31,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_BlackBoard_CanContainKnowledgeObject();
-    explicit DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army );
+             DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup );
     virtual ~DEC_BlackBoard_CanContainKnowledgeObject();
     //@}
 
@@ -103,6 +104,7 @@ private:
     //@{
     T_KnowledgeObjectMap   objectMap_;
     T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
+    MIL_KnowledgeGroup*    pKnowledgeGroup_;
     //@}
 };
 

@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_RapForLocal )
 // Name: DEC_Knowledge_RapForLocal constructor
 // Created: NLD 2006-04-21
 // -----------------------------------------------------------------------------
-DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion )
+DEC_Knowledge_RapForLocal::DEC_Knowledge_RapForLocal( const MIL_Agent_ABC& pion )
     : DEC_Knowledge_RapFor_ABC()
     , pPion_                  ( &pion )
     , dangerousEnemies_       ()
@@ -65,7 +65,7 @@ template< typename Archive >
 void DEC_Knowledge_RapForLocal::serialize( Archive& archive, const unsigned int )
 {
     archive & boost::serialization::base_object< DEC_Knowledge_RapFor_ABC >( *this )
-            & const_cast< MIL_AgentPion*& >( pPion_ );
+            & const_cast< MIL_Agent_ABC*& >( pPion_ );
 
     assert( pPion_ );
 }

@@ -78,7 +78,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const;
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const;
     //@}
 
 protected:

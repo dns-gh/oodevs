@@ -60,7 +60,7 @@ ObjectKnowledgeFactory::~ObjectKnowledgeFactory()
 // Name: ObjectKnowledgeFactory::Create
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Team_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
+ObjectKnowledge_ABC* ObjectKnowledgeFactory::Create( const Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
     ObjectKnowledge* knowledge = new ObjectKnowledge( owner, message, controllers_.controller_, static_.coordinateConverter_, model_.objects_, static_.objectTypes_ );
     knowledge->Attach< Positions >( *new ObjectKnowledgePositions( static_.coordinateConverter_, *knowledge ) );

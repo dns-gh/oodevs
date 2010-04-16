@@ -25,7 +25,6 @@ namespace MsgsSimToClient
     class MsgUnitKnowledgeUpdate;
 }
 
-class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_KnowledgeGroup;
 class MIL_Automate;
@@ -113,7 +112,7 @@ public:
     const MIL_Army_ABC*                  GetArmy                  () const;
     const PHY_PerceptionLevel&           GetMaxPerceptionLevel    () const;
     const PHY_PerceptionLevel&           GetCurrentPerceptionLevel() const;
-    const PHY_PerceptionLevel&           GetCurrentPerceptionLevel( const MIL_AgentPion& pion ) const;
+    const PHY_PerceptionLevel&           GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;
     const DEC_Knowledge_AgentComposante* GetMajorComposante       () const;
           bool                           IsHuman                  () const; // $$$$ NLD 2007-04-19: A CHIER
     E_Tristate                           IsAnEnemy                ( const MIL_Army_ABC& army ) const;
@@ -131,8 +130,8 @@ public:
     //! @name Decisional operations
     //@{
     MT_Float GetDangerosity     ( const DEC_Knowledge_Agent& target ) const;
-    MT_Float GetDangerosity     ( const MIL_AgentPion& target ) const;
-    MT_Float GetMaxRangeToFireOn( const MIL_AgentPion& target, MT_Float rWantedPH ) const;
+    MT_Float GetDangerosity     ( const MIL_Agent_ABC& target ) const;
+    MT_Float GetMaxRangeToFireOn( const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
     void     Lock               ();
     void     Unlock             ();
     void     KillOfficers       ();
@@ -145,7 +144,7 @@ public:
     typedef T_PerceptionAutomateSourceMap::iterator                             IT_PerceptionAutomateSourceMap;
     typedef T_PerceptionAutomateSourceMap::const_iterator                       CIT_PerceptionAutomateSourceMap;
 
-    typedef std::map< const MIL_AgentPion*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
+    typedef std::map< const MIL_Agent_ABC*, const PHY_PerceptionLevel* > T_PerceptionAgentSourceMap;
     typedef T_PerceptionAgentSourceMap::iterator                             IT_PerceptionAgentSourceMap;
     typedef T_PerceptionAgentSourceMap::const_iterator                       CIT_PerceptionAgentSourceMap;
     //@}

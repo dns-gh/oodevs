@@ -173,10 +173,7 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
 void PHY_RolePion_Communications::CopyKnowledgeGroup()
 {
     if( !pJammingKnowledgeGroup_ )
-    {
-        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup() );
-        pJammingKnowledgeGroup_->Jam( entity_ );
-    }
+        pJammingKnowledgeGroup_ = new MIL_KnowledgeGroup( entity_.GetKnowledgeGroup(), entity_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -27,7 +27,7 @@
 // Name: PHY_RoleAction_Objects_DataComputer constructor
 // Created: NLD 2004-10-01
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_DataComputer::PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation operation, const MIL_Object_ABC& object )
+PHY_RoleAction_Objects_DataComputer::PHY_RoleAction_Objects_DataComputer( MIL_Agent_ABC& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation operation, const MIL_Object_ABC& object )
     : operation_( operation )
     , object_   ( object )
 {
@@ -53,7 +53,7 @@ PHY_RoleAction_Objects_DataComputer::~PHY_RoleAction_Objects_DataComputer()
 // Name: PHY_RoleAction_Objects_DataComputer::CollectData
 // Created: NLD 2007-02-12
 // -----------------------------------------------------------------------------
-void PHY_RoleAction_Objects_DataComputer::CollectData( MIL_AgentPion& pion )
+void PHY_RoleAction_Objects_DataComputer::CollectData( MIL_Agent_ABC& pion )
 {
     pionsData_.push_back( PHY_RoleAction_Objects_DataComputerPionData( pion, operation_, object_ ) );
 

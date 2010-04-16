@@ -100,7 +100,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectCollision::save( MIL_CheckPointOutA
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived )
+DEC_Knowledge_ObjectCollision& DEC_BlackBoard_CanContainKnowledgeObjectCollision::CreateKnowledgeObjectCollision( const MIL_Agent_ABC& agentPerceiving, MIL_Object_ABC& objectPerceived )
 {
     DEC_Knowledge_ObjectCollision* pKnowledge = new DEC_Knowledge_ObjectCollision( agentPerceiving, objectPerceived );//$$ RAM   
     if( ! knowledgeObjectCollisionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )

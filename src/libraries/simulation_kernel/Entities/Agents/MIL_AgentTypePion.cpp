@@ -364,7 +364,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
 // Name: MIL_AgentTypePion::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePion::RegisterFunctions( directia::Brain& /*brain*/, MIL_AgentPion& /*agent*/ ) const
+void MIL_AgentTypePion::RegisterFunctions( directia::Brain& /*brain*/, MIL_Agent_ABC& /*agent*/ ) const
 {
 
 }

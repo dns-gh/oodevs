@@ -18,7 +18,6 @@
 #include "DEC_Knowledge_AgentPerceptionDataRecognition.h"
 #include "DEC_Knowledge_AgentPerceptionDataIdentification.h"
 
-class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_PerceptionLevel;
 
@@ -34,7 +33,7 @@ class DEC_Knowledge_AgentPerception : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_AgentPerception( const MIL_AgentPion& agentPerceiving, MIL_Agent_ABC& agentPerceived );
+             DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived );
              DEC_Knowledge_AgentPerception();
     virtual ~DEC_Knowledge_AgentPerception();
     //@}
@@ -70,7 +69,7 @@ public:
     //@{
           unsigned int                 GetCreationTimeStep       () const;
           MIL_Agent_ABC&       GetAgentPerceived         () const;
-    const MIL_AgentPion&       GetAgentPerceiving        () const;
+    const MIL_Agent_ABC&       GetAgentPerceiving        () const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel () const;
     const PHY_PerceptionLevel& GetPreviousPerceptionLevel() const;
     const PHY_PerceptionLevel& GetMaxPerceptionLevel     () const;
@@ -91,7 +90,7 @@ private:
           DEC_Knowledge_AgentPerceptionDataRecognition    dataRecognition_;
           DEC_Knowledge_AgentPerceptionDataIdentification dataIdentification_;
 
-    const MIL_AgentPion*                                  pAgentPerceiving_;
+    const MIL_Agent_ABC*                                  pAgentPerceiving_;
           MIL_Agent_ABC*                                  pAgentPerceived_;
     const PHY_PerceptionLevel*                            pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel*                            pPreviousPerceptionLevel_;

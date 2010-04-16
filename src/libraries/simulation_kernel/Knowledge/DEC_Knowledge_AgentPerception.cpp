@@ -14,7 +14,7 @@
 #include "MIL_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AgentServer.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "protocol/clientsenders.h"
 
@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
 // Name: DEC_Knowledge_AgentPerception constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_AgentPion& agentPerceiving, MIL_Agent_ABC& agentPerceived )
+DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived )
     : DEC_Knowledge_ABC          ()
     , pAgentPerceiving_          ( &agentPerceiving )
     , pAgentPerceived_           ( &agentPerceived )
@@ -111,7 +111,7 @@ void DEC_Knowledge_AgentPerception::load( MIL_CheckPointInArchive& file, const u
          >> dataDetection_
          >> dataRecognition_
          >> dataIdentification_
-         >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
+         >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ )
          >> pAgentPerceived_
          >> bRecordModeEnabled_
          >> bPreviousRecordModeEnabled_
@@ -219,7 +219,7 @@ MIL_Agent_ABC& DEC_Knowledge_AgentPerception::GetAgentPerceived() const
 // Name: DEC_Knowledge_AgentPerception::GetAgentPerceiving
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& DEC_Knowledge_AgentPerception::GetAgentPerceiving() const
+const MIL_Agent_ABC& DEC_Knowledge_AgentPerception::GetAgentPerceiving() const
 {
     assert( pAgentPerceiving_ );
     return *pAgentPerceiving_;    

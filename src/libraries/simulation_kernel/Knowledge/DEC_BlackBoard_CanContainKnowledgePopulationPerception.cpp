@@ -71,7 +71,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationPerception::save( MIL_CheckPoin
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationPerception::CreateKnowledgePopulationPerception
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulationPerception::CreateKnowledgePopulationPerception( const MIL_AgentPion& agentPerceiving, MIL_Population& populationPerceived )
+DEC_Knowledge_PopulationPerception& DEC_BlackBoard_CanContainKnowledgePopulationPerception::CreateKnowledgePopulationPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived )
 {
     DEC_Knowledge_PopulationPerception* pKnowledge = new DEC_Knowledge_PopulationPerception( agentPerceiving, populationPerceived );//$$ RAM   
     if( ! knowledgePopulationPerceptionMap_.insert( std::make_pair( &populationPerceived, pKnowledge ) ).second )

@@ -44,7 +44,7 @@ class ObjectKnowledge : public kernel::EntityImplementation< kernel::ObjectKnowl
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledge( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message,
+             ObjectKnowledge( const kernel::Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message,
                               kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                               const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver,
                               const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
@@ -57,7 +57,7 @@ public:
     virtual QString GetTypeName() const;
     virtual const kernel::Object_ABC* GetEntity() const;
     virtual const kernel::Entity_ABC* GetRecognizedEntity() const;
-    virtual const kernel::Team_ABC&   GetOwner() const;
+    virtual const kernel::Entity_ABC& GetOwner() const;
     virtual std::string GetSymbol() const;
 
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
@@ -83,21 +83,15 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
-    const kernel::Team_ABC& owner_;
+    const kernel::Entity_ABC& owner_;
 
     const kernel::ObjectType* type_;
 
     std::string position_;
     kernel::Object_ABC* pRealObject_;
 
-//    kernel::OptionalValue< unsigned int >   nConstructionPercentage_;
-//    kernel::OptionalValue< unsigned int >   nValorizationPercentage_;
-//    kernel::OptionalValue< unsigned int >   nBypassConstructionPercentage_;
     kernel::OptionalValue< bool >           bIsPerceived_;
-//    kernel::OptionalValue< E_DemolitionTargetType > obstacleType_;
-//    kernel::OptionalValue< bool >           reservedObstacleActivated_;
     kernel::OptionalValue< uint >           nRelevance_;
-    // $$$$ NLD 2007-05-23: Manque les dotations
     //@}
 };
 

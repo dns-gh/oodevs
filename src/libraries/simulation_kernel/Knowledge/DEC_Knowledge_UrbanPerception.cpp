@@ -24,7 +24,7 @@ MIL_IDManager DEC_Knowledge_UrbanPerception::idManager_;
 // Name: DEC_Knowledge_UrbanPerception constructor
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_AgentPion& agentPerceiving, const urban::TerrainObject_ABC& object )
+DEC_Knowledge_UrbanPerception::DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& object )
     : DEC_Knowledge_ABC              ()
     , perceiver_                     ( agentPerceiving )
     , object_                        ( object )
@@ -181,7 +181,7 @@ const urban::TerrainObject_ABC& DEC_Knowledge_UrbanPerception::GetUrbanPerceived
 // Name: DEC_Knowledge_UrbanPerception::GetPerceiver
 // Created: MGD 2009-12-14
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& DEC_Knowledge_UrbanPerception::GetPerceiver() const
+const MIL_Agent_ABC& DEC_Knowledge_UrbanPerception::GetPerceiver() const
 {
     return perceiver_;
 }

@@ -71,7 +71,7 @@ void DEC_BlackBoard_CanContainKnowledgePopulationCollision::save( MIL_CheckPoint
 // Name: DEC_BlackBoard_CanContainKnowledgePopulationCollision::CreateKnowledgePopulationCollision
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_PopulationCollision& DEC_BlackBoard_CanContainKnowledgePopulationCollision::CreateKnowledgePopulationCollision( const MIL_AgentPion& agent, MIL_Population& population )
+DEC_Knowledge_PopulationCollision& DEC_BlackBoard_CanContainKnowledgePopulationCollision::CreateKnowledgePopulationCollision( const MIL_Agent_ABC& agent, MIL_Population& population )
 {
     DEC_Knowledge_PopulationCollision* pKnowledge = new DEC_Knowledge_PopulationCollision( agent, population );//$$ RAM   
     if( ! knowledgePopulationCollisionMap_.insert( std::make_pair( &population, pKnowledge ) ).second )

@@ -25,6 +25,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeObject )
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
 DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject()
+: pKnowledgeGroup_( 0 )
 {
     // NOTHING
 }
@@ -44,12 +45,13 @@ DEC_BlackBoard_CanContainKnowledgeObject::~DEC_BlackBoard_CanContainKnowledgeObj
 // Created: LDC 2010-04-06
 // Copies army's object blackboard.
 // -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army )
+DEC_BlackBoard_CanContainKnowledgeObject::DEC_BlackBoard_CanContainKnowledgeObject( MIL_Army_ABC& army, MIL_KnowledgeGroup* pKnowledgeGroup )
+: pKnowledgeGroup_( pKnowledgeGroup )
 {
     DEC_BlackBoard_CanContainKnowledgeObject& copy = army.GetKnowledge().GetKnowledgeObjectContainer();
     for( CIT_KnowledgeObjectMap it = copy.objectMap_.begin(); it != copy.objectMap_.end(); ++it )
     {
-        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second) ) );   
+        boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object( *(it->second), pKnowledgeGroup_ ) );   
         if( ! objectMap_.insert( std::make_pair( it->first, knowledge ) ).second )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
         if( ! knowledgeObjectFromIDMap_.insert( std::make_pair( knowledge->GetID(), knowledge ) ).second )
@@ -127,7 +129,11 @@ void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& f
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObject::CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown )
 {
-    boost::shared_ptr< DEC_Knowledge_Object > knowledge = objectKnown.CreateKnowledge( teamKnowing );
+    boost::shared_ptr< DEC_Knowledge_Object > knowledge;
+    if( pKnowledgeGroup_ )
+        knowledge = objectKnown.CreateKnowledge( *pKnowledgeGroup_ );
+    else
+        knowledge = objectKnown.CreateKnowledge( teamKnowing );
    
     if( ! objectMap_.insert( std::make_pair( &objectKnown, knowledge ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );

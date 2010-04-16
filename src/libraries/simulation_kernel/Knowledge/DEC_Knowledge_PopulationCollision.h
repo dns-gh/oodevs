@@ -17,7 +17,7 @@
 class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class DEC_Knowledge_Population;
 
 // =============================================================================
@@ -29,7 +29,7 @@ class DEC_Knowledge_PopulationCollision : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_PopulationCollision( const MIL_AgentPion& agentColliding, MIL_Population& population );
+             DEC_Knowledge_PopulationCollision( const MIL_Agent_ABC& agentColliding, MIL_Population& population );
              DEC_Knowledge_PopulationCollision ();
     virtual ~DEC_Knowledge_PopulationCollision();
     //@}
@@ -60,7 +60,7 @@ public:
     //! @name Accessors
     //@{
           MIL_Population&  GetPopulation    () const;
-    const MIL_AgentPion&   GetAgentColliding() const;
+    const MIL_Agent_ABC&   GetAgentColliding() const;
     //@}
 
 private:
@@ -74,7 +74,7 @@ private:
     //@}
 
 private:
-    const MIL_AgentPion*                pAgentColliding_;
+    const MIL_Agent_ABC*                pAgentColliding_;
           MIL_Population*               pPopulation_;
 
           T_PopulationFlowSet           flows_;

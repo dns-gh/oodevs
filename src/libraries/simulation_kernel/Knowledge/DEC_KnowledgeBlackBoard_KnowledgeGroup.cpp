@@ -576,7 +576,7 @@ DEC_BlackBoard_CanContainKnowledgePopulation& DEC_KnowledgeBlackBoard_KnowledgeG
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_KnowledgeGroup::Jam()
 {
-    pKnowledgeObjectContainer_ = new DEC_BlackBoard_CanContainKnowledgeObject( pKnowledgeGroup_->GetArmy() );
+    pKnowledgeObjectContainer_ = new DEC_BlackBoard_CanContainKnowledgeObject( pKnowledgeGroup_->GetArmy(), pKnowledgeGroup_ );
 }
 
 // -----------------------------------------------------------------------------

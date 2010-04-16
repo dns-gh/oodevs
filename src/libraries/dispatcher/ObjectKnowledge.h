@@ -36,6 +36,7 @@ namespace kernel
 
 namespace dispatcher
 {
+    class KnowledgeGroup;
     class Model;
     class ObjectAttribute_ABC;
     class ClientPublisher_ABC;
@@ -106,7 +107,7 @@ public:
     const kernel::Team_ABC&      team_;
     const kernel::Object_ABC*    pObject_;
     const std::string            nType_;
-
+    const KnowledgeGroup*        knowledgeGroup_;
 
     unsigned int                   nRelevance_;
     Localisation                   localisation_;
@@ -121,21 +122,7 @@ private:
 
 private:
     T_ObjectAttributes           attributes_;
-    T_Optionals                    optionals_;
-    
-//    const EnumObstacleType nObstacleType_;
-//    const unsigned int           nTypeDotationForConstruction_;
-//    const unsigned int           nTypeDotationForMining_;
-
-        
-//    unsigned int                   nConstructionPercentage_;
-//    unsigned int                   nMiningPercentage_;
-//    unsigned int                   nBypassingPercentage_;
-//    bool                           bReservedObstacleActivated_;    
-//    unsigned int                   nNbrDotationForConstruction_;
-//    unsigned int                   nNbrDotationForMining_;
-
-    
+    T_Optionals                  optionals_;    
 };
 
 }

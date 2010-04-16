@@ -94,7 +94,7 @@ public:
                   int                 GetNumberOfFireHoses( int bestExtinguisherAgent );
     virtual const MIL_Automate&       GetAutomate        () const;
     virtual       MIL_Automate&       GetAutomate        ();
-    virtual const MIL_AgentTypePion&  GetType            () const;
+    virtual const MIL_AgentType_ABC&  GetType            () const;
     virtual bool                      IsDead             () const;
     virtual bool                      IsNeutralized      () const;
     virtual bool                      IsPC               () const;

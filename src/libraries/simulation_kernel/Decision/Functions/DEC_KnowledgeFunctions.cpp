@@ -255,7 +255,7 @@ MT_Float DEC_KnowledgeFunctions::GetRapForLocal( const MIL_AgentPion& callerAgen
 // Name: DEC_KnowledgeFunctions::GetClosestObject
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestObject( const MIL_AgentPion& callerAgent, const std::string& type )
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestObject( const MIL_Agent_ABC& callerAgent, const std::string& type )
 {
     std::vector< std::string > typeList;
     typeList.push_back( type );
@@ -267,7 +267,7 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestObje
 // Name: DEC_KnowledgeFunctions::GetClosestFriendObject
 // Created: NLD 2005-03-10
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestFriendObject( const MIL_AgentPion& callerAgent, const std::string& type )
+boost::shared_ptr< DEC_Knowledge_Object > DEC_KnowledgeFunctions::GetClosestFriendObject( const MIL_Agent_ABC& callerAgent, const std::string& type )
 {
     std::vector< std::string > typeList;
     typeList.push_back( type );

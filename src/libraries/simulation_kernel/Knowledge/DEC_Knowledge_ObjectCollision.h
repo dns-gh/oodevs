@@ -15,7 +15,7 @@
 #include "DEC_Knowledge_ABC.h"
 
 class MIL_Object_ABC;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  DEC_Knowledge_ObjectCollision
@@ -32,7 +32,7 @@ class DEC_Knowledge_ObjectCollision : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_ObjectCollision( const MIL_AgentPion& agentColliding, MIL_Object_ABC& object );
+             DEC_Knowledge_ObjectCollision( const MIL_Agent_ABC& agentColliding, MIL_Object_ABC& object );
              DEC_Knowledge_ObjectCollision ();
     virtual ~DEC_Knowledge_ObjectCollision();
     //@}
@@ -52,13 +52,13 @@ public:
     //! @name Accessors
     //@{
           MIL_Object_ABC&      GetObject        () const;
-    const MIL_AgentPion&       GetAgentColliding() const;
+    const MIL_Agent_ABC&       GetAgentColliding() const;
     const MT_Vector2D&         GetPosition      () const;
           bool                 IsValid          () const;
     //@}
 
 private:
-    const MIL_AgentPion*       pAgentColliding_;
+    const MIL_Agent_ABC*       pAgentColliding_;
           MIL_Object_ABC*      pObject_;
           MT_Vector2D          vPosition_;
           bool                 bIsValid_;

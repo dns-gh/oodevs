@@ -1001,7 +1001,10 @@ void AgentServerMsgMgr::OnReceiveMsgUnitKnowledgeDestruction( const MsgsSimToCli
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
-    GetModel().teams_.GetTeam( message.team() ).Update( message );
+    if( message.has_group() )
+        GetModel().knowledgeGroups_.Get( message.group() ).Update( message );
+    else
+        GetModel().teams_.GetTeam( message.team() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------
@@ -1010,7 +1013,10 @@ void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeCreation( const MsgsSimToClie
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgObjectKnowledgeUpdate( const MsgsSimToClient::MsgObjectKnowledgeUpdate& message )
 {
-    GetModel().teams_.GetTeam( message.team() ).Update( message );
+    if( message.has_group() )
+        GetModel().knowledgeGroups_.Get( message.group() ).Update( message );
+    else
+        GetModel().teams_.GetTeam( message.team() ).Update( message );
 }
 
 // -----------------------------------------------------------------------------

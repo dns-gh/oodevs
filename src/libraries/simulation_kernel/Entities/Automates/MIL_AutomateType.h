@@ -26,7 +26,7 @@ namespace directia
 
 class DEC_DataBase;
 class DEC_Model_ABC;
-class MIL_AgentTypePion;
+class MIL_AgentType_ABC;
 class MIL_Automate;
 class MIL_Formation;
 
@@ -61,7 +61,7 @@ public:
     //! @name Accessors
     //@{
           unsigned int                       GetID                            () const;
-    const MIL_AgentTypePion&                 GetTypePionPC                    () const;
+    const MIL_AgentType_ABC&                 GetTypePionPC                    () const;
     const DEC_Model_ABC&                     GetModel                         () const;
     const std::string&                       GetName                          () const;
           MT_Float                           GetRapForIncreasePerTimeStepValue() const;
@@ -105,7 +105,7 @@ private:
         unsigned int nMin_;
         unsigned int nMax_;
     };
-    typedef std::map< const MIL_AgentTypePion*, sCompositionBounds > T_CompositionMap;
+    typedef std::map< const MIL_AgentType_ABC*, sCompositionBounds > T_CompositionMap;
     typedef T_CompositionMap::const_iterator                         CIT_CompositionMap;
     //@}
 
@@ -128,7 +128,7 @@ private:
     const std::string         strName_;
     const DEC_Model_ABC*      pModel_;
           T_CompositionMap    composition_;
-    const MIL_AgentTypePion*  pTypePC_;
+    const MIL_AgentType_ABC*  pTypePC_;
           MT_Float            rRapForIncreasePerTimeStepValue_;
 
 private:

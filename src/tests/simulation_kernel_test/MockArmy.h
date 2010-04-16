@@ -81,6 +81,11 @@ public:
 //    {
 //        return *FindKnowledgeGroupShadow();
 //    }
+    
+    virtual const std::map< unsigned int, MIL_KnowledgeGroup* >& GetKnowledgeGroups() const
+    {
+        throw;
+    }
 
     template< typename Archive >
     void serialize( Archive&, const unsigned int ) 

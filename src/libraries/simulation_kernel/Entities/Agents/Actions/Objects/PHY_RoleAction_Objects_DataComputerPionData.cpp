@@ -15,7 +15,7 @@
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 
@@ -42,7 +42,7 @@ PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputer
 // Name: PHY_RoleAction_Objects_DataComputerPionData
 // Created: NLD 2005-03-25
 // -----------------------------------------------------------------------------
-PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputerPionData( MIL_AgentPion& pion, E_Operation operation, const MIL_Object_ABC& object )
+PHY_RoleAction_Objects_DataComputerPionData::PHY_RoleAction_Objects_DataComputerPionData( MIL_Agent_ABC& pion, E_Operation operation, const MIL_Object_ABC& object )
     : operation_           ( operation )
     , pObject_             ( &object )
     , pPion_               ( &pion )

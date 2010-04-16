@@ -17,6 +17,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Tools/MIL_Tools.h"
 
@@ -24,7 +25,7 @@
 // Name: DEC_PerceptionFunctions::SetStealthFactor
 // Created: NLD 2004-09-14
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::SetStealthFactor( MIL_AgentPion& callerAgent, float factor )
+void DEC_PerceptionFunctions::SetStealthFactor( MIL_Agent_ABC& callerAgent, float factor )
 {
     callerAgent.GetRole< PHY_RoleInterface_Posture >().SetStealthFactor( factor );
 }
@@ -33,7 +34,7 @@ void DEC_PerceptionFunctions::SetStealthFactor( MIL_AgentPion& callerAgent, floa
 // Name: DEC_PerceptionFunctions::EnableCoupDeSonde
 // Created: JVT 03-04-29
 //-----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::EnableCoupDeSonde( MIL_AgentPion& callerAgent )
+void DEC_PerceptionFunctions::EnableCoupDeSonde( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableCoupDeSonde();
 }
@@ -42,7 +43,7 @@ void DEC_PerceptionFunctions::EnableCoupDeSonde( MIL_AgentPion& callerAgent )
 // Name: DEC_PerceptionFunctions::DisableCoupDeSonde
 // Created: JVT 03-04-29
 //-----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableCoupDeSonde( MIL_AgentPion& callerAgent )
+void DEC_PerceptionFunctions::DisableCoupDeSonde( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableCoupDeSonde();
 }
@@ -51,7 +52,7 @@ void DEC_PerceptionFunctions::DisableCoupDeSonde( MIL_AgentPion& callerAgent )
 // Name: DEC_PerceptionFunctions::IsPointVisible
 // Created: AGN 03-01-21
 //-----------------------------------------------------------------------------
-bool DEC_PerceptionFunctions::IsPointVisible( const MIL_AgentPion& callerAgent, MT_Vector2D* pPt )
+bool DEC_PerceptionFunctions::IsPointVisible( const MIL_Agent_ABC& callerAgent, MT_Vector2D* pPt )
 {
     assert( pPt );
     const PHY_PerceptionLevel& level = callerAgent.GetRole< PHY_RoleInterface_Perceiver >().ComputePerception( *pPt );
@@ -62,7 +63,7 @@ bool DEC_PerceptionFunctions::IsPointVisible( const MIL_AgentPion& callerAgent, 
 // Name: DEC_PerceptionFunctions::SetVisionModeDirection
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::SetVisionModeDirection( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > pDir )
+void DEC_PerceptionFunctions::SetVisionModeDirection( MIL_Agent_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > pDir )
 {
     assert( pDir.get() );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModeDirection( *pDir );
@@ -72,7 +73,7 @@ void DEC_PerceptionFunctions::SetVisionModeDirection( MIL_AgentPion& callerAgent
 // Name: DEC_PerceptionFunctions::SetVisionModePoint
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::SetVisionModePoint( MIL_AgentPion& callerAgent, const MT_Vector2D* pPoint )
+void DEC_PerceptionFunctions::SetVisionModePoint( MIL_Agent_ABC& callerAgent, const MT_Vector2D* pPoint )
 {
     assert( pPoint );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModePoint( *pPoint );
@@ -82,7 +83,7 @@ void DEC_PerceptionFunctions::SetVisionModePoint( MIL_AgentPion& callerAgent, co
 // Name: DEC_PerceptionFunctions::SetVisionModePointPtr
 // Created: SLG 2010-01-28
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::SetVisionModePointPtr( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > point )
+void DEC_PerceptionFunctions::SetVisionModePointPtr( MIL_Agent_ABC& callerAgent, boost::shared_ptr< MT_Vector2D > point )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModePoint( *point );
 }
@@ -91,7 +92,7 @@ void DEC_PerceptionFunctions::SetVisionModePointPtr( MIL_AgentPion& callerAgent,
 // Name: DEC_PerceptionFunctions::SetVisionModeNormal
 // Created: NLD 2004-10-15
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::SetVisionModeNormal( MIL_AgentPion& callerAgent )
+void DEC_PerceptionFunctions::SetVisionModeNormal( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().SetVisionModeNormal();
 }
@@ -116,7 +117,7 @@ int DEC_PerceptionFunctions::EnableRecognitionPoint( DEC_Decision_ABC& callerAge
 // Name: DEC_PerceptionFunctions::DisableRecognitionPoint
 // Created: JVT 2004-10-21
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableRecognitionPoint( MIL_AgentPion& callerAgent, int id )
+void DEC_PerceptionFunctions::DisableRecognitionPoint( MIL_Agent_ABC& callerAgent, int id )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecoPoint( id );
 }
@@ -137,7 +138,7 @@ int DEC_PerceptionFunctions::EnableObjectRecognitionLocalisation( DEC_Decision_A
 // Name: DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation( MIL_AgentPion& callerAgent, int id )
+void DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecoObjects( id );
 }
@@ -147,7 +148,7 @@ void DEC_PerceptionFunctions::DisableObjectRecognitionLocalisation( MIL_AgentPio
 // Name: DEC_PerceptionFunctions::EnableRecognitionLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_AgentPion& callerAgent, const TER_Localisation* pLocalisation )
+int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation )
 {
     assert( pLocalisation );
 
@@ -158,7 +159,7 @@ int DEC_PerceptionFunctions::EnableRecognitionLocalisation( MIL_AgentPion& calle
 // Name: DEC_PerceptionFunctions::EnableRecognitionLocalisation
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
+int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Urban > urbanBlock )
 {
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoUrbanBlock( urbanBlock );
 }
@@ -167,7 +168,7 @@ int DEC_PerceptionFunctions::EnableRecognitionUrbanBlock( MIL_AgentPion& callerA
 // Name: DEC_PerceptionFunctions::DisableRecognitionLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableRecognitionLocalisation( MIL_AgentPion& callerAgent, int id )
+void DEC_PerceptionFunctions::DisableRecognitionLocalisation( MIL_Agent_ABC& callerAgent, int id )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecoLocalisation( id );
 }
@@ -176,7 +177,7 @@ void DEC_PerceptionFunctions::DisableRecognitionLocalisation( MIL_AgentPion& cal
 // Name: DEC_PerceptionFunctions::DisableRecognitionUrbanBlock
 // Created: MGD 2010-02-11
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableRecognitionUrbanBlock( MIL_AgentPion& callerAgent, int id )
+void DEC_PerceptionFunctions::DisableRecognitionUrbanBlock( MIL_Agent_ABC& callerAgent, int id )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecoUrbanBlock( id );
 }
@@ -185,7 +186,7 @@ void DEC_PerceptionFunctions::DisableRecognitionUrbanBlock( MIL_AgentPion& calle
 // Name: DEC_PerceptionFunctions::EnableRadarOnLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRadarOnLocalisation( MIL_AgentPion& callerAgent, int nRadarClass, const TER_Localisation* pLocalisation )
+int DEC_PerceptionFunctions::EnableRadarOnLocalisation( MIL_Agent_ABC& callerAgent, int nRadarClass, const TER_Localisation* pLocalisation )
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     assert( pRadarClass );
@@ -197,7 +198,7 @@ int DEC_PerceptionFunctions::EnableRadarOnLocalisation( MIL_AgentPion& callerAge
 // Name: DEC_PerceptionFunctions::DisableRadarOnLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableRadarOnLocalisation( MIL_AgentPion& callerAgent, int nRadarClass, int id )
+void DEC_PerceptionFunctions::DisableRadarOnLocalisation( MIL_Agent_ABC& callerAgent, int nRadarClass, int id )
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     assert( pRadarClass );
@@ -210,7 +211,7 @@ void DEC_PerceptionFunctions::DisableRadarOnLocalisation( MIL_AgentPion& callerA
 // Name: DEC_PerceptionFunctions::EnableRadar
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::EnableRadar( MIL_AgentPion& callerAgent, int nRadarClass )
+void DEC_PerceptionFunctions::EnableRadar( MIL_Agent_ABC& callerAgent, int nRadarClass )
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     assert( pRadarClass );
@@ -222,7 +223,7 @@ void DEC_PerceptionFunctions::EnableRadar( MIL_AgentPion& callerAgent, int nRada
 // Name: DEC_PerceptionFunctions::DisableRadar
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableRadar( MIL_AgentPion& callerAgent, int nRadarClass )
+void DEC_PerceptionFunctions::DisableRadar( MIL_Agent_ABC& callerAgent, int nRadarClass )
 {
     const PHY_RadarClass* pRadarClass = PHY_RadarClass::Find( nRadarClass );
     assert( pRadarClass );
@@ -234,7 +235,7 @@ void DEC_PerceptionFunctions::DisableRadar( MIL_AgentPion& callerAgent, int nRad
 // Name: DEC_PerceptionFunctions::EnableRadarOnPointPtr
 // Created: LMT 2010-02-04
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableRadarOnPointPtr( MIL_AgentPion& callerAgent, int nRadarClass, boost::shared_ptr< MT_Vector2D > point )
+int DEC_PerceptionFunctions::EnableRadarOnPointPtr( MIL_Agent_ABC& callerAgent, int nRadarClass, boost::shared_ptr< MT_Vector2D > point )
 {
     T_PointVector vector;
     vector.push_back( *point );
@@ -246,7 +247,7 @@ int DEC_PerceptionFunctions::EnableRadarOnPointPtr( MIL_AgentPion& callerAgent, 
 // Name: DEC_PerceptionFunctions::EnableRecordMode
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::EnableRecordMode( MIL_AgentPion& callerAgent )
+void DEC_PerceptionFunctions::EnableRecordMode( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecordMode();
 }
@@ -255,7 +256,7 @@ void DEC_PerceptionFunctions::EnableRecordMode( MIL_AgentPion& callerAgent )
 // Name: DEC_PerceptionFunctions::DisableRecordMode
 // Created: NLD 2004-11-15
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableRecordMode( MIL_AgentPion& callerAgent )
+void DEC_PerceptionFunctions::DisableRecordMode( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecordMode();
 }
@@ -264,7 +265,7 @@ void DEC_PerceptionFunctions::DisableRecordMode( MIL_AgentPion& callerAgent )
 // Name: DEC_PerceptionFunctions::EnableRecoAlat
 // Created: NLD 2004-11-16
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::EnableRecoAlat( MIL_AgentPion& callerAgent, const TER_Localisation* location )
+void DEC_PerceptionFunctions::EnableRecoAlat( MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
 {
     assert( location );
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableRecoAlat( *location );
@@ -274,7 +275,7 @@ void DEC_PerceptionFunctions::EnableRecoAlat( MIL_AgentPion& callerAgent, const 
 // Name: DEC_PerceptionFunctions::DisableRecoAlat
 // Created: NLD 2004-11-16
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableRecoAlat( MIL_AgentPion& callerAgent )
+void DEC_PerceptionFunctions::DisableRecoAlat( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableRecoAlat();
 }
@@ -283,7 +284,7 @@ void DEC_PerceptionFunctions::DisableRecoAlat( MIL_AgentPion& callerAgent )
 // Name: DEC_PerceptionFunctions::HasNoDelayedPeceptions
 // Created: JVT 2004-12-03
 // -----------------------------------------------------------------------------
-bool DEC_PerceptionFunctions::HasNoDelayedPeceptions( const MIL_AgentPion& callerAgent )
+bool DEC_PerceptionFunctions::HasNoDelayedPeceptions( const MIL_Agent_ABC& callerAgent )
 {
     return !callerAgent.GetRole< PHY_RoleInterface_Perceiver >().HasDelayedPerceptions();
 }
@@ -292,7 +293,7 @@ bool DEC_PerceptionFunctions::HasNoDelayedPeceptions( const MIL_AgentPion& calle
 // Name: DEC_PerceptionFunctions::EnableRecoSurveillance
 // Created: NLD 2004-11-17
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableSurveillanceLocalisation( MIL_AgentPion& callerAgent, const TER_Localisation* pLocalisation )
+int DEC_PerceptionFunctions::EnableSurveillanceLocalisation( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation )
 {
     assert( pLocalisation );
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableSurveillanceLocalisation( *pLocalisation );
@@ -302,7 +303,7 @@ int DEC_PerceptionFunctions::EnableSurveillanceLocalisation( MIL_AgentPion& call
 // Name: DEC_PerceptionFunctions::DisableSurveillanceLocalisation
 // Created: JVT 2004-10-22
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableSurveillanceLocalisation( MIL_AgentPion& callerAgent, int id )
+void DEC_PerceptionFunctions::DisableSurveillanceLocalisation( MIL_Agent_ABC& callerAgent, int id )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableSurveillanceLocalisation( id );
 }
@@ -311,7 +312,7 @@ void DEC_PerceptionFunctions::DisableSurveillanceLocalisation( MIL_AgentPion& ca
 // Name: DEC_PerceptionFunctions::EnableFlyingShellDetection
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-int DEC_PerceptionFunctions::EnableFlyingShellDetection( MIL_AgentPion& callerAgent, const TER_Localisation* pLocalisation )
+int DEC_PerceptionFunctions::EnableFlyingShellDetection( MIL_Agent_ABC& callerAgent, const TER_Localisation* pLocalisation )
 {
     assert( pLocalisation );
     return callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableFlyingShellDetection( *pLocalisation );
@@ -321,7 +322,7 @@ int DEC_PerceptionFunctions::EnableFlyingShellDetection( MIL_AgentPion& callerAg
 // Name: DEC_PerceptionFunctions::DisableFlyingShellDetection
 // Created: NLD 2005-02-21
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableFlyingShellDetection( MIL_AgentPion& callerAgent, int id )
+void DEC_PerceptionFunctions::DisableFlyingShellDetection( MIL_Agent_ABC& callerAgent, int id )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableFlyingShellDetection( id );
 }
@@ -330,7 +331,7 @@ void DEC_PerceptionFunctions::DisableFlyingShellDetection( MIL_AgentPion& caller
 // Name: DEC_PerceptionFunctions::DisableSensors
 // Created: JVT 2005-04-28
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::DisableSensors( MIL_AgentPion& callerAgent )
+void DEC_PerceptionFunctions::DisableSensors( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().DisableSensors();
 }
@@ -339,7 +340,7 @@ void DEC_PerceptionFunctions::DisableSensors( MIL_AgentPion& callerAgent )
 // Name: DEC_PerceptionFunctions::EnableSensors
 // Created: JVT 2005-04-28
 // -----------------------------------------------------------------------------
-void DEC_PerceptionFunctions::EnableSensors( MIL_AgentPion& callerAgent )
+void DEC_PerceptionFunctions::EnableSensors( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Perceiver >().EnableSensors();
 }

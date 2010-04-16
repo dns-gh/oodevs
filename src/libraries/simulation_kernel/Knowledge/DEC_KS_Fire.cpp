@@ -83,7 +83,7 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
 {
     assert( pBlackBoard_ );
 
-    const MIL_AgentPion& agentInteracting = pBlackBoard_->GetPion();
+    const MIL_Agent_ABC& agentInteracting = pBlackBoard_->GetPion();
     
     for( CIT_PionSet itAttacker = pionsAttacking_.begin(); itAttacker != pionsAttacking_.end(); ++itAttacker )
     {

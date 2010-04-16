@@ -474,6 +474,7 @@ void Model::SendReplayInfo( ClientPublisher_ABC& publisher, unsigned totalTicks,
 void Model::Accept( kernel::ModelVisitor_ABC& visitor ) const
 {
     sides_                 .Apply( boost::bind( &Sendable< kernel::Team_ABC >::Accept, _1, boost::ref( visitor ) ) );
+    knowledgeGroups_       .Apply( boost::bind( &KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
     agentKnowledges_       .Apply( boost::bind( &AgentKnowledge::Accept, _1, boost::ref( visitor ) ) );
     objectKnowledges_      .Apply( boost::bind( &ObjectKnowledge::Accept, _1, boost::ref( visitor ) ) );
     populationKnowledges_  .Apply( boost::bind( &PopulationKnowledge::Accept, _1, boost::ref( visitor ) ) );

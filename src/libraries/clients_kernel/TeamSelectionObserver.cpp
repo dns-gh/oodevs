@@ -9,10 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "TeamSelectionObserver.h"
-#include "Entity_ABC.h"
 #include "Team_ABC.h"
-#include "CommunicationHierarchies.h"
-#include "TacticalHierarchies.h"
 
 using namespace kernel;
 
@@ -57,11 +54,7 @@ void TeamSelectionObserver::AfterSelection()
 // Name: TeamSelectionObserver::Select
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
-void TeamSelectionObserver::Select( const Entity_ABC& element )
+void TeamSelectionObserver::Select( const Team_ABC& element )
 {
-    const Hierarchies* hierarchies = element.Retrieve< CommunicationHierarchies >();
-    if( !hierarchies )
-        hierarchies = element.Retrieve< TacticalHierarchies >();
-    if( hierarchies )
-        selected_ = static_cast< const Team_ABC* >( & hierarchies->GetTop() );
+    selected_ = &element;
 }

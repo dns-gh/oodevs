@@ -69,7 +69,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutA
 // Name: DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception
 // Created: MGD 2009-12-07
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_AgentPion& agentPerceiving, const urban::TerrainObject_ABC& objectPerceived )
+boost::shared_ptr< DEC_Knowledge_UrbanPerception > DEC_BlackBoard_CanContainKnowledgeUrbanPerception::CreateKnowledgeUrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& objectPerceived )
 {
     boost::shared_ptr< DEC_Knowledge_UrbanPerception > knowledge ( new DEC_Knowledge_UrbanPerception( agentPerceiving, objectPerceived ) );
     if( ! knowledgeUrbanPerceptionMap_.insert( std::make_pair( objectPerceived.GetId(), knowledge ) ).second )

@@ -31,6 +31,7 @@ class MIL_Agent_ABC;
 class MIL_AgentType_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
+class MIL_KnowledgeGroup;
 class MIL_Object_ABC;
 class MIL_ObjectType_ABC;
 
@@ -48,7 +49,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown );
-             DEC_Knowledge_Object( const DEC_Knowledge_Object& copy );
+             DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowing, MIL_Object_ABC& objectKnown );
+             DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_KnowledgeGroup* pGroupKnowing );
              DEC_Knowledge_Object();
     virtual ~DEC_Knowledge_Object();
     //@}
@@ -196,6 +198,7 @@ private:
 
 private:
     const MIL_Army_ABC*       pArmyKnowing_;
+    const MIL_KnowledgeGroup* pGroupKnowing_;
           MIL_Object_ABC*     pObjectKnown_; // Objet réel (peut ne plus exister...)
     const MIL_ObjectType_ABC* pObjectType_; 
     const unsigned int                nID_;

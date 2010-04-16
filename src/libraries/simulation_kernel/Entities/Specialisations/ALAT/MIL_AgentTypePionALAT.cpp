@@ -50,7 +50,7 @@ const MIL_AgentTypePion* MIL_AgentTypePionALAT::Create( const std::string& strNa
 // Name: MIL_AgentTypePionALAT::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionALAT::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const
+void MIL_AgentTypePionALAT::RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const
 {
     brain.RegisterFunction( "DEC_ALAT_ActiverReconnaissance",
         boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_PerceptionFunctions::EnableRecoAlat, boost::ref( agent ), _1 ) ) );

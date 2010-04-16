@@ -57,7 +57,7 @@ namespace MsgsClientToSim
 // @class  MIL_KnowledgeGroup
 // Created: JVT 2004-08-03
 // =============================================================================
-class MIL_KnowledgeGroup
+class MIL_KnowledgeGroup : private boost::noncopyable
 {
 
 public:
@@ -76,7 +76,7 @@ public:
     MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsigned int id, MIL_Army_ABC& army );
     MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent, KnowledgeGroupFactory_ABC& knowledgeGroupFactory ); // LTO
     MIL_KnowledgeGroup();
-    MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source );
+    MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion );
 
     virtual ~MIL_KnowledgeGroup();
     //@}
@@ -136,8 +136,6 @@ public:
           void                                    SetParent( MIL_KnowledgeGroup* parent );
     // LTO end
           bool IsJammed() const;
-          void Jam( const MIL_Agent_ABC& pion );
-          void JamTest( const MIL_Agent_ABC& pion );
     //@}
 
     //! @name Network
@@ -169,23 +167,6 @@ public:
     //@}
     
 private:
-
-
-
-    const MIL_KnowledgeGroupType* type_;
-    uint                    id_;
-    MIL_Army_ABC*           army_;
-    MIL_KnowledgeGroup*     parent_; // LTO
-
-    DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
-    T_AutomateVector        automates_;
-    T_KnowledgeGroupVector  knowledgeGroups_; // LTO
-    MT_Float                timeToDiffuse_; // LTO
-    bool                    isActivated_; // LTO
-    bool                    hasBeenUpdated_;  
-    bool                    isJammed_;
-    const MIL_Agent_ABC*    jammedPion_;
-
     bool OnReceiveMsgKnowledgeGroupEnable        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
     bool OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
     bool OnReceiveMsgKnowledgeGroupSetType       ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
@@ -204,7 +185,20 @@ private:
         //@}
     
 private:
-//    static std::set< unsigned int > ids_;
+    const MIL_KnowledgeGroupType* type_;
+    uint                    id_;
+    MIL_Army_ABC*           army_;
+    MIL_KnowledgeGroup*     parent_; // LTO
+
+    DEC_KnowledgeBlackBoard_KnowledgeGroup* knowledgeBlackBoard_;
+    T_AutomateVector        automates_;
+    T_KnowledgeGroupVector  knowledgeGroups_; // LTO
+    MT_Float                timeToDiffuse_; // LTO
+    bool                    isActivated_; // LTO
+    bool                    hasBeenUpdated_;  
+    bool                    isJammed_;
+    const MIL_Agent_ABC*    jammedPion_;
+
     static MIL_IDManager idManager_;
 };
 

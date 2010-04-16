@@ -13,7 +13,7 @@
 #define __PHY_RoleAction_Objects_DataComputerPionData_h_
 
 class MIL_Object_ABC;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class PHY_ComposantePion;
 class PHY_DotationCategory;
 
@@ -38,7 +38,7 @@ public:
 
 public:
     PHY_RoleAction_Objects_DataComputerPionData();
-    PHY_RoleAction_Objects_DataComputerPionData( MIL_AgentPion& pion, E_Operation operation, const MIL_Object_ABC& object );
+    PHY_RoleAction_Objects_DataComputerPionData( MIL_Agent_ABC& pion, E_Operation operation, const MIL_Object_ABC& object );
     virtual ~PHY_RoleAction_Objects_DataComputerPionData() {}
 
     //! @name Operations
@@ -68,7 +68,7 @@ private:
 private:
           E_Operation            operation_;
     const MIL_Object_ABC*    pObject_;
-          MIL_AgentPion*         pPion_;
+          MIL_Agent_ABC*         pPion_;
           bool                   bConsumptionReserved_;
           T_ComposanteDataVector workingComposantes_;    
 };

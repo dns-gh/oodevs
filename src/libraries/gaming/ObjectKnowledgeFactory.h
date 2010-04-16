@@ -22,8 +22,9 @@ namespace MsgsSimToClient
 namespace kernel
 {
     class Controllers;
-    class Team_ABC;
+    class KnowledgeGroup_ABC;
     class ObjectKnowledge_ABC;
+    class Team_ABC;
 }
 
 class Model;
@@ -48,7 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::ObjectKnowledge_ABC* Create( const kernel::Team_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message );
+    virtual kernel::ObjectKnowledge_ABC* Create( const kernel::Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message );
     //@}
 
 private:

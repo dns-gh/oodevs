@@ -169,6 +169,33 @@ bool MIL_AgentHLA::BelongsTo( const MIL_KnowledgeGroup& /*group*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetOrderManager
+// Created: LDC 2010-04-16
+// -----------------------------------------------------------------------------
+const MIL_PionOrderManager& MIL_AgentHLA::GetOrderManager() const
+{
+    throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::GetOrderManager
+// Created: LDC 2010-04-16
+// -----------------------------------------------------------------------------
+MIL_PionOrderManager& MIL_AgentHLA::GetOrderManager()
+{
+    throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::ChangeSuperior
+// Created: LDC 2010-04-16
+// -----------------------------------------------------------------------------
+void MIL_AgentHLA::ChangeSuperior( MIL_Automate& newAutomate )
+{
+    throw std::runtime_error( __FUNCTION__ " not available for HLA Agents" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentHLA::Deserialize
 // Created: AGE 2004-11-10
 // -----------------------------------------------------------------------------

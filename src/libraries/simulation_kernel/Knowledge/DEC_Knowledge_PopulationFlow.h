@@ -22,7 +22,7 @@ class DEC_Knowledge_PopulationCollision;
 class MIL_PopulationFlow;
 class MIL_PopulationAttitude;
 class PHY_PerceptionLevel;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-11
@@ -73,7 +73,7 @@ private:
 public:
     //! @name Types
     //@{
-    typedef std::map< const MIL_AgentPion*, DEC_Knowledge_PopulationFlowPart* > T_FlowPartMap;
+    typedef std::map< const MIL_Agent_ABC*, DEC_Knowledge_PopulationFlowPart* > T_FlowPartMap;
     typedef T_FlowPartMap::iterator                                             IT_FlowPartMap;
     typedef T_FlowPartMap::const_iterator                                       CIT_FlowPartMap;
     //@}

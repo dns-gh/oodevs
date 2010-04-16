@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgeObjectFunctions.h"
 
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 
 #include "Entities/Objects/Object.h"
@@ -38,7 +38,7 @@
 // Name: DEC_KnowledgeObjectFunctions::Recon
 // Created: NLD 2004-10-29
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::Recon( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+void DEC_KnowledgeObjectFunctions::Recon( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         pKnowledge->Recon( callerAgent );
@@ -63,7 +63,7 @@ namespace
 // Name: DEC_KnowledgeObjectFunctions::QueueForDecontamination
 // Created: NLD 2004-11-02
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( DecontaminationCapacity* pCapacity = IsValidObjectCapacity< DecontaminationCapacity >( pKnowledge ) )
     {
@@ -77,7 +77,7 @@ int DEC_KnowledgeObjectFunctions::QueueForDecontamination( MIL_AgentPion& caller
 // Name: DEC_KnowledgeObjectFunctions::CanBeAnimated
 // Created: NLD 2004-11-03
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( const MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )
@@ -89,7 +89,7 @@ bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_AgentPion& callerAge
 // Name: DEC_KnowledgeObjectFunctions::GetAnimationLevel
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeObjectFunctions::GetAnimationLevel( const MIL_AgentPion& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
+float DEC_KnowledgeObjectFunctions::GetAnimationLevel( const MIL_Agent_ABC& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
 {
     if( pKnowledge && pKnowledge->IsValid() )
     {
@@ -107,7 +107,7 @@ float DEC_KnowledgeObjectFunctions::GetAnimationLevel( const MIL_AgentPion& /*ca
 // Name: DEC_KnowledgeObjectFunctions::DecontaminateZone
 // Created: NLD 2005-03-22
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_AgentPion& callerAgent, const TER_Localisation* location )
+void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_Agent_ABC& callerAgent, const TER_Localisation* location )
 {
     assert( location );
 
@@ -127,7 +127,7 @@ void DEC_KnowledgeObjectFunctions::DecontaminateZone( const MIL_AgentPion& calle
 // Name: DEC_KnowledgeObjectFunctions::DamageObject
 // Created: SBO 2006-01-23
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::DamageObject( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation )
+int DEC_KnowledgeObjectFunctions::DamageObject( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
@@ -144,7 +144,7 @@ int DEC_KnowledgeObjectFunctions::DamageObject( MIL_AgentPion& callerAgent, boos
 // Name: DEC_KnowledgeObjectFunctions::CanBeOccupied
 // Created: NLD 2004-11-26
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::CanBeOccupied( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( pKnowledge && pKnowledge->IsValid() )
         if( const MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown() )
@@ -320,7 +320,7 @@ bool DEC_KnowledgeObjectFunctions::IsRecon( boost::shared_ptr< DEC_Knowledge_Obj
 // Name: DEC_KnowledgeObjectFunctions::IsAnEnemy
 // Created: MGD 2010-01-26
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return int( eTristate_DontKnow );
@@ -331,7 +331,7 @@ int DEC_KnowledgeObjectFunctions::IsAnEnemy( const MIL_AgentPion& callerAgent, b
 // Name: DEC_KnowledgeObjectFunctions::IsAFriend
 // Created: MGD 2010-01-26
 // -----------------------------------------------------------------------------
-int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+int DEC_KnowledgeObjectFunctions::IsAFriend( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
         return int( eTristate_DontKnow );
@@ -393,7 +393,7 @@ float DEC_KnowledgeObjectFunctions::GetValorizationLevel( boost::shared_ptr< DEC
 // Name: DEC_KnowledgeObjectFunctions::EstimatedWorkTime
 // Created: GGE & PSN 2010-04-09
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {   
     if( pKnowledge && pKnowledge->IsValid() )
         if( MIL_Object_ABC* object = pKnowledge->GetObjectKnown() )

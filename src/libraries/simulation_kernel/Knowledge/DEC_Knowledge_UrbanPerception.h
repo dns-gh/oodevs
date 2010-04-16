@@ -12,12 +12,10 @@
 
 #include "MIL.h"
 #include "DEC_Knowledge_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Tools/MIL_IDManager.h"
 #include "urban/TerrainObject_ABC.h"
-
-class MIL_AgentPion;
 
 namespace urban
 {
@@ -36,7 +34,7 @@ class DEC_Knowledge_UrbanPerception : public DEC_Knowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_UrbanPerception( const MIL_AgentPion& agentPerceiving, const urban::TerrainObject_ABC& object );
+             DEC_Knowledge_UrbanPerception( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& object );
     virtual ~DEC_Knowledge_UrbanPerception();
     //@}
     
@@ -60,7 +58,7 @@ public:
     unsigned GetId  () const;
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel() const;
     const urban::TerrainObject_ABC& GetUrbanPerceived() const;
-    const MIL_AgentPion& GetPerceiver() const;
+    const MIL_Agent_ABC& GetPerceiver() const;
     bool IsPerceived() const;
     //@}
 
@@ -78,7 +76,7 @@ private:
 
 private:
     const unsigned       nID_;
-    const MIL_AgentPion& perceiver_;
+    const MIL_Agent_ABC& perceiver_;
     const urban::TerrainObject_ABC& object_;
 
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
@@ -96,7 +94,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_UrbanPerception )
 template< typename Archive >
 inline void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
 {
-    const MIL_AgentPion* const perceiver = &perception->perceiver_;
+    const MIL_Agent_ABC* const perceiver = &perception->perceiver_;
     const urban::TerrainObject_ABC* const object = &perception->object_;
     archive << perceiver
             << object;
@@ -109,7 +107,7 @@ inline void save_construct_data( Archive& archive, const DEC_Knowledge_UrbanPerc
 template< typename Archive >
 inline void load_construct_data( Archive& archive, DEC_Knowledge_UrbanPerception* perception, const unsigned int /*version*/ )
 {
-    MIL_AgentPion* perceiver;
+    MIL_Agent_ABC* perceiver;
     urban::TerrainObject_ABC* object;
     archive >> perceiver
             >> object;

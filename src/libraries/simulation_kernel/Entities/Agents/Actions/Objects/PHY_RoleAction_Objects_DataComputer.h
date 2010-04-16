@@ -16,7 +16,7 @@
 #include "PHY_RoleAction_Objects_DataComputerPionData.h"
 
 class MIL_Object_ABC;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class PHY_ComposantePion;
 
 // =============================================================================
@@ -27,7 +27,7 @@ class PHY_RoleAction_Objects_DataComputer : public OnComponentFunctor_ABC
 {
 
 public:
-             PHY_RoleAction_Objects_DataComputer( MIL_AgentPion& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );
+             PHY_RoleAction_Objects_DataComputer( MIL_Agent_ABC& pion, PHY_RoleAction_Objects_DataComputerPionData::E_Operation nOperation, const MIL_Object_ABC& object );
     virtual ~PHY_RoleAction_Objects_DataComputer();
 
 
@@ -46,7 +46,7 @@ public:
 private:
     //! @name Tools
     //@{
-    void CollectData                     ( MIL_AgentPion& pion );
+    void CollectData                     ( MIL_Agent_ABC& pion );
     void FilterData                      ();
 
     void ReserveConsumptions             ();

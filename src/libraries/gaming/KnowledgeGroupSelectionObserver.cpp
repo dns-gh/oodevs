@@ -68,7 +68,10 @@ void KnowledgeGroupSelectionObserver::Select( const KnowledgeGroup_ABC& element 
 // -----------------------------------------------------------------------------
 void KnowledgeGroupSelectionObserver::Select( const Agent_ABC& element )
 {
-    selected_ = & element.Get< CommunicationHierarchies >().GetUp( 2 );
+    if( !element.Get< CommunicationHierarchies >().CanCommunicate() )
+        selected_ = & element.Get< CommunicationHierarchies >().GetUp();
+    else
+        selected_ = & element.Get< CommunicationHierarchies >().GetUp( 2 );
 }
 
 // -----------------------------------------------------------------------------

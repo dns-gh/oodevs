@@ -691,6 +691,7 @@ message MsgObjectKnowledgeCreation {
    required int32                      real_object = 3;
    required string                     type        = 4;
    required Common.MsgObjectAttributes attributes  = 5;
+   optional int32                      group       = 6;
 }
 
 message MsgObjectKnowledgeUpdate {
@@ -702,6 +703,7 @@ message MsgObjectKnowledgeUpdate {
    optional Common.MsgObjectAttributes attributes         = 6;
    optional bool                       perceived          = 7 [default = false];
    optional Common.MsgListOID          automat_perception = 8;
+   optional int32                      group              = 9;
 }
 message MsgObjectKnowledgeDestruction {
    required int32  oid  = 1;
@@ -1145,6 +1147,7 @@ message MsgKnowledgeGroupCreation {
    required uint32 oid_camp    = 2;
    optional uint32 oid_parent  = 3;
    required string type        = 4;
+   optional bool jam           = 5;
 }
 
 message MsgKnowledgeGroupUpdate {

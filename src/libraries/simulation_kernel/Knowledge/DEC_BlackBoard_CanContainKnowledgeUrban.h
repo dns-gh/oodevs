@@ -13,7 +13,7 @@
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_Urban;
-class MIL_Army;
+class MIL_Army_ABC;
 
 namespace urban
 {
@@ -38,7 +38,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army& knowledgeGroup );
+    explicit DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& knowledgeGroup );
     virtual ~DEC_BlackBoard_CanContainKnowledgeUrban();
     //@}
 
@@ -52,7 +52,7 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_Urban > CreateKnowledgeUrban( const MIL_Army& army, const urban::TerrainObject_ABC& object );
+    boost::shared_ptr< DEC_Knowledge_Urban > CreateKnowledgeUrban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object );
     void                 DestroyKnowledgeUrban( DEC_Knowledge_Urban& knowledge );
     //@}
 
@@ -95,8 +95,8 @@ private:
 
     //! @name Member data
     //@{
-    const MIL_Army& army_;
-          T_KnowledgeUrbanMap urbanMapFromConcrete_;
+    const MIL_Army_ABC& army_;
+    T_KnowledgeUrbanMap urbanMapFromConcrete_;
     //@}
 };
 
@@ -109,7 +109,7 @@ BOOST_CLASS_EXPORT_KEY( DEC_BlackBoard_CanContainKnowledgeUrban )
 template< typename Archive >
 inline void save_construct_data( Archive& archive, const DEC_BlackBoard_CanContainKnowledgeUrban* blackboard, const unsigned int /*version*/ )
 {
-    const MIL_Army* const army = &blackboard->army_;
+    const MIL_Army_ABC* const army = &blackboard->army_;
     archive << army;
 }
 
@@ -120,7 +120,7 @@ inline void save_construct_data( Archive& archive, const DEC_BlackBoard_CanConta
 template< typename Archive >
 inline void load_construct_data( Archive& archive, DEC_BlackBoard_CanContainKnowledgeUrban* blackboard, const unsigned int /*version*/ )
 {
-    MIL_Army* army;
+    MIL_Army_ABC* army;
     archive >> army;
     ::new( blackboard )DEC_BlackBoard_CanContainKnowledgeUrban( *army );
 }

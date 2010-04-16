@@ -16,7 +16,7 @@
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_ObjectPerception;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class MIL_Object_ABC;
 
 // =============================================================================
@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_ObjectPerception& CreateKnowledgeObjectPerception ( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived );
+    DEC_Knowledge_ObjectPerception& CreateKnowledgeObjectPerception ( const MIL_Agent_ABC& agentPerceiving, MIL_Object_ABC& objectPerceived );
     void                            DestroyKnowledgeObjectPerception( DEC_Knowledge_ObjectPerception& knowledge );
     //@}
 

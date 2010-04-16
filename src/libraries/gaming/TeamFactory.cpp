@@ -112,14 +112,16 @@ kernel::Formation_ABC* TeamFactory::CreateFormation( const Common::MsgFormationC
 // -----------------------------------------------------------------------------
 KnowledgeGroup_ABC* TeamFactory::CreateKnowledgeGroup( const MsgsSimToClient::MsgKnowledgeGroupCreation& message, Team_ABC& team  )
 {
-// LTO begin
+    // LTO begin
     Entity_ABC* superior = message.has_oid_parent() ? 
         (Entity_ABC*) &model_.knowledgeGroups_.Resolver< KnowledgeGroup_ABC >::Get( message.oid_parent() ) :
         (Entity_ABC*) &model_.teams_.Resolver< Team_ABC >::Get( message.oid_camp() );
+    // LTO end
 
     KnowledgeGroup* result = new KnowledgeGroup( message.oid(), controllers_.controller_, message.type(), model_.static_.types_ );
-    // LTO end
     result->Attach( *new AgentKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
+    if( message.has_jam() && message.jam() )
+        result->Attach( *new ObjectKnowledges( *result, controllers_.controller_, model_.objectKnowledgeFactory_ ) );
     result->Attach( *new PopulationKnowledges( controllers_.controller_, *result, model_.agentsKnowledgeFactory_ ) );
     result->Attach< CommunicationHierarchies >( *new KnowledgeGroupHierarchies( controllers_.controller_, superior, *result, model_.knowledgeGroups_ ) ); // LTO
     result->Polish();

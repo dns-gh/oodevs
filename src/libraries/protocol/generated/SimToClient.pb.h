@@ -10677,6 +10677,13 @@ class MsgObjectKnowledgeCreation : public ::google::protobuf::Message {
   inline const ::Common::MsgObjectAttributes& attributes() const;
   inline ::Common::MsgObjectAttributes* mutable_attributes();
   
+  // optional int32 group = 6;
+  inline bool has_group() const;
+  inline void clear_group();
+  static const int kGroupFieldNumber = 6;
+  inline ::google::protobuf::int32 group() const;
+  inline void set_group(::google::protobuf::int32 value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -10687,11 +10694,12 @@ class MsgObjectKnowledgeCreation : public ::google::protobuf::Message {
   ::std::string* type_;
   static const ::std::string _default_type_;
   ::Common::MsgObjectAttributes* attributes_;
+  ::google::protobuf::int32 group_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -10818,6 +10826,13 @@ class MsgObjectKnowledgeUpdate : public ::google::protobuf::Message {
   inline const ::Common::MsgListOID& automat_perception() const;
   inline ::Common::MsgListOID* mutable_automat_perception();
   
+  // optional int32 group = 9;
+  inline bool has_group() const;
+  inline void clear_group();
+  static const int kGroupFieldNumber = 9;
+  inline ::google::protobuf::int32 group() const;
+  inline void set_group(::google::protobuf::int32 value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -10830,11 +10845,12 @@ class MsgObjectKnowledgeUpdate : public ::google::protobuf::Message {
   ::Common::MsgObjectAttributes* attributes_;
   bool perceived_;
   ::Common::MsgListOID* automat_perception_;
+  ::google::protobuf::int32 group_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(9 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -18563,6 +18579,13 @@ class MsgKnowledgeGroupCreation : public ::google::protobuf::Message {
   inline void set_type(const char* value, size_t size);
   inline ::std::string* mutable_type();
   
+  // optional bool jam = 5;
+  inline bool has_jam() const;
+  inline void clear_jam();
+  static const int kJamFieldNumber = 5;
+  inline bool jam() const;
+  inline void set_jam(bool value);
+  
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
@@ -18572,11 +18595,12 @@ class MsgKnowledgeGroupCreation : public ::google::protobuf::Message {
   ::google::protobuf::uint32 oid_parent_;
   ::std::string* type_;
   static const ::std::string _default_type_;
+  bool jam_;
   friend void  protobuf_AddDesc_SimToClient_2eproto();
   friend void protobuf_AssignDesc_SimToClient_2eproto();
   friend void protobuf_ShutdownFile_SimToClient_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(5 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -25903,6 +25927,22 @@ inline ::Common::MsgObjectAttributes* MsgObjectKnowledgeCreation::mutable_attrib
   return attributes_;
 }
 
+// optional int32 group = 6;
+inline bool MsgObjectKnowledgeCreation::has_group() const {
+  return _has_bit(5);
+}
+inline void MsgObjectKnowledgeCreation::clear_group() {
+  group_ = 0;
+  _clear_bit(5);
+}
+inline ::google::protobuf::int32 MsgObjectKnowledgeCreation::group() const {
+  return group_;
+}
+inline void MsgObjectKnowledgeCreation::set_group(::google::protobuf::int32 value) {
+  _set_bit(5);
+  group_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // MsgObjectKnowledgeUpdate
@@ -26036,6 +26076,22 @@ inline ::Common::MsgListOID* MsgObjectKnowledgeUpdate::mutable_automat_perceptio
   _set_bit(7);
   if (automat_perception_ == NULL) automat_perception_ = new ::Common::MsgListOID;
   return automat_perception_;
+}
+
+// optional int32 group = 9;
+inline bool MsgObjectKnowledgeUpdate::has_group() const {
+  return _has_bit(8);
+}
+inline void MsgObjectKnowledgeUpdate::clear_group() {
+  group_ = 0;
+  _clear_bit(8);
+}
+inline ::google::protobuf::int32 MsgObjectKnowledgeUpdate::group() const {
+  return group_;
+}
+inline void MsgObjectKnowledgeUpdate::set_group(::google::protobuf::int32 value) {
+  _set_bit(8);
+  group_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -30475,6 +30531,22 @@ inline ::std::string* MsgKnowledgeGroupCreation::mutable_type() {
     type_ = new ::std::string;
   }
   return type_;
+}
+
+// optional bool jam = 5;
+inline bool MsgKnowledgeGroupCreation::has_jam() const {
+  return _has_bit(4);
+}
+inline void MsgKnowledgeGroupCreation::clear_jam() {
+  jam_ = false;
+  _clear_bit(4);
+}
+inline bool MsgKnowledgeGroupCreation::jam() const {
+  return jam_;
+}
+inline void MsgKnowledgeGroupCreation::set_jam(bool value) {
+  _set_bit(4);
+  jam_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -12,7 +12,7 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Urban.h"
 #include "MIL_AgentServer.h"
-#include "simulation_kernel/Entities/MIL_Army.h"
+#include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/UrbanModel.h"
 #include <urban/Block.h>
 #include <urban/BlockModel.h>
@@ -28,7 +28,7 @@ namespace
                                      , public boost::noncopyable
     {
     public:
-        UrbanBlockKnowledgeCreator( DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements, const MIL_Army& army )
+        UrbanBlockKnowledgeCreator( DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements, const MIL_Army_ABC& army )
             : elements_( elements ), army_( army ) {}
         virtual ~UrbanBlockKnowledgeCreator() {}
 
@@ -39,7 +39,7 @@ namespace
 
     private:
         DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements_;
-        const MIL_Army& army_;
+        const MIL_Army_ABC& army_;
     };
 
 }
@@ -48,7 +48,7 @@ namespace
 // Name: DEC_BlackBoard_CanContainKnowledgeUrban constructor
 // Created: MGD 2009-11-26
 // -----------------------------------------------------------------------------
-DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army& army )
+DEC_BlackBoard_CanContainKnowledgeUrban::DEC_BlackBoard_CanContainKnowledgeUrban( const MIL_Army_ABC& army )
     : army_( army )
 {
     UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, army );
@@ -104,7 +104,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& fi
 // Name: DEC_BlackBoard_CanContainKnowledgeUrban::CreateKnowledgeUrban
 // Created: MGD 2009-12-04
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::CreateKnowledgeUrban( const MIL_Army& army, const urban::TerrainObject_ABC& object )
+boost::shared_ptr< DEC_Knowledge_Urban > DEC_BlackBoard_CanContainKnowledgeUrban::CreateKnowledgeUrban( const MIL_Army_ABC& army, const urban::TerrainObject_ABC& object )
 {
     boost::shared_ptr< DEC_Knowledge_Urban > knowledge ( new DEC_Knowledge_Urban( army, object ) );
     if( ! urbanMapFromConcrete_.insert( std::make_pair( object.GetId(), knowledge ) ).second )

@@ -17,7 +17,7 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_ObjectAttributeCrossingSite.h"
 
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class DEC_Knowledge_Object;
 
 // =============================================================================
@@ -36,30 +36,30 @@ public:
     static bool IsReservedObstacle                ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsKnowledgeValid                  ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-    static int  QueueForDecontamination           ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static bool CanBeAnimated                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int  QueueForDecontamination           ( MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static bool CanBeAnimated                     ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static float GetConstructionLevel             ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
     static float GetValorizationLevel             ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
-    static float GetAnimationLevel                ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
-    static bool CanBeOccupied                     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static void DecontaminateZone                 ( const MIL_AgentPion& callerAgent, const TER_Localisation* location );
-    static int  DamageObject                      (       MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation );
+    static float GetAnimationLevel                ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge);
+    static bool CanBeOccupied                     ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static void DecontaminateZone                 ( const MIL_Agent_ABC& callerAgent, const TER_Localisation* location );
+    static int  DamageObject                      (       MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float factor, const PHY_DotationCategory* dotation );
 
     static bool CanBeBypassed                     ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static void SetExitingPopulationDensity       ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, float density );
     static void ResetExitingPopulationDensity     ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
-    static void Recon                             ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static void Recon                             ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsRecon                           ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     static int  EquipLogisticRoute                ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsStockSupplied                   ( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     
-    static int   IsAnEnemy                        ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static int   IsAFriend                        ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int   IsAnEnemy                        ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static int   IsAFriend                        ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int   GetCurrentPerceptionLevel        ( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static float EstimatedWorkTime                ( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static float EstimatedWorkTime                ( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     //@}
 };
 

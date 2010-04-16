@@ -1131,7 +1131,7 @@ MIL_Automate& MIL_AgentPion::GetAutomate()
 // Name: MIL_AgentPion::GetType
 // Created: NLD 2004-08-31
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion& MIL_AgentPion::GetType() const
+const MIL_AgentType_ABC& MIL_AgentPion::GetType() const
 {
     assert( pType_ );
     return *pType_;

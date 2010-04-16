@@ -16,7 +16,7 @@
 #include "DEC_Knowledge_Population.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Network/NET_AgentServer.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
@@ -27,7 +27,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_PopulationPerception )
 // Name: DEC_Knowledge_PopulationPerception constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MIL_AgentPion& agentPerceiving, MIL_Population& populationPerceived )
+DEC_Knowledge_PopulationPerception::DEC_Knowledge_PopulationPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived )
     : DEC_Knowledge_ABC    ()
     , pAgentPerceiving_    ( &agentPerceiving )
     , pPopulationPerceived_( &populationPerceived )
@@ -140,7 +140,7 @@ void DEC_Knowledge_PopulationPerception::load( MIL_CheckPointInArchive& file, co
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
 
-    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ )
+    file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ )
          >> pPopulationPerceived_
          >> concentrations_
          >> flows_
@@ -314,7 +314,7 @@ MIL_Population& DEC_Knowledge_PopulationPerception::GetPopulationPerceived() con
 // Name: DEC_Knowledge_PopulationPerception::GetPopulationPerceiving
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& DEC_Knowledge_PopulationPerception::GetAgentPerceiving() const
+const MIL_Agent_ABC& DEC_Knowledge_PopulationPerception::GetAgentPerceiving() const
 {
     assert( pAgentPerceiving_ );
     return *pAgentPerceiving_;    

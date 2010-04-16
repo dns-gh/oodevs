@@ -39,8 +39,6 @@
 #include <xeumeuleu/xml.h>
 #include <boost/serialization/export.hpp>
 
-//std::set< unsigned int > MIL_KnowledgeGroup::ids_;
-
 MIL_IDManager MIL_KnowledgeGroup::idManager_;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_KnowledgeGroup )
@@ -59,13 +57,11 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroupType& type, unsi
     , timeToDiffuse_       ( 0 ) // LTO
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( false )
-    , isJammed_               ( false )// LTO
-    , jammedPion_             ( 0 ) // LTO
+    , isJammed_               ( false )
+    , jammedPion_             ( 0 )
 {
     idManager_.Lock( id_ );
     army_->RegisterKnowledgeGroup( *this );
-//    if( !ids_.insert( id_ ).second )
-//        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "KnowledgeGroup id %d is already used", id_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -83,8 +79,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( xml::xistream& xis, MIL_Army_ABC& army, 
     , timeToDiffuse_        ( 0 ) // LTO
     , isActivated_          ( true ) // LTO
     , hasBeenUpdated_       ( true )
-    , isJammed_               ( false )// LTO
-    , jammedPion_             ( 0 ) // LTO
+    , isJammed_               ( false )
+    , jammedPion_             ( 0 )
 {
     idManager_.Lock( id_ );
     if( parent_ )
@@ -112,8 +108,8 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
     , timeToDiffuse_        ( 0 ) // LTO
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( false )
-    , isJammed_               ( false ) // LTO
-    , jammedPion_             ( 0 ) // LTO
+    , isJammed_               ( false )
+    , jammedPion_             ( 0 )
 {
     // NOTHING
 }
@@ -122,7 +118,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 // Name: KnowledgeGroupFactory::Create
 // Created: FDS 2010-03-17
 // -----------------------------------------------------------------------------
-MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source )
+MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion )
     : type_                   ( source.type_ )
     , id_                     ( idManager_.GetFreeId() )
     , army_                   ( source.army_ )
@@ -132,16 +128,16 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source )
     , timeToDiffuse_        ( 0 ) // LTO
     , isActivated_         ( true ) // LTO
     , hasBeenUpdated_      ( true )
-    , isJammed_               ( false ) // LTO
-    , jammedPion_             ( 0 ) // LTO
-{   
-    
-//    ids_.insert( id_ );
+    , isJammed_               ( true )
+    , jammedPion_             ( &pion )
+{
     army_->RegisterKnowledgeGroup( *this );
     SendCreation();
 
     source.ApplyOnKnowledgesAgent( boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromAgentPerception, this, _1 ) ); 
     source.ApplyOnKnowledgesPopulation( boost::bind( &MIL_KnowledgeGroup::CreateKnowledgeFromPopulationPerception, this, _1 ) );
+
+    knowledgeBlackBoard_->Jam();
 }
 
 // -----------------------------------------------------------------------------
@@ -183,7 +179,6 @@ MIL_KnowledgeGroup::~MIL_KnowledgeGroup()
             army_->UnregisterKnowledgeGroup( *this );
 
         delete knowledgeBlackBoard_;
-//        ids_.erase( id_ );
     }
 }
 
@@ -203,7 +198,6 @@ void MIL_KnowledgeGroup::Destroy()
             army_->UnregisterKnowledgeGroup( *this );
 
         delete knowledgeBlackBoard_;
-//        ids_.erase( id_ );
 
         // myself destruction
         client::KnowledgeGroupDestruction msg;   
@@ -368,6 +362,8 @@ void MIL_KnowledgeGroup::SendCreation() const
     if( parent_ )
         msg().set_oid_parent( parent_->GetId() );
     // LTO end
+    if( isJammed_ )
+        msg().set_jam( true );
     msg.Send( NET_Publisher_ABC::Publisher() );
     //SLG : @TODO MGD Move to factory
     // LTO begin
@@ -759,27 +755,6 @@ bool MIL_KnowledgeGroup::IsJammed() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::Jam
-// Created: FDS 2010-04-01
-// -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::Jam( const MIL_Agent_ABC& pion )
-{
-    isJammed_               = true;
-    jammedPion_             = &pion;
-    knowledgeBlackBoard_->Jam();
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_KnowledgeGroup::JamTest
-// Created: FDS 2010-04-01
-// -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::JamTest( const MIL_Agent_ABC& pion )
-{
-    isJammed_    = true;
-//    jammedPion_  = &pion;  // $$$$ _RC_ FDS 2010-04-14: Pb avec le mockAgent qui renvoi throw à la place de knowledge
-}
-
-// -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< DEC_Knowledge_Object > MIL_KnowledgeGroup::CreateKnowledgeObject
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
@@ -825,8 +800,9 @@ void MIL_KnowledgeGroup::ApplyOnKnowledgesPopulationPerception( int currentTimeS
     {
         if( jammedPion_ )
         {
-            jammedPion_->GetKnowledge().GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep)  ) );
-            jammedPion_->GetKnowledge().GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep)  )  );
+            DEC_KnowledgeBlackBoard_AgentPion& knowledgeBlackboard = jammedPion_->GetKnowledge();
+            knowledgeBlackboard.GetKnowledgePopulationPerceptionContainer().ApplyOnKnowledgesPopulationPerception( boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromPerception, this, _1, boost::ref(currentTimeStep)  ) );
+            knowledgeBlackboard.GetKnowledgePopulationCollisionContainer ().ApplyOnKnowledgesPopulationCollision ( boost::bind( & MIL_KnowledgeGroup::UpdatePopulationKnowledgeFromCollision, this, _1, boost::ref(currentTimeStep)  )  );
         }
     }
 

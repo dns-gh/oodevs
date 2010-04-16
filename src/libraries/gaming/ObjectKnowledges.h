@@ -21,7 +21,7 @@ using namespace Common;
 namespace kernel
 {
     class Controller;
-    class Team_ABC;
+    class Entity_ABC;
     class ObjectKnowledge_ABC;
 }
 
@@ -44,7 +44,7 @@ class ObjectKnowledges : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectKnowledges( const kernel::Team_ABC& team, kernel::Controller& controller, ObjectKnowledgeFactory& factory );
+             ObjectKnowledges( const kernel::Entity_ABC& team, kernel::Controller& controller, ObjectKnowledgeFactory& factory );
     virtual ~ObjectKnowledges();
     //@}
 
@@ -69,7 +69,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Team_ABC& team_;
+    const kernel::Entity_ABC* owner_;
     kernel::Controller& controller_;
     ObjectKnowledgeFactory& factory_;
     //@}

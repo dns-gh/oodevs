@@ -23,7 +23,7 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Automates/MIL_AutomateType.h"
 #include "Entities/Automates/DEC_AutomateDecision.h"
@@ -39,7 +39,7 @@ using namespace human;
 // Name: DEC_LogisticFunctions::PionMaintenanceEnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceEnableSystem( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMaintenanceEnableSystem( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO Maybe use Get and assert this DEC functions are just register on good PionLog
     if( role )
@@ -50,7 +50,7 @@ void DEC_LogisticFunctions::PionMaintenanceEnableSystem( MIL_AgentPion& callerAg
 // Name: DEC_LogisticFunctions::PionMaintenanceDisableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceDisableSystem( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMaintenanceDisableSystem( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >();
     if( role )
@@ -61,7 +61,7 @@ void DEC_LogisticFunctions::PionMaintenanceDisableSystem( MIL_AgentPion& callerA
 // Name: DEC_LogisticFunctions::PionMaintenanceChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceChangePriorities( MIL_AgentPion& callerAgent, const std::vector< const PHY_ComposanteTypePion* >& priorities )
+void DEC_LogisticFunctions::PionMaintenanceChangePriorities( MIL_Agent_ABC& callerAgent, const std::vector< const PHY_ComposanteTypePion* >& priorities )
 {
     PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >();
     if( role )
@@ -72,7 +72,7 @@ void DEC_LogisticFunctions::PionMaintenanceChangePriorities( MIL_AgentPion& call
 // Name: DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( MIL_AgentPion& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities )
+void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( MIL_Agent_ABC& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
     T_AutomateVector automates;
     automates.reserve( priorities.size() );
@@ -87,7 +87,7 @@ void DEC_LogisticFunctions::PionMaintenanceChangeTacticalPriorities( MIL_AgentPi
 // Name: DEC_LogisticFunctions::PionMaintenanceChangeWorkRate
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( MIL_AgentPion& callerAgent, int workRate )
+void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( MIL_Agent_ABC& callerAgent, int workRate )
 {
     if( const PHY_MaintenanceWorkRate* pWorkRate = PHY_MaintenanceWorkRate::Find( Common::EnumLogMaintenanceRegimeTravail( workRate ) ) )
         if( PHY_RoleInterface_Maintenance* role = callerAgent.RetrieveRole< PHY_RoleInterface_Maintenance >() )
@@ -192,7 +192,7 @@ void DEC_LogisticFunctions::AllowWoundedHumansAutoEvacuation( DEC_RolePion_Decis
 // Name: DEC_LogisticFunctions::PionMedicalEnableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalEnableSystem( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalEnableSystem( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Medical* role = callerAgent.RetrieveRole< PHY_RoleInterface_Medical >();
     if( role )
@@ -203,7 +203,7 @@ void DEC_LogisticFunctions::PionMedicalEnableSystem( MIL_AgentPion& callerAgent 
 // Name: DEC_LogisticFunctions::PionMedicalDisableSystem
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalDisableSystem( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalDisableSystem( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Medical* role = callerAgent.RetrieveRole< PHY_RoleInterface_Medical >();
     if( role )
@@ -214,7 +214,7 @@ void DEC_LogisticFunctions::PionMedicalDisableSystem( MIL_AgentPion& callerAgent
 // Name: DEC_LogisticFunctions::PionMedicalEnableSortingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalEnableSortingFunction( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalEnableSortingFunction( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Medical* role = callerAgent.RetrieveRole< PHY_RoleInterface_Medical >();
     if( role )
@@ -225,7 +225,7 @@ void DEC_LogisticFunctions::PionMedicalEnableSortingFunction( MIL_AgentPion& cal
 // Name: DEC_LogisticFunctions::PionMedicalDisableSortingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalDisableSortingFunction( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalDisableSortingFunction( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Medical* role = callerAgent.RetrieveRole< PHY_RoleInterface_Medical >();
     if( role )
@@ -236,7 +236,7 @@ void DEC_LogisticFunctions::PionMedicalDisableSortingFunction( MIL_AgentPion& ca
 // Name: DEC_LogisticFunctions::PionMedicalEnableHealingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalEnableHealingFunction( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalEnableHealingFunction( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Medical* role = callerAgent.RetrieveRole< PHY_RoleInterface_Medical >();
     if( role )
@@ -247,7 +247,7 @@ void DEC_LogisticFunctions::PionMedicalEnableHealingFunction( MIL_AgentPion& cal
 // Name: DEC_LogisticFunctions::PionMedicalDisableHealingFunction
 // Created: NLD 2006-08-01
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalDisableHealingFunction( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionMedicalDisableHealingFunction( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Medical* role = callerAgent.RetrieveRole< PHY_RoleInterface_Medical >();
     if( role )
@@ -258,7 +258,7 @@ void DEC_LogisticFunctions::PionMedicalDisableHealingFunction( MIL_AgentPion& ca
 // Name: DEC_LogisticFunctions::PionMedicalChangePriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalChangePriorities( MIL_AgentPion& callerAgent, const std::vector< const PHY_HumanWound* >& priorities )
+void DEC_LogisticFunctions::PionMedicalChangePriorities( MIL_Agent_ABC& callerAgent, const std::vector< const PHY_HumanWound* >& priorities )
 {
     PHY_RoleInterface_Medical* role = callerAgent.RetrieveRole< PHY_RoleInterface_Medical >();
     if( role )
@@ -269,7 +269,7 @@ void DEC_LogisticFunctions::PionMedicalChangePriorities( MIL_AgentPion& callerAg
 // Name: DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities
 // Created: NLD 2005-01-05
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( MIL_AgentPion& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities )
+void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( MIL_Agent_ABC& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
     T_AutomateVector automates;
     automates.reserve( priorities.size() );
@@ -360,7 +360,7 @@ void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( MIL_Automat
 // Name: DEC_LogisticFunctions::ChangeDotationsValueUsingTC2
 // Created: NLD 2005-03-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_AgentPion& callerAgent, int dotationType, const MT_Float rCapacityFactor, int ammoDotationClassId )
+void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerAgent, int dotationType, const MT_Float rCapacityFactor, int ammoDotationClassId )
 {
     const PHY_DotationType* pDotationType = PHY_DotationType::FindDotationType( dotationType );
     assert( pDotationType );
@@ -373,7 +373,7 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_AgentPion& callerA
 // Name: DEC_LogisticFunctions::PionSupplyEnableSystem
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionSupplyEnableSystem( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionSupplyEnableSystem( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -384,7 +384,7 @@ void DEC_LogisticFunctions::PionSupplyEnableSystem( MIL_AgentPion& callerAgent )
 // Name: DEC_LogisticFunctions::PionSupplyDisableSystem
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionSupplyDisableSystem( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionSupplyDisableSystem( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -422,7 +422,7 @@ void DEC_LogisticFunctions::AutomateRequestSupply( MIL_Automate& callerAutomate 
 // Name: DEC_LogisticFunctions::PionRequestSupply
 // Created: NLD 2005-03-03
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::PionRequestSupply( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::PionRequestSupply( MIL_Agent_ABC& callerAgent )
 {
     AutomateRequestSupply( callerAgent.GetAutomate() );
 }
@@ -435,7 +435,7 @@ void DEC_LogisticFunctions::PionRequestSupply( MIL_AgentPion& callerAgent )
 // Name: DEC_LogisticFunctions::ConvoyIsLoadingDone
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-bool DEC_LogisticFunctions::ConvoyIsLoadingDone( const MIL_AgentPion& callerAgent )
+bool DEC_LogisticFunctions::ConvoyIsLoadingDone( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -447,7 +447,7 @@ bool DEC_LogisticFunctions::ConvoyIsLoadingDone( const MIL_AgentPion& callerAgen
 // Name: DEC_LogisticFunctions::ConvoyIsUnloadingDone
 // Created: NLD 2005-12-16
 // -----------------------------------------------------------------------------
-bool DEC_LogisticFunctions::ConvoyIsUnloadingDone( const MIL_AgentPion& callerAgent )
+bool DEC_LogisticFunctions::ConvoyIsUnloadingDone( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -459,7 +459,7 @@ bool DEC_LogisticFunctions::ConvoyIsUnloadingDone( const MIL_AgentPion& callerAg
 // Name: DEC_LogisticFunctions::ConvoyGetSupplyingAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( const MIL_AgentPion& callerAgent )
+boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -474,7 +474,7 @@ boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSupplyingA
 // Name: DEC_LogisticFunctions::ConvoyGetConvoyingAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( const MIL_AgentPion& callerAgent )
+boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -489,7 +489,7 @@ boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetConvoyingA
 // Name: DEC_LogisticFunctions::ConvoyGetSuppliedAutomate
 // Created: NLD 2006-07-31
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( const MIL_AgentPion& callerAgent )
+boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSuppliedAutomate( const MIL_Agent_ABC& callerAgent )
 {
     const PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -504,7 +504,7 @@ boost::shared_ptr< DEC_Decision_ABC > DEC_LogisticFunctions::ConvoyGetSuppliedAu
 // Name: DEC_LogisticFunctions::ConvoyEndMission
 // Created: NLD 2005-02-10
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::ConvoyEndMission( MIL_AgentPion& callerAgent )
+void DEC_LogisticFunctions::ConvoyEndMission( MIL_Agent_ABC& callerAgent )
 {
     PHY_RoleInterface_Supply* role = callerAgent.RetrieveRole< PHY_RoleInterface_Supply >();
     if( role )
@@ -515,7 +515,7 @@ void DEC_LogisticFunctions::ConvoyEndMission( MIL_AgentPion& callerAgent )
 // Name: UndoLendComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate )
+void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate )
 {
     assert( pTarget );
     const unsigned int nNbrGotBack   = callerAgent.GetRole< PHY_RolePion_Composantes >().RetrieveLentComposantes( pTarget->GetPion().GetRole< PHY_RolePion_Composantes>(), nNbrToGetBack, std::mem_fun_ref( funcPredicate ) );
@@ -536,7 +536,7 @@ void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, con
 // Name: DEC_LogisticFunctions::UndoLendCollectionComposantes
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
+void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
 {
     UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, &PHY_ComposantePion::CanCollectCasualties );
 }
@@ -545,7 +545,7 @@ void DEC_LogisticFunctions::UndoLendCollectionComposantes( MIL_AgentPion& caller
 // Name: DEC_LogisticFunctions::UndoLendHaulerComposantes
 // Created: NLD 2006-04-04
 // -----------------------------------------------------------------------------
-void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
+void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack )
 {
     UndoLendComposantes( callerAgent, pTarget, nNbrToGetBack, &PHY_ComposantePion::CanHaul );
 }
@@ -554,7 +554,7 @@ void DEC_LogisticFunctions::UndoLendHaulerComposantes( MIL_AgentPion& callerAgen
 // Name: DEC_LogisticFunctions::PionGetTC2
 // Created: JVT 2005-01-17
 // -----------------------------------------------------------------------------
-DEC_Decision_ABC* DEC_LogisticFunctions::PionGetTC2( const MIL_AgentPion& agent )
+DEC_Decision_ABC* DEC_LogisticFunctions::PionGetTC2( const MIL_Agent_ABC& agent )
 {
    if (MIL_AutomateLOG* pTC2 = agent.GetAutomate().GetTC2() )
        return ( &pTC2->GetDecision() );

@@ -14,7 +14,7 @@
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_UrbanPerception;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 namespace urban
 {
@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    boost::shared_ptr< DEC_Knowledge_UrbanPerception > CreateKnowledgeUrbanPerception ( const MIL_AgentPion& agentPerceiving, const urban::TerrainObject_ABC& objectPerceived );
+    boost::shared_ptr< DEC_Knowledge_UrbanPerception > CreateKnowledgeUrbanPerception ( const MIL_Agent_ABC& agentPerceiving, const urban::TerrainObject_ABC& objectPerceived );
     void                           DestroyKnowledgeUrbanPerception( DEC_Knowledge_UrbanPerception& knowledge );
     //@}
 

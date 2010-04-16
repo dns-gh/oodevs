@@ -21,7 +21,7 @@ namespace Common
     class MsgUnitKnowledge;
 }
 
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class DEC_BlackBoard_CanContainKnowledgeAgentPerception;
 class DEC_BlackBoard_CanContainKnowledgeObjectCollision;
 class DEC_BlackBoard_CanContainKnowledgeObjectPerception;
@@ -54,7 +54,7 @@ class DEC_KnowledgeBlackBoard_AgentPion : public DEC_KnowledgeBlackBoard_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_KnowledgeBlackBoard_AgentPion( MIL_AgentPion& pion );
+    explicit DEC_KnowledgeBlackBoard_AgentPion( MIL_Agent_ABC& pion );
              DEC_KnowledgeBlackBoard_AgentPion();
     virtual ~DEC_KnowledgeBlackBoard_AgentPion();
     //@}
@@ -66,7 +66,7 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_AgentPion& GetPion() const;
+    MIL_Agent_ABC& GetPion() const;
 
     DEC_KS_Fire&                                            GetKsFire                 () const;
     DEC_KS_Perception&                                      GetKsPerception           () const;
@@ -134,7 +134,7 @@ public:
     //@}   
 
 private:
-    MIL_AgentPion* pPion_;
+    MIL_Agent_ABC* pPion_;
 
     // Containers
     DEC_BlackBoard_CanContainKnowledgeAgentPerception*      pKnowledgeAgentPerceptionContainer_;

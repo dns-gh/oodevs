@@ -379,7 +379,8 @@ MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT
     for( RIT_PionVector it = recycledPions_.rbegin(); it != recycledPions_.rend(); ++it )
     {
         MIL_AgentPion& pion = **it;
-        if( pion.GetType() == type )
+        const MIL_AgentType_ABC& pionType = pion.GetType();
+        if( &type == &pionType )
         {
             recycledPions_.erase( it.base() - 1 );
             pion.ChangeSuperior( *this );

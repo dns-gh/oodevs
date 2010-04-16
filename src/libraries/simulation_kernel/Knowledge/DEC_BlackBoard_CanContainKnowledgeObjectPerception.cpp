@@ -71,7 +71,7 @@ void DEC_BlackBoard_CanContainKnowledgeObjectPerception::save( MIL_CheckPointOut
 // Name: DEC_BlackBoard_CanContainKnowledgeObjectPerception::CreateKnowledgeObjectPerception
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPerception::CreateKnowledgeObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived )
+DEC_Knowledge_ObjectPerception& DEC_BlackBoard_CanContainKnowledgeObjectPerception::CreateKnowledgeObjectPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Object_ABC& objectPerceived )
 {
     DEC_Knowledge_ObjectPerception* pKnowledge = new DEC_Knowledge_ObjectPerception( agentPerceiving, objectPerceived );//$$ RAM   
     if( ! knowledgeObjectPerceptionMap_.insert( std::make_pair( &objectPerceived, pKnowledge ) ).second )

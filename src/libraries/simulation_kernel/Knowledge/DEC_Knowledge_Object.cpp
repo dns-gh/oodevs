@@ -27,8 +27,10 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
-
 #include "Entities/MIL_Army.h"
+
+#include "Knowledge/MIL_KnowledgeGroup.h"
+
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_IDManager.h"
@@ -52,6 +54,34 @@ MIL_IDManager DEC_Knowledge_Object::idManager_;
 DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL_Object_ABC& objectKnown )
     : DEC_Knowledge_ABC                 ()
     , pArmyKnowing_                     ( &armyKnowing )
+    , pGroupKnowing_                    ( 0 )
+    , pObjectKnown_                     ( &objectKnown )
+    , pObjectType_                      ( &objectKnown.GetType() )
+    , nID_                              ( idManager_.GetFreeId() )
+    , nAttributesUpdated_               ( eAttr_AllAttributes )
+    , pOwnerArmy_                       ( &objectKnown.GetArmy() )    
+    , localisation_                     ( )
+    , avoidanceLocalisation_            ( )            
+    , pCurrentPerceptionLevel_          ( &PHY_PerceptionLevel::notSeen_ )
+    , pPreviousPerceptionLevel_         ( &PHY_PerceptionLevel::notSeen_ )
+    , pMaxPerceptionLevel_              ( &PHY_PerceptionLevel::notSeen_ )
+    , perceptionPerAutomateSet_         ()
+    , previousPerceptionPerAutomateSet_ ()
+    , nTimeLastUpdate_                  ( 0 )
+    , rRelevance_                       ( 1. )
+    , bValid_                           ( true )
+{
+    SendMsgCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object constructor
+// Created: LDC 2010-04-15
+// -----------------------------------------------------------------------------
+DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowing, MIL_Object_ABC& objectKnown )
+    : DEC_Knowledge_ABC                 ()
+    , pArmyKnowing_                     ( &groupKnowing.GetArmy() )
+    , pGroupKnowing_                    ( &groupKnowing )
     , pObjectKnown_                     ( &objectKnown )
     , pObjectType_                      ( &objectKnown.GetType() )
     , nID_                              ( idManager_.GetFreeId() )
@@ -78,6 +108,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
 DEC_Knowledge_Object::DEC_Knowledge_Object()
     : DEC_Knowledge_ABC                ()
     , pArmyKnowing_                    ( 0 )
+    , pGroupKnowing_                    ( 0 )
     , pObjectKnown_                    ( 0 )
     , pObjectType_                     ( 0 )
     , nID_                             ( 0 )
@@ -102,9 +133,10 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
 // Name: DEC_Knowledge_Object constructor
 // Created: LDC 2010-04-07
 // -----------------------------------------------------------------------------
-DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy )
+DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, const MIL_KnowledgeGroup* pGroupKnowing )
     : DEC_Knowledge_ABC                 ()
     , pArmyKnowing_                     ( copy.pArmyKnowing_ )
+    , pGroupKnowing_                    ( pGroupKnowing )
     , pObjectKnown_                     ( copy.pObjectKnown_ )
     , pObjectType_                      ( copy.pObjectType_ )
     , nID_                              ( copy.idManager_.GetFreeId() )
@@ -478,8 +510,7 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( MsgsSimToClient::MsgObject
 {
     if( !IsAttributeUpdated( eAttr_PerceptionSources ) )
         return;
-    unsigned int i = 0;
-    for( CIT_PerceptionSourceSet it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it, ++i )
+    for( CIT_PerceptionSourceSet it = perceptionPerAutomateSet_.begin(); it != perceptionPerAutomateSet_.end(); ++it )
         asn.mutable_automat_perception()->add_elem( (*it)->GetID() );
 }
 
@@ -489,11 +520,8 @@ void DEC_Knowledge_Object::BuildMsgPerceptionSources( MsgsSimToClient::MsgObject
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::BuildMsgRelevance( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
-    if( !IsAttributeUpdated( eAttr_Relevance ) )
-        return;
-
-//    asn.set_relevancePresent( 1 );
-    asn.set_relevance( (unsigned int)( rRelevance_ * 100. ) );
+    if( IsAttributeUpdated( eAttr_Relevance ) )
+        asn.set_relevance( (unsigned int)( rRelevance_ * 100. ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -502,11 +530,8 @@ void DEC_Knowledge_Object::BuildMsgRelevance( MsgsSimToClient::MsgObjectKnowledg
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::BuildMsgLocalisations( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
-    if( !IsAttributeUpdated( eAttr_Localisation ) )
-        return;
-
-//    asn.set_locationPresent( 1 );
-    NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
+    if( IsAttributeUpdated( eAttr_Localisation ) )
+        NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
@@ -515,11 +540,8 @@ void DEC_Knowledge_Object::BuildMsgLocalisations( MsgsSimToClient::MsgObjectKnow
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
-    if( !IsAttributeUpdated( eAttr_CurrentPerceptionLevel ) )
-        return;
-
-//    asn.set_perceivedPresent( 1 );
-    asn.set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
+    if( IsAttributeUpdated( eAttr_CurrentPerceptionLevel ) )
+        asn.set_perceived( ( *pCurrentPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -529,10 +551,8 @@ void DEC_Knowledge_Object::BuildMsgCurrentPerceptionLevel( MsgsSimToClient::MsgO
 void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     assert( pObjectType_ );
-    if( *pMaxPerceptionLevel_ == PHY_PerceptionLevel::notSeen_ )
-        return;
-    
-    UpdateAttributes( attributes_, 
+    if( *pMaxPerceptionLevel_ != PHY_PerceptionLevel::notSeen_ )
+        UpdateAttributes( attributes_, 
                       boost::bind( &DEC_Knowledge_ObjectAttribute_ABC::Send, _1, boost::ref( *asn.mutable_attributes() ) ) );
     
 }
@@ -544,11 +564,8 @@ void DEC_Knowledge_Object::BuildMsgAttributes( MsgsSimToClient::MsgObjectKnowled
 inline
 void DEC_Knowledge_Object::BuildMsgRealObject( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
-    if( !IsAttributeUpdated( eAttr_RealObject ) )
-        return;
-
-//    asn.set_real_objectPresent( 1 );
-    asn.set_real_object( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
+    if( IsAttributeUpdated( eAttr_RealObject ) )
+        asn.set_real_object( pObjectKnown_ ? pObjectKnown_->GetID() : 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -571,6 +588,8 @@ void DEC_Knowledge_Object::UpdateOnNetwork()
     
     assert( pArmyKnowing_ );
     asn().set_team( pArmyKnowing_->GetID() );
+    if( pGroupKnowing_ )
+        asn().set_group( pGroupKnowing_->GetId() );
     
     BuildMsgRealObject            ( asn() );
     BuildMsgPerceptionSources     ( asn() );
@@ -598,6 +617,8 @@ void DEC_Knowledge_Object::SendMsgCreation() const
 
     assert( pArmyKnowing_ );
     asn().set_team( pArmyKnowing_->GetID() );
+    if( pGroupKnowing_ )
+        asn().set_group( pGroupKnowing_->GetId() );
     asn().set_type( pObjectType_->GetName().c_str() );
 
     std::for_each( attributes_.begin(), attributes_.end(), 

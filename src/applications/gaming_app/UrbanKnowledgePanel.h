@@ -12,8 +12,9 @@
 
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/TeamSelectionObserver.h"
-#include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
+#include "gaming/KnowledgeGroupSelectionObserver.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -45,6 +46,7 @@ class UrbanKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::ElementObserver_ABC< UrbanPerceptions >
                            , public tools::ElementObserver_ABC< UrbanKnowledges >
                            , public kernel::TeamSelectionObserver
+                           , public KnowledgeGroupSelectionObserver
 {
     Q_OBJECT;
 public:
@@ -82,6 +84,7 @@ private:
     virtual void NotifyUpdated( const UrbanPerceptions& element );
     virtual void NotifyUpdated( const kernel::UrbanKnowledge_ABC& element );
     virtual void Select( const kernel::Team_ABC* );
+    virtual void Select( const kernel::KnowledgeGroup_ABC* );
     //@}
 
 private:

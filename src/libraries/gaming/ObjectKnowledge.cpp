@@ -31,7 +31,7 @@ using namespace kernel;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Team_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
+ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const MsgsSimToClient::MsgObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter, 
                                   const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< ObjectType, std::string >& typeResolver )
     : EntityImplementation< ObjectKnowledge_ABC >( controller, message.oid(), "" )
     , converter_     ( converter )
@@ -148,7 +148,7 @@ const Entity_ABC* ObjectKnowledge::GetRecognizedEntity() const
 // Name: ObjectKnowledge::GetOwner
 // Created: AGE 2006-10-16
 // -----------------------------------------------------------------------------
-const Team_ABC& ObjectKnowledge::GetOwner() const
+const Entity_ABC& ObjectKnowledge::GetOwner() const
 {
     return owner_;
 }

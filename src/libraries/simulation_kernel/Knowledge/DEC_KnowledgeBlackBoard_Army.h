@@ -25,9 +25,10 @@ class DEC_BlackBoard_CanContainKnowledgeObject;
 class DEC_BlackBoard_CanContainKnowledgeUrban;
 class DEC_KS_ObjectKnowledgeSynthetizer;
 class DEC_KS_UrbanKnowledgeSynthetizer;
-class MIL_Army;
+class MIL_Army_ABC;
 class MIL_Object_ABC;
 class MIL_ObjectFilter;
+class TER_Polygon;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_Army
@@ -41,7 +42,7 @@ class DEC_KnowledgeBlackBoard_Army : public DEC_KnowledgeBlackBoard_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_KnowledgeBlackBoard_Army( MIL_Army& army );
+    explicit DEC_KnowledgeBlackBoard_Army( MIL_Army_ABC& army );
              DEC_KnowledgeBlackBoard_Army();
     virtual ~DEC_KnowledgeBlackBoard_Army();
     //@}
@@ -53,7 +54,7 @@ public:
 
     //! @name Accessors
     //@{
-    MIL_Army&                                 GetArmy                        () const;
+    MIL_Army_ABC&                             GetArmy                        () const;
     DEC_BlackBoard_CanContainKnowledgeObject& GetKnowledgeObjectContainer    () const;
     DEC_BlackBoard_CanContainKnowledgeUrban&  GetKnowledgeUrbanContainer    () const;
     DEC_KS_ObjectKnowledgeSynthetizer&        GetKsObjectKnowledgeSynthetizer() const;
@@ -103,7 +104,7 @@ public:
     //@}
 
 private:
-    MIL_Army* pArmy_;
+    MIL_Army_ABC* pArmy_;
 
     // Containers
     DEC_BlackBoard_CanContainKnowledgeObject* pKnowledgeObjectContainer_;

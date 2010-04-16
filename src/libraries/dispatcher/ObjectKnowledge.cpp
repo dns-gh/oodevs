@@ -8,23 +8,24 @@
 // *****************************************************************************
 
 #include "dispatcher_pch.h"
-#include "ObjectKnowledge.h"
-#include "protocol/ClientPublisher_ABC.h"
-#include "Model.h"
-#include "ConstructionAttribute.h"
-#include "ObstacleAttribute.h"
-#include "BypassAttribute.h"
-#include "CrossingSiteAttribute.h"
-#include "MineAttribute.h"
-#include "NBCAttribute.h"
-#include "SupplyRouteAttribute.h"
-#include "LogisticAttribute.h"
-#include "FireAttribute.h"
-#include "MedicalTreatmentAttribute.h"
-#include "clients_kernel/ModelVisitor_ABC.h"
-#include "Side.h"
 #include "Automat.h"
+#include "BypassAttribute.h"
+#include "ConstructionAttribute.h"
+#include "CrossingSiteAttribute.h"
+#include "FireAttribute.h"
+#include "LogisticAttribute.h"
+#include "KnowledgeGroup.h"
+#include "MedicalTreatmentAttribute.h"
+#include "MineAttribute.h"
+#include "Model.h"
+#include "NBCAttribute.h"
+#include "ObjectKnowledge.h"
+#include "ObstacleAttribute.h"
 #include "Object.h"
+#include "Side.h"
+#include "SupplyRouteAttribute.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
+#include "protocol/ClientPublisher_ABC.h"
 #include "protocol/clientsenders.h"
 #include <boost/bind.hpp>
 
@@ -37,13 +38,16 @@ using namespace dispatcher;
 ObjectKnowledge::ObjectKnowledge( const Model& model, const MsgsSimToClient::MsgObjectKnowledgeCreation& asnMsg )
     : SimpleEntity< kernel::ObjectKnowledge_ABC >( asnMsg.oid() )
     , model_                        ( model )
-    , team_                         ( model.sides_.Get( asnMsg.team() ) )
-    , pObject_                      ( model.objects_.Find( asnMsg.real_object() ) )
+    , team_                         ( model.Sides().Get( asnMsg.team() ) )
+    , pObject_                      ( model.Objects().Find( asnMsg.real_object() ) )
     , nType_                        ( asnMsg.type() )
+    , knowledgeGroup_               ( 0 )
     , localisation_                 ( )
     , bPerceived_                   ( false )
     , automatPerceptions_           ()    
 {
+    if( asnMsg.has_group() )
+        knowledgeGroup_ = &model.KnowledgeGroups().Get( asnMsg.group() );
     Initialize( model, asnMsg.attributes() );
 }
 
@@ -143,26 +147,13 @@ void ObjectKnowledge::SendCreation( ClientPublisher_ABC& publisher ) const
 
     asn().set_oid( GetId() );
     asn().set_team( team_.GetId() );
+    if( knowledgeGroup_ )
+        asn().set_group( knowledgeGroup_->GetId() );
     asn().set_real_object( pObject_ ? pObject_->GetId() : 0 );
     asn().set_type( nType_.c_str() );
 
     std::for_each( attributes_.begin(), attributes_.end(),
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
-
-//    if( nTypeDotationForConstruction_ != std::numeric_limits< unsigned int >::max() )
-//    {
-//        asn().set_construction_dotation_typePresent( 1 );
-//        asn().set_construction_dotation_type( nTypeDotationForConstruction_ );
-//    }
-//
-//    if( nTypeDotationForMining_ != std::numeric_limits< unsigned int >::max() )
-//    {
-//        asn().set_mining_dotation_typePresent( 1 );
-//        asn.set_mining_dotation_type( nTypeDotationForMining_ );
-//    }
-//
-//    SEND_ASN_ATTRIBUTE( obstacle_type              , nObstacleType_              );
-//    SEND_ASN_ATTRIBUTE( reserved_obstacle_activated, bReservedObstacleActivated_ );
 
     asn.Send( publisher );
 }
@@ -176,6 +167,8 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     client::ObjectKnowledgeUpdate asn;
     asn().set_oid( GetId() );
     asn().set_team( team_.GetId() );
+    if( knowledgeGroup_ )
+        asn().set_group( knowledgeGroup_->GetId() );
     asn().set_real_object( pObject_ ? pObject_->GetId() : 0 );
 
     if( asn().has_location() )
@@ -192,9 +185,6 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
                    boost::bind( &ObjectAttribute_ABC::Send, _1, boost::ref( *asn().mutable_attributes() ) ) );
 
     asn.Send( publisher );
-
-//    if( asn().has_specific_attributes() && pAttributes_ )
-//        pAttributes_->Delete( asn().specific_attributes );
 
     if( asn().has_automat_perception() && asn().automat_perception().elem_size() > 0 )
         asn().mutable_automat_perception()->Clear();

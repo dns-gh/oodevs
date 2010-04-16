@@ -76,8 +76,7 @@ public:
 
     virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const
     {
-        throw;
-        //      return *GetKnowledge_mocker.forward();
+        return *GetKnowledge_mocker.forward();
     }
     
     virtual const MIL_Automate& GetAutomate() const { throw; }
@@ -91,10 +90,9 @@ public:
 
     virtual const AlgorithmsFactories& GetAlgorithms() const { return algorithmFacories_; }
 
-    MIL_OrderManager_ABC& GetOrderManager()
-    {
-        throw std::runtime_error( "Unexpected call to GetOrderManager" );
-    }
+    virtual const MIL_PionOrderManager& GetOrderManager() const { throw; }
+    virtual MIL_PionOrderManager& GetOrderManager() { throw; }    
+    virtual void ChangeSuperior( MIL_Automate& newAutomate ) { throw; }
 
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, unsigned int, GetID );
     MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsDead );

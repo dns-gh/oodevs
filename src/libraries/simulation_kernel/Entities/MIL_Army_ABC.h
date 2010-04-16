@@ -104,6 +104,7 @@ public:
     virtual unsigned int                          GetID() const = 0;
     virtual const std::string&            GetName() const = 0;
     virtual DEC_KnowledgeBlackBoard_Army& GetKnowledge() const = 0;
+    virtual const std::map< unsigned int, MIL_KnowledgeGroup* >& GetKnowledgeGroups() const = 0;
     //@}
 
     //! @name 

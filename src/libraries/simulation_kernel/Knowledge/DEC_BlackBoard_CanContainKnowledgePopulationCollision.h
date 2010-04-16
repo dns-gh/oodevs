@@ -17,7 +17,7 @@
 
 class DEC_Knowledge_PopulationCollision;
 class MIL_Population;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  DEC_BlackBoard_CanContainKnowledgePopulationCollision
@@ -53,7 +53,7 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_PopulationCollision& CreateKnowledgePopulationCollision ( const MIL_AgentPion& agentColliding, MIL_Population& population );
+    DEC_Knowledge_PopulationCollision& CreateKnowledgePopulationCollision ( const MIL_Agent_ABC& agentColliding, MIL_Population& population );
     void                               DestroyKnowledgePopulationCollision( DEC_Knowledge_PopulationCollision& knowledge );
     //@}
 

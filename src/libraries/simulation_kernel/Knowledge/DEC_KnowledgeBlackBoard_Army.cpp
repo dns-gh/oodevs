@@ -18,7 +18,7 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_Urban.h"
-#include "Entities/MIL_Army.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "protocol/protocol.h"
 
@@ -28,7 +28,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_Army )
 // Name: DEC_KnowledgeBlackBoard_Army constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_KnowledgeBlackBoard_Army::DEC_KnowledgeBlackBoard_Army( MIL_Army& army )
+DEC_KnowledgeBlackBoard_Army::DEC_KnowledgeBlackBoard_Army( MIL_Army_ABC& army )
     : DEC_KnowledgeBlackBoard_ABC   ()
     , pArmy_                        ( &army )
     , pKnowledgeObjectContainer_    ( new DEC_BlackBoard_CanContainKnowledgeObject() )
@@ -353,7 +353,7 @@ namespace
     class sClosestObjectFriendInserter
     {
     public:
-        sClosestObjectFriendInserter( const MT_Vector2D& vPos, const MIL_Army& army, const MIL_ObjectFilter& filter )
+        sClosestObjectFriendInserter( const MT_Vector2D& vPos, const MIL_Army_ABC& army, const MIL_ObjectFilter& filter )
             : pArmy_       ( &army )
             , rClosestDist_( std::numeric_limits< MT_Float >::max() )
             , pos_         ( vPos )
@@ -381,7 +381,7 @@ namespace
 
     private:
               MT_Float          rClosestDist_;
-        const MIL_Army*         pArmy_;
+        const MIL_Army_ABC*     pArmy_;
         const MT_Vector2D&      pos_;   
         const MIL_ObjectFilter& filter_;
     };
@@ -586,7 +586,7 @@ void DEC_KnowledgeBlackBoard_Army::GetUrbanObjects( T_KnowledgeUrbanVector& cont
 // Name: DEC_KnowledgeBlackBoard_Army::GetArmy
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-MIL_Army& DEC_KnowledgeBlackBoard_Army::GetArmy() const
+MIL_Army_ABC& DEC_KnowledgeBlackBoard_Army::GetArmy() const
 {
     assert( pArmy_ );
     return *pArmy_;

@@ -26,7 +26,7 @@
 // Name: DEC_Path_KnowledgeAgent constructor
 // Created: NLD 2004-04-06
 // -----------------------------------------------------------------------------
-DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_AgentPion& pion )
+DEC_Path_KnowledgeAgent::DEC_Path_KnowledgeAgent( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Agent& knowledge, const MIL_Agent_ABC& pion )
     : vEnemyPosition_   ( knowledge.GetPosition() )
     , rSecurityDistance_( knowledge.GetMaxRangeToFireOn( pion, 0 ) )
 { 

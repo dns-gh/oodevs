@@ -25,13 +25,14 @@ namespace MsgsSimToClient
     enum MsgObjectMagicActionAck_ErrorCode;
 }
 
+class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
+class MIL_KnowledgeGroup;
+class MIL_ObjectManipulator_ABC;
+class MIL_ObjectType_ABC;
 class MIL_PopulationElement_ABC;
 class TER_Localisation;
-class MIL_ObjectManipulator_ABC;
-class DEC_Knowledge_Object;
-class MIL_ObjectType_ABC;
 
 // HLA
 namespace hla 
@@ -118,6 +119,7 @@ public:
     //! @name Knowledge
     //@{
     virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_Army_ABC& team ) = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledge( const MIL_KnowledgeGroup& group ) = 0;
     //@}
 
     //! @name Manipulator

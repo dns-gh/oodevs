@@ -11,13 +11,15 @@
 #include "UrbanKnowledgePanel.h"
 #include "moc_UrbanKnowledgePanel.cpp"
 
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
-#include "gaming/UrbanKnowledges.h"
 #include "clients_kernel/UrbanKnowledge_ABC.h"
-#include "gaming/UrbanPerceptions.h"
-#include "clients_gui/ListDisplayer.h"
 #include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/ListDisplayer.h"
+#include "gaming/UrbanKnowledges.h"
+#include "gaming/UrbanPerceptions.h"
 
 using namespace kernel;
 using namespace gui;
@@ -161,6 +163,19 @@ void UrbanKnowledgePanel::Select( const Team_ABC* team )
         else
             Hide();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanKnowledgePanel::Select
+// Created: LDC 2010-04-15
+// -----------------------------------------------------------------------------
+void UrbanKnowledgePanel::Select( const kernel::KnowledgeGroup_ABC* group )
+{    
+    const Hierarchies* hierarchies = group ? group->Retrieve< kernel::CommunicationHierarchies >() : 0;
+    if( hierarchies )
+        Select( static_cast< const Team_ABC* >( & hierarchies->GetTop() ) );
+    else
+        Select( ( const Team_ABC* )0 );
 }
 
 // -----------------------------------------------------------------------------

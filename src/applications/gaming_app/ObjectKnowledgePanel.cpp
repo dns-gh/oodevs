@@ -11,14 +11,16 @@
 #include "ObjectKnowledgePanel.h"
 #include "moc_ObjectKnowledgePanel.cpp"
 
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/ObjectExtensions.h"
-#include "gaming/ObjectKnowledges.h"
-#include "clients_kernel/ObjectKnowledge_ABC.h"
-#include "gaming/ObjectPerceptions.h"
-#include "clients_gui/ListDisplayer.h"
 #include "clients_gui/DisplayBuilder.h"
+#include "clients_gui/ListDisplayer.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/ObjectExtensions.h"
+#include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "clients_kernel/Team_ABC.h"
+#include "gaming/ObjectKnowledges.h"
+#include "gaming/ObjectPerceptions.h"
 
 using namespace kernel;
 using namespace gui;
@@ -259,17 +261,41 @@ void ObjectKnowledgePanel::Select( const Team_ABC* team )
 {
     const ObjectKnowledges* k = team ? team->Retrieve< ObjectKnowledges >() : 0;
     if( ! k || k != selected_ )
+        Select( k );    
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::Select
+// Created: LDC 2010-04-15
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::Select( const ObjectKnowledges* k )
+{
+    selected_ = k;
+    if( selected_ )
     {
-        selected_ = k;
-        if( selected_ )
-        {
-            subSelected_ = 0;
-            Show();
-            NotifyUpdated( *selected_ );
-        }
-        else
-            Hide();
+        subSelected_ = 0;
+        Show();
+        NotifyUpdated( *selected_ );
     }
+    else
+        Hide();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectKnowledgePanel::Select
+// Created: LDC 2010-04-15
+// -----------------------------------------------------------------------------
+void ObjectKnowledgePanel::Select( const kernel::KnowledgeGroup_ABC* group )
+{
+    const ObjectKnowledges* k = group ? group->Retrieve< ObjectKnowledges >() : 0;
+    if( !k && group )
+    {        
+        const Hierarchies* hierarchies = group->Retrieve< kernel::CommunicationHierarchies >();
+        if( hierarchies )
+            Select( static_cast< const Team_ABC* >( & hierarchies->GetTop() ) );
+    }
+    else if( k != selected_ )
+        Select( k );
 }
 
 // -----------------------------------------------------------------------------

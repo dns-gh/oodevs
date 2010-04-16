@@ -14,7 +14,6 @@
 
 namespace kernel
 {
-    class Entity_ABC;
     class Team_ABC;
 
 // =============================================================================
@@ -23,8 +22,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-24
 // =============================================================================
-class TeamSelectionObserver : public tools::SelectionObserver_ABC
-                            , public tools::SelectionObserver_Base< Entity_ABC >
+class TeamSelectionObserver : public tools::SelectionObserver_Base< Team_ABC >
 {
 
 public:
@@ -46,8 +44,8 @@ protected:
     //@{
     virtual void BeforeSelection();
     virtual void AfterSelection();
-    virtual void Select( const Entity_ABC& element );
-    virtual void Select( const Team_ABC* ) = 0;
+    virtual void Select( const Team_ABC& team );
+    virtual void Select( const Team_ABC* team ) = 0;
     //@}
 
 private:

@@ -16,7 +16,7 @@
 #include "DEC_Knowledge_Def.h"
 
 class DEC_Knowledge_PopulationPerception;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class MIL_Population;
 
 // =============================================================================
@@ -50,7 +50,7 @@ public:
 
     //! @name Operations
     //@{
-    DEC_Knowledge_PopulationPerception& CreateKnowledgePopulationPerception ( const MIL_AgentPion& agentPerceiving, MIL_Population& populationPerceived );
+    DEC_Knowledge_PopulationPerception& CreateKnowledgePopulationPerception ( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived );
     void                                DestroyKnowledgePopulationPerception( DEC_Knowledge_PopulationPerception& knowledge );
     //@}
 

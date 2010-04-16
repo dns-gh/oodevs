@@ -21,9 +21,9 @@ using namespace kernel;
 // Name: ObjectKnowledges constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-ObjectKnowledges::ObjectKnowledges( const Team_ABC& team, Controller& controller, ObjectKnowledgeFactory& factory )
+ObjectKnowledges::ObjectKnowledges( const Entity_ABC& owner, Controller& controller, ObjectKnowledgeFactory& factory )
     : Creatable< ObjectKnowledges >( controller, this )
-    , team_( team )
+    , owner_( &owner )
     , controller_( controller )
     , factory_( factory )
 {
@@ -47,7 +47,7 @@ ObjectKnowledges::~ObjectKnowledges()
 void ObjectKnowledges::DoUpdate( const MsgsSimToClient::MsgObjectKnowledgeCreation& message )
 {
     if( ! Find( message.oid() ) )
-        Register( message.oid(), * factory_.Create( team_, message ) );
+        Register( message.oid(), * factory_.Create( *owner_, message ) );
     controller_.Update( *this );
 }
 

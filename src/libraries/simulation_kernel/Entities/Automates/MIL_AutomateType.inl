@@ -49,7 +49,7 @@ MT_Float MIL_AutomateType::GetRapForIncreasePerTimeStepValue() const
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 inline
-const MIL_AgentTypePion& MIL_AutomateType::GetTypePionPC() const
+const MIL_AgentType_ABC& MIL_AutomateType::GetTypePionPC() const
 {
     assert( pTypePC_ );
     return *pTypePC_;

@@ -50,7 +50,7 @@ const MIL_AgentTypePion* MIL_AgentTypePionNBC::Create( const std::string& strNam
 // Name: MIL_AgentTypePionNBC::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionNBC::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const
+void MIL_AgentTypePionNBC::RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const
 {
     brain.RegisterFunction( "DEC_DecontaminerZone",
         boost::function< void( const TER_Localisation* ) >( boost::bind( &DEC_KnowledgeObjectFunctions::DecontaminateZone, boost::cref( agent ), _1 ) ) );

@@ -24,6 +24,7 @@ class MIL_AgentType_ABC;
 class MIL_Army_ABC;
 class MIL_Automate;
 class MIL_KnowledgeGroup;
+class MIL_PionOrderManager;
 class MIL_Population;
 class MT_Vector2D;
 
@@ -64,6 +65,11 @@ public:
     virtual const AlgorithmsFactories& GetAlgorithms() const = 0;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const = 0;
+
+    virtual const MIL_PionOrderManager& GetOrderManager() const = 0;
+    virtual MIL_PionOrderManager& GetOrderManager() = 0;
+
+    virtual void ChangeSuperior( MIL_Automate& newAutomate ) = 0;
     //@}
 
     //! @name Operations

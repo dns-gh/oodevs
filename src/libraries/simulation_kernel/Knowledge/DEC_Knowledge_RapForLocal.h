@@ -16,7 +16,7 @@
 #include "DEC_Knowledge_Def.h"
 #include <boost/serialization/export.hpp>
 
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 
 // =============================================================================
 // Created: NLD 2004-04-07
@@ -27,7 +27,7 @@ class DEC_Knowledge_RapForLocal : public DEC_Knowledge_RapFor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit DEC_Knowledge_RapForLocal( const MIL_AgentPion& pion );
+    explicit DEC_Knowledge_RapForLocal( const MIL_Agent_ABC& pion );
              DEC_Knowledge_RapForLocal();
     virtual ~DEC_Knowledge_RapForLocal();
     //@}
@@ -48,7 +48,7 @@ public:
     //@}
 
 private:
-    const MIL_AgentPion*              pPion_;
+    const MIL_Agent_ABC*              pPion_;
           T_ConstKnowledgeAgentVector dangerousEnemies_;
 };
 

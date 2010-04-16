@@ -44,7 +44,7 @@ MIL_AgentTypePionLOG_ABC::~MIL_AgentTypePionLOG_ABC()
 // Name: MIL_AgentTypePionLOG_ABC::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionLOG_ABC::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const
+void MIL_AgentTypePionLOG_ABC::RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const
 {
     brain.RegisterFunction( "DEC_Maintenance_ActiverChaine",
         boost::bind( &DEC_LogisticFunctions::PionMaintenanceEnableSystem, boost::ref( agent ) ) );

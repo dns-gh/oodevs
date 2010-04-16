@@ -17,7 +17,7 @@
 class DEC_Decision_ABC;
 class DEC_RolePion_Decision;
 class DEC_AutomateDecision;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class MIL_Automate;
 class PHY_ComposanteTypePion;
 class PHY_ComposantePion;
@@ -37,11 +37,11 @@ class DEC_LogisticFunctions
 public:
     //! @name Maintenance
     //@{
-    static void PionMaintenanceEnableSystem            ( MIL_AgentPion& callerAgent );
-    static void PionMaintenanceDisableSystem           ( MIL_AgentPion& callerAgent );
-    static void PionMaintenanceChangePriorities        ( MIL_AgentPion& callerAgent, const std::vector< const PHY_ComposanteTypePion* >& priorities );
-    static void PionMaintenanceChangeTacticalPriorities( MIL_AgentPion& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities );
-    static void PionMaintenanceChangeWorkRate          ( MIL_AgentPion& callerAgent, int workRate );
+    static void PionMaintenanceEnableSystem            ( MIL_Agent_ABC& callerAgent );
+    static void PionMaintenanceDisableSystem           ( MIL_Agent_ABC& callerAgent );
+    static void PionMaintenanceChangePriorities        ( MIL_Agent_ABC& callerAgent, const std::vector< const PHY_ComposanteTypePion* >& priorities );
+    static void PionMaintenanceChangeTacticalPriorities( MIL_Agent_ABC& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities );
+    static void PionMaintenanceChangeWorkRate          ( MIL_Agent_ABC& callerAgent, int workRate );
 
     static void AutomateMaintenanceEnableSystem            ( MIL_Automate& callerAutomate );
     static void AutomateMaintenanceDisableSystem           ( MIL_Automate& callerAutomate );
@@ -52,14 +52,14 @@ public:
 
     //! @name Medical
     //@{
-    static void PionMedicalEnableSystem            ( MIL_AgentPion& callerAgent );
-    static void PionMedicalDisableSystem           ( MIL_AgentPion& callerAgent );
-    static void PionMedicalEnableSortingFunction   ( MIL_AgentPion& callerAgent );
-    static void PionMedicalDisableSortingFunction  ( MIL_AgentPion& callerAgent );
-    static void PionMedicalEnableHealingFunction   ( MIL_AgentPion& callerAgent );
-    static void PionMedicalDisableHealingFunction  ( MIL_AgentPion& callerAgent );
-    static void PionMedicalChangePriorities        ( MIL_AgentPion& callerAgent, const std::vector< const PHY_HumanWound* >& priorities );
-    static void PionMedicalChangeTacticalPriorities( MIL_AgentPion& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities );
+    static void PionMedicalEnableSystem            ( MIL_Agent_ABC& callerAgent );
+    static void PionMedicalDisableSystem           ( MIL_Agent_ABC& callerAgent );
+    static void PionMedicalEnableSortingFunction   ( MIL_Agent_ABC& callerAgent );
+    static void PionMedicalDisableSortingFunction  ( MIL_Agent_ABC& callerAgent );
+    static void PionMedicalEnableHealingFunction   ( MIL_Agent_ABC& callerAgent );
+    static void PionMedicalDisableHealingFunction  ( MIL_Agent_ABC& callerAgent );
+    static void PionMedicalChangePriorities        ( MIL_Agent_ABC& callerAgent, const std::vector< const PHY_HumanWound* >& priorities );
+    static void PionMedicalChangeTacticalPriorities( MIL_Agent_ABC& callerAgent, const std::vector< const DEC_Decision_ABC* >& priorities );
 
     static void AutomateMedicalEnableSystem            ( MIL_Automate& callerAutomate );
     static void AutomateMedicalDisableSystem           ( MIL_Automate& callerAutomate );
@@ -78,37 +78,37 @@ public:
 
     //! @name Supply
     //@{
-    static void PionSupplyEnableSystem     ( MIL_AgentPion& callerAgent );
-    static void PionSupplyDisableSystem    ( MIL_AgentPion& callerAgent );
+    static void PionSupplyEnableSystem     ( MIL_Agent_ABC& callerAgent );
+    static void PionSupplyDisableSystem    ( MIL_Agent_ABC& callerAgent );
     static void AutomateSupplyEnableSystem ( MIL_Automate& callerAutomate );
     static void AutomateSupplyDisableSystem( MIL_Automate& callerAutomate );
     
-    static bool ConvoyIsLoadingDone        ( const MIL_AgentPion& callerAgent );
-    static bool ConvoyIsUnloadingDone      ( const MIL_AgentPion& callerAgent );
-    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetSupplyingAutomate( const MIL_AgentPion& callerAgent );
-    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetConvoyingAutomate( const MIL_AgentPion& callerAgent );  
-    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetSuppliedAutomate ( const MIL_AgentPion& callerAgent );
-    static void ConvoyEndMission           ( MIL_AgentPion& callerAgent );
+    static bool ConvoyIsLoadingDone        ( const MIL_Agent_ABC& callerAgent );
+    static bool ConvoyIsUnloadingDone      ( const MIL_Agent_ABC& callerAgent );
+    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetSupplyingAutomate( const MIL_Agent_ABC& callerAgent );
+    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetConvoyingAutomate( const MIL_Agent_ABC& callerAgent );  
+    static boost::shared_ptr< DEC_Decision_ABC > ConvoyGetSuppliedAutomate ( const MIL_Agent_ABC& callerAgent );
+    static void ConvoyEndMission           ( MIL_Agent_ABC& callerAgent );
 
     static void AutomateRequestSupply      ( MIL_Automate&  callerAutomate );
-    static void PionRequestSupply          ( MIL_AgentPion& callerAgent );
+    static void PionRequestSupply          ( MIL_Agent_ABC& callerAgent );
 
-    static void ChangeDotationsValueUsingTC2( MIL_AgentPion& callerAgent, int dotationType, const MT_Float rCapacityFactor, int ammoDotationClassId );
+    static void ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerAgent, int dotationType, const MT_Float rCapacityFactor, int ammoDotationClassId );
     //@}
     
     //! @name Misc
     //@{
-    static DEC_Decision_ABC*  PionGetTC2    ( const MIL_AgentPion& );
+    static DEC_Decision_ABC*  PionGetTC2    ( const MIL_Agent_ABC& );
     static DEC_Decision_ABC* AutomateGetTC2( const MIL_Automate& );
 
-    static void UndoLendCollectionComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack ); 
-    static void UndoLendHaulerComposantes    ( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack ); 
+    static void UndoLendCollectionComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack ); 
+    static void UndoLendHaulerComposantes    ( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack ); 
     //@}
 
     //! @name Helpers
     //@{
 private:
-    static void DEC_LogisticFunctions::UndoLendComposantes( MIL_AgentPion& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate );
+    static void DEC_LogisticFunctions::UndoLendComposantes( MIL_Agent_ABC& callerAgent, const DEC_Decision_ABC* pTarget, const unsigned int nNbrToGetBack, T_ComposantePredicate funcPredicate );
     //@}
 };
 

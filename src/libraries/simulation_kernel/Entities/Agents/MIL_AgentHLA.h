@@ -55,6 +55,11 @@ public:
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
 
+    virtual const MIL_PionOrderManager& GetOrderManager() const;
+    virtual MIL_PionOrderManager& GetOrderManager();
+
+    virtual void ChangeSuperior( MIL_Automate& newAutomate );
+
     void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
 

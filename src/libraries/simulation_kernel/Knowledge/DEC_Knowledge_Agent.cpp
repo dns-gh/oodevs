@@ -14,6 +14,7 @@
 #include "DEC_Knowledge_AgentPerception.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_AgentType_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
@@ -273,7 +274,7 @@ void DEC_Knowledge_Agent::UpdatePerceptionSources( const DEC_Knowledge_AgentPerc
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
 
-    const MIL_AgentPion& pionSource = perception.GetAgentPerceiving();
+    const MIL_Agent_ABC& pionSource = perception.GetAgentPerceiving();
     const MIL_Automate& automateSource = pionSource.GetAutomate();
 
     // On ne garde que les sources provenant d'autres knowledge groupes
@@ -614,7 +615,7 @@ void DEC_Knowledge_Agent::DegradeDangerosity( MT_Float& rDangerosity ) const
 // Name: DEC_Knowledge_Agent::GetDangerosity
 // Created: NLD 2004-04-02
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_AgentPion& target ) const
+MT_Float DEC_Knowledge_Agent::GetDangerosity( const MIL_Agent_ABC& target ) const
 {
     if(     *pMaxPerceptionLevel_ < PHY_PerceptionLevel::recognized_ 
         ||  IsAFriend( target.GetArmy() ) == eTristate_True 
@@ -730,7 +731,7 @@ MT_Float DEC_Knowledge_Agent::GetDangerosity( const DEC_Knowledge_Agent& target 
 // Name: DEC_Knowledge_Agent::GetMaxRangeToFireOn
 // Created: NLD 2004-04-13
 // -----------------------------------------------------------------------------
-MT_Float DEC_Knowledge_Agent::GetMaxRangeToFireOn( const MIL_AgentPion& target, MT_Float rWantedPH ) const
+MT_Float DEC_Knowledge_Agent::GetMaxRangeToFireOn( const MIL_Agent_ABC& target, MT_Float rWantedPH ) const
 {
     // Get back the most dangerous composante type of the target (from our point of view ...)
     const PHY_ComposantePion* pTargetComposante = target.GetRole< PHY_RolePion_Composantes >().GetMajorComposante();
@@ -996,7 +997,7 @@ const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel() cons
 // Name: DEC_Knowledge_Agent::GetCurrentPerceptionLevel
 // Created: SLG 2010-01-27
 // -----------------------------------------------------------------------------
-const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel( const MIL_AgentPion& pion ) const
+const PHY_PerceptionLevel& DEC_Knowledge_Agent::GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const
 {
     CIT_PerceptionAgentSourceMap  itPerceptionLevel = perceptionLevelPerAgentMap_.find( &pion );
     if( itPerceptionLevel != perceptionLevelPerAgentMap_.end() )

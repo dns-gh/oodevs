@@ -237,7 +237,7 @@ void MIL_AutomateType::InitializeRapFor( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
 {
-    typedef std::map< const MIL_AgentTypePion*, unsigned int > T_CounterMap;
+    typedef std::map< const MIL_AgentType_ABC*, unsigned int > T_CounterMap;
     typedef T_CounterMap::const_iterator               CIT_CounterMap;
     
     T_CounterMap currentComposition;
@@ -247,8 +247,9 @@ bool MIL_AutomateType::CheckComposition( const MIL_Automate& automate ) const
     {
         const MIL_AgentPion& pion = **it;
 
-        ++currentComposition[ &pion.GetType() ];
-        if( composition_.find( &pion.GetType() ) == composition_.end() )
+        const MIL_AgentType_ABC& pionType = pion.GetType();
+        ++currentComposition[ &pionType ];
+        if( composition_.find( &pionType ) == composition_.end() )
             return false;
     }
     
@@ -341,7 +342,7 @@ MT_Float MIL_AutomateType::GetRapForIncreasePerTimeStepValue() const
 // Name: MIL_AutomateType::GetTypePionPC
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
-const MIL_AgentTypePion& MIL_AutomateType::GetTypePionPC() const
+const MIL_AgentType_ABC& MIL_AutomateType::GetTypePionPC() const
 {
     assert( pTypePC_ );
     return *pTypePC_;

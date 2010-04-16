@@ -47,7 +47,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_AgentPion )
 // Name: DEC_KnowledgeBlackBoard_AgentPion constructor
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_AgentPion& pion )
+DEC_KnowledgeBlackBoard_AgentPion::DEC_KnowledgeBlackBoard_AgentPion( MIL_Agent_ABC& pion )
     : pPion_                                    ( &pion )
     , pKnowledgeAgentPerceptionContainer_       ( new DEC_BlackBoard_CanContainKnowledgeAgentPerception     () )
     , pKnowledgeUrbanPerceptionContainer_       ( new DEC_BlackBoard_CanContainKnowledgeUrbanPerception     () )
@@ -216,7 +216,7 @@ namespace {
     class sLivingEnemiesPerceivedInsertor
     {
     public:
-        sLivingEnemiesPerceivedInsertor( const MIL_AgentPion& pion, T_ConstKnowledgeAgentVector& container, const T* pZone = 0 )
+        sLivingEnemiesPerceivedInsertor( const MIL_Agent_ABC& pion, T_ConstKnowledgeAgentVector& container, const T* pZone = 0 )
             : pContainer_( &container )
             , pPion_     ( &pion )
             , pArmy_     ( &pion.GetArmy() )
@@ -247,7 +247,7 @@ namespace {
 
     private:
               T_ConstKnowledgeAgentVector* pContainer_;
-        const MIL_AgentPion*               pPion_;
+        const MIL_Agent_ABC*               pPion_;
         const MIL_Army_ABC*                pArmy_;
         const T*                           pZone_;
     };
@@ -285,7 +285,7 @@ namespace {
     class sAgentsAttackingInsertor
     {
     public:
-        sAgentsAttackingInsertor( const MIL_AgentPion& pion, T_ConstKnowledgeAgentVector& container )
+        sAgentsAttackingInsertor( const MIL_Agent_ABC& pion, T_ConstKnowledgeAgentVector& container )
             : pContainer_( &container )
             , pPion_     ( &pion )
         {
@@ -303,7 +303,7 @@ namespace {
 
     private:
               T_ConstKnowledgeAgentVector* pContainer_;
-        const MIL_AgentPion*               pPion_;
+        const MIL_Agent_ABC*               pPion_;
     };
 }
 
@@ -490,7 +490,7 @@ namespace {
     class sPopulationAttackingInsertor
     {
     public:
-        sPopulationAttackingInsertor( const MIL_AgentPion& pion, T_KnowledgePopulationDiaIDVector& container )
+        sPopulationAttackingInsertor( const MIL_Agent_ABC& pion, T_KnowledgePopulationDiaIDVector& container )
             : pContainer_( &container )
             , pPion_     ( &pion )
         {
@@ -508,7 +508,7 @@ namespace {
 
     private:
             T_KnowledgePopulationDiaIDVector* pContainer_;
-        const MIL_AgentPion*                    pPion_;
+        const MIL_Agent_ABC*                    pPion_;
     };
 }
 
@@ -605,7 +605,7 @@ boost::shared_ptr< DEC_Knowledge_Urban > DEC_KnowledgeBlackBoard_AgentPion::Reso
 // Name: DEC_KnowledgeBlackBoard_AgentPion::GetPion
 // Created: NLD 2006-04-12
 // -----------------------------------------------------------------------------
-MIL_AgentPion& DEC_KnowledgeBlackBoard_AgentPion::GetPion() const
+MIL_Agent_ABC& DEC_KnowledgeBlackBoard_AgentPion::GetPion() const
 {
     assert( pPion_ );
     return *pPion_;

@@ -17,9 +17,16 @@ namespace xml
     class xistream;
 }
 
+class DEC_Model_ABC;
+class MIL_Agent_ABC;
 class PHY_NatureAtlas;
 class PHY_NatureLevel;
 class PHY_UnitType;
+
+namespace directia
+{
+    class Brain;
+}
 
 // =============================================================================
 // @class  MIL_AgentType_ABC
@@ -44,6 +51,11 @@ public:
     virtual bool           IsTerrorist   () const;
 
     virtual const PHY_UnitType& GetUnitType() const = 0;
+    virtual MT_Float GetRapForIncreasePerTimeStepValue() const = 0;
+    virtual void RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const = 0;
+    virtual const DEC_Model_ABC& GetModel() const = 0;    
+    virtual MT_Float GetDistanceAvantPoint ( const TerrainData& nType ) const = 0;
+    virtual MT_Float GetDistanceAvantLima () const = 0;
     //@}
 
 protected:

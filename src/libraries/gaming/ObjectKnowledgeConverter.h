@@ -60,7 +60,7 @@ private:
     //@{
     typedef std::map< const kernel::Object_ABC*, const kernel::ObjectKnowledge_ABC* > T_KnowledgeMap;
     typedef T_KnowledgeMap::const_iterator                                            CIT_KnowledgeMap;
-    typedef std::map< const kernel::Team_ABC*, T_KnowledgeMap >                       T_Knowledges;
+    typedef std::map< const kernel::Entity_ABC*, T_KnowledgeMap >                       T_Knowledges;
     typedef T_Knowledges::const_iterator                                              CIT_Knowledges;
     //@}
 

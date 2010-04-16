@@ -19,7 +19,7 @@
 class MIL_Population;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
-class MIL_AgentPion;
+class MIL_Agent_ABC;
 class DEC_Knowledge_PopulationConcentrationPerception;
 class DEC_Knowledge_PopulationFlowPerception;
 class DEC_Knowledge_Population;
@@ -45,7 +45,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_Knowledge_PopulationPerception( const MIL_AgentPion& agentPerceiving, MIL_Population& populationPerceived );
+             DEC_Knowledge_PopulationPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Population& populationPerceived );
              DEC_Knowledge_PopulationPerception();
     virtual ~DEC_Knowledge_PopulationPerception();
     //@}
@@ -85,11 +85,11 @@ public:
     //! @name Accessors
     //@{
           MIL_Population& GetPopulationPerceived() const;
-    const MIL_AgentPion&  GetAgentPerceiving    () const;
+    const MIL_Agent_ABC&  GetAgentPerceiving    () const;
     //@}
 
 private:
-    const MIL_AgentPion*   pAgentPerceiving_;
+    const MIL_Agent_ABC*   pAgentPerceiving_;
           MIL_Population*  pPopulationPerceived_;
 
     T_ConcentrationMap     concentrations_;

@@ -507,6 +507,18 @@ boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge( const MIL_Arm
 }
 
 // -----------------------------------------------------------------------------
+// Name: boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge
+// Created: LDC 2010-04-15
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Knowledge_Object > Object::CreateKnowledge( const MIL_KnowledgeGroup& group )
+{
+    boost::shared_ptr< DEC_Knowledge_Object > pKnowledge( new DEC_Knowledge_Object( group, *this ) );
+    std::for_each( attributes_.begin(), attributes_.end(),
+                   boost::bind( &ObjectAttribute_ABC::Instanciate, _1, boost::ref( *pKnowledge ) ) );
+    return pKnowledge;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Object::UpdateLocatisation
 // Created: JCR 2008-06-12
 // -----------------------------------------------------------------------------

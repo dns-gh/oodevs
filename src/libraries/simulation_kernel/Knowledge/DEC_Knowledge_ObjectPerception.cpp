@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Knowledge_ObjectPerception.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Network/NET_AgentServer.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -23,7 +23,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectPerception )
 // Name: DEC_Knowledge_ObjectPerception constructor
 // Created: NLD 2004-03-11
 // -----------------------------------------------------------------------------
-DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception( const MIL_AgentPion& agentPerceiving, MIL_Object_ABC& objectPerceived )
+DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Object_ABC& objectPerceived )
     : DEC_Knowledge_ABC        ()
     , pAgentPerceiving_        ( &agentPerceiving )
     , pObjectPerceived_        ( &objectPerceived )
@@ -64,7 +64,7 @@ void DEC_Knowledge_ObjectPerception::load( MIL_CheckPointInArchive& file, const 
 {
     file >> boost::serialization::base_object< DEC_Knowledge_ABC >( *this );
 
-    file >> const_cast< MIL_AgentPion*& >( pAgentPerceiving_ ) 
+    file >> const_cast< MIL_Agent_ABC*& >( pAgentPerceiving_ ) 
          >> pObjectPerceived_;
     
     unsigned int nTmp;
@@ -150,7 +150,7 @@ MIL_Object_ABC& DEC_Knowledge_ObjectPerception::GetObjectPerceived() const
 // Name: DEC_Knowledge_ObjectPerception::GetObjectPerceiving
 // Created: NLD 2004-03-19
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& DEC_Knowledge_ObjectPerception::GetAgentPerceiving() const
+const MIL_Agent_ABC& DEC_Knowledge_ObjectPerception::GetAgentPerceiving() const
 {
     assert( pAgentPerceiving_ );
     return *pAgentPerceiving_;    

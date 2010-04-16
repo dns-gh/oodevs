@@ -49,7 +49,7 @@ const MIL_AgentTypePion* MIL_AgentTypePionRENS::Create( const std::string& strNa
 // Name: MIL_AgentTypePionRENS::RegisterFunctions
 // Created: LDC 2009-04-23
 // -----------------------------------------------------------------------------
-void MIL_AgentTypePionRENS::RegisterFunctions( directia::Brain& brain, MIL_AgentPion& agent ) const
+void MIL_AgentTypePionRENS::RegisterFunctions( directia::Brain& brain, MIL_Agent_ABC& agent ) const
 {
     brain.RegisterFunction( "DEC_Perception_ActiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::EnableRecordMode, boost::ref( agent ) ) );
     brain.RegisterFunction( "DEC_Perception_DesactiverModeEnregistrement", boost::bind( &DEC_PerceptionFunctions::DisableRecordMode, boost::ref( agent ) ) );

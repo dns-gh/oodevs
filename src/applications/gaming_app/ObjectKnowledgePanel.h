@@ -12,6 +12,7 @@
 
 #include "clients_gui/InfoPanel_ABC.h"
 #include "clients_kernel/TeamSelectionObserver.h"
+#include "gaming/KnowledgeGroupSelectionObserver.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 
@@ -66,6 +67,7 @@ class ObjectKnowledgePanel : public gui::InfoPanel_ABC
                            , public tools::ElementObserver_ABC< kernel::NBCAttribute_ABC >
                            , public tools::ElementObserver_ABC< kernel::ActivityTimeAttribute_ABC >                           
                            , public kernel::TeamSelectionObserver
+                           , public KnowledgeGroupSelectionObserver
 {
     Q_OBJECT;
 public:
@@ -116,6 +118,8 @@ private:
     template< typename T >
     void UpdateExtension( const kernel::ObjectKnowledge_ABC& k );
     virtual void Select( const kernel::Team_ABC* );
+    virtual void Select( const kernel::KnowledgeGroup_ABC* );
+    void Select( const ObjectKnowledges* );
     //@}
 
 private:
