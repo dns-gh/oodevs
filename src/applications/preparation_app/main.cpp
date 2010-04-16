@@ -16,26 +16,16 @@
 
 //#define NO_LICENSE_CHECK
 
-#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-#   pragma warning( push )
-#   pragma warning( disable: 4127 4512 )
-#   include <boost/date_time/gregorian/gregorian.hpp>
-#   pragma warning( pop )
-#   include "tools/win32/FlexLm.h"
-using namespace boost::gregorian;
-#else
-class FlexLmLicense {};
+#if !defined( NO_LICENSE_CHECK )
+#   include <tools/win32/FlexLm.h>
 #endif
 
 int main( int argc, char** argv )
-{   
-    std::auto_ptr< FlexLmLicense > license;
+{
     QString expiration;
-#if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    license = FlexLmLicense::CheckLicense( "sword", 1.0f );
-    const boost::gregorian::date expirationDate( license->GetExpirationDate() );
-    if( !expirationDate.is_infinity() )
-        expiration = boost::gregorian::to_simple_string( expirationDate ).c_str();
+#if !defined( NO_LICENSE_CHECK )
+    std::auto_ptr< FlexLmLicense > pLicense = FlexLmLicense::CheckLicense( "sword", 1.0f );
+    expiration = pLicense->GetExpirationDate().c_str();
 #endif
 
     QApplication::setStyle( "windowsxp" );
