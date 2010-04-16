@@ -11,9 +11,10 @@
 #include "PopulationMagicOrdersInterface.h"
 #include "moc_PopulationMagicOrdersInterface.cpp"
 
-#include "actions/ActionsModel.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/Point.h"
+#include "actions/Quantity.h"
+#include "actions/Enumeration.h"
 
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
@@ -118,7 +119,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
 
     QPopupMenu* choiceMenu = new QPopupMenu( magicMenu );
     for( unsigned int i = 0; i < unsigned int( eNbrPopulationAttitude ); ++i )
-        choiceMenu->insertItem( tools::ToString( (E_PopulationAttitude)i ), 0, i );
+        choiceMenu->insertItem( tools::ToString( (E_PopulationAttitude)i ), this, SLOT( ChangePopulationAttitude( int ) ), 0, i );
     magicMenu->insertItem( tr( "Change population attitude" ), choiceMenu );
 }
 
@@ -134,14 +135,10 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
         {
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "teleport" );
             UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
-
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-            while( it.HasMoreElements() )
-                action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
+            action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->Polish();
-            actionsModel_.Register( action->GetId(), *action );
-            actionsModel_.Publish( *action, actionPublisher_ );
+            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
         }
     }
     controllers_.Unregister( *magicMoveLocation_ );
@@ -169,10 +166,10 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
 {
     if( selectedEntity_ )
     {
-        simulation::PopulationMagicAction magicAction;
-        magicAction().set_oid( selectedEntity_->GetId() );
-        //magicAction.action().t ( T_MsgPopulationMagicAction_action_destruction_totale;
-        magicAction.Send( publisher_ );
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_total_destruction" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     }
 }
 
@@ -185,10 +182,12 @@ void PopulationMagicOrdersInterface::KillSomePopulation()
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
-            simulation::PopulationMagicAction magicAction;
-            magicAction().set_oid( selectedEntity_->GetId() );
-            magicAction().mutable_action()->mutable_tuer()->set_kill( editor->text().toUInt() );
-            magicAction.Send( publisher_ );
+            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_kill" );
+            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+            tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+            action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
         }
 }
 
@@ -201,10 +200,12 @@ void PopulationMagicOrdersInterface::ResurectSomePopulation()
     if( selectedEntity_ )
         if( const QLineEdit* editor = dynamic_cast< const QLineEdit* >( sender() ) )
         {
-            simulation::PopulationMagicAction magicAction;
-            magicAction().set_oid( selectedEntity_->GetId() );
-            magicAction().mutable_action()->mutable_ressusciter()->set_resurrect( editor->text().toUInt() );
-            magicAction.Send( publisher_ );
+            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_resurrect" );
+            UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+            tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+            action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
         }
 }
 
@@ -216,14 +217,16 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
 {
     if( selectedEntity_ )
     {
-        simulation::PopulationMagicAction magicAction;
-        magicAction().set_oid( selectedEntity_->GetId() );
-        MsgMagicActionPopulationChangeAttitude params;
-        params.set_attitude( ( EnumPopulationAttitude )index );
-
-
-        *magicAction().mutable_action()->mutable_change_attitude() = params;
-        magicAction.Send( publisher_ );
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_change_attitude" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::Enumeration( it.NextElement(), index ) );
+        // $$$$ JSR 2010-04-16: TODO? not used by now
+        // optional int32 flux
+        // optional int32 concentration
+        // optional bool global
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     }
 }
 

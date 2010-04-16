@@ -99,8 +99,6 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         workspace.GetEntityManager        ().OnReceiveMsgPopulationOrder                ( wrapper.message().population_order()                   , nCtx ); 
     else if( wrapper.message().has_frag_order() )
         workspace.GetEntityManager        ().OnReceiveMsgFragOrder                      ( wrapper.message().frag_order()                         , nCtx ); 
-    else if( wrapper.message().has_population_magic_action() )
-        workspace.GetEntityManager        ().OnReceiveMsgPopulationMagicAction          ( wrapper.message().population_magic_action()            , nCtx ); 
     else if( wrapper.message().has_set_automat_mode() )
         workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx ); 
     else if( wrapper.message().has_unit_creation_request() )

@@ -34,18 +34,24 @@ message MsgUnitCreationRequest {
 // Magic Action
 message MsgUnitMagicAction {
    enum Type {
-        move_to              = 0;
-        surrender_to         = 1;
-        cancel_surrender     = 2;
-        recover_transporters = 3;
-        destroy_component    = 4;
-        recover_all          = 5;
-        recover_troops       = 6;
-        recover_equipments   = 7;
-        recover_resources    = 8;
-        destroy_all          = 9;
-        change_human_factors = 10;
-        partial_recovery     = 11;
+        move_to                      = 0;
+        surrender_to                 = 1;
+        cancel_surrender             = 2;
+        recover_transporters         = 3;
+        destroy_component            = 4;
+        recover_all                  = 5;
+        recover_troops               = 6;
+        recover_equipments           = 7;
+        recover_resources            = 8;
+        destroy_all                  = 9;
+        change_human_factors         = 10;
+        partial_recovery             = 11;
+        unit_creation                = 12;
+        create_fire_order            = 13;
+        population_total_destruction = 14;
+        population_kill              = 15;
+        population_resurrect         = 16;
+        population_change_attitude   = 17;
     }
    required uint32                      oid        = 1;
    required Type                        type       = 2;

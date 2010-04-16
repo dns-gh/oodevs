@@ -27,7 +27,6 @@ namespace Common
 namespace MsgsClientToSim
 {
     class MsgFragOrder;
-    class MsgPopulationMagicAction;
     class MsgUnitMagicAction;
 }
 
@@ -150,7 +149,7 @@ public:
     void SendFullState        () const;
     void UpdateNetwork        ();
 
-    void OnReceiveMsgPopulationMagicAction      ( const MsgsClientToSim::MsgPopulationMagicAction& asnMsg );
+    void OnReceiveMsgPopulationMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction& asnMsg );
     void OnReceiveMsgPopulationMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
     //@}
 
@@ -192,9 +191,9 @@ private:
     //! @name Magic actions
     //@{
     void OnReceiveMsgDestroyAll    ();
-    void OnReceiveMsgChangeAttitude( const Common::MsgMagicActionPopulationChangeAttitude& asn );
-    void OnReceiveMsgKill          ( const Common::MsgMagicActionPopulationKill& asn );
-    void OnReceiveMsgResurrect     ( const Common::MsgMagicActionPopulationResurrect& asn );
+    void OnReceiveMsgChangeAttitude( const MsgsClientToSim::MsgUnitMagicAction& asn );
+    void OnReceiveMsgKill          ( const MsgsClientToSim::MsgUnitMagicAction& asn );
+    void OnReceiveMsgResurrect     ( const MsgsClientToSim::MsgUnitMagicAction& asn );
     //@}
 
     //! @name Network

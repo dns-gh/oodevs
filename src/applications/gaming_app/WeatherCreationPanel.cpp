@@ -11,7 +11,6 @@
 #include "WeatherCreationPanel.h"
 #include "moc_WeatherCreationPanel.cpp"
 #include "actions/MagicActionMeteo.h"
-#include "actions/ActionsModel.h"
 #include "actions/Numeric.h"
 #include "actions/DateTime.h"
 #include "actions/Location.h"
@@ -146,9 +145,7 @@ void WeatherCreationPanel::Commit()
                 action->AddParameter( weather_->CreateParameter( parameter ) );
         }
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->Polish();
-        actionsModel_.Register( action->GetId(), *action );
-        actionsModel_.Publish( *action, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
         Reset();
     }
 }

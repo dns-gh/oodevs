@@ -10,6 +10,7 @@
 #include "actions_pch.h"
 #include "Action_ABC.h"
 #include "Parameter_ABC.h"
+#include "ActionsModel.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -200,4 +201,15 @@ void Action_ABC::ContextMenu( kernel::ActionController& controller, const QPoint
 void Action_ABC::Activate( kernel::ActionController& controller ) const
 {
     controller.Activate( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::RegisterAndPublish
+// Created: JSR 2010-04-16
+// -----------------------------------------------------------------------------
+void Action_ABC::RegisterAndPublish( ActionsModel& actionsModel, Publisher_ABC& actionPublisher)
+{
+    Polish();
+    actionsModel.Register( GetId(), *this );
+    actionsModel.Publish( *this, actionPublisher );
 }

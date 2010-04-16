@@ -44,7 +44,6 @@ namespace MsgsClientToSim
     class MsgLogSupplyPushFlow;
     class MsgLogSupplyChangeQuotas;
     class MsgObjectMagicAction;
-    class MsgPopulationMagicAction;
     class MsgSetAutomatMode;
     class MsgUnitCreationRequest;
     class MsgUnitMagicAction;
@@ -157,7 +156,6 @@ public:
     void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );
     void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
     void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
-    void OnReceiveMsgPopulationMagicAction       ( const MsgsClientToSim::MsgPopulationMagicAction&         message, unsigned int nCtx );
     void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                        message, unsigned int nCtx );
     void OnReceiveMsgAutomateChangeKnowledgeGroup( const Common::MsgAutomatChangeKnowledgeGroup&            message, unsigned int nCtx );
     void OnReceiveMsgAutomateChangeLogisticLinks ( const Common::MsgAutomatChangeLogisticLinks&             message, unsigned int nCtx );

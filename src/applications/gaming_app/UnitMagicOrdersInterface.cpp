@@ -11,7 +11,6 @@
 #include "UnitMagicOrdersInterface.h"
 #include "moc_UnitMagicOrdersInterface.cpp"
 
-#include "actions/ActionsModel.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/Point.h"
 #include "actions/Army.h"
@@ -162,9 +161,7 @@ void UnitMagicOrdersInterface::Handle( kernel::Location_ABC& location )
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->Polish();
-            actionsModel_.Register( action->GetId(), *action );
-            actionsModel_.Publish( *action, actionPublisher_ );
+            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
         }
     }
     controllers_.Unregister( *magicMoveLocation_ );
@@ -190,9 +187,7 @@ namespace
             MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType >& > ( static_.types_ ).Get( id_ );
             UnitMagicAction* action = new UnitMagicAction( agent, actionType, controllers_.controller_, true );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->Polish();
-            actionsModel_.Register( action->GetId(), *action );
-            actionsModel_.Publish( *action, actionPublisher_ );
+            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
         }
     private:
         MagicFunctor& operator=( const MagicFunctor& );
@@ -291,9 +286,7 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
         action->AddParameter( *new parameters::Army( it.NextElement(), *( Team_ABC* ) teamPtr, controllers_.controller_ ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->Polish();
-        actionsModel_.Register( action->GetId(), *action );
-        actionsModel_.Publish( *action, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     }
 }
 
@@ -348,9 +341,7 @@ void UnitMagicOrdersInterface::CreateAndPublish( const std::string& actionStr )
     MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( actionStr );
     UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->Polish();
-    actionsModel_.Register( action->GetId(), *action );
-    actionsModel_.Publish( *action, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
 }
 
 namespace

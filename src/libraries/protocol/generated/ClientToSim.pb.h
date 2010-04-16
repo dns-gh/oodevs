@@ -66,11 +66,17 @@ enum MsgUnitMagicAction_Type {
   MsgUnitMagicAction_Type_recover_resources = 8,
   MsgUnitMagicAction_Type_destroy_all = 9,
   MsgUnitMagicAction_Type_change_human_factors = 10,
-  MsgUnitMagicAction_Type_partial_recovery = 11
+  MsgUnitMagicAction_Type_partial_recovery = 11,
+  MsgUnitMagicAction_Type_unit_creation = 12,
+  MsgUnitMagicAction_Type_create_fire_order = 13,
+  MsgUnitMagicAction_Type_population_total_destruction = 14,
+  MsgUnitMagicAction_Type_population_kill = 15,
+  MsgUnitMagicAction_Type_population_resurrect = 16,
+  MsgUnitMagicAction_Type_population_change_attitude = 17
 };
 bool MsgUnitMagicAction_Type_IsValid(int value);
 const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MIN = MsgUnitMagicAction_Type_move_to;
-const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MAX = MsgUnitMagicAction_Type_partial_recovery;
+const MsgUnitMagicAction_Type MsgUnitMagicAction_Type_Type_MAX = MsgUnitMagicAction_Type_population_change_attitude;
 
 const ::google::protobuf::EnumDescriptor* MsgUnitMagicAction_Type_descriptor();
 inline const ::std::string& MsgUnitMagicAction_Type_Name(MsgUnitMagicAction_Type value) {
@@ -714,6 +720,12 @@ class MsgUnitMagicAction : public ::google::protobuf::Message {
   static const Type destroy_all = MsgUnitMagicAction_Type_destroy_all;
   static const Type change_human_factors = MsgUnitMagicAction_Type_change_human_factors;
   static const Type partial_recovery = MsgUnitMagicAction_Type_partial_recovery;
+  static const Type unit_creation = MsgUnitMagicAction_Type_unit_creation;
+  static const Type create_fire_order = MsgUnitMagicAction_Type_create_fire_order;
+  static const Type population_total_destruction = MsgUnitMagicAction_Type_population_total_destruction;
+  static const Type population_kill = MsgUnitMagicAction_Type_population_kill;
+  static const Type population_resurrect = MsgUnitMagicAction_Type_population_resurrect;
+  static const Type population_change_attitude = MsgUnitMagicAction_Type_population_change_attitude;
   static inline bool Type_IsValid(int value) {
     return MsgUnitMagicAction_Type_IsValid(value);
   }

@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "ChangeHumanFactorsDialog.h"
 #include "moc_ChangeHumanFactorsDialog.cpp"
-#include "actions/ActionsModel.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/Enumeration.h"
 #include "gaming/HumanFactors.h"
@@ -189,9 +188,7 @@ void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, Enu
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) moral ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) experience ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->Polish();
-    actionsModel_.Register( action->GetId(), *action );
-    actionsModel_.Publish( *action, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
 }
 
 // -----------------------------------------------------------------------------

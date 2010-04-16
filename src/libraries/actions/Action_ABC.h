@@ -38,6 +38,7 @@ class Publisher_ABC;
 
 namespace actions
 {
+class ActionsModel;
 
 // =============================================================================
 /** @class  Action_ABC
@@ -82,6 +83,8 @@ public:
     virtual void Select( kernel::ActionController& controller ) const;
     virtual void ContextMenu( kernel::ActionController& controller, const QPoint& where ) const;
     virtual void Activate( kernel::ActionController& controller ) const;
+
+    void RegisterAndPublish( ActionsModel& actionsModel, Publisher_ABC& actionPublisher);
     //@}
 
 protected:

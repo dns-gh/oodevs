@@ -867,18 +867,25 @@ void MIL_Population::OnReceiveMsgFragOrder( const MsgsClientToSim::MsgFragOrder&
 // Name: MIL_Population::OnReceiveMsgPopulationMagicAction
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::MsgPopulationMagicAction& asnMsg )
+void MIL_Population::OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    if( asnMsg.action().has_destruction_totale())
-        OnReceiveMsgDestroyAll    ();
-    else if( asnMsg.action().has_change_attitude())
-        OnReceiveMsgChangeAttitude( asnMsg.action().change_attitude() );
-    else if( asnMsg.action().has_tuer())
-        OnReceiveMsgKill          ( asnMsg.action().tuer() );
-    else if( asnMsg.action().has_ressusciter())
-        OnReceiveMsgResurrect     ( asnMsg.action().ressusciter() );
-    else
-        assert( false );
+    switch( msg.type() )
+        {
+        case MsgsClientToSim::MsgUnitMagicAction_Type_population_total_destruction:
+            OnReceiveMsgDestroyAll();
+            break;
+        case MsgsClientToSim::MsgUnitMagicAction_Type_population_kill:
+            OnReceiveMsgKill( msg );
+            break;
+        case MsgsClientToSim::MsgUnitMagicAction_Type_population_resurrect:
+            OnReceiveMsgResurrect( msg );
+            break;
+        case MsgsClientToSim::MsgUnitMagicAction_Type_population_change_attitude:
+            OnReceiveMsgChangeAttitude( msg );
+            break;
+        default:
+            assert( false );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -940,14 +947,29 @@ void MIL_Population::OnReceiveMsgDestroyAll()
 // Name: MIL_Population::OnReceiveMsgChangeAttitude
 // Created: SBO 2005-10-25
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgChangeAttitude( const Common::MsgMagicActionPopulationChangeAttitude& asn )
+void MIL_Population::OnReceiveMsgChangeAttitude( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( asn.attitude() );
+    if( !msg.has_parametres() )
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
+    
+    const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
+    if( !parametre.has_value() || !parametre.value().has_enumeration() )
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
+
+    const MIL_PopulationAttitude* pAttitude = MIL_PopulationAttitude::Find( parametre.value().enumeration() );
     if( !pAttitude )
         throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
 
+    // $$$$ JSR 2010-04-16: TODO concentration, flux et global non définis.
+    // On fait comme si c'était en global.
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
+        ( **it ).SetAttitude( *pAttitude );
+    for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
+        ( **it ).SetAttitude( *pAttitude );
+
+
     // concentration
-    if( asn.beneficiaire().has_concentration() )
+    /*if( asn.beneficiaire().has_concentration() )
     {
         for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
             if( static_cast<int>( ( **it ).GetID() ) == asn.beneficiaire().concentration() )
@@ -975,16 +997,23 @@ void MIL_Population::OnReceiveMsgChangeAttitude( const Common::MsgMagicActionPop
             ( **it ).SetAttitude( *pAttitude );
         for( CIT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
             ( **it ).SetAttitude( *pAttitude );
-    }
+    }*/
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::OnReceiveMsgKill
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgKill( const Common::MsgMagicActionPopulationKill& asn )
+void MIL_Population::OnReceiveMsgKill( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    unsigned int remainingKills = asn.kill();
+    if( !msg.has_parametres() )
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
+    
+    const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
+    if( !parametre.has_value() || !parametre.value().has_quantity() )
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
+
+    unsigned int remainingKills = parametre.value().quantity();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( remainingKills == 0 )
@@ -1003,9 +1032,16 @@ void MIL_Population::OnReceiveMsgKill( const Common::MsgMagicActionPopulationKil
 // Name: MIL_Population::OnReceiveMsgResurrect
 // Created: SBO 2006-04-05
 // -----------------------------------------------------------------------------
-void MIL_Population::OnReceiveMsgResurrect( const Common::MsgMagicActionPopulationResurrect& asn )
+void MIL_Population::OnReceiveMsgResurrect( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    unsigned int remainingResurrections = asn.resurrect();
+    if( !msg.has_parametres() )
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
+    
+    const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
+    if( !parametre.has_value() || !parametre.value().has_quantity() )
+        throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_attribute );
+
+    unsigned int remainingResurrections = parametre.value().quantity();
     for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end(); ++it )
     {
         if( remainingResurrections == 0 )

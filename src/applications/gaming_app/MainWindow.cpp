@@ -212,7 +212,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
-    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, publisher, staticModel_.coordinateConverter_ );
+    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, publisher, actionPublisher, model_.actions_, staticModel_, simulation );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );

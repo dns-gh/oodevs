@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyRecompletionDialog.h"
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
-#include "actions/ActionsModel.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/ParameterList.h"
 #include "actions/Quantity.h"
@@ -572,9 +571,7 @@ void LogisticSupplyRecompletionDialog::Validate()
     FillSupplies( *stocks );
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->Polish();
-    actionsModel_.Register( action->GetId(), *action );
-    actionsModel_.Publish( *action, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
 
     selected_ = 0;
     hide();

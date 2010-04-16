@@ -172,8 +172,9 @@ public:
             void OnReceiveMsgFragOrder            ( const MsgsClientToSim::MsgFragOrder&             msg );
             void OnReceiveMsgSetAutomateMode      ( const MsgsClientToSim::MsgSetAutomatMode&        msg );
             void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitCreationRequest&   msg );
+            void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitMagicAction&       msg );
             void OnReceiveMsgUnitMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction&       msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgMagicActionMoveTo    ( const MsgsClientToSim::MsgUnitMagicAction&      msg );
+            void OnReceiveMsgMagicActionMoveTo    ( const MsgsClientToSim::MsgUnitMagicAction&       msg );
             void OnReceiveMsgChangeKnowledgeGroup ( const Common::MsgAutomatChangeKnowledgeGroup&    msg, const tools::Resolver< MIL_Army_ABC >& armies );
             void OnReceiveMsgChangeSuperior       ( const Common::MsgAutomatChangeSuperior&          msg, const tools::Resolver< MIL_Formation >& formations );
     virtual void OnReceiveMsgChangeLogisticLinks  ( const Common::MsgAutomatChangeLogisticLinks&     msg );

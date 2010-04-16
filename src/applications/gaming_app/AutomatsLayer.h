@@ -18,7 +18,15 @@ namespace kernel
     class AgentType;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
+class ActionPublisher;
 class Publisher_ABC;
+class Simulation;
+class StaticModel;
 
 // =============================================================================
 /** @class  AutomatsLayer
@@ -32,7 +40,7 @@ class AutomatsLayer : public gui::AutomatsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::AgentsLayer& agents, Publisher_ABC& publisher, const kernel::CoordinateConverter_ABC& converter );
+             AutomatsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::AgentsLayer& agents, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
     virtual ~AutomatsLayer();
     //@}
 
@@ -61,7 +69,10 @@ private:
     //@{
     const kernel::GlTools_ABC& tools_;
     Publisher_ABC& publisher_;
-    const kernel::CoordinateConverter_ABC& converter_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& static_;
+    const Simulation& simulation_;
     kernel::SafePointer< kernel::Automat_ABC > selected_;
     //@}
 };

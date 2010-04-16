@@ -976,6 +976,41 @@ void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUn
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReceiveMsgUnitCreationRequest
+// Created: JSR 2010-04-16
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReceiveMsgUnitCreationRequest( const MsgsClientToSim::MsgUnitMagicAction& msg )
+{
+    if( msg.type() != MsgsClientToSim::MsgUnitMagicAction_Type_unit_creation )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    if( !msg.has_parametres() || msg.parametres().elem_size() != 2)
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    
+    const Common::MsgMissionParameter& id = msg.parametres().elem( 0 );
+    if( !id.has_value() || !id.value().has_identifier() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( id.value().identifier() );
+    if( !pType )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
+
+    const Common::MsgMissionParameter& location = msg.parametres().elem( 1 );
+    if( !location.has_value() || !location.value().has_point() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    const Common::MsgPoint& point = location.value().point();
+
+    if( point.location().type() != Common::MsgLocation_Geometry_point 
+        || point.location().coordinates().elem_size() != 1 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    MT_Vector2D position;
+    MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem(0), position );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position ); // Auto-registration
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::OnReceiveMsgUnitMagicAction
 // Created: JSR 2010-04-14
 // -----------------------------------------------------------------------------

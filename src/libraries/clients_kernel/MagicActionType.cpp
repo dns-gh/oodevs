@@ -102,4 +102,29 @@ void MagicActionType::Initialize()
         OrderParameter* stocks = new OrderParameter( "Stocks", "list", true );
         Register( Count(), *stocks );
     }
+    else if( name_ == "unit_creation" )
+    {
+        OrderParameter* superior = new OrderParameter( "UnitType", "identifier", false );
+        Register( Count(), *superior );
+        OrderParameter* location = new OrderParameter( "Location", "point", false );
+        Register( Count(), *location );
+    }
+    else if( name_ == "population_kill" || name_ == "population_resurrect" )
+    {
+        OrderParameter* number = new OrderParameter( "Number", "quantity", false );
+        Register( Count(), *number );
+    }
+    else if( name_ == "population_change_attitude" )
+    {
+        OrderParameter* attitude = new OrderParameter( "Attitude", "enumeration", false );
+        attitude->AddValue( ePopulationAttitude_Calme, tools::ToString( ePopulationAttitude_Calme ).ascii() );
+        attitude->AddValue( ePopulationAttitude_Agitee, tools::ToString( ePopulationAttitude_Agitee ).ascii() );
+        attitude->AddValue( ePopulationAttitude_Excitee, tools::ToString( ePopulationAttitude_Excitee ).ascii() );
+        attitude->AddValue( ePopulationAttitude_Agressive, tools::ToString( ePopulationAttitude_Agressive ).ascii() );
+        Register( Count(), *attitude );
+        // $$$$ JSR 2010-04-16: TODO? not used by now
+        // optional int32 flux
+        // optional int32 concentration
+        // optional bool global
+    }
 }

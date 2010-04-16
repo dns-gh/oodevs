@@ -683,6 +683,21 @@ void MIL_EntityManager::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgU
         case MsgsClientToSim::MsgUnitMagicAction_Type_move_to :
             OnReceiveMsgMagicActionMoveTo( message, nCtx );
             break;
+        case MsgsClientToSim::MsgUnitMagicAction_Type_unit_creation :
+            if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
+                pAutomate->OnReceiveMsgUnitCreationRequest( message );
+            else
+                throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_unit );
+            break;
+        case MsgsClientToSim::MsgUnitMagicAction_Type_population_total_destruction:
+        case MsgsClientToSim::MsgUnitMagicAction_Type_population_kill:
+        case MsgsClientToSim::MsgUnitMagicAction_Type_population_resurrect:
+        case MsgsClientToSim::MsgUnitMagicAction_Type_population_change_attitude:
+            if( MIL_Population* pPopulation = pPopulation = populationFactory_->Find ( message.oid() ) )
+                pPopulation->OnReceiveMsgPopulationMagicAction( message );
+            else
+                throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_unit );
+            break;
         default:
             if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
                 pAutomate->OnReceiveMsgUnitMagicAction( message, *armyFactory_ );
@@ -804,29 +819,6 @@ void MIL_EntityManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
 {
     assert( pObjectManager_ );
     pObjectManager_->OnReceiveMsgObjectMagicAction( message, nCtx, *armyFactory_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_EntityManager::OnReceiveMsgPopulationMagicAction
-// Created: SBO 2005-10-25
-// -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgPopulationMagicAction( const MsgsClientToSim::MsgPopulationMagicAction& message, unsigned int nCtx )
-{
-    client::PopulationMagicActionAck ack;
-    ack().set_oid( message.oid() );
-    ack().set_error_code( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_no_error );
-    try
-    {
-        MIL_Population* pPopulation = populationFactory_->Find( message.oid() );
-        if( !pPopulation )
-            throw NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >( MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode_error_invalid_unit );
-        pPopulation->OnReceiveMsgPopulationMagicAction( message );
-    }
-    catch( NET_AsnException< MsgsSimToClient::MsgPopulationMagicActionAck_ErrorCode >& e )
-    {
-        ack().set_error_code( e.GetErrorID() );
-    }
-    ack.Send( NET_Publisher_ABC::Publisher(), nCtx );
 }
 
 // -----------------------------------------------------------------------------
@@ -1027,7 +1019,7 @@ void MIL_EntityManager::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::Ms
 // Name: MIL_EntityManager::OnReceiveMsgMagicActionMoveTo
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& message, unsigned int )
 {
     if( MIL_Automate*  pAutomate = FindAutomate ( message.oid() ) )
         pAutomate->OnReceiveMsgMagicActionMoveTo( message );
