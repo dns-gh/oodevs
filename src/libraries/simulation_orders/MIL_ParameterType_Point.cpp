@@ -42,5 +42,7 @@ bool MIL_ParameterType_Point::Copy( const MIL_MissionParameter_ABC& from, Common
     if( !from.IsOfType( *this ) )
         return false;
     to.set_null_value( !from.ToPoint( (Common::MsgPoint&) *to.mutable_value()->mutable_point() ) );
+    if( to.null_value() )
+        to.clear_value();
     return ( bIsOptional || !to.null_value() );
 }

@@ -63,7 +63,7 @@ Point::~Point()
 void Point::CommitTo( Common::MsgMissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
-    message.mutable_value()->mutable_point();    // enforce initialisation of parameter to force his type
+    message.mutable_value()->mutable_point()->mutable_location()->set_type( MsgLocation_Geometry_point );    // enforce initialisation of parameter to force his type
     if( IsSet() )
         Location::CommitTo( *message.mutable_value()->mutable_point()->mutable_location() );
 }
