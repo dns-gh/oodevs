@@ -13,6 +13,9 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Knowledge/DEC_Knowledge_Urban.h"
+#include "urban/MaterialCompositionType.h"
+#include "urban/TerrainObject_ABC.h"
+#include "urban/Architecture.h"
 
 
 // -----------------------------------------------------------------------------
@@ -53,4 +56,35 @@ float DEC_KnowledgeUrbanFunctions::GetPathfindCost( const MIL_AgentPion& callerA
         return pKnowledge->GetPathfindCost( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() );
      else
         return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeUrbanFunctions::GetMaterialProtectionLevel
+// Created: DDA 2010-04-12
+// $$TODO DDA: TO IMPROVE !!!!!!!!!!!!!!!!!!
+// Temporal solution for the safeguarding behavior.
+// A string value of urban block's material is transformed in range index of the protection of the unit in this urban block :
+// [0.25; 0.50; 0.75; 0.90] More the index is hight, less the unit is protected
+// Function doesn't use ennemi's weapon system relation and this material
+// -----------------------------------------------------------------------------
+float DEC_KnowledgeUrbanFunctions::GetMaterialProtectionLevel( boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge )
+{
+    static std::map< std::string , float > protectionIndex;
+    protectionIndex.insert(std::pair< std::string , float >("Bois", 0.9) );
+    protectionIndex.insert(std::pair< std::string , float >("Beton", 0.25) );
+    protectionIndex.insert(std::pair< std::string , float >("Metal", 0.5) );
+    protectionIndex.insert(std::pair< std::string , float >("Brique", 0.25) );
+    protectionIndex.insert(std::pair< std::string , float >("Torchis", 0.9) );
+    protectionIndex.insert(std::pair< std::string , float >("Prefabrique", 0.75) );
+    protectionIndex.insert(std::pair< std::string , float >("Vegetation", 0.9) );
+
+    if( pKnowledge.get() && pKnowledge->IsValid() )
+    {
+        const urban::Architecture* architecture = pKnowledge->GetTerrainObjectKnown().RetrievePhysicalFeature< urban::Architecture >();
+        if( architecture )
+        {
+            return protectionIndex[architecture->GetMaterial()];
+        }
+    }
+    return 0.;
 }

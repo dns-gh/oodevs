@@ -608,13 +608,19 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
             boost::function< int (int, float, const PHY_DotationCategory*) >(boost::bind( &DEC_KnowledgePopulationFunctions::Exterminate, boost::ref( GetPion() ), _1, _2, _3 ) ) );
     
     // Urban knowledges accessors
+    brain.RegisterFunction( "DEC_Connaissances_BlocUrbain",
+        boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
+	brain.RegisterFunction( "DEC_Connaissances_BlocUrbainDansCercle",
+		boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MT_Vector2D>, float )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1, _2, _3 ) ) );	
     brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_NiveauDePerceptionCourant"    , 
             boost::function< int( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentPerceptionLevel, boost::cref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceUrbanBlock_Barycentre"    , 
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetCurrentBarycenter, _1 ) ) );
-     brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_Traficabilite"    , 
-            boost::function< float( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetPathfindCost, boost::cref( GetPion() ), _1 ) ) );
-
+    brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_Traficabilite"    , 
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetPathfindCost, boost::cref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_ConnaissanceBlocUrbain_NiveauDeProtectionMateriel"    , 
+        boost::function< float( boost::shared_ptr< DEC_Knowledge_Urban > ) >( boost::bind( &DEC_KnowledgeUrbanFunctions::GetMaterialProtectionLevel, _1 ) ) );
+  
     // Global knowledge
     brain.RegisterFunction( "DEC_RapportDeForceLocal", boost::bind( &DEC_KnowledgeFunctions::GetRapForLocal, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Connaissances_UnitesDetecteesDansFuseau", boost::bind( &DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau, boost::ref( GetPion() ) ) );
@@ -626,10 +632,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_Connaissances_UnitesEnnemiesVivantesPercues", boost::bind( &DEC_KnowledgeFunctions::GetLivingEnemiesPerceived, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_Connaissances_Observable",
         boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObservableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
-    brain.RegisterFunction( "DEC_Connaissances_BlocUrbain",
-        boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );
-	brain.RegisterFunction( "DEC_Connaissances_BlocUrbainDansCercle",
-		boost::function< void( const directia::ScriptRef&, boost::shared_ptr< MT_Vector2D>, float )>( boost::bind( &DEC_KnowledgeFunctions::GetUrbanBlockKnowledgeInCercle, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1, _2, _3 ) ) );	
 	brain.RegisterFunction( "DEC_Connaissances_Destroyable",
         boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_KnowledgeFunctions::GetDestroyableKnowledge, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) );//@TODO MGD same function than Observable for the moment
 	brain.RegisterFunction( "DEC_Connaissances_Identifiable",

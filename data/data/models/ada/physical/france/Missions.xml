@@ -851,7 +851,7 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MiseEnOeuvreSurPosition" id="2030" name="DeployOnPosition">
       <parameter dia-name="objectives" name="objective" optional="false" type="ObjectKnowledgeBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.Safeguard" dia-type="T_Mission_Pion_Safeguard" id="2031" name="Safeguard"/>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.TakeCover" dia-type="T_Mission_Pion_TakeCover" id="2031" name="TakeCover"/>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Flee" dia-type="T_Mission_Pion_Flee" id="2032" name="Flee"/>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.SelfProtect" dia-type="T_Mission_Pion_SelfProtect" id="2033" name="SelfProtect">
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
