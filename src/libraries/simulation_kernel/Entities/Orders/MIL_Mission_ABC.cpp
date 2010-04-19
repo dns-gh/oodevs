@@ -73,6 +73,7 @@ MIL_Mission_ABC::MIL_Mission_ABC( const MIL_MissionType_ABC& type, const DEC_Kno
     , context_          ( parent->context_ )
     , knowledgeResolver_( knowledgeResolver )
 {
+    type.InitializeDefault( parameters_ ); // $$$$ LMT 2010-04-19: set default to NullParameter
     // Parameters will be filled by DIA $$$ // $$$$ LDC: TODO Fill parameters_ from DIA....
 }
 

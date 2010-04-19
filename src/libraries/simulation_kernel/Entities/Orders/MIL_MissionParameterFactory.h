@@ -29,6 +29,7 @@ class DEC_Knowledge_Urban;
 class DEC_RolePion_Decision;
 class MIL_Mission_ABC;
 class MIL_MissionParameter_ABC;
+class MIL_OrderTypeParameter;
 class MT_Vector2D;
 class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
@@ -51,6 +52,7 @@ class MIL_MissionParameterFactory
 public:
     //! @name Operations
     //@{
+    static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const MIL_OrderTypeParameter& type );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const Common::MsgMissionParameter& asn, const DEC_KnowledgeResolver_ABC& resolver );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
     static boost::shared_ptr<MIL_MissionParameter_ABC> Create( const PHY_DotationCategory* dotationType );

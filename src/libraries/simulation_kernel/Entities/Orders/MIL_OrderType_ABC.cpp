@@ -15,6 +15,7 @@
 #include "Network/NET_AsnException.h"
 #include "protocol/protocol.h"
 #include "simulation_orders/MIL_MissionParameter_ABC.h"
+#include "MIL_MissionParameterFactory.h"
 #include <boost/shared_ptr.hpp>
 #include <xeumeuleu/xml.h>
 
@@ -79,6 +80,16 @@ bool MIL_OrderType_ABC::Copy( const std::vector< boost::shared_ptr< MIL_MissionP
             return false;
         }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_OrderType_ABC::InitializeDefault
+// Created: LMT 2010-04-19
+// -----------------------------------------------------------------------------
+void MIL_OrderType_ABC::InitializeDefault( std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& parameters ) const
+{
+    for( CIT_MissionParameterVector it = parameters_.begin(); it != parameters_.end(); ++it )
+        parameters.push_back( MIL_MissionParameterFactory::Create( **it ) );
 }
 
 //-----------------------------------------------------------------------------
