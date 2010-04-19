@@ -312,7 +312,7 @@ includedFiles["sources/humus/humus_rens/pions/common/Actions.bms"] = true
                 end
 
                 DEC_Trace( "**** Activation brouillage ****" )
-                DEC_CreerObjetSansDelais( self._namedParams.eTypeObjectZoneBrouillage, gNullID, self.localisation, "" )
+                DEC_CreerObjetSansDelais( self._namedParams.eTypeObjectZoneBrouillage, gNullID, self.localisation )
             end
         end
 

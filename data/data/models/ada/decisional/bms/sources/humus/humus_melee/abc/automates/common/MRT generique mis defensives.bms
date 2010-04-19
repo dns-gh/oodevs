@@ -135,7 +135,7 @@ elseif switch_1 == eMRT_AssignerMissions then
 ]]local mission = DEC_GetMission( myself )
                                 local pointTemp = S_Geometrie_BarycentreZone( mission.zoneDeControle_ )
                                 local zoneControle = DEC_Geometrie_ConvertirPointEnLocalisation( pointTemp )
-                                DEC_CreerObjetSansDelais( S_TypeObject_ToString( eTypeObjectPosteControle ), zoneControle, "" )
+                                DEC_CreerObjetSansDelais( S_TypeObject_ToString( eTypeObjectPosteControle ), zoneControle )
                                 self.ePhase = eMRT_Valider
                                 _continue = false
                             --[[//-----------------------------------------------------------------------------

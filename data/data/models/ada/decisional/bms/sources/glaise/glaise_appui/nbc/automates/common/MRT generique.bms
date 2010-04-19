@@ -201,7 +201,7 @@ elseif switch_2 == "T_Mission_Automate_NBC_ArmerUnSiteDeDecontamination" then
                                 --[[// HACK
 ]]local pointTemp = S_Geometrie_BarycentreZone( mission.site_ )
                                 local siteDec = DEC_Geometrie_ConvertirPointEnLocalisation( pointTemp )
-                                DEC_CreerObjetSansDelais( eTypeObjectSiteDecontamination, gNullID, siteDec, "" )
+                                DEC_CreerObjetSansDelais( eTypeObjectSiteDecontamination, gNullID, siteDec )
                                 self.ePhase = eMRT_Valider
                                 _continue = false
                             --[[//-----------------------------------------------------------------------------
