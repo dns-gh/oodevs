@@ -28,7 +28,7 @@ void DEC_TelepathyFunctions::Register( directia::Brain& brain )
 // Name: DEC_TelepathyFunctions::CopyPlotsRavitaillement
 // Created: LDC 2009-07-31
 // -----------------------------------------------------------------------------
-void DEC_TelepathyFunctions::CopyPlotsRavitaillement( DEC_Decision_ABC* pPion, const std::vector< int >& value )
+void DEC_TelepathyFunctions::CopyPlotsRavitaillement( DEC_Decision_ABC* pPion, const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& value )
 {
     pPion->SetVariable( "myself.plotsRavitaillement_", value );
 }

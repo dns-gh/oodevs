@@ -724,9 +724,9 @@ boost::shared_ptr< MT_Vector2D > DEC_Decision<T>::GetObjectifCourant()
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
 template <class T>
-int DEC_Decision<T>::GetPlotRavitaillementAssigne()
+boost::shared_ptr< DEC_Knowledge_Object > DEC_Decision<T>::GetPlotRavitaillementAssigne()
 {
-    return GetScalarVariable<int>( "myself.plotRavitaillementAssigne_" );
+    return GetVariable< boost::shared_ptr< DEC_Knowledge_Object > >( "myself.plotRavitaillementAssigne_" );
 }
 
 // -----------------------------------------------------------------------------
@@ -734,7 +734,7 @@ int DEC_Decision<T>::GetPlotRavitaillementAssigne()
 // Created: LDC 2009-08-04
 // -----------------------------------------------------------------------------
 template <class T>
-void DEC_Decision<T>::SetPlotRavitaillementAssigne( int value )
+void DEC_Decision<T>::SetPlotRavitaillementAssigne( boost::shared_ptr< DEC_Knowledge_Object > value )
 {
     SetVariable( "myself.plotRavitaillementAssigne_", value );
 }

@@ -103,8 +103,8 @@ public:
     virtual DEC_Knowledge_Object* GetObjMisEnCours() = 0;
     virtual void SetObjMisEnCours( DEC_Knowledge_Object* ) = 0;
     virtual boost::shared_ptr< MT_Vector2D > GetObjectifCourant() = 0;
-    virtual int GetPlotRavitaillementAssigne() = 0;
-    virtual void SetPlotRavitaillementAssigne( int ) = 0;
+    virtual boost::shared_ptr< DEC_Knowledge_Object > GetPlotRavitaillementAssigne() = 0;
+    virtual void SetPlotRavitaillementAssigne( boost::shared_ptr< DEC_Knowledge_Object > ) = 0;
     virtual int GetPorteeAction() = 0;
     virtual void SetPorteeAction( int ) = 0;
     virtual float GetNiveauAlerteRavitaillement() = 0;

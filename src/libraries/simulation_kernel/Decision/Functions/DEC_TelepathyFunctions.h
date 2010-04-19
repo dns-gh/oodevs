@@ -16,6 +16,7 @@ namespace directia
 }
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
+class DEC_Knowledge_Object;
 
 // =============================================================================
 /** @class  DEC_TelepathyFunctions
@@ -33,7 +34,7 @@ public:
 
     //! @name Functions used to directly access or modify another brain
     //@{
-    static void CopyPlotsRavitaillement( DEC_Decision_ABC* pPion, const std::vector< int >& value );
+    static void CopyPlotsRavitaillement( DEC_Decision_ABC* pPion, const std::vector< boost::shared_ptr< DEC_Knowledge_Object > >& value );
     static std::vector< boost::shared_ptr< DEC_Knowledge_Agent > > GetListeEnisTirAutorise( DEC_Decision_ABC* pPion );
     static void RemoveAgentFromListeEnisTirAutorise( DEC_Decision_ABC* pPion, boost::shared_ptr< DEC_Knowledge_Agent > eni );
     //@}
