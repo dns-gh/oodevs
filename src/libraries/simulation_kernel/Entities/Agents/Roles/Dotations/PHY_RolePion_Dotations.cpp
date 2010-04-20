@@ -353,7 +353,7 @@ MT_Float PHY_RolePion_Dotations::GetMaxTimeForConsumption( const PHY_Consumption
     assert( pDotations_ );
     sConsumptionTimeExpectancy func( mode );
     std::auto_ptr< OnComponentComputer_ABC > dotationComputer( pion_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( func ) );
-    pion_.Execute( dotationComputer );
+    pion_.Execute( *dotationComputer );
     return func.GetNbrTicksForConsumption( *pDotations_ );
 }
 

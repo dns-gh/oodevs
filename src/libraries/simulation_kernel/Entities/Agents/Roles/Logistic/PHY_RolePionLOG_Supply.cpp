@@ -459,7 +459,7 @@ void PHY_RolePionLOG_Supply::SendFullState( client::UnitAttributes& asnUnit ) co
     pion_.Execute( *componentComputer );
     ConvoyLendedTransportersUseFunctor functor2( composanteUse );
     std::auto_ptr< OnComponentLendedFunctorComputer_ABC > lendedComputer( pion_.GetAlgorithms().onComponentLendedFunctorComputerFactory_->Create( functor2 ) );
-    pion_.Execute( lendedComputer );
+    pion_.Execute( *lendedComputer );
 
     SendComposanteUse( composanteUse, *asn().mutable_disponibilites_transporteurs_convois()  );
 
