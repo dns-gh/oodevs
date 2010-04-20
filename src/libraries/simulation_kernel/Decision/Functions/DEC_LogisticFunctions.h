@@ -71,7 +71,7 @@ public:
     static void AutomateMedicalChangeTacticalPriorities( MIL_Automate& callerAutomate, const std::vector< const DEC_Decision_ABC* >& priorities );
 
     static void EvacuateWoundedHumansToTC2       ( DEC_RolePion_Decision* pPionWounded, DEC_AutomateDecision* pDecTC2 );
-    static bool HasWoundedHumansToEvacuate       ( DEC_RolePion_Decision* pPion );
+    static bool HasWoundedHumansToEvacuate       ( DEC_Decision_ABC* pPion );
     static void ForbidWoundedHumansAutoEvacuation( DEC_RolePion_Decision* pPion );
     static void AllowWoundedHumansAutoEvacuation ( DEC_RolePion_Decision* pPion ); 
     //@}

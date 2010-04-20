@@ -162,7 +162,7 @@ void DEC_LogisticFunctions::EvacuateWoundedHumansToTC2( DEC_RolePion_Decision* p
 // Name: DEC_LogisticFunctions::HasWoundedHumansToEvacuate
 // Created: NLD 2005-08-08
 // -----------------------------------------------------------------------------
-bool DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DEC_RolePion_Decision* pPion )
+bool DEC_LogisticFunctions::HasWoundedHumansToEvacuate( DEC_Decision_ABC* pPion )
 {
     assert( pPion );
     return pPion->GetPion().GetRole< PHY_RoleInterface_Humans >().HasWoundedHumansToEvacuate();
