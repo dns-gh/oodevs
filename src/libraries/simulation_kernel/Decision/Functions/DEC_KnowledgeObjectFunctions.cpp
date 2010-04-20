@@ -89,7 +89,7 @@ bool DEC_KnowledgeObjectFunctions::CanBeAnimated( const MIL_Agent_ABC& callerAge
 // Name: DEC_KnowledgeObjectFunctions::GetAnimationLevel
 // Created: MGD 2010-02-15
 // -----------------------------------------------------------------------------
-float DEC_KnowledgeObjectFunctions::GetAnimationLevel( const MIL_Agent_ABC& /*callerAgent*/, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
+float DEC_KnowledgeObjectFunctions::GetAnimationLevel( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge)
 {
     if( pKnowledge && pKnowledge->IsValid() )
     {

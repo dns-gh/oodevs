@@ -3,6 +3,7 @@
   <units>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Platoon">
       <missions>
+        <mission name="Animate"/>
         <mission name="Load"/>
         <mission name="Mount"/>
         <mission name="MoveToPoint">

@@ -895,6 +895,9 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.RemoveObstacle" dia-type="T_Mission_Pion_RemoveObstacle" id="2045" name="RemoveObstacle">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="Animate">
+      <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
+    </mission>
   </units>
   <automats>
     <context>
