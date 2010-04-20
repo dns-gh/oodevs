@@ -16,7 +16,7 @@
 #include "DEC_Population_PathClass.h"
 #include "Entities/Populations/MIL_Population.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
-#include "Decision/Path/Population/DEC_Population_PathSection.h"
+#include "Decision/Path/DEC_Population_PathSection.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "MIL_AgentServer.h"

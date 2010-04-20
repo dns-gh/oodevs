@@ -19,7 +19,7 @@
 #include "Entities/MIL_Army.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathWalker.h"
-#include "Decision/Path/Agent/DEC_Agent_Path.h"
+#include "Decision/Path/DEC_Agent_Path.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Decision/DEC_Tools.h"
 #include "Knowledge/DEC_Knowledge_Object.h"

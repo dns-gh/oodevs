@@ -21,7 +21,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/PopulationAttribute.h"
 #include "Entities/Orders/MIL_Report.h"
-#include "Decision/Path/Population/DEC_Population_Path.h"
+#include "Decision/Path/DEC_Population_Path.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Network/NET_ASN_Tools.h"

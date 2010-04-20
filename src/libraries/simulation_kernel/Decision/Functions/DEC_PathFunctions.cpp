@@ -15,7 +15,7 @@
 #include "Decision/Path/DEC_PathType.h"
 #include "Decision/Path/DEC_PathPoint.h"
 #include "Decision/Path/DEC_PathFind_Manager.h"
-#include "Decision/Path/Agent/DEC_Agent_Path.h"
+#include "Decision/Path/DEC_Agent_Path.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
