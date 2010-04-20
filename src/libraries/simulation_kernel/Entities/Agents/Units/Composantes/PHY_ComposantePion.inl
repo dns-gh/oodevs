@@ -31,7 +31,6 @@ inline void PHY_ComposantePion::ApplyOnHumanProtection( T& functor ) const
         functor( *this, **it );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyOnSensors
 // Created: NLD 2004-08-20

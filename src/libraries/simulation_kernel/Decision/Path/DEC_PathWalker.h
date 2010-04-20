@@ -25,6 +25,11 @@ namespace MsgsSimToClient
     class MsgUnitEnvironmentType;
 }
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 class MIL_Object_ABC;
 class TerrainData;
 class PHY_MovingEntity_ABC;
@@ -85,6 +90,8 @@ private:
     //@{
     typedef std::set< MIL_Object_ABC* > T_ObjectSet;
     typedef T_ObjectSet::const_iterator CIT_ObjectSet;
+    typedef std::set< const urban::TerrainObject_ABC* >  T_UrbanBlockSet;
+    typedef T_UrbanBlockSet::const_iterator             CIT_UrbanBlockSet;
 
     // Struct used to store the steps when moving from a point to another : manage the collision with the dynamic objects
     struct T_MoveStep
@@ -98,6 +105,10 @@ private:
         T_ObjectSet objectsToNextPointSet_; // The path to the next point pass through these objects
         T_ObjectSet objectsOutSet_;         // On this move step, we are out of these objets
         T_ObjectSet ponctualObjectsOnSet_;  // Ponctual objets that are on this move step point (i.e. Objects that aren't on the path to the next point)
+        
+        T_UrbanBlockSet urbanBlocksToNextPointSet_; // The path to the next point pass through these objects
+        T_UrbanBlockSet urbanBlocksOutSet_;         // On this move step, we are out of these objets
+        T_UrbanBlockSet ponctualUrbanBlocksOnSet_;  // Ponctual objets that are on this move step point (i.e. Objects that aren't on the path to the next point)
     };
 
     // STL comparison operator : use the SquareDistance between the start pos and the collision pos 
@@ -131,13 +142,15 @@ private:
 
     //! @name Tools
     //@{    
-    bool TryToMoveToNextStep    ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove );
-    bool TryToMoveTo            ( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining );
-    void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
-    void ComputeCurrentSpeed    ();
-    void InitializeEnvironment  ( const DEC_PathResult& path );
-    bool GoToNextNavPoint       ( const DEC_PathResult& path );
-    bool SetCurrentPath         ( boost::shared_ptr< DEC_PathResult > pPath );
+    bool TryToMoveToNextStep        ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove );
+    void TryToCrossUrbanBlocks      ( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep );
+    bool TryToMoveTo                ( const DEC_PathResult& path, const MT_Vector2D& vNewPosTmp, MT_Float& rTimeRemaining );
+    void ComputeObjectsCollision    ( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
+    void ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
+    void ComputeCurrentSpeed        ();
+    void InitializeEnvironment      ( const DEC_PathResult& path );
+    bool GoToNextNavPoint           ( const DEC_PathResult& path );
+    bool SetCurrentPath             ( boost::shared_ptr< DEC_PathResult > pPath );
     //@}
 
 private:

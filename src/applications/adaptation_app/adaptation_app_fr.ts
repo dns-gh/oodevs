@@ -3639,6 +3639,10 @@ Arrêt moteur allumé</translation>
         <source>Equipment - Invalid resource type &apos;%1&apos;</source>
         <translation>Composante - Ressource invalide &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Data::CategoryInfo</name>

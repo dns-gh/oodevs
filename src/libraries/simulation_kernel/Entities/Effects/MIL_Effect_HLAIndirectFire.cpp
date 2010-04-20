@@ -41,7 +41,7 @@ bool MIL_Effect_HLAIndirectFire::Execute()
 {
     PHY_FireResults_ABC* pFireResult = new PHY_FireResults_ABC(); //$$$ BOF
     pFireResult->IncRef();
-    target_.GetRole< PHY_RoleInterface_Composantes >().ApplyIndirectFire( ammunition_, *pFireResult );
+    target_.GetRole< PHY_RoleInterface_Composantes >().ApplyIndirectFire( ammunition_, *pFireResult, 1. );
     pFireResult->DecRef();
     return false;
 }

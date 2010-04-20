@@ -163,7 +163,8 @@ MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_Agent_ABC& firer, const
 {
     const PHY_RoleInterface_Posture&      firerPosture  = firer .GetRole< PHY_RoleInterface_Posture      >();
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
-    MT_Float rDistance = firerPosition.Distance( targetPosition );
+    MT_Float rDistanceTest = firerPosition.Distance( targetPosition );
+    MT_Float rDistance = firer.Distance( target );
     assert( phs_.size() > targetVolume.GetID() );
 
     assert( firerPosture.GetElongationFactor() > 0. );
@@ -174,8 +175,6 @@ MT_Float PHY_WeaponDataType_DirectFire::GetPH( const MIL_Agent_ABC& firer, const
         return 0.;
     rDistance /= rPHModificator;
 
-    float rUrbanModificator = UrbanModel::GetSingleton().ComputeUrbanPhModifier( firerPosition, targetPosition );
-    rDistance /= rUrbanModificator;
     const MT_Float rPH = phs_[ targetVolume.GetID() ]( rDistance );
     const double protection = target.GetRole< PHY_RoleInterface_ActiveProtection >().GetPHModifier( weaponType_.GetDotationCategory() );
     return firer.GetRole< PHY_RoleInterface_HumanFactors >().ModifyPH( rPH * protection );

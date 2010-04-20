@@ -136,7 +136,7 @@ public:
     //@{
     void     ApplyPopulationFire            ( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages );
     void     ApplyDirectFire                ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
-    void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages );
+    void     ApplyIndirectFire              ( const PHY_DotationCategory& dotationCategory                                              , PHY_FireDamages_Agent& fireDamages, MT_Float ratio );
     void     ApplyExplosion                 ( const AttritionCapacity& capacity                                                         , PHY_FireDamages_Agent& fireDamages );
     void     ApplyContamination             ( const MIL_ToxicEffectManipulator& contamination );
     void     ApplyPoisonous                 ( const MIL_ToxicEffectManipulator& contamination );
@@ -243,7 +243,7 @@ private:
 private:
     //! @name Tools
     //@{
-    void ApplyFire           ( const PHY_AttritionData& attritionData, PHY_FireDamages_Agent& fireDamages );
+    void ApplyFire           ( const PHY_AttritionData& attritionData, MT_Float urbanProtection, PHY_FireDamages_Agent& fireDamages );
     bool CanBeUsed           () const;
     bool CanBeUsedForMove    () const;
     void ManageEndMaintenance();

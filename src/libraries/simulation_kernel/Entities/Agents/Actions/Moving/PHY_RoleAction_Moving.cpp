@@ -36,6 +36,7 @@
 #include "simulation_kernel/ConsumptionModeChangeRequest_ABC.h"
 #include "simulation_kernel/ConsumptionChangeRequestHandler_ABC.h"
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
+#include "simulation_kernel/UrbanBlockCollisionNotificationHandler_ABC.h"
 
 #include "AlgorithmsFactories.h"
 #include "SpeedComputerStrategy.h"
@@ -344,6 +345,24 @@ void PHY_RoleAction_Moving::NotifyMovingInsideObject( MIL_Object_ABC& object )
 void PHY_RoleAction_Moving::NotifyMovingOutsideObject( MIL_Object_ABC& object )
 {
     pion_.Apply(&terrain::ObjectCollisionNotificationHandler_ABC::NotifyMovingOutsideObject, object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::NotifyMovingInsideUrbanBlock
+// Created: SLG 2010-04-09
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::NotifyMovingInsideUrbanBlock( const urban::TerrainObject_ABC& urbanBlock )
+{
+    pion_.Apply(&terrain::UrbanBlockCollisionNotificationHandler_ABC::NotifyMovingInsideUrbanBlock, urbanBlock );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::NotifyMovingOutsideUrbanBlock
+// Created: SLG 2010-04-09
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::NotifyMovingOutsideUrbanBlock( const urban::TerrainObject_ABC& urbanBlock )
+{
+    pion_.Apply(&terrain::UrbanBlockCollisionNotificationHandler_ABC::NotifyMovingOutsideUrbanBlock, urbanBlock );
 }
 
 // -----------------------------------------------------------------------------

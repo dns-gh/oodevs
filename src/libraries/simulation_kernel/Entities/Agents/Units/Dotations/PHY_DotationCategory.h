@@ -59,9 +59,10 @@ public:
     bool CanBeUsedForIndirectFire() const;
     bool HasAttritions           () const;
 
-    const PHY_AttritionData&                     GetAttritionData   ( const PHY_Protection& protectionTarget ) const;
-          MT_Float                               GetAttritionScore  ( const PHY_Protection& protectionTarget ) const;
-    const PHY_DotationCategory_IndirectFire_ABC* GetIndirectFireData() const;
+    const PHY_AttritionData&                     GetAttritionData           ( const PHY_Protection& protectionTarget ) const;
+          MT_Float                               GetAttritionScore          ( const PHY_Protection& protectionTarget ) const;
+    const MT_Float                               GetUrbanAttritionModifer   ( unsigned materialId ) const;
+    const PHY_DotationCategory_IndirectFire_ABC* GetIndirectFireData        () const;
 
     void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
     void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
@@ -83,12 +84,14 @@ private:
     //! @name Types
     //@{
     typedef std::vector< PHY_AttritionData > T_AttritionVector;
+    typedef std::vector< MT_Float > T_UrbanAttritionVector;
     //@}
 
 private:
     //! @name Init
     //@{
     void InitializeAttritions      ( xml::xistream& xis );
+    void InitializeUrbanAttritions ( xml::xistream& xis );
     void InitializeIndirectFireData( xml::xistream& xis );
     void InitializePackagingData   ( xml::xistream& xis );
     void InitializeLogisticType    ( xml::xistream& xis );
@@ -97,9 +100,11 @@ private:
     //@}
     //! @name Helpers
     //@{
-    void ListAttrition   ( xml::xistream& xis );
-    void ReadAttrition   ( xml::xistream& xis );
-    void ReadIndirectFire( xml::xistream& xis );
+    void ListAttrition              ( xml::xistream& xis );
+    void ReadAttrition              ( xml::xistream& xis );
+    void ListUrbanAttrition         ( xml::xistream& xis );
+    void ReadUrbanAttritionModifier ( xml::xistream& xis );
+    void ReadIndirectFire           ( xml::xistream& xis );
     //@}
 
 private:
@@ -116,6 +121,7 @@ private:
     MT_Float rVolume_;
 
     T_AttritionVector                      attritions_;
+    T_UrbanAttritionVector                 urbanAttritionFactors_;
     PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData_;
 
     //Illumination capacity

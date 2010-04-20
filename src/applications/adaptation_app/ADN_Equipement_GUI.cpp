@@ -35,6 +35,7 @@
 #include "ADN_Equipement_Data.h"
 #include "ADN_Equipement_GenericListView.h"
 #include "ADN_Equipement_AttritionTable.h"
+#include "ADN_Equipement_UrbanAttritionTable.h"
 #include "ADN_Connector_ListView_ABC.h"
 #include "ADN_EditLine.h"
 #include "ADN_ComboBox_Enum.h"
@@ -167,11 +168,14 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 
 
     // Direct fire properties
-    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Attritions" ), pGroupBox );
+    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Attritions" ), pGroupBox );
     vConnectors[eDirect] = &pDirectGroup->GetConnector();
 
     pAttritionTable_ = new ADN_Equipement_AttritionTable( pDirectGroup );
     vConnectors[eAttritions] = &pAttritionTable_->GetConnector();
+
+    pUrbanAttritionTable_ = new ADN_Equipement_UrbanAttritionTable( pDirectGroup );
+    vConnectors[eUrbanAttritions] = &pUrbanAttritionTable_->GetConnector();
 
     // Indirect fire properties
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Indirect fire" ), pGroupBox );

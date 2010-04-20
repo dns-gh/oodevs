@@ -40,7 +40,7 @@ public:
     //@{
     virtual void ApplyEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, MT_Float rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
-    virtual bool HasHit     ( const MIL_Agent_ABC& target ) const;
+    virtual bool HasHit     ( const MIL_Agent_ABC& target, MT_Float ratio ) const;
     //@}
 
 private:

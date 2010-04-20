@@ -34,7 +34,6 @@ public:
 
     void  AddSubItems(int i,void *obj)
     {
-
         assert(obj);
         ADN_TableItem_String *pItemString=0;
         ADN_TableItem_Double *pItemDouble=0;
@@ -54,10 +53,6 @@ public:
         pItemString->GetConnector().Connect(static_cast<ModificatorUrbanBlockInfos*>(obj)->ptrMaterial_.GetData());
         pItemDouble->GetConnector().Connect(&static_cast<ModificatorUrbanBlockInfos*>(obj)->rCoeff_);
     }
-
-
-
-
 
 private:
     ADN_CT_Sensors_UrbanBlock& operator=( const ADN_CT_Sensors_UrbanBlock& );

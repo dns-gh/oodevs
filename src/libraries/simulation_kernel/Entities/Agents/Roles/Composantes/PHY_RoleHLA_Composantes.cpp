@@ -285,7 +285,7 @@ void PHY_RoleHLA_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, c
 // Name: PHY_RoleHLA_Composantes::ApplyIndirectFire
 // Created: AGE 2004-11-08
 // -----------------------------------------------------------------------------
-void PHY_RoleHLA_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/ )
+void PHY_RoleHLA_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& /*result*/, MT_Float /*ratio*/ )
 {
     interactionManager_.Send( HLA_IndirectFire( entity_.GetRole< HLA_RoleInterface >(), dotationCategory ) );
 }

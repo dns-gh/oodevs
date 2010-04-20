@@ -16,7 +16,10 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "UrbanModel.h"
 #include "protocol/protocol.h"
+#include <urban/TerrainObject_ABC.h>
+#include <urban/Model.h>
 
 //$$$ Refactorer gestion collisions objets
 
@@ -259,12 +262,90 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     }
 }
 
+//-----------------------------------------------------------------------------
+// Name: DEC_PathWalker::ComputeObjectsCollision
+// Created: NLD 2002-12-17
+//-----------------------------------------------------------------------------
+void DEC_PathWalker::ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet )
+{   
+    // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
+    geometry::Point2f start( vStart.rX_, vStart.rY_ );
+    geometry::Point2f end( vEnd.rX_, vEnd.rY_ );
+    std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
+    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vNewPos_.rX_, vNewPos_.rY_ ), start.Distance( end ), urbanBlocks );
+    
+    moveStepSet.clear();
+
+    geometry::Segment2f lineTmp( start, end );
+
+    moveStepSet.insert( T_MoveStep( vStart ) );
+    moveStepSet.insert( T_MoveStep( vEnd   ) );
+
+    //TER_DistanceLess colCmp( vStart );
+    geometry::Polygon2f::T_Vertices collisions;
+
+    for( std::vector< const urban::TerrainObject_ABC* >::iterator itUrbanBlock = urbanBlocks.begin(); itUrbanBlock != urbanBlocks.end(); ++itUrbanBlock )
+    {
+        const urban::TerrainObject_ABC& urbanBlock = **itUrbanBlock;
+        const geometry::Polygon2f* urbanBlockPolygon = (*itUrbanBlock)->GetFootprint();
+        collisions = urbanBlockPolygon->Intersect( lineTmp ); 
+        // Ajout des points de collision dans moveStepSet
+        if( !collisions.empty() )
+        {           
+            for( geometry::Polygon2f::IT_Vertices itPoint = collisions.begin(); itPoint != collisions.end(); ++itPoint )
+            {
+                geometry::Point2f& vPoint = *itPoint;
+                //assert( urbanBlockPolygon->IsInside( vPoint ) );
+
+                IT_MoveStepSet itMoveStep = moveStepSet.insert( T_MoveStep( MT_Vector2D( vPoint.X(), vPoint.Y() ) ) ).first;
+                itMoveStep->ponctualUrbanBlocksOnSet_.insert( &urbanBlock );
+
+                // A - C - B ( Le point C ajouté entre A et B contient les mêmes objets que de A -> B)
+                if( itMoveStep != moveStepSet.begin() )
+                {
+                    IT_MoveStepSet itPrevMoveStep = itMoveStep;
+                    itMoveStep->objectsToNextPointSet_ = (--itPrevMoveStep)->objectsToNextPointSet_;
+                }
+            }
+            collisions.clear();
+        }
+
+        // Détermination si objet courant se trouve sur le trajet entre chaque point 
+        IT_MoveStepSet itPrevMoveStep = moveStepSet.begin();
+        bool bInsideObjectOnPrevPoint = false;
+        for( IT_MoveStepSet itMoveStep = ++(moveStepSet.begin()); itMoveStep != moveStepSet.end(); ++itMoveStep )
+        {           
+            // Picking au milieu de la ligne reliant les 2 points
+            MT_Vector2D vTmp = ( itMoveStep->vPos_ + itPrevMoveStep->vPos_ ) / 2;
+            geometry::Point2f tmp( vTmp.rX_, vTmp.rY_ );
+            if( urbanBlockPolygon->IsInside( tmp ) )
+            {
+                itPrevMoveStep->urbanBlocksToNextPointSet_.insert( &urbanBlock );
+                bInsideObjectOnPrevPoint = true;
+                itPrevMoveStep->ponctualUrbanBlocksOnSet_.erase( &urbanBlock ); // This is not yet a ponctual object
+            }
+            else
+            {
+                // Stockage des objets desquels on sort
+                if( bInsideObjectOnPrevPoint )
+                {
+                    itMoveStep->urbanBlocksOutSet_.insert( &urbanBlock );
+                    bInsideObjectOnPrevPoint = false;
+                }
+            }
+            itPrevMoveStep = itMoveStep;
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathWalker::TryToMoveToNextStep
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep, MT_Float& rTimeRemaining, bool bFirstMove )
 {
+    TryToCrossUrbanBlocks( itCurMoveStep, itNextMoveStep );
+    
     static int nDistanceBeforeBlockingObject = -10;
     CIT_ObjectSet itObject;
 
@@ -328,6 +409,23 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_PathWalker::TryToCrossUrbanBlocks
+// Created: SLG 2010-04-09
+// -----------------------------------------------------------------------------
+void DEC_PathWalker::TryToCrossUrbanBlocks( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep )
+{
+    CIT_UrbanBlockSet itUrbanBlock;
+    for( itUrbanBlock = itCurMoveStep->urbanBlocksToNextPointSet_.begin(); itUrbanBlock != itCurMoveStep->urbanBlocksToNextPointSet_.end(); ++itUrbanBlock )
+    {
+        const urban::TerrainObject_ABC& urbanBlock = **itUrbanBlock;
+        movingEntity_.NotifyMovingInsideUrbanBlock( urbanBlock );
+    }
+
+    for( itUrbanBlock = itNextMoveStep->urbanBlocksOutSet_.begin(); itUrbanBlock != itNextMoveStep->urbanBlocksOutSet_.end(); ++itUrbanBlock )
+        movingEntity_.NotifyMovingOutsideUrbanBlock( **itUrbanBlock );
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_PathWalker::TryToMoveTo
 // Created: NLD 2002-12-17
@@ -346,6 +444,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     T_MoveStepSet moveStepSet( cmp ); 
    
     ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );
+    ComputeUrbanBlocksCollision( vNewPos_, vNewPosTmp, moveStepSet );
     assert( moveStepSet.size() >= 2 );
 
     CIT_MoveStepSet itCurMoveStep  = moveStepSet.begin();

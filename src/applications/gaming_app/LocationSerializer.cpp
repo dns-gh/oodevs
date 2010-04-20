@@ -96,7 +96,7 @@ void LocationSerializer::VisitLines( const T_PointVector& points )
 void LocationSerializer::VisitRectangle( const T_PointVector& points )
 {
     SetPoints( points );
-    location_->set_type( MsgLocation_Geometry_line ); //TODO
+    location_->set_type( MsgLocation_Geometry_rectangle );
 }
 
 // -----------------------------------------------------------------------------

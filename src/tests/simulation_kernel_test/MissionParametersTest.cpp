@@ -48,6 +48,7 @@
 #include "Entities/Orders/MIL_StringParameter.h"
 #include "Entities/Orders/MIL_TirIndirectParameter.h"
 
+#include "UrbanType.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
@@ -246,6 +247,9 @@ BOOST_AUTO_TEST_CASE( TestMIL_DirectionParameter_ToASN )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
 {
+    xml::xistringstream xisUrbanType( "<urban><urban-block-types><material-composition-types/>"
+        "<facade-types/><roof-shape-types/></urban-block-types></urban>" );
+    UrbanType::Initialize( xisUrbanType );
     xml::xistringstream xisNat( "<natures><nature type='Solid'/></natures>" );
     PHY_DotationNature::Initialize( xisNat );
     xml::xistringstream xis( "<dotations>"
@@ -259,6 +263,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_DotationTypeParameter_ToASN )
     MsgDotationType asnOut;
     BOOST_CHECK_EQUAL( true, param.ToDotationType( asnOut ) );
     BOOST_CHECK_EQUAL( 42, asnOut.oid() );
+    UrbanType::Terminate();
 }
 
 // -----------------------------------------------------------------------------

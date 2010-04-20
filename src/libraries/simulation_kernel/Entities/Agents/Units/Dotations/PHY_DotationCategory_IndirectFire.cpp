@@ -122,6 +122,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
                 return;
             }
         }
+
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
@@ -135,7 +136,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
                 PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
                 targetRoleComposantes.Neutralize();
                 if( attritionSurface.IsInside( (**itTarget).GetPosition() ) )
-                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult );
+                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, 1 );  // $$$$ _RC_ SLG 2010-04-16: valeur en dur = ratio entre l'aire d'intersection de l'llipse avec le BU et le BU lui même. a faire des que boost::geometry sera diponible
 
                 if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 {
@@ -222,12 +223,12 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 // Name: PHY_DotationCategory_IndirectFire::HasHit
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-bool PHY_DotationCategory_IndirectFire::HasHit( const MIL_Agent_ABC& target ) const
+bool PHY_DotationCategory_IndirectFire::HasHit( const MIL_Agent_ABC& target, MT_Float ratio ) const
 {
     const PHY_RoleInterface_Posture& targetPosture = target.GetRole< PHY_RoleInterface_Posture >();
     
     const MT_Float rPH =   phs_[ targetPosture.GetCurrentPosture().GetID() ] *        targetPosture.GetPostureCompletionPercentage()
                          + phs_[ targetPosture.GetLastPosture   ().GetID() ] * ( 1. - targetPosture.GetPostureCompletionPercentage() );
 
-    return random_.rand_oi() <= rPH ;
+    return random_.rand_oi() <= (rPH * ratio ) ;
 }

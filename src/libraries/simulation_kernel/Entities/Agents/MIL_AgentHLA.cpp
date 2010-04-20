@@ -322,3 +322,12 @@ bool MIL_AgentHLA::IsAutonomous() const
 {
     throw std::runtime_error( "HLA Agent: Unexpected IsAutonomous call" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentHLA::Distance
+// Created: SLG 2010-04-13
+// -----------------------------------------------------------------------------
+double MIL_AgentHLA::Distance( const MIL_Agent_ABC& ) const
+{
+    throw std::runtime_error( "HLA Agent: Unexpected Distance call" );
+}

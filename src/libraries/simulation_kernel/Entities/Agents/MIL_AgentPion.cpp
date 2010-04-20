@@ -33,6 +33,7 @@
 #include "Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
+#include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
 
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Actions/Objects/PHY_RoleAction_Objects.h"
@@ -78,13 +79,13 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 // Created: NLD 2004-08-11
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
-    : MIL_Agent_ABC            ( xis )
-    , pType_                   ( &type )
-    , bIsPC_                   ( xml::attribute< bool >( xis, "command-post", false ) )
-    , pAutomate_               ( &automate )
-    , pKnowledgeBlackBoard_    (  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , orderManager_            ( *new MIL_PionOrderManager( *this ) )
-    , algorithmFactories_      ( algorithmFactories )
+    : MIL_Agent_ABC        ( xis )
+    , pType_               ( &type )
+    , bIsPC_               ( xml::attribute< bool >( xis, "command-post", false ) )
+    , pAutomate_           ( &automate )
+    , pKnowledgeBlackBoard_(  new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
+    , orderManager_        ( *new MIL_PionOrderManager( *this ) )
+    , algorithmFactories_  ( algorithmFactories )
 {
     automate.RegisterPion( *this );
 }
@@ -396,6 +397,7 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< human::PHY_RolePion_Humans           >().Update( bIsDead );
     GetRole< PHY_RolePion_Composantes             >().Update( bIsDead );
     GetRole< PHY_RolePion_Posture                 >().Update( bIsDead );
+    GetRole< PHY_RolePion_UrbanLocation           >().Update( bIsDead );
     GetRole< PHY_RolePion_Reinforcement           >().Update( bIsDead );
     GetRole< PHY_RolePion_Location                >().Update( bIsDead );
     GetRole< nbc::PHY_RolePion_NBC                >().Update( bIsDead );
@@ -665,6 +667,7 @@ void MIL_AgentPion::OnReceiveMsgDestroyComponent()
 void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
 {
     GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
+    GetRole< PHY_RolePion_UrbanLocation >().MagicMove( vNewPos );
     CancelAllActions();
     GetRole< DEC_RolePion_Decision >().Reset( GetAutomate().GetName() );
     orderManager_.CancelMission();
@@ -1201,4 +1204,32 @@ double MIL_AgentPion::GetDangerosity( boost::shared_ptr< DEC_Knowledge_Agent > p
     
     //DegradeDangerosity( rDangerosity );//@TODO MGD before commit
     return rDangerosity;  
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::Distance
+// Created: SLG 2010-04-12
+// -----------------------------------------------------------------------------
+double MIL_AgentPion::Distance( const MIL_Agent_ABC& target ) const
+{
+    const PHY_RoleInterface_Location& firerLocation = GetRole< PHY_RoleInterface_Location >();
+    const geometry::Point2f firerPosition( firerLocation.GetPosition().rX_, firerLocation.GetPosition().rY_ );
+
+    const PHY_RoleInterface_Location& targetLocation = target.GetRole< PHY_RoleInterface_Location >();
+    const geometry::Point2f targetPosition( targetLocation.GetPosition().rX_, targetLocation.GetPosition().rY_ );
+
+    const PHY_RoleInterface_UrbanLocation& firerUrbanRole = GetRole< PHY_RoleInterface_UrbanLocation >();
+    const PHY_RoleInterface_UrbanLocation& targetUrbanRole = target.GetRole< PHY_RoleInterface_UrbanLocation >();
+    
+    if( firerUrbanRole.GetCurrentUrbanBlock() == targetUrbanRole.GetCurrentUrbanBlock() && firerUrbanRole.GetCurrentUrbanBlock() )
+        return firerUrbanRole.ComputeDistanceInsideSameUrbanBlock(firerPosition, targetPosition, targetUrbanRole.GetDeployment() );
+    else
+    {
+    geometry::Point2f realFirerPosition = firerUrbanRole.GetFirerPosition( firerPosition, targetPosition );
+    geometry::Point2f realTargetPosition = targetUrbanRole.GetTargetPosition( firerPosition, targetPosition );
+    
+    MT_Vector3D vFirerPosition(  realFirerPosition.X(), realFirerPosition.Y(), firerLocation.GetAltitude() );
+    MT_Vector3D vTargetPosition(  realTargetPosition.X(), realTargetPosition.Y(), targetLocation.GetAltitude() );
+    return vFirerPosition.Distance( vTargetPosition );
+    }
 }

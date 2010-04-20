@@ -29,6 +29,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "DotationComputer_ABC.h"
 #include "WeaponAvailabilityComputer_ABC.h"
+#include "UrbanType.h"
 #include <xeumeuleu/xml.h>
 
 using namespace mockpp;

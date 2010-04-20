@@ -26,6 +26,7 @@
 #include "ADN_Type_VectorFixed_ABC.h"
 #include "ADN_Enums.h"
 #include "ADN_Categories_Data.h"
+#include "ADN_Urban_Data.h"
 
 class xml::xistream;
 
@@ -133,6 +134,59 @@ public:
     typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfos_Vector;
     typedef T_AttritionInfos_Vector::iterator        IT_AttritionInfos_Vector;
 
+// *****************************************************************************
+    class UrbanAttritionInfos
+        : public ADN_Ref_ABC
+        , public ADN_DataTreeNode_ABC
+    {
+        MT_COPYNOTALLOWED( UrbanAttritionInfos );
+
+    public:
+        UrbanAttritionInfos(ADN_Urban_Data::UrbanInfos* ptr);
+
+        virtual std::string GetNodeName();
+        std::string GetItemName();
+
+        void CopyFrom( UrbanAttritionInfos& attritions );
+
+        void ReadArchive( xml::xistream& );
+        void WriteArchive( xml::xostream&, const std::string& tag = "urbanModifier" );
+
+    public:
+        ADN_TypePtr_InVector_ABC<ADN_Urban_Data::UrbanInfos>        ptrMaterial_;
+        ADN_Type_Double                                             rCoeff_;
+
+    public:
+        typedef ADN_Urban_Data::UrbanInfos                  T_Item;
+
+        class CmpRef : public std::unary_function< UrbanAttritionInfos* , bool >
+        {
+        public:
+            CmpRef(ADN_Urban_Data::UrbanInfos* val) : val_(val) {}
+            bool operator()( UrbanAttritionInfos* tgtnfos ) const 
+            {   return tgtnfos->ptrMaterial_.GetData() == val_;}
+
+        private:
+            ADN_Urban_Data::UrbanInfos* val_;
+        };
+
+        class Cmp : public std::unary_function< UrbanAttritionInfos* , bool >
+        {
+        public:
+            Cmp(const std::string& val) : val_(val) {}
+            ~Cmp() {}
+
+            bool operator()( UrbanAttritionInfos* tgtnfos ) const 
+            { return tgtnfos->ptrMaterial_.GetData() && tgtnfos->ptrMaterial_.GetData()->GetData()==val_; }
+
+        private:
+            std::string val_;
+        };
+    };
+
+    typedef ADN_Type_VectorFixed_ABC< UrbanAttritionInfos > T_UrbanAttritionInfos_Vector;
+    typedef T_UrbanAttritionInfos_Vector::iterator         IT_UrbanAttritionInfos_Vector;
+
 //*****************************************************************************
     class ModificatorPostureInfos
         : public ADN_Ref_ABC
@@ -223,6 +277,7 @@ public:
 
         void ReadArchive( xml::xistream& );
         void ReadAttrition( xml::xistream& );
+        void ReadUrbanModifer( xml::xistream& );
         void ReadIndirectFire( xml::xistream& );
         void WriteArchive( xml::xostream& );
 
@@ -232,10 +287,11 @@ public:
         ADN_Type_Bool bTrancheD_;
 
         ADN_Type_Bool bDirect_;
+        ADN_Type_Bool bUrbanAttrition_;
         ADN_Type_Bool bIndirect_;
 
-        T_AttritionInfos_Vector attritions_;
-        
+        T_AttritionInfos_Vector         attritions_;
+        T_UrbanAttritionInfos_Vector    modifUrbanBlocks_;
         ADN_Type_Bool bIlluminating_;
         ADN_Type_Bool bMaintainIllumination_;
         ADN_Type_Double fRange_;

@@ -81,6 +81,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eAmmoPackageVolume ]->Connect( &pInfos->rPackageVolume_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eTrancheD]->Connect( &pInfos->bTrancheD_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eAttritions]->Connect( &pInfos->attritions_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eUrbanAttritions]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eIndirectType]->Connect( &pInfos->indirectAmmoInfos_.nIndirectType_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eIntervention]->Connect( &pInfos->indirectAmmoInfos_.nIntervention_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eDispersionX]->Connect( &pInfos->indirectAmmoInfos_.rDispersionX_, bConnect );

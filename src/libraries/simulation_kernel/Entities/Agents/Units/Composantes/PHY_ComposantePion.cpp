@@ -30,6 +30,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_AttritionData.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
@@ -337,7 +338,7 @@ const PHY_ConsumptionType& PHY_ComposantePion::GetConsumptionMode( const MIL_Obj
 // Name: PHY_ComposantePion::ApplyFire
 // Created: NLD 2004-10-13
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_FireDamages_Agent& fireDamages )
+void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, MT_Float urbanProtection, PHY_FireDamages_Agent& fireDamages )
 {
     //$$$ FACTORISER AVEC REINITIALIZESTATE()
     assert( pRole_ );
@@ -346,7 +347,7 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
     assert( pState_ );
 
     const PHY_ComposanteState& oldState  = *pState_;
-    const PHY_ComposanteState* pNewState = &attritionData.ComputeComposanteState();
+    const PHY_ComposanteState* pNewState = &attritionData.ComputeComposanteState( urbanProtection );
 
     pRole_->WoundLoadedHumans( *this, *pNewState, fireDamages );
     ApplyHumansWounds( *pNewState, fireDamages );    
@@ -375,7 +376,7 @@ void PHY_ComposantePion::ApplyFire( const PHY_AttritionData& attritionData, PHY_
 void PHY_ComposantePion::ApplyExplosion( const AttritionCapacity& capacity, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    ApplyFire( capacity.GetAttritionData( pType_->GetProtection() ), fireDamages );
+    ApplyFire( capacity.GetAttritionData( pType_->GetProtection() ), 0, fireDamages );
 }
 
 // -----------------------------------------------------------------------------
@@ -385,7 +386,7 @@ void PHY_ComposantePion::ApplyExplosion( const AttritionCapacity& capacity, PHY_
 void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    ApplyFire( populationType.GetAttritionData( populationAttitude, pType_->GetProtection() ), fireDamages );
+    ApplyFire( populationType.GetAttritionData( populationAttitude, pType_->GetProtection() ), 0, fireDamages );
 }
 
 // -----------------------------------------------------------------------------
@@ -395,19 +396,23 @@ void PHY_ComposantePion::ApplyPopulationFire( const MIL_PopulationType& populati
 void PHY_ComposantePion::ApplyDirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages )
 {
     assert( pType_ );
-    ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireDamages );
+    MT_Float urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
+    ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), urbanProtection, fireDamages );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::ApplyIndirectFire
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages )
+void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, MT_Float ratio )
 {
     assert( pType_ );
     assert( dotationCategory.GetIndirectFireData() );
-    if( dotationCategory.GetIndirectFireData()->HasHit( pRole_->GetPion() ) )
-        ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), fireDamages );
+    if( dotationCategory.GetIndirectFireData()->HasHit( pRole_->GetPion(), ratio ) )
+    {
+        MT_Float urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
+        ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), urbanProtection, fireDamages );
+    }
 }
 
 // -----------------------------------------------------------------------------

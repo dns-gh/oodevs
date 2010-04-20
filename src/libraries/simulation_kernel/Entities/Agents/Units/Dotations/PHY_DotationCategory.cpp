@@ -18,6 +18,10 @@
 #include "PHY_DotationLogisticType.h"
 #include "PHY_DotationNature.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
+#include "tools/Resolver.h"
+#include "UrbanType.h"
+#include <urban/StaticModel.h>
+#include <urban/MaterialCompositionType.h>
 #include <xeumeuleu/xml.h>
 
 //-----------------------------------------------------------------------------
@@ -25,22 +29,23 @@
 // Created: NLD/JVT 2004-08-03
 //-----------------------------------------------------------------------------
 PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, xml::xistream& xis )
-    : type_              ( type )
-    , pAmmoDotationClass_( 0 )
-    , pLogisticType_     ( 0 )
-    , pNature_           ( 0 )
-    , strName_           ( strName )
-    , nMosID_            ( 0 )
-    , pIndirectFireData_ ( 0 )
-    , attritions_        ()
-    , rWeight_           ( 0. )
-    , rVolume_           ( 0. ) 
-    , bIlluminating_     ( false )
-    , fRange_            ( 0.)
-    , bMaintainIllumination_ ( false )
-    , bGuided_           ( false )
-    , bMaintainGuidance_ ( false )
-    , rGuidanceRange_    ( 0.f )
+    : type_                 ( type )
+    , pAmmoDotationClass_   ( 0 )
+    , pLogisticType_        ( 0 )
+    , pNature_              ( 0 )
+    , strName_              ( strName )
+    , nMosID_               ( 0 )
+    , pIndirectFireData_    ( 0 )
+    , attritions_           ()
+    , urbanAttritionFactors_( UrbanType::GetUrbanType().GetStaticModel().Resolver< urban::MaterialCompositionType, std::string >::Count(), 1. )
+    , rWeight_              ( 0. )
+    , rVolume_              ( 0. ) 
+    , bIlluminating_        ( false )
+    , fRange_               ( 0.)
+    , bMaintainIllumination_( false )
+    , bGuided_              ( false )
+    , bMaintainGuidance_    ( false )
+    , rGuidanceRange_       ( 0.f )
 {
     std::string strNature;
     xis >> xml::attribute( "id", nMosID_ )
@@ -52,6 +57,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
 
     InitializePackagingData   ( xis );
     InitializeAttritions      ( xis );
+    InitializeUrbanAttritions ( xis );
     InitializeIndirectFireData( xis );
     InitializeLogisticType    ( xis );
 
@@ -144,6 +150,42 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::InitializeUrbanAttritions
+// Created: SLG 2010-04-14
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
+{
+    xis >> xml::list( "urbanModifiers", *this, &PHY_DotationCategory::ListUrbanAttrition );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::ListUrbanAttrition
+// Created: SLG 2010-04-14
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::ListUrbanAttrition( xml::xistream& xis )
+{
+    xis >> xml::list( "urbanModifier", *this, &PHY_DotationCategory::ReadUrbanAttritionModifier );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::ReadUrbanAttritionModifier
+// Created: SLG 2010-04-14
+// -----------------------------------------------------------------------------
+void PHY_DotationCategory::ReadUrbanAttritionModifier( xml::xistream& xis )
+{
+    MT_Float rFactor;
+    std::string materialType;
+    xis >> xml::attribute( "material-type", materialType )
+        >> xml::attribute( "value", rFactor );
+    urban::MaterialCompositionType* material = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( materialType );
+    if( rFactor < 0 || rFactor > 1 )
+        xis.error( "urbanBlock-modifier: value not in [0..1]" );
+    if( urbanAttritionFactors_.size() <  material->GetId() )
+        throw std::runtime_error( "error in loading material type" );
+    urbanAttritionFactors_[ material->GetId() ] = rFactor;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::InitializeIndirectFireData
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
@@ -224,6 +266,16 @@ const PHY_AttritionData& PHY_DotationCategory::GetAttritionData( const PHY_Prote
 {
     assert( attritions_.size() > protectionTarget.GetID() );
     return attritions_[ protectionTarget.GetID() ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetUrbanAttritionModifer
+// Created: SLG 2010-04-14
+// -----------------------------------------------------------------------------
+const MT_Float PHY_DotationCategory::GetUrbanAttritionModifer( unsigned materialId ) const
+{
+    assert( urbanAttritionFactors_.size() > materialId );
+    return urbanAttritionFactors_[ materialId ];
 }
 
 // -----------------------------------------------------------------------------

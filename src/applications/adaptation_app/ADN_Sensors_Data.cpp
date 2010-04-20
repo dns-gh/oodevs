@@ -341,7 +341,7 @@ void ADN_Sensors_Data::ModificatorEnvironmentInfos::WriteArchive( xml::xostream&
 // Name: ModificatorEnvironmentInfos::ModificatorUrbanBlockInfos
 // Created: SLG 2010-03-02
 //-----------------------------------------------------------------------------
-ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos(ADN_Urban_Data::UrbanInfos* ptr)
+ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Urban_Data::UrbanInfos* ptr )
 : ADN_Ref_ABC()
 , ADN_DataTreeNode_ABC()
 , ptrMaterial_(ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(),(ADN_Urban_Data::UrbanInfos*)ptr)

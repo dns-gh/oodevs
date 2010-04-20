@@ -28,6 +28,7 @@
 
 class ADN_Table;
 class ADN_Equipement_AttritionTable;
+class ADN_Equipement_UrbanAttritionTable;
 class ADN_Equipement_AmmoListView;
 class ADN_ComboBox;
 class QLabel;
@@ -63,6 +64,7 @@ public:
         eLFRILCode,
         eNNOCode,
         eAttritions,
+        eUrbanAttritions,
         eIndirectType,
         eIntervention,
         eDispersionX,
@@ -129,8 +131,9 @@ private:
     //@{
     ADN_Equipement_Data& data_;
 
-    ADN_Equipement_AmmoListView* pAmmoListView_;
-    ADN_Equipement_AttritionTable* pAttritionTable_;
+    ADN_Equipement_AmmoListView*        pAmmoListView_;
+    ADN_Equipement_AttritionTable*      pAttritionTable_;
+    ADN_Equipement_UrbanAttritionTable* pUrbanAttritionTable_;
     
     ADN_ComboBox* pIndirectTypeCombo_;
     

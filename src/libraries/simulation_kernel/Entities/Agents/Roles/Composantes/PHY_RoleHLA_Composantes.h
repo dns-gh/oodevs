@@ -66,7 +66,7 @@ public:
     virtual void Neutralize                 ();
     virtual void ApplyPopulationFire        ( PHY_Composante_ABC& compTarget, const MIL_PopulationType& populationType, const MIL_PopulationAttitude& populationAttitude, PHY_FireResults_ABC& result );
     virtual void ApplyDirectFire            ( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
-    virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result );
+    virtual void ApplyIndirectFire          ( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& result, MT_Float );
     virtual void ApplyDirectFireOnMajorComposantes( const PHY_DotationCategory& /*dotationCategory*/, PHY_FireResults_ABC& /*fireResult*/ ) {}
     virtual void ApplyExplosion             ( const AttritionCapacity& objectType        , PHY_FireResults_ABC& result );
     virtual void ApplyContamination         ( const MIL_ToxicEffectManipulator& /*contamination*/ ) {};

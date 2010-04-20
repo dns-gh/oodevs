@@ -24,6 +24,7 @@
 #include "simulation_kernel/DetectionComputer_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/PerceptionDistanceComputer_ABC.h"
+#include "simulation_kernel/UrbanLocationComputer_ABC.h"
 
 using namespace posture;
 
@@ -494,4 +495,13 @@ void PHY_RolePion_Posture::Execute( detection::PerceptionDistanceComputer_ABC& a
 {
     //algorithm.AddModifier( rElongationFactor_ );
     algorithm.AddElongationFactor( rElongationFactor_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Posture::Execute
+// Created: SLG 2010-04-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Posture::Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const
+{
+    algorithm.ComputeUrbanDeployment( *pCurrentPosture_ );
 }

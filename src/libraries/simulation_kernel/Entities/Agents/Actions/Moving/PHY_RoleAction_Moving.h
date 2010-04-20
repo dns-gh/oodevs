@@ -31,6 +31,11 @@ namespace posture
     class PostureComputer_ABC;
 }
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 namespace moving
 {
 
@@ -100,12 +105,14 @@ private:
 
     //! @name Notifications
     //@{
-    virtual void NotifyMovingOnPathPoint   ( const DEC_PathPoint& point );
-    virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point );
-    virtual void NotifyMovingInsideObject  ( MIL_Object_ABC& object );
-    virtual void NotifyMovingOutsideObject ( MIL_Object_ABC& object );
-    virtual void NotifyEnvironmentChanged  ();
-    virtual void NotifyCurrentPathChanged  ();
+    virtual void NotifyMovingOnPathPoint        ( const DEC_PathPoint& point );
+    virtual void NotifyMovingOnSpecialPoint     ( boost::shared_ptr< DEC_PathPoint > point );
+    virtual void NotifyMovingInsideObject       ( MIL_Object_ABC& object );
+    virtual void NotifyMovingOutsideObject      ( MIL_Object_ABC& object );
+    virtual void NotifyMovingInsideUrbanBlock   ( const urban::TerrainObject_ABC& urbanBlock );
+    virtual void NotifyMovingOutsideUrbanBlock  ( const urban::TerrainObject_ABC& urbanBlock );
+    virtual void NotifyEnvironmentChanged       ();
+    virtual void NotifyCurrentPathChanged       ();
     //@}
 
     //! @name 

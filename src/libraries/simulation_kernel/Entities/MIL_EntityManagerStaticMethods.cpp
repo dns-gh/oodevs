@@ -128,6 +128,7 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     xml::xifstream xis( config.GetPhysicalFile() );
     xis >> xml::start( "physical" );
 
+    InitializeType< UrbanType                      >( xis, config, "urban"              );
     InitializeType< MIL_Report                     >( xis, config, "reports"            );
     InitializeType< PHY_MaintenanceWorkRate        >( xis, config, "maintenance"        );
     InitializeType< PHY_MaintenanceResourcesAlarms >( xis, config, "maintenance"        );
@@ -141,7 +142,6 @@ void MIL_EntityManagerStaticMethods::Initialize( MIL_Config& config, const MIL_T
     InitializeType< PHY_BreakdownType              >( xis, config, "breakdowns"         );
     InitializeType< PHY_LauncherType               >( xis, config, "launchers"          );
     InitializeType< PHY_ActiveProtection           >( xis, config, "active-protections" );
-    InitializeType< UrbanType                       >( xis, config, "urban"              );
     InitializeWeapons    ( xis, config, time );
     InitializeSensors    ( xis, config, time );
     InitializeComposantes( xis, config, time );

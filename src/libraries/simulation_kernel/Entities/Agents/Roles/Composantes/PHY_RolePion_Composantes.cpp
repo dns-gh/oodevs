@@ -899,14 +899,14 @@ void PHY_RolePion_Composantes::ApplyExplosion( const AttritionCapacity& capacity
 // Name: PHY_RolePion_Composantes::ApplyIndirectFire
 // Created: NLD 2004-10-12
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
+void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult, MT_Float ratio )
 {
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );
     for( PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
     {
         PHY_ComposantePion& composante = **it;
         if( composante.CanBeFired() )
-            composante.ApplyIndirectFire( dotationCategory, fireDamages );
+            composante.ApplyIndirectFire( dotationCategory, fireDamages, ratio );
     }
 }
 
@@ -1565,7 +1565,6 @@ MT_Float PHY_RolePion_Composantes::GetMajorOperationalState() const
 // -----------------------------------------------------------------------------
 const MIL_Agent_ABC& PHY_RolePion_Composantes::GetPion() const
 {
-
     return pion_;
 }
 

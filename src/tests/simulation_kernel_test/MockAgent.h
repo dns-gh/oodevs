@@ -47,6 +47,7 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyAttackedBy_Population )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( BelongsTo )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsPerceived )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Distance )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CreateKnowledgeShadow )
         , GetKnowledge_mocker ("GetKnowledge", this)
     {
@@ -108,6 +109,7 @@ public:
 
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, BelongsTo, const MIL_KnowledgeGroup&, bool, , MIL_KnowledgeGroup );
     MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, IsPerceived, const MIL_Agent_ABC&, bool, , MIL_Agent_ABC );
+    MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, MT_Float, Distance, const MIL_Agent_ABC&, MT_Float, , MIL_Agent_ABC );
     MOCKPP_CHAINABLE_EXT1            ( MockAgent, boost::shared_ptr< DEC_Knowledge_Agent >, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup );    
     
       mockpp::ChainableMockMethod< DEC_KnowledgeBlackBoard_AgentPion* > GetKnowledge_mocker;

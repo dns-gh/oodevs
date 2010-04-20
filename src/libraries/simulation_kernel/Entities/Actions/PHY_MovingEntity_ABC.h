@@ -23,6 +23,11 @@ namespace MsgsSimToClient
     class MsgUnitEnvironmentType;
 }
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
+
 class MIL_Object_ABC;
 class MIL_Object_ABC;
 class DEC_PathResult;
@@ -64,12 +69,14 @@ public:
 
     //! @name Notifications
     //@{
-    virtual void NotifyMovingOnPathPoint   ( const DEC_PathPoint& point ) = 0;
-    virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point ) = 0;
-    virtual void NotifyMovingInsideObject  ( MIL_Object_ABC& object ) = 0;
-    virtual void NotifyMovingOutsideObject ( MIL_Object_ABC& object ) = 0;
-    virtual void NotifyEnvironmentChanged  () = 0;
-    virtual void NotifyCurrentPathChanged  () = 0;
+    virtual void NotifyMovingOnPathPoint        ( const DEC_PathPoint& point ) = 0;
+    virtual void NotifyMovingOnSpecialPoint     ( boost::shared_ptr< DEC_PathPoint > point ) = 0;
+    virtual void NotifyMovingInsideObject       ( MIL_Object_ABC& object ) = 0;
+    virtual void NotifyMovingOutsideObject      ( MIL_Object_ABC& object ) = 0;
+    virtual void NotifyMovingInsideUrbanBlock   ( const urban::TerrainObject_ABC& object ) = 0;
+    virtual void NotifyMovingOutsideUrbanBlock  ( const urban::TerrainObject_ABC& object ) = 0;
+    virtual void NotifyEnvironmentChanged       () = 0;
+    virtual void NotifyCurrentPathChanged       () = 0;
     //@}
 
     //! @name 

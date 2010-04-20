@@ -33,6 +33,11 @@ namespace detection
     class PerceptionDistanceComputer_ABC;
 }
 
+namespace urbanLocation
+{
+    class UrbanLocationComputer_ABC;
+}
+
 // =============================================================================
 // @class  PHY_RolePion_Posture
 // Created: JVT 2004-08-03
@@ -41,6 +46,7 @@ class PHY_RolePion_Posture : public PHY_RoleInterface_Posture
                            , public tools::AlgorithmModifier_ABC< dotation::ConsumptionComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< detection::DetectionComputer_ABC >
                            , public tools::AlgorithmModifier_ABC< detection::PerceptionDistanceComputer_ABC >
+                           , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
                            , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
@@ -63,6 +69,7 @@ public:
     virtual void Execute( dotation::ConsumptionComputer_ABC& algorithm ) const;
     virtual void Execute( detection::DetectionComputer_ABC& algorithm ) const;
     void Execute( detection::PerceptionDistanceComputer_ABC& algorithm ) const;
+    void Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
 
     // Override automatic postures
     virtual void SetPosturePostePrepareGenie  ();

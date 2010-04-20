@@ -233,6 +233,66 @@ void ADN_Equipement_Data::AttritionInfos::WriteArchive( xml::xostream& output, c
            << xml::end();
 }
 
+// TEMP SLG
+// -----------------------------------------------------------------------------
+// Name: AttritionInfos::AttritionInfos
+// Created: SLG 2010-04-13
+// -----------------------------------------------------------------------------
+ADN_Equipement_Data::UrbanAttritionInfos::UrbanAttritionInfos( ADN_Urban_Data::UrbanInfos* ptr )
+: ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
+, rCoeff_( 0.0 )
+{
+    this->BindExistenceTo( &ptrMaterial_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanAttritionInfos::GetNodeName
+// Created: SLG 2010-04-13
+// -----------------------------------------------------------------------------
+std::string ADN_Equipement_Data::UrbanAttritionInfos::GetNodeName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanAttritionInfos::GetItemName
+// Created: SLG 2010-04-13
+// -----------------------------------------------------------------------------
+std::string ADN_Equipement_Data::UrbanAttritionInfos::GetItemName()
+{
+    return std::string();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanAttritionInfos::CopyFrom
+// Created: SLG 2010-04-13
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::UrbanAttritionInfos::CopyFrom( ADN_Equipement_Data::UrbanAttritionInfos& attritions )
+{
+    rCoeff_ = attritions.rCoeff_.GetData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanAttritionInfos::ReadArchive
+// Created: SLG 2010-04-13
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::UrbanAttritionInfos::ReadArchive( xml::xistream& input )
+{
+    input >> xml::attribute( "value", rCoeff_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanAttritionInfos::WriteArchive
+// Created: APE 2004-11-15
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::UrbanAttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /*= "urbanModifier"*/ )
+{
+    output << xml::start( tag )
+        << xml::attribute( "material-type", ptrMaterial_.GetData()->GetData() )
+        << xml::attribute( "value", rCoeff_.GetData() )
+        << xml::end();
+}
+// TEMP SLG
 //-----------------------------------------------------------------------------
 // Name: ModificatorPostureInfos::ModificatorPostureInfos
 // Created: JDY 03-09-29
@@ -432,6 +492,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
 ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( DotationInfos& parentDotation )
 : CategoryInfo      ( parentDotation )
 , bDirect_          ( false )
+, bUrbanAttrition_  ( false )
 , bTrancheD_        ( false )
 , bIndirect_        ( false )
 , bIlluminating_    ( false )
@@ -440,7 +501,8 @@ ADN_Equipement_Data::AmmoCategoryInfo::AmmoCategoryInfo( DotationInfos& parentDo
 , bGuided_          ( false )
 , bMaintainGuidance_( false )
 , fGuidanceRange_   ( 0 )
-, attritions_       (ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos())
+, attritions_       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos() )
+, modifUrbanBlocks_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos() )
 , indirectAmmoInfos_()
 {
 }
@@ -455,6 +517,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->bTrancheD_ = bTrancheD_.GetData();
     pCopy->nType_ = nType_.GetData();
     pCopy->bDirect_ = bDirect_.GetData();
+    pCopy->bUrbanAttrition_ = bUrbanAttrition_.GetData();
     pCopy->bIndirect_ = bIndirect_.GetData();
     
     pCopy->rNbrInPackage_  = rNbrInPackage_ .GetData();
@@ -494,6 +557,20 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition( xml::xistream& input 
     if( itAttrition == attritions_.end() )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).ascii() );
     (*itAttrition)->ReadArchive( input );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer
+// Created: SLG 2010-04-13
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer( xml::xistream& input )
+{
+    bUrbanAttrition_ = true;
+    std::string material = xml::attribute< std::string >( input, "material-type" );
+    IT_UrbanAttritionInfos_Vector it = std::find_if( modifUrbanBlocks_.begin(), modifUrbanBlocks_.end(), UrbanAttritionInfos::Cmp( material ) );
+    if( it == modifUrbanBlocks_.end() )
+        throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid urban Material type '%1'" ).arg( material.c_str() ).ascii() );
+    (*it)->ReadArchive( input );
 }
 
 // -----------------------------------------------------------------------------
@@ -546,6 +623,10 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::start( "attritions" )
             >> xml::list( "attrition", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadAttrition )
           >> xml::end()
+          >> xml::optional()
+          >> xml::start( "urbanModifiers" )
+            >> xml::list( "urbanModifier", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer )
+          >> xml::end()
           >> xml::list( "indirect-fire", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadIndirectFire );
 }
 
@@ -581,6 +662,13 @@ void ADN_Equipement_Data::AmmoCategoryInfo::WriteArchive( xml::xostream& output 
         output << xml::start( "attritions" );
         for( IT_AttritionInfos_Vector itAttrition = attritions_.begin(); itAttrition != attritions_.end(); ++itAttrition )
             (*itAttrition)->WriteArchive( output );
+        output << xml::end();
+    }
+    if( bUrbanAttrition_.GetData() == true )
+    {
+        output << xml::start( "urbanModifiers" );
+        for( IT_UrbanAttritionInfos_Vector itUrbanAttrition = modifUrbanBlocks_.begin(); itUrbanAttrition != modifUrbanBlocks_.end(); ++itUrbanAttrition )
+            (*itUrbanAttrition)->WriteArchive( output ); 
         output << xml::end();
     }
 

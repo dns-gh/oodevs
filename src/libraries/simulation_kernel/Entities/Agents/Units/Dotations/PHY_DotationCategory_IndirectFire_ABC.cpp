@@ -88,7 +88,7 @@ MT_Float PHY_DotationCategory_IndirectFire_ABC::ConvertToNbrAmmo( MT_Float rNbrI
 // Name: PHY_DotationCategory_IndirectFire_ABC::HasHit
 // Created: NLD 2005-08-04
 // -----------------------------------------------------------------------------
-bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*target*/ ) const
+bool PHY_DotationCategory_IndirectFire_ABC::HasHit( const MIL_Agent_ABC& /*target*/, MT_Float ) const
 {
     return true;
 }

@@ -101,6 +101,7 @@ public:
     virtual MT_Float                  GetMajorComponentWeight   () const;
 
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
+    virtual double Distance( const MIL_Agent_ABC& pion ) const;
 
     bool CanFly      () const;
     bool IsAutonomous() const; // Drones

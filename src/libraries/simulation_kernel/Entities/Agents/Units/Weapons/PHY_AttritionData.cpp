@@ -21,9 +21,9 @@ MT_Random PHY_AttritionData::randomGenerator_;
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_AttritionData::PHY_AttritionData()
-    : rDestroyedBound_                 ( 0. )
-    , rReparableWithEvacuationBound_   ( 0. )
-    , rReparableWithoutEvacuationBound_( 0. )
+    : rDestroyed_                 ( 0. )
+    , rReparableWithEvacuation_   ( 0. )
+    , rReparableWithoutEvacuation_( 0. )
     , rScore_                          ( 0. )
 {
     // NOTHING
@@ -35,30 +35,21 @@ PHY_AttritionData::PHY_AttritionData()
 // -----------------------------------------------------------------------------
 PHY_AttritionData::PHY_AttritionData( xml::xistream& xis )
 {
-    MT_Float rDestroyed;
-    MT_Float rReparableWithEvacuation;
-    MT_Float rReparableWithoutEvacuation;
+    xis >> xml::attribute( "destruction", rDestroyed_ )
+        >> xml::attribute( "repairable-with-evacuation", rReparableWithEvacuation_ )
+        >> xml::attribute( "repairable-without-evacuation", rReparableWithoutEvacuation_ );
 
-    xis >> xml::attribute( "destruction", rDestroyed )
-        >> xml::attribute( "repairable-with-evacuation", rReparableWithEvacuation )
-        >> xml::attribute( "repairable-without-evacuation", rReparableWithoutEvacuation );
-
-    if( rDestroyed < 0. || rDestroyed > 1. )
+    if( rDestroyed_ < 0. || rDestroyed_ > 1. )
         xis.error( "rDestroyed not in [0..1]" );
-    if( rReparableWithEvacuation < 0. || rReparableWithEvacuation > 1. )
+    if( rReparableWithEvacuation_ < 0. || rReparableWithEvacuation_ > 1. )
         xis.error( "rReparableWithEvacuation not in [0..1]" );
-    if( rReparableWithoutEvacuation < 0. || rReparableWithoutEvacuation > 1. )
+    if( rReparableWithoutEvacuation_ < 0. || rReparableWithoutEvacuation_ > 1. )
         xis.error( "rReparableWithoutEvacuation not in [0..1]" );
-
-    rDestroyedBound_                    = rDestroyed;
-    rReparableWithEvacuationBound_      = rDestroyedBound_ + rReparableWithEvacuation;
-    rReparableWithoutEvacuationBound_   = rReparableWithEvacuationBound_ + rReparableWithoutEvacuation;
-
-    if( rReparableWithoutEvacuationBound_ > 1. )
+    if( rDestroyed_ + rReparableWithEvacuation_ + rReparableWithoutEvacuation_ > 1. )
         xis.error( "Sum of attrition percentages is out of bound" );
 
     // Score
-    rScore_ = rDestroyed + ( rReparableWithEvacuation / 2. ) + ( rReparableWithoutEvacuation / 4. );
+    rScore_ = rDestroyed_ + ( rReparableWithEvacuation_ / 2. ) + ( rReparableWithoutEvacuation_ / 4. );
     assert( rScore_ <= 1. );
 }
 
@@ -67,10 +58,10 @@ PHY_AttritionData::PHY_AttritionData( xml::xistream& xis )
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
 PHY_AttritionData::PHY_AttritionData( const PHY_AttritionData& rhs )
-    : rDestroyedBound_                 ( rhs.rDestroyedBound_                  )
-    , rReparableWithEvacuationBound_   ( rhs.rReparableWithEvacuationBound_    )
-    , rReparableWithoutEvacuationBound_( rhs.rReparableWithoutEvacuationBound_ )
-    , rScore_                          ( rhs.rScore_                           )
+    : rDestroyed_                 ( rhs.rDestroyed_                     )
+    , rReparableWithEvacuation_   ( rhs.rReparableWithEvacuation_       )
+    , rReparableWithoutEvacuation_( rhs.rReparableWithoutEvacuation_    )
+    , rScore_                     ( rhs.rScore_                         )
 {
     // NOTHING
 }
@@ -88,14 +79,22 @@ PHY_AttritionData::~PHY_AttritionData()
 // Name: PHY_AttritionData::ComputeComposanteState
 // Created: NLD 2004-10-06
 // -----------------------------------------------------------------------------
-const PHY_ComposanteState& PHY_AttritionData::ComputeComposanteState() const
+const PHY_ComposanteState& PHY_AttritionData::ComputeComposanteState( MT_Float urbanProtection ) const
 {
+    assert( urbanProtection < 1.f );
     // Tirage de l'état opérationnel
     MT_Float rRand = randomGenerator_.rand_ii();
-    
-    return rRand <= rDestroyedBound_                  ? PHY_ComposanteState::dead_:
-           rRand <= rReparableWithEvacuationBound_    ? PHY_ComposanteState::repairableWithEvacuation_   :
-           rRand <= rReparableWithoutEvacuationBound_ ? PHY_ComposanteState::repairableWithoutEvacuation_:
+
+    MT_Float rReduction = rDestroyed_ * urbanProtection;
+    MT_Float rDestroyedBound = rDestroyed_ - rReduction;
+    rReduction = ( rReparableWithEvacuation_ + rReduction ) * urbanProtection;
+    MT_Float rReparableWithEvacuationBound = rDestroyedBound + rReparableWithEvacuation_ - rReduction;
+    rReduction = ( rReparableWithoutEvacuation_ + rReduction ) * urbanProtection;
+    MT_Float rReparableWithoutEvacuationBound  = rReparableWithEvacuationBound + rReparableWithoutEvacuation_ - rReduction;
+
+    return rRand <= rDestroyedBound                  ? PHY_ComposanteState::dead_:
+           rRand <= rReparableWithEvacuationBound    ? PHY_ComposanteState::repairableWithEvacuation_   :
+           rRand <= rReparableWithoutEvacuationBound ? PHY_ComposanteState::repairableWithoutEvacuation_:
                                                         PHY_ComposanteState::undamaged_;
 }
 
@@ -105,10 +104,10 @@ const PHY_ComposanteState& PHY_AttritionData::ComputeComposanteState() const
 // -----------------------------------------------------------------------------
 PHY_AttritionData& PHY_AttritionData::operator=( const PHY_AttritionData& rhs )
 {
-    rScore_                           = rhs.rScore_;
-    rDestroyedBound_                  = rhs.rDestroyedBound_;
-    rReparableWithEvacuationBound_    = rhs.rReparableWithEvacuationBound_;
-    rReparableWithoutEvacuationBound_ = rhs.rReparableWithoutEvacuationBound_;
+    rScore_                      = rhs.rScore_;
+    rDestroyed_                  = rhs.rDestroyed_;
+    rReparableWithEvacuation_    = rhs.rReparableWithEvacuation_;
+    rReparableWithoutEvacuation_ = rhs.rReparableWithoutEvacuation_;
     return *this;
 }
 

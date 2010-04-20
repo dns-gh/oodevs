@@ -65,9 +65,10 @@ public:
 
     //! @name Operations
     //@{
-    virtual void NotifyAttackedBy( MIL_AgentPion& pion );
-    virtual void NotifyAttackedBy( MIL_Population& population );
-    virtual void MagicMove( const MT_Vector2D& );
+    virtual void    NotifyAttackedBy( MIL_AgentPion& pion );
+    virtual void    NotifyAttackedBy( MIL_Population& population );
+    virtual void    MagicMove( const MT_Vector2D& );
+    virtual double  Distance( const MIL_Agent_ABC& ) const;
     //@}
 
     //! @name Knowledge

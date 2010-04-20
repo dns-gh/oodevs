@@ -17,6 +17,10 @@
 #include "Tools/MIL_IDManager.h"
 #include <boost/shared_ptr.hpp>
 
+namespace urban
+{
+    class TerrainObject_ABC;
+}
 class MIL_PopulationConcentration;
 class MIL_PopulationAttitude;
 class DEC_Population_Path;
@@ -118,6 +122,8 @@ private:
     virtual void NotifyMovingOnSpecialPoint( boost::shared_ptr< DEC_PathPoint > point );
     virtual void NotifyMovingInsideObject  ( MIL_Object_ABC& object );
     virtual void NotifyMovingOutsideObject ( MIL_Object_ABC& object );
+    virtual void NotifyMovingInsideUrbanBlock   ( const urban::TerrainObject_ABC& object ) {};
+    virtual void NotifyMovingOutsideUrbanBlock  ( const urban::TerrainObject_ABC& object ) {};
     virtual void NotifyEnvironmentChanged  ();
     virtual void NotifyCurrentPathChanged  ();
 
