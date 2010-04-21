@@ -64,11 +64,12 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     xis3 >> xml::start( "root" );
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
     
-    MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
+    MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
+    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 1 ) );
-    msg.set_oid_camp( army.GetID() );
-    msg.set_oid_parent( group1.GetId() );
+    msg.mutable_parametres()->add_elem()->mutable_value()->set_army( army.GetID() );
+    msg.mutable_parametres()->add_elem()->mutable_value()->set_knowledgegroup( group1.GetId() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -116,11 +117,11 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
     xis3 >> xml::start( "root" );
     MIL_KnowledgeGroup group2( xis3, army, &group1, mockKnowledgeGroupFactory );
     
-    MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
+    MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
+    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 10 ) );
-    msg.set_oid_camp( army.GetID() );
-    msg.set_oid_parent( 0 );
+    msg.mutable_parametres()->add_elem()->mutable_value()->set_army( army.GetID() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -169,11 +170,12 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
     xis3 >> xml::start( "root" );
     MIL_KnowledgeGroup group2( xis3, army, 0, mockKnowledgeGroupFactory );
     
-    MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
+    MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
+    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent );
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 20 ) );
-    msg.set_oid_camp( army.GetID() );
-    msg.set_oid_parent( group1.GetId() );
+    msg.mutable_parametres()->add_elem()->mutable_value()->set_army( army.GetID() );
+    msg.mutable_parametres()->add_elem()->mutable_value()->set_knowledgegroup( group1.GetId() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
@@ -221,10 +223,11 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     MIL_KnowledgeGroup groupArmy( kgType, 30, army );
 
     // prepare message    
-    MsgsClientToSim::MsgKnowledgeGroupUpdateRequest msg;
+    MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( groupArmy.GetId() );
+    msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type );
     const MIL_KnowledgeGroupType &kgType_new = *MIL_KnowledgeGroupType::FindType("TOTO");
-    msg.set_type( kgType_new.GetName().c_str() );
+    msg.mutable_parametres()->add_elem()->mutable_value()->set_acharstr( kgType_new.GetName().c_str() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue< uint >( 1 ) );
