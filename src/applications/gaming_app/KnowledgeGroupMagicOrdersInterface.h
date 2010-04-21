@@ -33,6 +33,7 @@ namespace actions
 class Publisher_ABC;
 class ActionPublisher;
 class Simulation;
+class StaticModel;
 
 // =============================================================================
 /** @class  KnowledgeGroupMagicOrdersInterface
@@ -49,7 +50,7 @@ class KnowledgeGroupMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroupMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroupMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroupMagicOrdersInterface();
     //@}
 
@@ -92,6 +93,7 @@ private:
     Publisher_ABC& publisher_;
     ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
+    const StaticModel& static_;
     const Simulation& simulation_;
     const kernel::Profile_ABC& profile_;
     kernel::SafePointer< kernel::KnowledgeGroup_ABC > selectedEntity_;

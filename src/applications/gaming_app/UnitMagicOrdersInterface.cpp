@@ -184,7 +184,32 @@ namespace
 
         void operator()( const Agent_ABC& agent ) const
         {
-            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType >& > ( static_.types_ ).Get( id_ );
+            std::string strType;
+            switch( id_ )
+            {
+            case MsgsClientToSim::MsgUnitMagicAction_Type_recover_all:
+                strType = "recover_all"; 
+                break;
+            case MsgsClientToSim::MsgUnitMagicAction_Type_recover_troops:
+                strType = "recover_troops"; 
+                break;
+            case MsgsClientToSim::MsgUnitMagicAction_Type_recover_equipments:
+                strType = "recover_equipments"; 
+                break;
+            case MsgsClientToSim::MsgUnitMagicAction_Type_recover_resources:
+                strType = "recover_resources"; 
+                break;
+            case MsgsClientToSim::MsgUnitMagicAction_Type_destroy_all:
+                strType = "destroy_all"; 
+                break;
+            case MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender:
+                strType = "cancel_surrender"; 
+                break;
+            default:
+                return;
+            }
+
+            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( strType );
             UnitMagicAction* action = new UnitMagicAction( agent, actionType, controllers_.controller_, true );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
             action->RegisterAndPublish( actionsModel_, actionPublisher_ );

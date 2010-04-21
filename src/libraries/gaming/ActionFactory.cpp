@@ -15,17 +15,20 @@
 #include "actions/FragOrder.h"
 #include "actions/MagicAction.h"
 #include "actions/MagicActionMeteo.h"
+#include "actions/KnowledgeGroupMagicAction.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/ObjectMagicAction.h"
 #include "actions/Parameter_ABC.h"
 #include "Model.h"
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
+#include "KnowledgeGroupsModel.h"
 #include "ActionTiming.h"
 #include "ParameterFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
@@ -203,6 +206,8 @@ actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
         return CreateUnitMagicAction( xis );
     if( type == "magicobject" )
         return CreateObjectMagicAction( xis );
+    if( type == "magicknowledge" )
+        return CreateKnowledgeGroupMagicAction( xis );
     return 0;
 }
 
@@ -328,8 +333,6 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) 
         ThrowTargetNotFound( targetid );
 
     action.reset( new actions::UnitMagicAction( xis, controllers_.controller_, magicActions_.Get( id ), *target ) );
-    /*else
-        ThrowMagicIdNotFound( id );*/
 
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();
@@ -372,6 +375,32 @@ actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis 
     tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
     // JSR TODO
     // xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
+    if( it.HasMoreElements() )
+        ThrowMissingParameter( *action, it.NextElement() );
+    return action.release();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateKnowledgeGroupMagicAction
+// Created: JSR 2010-04-20
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateKnowledgeGroupMagicAction( xml::xistream& xis ) const
+{
+    const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
+    const std::string id = xml::attribute< std::string >( xis, "id" );
+
+    std::auto_ptr< actions::KnowledgeGroupMagicAction > action;
+    const kernel::KnowledgeGroup_ABC* target = model_.knowledgeGroups_.Find( targetid );
+    if( !target )
+        ThrowTargetNotFound( targetid );
+
+    action.reset( new actions::KnowledgeGroupMagicAction( xis, controllers_.controller_, magicActions_.Get( id ), *target ) );
+
+    action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Polish();
+
+    tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
+    xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
     if( it.HasMoreElements() )
         ThrowMissingParameter( *action, it.NextElement() );
     return action.release();

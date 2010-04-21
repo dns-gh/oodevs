@@ -226,8 +226,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     EntitySymbols* icons = new EntitySymbols( *symbols, *strategy_ );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
 
-    pListsTabWidget->addTab( new TacticalList    ( controllers, publisher, *factory, profile, *icons ), tr( "Tactical" ) );
-    pListsTabWidget->addTab( new AgentList       ( controllers, publisher, *factory, profile, *icons ), tr( "Communication" ) );
+    pListsTabWidget->addTab( new TacticalList    ( controllers, publisher, actionPublisher, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
+    pListsTabWidget->addTab( new AgentList       ( controllers, publisher, actionPublisher, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
     pListsTabWidget->addTab( new ObjectList      ( controllers, *factory, profile ),                    tr( "Objects" ) );
     pListsTabWidget->addTab( new PopulationList  ( controllers, *factory, profile ),                    tr( "Populations" ) );
     pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, profile ),            tr( "Intelligences" ) );

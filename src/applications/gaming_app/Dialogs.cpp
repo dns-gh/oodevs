@@ -29,9 +29,9 @@ Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model,
     : QObject( parent )
 {
     new ChangeDiplomacyDialog( parent, controllers, publisher, profile );
-    new ChangeLogisticLinksDialog( parent, controllers, publisher, profile  );
-    new LogisticSupplyChangeQuotasDialog( parent, controllers, publisher, model, profile  );
-    new LogisticSupplyPushFlowDialog( parent, controllers, publisher, model.agents_, profile  );
+    new ChangeLogisticLinksDialog( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, profile  );
+    new LogisticSupplyChangeQuotasDialog( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, model, profile  );
+    new LogisticSupplyPushFlowDialog( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, model.agents_, profile  );
     new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, publisher, actionPublisher, actionsModel, simulation, profile );
     new ChangeHumanFactorsDialog( parent, controllers, staticModel, publisher, actionPublisher, actionsModel, simulation, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );

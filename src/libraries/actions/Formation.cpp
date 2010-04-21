@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "Formation.h"
+#include "protocol/Protocol.h"
 #include "clients_kernel/Formation_ABC.h"
 #include <xeumeuleu/xml.h>
 
@@ -54,4 +55,15 @@ Formation::Formation( const OrderParameter& parameter, xml::xistream& xis, const
 Formation::~Formation()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Formation::CommitTo
+// Created: JSR 2010-04-20
+// -----------------------------------------------------------------------------
+void Formation::CommitTo( Common::MsgMissionParameter& message ) const
+{
+    message.set_null_value( !IsSet() );
+    if( IsSet() && GetValue())
+        message.mutable_value()->set_formation( GetValue()->GetId() );
 }

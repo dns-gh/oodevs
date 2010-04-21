@@ -22,7 +22,15 @@ namespace kernel
     class Profile_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
+class ActionPublisher;
 class Publisher_ABC;
+class StaticModel;
+class Simulation;
 
 // =============================================================================
 /** @class  ChangeLogisticLinksDialog
@@ -41,7 +49,7 @@ class ChangeLogisticLinksDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile );
+             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~ChangeLogisticLinksDialog();
     //@}
 
@@ -72,6 +80,10 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& static_;
+    const Simulation& simulation_;
     const kernel::Profile_ABC& profile_;
 
     gui::ValuedComboBox< const kernel::Automat_ABC* >* tc2Combo_;

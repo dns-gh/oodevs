@@ -21,8 +21,16 @@ namespace kernel
     class Formation_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
+class ActionPublisher;
 class AutomatDecisions;
 class Publisher_ABC;
+class Simulation;
+class StaticModel;
 
 // =============================================================================
 /** @class  TacticalListView
@@ -38,7 +46,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~TacticalListView();
     //@}
 
@@ -70,6 +78,10 @@ private:
     //! @name Member data
     //@{
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& static_;
+    const Simulation& simulation_;
     QPixmap lock_, commandPost_;
     //@}
 };

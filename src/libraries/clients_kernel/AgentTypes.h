@@ -55,7 +55,6 @@ class AgentTypes : public tools::Resolver< AgentType >
                  , public tools::Resolver< MissionType >
                  , public tools::Resolver< FragOrderType >
                  , public tools::Resolver< FragOrderType, std::string >
-                 , public tools::Resolver< MagicActionType >
                  , public tools::Resolver< MagicActionType, std::string >
 {
 

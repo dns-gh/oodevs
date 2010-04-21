@@ -23,13 +23,12 @@ namespace Common
     class MsgAutomatChangeKnowledgeGroup;
     class MsgAutomatChangeSuperior;
     class MsgAutomatChangeLogisticLinks;
+    class MsgMissionParameters;
 }
 
 namespace MsgsClientToSim
 {
     class MsgFragOrder;
-    class MsgLogSupplyChangeQuotas;
-    class MsgLogSupplyPushFlow;
     class MsgSetAutomatMode;
     class MsgUnitCreationRequest;
     class MsgUnitMagicAction;
@@ -175,11 +174,11 @@ public:
             void OnReceiveMsgUnitCreationRequest  ( const MsgsClientToSim::MsgUnitMagicAction&       msg );
             void OnReceiveMsgUnitMagicAction      ( const MsgsClientToSim::MsgUnitMagicAction&       msg, const tools::Resolver< MIL_Army_ABC >& armies );
             void OnReceiveMsgMagicActionMoveTo    ( const MsgsClientToSim::MsgUnitMagicAction&       msg );
-            void OnReceiveMsgChangeKnowledgeGroup ( const Common::MsgAutomatChangeKnowledgeGroup&    msg, const tools::Resolver< MIL_Army_ABC >& armies );
-            void OnReceiveMsgChangeSuperior       ( const Common::MsgAutomatChangeSuperior&          msg, const tools::Resolver< MIL_Formation >& formations );
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const Common::MsgAutomatChangeLogisticLinks&     msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const MsgsClientToSim::MsgLogSupplyPushFlow&     msg );
+            void OnReceiveMsgChangeKnowledgeGroup ( const MsgsClientToSim::MsgUnitMagicAction&       msg, const tools::Resolver< MIL_Army_ABC >& armies );
+            void OnReceiveMsgChangeSuperior       ( const MsgsClientToSim::MsgUnitMagicAction&       msg, const tools::Resolver< MIL_Formation >& formations );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( const MsgsClientToSim::MsgUnitMagicAction&       msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters&              msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( const Common::MsgMissionParameters&              msg );
     //@}
 
     //! @name Misc

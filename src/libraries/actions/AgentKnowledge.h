@@ -42,6 +42,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AgentKnowledge( const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             AgentKnowledge( const kernel::OrderParameter& parameter, const kernel::AgentKnowledge_ABC& entity, kernel::Controller& controller );
              AgentKnowledge( const kernel::OrderParameter& parameter, unsigned long id, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
              AgentKnowledge( xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );
              AgentKnowledge( const kernel::OrderParameter& parameter, xml::xistream& xis, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& owner, kernel::Controller& controller );

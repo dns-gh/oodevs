@@ -10,23 +10,36 @@
 #include "gaming_app_pch.h"
 #include "icons.h"
 #include "TacticalListView.h"
+#include "actions/Automat.h"
+#include "actions/Formation.h"
+#include "actions/UnitMagicAction.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
-#include "clients_kernel/CommandPostAttributes.h"
-#include "clients_kernel/Automat_ABC.h"
+#include "gaming/StaticModel.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommandPostAttributes.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/MagicActionType.h"
 #include "protocol/SimulationSenders.h"
 
-//using namespace Common;
+using namespace actions;
+using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView constructor
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation )
     , lock_( MAKE_PIXMAP( lock ) )
     , commandPost_( MAKE_PIXMAP( commandpost ) )
 {
@@ -119,10 +132,13 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
-    simulation::UnitChangeSuperior message;
-    message().set_oid( item.GetId() );
-    message().set_oid_automate( target.GetId() );
-    message.Send( publisher_ );
+
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
+    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     return true;
 }
 
@@ -134,11 +150,13 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Auto
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target || &item == &target )
         return false;
-    simulation::AutomatChangeSuperior message;
-    message().set_oid( item.GetId() );
-    //message().oid_superior.t          = T_MsgAutomatChangeSuperior_oid_superior_automate;
-    message().mutable_oid_superior()->mutable_automate()->set_oid( target.GetId() );
-    message.Send( publisher_ );
+
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_automat_superior" );
+    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     return true;
 }
 
@@ -150,10 +168,12 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Form
 {
     if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
         return false;
-    simulation::AutomatChangeSuperior message;
-    message().set_oid( item.GetId() );
-    //message().oid_superior.t           = T_MsgAutomatChangeSuperior_oid_superior_formation;
-    message().mutable_oid_superior()->mutable_formation()->set_oid( target.GetId() );
-    message.Send( publisher_ );
+
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_formation_superior" );
+    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Formation( it.NextElement(), target, controllers_.controller_ ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     return true;
 }

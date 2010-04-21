@@ -1169,10 +1169,16 @@ message KnowledgeGroupAck {
     }
 }
 
+message MsgKnowledgeGroupAck {
+    required uint32                      oid        = 1;
+    required KnowledgeGroupAck.ErrorCode error_code = 2;
+}
+
 message MsgKnowledgeGroupCreationAck {
     required uint32                      oid        = 1;
     required KnowledgeGroupAck.ErrorCode error_code = 2;
 }
+
 message MsgKnowledgeGroupUpdateAck {
     required uint32                      oid        = 1;
     required KnowledgeGroupAck.ErrorCode error_code = 2;
@@ -1319,15 +1325,16 @@ message MsgSimToClient {
         optional MsgUrbanKnowledgeDestruction                   urban_knowledge_destruction                    = 113;
         optional Common.StockResource                           stock_resource                                 = 114;
         optional MsgUrbanDetection                              urban_detection                                = 115;
-        optional MsgKnowledgeGroupCreation                      knowledge_group_creation                       = 116;
-        optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 117;
-        optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 118;
-        optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 119;
-        optional MsgKnowledgeGroupDestruction                   knowledge_group_destruction                    = 120;        
-        optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 121;
-        optional MsgControlGlobalMeteo			                control_global_meteo						   = 122;
-        optional MsgControlLocalMeteoCreation		            control_local_meteo_creation				   = 123;
-        optional MsgControlLocalMeteoDestruction		        control_local_meteo_destruction 			   = 124;
+        optional MsgKnowledgeGroupAck                           knowledge_group_ack                            = 116;
+        optional MsgKnowledgeGroupCreation                      knowledge_group_creation                       = 117;
+        optional MsgKnowledgeGroupUpdate                        knowledge_group_update                         = 118;
+        optional MsgKnowledgeGroupCreationAck                   knowledge_group_creation_ack                   = 119;
+        optional MsgKnowledgeGroupUpdateAck                     knowledge_group_update_ack                     = 120;
+        optional MsgKnowledgeGroupDestruction                   knowledge_group_destruction                    = 121;        
+        optional MsgActionCreateFireOrderAck                    action_create_fire_order_ack                   = 122;
+        optional MsgControlGlobalMeteo			                control_global_meteo						   = 123;
+        optional MsgControlLocalMeteoCreation		            control_local_meteo_creation				   = 124;
+        optional MsgControlLocalMeteoDestruction		        control_local_meteo_destruction 			   = 125;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

@@ -26,8 +26,8 @@ MagicOrdersInterface::MagicOrdersInterface( QWidget* parent, kernel::Controllers
 {
     new UnitMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, layer, profile );
     new PopulationMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, layer, profile );
-    new ObjectMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, simulation, profile );
-    new KnowledgeGroupMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, simulation, profile, staticModel.types_ ); // LTO
+    new ObjectMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, profile );
+    new KnowledgeGroupMagicOrdersInterface( parent, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, profile, staticModel.types_ ); // LTO
 }
 
 // -----------------------------------------------------------------------------

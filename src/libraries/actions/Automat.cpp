@@ -29,6 +29,16 @@ Automat::Automat( const kernel::OrderParameter& parameter, kernel::Controller& c
 
 // -----------------------------------------------------------------------------
 // Name: Automat constructor
+// Created: JSR 2010-04-20
+// -----------------------------------------------------------------------------
+Automat::Automat( const kernel::OrderParameter& parameter, const kernel::Automat_ABC& automat, kernel::Controller& controller )
+    : Entity< Automat_ABC >( parameter, &automat, controller )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Automat constructor
 // Created: SBO 2007-05-23
 // -----------------------------------------------------------------------------
 Automat::Automat( const kernel::OrderParameter& parameter, unsigned int id, const tools::Resolver_ABC< kernel::Automat_ABC >& resolver, kernel::Controller& controller )

@@ -10,13 +10,23 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyPushFlowDialog.h"
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
+#include "actions/UnitMagicAction.h"
+#include "actions/ParameterList.h"
+#include "actions/Quantity.h"
+#include "actions/Identifier.h"
+#include "actions/Automat.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
 #include "gaming/Dotation.h"
+#include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Profile_ABC.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -24,15 +34,21 @@
 
 using namespace kernel;
 using namespace gui;
+using namespace actions;
+using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
     : QDialog( parent, tr( "Push supply flow" ) )
     , controllers_( controllers )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation)
     , automats_( automats )
     , profile_( profile )
     , selected_( controllers )
@@ -126,6 +142,14 @@ void LogisticSupplyPushFlowDialog::Show()
     show();
 }
 
+namespace
+{
+    std::string CreateName( const std::string& str, int& index )
+    {
+        return QString( (str + " %1" ).c_str() ).arg( index++ ).ascii();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::Validate
 // Created: SBO 2006-07-03
@@ -136,32 +160,40 @@ void LogisticSupplyPushFlowDialog::Validate()
     if( !selected_ || !target )
         return;
 
-    simulation::LogSupplyPushFlow message;
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_push_flow" );
+    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, true );
+    
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Automat( it.NextElement(), *selected_, controllers_.controller_ ) );
 
-    message().set_oid_donneur( selected_->GetId() );
-    message().set_oid_receveur( target->GetId() );
+    parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
+    
+    action->AddParameter( *dotations );
 
     unsigned int rows = 0;
     for( int i = 0; i < table_->numRows(); ++i )
         if( !table_->item( i, 0 )->text().isEmpty() )
             ++rows;
 
-//    message.mutable_stocks()->set_n( rows );
     if( rows > 0 )
     {
+        int index = 1;
         for( int i = 0; i < table_->numRows(); ++i )
         {
             const QString text = table_->text( i, 0 );
             if( text.isEmpty() )
                 continue;
-            message().mutable_stocks()->add_elem()->set_ressource_id( supplies_[ text ].type_->GetId() );
-            message().mutable_stocks()->mutable_elem( i )->set_quantite_disponible( table_->text( i, 1 ).toInt() );
+
+            ParameterList* dotationList = new ParameterList( OrderParameter( CreateName( "Dotation", index ), "list", false ) );
+            dotations->AddParameter( *dotationList );
+            dotationList->AddParameter( *new Identifier( OrderParameter( "Type", "identifier", false ), supplies_[ text ].type_->GetId() ) );
+            dotationList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), table_->text( i, 1 ).toInt() ) );
         }
-//        message.mutable_stocks()->set_elem( stock );
     }
-    message.Send( publisher_ );
-    if( message().stocks().elem_size() > 0 )
-        message().mutable_stocks()->mutable_elem()->Clear();
+
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+
     hide();
 }
 

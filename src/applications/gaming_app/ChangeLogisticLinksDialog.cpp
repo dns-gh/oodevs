@@ -11,9 +11,16 @@
 #include "ChangeLogisticLinksDialog.h"
 #include "moc_ChangeLogisticLinksDialog.cpp"
 #include "gaming/LogisticLinks.h"
+#include "actions/Identifier.h"
+#include "actions/UnitMagicAction.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
+#include "gaming/StaticModel.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
 //#include "protocol/clientsenders.h"
 #include "protocol/simulationsenders.h"
@@ -22,6 +29,7 @@
 
 #include <qgrid.h>
 
+using namespace actions;
 using namespace kernel;
 using namespace gui;
 
@@ -29,10 +37,14 @@ using namespace gui;
 // Name: ChangeLogisticLinksDialog constructor
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile )
+ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
     : QDialog( parent )
     , controllers_( controllers )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation)
     , profile_( profile )
     , selected_( controllers )
 {
@@ -161,14 +173,15 @@ void ChangeLogisticLinksDialog::NotifyDeleted( const Automat_ABC& agent )
 
 namespace
 {
-    unsigned int SetId( ValuedComboBox< const Automat_ABC* >& combo, int& id )
+    unsigned int GetId( ValuedComboBox< const Automat_ABC* >& combo )
     {
         if( combo.isEnabled() )
         {
             const Automat_ABC* agent = combo.count() ? combo.GetValue() : 0;
-            id = agent ? agent->GetId() : 0;
+            return agent ? agent->GetId() : 0;
         }
-        return combo.isEnabled();
+        else
+            return ( unsigned int ) -1;
     }
 }
 
@@ -180,20 +193,15 @@ void ChangeLogisticLinksDialog::Validate()
 {
     if( selected_ )
     {
-        simulation::AutomatChangeLogisticLinks message;
-        message().set_oid( selected_->GetId() );
-
-        int id;
-        if( SetId( *tc2Combo_, id ) )
-            message().set_oid_tc2( id );
-        if( SetId( *maintenanceCombo_, id ) )
-            message().set_oid_maintenance( id );
-        if( SetId( *medicalCombo_, id ) )
-            message().set_oid_sante( id );
-        if( SetId( *supplyCombo_, id ) )
-            message().set_oid_ravitaillement( id );
-
-	    message.Send( publisher_ );
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_logistic_links" );
+        UnitMagicAction* action = new UnitMagicAction( *selected_, actionType, controllers_.controller_, true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *tc2Combo_ ) ) );
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *maintenanceCombo_ ) ) );
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *medicalCombo_ ) ) );
+        action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *supplyCombo_ ) ) );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     }
     Reject();
 }

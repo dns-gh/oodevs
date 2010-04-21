@@ -41,15 +41,12 @@ namespace MsgsSimToClient
 namespace MsgsClientToSim
 {
     class MsgFragOrder;
-    class MsgLogSupplyPushFlow;
-    class MsgLogSupplyChangeQuotas;
     class MsgObjectMagicAction;
     class MsgSetAutomatMode;
     class MsgUnitCreationRequest;
     class MsgUnitMagicAction;
     class MsgKnowledgeGroupCreationRequest;
-    class MsgKnowledgeGroupUpdateRequest;
-    class MsgMagicActionCreateFireOrder;
+    class MsgKnowledgeMagicAction;
 }
 
 namespace xml
@@ -155,19 +152,20 @@ public:
     void OnReceiveMsgSetAutomateMode             ( const MsgsClientToSim::MsgSetAutomatMode&                message, unsigned int nCtx );
     void OnReceiveMsgUnitCreationRequest         ( const MsgsClientToSim::MsgUnitCreationRequest&           message, unsigned int nCtx );
     void OnReceiveMsgFragOrder                   ( const MsgsClientToSim::MsgFragOrder&                     message, unsigned int nCtx );
+    void OnReceiveMsgKnowledgeMagicAction        ( const MsgsClientToSim::MsgKnowledgeMagicAction&          message, unsigned int nCtx );
     void OnReceiveMsgObjectMagicAction           ( const MsgsClientToSim::MsgObjectMagicAction&             message, unsigned int nCtx );
     void OnReceiveMsgChangeDiplomacy             ( const Common::MsgChangeDiplomacy&                        message, unsigned int nCtx );
-    void OnReceiveMsgAutomateChangeKnowledgeGroup( const Common::MsgAutomatChangeKnowledgeGroup&            message, unsigned int nCtx );
-    void OnReceiveMsgAutomateChangeLogisticLinks ( const Common::MsgAutomatChangeLogisticLinks&             message, unsigned int nCtx );
-    void OnReceiveMsgAutomateChangeSuperior      ( const Common::MsgAutomatChangeSuperior&                  message, unsigned int nCtx );
-    void OnReceiveMsgUnitChangeSuperior          ( const Common::MsgUnitChangeSuperior&                     message, unsigned int nCtx );
-    void OnReceiveMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgLogSupplyChangeQuotas&         message, unsigned int nCtx );
-    void OnReceiveMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgLogSupplyPushFlow&             message, unsigned int nCtx );
-    void OnReceiveMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgUnitMagicAction&              message, unsigned int nCtx );
+    void OnReceiveMsgAutomateChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveMsgAutomateChangeLogisticLinks ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveMsgAutomateChangeSuperior      ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveMsgUnitChangeSuperior          ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveMsgLogSupplyChangeQuotas       ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveMsgLogSupplyPushFlow           ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
+    void OnReceiveMsgMagicActionMoveTo           ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
     // LTO begin
     void OnReceiveMsgKnowledgeGroupCreation      ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message, unsigned int nCtx );
-    void OnReceiveMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest&   message, unsigned int nCtx );
-    void OnReceiveMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgMagicActionCreateFireOrder&    message, unsigned int nCtx );
+    void OnReceiveMsgKnowledgeGroupUpdate        ( const MsgsClientToSim::MsgKnowledgeMagicAction&          message, unsigned int nCtx );
+    void OnReceiveMsgMagicActionCreateFireOrder  ( const MsgsClientToSim::MsgUnitMagicAction&               message, unsigned int nCtx );
     // LTO end
     //@}
 

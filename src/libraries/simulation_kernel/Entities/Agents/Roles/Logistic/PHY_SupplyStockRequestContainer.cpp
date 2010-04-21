@@ -41,7 +41,7 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
 // Name: PHY_SupplyStockRequestContainer constructor
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::SeqOfDotationStock& asnStocks )
+PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::MsgMissionParameter& asnStocks )
     : suppliedAutomate_                  ( suppliedAutomate )
     , requests_                          ()
     , bAtLeastOneExplicitSupplySatisfied_( false )
@@ -49,15 +49,20 @@ PHY_SupplyStockRequestContainer::PHY_SupplyStockRequestContainer( MIL_AutomateLO
     , bExplicitSupplyFullSatisfied_      ( false )
     , bPushedFlow_                       ( true )
 {
+    if( !asnStocks.has_value() || asnStocks.value().list_size() == 0 )
+        return;
+
     const MIL_Automate::T_PionVector& pions = suppliedAutomate.GetPions();
-    for( int i = 0; i < asnStocks.elem_size(); ++i )
+    for( int i = 0; i < asnStocks.value().list_size(); ++i )
     {
-        const Common::MsgDotationStock& asnStock = asnStocks.elem(i);
-        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnStock.ressource_id() );
+        unsigned int type = asnStocks.value().list( i ).list( 0 ).identifier();
+        int number = asnStocks.value().list( i ).list( 1 ).quantity();
+
+        const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type );
         if( !pDotationCategory )
             continue;
 
-        MT_Float rTotalValue = asnStock.quantite_disponible();
+        MT_Float rTotalValue = number;
 
         typedef std::vector< std::pair< PHY_DotationStock*, MT_Float > > T_PionStockVector;
         typedef T_PionStockVector::iterator                              IT_PionStockVector;

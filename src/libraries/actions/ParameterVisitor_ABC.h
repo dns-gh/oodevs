@@ -30,6 +30,7 @@ namespace actions
         class Army;
         class Quantity;
         class Identifier;
+        class KnowledgeGroup;
     }
 
 // =============================================================================
@@ -67,6 +68,7 @@ public:
     virtual void Visit( const parameters::Army&                ) {}
     virtual void Visit( const parameters::Quantity&            ) {}
     virtual void Visit( const parameters::Identifier&          ) {}
+    virtual void Visit( const parameters::KnowledgeGroup&      ) {}
     //@}
 };
 

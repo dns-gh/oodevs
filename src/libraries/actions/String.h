@@ -35,6 +35,7 @@ public:
     //! @name Operations
     //@{
     void CommitTo( std::string& asn ) const;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     //@}
 
 private:

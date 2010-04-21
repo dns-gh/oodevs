@@ -127,4 +127,75 @@ void MagicActionType::Initialize()
         // optional int32 concentration
         // optional bool global
     }
+    else if( name_ == "fire_order" )
+    {
+        OrderParameter* target = new OrderParameter( "Target", "identifier", false );
+        Register( Count(), *target );
+        OrderParameter* ammo = new OrderParameter( "Ammo", "dotationtype", false );
+        Register( Count(), *ammo );
+        OrderParameter* iterations = new OrderParameter( "Iterations", "numeric", false );
+        Register( Count(), *iterations );
+    }
+    else if( name_ == "change_knowledge_group" )
+    {
+        OrderParameter* group = new OrderParameter( "Group", "knowledgegroup", false );
+        Register( Count(), *group );
+        OrderParameter* camp = new OrderParameter( "Camp", "army", false );
+        Register( Count(), *camp );
+    }
+    else if( name_ == "unit_change_superior" )
+    {
+        OrderParameter* superior = new OrderParameter( "Superior", "automate", false );
+        Register( Count(), *superior );
+    }
+    else if( name_ == "change_automat_superior" )
+    {
+        OrderParameter* automat = new OrderParameter( "Automat", "automate", false );
+        Register( Count(), *automat );
+    }
+    else if( name_ == "change_formation_superior" )
+    {
+        OrderParameter* formation = new OrderParameter( "Formation", "formation", false );
+        Register( Count(), *formation );
+    }
+    else if( name_ == "change_logistic_links" )
+    {
+        OrderParameter* tc2 = new OrderParameter( "TC2", "identifier", false );
+        Register( Count(), *tc2 );
+        OrderParameter* maintenance = new OrderParameter( "Maintenance", "identifier", false );
+        Register( Count(), *maintenance );
+        OrderParameter* sante = new OrderParameter( "Sante", "identifier", false );
+        Register( Count(), *sante );
+        OrderParameter* ravitaillement = new OrderParameter( "Ravitaillement", "identifier", false );
+        Register( Count(), *ravitaillement );
+    }
+    else if( name_ == "knowledge_group_enable" )
+    {
+        OrderParameter* enabled = new OrderParameter( "Enabled", "bool", false );
+        Register( Count(), *enabled );
+    }
+    else if( name_ == "knowledge_group_update_side" )
+    {
+        OrderParameter* camp = new OrderParameter( "Camp", "army", false );
+        Register( Count(), *camp );
+    }
+    else if( name_ == "knowledge_group_update_side_parent" )
+    {
+        OrderParameter* camp = new OrderParameter( "Camp", "army", false );
+        Register( Count(), *camp );
+        OrderParameter* parent = new OrderParameter( "Parent", "knowledgegroup", false );
+        Register( Count(), *parent );
+    }
+    else if( name_ == "knowledge_group_update_type" )
+    {
+        OrderParameter* type = new OrderParameter( "Type", "string", false );
+        Register( Count(), *type );
+    }
+    else if( name_ == "log_supply_push_flow" || name_ == "log_supply_change_quotas" )
+    {
+        OrderParameter* automat = new OrderParameter( "Receiver", "automate", false );
+        Register( Count(), *automat );
+        OrderParameter* dotations = new OrderParameter( "Dotations", "list", false );
+        Register( Count(), *dotations );
+    }
 }

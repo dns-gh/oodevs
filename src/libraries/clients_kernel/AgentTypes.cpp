@@ -99,8 +99,7 @@ void AgentTypes::Purge()
     tools::Resolver< ComponentType >::DeleteAll();
     tools::Resolver< ComponentType, std::string >::Clear();
     tools::Resolver< SensorType, std::string >::DeleteAll();
-    tools::Resolver< MagicActionType >::DeleteAll();
-    tools::Resolver< MagicActionType, std::string >::Clear();
+    tools::Resolver< MagicActionType, std::string >::DeleteAll();
 }
 
 // -----------------------------------------------------------------------------
@@ -337,7 +336,6 @@ void AgentTypes::ReadKnowledgeGroupType( xml::xistream& xis )
 void AgentTypes::RegisterActionType( MagicActionType& actionType )
 {
     tools::Resolver< MagicActionType, std::string >::Register( actionType.GetName(), actionType );
-    tools::Resolver< MagicActionType >::Register( actionType.GetId(), actionType );
 }
 
 // -----------------------------------------------------------------------------
@@ -360,11 +358,23 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_human_factors", MsgsClientToSim::MsgUnitMagicAction_Type_change_human_factors ) );
     RegisterActionType( *new MagicActionType( "partial_recovery", MsgsClientToSim::MsgUnitMagicAction_Type_partial_recovery ) );
     RegisterActionType( *new MagicActionType( "unit_creation", MsgsClientToSim::MsgUnitMagicAction_Type_unit_creation ) );
-    RegisterActionType( *new MagicActionType( "create_fire_order", MsgsClientToSim::MsgUnitMagicAction_Type_create_fire_order ) );
+    RegisterActionType( *new MagicActionType( "fire_order", MsgsClientToSim::MsgUnitMagicAction_Type_create_fire_order ) );
     RegisterActionType( *new MagicActionType( "population_total_destruction", MsgsClientToSim::MsgUnitMagicAction_Type_population_total_destruction ) );
     RegisterActionType( *new MagicActionType( "population_kill", MsgsClientToSim::MsgUnitMagicAction_Type_population_kill ) );
     RegisterActionType( *new MagicActionType( "population_resurrect", MsgsClientToSim::MsgUnitMagicAction_Type_population_resurrect ) );
     RegisterActionType( *new MagicActionType( "population_change_attitude", MsgsClientToSim::MsgUnitMagicAction_Type_population_change_attitude ) );
+    RegisterActionType( *new MagicActionType( "change_knowledge_group", MsgsClientToSim::MsgUnitMagicAction_Type_change_knowledge_group ) );
+    RegisterActionType( *new MagicActionType( "unit_change_superior", MsgsClientToSim::MsgUnitMagicAction_Type_unit_change_superior ) );
+    RegisterActionType( *new MagicActionType( "change_automat_superior", MsgsClientToSim::MsgUnitMagicAction_Type_change_automat_superior ) );
+    RegisterActionType( *new MagicActionType( "change_formation_superior", MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior ) );
+    RegisterActionType( *new MagicActionType( "change_logistic_links", MsgsClientToSim::MsgUnitMagicAction_Type_change_logistic_links ) );
+    RegisterActionType( *new MagicActionType( "log_supply_push_flow", MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_push_flow ) );
+    RegisterActionType( *new MagicActionType( "log_supply_change_quotas", MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_change_quotas ) );
+
+    RegisterActionType( *new MagicActionType( "knowledge_group_enable", MsgsClientToSim::MsgKnowledgeMagicAction_Type_enable ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_update_side", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_update_side_parent", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent ) );
+    RegisterActionType( *new MagicActionType( "knowledge_group_update_type", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type ) );
 
     // $$$$ JSR 2010-04-14: TODO à remettre quand ces types auront des id
     // RegisterActionType( *new MagicActionMeteoType() );

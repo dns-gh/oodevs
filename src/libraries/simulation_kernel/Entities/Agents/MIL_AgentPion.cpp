@@ -962,9 +962,9 @@ void MIL_AgentPion::OnReceiveMagicCancelSurrender()
 // Name: MIL_AgentPion::OnReceiveMsgChangeSuperior
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const Common::MsgUnitChangeSuperior& asnMsg )
+void MIL_AgentPion::OnReceiveMsgChangeSuperior( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
-    MIL_Automate* pNewAutomate = manager.FindAutomate( asnMsg.oid_automate() );
+    MIL_Automate* pNewAutomate = manager.FindAutomate( msg.parametres().elem( 0 ).value().automat().oid() );
     if( !pNewAutomate )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
 

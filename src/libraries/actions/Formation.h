@@ -39,6 +39,12 @@ public:
     virtual ~Formation();
     //@}
 
+    //! @name Operations
+    //@{
+    using Entity< kernel::Formation_ABC >::CommitTo;
+    virtual void CommitTo( Common::MsgMissionParameter& message ) const;
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{

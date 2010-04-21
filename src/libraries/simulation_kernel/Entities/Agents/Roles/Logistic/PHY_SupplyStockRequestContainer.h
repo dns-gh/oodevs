@@ -17,7 +17,7 @@
 
 namespace Common
 {
-    class SeqOfDotationStock;
+    class MsgMissionParameter;
 }
 
 class PHY_DotationCategory;
@@ -35,7 +35,7 @@ class PHY_SupplyStockRequestContainer : private boost::noncopyable
 
 public:
     explicit PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate );
-             PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::SeqOfDotationStock& asnStocks );
+             PHY_SupplyStockRequestContainer( MIL_AutomateLOG& suppliedAutomate, const Common::MsgMissionParameter& asnStocks );
     virtual  ~PHY_SupplyStockRequestContainer();
 
     //! @name Operations

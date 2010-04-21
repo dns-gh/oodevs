@@ -40,7 +40,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     controllers_.Register( *this );
     AddPanel( intel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
-    AddPanel( new FireCreationPanel( this, *this, controllers, publisher, staticModel ) );
+    AddPanel( new FireCreationPanel( this, *this, controllers, publisher, actionPublisher, actionsModel, simulation, staticModel ) );
     AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, paramLayer, tools ) );
 }
 

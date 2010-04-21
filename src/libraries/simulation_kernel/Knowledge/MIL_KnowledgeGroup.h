@@ -40,6 +40,12 @@ class MIL_Population;
 // LTO begin
 class KnowledgeGroupFactory_ABC;
 class MIL_KnowledgeGroup;
+
+namespace Common
+{
+    class MsgMissionParameters;
+}
+
 namespace MsgsSimToClient
 {
     class MsgKnowledgeGroupCreation;
@@ -49,7 +55,7 @@ namespace MsgsSimToClient
 namespace MsgsClientToSim
 { 
     class MsgKnowledgeGroupCreationRequest;
-    class MsgKnowledgeGroupUpdateRequest;
+    class MsgKnowledgeMagicAction;
 }
 // LTO end
 
@@ -116,7 +122,7 @@ public:
     //! @name Operations
     //@{
     void OnReceiveMsgKnowledgeGroupCreation   ( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& message );
-    void OnReceiveMsgKnowledgeGroupUpdate     ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
+    void OnReceiveMsgKnowledgeGroupUpdate     ( const MsgsClientToSim::MsgKnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
     void Destroy();
     //@}
 
@@ -167,9 +173,9 @@ public:
     //@}
     
 private:
-    bool OnReceiveMsgKnowledgeGroupEnable        ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
-    bool OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies );
-    bool OnReceiveMsgKnowledgeGroupSetType       ( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message );
+    bool OnReceiveMsgKnowledgeGroupEnable        ( const Common::MsgMissionParameters& message );
+    bool OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent );
+    bool OnReceiveMsgKnowledgeGroupSetType       ( const Common::MsgMissionParameters& message );
 
     void CreateKnowledgeFromAgentPerception( const DEC_Knowledge_Agent& agent );
     void CreateKnowledgeFromPopulationPerception( const DEC_Knowledge_Population& population );

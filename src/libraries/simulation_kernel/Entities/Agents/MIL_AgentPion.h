@@ -139,7 +139,7 @@ public:
     void OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnitMagicAction& asn );
     void OnReceiveMsgOrder            ( const Common::MsgUnitOrder& msg ); 
     void OnReceiveMsgFragOrder        ( const MsgsClientToSim::MsgFragOrder& msg );
-    void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const Common::MsgUnitChangeSuperior& msg );
+    void OnReceiveMsgChangeSuperior   ( const MIL_EntityManager& manager, const MsgsClientToSim::MsgUnitMagicAction& msg );
     void OnReceiveMagicSurrender      ();
     void OnReceiveMagicCancelSurrender();
     void OnReceiveMsgMagicActionMoveTo( const MT_Vector2D& vPosition ); // Magic move automate

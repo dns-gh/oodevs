@@ -325,6 +325,15 @@ void BaseDisplayer::Call( const kernel::ObjectKnowledge_ABC& value )
 }
 
 // -----------------------------------------------------------------------------
+// Name: BaseDisplayer::Call
+// Created: JSR 2010-04-19
+// -----------------------------------------------------------------------------
+void BaseDisplayer::Call( const kernel::KnowledgeGroup_ABC& value )
+{
+    AddToDisplay( value.GetName() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: BaseDisplayer::Clear
 // Created: LDC 2009-03-18
 // -----------------------------------------------------------------------------

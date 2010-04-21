@@ -52,6 +52,26 @@ message MsgUnitMagicAction {
         population_kill              = 15;
         population_resurrect         = 16;
         population_change_attitude   = 17;
+        change_knowledge_group       = 18;
+        change_logistic_links        = 19;
+        unit_change_superior         = 20;
+        change_automat_superior      = 21;
+        change_formation_superior    = 22;
+        knowledge_group_update       = 23;
+        log_supply_push_flow         = 24;
+        log_supply_change_quotas     = 25;
+    }
+   required uint32                      oid        = 1;
+   required Type                        type       = 2;
+   required Common.MsgMissionParameters parametres = 3;
+}
+
+message MsgKnowledgeMagicAction {
+   enum Type {
+        enable                 = 24;
+        update_side            = 25;
+        update_side_parent     = 26;
+        update_type            = 27;
     }
    required uint32                      oid        = 1;
    required Type                        type       = 2;
@@ -79,25 +99,6 @@ message MsgObjectMagicAction_action {
 
 message MsgObjectMagicAction {
    required MsgObjectMagicAction_action  action             = 1;
-}
-
-message MsgMagicActionCreateFireOrder {
-   required int32                      oid_targetKnowledge = 1;
-   required int32                      oid_agentForCr      = 2;
-   required int32                      munition            = 3;
-   required int32                      it                  = 4;
-}
-
-message MsgPopulationMagicAction_action {
-   optional Common.MsgMagicActionPopulationChangeAttitude   change_attitude     = 1;
-   optional bool                                            destruction_totale  = 2;
-   optional Common.MsgMagicActionPopulationKill             tuer                = 3;
-   optional Common.MsgMagicActionPopulationResurrect        ressusciter         = 4;
-}
-
-message MsgPopulationMagicAction {
-   required uint32                          oid    = 1;
-   required MsgPopulationMagicAction_action action = 2;
 }
 
 message MsgLogSupplyPushFlow {
@@ -152,19 +153,11 @@ message MsgClientToSim {
        optional MsgFragOrder                           frag_order                           = 13;
        optional MsgSetAutomatMode                      set_automat_mode                     = 14;
        optional MsgUnitCreationRequest                 unit_creation_request                = 15;
-       optional MsgUnitMagicAction                     unit_magic_action                    = 17;
-       optional MsgObjectMagicAction                   object_magic_action                  = 18;
-       optional MsgPopulationMagicAction               population_magic_action              = 19;
-       optional Common.MsgChangeDiplomacy              change_diplomacy                     = 20;
-       optional Common.MsgAutomatChangeKnowledgeGroup  automat_change_knowledge_group       = 21;
-       optional Common.MsgAutomatChangeLogisticLinks   automat_change_logistic_links        = 22;
-       optional Common.MsgAutomatChangeSuperior        automat_change_superior              = 23;
-       optional Common.MsgUnitChangeSuperior           unit_change_superior                 = 24;
-       optional MsgLogSupplyPushFlow                   log_supply_push_flow                 = 25;
-       optional MsgLogSupplyChangeQuotas               log_supply_change_quotas             = 26;   
-       optional MsgKnowledgeGroupCreationRequest       knowledge_group_creation_request     = 27;   
-       optional MsgKnowledgeGroupUpdateRequest         knowledge_group_update_request       = 28;
-       optional MsgMagicActionCreateFireOrder          create_fire_order                    = 29;   
+       optional MsgUnitMagicAction                     unit_magic_action                    = 16;
+       optional MsgObjectMagicAction                   object_magic_action                  = 17;
+       optional Common.MsgChangeDiplomacy              change_diplomacy                     = 18;
+       optional MsgKnowledgeMagicAction                knowledge_magic_action               = 19;
+       optional MsgKnowledgeGroupCreationRequest       knowledge_group_creation_request     = 20;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;

@@ -9,6 +9,7 @@
 
 #include "actions_pch.h"
 #include "String.h"
+#include "protocol/protocol.h"
 #include <xeumeuleu/xml.h>
 
 using namespace actions;
@@ -51,6 +52,18 @@ void String::CommitTo( std::string& message ) const
 {
     const QString value = GetValue();
     message = value.isNull() ? "" : value.ascii();
+}
+
+// -----------------------------------------------------------------------------
+// Name: String::CommitTo
+// Created: JSR 2010-04-20
+// -----------------------------------------------------------------------------
+void String::CommitTo( Common::MsgMissionParameter& message ) const
+{
+    message.set_null_value( !IsSet() );
+    message.mutable_value();    // enforce initialisation of parameter to force his type
+    if( IsSet() )
+        message.mutable_value()->set_acharstr( GetValue().ascii() );
 }
 
 // -----------------------------------------------------------------------------

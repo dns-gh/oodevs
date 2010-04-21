@@ -53,7 +53,7 @@ private:
     HierarchyListView& operator=( const HierarchyListView& );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;

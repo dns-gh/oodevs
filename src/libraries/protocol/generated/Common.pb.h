@@ -93,10 +93,6 @@ class MsgMissionParameters;
 class MsgShape;
 class MsgChatTarget;
 class MsgTextMessage;
-class MsgMagicActionPopulationChangeAttitude_beneficiaire;
-class MsgMagicActionPopulationChangeAttitude;
-class MsgMagicActionPopulationKill;
-class MsgMagicActionPopulationResurrect;
 class MsgTacticalLine;
 class MsgTacticalLine_Diffusion;
 class MsgFormation;
@@ -6343,24 +6339,38 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 army() const;
   inline void set_army(::google::protobuf::int32 value);
   
-  // optional uint32 identifier = 39;
+  // optional int32 formation = 39;
+  inline bool has_formation() const;
+  inline void clear_formation();
+  static const int kFormationFieldNumber = 39;
+  inline ::google::protobuf::int32 formation() const;
+  inline void set_formation(::google::protobuf::int32 value);
+  
+  // optional uint32 identifier = 40;
   inline bool has_identifier() const;
   inline void clear_identifier();
-  static const int kIdentifierFieldNumber = 39;
+  static const int kIdentifierFieldNumber = 40;
   inline ::google::protobuf::uint32 identifier() const;
   inline void set_identifier(::google::protobuf::uint32 value);
   
-  // optional int32 quantity = 40;
+  // optional int32 quantity = 41;
   inline bool has_quantity() const;
   inline void clear_quantity();
-  static const int kQuantityFieldNumber = 40;
+  static const int kQuantityFieldNumber = 41;
   inline ::google::protobuf::int32 quantity() const;
   inline void set_quantity(::google::protobuf::int32 value);
   
-  // repeated .Common.MsgMissionParameter.Value list = 41;
+  // optional int32 knowledgeGroup = 42;
+  inline bool has_knowledgegroup() const;
+  inline void clear_knowledgegroup();
+  static const int kKnowledgeGroupFieldNumber = 42;
+  inline ::google::protobuf::int32 knowledgegroup() const;
+  inline void set_knowledgegroup(::google::protobuf::int32 value);
+  
+  // repeated .Common.MsgMissionParameter.Value list = 43;
   inline int list_size() const;
   inline void clear_list();
-  static const int kListFieldNumber = 41;
+  static const int kListFieldNumber = 43;
   inline const ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >& list() const;
   inline ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value >* mutable_list();
   inline const ::Common::MsgMissionParameter_Value& list(int index) const;
@@ -6410,14 +6420,16 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   ::Common::MsgIntelligenceList* intelligencelist_;
   ::Common::MsgUrbanBlock* urbanblock_;
   ::google::protobuf::int32 army_;
+  ::google::protobuf::int32 formation_;
   ::google::protobuf::uint32 identifier_;
   ::google::protobuf::int32 quantity_;
+  ::google::protobuf::int32 knowledgegroup_;
   ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value > list_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(41 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(43 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -6940,378 +6952,6 @@ class MsgTextMessage : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgTextMessage* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgMagicActionPopulationChangeAttitude_beneficiaire : public ::google::protobuf::Message {
- public:
-  MsgMagicActionPopulationChangeAttitude_beneficiaire();
-  virtual ~MsgMagicActionPopulationChangeAttitude_beneficiaire();
-  
-  MsgMagicActionPopulationChangeAttitude_beneficiaire(const MsgMagicActionPopulationChangeAttitude_beneficiaire& from);
-  
-  inline MsgMagicActionPopulationChangeAttitude_beneficiaire& operator=(const MsgMagicActionPopulationChangeAttitude_beneficiaire& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMagicActionPopulationChangeAttitude_beneficiaire& default_instance();
-  void Swap(MsgMagicActionPopulationChangeAttitude_beneficiaire* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgMagicActionPopulationChangeAttitude_beneficiaire* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMagicActionPopulationChangeAttitude_beneficiaire& from);
-  void MergeFrom(const MsgMagicActionPopulationChangeAttitude_beneficiaire& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // optional int32 flux = 1;
-  inline bool has_flux() const;
-  inline void clear_flux();
-  static const int kFluxFieldNumber = 1;
-  inline ::google::protobuf::int32 flux() const;
-  inline void set_flux(::google::protobuf::int32 value);
-  
-  // optional int32 concentration = 2;
-  inline bool has_concentration() const;
-  inline void clear_concentration();
-  static const int kConcentrationFieldNumber = 2;
-  inline ::google::protobuf::int32 concentration() const;
-  inline void set_concentration(::google::protobuf::int32 value);
-  
-  // optional bool global = 3;
-  inline bool has_global() const;
-  inline void clear_global();
-  static const int kGlobalFieldNumber = 3;
-  inline bool global() const;
-  inline void set_global(bool value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 flux_;
-  ::google::protobuf::int32 concentration_;
-  bool global_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgMagicActionPopulationChangeAttitude_beneficiaire* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgMagicActionPopulationChangeAttitude : public ::google::protobuf::Message {
- public:
-  MsgMagicActionPopulationChangeAttitude();
-  virtual ~MsgMagicActionPopulationChangeAttitude();
-  
-  MsgMagicActionPopulationChangeAttitude(const MsgMagicActionPopulationChangeAttitude& from);
-  
-  inline MsgMagicActionPopulationChangeAttitude& operator=(const MsgMagicActionPopulationChangeAttitude& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMagicActionPopulationChangeAttitude& default_instance();
-  void Swap(MsgMagicActionPopulationChangeAttitude* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgMagicActionPopulationChangeAttitude* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMagicActionPopulationChangeAttitude& from);
-  void MergeFrom(const MsgMagicActionPopulationChangeAttitude& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required .Common.EnumPopulationAttitude attitude = 1;
-  inline bool has_attitude() const;
-  inline void clear_attitude();
-  static const int kAttitudeFieldNumber = 1;
-  inline Common::EnumPopulationAttitude attitude() const;
-  inline void set_attitude(Common::EnumPopulationAttitude value);
-  
-  // required .Common.MsgMagicActionPopulationChangeAttitude_beneficiaire beneficiaire = 2;
-  inline bool has_beneficiaire() const;
-  inline void clear_beneficiaire();
-  static const int kBeneficiaireFieldNumber = 2;
-  inline const ::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire& beneficiaire() const;
-  inline ::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire* mutable_beneficiaire();
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  int attitude_;
-  ::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire* beneficiaire_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(2 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgMagicActionPopulationChangeAttitude* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgMagicActionPopulationKill : public ::google::protobuf::Message {
- public:
-  MsgMagicActionPopulationKill();
-  virtual ~MsgMagicActionPopulationKill();
-  
-  MsgMagicActionPopulationKill(const MsgMagicActionPopulationKill& from);
-  
-  inline MsgMagicActionPopulationKill& operator=(const MsgMagicActionPopulationKill& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMagicActionPopulationKill& default_instance();
-  void Swap(MsgMagicActionPopulationKill* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgMagicActionPopulationKill* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMagicActionPopulationKill& from);
-  void MergeFrom(const MsgMagicActionPopulationKill& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 kill = 1;
-  inline bool has_kill() const;
-  inline void clear_kill();
-  static const int kKillFieldNumber = 1;
-  inline ::google::protobuf::int32 kill() const;
-  inline void set_kill(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 kill_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgMagicActionPopulationKill* default_instance_;
-};
-// -------------------------------------------------------------------
-
-class MsgMagicActionPopulationResurrect : public ::google::protobuf::Message {
- public:
-  MsgMagicActionPopulationResurrect();
-  virtual ~MsgMagicActionPopulationResurrect();
-  
-  MsgMagicActionPopulationResurrect(const MsgMagicActionPopulationResurrect& from);
-  
-  inline MsgMagicActionPopulationResurrect& operator=(const MsgMagicActionPopulationResurrect& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-  
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-  
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const MsgMagicActionPopulationResurrect& default_instance();
-  void Swap(MsgMagicActionPopulationResurrect* other);
-  
-  // implements Message ----------------------------------------------
-  
-  MsgMagicActionPopulationResurrect* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MsgMagicActionPopulationResurrect& from);
-  void MergeFrom(const MsgMagicActionPopulationResurrect& from);
-  void Clear();
-  bool IsInitialized() const;
-  
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const { _cached_size_ = size; }
-  public:
-  
-  ::google::protobuf::Metadata GetMetadata() const;
-  
-  // nested types ----------------------------------------------------
-  
-  // accessors -------------------------------------------------------
-  
-  // required int32 resurrect = 1;
-  inline bool has_resurrect() const;
-  inline void clear_resurrect();
-  static const int kResurrectFieldNumber = 1;
-  inline ::google::protobuf::int32 resurrect() const;
-  inline void set_resurrect(::google::protobuf::int32 value);
-  
- private:
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-  mutable int _cached_size_;
-  
-  ::google::protobuf::int32 resurrect_;
-  friend void  protobuf_AddDesc_Common_2eproto();
-  friend void protobuf_AssignDesc_Common_2eproto();
-  friend void protobuf_ShutdownFile_Common_2eproto();
-  
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
-  
-  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
-  inline bool _has_bit(int index) const {
-    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
-  }
-  inline void _set_bit(int index) {
-    _has_bits_[index / 32] |= (1u << (index % 32));
-  }
-  inline void _clear_bit(int index) {
-    _has_bits_[index / 32] &= ~(1u << (index % 32));
-  }
-  
-  void InitAsDefaultInstance();
-  static MsgMagicActionPopulationResurrect* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -12780,39 +12420,71 @@ inline void MsgMissionParameter_Value::set_army(::google::protobuf::int32 value)
   army_ = value;
 }
 
-// optional uint32 identifier = 39;
-inline bool MsgMissionParameter_Value::has_identifier() const {
+// optional int32 formation = 39;
+inline bool MsgMissionParameter_Value::has_formation() const {
   return _has_bit(38);
+}
+inline void MsgMissionParameter_Value::clear_formation() {
+  formation_ = 0;
+  _clear_bit(38);
+}
+inline ::google::protobuf::int32 MsgMissionParameter_Value::formation() const {
+  return formation_;
+}
+inline void MsgMissionParameter_Value::set_formation(::google::protobuf::int32 value) {
+  _set_bit(38);
+  formation_ = value;
+}
+
+// optional uint32 identifier = 40;
+inline bool MsgMissionParameter_Value::has_identifier() const {
+  return _has_bit(39);
 }
 inline void MsgMissionParameter_Value::clear_identifier() {
   identifier_ = 0u;
-  _clear_bit(38);
+  _clear_bit(39);
 }
 inline ::google::protobuf::uint32 MsgMissionParameter_Value::identifier() const {
   return identifier_;
 }
 inline void MsgMissionParameter_Value::set_identifier(::google::protobuf::uint32 value) {
-  _set_bit(38);
+  _set_bit(39);
   identifier_ = value;
 }
 
-// optional int32 quantity = 40;
+// optional int32 quantity = 41;
 inline bool MsgMissionParameter_Value::has_quantity() const {
-  return _has_bit(39);
+  return _has_bit(40);
 }
 inline void MsgMissionParameter_Value::clear_quantity() {
   quantity_ = 0;
-  _clear_bit(39);
+  _clear_bit(40);
 }
 inline ::google::protobuf::int32 MsgMissionParameter_Value::quantity() const {
   return quantity_;
 }
 inline void MsgMissionParameter_Value::set_quantity(::google::protobuf::int32 value) {
-  _set_bit(39);
+  _set_bit(40);
   quantity_ = value;
 }
 
-// repeated .Common.MsgMissionParameter.Value list = 41;
+// optional int32 knowledgeGroup = 42;
+inline bool MsgMissionParameter_Value::has_knowledgegroup() const {
+  return _has_bit(41);
+}
+inline void MsgMissionParameter_Value::clear_knowledgegroup() {
+  knowledgegroup_ = 0;
+  _clear_bit(41);
+}
+inline ::google::protobuf::int32 MsgMissionParameter_Value::knowledgegroup() const {
+  return knowledgegroup_;
+}
+inline void MsgMissionParameter_Value::set_knowledgegroup(::google::protobuf::int32 value) {
+  _set_bit(41);
+  knowledgegroup_ = value;
+}
+
+// repeated .Common.MsgMissionParameter.Value list = 43;
 inline int MsgMissionParameter_Value::list_size() const {
   return list_.size();
 }
@@ -13174,136 +12846,6 @@ inline ::std::string* MsgTextMessage::mutable_message() {
     message_ = new ::std::string;
   }
   return message_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgMagicActionPopulationChangeAttitude_beneficiaire
-
-// optional int32 flux = 1;
-inline bool MsgMagicActionPopulationChangeAttitude_beneficiaire::has_flux() const {
-  return _has_bit(0);
-}
-inline void MsgMagicActionPopulationChangeAttitude_beneficiaire::clear_flux() {
-  flux_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgMagicActionPopulationChangeAttitude_beneficiaire::flux() const {
-  return flux_;
-}
-inline void MsgMagicActionPopulationChangeAttitude_beneficiaire::set_flux(::google::protobuf::int32 value) {
-  _set_bit(0);
-  flux_ = value;
-}
-
-// optional int32 concentration = 2;
-inline bool MsgMagicActionPopulationChangeAttitude_beneficiaire::has_concentration() const {
-  return _has_bit(1);
-}
-inline void MsgMagicActionPopulationChangeAttitude_beneficiaire::clear_concentration() {
-  concentration_ = 0;
-  _clear_bit(1);
-}
-inline ::google::protobuf::int32 MsgMagicActionPopulationChangeAttitude_beneficiaire::concentration() const {
-  return concentration_;
-}
-inline void MsgMagicActionPopulationChangeAttitude_beneficiaire::set_concentration(::google::protobuf::int32 value) {
-  _set_bit(1);
-  concentration_ = value;
-}
-
-// optional bool global = 3;
-inline bool MsgMagicActionPopulationChangeAttitude_beneficiaire::has_global() const {
-  return _has_bit(2);
-}
-inline void MsgMagicActionPopulationChangeAttitude_beneficiaire::clear_global() {
-  global_ = false;
-  _clear_bit(2);
-}
-inline bool MsgMagicActionPopulationChangeAttitude_beneficiaire::global() const {
-  return global_;
-}
-inline void MsgMagicActionPopulationChangeAttitude_beneficiaire::set_global(bool value) {
-  _set_bit(2);
-  global_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgMagicActionPopulationChangeAttitude
-
-// required .Common.EnumPopulationAttitude attitude = 1;
-inline bool MsgMagicActionPopulationChangeAttitude::has_attitude() const {
-  return _has_bit(0);
-}
-inline void MsgMagicActionPopulationChangeAttitude::clear_attitude() {
-  attitude_ = 0;
-  _clear_bit(0);
-}
-inline Common::EnumPopulationAttitude MsgMagicActionPopulationChangeAttitude::attitude() const {
-  return static_cast< Common::EnumPopulationAttitude >(attitude_);
-}
-inline void MsgMagicActionPopulationChangeAttitude::set_attitude(Common::EnumPopulationAttitude value) {
-  GOOGLE_DCHECK(Common::EnumPopulationAttitude_IsValid(value));
-  _set_bit(0);
-  attitude_ = value;
-}
-
-// required .Common.MsgMagicActionPopulationChangeAttitude_beneficiaire beneficiaire = 2;
-inline bool MsgMagicActionPopulationChangeAttitude::has_beneficiaire() const {
-  return _has_bit(1);
-}
-inline void MsgMagicActionPopulationChangeAttitude::clear_beneficiaire() {
-  if (beneficiaire_ != NULL) beneficiaire_->::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire::Clear();
-  _clear_bit(1);
-}
-inline const ::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire& MsgMagicActionPopulationChangeAttitude::beneficiaire() const {
-  return beneficiaire_ != NULL ? *beneficiaire_ : *default_instance_->beneficiaire_;
-}
-inline ::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire* MsgMagicActionPopulationChangeAttitude::mutable_beneficiaire() {
-  _set_bit(1);
-  if (beneficiaire_ == NULL) beneficiaire_ = new ::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire;
-  return beneficiaire_;
-}
-
-// -------------------------------------------------------------------
-
-// MsgMagicActionPopulationKill
-
-// required int32 kill = 1;
-inline bool MsgMagicActionPopulationKill::has_kill() const {
-  return _has_bit(0);
-}
-inline void MsgMagicActionPopulationKill::clear_kill() {
-  kill_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgMagicActionPopulationKill::kill() const {
-  return kill_;
-}
-inline void MsgMagicActionPopulationKill::set_kill(::google::protobuf::int32 value) {
-  _set_bit(0);
-  kill_ = value;
-}
-
-// -------------------------------------------------------------------
-
-// MsgMagicActionPopulationResurrect
-
-// required int32 resurrect = 1;
-inline bool MsgMagicActionPopulationResurrect::has_resurrect() const {
-  return _has_bit(0);
-}
-inline void MsgMagicActionPopulationResurrect::clear_resurrect() {
-  resurrect_ = 0;
-  _clear_bit(0);
-}
-inline ::google::protobuf::int32 MsgMagicActionPopulationResurrect::resurrect() const {
-  return resurrect_;
-}
-inline void MsgMagicActionPopulationResurrect::set_resurrect(::google::protobuf::int32 value) {
-  _set_bit(0);
-  resurrect_ = value;
 }
 
 // -------------------------------------------------------------------

@@ -35,6 +35,7 @@
 #include "actions/ObjectKnowledgeList.h"
 #include "actions/Enumeration.h"
 #include "actions/Bool.h"
+#include "actions/String.h"
 #include "actions/Numeric.h"
 #include "actions/DotationType.h"
 #include "actions/AtlasNature.h"
@@ -44,14 +45,17 @@
 #include "actions/DateTime.h"
 #include "actions/UrbanBlock.h"
 #include "actions/Army.h"
+#include "actions/Formation.h"
 #include "actions/Quantity.h"
 #include "actions/Identifier.h"
 #include "actions/ParameterList.h"
+#include "actions/KnowledgeGroup.h"
 #include "Model.h"
 #include "StaticModel.h"
 #include "AgentsModel.h"
 #include "TeamsModel.h"
 #include "ObjectsModel.h"
+#include "KnowledgeGroupsModel.h"
 #include "Tools.h"
 #include "UrbanModel.h"
 #include "clients_kernel/Entity_ABC.h"
@@ -109,7 +113,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     if( message.value().has_abool() )
         return new actions::parameters::Bool( parameter, message.value().abool() != 0 );
     if( message.value().has_acharstr() )
-        return new actions::parameters::Parameter< QString >( parameter, QString( message.value().acharstr().c_str() ) );
+        return new actions::parameters::String( parameter, message.value().acharstr().c_str() );
     if( message.value().has_unit() )
         return new actions::parameters::Agent( parameter, message.value().unit().oid(), model_.agents_, controller_ );
     if( message.value().has_areal() )
@@ -182,10 +186,14 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
         return new actions::parameters::UrbanBlock( parameter, message.value().urbanblock() );
     if( message.value().has_army() )
         return new actions::parameters::Army( parameter, message.value().army(), model_.teams_, controller_ );
+    if( message.value().has_formation() )
+        return new actions::parameters::Formation( parameter, message.value().formation(), model_.teams_, controller_ );
     if( message.value().has_quantity() )
         return new actions::parameters::Quantity( parameter, message.value().quantity() );
     if( message.value().has_identifier() )
         return new actions::parameters::Identifier( parameter, message.value().identifier() );
+    if( message.value().has_knowledgegroup() )
+        return new actions::parameters::KnowledgeGroup( parameter, message.value().knowledgegroup(), model_.knowledgeGroups_, controller_ );
     if( message.value().list_size() )
         return new actions::parameters::ParameterList( parameter );
     return 0;
@@ -274,6 +282,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::Bool( parameter, xis ) );
     else if( type == "numeric" )
         param.reset( new actions::parameters::Numeric( parameter, xis ) );
+    else if( type == "string" )
+        param.reset( new actions::parameters::String( parameter, xis ) );
     else if( type == "path" )
         param.reset( new actions::parameters::Path( parameter, converter_, xis ) );
     else if( type == "point" )
@@ -310,6 +320,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::AutomatList( parameter, xis, model_.agents_, controller_ ) );
     else if( type == "army" )
         param.reset( new actions::parameters::Army( parameter, xis, model_.teams_, controller_ ) );
+    else if( type == "formation" )
+        param.reset( new actions::parameters::Formation( parameter, xis, model_.teams_, controller_ ) );
     else if( type == "dotationtype" )
         param.reset( new actions::parameters::DotationType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "genobject" )
@@ -334,6 +346,8 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new actions::parameters::Quantity( parameter, xis ) );
     else if( type == "identifier" )
         param.reset( new actions::parameters::Identifier( parameter, xis ) );
+    else if( type == "knowledgegroup" )
+        param.reset( new actions::parameters::KnowledgeGroup( parameter, xis, model_.knowledgeGroups_, controller_ ) );
     else if( type == "list" )
     {
         actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( parameter );

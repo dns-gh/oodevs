@@ -495,9 +495,11 @@ message MsgMissionParameter {
         optional MsgIntelligenceList         intelligenceList            = 36;
         optional MsgUrbanBlock               urbanBlock                  = 37;
         optional int32                       army                        = 38;
-        optional uint32                      identifier                  = 39;
-        optional int32                       quantity                    = 40;
-        repeated Value                       list                        = 41;
+        optional int32                       formation                   = 39;
+        optional uint32                      identifier                  = 40;
+        optional int32                       quantity                    = 41;
+        optional int32                       knowledgeGroup              = 42;
+        repeated Value                       list                        = 43;
     }
     optional bool  null_value = 1 [default = false];
     optional Value value      = 2;
@@ -537,25 +539,6 @@ message MsgTextMessage {
    required MsgChatTarget               source              = 1;
    required MsgChatTarget               target              = 2;
    required string                      message             = 3;
-}
-
-message MsgMagicActionPopulationChangeAttitude_beneficiaire {
-   optional int32                       flux                = 1;
-   optional int32                       concentration       = 2;
-   optional bool                        global              = 3;
-}
-
-message MsgMagicActionPopulationChangeAttitude {
-   required EnumPopulationAttitude                                  attitude            = 1;
-   required MsgMagicActionPopulationChangeAttitude_beneficiaire     beneficiaire        = 2;
-}
-
-message MsgMagicActionPopulationKill {
-   required int32                       kill                = 1;
-}
-
-message MsgMagicActionPopulationResurrect {
-   required int32                       resurrect           = 1;
 }
 
 message MsgTacticalLine {

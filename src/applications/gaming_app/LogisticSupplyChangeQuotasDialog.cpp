@@ -10,15 +10,25 @@
 #include "gaming_app_pch.h"
 #include "LogisticSupplyChangeQuotasDialog.h"
 #include "moc_LogisticSupplyChangeQuotasDialog.cpp"
+#include "actions/UnitMagicAction.h"
+#include "actions/ParameterList.h"
+#include "actions/Quantity.h"
+#include "actions/Identifier.h"
+#include "actions/Automat.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Dotation.h"
 #include "gaming/LogisticLinks.h"
 #include "gaming/Model.h"
+#include "gaming/StaticModel.h"
 #include "gaming/SupplyStates.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/MagicActionType.h"
 #include "tools/Iterator.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -28,15 +38,21 @@
 
 using namespace kernel;
 using namespace gui;
+using namespace actions;
+using namespace parameters;
 
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, const Model& model, const Profile_ABC& profile )
+LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Model& model, const Profile_ABC& profile )
     : QDialog( parent, tr( "Supply quotas allocation" ) )
     , controllers_( controllers )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation)
     , model_( model )
     , profile_( profile )
     , selected_( controllers )
@@ -126,6 +142,14 @@ void LogisticSupplyChangeQuotasDialog::Show()
     show();
 }
 
+namespace
+{
+    std::string CreateName( const std::string& str, int& index )
+    {
+        return QString( (str + " %1" ).c_str() ).arg( index++ ).ascii();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyChangeQuotasDialog::Validate
 // Created: SBO 2006-07-03
@@ -136,32 +160,41 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     if( !selected_ || !target )
         return;
 
-    simulation::LogSupplyChangeQuotas message;
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_supply_change_quotas" );
+    UnitMagicAction* action = new UnitMagicAction( *target, actionType, controllers_.controller_, true );
+    
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Automat( it.NextElement(), *selected_, controllers_.controller_ ) );
 
-    message().set_oid_donneur( selected_->GetId() );
-    message().set_oid_receveur( target->GetId() );
+    parameters::ParameterList* dotations = new parameters::ParameterList( it.NextElement() );
+    
+    action->AddParameter( *dotations );
 
     unsigned int rows = 0;
     for( int i = 0; i < table_->numRows(); ++i )
         if( !table_->item( i, 0 )->text().isEmpty() )
             ++rows;
 
-//    message.mutable_quotas()->set_n( rows );
     if( rows > 0 )
     {
-        //DotationQuota* quota = new DotationQuota[rows];
+        int index = 1;
         for( int i = 0; i < table_->numRows(); ++i )
         {
             const QString text = table_->text( i, 0 );
             if( text.isEmpty() )
                 continue;
-            message().mutable_quotas()->add_elem()->set_ressource_id( supplies_[ text ].type_->GetId() );
-            message().mutable_quotas()->mutable_elem( i )->set_quota_disponible( table_->text( i, 1 ).toInt() );
+
+            ParameterList* dotationList = new ParameterList( OrderParameter( CreateName( "Dotation", index ), "list", false ) );
+            dotations->AddParameter( *dotationList );
+            dotationList->AddParameter( *new Identifier( OrderParameter( "Type", "identifier", false ), supplies_[ text ].type_->GetId() ) );
+            dotationList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), table_->text( i, 1 ).toInt() ) );
+
         }
-//        message().mutable_quotas()->set_elem( quota );
     }
-    message.Send( publisher_ );
-    message().mutable_quotas()->mutable_elem()->Clear();
+
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+
     hide();
 }
 

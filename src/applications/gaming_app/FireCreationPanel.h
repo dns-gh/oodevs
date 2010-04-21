@@ -29,9 +29,15 @@ namespace gui
     class PanelStack_ABC;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
 
+class ActionPublisher;
 class Publisher_ABC;
 class StaticModel;
+class Simulation;
 
 // =============================================================================
 /** @class  FireCreationPanel
@@ -51,7 +57,7 @@ public:
     //! @name Constructors/Destructor
     //@{    
              FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers,
-                                Publisher_ABC& publisher, const StaticModel& staticModel );
+                                Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const StaticModel& staticModel );
     virtual ~FireCreationPanel();
     //@}
 
@@ -87,6 +93,9 @@ private:
     const StaticModel& staticModel_;
     kernel::Controllers& controllers_;
     Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const Simulation& simulation_;
 
     const kernel::AgentKnowledge_ABC* potentialTarget_;
     const kernel::AgentKnowledge_ABC* selectedTarget_;

@@ -103,31 +103,17 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         workspace.GetEntityManager        ().OnReceiveMsgSetAutomateMode                ( wrapper.message().set_automat_mode()                   , nCtx ); 
     else if( wrapper.message().has_unit_creation_request() )
         workspace.GetEntityManager        ().OnReceiveMsgUnitCreationRequest            ( wrapper.message().unit_creation_request()              , nCtx ); 
+    else if( wrapper.message().has_knowledge_magic_action() )
+        workspace.GetEntityManager        ().OnReceiveMsgKnowledgeMagicAction           ( wrapper.message().knowledge_magic_action()             , nCtx ); 
     else if( wrapper.message().has_unit_magic_action() )
         workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx ); 
     else if( wrapper.message().has_object_magic_action() )
         workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx ); 
     else if( wrapper.message().has_change_diplomacy() )
         workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy                ( wrapper.message().change_diplomacy()                   , nCtx ); 
-    else if( wrapper.message().has_automat_change_knowledge_group() )
-        workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeKnowledgeGroup   ( wrapper.message().automat_change_knowledge_group()     , nCtx ); 
-    else if( wrapper.message().has_automat_change_logistic_links() )
-        workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeLogisticLinks    ( wrapper.message().automat_change_logistic_links()      , nCtx ); 
-    else if( wrapper.message().has_automat_change_superior() )
-        workspace.GetEntityManager        ().OnReceiveMsgAutomateChangeSuperior         ( wrapper.message().automat_change_superior()            , nCtx ); 
-    else if( wrapper.message().has_unit_change_superior() )
-        workspace.GetEntityManager        ().OnReceiveMsgUnitChangeSuperior             ( wrapper.message().unit_change_superior()               , nCtx ); 
-    else if( wrapper.message().has_log_supply_change_quotas() )
-        workspace.GetEntityManager        ().OnReceiveMsgLogSupplyChangeQuotas          ( wrapper.message().log_supply_change_quotas()           , nCtx ); 
-    else if( wrapper.message().has_log_supply_push_flow() )
-        workspace.GetEntityManager        ().OnReceiveMsgLogSupplyPushFlow              ( wrapper.message().log_supply_push_flow()               , nCtx ); 
     // LTO BEGIN
     else if( wrapper.message().has_knowledge_group_creation_request() )
         workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation         ( wrapper.message().knowledge_group_creation_request()   , nCtx ); 
-    else if( wrapper.message().has_knowledge_group_update_request() )             
-        workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupUpdate           ( wrapper.message().knowledge_group_update_request()     , nCtx );        
-    else if( wrapper.message().has_create_fire_order() )             
-        workspace.GetEntityManager        ().OnReceiveMsgMagicActionCreateFireOrder     ( wrapper.message().create_fire_order()          , nCtx );
     // LTO END
 }
 

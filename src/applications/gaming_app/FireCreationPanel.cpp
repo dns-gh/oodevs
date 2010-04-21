@@ -11,26 +11,41 @@
 #include "FireCreationPanel.h"
 #include "moc_FireCreationPanel.cpp"
 
+#include "actions/DotationType.h"
+#include "actions/Identifier.h"
+#include "actions/Numeric.h"
+#include "actions/UnitMagicAction.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "protocol/ServerPublisher_ABC.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 #include "tools/iterator.h"
+
+using namespace kernel;
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: FireCreationPanel constructor
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------
 FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers,
-                                      Publisher_ABC& publisher, const StaticModel& staticModel )
+                                      Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel,
+                                      const Simulation& simulation, const StaticModel& staticModel )
 : gui::InfoPanel_ABC( parent, panel, tr( "Fire" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , simulation_( simulation ) 
     , potentialTarget_( 0 )
     , selectedTarget_( 0 )
     , potentialReporter_( 0 )
@@ -86,14 +101,14 @@ FireCreationPanel::~FireCreationPanel()
 // -----------------------------------------------------------------------------
 void FireCreationPanel::Commit()
 {
-    simulation::MagicActionCreateFireOrder message;
-
-    message().set_oid_targetknowledge( selectedTarget_->GetId() );
-    message().set_oid_agentforcr( selectedReporter_->GetId() );
-    message().set_munition( ammunitionsBox_->GetValue() );
-    message().set_it( interventionType_->text().toUInt() );
-
-    message.Send( publisher_ );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "fire_order" );
+    UnitMagicAction* action = new UnitMagicAction( *selectedReporter_, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Identifier( it.NextElement(), selectedTarget_->GetId() ) );
+    action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
+    action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
 }
 
 // -----------------------------------------------------------------------------

@@ -9,26 +9,41 @@
 
 #include "gaming_app_pch.h"
 #include "AgentListView.h"
+#include "actions/Army.h"
+#include "actions/Automat.h"
+#include "actions/KnowledgeGroup.h"
+#include "actions/KnowledgeGroupMagicAction.h"
+#include "actions/UnitMagicAction.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/CommandPostAttributes.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/KnowledgeGroupHierarchies.h" // LTO
+#include "gaming/StaticModel.h"
 #include "icons.h"
 #include "protocol/SimulationSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 
 using namespace kernel;
+using namespace actions;
 
 // -----------------------------------------------------------------------------
 // Name: AgentListView constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
     , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation )
     , lock_( MAKE_PIXMAP( lock ) )
     , scisors_( MAKE_PIXMAP( scisors ) ) // LTO
     , commandPost_( MAKE_PIXMAP( commandpost ) )
@@ -168,10 +183,12 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
     if( & item.Get< CommunicationHierarchies >().GetUp() == &target )
         return false;
 
-    simulation::UnitChangeSuperior message;
-    message().set_oid( item.GetId() );
-    message().set_oid_automate( target.GetId() );
-    message.Send( publisher_ );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
+    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     return true;
 }
 
@@ -181,11 +198,14 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& target )
 {
-    simulation::AutomatChangeKnowledgeGroup message;
-    message().set_oid( item.GetId() );
-    message().set_oid_camp( target.Get< CommunicationHierarchies >().GetTop().GetId() );
-    message().set_oid_groupe_connaissance( target.GetId() );
-    message.Send( publisher_ );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_knowledge_group" );
+    UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), target, controllers_.controller_ ) );
+    if( const Team_ABC *team = dynamic_cast< const Team_ABC* >( &target.Get< CommunicationHierarchies >().GetTop() ) )
+        action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     return true;
 }
 
@@ -196,11 +216,13 @@ bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& tar
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target )
 {
-    simulation::KnowledgeGroupUpdateRequest message;
-    message().set_oid( item.GetId() );
-    message().set_oid_camp( target.Get< CommunicationHierarchies >().GetTop().GetId() );
-    message().set_oid_parent( 0 );
-    message.Send( publisher_ );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side" );
+    KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( item, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    if( const Team_ABC *team = dynamic_cast< const Team_ABC* >( &target.Get< CommunicationHierarchies >().GetTop() ) )
+        action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     return true;
 }
 
@@ -211,10 +233,13 @@ bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target
 // -----------------------------------------------------------------------------
 bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const KnowledgeGroup_ABC& target )
 {
-    simulation::KnowledgeGroupUpdateRequest message;
-    message().set_oid( item.GetId() );
-    message().set_oid_camp( target.Get< CommunicationHierarchies >().GetTop().GetId() );
-    message().set_oid_parent( target.GetId() );
-    message.Send( publisher_ );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "knowledge_group_update_side_parent" );
+    KnowledgeGroupMagicAction* action = new KnowledgeGroupMagicAction( item, actionType, controllers_.controller_, true );
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+    if( const Team_ABC *team = dynamic_cast< const Team_ABC* >( &target.Get< CommunicationHierarchies >().GetTop() ) )
+        action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
+    action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), target, controllers_.controller_ ) );
+    action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     return true;
 }

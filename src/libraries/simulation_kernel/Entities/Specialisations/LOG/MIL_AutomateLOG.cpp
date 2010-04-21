@@ -881,7 +881,7 @@ void MIL_AutomateLOG::SendFullState() const
 // Name: MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const Common::MsgAutomatChangeLogisticLinks& msg )
+void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
     bool bNewTC2                 = false;
     bool bNewMaintenanceSuperior = false;
@@ -893,42 +893,49 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const Common::MsgAutomatC
     MIL_AutomateLOG* pNewMedicalSuperior     = 0;
     MIL_AutomateLOG* pNewSupplySuperior      = 0;
 
-    if( msg.has_oid_tc2()  )
+    unsigned int tc2Id = msg.parametres().elem( 0 ).value().identifier();
+    if( tc2Id != ( unsigned int ) -1)
     {
         bNewTC2 = true;
-        if( msg.oid_tc2() != 0 )
+        if( tc2Id != 0 )
         {
-            pNewTC2 = GetLogisticAutomate( msg.oid_tc2() );
+            pNewTC2 = GetLogisticAutomate( tc2Id );
             if( !pNewTC2 )
                 throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_tc2 );
         }
     }
-    if( msg.has_oid_maintenance()  )
+
+    unsigned int maintenanceId = msg.parametres().elem( 1 ).value().identifier();
+    if( maintenanceId != ( unsigned int ) -1 )
     {
         bNewMaintenanceSuperior = true;
-        if( msg.oid_maintenance() != 0 )
+        if( maintenanceId != 0 )
         {
-            pNewMaintenanceSuperior = GetLogisticAutomate( msg.oid_maintenance() );
+            pNewMaintenanceSuperior = GetLogisticAutomate( maintenanceId );
             if( !pNewMaintenanceSuperior )
                 throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_maintenance );
         }
     }
-    if( msg.has_oid_sante()  )
+
+    unsigned int santeId = msg.parametres().elem( 2 ).value().identifier();
+    if( santeId != ( unsigned int ) -1 )
     {
         bNewMedicalSuperior = true;
-        if( msg.oid_sante() != 0 )
+        if( santeId != 0 )
         {
-            pNewMedicalSuperior = GetLogisticAutomate( msg.oid_sante() );
+            pNewMedicalSuperior = GetLogisticAutomate( santeId );
             if( !pNewMedicalSuperior )
                 throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_sante );
         }
     }
-    if( msg.has_oid_ravitaillement()  )
+
+    unsigned int supplyId = msg.parametres().elem( 3 ).value().identifier();
+    if( supplyId != ( unsigned int ) -1 )
     {
         bNewSupplySuperior = true;
-        if( msg.oid_ravitaillement() != 0 )
+        if( supplyId != 0 )
         {
-            pNewSupplySuperior = GetLogisticAutomate( msg.oid_ravitaillement() );
+            pNewSupplySuperior = GetLogisticAutomate( supplyId );
             if( !pNewSupplySuperior )
                 throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_ravitaillement );
         }
@@ -948,18 +955,23 @@ void MIL_AutomateLOG::OnReceiveMsgChangeLogisticLinks( const Common::MsgAutomatC
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& asnMsg )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& msg )
 {
-    if( !pSupplySuperior_ || GetLogisticAutomate( asnMsg.oid_donneur() ) != pSupplySuperior_ )
+    if( !pSupplySuperior_ || GetLogisticAutomate( msg.elem( 0 ).value().automat().oid() ) != pSupplySuperior_ )
         throw NET_AsnException< MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas >( MsgLogSupplyChangeQuotasAck_LogSupplyChangeQuotas_error_invalid_donneur_quotas );
 
-    for( int i = 0; i < asnMsg.quotas().elem_size(); ++i )
-        if( const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( asnMsg.quotas().elem( i ).ressource_id() ) )
+    for( int i = 0; i < msg.elem( 1 ).value().list_size(); ++i )
+    {
+        unsigned int type = msg.elem( 1 ).value().list( i ).list( 0 ).identifier();
+        int number = msg.elem( 1 ).value().list( i ).list( 1 ).quantity();
+
+        if( const PHY_DotationCategory* pDotationCategory = PHY_DotationType::FindDotationCategory( type ) )
         {
             sDotationQuota& dotationQuota = stockQuotas_[ pDotationCategory ];
-            dotationQuota.rQuota_          = asnMsg.quotas().elem( i ).quota_disponible();
-            dotationQuota.rQuotaThreshold_ = asnMsg.quotas().elem( i ).quota_disponible() * 0.1; //$$ fichier de conf cpp ;)
+            dotationQuota.rQuota_          = number;
+            dotationQuota.rQuotaThreshold_ = number * 0.1; //$$ fichier de conf cpp ;)
         }
+    }
     bQuotasHaveChanged_ = true;
 }
 
@@ -967,13 +979,13 @@ void MIL_AutomateLOG::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::
 // Name: MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::MsgLogSupplyPushFlow& asnMsg )
+void MIL_AutomateLOG::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& msg )
 {
-    MIL_AutomateLOG* pSupplier = GetLogisticAutomate( asnMsg.oid_donneur() );
+    MIL_AutomateLOG* pSupplier = GetLogisticAutomate( msg.elem( 0 ).value().automat().oid() );
     if( !pSupplier )
         throw NET_AsnException< MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_donneur_pushflow );
 
-    PHY_SupplyStockRequestContainer supplyRequests( *this, asnMsg.stocks() );
+    PHY_SupplyStockRequestContainer supplyRequests( *this, msg.elem( 1 ) );
 
     PHY_SupplyStockState* pSupplyState = 0;
     supplyRequests.Execute( *pSupplier, pSupplyState );

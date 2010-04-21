@@ -1054,7 +1054,7 @@ void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnit
     if( msg.type() != MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
-    if( !msg.has_parametres() || msg.parametres().elem_size() != 1)
+    if( !msg.has_parametres() || msg.parametres().elem_size() != 1 )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
     
     const Common::MsgMissionParameter& parametre = msg.parametres().elem( 0 );
@@ -1083,13 +1083,25 @@ void MIL_Automate::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::MsgUnit
 // Name: MIL_Automate::OnReceiveMsgChangeKnowledgeGroup
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const Common::MsgAutomatChangeKnowledgeGroup& asnMsg, const tools::Resolver< MIL_Army_ABC >& armies  )
+void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
-    MIL_Army_ABC* pNewArmy = armies.Find( asnMsg.oid_camp() );
+    if( msg.type() != MsgsClientToSim::MsgUnitMagicAction_Type_change_knowledge_group )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    if( !msg.has_parametres() || msg.parametres().elem_size() != 2 )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+    
+    if( !msg.parametres().elem( 0 ).has_value() || !msg.parametres().elem( 0 ).value().has_knowledgegroup() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    if( !msg.parametres().elem( 1 ).has_value() || !msg.parametres().elem( 1 ).value().has_army() )
+        throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
+
+    MIL_Army_ABC* pNewArmy = armies.Find( msg.parametres().elem( 1 ).value().army() );
     if( !pNewArmy || *pNewArmy != GetArmy() )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_camp_hierarchy );
 
-    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( asnMsg.oid_groupe_connaissance() );
+    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parametres().elem( 0 ).value().knowledgegroup() );
     if( !pNewKnowledgeGroup )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_groupe_connaissance );
 
@@ -1105,18 +1117,19 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const Common::MsgAutomatCha
 // Name: MIL_Automate::OnReceiveMsgChangeLogisticLinks
 // Created: NLD 2005-01-17
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const Common::MsgAutomatChangeLogisticLinks& msg )
+void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const MsgsClientToSim::MsgUnitMagicAction& msg )
 {
     if( IsSurrendered() )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_unit_surrendered_hierarchy );
 
-    if( msg.has_oid_tc2()  )
+    unsigned int tc2Id = msg.parametres().elem( 0 ).value().identifier();
+    if( tc2Id != ( unsigned int ) -1 )
     {
-        if( msg.oid_tc2() == 0 )
+        if( tc2Id == 0 )
             pTC2_ = 0;
         else
         {
-            MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.oid_tc2() );
+            MIL_Automate* pTC2 = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( tc2Id );
             if( !pTC2 || !pTC2->GetType().IsLogistic() )
                 throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate_tc2 );
             pTC2_ = static_cast< MIL_AutomateLOG* >( pTC2 );
@@ -1128,11 +1141,11 @@ void MIL_Automate::OnReceiveMsgChangeLogisticLinks( const Common::MsgAutomatChan
 // Name: MIL_Automate::OnReceiveMsgChangeSuperior
 // Created: NLD 2007-04-11
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgChangeSuperior( const Common::MsgAutomatChangeSuperior& msg, const tools::Resolver< MIL_Formation >& formations )
+void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMagicAction& msg, const tools::Resolver< MIL_Formation >& formations )
 {
-    if( msg.oid_superior().has_formation() )
+    if( msg.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior )
     {
-        MIL_Formation* pNewFormation = formations.Find( msg.oid_superior().formation().oid() );
+        MIL_Formation* pNewFormation = formations.Find( msg.parametres().elem( 0 ).value().formation() );
         if( !pNewFormation )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_formation );
         if( pNewFormation->GetArmy() != GetArmy() )
@@ -1145,9 +1158,9 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const Common::MsgAutomatChangeSup
         pParentFormation_ = pNewFormation;
         pNewFormation->RegisterAutomate( *this );
     }
-    else if( msg.oid_superior().has_automate() )
+    else if( msg.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_automat_superior )
     {
-        MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.oid_superior().automate().oid() );
+        MIL_Automate* pNewAutomate = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( msg.parametres().elem( 0 ).value().automat().oid() );
         if( !pNewAutomate )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_automate );
         if( pNewAutomate->GetArmy() != GetArmy() )
@@ -1168,7 +1181,7 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const Common::MsgAutomatChangeSup
 // Name: MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas
 // Created: NLD 2005-02-03
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& /*msg*/ )
+void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& /*msg*/ )
 {
     throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
 }
@@ -1177,7 +1190,7 @@ void MIL_Automate::OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::Msg
 // Name: MIL_Automate::OnReceiveMsgLogSupplyPushFlow
 // Created: NLD 2005-02-04
 // -----------------------------------------------------------------------------
-void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( const MsgsClientToSim::MsgLogSupplyPushFlow& /*msg*/ )
+void MIL_Automate::OnReceiveMsgLogSupplyPushFlow( const Common::MsgMissionParameters& /*msg*/ )
 {
     throw NET_AsnException< MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow >( MsgsSimToClient::MsgLogSupplyPushFlowAck_EnumLogSupplyPushFlow_error_invalid_receveur_pushflow );
 }

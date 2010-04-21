@@ -32,6 +32,17 @@ AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, kernel::Control
 
 // -----------------------------------------------------------------------------
 // Name: AgentKnowledge constructor
+// Created: JSR 2010-04-16
+// -----------------------------------------------------------------------------
+AgentKnowledge::AgentKnowledge( const kernel::OrderParameter& parameter, const kernel::AgentKnowledge_ABC& entity, kernel::Controller& controller )
+    : Entity< AgentKnowledge_ABC >( parameter, &entity, controller )
+{
+    if( ! GetValue() )
+        throw std::runtime_error( tools::translate( "Parameter", "Agent knowledge not found." ).ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AgentKnowledge constructor
 // Created: SBO 2007-05-24
 // -----------------------------------------------------------------------------
 AgentKnowledge::AgentKnowledge( const OrderParameter& parameter, unsigned long id, AgentKnowledgeConverter_ABC& converter, const Entity_ABC& owner, kernel::Controller& controller )

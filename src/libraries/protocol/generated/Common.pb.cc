@@ -206,18 +206,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* MsgTextMessage_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgTextMessage_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgMagicActionPopulationChangeAttitude_beneficiaire_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgMagicActionPopulationChangeAttitude_beneficiaire_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgMagicActionPopulationChangeAttitude_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgMagicActionPopulationChangeAttitude_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgMagicActionPopulationKill_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgMagicActionPopulationKill_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgMagicActionPopulationResurrect_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgMagicActionPopulationResurrect_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgTacticalLine_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgTacticalLine_reflection_ = NULL;
@@ -1234,7 +1222,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgMissionParameter));
   MsgMissionParameter_Value_descriptor_ = MsgMissionParameter_descriptor_->nested_type(0);
-  static const int MsgMissionParameter_Value_offsets_[41] = {
+  static const int MsgMissionParameter_Value_offsets_[43] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, abool_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, areal_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, enumeration_),
@@ -1273,8 +1261,10 @@ void protobuf_AssignDesc_Common_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, intelligencelist_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, urbanblock_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, army_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, formation_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, identifier_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, quantity_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, knowledgegroup_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMissionParameter_Value, list_),
   };
   MsgMissionParameter_Value_reflection_ =
@@ -1353,70 +1343,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgTextMessage));
-  MsgMagicActionPopulationChangeAttitude_beneficiaire_descriptor_ = file->message_type(62);
-  static const int MsgMagicActionPopulationChangeAttitude_beneficiaire_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude_beneficiaire, flux_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude_beneficiaire, concentration_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude_beneficiaire, global_),
-  };
-  MsgMagicActionPopulationChangeAttitude_beneficiaire_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgMagicActionPopulationChangeAttitude_beneficiaire_descriptor_,
-      MsgMagicActionPopulationChangeAttitude_beneficiaire::default_instance_,
-      MsgMagicActionPopulationChangeAttitude_beneficiaire_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude_beneficiaire, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude_beneficiaire, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgMagicActionPopulationChangeAttitude_beneficiaire));
-  MsgMagicActionPopulationChangeAttitude_descriptor_ = file->message_type(63);
-  static const int MsgMagicActionPopulationChangeAttitude_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude, attitude_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude, beneficiaire_),
-  };
-  MsgMagicActionPopulationChangeAttitude_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgMagicActionPopulationChangeAttitude_descriptor_,
-      MsgMagicActionPopulationChangeAttitude::default_instance_,
-      MsgMagicActionPopulationChangeAttitude_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationChangeAttitude, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgMagicActionPopulationChangeAttitude));
-  MsgMagicActionPopulationKill_descriptor_ = file->message_type(64);
-  static const int MsgMagicActionPopulationKill_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationKill, kill_),
-  };
-  MsgMagicActionPopulationKill_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgMagicActionPopulationKill_descriptor_,
-      MsgMagicActionPopulationKill::default_instance_,
-      MsgMagicActionPopulationKill_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationKill, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationKill, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgMagicActionPopulationKill));
-  MsgMagicActionPopulationResurrect_descriptor_ = file->message_type(65);
-  static const int MsgMagicActionPopulationResurrect_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationResurrect, resurrect_),
-  };
-  MsgMagicActionPopulationResurrect_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgMagicActionPopulationResurrect_descriptor_,
-      MsgMagicActionPopulationResurrect::default_instance_,
-      MsgMagicActionPopulationResurrect_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationResurrect, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionPopulationResurrect, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgMagicActionPopulationResurrect));
-  MsgTacticalLine_descriptor_ = file->message_type(66);
+  MsgTacticalLine_descriptor_ = file->message_type(62);
   static const int MsgTacticalLine_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTacticalLine, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgTacticalLine, geometry_),
@@ -1449,7 +1376,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgTacticalLine_Diffusion));
-  MsgFormation_descriptor_ = file->message_type(67);
+  MsgFormation_descriptor_ = file->message_type(63);
   static const int MsgFormation_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFormation, oid_),
   };
@@ -1464,7 +1391,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgFormation));
-  MsgFormationCreation_descriptor_ = file->message_type(68);
+  MsgFormationCreation_descriptor_ = file->message_type(64);
   static const int MsgFormationCreation_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFormationCreation, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFormationCreation, oid_camp_),
@@ -1483,7 +1410,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgFormationCreation));
-  MsgUnitOrder_descriptor_ = file->message_type(69);
+  MsgUnitOrder_descriptor_ = file->message_type(65);
   static const int MsgUnitOrder_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitOrder, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitOrder, mission_),
@@ -1500,7 +1427,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUnitOrder));
-  MsgAutomatOrder_descriptor_ = file->message_type(70);
+  MsgAutomatOrder_descriptor_ = file->message_type(66);
   static const int MsgAutomatOrder_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatOrder, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgAutomatOrder, mission_),
@@ -1517,7 +1444,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgAutomatOrder));
-  MsgPopulationOrder_descriptor_ = file->message_type(71);
+  MsgPopulationOrder_descriptor_ = file->message_type(67);
   static const int MsgPopulationOrder_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationOrder, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgPopulationOrder, mission_),
@@ -1534,7 +1461,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgPopulationOrder));
-  MsgObjectAttributeConstruction_descriptor_ = file->message_type(72);
+  MsgObjectAttributeConstruction_descriptor_ = file->message_type(68);
   static const int MsgObjectAttributeConstruction_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeConstruction, dotation_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeConstruction, dotation_nbr_),
@@ -1552,7 +1479,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeConstruction));
-  MsgObjectAttributeMine_descriptor_ = file->message_type(73);
+  MsgObjectAttributeMine_descriptor_ = file->message_type(69);
   static const int MsgObjectAttributeMine_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeMine, dotation_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeMine, dotation_nbr_),
@@ -1570,7 +1497,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeMine));
-  MsgObjectAttributeLogistic_descriptor_ = file->message_type(74);
+  MsgObjectAttributeLogistic_descriptor_ = file->message_type(70);
   static const int MsgObjectAttributeLogistic_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeLogistic, tc2_),
   };
@@ -1585,7 +1512,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeLogistic));
-  MsgObjectAttributeInteractionHeight_descriptor_ = file->message_type(75);
+  MsgObjectAttributeInteractionHeight_descriptor_ = file->message_type(71);
   static const int MsgObjectAttributeInteractionHeight_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeInteractionHeight, height_),
   };
@@ -1600,7 +1527,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeInteractionHeight));
-  MsgObjectAttributeObstacle_descriptor_ = file->message_type(76);
+  MsgObjectAttributeObstacle_descriptor_ = file->message_type(72);
   static const int MsgObjectAttributeObstacle_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeObstacle, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeObstacle, activated_),
@@ -1616,7 +1543,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeObstacle));
-  MsgObjectAttributeActivityTime_descriptor_ = file->message_type(77);
+  MsgObjectAttributeActivityTime_descriptor_ = file->message_type(73);
   static const int MsgObjectAttributeActivityTime_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeActivityTime, value_),
   };
@@ -1631,7 +1558,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeActivityTime));
-  MsgObjectAttributeBypass_descriptor_ = file->message_type(78);
+  MsgObjectAttributeBypass_descriptor_ = file->message_type(74);
   static const int MsgObjectAttributeBypass_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeBypass, percentage_),
   };
@@ -1646,7 +1573,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeBypass));
-  MsgObjectAttributeNBC_descriptor_ = file->message_type(79);
+  MsgObjectAttributeNBC_descriptor_ = file->message_type(75);
   static const int MsgObjectAttributeNBC_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeNBC, danger_level_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeNBC, nbc_agents_),
@@ -1662,7 +1589,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeNBC));
-  StockResource_descriptor_ = file->message_type(80);
+  StockResource_descriptor_ = file->message_type(76);
   static const int StockResource_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StockResource, dotation_type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(StockResource, current_),
@@ -1679,7 +1606,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(StockResource));
-  MsgObjectAttributeStock_descriptor_ = file->message_type(81);
+  MsgObjectAttributeStock_descriptor_ = file->message_type(77);
   static const int MsgObjectAttributeStock_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeStock, resources_),
   };
@@ -1694,7 +1621,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeStock));
-  MsgObjectAttributeCrossingSite_descriptor_ = file->message_type(82);
+  MsgObjectAttributeCrossingSite_descriptor_ = file->message_type(78);
   static const int MsgObjectAttributeCrossingSite_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeCrossingSite, width_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeCrossingSite, depth_),
@@ -1712,7 +1639,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeCrossingSite));
-  MsgObjectAttributeSupplyRoute_descriptor_ = file->message_type(83);
+  MsgObjectAttributeSupplyRoute_descriptor_ = file->message_type(79);
   static const int MsgObjectAttributeSupplyRoute_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeSupplyRoute, equipped_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeSupplyRoute, max_weight_),
@@ -1731,7 +1658,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeSupplyRoute));
-  MsgLocatedQuantity_descriptor_ = file->message_type(84);
+  MsgLocatedQuantity_descriptor_ = file->message_type(80);
   static const int MsgLocatedQuantity_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocatedQuantity, coordinate_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocatedQuantity, quantity_),
@@ -1747,7 +1674,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLocatedQuantity));
-  MsgLocatedQuantityList_descriptor_ = file->message_type(85);
+  MsgLocatedQuantityList_descriptor_ = file->message_type(81);
   static const int MsgLocatedQuantityList_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLocatedQuantityList, elem_),
   };
@@ -1762,7 +1689,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgLocatedQuantityList));
-  MsgObjectAttributeToxicCloud_descriptor_ = file->message_type(86);
+  MsgObjectAttributeToxicCloud_descriptor_ = file->message_type(82);
   static const int MsgObjectAttributeToxicCloud_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeToxicCloud, quantities_),
   };
@@ -1777,7 +1704,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeToxicCloud));
-  MsgObjectAttributeFire_descriptor_ = file->message_type(87);
+  MsgObjectAttributeFire_descriptor_ = file->message_type(83);
   static const int MsgObjectAttributeFire_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeFire, class_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeFire, heat_),
@@ -1793,7 +1720,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeFire));
-  MsgObjectAttributeMedicalTreatment_descriptor_ = file->message_type(88);
+  MsgObjectAttributeMedicalTreatment_descriptor_ = file->message_type(84);
   static const int MsgObjectAttributeMedicalTreatment_offsets_[5] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeMedicalTreatment, type_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeMedicalTreatment, beds_),
@@ -1812,7 +1739,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeMedicalTreatment));
-  MsgObjectAttributeNBCType_descriptor_ = file->message_type(89);
+  MsgObjectAttributeNBCType_descriptor_ = file->message_type(85);
   static const int MsgObjectAttributeNBCType_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeNBCType, agent_id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributeNBCType, concentration_),
@@ -1829,7 +1756,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributeNBCType));
-  MsgObjectAttributes_descriptor_ = file->message_type(90);
+  MsgObjectAttributes_descriptor_ = file->message_type(86);
   static const int MsgObjectAttributes_offsets_[15] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributes, construction_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectAttributes, obstacle_),
@@ -1858,7 +1785,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgObjectAttributes));
-  MsgNote_descriptor_ = file->message_type(91);
+  MsgNote_descriptor_ = file->message_type(87);
   static const int MsgNote_offsets_[4] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNote, name_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgNote, number_),
@@ -1876,7 +1803,7 @@ void protobuf_AssignDesc_Common_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgNote));
-  MsgMeteoAttributes_descriptor_ = file->message_type(92);
+  MsgMeteoAttributes_descriptor_ = file->message_type(88);
   static const int MsgMeteoAttributes_offsets_[7] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, temperature_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMeteoAttributes, wind_speed_),
@@ -2056,14 +1983,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
     MsgChatTarget_descriptor_, &MsgChatTarget::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgTextMessage_descriptor_, &MsgTextMessage::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgMagicActionPopulationChangeAttitude_beneficiaire_descriptor_, &MsgMagicActionPopulationChangeAttitude_beneficiaire::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgMagicActionPopulationChangeAttitude_descriptor_, &MsgMagicActionPopulationChangeAttitude::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgMagicActionPopulationKill_descriptor_, &MsgMagicActionPopulationKill::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgMagicActionPopulationResurrect_descriptor_, &MsgMagicActionPopulationResurrect::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgTacticalLine_descriptor_, &MsgTacticalLine::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -2251,14 +2170,6 @@ void protobuf_ShutdownFile_Common_2eproto() {
   delete MsgChatTarget_reflection_;
   delete MsgTextMessage::default_instance_;
   delete MsgTextMessage_reflection_;
-  delete MsgMagicActionPopulationChangeAttitude_beneficiaire::default_instance_;
-  delete MsgMagicActionPopulationChangeAttitude_beneficiaire_reflection_;
-  delete MsgMagicActionPopulationChangeAttitude::default_instance_;
-  delete MsgMagicActionPopulationChangeAttitude_reflection_;
-  delete MsgMagicActionPopulationKill::default_instance_;
-  delete MsgMagicActionPopulationKill_reflection_;
-  delete MsgMagicActionPopulationResurrect::default_instance_;
-  delete MsgMagicActionPopulationResurrect_reflection_;
   delete MsgTacticalLine::default_instance_;
   delete MsgTacticalLine_reflection_;
   delete MsgTacticalLine_Diffusion::default_instance_;
@@ -2426,9 +2337,9 @@ void protobuf_AddDesc_Common_2eproto() {
     "uipmentType\022\021\n\tequipment\030\001 \002(\r\"\036\n\017MsgDot"
     "ationType\022\013\n\003oid\030\001 \002(\r\"\034\n\rMsgUrbanBlock\022"
     "\013\n\003oid\030\001 \002(\r\" \n\021MsgUrbanKnowledge\022\013\n\003oid"
-    "\030\001 \002(\r\"\367\r\n\023MsgMissionParameter\022\031\n\nnull_v"
+    "\030\001 \002(\r\"\242\016\n\023MsgMissionParameter\022\031\n\nnull_v"
     "alue\030\001 \001(\010:\005false\0220\n\005value\030\002 \001(\0132!.Commo"
-    "n.MsgMissionParameter.Value\032\222\r\n\005Value\022\r\n"
+    "n.MsgMissionParameter.Value\032\275\r\n\005Value\022\r\n"
     "\005aBool\030\001 \001(\010\022\r\n\005aReal\030\002 \001(\002\022\023\n\013enumerati"
     "on\030\003 \001(\005\022\035\n\004path\030\004 \001(\0132\017.Common.MsgPath\022"
     "%\n\010pathList\030\005 \001(\0132\023.Common.MsgPathList\022\037"
@@ -2468,183 +2379,174 @@ void protobuf_AddDesc_Common_2eproto() {
     "rder\030# \001(\0132\025.Common.MsgLimasOrder\0225\n\020int"
     "elligenceList\030$ \001(\0132\033.Common.MsgIntellig"
     "enceList\022)\n\nurbanBlock\030% \001(\0132\025.Common.Ms"
-    "gUrbanBlock\022\014\n\004army\030& \001(\005\022\022\n\nidentifier\030"
-    "\' \001(\r\022\020\n\010quantity\030( \001(\005\022/\n\004list\030) \003(\0132!."
-    "Common.MsgMissionParameter.Value\"A\n\024MsgM"
-    "issionParameters\022)\n\004elem\030\001 \003(\0132\033.Common."
-    "MsgMissionParameter\"k\n\010MsgShape\022\020\n\010categ"
-    "ory\030\001 \002(\t\022\r\n\005color\030\002 \002(\t\022\021\n\ttemplate_\030\003 "
-    "\002(\t\022+\n\006points\030\004 \002(\0132\033.Common.MsgCoordLat"
-    "LongList\" \n\rMsgChatTarget\022\017\n\007profile\030\001 \002"
-    "(\t\"o\n\016MsgTextMessage\022%\n\006source\030\001 \002(\0132\025.C"
-    "ommon.MsgChatTarget\022%\n\006target\030\002 \002(\0132\025.Co"
-    "mmon.MsgChatTarget\022\017\n\007message\030\003 \002(\t\"j\n3M"
-    "sgMagicActionPopulationChangeAttitude_be"
-    "neficiaire\022\014\n\004flux\030\001 \001(\005\022\025\n\rconcentratio"
-    "n\030\002 \001(\005\022\016\n\006global\030\003 \001(\010\"\255\001\n&MsgMagicActi"
-    "onPopulationChangeAttitude\0220\n\010attitude\030\001"
-    " \002(\0162\036.Common.EnumPopulationAttitude\022Q\n\014"
-    "beneficiaire\030\002 \002(\0132;.Common.MsgMagicActi"
-    "onPopulationChangeAttitude_beneficiaire\""
-    ",\n\034MsgMagicActionPopulationKill\022\014\n\004kill\030"
-    "\001 \002(\005\"6\n!MsgMagicActionPopulationResurre"
-    "ct\022\021\n\tresurrect\030\001 \002(\005\"\255\001\n\017MsgTacticalLin"
-    "e\022\014\n\004name\030\001 \002(\t\022%\n\010geometry\030\002 \002(\0132\023.Comm"
-    "on.MsgLocation\0224\n\tdiffusion\030\003 \002(\0132!.Comm"
-    "on.MsgTacticalLine.Diffusion\032/\n\tDiffusio"
-    "n\022\017\n\007automat\030\001 \001(\r\022\021\n\tformation\030\002 \001(\r\"\033\n"
-    "\014MsgFormation\022\013\n\003oid\030\001 \002(\005\"\215\001\n\024MsgFormat"
-    "ionCreation\022\013\n\003oid\030\001 \002(\005\022\020\n\010oid_camp\030\002 \002"
-    "(\005\022 \n\025oid_formation_parente\030\003 \001(\005:\0010\022\'\n\006"
-    "niveau\030\004 \002(\0162\027.Common.EnumNatureLevel\022\013\n"
-    "\003nom\030\005 \002(\t\"^\n\014MsgUnitOrder\022\013\n\003oid\030\001 \002(\005\022"
-    "\017\n\007mission\030\002 \002(\005\0220\n\nparametres\030\003 \001(\0132\034.C"
-    "ommon.MsgMissionParameters\"a\n\017MsgAutomat"
-    "Order\022\013\n\003oid\030\001 \002(\005\022\017\n\007mission\030\002 \002(\005\0220\n\np"
-    "arametres\030\003 \001(\0132\034.Common.MsgMissionParam"
-    "eters\"d\n\022MsgPopulationOrder\022\013\n\003oid\030\001 \002(\005"
-    "\022\017\n\007mission\030\002 \002(\005\0220\n\nparametres\030\003 \001(\0132\034."
-    "Common.MsgMissionParameters\"~\n\036MsgObject"
-    "AttributeConstruction\022\030\n\rdotation_type\030\001"
-    " \001(\005:\0010\022\027\n\014dotation_nbr\030\002 \001(\005:\0010\022\022\n\007dens"
-    "ity\030\003 \001(\002:\0010\022\025\n\npercentage\030\004 \001(\005:\0010\"v\n\026M"
-    "sgObjectAttributeMine\022\030\n\rdotation_type\030\001"
-    " \001(\005:\0010\022\027\n\014dotation_nbr\030\002 \001(\005:\0010\022\022\n\007dens"
-    "ity\030\003 \001(\002:\0010\022\025\n\npercentage\030\004 \001(\005:\0010\")\n\032M"
-    "sgObjectAttributeLogistic\022\013\n\003tc2\030\001 \002(\005\"5"
-    "\n#MsgObjectAttributeInteractionHeight\022\016\n"
-    "\006height\030\001 \002(\002\"h\n\032MsgObjectAttributeObsta"
-    "cle\0227\n\004type\030\001 \002(\0162).Common.ObstacleType."
-    "DemolitionTargetType\022\021\n\tactivated\030\002 \001(\010\""
-    "/\n\036MsgObjectAttributeActivityTime\022\r\n\005val"
-    "ue\030\001 \002(\005\"1\n\030MsgObjectAttributeBypass\022\025\n\n"
-    "percentage\030\001 \001(\005:\0010\"U\n\025MsgObjectAttribut"
-    "eNBC\022\024\n\014danger_level\030\001 \002(\005\022&\n\nnbc_agents"
-    "\030\002 \002(\0132\022.Common.MsgListOID\"]\n\rStockResou"
-    "rce\022.\n\rdotation_type\030\001 \002(\0132\027.Common.MsgD"
-    "otationType\022\017\n\007current\030\002 \002(\005\022\013\n\003max\030\003 \001("
-    "\005\"C\n\027MsgObjectAttributeStock\022(\n\tresource"
-    "s\030\001 \003(\0132\025.Common.StockResource\"p\n\036MsgObj"
-    "ectAttributeCrossingSite\022\r\n\005width\030\001 \002(\005\022"
-    "\r\n\005depth\030\002 \002(\005\022\021\n\tflow_rate\030\003 \002(\005\022\035\n\025ban"
-    "ks_require_fitting\030\004 \002(\010\"w\n\035MsgObjectAtt"
-    "ributeSupplyRoute\022\020\n\010equipped\030\001 \002(\010\022\022\n\nm"
-    "ax_weight\030\002 \002(\005\022\r\n\005width\030\003 \002(\005\022\016\n\006length"
-    "\030\004 \002(\005\022\021\n\tflow_rate\030\005 \002(\005\"S\n\022MsgLocatedQ"
-    "uantity\022+\n\ncoordinate\030\001 \002(\0132\027.Common.Msg"
-    "CoordLatLong\022\020\n\010quantity\030\002 \002(\002\"B\n\026MsgLoc"
-    "atedQuantityList\022(\n\004elem\030\001 \003(\0132\032.Common."
-    "MsgLocatedQuantity\"R\n\034MsgObjectAttribute"
-    "ToxicCloud\0222\n\nquantities\030\001 \002(\0132\036.Common."
-    "MsgLocatedQuantityList\"8\n\026MsgObjectAttri"
-    "buteFire\022\020\n\010class_id\030\001 \002(\005\022\014\n\004heat\030\002 \002(\005"
-    "\"\233\001\n\"MsgObjectAttributeMedicalTreatment\022"
-    "#\n\007type_id\030\001 \002(\0132\022.Common.MsgListOID\022\014\n\004"
-    "beds\030\002 \002(\005\022\026\n\016available_beds\030\003 \002(\005\022\017\n\007do"
-    "ctors\030\004 \002(\005\022\031\n\021available_doctors\030\005 \002(\005\"b"
-    "\n\031MsgObjectAttributeNBCType\022\020\n\010agent_id\030"
-    "\001 \002(\005\022\025\n\rconcentration\030\002 \002(\005\022\034\n\024source_l"
-    "ife_duration\030\003 \002(\005\"\345\006\n\023MsgObjectAttribut"
-    "es\022<\n\014construction\030\001 \001(\0132&.Common.MsgObj"
-    "ectAttributeConstruction\0224\n\010obstacle\030\002 \001"
-    "(\0132\".Common.MsgObjectAttributeObstacle\022,"
-    "\n\004mine\030\003 \001(\0132\036.Common.MsgObjectAttribute"
-    "Mine\022=\n\ractivity_time\030\004 \001(\0132&.Common.Msg"
-    "ObjectAttributeActivityTime\0220\n\006bypass\030\005 "
-    "\001(\0132 .Common.MsgObjectAttributeBypass\0224\n"
-    "\010logistic\030\006 \001(\0132\".Common.MsgObjectAttrib"
-    "uteLogistic\022*\n\003nbc\030\007 \001(\0132\035.Common.MsgObj"
-    "ectAttributeNBC\022=\n\rcrossing_site\030\010 \001(\0132&"
-    ".Common.MsgObjectAttributeCrossingSite\022;"
-    "\n\014supply_route\030\t \001(\0132%.Common.MsgObjectA"
-    "ttributeSupplyRoute\0229\n\013toxic_cloud\030\n \001(\013"
-    "2$.Common.MsgObjectAttributeToxicCloud\022,"
-    "\n\004fire\030\013 \001(\0132\036.Common.MsgObjectAttribute"
-    "Fire\022E\n\021medical_treatment\030\014 \001(\0132*.Common"
-    ".MsgObjectAttributeMedicalTreatment\022G\n\022i"
-    "nteraction_height\030\r \001(\0132+.Common.MsgObje"
-    "ctAttributeInteractionHeight\022.\n\005stock\030\016 "
-    "\001(\0132\037.Common.MsgObjectAttributeStock\0224\n\t"
-    "nbc_agent\030\017 \001(\0132!.Common.MsgObjectAttrib"
-    "uteNBCType\"L\n\007MsgNote\022\014\n\004name\030\001 \002(\t\022\016\n\006n"
-    "umber\030\002 \002(\t\022\023\n\013description\030\003 \002(\t\022\016\n\006pare"
-    "nt\030\004 \002(\r\"\342\001\n\022MsgMeteoAttributes\022\023\n\013tempe"
-    "rature\030\001 \002(\005\022\022\n\nwind_speed\030\002 \002(\005\022*\n\016wind"
-    "_direction\030\003 \002(\0132\022.Common.MsgHeading\022\023\n\013"
-    "cloud_floor\030\004 \002(\005\022\025\n\rcloud_ceiling\030\005 \002(\005"
-    "\022\025\n\rcloud_density\030\006 \002(\005\0224\n\rprecipitation"
-    "\030\007 \002(\0162\035.Common.EnumPrecipitationType*m\n"
-    "\022EnumDotationFamily\022\014\n\010munition\020\000\022\r\n\tcar"
-    "burant\020\001\022\014\n\010explosif\020\002\022\010\n\004mine\020\003\022\013\n\007barb"
-    "ele\020\004\022\t\n\005piece\020\005\022\n\n\006ration\020\006*Q\n\024EnumAmmu"
-    "nitionFamily\022\010\n\004obus\020\000\022\017\n\013missile_sol\020\001\022"
-    "\017\n\013missile_air\020\002\022\r\n\tmitraille\020\003*w\n\025EnumP"
-    "recipitationType\022\030\n\024pas_de_precipitation"
-    "\020\000\022\021\n\rtempete_sable\020\001\022\016\n\nbrouillard\020\002\022\013\n"
-    "\007crachin\020\003\022\t\n\005pluie\020\004\022\t\n\005neige\020\005*\264\003\n Enu"
-    "mLogMaintenanceHandlingStatus\022\033\n\027deplace"
-    "ment_vers_chaine\020\000\022$\n attente_disponibil"
-    "ite_remorqueur\020\001\022 \n\034remorqueur_deplaceme"
-    "nt_aller\020\002\022\031\n\025remorqueur_chargement\020\003\022!\n"
-    "\035remorqueur_deplacement_retour\020\004\022\033\n\027remo"
-    "rqueur_dechargement\020\005\022\034\n\030diagnostique_ma"
-    "intenance\020\006\0220\n,attente_prise_en_charge_p"
-    "ar_niveau_superieur\020\007\022 \n\034attente_disponi"
-    "bilite_pieces\020\010\022$\n attente_disponibilite"
-    "_reparateur\020\t\022\016\n\nreparation\020\n\022\017\n\013retour_"
-    "pion\020\013\022\027\n\023termine_maintenance\020\014*\364\005\n\034Enum"
-    "LogMedicalHandlingStatus\022*\n&attente_disp"
-    "onibilite_ambulance_releve\020\000\022&\n\"ambulanc"
-    "e_releve_deplacement_aller\020\001\022\037\n\033ambulanc"
-    "e_releve_chargement\020\002\022/\n+attente_chargem"
-    "ent_complet_ambulance_releve\020\003\022\'\n#ambula"
-    "nce_releve_deplacement_retour\020\004\022!\n\035ambul"
-    "ance_releve_dechargement\020\005\0223\n/attente_di"
-    "sponibilite_medecin_pour_diagnostique\020\006\022"
-    "\020\n\014diagnostique\020\007\022\031\n\025recherche_secteur_t"
-    "ri\020\010\022*\n&attente_disponibilite_medecin_po"
-    "ur_tri\020\t\022\007\n\003tri\020\n\022\032\n\026recherche_secteur_s"
-    "oin\020\013\022+\n\'attente_disponibilite_medecin_p"
-    "our_soin\020\014\022\010\n\004soin\020\r\022\023\n\017hospitalisation\020"
-    "\016\022-\n)attente_disponibilite_ambulance_ram"
-    "assage\020\017\022\"\n\036ambulance_ramassage_chargeme"
-    "nt\020\020\0222\n.attente_chargement_complet_ambul"
-    "ance_ramassage\020\021\022)\n%ambulance_ramassage_"
-    "deplacement_aller\020\022\022$\n ambulance_ramassa"
-    "ge_dechargement\020\023\022\013\n\007termine\020\024*_\n\022EnumUn"
-    "itVisibility\022\r\n\tinvisible\020\000\022\014\n\010detected\020"
-    "\001\022\016\n\nrecognized\020\002\022\016\n\nidentified\020\003\022\014\n\010rec"
-    "orded\020\004*1\n\022EnumFireEffectType\022\014\n\010fumigen"
-    "e\020\000\022\r\n\teclairant\020\001*H\n\023EnumSimulationStat"
-    "e\022\013\n\007running\020\000\022\n\n\006paused\020\001\022\013\n\007stopped\020\002\022"
-    "\013\n\007loading\020\003*l\n\033EnumMeetingEngagementSta"
-    "tus\022\020\n\014none_meeting\020\000\022\020\n\014etat_esquive\020\001\022"
-    "\r\n\tetat_fixe\020\002\022\032\n\026etat_poursuite_mission"
-    "\020\003*[\n\025EnumOperationalStatus\022\026\n\022detruit_t"
-    "otalement\020\000\022\030\n\024detruit_tactiquement\020\001\022\020\n"
-    "\014operationnel\020\002*1\n\025MsgStartUnitFire_type"
-    "\022\n\n\006direct\020\000\022\014\n\010indirect\020\001*+\n\017EnumAutoma"
-    "tMode\022\013\n\007embraye\020\000\022\013\n\007debraye\020\001*K\n\026EnumP"
-    "opulationAttitude\022\t\n\005calme\020\000\022\n\n\006agitee\020\001"
-    "\022\013\n\007excitee\020\002\022\r\n\tagressive\020\003*8\n\021EnumUnit"
-    "Tiredness\022\n\n\006normal\020\000\022\013\n\007fatigue\020\001\022\n\n\006ep"
-    "uise\020\002*@\n\016EnumUnitMorale\022\r\n\tfanatique\020\000\022"
-    "\007\n\003bon\020\001\022\t\n\005moyen\020\002\022\013\n\007mauvais\020\003*@\n\022Enum"
-    "UnitExperience\022\013\n\007veteran\020\000\022\017\n\013experimen"
-    "te\020\001\022\014\n\010conscrit\020\002*8\n\rEnumHumanRank\022\014\n\010o"
-    "fficier\020\000\022\020\n\014sous_officer\020\001\022\007\n\003mdr\020\002*X\n\r"
-    "EnumDiplomacy\022\021\n\runknown_diplo\020\000\022\020\n\014frie"
-    "nd_diplo\020\001\022\017\n\013enemy_diplo\020\002\022\021\n\rneutral_d"
-    "iplo\020\003*\210\001\n\016EnumHumanWound\022\016\n\nnon_blesse\020"
-    "\000\022\010\n\004mort\020\001\022\024\n\020blesse_urgence_1\020\002\022\024\n\020ble"
-    "sse_urgence_2\020\003\022\024\n\020blesse_urgence_3\020\004\022\032\n"
-    "\026blesse_urgence_extreme\020\005*Y\n\037EnumLogMain"
-    "tenanceRegimeTravail\022\014\n\010regime_1\020\000\022\014\n\010re"
-    "gime_2\020\001\022\014\n\010regime_3\020\002\022\014\n\010regime_4\020\003*\204\001\n"
-    "\017EnumNatureLevel\022\024\n\020none_naturelevel\020\000\022\005"
-    "\n\001o\020\001\022\006\n\002oo\020\002\022\007\n\003ooo\020\003\022\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n"
-    "\003iii\020\006\022\005\n\001x\020\007\022\006\n\002xx\020\010\022\007\n\003xxx\020\t\022\010\n\004xxxx\020\n"
-    "\022\t\n\005xxxxx\020\013", 12811);
+    "gUrbanBlock\022\014\n\004army\030& \001(\005\022\021\n\tformation\030\'"
+    " \001(\005\022\022\n\nidentifier\030( \001(\r\022\020\n\010quantity\030) \001"
+    "(\005\022\026\n\016knowledgeGroup\030* \001(\005\022/\n\004list\030+ \003(\013"
+    "2!.Common.MsgMissionParameter.Value\"A\n\024M"
+    "sgMissionParameters\022)\n\004elem\030\001 \003(\0132\033.Comm"
+    "on.MsgMissionParameter\"k\n\010MsgShape\022\020\n\010ca"
+    "tegory\030\001 \002(\t\022\r\n\005color\030\002 \002(\t\022\021\n\ttemplate_"
+    "\030\003 \002(\t\022+\n\006points\030\004 \002(\0132\033.Common.MsgCoord"
+    "LatLongList\" \n\rMsgChatTarget\022\017\n\007profile\030"
+    "\001 \002(\t\"o\n\016MsgTextMessage\022%\n\006source\030\001 \002(\0132"
+    "\025.Common.MsgChatTarget\022%\n\006target\030\002 \002(\0132\025"
+    ".Common.MsgChatTarget\022\017\n\007message\030\003 \002(\t\"\255"
+    "\001\n\017MsgTacticalLine\022\014\n\004name\030\001 \002(\t\022%\n\010geom"
+    "etry\030\002 \002(\0132\023.Common.MsgLocation\0224\n\tdiffu"
+    "sion\030\003 \002(\0132!.Common.MsgTacticalLine.Diff"
+    "usion\032/\n\tDiffusion\022\017\n\007automat\030\001 \001(\r\022\021\n\tf"
+    "ormation\030\002 \001(\r\"\033\n\014MsgFormation\022\013\n\003oid\030\001 "
+    "\002(\005\"\215\001\n\024MsgFormationCreation\022\013\n\003oid\030\001 \002("
+    "\005\022\020\n\010oid_camp\030\002 \002(\005\022 \n\025oid_formation_par"
+    "ente\030\003 \001(\005:\0010\022\'\n\006niveau\030\004 \002(\0162\027.Common.E"
+    "numNatureLevel\022\013\n\003nom\030\005 \002(\t\"^\n\014MsgUnitOr"
+    "der\022\013\n\003oid\030\001 \002(\005\022\017\n\007mission\030\002 \002(\005\0220\n\npar"
+    "ametres\030\003 \001(\0132\034.Common.MsgMissionParamet"
+    "ers\"a\n\017MsgAutomatOrder\022\013\n\003oid\030\001 \002(\005\022\017\n\007m"
+    "ission\030\002 \002(\005\0220\n\nparametres\030\003 \001(\0132\034.Commo"
+    "n.MsgMissionParameters\"d\n\022MsgPopulationO"
+    "rder\022\013\n\003oid\030\001 \002(\005\022\017\n\007mission\030\002 \002(\005\0220\n\npa"
+    "rametres\030\003 \001(\0132\034.Common.MsgMissionParame"
+    "ters\"~\n\036MsgObjectAttributeConstruction\022\030"
+    "\n\rdotation_type\030\001 \001(\005:\0010\022\027\n\014dotation_nbr"
+    "\030\002 \001(\005:\0010\022\022\n\007density\030\003 \001(\002:\0010\022\025\n\npercent"
+    "age\030\004 \001(\005:\0010\"v\n\026MsgObjectAttributeMine\022\030"
+    "\n\rdotation_type\030\001 \001(\005:\0010\022\027\n\014dotation_nbr"
+    "\030\002 \001(\005:\0010\022\022\n\007density\030\003 \001(\002:\0010\022\025\n\npercent"
+    "age\030\004 \001(\005:\0010\")\n\032MsgObjectAttributeLogist"
+    "ic\022\013\n\003tc2\030\001 \002(\005\"5\n#MsgObjectAttributeInt"
+    "eractionHeight\022\016\n\006height\030\001 \002(\002\"h\n\032MsgObj"
+    "ectAttributeObstacle\0227\n\004type\030\001 \002(\0162).Com"
+    "mon.ObstacleType.DemolitionTargetType\022\021\n"
+    "\tactivated\030\002 \001(\010\"/\n\036MsgObjectAttributeAc"
+    "tivityTime\022\r\n\005value\030\001 \002(\005\"1\n\030MsgObjectAt"
+    "tributeBypass\022\025\n\npercentage\030\001 \001(\005:\0010\"U\n\025"
+    "MsgObjectAttributeNBC\022\024\n\014danger_level\030\001 "
+    "\002(\005\022&\n\nnbc_agents\030\002 \002(\0132\022.Common.MsgList"
+    "OID\"]\n\rStockResource\022.\n\rdotation_type\030\001 "
+    "\002(\0132\027.Common.MsgDotationType\022\017\n\007current\030"
+    "\002 \002(\005\022\013\n\003max\030\003 \001(\005\"C\n\027MsgObjectAttribute"
+    "Stock\022(\n\tresources\030\001 \003(\0132\025.Common.StockR"
+    "esource\"p\n\036MsgObjectAttributeCrossingSit"
+    "e\022\r\n\005width\030\001 \002(\005\022\r\n\005depth\030\002 \002(\005\022\021\n\tflow_"
+    "rate\030\003 \002(\005\022\035\n\025banks_require_fitting\030\004 \002("
+    "\010\"w\n\035MsgObjectAttributeSupplyRoute\022\020\n\010eq"
+    "uipped\030\001 \002(\010\022\022\n\nmax_weight\030\002 \002(\005\022\r\n\005widt"
+    "h\030\003 \002(\005\022\016\n\006length\030\004 \002(\005\022\021\n\tflow_rate\030\005 \002"
+    "(\005\"S\n\022MsgLocatedQuantity\022+\n\ncoordinate\030\001"
+    " \002(\0132\027.Common.MsgCoordLatLong\022\020\n\010quantit"
+    "y\030\002 \002(\002\"B\n\026MsgLocatedQuantityList\022(\n\004ele"
+    "m\030\001 \003(\0132\032.Common.MsgLocatedQuantity\"R\n\034M"
+    "sgObjectAttributeToxicCloud\0222\n\nquantitie"
+    "s\030\001 \002(\0132\036.Common.MsgLocatedQuantityList\""
+    "8\n\026MsgObjectAttributeFire\022\020\n\010class_id\030\001 "
+    "\002(\005\022\014\n\004heat\030\002 \002(\005\"\233\001\n\"MsgObjectAttribute"
+    "MedicalTreatment\022#\n\007type_id\030\001 \002(\0132\022.Comm"
+    "on.MsgListOID\022\014\n\004beds\030\002 \002(\005\022\026\n\016available"
+    "_beds\030\003 \002(\005\022\017\n\007doctors\030\004 \002(\005\022\031\n\021availabl"
+    "e_doctors\030\005 \002(\005\"b\n\031MsgObjectAttributeNBC"
+    "Type\022\020\n\010agent_id\030\001 \002(\005\022\025\n\rconcentration\030"
+    "\002 \002(\005\022\034\n\024source_life_duration\030\003 \002(\005\"\345\006\n\023"
+    "MsgObjectAttributes\022<\n\014construction\030\001 \001("
+    "\0132&.Common.MsgObjectAttributeConstructio"
+    "n\0224\n\010obstacle\030\002 \001(\0132\".Common.MsgObjectAt"
+    "tributeObstacle\022,\n\004mine\030\003 \001(\0132\036.Common.M"
+    "sgObjectAttributeMine\022=\n\ractivity_time\030\004"
+    " \001(\0132&.Common.MsgObjectAttributeActivity"
+    "Time\0220\n\006bypass\030\005 \001(\0132 .Common.MsgObjectA"
+    "ttributeBypass\0224\n\010logistic\030\006 \001(\0132\".Commo"
+    "n.MsgObjectAttributeLogistic\022*\n\003nbc\030\007 \001("
+    "\0132\035.Common.MsgObjectAttributeNBC\022=\n\rcros"
+    "sing_site\030\010 \001(\0132&.Common.MsgObjectAttrib"
+    "uteCrossingSite\022;\n\014supply_route\030\t \001(\0132%."
+    "Common.MsgObjectAttributeSupplyRoute\0229\n\013"
+    "toxic_cloud\030\n \001(\0132$.Common.MsgObjectAttr"
+    "ibuteToxicCloud\022,\n\004fire\030\013 \001(\0132\036.Common.M"
+    "sgObjectAttributeFire\022E\n\021medical_treatme"
+    "nt\030\014 \001(\0132*.Common.MsgObjectAttributeMedi"
+    "calTreatment\022G\n\022interaction_height\030\r \001(\013"
+    "2+.Common.MsgObjectAttributeInteractionH"
+    "eight\022.\n\005stock\030\016 \001(\0132\037.Common.MsgObjectA"
+    "ttributeStock\0224\n\tnbc_agent\030\017 \001(\0132!.Commo"
+    "n.MsgObjectAttributeNBCType\"L\n\007MsgNote\022\014"
+    "\n\004name\030\001 \002(\t\022\016\n\006number\030\002 \002(\t\022\023\n\013descript"
+    "ion\030\003 \002(\t\022\016\n\006parent\030\004 \002(\r\"\342\001\n\022MsgMeteoAt"
+    "tributes\022\023\n\013temperature\030\001 \002(\005\022\022\n\nwind_sp"
+    "eed\030\002 \002(\005\022*\n\016wind_direction\030\003 \002(\0132\022.Comm"
+    "on.MsgHeading\022\023\n\013cloud_floor\030\004 \002(\005\022\025\n\rcl"
+    "oud_ceiling\030\005 \002(\005\022\025\n\rcloud_density\030\006 \002(\005"
+    "\0224\n\rprecipitation\030\007 \002(\0162\035.Common.EnumPre"
+    "cipitationType*m\n\022EnumDotationFamily\022\014\n\010"
+    "munition\020\000\022\r\n\tcarburant\020\001\022\014\n\010explosif\020\002\022"
+    "\010\n\004mine\020\003\022\013\n\007barbele\020\004\022\t\n\005piece\020\005\022\n\n\006rat"
+    "ion\020\006*Q\n\024EnumAmmunitionFamily\022\010\n\004obus\020\000\022"
+    "\017\n\013missile_sol\020\001\022\017\n\013missile_air\020\002\022\r\n\tmit"
+    "raille\020\003*w\n\025EnumPrecipitationType\022\030\n\024pas"
+    "_de_precipitation\020\000\022\021\n\rtempete_sable\020\001\022\016"
+    "\n\nbrouillard\020\002\022\013\n\007crachin\020\003\022\t\n\005pluie\020\004\022\t"
+    "\n\005neige\020\005*\264\003\n EnumLogMaintenanceHandling"
+    "Status\022\033\n\027deplacement_vers_chaine\020\000\022$\n a"
+    "ttente_disponibilite_remorqueur\020\001\022 \n\034rem"
+    "orqueur_deplacement_aller\020\002\022\031\n\025remorqueu"
+    "r_chargement\020\003\022!\n\035remorqueur_deplacement"
+    "_retour\020\004\022\033\n\027remorqueur_dechargement\020\005\022\034"
+    "\n\030diagnostique_maintenance\020\006\0220\n,attente_"
+    "prise_en_charge_par_niveau_superieur\020\007\022 "
+    "\n\034attente_disponibilite_pieces\020\010\022$\n atte"
+    "nte_disponibilite_reparateur\020\t\022\016\n\nrepara"
+    "tion\020\n\022\017\n\013retour_pion\020\013\022\027\n\023termine_maint"
+    "enance\020\014*\364\005\n\034EnumLogMedicalHandlingStatu"
+    "s\022*\n&attente_disponibilite_ambulance_rel"
+    "eve\020\000\022&\n\"ambulance_releve_deplacement_al"
+    "ler\020\001\022\037\n\033ambulance_releve_chargement\020\002\022/"
+    "\n+attente_chargement_complet_ambulance_r"
+    "eleve\020\003\022\'\n#ambulance_releve_deplacement_"
+    "retour\020\004\022!\n\035ambulance_releve_dechargemen"
+    "t\020\005\0223\n/attente_disponibilite_medecin_pou"
+    "r_diagnostique\020\006\022\020\n\014diagnostique\020\007\022\031\n\025re"
+    "cherche_secteur_tri\020\010\022*\n&attente_disponi"
+    "bilite_medecin_pour_tri\020\t\022\007\n\003tri\020\n\022\032\n\026re"
+    "cherche_secteur_soin\020\013\022+\n\'attente_dispon"
+    "ibilite_medecin_pour_soin\020\014\022\010\n\004soin\020\r\022\023\n"
+    "\017hospitalisation\020\016\022-\n)attente_disponibil"
+    "ite_ambulance_ramassage\020\017\022\"\n\036ambulance_r"
+    "amassage_chargement\020\020\0222\n.attente_chargem"
+    "ent_complet_ambulance_ramassage\020\021\022)\n%amb"
+    "ulance_ramassage_deplacement_aller\020\022\022$\n "
+    "ambulance_ramassage_dechargement\020\023\022\013\n\007te"
+    "rmine\020\024*_\n\022EnumUnitVisibility\022\r\n\tinvisib"
+    "le\020\000\022\014\n\010detected\020\001\022\016\n\nrecognized\020\002\022\016\n\nid"
+    "entified\020\003\022\014\n\010recorded\020\004*1\n\022EnumFireEffe"
+    "ctType\022\014\n\010fumigene\020\000\022\r\n\teclairant\020\001*H\n\023E"
+    "numSimulationState\022\013\n\007running\020\000\022\n\n\006pause"
+    "d\020\001\022\013\n\007stopped\020\002\022\013\n\007loading\020\003*l\n\033EnumMee"
+    "tingEngagementStatus\022\020\n\014none_meeting\020\000\022\020"
+    "\n\014etat_esquive\020\001\022\r\n\tetat_fixe\020\002\022\032\n\026etat_"
+    "poursuite_mission\020\003*[\n\025EnumOperationalSt"
+    "atus\022\026\n\022detruit_totalement\020\000\022\030\n\024detruit_"
+    "tactiquement\020\001\022\020\n\014operationnel\020\002*1\n\025MsgS"
+    "tartUnitFire_type\022\n\n\006direct\020\000\022\014\n\010indirec"
+    "t\020\001*+\n\017EnumAutomatMode\022\013\n\007embraye\020\000\022\013\n\007d"
+    "ebraye\020\001*K\n\026EnumPopulationAttitude\022\t\n\005ca"
+    "lme\020\000\022\n\n\006agitee\020\001\022\013\n\007excitee\020\002\022\r\n\tagress"
+    "ive\020\003*8\n\021EnumUnitTiredness\022\n\n\006normal\020\000\022\013"
+    "\n\007fatigue\020\001\022\n\n\006epuise\020\002*@\n\016EnumUnitMoral"
+    "e\022\r\n\tfanatique\020\000\022\007\n\003bon\020\001\022\t\n\005moyen\020\002\022\013\n\007"
+    "mauvais\020\003*@\n\022EnumUnitExperience\022\013\n\007veter"
+    "an\020\000\022\017\n\013experimente\020\001\022\014\n\010conscrit\020\002*8\n\rE"
+    "numHumanRank\022\014\n\010officier\020\000\022\020\n\014sous_offic"
+    "er\020\001\022\007\n\003mdr\020\002*X\n\rEnumDiplomacy\022\021\n\runknow"
+    "n_diplo\020\000\022\020\n\014friend_diplo\020\001\022\017\n\013enemy_dip"
+    "lo\020\002\022\021\n\rneutral_diplo\020\003*\210\001\n\016EnumHumanWou"
+    "nd\022\016\n\nnon_blesse\020\000\022\010\n\004mort\020\001\022\024\n\020blesse_u"
+    "rgence_1\020\002\022\024\n\020blesse_urgence_2\020\003\022\024\n\020bles"
+    "se_urgence_3\020\004\022\032\n\026blesse_urgence_extreme"
+    "\020\005*Y\n\037EnumLogMaintenanceRegimeTravail\022\014\n"
+    "\010regime_1\020\000\022\014\n\010regime_2\020\001\022\014\n\010regime_3\020\002\022"
+    "\014\n\010regime_4\020\003*\204\001\n\017EnumNatureLevel\022\024\n\020non"
+    "e_naturelevel\020\000\022\005\n\001o\020\001\022\006\n\002oo\020\002\022\007\n\003ooo\020\003\022"
+    "\005\n\001i\020\004\022\006\n\002ii\020\005\022\007\n\003iii\020\006\022\005\n\001x\020\007\022\006\n\002xx\020\010\022\007"
+    "\n\003xxx\020\t\022\010\n\004xxxx\020\n\022\t\n\005xxxxx\020\013", 12468);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Common.proto", &protobuf_RegisterTypes);
   MsgTeam::default_instance_ = new MsgTeam();
@@ -2710,10 +2612,6 @@ void protobuf_AddDesc_Common_2eproto() {
   MsgShape::default_instance_ = new MsgShape();
   MsgChatTarget::default_instance_ = new MsgChatTarget();
   MsgTextMessage::default_instance_ = new MsgTextMessage();
-  MsgMagicActionPopulationChangeAttitude_beneficiaire::default_instance_ = new MsgMagicActionPopulationChangeAttitude_beneficiaire();
-  MsgMagicActionPopulationChangeAttitude::default_instance_ = new MsgMagicActionPopulationChangeAttitude();
-  MsgMagicActionPopulationKill::default_instance_ = new MsgMagicActionPopulationKill();
-  MsgMagicActionPopulationResurrect::default_instance_ = new MsgMagicActionPopulationResurrect();
   MsgTacticalLine::default_instance_ = new MsgTacticalLine();
   MsgTacticalLine_Diffusion::default_instance_ = new MsgTacticalLine_Diffusion();
   MsgFormation::default_instance_ = new MsgFormation();
@@ -2805,10 +2703,6 @@ void protobuf_AddDesc_Common_2eproto() {
   MsgShape::default_instance_->InitAsDefaultInstance();
   MsgChatTarget::default_instance_->InitAsDefaultInstance();
   MsgTextMessage::default_instance_->InitAsDefaultInstance();
-  MsgMagicActionPopulationChangeAttitude_beneficiaire::default_instance_->InitAsDefaultInstance();
-  MsgMagicActionPopulationChangeAttitude::default_instance_->InitAsDefaultInstance();
-  MsgMagicActionPopulationKill::default_instance_->InitAsDefaultInstance();
-  MsgMagicActionPopulationResurrect::default_instance_->InitAsDefaultInstance();
   MsgTacticalLine::default_instance_->InitAsDefaultInstance();
   MsgTacticalLine_Diffusion::default_instance_->InitAsDefaultInstance();
   MsgFormation::default_instance_->InitAsDefaultInstance();
@@ -16056,8 +15950,10 @@ const int MsgMissionParameter_Value::kLimasOrderFieldNumber;
 const int MsgMissionParameter_Value::kIntelligenceListFieldNumber;
 const int MsgMissionParameter_Value::kUrbanBlockFieldNumber;
 const int MsgMissionParameter_Value::kArmyFieldNumber;
+const int MsgMissionParameter_Value::kFormationFieldNumber;
 const int MsgMissionParameter_Value::kIdentifierFieldNumber;
 const int MsgMissionParameter_Value::kQuantityFieldNumber;
+const int MsgMissionParameter_Value::kKnowledgeGroupFieldNumber;
 const int MsgMissionParameter_Value::kListFieldNumber;
 #endif  // !_MSC_VER
 
@@ -16145,8 +16041,10 @@ void MsgMissionParameter_Value::SharedCtor() {
   intelligencelist_ = NULL;
   urbanblock_ = NULL;
   army_ = 0;
+  formation_ = 0;
   identifier_ = 0u;
   quantity_ = 0;
+  knowledgegroup_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -16325,8 +16223,12 @@ void MsgMissionParameter_Value::Clear() {
       if (urbanblock_ != NULL) urbanblock_->::Common::MsgUrbanBlock::Clear();
     }
     army_ = 0;
+    formation_ = 0;
     identifier_ = 0u;
+  }
+  if (_has_bits_[40 / 32] & (0xffu << (40 % 32))) {
     quantity_ = 0;
+    knowledgegroup_ = 0;
   }
   list_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -16836,12 +16738,26 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
         DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
               input, &army_));
         _set_bit(37);
-        if (input->ExpectTag(312)) goto parse_identifier;
+        if (input->ExpectTag(312)) goto parse_formation;
         break;
       }
       
-      // optional uint32 identifier = 39;
+      // optional int32 formation = 39;
       case 39: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_formation:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &formation_));
+        _set_bit(38);
+        if (input->ExpectTag(320)) goto parse_identifier;
+        break;
+      }
+      
+      // optional uint32 identifier = 40;
+      case 40: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -16849,13 +16765,13 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_identifier:
         DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
               input, &identifier_));
-        _set_bit(38);
-        if (input->ExpectTag(320)) goto parse_quantity;
+        _set_bit(39);
+        if (input->ExpectTag(328)) goto parse_quantity;
         break;
       }
       
-      // optional int32 quantity = 40;
-      case 40: {
+      // optional int32 quantity = 41;
+      case 41: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
@@ -16863,13 +16779,27 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_quantity:
         DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
               input, &quantity_));
-        _set_bit(39);
-        if (input->ExpectTag(330)) goto parse_list;
+        _set_bit(40);
+        if (input->ExpectTag(336)) goto parse_knowledgeGroup;
         break;
       }
       
-      // repeated .Common.MsgMissionParameter.Value list = 41;
-      case 41: {
+      // optional int32 knowledgeGroup = 42;
+      case 42: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          goto handle_uninterpreted;
+        }
+       parse_knowledgeGroup:
+        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
+              input, &knowledgegroup_));
+        _set_bit(41);
+        if (input->ExpectTag(346)) goto parse_list;
+        break;
+      }
+      
+      // repeated .Common.MsgMissionParameter.Value list = 43;
+      case 43: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -16877,7 +16807,7 @@ bool MsgMissionParameter_Value::MergePartialFromCodedStream(
        parse_list:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
               input, add_list()));
-        if (input->ExpectTag(330)) goto parse_list;
+        if (input->ExpectTag(346)) goto parse_list;
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -17132,20 +17062,30 @@ void MsgMissionParameter_Value::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteInt32(38, this->army(), output);
   }
   
-  // optional uint32 identifier = 39;
+  // optional int32 formation = 39;
   if (_has_bit(38)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(39, this->identifier(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(39, this->formation(), output);
   }
   
-  // optional int32 quantity = 40;
+  // optional uint32 identifier = 40;
   if (_has_bit(39)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(40, this->quantity(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteUInt32(40, this->identifier(), output);
   }
   
-  // repeated .Common.MsgMissionParameter.Value list = 41;
+  // optional int32 quantity = 41;
+  if (_has_bit(40)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(41, this->quantity(), output);
+  }
+  
+  // optional int32 knowledgeGroup = 42;
+  if (_has_bit(41)) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(42, this->knowledgegroup(), output);
+  }
+  
+  // repeated .Common.MsgMissionParameter.Value list = 43;
   for (int i = 0; i < this->list_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      41, this->list(i), output);
+      43, this->list(i), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -17415,21 +17355,31 @@ void MsgMissionParameter_Value::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(38, this->army(), target);
   }
   
-  // optional uint32 identifier = 39;
+  // optional int32 formation = 39;
   if (_has_bit(38)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(39, this->identifier(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(39, this->formation(), target);
   }
   
-  // optional int32 quantity = 40;
+  // optional uint32 identifier = 40;
   if (_has_bit(39)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(40, this->quantity(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(40, this->identifier(), target);
   }
   
-  // repeated .Common.MsgMissionParameter.Value list = 41;
+  // optional int32 quantity = 41;
+  if (_has_bit(40)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(41, this->quantity(), target);
+  }
+  
+  // optional int32 knowledgeGroup = 42;
+  if (_has_bit(41)) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(42, this->knowledgegroup(), target);
+  }
+  
+  // repeated .Common.MsgMissionParameter.Value list = 43;
   for (int i = 0; i < this->list_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        41, this->list(i), target);
+        43, this->list(i), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -17713,22 +17663,38 @@ int MsgMissionParameter_Value::ByteSize() const {
           this->army());
     }
     
-    // optional uint32 identifier = 39;
+    // optional int32 formation = 39;
+    if (has_formation()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->formation());
+    }
+    
+    // optional uint32 identifier = 40;
     if (has_identifier()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::UInt32Size(
           this->identifier());
     }
     
-    // optional int32 quantity = 40;
+  }
+  if (_has_bits_[40 / 32] & (0xffu << (40 % 32))) {
+    // optional int32 quantity = 41;
     if (has_quantity()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::Int32Size(
           this->quantity());
     }
     
+    // optional int32 knowledgeGroup = 42;
+    if (has_knowledgegroup()) {
+      total_size += 2 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->knowledgegroup());
+    }
+    
   }
-  // repeated .Common.MsgMissionParameter.Value list = 41;
+  // repeated .Common.MsgMissionParameter.Value list = 43;
   total_size += 2 * this->list_size();
   for (int i = 0; i < this->list_size(); i++) {
     total_size +=
@@ -17884,10 +17850,18 @@ void MsgMissionParameter_Value::MergeFrom(const MsgMissionParameter_Value& from)
       set_army(from.army());
     }
     if (from._has_bit(38)) {
-      set_identifier(from.identifier());
+      set_formation(from.formation());
     }
     if (from._has_bit(39)) {
+      set_identifier(from.identifier());
+    }
+  }
+  if (from._has_bits_[40 / 32] & (0xffu << (40 % 32))) {
+    if (from._has_bit(40)) {
       set_quantity(from.quantity());
+    }
+    if (from._has_bit(41)) {
+      set_knowledgegroup(from.knowledgegroup());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -18046,8 +18020,10 @@ void MsgMissionParameter_Value::Swap(MsgMissionParameter_Value* other) {
     std::swap(intelligencelist_, other->intelligencelist_);
     std::swap(urbanblock_, other->urbanblock_);
     std::swap(army_, other->army_);
+    std::swap(formation_, other->formation_);
     std::swap(identifier_, other->identifier_);
     std::swap(quantity_, other->quantity_);
+    std::swap(knowledgegroup_, other->knowledgegroup_);
     list_.Swap(&other->list_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     std::swap(_has_bits_[1], other->_has_bits_[1]);
@@ -19430,940 +19406,6 @@ void MsgTextMessage::Swap(MsgTextMessage* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgTextMessage_descriptor_;
   metadata.reflection = MsgTextMessage_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgMagicActionPopulationChangeAttitude_beneficiaire::kFluxFieldNumber;
-const int MsgMagicActionPopulationChangeAttitude_beneficiaire::kConcentrationFieldNumber;
-const int MsgMagicActionPopulationChangeAttitude_beneficiaire::kGlobalFieldNumber;
-#endif  // !_MSC_VER
-
-MsgMagicActionPopulationChangeAttitude_beneficiaire::MsgMagicActionPopulationChangeAttitude_beneficiaire() {
-  SharedCtor();
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::InitAsDefaultInstance() {
-}
-
-MsgMagicActionPopulationChangeAttitude_beneficiaire::MsgMagicActionPopulationChangeAttitude_beneficiaire(const MsgMagicActionPopulationChangeAttitude_beneficiaire& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::SharedCtor() {
-  _cached_size_ = 0;
-  flux_ = 0;
-  concentration_ = 0;
-  global_ = false;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgMagicActionPopulationChangeAttitude_beneficiaire::~MsgMagicActionPopulationChangeAttitude_beneficiaire() {
-  SharedDtor();
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgMagicActionPopulationChangeAttitude_beneficiaire::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgMagicActionPopulationChangeAttitude_beneficiaire_descriptor_;
-}
-
-const MsgMagicActionPopulationChangeAttitude_beneficiaire& MsgMagicActionPopulationChangeAttitude_beneficiaire::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
-}
-
-MsgMagicActionPopulationChangeAttitude_beneficiaire* MsgMagicActionPopulationChangeAttitude_beneficiaire::default_instance_ = NULL;
-
-MsgMagicActionPopulationChangeAttitude_beneficiaire* MsgMagicActionPopulationChangeAttitude_beneficiaire::New() const {
-  return new MsgMagicActionPopulationChangeAttitude_beneficiaire;
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    flux_ = 0;
-    concentration_ = 0;
-    global_ = false;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgMagicActionPopulationChangeAttitude_beneficiaire::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional int32 flux = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &flux_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_concentration;
-        break;
-      }
-      
-      // optional int32 concentration = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_concentration:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &concentration_));
-        _set_bit(1);
-        if (input->ExpectTag(24)) goto parse_global;
-        break;
-      }
-      
-      // optional bool global = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_global:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
-              input, &global_));
-        _set_bit(2);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgMagicActionPopulationChangeAttitude_beneficiaire::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // optional int32 flux = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->flux(), output);
-  }
-  
-  // optional int32 concentration = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(2, this->concentration(), output);
-  }
-  
-  // optional bool global = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(3, this->global(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgMagicActionPopulationChangeAttitude_beneficiaire::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional int32 flux = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->flux(), target);
-  }
-  
-  // optional int32 concentration = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(2, this->concentration(), target);
-  }
-  
-  // optional bool global = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(3, this->global(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgMagicActionPopulationChangeAttitude_beneficiaire::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional int32 flux = 1;
-    if (has_flux()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->flux());
-    }
-    
-    // optional int32 concentration = 2;
-    if (has_concentration()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->concentration());
-    }
-    
-    // optional bool global = 3;
-    if (has_global()) {
-      total_size += 1 + 1;
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgMagicActionPopulationChangeAttitude_beneficiaire* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMagicActionPopulationChangeAttitude_beneficiaire*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::MergeFrom(const MsgMagicActionPopulationChangeAttitude_beneficiaire& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_flux(from.flux());
-    }
-    if (from._has_bit(1)) {
-      set_concentration(from.concentration());
-    }
-    if (from._has_bit(2)) {
-      set_global(from.global());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::CopyFrom(const MsgMagicActionPopulationChangeAttitude_beneficiaire& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgMagicActionPopulationChangeAttitude_beneficiaire::IsInitialized() const {
-  
-  return true;
-}
-
-void MsgMagicActionPopulationChangeAttitude_beneficiaire::Swap(MsgMagicActionPopulationChangeAttitude_beneficiaire* other) {
-  if (other != this) {
-    std::swap(flux_, other->flux_);
-    std::swap(concentration_, other->concentration_);
-    std::swap(global_, other->global_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgMagicActionPopulationChangeAttitude_beneficiaire::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgMagicActionPopulationChangeAttitude_beneficiaire_descriptor_;
-  metadata.reflection = MsgMagicActionPopulationChangeAttitude_beneficiaire_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgMagicActionPopulationChangeAttitude::kAttitudeFieldNumber;
-const int MsgMagicActionPopulationChangeAttitude::kBeneficiaireFieldNumber;
-#endif  // !_MSC_VER
-
-MsgMagicActionPopulationChangeAttitude::MsgMagicActionPopulationChangeAttitude() {
-  SharedCtor();
-}
-
-void MsgMagicActionPopulationChangeAttitude::InitAsDefaultInstance() {
-  beneficiaire_ = const_cast< ::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire*>(&::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire::default_instance());
-}
-
-MsgMagicActionPopulationChangeAttitude::MsgMagicActionPopulationChangeAttitude(const MsgMagicActionPopulationChangeAttitude& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgMagicActionPopulationChangeAttitude::SharedCtor() {
-  _cached_size_ = 0;
-  attitude_ = 0;
-  beneficiaire_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgMagicActionPopulationChangeAttitude::~MsgMagicActionPopulationChangeAttitude() {
-  SharedDtor();
-}
-
-void MsgMagicActionPopulationChangeAttitude::SharedDtor() {
-  if (this != default_instance_) {
-    delete beneficiaire_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgMagicActionPopulationChangeAttitude::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgMagicActionPopulationChangeAttitude_descriptor_;
-}
-
-const MsgMagicActionPopulationChangeAttitude& MsgMagicActionPopulationChangeAttitude::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
-}
-
-MsgMagicActionPopulationChangeAttitude* MsgMagicActionPopulationChangeAttitude::default_instance_ = NULL;
-
-MsgMagicActionPopulationChangeAttitude* MsgMagicActionPopulationChangeAttitude::New() const {
-  return new MsgMagicActionPopulationChangeAttitude;
-}
-
-void MsgMagicActionPopulationChangeAttitude::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    attitude_ = 0;
-    if (_has_bit(1)) {
-      if (beneficiaire_ != NULL) beneficiaire_->::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgMagicActionPopulationChangeAttitude::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Common.EnumPopulationAttitude attitude = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        int value;
-        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
-        if (Common::EnumPopulationAttitude_IsValid(value)) {
-          set_attitude(static_cast< Common::EnumPopulationAttitude >(value));
-        } else {
-          mutable_unknown_fields()->AddVarint(1, value);
-        }
-        if (input->ExpectTag(18)) goto parse_beneficiaire;
-        break;
-      }
-      
-      // required .Common.MsgMagicActionPopulationChangeAttitude_beneficiaire beneficiaire = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_beneficiaire:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_beneficiaire()));
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgMagicActionPopulationChangeAttitude::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgMagicActionPopulationChangeAttitude::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required .Common.EnumPopulationAttitude attitude = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteEnum(
-      1, this->attitude(), output);
-  }
-  
-  // required .Common.MsgMagicActionPopulationChangeAttitude_beneficiaire beneficiaire = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->beneficiaire(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgMagicActionPopulationChangeAttitude::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required .Common.EnumPopulationAttitude attitude = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
-      1, this->attitude(), target);
-  }
-  
-  // required .Common.MsgMagicActionPopulationChangeAttitude_beneficiaire beneficiaire = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->beneficiaire(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgMagicActionPopulationChangeAttitude::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Common.EnumPopulationAttitude attitude = 1;
-    if (has_attitude()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::EnumSize(this->attitude());
-    }
-    
-    // required .Common.MsgMagicActionPopulationChangeAttitude_beneficiaire beneficiaire = 2;
-    if (has_beneficiaire()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->beneficiaire());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgMagicActionPopulationChangeAttitude::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgMagicActionPopulationChangeAttitude* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMagicActionPopulationChangeAttitude*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgMagicActionPopulationChangeAttitude::MergeFrom(const MsgMagicActionPopulationChangeAttitude& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_attitude(from.attitude());
-    }
-    if (from._has_bit(1)) {
-      mutable_beneficiaire()->::Common::MsgMagicActionPopulationChangeAttitude_beneficiaire::MergeFrom(from.beneficiaire());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgMagicActionPopulationChangeAttitude::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgMagicActionPopulationChangeAttitude::CopyFrom(const MsgMagicActionPopulationChangeAttitude& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgMagicActionPopulationChangeAttitude::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
-  
-  return true;
-}
-
-void MsgMagicActionPopulationChangeAttitude::Swap(MsgMagicActionPopulationChangeAttitude* other) {
-  if (other != this) {
-    std::swap(attitude_, other->attitude_);
-    std::swap(beneficiaire_, other->beneficiaire_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgMagicActionPopulationChangeAttitude::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgMagicActionPopulationChangeAttitude_descriptor_;
-  metadata.reflection = MsgMagicActionPopulationChangeAttitude_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgMagicActionPopulationKill::kKillFieldNumber;
-#endif  // !_MSC_VER
-
-MsgMagicActionPopulationKill::MsgMagicActionPopulationKill() {
-  SharedCtor();
-}
-
-void MsgMagicActionPopulationKill::InitAsDefaultInstance() {
-}
-
-MsgMagicActionPopulationKill::MsgMagicActionPopulationKill(const MsgMagicActionPopulationKill& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgMagicActionPopulationKill::SharedCtor() {
-  _cached_size_ = 0;
-  kill_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgMagicActionPopulationKill::~MsgMagicActionPopulationKill() {
-  SharedDtor();
-}
-
-void MsgMagicActionPopulationKill::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgMagicActionPopulationKill::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgMagicActionPopulationKill_descriptor_;
-}
-
-const MsgMagicActionPopulationKill& MsgMagicActionPopulationKill::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
-}
-
-MsgMagicActionPopulationKill* MsgMagicActionPopulationKill::default_instance_ = NULL;
-
-MsgMagicActionPopulationKill* MsgMagicActionPopulationKill::New() const {
-  return new MsgMagicActionPopulationKill;
-}
-
-void MsgMagicActionPopulationKill::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    kill_ = 0;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgMagicActionPopulationKill::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 kill = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &kill_));
-        _set_bit(0);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgMagicActionPopulationKill::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgMagicActionPopulationKill::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required int32 kill = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->kill(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgMagicActionPopulationKill::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required int32 kill = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->kill(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgMagicActionPopulationKill::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 kill = 1;
-    if (has_kill()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->kill());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgMagicActionPopulationKill::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgMagicActionPopulationKill* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMagicActionPopulationKill*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgMagicActionPopulationKill::MergeFrom(const MsgMagicActionPopulationKill& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_kill(from.kill());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgMagicActionPopulationKill::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgMagicActionPopulationKill::CopyFrom(const MsgMagicActionPopulationKill& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgMagicActionPopulationKill::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-  
-  return true;
-}
-
-void MsgMagicActionPopulationKill::Swap(MsgMagicActionPopulationKill* other) {
-  if (other != this) {
-    std::swap(kill_, other->kill_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgMagicActionPopulationKill::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgMagicActionPopulationKill_descriptor_;
-  metadata.reflection = MsgMagicActionPopulationKill_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgMagicActionPopulationResurrect::kResurrectFieldNumber;
-#endif  // !_MSC_VER
-
-MsgMagicActionPopulationResurrect::MsgMagicActionPopulationResurrect() {
-  SharedCtor();
-}
-
-void MsgMagicActionPopulationResurrect::InitAsDefaultInstance() {
-}
-
-MsgMagicActionPopulationResurrect::MsgMagicActionPopulationResurrect(const MsgMagicActionPopulationResurrect& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgMagicActionPopulationResurrect::SharedCtor() {
-  _cached_size_ = 0;
-  resurrect_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgMagicActionPopulationResurrect::~MsgMagicActionPopulationResurrect() {
-  SharedDtor();
-}
-
-void MsgMagicActionPopulationResurrect::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgMagicActionPopulationResurrect::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgMagicActionPopulationResurrect_descriptor_;
-}
-
-const MsgMagicActionPopulationResurrect& MsgMagicActionPopulationResurrect::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_Common_2eproto();  return *default_instance_;
-}
-
-MsgMagicActionPopulationResurrect* MsgMagicActionPopulationResurrect::default_instance_ = NULL;
-
-MsgMagicActionPopulationResurrect* MsgMagicActionPopulationResurrect::New() const {
-  return new MsgMagicActionPopulationResurrect;
-}
-
-void MsgMagicActionPopulationResurrect::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    resurrect_ = 0;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgMagicActionPopulationResurrect::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 resurrect = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &resurrect_));
-        _set_bit(0);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgMagicActionPopulationResurrect::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgMagicActionPopulationResurrect::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required int32 resurrect = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->resurrect(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgMagicActionPopulationResurrect::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required int32 resurrect = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->resurrect(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgMagicActionPopulationResurrect::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 resurrect = 1;
-    if (has_resurrect()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->resurrect());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgMagicActionPopulationResurrect::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgMagicActionPopulationResurrect* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMagicActionPopulationResurrect*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgMagicActionPopulationResurrect::MergeFrom(const MsgMagicActionPopulationResurrect& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_resurrect(from.resurrect());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgMagicActionPopulationResurrect::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgMagicActionPopulationResurrect::CopyFrom(const MsgMagicActionPopulationResurrect& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgMagicActionPopulationResurrect::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-  
-  return true;
-}
-
-void MsgMagicActionPopulationResurrect::Swap(MsgMagicActionPopulationResurrect* other) {
-  if (other != this) {
-    std::swap(resurrect_, other->resurrect_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgMagicActionPopulationResurrect::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgMagicActionPopulationResurrect_descriptor_;
-  metadata.reflection = MsgMagicActionPopulationResurrect_reflection_;
   return metadata;
 }
 

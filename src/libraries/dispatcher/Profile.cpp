@@ -222,8 +222,6 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return bSupervision_;
     if( wrapper.message().has_knowledge_group_creation_request() )
         return bSupervision_;
-    if( wrapper.message().has_knowledge_group_update_request() )
-        return bSupervision_;
     if( wrapper.message().has_control_toggle_vision_cones() )
         return true;
     if( message.has_unit_order() )
@@ -234,32 +232,22 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return true;
     if( message.has_frag_order() )
         return true;
-    if( message.has_set_automat_mode() )
-        return true;
     if( message.has_unit_creation_request() )
         return true;
+    if( message.has_set_automat_mode() )
+        return true;
     if( message.has_unit_magic_action() )
+    {
+        if( message.unit_magic_action().type()== MsgsClientToSim::MsgUnitMagicAction_Type_create_fire_order )
+            return bSupervision_;
         return true;
+    }
+    if( message.has_knowledge_magic_action() )
+        return bSupervision_;
     if( message.has_object_magic_action() )
-        return true;
-    if( message.has_population_magic_action() )
         return true;
     if( message.has_change_diplomacy() )
         return true;
-    if( message.has_automat_change_knowledge_group() )
-        return true;
-    if( message.has_automat_change_logistic_links() )
-        return true;
-    if( message.has_automat_change_superior() )
-        return true;
-    if( message.has_unit_change_superior() )
-        return true;
-    if( message.has_log_supply_push_flow() )
-        return true;
-    if( message.has_log_supply_change_quotas() )
-        return true;
-    if( message.has_create_fire_order() )
-        return bSupervision_;
 
     return false;
 }

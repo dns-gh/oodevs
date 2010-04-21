@@ -22,7 +22,15 @@ namespace gui
     class EntitySymbols;
 }
 
+namespace actions
+{
+    class ActionsModel;
+}
+
+class ActionPublisher;
 class Publisher_ABC;
+class Simulation;
+class StaticModel;
 
 // =============================================================================
 /** @class  TacticalList
@@ -36,7 +44,7 @@ class TacticalList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalList( kernel::Controllers& controllers, Publisher_ABC& publisher, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             TacticalList( kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~TacticalList();
     //@}
 

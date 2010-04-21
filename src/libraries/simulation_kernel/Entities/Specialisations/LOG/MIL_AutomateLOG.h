@@ -125,9 +125,9 @@ public:
     //! @name Network
     //@{
     virtual void SendFullState                    () const;
-    virtual void OnReceiveMsgChangeLogisticLinks  ( const Common::MsgAutomatChangeLogisticLinks& msg );
-    virtual void OnReceiveMsgLogSupplyChangeQuotas( const MsgsClientToSim::MsgLogSupplyChangeQuotas& msg );
-    virtual void OnReceiveMsgLogSupplyPushFlow    ( const MsgsClientToSim::MsgLogSupplyPushFlow& msg );
+    virtual void OnReceiveMsgChangeLogisticLinks  ( const MsgsClientToSim::MsgUnitMagicAction& msg );
+    virtual void OnReceiveMsgLogSupplyChangeQuotas( const Common::MsgMissionParameters& msg );
+    virtual void OnReceiveMsgLogSupplyPushFlow    ( const Common::MsgMissionParameters& msg );
     //@}
 
 protected:
