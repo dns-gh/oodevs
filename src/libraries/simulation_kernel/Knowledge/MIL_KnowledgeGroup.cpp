@@ -298,7 +298,7 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 
     if( jammedPion_ )
         jammedPion_->GetKnowledge().Update(currentTimeStep);
-
+    
     assert( knowledgeBlackBoard_ );
     knowledgeBlackBoard_->Update(currentTimeStep);
 }
@@ -317,9 +317,9 @@ void MIL_KnowledgeGroup::CleanKnowledges()
 
     for( CIT_AutomateVector it = automates_.begin(); it != automates_.end(); ++it )
         (**it).CleanKnowledges();
-
+        
     if( jammedPion_ )
-        jammedPion_->GetKnowledge().Clean();
+        jammedPion_->GetKnowledge().Clean();    
 }
 
 // -----------------------------------------------------------------------------
@@ -647,16 +647,25 @@ void MIL_KnowledgeGroup::RefreshTimeToDiffuseToKnowledgeGroup()
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate
 // Created: FDS 2010-01-13
 // -----------------------------------------------------------------------------
-void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies  )
+void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim::MsgKnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies  )
 {
-    if( message.has_enabled() )
-       hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupEnable( message ) || hasBeenUpdated_;  
- 
-    if( message.has_oid_parent() &&  message.has_oid_camp() )
-       hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message, armies ) || hasBeenUpdated_;
-
-    if( message.has_type() ) 
-       hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupSetType( message ) || hasBeenUpdated_;    
+    switch( message.type() )
+    {
+    case MsgsClientToSim::MsgKnowledgeMagicAction_Type_enable :
+        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupEnable( message.parametres() ) || hasBeenUpdated_;
+        break;
+    case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side :
+        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message.parametres(), armies, false ) || hasBeenUpdated_;
+        break;
+    case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent :
+        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupChangeSuperior( message.parametres(), armies, true ) || hasBeenUpdated_;
+        break;
+    case MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type :
+        hasBeenUpdated_ = OnReceiveMsgKnowledgeGroupSetType( message.parametres() ) || hasBeenUpdated_;    
+        break;
+    default:
+        break;
+    }
    
     UpdateKnowledgeGroup();
 }
@@ -665,29 +674,29 @@ void MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupUpdate( const MsgsClientToSim
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable
 // Created: SLG 2009-12-17
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message )
+bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const Common::MsgMissionParameters& message )
 {
-    if( message.has_enabled() )
-    {
-        isActivated_ = message.enabled();
-        return true;
-    }
-    return false;
+    isActivated_ = message.elem( 0 ).value().abool();
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior
 // Created: FHD 2009-12-17:  
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message, const tools::Resolver< MIL_Army_ABC >& armies )
+bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
 {
-    MIL_Army_ABC* pTargetArmy = armies.Find( message.oid_camp() );
+    MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().army() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
         throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_camp );
 
-    MIL_KnowledgeGroup* pNewParent = pTargetArmy->FindKnowledgeGroup( message.oid_parent() );
-    if( !pNewParent && message.oid_parent() != 0 )
-        throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
+    MIL_KnowledgeGroup* pNewParent = 0;
+    if( hasParent )
+    {
+        pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup() );
+        if( !pNewParent  )
+            throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
+    }
     if( pNewParent )
     {
         MIL_KnowledgeGroup* parent = GetParent();
@@ -727,9 +736,9 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const MsgsCli
 // Name: MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType
 // Created: FHD 2009-12-17: 
 // -----------------------------------------------------------------------------
-bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const MsgsClientToSim::MsgKnowledgeGroupUpdateRequest& message )
+bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupSetType( const Common::MsgMissionParameters& message )
 {
-    const MIL_KnowledgeGroupType* pFoundType = MIL_KnowledgeGroupType::FindType( message.type() );
+    const MIL_KnowledgeGroupType* pFoundType = MIL_KnowledgeGroupType::FindType( message.elem( 0 ).value().acharstr() );
     if( pFoundType && pFoundType->GetID() != GetType().GetID() )
     {
         SetType( const_cast< MIL_KnowledgeGroupType* >( pFoundType ) );
