@@ -531,7 +531,9 @@ void DEC_Knowledge_Object::BuildMsgRelevance( MsgsSimToClient::MsgObjectKnowledg
 void DEC_Knowledge_Object::BuildMsgLocalisations( MsgsSimToClient::MsgObjectKnowledgeUpdate& asn ) const
 {
     if( IsAttributeUpdated( eAttr_Localisation ) )
-        NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
+	    // $$$$ FDS 2010-04-16: Dans le cas où le type de localiation est none, la Localisation n'est pas renseigné ( Dans Gaming cela entrainerait sinon un Throw )
+    	if( localisation_.GetType() !=  Common::MsgLocation_Geometry_none )
+        	NET_ASN_Tools::WriteLocation( localisation_, *asn.mutable_location() );
 }
 
 // -----------------------------------------------------------------------------
