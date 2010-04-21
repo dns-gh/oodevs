@@ -30,8 +30,12 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const
     , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, Common::ObstacleType_DemolitionTargetType_preliminary ) ) 
 {    
     role_.SetCreator( *pObject_ );
-    pObject_->RetrieveAttribute< ConstructionAttribute >()->Set( 0. );//default construction is set to 100%
-    pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyBuildByGen();
+    ConstructionAttribute* attribute = pObject_->RetrieveAttribute< ConstructionAttribute >();
+    if( attribute )
+    {
+        attribute->Set( 0. );//default construction is set to 100%
+        attribute->NotifyBuildByGen();
+    }
     Callback( role_.GetInitialReturnCode() );
 }
 
