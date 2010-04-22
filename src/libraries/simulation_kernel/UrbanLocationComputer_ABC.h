@@ -10,10 +10,14 @@
 #ifndef __UrbanLocationComputer_ABC_h_
 #define __UrbanLocationComputer_ABC_h_
 
-class PHY_Posture;
+namespace urban
+{
+    class TerrainObject_ABC;
+}
 
 namespace urbanLocation
 {
+
 // =============================================================================
 /** @class  UrbanLocationComputer_ABC
     @brief  UrbanLocationComputer_ABC
@@ -22,6 +26,21 @@ namespace urbanLocation
 // =============================================================================
 class UrbanLocationComputer_ABC
 {
+public:
+
+    struct Parameters
+    {
+        const urban::TerrainObject_ABC& block_;
+        explicit Parameters( const urban::TerrainObject_ABC& block );
+    };
+
+    struct Results
+    {
+        float urbanDeployment_;
+        geometry::Point2f position_;
+        Results();
+    };
+
 
 public:
 
@@ -33,8 +52,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual void ComputeUrbanDeployment( const PHY_Posture& currentPosture ) = 0;
-    virtual float Result() = 0;
+    virtual void SetUrbanDeployment ( float urbanDeployment ) = 0;
+    virtual void SetPosition        ( geometry::Point2f position ) = 0;
+    virtual Results& Result() = 0;
     //@}
 };
 

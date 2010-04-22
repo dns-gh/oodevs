@@ -399,7 +399,6 @@ void MIL_AgentPion::UpdatePhysicalState()
     GetRole< human::PHY_RolePion_Humans           >().Update( bIsDead );
     GetRole< PHY_RolePion_Composantes             >().Update( bIsDead );
     GetRole< PHY_RolePion_Posture                 >().Update( bIsDead );
-    GetRole< PHY_RolePion_UrbanLocation           >().Update( bIsDead );
     GetRole< PHY_RolePion_Reinforcement           >().Update( bIsDead );
     GetRole< PHY_RolePion_Location                >().Update( bIsDead );
     GetRole< nbc::PHY_RolePion_NBC                >().Update( bIsDead );
@@ -1224,14 +1223,14 @@ double MIL_AgentPion::Distance( const MIL_Agent_ABC& target ) const
     const PHY_RoleInterface_UrbanLocation& targetUrbanRole = target.GetRole< PHY_RoleInterface_UrbanLocation >();
     
     if( firerUrbanRole.GetCurrentUrbanBlock() == targetUrbanRole.GetCurrentUrbanBlock() && firerUrbanRole.GetCurrentUrbanBlock() )
-        return firerUrbanRole.ComputeDistanceInsideSameUrbanBlock(firerPosition, targetPosition, targetUrbanRole.GetDeployment() );
+        return firerUrbanRole.ComputeDistanceInsideSameUrbanBlock( const_cast< MIL_Agent_ABC& >( target ) );
     else
     {
-    geometry::Point2f realFirerPosition = firerUrbanRole.GetFirerPosition( firerPosition, targetPosition );
-    geometry::Point2f realTargetPosition = targetUrbanRole.GetTargetPosition( firerPosition, targetPosition );
-    
-    MT_Vector3D vFirerPosition(  realFirerPosition.X(), realFirerPosition.Y(), firerLocation.GetAltitude() );
-    MT_Vector3D vTargetPosition(  realTargetPosition.X(), realTargetPosition.Y(), targetLocation.GetAltitude() );
-    return vFirerPosition.Distance( vTargetPosition );
+        geometry::Point2f realFirerPosition = firerUrbanRole.GetFirerPosition( const_cast< MIL_Agent_ABC& >( target ) );
+        geometry::Point2f realTargetPosition = targetUrbanRole.GetTargetPosition( const_cast< MIL_Agent_ABC& >( target ) );
+        
+        MT_Vector3D vFirerPosition(  realFirerPosition.X(), realFirerPosition.Y(), firerLocation.GetAltitude() );
+        MT_Vector3D vTargetPosition(  realTargetPosition.X(), realTargetPosition.Y(), targetLocation.GetAltitude() );
+        return vFirerPosition.Distance( vTargetPosition );
     }
 }

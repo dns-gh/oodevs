@@ -23,6 +23,7 @@ namespace urban
 }
 
 class PHY_DotationCategory;
+class MIL_Agent_ABC;
 
 // =============================================================================
 /** @class  PHY_RoleInterface_UrbanLocation
@@ -47,16 +48,15 @@ public:
     //! @name Operations
     //@{
     virtual MT_Float            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
-    virtual geometry::Point2f   GetFirerPosition( const geometry::Point2f firerPosition, const geometry::Point2f targetPosition ) const = 0;
-    virtual geometry::Point2f   GetTargetPosition( const geometry::Point2f firerPosition, const geometry::Point2f targetPosition ) const = 0;
-    virtual float               ComputeDistanceInsideSameUrbanBlock( const geometry::Point2f firerPosition, const geometry::Point2f targetPosition, float targetDeployment  ) const = 0;
+    virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target ) const = 0;
+    virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& target ) const = 0;
+    virtual float               ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target  ) const = 0;
     //@}
 
 
     //! @name Accessors
     //@{
     virtual const urban::TerrainObject_ABC* GetCurrentUrbanBlock() const = 0;
-    virtual float GetDeployment() const = 0;
     //@}
 
 private:

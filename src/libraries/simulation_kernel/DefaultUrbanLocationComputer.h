@@ -31,22 +31,24 @@ class DefaultUrbanLocationComputer : public UrbanLocationComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultUrbanLocationComputer( const urban::TerrainObject_ABC& block, float urbanDeployment );
+             DefaultUrbanLocationComputer( const urban::TerrainObject_ABC& block );
     virtual ~DefaultUrbanLocationComputer();
     //@}
 
     //! @name Operations
     //@{
-    virtual void ComputeUrbanDeployment( const PHY_Posture& currentPosture );
-    virtual float Result();
+    virtual void SetUrbanDeployment( float urbanDeployment );
+    virtual void SetPosition( geometry::Point2f position );
+    virtual Results& Result();
     //@}
 
 private:
     //! @name Attribute
     //@{
-    const urban::TerrainObject_ABC& block_;
-    float urbanDeployment_;
+    Parameters params_;
+    Results results_;
     //@}
+
 
 };
 

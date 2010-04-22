@@ -18,9 +18,9 @@ using namespace urbanLocation;
 // Name: DefaultUrbanLocationComputer::DefaultUrbanLocationComputer
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-DefaultUrbanLocationComputer::DefaultUrbanLocationComputer( const urban::TerrainObject_ABC& block, float urbanDeployment )
-    : block_          ( block )
-    , urbanDeployment_( urbanDeployment )
+DefaultUrbanLocationComputer::DefaultUrbanLocationComputer( const urban::TerrainObject_ABC& block )
+    : params_( block )
+    , results_()
 {
     // NOTHING
 }
@@ -35,27 +35,28 @@ DefaultUrbanLocationComputer::~DefaultUrbanLocationComputer()
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultUrbanLocationComputer::ComputeUrbanDeployment
+// Name: DefaultUrbanLocationComputer::SetUrbanDeployment
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-void DefaultUrbanLocationComputer::ComputeUrbanDeployment( const PHY_Posture& currentPosture )
+void DefaultUrbanLocationComputer::SetUrbanDeployment( float urbanDeployment )
 {
-    if( &currentPosture == &PHY_Posture::poste_ || &currentPosture == &PHY_Posture::posteAmenage_ || &currentPosture == &PHY_Posture::postePrepareGenie_  )
-    {
-        urbanDeployment_ = urbanDeployment_ + ( 100 + urbanDeployment_ )/( block_.ComputeComplexity() );
-        if( urbanDeployment_ > 1.f )
-            urbanDeployment_ = 1.f;
-    }
-        
-    else
-        urbanDeployment_ = 0;
+    results_.urbanDeployment_ = urbanDeployment;
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultUrbanLocationComputer::Result
+// Name: DefaultUrbanLocationComputer::SetPosition
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-float DefaultUrbanLocationComputer::Result()
+void DefaultUrbanLocationComputer::SetPosition( geometry::Point2f position )
 {
-    return urbanDeployment_;
+    results_.position_ = position;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultUrbanLocationComputer::GetPosture
+// Created: SLG 2010-04-20
+// -----------------------------------------------------------------------------
+UrbanLocationComputer_ABC::Results& DefaultUrbanLocationComputer::Result()
+{
+    return results_;
 }

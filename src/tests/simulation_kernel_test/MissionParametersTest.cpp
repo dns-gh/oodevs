@@ -106,7 +106,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     MsgUnitList asnIn;
     asnIn.add_elem()->set_oid( 12 );
     MockMIL_EntityManager_ABC entityManager;
-    FixturePion fixture;
+    MIL_EffectManager effectManager;
+    FixturePion fixture( effectManager );
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, StubDEC_Database() ) );
     entityManager.FindAgentPion_mocker.expects( once() ).will( returnValue( static_cast< MIL_AgentPion* >( fixture.pPion_.get() ) ) );
     MIL_AgentListParameter param( asnIn, entityManager );
@@ -128,7 +129,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     MsgUnit asnIn;
     asnIn.set_oid( 12 );
     MockMIL_EntityManager_ABC entityManager;
-    FixturePion fixture;
+    MIL_EffectManager effectManager;
+    FixturePion fixture( effectManager );
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_,  StubDEC_Database() ) );
     entityManager.FindAgentPion_mocker.expects( once() ).will( returnValue( static_cast< MIL_AgentPion* >( fixture.pPion_.get() ) ) );
     MIL_AgentParameter param( asnIn, entityManager );
@@ -817,7 +819,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_MissionWithNullParameters )
         AddPoint( location, "35RPQ8696412999" );
     }
      //    const MIL_MissionType_ABC& type;
-    FixturePion pion; //MIL_AgentPion pion;
+    //FixturePion pion; //MIL_AgentPion pion;
     //MIL_MissionPion missionpion( MIL_PionMissionType::Find( id ), pion, order );
 
 }

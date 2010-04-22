@@ -37,8 +37,8 @@ UrbanLocationComputerFactory::~UrbanLocationComputerFactory()
 // Name: UrbanLocationComputerFactory Create
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-std::auto_ptr< UrbanLocationComputer_ABC > UrbanLocationComputerFactory::Create( const urban::TerrainObject_ABC& block, float deployment ) const
+std::auto_ptr< UrbanLocationComputer_ABC > UrbanLocationComputerFactory::Create( const urban::TerrainObject_ABC& block ) const
 {
-    std::auto_ptr< UrbanLocationComputer_ABC > pUrbanLocationComputer( new DefaultUrbanLocationComputer( block, deployment ) );
+    std::auto_ptr< UrbanLocationComputer_ABC > pUrbanLocationComputer( new DefaultUrbanLocationComputer( block ) );
     return pUrbanLocationComputer;
 }

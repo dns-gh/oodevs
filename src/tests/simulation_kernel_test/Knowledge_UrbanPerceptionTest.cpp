@@ -64,7 +64,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanPerceptionTest_Update )
     std::auto_ptr< urban::Model > model( new urban::Model() );
     model->Load( flux );
 
-    FixturePion pion;
+    MIL_EffectManager effectManager;
+    FixturePion pion( effectManager );
     const urban::Block& object = model->blocks_.Get( 9 );
 
     {

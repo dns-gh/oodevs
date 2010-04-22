@@ -18,6 +18,12 @@
 #include "simulation_kernel/ObjectCollisionNotificationHandler_ABC.h"
 #include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 #include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
+
+namespace urbanLocation
+{
+    class UrbanLocationComputer_ABC;
+}
 
 class MIL_AgentPion;
 
@@ -30,6 +36,7 @@ class PHY_RolePion_Location : public PHY_RoleInterface_Location
                             , public terrain::ObjectCollisionNotificationHandler_ABC
                             , public network::NetworkUnitMessageNotificationHandler_ABC
                             , public location::LocationActionNotificationHandler_ABC
+                            , public tools::AlgorithmModifier_ABC< urbanLocation::UrbanLocationComputer_ABC >
 {
 
 public:
@@ -54,6 +61,7 @@ public:
     virtual void MagicMove( const MT_Vector2D& vNewPosition );
     virtual void Move     ( const MT_Vector2D& vNewPosition, const MT_Vector2D& vNewDirection, MT_Float rNewSpeed );
     virtual void Follow   ( const MIL_Agent_ABC& agent );
+    void         Execute  ( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const;
 
     virtual void NotifyTerrainObjectCollision    ( MIL_Object_ABC& object );
     virtual void NotifyTerrainPutInsideObject    ( MIL_Object_ABC& object );

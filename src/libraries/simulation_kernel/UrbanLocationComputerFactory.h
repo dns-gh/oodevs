@@ -33,7 +33,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::auto_ptr< UrbanLocationComputer_ABC > Create( const urban::TerrainObject_ABC& block, float deployment ) const;
+    virtual std::auto_ptr< UrbanLocationComputer_ABC > Create( const urban::TerrainObject_ABC& block ) const;
     //@}
 };
 

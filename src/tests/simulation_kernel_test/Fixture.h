@@ -22,8 +22,9 @@
 
 struct FixturePion
 {
-    FixturePion()
-        : algorithmsFactories_( new AlgorithmsFactories())
+    FixturePion( MIL_EffectManager& effectManager )
+        : algorithmsFactories_( new AlgorithmsFactories() )
+        , effectManager_( effectManager )
     {
         xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms' id='12' name='stuff'/>" );
         xis.start( "main" );
@@ -42,7 +43,7 @@ struct FixturePion
     std::auto_ptr< StubMIL_AutomateType >  pTypeAutomat_;
     std::auto_ptr< MIL_Automate >          pAutomat_;
     std::auto_ptr< StubMIL_AgentPion >     pPion_;
-    MIL_EffectManager                      effectManager_;
+    MIL_EffectManager&                      effectManager_;
 };
 
 struct FixtureAutomate

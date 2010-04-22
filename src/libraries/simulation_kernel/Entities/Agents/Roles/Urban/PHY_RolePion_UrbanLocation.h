@@ -13,9 +13,13 @@
 #include "MIL.h"
 #include "PHY_RoleInterface_UrbanLocation.h"
 #include "UrbanBlockCollisionNotificationHandler_ABC.h"
+#include "MT_Tools/AlgorithmModifier_ABC.h"
 #include "MT_Tools/MT_Random.h"
 
-class MIL_Agent_ABC;
+namespace posture
+{
+    class PostureComputer_ABC;
+}
 
 // =============================================================================
 /** @class  PHY_RolePion_UrbanLocation
@@ -25,6 +29,7 @@ class MIL_Agent_ABC;
 // =============================================================================
 class PHY_RolePion_UrbanLocation : public PHY_RoleInterface_UrbanLocation
                                  , public terrain::UrbanBlockCollisionNotificationHandler_ABC
+                                 , public tools::AlgorithmModifier_ABC< posture::PostureComputer_ABC >
 {
 
 public:
@@ -44,13 +49,12 @@ public:
 
     //! @name Operations
     //@{
-    void                        Update( bool bIsDead );
     void                        MagicMove( MT_Vector2D vPosition );
     virtual MT_Float            ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
-    virtual geometry::Point2f   GetFirerPosition( const geometry::Point2f firerPosition, const geometry::Point2f targetPosition ) const;
-    virtual geometry::Point2f   GetTargetPosition( const geometry::Point2f firerPosition, const geometry::Point2f targetPosition ) const;
-    virtual float               ComputeDistanceInsideSameUrbanBlock( const geometry::Point2f firerPosition, const geometry::Point2f targetPosition, float urbanDeployment  ) const;
-
+    virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target ) const;
+    virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& target ) const;
+    virtual float               ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
+    void                        Execute( posture::PostureComputer_ABC& algorithm ) const;
 
     //@}
 
@@ -63,7 +67,6 @@ public:
     //! @name Accessors
     //@{
     virtual const urban::TerrainObject_ABC* GetCurrentUrbanBlock() const;
-    virtual float GetDeployment() const;
     //@}
 
     //! @name Network
@@ -88,7 +91,6 @@ private:
     //@{
     MIL_Agent_ABC& pion_;
     const urban::TerrainObject_ABC* urbanObject_;
-    float urbanDeployement_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );

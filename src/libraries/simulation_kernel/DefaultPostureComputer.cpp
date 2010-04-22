@@ -77,6 +77,16 @@ void DefaultPostureComputer::AddCoefficientModifier( double coef )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DefaultPostureComputer::MustBeForce
+// Created: MGD 2009-09-21
+// -----------------------------------------------------------------------------
+void DefaultPostureComputer::AddUrbanCoefficientModifier( double coef )
+{
+    if( &( params_->posture_ ) == &PHY_Posture::poste_ )
+        coefficientsModifier_.push_back( coef );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DefaultPostureComputer::GetPosture
 // Created: MGD 2009-09-21
 // -----------------------------------------------------------------------------

@@ -69,7 +69,8 @@ BOOST_AUTO_TEST_CASE( Knowledge_UrbanTest_Update )
     model->Load( flux );
 
     MockArmy army;
-    FixturePion pion;
+    MIL_EffectManager effectManager;
+    FixturePion pion( effectManager );
 
     const urban::Block& object = model->blocks_.Get( 9 );
 

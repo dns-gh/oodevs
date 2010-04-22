@@ -31,7 +31,8 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( InstantiateBrainForMIL_AgentPion )
 {
-    FixturePion fixture;
+    MIL_EffectManager effectManager;
+    FixturePion fixture( effectManager );
     DEC_RolePion_Decision decision ( *fixture.pPion_, StubDEC_Database() );
 }
 

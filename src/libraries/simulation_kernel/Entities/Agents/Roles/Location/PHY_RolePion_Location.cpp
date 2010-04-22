@@ -28,6 +28,7 @@
 #include "simulation_kernel/MovementHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
+#include "simulation_kernel/UrbanLocationComputer_ABC.h"
 #include "simulation_terrain/TER_World.h"
 #include "Tools/MIL_Tools.h"
 
@@ -507,4 +508,14 @@ void PHY_RolePion_Location::NotifyTerrainPutInsideObject( MIL_Object_ABC& object
 void PHY_RolePion_Location::NotifyTerrainPutOutsideObject( MIL_Object_ABC& object )
 {
     pion_.Apply( &terrain::ObjectCollisionNotificationHandler_ABC::NotifyPutOutsideObject, object );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Location::Execute
+// Created: SLG 2010-04-12
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Location::Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const
+{
+    geometry::Point2f position( pvPosition_->rX_, pvPosition_->rY_ );
+    algorithm.SetPosition( position );
 }
