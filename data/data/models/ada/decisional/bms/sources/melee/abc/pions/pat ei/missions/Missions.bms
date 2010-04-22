@@ -19,6 +19,8 @@ includedFiles["sources/melee/abc/pions/pat ei/missions/Missions.bms"] = true
 
 include "Melee/Abc/Pions/Pat EI/Missions/ReconnaitreAxe.bms"
 
+include "Melee/Abc/Pions/Pat EI/Missions/ArmerPointControle.bms"
+
 include "Melee/Abc/Pions/Pat EI/Missions/Attaquer.bms"
 
 include "Melee/Abc/Pions/Pat EI/Missions/ContreAttaquer.bms"
