@@ -141,7 +141,7 @@ MT_Float PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationC
         if( architecture  && soil )
         {
             unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
-            return dotationCategory.GetUrbanAttritionModifer( materialID ) * 2 * ( soil->GetOccupation() ); // TODO SLG A changer quand les paramètres des BU changeront
+            return ( 1 -dotationCategory.GetUrbanAttritionModifer( materialID ) )* ( soil->GetOccupation() ); // TODO SLG A changer quand les paramètres des BU changeront
         }
     }
     return 0.f;

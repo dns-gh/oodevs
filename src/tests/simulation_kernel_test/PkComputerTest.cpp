@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE( PkComputerUrbanProtectionTest )
     urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
     firer.RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
-    BOOST_CHECK_CLOSE( 0.64, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
+    BOOST_CHECK_CLOSE( 0.48, urbanRole->ComputeUrbanProtection( *pCategory ), 1. );
     delete coord;
     delete test;
 }
