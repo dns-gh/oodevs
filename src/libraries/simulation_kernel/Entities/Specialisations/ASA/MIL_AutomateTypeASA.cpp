@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateTypeASA.h"
-#include "Decision/Functions/DEC_GeometryFunctions.h"
+#include "Decision/DEC_GeometryFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>

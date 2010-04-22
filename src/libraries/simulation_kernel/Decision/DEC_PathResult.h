@@ -13,7 +13,7 @@
 #define __DEC_PathResult_h_
 
 #include "MIL.h"
-#include "Decision/Path/DEC_Path_ABC.h"
+#include "Decision/DEC_Path_ABC.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
 
 namespace Common

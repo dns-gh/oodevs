@@ -14,7 +14,7 @@
 
 #include "MIL.h"
 
-#include "Decision/Path/DEC_PathSection_ABC.h"
+#include "Decision/DEC_PathSection_ABC.h"
 
 class DEC_Agent_Path;
 class TerrainRule_ABC;

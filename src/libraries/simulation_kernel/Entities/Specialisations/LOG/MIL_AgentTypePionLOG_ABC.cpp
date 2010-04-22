@@ -11,9 +11,9 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionLOG_ABC.h"
-#include "Decision/Functions/DEC_LogisticFunctions.h"
-#include "Decision/Functions/DEC_ActionFunctions.h"
-#include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
+#include "Decision/DEC_LogisticFunctions.h"
+#include "Decision/DEC_ActionFunctions.h"
+#include "Decision/DEC_KnowledgeObjectFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyLoad.h"
 #include "Entities/Agents/Actions/ConvoySupply/PHY_ActionConvoyUnload.h"

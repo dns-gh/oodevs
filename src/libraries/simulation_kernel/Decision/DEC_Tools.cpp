@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Tools.h"
-#include "Functions/DEC_FrontAndBackLinesComputer.h"
+#include "Decision/DEC_FrontAndBackLinesComputer.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Decision/DEC_Objective.h"
 

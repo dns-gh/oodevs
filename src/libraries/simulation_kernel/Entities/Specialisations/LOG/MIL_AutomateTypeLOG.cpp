@@ -12,7 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_AutomateTypeLOG.h"
 #include "MIL_AutomateLOG.h"
-#include "Decision/Functions/DEC_LogisticFunctions.h"
+#include "Decision/DEC_LogisticFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>

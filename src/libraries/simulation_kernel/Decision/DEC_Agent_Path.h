@@ -17,7 +17,7 @@
 #include "DEC_Path_KnowledgeAgent.h"
 #include "DEC_Path_KnowledgeObject.h"
 #include "DEC_Path_KnowledgePopulation.h"
-#include "Decision/Path/DEC_PathResult.h"
+#include "Decision/DEC_PathResult.h"
 #include "Entities/Agents/Units/PHY_Speeds.h"
 #include "Entities/Orders/MIL_Fuseau.h"
 #include "MT_Tools/MT_Profiler.h"

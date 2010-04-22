@@ -11,7 +11,7 @@
 
 #include "DEC_Agent_PathClass.h"
 
-#include "Decision/Path/DEC_PathType.h"
+#include "Decision/DEC_PathType.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_ObjectFactory.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"

@@ -10,7 +10,7 @@
 #ifndef __PHY_MovingEntity_ABC_h_
 #define __PHY_MovingEntity_ABC_h_
 
-#include "Decision/Path/DEC_PathWalker.h"
+#include "Decision/DEC_PathWalker.h"
 #include <boost/shared_ptr.hpp>
 
 namespace Common

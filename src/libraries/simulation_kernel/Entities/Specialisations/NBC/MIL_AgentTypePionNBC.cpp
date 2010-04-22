@@ -11,8 +11,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_AgentTypePionNBC.h"
-#include "Decision/Functions/DEC_KnowledgeObjectFunctions.h"
-#include "Decision/Functions/DEC_AgentFunctions.h"
+#include "Decision/DEC_KnowledgeObjectFunctions.h"
+#include "Decision/DEC_AgentFunctions.h"
 #include "Decision/DEC_Tools.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>

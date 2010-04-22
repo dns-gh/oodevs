@@ -12,10 +12,10 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFunctions.h"
 
-#include "Decision/Path/DEC_PathType.h"
-#include "Decision/Path/DEC_PathPoint.h"
-#include "Decision/Path/DEC_PathFind_Manager.h"
-#include "Decision/Path/DEC_Agent_Path.h"
+#include "Decision/DEC_PathType.h"
+#include "Decision/DEC_PathPoint.h"
+#include "Decision/DEC_PathFind_Manager.h"
+#include "Decision/DEC_Agent_Path.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -25,9 +25,9 @@
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "MIL_AgentServer.h"
 #include "Tools/MIL_Tools.h"
-#include "Decision/Knowledge/DEC_Rep_PathPoint.h"
-#include "Decision/Knowledge/DEC_Rep_PathPoint_Front.h"
-#include "Decision/Knowledge/DEC_Rep_PathPoint_Lima.h"
+#include "Decision/DEC_Rep_PathPoint.h"
+#include "Decision/DEC_Rep_PathPoint_Front.h"
+#include "Decision/DEC_Rep_PathPoint_Lima.h"
 
 
 // -----------------------------------------------------------------------------

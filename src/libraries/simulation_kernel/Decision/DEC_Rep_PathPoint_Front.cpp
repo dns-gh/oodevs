@@ -13,7 +13,7 @@
 
 #include "DEC_Rep_PathPoint_Front.h"
 
-#include "Decision/Knowledge/DEC_Rep_PathPoint.h"
+#include "Decision/DEC_Rep_PathPoint.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Representations.h"
 

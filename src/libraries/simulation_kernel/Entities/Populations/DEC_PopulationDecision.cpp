@@ -22,9 +22,9 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "MT_Tools/MT_CrashHandler.h"
 
-#include "Decision/Functions/DEC_PopulationFunctions.h"
-#include "Decision/Functions/DEC_ActionFunctions.h"
-#include "Decision/Functions/DEC_MiscFunctions.h"
+#include "Decision/DEC_PopulationFunctions.h"
+#include "Decision/DEC_ActionFunctions.h"
+#include "Decision/DEC_MiscFunctions.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionMove.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPion.h"
 #include "Entities/Populations/Actions/PHY_Population_ActionFireOnPions.h"

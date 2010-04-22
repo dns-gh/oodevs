@@ -14,8 +14,8 @@
 
 #include "MIL.h"
 
-#include "Decision/Path/DEC_PathResult.h"
-#include "Decision/Path/DEC_Population_Path_Channeler.h"
+#include "Decision/DEC_PathResult.h"
+#include "Decision/DEC_Population_Path_Channeler.h"
 #include "MT_Tools/MT_Profiler.h"
 
 class MIL_Population;

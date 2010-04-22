@@ -22,7 +22,7 @@
 
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_Representations.h"
-#include "Decision/Path/DEC_PathPoint.h"
+#include "Decision/DEC_PathPoint.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/clientsenders.h"

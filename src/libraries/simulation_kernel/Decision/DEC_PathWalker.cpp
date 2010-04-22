@@ -11,7 +11,7 @@
 
 #include "protocol/protocol.h"
 #include "DEC_PathWalker.h"
-#include "Decision/Path/DEC_PathPoint.h"
+#include "Decision/DEC_PathPoint.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"

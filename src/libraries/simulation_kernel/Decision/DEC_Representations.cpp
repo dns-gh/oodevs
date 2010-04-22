@@ -10,7 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_Representations.h"
 #include "Entities/Orders/MIL_FragOrder.h"
-#include "Decision/Path/DEC_PathPoint.h"
+#include "Decision/DEC_PathPoint.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Representations )
 

@@ -11,7 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_Effect_Move.h"
-#include "Decision/Path/DEC_PathWalker.h"
+#include "Decision/DEC_PathWalker.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Effect_Move::MIL_Effect_Move

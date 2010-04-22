@@ -9,7 +9,7 @@
 
 #include "DEC_Model_ABC.h"
 #include "Decision/DEC_DataBase.h"
-#include "Decision/Functions/DEC_PathFunctions.h"
+#include "Decision/DEC_PathFunctions.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Orders/MIL_Report.h"

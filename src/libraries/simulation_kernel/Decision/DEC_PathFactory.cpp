@@ -9,8 +9,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_PathFactory.h"
-#include "Decision/Path/DEC_Agent_PathClass.h"
-#include "Decision/Path/DEC_Population_PathClass.h"
+#include "Decision/DEC_Agent_PathClass.h"
+#include "Decision/DEC_Population_PathClass.h"
 #include <xeumeuleu/xml.h>
 
 

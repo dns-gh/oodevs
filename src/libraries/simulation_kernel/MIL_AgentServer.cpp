@@ -9,7 +9,7 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Decision/DEC_Workspace.h"
-#include "Decision/Path/DEC_PathFind_Manager.h"
+#include "Decision/DEC_PathFind_Manager.h"
 #include "Entities/Orders/MIL_TacticalLineManager.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"

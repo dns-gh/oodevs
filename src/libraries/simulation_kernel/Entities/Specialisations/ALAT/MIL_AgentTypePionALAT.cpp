@@ -13,7 +13,7 @@
 
 #include "MIL_AgentTypePionALAT.h"
 #include "Decision/DEC_Tools.h"
-#include "Decision/Functions/DEC_PerceptionFunctions.h"
+#include "Decision/DEC_PerceptionFunctions.h"
 #include <boost/bind.hpp>
 #include <boost/function.hpp>
 #include <directia/Brain.h>
