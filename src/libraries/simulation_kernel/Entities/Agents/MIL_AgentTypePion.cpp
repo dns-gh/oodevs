@@ -51,6 +51,7 @@
 #include "Entities/Agents/Roles/Population/PHY_RolePion_Population.h"
 #include "Entities/Agents/Roles/Protection/PHY_RolePion_ActiveProtection.h"
 #include "Entities/Agents/Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
+#include "Entities/Agents/Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
@@ -355,6 +356,7 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, DEC_DataBase& databa
     pion.RegisterRole( *new DEC_RolePion_Decision( pion, database ) );
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );
+    pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );
 
     if( pion.CanFly() )
         pion.RegisterRole( *new PHY_RoleAction_Flying( pion ) );

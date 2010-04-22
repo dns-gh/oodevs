@@ -33,6 +33,7 @@
 #include "Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Roles/Illumination/PHY_RolePion_Illumination.h" // LTO
+#include "Roles/Terrain/PHY_RolePion_TerrainAnalysis.h"
 #include "Roles/Urban/PHY_RolePion_UrbanLocation.h"
 
 #include "Actions/Loading/PHY_RoleAction_Loading.h"
@@ -210,6 +211,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     LoadRole< PHY_RoleAction_FolkInfluence >( file, *this );
     LoadRole< PHY_RolePion_Illumination >( file, *this ); // LTO
     RegisterRole( *new DEC_Representations() );
+    RegisterRole( *new PHY_RolePion_TerrainAnalysis( *this ) );
 }
 
 // -----------------------------------------------------------------------------

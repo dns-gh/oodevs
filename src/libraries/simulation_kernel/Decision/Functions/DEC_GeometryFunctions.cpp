@@ -13,7 +13,9 @@
 
 #include "DEC_GeometryFunctions.h"
 #include "DEC_FrontAndBackLinesComputer.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Terrain/PHY_RoleInterface_TerrainAnalysis.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Fuseau.h"
@@ -26,7 +28,6 @@
 #include "Tools/MIL_Tools.h"
 #include "simulation_terrain/TER_Localisation.h"
 #include "MT_Tools/MT_Random.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 
 #define PRECISION 0.0000001
 
@@ -1481,14 +1482,10 @@ float DEC_GeometryFunctions::ComputeDelayFromSchedule( const MIL_Fuseau* pFuseau
 // Name: DEC_GeometryFunctions::GetCrossroads
 // Created: MGD 2009-08-19
 // -----------------------------------------------------------------------------
-void DEC_GeometryFunctions::GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, boost::shared_ptr< MT_Vector2D > center, float radius, const directia::ScriptRef& table )
+void DEC_GeometryFunctions::GetCrossroads( const directia::Brain& brain, const MIL_AgentPion& pion, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& table )
 {  
     std::vector< boost::shared_ptr< MT_Vector2D > > points;
-    const MIL_Fuseau& fuseau = pion.GetOrderManager().GetFuseau();
-    if( fuseau.IsNull() )
-        points = TER_PathFindManager::GetPathFindManager().FindCrossroadsWithinCircle( *center, radius );
-    else
-        points = pion.GetOrderManager().GetFuseau().FindCrossroadsWithinCircle( *center, radius );
+    pion.GetRole< PHY_RoleInterface_TerrainAnalysis >().GetCrossroads( points );
 
     knowledgeCreateFunction( table, brain.GetScriptVariable( "net.masagroup.sword.military.world.Point" ), points, true );
 }

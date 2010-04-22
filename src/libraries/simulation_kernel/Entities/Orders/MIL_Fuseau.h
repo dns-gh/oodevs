@@ -77,7 +77,6 @@ public:
 
     bool             IsNull            () const;
     const MT_Line&   GetGlobalDirection() const;
-    std::vector< boost::shared_ptr< MT_Vector2D > > FindCrossroadsWithinCircle( MT_Vector2D& pos, float radius ) const;
     //@}
    
     //! @name Tools
@@ -127,9 +126,6 @@ private:
     MT_Vector2D vStartGlobalDirection_;
     MT_Vector2D vEndGlobalDirection_;
     MT_Line     globalDirectionLine_;
-
-    //Queries buffer
-    std::vector< boost::shared_ptr< MT_Vector2D > > crossroadsBuffer_;
 
 private:
     static unsigned int nNbrMeterPerSample_;

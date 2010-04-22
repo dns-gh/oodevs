@@ -25,6 +25,7 @@
 #include "simulation_kernel/LocationComputerFactory_ABC.h"
 #include "simulation_kernel/MoveComputer_ABC.h"
 #include "simulation_kernel/MoveComputerFactory_ABC.h"
+#include "simulation_kernel/MovementHandler_ABC.h"
 #include "simulation_kernel/NetworkNotificationHandler_ABC.h"
 #include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
@@ -451,6 +452,7 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     {
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
         pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
+        pion_.Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
     }
     if( HasSpeedChanged() )
         pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );

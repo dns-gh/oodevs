@@ -758,7 +758,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
 
     //Keypoint
     brain.RegisterFunction( "DEC_Crossroads", 
-        boost::function< void( boost::shared_ptr< MT_Vector2D >, float, const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 , _2, _3 ) ) ) ;
+        boost::function< void( const directia::ScriptRef& ) >( boost::bind( &DEC_GeometryFunctions::GetCrossroads, boost::ref( brain ), boost::ref( GetPion() ), initQueryFunction, _1 ) ) ) ;
     
     // Fire 
     brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirerSurUnite",
