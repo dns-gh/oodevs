@@ -1227,7 +1227,7 @@ double MIL_AgentPion::Distance( const MIL_Agent_ABC& target ) const
     else
     {
         geometry::Point2f realFirerPosition = firerUrbanRole.GetFirerPosition( const_cast< MIL_Agent_ABC& >( target ) );
-        geometry::Point2f realTargetPosition = targetUrbanRole.GetTargetPosition( const_cast< MIL_Agent_ABC& >( target ) );
+        geometry::Point2f realTargetPosition = targetUrbanRole.GetTargetPosition( const_cast< MIL_AgentPion& >( *this ) );
         
         MT_Vector3D vFirerPosition(  realFirerPosition.X(), realFirerPosition.Y(), firerLocation.GetAltitude() );
         MT_Vector3D vTargetPosition(  realTargetPosition.X(), realTargetPosition.Y(), targetLocation.GetAltitude() );

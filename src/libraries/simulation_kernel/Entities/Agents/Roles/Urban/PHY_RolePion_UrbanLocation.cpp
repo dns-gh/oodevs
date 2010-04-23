@@ -165,7 +165,7 @@ geometry::Point2f PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& t
     {
         std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( geometry::Segment2f( firerResult.position_, targetResult.position_ ) );
         if( points.empty() )
-            throw std::exception( " error in urbanBlock intersection" );
+            throw std::exception( "error in urbanBlock intersection for firer" );
         return GetNearestUrbanBlockPoint( firerResult.position_, points ); 
     }
     return firerResult.position_;
@@ -175,26 +175,26 @@ geometry::Point2f PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& t
 // Name: PHY_RolePion_UrbanLocation::GetTargetPosition
 // Created: SLG 2010-04-13
 // -----------------------------------------------------------------------------
-geometry::Point2f PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& target ) const
+geometry::Point2f PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer ) const
 {
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
-    const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *firerComputer );
-    UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
-
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( target.GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
-    target.Execute( *targetComputer );
+    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
+    const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *targetComputer );
     UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
+
+    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( firer.GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
+    firer.Execute( *firerComputer );
+    UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
 
     if( urbanObject_ )
     {
         geometry::Line2f lineTmp( firerResult.position_, targetResult.position_ );
         std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( lineTmp );
         if( points.size() < 2 )
-            throw std::exception( " error in urbanBlock intersection" );
+            throw std::exception( " error in urbanBlock intersection for target" );
         geometry::Point2f pfirst = GetNearestUrbanBlockPoint( firerResult.position_, points );
         geometry::Point2f pSecond = GetFurthestUrbanBlockPoint( firerResult.position_, points );
         geometry::Vector2f vector( pfirst, pSecond );
-        vector = vector * ( 1 - firerResult.urbanDeployment_ );
+        vector = vector * ( 1 - targetResult.urbanDeployment_ );
         geometry::Point2f pM = pfirst + vector;
         vector = geometry::Vector2f( pM, pSecond ) * randomGenerator_.rand_ii();
         return pM + vector;
