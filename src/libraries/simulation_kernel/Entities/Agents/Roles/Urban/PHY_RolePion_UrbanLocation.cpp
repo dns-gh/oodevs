@@ -94,8 +94,12 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
     for (std::vector< const urban::TerrainObject_ABC* >::const_iterator it = urbanBlocks.begin(); it != urbanBlocks.end(); ++it )
     {
         if( (**it).GetFootprint()->IsInside( point ) )
+        {
             urbanObject_ = *it;
+            return;
+        }
     }
+    urbanObject_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +170,7 @@ geometry::Point2f PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& t
         std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( geometry::Segment2f( firerResult.position_, targetResult.position_ ) );
         if( points.empty() )
             throw std::exception( "error in urbanBlock intersection for firer" );
-        return GetNearestUrbanBlockPoint( firerResult.position_, points ); 
+        return GetNearestUrbanBlockPoint( targetResult.position_, points ); 
     }
     return firerResult.position_;
 }
