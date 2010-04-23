@@ -59,4 +59,6 @@ include "Melee/Abc/Pions/Pat EI/Missions/RenseignerSur.bms"
 
 include "Melee/Abc/Pions/Pat EI/Missions/ArmerPIA.bms"
 
+include "Melee/Abc/Pions/Pat EI/Missions/ArmerPointControle.bms"
+
 include "Melee/Abc/Pions/Pat EI/Missions/Escorter.bms"

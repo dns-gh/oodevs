@@ -64,6 +64,8 @@ include "Melee/Abc/Pions/Common/Missions/AppuyerSurPosition.bms"
 
 include "Melee/Abc/Pions/Common/Missions/ArmerPIA.bms"
 
+include "Melee/Abc/Pions/Common/Missions/ArmerPointControle.bms"
+
 include "Melee/Abc/Pions/Common/Missions/Barrer.bms"
 
 include "Melee/Abc/Pions/Common/Missions/ContreAttaquer.bms"
