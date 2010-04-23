@@ -197,7 +197,7 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     TER_Object_ABC::T_ObjectVector objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vNewPos_, (vEnd - vStart).Magnitude(), objects ); 
 
-    moveStepSet.clear();
+    //moveStepSet.clear();
 
     MT_Line lineTmp( vStart, vEnd );
 
@@ -274,7 +274,7 @@ void DEC_PathWalker::ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, con
     std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
     UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vNewPos_.rX_, vNewPos_.rY_ ), start.Distance( end ), urbanBlocks );
     
-    moveStepSet.clear();
+    //moveStepSet.clear();
 
     geometry::Segment2f lineTmp( start, end );
 
@@ -304,7 +304,7 @@ void DEC_PathWalker::ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, con
                 if( itMoveStep != moveStepSet.begin() )
                 {
                     IT_MoveStepSet itPrevMoveStep = itMoveStep;
-                    itMoveStep->objectsToNextPointSet_ = (--itPrevMoveStep)->objectsToNextPointSet_;
+                    itMoveStep->urbanBlocksToNextPointSet_ = (--itPrevMoveStep)->urbanBlocksToNextPointSet_;
                 }
             }
             collisions.clear();
@@ -443,6 +443,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     sMoveStepCmp  cmp( vNewPos_ );
     T_MoveStepSet moveStepSet( cmp ); 
    
+    moveStepSet.clear();
     ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );
     ComputeUrbanBlocksCollision( vNewPos_, vNewPosTmp, moveStepSet );
     assert( moveStepSet.size() >= 2 );
