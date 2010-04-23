@@ -51,10 +51,9 @@ using namespace actions;
 // Name: UnitMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
+UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
@@ -172,9 +171,8 @@ namespace
 {
     struct MagicFunctor
     {
-        MagicFunctor( Publisher_ABC& publisher, const StaticModel& staticModel, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, int id ) 
-            : publisher_( publisher )
-            , static_( staticModel )
+        MagicFunctor( const StaticModel& staticModel, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, int id ) 
+            : static_( staticModel )
             , controllers_( controllers )
             , actionPublisher_( actionPublisher )
             , actionsModel_( actionsModel)
@@ -216,7 +214,6 @@ namespace
         }
     private:
         MagicFunctor& operator=( const MagicFunctor& );
-        Publisher_ABC& publisher_;
         const StaticModel& static_;
         Controllers& controllers_;
         ActionPublisher& actionPublisher_;
@@ -227,8 +224,8 @@ namespace
 
     struct RecursiveMagicFunctor : public MagicFunctor
     {
-        RecursiveMagicFunctor( Publisher_ABC& publisher, const StaticModel& staticModel, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, int id )
-            : MagicFunctor( publisher, staticModel, controllers, actionPublisher, actionsModel, simulation, id )
+        RecursiveMagicFunctor( const StaticModel& staticModel, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, int id )
+            : MagicFunctor( staticModel, controllers, actionPublisher, actionsModel, simulation, id )
         {}
         void operator()( const Entity_ABC& entity ) const
         {
@@ -340,7 +337,7 @@ int UnitMagicOrdersInterface::AddMagic( const QString& label, const char* slot, 
 // -----------------------------------------------------------------------------
 void UnitMagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id )
 {
-    RecursiveMagicFunctor functor( publisher_, static_, controllers_, actionPublisher_, actionsModel_, simulation_, id);
+    RecursiveMagicFunctor functor( static_, controllers_, actionPublisher_, actionsModel_, simulation_, id);
     functor( entity );
 }
 

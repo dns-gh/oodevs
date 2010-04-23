@@ -55,13 +55,14 @@ NBCAttribute::NBCAttribute()
 // Name: NBCAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-NBCAttribute::NBCAttribute( const Common::MsgObjectAttributes& asn )
+NBCAttribute::NBCAttribute( const Common::MsgMissionParameter_Value& attributes )
     : nForm_ ( eGas )
-    , danger_( asn.nbc().danger_level() )
+    , danger_( attributes.list( 1 ).quantity() )
 {
-    for( int i = 0; i < asn.nbc().nbc_agents().elem_size(); ++i )
+    const Common::MsgMissionParameter_Value& agentsList = attributes.list( 2 );
+    for( int i = 0; i < agentsList.list_size(); ++i )
     {
-        const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( asn.nbc().nbc_agents().elem( i ) );
+        const MIL_NbcAgentType* pType = MIL_NbcAgentType::Find( agentsList.list( i ).identifier() );
         if( !pType )
             throw std::runtime_error( "Unknown agent type for NBC attribute" );
         agents_.push_back( pType );

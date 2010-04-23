@@ -65,6 +65,15 @@ Object_ABC& ObjectsModel::GetObject( unsigned long id )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObjectsModel::FindObject
+// Created: JSR 2010-04-21
+// -----------------------------------------------------------------------------
+kernel::Object_ABC* ObjectsModel::FindObject( unsigned long id )
+{
+    return tools::Resolver< Object_ABC >::Find( id );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObjectsModel::DeleteObject
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------

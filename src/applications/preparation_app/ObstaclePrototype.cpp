@@ -53,11 +53,3 @@ void ObstaclePrototype::Commit()
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: ObstaclePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void ObstaclePrototype::Clean()
-{
-    // NOTHING
-}

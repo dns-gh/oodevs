@@ -28,7 +28,6 @@
 #include "gaming/StaticModel.h"
 #include "icons.h"
 #include "protocol/SimulationSenders.h"
-#include "protocol/ServerPublisher_ABC.h"
 
 using namespace kernel;
 using namespace actions;
@@ -37,9 +36,8 @@ using namespace actions;
 // Name: AgentListView constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )

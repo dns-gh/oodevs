@@ -48,6 +48,7 @@ public:
 
     void CreateObject( const MsgsSimToClient::MsgObjectCreation& message );
     kernel::Object_ABC& GetObject( unsigned long id );
+    kernel::Object_ABC* FindObject( unsigned long id );
     void DeleteObject( unsigned long id );
     //@}
 

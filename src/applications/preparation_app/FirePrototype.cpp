@@ -34,7 +34,6 @@ FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireCl
 // -----------------------------------------------------------------------------
 FirePrototype::~FirePrototype()
 {
-    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -52,11 +51,3 @@ void FirePrototype::Commit()
     }
 }
 
-// -----------------------------------------------------------------------------
-// Name: FirePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void FirePrototype::Clean()
-{
-    // NOTHING
-}

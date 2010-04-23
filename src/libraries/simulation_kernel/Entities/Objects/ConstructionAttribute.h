@@ -66,7 +66,7 @@ public:
     //@{
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
     virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
-    virtual void OnUpdate( const Common::MsgObjectAttributes& asn );        
+    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );        
     //@}
 
     //! @name ODB

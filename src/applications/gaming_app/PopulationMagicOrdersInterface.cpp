@@ -75,10 +75,9 @@ namespace
 // Name: PopulationMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ParametersLayer& layer, const Profile_ABC& profile )
+PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ParametersLayer& layer, const Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )

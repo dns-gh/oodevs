@@ -32,7 +32,6 @@ namespace actions
 class StaticModel;
 class Equipment;
 class Dotation;
-class Publisher_ABC;
 class ActionPublisher;
 class Simulation;
 
@@ -48,7 +47,7 @@ class LogisticSupplyRecompletionDialog : public QDialog
 public:
     //! @name Constructor/Destructor
     //@{
-             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             LogisticSupplyRecompletionDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyRecompletionDialog();
     //@}
 
@@ -117,7 +116,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const StaticModel& static_;
-    Publisher_ABC& publisher_;
     ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const Simulation& simulation_;

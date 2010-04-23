@@ -2284,5 +2284,9 @@
         <source>nervous</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

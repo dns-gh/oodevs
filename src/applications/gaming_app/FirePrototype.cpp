@@ -12,6 +12,7 @@
 #include "clients_kernel/FireClass.h"
 #include "protocol/Protocol.h"
 #include "tools/Iterator.h"
+#include "actions/ParameterList.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,9 +21,9 @@ using namespace gui;
 // Name: FirePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass >& resolver, MsgsClientToSim::MsgMagicActionCreateObject& msg )
+FirePrototype::FirePrototype( QWidget* parent, const tools::Resolver_ABC< FireClass >& resolver, actions::parameters::ParameterList*& attributesList )
     : FirePrototype_ABC( parent, resolver )
-    , msg_( msg )     
+    , attributesList_( attributesList )
 {
     // NOTHING
 }
@@ -44,17 +45,9 @@ void FirePrototype::Commit()
 {
     if( const kernel::FireClass* fire = fireClass_->GetValue() )
     {
-        msg_.mutable_attributes()->mutable_fire()->set_class_id( fire->GetId() );
-        msg_.mutable_attributes()->mutable_fire()->set_heat( fire->GetDefaultHeat() );
+        actions::parameters::ParameterList& list = attributesList_->AddList( "Fire" );
+        list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_fire );
+        list.AddIdentifier( "ClassId", fire->GetId() );
+        list.AddQuantity( "Heat", fire->GetDefaultHeat() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: FirePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void FirePrototype::Clean()
-{
-    if( msg_.attributes().has_fire() )
-        msg_.mutable_attributes()->clear_fire();
 }

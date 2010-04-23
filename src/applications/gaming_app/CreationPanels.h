@@ -36,7 +36,6 @@ namespace actions
 }
 
 class StaticModel;
-class Publisher_ABC;
 class ActionPublisher;
 class ObjectCreationPanel;
 class Services;
@@ -57,7 +56,7 @@ class CreationPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings );
+             CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, gui::ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, gui::ParametersLayer& paramLayer, kernel::GlTools_ABC& tools, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings );
     virtual ~CreationPanels();
     //@}
 

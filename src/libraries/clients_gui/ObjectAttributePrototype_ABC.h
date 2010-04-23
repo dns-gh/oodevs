@@ -34,7 +34,6 @@ public:
     //@{
     virtual bool CheckValidity() const = 0;
     virtual void Commit() = 0;
-    virtual void Clean() = 0;
     //@}
 };
 

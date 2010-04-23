@@ -194,7 +194,10 @@ void StockAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 void StockAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
     if( NeedUpdate( eOnCreation ) | NeedUpdate( eOnUpdate) )
+    {
         Send( *asn.mutable_stock(), false );
+        Reset();
+    }
 }
 
 // -----------------------------------------------------------------------------

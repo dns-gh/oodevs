@@ -11,6 +11,7 @@
 #include "SupplyRoutePrototype.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"
+#include "actions/ParameterList.h"
 
 using namespace MsgsClientToSim;
 using namespace gui;
@@ -19,9 +20,9 @@ using namespace gui;
 // Name: SupplyRoutePrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-SupplyRoutePrototype::SupplyRoutePrototype( QWidget* parent, MsgMagicActionCreateObject& msg )
+SupplyRoutePrototype::SupplyRoutePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
     : SupplyRoutePrototype_ABC( parent )
-    , msg_  ( msg )
+    , attributesList_( attributesList )
     , attr_ ( 0 )
 {
     // NOTHING
@@ -42,19 +43,11 @@ SupplyRoutePrototype::~SupplyRoutePrototype()
 // -----------------------------------------------------------------------------
 void SupplyRoutePrototype::Commit()
 {
-    msg_.mutable_attributes()->mutable_supply_route()->set_flow_rate( flow_->value() );
-    msg_.mutable_attributes()->mutable_supply_route()->set_width( width_->value() );
-    msg_.mutable_attributes()->mutable_supply_route()->set_length( length_->value() );
-    msg_.mutable_attributes()->mutable_supply_route()->set_max_weight( maxWeight_->value() );
-    msg_.mutable_attributes()->mutable_supply_route()->set_equipped( equipped_->isOn() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: SupplyRoutePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void SupplyRoutePrototype::Clean()
-{
-    if( msg_.attributes().has_supply_route() )
-        msg_.mutable_attributes()->clear_supply_route();
+    actions::parameters::ParameterList& list = attributesList_->AddList( "SupplyRoute" );
+    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_supply_route );
+    list.AddBool( "Equipped", equipped_->isOn() );
+    list.AddQuantity( "MaxWeight", maxWeight_->value() );
+    list.AddQuantity( "Width", width_->value() );
+    list.AddQuantity( "Length", length_->value() );
+    list.AddQuantity( "FlowRate", flow_->value() );
 }

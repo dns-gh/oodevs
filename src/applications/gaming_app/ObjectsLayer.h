@@ -13,7 +13,14 @@
 #include "clients_gui/ObjectsLayer.h"
 #include "protocol/ServerPublisher_ABC.h"
 
-class Publisher_ABC;
+namespace actions
+{
+    class ActionsModel;
+}
+
+class ActionPublisher;
+class Simulation;
+class StaticModel;
 
 // =============================================================================
 /** @class  ObjectsLayer
@@ -27,7 +34,7 @@ class ObjectsLayer : public gui::ObjectsLayer
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, Publisher_ABC& publisher );
+    ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
     virtual ~ObjectsLayer();
     //@}
 
@@ -51,7 +58,10 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& static_;
+    const Simulation& simulation_;
     kernel::SafePointer< kernel::Object_ABC > selected_;
     //@}
 };

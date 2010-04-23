@@ -104,10 +104,28 @@ namespace
 void ObjectListener::SendCreation( const Row_ABC& row )
 {
     simulation::ObjectMagicAction message;
-    MsgsClientToSim::MsgMagicActionCreateObject* creation = message().mutable_action()->mutable_create_object();
+    /*MsgsClientToSim::MsgMagicActionCreateObject* creation = message().mutable_action()->mutable_create_object();
     creation->set_team( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
     creation->set_type( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
     creation->set_name( "" );
-    row.GetGeometry().Serialize( *creation->mutable_location() );
+    row.GetGeometry().Serialize( *creation->mutable_location() );*/
+    message().set_oid( 0 );
+    message().set_type( MsgsClientToSim::MsgObjectMagicAction_Type_create );
+
+    // type
+    message().mutable_parametres()->add_elem()->mutable_value()->set_acharstr( GetType( boost::get< std::string >( row.GetField( "Info" ) ) ).c_str() );
+
+    // location
+    row.GetGeometry().Serialize( *message().mutable_parametres()->add_elem()->mutable_value()->mutable_location() );
+
+    // name
+    message().mutable_parametres()->add_elem()->mutable_value()->set_acharstr( "" );
+
+    // team
+    message().mutable_parametres()->add_elem()->mutable_value()->set_army( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
+
+    // list (unused but must be created)
+    message().mutable_parametres()->add_elem();
+
     message.Send( publisher_ );
 }

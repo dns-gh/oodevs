@@ -56,14 +56,14 @@ FireAttribute::FireAttribute( xml::xistream& xis )
 // Name: FireAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-FireAttribute::FireAttribute( const Common::MsgObjectAttributes& asn )
+FireAttribute::FireAttribute( const Common::MsgMissionParameter_Value& attributes )
     : heat_        ( 0 )
     , pClass_    ( 0 )
     , width_    ( MIL_FireClass::GetWidth() )
     , length_   ( MIL_FireClass::GetLength() )
     , timeOfLastUpdate_ ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
 {        
-    pClass_ = MIL_FireClass::Find( asn.fire().class_id() );
+    pClass_ = MIL_FireClass::Find( attributes.list( 1 ).identifier() );
     if( !pClass_ )
         throw std::runtime_error( "Unknown 'Fire class' for fire object attribute" );    
     heat_ = pClass_->GetDefaultHeat();

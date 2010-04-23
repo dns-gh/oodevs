@@ -11,6 +11,7 @@
 #define __TimeLimitedAttribute_h_
 
 #include "ObjectAttribute_ABC.h"
+#include "UpdatableAttribute_ABC.h"
 #include <boost/serialization/export.hpp>
 
 // =============================================================================
@@ -20,6 +21,7 @@
 // Created: JCR 2008-05-30
 // =============================================================================
 class TimeLimitedAttribute : public ObjectAttribute_ABC
+                           , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -27,7 +29,7 @@ public:
              TimeLimitedAttribute();
     explicit TimeLimitedAttribute( xml::xistream& xis );
     explicit TimeLimitedAttribute( unsigned int nActivityTime );
-    explicit TimeLimitedAttribute( const Common::MsgObjectAttributes& asn );
+    explicit TimeLimitedAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~TimeLimitedAttribute();
     //@}
 

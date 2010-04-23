@@ -29,6 +29,7 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/MissionType.h"
 #include "clients_kernel/FragOrderType.h"
@@ -350,31 +351,29 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) 
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateObjectMagicAction( xml::xistream& xis ) const
 {
-    const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
     const std::string id = xml::attribute< std::string >( xis, "id" );
 
-    // JSR target = object or unit? (creation/update)
     std::auto_ptr< actions::ObjectMagicAction > action;
-    /*const kernel::Object_ABC* target = &model_.objects_.GetObject( targetid );
-    if( !target )
-        ThrowTargetNotFound( targetid );*/
 
-    if( id == "object_creation" )
+    kernel::Entity_ABC* target = 0;
+    if( id != "create_object" )
     {
-    // JSR TODO   action.reset( new actions::ObjectMagicActionCreation( xis, controllers_.controller_, magicAction, *target ) );
+        const unsigned long targetid = xml::attribute< unsigned long >( xis, "target" );
+        target = model_.objects_.FindObject( targetid );
+        if( !target )
+            ThrowTargetNotFound( targetid );
     }
-    // JSR TODO
-    // else
-    //    ...
-    else
-        ThrowMagicIdNotFound( id );
+
+    action.reset( new actions::ObjectMagicAction( xis, controllers_.controller_, magicActions_.Get( id ), target ) );
 
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
     tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
-    // JSR TODO
-    // xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
+    if( target )
+        xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it, *target );
+    else
+        xis >> list( "parameter", *this, &ActionFactory::ReadParameter, *action, it );
     if( it.HasMoreElements() )
         ThrowMissingParameter( *action, it.NextElement() );
     return action.release();

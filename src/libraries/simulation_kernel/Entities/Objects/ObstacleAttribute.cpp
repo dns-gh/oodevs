@@ -77,9 +77,9 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
 // Name: ObstacleAttribute::ObstacleAttribute
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-ObstacleAttribute::ObstacleAttribute( const Common::MsgObjectAttributes& asn )
-    : obstacle_  ( asn.obstacle().type() )
-    , bActivated_ ( asn.obstacle().activated() != 0 )
+ObstacleAttribute::ObstacleAttribute( const Common::MsgMissionParameter_Value& attributes )
+    : obstacle_  ( ( Common::ObstacleType_DemolitionTargetType ) attributes.list( 1 ).identifier() )
+    , bActivated_ ( attributes.list( 2 ).abool() )
 {
     // NOTHING
 }
@@ -213,11 +213,11 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
 // Name: ObstacleAttribute::OnUpdate
 // Created: LDC 2009-03-16
 // -----------------------------------------------------------------------------
-void ObstacleAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
+void ObstacleAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
 {
-    if( asn.has_obstacle() != 0 && bActivated_ != ( asn.obstacle().activated() != 0 ) )
+    if( attribute.list_size() > 2 && bActivated_ != attribute.list( 2 ).abool() )
     {
-        bActivated_ = (asn.obstacle().activated() != 0);
+        bActivated_ = attribute.list( 2 ).abool();
         NotifyAttributeUpdated( eOnUpdate );
     }
 }

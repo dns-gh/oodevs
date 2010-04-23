@@ -17,13 +17,13 @@
 namespace Common
 {
     enum ObstacleType_DemolitionTargetType;
+    class MsgMissionParameters;
 }
 #include "tools/Resolver.h"
 
 namespace MsgsClientToSim
 {
     class MsgObjectMagicAction;
-    class MsgMagicActionCreateObject;
 }
 
 namespace MsgsSimToClient
@@ -97,7 +97,7 @@ private:
 private:
     //! @name Tools
     //@{
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode CreateObject( const MsgsClientToSim::MsgMagicActionCreateObject& asn, const tools::Resolver< MIL_Army_ABC >& armies );
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode CreateObject( const Common::MsgMissionParameters& asn, const tools::Resolver< MIL_Army_ABC >& armies );
     //@}
 
 private:

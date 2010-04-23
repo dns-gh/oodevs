@@ -28,7 +28,7 @@ public:
     //@{
              LogisticAttribute();
     explicit LogisticAttribute( xml::xistream& xis );
-    explicit LogisticAttribute( const Common::MsgObjectAttributes& asn );
+    explicit LogisticAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~LogisticAttribute();
     //@}
 

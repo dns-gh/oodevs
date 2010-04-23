@@ -13,12 +13,15 @@
 #include "clients_gui/MedicalTreatmentPrototype_ABC.h"
 #include "protocol/clientsenders.h"
 
-namespace MsgsClientToSim
+namespace actions
 {
-    class MagicActionCreateObject;
+    namespace parameters
+    {
+        class ParameterList;
+    }
 }
-struct ObjectAttributeMedicalTreatment;
 
+struct ObjectAttributeMedicalTreatment;
 
 // =============================================================================
 /** @class  MedicalTreatmentPrototype
@@ -32,14 +35,13 @@ class MedicalTreatmentPrototype : public gui::MedicalTreatmentPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver, MsgsClientToSim::MsgMagicActionCreateObject& msg );
+             MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::MedicalTreatmentType >& resolver, actions::parameters::ParameterList*& attributesList );
     virtual ~MedicalTreatmentPrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    virtual void Clean();
     //@}
 
 private:
@@ -52,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgsClientToSim::MsgMagicActionCreateObject& msg_;    
+    actions::parameters::ParameterList*& attributesList_;
     //@}
 };
 

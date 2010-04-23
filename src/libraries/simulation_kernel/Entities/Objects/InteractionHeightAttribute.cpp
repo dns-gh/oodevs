@@ -31,8 +31,8 @@ InteractionHeightAttribute::InteractionHeightAttribute()
 // Name: InteractionHeightAttribute constructor
 // Created: LDC 2009-03-09
 // -----------------------------------------------------------------------------
-InteractionHeightAttribute::InteractionHeightAttribute( const Common::MsgObjectAttributes& asn )
-    : height_( asn.interaction_height().height() )
+InteractionHeightAttribute::InteractionHeightAttribute( const Common::MsgMissionParameter_Value& attributes )
+    : height_( attributes.list( 1 ).quantity() )
 {
     // NOTHING
 }

@@ -55,12 +55,3 @@ void CrossingSitePrototype::Commit()
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: CrossingSitePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void CrossingSitePrototype::Clean()
-{
-    // NOTHING
-}

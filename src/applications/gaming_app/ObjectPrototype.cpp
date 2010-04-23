@@ -18,18 +18,29 @@
 #include "MedicalTreatmentPrototype.h"
 #include "FirePrototype.h"
 #include "ActivityTimePrototype.h"
-#include "gaming/StaticModel.h"
+#include "actions/ObjectMagicAction.h"
+#include "actions/Army.h"
+#include "actions/ParameterList.h"
+#include "actions/Location.h"
+#include "actions/String.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Point.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
-#include "protocol/ServerPublisher_ABC.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
+#include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
 #include <xeumeuleu/xml.h>
 #include <boost/bind.hpp>
 
+using namespace actions;
 using namespace kernel;
 using namespace gui;
+using namespace parameters;
 
 namespace
 {
@@ -38,10 +49,10 @@ namespace
     class ConstructorBuilder
     {
     public:
-        ConstructorBuilder( T_AttributeContainer& container, QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& message )
+        ConstructorBuilder( T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
             : container_ ( container )
             , parent_ ( parent )
-            , message_ ( message ) {}
+            , attributesList_ ( attributesList ) {}
 
         void BuildPrototype( xml::xistream& /*xis*/, bool /*density*/ )
         {            
@@ -57,12 +68,12 @@ namespace
     private:
         T_AttributeContainer& container_;
         QWidget* parent_; 
-        MsgsClientToSim::MsgMagicActionCreateObject& message_;
+        ParameterList*& attributesList_;
     };
 
-    void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& message )
+    void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
     {
-        ConstructorBuilder builder( container, parent, message );
+        ConstructorBuilder builder( container, parent, attributesList );
         std::string type( xml::attribute< std::string >( xis, "unit-type" ) );
 
         bool density = ( type == "density" );
@@ -74,12 +85,12 @@ namespace
     //{
     //}
 
-    void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, MsgsClientToSim::MsgMagicActionCreateObject& message )
+    void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, Controllers& controllers, ParameterList*& attributesList )
     {
-        container.push_back( new LogisticPrototype( parent, controllers, message ) );
+        container.push_back( new LogisticPrototype( parent, controllers, attributesList ) );
     }
     
-    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, MsgsClientToSim::MsgMagicActionCreateObject& message )
+    void PropagationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, ParameterList*& attributesList )
     {
         std::string model( xml::attribute< std::string >( xis, "model" ) );
         if( model == "input" )
@@ -88,45 +99,45 @@ namespace
             // container.push_back( new InputPropagationPrototype( parent, resolver, message ) );
         }
         if( model == "fire" )
-            container.push_back( new FirePrototype( parent, resolver, message ) );
+            container.push_back( new FirePrototype( parent, resolver, attributesList ) );
     }
 
-    void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, MsgsClientToSim::MsgMagicActionCreateObject& message )
+    void ContaminationAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, const ObjectTypes& resolver, ParameterList*& attributesList )
     {
         int toxic = xml::attribute< int >( xis, "max-toxic" );
-        container.push_back( new NBCPrototype( parent, resolver, toxic, message ) );
+        container.push_back( new NBCPrototype( parent, resolver, toxic, attributesList ) );
     }
 
-    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, MsgsClientToSim::MsgMagicActionCreateObject& message )
+    void MedicalTreatmentAttribute( T_AttributeContainer& container, QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, ParameterList*& attributesList )
     {
-        container.push_back( new MedicalTreatmentPrototype( parent, resolver, message ) );
+        container.push_back( new MedicalTreatmentPrototype( parent, resolver, attributesList ) );
     }
 
     template<typename T>
     struct Capacity
     {
-        static void Build( T_AttributeContainer& container, QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& message )
+        static void Build( T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
         {
-            container.push_back( new T( parent, message ) );
+            container.push_back( new T( parent, attributesList ) );
         }
     };
     
     ObjectAttributePrototypeFactory_ABC* FactoryMaker( Controllers& controllers, 
-                                                       const ObjectTypes& resolver, MsgsClientToSim::MsgMagicActionCreateObject& message )
+                                                       const ObjectTypes& resolver, ParameterList*& attributesList )
     {
         ObjectAttributePrototypeFactory* factory = new ObjectAttributePrototypeFactory();
-        factory->Register( "constructor"    , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( message ) ) );
-        factory->Register( "activable"      , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( message ) ) );
-        factory->Register( "time-limited"   , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( message ) ) );
-        factory->Register( "supply-route"   , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( message ) ) );
-        factory->Register( "bridging"       , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( message ) ) );
+        factory->Register( "constructor"    , boost::bind( &ConstructorAttribute, _1, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "activable"      , boost::bind( &Capacity< ObstaclePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "time-limited"   , boost::bind( &Capacity< ActivityTimePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "supply-route"   , boost::bind( &Capacity< SupplyRoutePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
+        factory->Register( "bridging"       , boost::bind( &Capacity< CrossingSitePrototype >::Build, _2, _3, boost::ref( attributesList ) ) );
         
-        factory->Register( "logistic"       , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( message ) ) );
+        factory->Register( "logistic"       , boost::bind( &LogisticAttribute, _2, _3, boost::ref( controllers ), boost::ref( attributesList ) ) );
 
-        factory->Register( "healable"       , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( message ) ) );
-        factory->Register( "propagation"    , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( message ) ) );
+        factory->Register( "healable"       , boost::bind( &MedicalTreatmentAttribute, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
+        factory->Register( "propagation"    , boost::bind( &PropagationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
                        
-        factory->Register( "contamination"  , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( message ) ) );
+        factory->Register( "contamination"  , boost::bind( &ContaminationAttribute, _1, _2, _3, boost::ref( resolver ), boost::ref( attributesList ) ) );
         return factory;
     }
 }
@@ -136,8 +147,8 @@ namespace
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectPrototype::ObjectPrototype( QWidget* parent, kernel::Controllers& controllers, const StaticModel& model, gui::ParametersLayer& layer )
-    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, *FactoryMaker( controllers, model.objectTypes_, creation_ ) )
-    , serializer_( model.coordinateConverter_, *creation_.mutable_location() )
+    : ObjectPrototype_ABC( parent, controllers, model.objectTypes_, layer, *FactoryMaker( controllers, model.objectTypes_, attributesList_ ) )
+    , static_( model )
 {
     // NOTHING
 }
@@ -155,20 +166,28 @@ ObjectPrototype::~ObjectPrototype()
 // Name: ObjectPrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Commit( Publisher_ABC& publisher )
+void ObjectPrototype::Commit( ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation )
 {    
     if( CheckValidity() )
     {
-        simulation::ObjectMagicAction message;
-        creation_.set_name( name_->text().isEmpty() ? "" : name_->text().ascii() );
-        creation_.set_team( teams_->GetValue()->GetId() );
-        creation_.set_type( objectTypes_->GetValue()->GetType() );
-        if( location_ )
-            serializer_.Serialize( *location_ );
-        creation_.mutable_attributes();
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_object" );
+        ObjectMagicAction* action = new ObjectMagicAction( 0, actionType, controllers_.controller_, true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        
+        action->AddParameter( *new String( it.NextElement(), objectTypes_->GetValue()->GetType() ) );
+        kernel::Point point;
+        action->AddParameter( *new Location( it.NextElement(), static_.coordinateConverter_, location_? *location_ : point ) );
+        action->AddParameter( *new String( it.NextElement(), name_->text().isEmpty() ? "" : name_->text().ascii() ) );
+        action->AddParameter( *new Army( it.NextElement(), *teams_->GetValue(), controllers_.controller_ ) );
+        
+        attributesList_ = new ParameterList( it.NextElement() );
+        action->AddParameter( *attributesList_ );
+
         ObjectPrototype_ABC::Commit();
-        *message().mutable_action()->mutable_create_object() = creation_;
-        message.Send( publisher );
+
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation, *action ) );
+        action->RegisterAndPublish( actionsModel, actionPublisher );
+
         ObjectPrototype_ABC::Clean();
     }
 }

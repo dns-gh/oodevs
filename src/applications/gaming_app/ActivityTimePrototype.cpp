@@ -11,6 +11,7 @@
 #include "ActivityTimePrototype.h"
 #include "clients_kernel/Units.h"
 #include "protocol/Protocol.h"
+#include "actions/ParameterList.h"
 
 using namespace Common;
 
@@ -21,9 +22,9 @@ using namespace gui;
 // Name: ActivityTimePrototype constructor
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-ActivityTimePrototype::ActivityTimePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg )
+ActivityTimePrototype::ActivityTimePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
     : ActivityTimePrototype_ABC ( parent )
-    , msg_ ( msg )
+    , attributesList_( attributesList )
 {
     // NOTHING
 }
@@ -43,18 +44,10 @@ ActivityTimePrototype::~ActivityTimePrototype()
 // -----------------------------------------------------------------------------
 void ActivityTimePrototype::Commit()
 {
-    msg_.mutable_attributes()->mutable_activity_time()->set_value( 
-        3600 * activityTime_->time().hour() + 
-        60 * activityTime_->time().minute() +
-        activityTime_->time().second() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActivityTimePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void ActivityTimePrototype::Clean()
-{
-    if( msg_.attributes().has_activity_time() )
-        msg_.mutable_attributes()->clear_activity_time();
+    int time = 3600 * activityTime_->time().hour() + 
+               60 * activityTime_->time().minute() +
+               activityTime_->time().second();
+    actions::parameters::ParameterList& list = attributesList_->AddList( "ActivityTime" );
+    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_activity_time );
+    list.AddQuantity( "Time", time );
 }

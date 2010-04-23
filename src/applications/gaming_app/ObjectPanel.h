@@ -12,13 +12,20 @@
 
 #include "clients_gui/ObjectPanel.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace gui
 {
     class SpinBoxDisplayer;
     class CheckBoxDisplayer;
 }
 
-class Publisher_ABC;
+class ActionPublisher;
+class Simulation;
+class StaticModel;
 
 // =============================================================================
 /** @class  ObjectPanel
@@ -33,7 +40,7 @@ class ObjectPanel : public gui::ObjectPanel
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
+             ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
     virtual ~ObjectPanel();
     //@}
 
@@ -54,7 +61,10 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& static_;
+    const Simulation& simulation_;
     gui::SpinBoxDisplayer* construction_;
     gui::SpinBoxDisplayer* valorisation_;     
     gui::SpinBoxDisplayer* contournement_;

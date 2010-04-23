@@ -43,9 +43,9 @@ LogisticAttribute::LogisticAttribute( xml::xistream& xis )
 // Name: LogisticAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-LogisticAttribute::LogisticAttribute( const Common::MsgObjectAttributes& asn )    
+LogisticAttribute::LogisticAttribute( const Common::MsgMissionParameter_Value& attributes )    
 {
-    MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( asn.logistic().tc2() );
+    MIL_Automate* pTC2Tmp = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAutomate( attributes.list( 1 ).identifier() );
     if( !pTC2Tmp )
         throw std::runtime_error( "Automate TC2 specified is invalid" );
     if( !pTC2Tmp->GetType().IsLogistic() )

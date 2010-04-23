@@ -26,7 +26,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              InteractionHeightAttribute();
-    explicit InteractionHeightAttribute( const Common::MsgObjectAttributes& asn );
+    explicit InteractionHeightAttribute( const Common::MsgMissionParameter_Value& attributes );
     explicit InteractionHeightAttribute( xml::xistream& xis );
     virtual ~InteractionHeightAttribute();
     //@}

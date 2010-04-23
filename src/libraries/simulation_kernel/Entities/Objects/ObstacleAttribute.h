@@ -34,7 +34,7 @@ public:
              ObstacleAttribute();
     explicit ObstacleAttribute( bool reserved );
     explicit ObstacleAttribute( xml::xistream& xis );
-    explicit ObstacleAttribute( const Common::MsgObjectAttributes& asn );
+    explicit ObstacleAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~ObstacleAttribute();
     //@}
 
@@ -63,7 +63,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void OnUpdate( const Common::MsgObjectAttributes& asn ); //<! Update from asn msg
+    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute ); //<! Update from asn msg
     ObstacleAttribute& operator=( const ObstacleAttribute& ); //!< Assignment operator
     //@}
 

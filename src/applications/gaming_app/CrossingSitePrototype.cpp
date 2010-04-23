@@ -11,6 +11,7 @@
 #include "CrossingSitePrototype.h"
 #include "clients_kernel/Units.h"
 #include "protocol/Protocol.h"       
+#include "actions/ParameterList.h"
 
 using namespace kernel;
 using namespace gui;
@@ -19,9 +20,9 @@ using namespace gui;
 // Name: CrossingSitePrototype constructor
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg )
+CrossingSitePrototype::CrossingSitePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
     : CrossingSitePrototype_ABC( parent )
-    , msg_( msg )
+    , attributesList_( attributesList )
 {
     // NOTHING
 }
@@ -41,18 +42,10 @@ CrossingSitePrototype::~CrossingSitePrototype()
 // -----------------------------------------------------------------------------
 void CrossingSitePrototype::Commit()
 {
-    msg_.mutable_attributes()->mutable_crossing_site()->set_width                 ( width_->value() );
-    msg_.mutable_attributes()->mutable_crossing_site()->set_depth                 ( depth_->value() );
-    msg_.mutable_attributes()->mutable_crossing_site()->set_flow_rate             ( speed_->value() );
-    msg_.mutable_attributes()->mutable_crossing_site()->set_banks_require_fitting ( needsConstruction_->isOn() );    
-}
-
-// -----------------------------------------------------------------------------
-// Name: CrossingSitePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void CrossingSitePrototype::Clean()
-{
-    if( msg_.attributes().has_crossing_site() )
-        msg_.mutable_attributes()->clear_crossing_site();
+    actions::parameters::ParameterList& list = attributesList_->AddList( "CrossingSite" );
+    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_crossing_site );
+    list.AddQuantity( "Width", width_->value() );
+    list.AddQuantity( "Depth", depth_->value() );
+    list.AddQuantity( "FlowRate", speed_->value() );
+    list.AddBool( "BanksRequireFitting", needsConstruction_->isOn() );
 }

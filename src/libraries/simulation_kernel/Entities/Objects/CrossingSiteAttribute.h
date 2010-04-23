@@ -33,7 +33,7 @@ public:
     //@{
              CrossingSiteAttribute();
     explicit CrossingSiteAttribute( xml::xistream& xis );
-    explicit CrossingSiteAttribute( const Common::MsgObjectAttributes& asn );
+    explicit CrossingSiteAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~CrossingSiteAttribute();
     //@}
 
@@ -56,7 +56,7 @@ public:
     //@{
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
     virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
-    virtual void OnUpdate( const Common::MsgObjectAttributes& asn );    
+    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );    
     //@}
 
     //! @name Knowledge

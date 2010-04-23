@@ -12,8 +12,6 @@
 #include "moc_LogisticSupplyPushFlowDialog.cpp"
 #include "actions/UnitMagicAction.h"
 #include "actions/ParameterList.h"
-#include "actions/Quantity.h"
-#include "actions/Identifier.h"
 #include "actions/Automat.h"
 #include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
@@ -29,7 +27,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/simulationsenders.h"
 
 using namespace kernel;
@@ -41,10 +38,9 @@ using namespace parameters;
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
     : QDialog( parent, tr( "Push supply flow" ) )
     , controllers_( controllers )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
@@ -184,10 +180,9 @@ void LogisticSupplyPushFlowDialog::Validate()
             if( text.isEmpty() )
                 continue;
 
-            ParameterList* dotationList = new ParameterList( OrderParameter( CreateName( "Dotation", index ), "list", false ) );
-            dotations->AddParameter( *dotationList );
-            dotationList->AddParameter( *new Identifier( OrderParameter( "Type", "identifier", false ), supplies_[ text ].type_->GetId() ) );
-            dotationList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), table_->text( i, 1 ).toInt() ) );
+            ParameterList& dotationList = dotations->AddList( CreateName( "Dotation", index ) );
+            dotationList.AddIdentifier( "Type", supplies_[ text ].type_->GetId() );
+            dotationList.AddQuantity( "Number", table_->text( i, 1 ).toInt() );
         }
     }
 

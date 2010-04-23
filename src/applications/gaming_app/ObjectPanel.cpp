@@ -10,6 +10,10 @@
 #include "gaming_app_pch.h"
 #include "ObjectPanel.h"
 #include "moc_ObjectPanel.cpp"
+#include "actions/ObjectMagicAction.h"
+#include "actions/ParameterList.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/MagicActionType.h"
 #include "clients_gui/DisplayBuilder.h"
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_gui/LabelDisplayer.h"
@@ -17,10 +21,14 @@
 #include "clients_gui/SpinBoxDisplayer.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "protocol/ServerPublisher_ABC.h"
+#include "gaming/ActionPublisher.h"
+#include "gaming/ActionTiming.h"
+#include "gaming/StaticModel.h"
 #include "protocol/simulationsenders.h"
 
+using namespace actions;
 using namespace kernel;
+using namespace parameters;
 
 typedef gui::ObjectPanel MyParent;
 
@@ -28,9 +36,12 @@ typedef gui::ObjectPanel MyParent;
 // Name: ObjectPanel constructor
 // Created: AGE 2006-09-08
 // -----------------------------------------------------------------------------
-ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher )
+ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
     : MyParent( parent, panel, controllers, factory )
-    , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation )
 {
     // $$$$ AGE 2006-08-23: tous ces trucs doivent etre identiques au labels utilisés
     // $$$$ AGE 2006-08-23: par le modèle correspondant et pire : traduits de la même maniere.
@@ -117,24 +128,44 @@ void ObjectPanel::OnApply()
     const kernel::Object_ABC* object = GetSelected();
     if( object )
     {
-        MsgsClientToSim::MsgMagicActionUpdateObject magicAction;
-        magicAction.set_oid( object->GetId() );
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "update_object" );
+        ObjectMagicAction* action = new ObjectMagicAction( object, actionType, controllers_.controller_, true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        
+        ParameterList* attributesList = new ParameterList( it.NextElement() );
+        action->AddParameter( *attributesList );
 
+        // add attributes
         Displayer_ABC& infos = GetBuilder().Group( tr( "Information" ) );
         gui::CheckBoxDisplayer* pCheckBox = dynamic_cast< gui::CheckBoxDisplayer* > ( & infos.Item( tools::translate( "ObjectPanel", "Reserved obstacle activated:" ) ) );
         if( pCheckBox && pCheckBox->IsChecked() )
         {
-            magicAction.mutable_attributes()->mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType_reserved );
-            magicAction.mutable_attributes()->mutable_obstacle()->set_activated( true );
+            ParameterList& obstacleList = attributesList->AddList( "Obstacle" );
+            obstacleList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
+            obstacleList.AddIdentifier( "TargetType", Common::ObstacleType_DemolitionTargetType_reserved );
+            obstacleList.AddBool( "Activation", true );
         }
 
-        magicAction.mutable_attributes()->mutable_construction()->set_percentage( construction_ ->GetValue() );
-        magicAction.mutable_attributes()->mutable_mine()->set_percentage( valorisation_ ->GetValue() );
-        magicAction.mutable_attributes()->mutable_bypass()->set_percentage( contournement_->GetValue() );
+        ParameterList& constructionList = attributesList->AddList( "Construction" );
+        constructionList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_construction );
+        constructionList.AddIdentifier( "Type", 0 );
+        constructionList.AddQuantity( "Number", 0 );
+        constructionList.AddNumeric( "Density", 0 );
+        constructionList.AddQuantity( "Percentage", construction_->GetValue() );
 
-        simulation::ObjectMagicAction message;
-        *message().mutable_action()->mutable_update_object() = magicAction;
-        message.Send( publisher_ );
+        ParameterList& mineList = attributesList->AddList( "Mine" );
+        mineList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_mine );
+        mineList.AddIdentifier( "Type", 0 );
+        mineList.AddQuantity( "Number", 0 );
+        mineList.AddNumeric( "Density", 0 );
+        mineList.AddQuantity( "Percentage", valorisation_->GetValue() );
+
+        ParameterList& bypassList = attributesList->AddList( "Bypass" );
+        bypassList.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_bypass );
+        bypassList.AddQuantity( "Percentage", contournement_->GetValue() );
+
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
     }
 }
 

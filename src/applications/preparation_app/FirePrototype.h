@@ -36,7 +36,6 @@ public:
     //! @name Operations
     //@{
     virtual void Commit();
-    virtual void Clean();
     //@}
 
 private:

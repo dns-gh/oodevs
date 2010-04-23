@@ -47,6 +47,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( Object )
 using namespace hla;
 
 using namespace Common;
+using namespace MsgsClientToSim;
 
 MIL_IDManager Object::idManager_;
 
@@ -338,14 +339,40 @@ const MIL_ObjectManipulator_ABC& Object::operator()() const
 // Name: Object::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const MsgObjectAttributes& asn )
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode Object::OnUpdate( const MsgMissionParameter_Value& attributes )
 {
-    if( asn.has_mine() ) GetAttribute< MineAttribute >().OnUpdate( asn );
-    if( asn.has_bypass() ) GetAttribute< BypassAttribute >().OnUpdate( asn );
-    if( asn.has_construction() ) GetAttribute< ConstructionAttribute >().OnUpdate( asn );
-    if( asn.has_obstacle() ) GetAttribute< ObstacleAttribute >().OnUpdate( asn );
-    if( asn.has_crossing_site()) GetAttribute< CrossingSiteAttribute >().OnUpdate( asn );
-    if( asn.has_supply_route()) GetAttribute< SupplyRouteAttribute >().OnUpdate( asn );
+    for( int i = 0; i < attributes.list_size(); ++i )
+    {
+        const MsgMissionParameter_Value& attribute = attributes.list( i );
+        if( attribute.list_size() == 0 ) // it should be a list of lists
+            return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
+
+        unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+
+        switch( actionId )
+        {
+        case MsgObjectMagicAction_Attribute_mine:
+            GetAttribute< MineAttribute >().OnUpdate( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_bypass:
+            GetAttribute< BypassAttribute >().OnUpdate( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_construction:
+            GetAttribute< ConstructionAttribute >().OnUpdate( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_obstacle:
+            GetAttribute< ObstacleAttribute >().OnUpdate( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_crossing_site:
+            GetAttribute< CrossingSiteAttribute >().OnUpdate( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_supply_route:
+            GetAttribute< SupplyRouteAttribute >().OnUpdate( attribute );
+            break;
+        default:
+            break;
+        }
+    }
 
     return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
 }

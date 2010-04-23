@@ -57,12 +57,3 @@ void SupplyRoutePrototype::Commit()
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }    
 }
-
-// -----------------------------------------------------------------------------
-// Name: SupplyRoutePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void SupplyRoutePrototype::Clean()
-{
-    // NOTHING
-}

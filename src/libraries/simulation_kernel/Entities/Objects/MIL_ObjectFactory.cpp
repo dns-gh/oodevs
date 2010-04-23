@@ -78,10 +78,10 @@ MIL_Object_ABC& MIL_ObjectFactory::BuildObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectFactory::BuildObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectFactory::BuildObject( const MsgsClientToSim::MsgMagicActionCreateObject& asn, MIL_Army_ABC& army )
+MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectFactory::BuildObject( const Common::MsgMissionParameters& msg, MIL_Army_ABC& army )
 {
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode   value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
-    MIL_Object_ABC*                                      pObject =  MIL_ObjectLoader::GetLoader().CreateObject( asn, army, value );
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_no_error;
+    MIL_Object_ABC* pObject =  MIL_ObjectLoader::GetLoader().CreateObject( msg, army, value );
     if ( pObject )
     {
         MIL_ObjectManipulator_ABC& obj = pObject->operator ()();

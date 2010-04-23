@@ -59,9 +59,12 @@ CrossingSiteAttribute::CrossingSiteAttribute()
 // Name: CrossingSiteAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-CrossingSiteAttribute::CrossingSiteAttribute( const Common::MsgObjectAttributes& asn )
+CrossingSiteAttribute::CrossingSiteAttribute( const Common::MsgMissionParameter_Value& attributes )
 {
-    OnUpdate( asn );
+    rWidth_         = attributes.list( 1 ).quantity();
+    rDepth_         = attributes.list( 2 ).quantity();
+    rCurrentSpeed_  = attributes.list( 3 ).quantity();
+    bBanksToFitOut_ = attributes.list( 4 ).abool();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,12 +156,15 @@ void CrossingSiteAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // Name: CrossingSiteAttribute::OnUpdate
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void CrossingSiteAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
+void CrossingSiteAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
 {
-    rWidth_         = asn.crossing_site().width();
-    rDepth_         = asn.crossing_site().depth();
-    rCurrentSpeed_  = asn.crossing_site().flow_rate();
-    bBanksToFitOut_ = asn.crossing_site().banks_require_fitting();
+    if( attribute.list_size() > 4 )
+    {
+        rWidth_         = attribute.list( 1 ).quantity();
+        rDepth_         = attribute.list( 2 ).quantity();
+        rCurrentSpeed_  = attribute.list( 3 ).quantity();
+        bBanksToFitOut_ = attribute.list( 4 ).abool();
+    }
 }
 
 // -----------------------------------------------------------------------------

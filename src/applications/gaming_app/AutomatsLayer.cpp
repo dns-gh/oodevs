@@ -25,7 +25,6 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "protocol/simulationsenders.h"
-#include "protocol/ServerPublisher_ABC.h"
 
 using namespace kernel;
 using namespace actions;
@@ -34,10 +33,9 @@ using namespace actions;
 // Name: AutomatsLayer constructor
 // Created: SBO 2007-04-13
 // -----------------------------------------------------------------------------
-AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const Profile_ABC& profile, gui::AgentsLayer& agents, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
+AutomatsLayer::AutomatsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const Profile_ABC& profile, gui::AgentsLayer& agents, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
     : gui::AutomatsLayer( controllers, tools, strategy, view, profile, agents )
     , tools_( tools )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )

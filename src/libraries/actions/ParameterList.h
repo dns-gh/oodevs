@@ -42,6 +42,13 @@ public:
     virtual void Serialize( xml::xostream& xos ) const;
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
     virtual void Clean( Common::MsgMissionParameter& message ) const;
+
+    ParameterList& AddList      ( const std::string& name );
+
+    void AddBool      ( const std::string& name, bool value );
+    void AddIdentifier( const std::string& name, unsigned int id );
+    void AddNumeric   ( const std::string& name, float value );
+    void AddQuantity  ( const std::string& name, int value );
     //@}
 
 private:

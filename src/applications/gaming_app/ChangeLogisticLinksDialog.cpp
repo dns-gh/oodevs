@@ -22,10 +22,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
-//#include "protocol/clientsenders.h"
 #include "protocol/simulationsenders.h"
-#include "protocol/ServerPublisher_ABC.h"
-
 
 #include <qgrid.h>
 
@@ -37,10 +34,9 @@ using namespace gui;
 // Name: ChangeLogisticLinksDialog constructor
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
+ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
     : QDialog( parent )
     , controllers_( controllers )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )

@@ -11,6 +11,7 @@
 #include "LogisticPrototype.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "protocol/Protocol.h"       
+#include "actions/ParameterList.h"
 
 using namespace kernel;
 using namespace gui;
@@ -19,9 +20,9 @@ using namespace gui;
 // Name: LogisticPrototype::LogisticPrototype
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-LogisticPrototype::LogisticPrototype( QWidget* parent, Controllers& controllers, MsgsClientToSim::MsgMagicActionCreateObject& msg )
+LogisticPrototype::LogisticPrototype( QWidget* parent, Controllers& controllers, actions::parameters::ParameterList*& attributesList )
     : LogisticPrototype_ABC( parent, controllers )
-    , msg_ ( msg )
+    , attributesList_( attributesList )
 {
     // NOTHING
 }
@@ -41,15 +42,7 @@ LogisticPrototype::~LogisticPrototype()
 // -----------------------------------------------------------------------------
 void LogisticPrototype::Commit()
 {
-    msg_.mutable_attributes()->mutable_logistic()->set_tc2( tc2s_->GetValue()->GetId());
-}
-
-// -----------------------------------------------------------------------------
-// Name: LogisticPrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void LogisticPrototype::Clean()
-{
-    if( msg_.attributes().has_logistic() )
-        msg_.mutable_attributes()->clear_logistic();
+    actions::parameters::ParameterList& list = attributesList_->AddList( "Logistic" );
+    list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_logistic );
+    list.AddIdentifier( "tc2", tc2s_->GetValue()->GetId() );
 }

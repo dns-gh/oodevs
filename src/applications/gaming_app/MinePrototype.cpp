@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "MinePrototype.h"
 #include "protocol/Protocol.h"
+#include "actions/ParameterList.h"
 
 using namespace Common;
 
@@ -17,9 +18,9 @@ using namespace Common;
 // Name: MinePrototype constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-MinePrototype::MinePrototype( QWidget* parent, MagicActionCreateObject& msg )
+MinePrototype::MinePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
     : MinePrototype_ABC( parent )
-    , msg_ ( msg )
+    , attributesList_( attributesList )
 {
     // NOTHING
 }
@@ -30,7 +31,6 @@ MinePrototype::MinePrototype( QWidget* parent, MagicActionCreateObject& msg )
 // -----------------------------------------------------------------------------
 MinePrototype::~MinePrototype()
 {
-    Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -40,13 +40,4 @@ MinePrototype::~MinePrototype()
 void MinePrototype::Commit()
 {
 	// NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: MinePrototype::Clean
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-void MinePrototype::Clean()
-{
-    
 }

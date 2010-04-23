@@ -107,16 +107,6 @@ void ObjectAttributePrototypeContainer::Commit()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ObjectAttributePrototypeContainer::Commit
-// Created: JCR 2008-06-11
-// -----------------------------------------------------------------------------
-void ObjectAttributePrototypeContainer::Clean()
-{
-    if( current_.get() )
-        std::for_each( current_->begin(), current_->end(), boost::bind( &ObjectAttributePrototype_ABC::Clean, _1 ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ObjectAttributePrototypeContainer::Hide
 // Created: JCR 2008-06-11
 // -----------------------------------------------------------------------------

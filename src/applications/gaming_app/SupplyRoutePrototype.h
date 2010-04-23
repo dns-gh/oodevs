@@ -13,8 +13,15 @@
 #include "clients_gui/SupplyRoutePrototype_ABC.h"
 #include "protocol/clientsenders.h"
 
+namespace actions
+{
+    namespace parameters
+    {
+        class ParameterList;
+    }
+}
+
 struct MsgObjectAttributesLogisticRoute;
-struct MagicActionCreateObject;
 
 // =============================================================================
 /** @class  SupplyRoutePrototype
@@ -28,14 +35,13 @@ class SupplyRoutePrototype : public gui::SupplyRoutePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    SupplyRoutePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg );
+    SupplyRoutePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
     virtual ~SupplyRoutePrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    virtual void Clean();
     //@}
 
 private:
@@ -48,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
+    actions::parameters::ParameterList*& attributesList_;
     MsgObjectAttributesLogisticRoute* attr_;
     //@}
 };

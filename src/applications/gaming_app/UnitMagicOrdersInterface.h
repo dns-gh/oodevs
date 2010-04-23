@@ -15,7 +15,6 @@
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "tools/ElementObserver_ABC.h"
-#include "protocol/ServerPublisher_ABC.h"
 
 namespace kernel
 {
@@ -41,7 +40,6 @@ namespace gui
 
 class StaticModel;
 
-class Publisher_ABC;
 class ActionPublisher;
 class Simulation;
 
@@ -65,7 +63,7 @@ class UnitMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
     virtual ~UnitMagicOrdersInterface();
     //@}
 
@@ -118,7 +116,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Publisher_ABC& publisher_;
     ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;

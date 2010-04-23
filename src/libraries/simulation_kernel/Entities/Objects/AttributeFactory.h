@@ -14,7 +14,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class MsgMissionParameter_Value;
 }
 
 class Object;
@@ -37,7 +37,7 @@ public:
     //! @name Operations
     //@{    
     void Create( Object& object, const std::string& attribute, xml::xistream& xis ) const;
-    void Create( Object& object, const Common::MsgObjectAttributes& asn ) const;
+    void Create( Object& object, const Common::MsgMissionParameter_Value& attributes ) const;
     //@}
 
 private:

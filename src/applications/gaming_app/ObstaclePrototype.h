@@ -12,9 +12,12 @@
 
 #include "clients_gui/ObstaclePrototype_ABC.h"
 
-namespace MsgsClientToSim
+namespace actions
 {
-    class MsgMagicActionCreateObject;
+    namespace parameters
+    {
+        class ParameterList;
+    }
 }
 
 // =============================================================================
@@ -29,14 +32,13 @@ class ObstaclePrototype : public gui::ObstaclePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ObstaclePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg );
+    ObstaclePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
     virtual ~ObstaclePrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    virtual void Clean();
     //@}
 
 private:
@@ -49,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
+    actions::parameters::ParameterList*& attributesList_;
     //@}
 };
 

@@ -52,12 +52,3 @@ void MinePrototype::Commit()
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: MinePrototype::Clean
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-void MinePrototype::Clean()
-{
-    // NOTHING
-}

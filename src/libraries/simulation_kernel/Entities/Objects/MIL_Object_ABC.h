@@ -25,6 +25,11 @@ namespace MsgsSimToClient
     enum MsgObjectMagicActionAck_ErrorCode;
 }
 
+namespace Common
+{
+    class MsgMissionParameter_Value;
+}
+
 class DEC_Knowledge_Object;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
@@ -144,7 +149,7 @@ public:
     
     //! @name Network
     //@{
-    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgObjectAttributes& asn ) = 0;
+    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& asn ) = 0;
     virtual void SendCreation() const = 0;
     virtual void SendDestruction() const = 0;
     virtual void SendFullState() const = 0;

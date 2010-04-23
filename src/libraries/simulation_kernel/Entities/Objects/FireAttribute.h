@@ -31,7 +31,7 @@ public:
     //@{
              FireAttribute();    
     explicit FireAttribute( xml::xistream& xis );
-    explicit FireAttribute( const Common::MsgObjectAttributes& asn );
+    explicit FireAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~FireAttribute();
     //@}
 

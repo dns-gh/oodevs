@@ -30,7 +30,6 @@ namespace actions
 
 class ActionPublisher;
 class Dotation;
-class Publisher_ABC;
 class StaticModel;
 class Simulation;
 
@@ -50,7 +49,7 @@ class LogisticSupplyPushFlowDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
+             LogisticSupplyPushFlowDialog( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< kernel::Automat_ABC >& automats, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyPushFlowDialog();
     //@}
 
@@ -91,7 +90,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Publisher_ABC& publisher_;
     ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;

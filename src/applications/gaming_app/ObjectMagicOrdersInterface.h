@@ -23,6 +23,10 @@ namespace MsgsClientToSim
 namespace actions
 {
     class ActionsModel;
+    namespace parameters
+    {
+        class ParameterList;
+    }
 }
 
 namespace kernel
@@ -33,7 +37,6 @@ namespace kernel
     class Object_ABC;
 }
 
-class Publisher_ABC;
 class ActionPublisher;
 class Simulation;
 class StaticModel;
@@ -53,7 +56,7 @@ class ObjectMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~ObjectMagicOrdersInterface();
     //@}
 
@@ -83,14 +86,13 @@ private:
     //! @name Helpers
     //@{
     int  AddMagic( const QString& label, const char* slot, QPopupMenu* menu );
-    void SendObjectMagic( MsgsClientToSim::MsgMagicActionUpdateObject& message );
+    void SendObjectMagic( actions::parameters::ParameterList& attribute );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Publisher_ABC& publisher_;
     ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;

@@ -12,9 +12,12 @@
 
 #include "clients_gui/ActivityTimePrototype_ABC.h"
 
-namespace MsgsClientToSim
+namespace actions
 {
-    class MsgMagicActionCreateObject;
+    namespace parameters
+    {
+        class ParameterList;
+    }
 }
 
 // =============================================================================
@@ -29,14 +32,13 @@ class ActivityTimePrototype : public gui::ActivityTimePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    ActivityTimePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg );
+    ActivityTimePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
     virtual ~ActivityTimePrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    virtual void Clean();
     //@}
 
 private:
@@ -49,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
+    actions::parameters::ParameterList*& attributesList_;
     //@}
 };
 

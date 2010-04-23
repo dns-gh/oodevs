@@ -9,8 +9,15 @@
 
 #include "actions_pch.h"
 #include "ParameterList.h"
+#include "Bool.h"
+#include "Identifier.h"
+#include "Numeric.h"
+#include "Quantity.h"
+#include "clients_kernel/OrderParameter.h"
 
 #include "protocol/Protocol.h"
+
+using namespace kernel;
 
 namespace actions {
     namespace parameters {
@@ -88,6 +95,53 @@ void ParameterList::Clean( Common::MsgMissionParameter& message ) const
 {
     if( message.value().list_size() > 0 )
         message.mutable_value()->clear_list();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList::AddList
+// Created: JSR 2010-04-22
+// -----------------------------------------------------------------------------
+ParameterList& ParameterList::AddList( const std::string& name )
+{
+    ParameterList& ret = *new ParameterList( OrderParameter( name, "list", false ) );
+    AddParameter( ret );
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList::AddBool
+// Created: JSR 2010-04-22
+// -----------------------------------------------------------------------------
+void ParameterList::AddBool( const std::string& name, bool value )
+{
+    AddParameter( *new Bool( OrderParameter( name, "bool", false ), value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList::AddIdentifier
+// Created: JSR 2010-04-22
+// -----------------------------------------------------------------------------
+void ParameterList::AddIdentifier( const std::string& name, unsigned int id )
+{
+    AddParameter( *new Identifier( OrderParameter( name, "identifier", false ), id ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList::AddNumeric
+// Created: JSR 2010-04-22
+// -----------------------------------------------------------------------------
+void ParameterList::AddNumeric( const std::string& name, float value )
+{
+    AddParameter( *new Numeric( OrderParameter( name, "numeric", false ), value ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParameterList::AddQuantity
+// Created: JSR 2010-04-22
+// -----------------------------------------------------------------------------
+void ParameterList::AddQuantity( const std::string& name, int value )
+{
+    AddParameter( *new Quantity( OrderParameter( name, "quantity", false ), value ) );
 }
 
     }

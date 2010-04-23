@@ -23,7 +23,6 @@
 #include "gaming/ActionPublisher.h"
 #include "gaming/StaticModel.h"
 #include "gaming/ActionTiming.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "WeatherWidget.h"
 
@@ -35,11 +34,10 @@ using namespace parameters;
 // Name: WeatherCreationPanel constructor
 // Created: SLG 2010-03-24
 // -----------------------------------------------------------------------------
-WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
+WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
     : gui::InfoPanel_ABC( parent, panel, tr( "Weathers" ), "WeatherCreationPanel" )
     , controllers_      ( controllers )
     , layer_            ( layer )
-    , publisher_        ( publisher )
     , actionPublisher_  ( actionPublisher )
     , actionsModel_     ( actionsModel )
     , model_            ( model )

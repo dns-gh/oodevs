@@ -41,7 +41,7 @@ public:
     //@{
              MedicalTreatmentAttribute();    
     explicit MedicalTreatmentAttribute( xml::xistream& xis );
-    explicit MedicalTreatmentAttribute( const Common::MsgObjectAttributes& asn );
+    explicit MedicalTreatmentAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~MedicalTreatmentAttribute();
     //@}
 

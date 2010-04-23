@@ -18,7 +18,7 @@
 
 namespace Common
 {
-    class MsgObjectAttributes;
+    class MsgMissionParameter_Value;
 }
 
 namespace MsgsSimToClient
@@ -113,7 +113,7 @@ public:
     //! @name Network
     //@{
     virtual   void    UpdateState();
-    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode  OnUpdate( const Common::MsgObjectAttributes& asn );
+    MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode  OnUpdate( const Common::MsgMissionParameter_Value& list );
     void                                                SendCreation() const;
     void                                                SendDestruction() const;
     void                                                SendFullState() const;

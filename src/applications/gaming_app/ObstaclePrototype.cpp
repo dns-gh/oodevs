@@ -10,14 +10,15 @@
 #include "gaming_app_pch.h"
 #include "ObstaclePrototype.h"
 #include "protocol/Protocol.h"
+#include "actions/ParameterList.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObstaclePrototype constructor
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
-ObstaclePrototype::ObstaclePrototype( QWidget* parent, MsgsClientToSim::MsgMagicActionCreateObject& msg )
+ObstaclePrototype::ObstaclePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList )
     : ObstaclePrototype_ABC( parent )
-    , msg_( msg )
+    , attributesList_( attributesList )
 {
     // NOTHING
 }
@@ -39,17 +40,9 @@ void ObstaclePrototype::Commit()
 {
     if( types_ )
     {
-        msg_.mutable_attributes()->mutable_obstacle()->set_type( Common::ObstacleType_DemolitionTargetType( types_->GetValue() ) );
-        msg_.mutable_attributes()->mutable_obstacle()->set_activated( IsActivated() );
+        actions::parameters::ParameterList& list = attributesList_->AddList( "Obstacle" );
+        list.AddIdentifier( "AttributeId", MsgsClientToSim::MsgObjectMagicAction_Attribute_obstacle );
+        list.AddIdentifier( "TargetType", types_->GetValue() );
+        list.AddBool( "Activation", IsActivated() );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObstaclePrototype::Clean
-// Created: JCR 2008-06-11
-// -----------------------------------------------------------------------------
-void ObstaclePrototype::Clean()
-{
-    if( msg_.attributes().has_obstacle() )
-        msg_.mutable_attributes()->clear_obstacle();
 }

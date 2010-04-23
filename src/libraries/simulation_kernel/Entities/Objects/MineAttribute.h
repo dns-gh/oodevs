@@ -36,7 +36,7 @@ public:
     //@{
              MineAttribute();    
              MineAttribute( const PHY_DotationCategory& category, unsigned int nFullNbrDotation );
-    explicit MineAttribute( const Common::MsgObjectAttributes& asn );
+    explicit MineAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~MineAttribute();
     //@}
 
@@ -58,7 +58,7 @@ public:
     virtual void Register( Object& object ) const;
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
     virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
-    virtual void OnUpdate( const Common::MsgObjectAttributes& asn );
+    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
     virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );    
     virtual void WriteODB( xml::xostream& xos ) const;

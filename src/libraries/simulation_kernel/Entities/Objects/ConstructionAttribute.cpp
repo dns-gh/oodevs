@@ -184,7 +184,7 @@ void ConstructionAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
     {
         asn.mutable_construction()->set_dotation_nbr( nCurrentNbrDotation_ );
         asn.mutable_construction()->set_percentage( unsigned int( rConstructionPercentage_ * 100. ) );
-        Reset( eOnUpdate );
+        Reset( eOnUpdate | eOnHLAUpdate);
     }
 }
 
@@ -192,12 +192,11 @@ void ConstructionAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // Name: ConstructionAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void ConstructionAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
+void ConstructionAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
 {
-    if( asn.has_construction() )
+    if( attribute.list_size() > 4 )
     {
-        if( asn.construction().has_percentage()  )
-            Set( asn.construction().percentage() / 100. );
+        Set( attribute.list( 4 ).quantity() / 100. ); // four first parameters not used
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }

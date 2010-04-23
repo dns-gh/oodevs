@@ -3189,5 +3189,9 @@
         <source>preliminary</source>
         <translation>préliminaire</translation>
     </message>
+    <message>
+        <source>rectangle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

@@ -12,9 +12,12 @@
 
 #include "clients_gui/NBCPrototype_ABC.h"
 
-namespace MsgsClientToSim 
+namespace actions
 {
-    class MsgMagicActionCreateObject;
+    namespace parameters
+    {
+        class ParameterList;
+    }
 }
 
 struct MsgObjectAttributesNbcZone;
@@ -32,14 +35,13 @@ class NBCPrototype : public gui::NBCPrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    NBCPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic, MsgsClientToSim::MsgMagicActionCreateObject& msg );
+    NBCPrototype( QWidget* parent, const tools::Resolver_ABC< kernel::NBCAgent >& resolver, int maxToxic, actions::parameters::ParameterList*& attributesList );
     virtual ~NBCPrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    virtual void Clean();
     //@}
 
 private:
@@ -52,7 +54,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgsClientToSim::MsgMagicActionCreateObject& msg_;
+    actions::parameters::ParameterList*& attributesList_;
     //@}
 };
 

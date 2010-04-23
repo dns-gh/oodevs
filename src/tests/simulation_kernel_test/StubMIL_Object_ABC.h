@@ -42,7 +42,7 @@ public:
     virtual void            SetHLAView( HLA_Object_ABC& view ) {}
     virtual void    Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer ) {}
     virtual void    Serialize  ( HLA_UpdateFunctor& functor ) const {}
-    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgObjectAttributes& asn ) { throw; }
+    virtual MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode OnUpdate( const Common::MsgMissionParameter_Value& asn ) { throw; }
     virtual void    SendCreation() const {}
     virtual void    SendDestruction() const {}
     virtual void    SendFullState() const {}

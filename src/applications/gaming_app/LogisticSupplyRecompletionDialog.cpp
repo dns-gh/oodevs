@@ -12,8 +12,6 @@
 #include "moc_LogisticSupplyRecompletionDialog.cpp"
 #include "actions/UnitMagicAction.h"
 #include "actions/ParameterList.h"
-#include "actions/Quantity.h"
-#include "actions/Identifier.h"
 #include "gaming/Dotations.h"
 #include "gaming/Dotation.h"
 #include "gaming/Equipment.h"
@@ -35,7 +33,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "protocol/ClientSenders.h"
 #include "protocol/Protocol.h"       
-#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace kernel;
@@ -93,11 +90,10 @@ private:
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
+LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
     : QDialog( parent, tr( "Recompletion" ) )
     , controllers_( controllers )
     , static_( staticModel )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , simulation_( simulation )
@@ -407,10 +403,9 @@ void LogisticSupplyRecompletionDialog::FillPersonal( ParameterList& list )
             if( !pPersonnelItemCheckBox->isChecked() )
                 continue;
 
-            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Human", index ) , "list", false ) );
-            list.AddParameter( *personalList );
-            personalList->AddParameter( *new Identifier( OrderParameter( "Rank", "identifier", false ), nRow ) );
-            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pNbrItem->text().toInt() ) );
+            ParameterList& personalList = list.AddList( CreateName( "Human", index ) );
+            personalList.AddIdentifier( "Rank", nRow );
+            personalList.AddQuantity( "Number", pNbrItem->text().toInt() );
         }
     }
 }
@@ -428,10 +423,9 @@ void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::Para
             QComboTableItem* pEquipementItem  = static_cast< QComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
             QTableItem*      pNbrItem         = equipmentsTable_->item( nRow, 1 );
 
-            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Equipment", index ), "list", false ) );
-            list.AddParameter( *personalList );
-            personalList->AddParameter( *new Identifier( OrderParameter( "equipment", "identifier", false ), equipments_[ pEquipementItem->currentText() ]->type_.GetId() ) );
-            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pNbrItem->text().toInt() ) );
+            ParameterList& personalList = list.AddList( CreateName( "Equipment", index ) );
+            personalList.AddIdentifier( "Equipment", equipments_[ pEquipementItem->currentText() ]->type_.GetId() );
+            personalList.AddQuantity( "Number", pNbrItem->text().toInt() );
         }
     }
 }
@@ -461,10 +455,9 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
             if( !pDotationItemCheckBox->isChecked() )
                 continue;
 
-            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Dotation", index ), "list", false ) );
-            list.AddParameter( *personalList );
-            personalList->AddParameter( *new Identifier( OrderParameter( "dotation", "identifier", false ), tools::DotationFamilyFromString( pDotationItem->text() ) ) );
-            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pPercentageItem->text().toInt() ) );
+            ParameterList& personalList = list.AddList( CreateName( "Dotation", index ) );
+            personalList.AddIdentifier( "Dotation", tools::DotationFamilyFromString( pDotationItem->text() ) );
+            personalList.AddQuantity( "Number", pPercentageItem->text().toInt() );
         }
     } 
 }
@@ -494,10 +487,9 @@ void LogisticSupplyRecompletionDialog::FillAmmunitions( actions::parameters::Par
             if( !pMunitionItemCheckBox->isChecked() )
                 continue;
 
-            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Ammo", index ), "list", false ) );
-            list.AddParameter( *personalList );
-            personalList->AddParameter( *new Identifier( OrderParameter( "ammo", "identifier", false ), nRow ) );
-            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pPercentageItem->text().toInt() ) );
+            ParameterList& ammoList = list.AddList( CreateName( "Ammo", index ) );
+            ammoList.AddIdentifier( "Ammo", nRow );
+            ammoList.AddQuantity( "Number", pPercentageItem->text().toInt() );
         }
     }
 }
@@ -531,10 +523,9 @@ void LogisticSupplyRecompletionDialog::FillSupplies( actions::parameters::Parame
             assert( pItem );            
             assert( pQttyItem );
 
-            ParameterList* personalList = new ParameterList( OrderParameter( CreateName( "Stock", index ), "list", false ) );
-            list.AddParameter( *personalList );
-            personalList->AddParameter( *new Identifier( OrderParameter( "stock", "identifier", false ), stocks_[ pItem->text() ]->type_->GetId() ) );
-            personalList->AddParameter( *new Quantity( OrderParameter( "Number", "quantity", false ), pQttyItem->text().toInt() ) );
+            ParameterList& stockList = list.AddList( CreateName( "Stock", index ) );
+            stockList.AddIdentifier( "Stock", stocks_[ pItem->text() ]->type_->GetId() );
+            stockList.AddQuantity( "Number", pQttyItem->text().toInt() );
         }
     }
 }

@@ -55,7 +55,7 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int
 // Name: MineAttribute constructor
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
-MineAttribute::MineAttribute( const Common::MsgObjectAttributes& asn  )
+MineAttribute::MineAttribute( const Common::MsgMissionParameter_Value& attributes  )
     : dotation_( 0 )
     , nFullNbrDotation_( 0 )
     , nCurrentNbrDotation_( 0 )
@@ -63,12 +63,12 @@ MineAttribute::MineAttribute( const Common::MsgObjectAttributes& asn  )
     , nMinesActivityTime_( 0 )
     , nDeathTimeStep_( 0 )
 {
-    dotation_ = PHY_DotationType::FindDotationCategory( asn.mine().dotation_type() );
+    dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
     if( !dotation_ )
         throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
-    nFullNbrDotation_ = asn.mine().density();
-    nCurrentNbrDotation_ = asn.mine().dotation_nbr();
-    rMiningPercentage_ = asn.mine().percentage();
+    nCurrentNbrDotation_ = attributes.list( 2 ).quantity();
+    nFullNbrDotation_ = attributes.list( 3 ).areal();
+    rMiningPercentage_ = attributes.list( 4 ).quantity();
     //nMinesActivityTime_;
     //nDeathTimeStep_;
 }
@@ -193,7 +193,7 @@ void MineAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
     {
         asn.mutable_mine()->set_percentage( unsigned int( rMiningPercentage_ * 100. ) );
         asn.mutable_mine()->set_dotation_nbr( nCurrentNbrDotation_ );
-        Reset( eOnUpdate );
+        Reset( eOnUpdate | eOnHLAUpdate );
     }
 }
 
@@ -201,12 +201,11 @@ void MineAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // Name: MineAttribute::OnUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void MineAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
+void MineAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
 {
-    if( asn.has_mine() )
+    if( attribute.list_size() > 4 )
     {
-        if ( asn.mine().has_percentage()  )
-            Set( asn.mine().percentage() / 100. );
+        Set( attribute.list( 4 ).quantity() / 100. ); // four first parameters not used
         NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
     }
 }

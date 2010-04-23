@@ -48,12 +48,3 @@ void ConstructionPrototype::Commit()
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: ConstructionPrototype::Clean
-// Created: SBO 2009-06-09
-// -----------------------------------------------------------------------------
-void ConstructionPrototype::Clean()
-{
-    // NOTHING
-}

@@ -54,12 +54,3 @@ void MedicalTreatmentPrototype::Commit()
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentPrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void MedicalTreatmentPrototype::Clean()
-{
-    // NOTHING
-}

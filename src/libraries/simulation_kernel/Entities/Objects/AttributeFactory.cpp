@@ -31,6 +31,8 @@
 #include "protocol/protocol.h"
 #include <boost/bind.hpp>
 
+using namespace MsgsClientToSim;
+
 namespace 
 {
     template< typename T, typename I = T  >
@@ -129,29 +131,63 @@ void AttributeFactory::Create( Object& object, const std::string& attribute, xml
         it->second( object, xis );
 }
 
-#define ASN_CREATE_ATTRIBUTE( ASN, CLASS )      \
-    if( asn.has_##ASN##() )    \
-        object.GetAttribute< CLASS >() = CLASS( asn );
-
 // -----------------------------------------------------------------------------
 // Name: AttributeFactory::Create
 // Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-void AttributeFactory::Create( Object& object, const Common::MsgObjectAttributes& asn ) const
+void AttributeFactory::Create( Object& object, const Common::MsgMissionParameter_Value& attributes ) const
 {
     // Initialize construction with 100%
     object.GetAttribute< ConstructionAttribute >();
     object.GetAttribute< OccupantAttribute >();     // $$$$ LDC: All physical objects have an occupant attribute.
-    ASN_CREATE_ATTRIBUTE( obstacle, ObstacleAttribute );
-    ASN_CREATE_ATTRIBUTE( mine, MineAttribute );
-    ASN_CREATE_ATTRIBUTE( activity_time, TimeLimitedAttribute );
-    ASN_CREATE_ATTRIBUTE( bypass, BypassAttribute );
-    ASN_CREATE_ATTRIBUTE( logistic, LogisticAttribute );
-    ASN_CREATE_ATTRIBUTE( nbc, NBCAttribute );
-    ASN_CREATE_ATTRIBUTE( crossing_site, CrossingSiteAttribute );
-    ASN_CREATE_ATTRIBUTE( supply_route, SupplyRouteAttribute );
-    //ASN_CREATE_ATTRIBUTE( toxic_cloud, ??? );
-    ASN_CREATE_ATTRIBUTE( fire, FireAttribute );
-    ASN_CREATE_ATTRIBUTE( medical_treatment, MedicalTreatmentAttribute );
-    ASN_CREATE_ATTRIBUTE( interaction_height, InteractionHeightAttribute );
+
+    for( int i = 0; i < attributes.list_size(); ++i )
+    {
+        const Common::MsgMissionParameter_Value& attribute = attributes.list( i );
+        if( attribute.list_size() == 0 ) // it should be a list of lists
+            return;
+
+        unsigned int actionId = attribute.list( 0 ).identifier(); // first element is the type
+        switch( actionId )
+        {
+        case MsgObjectMagicAction_Attribute_obstacle:
+            object.GetAttribute< ObstacleAttribute >() = ObstacleAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_mine:
+            object.GetAttribute< MineAttribute >() = MineAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_activity_time:
+            object.GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_bypass:
+            object.GetAttribute< BypassAttribute >() = BypassAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_logistic:
+            object.GetAttribute< LogisticAttribute >() = LogisticAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_nbc:
+            object.GetAttribute< NBCAttribute >() = NBCAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_crossing_site:
+            object.GetAttribute< CrossingSiteAttribute >() = CrossingSiteAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_supply_route:
+            object.GetAttribute< SupplyRouteAttribute >() = SupplyRouteAttribute( attribute );
+            break;
+        /*case MsgObjectMagicAction_Attribute_toxic_cloud:
+            object.GetAttribute< ??? >() = ???( attribute );
+            break;*/
+        case MsgObjectMagicAction_Attribute_fire:
+            object.GetAttribute< FireAttribute >() = FireAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_medical_treatment:
+            object.GetAttribute< MedicalTreatmentAttribute >() = MedicalTreatmentAttribute( attribute );
+            break;
+        case MsgObjectMagicAction_Attribute_interaction_height:
+            object.GetAttribute< InteractionHeightAttribute >() = InteractionHeightAttribute( attribute );
+            break;
+        default:
+            break;
+        }
+    }
 }

@@ -20,12 +20,15 @@
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, Publisher_ABC& publisher, const StaticModel& model, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
 : gui::InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )
-    , publisher_( publisher )
+    , actionPublisher_( actionPublisher )
+    , actionsModel_( actionsModel )
+    , static_( staticModel )
+    , simulation_( simulation )
     , tools_( tools )
-    , created_( new ObjectPrototype( this, controllers, model, layer ) )
+    , created_( new ObjectPrototype( this, controllers, staticModel, layer ) )
 {
     QPushButton* ok = new QPushButton( tr( "Create" ), this );
     connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
@@ -47,7 +50,7 @@ ObjectCreationPanel::~ObjectCreationPanel()
 // -----------------------------------------------------------------------------
 void ObjectCreationPanel::Commit()
 {
-    created_->Commit( publisher_ );
+    created_->Commit( actionPublisher_, actionsModel_, simulation_ );
 }
 
 // -----------------------------------------------------------------------------

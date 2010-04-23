@@ -116,10 +116,15 @@ private:
     void UpdateExtension( const kernel::Object_ABC& object );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     kernel::SafePointer< kernel::Object_ABC > selected_;
     DisplayBuilder* display_;
     //@}

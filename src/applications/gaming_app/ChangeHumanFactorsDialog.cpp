@@ -27,7 +27,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/simulationsenders.h"
 
 using namespace kernel;
@@ -48,11 +47,10 @@ namespace
 // Name: ChangeHumanFactorsDialog constructor
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const Profile_ABC& profile )
+ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, const StaticModel& staticModel, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const Profile_ABC& profile )
     : QDialog( pParent, tr( "Human factors" ) )
     , controllers_( controllers )
     , static_( staticModel )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , simulation_( simulation )

@@ -68,10 +68,10 @@ message MsgUnitMagicAction {
 
 message MsgKnowledgeMagicAction {
    enum Type {
-        enable                 = 24;
-        update_side            = 25;
-        update_side_parent     = 26;
-        update_type            = 27;
+        enable                 = 0;
+        update_side            = 1;
+        update_side_parent     = 2;
+        update_type            = 3;
     }
    required uint32                      oid        = 1;
    required Type                        type       = 2;
@@ -98,7 +98,33 @@ message MsgObjectMagicAction_action {
 }
 
 message MsgObjectMagicAction {
-   required MsgObjectMagicAction_action  action             = 1;
+   enum Type {
+        create  = 0;
+        update  = 1;
+        destroy = 2;
+   }
+   
+   enum Attribute {
+        construction       = 0;
+        obstacle           = 1;
+        mine               = 2;
+        activity_time      = 3;
+        bypass             = 4;
+        logistic           = 5;
+        nbc                = 6;
+        crossing_site      = 7;
+        supply_route       = 8;
+        toxic_cloud        = 9;
+        fire               = 10;
+        medical_treatment  = 11;
+        interaction_height = 12;
+        stock              = 13;
+        nbc_agent          = 14;
+   }
+   
+   required uint32                      oid        = 1;
+   required Type                        type       = 2;
+   required Common.MsgMissionParameters parametres = 3;
 }
 
 message MsgLogSupplyPushFlow {

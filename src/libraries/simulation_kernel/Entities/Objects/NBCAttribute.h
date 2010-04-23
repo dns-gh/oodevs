@@ -52,7 +52,7 @@ public:
     //@{
              NBCAttribute();
     explicit NBCAttribute( xml::xistream& xis );
-    explicit NBCAttribute( const Common::MsgObjectAttributes& asn );
+    explicit NBCAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~NBCAttribute();
     //@}
 

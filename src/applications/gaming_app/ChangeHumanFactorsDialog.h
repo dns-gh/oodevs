@@ -34,7 +34,6 @@ namespace actions
     class ActionsModel;
 }
 
-class Publisher_ABC;
 class StaticModel;
 class ActionPublisher;
 class Simulation;
@@ -60,7 +59,7 @@ class ChangeHumanFactorsDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             ChangeHumanFactorsDialog( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& staticModel, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~ChangeHumanFactorsDialog();
     //@}
 
@@ -102,7 +101,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const StaticModel& static_;
-    Publisher_ABC& publisher_;
     ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const Simulation& simulation_;

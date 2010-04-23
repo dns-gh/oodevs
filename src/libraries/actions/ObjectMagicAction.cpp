@@ -9,18 +9,21 @@
 
 #include "actions_pch.h"
 #include "ObjectMagicAction.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/publisher_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/ModelVisitor_ABC.h"
 
 using namespace actions;
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ObjectMagicAction::ObjectMagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-ObjectMagicAction::ObjectMagicAction( const kernel::Entity_ABC& entity, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /*= true*/ )
-    : ActionWithTarget_ABC ( controller, magic, entity )
+ObjectMagicAction::ObjectMagicAction( const kernel::Entity_ABC* object, const kernel::MagicActionType& magic, kernel::Controller& controller, bool registered /*= true*/ )
+    : Action_ABC ( controller, magic )
+    , objectId_  ( object ? object->GetId() : 0 )
     , controller_( controller )
     , registered_( registered )
 {
@@ -31,10 +34,11 @@ ObjectMagicAction::ObjectMagicAction( const kernel::Entity_ABC& entity, const ke
 // Name: ObjectMagicAction::ObjectMagicAction
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC& entity )
-    : ActionWithTarget_ABC( xis, controller, magic, entity )
-    , controller_         ( controller )
-    , registered_         ( true )
+ObjectMagicAction::ObjectMagicAction( xml::xistream& xis, kernel::Controller& controller, const kernel::MagicActionType& magic, const kernel::Entity_ABC* object )
+    : Action_ABC ( xis, controller, magic )
+    , objectId_  ( object ? object->GetId() : 0 )
+    , controller_( controller )
+    , registered_( true )
 {
     // NOTHING
 }
@@ -65,6 +69,34 @@ void ObjectMagicAction::Polish()
 // -----------------------------------------------------------------------------
 void ObjectMagicAction::Serialize( xml::xostream& xos ) const
 {
-    xos << xml::attribute( "type", "magicunit" );
-    ActionWithTarget_ABC::Serialize( xos );
+    xos << xml::attribute( "id", GetType().GetName() );
+    xos << xml::attribute( "type", "magicobject" );
+    if( objectId_ != 0 )
+        xos << xml::attribute( "target", objectId_ );
+    Action_ABC::Serialize( xos );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicAction::Accept
+// Created: JSR 2010-04-21
+// -----------------------------------------------------------------------------
+void ObjectMagicAction::Accept( kernel::ModelVisitor_ABC& visitor ) const
+{
+    visitor.Visit( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectMagicAction::Publish
+// Created: JSR 2010-04-21
+// -----------------------------------------------------------------------------
+void ObjectMagicAction::Publish( Publisher_ABC& publisher ) const
+{
+    MsgsClientToSim::MsgObjectMagicAction_Type type = 
+        ( MsgsClientToSim::MsgObjectMagicAction_Type ) GetType().GetId();
+    simulation::ObjectMagicAction message;
+    message().set_oid( objectId_ );
+    message().set_type( type );
+    CommitTo( *message().mutable_parametres() );
+    message.Send( publisher );
+    message().Clear();
 }

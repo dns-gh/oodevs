@@ -95,10 +95,10 @@ inline bool MsgUnitMagicAction_Type_Parse(
     MsgUnitMagicAction_Type_descriptor(), name, value);
 }
 enum MsgKnowledgeMagicAction_Type {
-  MsgKnowledgeMagicAction_Type_enable = 24,
-  MsgKnowledgeMagicAction_Type_update_side = 25,
-  MsgKnowledgeMagicAction_Type_update_side_parent = 26,
-  MsgKnowledgeMagicAction_Type_update_type = 27
+  MsgKnowledgeMagicAction_Type_enable = 0,
+  MsgKnowledgeMagicAction_Type_update_side = 1,
+  MsgKnowledgeMagicAction_Type_update_side_parent = 2,
+  MsgKnowledgeMagicAction_Type_update_type = 3
 };
 bool MsgKnowledgeMagicAction_Type_IsValid(int value);
 const MsgKnowledgeMagicAction_Type MsgKnowledgeMagicAction_Type_Type_MIN = MsgKnowledgeMagicAction_Type_enable;
@@ -113,6 +113,56 @@ inline bool MsgKnowledgeMagicAction_Type_Parse(
     const ::std::string& name, MsgKnowledgeMagicAction_Type* value) {
   return ::google::protobuf::internal::ParseNamedEnum<MsgKnowledgeMagicAction_Type>(
     MsgKnowledgeMagicAction_Type_descriptor(), name, value);
+}
+enum MsgObjectMagicAction_Type {
+  MsgObjectMagicAction_Type_create = 0,
+  MsgObjectMagicAction_Type_update = 1,
+  MsgObjectMagicAction_Type_destroy = 2
+};
+bool MsgObjectMagicAction_Type_IsValid(int value);
+const MsgObjectMagicAction_Type MsgObjectMagicAction_Type_Type_MIN = MsgObjectMagicAction_Type_create;
+const MsgObjectMagicAction_Type MsgObjectMagicAction_Type_Type_MAX = MsgObjectMagicAction_Type_destroy;
+
+const ::google::protobuf::EnumDescriptor* MsgObjectMagicAction_Type_descriptor();
+inline const ::std::string& MsgObjectMagicAction_Type_Name(MsgObjectMagicAction_Type value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgObjectMagicAction_Type_descriptor(), value);
+}
+inline bool MsgObjectMagicAction_Type_Parse(
+    const ::std::string& name, MsgObjectMagicAction_Type* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgObjectMagicAction_Type>(
+    MsgObjectMagicAction_Type_descriptor(), name, value);
+}
+enum MsgObjectMagicAction_Attribute {
+  MsgObjectMagicAction_Attribute_construction = 0,
+  MsgObjectMagicAction_Attribute_obstacle = 1,
+  MsgObjectMagicAction_Attribute_mine = 2,
+  MsgObjectMagicAction_Attribute_activity_time = 3,
+  MsgObjectMagicAction_Attribute_bypass = 4,
+  MsgObjectMagicAction_Attribute_logistic = 5,
+  MsgObjectMagicAction_Attribute_nbc = 6,
+  MsgObjectMagicAction_Attribute_crossing_site = 7,
+  MsgObjectMagicAction_Attribute_supply_route = 8,
+  MsgObjectMagicAction_Attribute_toxic_cloud = 9,
+  MsgObjectMagicAction_Attribute_fire = 10,
+  MsgObjectMagicAction_Attribute_medical_treatment = 11,
+  MsgObjectMagicAction_Attribute_interaction_height = 12,
+  MsgObjectMagicAction_Attribute_stock = 13,
+  MsgObjectMagicAction_Attribute_nbc_agent = 14
+};
+bool MsgObjectMagicAction_Attribute_IsValid(int value);
+const MsgObjectMagicAction_Attribute MsgObjectMagicAction_Attribute_Attribute_MIN = MsgObjectMagicAction_Attribute_construction;
+const MsgObjectMagicAction_Attribute MsgObjectMagicAction_Attribute_Attribute_MAX = MsgObjectMagicAction_Attribute_nbc_agent;
+
+const ::google::protobuf::EnumDescriptor* MsgObjectMagicAction_Attribute_descriptor();
+inline const ::std::string& MsgObjectMagicAction_Attribute_Name(MsgObjectMagicAction_Attribute value) {
+  return ::google::protobuf::internal::NameOfEnum(
+    MsgObjectMagicAction_Attribute_descriptor(), value);
+}
+inline bool MsgObjectMagicAction_Attribute_Parse(
+    const ::std::string& name, MsgObjectMagicAction_Attribute* value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MsgObjectMagicAction_Attribute>(
+    MsgObjectMagicAction_Attribute_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -1334,25 +1384,99 @@ class MsgObjectMagicAction : public ::google::protobuf::Message {
   
   // nested types ----------------------------------------------------
   
+  typedef MsgObjectMagicAction_Type Type;
+  static const Type create = MsgObjectMagicAction_Type_create;
+  static const Type update = MsgObjectMagicAction_Type_update;
+  static const Type destroy = MsgObjectMagicAction_Type_destroy;
+  static inline bool Type_IsValid(int value) {
+    return MsgObjectMagicAction_Type_IsValid(value);
+  }
+  static const Type Type_MIN =
+    MsgObjectMagicAction_Type_Type_MIN;
+  static const Type Type_MAX =
+    MsgObjectMagicAction_Type_Type_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  Type_descriptor() {
+    return MsgObjectMagicAction_Type_descriptor();
+  }
+  static inline const ::std::string& Type_Name(Type value) {
+    return MsgObjectMagicAction_Type_Name(value);
+  }
+  static inline bool Type_Parse(const ::std::string& name,
+      Type* value) {
+    return MsgObjectMagicAction_Type_Parse(name, value);
+  }
+  
+  typedef MsgObjectMagicAction_Attribute Attribute;
+  static const Attribute construction = MsgObjectMagicAction_Attribute_construction;
+  static const Attribute obstacle = MsgObjectMagicAction_Attribute_obstacle;
+  static const Attribute mine = MsgObjectMagicAction_Attribute_mine;
+  static const Attribute activity_time = MsgObjectMagicAction_Attribute_activity_time;
+  static const Attribute bypass = MsgObjectMagicAction_Attribute_bypass;
+  static const Attribute logistic = MsgObjectMagicAction_Attribute_logistic;
+  static const Attribute nbc = MsgObjectMagicAction_Attribute_nbc;
+  static const Attribute crossing_site = MsgObjectMagicAction_Attribute_crossing_site;
+  static const Attribute supply_route = MsgObjectMagicAction_Attribute_supply_route;
+  static const Attribute toxic_cloud = MsgObjectMagicAction_Attribute_toxic_cloud;
+  static const Attribute fire = MsgObjectMagicAction_Attribute_fire;
+  static const Attribute medical_treatment = MsgObjectMagicAction_Attribute_medical_treatment;
+  static const Attribute interaction_height = MsgObjectMagicAction_Attribute_interaction_height;
+  static const Attribute stock = MsgObjectMagicAction_Attribute_stock;
+  static const Attribute nbc_agent = MsgObjectMagicAction_Attribute_nbc_agent;
+  static inline bool Attribute_IsValid(int value) {
+    return MsgObjectMagicAction_Attribute_IsValid(value);
+  }
+  static const Attribute Attribute_MIN =
+    MsgObjectMagicAction_Attribute_Attribute_MIN;
+  static const Attribute Attribute_MAX =
+    MsgObjectMagicAction_Attribute_Attribute_MAX;
+  static inline const ::google::protobuf::EnumDescriptor*
+  Attribute_descriptor() {
+    return MsgObjectMagicAction_Attribute_descriptor();
+  }
+  static inline const ::std::string& Attribute_Name(Attribute value) {
+    return MsgObjectMagicAction_Attribute_Name(value);
+  }
+  static inline bool Attribute_Parse(const ::std::string& name,
+      Attribute* value) {
+    return MsgObjectMagicAction_Attribute_Parse(name, value);
+  }
+  
   // accessors -------------------------------------------------------
   
-  // required .MsgsClientToSim.MsgObjectMagicAction_action action = 1;
-  inline bool has_action() const;
-  inline void clear_action();
-  static const int kActionFieldNumber = 1;
-  inline const ::MsgsClientToSim::MsgObjectMagicAction_action& action() const;
-  inline ::MsgsClientToSim::MsgObjectMagicAction_action* mutable_action();
+  // required uint32 oid = 1;
+  inline bool has_oid() const;
+  inline void clear_oid();
+  static const int kOidFieldNumber = 1;
+  inline ::google::protobuf::uint32 oid() const;
+  inline void set_oid(::google::protobuf::uint32 value);
+  
+  // required .MsgsClientToSim.MsgObjectMagicAction.Type type = 2;
+  inline bool has_type() const;
+  inline void clear_type();
+  static const int kTypeFieldNumber = 2;
+  inline ::MsgsClientToSim::MsgObjectMagicAction_Type type() const;
+  inline void set_type(::MsgsClientToSim::MsgObjectMagicAction_Type value);
+  
+  // required .Common.MsgMissionParameters parametres = 3;
+  inline bool has_parametres() const;
+  inline void clear_parametres();
+  static const int kParametresFieldNumber = 3;
+  inline const ::Common::MsgMissionParameters& parametres() const;
+  inline ::Common::MsgMissionParameters* mutable_parametres();
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
   mutable int _cached_size_;
   
-  ::MsgsClientToSim::MsgObjectMagicAction_action* action_;
+  ::google::protobuf::uint32 oid_;
+  int type_;
+  ::Common::MsgMissionParameters* parametres_;
   friend void  protobuf_AddDesc_ClientToSim_2eproto();
   friend void protobuf_AssignDesc_ClientToSim_2eproto();
   friend void protobuf_ShutdownFile_ClientToSim_2eproto();
   
-  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(3 + 31) / 32];
   
   // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
   inline bool _has_bit(int index) const {
@@ -2630,7 +2754,7 @@ inline bool MsgKnowledgeMagicAction::has_type() const {
   return _has_bit(1);
 }
 inline void MsgKnowledgeMagicAction::clear_type() {
-  type_ = 24;
+  type_ = 0;
   _clear_bit(1);
 }
 inline ::MsgsClientToSim::MsgKnowledgeMagicAction_Type MsgKnowledgeMagicAction::type() const {
@@ -2892,21 +3016,54 @@ inline void MsgObjectMagicAction_action::set_destroy_object(::google::protobuf::
 
 // MsgObjectMagicAction
 
-// required .MsgsClientToSim.MsgObjectMagicAction_action action = 1;
-inline bool MsgObjectMagicAction::has_action() const {
+// required uint32 oid = 1;
+inline bool MsgObjectMagicAction::has_oid() const {
   return _has_bit(0);
 }
-inline void MsgObjectMagicAction::clear_action() {
-  if (action_ != NULL) action_->::MsgsClientToSim::MsgObjectMagicAction_action::Clear();
+inline void MsgObjectMagicAction::clear_oid() {
+  oid_ = 0u;
   _clear_bit(0);
 }
-inline const ::MsgsClientToSim::MsgObjectMagicAction_action& MsgObjectMagicAction::action() const {
-  return action_ != NULL ? *action_ : *default_instance_->action_;
+inline ::google::protobuf::uint32 MsgObjectMagicAction::oid() const {
+  return oid_;
 }
-inline ::MsgsClientToSim::MsgObjectMagicAction_action* MsgObjectMagicAction::mutable_action() {
+inline void MsgObjectMagicAction::set_oid(::google::protobuf::uint32 value) {
   _set_bit(0);
-  if (action_ == NULL) action_ = new ::MsgsClientToSim::MsgObjectMagicAction_action;
-  return action_;
+  oid_ = value;
+}
+
+// required .MsgsClientToSim.MsgObjectMagicAction.Type type = 2;
+inline bool MsgObjectMagicAction::has_type() const {
+  return _has_bit(1);
+}
+inline void MsgObjectMagicAction::clear_type() {
+  type_ = 0;
+  _clear_bit(1);
+}
+inline ::MsgsClientToSim::MsgObjectMagicAction_Type MsgObjectMagicAction::type() const {
+  return static_cast< ::MsgsClientToSim::MsgObjectMagicAction_Type >(type_);
+}
+inline void MsgObjectMagicAction::set_type(::MsgsClientToSim::MsgObjectMagicAction_Type value) {
+  GOOGLE_DCHECK(::MsgsClientToSim::MsgObjectMagicAction_Type_IsValid(value));
+  _set_bit(1);
+  type_ = value;
+}
+
+// required .Common.MsgMissionParameters parametres = 3;
+inline bool MsgObjectMagicAction::has_parametres() const {
+  return _has_bit(2);
+}
+inline void MsgObjectMagicAction::clear_parametres() {
+  if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
+  _clear_bit(2);
+}
+inline const ::Common::MsgMissionParameters& MsgObjectMagicAction::parametres() const {
+  return parametres_ != NULL ? *parametres_ : *default_instance_->parametres_;
+}
+inline ::Common::MsgMissionParameters* MsgObjectMagicAction::mutable_parametres() {
+  _set_bit(2);
+  if (parametres_ == NULL) parametres_ = new ::Common::MsgMissionParameters;
+  return parametres_;
 }
 
 // -------------------------------------------------------------------
@@ -3638,6 +3795,14 @@ inline const EnumDescriptor* GetEnumDescriptor< ::MsgsClientToSim::MsgUnitMagicA
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::MsgsClientToSim::MsgKnowledgeMagicAction_Type>() {
   return ::MsgsClientToSim::MsgKnowledgeMagicAction_Type_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsClientToSim::MsgObjectMagicAction_Type>() {
+  return ::MsgsClientToSim::MsgObjectMagicAction_Type_descriptor();
+}
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::MsgsClientToSim::MsgObjectMagicAction_Attribute>() {
+  return ::MsgsClientToSim::MsgObjectMagicAction_Attribute_descriptor();
 }
 
 }  // namespace google

@@ -58,17 +58,18 @@ MedicalTreatmentAttribute::MedicalTreatmentAttribute( xml::xistream& xis )
 // Name: MedicalTreatmentAttribute::MedicalTreatmentAttribute
 // Created: RFT 2008-06-05
 // -----------------------------------------------------------------------------
-MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::MsgObjectAttributes& asn )
-    : beds_             ( asn.medical_treatment().beds() )
-    , availableBeds_    ( asn.medical_treatment().available_beds() )
-    , doctors_          ( asn.medical_treatment().doctors() )
-    , availableDoctors_ ( asn.medical_treatment().available_doctors() )
-    , initialBeds_      ( asn.medical_treatment().beds() )
-    , initialDoctors_   ( asn.medical_treatment().doctors() )
+MedicalTreatmentAttribute::MedicalTreatmentAttribute( const Common::MsgMissionParameter_Value& attributes )
+    : beds_             ( attributes.list( 2 ).quantity() )
+    , availableBeds_    ( attributes.list( 3 ).quantity() )
+    , doctors_          ( attributes.list( 4 ).quantity() )
+    , availableDoctors_ ( attributes.list( 5 ).quantity() )
+    , initialBeds_      ( attributes.list( 2 ).quantity() )
+    , initialDoctors_   ( attributes.list( 4 ).quantity() )
 {
-    for( int i = 0; i < asn.medical_treatment().type_id().elem_size(); ++i )
+    const Common::MsgMissionParameter_Value& treatments = attributes.list( 1 );
+    for( int i = 0; i < treatments.list_size(); ++i )
     {                
-        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( asn.medical_treatment().type_id().elem( i ) );
+        const MIL_MedicalTreatmentType* pType = MIL_MedicalTreatmentType::Find( treatments.list( i ).identifier() );
         if( !pType )
             throw std::runtime_error( "Unknown Medical treatment type for medical treatment attribute" );
         medicalTreatmentMap_.insert( std::make_pair( pType->GetID(), new T_PatientDiagnosisList() ) );

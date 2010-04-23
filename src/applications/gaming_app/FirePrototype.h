@@ -14,9 +14,12 @@
 
 struct ObjectAttributeFire;
 
-namespace MsgsClientToSim
+namespace actions
 {
-    class MsgMagicActionCreateObject;
+    namespace parameters
+    {
+        class ParameterList;
+    }
 }
 
 // =============================================================================
@@ -31,14 +34,13 @@ class FirePrototype : public gui::FirePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    FirePrototype( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver, MsgsClientToSim::MsgMagicActionCreateObject& msg );
+    FirePrototype( QWidget* parent, const tools::Resolver_ABC< kernel::FireClass >& resolver, actions::parameters::ParameterList*& attributesList );
     virtual ~FirePrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    virtual void Clean();
     //@}
 
 private:
@@ -51,7 +53,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgsClientToSim::MsgMagicActionCreateObject& msg_;    
+    actions::parameters::ParameterList*& attributesList_;    
     //@}
 };
 

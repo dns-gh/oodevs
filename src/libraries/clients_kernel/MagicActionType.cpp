@@ -72,18 +72,18 @@ void MagicActionType::Initialize()
     }
     else if( name_ == "change_human_factors" )
     {
-        OrderParameter* tiredness = new OrderParameter( "Tiredness", "enumeration", true );
+        OrderParameter* tiredness = new OrderParameter( "Tiredness", "enumeration", false );
         tiredness->AddValue( eUnitTiredness_Normal, tools::ToString( eUnitTiredness_Normal ).ascii() );
         tiredness->AddValue( eUnitTiredness_Fatigue, tools::ToString( eUnitTiredness_Fatigue ).ascii() );
         tiredness->AddValue( eUnitTiredness_Epuise, tools::ToString( eUnitTiredness_Epuise ).ascii() );
         Register( Count(), *tiredness );
-        OrderParameter* morale = new OrderParameter( "Morale", "enumeration", true );
+        OrderParameter* morale = new OrderParameter( "Morale", "enumeration", false );
         morale->AddValue( eUnitMorale_Fanatique, tools::ToString( eUnitMorale_Fanatique ).ascii() );
         morale->AddValue( eUnitMorale_Bon, tools::ToString( eUnitMorale_Bon ).ascii() );
         morale->AddValue( eUnitMorale_Moyen, tools::ToString( eUnitMorale_Moyen ).ascii() );
         morale->AddValue( eUnitMorale_Mauvais, tools::ToString( eUnitMorale_Mauvais ).ascii() );
         Register( Count(), *morale );
-        OrderParameter* experience = new OrderParameter( "Experience", "enumeration", true );
+        OrderParameter* experience = new OrderParameter( "Experience", "enumeration", false );
         experience->AddValue( eUnitExperience_Veteran, tools::ToString( eUnitExperience_Veteran ).ascii() );
         experience->AddValue( eUnitExperience_Experimente, tools::ToString( eUnitExperience_Experimente ).ascii() );
         experience->AddValue( eUnitExperience_Conscrit, tools::ToString( eUnitExperience_Conscrit ).ascii() );
@@ -91,15 +91,15 @@ void MagicActionType::Initialize()
     }
     else if( name_ == "partial_recovery" )
     {
-        OrderParameter* equipments = new OrderParameter( "Equipments", "list", true );
+        OrderParameter* equipments = new OrderParameter( "Equipments", "list", false );
         Register( Count(), *equipments );
-        OrderParameter* humans = new OrderParameter( "Humans", "list", true );
+        OrderParameter* humans = new OrderParameter( "Humans", "list", false );
         Register( Count(), *humans );
-        OrderParameter* dotations = new OrderParameter( "Dotations", "list", true );
+        OrderParameter* dotations = new OrderParameter( "Dotations", "list", false );
         Register( Count(), *dotations );
-        OrderParameter* ammo = new OrderParameter( "Ammo", "list", true );
+        OrderParameter* ammo = new OrderParameter( "Ammo", "list", false );
         Register( Count(), *ammo );
-        OrderParameter* stocks = new OrderParameter( "Stocks", "list", true );
+        OrderParameter* stocks = new OrderParameter( "Stocks", "list", false );
         Register( Count(), *stocks );
     }
     else if( name_ == "unit_creation" )
@@ -197,5 +197,23 @@ void MagicActionType::Initialize()
         Register( Count(), *automat );
         OrderParameter* dotations = new OrderParameter( "Dotations", "list", false );
         Register( Count(), *dotations );
+    }
+    else if( name_ == "create_object" )
+    {
+        OrderParameter* type = new OrderParameter( "Type", "string", false );
+        Register( Count(), *type );
+        OrderParameter* location = new OrderParameter( "Location", "location", false );
+        Register( Count(), *location );
+        OrderParameter* name = new OrderParameter( "Name", "string", false );
+        Register( Count(), *name);
+        OrderParameter* camp = new OrderParameter( "Camp", "army", false );
+        Register( Count(), *camp );
+        OrderParameter* attributes = new OrderParameter( "Attributes", "list", false );
+        Register( Count(), *attributes );
+    }
+    else if( name_ == "update_object" )
+    {
+        OrderParameter* attributes = new OrderParameter( "Attributes", "list", false );
+        Register( Count(), *attributes );
     }
 }

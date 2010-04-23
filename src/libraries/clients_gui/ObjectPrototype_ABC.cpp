@@ -151,7 +151,6 @@ bool ObjectPrototype_ABC::CheckValidity() const
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::Clean()
 {
-    attributes_->Clean();
     name_->setText( "" );
     ResetLocation();
 }

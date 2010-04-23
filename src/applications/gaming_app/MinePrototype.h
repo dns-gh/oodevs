@@ -12,7 +12,13 @@
 
 #include "clients_gui/MinePrototype_ABC.h"
 
-struct MagicActionCreateObject;
+namespace actions
+{
+    namespace parameters
+    {
+        class ParameterList;
+    }
+}
 
 // =============================================================================
 /** @class  MinePrototype
@@ -26,14 +32,13 @@ class MinePrototype : public gui::MinePrototype_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MinePrototype( QWidget* parent, MagicActionCreateObject& msg );
+             MinePrototype( QWidget* parent, actions::parameters::ParameterList*& attributesList );
     virtual ~MinePrototype();
     //@}
 
     //! @name Operations
     //@{
     virtual void Commit();
-    virtual void Clean();
     //@}
 
 private:
@@ -46,7 +51,7 @@ private:
 private:
     //! @name Member data
     //@{
-    MagicActionCreateObject& msg_;
+    actions::parameters::ParameterList*& attributesList_;
     //@}
 };
 

@@ -52,12 +52,3 @@ void LogisticPrototype::Commit()
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: LogisticPrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void LogisticPrototype::Clean()
-{
-    // NOTHING
-}

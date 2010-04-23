@@ -28,7 +28,6 @@ namespace actions
 
 class ActionPublisher;
 class AutomatDecisions;
-class Publisher_ABC;
 class Simulation;
 class StaticModel;
 
@@ -46,7 +45,7 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~TacticalListView();
     //@}
 
@@ -77,7 +76,6 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& publisher_;
     ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;

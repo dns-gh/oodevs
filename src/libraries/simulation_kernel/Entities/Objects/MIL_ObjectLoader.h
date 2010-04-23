@@ -16,11 +16,7 @@
 namespace Common
 {    
     class MsgLocation;
-}
-
-namespace MsgsClientToSim
-{
-    class MsgMagicActionCreateObject;
+    class MsgMissionParameters;
 }
 
 namespace MsgsSimToClient
@@ -61,7 +57,7 @@ public:
     //@{
     void Initialize( xml::xistream& xis );
     MIL_Object_ABC* CreateObject( xml::xistream& xis, MIL_Army_ABC& army ) const;
-    MIL_Object_ABC* CreateObject( const MsgsClientToSim::MsgMagicActionCreateObject& asn, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value ) const;
+    MIL_Object_ABC* CreateObject( const Common::MsgMissionParameters& asn, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value ) const;
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& location, bool reserved ) const;
     MIL_Object_ABC* CreateObject( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC& army ) const;
     //@}

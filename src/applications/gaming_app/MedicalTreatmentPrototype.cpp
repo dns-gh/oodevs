@@ -12,6 +12,7 @@
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "protocol/Protocol.h"
 #include "tools/Iterator.h"
+#include "actions/ParameterList.h"
 
 using namespace Common;
 using namespace kernel;
@@ -21,9 +22,9 @@ using namespace gui;
 // Name: MedicalTreatmentPrototype constructor
 // Created: SBO 2006-04-20
 // -----------------------------------------------------------------------------
-MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, MsgsClientToSim::MsgMagicActionCreateObject& msg )
+MedicalTreatmentPrototype::MedicalTreatmentPrototype( QWidget* parent, const tools::Resolver_ABC< MedicalTreatmentType >& resolver, actions::parameters::ParameterList*& attributesList )
     : MedicalTreatmentPrototype_ABC( parent, resolver )
-    , msg_( msg )     
+    , attributesList_( attributesList )
 {
     // NOTHING
 }
@@ -54,14 +55,4 @@ void MedicalTreatmentPrototype::Commit()
             msg_.mutable_attributes()->mutable_medical_treatment()->mutable_type_id()->add_elem( type_->GetValue()->GetId() );
     }
     */
-}
-
-// -----------------------------------------------------------------------------
-// Name: MedicalTreatmentPrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void MedicalTreatmentPrototype::Clean()
-{
-    if( msg_.attributes().has_medical_treatment() )
-        msg_.mutable_attributes()->clear_medical_treatment();
 }

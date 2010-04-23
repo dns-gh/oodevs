@@ -66,12 +66,12 @@ SupplyRouteAttribute::SupplyRouteAttribute()
 // Name: SupplyRouteAttribute constructor
 // Created: JCR 2008-07-21
 // -----------------------------------------------------------------------------
-SupplyRouteAttribute::SupplyRouteAttribute( const Common::MsgObjectAttributes& asn )
-    : bEquipped_        ( asn.supply_route().equipped() ? true : false )
-    , rWeightSupported_ ( asn.supply_route().max_weight() )
-    , rWidth_           ( asn.supply_route().width() )
-    , rLength_          ( asn.supply_route().length() ) 
-    , rFlow_            ( asn.supply_route().flow_rate() )
+SupplyRouteAttribute::SupplyRouteAttribute( const Common::MsgMissionParameter_Value& attributes )
+    : bEquipped_        ( attributes.list( 1 ).abool() )
+    , rWeightSupported_ ( attributes.list( 2 ).quantity() )
+    , rWidth_           ( attributes.list( 3 ).quantity() )
+    , rLength_          ( attributes.list( 4 ).quantity() ) 
+    , rFlow_            ( attributes.list( 5 ).quantity() )
 {
     // NOTHING
 }

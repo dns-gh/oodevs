@@ -30,18 +30,18 @@ using namespace actions;
 // Name: CreationPanels constructor
 // Created: SBO 2007-06-19
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ItemFactory_ABC& factory, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings )
+CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, ParametersLayer& paramLayer, GlTools_ABC& tools, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, DrawingsModel& drawings )
     : Panels( parent )
     , controllers_( controllers )
     , shown_( true )
 {
     AddPanel( units_   = new gui::UnitsPanel    ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
-    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, publisher, staticModel, paramLayer, tools ) );
+    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, actionPublisher, actionsModel, staticModel, simulation, paramLayer, tools ) );
     controllers_.Register( *this );
     AddPanel( intel_ = new gui::IntelligencesPanel( this, *this, controllers, staticModel.levels_, icons ) );
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, drawings ) );
-    AddPanel( new FireCreationPanel( this, *this, controllers, publisher, actionPublisher, actionsModel, simulation, staticModel ) );
-    AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, paramLayer, tools ) );
+    AddPanel( new FireCreationPanel( this, *this, controllers, actionPublisher, actionsModel, simulation, staticModel ) );
+    AddPanel( weather_ = new WeatherCreationPanel( this, *this, controllers, actionPublisher, actionsModel, staticModel, simulation, paramLayer, tools ) );
 }
 
 // -----------------------------------------------------------------------------

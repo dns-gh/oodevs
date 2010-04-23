@@ -29,7 +29,6 @@ namespace actions
 
 class ActionPublisher;
 class AutomatDecisions;
-class Publisher_ABC;
 class Simulation;
 class StaticModel;
 
@@ -45,7 +44,7 @@ class AgentList : public QVBox
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentList( kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             AgentList( kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~AgentList();
     //@}
 

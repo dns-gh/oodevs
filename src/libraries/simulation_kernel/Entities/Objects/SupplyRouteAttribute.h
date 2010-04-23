@@ -28,7 +28,7 @@ public:
     //@{
              SupplyRouteAttribute();
     explicit SupplyRouteAttribute( xml::xistream& xis );
-    explicit SupplyRouteAttribute( const Common::MsgObjectAttributes& asn );
+    explicit SupplyRouteAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~SupplyRouteAttribute();
     //@}
 

@@ -344,7 +344,7 @@ void AgentTypes::RegisterActionType( MagicActionType& actionType )
 // -----------------------------------------------------------------------------
 void AgentTypes::CreateMagicActionTypes()
 {
-    //RegisterActionType( *new MagicActionMoveToType() );
+    // Unit Magic Actions
     RegisterActionType( *new MagicActionType( "teleport", MsgsClientToSim::MsgUnitMagicAction_Type_move_to ) );
     RegisterActionType( *new MagicActionType( "surrender", MsgsClientToSim::MsgUnitMagicAction_Type_surrender_to ) );
     RegisterActionType( *new MagicActionType( "cancel_surrender", MsgsClientToSim::MsgUnitMagicAction_Type_cancel_surrender ) );
@@ -371,11 +371,18 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "log_supply_push_flow", MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_push_flow ) );
     RegisterActionType( *new MagicActionType( "log_supply_change_quotas", MsgsClientToSim::MsgUnitMagicAction_Type_log_supply_change_quotas ) );
 
+    // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", MsgsClientToSim::MsgKnowledgeMagicAction_Type_enable ) );
     RegisterActionType( *new MagicActionType( "knowledge_group_update_side", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side ) );
     RegisterActionType( *new MagicActionType( "knowledge_group_update_side_parent", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent ) );
     RegisterActionType( *new MagicActionType( "knowledge_group_update_type", MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_type ) );
 
+    // Object Magic Actions
+    RegisterActionType( *new MagicActionType( "create_object", MsgsClientToSim::MsgObjectMagicAction_Type_create ) );
+    RegisterActionType( *new MagicActionType( "update_object", MsgsClientToSim::MsgObjectMagicAction_Type_update ) );
+    RegisterActionType( *new MagicActionType( "destroy_object", MsgsClientToSim::MsgObjectMagicAction_Type_destroy ) );
+
+    // Other Magic Actions
     // $$$$ JSR 2010-04-14: TODO à remettre quand ces types auront des id
     // RegisterActionType( *new MagicActionMeteoType() );
     // RegisterActionType( *new MagicActionLocalMeteoType() );

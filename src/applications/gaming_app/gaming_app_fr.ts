@@ -52,6 +52,14 @@
         <source>Surrender to</source>
         <translation type="obsolete">Rédition</translation>
     </message>
+    <message>
+        <source>Magic orders</source>
+        <translation type="obsolete">Actions magiques</translation>
+    </message>
+    <message>
+        <source>Partial recompletion</source>
+        <translation type="obsolete">Recomplétion partielle</translation>
+    </message>
 </context>
 <context>
     <name>AboutDialog</name>
@@ -1420,11 +1428,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Magic orders</source>
-        <translation>Actions magiques</translation>
+        <translation type="unfinished">Actions magiques</translation>
     </message>
     <message>
         <source>Partial recompletion</source>
-        <translation>Recomplétion partielle</translation>
+        <translation type="unfinished">Recomplétion partielle</translation>
     </message>
     <message>
         <source>Quantity %</source>

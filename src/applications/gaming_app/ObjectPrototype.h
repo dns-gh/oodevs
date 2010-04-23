@@ -13,13 +13,18 @@
 #include "LocationSerializer.h"
 #include "clients_gui/ObjectPrototype_ABC.h"
 
-namespace MsgsClientToSim
+namespace actions
 {
-    class MsgMagicActionCreateObject;
+    class ActionsModel;
+    namespace parameters
+    {
+        class ParameterList;
+    }
 }
 
+class ActionPublisher;
+class Simulation;
 class StaticModel;
-class Publisher_ABC;
 
 // =============================================================================
 /** @class  ObjectPrototype
@@ -39,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( Publisher_ABC& publisher );
+    void Commit( ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation );
     //@}
 
 private:
@@ -52,8 +57,8 @@ private:
 private:
     //! @name Member data
     //@{
-    MsgsClientToSim::MsgMagicActionCreateObject creation_;
-    LocationSerializer serializer_;
+    actions::parameters::ParameterList* attributesList_;
+    const StaticModel& static_;
     //@}
 };
 

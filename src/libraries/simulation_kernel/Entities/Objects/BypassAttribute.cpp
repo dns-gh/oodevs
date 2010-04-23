@@ -32,8 +32,8 @@ BypassAttribute::BypassAttribute()
 // Name: BypassAttribute constructor
 // Created: RPD 2009-10-20
 // -----------------------------------------------------------------------------
-BypassAttribute::BypassAttribute( const Common::MsgObjectAttributes& asn )
-    : rBypass_ ( asn.bypass().percentage() )
+BypassAttribute::BypassAttribute( const Common::MsgMissionParameter_Value& attributes )
+    : rBypass_ ( attributes.list( 1 ).quantity() / 100. )
 {
     // NOTHING
 }
@@ -92,10 +92,10 @@ void BypassAttribute::SendFullState( Common::MsgObjectAttributes& asn ) const
 // -----------------------------------------------------------------------------
 void BypassAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    if( NeedUpdate( eOnUpdate ) )
+    if( NeedUpdate( ) )
     {
         SendFullState( asn );
-        Reset( eOnUpdate );
+        Reset( );
     }
 }
 
@@ -103,10 +103,13 @@ void BypassAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 // Name: BypassAttribute::OnMagicActionUpdate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
-void BypassAttribute::OnUpdate( const Common::MsgObjectAttributes& asn )
+void BypassAttribute::OnUpdate( const Common::MsgMissionParameter_Value& attribute )
 {
-    if( asn.has_bypass() ) 
-        rBypass_ = asn.bypass().percentage() / 100.;
+    if( attribute.list_size() > 1 )
+    {
+        rBypass_ = attribute.list( 1 ).quantity() / 100.;
+        NotifyAttributeUpdated( eOnUpdate | eOnHLAUpdate );
+    }
 }
 
 // -----------------------------------------------------------------------------

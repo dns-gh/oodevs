@@ -22,7 +22,6 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
@@ -37,12 +36,11 @@ using namespace actions;
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------
 FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers,
-                                      Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel,
+                                      ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel,
                                       const Simulation& simulation, const StaticModel& staticModel )
 : gui::InfoPanel_ABC( parent, panel, tr( "Fire" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )
-    , publisher_( publisher )
     , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , simulation_( simulation ) 

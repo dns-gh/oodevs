@@ -20,10 +20,10 @@ using namespace gui;
 // Name: AgentList constructor
 // Created: AGE 2006-08-29
 // -----------------------------------------------------------------------------
-AgentList::AgentList( Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+AgentList::AgentList( Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
 {
     new EntitySearchBox< Agent_ABC >( this, controllers );
-    new AgentListView( this, controllers, publisher, actionPublisher, actionsModel, staticModel, simulation, factory, profile, icons );
+    new AgentListView( this, controllers, actionPublisher, actionsModel, staticModel, simulation, factory, profile, icons );
 }
 
 // -----------------------------------------------------------------------------

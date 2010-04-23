@@ -52,12 +52,3 @@ void ActivityTimePrototype::Commit()
         creation_->Get< ObjectAttributesContainer >().Register( *attribute );
     }
 }
-
-// -----------------------------------------------------------------------------
-// Name: ActivityTimePrototype::Clean
-// Created: SBO 2006-04-20
-// -----------------------------------------------------------------------------
-void ActivityTimePrototype::Clean()
-{
-    // NOTHING
-}

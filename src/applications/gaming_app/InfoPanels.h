@@ -12,6 +12,11 @@
 
 #include "clients_gui/Panels.h"
 
+namespace actions
+{
+    class ActionsModel;
+}
+
 namespace kernel
 {
     class Controllers;
@@ -22,7 +27,10 @@ namespace gui
     class ItemFactory_ABC;
 }
 
+class ActionPublisher;
 class Publisher_ABC;
+class Simulation;
+class StaticModel;
 
 // =============================================================================
 /** @class  InfoPanels
@@ -35,7 +43,7 @@ class InfoPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, Publisher_ABC& publisher );
+             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
     virtual ~InfoPanels();
     //@}
 

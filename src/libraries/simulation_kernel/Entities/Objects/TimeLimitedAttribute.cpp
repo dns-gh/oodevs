@@ -58,8 +58,8 @@ TimeLimitedAttribute::TimeLimitedAttribute()
 // Name: TimeLimitedAttribute constructor
 // Created: RPD 2009-10-19
 // -----------------------------------------------------------------------------
-TimeLimitedAttribute::TimeLimitedAttribute( const Common::MsgObjectAttributes& asn )
-    : nActivityTime_ ( asn.activity_time().value() )
+TimeLimitedAttribute::TimeLimitedAttribute( const Common::MsgMissionParameter_Value& attributes )
+    : nActivityTime_ ( attributes.list( 1 ).quantity() )
     , nDeathTimeStep_ ( 0 )
 {
     // NOTHING
@@ -159,5 +159,9 @@ void TimeLimitedAttribute::SendFullState( Common::MsgObjectAttributes& asn ) con
 // -----------------------------------------------------------------------------
 void TimeLimitedAttribute::SendUpdate( Common::MsgObjectAttributes& asn ) const
 {
-    SendFullState( asn );
+    if( NeedUpdate() )
+    {
+        SendFullState( asn );
+        Reset();
+    }
 }

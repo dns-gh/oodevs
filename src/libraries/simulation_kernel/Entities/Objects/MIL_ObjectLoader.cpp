@@ -152,19 +152,19 @@ MIL_Object_ABC* MIL_ObjectLoader::CreateObject( xml::xistream& xis, MIL_Army_ABC
 // Name: MIL_ObjectLoader::CreateObject
 // Created: JCR 2008-06-02
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const MsgsClientToSim::MsgMagicActionCreateObject& message, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value ) const
+MIL_Object_ABC* MIL_ObjectLoader::CreateObject( const Common::MsgMissionParameters& message, MIL_Army_ABC& army, MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode& value ) const
 {
-    CIT_Prototypes it = prototypes_.find( message.type() );
+    CIT_Prototypes it = prototypes_.find( message.elem( 0 ).value().acharstr() );
     if( it == prototypes_.end() )
     {
         value = MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_object;
         return 0;
     }
     TER_Localisation location;
-    if( ! NET_ASN_Tools::ReadLocation( message.location(), location ) )
+    if( ! NET_ASN_Tools::ReadLocation( message.elem( 1 ).value().location(), location ) )
         return 0;
-    Object* pObject = new Object( *it->second, army, &location, message.name() );
-    attributes_->Create( *pObject, message.attributes() );
+    Object* pObject = new Object( *it->second, army, &location, message.elem( 2 ).value().acharstr() );
+    attributes_->Create( *pObject, message.elem( 4 ).value() );
     pObject->Finalize();
     return pObject;
 }

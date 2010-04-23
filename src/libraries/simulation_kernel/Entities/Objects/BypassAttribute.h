@@ -32,7 +32,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              BypassAttribute();
-    explicit BypassAttribute( const Common::MsgObjectAttributes& asn );
+    explicit BypassAttribute( const Common::MsgMissionParameter_Value& attributes );
     virtual ~BypassAttribute();
     //@}
 
@@ -47,7 +47,7 @@ public:
     virtual void Register( Object& object ) const;
     virtual void SendFullState( Common::MsgObjectAttributes& asn ) const;
     virtual void SendUpdate( Common::MsgObjectAttributes& asn ) const;
-    virtual void OnUpdate( const Common::MsgObjectAttributes& asn );
+    virtual void OnUpdate( const Common::MsgMissionParameter_Value& attribute );
     virtual void Serialize( HLA_UpdateFunctor& functor ) const;
     virtual void Deserialize( const hla::AttributeIdentifier& attributeID, hla::Deserializer deserializer );
     //@}
