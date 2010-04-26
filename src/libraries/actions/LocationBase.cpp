@@ -295,6 +295,8 @@ bool LocationBase::CheckValidity() const
         return points_.size() == 2;
     case Common::MsgLocation::point:
         return points_.size() == 1;
+    case Common::MsgLocation::rectangle:
+        return points_.size() == 2;
     }
     return false;
 }

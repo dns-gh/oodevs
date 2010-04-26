@@ -10,7 +10,7 @@
 #include "gaming_app_pch.h"
 #include "WeatherCreationPanel.h"
 #include "moc_WeatherCreationPanel.cpp"
-#include "actions/MagicActionMeteo.h"
+#include "actions/MagicAction.h"
 #include "actions/Numeric.h"
 #include "actions/DateTime.h"
 #include "actions/Location.h"
@@ -121,26 +121,14 @@ void WeatherCreationPanel::Commit()
     if( CheckValidity() )
     {      
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( model_.types_ ).Get( isGlobal_? "global_meteo" : "local_meteo" );
-        MagicActionMeteo* action = new MagicActionMeteo( actionType, controllers_.controller_, true );
-
+        MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
         tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
-        while( it.HasMoreElements() )
+        weather_->CreateParameters( *action, it );
+        if( !isGlobal_ )
         {
-            const OrderParameter& parameter = it.NextElement();
-
-            if( parameter.GetName() == "StartTime" || parameter.GetName() == "EndTime" || parameter.GetName() == "Location" )
-            {
-                if( isGlobal_ )
-                    continue;
-                if( parameter.GetName() == "StartTime" )
-                    action->AddParameter( *new DateTime( parameter, startTime_->dateTime() ) );
-                else if( parameter.GetName() == "EndTime" )
-                    action->AddParameter( *new DateTime( parameter, endTime_->dateTime() ) );
-                else if( parameter.GetName() == "Location" )
-                    action->AddParameter( *new Location( parameter, model_.coordinateConverter_ , *location_ ) );
-            }
-            else
-                action->AddParameter( weather_->CreateParameter( parameter ) );
+            action->AddParameter( *new DateTime( it.NextElement(), startTime_->dateTime() ) );
+            action->AddParameter( *new DateTime( it.NextElement(), endTime_->dateTime() ) );
+            action->AddParameter( *new Location( it.NextElement(), model_.coordinateConverter_ , *location_ ) );
         }
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
         action->RegisterAndPublish( actionsModel_, actionPublisher_ );

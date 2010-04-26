@@ -642,20 +642,29 @@ void MIL_Army::SendKnowledge() const
 // Name: MIL_Army::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_Army::OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& asnMsg )
+void MIL_Army::OnReceiveMsgChangeDiplomacy( const Common::MsgMissionParameters& asnMsg )
 {
-    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.oid_camp2() );
+    MIL_Army_ABC* pArmy2 = armyFactory_.Find( asnMsg.elem( 1 ).value().identifier() );
     if( !pArmy2 || *pArmy2 == *this )
         throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
     E_Diplomacy nDiplomacy = eUnknown;
-    if( asnMsg.diplomatie() == Common::unknown_diplo )
+    switch( asnMsg.elem( 2 ).value().enumeration() )
+    {
+    case Common::unknown_diplo:
         nDiplomacy = eUnknown;
-    else if( asnMsg.diplomatie() == Common::friend_diplo )
+        break;
+    case Common::friend_diplo:
         nDiplomacy = eFriend;
-    else if( asnMsg.diplomatie() == Common::enemy_diplo )
+        break;
+    case Common::enemy_diplo:
         nDiplomacy = eEnemy;
-    else if( asnMsg.diplomatie() == Common::neutral_diplo )
+        break;
+    case Common::neutral_diplo:
         nDiplomacy = eNeutral;
+        break;
+    default:
+        break;
+    }
     diplomacies_[ pArmy2 ] = nDiplomacy;
 }
 

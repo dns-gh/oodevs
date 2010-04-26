@@ -9,12 +9,13 @@
 
 #include "actions_pch.h"
 #include "MagicAction.h"
+#include "protocol/simulationsenders.h"
+#include "protocol/publisher_ABC.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Controller.h"
 
 using namespace actions;
-
 
 // -----------------------------------------------------------------------------
 // Name: MagicAction constructor
@@ -75,7 +76,22 @@ void MagicAction::Accept( kernel::ModelVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void MagicAction::Serialize( xml::xostream& xos ) const
 {
+    xos << xml::attribute( "id", GetType().GetName() );
     xos << xml::attribute( "type", "magic" );
     Action_ABC::Serialize( xos );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MagicAction::Publish
+// Created: JSR 2010-04-23
+// -----------------------------------------------------------------------------
+void MagicAction::Publish( Publisher_ABC& publisher ) const
+{
+    MsgsClientToSim::MsgMagicAction_Type type = 
+        ( MsgsClientToSim::MsgMagicAction_Type ) GetType().GetId();
+    simulation::MagicAction message;
+    message().set_type( type );
+    CommitTo( *message().mutable_parametres() );
+    message.Send( publisher );
+    message().Clear();
+}

@@ -212,15 +212,11 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
         return bSupervision_;
     if( message.has_control_date_time_change() )
         return bSupervision_;
-    if( message.has_control_meteo() )
-        return bSupervision_;
     if( message.has_control_checkpoint_save_now() )
         return bSupervision_;
     if( message.has_control_checkpoint_set_frequency() )
         return bSupervision_;
     if( wrapper.message().has_control_checkpoint_set_frequency() )
-        return bSupervision_;
-    if( wrapper.message().has_knowledge_group_creation_request() )
         return bSupervision_;
     if( wrapper.message().has_control_toggle_vision_cones() )
         return true;
@@ -242,11 +238,17 @@ bool Profile::CheckRights( const MsgsClientToSim::MsgClientToSim& wrapper ) cons
             return bSupervision_;
         return true;
     }
+    if( message.has_magic_action() )
+    {
+        if( message.magic_action().type()== MsgsClientToSim::MsgMagicAction_Type_global_meteo
+            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction_Type_local_meteo
+            || message.magic_action().type()== MsgsClientToSim::MsgMagicAction_Type_create_knowledge_group )
+            return bSupervision_;
+        return true;
+    }
     if( message.has_knowledge_magic_action() )
         return bSupervision_;
     if( message.has_object_magic_action() )
-        return true;
-    if( message.has_change_diplomacy() )
         return true;
 
     return false;

@@ -14,7 +14,6 @@
 #include "actions/PopulationMission.h"
 #include "actions/FragOrder.h"
 #include "actions/MagicAction.h"
-#include "actions/MagicActionMeteo.h"
 #include "actions/KnowledgeGroupMagicAction.h"
 #include "actions/UnitMagicAction.h"
 #include "actions/ObjectMagicAction.h"
@@ -295,15 +294,8 @@ actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis ) cons
     const std::string id = xml::attribute< std::string >( xis, "id" );
 
     std::auto_ptr< actions::MagicAction > action;
-    if( id == "global_meteo" )
-        action.reset( new actions::MagicActionMeteo( xis, controllers_.controller_, magicActions_.Get( "global_meteo" ) ) );
-    else if( id == "local_meteo" )
-        action.reset( new actions::MagicActionMeteo( xis, controllers_.controller_, magicActions_.Get( "local_meteo" ) ) );
-    // $$$$ JSR 2010-04-07: TODO
-    // else
-    //    ...
-    else
-        ThrowMagicIdNotFound( id );
+
+    action.reset( new actions::MagicAction( xis, controllers_.controller_, magicActions_.Get( id ) ) );
 
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();

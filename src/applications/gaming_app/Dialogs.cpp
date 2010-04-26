@@ -28,7 +28,7 @@ using namespace kernel;
 Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config )
     : QObject( parent )
 {
-    new ChangeDiplomacyDialog( parent, controllers, publisher, profile );
+    new ChangeDiplomacyDialog( parent, controllers, actionPublisher, actionsModel, staticModel, simulation, profile );
     new ChangeLogisticLinksDialog( parent, controllers, actionPublisher, actionsModel, staticModel, simulation, profile  );
     new LogisticSupplyChangeQuotasDialog( parent, controllers, actionPublisher, actionsModel, staticModel, simulation, model, profile  );
     new LogisticSupplyPushFlowDialog( parent, controllers, actionPublisher, actionsModel, staticModel, simulation, model.agents_, profile  );

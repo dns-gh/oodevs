@@ -83,8 +83,6 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         simulation_.SetTimeFactor( wrapper.message().control_change_time_factor().time_factor() ); 
     else if( wrapper.message().has_control_date_time_change() )
         simulation_.SetRealTime( wrapper.message().control_date_time_change().date_time().data() ); 
-    else if( wrapper.message().has_control_meteo() )
-        workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                          ( wrapper.message().control_meteo()                             ); 
     else if( wrapper.message().has_control_checkpoint_save_now() )
         workspace.GetCheckPointManager    ().OnReceiveMsgCheckPointSaveNow              ( wrapper.message().control_checkpoint_save_now()               ); 
     else if( wrapper.message().has_control_checkpoint_set_frequency() )
@@ -109,11 +107,15 @@ void NET_AS_MOSServerMsgMgr::OnReceiveClient( const std::string& /*from*/, const
         workspace.GetEntityManager        ().OnReceiveMsgUnitMagicAction                ( wrapper.message().unit_magic_action()                  , nCtx ); 
     else if( wrapper.message().has_object_magic_action() )
         workspace.GetEntityManager        ().OnReceiveMsgObjectMagicAction              ( wrapper.message().object_magic_action()                , nCtx ); 
-    else if( wrapper.message().has_change_diplomacy() )
-        workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy                ( wrapper.message().change_diplomacy()                   , nCtx ); 
+    else if( wrapper.message().has_magic_action() )
+        if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_global_meteo
+         || wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_local_meteo )
+            workspace.GetMeteoDataManager     ().OnReceiveMsgMeteo                      ( wrapper.message().magic_action()                              ); 
+        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_change_diplomacy )
+            workspace.GetEntityManager        ().OnReceiveMsgChangeDiplomacy            ( wrapper.message().magic_action()                       , nCtx ); 
     // LTO BEGIN
-    else if( wrapper.message().has_knowledge_group_creation_request() )
-        workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation         ( wrapper.message().knowledge_group_creation_request()   , nCtx ); 
+        else if( wrapper.message().magic_action().type() == MsgsClientToSim::MsgMagicAction_Type_create_knowledge_group )
+            workspace.GetEntityManager        ().OnReceiveMsgKnowledgeGroupCreation     ( wrapper.message().magic_action()                       , nCtx ); 
     // LTO END
 }
 

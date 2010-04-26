@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "WeatherWidget.h"
 #include "moc_WeatherWidget.cpp"
+#include "actions/MagicAction.h"
 #include "actions/Numeric.h"
 #include "actions/Direction.h"
 #include "actions/Enumeration.h"
@@ -91,29 +92,16 @@ void WeatherWidget::Commit( Common::MsgMissionParameters& att ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: WeatherWidget::CreateParameter
-// Created: JSR 2010-04-12
+// Name: WeatherWidget::CreateParameters
+// Created: JSR 2010-04-23
 // -----------------------------------------------------------------------------
-Parameter_ABC& WeatherWidget::CreateParameter( const OrderParameter& parameter )
+void WeatherWidget::CreateParameters( MagicAction& action, tools::Iterator< const OrderParameter& >& it )
 {
-    if( parameter.GetName() == "Temperature" )
-        return *new Numeric( parameter, 0 );
-    else if( parameter.GetName() == "WindSpeed" )
-        return *new Numeric( parameter, ( float) windSpeed_->value() );
-    else if( parameter.GetName() == "WindDirection" )
-        return *new Direction( parameter, windDirection_->value() );
-    else if( parameter.GetName() == "CloudFloor" )
-        return *new Numeric( parameter, ( float) cloudFloor_->value() );
-    else if( parameter.GetName() == "CloudCeiling" )
-        return *new Numeric( parameter, ( float) cloudCeiling_->value() );
-    else if( parameter.GetName() == "CloudDensity" )
-        return *new Numeric( parameter, ( float) cloudDensity_->value() );
-    else if( parameter.GetName() == "Precipitation" )
-    {
-        //const weather::PHY_Precipitation* precipitation = weather::PHY_Precipitation::FindPrecipitation( tools::ToString( type_->GetValue() ).ascii() );
-        return *new Enumeration( parameter, type_->GetValue() /*precipitation->GetAsnID()*/ );
-    }
-    else
-        throw std::exception( "Weather Widget : bad parameter type" );
+    action.AddParameter( *new Numeric( it.NextElement(), 0 ) ); // TODO temperature
+    action.AddParameter( *new Numeric( it.NextElement(), ( float) windSpeed_->value() ) );
+    action.AddParameter( *new Direction( it.NextElement(), windDirection_->value() ) );
+    action.AddParameter( *new Numeric( it.NextElement(), ( float) cloudFloor_->value() ) );
+    action.AddParameter( *new Numeric( it.NextElement(), ( float) cloudCeiling_->value() ) );
+    action.AddParameter( *new Numeric( it.NextElement(), ( float) cloudDensity_->value() ) );
+    action.AddParameter( *new Enumeration( it.NextElement(), type_->GetValue() ) );
 }
-

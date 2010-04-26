@@ -14,8 +14,10 @@
 #include "moc_KnowledgeGroupMagicOrdersInterface.cpp"
 
 #include "actions/Bool.h"
+#include "actions/Identifier.h"
 #include "actions/String.h"
 #include "actions/KnowledgeGroupMagicAction.h"
+#include "actions/MagicAction.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CommunicationHierarchies.h"
@@ -136,11 +138,14 @@ void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
     if( selectedEntity_ )
         if( const kernel::CommunicationHierarchies* hierarchies = selectedEntity_->Retrieve< kernel::CommunicationHierarchies >() )
         {
-            simulation::KnowledgeGroupCreationRequest message;
-            message().set_type( "Standard" ); // $$$$ _RC_ SBO 2010-03-04: used kernel::KnowledgeGroupTypes::GetDefault() or something
-            message().set_oid_camp( hierarchies->GetTop().GetId() );
-            message().set_oid_parent( selectedEntity_->GetId() );
-            message.Send( publisher_ );
+            MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "create_knowledge_group" );
+            MagicAction* action = new MagicAction( actionType, controllers_.controller_, true );
+            tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
+            action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), hierarchies->GetTop().GetId() ) );
+            action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), selectedEntity_->GetId() ) );
+            action->AddParameter( *new parameters::String( paramIt.NextElement(), "Standard" ) ); // $$$$ _RC_ SBO 2010-03-04: used kernel::KnowledgeGroupTypes::GetDefault() or something
+            action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
         }
 }
 

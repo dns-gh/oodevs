@@ -76,10 +76,15 @@ private:
     typedef std::vector< const kernel::Team_ABC* > T_Teams;
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
     const kernel::Profile_ABC& profile_;
     QTable* table_;
     T_Teams teams_;

@@ -107,7 +107,7 @@ public:
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, RegisterFormation, MIL_Formation&, , MIL_Formation );   
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, UnregisterFormation, MIL_Formation&, , MIL_Formation);   
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, InitializeDiplomacy, xml::xistream&,  ,  xml::xistream);   
-    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, OnReceiveMsgChangeDiplomacy, const Common::MsgChangeDiplomacy&, , const Common::MsgChangeDiplomacy );   
+    MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, OnReceiveMsgChangeDiplomacy, const Common::MsgMissionParameters&, , const Common::MsgMissionParameters );   
     MOCKPP_VOID_CONST_CHAINABLE_EXT1 ( MockArmy, WriteODB, xml::xostream&, , xml::xostream );  
     MOCKPP_VOID_CONST_CHAINABLE_EXT1 ( MockArmy, WriteDiplomacyODB, xml::xostream& , , xml::xostream );   
     MOCKPP_VOID_CHAINABLE_EXT1       ( MockArmy, UpdateKnowledges, int, , int);  

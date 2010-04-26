@@ -21,12 +21,17 @@ namespace Common
 
 namespace actions
 {
-    class Parameter_ABC;
+    class MagicAction;
 }
 
 namespace kernel
 {
     class OrderParameter;
+}
+
+namespace tools
+{
+    template< typename Item > class Iterator;
 }
 
 // =============================================================================
@@ -50,7 +55,7 @@ public:
     //@{
     void Commit( Common::MsgMeteoAttributes& att ) const;
     void Commit( Common::MsgMissionParameters& att ) const;
-    actions::Parameter_ABC& CreateParameter( const kernel::OrderParameter& parameter );
+    void CreateParameters( actions::MagicAction& action, tools::Iterator< const kernel::OrderParameter& >& it );
     //@}
 
 private:

@@ -37,6 +37,7 @@ private:
     //! @name Operations
     //@{
     void Clean();
+    OrderParameter* CreateOrderParameter( const std::string& name, const std::string& type );
     virtual void Initialize();
     //@}
 };

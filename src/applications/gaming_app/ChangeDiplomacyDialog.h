@@ -13,7 +13,14 @@
 
 #include "clients_gui/DiplomacyDialog_ABC.h"
 
-class Publisher_ABC;
+namespace actions
+{
+    class ActionsModel;
+}
+
+class ActionPublisher;
+class Simulation;
+class StaticModel;
 
 // =============================================================================
 /** @class  ChangeDiplomacyDialog
@@ -27,7 +34,7 @@ class ChangeDiplomacyDialog : public gui::DiplomacyDialog_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, const kernel::Profile_ABC& profile );
+             ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~ChangeDiplomacyDialog();
     //@}
 
@@ -47,7 +54,10 @@ private:
 private:
     //! @name Member data
     //@{
-    Publisher_ABC& publisher_;
+    ActionPublisher& actionPublisher_;
+    actions::ActionsModel& actionsModel_;
+    const StaticModel& static_;
+    const Simulation& simulation_;
     //@}
 };
 

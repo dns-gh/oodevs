@@ -19,9 +19,7 @@
 #include "FileLoader.h"
 #include "FragOrderType.h"
 #include "KnowledgeGroupType.h"
-//#include "MagicActionMoveToType.h"
-#include "MagicActionMeteoType.h"
-#include "MagicActionLocalMeteoType.h"
+#include "MagicActionType.h"
 #include "MissionFactory.h"
 #include "MissionType.h"
 #include "OrderContext.h"
@@ -383,11 +381,8 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "destroy_object", MsgsClientToSim::MsgObjectMagicAction_Type_destroy ) );
 
     // Other Magic Actions
-    // $$$$ JSR 2010-04-14: TODO à remettre quand ces types auront des id
-    // RegisterActionType( *new MagicActionMeteoType() );
-    // RegisterActionType( *new MagicActionLocalMeteoType() );
-    MagicActionMeteoType* meteo = new MagicActionMeteoType();
-    tools::Resolver< MagicActionType, std::string >::Register( meteo->GetName(), *meteo );
-    MagicActionLocalMeteoType* localmeteo = new MagicActionLocalMeteoType();
-    tools::Resolver< MagicActionType, std::string >::Register( localmeteo->GetName(), *localmeteo );
+    RegisterActionType( *new MagicActionType( "global_meteo", MsgsClientToSim::MsgMagicAction_Type_global_meteo ) );
+    RegisterActionType( *new MagicActionType( "local_meteo", MsgsClientToSim::MsgMagicAction_Type_local_meteo ) );
+    RegisterActionType( *new MagicActionType( "change_diplomacy", MsgsClientToSim::MsgMagicAction_Type_change_diplomacy ) );
+    RegisterActionType( *new MagicActionType( "create_knowledge_group", MsgsClientToSim::MsgMagicAction_Type_create_knowledge_group ) );
 }

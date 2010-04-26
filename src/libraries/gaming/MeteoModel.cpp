@@ -133,12 +133,12 @@ void MeteoModel::Purge()
 {
     if( !meteos_.empty() )
     {
-        for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); ++it )
+        for( T_MeteoList::iterator it = meteos_.begin(); it != meteos_.end(); )
         {
-            weather::PHY_Meteo* toDel = *it;
-            delete toDel;
+            weather::PHY_Meteo* meteo = *it;
+            it = meteos_.erase( it );
+            delete meteo;
         }
-    meteos_.clear();
     }
 
     pGlobalMeteo_.reset();

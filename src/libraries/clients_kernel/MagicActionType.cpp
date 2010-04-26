@@ -9,6 +9,8 @@
 
 #include "clients_kernel_pch.h"
 #include "MagicActionType.h"
+#include "protocol/protocol.h"
+#include "Karma.h"
 #include "OrderParameter.h"
 #include "Tools.h"
 
@@ -55,6 +57,17 @@ void MagicActionType::Clean()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MagicActionType::CreateOrderParameter
+// Created: JSR 2010-04-23
+// -----------------------------------------------------------------------------
+OrderParameter* MagicActionType::CreateOrderParameter( const std::string& name, const std::string& type )
+{
+    OrderParameter* param = new OrderParameter( name, type, false );
+    Register( Count(), *param );
+    return param;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MagicActionType::Initialize
 // Created: JSR 2010-04-13
 // -----------------------------------------------------------------------------
@@ -62,66 +75,54 @@ void MagicActionType::Initialize()
 {
     if( name_ == "teleport" )
     {
-        OrderParameter* param = new OrderParameter( "Location", "point", false );
-        Register( Count(), *param );
+        CreateOrderParameter( "Location", "point" );
     }
     else if( name_ == "surrender" )
     {
-        OrderParameter* param = new OrderParameter( "Camp", "army", false );
-        Register( Count(), *param );
+        CreateOrderParameter( "Camp", "army" );
     }
     else if( name_ == "change_human_factors" )
     {
-        OrderParameter* tiredness = new OrderParameter( "Tiredness", "enumeration", false );
+        OrderParameter* tiredness = CreateOrderParameter( "Tiredness", "enumeration" );
         tiredness->AddValue( eUnitTiredness_Normal, tools::ToString( eUnitTiredness_Normal ).ascii() );
         tiredness->AddValue( eUnitTiredness_Fatigue, tools::ToString( eUnitTiredness_Fatigue ).ascii() );
         tiredness->AddValue( eUnitTiredness_Epuise, tools::ToString( eUnitTiredness_Epuise ).ascii() );
-        Register( Count(), *tiredness );
-        OrderParameter* morale = new OrderParameter( "Morale", "enumeration", false );
+
+        OrderParameter* morale = CreateOrderParameter( "Morale", "enumeration" );
         morale->AddValue( eUnitMorale_Fanatique, tools::ToString( eUnitMorale_Fanatique ).ascii() );
         morale->AddValue( eUnitMorale_Bon, tools::ToString( eUnitMorale_Bon ).ascii() );
         morale->AddValue( eUnitMorale_Moyen, tools::ToString( eUnitMorale_Moyen ).ascii() );
         morale->AddValue( eUnitMorale_Mauvais, tools::ToString( eUnitMorale_Mauvais ).ascii() );
-        Register( Count(), *morale );
-        OrderParameter* experience = new OrderParameter( "Experience", "enumeration", false );
+ 
+        OrderParameter* experience = CreateOrderParameter( "Experience", "enumeration" );
         experience->AddValue( eUnitExperience_Veteran, tools::ToString( eUnitExperience_Veteran ).ascii() );
         experience->AddValue( eUnitExperience_Experimente, tools::ToString( eUnitExperience_Experimente ).ascii() );
         experience->AddValue( eUnitExperience_Conscrit, tools::ToString( eUnitExperience_Conscrit ).ascii() );
-        Register( Count(), *experience );
     }
     else if( name_ == "partial_recovery" )
     {
-        OrderParameter* equipments = new OrderParameter( "Equipments", "list", false );
-        Register( Count(), *equipments );
-        OrderParameter* humans = new OrderParameter( "Humans", "list", false );
-        Register( Count(), *humans );
-        OrderParameter* dotations = new OrderParameter( "Dotations", "list", false );
-        Register( Count(), *dotations );
-        OrderParameter* ammo = new OrderParameter( "Ammo", "list", false );
-        Register( Count(), *ammo );
-        OrderParameter* stocks = new OrderParameter( "Stocks", "list", false );
-        Register( Count(), *stocks );
+        CreateOrderParameter( "Equipments", "list" );
+        CreateOrderParameter( "Humans", "list" );
+        CreateOrderParameter( "Dotations", "list" );
+        CreateOrderParameter( "Ammo", "list" );
+        CreateOrderParameter( "Stocks", "list" );
     }
     else if( name_ == "unit_creation" )
     {
-        OrderParameter* superior = new OrderParameter( "UnitType", "identifier", false );
-        Register( Count(), *superior );
-        OrderParameter* location = new OrderParameter( "Location", "point", false );
-        Register( Count(), *location );
+        CreateOrderParameter( "UnitType", "identifier" );
+        CreateOrderParameter( "Location", "point" );
     }
     else if( name_ == "population_kill" || name_ == "population_resurrect" )
     {
-        OrderParameter* number = new OrderParameter( "Number", "quantity", false );
-        Register( Count(), *number );
+        CreateOrderParameter( "Number", "quantity" );
     }
     else if( name_ == "population_change_attitude" )
     {
-        OrderParameter* attitude = new OrderParameter( "Attitude", "enumeration", false );
+        OrderParameter* attitude = CreateOrderParameter( "Attitude", "enumeration" );
         attitude->AddValue( ePopulationAttitude_Calme, tools::ToString( ePopulationAttitude_Calme ).ascii() );
         attitude->AddValue( ePopulationAttitude_Agitee, tools::ToString( ePopulationAttitude_Agitee ).ascii() );
         attitude->AddValue( ePopulationAttitude_Excitee, tools::ToString( ePopulationAttitude_Excitee ).ascii() );
         attitude->AddValue( ePopulationAttitude_Agressive, tools::ToString( ePopulationAttitude_Agressive ).ascii() );
-        Register( Count(), *attitude );
         // $$$$ JSR 2010-04-16: TODO? not used by now
         // optional int32 flux
         // optional int32 concentration
@@ -129,91 +130,106 @@ void MagicActionType::Initialize()
     }
     else if( name_ == "fire_order" )
     {
-        OrderParameter* target = new OrderParameter( "Target", "identifier", false );
-        Register( Count(), *target );
-        OrderParameter* ammo = new OrderParameter( "Ammo", "dotationtype", false );
-        Register( Count(), *ammo );
-        OrderParameter* iterations = new OrderParameter( "Iterations", "numeric", false );
-        Register( Count(), *iterations );
+        CreateOrderParameter( "Target", "identifier" );
+        CreateOrderParameter( "Ammo", "dotationtype" );
+        CreateOrderParameter( "Iterations", "numeric" );
     }
     else if( name_ == "change_knowledge_group" )
     {
-        OrderParameter* group = new OrderParameter( "Group", "knowledgegroup", false );
-        Register( Count(), *group );
-        OrderParameter* camp = new OrderParameter( "Camp", "army", false );
-        Register( Count(), *camp );
+        CreateOrderParameter( "Group", "knowledgegroup" );
+        CreateOrderParameter( "Camp", "army" );
     }
     else if( name_ == "unit_change_superior" )
     {
-        OrderParameter* superior = new OrderParameter( "Superior", "automate", false );
-        Register( Count(), *superior );
+        CreateOrderParameter( "Superior", "automate" );
     }
     else if( name_ == "change_automat_superior" )
     {
-        OrderParameter* automat = new OrderParameter( "Automat", "automate", false );
-        Register( Count(), *automat );
+        CreateOrderParameter( "Automat", "automate" );
     }
     else if( name_ == "change_formation_superior" )
     {
-        OrderParameter* formation = new OrderParameter( "Formation", "formation", false );
-        Register( Count(), *formation );
+        CreateOrderParameter( "Formation", "formation" );
     }
     else if( name_ == "change_logistic_links" )
     {
-        OrderParameter* tc2 = new OrderParameter( "TC2", "identifier", false );
-        Register( Count(), *tc2 );
-        OrderParameter* maintenance = new OrderParameter( "Maintenance", "identifier", false );
-        Register( Count(), *maintenance );
-        OrderParameter* sante = new OrderParameter( "Sante", "identifier", false );
-        Register( Count(), *sante );
-        OrderParameter* ravitaillement = new OrderParameter( "Ravitaillement", "identifier", false );
-        Register( Count(), *ravitaillement );
+        CreateOrderParameter( "TC2", "identifier" );
+        CreateOrderParameter( "Maintenance", "identifier" );
+        CreateOrderParameter( "Sante", "identifier" );
+        CreateOrderParameter( "Ravitaillement", "identifier" );
     }
     else if( name_ == "knowledge_group_enable" )
     {
-        OrderParameter* enabled = new OrderParameter( "Enabled", "bool", false );
-        Register( Count(), *enabled );
+        CreateOrderParameter( "Enabled", "bool" );
     }
     else if( name_ == "knowledge_group_update_side" )
     {
-        OrderParameter* camp = new OrderParameter( "Camp", "army", false );
-        Register( Count(), *camp );
+        CreateOrderParameter( "Camp", "army" );
     }
     else if( name_ == "knowledge_group_update_side_parent" )
     {
-        OrderParameter* camp = new OrderParameter( "Camp", "army", false );
-        Register( Count(), *camp );
-        OrderParameter* parent = new OrderParameter( "Parent", "knowledgegroup", false );
-        Register( Count(), *parent );
+        CreateOrderParameter( "Camp", "army" );
+        CreateOrderParameter( "Parent", "knowledgegroup" );
     }
     else if( name_ == "knowledge_group_update_type" )
     {
-        OrderParameter* type = new OrderParameter( "Type", "string", false );
-        Register( Count(), *type );
+        CreateOrderParameter( "Type", "string" );
     }
     else if( name_ == "log_supply_push_flow" || name_ == "log_supply_change_quotas" )
     {
-        OrderParameter* automat = new OrderParameter( "Receiver", "automate", false );
-        Register( Count(), *automat );
-        OrderParameter* dotations = new OrderParameter( "Dotations", "list", false );
-        Register( Count(), *dotations );
+        CreateOrderParameter( "Receiver", "automate" );
+        CreateOrderParameter( "Dotations", "list" );
     }
     else if( name_ == "create_object" )
     {
-        OrderParameter* type = new OrderParameter( "Type", "string", false );
-        Register( Count(), *type );
-        OrderParameter* location = new OrderParameter( "Location", "location", false );
-        Register( Count(), *location );
-        OrderParameter* name = new OrderParameter( "Name", "string", false );
-        Register( Count(), *name);
-        OrderParameter* camp = new OrderParameter( "Camp", "army", false );
-        Register( Count(), *camp );
-        OrderParameter* attributes = new OrderParameter( "Attributes", "list", false );
-        Register( Count(), *attributes );
+        CreateOrderParameter( "Type", "string" );
+        CreateOrderParameter( "Location", "location" );
+        CreateOrderParameter( "Name", "string" );
+        CreateOrderParameter( "Camp", "army" );
+        CreateOrderParameter( "Attributes", "list" );
     }
     else if( name_ == "update_object" )
     {
-        OrderParameter* attributes = new OrderParameter( "Attributes", "list", false );
-        Register( Count(), *attributes );
+        CreateOrderParameter( "Attributes", "list" );
+    }
+    else if( name_ == "global_meteo" || name_ == "local_meteo" )
+    {
+        CreateOrderParameter( "Temperature", "numeric" );
+        CreateOrderParameter( "WindSpeed", "numeric" );
+        CreateOrderParameter( "WindDirection", "direction" );
+        CreateOrderParameter( "CloudFloor", "numeric" );
+        CreateOrderParameter( "CloudCeiling", "numeric" );
+        CreateOrderParameter( "CloudDensity", "numeric" );
+        OrderParameter* precipitation = CreateOrderParameter( "Precipitation", "enumeration" );
+        precipitation->AddValue( 0, "PasDePrecipitation" );
+        precipitation->AddValue( 1, "TempeteDeSable"     );
+        precipitation->AddValue( 2, "Brouillard"         );
+        precipitation->AddValue( 3, "Crachin"            );
+        precipitation->AddValue( 4, "Pluie"              );
+        precipitation->AddValue( 5, "Neige"              );
+        precipitation->AddValue( 6, "Fumigene"           );
+
+        if( name_ == "local_meteo" )
+        {
+            CreateOrderParameter( "StartTime", "datetime" );
+            CreateOrderParameter( "EndTime", "datetime" );
+            CreateOrderParameter( "Location", "location" );
+        }
+    }
+    else if( name_ == "change_diplomacy" )
+    {
+        CreateOrderParameter( "Camp1", "identifier" );
+        CreateOrderParameter( "Camp2", "identifier" );
+        OrderParameter* diplomacy = CreateOrderParameter( "Diplomacy", "enumeration" );
+        diplomacy->AddValue( Common::unknown_diplo, kernel::Karma::unknown_.GetName().ascii() );
+        diplomacy->AddValue( Common::friend_diplo, kernel::Karma::friend_.GetName().ascii() );
+        diplomacy->AddValue( Common::enemy_diplo, kernel::Karma::enemy_.GetName().ascii() );
+        diplomacy->AddValue( Common::neutral_diplo, kernel::Karma::neutral_.GetName().ascii() );
+    }
+    else if( name_ == "create_knowledge_group" )
+    {
+        CreateOrderParameter( "Camp", "identifier" );
+        CreateOrderParameter( "Parent", "identifier" );
+        CreateOrderParameter( "Type", "string" );
     }
 }

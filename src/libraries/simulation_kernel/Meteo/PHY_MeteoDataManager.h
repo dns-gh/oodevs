@@ -14,7 +14,7 @@
 
 namespace MsgsClientToSim
 {
-    class MsgControlMeteo;
+    class MsgMagicAction;
 }
 
 namespace xml
@@ -58,7 +58,7 @@ public:
 
     //! @name Network
     //@{
-    virtual void OnReceiveMsgMeteo( const MsgsClientToSim::MsgControlMeteo& msg );
+    virtual void OnReceiveMsgMeteo( const MsgsClientToSim::MsgMagicAction& msg );
     //@}
 
 private:

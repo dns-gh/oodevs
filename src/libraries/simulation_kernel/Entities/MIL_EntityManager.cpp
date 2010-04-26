@@ -878,18 +878,19 @@ void MIL_EntityManager::OnReceiveMsgObjectMagicAction( const MsgsClientToSim::Ms
 // Name: MIL_EntityManager::OnReceiveMsgChangeDiplomacy
 // Created: NLD 2004-10-25
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const MsgChangeDiplomacy& message, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgChangeDiplomacy( const MsgMagicAction& message, unsigned int nCtx )
 {
     client::ChangeDiplomacyAck ack;
-    ack().set_oid_camp1( message.oid_camp1() );
-    ack().set_oid_camp2( message.oid_camp2() );
+    ack().set_oid_camp1( message.parametres().elem( 0 ).value().identifier() );
+    ack().set_oid_camp2( message.parametres().elem( 1 ).value().identifier() );
+    ack().set_diplomatie( ( Common::EnumDiplomacy ) message.parametres().elem( 2 ).value().enumeration() );
     ack().set_error_code( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_no_error_diplomacy );
     try
     {
-        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.oid_camp1() );
+        MIL_Army_ABC* pArmy1 = armyFactory_->Find( message.parametres().elem( 0 ).value().identifier() );
         if( !pArmy1 )
             throw NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >( MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode_error_invalid_camp_diplomacy );
-        pArmy1->OnReceiveMsgChangeDiplomacy( message );
+        pArmy1->OnReceiveMsgChangeDiplomacy( message.parametres() );
     }
     catch( NET_AsnException< MsgsSimToClient::MsgChangeDiplomacyAck_EnumChangeDiplomacyErrorCode >& e )
     {
@@ -1108,7 +1109,7 @@ void MIL_EntityManager::OnReceiveMsgMagicActionMoveTo( const MsgsClientToSim::Ms
 // Created: FHD 2009-12-15: 
 // LTO
 // -----------------------------------------------------------------------------
-void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgKnowledgeGroupCreationRequest& /*message*/, unsigned int nCtx )
+void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSim::MsgMagicAction& /*message*/, unsigned int nCtx )
 {
     client::KnowledgeGroupCreationAck ack;
     ack().set_oid( 0 );
@@ -1117,17 +1118,19 @@ void MIL_EntityManager::OnReceiveMsgKnowledgeGroupCreation( const MsgsClientToSi
 //
 //    try
 //    {
-//        if( message.has_parent() )
+//        //if( message.has_parent() )
+//        if( message.parametres().elem( 1 ).value().identifier() != ( unsigned int ) -1 )
 //        {
-//            if( MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.oid_parent() ) )
-//                pReceiver->OnReceiveMsgKnowledgeGroupCreation( message );
+//            if( MIL_KnowledgeGroup* pReceiver = FindKnowledgeGroup( message.parametres().elem( 1 ).value().identifier() ) )
+//                pReceiver->OnReceiveMsgKnowledgeGroupCreation( message.parametres() );
 //            else
 //                throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
 //        }
 //        else
 //        {
-//            if( MIL_Army* parent = FindArmy( message.oid_camp() ) )
-//                parent->OnReceiveMsgKnowledgeGroupCreation( message );
+//            //if( MIL_Army* parent = FindArmy( message.oid_camp() ) )
+//            if( MIL_Army* parent = FindArmy( message.parametres().elem( 0 ).value().identifier() ) )
+//                parent->OnReceiveMsgKnowledgeGroupCreation( message.parametres() );
 //            else
 //                throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_camp );
 //        }

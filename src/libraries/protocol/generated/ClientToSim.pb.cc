@@ -16,9 +16,6 @@ namespace {
 const ::google::protobuf::Descriptor* MsgControlDatetimeChange_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgControlDatetimeChange_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgControlMeteo_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgControlMeteo_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgControlCheckPointSaveNow_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgControlCheckPointSaveNow_reflection_ = NULL;
@@ -39,38 +36,21 @@ const ::google::protobuf::Descriptor* MsgKnowledgeMagicAction_descriptor_ = NULL
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgKnowledgeMagicAction_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* MsgKnowledgeMagicAction_Type_descriptor_ = NULL;
-const ::google::protobuf::Descriptor* MsgMagicActionCreateObject_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgMagicActionCreateObject_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgMagicActionUpdateObject_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgMagicActionUpdateObject_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgObjectMagicAction_action_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgObjectMagicAction_action_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgObjectMagicAction_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgObjectMagicAction_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* MsgObjectMagicAction_Type_descriptor_ = NULL;
 const ::google::protobuf::EnumDescriptor* MsgObjectMagicAction_Attribute_descriptor_ = NULL;
-const ::google::protobuf::Descriptor* MsgLogSupplyPushFlow_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* MsgMagicAction_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgLogSupplyPushFlow_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgLogSupplyChangeQuotas_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgLogSupplyChangeQuotas_reflection_ = NULL;
+  MsgMagicAction_reflection_ = NULL;
+const ::google::protobuf::EnumDescriptor* MsgMagicAction_Type_descriptor_ = NULL;
 const ::google::protobuf::Descriptor* MsgControlCheckPointSetFrequency_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgControlCheckPointSetFrequency_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgControlToggleVisionCones_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgControlToggleVisionCones_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgKnowledgeGroupCreationRequest_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgKnowledgeGroupCreationRequest_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MsgKnowledgeGroupUpdateRequest_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  MsgKnowledgeGroupUpdateRequest_reflection_ = NULL;
 const ::google::protobuf::Descriptor* MsgClientToSim_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   MsgClientToSim_reflection_ = NULL;
@@ -102,22 +82,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlDatetimeChange));
-  MsgControlMeteo_descriptor_ = file->message_type(1);
-  static const int MsgControlMeteo_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlMeteo, parametres_),
-  };
-  MsgControlMeteo_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgControlMeteo_descriptor_,
-      MsgControlMeteo::default_instance_,
-      MsgControlMeteo_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlMeteo, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlMeteo, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgControlMeteo));
-  MsgControlCheckPointSaveNow_descriptor_ = file->message_type(2);
+  MsgControlCheckPointSaveNow_descriptor_ = file->message_type(1);
   static const int MsgControlCheckPointSaveNow_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlCheckPointSaveNow, name_),
   };
@@ -132,7 +97,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlCheckPointSaveNow));
-  MsgFragOrder_descriptor_ = file->message_type(3);
+  MsgFragOrder_descriptor_ = file->message_type(2);
   static const int MsgFragOrder_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFragOrder, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgFragOrder, frag_order_),
@@ -149,7 +114,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgFragOrder));
-  MsgSetAutomatMode_descriptor_ = file->message_type(4);
+  MsgSetAutomatMode_descriptor_ = file->message_type(3);
   static const int MsgSetAutomatMode_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSetAutomatMode, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgSetAutomatMode, mode_),
@@ -165,7 +130,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgSetAutomatMode));
-  MsgUnitCreationRequest_descriptor_ = file->message_type(5);
+  MsgUnitCreationRequest_descriptor_ = file->message_type(4);
   static const int MsgUnitCreationRequest_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, type_pion_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitCreationRequest, oid_automate_),
@@ -182,7 +147,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUnitCreationRequest));
-  MsgUnitMagicAction_descriptor_ = file->message_type(6);
+  MsgUnitMagicAction_descriptor_ = file->message_type(5);
   static const int MsgUnitMagicAction_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgUnitMagicAction, type_),
@@ -200,7 +165,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgUnitMagicAction));
   MsgUnitMagicAction_Type_descriptor_ = MsgUnitMagicAction_descriptor_->enum_type(0);
-  MsgKnowledgeMagicAction_descriptor_ = file->message_type(7);
+  MsgKnowledgeMagicAction_descriptor_ = file->message_type(6);
   static const int MsgKnowledgeMagicAction_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeMagicAction, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeMagicAction, type_),
@@ -218,59 +183,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgKnowledgeMagicAction));
   MsgKnowledgeMagicAction_Type_descriptor_ = MsgKnowledgeMagicAction_descriptor_->enum_type(0);
-  MsgMagicActionCreateObject_descriptor_ = file->message_type(8);
-  static const int MsgMagicActionCreateObject_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, location_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, name_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, team_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, attributes_),
-  };
-  MsgMagicActionCreateObject_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgMagicActionCreateObject_descriptor_,
-      MsgMagicActionCreateObject::default_instance_,
-      MsgMagicActionCreateObject_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionCreateObject, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgMagicActionCreateObject));
-  MsgMagicActionUpdateObject_descriptor_ = file->message_type(9);
-  static const int MsgMagicActionUpdateObject_offsets_[2] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionUpdateObject, oid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionUpdateObject, attributes_),
-  };
-  MsgMagicActionUpdateObject_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgMagicActionUpdateObject_descriptor_,
-      MsgMagicActionUpdateObject::default_instance_,
-      MsgMagicActionUpdateObject_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionUpdateObject, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicActionUpdateObject, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgMagicActionUpdateObject));
-  MsgObjectMagicAction_action_descriptor_ = file->message_type(10);
-  static const int MsgObjectMagicAction_action_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction_action, create_object_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction_action, update_object_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction_action, destroy_object_),
-  };
-  MsgObjectMagicAction_action_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgObjectMagicAction_action_descriptor_,
-      MsgObjectMagicAction_action::default_instance_,
-      MsgObjectMagicAction_action_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction_action, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction_action, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgObjectMagicAction_action));
-  MsgObjectMagicAction_descriptor_ = file->message_type(11);
+  MsgObjectMagicAction_descriptor_ = file->message_type(7);
   static const int MsgObjectMagicAction_offsets_[3] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction, oid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgObjectMagicAction, type_),
@@ -289,41 +202,24 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       sizeof(MsgObjectMagicAction));
   MsgObjectMagicAction_Type_descriptor_ = MsgObjectMagicAction_descriptor_->enum_type(0);
   MsgObjectMagicAction_Attribute_descriptor_ = MsgObjectMagicAction_descriptor_->enum_type(1);
-  MsgLogSupplyPushFlow_descriptor_ = file->message_type(12);
-  static const int MsgLogSupplyPushFlow_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyPushFlow, oid_donneur_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyPushFlow, oid_receveur_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyPushFlow, stocks_),
+  MsgMagicAction_descriptor_ = file->message_type(8);
+  static const int MsgMagicAction_offsets_[2] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicAction, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicAction, parametres_),
   };
-  MsgLogSupplyPushFlow_reflection_ =
+  MsgMagicAction_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgLogSupplyPushFlow_descriptor_,
-      MsgLogSupplyPushFlow::default_instance_,
-      MsgLogSupplyPushFlow_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyPushFlow, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyPushFlow, _unknown_fields_),
+      MsgMagicAction_descriptor_,
+      MsgMagicAction::default_instance_,
+      MsgMagicAction_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicAction, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgMagicAction, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgLogSupplyPushFlow));
-  MsgLogSupplyChangeQuotas_descriptor_ = file->message_type(13);
-  static const int MsgLogSupplyChangeQuotas_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyChangeQuotas, oid_donneur_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyChangeQuotas, oid_receveur_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyChangeQuotas, quotas_),
-  };
-  MsgLogSupplyChangeQuotas_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgLogSupplyChangeQuotas_descriptor_,
-      MsgLogSupplyChangeQuotas::default_instance_,
-      MsgLogSupplyChangeQuotas_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyChangeQuotas, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgLogSupplyChangeQuotas, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgLogSupplyChangeQuotas));
-  MsgControlCheckPointSetFrequency_descriptor_ = file->message_type(14);
+      sizeof(MsgMagicAction));
+  MsgMagicAction_Type_descriptor_ = MsgMagicAction_descriptor_->enum_type(0);
+  MsgControlCheckPointSetFrequency_descriptor_ = file->message_type(9);
   static const int MsgControlCheckPointSetFrequency_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlCheckPointSetFrequency, frequency_),
   };
@@ -338,7 +234,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlCheckPointSetFrequency));
-  MsgControlToggleVisionCones_descriptor_ = file->message_type(15);
+  MsgControlToggleVisionCones_descriptor_ = file->message_type(10);
   static const int MsgControlToggleVisionCones_offsets_[1] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgControlToggleVisionCones, vision_cones_),
   };
@@ -353,43 +249,7 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgControlToggleVisionCones));
-  MsgKnowledgeGroupCreationRequest_descriptor_ = file->message_type(16);
-  static const int MsgKnowledgeGroupCreationRequest_offsets_[3] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, oid_camp_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, oid_parent_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, type_),
-  };
-  MsgKnowledgeGroupCreationRequest_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgKnowledgeGroupCreationRequest_descriptor_,
-      MsgKnowledgeGroupCreationRequest::default_instance_,
-      MsgKnowledgeGroupCreationRequest_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupCreationRequest, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgKnowledgeGroupCreationRequest));
-  MsgKnowledgeGroupUpdateRequest_descriptor_ = file->message_type(17);
-  static const int MsgKnowledgeGroupUpdateRequest_offsets_[5] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, oid_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, oid_camp_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, oid_parent_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, enabled_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, type_),
-  };
-  MsgKnowledgeGroupUpdateRequest_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      MsgKnowledgeGroupUpdateRequest_descriptor_,
-      MsgKnowledgeGroupUpdateRequest::default_instance_,
-      MsgKnowledgeGroupUpdateRequest_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgKnowledgeGroupUpdateRequest, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MsgKnowledgeGroupUpdateRequest));
-  MsgClientToSim_descriptor_ = file->message_type(18);
+  MsgClientToSim_descriptor_ = file->message_type(11);
   static const int MsgClientToSim_offsets_[2] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim, context_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim, message_),
@@ -406,13 +266,12 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(MsgClientToSim));
   MsgClientToSim_Content_descriptor_ = MsgClientToSim_descriptor_->nested_type(0);
-  static const int MsgClientToSim_Content_offsets_[20] = {
+  static const int MsgClientToSim_Content_offsets_[18] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_stop_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_pause_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_resume_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_change_time_factor_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_date_time_change_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_meteo_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_checkpoint_save_now_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_checkpoint_set_frequency_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, control_toggle_vision_cones_),
@@ -424,9 +283,8 @@ void protobuf_AssignDesc_ClientToSim_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, unit_creation_request_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, unit_magic_action_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, object_magic_action_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, change_diplomacy_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, knowledge_magic_action_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, knowledge_group_creation_request_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MsgClientToSim_Content, magic_action_),
   };
   MsgClientToSim_Content_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -454,8 +312,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgControlDatetimeChange_descriptor_, &MsgControlDatetimeChange::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgControlMeteo_descriptor_, &MsgControlMeteo::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgControlCheckPointSaveNow_descriptor_, &MsgControlCheckPointSaveNow::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgFragOrder_descriptor_, &MsgFragOrder::default_instance());
@@ -468,25 +324,13 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgKnowledgeMagicAction_descriptor_, &MsgKnowledgeMagicAction::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgMagicActionCreateObject_descriptor_, &MsgMagicActionCreateObject::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgMagicActionUpdateObject_descriptor_, &MsgMagicActionUpdateObject::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgObjectMagicAction_action_descriptor_, &MsgObjectMagicAction_action::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgObjectMagicAction_descriptor_, &MsgObjectMagicAction::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgLogSupplyPushFlow_descriptor_, &MsgLogSupplyPushFlow::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgLogSupplyChangeQuotas_descriptor_, &MsgLogSupplyChangeQuotas::default_instance());
+    MsgMagicAction_descriptor_, &MsgMagicAction::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgControlCheckPointSetFrequency_descriptor_, &MsgControlCheckPointSetFrequency::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgControlToggleVisionCones_descriptor_, &MsgControlToggleVisionCones::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgKnowledgeGroupCreationRequest_descriptor_, &MsgKnowledgeGroupCreationRequest::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MsgKnowledgeGroupUpdateRequest_descriptor_, &MsgKnowledgeGroupUpdateRequest::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     MsgClientToSim_descriptor_, &MsgClientToSim::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
@@ -498,8 +342,6 @@ void protobuf_RegisterTypes(const ::std::string&) {
 void protobuf_ShutdownFile_ClientToSim_2eproto() {
   delete MsgControlDatetimeChange::default_instance_;
   delete MsgControlDatetimeChange_reflection_;
-  delete MsgControlMeteo::default_instance_;
-  delete MsgControlMeteo_reflection_;
   delete MsgControlCheckPointSaveNow::default_instance_;
   delete MsgControlCheckPointSaveNow_reflection_;
   delete MsgFragOrder::default_instance_;
@@ -512,26 +354,14 @@ void protobuf_ShutdownFile_ClientToSim_2eproto() {
   delete MsgUnitMagicAction_reflection_;
   delete MsgKnowledgeMagicAction::default_instance_;
   delete MsgKnowledgeMagicAction_reflection_;
-  delete MsgMagicActionCreateObject::default_instance_;
-  delete MsgMagicActionCreateObject_reflection_;
-  delete MsgMagicActionUpdateObject::default_instance_;
-  delete MsgMagicActionUpdateObject_reflection_;
-  delete MsgObjectMagicAction_action::default_instance_;
-  delete MsgObjectMagicAction_action_reflection_;
   delete MsgObjectMagicAction::default_instance_;
   delete MsgObjectMagicAction_reflection_;
-  delete MsgLogSupplyPushFlow::default_instance_;
-  delete MsgLogSupplyPushFlow_reflection_;
-  delete MsgLogSupplyChangeQuotas::default_instance_;
-  delete MsgLogSupplyChangeQuotas_reflection_;
+  delete MsgMagicAction::default_instance_;
+  delete MsgMagicAction_reflection_;
   delete MsgControlCheckPointSetFrequency::default_instance_;
   delete MsgControlCheckPointSetFrequency_reflection_;
   delete MsgControlToggleVisionCones::default_instance_;
   delete MsgControlToggleVisionCones_reflection_;
-  delete MsgKnowledgeGroupCreationRequest::default_instance_;
-  delete MsgKnowledgeGroupCreationRequest_reflection_;
-  delete MsgKnowledgeGroupUpdateRequest::default_instance_;
-  delete MsgKnowledgeGroupUpdateRequest_reflection_;
   delete MsgClientToSim::default_instance_;
   delete MsgClientToSim_reflection_;
   delete MsgClientToSim_Content::default_instance_;
@@ -548,153 +378,117 @@ void protobuf_AddDesc_ClientToSim_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\021ClientToSim.proto\022\017MsgsClientToSim\032\014Co"
     "mmon.proto\"B\n\030MsgControlDatetimeChange\022&"
-    "\n\tdate_time\030\001 \002(\0132\023.Common.MsgDateTime\"C"
-    "\n\017MsgControlMeteo\0220\n\nparametres\030\001 \002(\0132\034."
-    "Common.MsgMissionParameters\"+\n\033MsgContro"
-    "lCheckPointSaveNow\022\014\n\004name\030\001 \001(\t\"a\n\014MsgF"
-    "ragOrder\022\013\n\003oid\030\001 \002(\r\022\022\n\nfrag_order\030\002 \002("
-    "\r\0220\n\nparametres\030\003 \001(\0132\034.Common.MsgMissio"
-    "nParameters\"G\n\021MsgSetAutomatMode\022\013\n\003oid\030"
-    "\001 \002(\005\022%\n\004mode\030\002 \002(\0162\027.Common.EnumAutomat"
-    "Mode\"l\n\026MsgUnitCreationRequest\022\021\n\ttype_p"
-    "ion\030\001 \002(\r\022\024\n\014oid_automate\030\002 \002(\r\022)\n\010posit"
-    "ion\030\003 \002(\0132\027.Common.MsgCoordLatLong\"\213\006\n\022M"
-    "sgUnitMagicAction\022\013\n\003oid\030\001 \002(\r\0226\n\004type\030\002"
-    " \002(\0162(.MsgsClientToSim.MsgUnitMagicActio"
-    "n.Type\0220\n\nparametres\030\003 \002(\0132\034.Common.MsgM"
-    "issionParameters\"\375\004\n\004Type\022\013\n\007move_to\020\000\022\020"
-    "\n\014surrender_to\020\001\022\024\n\020cancel_surrender\020\002\022\030"
-    "\n\024recover_transporters\020\003\022\025\n\021destroy_comp"
-    "onent\020\004\022\017\n\013recover_all\020\005\022\022\n\016recover_troo"
-    "ps\020\006\022\026\n\022recover_equipments\020\007\022\025\n\021recover_"
-    "resources\020\010\022\017\n\013destroy_all\020\t\022\030\n\024change_h"
-    "uman_factors\020\n\022\024\n\020partial_recovery\020\013\022\021\n\r"
-    "unit_creation\020\014\022\025\n\021create_fire_order\020\r\022 "
-    "\n\034population_total_destruction\020\016\022\023\n\017popu"
-    "lation_kill\020\017\022\030\n\024population_resurrect\020\020\022"
-    "\036\n\032population_change_attitude\020\021\022\032\n\026chang"
-    "e_knowledge_group\020\022\022\031\n\025change_logistic_l"
-    "inks\020\023\022\030\n\024unit_change_superior\020\024\022\033\n\027chan"
-    "ge_automat_superior\020\025\022\035\n\031change_formatio"
-    "n_superior\020\026\022\032\n\026knowledge_group_update\020\027"
-    "\022\030\n\024log_supply_push_flow\020\030\022\034\n\030log_supply"
-    "_change_quotas\020\031\"\343\001\n\027MsgKnowledgeMagicAc"
-    "tion\022\013\n\003oid\030\001 \002(\r\022;\n\004type\030\002 \002(\0162-.MsgsCl"
-    "ientToSim.MsgKnowledgeMagicAction.Type\0220"
-    "\n\nparametres\030\003 \002(\0132\034.Common.MsgMissionPa"
-    "rameters\"L\n\004Type\022\n\n\006enable\020\000\022\017\n\013update_s"
-    "ide\020\001\022\026\n\022update_side_parent\020\002\022\017\n\013update_"
-    "type\020\003\"\236\001\n\032MsgMagicActionCreateObject\022\014\n"
-    "\004type\030\001 \002(\t\022%\n\010location\030\002 \002(\0132\023.Common.M"
-    "sgLocation\022\014\n\004name\030\003 \002(\t\022\014\n\004team\030\004 \002(\005\022/"
-    "\n\nattributes\030\005 \002(\0132\033.Common.MsgObjectAtt"
-    "ributes\"Z\n\032MsgMagicActionUpdateObject\022\013\n"
-    "\003oid\030\001 \002(\005\022/\n\nattributes\030\002 \002(\0132\033.Common."
-    "MsgObjectAttributes\"\275\001\n\033MsgObjectMagicAc"
-    "tion_action\022B\n\rcreate_object\030\001 \001(\0132+.Msg"
-    "sClientToSim.MsgMagicActionCreateObject\022"
-    "B\n\rupdate_object\030\002 \001(\0132+.MsgsClientToSim"
-    ".MsgMagicActionUpdateObject\022\026\n\016destroy_o"
-    "bject\030\003 \001(\005\"\263\003\n\024MsgObjectMagicAction\022\013\n\003"
-    "oid\030\001 \002(\r\0228\n\004type\030\002 \002(\0162*.MsgsClientToSi"
-    "m.MsgObjectMagicAction.Type\0220\n\nparametre"
-    "s\030\003 \002(\0132\034.Common.MsgMissionParameters\"+\n"
-    "\004Type\022\n\n\006create\020\000\022\n\n\006update\020\001\022\013\n\007destroy"
-    "\020\002\"\364\001\n\tAttribute\022\020\n\014construction\020\000\022\014\n\010ob"
-    "stacle\020\001\022\010\n\004mine\020\002\022\021\n\ractivity_time\020\003\022\n\n"
-    "\006bypass\020\004\022\014\n\010logistic\020\005\022\007\n\003nbc\020\006\022\021\n\rcros"
-    "sing_site\020\007\022\020\n\014supply_route\020\010\022\017\n\013toxic_c"
-    "loud\020\t\022\010\n\004fire\020\n\022\025\n\021medical_treatment\020\013\022"
-    "\026\n\022interaction_height\020\014\022\t\n\005stock\020\r\022\r\n\tnb"
-    "c_agent\020\016\"m\n\024MsgLogSupplyPushFlow\022\023\n\013oid"
-    "_donneur\030\001 \002(\r\022\024\n\014oid_receveur\030\002 \002(\r\022*\n\006"
-    "stocks\030\003 \002(\0132\032.Common.SeqOfDotationStock"
-    "\"q\n\030MsgLogSupplyChangeQuotas\022\023\n\013oid_donn"
-    "eur\030\001 \002(\r\022\024\n\014oid_receveur\030\002 \002(\r\022*\n\006quota"
-    "s\030\003 \002(\0132\032.Common.SeqOfDotationQuota\"5\n M"
-    "sgControlCheckPointSetFrequency\022\021\n\tfrequ"
-    "ency\030\001 \002(\005\"3\n\033MsgControlToggleVisionCone"
-    "s\022\024\n\014vision_cones\030\001 \002(\010\"V\n MsgKnowledgeG"
-    "roupCreationRequest\022\020\n\010oid_camp\030\001 \002(\r\022\022\n"
-    "\noid_parent\030\002 \001(\r\022\014\n\004type\030\003 \002(\t\"r\n\036MsgKn"
-    "owledgeGroupUpdateRequest\022\013\n\003oid\030\001 \002(\r\022\020"
-    "\n\010oid_camp\030\002 \001(\r\022\022\n\noid_parent\030\003 \001(\r\022\017\n\007"
-    "enabled\030\004 \001(\010\022\014\n\004type\030\005 \001(\t\"\365\n\n\016MsgClien"
-    "tToSim\022\022\n\007context\030\001 \001(\005:\0010\0228\n\007message\030\002 "
-    "\002(\0132\'.MsgsClientToSim.MsgClientToSim.Con"
-    "tent\032\224\n\n\007Content\022,\n\014control_stop\030\001 \001(\0132\026"
-    ".Common.MsgControlStop\022.\n\rcontrol_pause\030"
-    "\002 \001(\0132\027.Common.MsgControlPause\0220\n\016contro"
-    "l_resume\030\003 \001(\0132\030.Common.MsgControlResume"
-    "\022F\n\032control_change_time_factor\030\004 \001(\0132\".C"
-    "ommon.MsgControlChangeTimeFactor\022K\n\030cont"
-    "rol_date_time_change\030\005 \001(\0132).MsgsClientT"
-    "oSim.MsgControlDatetimeChange\0227\n\rcontrol"
-    "_meteo\030\006 \001(\0132 .MsgsClientToSim.MsgContro"
-    "lMeteo\022Q\n\033control_checkpoint_save_now\030\007 "
-    "\001(\0132,.MsgsClientToSim.MsgControlCheckPoi"
-    "ntSaveNow\022[\n control_checkpoint_set_freq"
-    "uency\030\010 \001(\01321.MsgsClientToSim.MsgControl"
-    "CheckPointSetFrequency\022Q\n\033control_toggle"
-    "_vision_cones\030\t \001(\0132,.MsgsClientToSim.Ms"
-    "gControlToggleVisionCones\022(\n\nunit_order\030"
-    "\n \001(\0132\024.Common.MsgUnitOrder\022.\n\rautomat_o"
-    "rder\030\013 \001(\0132\027.Common.MsgAutomatOrder\0224\n\020p"
-    "opulation_order\030\014 \001(\0132\032.Common.MsgPopula"
-    "tionOrder\0221\n\nfrag_order\030\r \001(\0132\035.MsgsClie"
-    "ntToSim.MsgFragOrder\022<\n\020set_automat_mode"
-    "\030\016 \001(\0132\".MsgsClientToSim.MsgSetAutomatMo"
-    "de\022F\n\025unit_creation_request\030\017 \001(\0132\'.Msgs"
-    "ClientToSim.MsgUnitCreationRequest\022>\n\021un"
-    "it_magic_action\030\020 \001(\0132#.MsgsClientToSim."
-    "MsgUnitMagicAction\022B\n\023object_magic_actio"
-    "n\030\021 \001(\0132%.MsgsClientToSim.MsgObjectMagic"
-    "Action\0224\n\020change_diplomacy\030\022 \001(\0132\032.Commo"
-    "n.MsgChangeDiplomacy\022H\n\026knowledge_magic_"
-    "action\030\023 \001(\0132(.MsgsClientToSim.MsgKnowle"
-    "dgeMagicAction\022[\n knowledge_group_creati"
-    "on_request\030\024 \001(\01321.MsgsClientToSim.MsgKn"
-    "owledgeGroupCreationRequest", 4347);
+    "\n\tdate_time\030\001 \002(\0132\023.Common.MsgDateTime\"+"
+    "\n\033MsgControlCheckPointSaveNow\022\014\n\004name\030\001 "
+    "\001(\t\"a\n\014MsgFragOrder\022\013\n\003oid\030\001 \002(\r\022\022\n\nfrag"
+    "_order\030\002 \002(\r\0220\n\nparametres\030\003 \001(\0132\034.Commo"
+    "n.MsgMissionParameters\"G\n\021MsgSetAutomatM"
+    "ode\022\013\n\003oid\030\001 \002(\005\022%\n\004mode\030\002 \002(\0162\027.Common."
+    "EnumAutomatMode\"l\n\026MsgUnitCreationReques"
+    "t\022\021\n\ttype_pion\030\001 \002(\r\022\024\n\014oid_automate\030\002 \002"
+    "(\r\022)\n\010position\030\003 \002(\0132\027.Common.MsgCoordLa"
+    "tLong\"\213\006\n\022MsgUnitMagicAction\022\013\n\003oid\030\001 \002("
+    "\r\0226\n\004type\030\002 \002(\0162(.MsgsClientToSim.MsgUni"
+    "tMagicAction.Type\0220\n\nparametres\030\003 \002(\0132\034."
+    "Common.MsgMissionParameters\"\375\004\n\004Type\022\013\n\007"
+    "move_to\020\000\022\020\n\014surrender_to\020\001\022\024\n\020cancel_su"
+    "rrender\020\002\022\030\n\024recover_transporters\020\003\022\025\n\021d"
+    "estroy_component\020\004\022\017\n\013recover_all\020\005\022\022\n\016r"
+    "ecover_troops\020\006\022\026\n\022recover_equipments\020\007\022"
+    "\025\n\021recover_resources\020\010\022\017\n\013destroy_all\020\t\022"
+    "\030\n\024change_human_factors\020\n\022\024\n\020partial_rec"
+    "overy\020\013\022\021\n\runit_creation\020\014\022\025\n\021create_fir"
+    "e_order\020\r\022 \n\034population_total_destructio"
+    "n\020\016\022\023\n\017population_kill\020\017\022\030\n\024population_r"
+    "esurrect\020\020\022\036\n\032population_change_attitude"
+    "\020\021\022\032\n\026change_knowledge_group\020\022\022\031\n\025change"
+    "_logistic_links\020\023\022\030\n\024unit_change_superio"
+    "r\020\024\022\033\n\027change_automat_superior\020\025\022\035\n\031chan"
+    "ge_formation_superior\020\026\022\032\n\026knowledge_gro"
+    "up_update\020\027\022\030\n\024log_supply_push_flow\020\030\022\034\n"
+    "\030log_supply_change_quotas\020\031\"\343\001\n\027MsgKnowl"
+    "edgeMagicAction\022\013\n\003oid\030\001 \002(\r\022;\n\004type\030\002 \002"
+    "(\0162-.MsgsClientToSim.MsgKnowledgeMagicAc"
+    "tion.Type\0220\n\nparametres\030\003 \002(\0132\034.Common.M"
+    "sgMissionParameters\"L\n\004Type\022\n\n\006enable\020\000\022"
+    "\017\n\013update_side\020\001\022\026\n\022update_side_parent\020\002"
+    "\022\017\n\013update_type\020\003\"\263\003\n\024MsgObjectMagicActi"
+    "on\022\013\n\003oid\030\001 \002(\r\0228\n\004type\030\002 \002(\0162*.MsgsClie"
+    "ntToSim.MsgObjectMagicAction.Type\0220\n\npar"
+    "ametres\030\003 \002(\0132\034.Common.MsgMissionParamet"
+    "ers\"+\n\004Type\022\n\n\006create\020\000\022\n\n\006update\020\001\022\013\n\007d"
+    "estroy\020\002\"\364\001\n\tAttribute\022\020\n\014construction\020\000"
+    "\022\014\n\010obstacle\020\001\022\010\n\004mine\020\002\022\021\n\ractivity_tim"
+    "e\020\003\022\n\n\006bypass\020\004\022\014\n\010logistic\020\005\022\007\n\003nbc\020\006\022\021"
+    "\n\rcrossing_site\020\007\022\020\n\014supply_route\020\010\022\017\n\013t"
+    "oxic_cloud\020\t\022\010\n\004fire\020\n\022\025\n\021medical_treatm"
+    "ent\020\013\022\026\n\022interaction_height\020\014\022\t\n\005stock\020\r"
+    "\022\r\n\tnbc_agent\020\016\"\323\001\n\016MsgMagicAction\0222\n\004ty"
+    "pe\030\001 \002(\0162$.MsgsClientToSim.MsgMagicActio"
+    "n.Type\0220\n\nparametres\030\002 \002(\0132\034.Common.MsgM"
+    "issionParameters\"[\n\004Type\022\020\n\014global_meteo"
+    "\020\000\022\017\n\013local_meteo\020\001\022\024\n\020change_diplomacy\020"
+    "\002\022\032\n\026create_knowledge_group\020\003\"5\n MsgCont"
+    "rolCheckPointSetFrequency\022\021\n\tfrequency\030\001"
+    " \002(\005\"3\n\033MsgControlToggleVisionCones\022\024\n\014v"
+    "ision_cones\030\001 \002(\010\"\340\t\n\016MsgClientToSim\022\022\n\007"
+    "context\030\001 \001(\005:\0010\0228\n\007message\030\002 \002(\0132\'.Msgs"
+    "ClientToSim.MsgClientToSim.Content\032\377\010\n\007C"
+    "ontent\022,\n\014control_stop\030\001 \001(\0132\026.Common.Ms"
+    "gControlStop\022.\n\rcontrol_pause\030\002 \001(\0132\027.Co"
+    "mmon.MsgControlPause\0220\n\016control_resume\030\003"
+    " \001(\0132\030.Common.MsgControlResume\022F\n\032contro"
+    "l_change_time_factor\030\004 \001(\0132\".Common.MsgC"
+    "ontrolChangeTimeFactor\022K\n\030control_date_t"
+    "ime_change\030\005 \001(\0132).MsgsClientToSim.MsgCo"
+    "ntrolDatetimeChange\022Q\n\033control_checkpoin"
+    "t_save_now\030\006 \001(\0132,.MsgsClientToSim.MsgCo"
+    "ntrolCheckPointSaveNow\022[\n control_checkp"
+    "oint_set_frequency\030\007 \001(\01321.MsgsClientToS"
+    "im.MsgControlCheckPointSetFrequency\022Q\n\033c"
+    "ontrol_toggle_vision_cones\030\010 \001(\0132,.MsgsC"
+    "lientToSim.MsgControlToggleVisionCones\022("
+    "\n\nunit_order\030\t \001(\0132\024.Common.MsgUnitOrder"
+    "\022.\n\rautomat_order\030\n \001(\0132\027.Common.MsgAuto"
+    "matOrder\0224\n\020population_order\030\013 \001(\0132\032.Com"
+    "mon.MsgPopulationOrder\0221\n\nfrag_order\030\014 \001"
+    "(\0132\035.MsgsClientToSim.MsgFragOrder\022<\n\020set"
+    "_automat_mode\030\r \001(\0132\".MsgsClientToSim.Ms"
+    "gSetAutomatMode\022F\n\025unit_creation_request"
+    "\030\016 \001(\0132\'.MsgsClientToSim.MsgUnitCreation"
+    "Request\022>\n\021unit_magic_action\030\017 \001(\0132#.Msg"
+    "sClientToSim.MsgUnitMagicAction\022B\n\023objec"
+    "t_magic_action\030\020 \001(\0132%.MsgsClientToSim.M"
+    "sgObjectMagicAction\022H\n\026knowledge_magic_a"
+    "ction\030\021 \001(\0132(.MsgsClientToSim.MsgKnowled"
+    "geMagicAction\0225\n\014magic_action\030\022 \001(\0132\037.Ms"
+    "gsClientToSim.MsgMagicAction", 3468);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "ClientToSim.proto", &protobuf_RegisterTypes);
   MsgControlDatetimeChange::default_instance_ = new MsgControlDatetimeChange();
-  MsgControlMeteo::default_instance_ = new MsgControlMeteo();
   MsgControlCheckPointSaveNow::default_instance_ = new MsgControlCheckPointSaveNow();
   MsgFragOrder::default_instance_ = new MsgFragOrder();
   MsgSetAutomatMode::default_instance_ = new MsgSetAutomatMode();
   MsgUnitCreationRequest::default_instance_ = new MsgUnitCreationRequest();
   MsgUnitMagicAction::default_instance_ = new MsgUnitMagicAction();
   MsgKnowledgeMagicAction::default_instance_ = new MsgKnowledgeMagicAction();
-  MsgMagicActionCreateObject::default_instance_ = new MsgMagicActionCreateObject();
-  MsgMagicActionUpdateObject::default_instance_ = new MsgMagicActionUpdateObject();
-  MsgObjectMagicAction_action::default_instance_ = new MsgObjectMagicAction_action();
   MsgObjectMagicAction::default_instance_ = new MsgObjectMagicAction();
-  MsgLogSupplyPushFlow::default_instance_ = new MsgLogSupplyPushFlow();
-  MsgLogSupplyChangeQuotas::default_instance_ = new MsgLogSupplyChangeQuotas();
+  MsgMagicAction::default_instance_ = new MsgMagicAction();
   MsgControlCheckPointSetFrequency::default_instance_ = new MsgControlCheckPointSetFrequency();
   MsgControlToggleVisionCones::default_instance_ = new MsgControlToggleVisionCones();
-  MsgKnowledgeGroupCreationRequest::default_instance_ = new MsgKnowledgeGroupCreationRequest();
-  MsgKnowledgeGroupUpdateRequest::default_instance_ = new MsgKnowledgeGroupUpdateRequest();
   MsgClientToSim::default_instance_ = new MsgClientToSim();
   MsgClientToSim_Content::default_instance_ = new MsgClientToSim_Content();
   MsgControlDatetimeChange::default_instance_->InitAsDefaultInstance();
-  MsgControlMeteo::default_instance_->InitAsDefaultInstance();
   MsgControlCheckPointSaveNow::default_instance_->InitAsDefaultInstance();
   MsgFragOrder::default_instance_->InitAsDefaultInstance();
   MsgSetAutomatMode::default_instance_->InitAsDefaultInstance();
   MsgUnitCreationRequest::default_instance_->InitAsDefaultInstance();
   MsgUnitMagicAction::default_instance_->InitAsDefaultInstance();
   MsgKnowledgeMagicAction::default_instance_->InitAsDefaultInstance();
-  MsgMagicActionCreateObject::default_instance_->InitAsDefaultInstance();
-  MsgMagicActionUpdateObject::default_instance_->InitAsDefaultInstance();
-  MsgObjectMagicAction_action::default_instance_->InitAsDefaultInstance();
   MsgObjectMagicAction::default_instance_->InitAsDefaultInstance();
-  MsgLogSupplyPushFlow::default_instance_->InitAsDefaultInstance();
-  MsgLogSupplyChangeQuotas::default_instance_->InitAsDefaultInstance();
+  MsgMagicAction::default_instance_->InitAsDefaultInstance();
   MsgControlCheckPointSetFrequency::default_instance_->InitAsDefaultInstance();
   MsgControlToggleVisionCones::default_instance_->InitAsDefaultInstance();
-  MsgKnowledgeGroupCreationRequest::default_instance_->InitAsDefaultInstance();
-  MsgKnowledgeGroupUpdateRequest::default_instance_->InitAsDefaultInstance();
   MsgClientToSim::default_instance_->InitAsDefaultInstance();
   MsgClientToSim_Content::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_ClientToSim_2eproto);
@@ -916,218 +710,6 @@ void MsgControlDatetimeChange::Swap(MsgControlDatetimeChange* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = MsgControlDatetimeChange_descriptor_;
   metadata.reflection = MsgControlDatetimeChange_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgControlMeteo::kParametresFieldNumber;
-#endif  // !_MSC_VER
-
-MsgControlMeteo::MsgControlMeteo() {
-  SharedCtor();
-}
-
-void MsgControlMeteo::InitAsDefaultInstance() {
-  parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
-}
-
-MsgControlMeteo::MsgControlMeteo(const MsgControlMeteo& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgControlMeteo::SharedCtor() {
-  _cached_size_ = 0;
-  parametres_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgControlMeteo::~MsgControlMeteo() {
-  SharedDtor();
-}
-
-void MsgControlMeteo::SharedDtor() {
-  if (this != default_instance_) {
-    delete parametres_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgControlMeteo::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgControlMeteo_descriptor_;
-}
-
-const MsgControlMeteo& MsgControlMeteo::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgControlMeteo* MsgControlMeteo::default_instance_ = NULL;
-
-MsgControlMeteo* MsgControlMeteo::New() const {
-  return new MsgControlMeteo;
-}
-
-void MsgControlMeteo::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (_has_bit(0)) {
-      if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgControlMeteo::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required .Common.MsgMissionParameters parametres = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_parametres()));
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgControlMeteo::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgControlMeteo::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required .Common.MsgMissionParameters parametres = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->parametres(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgControlMeteo::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required .Common.MsgMissionParameters parametres = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->parametres(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgControlMeteo::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required .Common.MsgMissionParameters parametres = 1;
-    if (has_parametres()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->parametres());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgControlMeteo::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgControlMeteo* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgControlMeteo*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgControlMeteo::MergeFrom(const MsgControlMeteo& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      mutable_parametres()->::Common::MsgMissionParameters::MergeFrom(from.parametres());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgControlMeteo::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgControlMeteo::CopyFrom(const MsgControlMeteo& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgControlMeteo::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-  
-  if (has_parametres()) {
-    if (!this->parametres().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgControlMeteo::Swap(MsgControlMeteo* other) {
-  if (other != this) {
-    std::swap(parametres_, other->parametres_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgControlMeteo::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgControlMeteo_descriptor_;
-  metadata.reflection = MsgControlMeteo_reflection_;
   return metadata;
 }
 
@@ -2855,963 +2437,6 @@ void MsgKnowledgeMagicAction::Swap(MsgKnowledgeMagicAction* other) {
 
 // ===================================================================
 
-const ::std::string MsgMagicActionCreateObject::_default_type_;
-const ::std::string MsgMagicActionCreateObject::_default_name_;
-#ifndef _MSC_VER
-const int MsgMagicActionCreateObject::kTypeFieldNumber;
-const int MsgMagicActionCreateObject::kLocationFieldNumber;
-const int MsgMagicActionCreateObject::kNameFieldNumber;
-const int MsgMagicActionCreateObject::kTeamFieldNumber;
-const int MsgMagicActionCreateObject::kAttributesFieldNumber;
-#endif  // !_MSC_VER
-
-MsgMagicActionCreateObject::MsgMagicActionCreateObject() {
-  SharedCtor();
-}
-
-void MsgMagicActionCreateObject::InitAsDefaultInstance() {
-  location_ = const_cast< ::Common::MsgLocation*>(&::Common::MsgLocation::default_instance());
-  attributes_ = const_cast< ::Common::MsgObjectAttributes*>(&::Common::MsgObjectAttributes::default_instance());
-}
-
-MsgMagicActionCreateObject::MsgMagicActionCreateObject(const MsgMagicActionCreateObject& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgMagicActionCreateObject::SharedCtor() {
-  _cached_size_ = 0;
-  type_ = const_cast< ::std::string*>(&_default_type_);
-  location_ = NULL;
-  name_ = const_cast< ::std::string*>(&_default_name_);
-  team_ = 0;
-  attributes_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgMagicActionCreateObject::~MsgMagicActionCreateObject() {
-  SharedDtor();
-}
-
-void MsgMagicActionCreateObject::SharedDtor() {
-  if (type_ != &_default_type_) {
-    delete type_;
-  }
-  if (name_ != &_default_name_) {
-    delete name_;
-  }
-  if (this != default_instance_) {
-    delete location_;
-    delete attributes_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgMagicActionCreateObject::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgMagicActionCreateObject_descriptor_;
-}
-
-const MsgMagicActionCreateObject& MsgMagicActionCreateObject::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgMagicActionCreateObject* MsgMagicActionCreateObject::default_instance_ = NULL;
-
-MsgMagicActionCreateObject* MsgMagicActionCreateObject::New() const {
-  return new MsgMagicActionCreateObject;
-}
-
-void MsgMagicActionCreateObject::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (_has_bit(0)) {
-      if (type_ != &_default_type_) {
-        type_->clear();
-      }
-    }
-    if (_has_bit(1)) {
-      if (location_ != NULL) location_->::Common::MsgLocation::Clear();
-    }
-    if (_has_bit(2)) {
-      if (name_ != &_default_name_) {
-        name_->clear();
-      }
-    }
-    team_ = 0;
-    if (_has_bit(4)) {
-      if (attributes_ != NULL) attributes_->::Common::MsgObjectAttributes::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgMagicActionCreateObject::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required string type = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_type()));
-        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->type().data(), this->type().length(),
-          ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(18)) goto parse_location;
-        break;
-      }
-      
-      // required .Common.MsgLocation location = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_location:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_location()));
-        if (input->ExpectTag(26)) goto parse_name;
-        break;
-      }
-      
-      // required string name = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_name:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_name()));
-        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->name().data(), this->name().length(),
-          ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectTag(32)) goto parse_team;
-        break;
-      }
-      
-      // required int32 team = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_team:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &team_));
-        _set_bit(3);
-        if (input->ExpectTag(42)) goto parse_attributes;
-        break;
-      }
-      
-      // required .Common.MsgObjectAttributes attributes = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_attributes:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_attributes()));
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgMagicActionCreateObject::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgMagicActionCreateObject::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required string type = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->type().data(), this->type().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      1, this->type(), output);
-  }
-  
-  // required .Common.MsgLocation location = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->location(), output);
-  }
-  
-  // required string name = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      3, this->name(), output);
-  }
-  
-  // required int32 team = 4;
-  if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(4, this->team(), output);
-  }
-  
-  // required .Common.MsgObjectAttributes attributes = 5;
-  if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      5, this->attributes(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgMagicActionCreateObject::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required string type = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->type().data(), this->type().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        1, this->type(), target);
-  }
-  
-  // required .Common.MsgLocation location = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->location(), target);
-  }
-  
-  // required string name = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->name().data(), this->name().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->name(), target);
-  }
-  
-  // required int32 team = 4;
-  if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(4, this->team(), target);
-  }
-  
-  // required .Common.MsgObjectAttributes attributes = 5;
-  if (_has_bit(4)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        5, this->attributes(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgMagicActionCreateObject::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required string type = 1;
-    if (has_type()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->type());
-    }
-    
-    // required .Common.MsgLocation location = 2;
-    if (has_location()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->location());
-    }
-    
-    // required string name = 3;
-    if (has_name()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->name());
-    }
-    
-    // required int32 team = 4;
-    if (has_team()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->team());
-    }
-    
-    // required .Common.MsgObjectAttributes attributes = 5;
-    if (has_attributes()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->attributes());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgMagicActionCreateObject::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgMagicActionCreateObject* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMagicActionCreateObject*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgMagicActionCreateObject::MergeFrom(const MsgMagicActionCreateObject& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_type(from.type());
-    }
-    if (from._has_bit(1)) {
-      mutable_location()->::Common::MsgLocation::MergeFrom(from.location());
-    }
-    if (from._has_bit(2)) {
-      set_name(from.name());
-    }
-    if (from._has_bit(3)) {
-      set_team(from.team());
-    }
-    if (from._has_bit(4)) {
-      mutable_attributes()->::Common::MsgObjectAttributes::MergeFrom(from.attributes());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgMagicActionCreateObject::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgMagicActionCreateObject::CopyFrom(const MsgMagicActionCreateObject& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgMagicActionCreateObject::IsInitialized() const {
-  if ((_has_bits_[0] & 0x0000001f) != 0x0000001f) return false;
-  
-  if (has_location()) {
-    if (!this->location().IsInitialized()) return false;
-  }
-  if (has_attributes()) {
-    if (!this->attributes().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgMagicActionCreateObject::Swap(MsgMagicActionCreateObject* other) {
-  if (other != this) {
-    std::swap(type_, other->type_);
-    std::swap(location_, other->location_);
-    std::swap(name_, other->name_);
-    std::swap(team_, other->team_);
-    std::swap(attributes_, other->attributes_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgMagicActionCreateObject::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgMagicActionCreateObject_descriptor_;
-  metadata.reflection = MsgMagicActionCreateObject_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgMagicActionUpdateObject::kOidFieldNumber;
-const int MsgMagicActionUpdateObject::kAttributesFieldNumber;
-#endif  // !_MSC_VER
-
-MsgMagicActionUpdateObject::MsgMagicActionUpdateObject() {
-  SharedCtor();
-}
-
-void MsgMagicActionUpdateObject::InitAsDefaultInstance() {
-  attributes_ = const_cast< ::Common::MsgObjectAttributes*>(&::Common::MsgObjectAttributes::default_instance());
-}
-
-MsgMagicActionUpdateObject::MsgMagicActionUpdateObject(const MsgMagicActionUpdateObject& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgMagicActionUpdateObject::SharedCtor() {
-  _cached_size_ = 0;
-  oid_ = 0;
-  attributes_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgMagicActionUpdateObject::~MsgMagicActionUpdateObject() {
-  SharedDtor();
-}
-
-void MsgMagicActionUpdateObject::SharedDtor() {
-  if (this != default_instance_) {
-    delete attributes_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgMagicActionUpdateObject::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgMagicActionUpdateObject_descriptor_;
-}
-
-const MsgMagicActionUpdateObject& MsgMagicActionUpdateObject::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgMagicActionUpdateObject* MsgMagicActionUpdateObject::default_instance_ = NULL;
-
-MsgMagicActionUpdateObject* MsgMagicActionUpdateObject::New() const {
-  return new MsgMagicActionUpdateObject;
-}
-
-void MsgMagicActionUpdateObject::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0;
-    if (_has_bit(1)) {
-      if (attributes_ != NULL) attributes_->::Common::MsgObjectAttributes::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgMagicActionUpdateObject::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 oid = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &oid_));
-        _set_bit(0);
-        if (input->ExpectTag(18)) goto parse_attributes;
-        break;
-      }
-      
-      // required .Common.MsgObjectAttributes attributes = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_attributes:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_attributes()));
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgMagicActionUpdateObject::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgMagicActionUpdateObject::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required int32 oid = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->oid(), output);
-  }
-  
-  // required .Common.MsgObjectAttributes attributes = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->attributes(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgMagicActionUpdateObject::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required int32 oid = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->oid(), target);
-  }
-  
-  // required .Common.MsgObjectAttributes attributes = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->attributes(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgMagicActionUpdateObject::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 oid = 1;
-    if (has_oid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->oid());
-    }
-    
-    // required .Common.MsgObjectAttributes attributes = 2;
-    if (has_attributes()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->attributes());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgMagicActionUpdateObject::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgMagicActionUpdateObject* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMagicActionUpdateObject*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgMagicActionUpdateObject::MergeFrom(const MsgMagicActionUpdateObject& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_oid(from.oid());
-    }
-    if (from._has_bit(1)) {
-      mutable_attributes()->::Common::MsgObjectAttributes::MergeFrom(from.attributes());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgMagicActionUpdateObject::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgMagicActionUpdateObject::CopyFrom(const MsgMagicActionUpdateObject& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgMagicActionUpdateObject::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
-  
-  if (has_attributes()) {
-    if (!this->attributes().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgMagicActionUpdateObject::Swap(MsgMagicActionUpdateObject* other) {
-  if (other != this) {
-    std::swap(oid_, other->oid_);
-    std::swap(attributes_, other->attributes_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgMagicActionUpdateObject::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgMagicActionUpdateObject_descriptor_;
-  metadata.reflection = MsgMagicActionUpdateObject_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgObjectMagicAction_action::kCreateObjectFieldNumber;
-const int MsgObjectMagicAction_action::kUpdateObjectFieldNumber;
-const int MsgObjectMagicAction_action::kDestroyObjectFieldNumber;
-#endif  // !_MSC_VER
-
-MsgObjectMagicAction_action::MsgObjectMagicAction_action() {
-  SharedCtor();
-}
-
-void MsgObjectMagicAction_action::InitAsDefaultInstance() {
-  create_object_ = const_cast< ::MsgsClientToSim::MsgMagicActionCreateObject*>(&::MsgsClientToSim::MsgMagicActionCreateObject::default_instance());
-  update_object_ = const_cast< ::MsgsClientToSim::MsgMagicActionUpdateObject*>(&::MsgsClientToSim::MsgMagicActionUpdateObject::default_instance());
-}
-
-MsgObjectMagicAction_action::MsgObjectMagicAction_action(const MsgObjectMagicAction_action& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgObjectMagicAction_action::SharedCtor() {
-  _cached_size_ = 0;
-  create_object_ = NULL;
-  update_object_ = NULL;
-  destroy_object_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgObjectMagicAction_action::~MsgObjectMagicAction_action() {
-  SharedDtor();
-}
-
-void MsgObjectMagicAction_action::SharedDtor() {
-  if (this != default_instance_) {
-    delete create_object_;
-    delete update_object_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgObjectMagicAction_action::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgObjectMagicAction_action_descriptor_;
-}
-
-const MsgObjectMagicAction_action& MsgObjectMagicAction_action::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgObjectMagicAction_action* MsgObjectMagicAction_action::default_instance_ = NULL;
-
-MsgObjectMagicAction_action* MsgObjectMagicAction_action::New() const {
-  return new MsgObjectMagicAction_action;
-}
-
-void MsgObjectMagicAction_action::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (_has_bit(0)) {
-      if (create_object_ != NULL) create_object_->::MsgsClientToSim::MsgMagicActionCreateObject::Clear();
-    }
-    if (_has_bit(1)) {
-      if (update_object_ != NULL) update_object_->::MsgsClientToSim::MsgMagicActionUpdateObject::Clear();
-    }
-    destroy_object_ = 0;
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgObjectMagicAction_action::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .MsgsClientToSim.MsgMagicActionCreateObject create_object = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_create_object()));
-        if (input->ExpectTag(18)) goto parse_update_object;
-        break;
-      }
-      
-      // optional .MsgsClientToSim.MsgMagicActionUpdateObject update_object = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_update_object:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_update_object()));
-        if (input->ExpectTag(24)) goto parse_destroy_object;
-        break;
-      }
-      
-      // optional int32 destroy_object = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_destroy_object:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadInt32(
-              input, &destroy_object_));
-        _set_bit(2);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgObjectMagicAction_action::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgObjectMagicAction_action::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // optional .MsgsClientToSim.MsgMagicActionCreateObject create_object = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      1, this->create_object(), output);
-  }
-  
-  // optional .MsgsClientToSim.MsgMagicActionUpdateObject update_object = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      2, this->update_object(), output);
-  }
-  
-  // optional int32 destroy_object = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(3, this->destroy_object(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgObjectMagicAction_action::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // optional .MsgsClientToSim.MsgMagicActionCreateObject create_object = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->create_object(), target);
-  }
-  
-  // optional .MsgsClientToSim.MsgMagicActionUpdateObject update_object = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        2, this->update_object(), target);
-  }
-  
-  // optional int32 destroy_object = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(3, this->destroy_object(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgObjectMagicAction_action::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // optional .MsgsClientToSim.MsgMagicActionCreateObject create_object = 1;
-    if (has_create_object()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->create_object());
-    }
-    
-    // optional .MsgsClientToSim.MsgMagicActionUpdateObject update_object = 2;
-    if (has_update_object()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->update_object());
-    }
-    
-    // optional int32 destroy_object = 3;
-    if (has_destroy_object()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->destroy_object());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgObjectMagicAction_action::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgObjectMagicAction_action* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgObjectMagicAction_action*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgObjectMagicAction_action::MergeFrom(const MsgObjectMagicAction_action& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      mutable_create_object()->::MsgsClientToSim::MsgMagicActionCreateObject::MergeFrom(from.create_object());
-    }
-    if (from._has_bit(1)) {
-      mutable_update_object()->::MsgsClientToSim::MsgMagicActionUpdateObject::MergeFrom(from.update_object());
-    }
-    if (from._has_bit(2)) {
-      set_destroy_object(from.destroy_object());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgObjectMagicAction_action::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgObjectMagicAction_action::CopyFrom(const MsgObjectMagicAction_action& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgObjectMagicAction_action::IsInitialized() const {
-  
-  if (has_create_object()) {
-    if (!this->create_object().IsInitialized()) return false;
-  }
-  if (has_update_object()) {
-    if (!this->update_object().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgObjectMagicAction_action::Swap(MsgObjectMagicAction_action* other) {
-  if (other != this) {
-    std::swap(create_object_, other->create_object_);
-    std::swap(update_object_, other->update_object_);
-    std::swap(destroy_object_, other->destroy_object_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgObjectMagicAction_action::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgObjectMagicAction_action_descriptor_;
-  metadata.reflection = MsgObjectMagicAction_action_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
 const ::google::protobuf::EnumDescriptor* MsgObjectMagicAction_Type_descriptor() {
   protobuf_AssignDescriptorsOnce();
   return MsgObjectMagicAction_Type_descriptor_;
@@ -4173,112 +2798,123 @@ void MsgObjectMagicAction::Swap(MsgObjectMagicAction* other) {
 
 // ===================================================================
 
+const ::google::protobuf::EnumDescriptor* MsgMagicAction_Type_descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return MsgMagicAction_Type_descriptor_;
+}
+bool MsgMagicAction_Type_IsValid(int value) {
+  switch(value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
 #ifndef _MSC_VER
-const int MsgLogSupplyPushFlow::kOidDonneurFieldNumber;
-const int MsgLogSupplyPushFlow::kOidReceveurFieldNumber;
-const int MsgLogSupplyPushFlow::kStocksFieldNumber;
+const MsgMagicAction_Type MsgMagicAction::global_meteo;
+const MsgMagicAction_Type MsgMagicAction::local_meteo;
+const MsgMagicAction_Type MsgMagicAction::change_diplomacy;
+const MsgMagicAction_Type MsgMagicAction::create_knowledge_group;
+const MsgMagicAction_Type MsgMagicAction::Type_MIN;
+const MsgMagicAction_Type MsgMagicAction::Type_MAX;
+#endif  // _MSC_VER
+#ifndef _MSC_VER
+const int MsgMagicAction::kTypeFieldNumber;
+const int MsgMagicAction::kParametresFieldNumber;
 #endif  // !_MSC_VER
 
-MsgLogSupplyPushFlow::MsgLogSupplyPushFlow() {
+MsgMagicAction::MsgMagicAction() {
   SharedCtor();
 }
 
-void MsgLogSupplyPushFlow::InitAsDefaultInstance() {
-  stocks_ = const_cast< ::Common::SeqOfDotationStock*>(&::Common::SeqOfDotationStock::default_instance());
+void MsgMagicAction::InitAsDefaultInstance() {
+  parametres_ = const_cast< ::Common::MsgMissionParameters*>(&::Common::MsgMissionParameters::default_instance());
 }
 
-MsgLogSupplyPushFlow::MsgLogSupplyPushFlow(const MsgLogSupplyPushFlow& from) {
+MsgMagicAction::MsgMagicAction(const MsgMagicAction& from) {
   SharedCtor();
   MergeFrom(from);
 }
 
-void MsgLogSupplyPushFlow::SharedCtor() {
+void MsgMagicAction::SharedCtor() {
   _cached_size_ = 0;
-  oid_donneur_ = 0u;
-  oid_receveur_ = 0u;
-  stocks_ = NULL;
+  type_ = 0;
+  parametres_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-MsgLogSupplyPushFlow::~MsgLogSupplyPushFlow() {
+MsgMagicAction::~MsgMagicAction() {
   SharedDtor();
 }
 
-void MsgLogSupplyPushFlow::SharedDtor() {
+void MsgMagicAction::SharedDtor() {
   if (this != default_instance_) {
-    delete stocks_;
+    delete parametres_;
   }
 }
 
-const ::google::protobuf::Descriptor* MsgLogSupplyPushFlow::descriptor() {
+const ::google::protobuf::Descriptor* MsgMagicAction::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return MsgLogSupplyPushFlow_descriptor_;
+  return MsgMagicAction_descriptor_;
 }
 
-const MsgLogSupplyPushFlow& MsgLogSupplyPushFlow::default_instance() {
+const MsgMagicAction& MsgMagicAction::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
 }
 
-MsgLogSupplyPushFlow* MsgLogSupplyPushFlow::default_instance_ = NULL;
+MsgMagicAction* MsgMagicAction::default_instance_ = NULL;
 
-MsgLogSupplyPushFlow* MsgLogSupplyPushFlow::New() const {
-  return new MsgLogSupplyPushFlow;
+MsgMagicAction* MsgMagicAction::New() const {
+  return new MsgMagicAction;
 }
 
-void MsgLogSupplyPushFlow::Clear() {
+void MsgMagicAction::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_donneur_ = 0u;
-    oid_receveur_ = 0u;
-    if (_has_bit(2)) {
-      if (stocks_ != NULL) stocks_->::Common::SeqOfDotationStock::Clear();
+    type_ = 0;
+    if (_has_bit(1)) {
+      if (parametres_ != NULL) parametres_->::Common::MsgMissionParameters::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool MsgLogSupplyPushFlow::MergePartialFromCodedStream(
+bool MsgMagicAction::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid_donneur = 1;
+      // required .MsgsClientToSim.MsgMagicAction.Type type = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           goto handle_uninterpreted;
         }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_donneur_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_oid_receveur;
-        break;
-      }
-      
-      // required uint32 oid_receveur = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
+        int value;
+        DO_(::google::protobuf::internal::WireFormatLite::ReadEnum(input, &value));
+        if (::MsgsClientToSim::MsgMagicAction_Type_IsValid(value)) {
+          set_type(static_cast< ::MsgsClientToSim::MsgMagicAction_Type >(value));
+        } else {
+          mutable_unknown_fields()->AddVarint(1, value);
         }
-       parse_oid_receveur:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_receveur_));
-        _set_bit(1);
-        if (input->ExpectTag(26)) goto parse_stocks;
+        if (input->ExpectTag(18)) goto parse_parametres;
         break;
       }
       
-      // required .Common.SeqOfDotationStock stocks = 3;
-      case 3: {
+      // required .Common.MsgMissionParameters parametres = 2;
+      case 2: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_stocks:
+       parse_parametres:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_stocks()));
+             input, mutable_parametres()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -4299,28 +2935,24 @@ bool MsgLogSupplyPushFlow::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void MsgLogSupplyPushFlow::SerializeWithCachedSizes(
+void MsgMagicAction::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
   if (raw_buffer != NULL) {
-    MsgLogSupplyPushFlow::SerializeWithCachedSizesToArray(raw_buffer);
+    MsgMagicAction::SerializeWithCachedSizesToArray(raw_buffer);
     return;
   }
   
-  // required uint32 oid_donneur = 1;
+  // required .MsgsClientToSim.MsgMagicAction.Type type = 1;
   if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid_donneur(), output);
+    ::google::protobuf::internal::WireFormatLite::WriteEnum(
+      1, this->type(), output);
   }
   
-  // required uint32 oid_receveur = 2;
+  // required .Common.MsgMissionParameters parametres = 2;
   if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->oid_receveur(), output);
-  }
-  
-  // required .Common.SeqOfDotationStock stocks = 3;
-  if (_has_bit(2)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      3, this->stocks(), output);
+      2, this->parametres(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -4329,23 +2961,19 @@ void MsgLogSupplyPushFlow::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* MsgLogSupplyPushFlow::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MsgMagicAction::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required uint32 oid_donneur = 1;
+  // required .MsgsClientToSim.MsgMagicAction.Type type = 1;
   if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid_donneur(), target);
+    target = ::google::protobuf::internal::WireFormatLite::WriteEnumToArray(
+      1, this->type(), target);
   }
   
-  // required uint32 oid_receveur = 2;
+  // required .Common.MsgMissionParameters parametres = 2;
   if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->oid_receveur(), target);
-  }
-  
-  // required .Common.SeqOfDotationStock stocks = 3;
-  if (_has_bit(2)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->stocks(), target);
+        2, this->parametres(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -4355,29 +2983,21 @@ void MsgLogSupplyPushFlow::SerializeWithCachedSizes(
   return target;
 }
 
-int MsgLogSupplyPushFlow::ByteSize() const {
+int MsgMagicAction::ByteSize() const {
   int total_size = 0;
   
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid_donneur = 1;
-    if (has_oid_donneur()) {
+    // required .MsgsClientToSim.MsgMagicAction.Type type = 1;
+    if (has_type()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_donneur());
+        ::google::protobuf::internal::WireFormatLite::EnumSize(this->type());
     }
     
-    // required uint32 oid_receveur = 2;
-    if (has_oid_receveur()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_receveur());
-    }
-    
-    // required .Common.SeqOfDotationStock stocks = 3;
-    if (has_stocks()) {
+    // required .Common.MsgMissionParameters parametres = 2;
+    if (has_parametres()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->stocks());
+          this->parametres());
     }
     
   }
@@ -4390,10 +3010,10 @@ int MsgLogSupplyPushFlow::ByteSize() const {
   return total_size;
 }
 
-void MsgLogSupplyPushFlow::MergeFrom(const ::google::protobuf::Message& from) {
+void MsgMagicAction::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const MsgLogSupplyPushFlow* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgLogSupplyPushFlow*>(
+  const MsgMagicAction* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MsgMagicAction*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -4402,347 +3022,55 @@ void MsgLogSupplyPushFlow::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void MsgLogSupplyPushFlow::MergeFrom(const MsgLogSupplyPushFlow& from) {
+void MsgMagicAction::MergeFrom(const MsgMagicAction& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from._has_bit(0)) {
-      set_oid_donneur(from.oid_donneur());
+      set_type(from.type());
     }
     if (from._has_bit(1)) {
-      set_oid_receveur(from.oid_receveur());
-    }
-    if (from._has_bit(2)) {
-      mutable_stocks()->::Common::SeqOfDotationStock::MergeFrom(from.stocks());
+      mutable_parametres()->::Common::MsgMissionParameters::MergeFrom(from.parametres());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void MsgLogSupplyPushFlow::CopyFrom(const ::google::protobuf::Message& from) {
+void MsgMagicAction::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MsgLogSupplyPushFlow::CopyFrom(const MsgLogSupplyPushFlow& from) {
+void MsgMagicAction::CopyFrom(const MsgMagicAction& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MsgLogSupplyPushFlow::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
+bool MsgMagicAction::IsInitialized() const {
+  if ((_has_bits_[0] & 0x00000003) != 0x00000003) return false;
   
-  if (has_stocks()) {
-    if (!this->stocks().IsInitialized()) return false;
+  if (has_parametres()) {
+    if (!this->parametres().IsInitialized()) return false;
   }
   return true;
 }
 
-void MsgLogSupplyPushFlow::Swap(MsgLogSupplyPushFlow* other) {
+void MsgMagicAction::Swap(MsgMagicAction* other) {
   if (other != this) {
-    std::swap(oid_donneur_, other->oid_donneur_);
-    std::swap(oid_receveur_, other->oid_receveur_);
-    std::swap(stocks_, other->stocks_);
+    std::swap(type_, other->type_);
+    std::swap(parametres_, other->parametres_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata MsgLogSupplyPushFlow::GetMetadata() const {
+::google::protobuf::Metadata MsgMagicAction::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgLogSupplyPushFlow_descriptor_;
-  metadata.reflection = MsgLogSupplyPushFlow_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int MsgLogSupplyChangeQuotas::kOidDonneurFieldNumber;
-const int MsgLogSupplyChangeQuotas::kOidReceveurFieldNumber;
-const int MsgLogSupplyChangeQuotas::kQuotasFieldNumber;
-#endif  // !_MSC_VER
-
-MsgLogSupplyChangeQuotas::MsgLogSupplyChangeQuotas() {
-  SharedCtor();
-}
-
-void MsgLogSupplyChangeQuotas::InitAsDefaultInstance() {
-  quotas_ = const_cast< ::Common::SeqOfDotationQuota*>(&::Common::SeqOfDotationQuota::default_instance());
-}
-
-MsgLogSupplyChangeQuotas::MsgLogSupplyChangeQuotas(const MsgLogSupplyChangeQuotas& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgLogSupplyChangeQuotas::SharedCtor() {
-  _cached_size_ = 0;
-  oid_donneur_ = 0u;
-  oid_receveur_ = 0u;
-  quotas_ = NULL;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgLogSupplyChangeQuotas::~MsgLogSupplyChangeQuotas() {
-  SharedDtor();
-}
-
-void MsgLogSupplyChangeQuotas::SharedDtor() {
-  if (this != default_instance_) {
-    delete quotas_;
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgLogSupplyChangeQuotas::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgLogSupplyChangeQuotas_descriptor_;
-}
-
-const MsgLogSupplyChangeQuotas& MsgLogSupplyChangeQuotas::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgLogSupplyChangeQuotas* MsgLogSupplyChangeQuotas::default_instance_ = NULL;
-
-MsgLogSupplyChangeQuotas* MsgLogSupplyChangeQuotas::New() const {
-  return new MsgLogSupplyChangeQuotas;
-}
-
-void MsgLogSupplyChangeQuotas::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_donneur_ = 0u;
-    oid_receveur_ = 0u;
-    if (_has_bit(2)) {
-      if (quotas_ != NULL) quotas_->::Common::SeqOfDotationQuota::Clear();
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgLogSupplyChangeQuotas::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid_donneur = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_donneur_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_oid_receveur;
-        break;
-      }
-      
-      // required uint32 oid_receveur = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_oid_receveur:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_receveur_));
-        _set_bit(1);
-        if (input->ExpectTag(26)) goto parse_quotas;
-        break;
-      }
-      
-      // required .Common.SeqOfDotationQuota quotas = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_quotas:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_quotas()));
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgLogSupplyChangeQuotas::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgLogSupplyChangeQuotas::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required uint32 oid_donneur = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid_donneur(), output);
-  }
-  
-  // required uint32 oid_receveur = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->oid_receveur(), output);
-  }
-  
-  // required .Common.SeqOfDotationQuota quotas = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      3, this->quotas(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgLogSupplyChangeQuotas::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required uint32 oid_donneur = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid_donneur(), target);
-  }
-  
-  // required uint32 oid_receveur = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->oid_receveur(), target);
-  }
-  
-  // required .Common.SeqOfDotationQuota quotas = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        3, this->quotas(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgLogSupplyChangeQuotas::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid_donneur = 1;
-    if (has_oid_donneur()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_donneur());
-    }
-    
-    // required uint32 oid_receveur = 2;
-    if (has_oid_receveur()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_receveur());
-    }
-    
-    // required .Common.SeqOfDotationQuota quotas = 3;
-    if (has_quotas()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->quotas());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgLogSupplyChangeQuotas::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgLogSupplyChangeQuotas* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgLogSupplyChangeQuotas*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgLogSupplyChangeQuotas::MergeFrom(const MsgLogSupplyChangeQuotas& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_oid_donneur(from.oid_donneur());
-    }
-    if (from._has_bit(1)) {
-      set_oid_receveur(from.oid_receveur());
-    }
-    if (from._has_bit(2)) {
-      mutable_quotas()->::Common::SeqOfDotationQuota::MergeFrom(from.quotas());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgLogSupplyChangeQuotas::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgLogSupplyChangeQuotas::CopyFrom(const MsgLogSupplyChangeQuotas& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgLogSupplyChangeQuotas::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000007) != 0x00000007) return false;
-  
-  if (has_quotas()) {
-    if (!this->quotas().IsInitialized()) return false;
-  }
-  return true;
-}
-
-void MsgLogSupplyChangeQuotas::Swap(MsgLogSupplyChangeQuotas* other) {
-  if (other != this) {
-    std::swap(oid_donneur_, other->oid_donneur_);
-    std::swap(oid_receveur_, other->oid_receveur_);
-    std::swap(quotas_, other->quotas_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgLogSupplyChangeQuotas::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgLogSupplyChangeQuotas_descriptor_;
-  metadata.reflection = MsgLogSupplyChangeQuotas_reflection_;
+  metadata.descriptor = MsgMagicAction_descriptor_;
+  metadata.reflection = MsgMagicAction_reflection_;
   return metadata;
 }
 
@@ -5153,683 +3481,12 @@ void MsgControlToggleVisionCones::Swap(MsgControlToggleVisionCones* other) {
 
 // ===================================================================
 
-const ::std::string MsgKnowledgeGroupCreationRequest::_default_type_;
-#ifndef _MSC_VER
-const int MsgKnowledgeGroupCreationRequest::kOidCampFieldNumber;
-const int MsgKnowledgeGroupCreationRequest::kOidParentFieldNumber;
-const int MsgKnowledgeGroupCreationRequest::kTypeFieldNumber;
-#endif  // !_MSC_VER
-
-MsgKnowledgeGroupCreationRequest::MsgKnowledgeGroupCreationRequest() {
-  SharedCtor();
-}
-
-void MsgKnowledgeGroupCreationRequest::InitAsDefaultInstance() {
-}
-
-MsgKnowledgeGroupCreationRequest::MsgKnowledgeGroupCreationRequest(const MsgKnowledgeGroupCreationRequest& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgKnowledgeGroupCreationRequest::SharedCtor() {
-  _cached_size_ = 0;
-  oid_camp_ = 0u;
-  oid_parent_ = 0u;
-  type_ = const_cast< ::std::string*>(&_default_type_);
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgKnowledgeGroupCreationRequest::~MsgKnowledgeGroupCreationRequest() {
-  SharedDtor();
-}
-
-void MsgKnowledgeGroupCreationRequest::SharedDtor() {
-  if (type_ != &_default_type_) {
-    delete type_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgKnowledgeGroupCreationRequest::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgKnowledgeGroupCreationRequest_descriptor_;
-}
-
-const MsgKnowledgeGroupCreationRequest& MsgKnowledgeGroupCreationRequest::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgKnowledgeGroupCreationRequest* MsgKnowledgeGroupCreationRequest::default_instance_ = NULL;
-
-MsgKnowledgeGroupCreationRequest* MsgKnowledgeGroupCreationRequest::New() const {
-  return new MsgKnowledgeGroupCreationRequest;
-}
-
-void MsgKnowledgeGroupCreationRequest::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_camp_ = 0u;
-    oid_parent_ = 0u;
-    if (_has_bit(2)) {
-      if (type_ != &_default_type_) {
-        type_->clear();
-      }
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgKnowledgeGroupCreationRequest::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid_camp = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_camp_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_oid_parent;
-        break;
-      }
-      
-      // optional uint32 oid_parent = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_oid_parent:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_parent_));
-        _set_bit(1);
-        if (input->ExpectTag(26)) goto parse_type;
-        break;
-      }
-      
-      // required string type = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_type:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_type()));
-        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->type().data(), this->type().length(),
-          ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgKnowledgeGroupCreationRequest::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgKnowledgeGroupCreationRequest::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required uint32 oid_camp = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid_camp(), output);
-  }
-  
-  // optional uint32 oid_parent = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->oid_parent(), output);
-  }
-  
-  // required string type = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->type().data(), this->type().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      3, this->type(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgKnowledgeGroupCreationRequest::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required uint32 oid_camp = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid_camp(), target);
-  }
-  
-  // optional uint32 oid_parent = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->oid_parent(), target);
-  }
-  
-  // required string type = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->type().data(), this->type().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        3, this->type(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgKnowledgeGroupCreationRequest::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid_camp = 1;
-    if (has_oid_camp()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_camp());
-    }
-    
-    // optional uint32 oid_parent = 2;
-    if (has_oid_parent()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_parent());
-    }
-    
-    // required string type = 3;
-    if (has_type()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->type());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgKnowledgeGroupCreationRequest::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgKnowledgeGroupCreationRequest* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgKnowledgeGroupCreationRequest*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgKnowledgeGroupCreationRequest::MergeFrom(const MsgKnowledgeGroupCreationRequest& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_oid_camp(from.oid_camp());
-    }
-    if (from._has_bit(1)) {
-      set_oid_parent(from.oid_parent());
-    }
-    if (from._has_bit(2)) {
-      set_type(from.type());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgKnowledgeGroupCreationRequest::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgKnowledgeGroupCreationRequest::CopyFrom(const MsgKnowledgeGroupCreationRequest& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgKnowledgeGroupCreationRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000005) != 0x00000005) return false;
-  
-  return true;
-}
-
-void MsgKnowledgeGroupCreationRequest::Swap(MsgKnowledgeGroupCreationRequest* other) {
-  if (other != this) {
-    std::swap(oid_camp_, other->oid_camp_);
-    std::swap(oid_parent_, other->oid_parent_);
-    std::swap(type_, other->type_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgKnowledgeGroupCreationRequest::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgKnowledgeGroupCreationRequest_descriptor_;
-  metadata.reflection = MsgKnowledgeGroupCreationRequest_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-const ::std::string MsgKnowledgeGroupUpdateRequest::_default_type_;
-#ifndef _MSC_VER
-const int MsgKnowledgeGroupUpdateRequest::kOidFieldNumber;
-const int MsgKnowledgeGroupUpdateRequest::kOidCampFieldNumber;
-const int MsgKnowledgeGroupUpdateRequest::kOidParentFieldNumber;
-const int MsgKnowledgeGroupUpdateRequest::kEnabledFieldNumber;
-const int MsgKnowledgeGroupUpdateRequest::kTypeFieldNumber;
-#endif  // !_MSC_VER
-
-MsgKnowledgeGroupUpdateRequest::MsgKnowledgeGroupUpdateRequest() {
-  SharedCtor();
-}
-
-void MsgKnowledgeGroupUpdateRequest::InitAsDefaultInstance() {
-}
-
-MsgKnowledgeGroupUpdateRequest::MsgKnowledgeGroupUpdateRequest(const MsgKnowledgeGroupUpdateRequest& from) {
-  SharedCtor();
-  MergeFrom(from);
-}
-
-void MsgKnowledgeGroupUpdateRequest::SharedCtor() {
-  _cached_size_ = 0;
-  oid_ = 0u;
-  oid_camp_ = 0u;
-  oid_parent_ = 0u;
-  enabled_ = false;
-  type_ = const_cast< ::std::string*>(&_default_type_);
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-MsgKnowledgeGroupUpdateRequest::~MsgKnowledgeGroupUpdateRequest() {
-  SharedDtor();
-}
-
-void MsgKnowledgeGroupUpdateRequest::SharedDtor() {
-  if (type_ != &_default_type_) {
-    delete type_;
-  }
-  if (this != default_instance_) {
-  }
-}
-
-const ::google::protobuf::Descriptor* MsgKnowledgeGroupUpdateRequest::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return MsgKnowledgeGroupUpdateRequest_descriptor_;
-}
-
-const MsgKnowledgeGroupUpdateRequest& MsgKnowledgeGroupUpdateRequest::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_ClientToSim_2eproto();  return *default_instance_;
-}
-
-MsgKnowledgeGroupUpdateRequest* MsgKnowledgeGroupUpdateRequest::default_instance_ = NULL;
-
-MsgKnowledgeGroupUpdateRequest* MsgKnowledgeGroupUpdateRequest::New() const {
-  return new MsgKnowledgeGroupUpdateRequest;
-}
-
-void MsgKnowledgeGroupUpdateRequest::Clear() {
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    oid_ = 0u;
-    oid_camp_ = 0u;
-    oid_parent_ = 0u;
-    enabled_ = false;
-    if (_has_bit(4)) {
-      if (type_ != &_default_type_) {
-        type_->clear();
-      }
-    }
-  }
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool MsgKnowledgeGroupUpdateRequest::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
-  ::google::protobuf::uint32 tag;
-  while ((tag = input->ReadTag()) != 0) {
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required uint32 oid = 1;
-      case 1: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_));
-        _set_bit(0);
-        if (input->ExpectTag(16)) goto parse_oid_camp;
-        break;
-      }
-      
-      // optional uint32 oid_camp = 2;
-      case 2: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_oid_camp:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_camp_));
-        _set_bit(1);
-        if (input->ExpectTag(24)) goto parse_oid_parent;
-        break;
-      }
-      
-      // optional uint32 oid_parent = 3;
-      case 3: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_oid_parent:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadUInt32(
-              input, &oid_parent_));
-        _set_bit(2);
-        if (input->ExpectTag(32)) goto parse_enabled;
-        break;
-      }
-      
-      // optional bool enabled = 4;
-      case 4: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
-          goto handle_uninterpreted;
-        }
-       parse_enabled:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadBool(
-              input, &enabled_));
-        _set_bit(3);
-        if (input->ExpectTag(42)) goto parse_type;
-        break;
-      }
-      
-      // optional string type = 5;
-      case 5: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_type:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadString(
-              input, this->mutable_type()));
-        ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-          this->type().data(), this->type().length(),
-          ::google::protobuf::internal::WireFormat::PARSE);
-        if (input->ExpectAtEnd()) return true;
-        break;
-      }
-      
-      default: {
-      handle_uninterpreted:
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          return true;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-  return true;
-#undef DO_
-}
-
-void MsgKnowledgeGroupUpdateRequest::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  ::google::protobuf::uint8* raw_buffer = output->GetDirectBufferForNBytesAndAdvance(_cached_size_);
-  if (raw_buffer != NULL) {
-    MsgKnowledgeGroupUpdateRequest::SerializeWithCachedSizesToArray(raw_buffer);
-    return;
-  }
-  
-  // required uint32 oid = 1;
-  if (_has_bit(0)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(1, this->oid(), output);
-  }
-  
-  // optional uint32 oid_camp = 2;
-  if (_has_bit(1)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(2, this->oid_camp(), output);
-  }
-  
-  // optional uint32 oid_parent = 3;
-  if (_has_bit(2)) {
-    ::google::protobuf::internal::WireFormatLite::WriteUInt32(3, this->oid_parent(), output);
-  }
-  
-  // optional bool enabled = 4;
-  if (_has_bit(3)) {
-    ::google::protobuf::internal::WireFormatLite::WriteBool(4, this->enabled(), output);
-  }
-  
-  // optional string type = 5;
-  if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->type().data(), this->type().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    ::google::protobuf::internal::WireFormatLite::WriteString(
-      5, this->type(), output);
-  }
-  
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-}
-
-::google::protobuf::uint8* MsgKnowledgeGroupUpdateRequest::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // required uint32 oid = 1;
-  if (_has_bit(0)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(1, this->oid(), target);
-  }
-  
-  // optional uint32 oid_camp = 2;
-  if (_has_bit(1)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(2, this->oid_camp(), target);
-  }
-  
-  // optional uint32 oid_parent = 3;
-  if (_has_bit(2)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteUInt32ToArray(3, this->oid_parent(), target);
-  }
-  
-  // optional bool enabled = 4;
-  if (_has_bit(3)) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(4, this->enabled(), target);
-  }
-  
-  // optional string type = 5;
-  if (_has_bit(4)) {
-    ::google::protobuf::internal::WireFormat::VerifyUTF8String(
-      this->type().data(), this->type().length(),
-      ::google::protobuf::internal::WireFormat::SERIALIZE);
-    target =
-      ::google::protobuf::internal::WireFormatLite::WriteStringToArray(
-        5, this->type(), target);
-  }
-  
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  return target;
-}
-
-int MsgKnowledgeGroupUpdateRequest::ByteSize() const {
-  int total_size = 0;
-  
-  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required uint32 oid = 1;
-    if (has_oid()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid());
-    }
-    
-    // optional uint32 oid_camp = 2;
-    if (has_oid_camp()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_camp());
-    }
-    
-    // optional uint32 oid_parent = 3;
-    if (has_oid_parent()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::UInt32Size(
-          this->oid_parent());
-    }
-    
-    // optional bool enabled = 4;
-    if (has_enabled()) {
-      total_size += 1 + 1;
-    }
-    
-    // optional string type = 5;
-    if (has_type()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::StringSize(
-          this->type());
-    }
-    
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  _cached_size_ = total_size;
-  return total_size;
-}
-
-void MsgKnowledgeGroupUpdateRequest::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const MsgKnowledgeGroupUpdateRequest* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MsgKnowledgeGroupUpdateRequest*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void MsgKnowledgeGroupUpdateRequest::MergeFrom(const MsgKnowledgeGroupUpdateRequest& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from._has_bit(0)) {
-      set_oid(from.oid());
-    }
-    if (from._has_bit(1)) {
-      set_oid_camp(from.oid_camp());
-    }
-    if (from._has_bit(2)) {
-      set_oid_parent(from.oid_parent());
-    }
-    if (from._has_bit(3)) {
-      set_enabled(from.enabled());
-    }
-    if (from._has_bit(4)) {
-      set_type(from.type());
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void MsgKnowledgeGroupUpdateRequest::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void MsgKnowledgeGroupUpdateRequest::CopyFrom(const MsgKnowledgeGroupUpdateRequest& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool MsgKnowledgeGroupUpdateRequest::IsInitialized() const {
-  if ((_has_bits_[0] & 0x00000001) != 0x00000001) return false;
-  
-  return true;
-}
-
-void MsgKnowledgeGroupUpdateRequest::Swap(MsgKnowledgeGroupUpdateRequest* other) {
-  if (other != this) {
-    std::swap(oid_, other->oid_);
-    std::swap(oid_camp_, other->oid_camp_);
-    std::swap(oid_parent_, other->oid_parent_);
-    std::swap(enabled_, other->enabled_);
-    std::swap(type_, other->type_);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata MsgKnowledgeGroupUpdateRequest::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MsgKnowledgeGroupUpdateRequest_descriptor_;
-  metadata.reflection = MsgKnowledgeGroupUpdateRequest_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
 #ifndef _MSC_VER
 const int MsgClientToSim_Content::kControlStopFieldNumber;
 const int MsgClientToSim_Content::kControlPauseFieldNumber;
 const int MsgClientToSim_Content::kControlResumeFieldNumber;
 const int MsgClientToSim_Content::kControlChangeTimeFactorFieldNumber;
 const int MsgClientToSim_Content::kControlDateTimeChangeFieldNumber;
-const int MsgClientToSim_Content::kControlMeteoFieldNumber;
 const int MsgClientToSim_Content::kControlCheckpointSaveNowFieldNumber;
 const int MsgClientToSim_Content::kControlCheckpointSetFrequencyFieldNumber;
 const int MsgClientToSim_Content::kControlToggleVisionConesFieldNumber;
@@ -5841,9 +3498,8 @@ const int MsgClientToSim_Content::kSetAutomatModeFieldNumber;
 const int MsgClientToSim_Content::kUnitCreationRequestFieldNumber;
 const int MsgClientToSim_Content::kUnitMagicActionFieldNumber;
 const int MsgClientToSim_Content::kObjectMagicActionFieldNumber;
-const int MsgClientToSim_Content::kChangeDiplomacyFieldNumber;
 const int MsgClientToSim_Content::kKnowledgeMagicActionFieldNumber;
-const int MsgClientToSim_Content::kKnowledgeGroupCreationRequestFieldNumber;
+const int MsgClientToSim_Content::kMagicActionFieldNumber;
 #endif  // !_MSC_VER
 
 MsgClientToSim_Content::MsgClientToSim_Content() {
@@ -5856,7 +3512,6 @@ void MsgClientToSim_Content::InitAsDefaultInstance() {
   control_resume_ = const_cast< ::Common::MsgControlResume*>(&::Common::MsgControlResume::default_instance());
   control_change_time_factor_ = const_cast< ::Common::MsgControlChangeTimeFactor*>(&::Common::MsgControlChangeTimeFactor::default_instance());
   control_date_time_change_ = const_cast< ::MsgsClientToSim::MsgControlDatetimeChange*>(&::MsgsClientToSim::MsgControlDatetimeChange::default_instance());
-  control_meteo_ = const_cast< ::MsgsClientToSim::MsgControlMeteo*>(&::MsgsClientToSim::MsgControlMeteo::default_instance());
   control_checkpoint_save_now_ = const_cast< ::MsgsClientToSim::MsgControlCheckPointSaveNow*>(&::MsgsClientToSim::MsgControlCheckPointSaveNow::default_instance());
   control_checkpoint_set_frequency_ = const_cast< ::MsgsClientToSim::MsgControlCheckPointSetFrequency*>(&::MsgsClientToSim::MsgControlCheckPointSetFrequency::default_instance());
   control_toggle_vision_cones_ = const_cast< ::MsgsClientToSim::MsgControlToggleVisionCones*>(&::MsgsClientToSim::MsgControlToggleVisionCones::default_instance());
@@ -5868,9 +3523,8 @@ void MsgClientToSim_Content::InitAsDefaultInstance() {
   unit_creation_request_ = const_cast< ::MsgsClientToSim::MsgUnitCreationRequest*>(&::MsgsClientToSim::MsgUnitCreationRequest::default_instance());
   unit_magic_action_ = const_cast< ::MsgsClientToSim::MsgUnitMagicAction*>(&::MsgsClientToSim::MsgUnitMagicAction::default_instance());
   object_magic_action_ = const_cast< ::MsgsClientToSim::MsgObjectMagicAction*>(&::MsgsClientToSim::MsgObjectMagicAction::default_instance());
-  change_diplomacy_ = const_cast< ::Common::MsgChangeDiplomacy*>(&::Common::MsgChangeDiplomacy::default_instance());
   knowledge_magic_action_ = const_cast< ::MsgsClientToSim::MsgKnowledgeMagicAction*>(&::MsgsClientToSim::MsgKnowledgeMagicAction::default_instance());
-  knowledge_group_creation_request_ = const_cast< ::MsgsClientToSim::MsgKnowledgeGroupCreationRequest*>(&::MsgsClientToSim::MsgKnowledgeGroupCreationRequest::default_instance());
+  magic_action_ = const_cast< ::MsgsClientToSim::MsgMagicAction*>(&::MsgsClientToSim::MsgMagicAction::default_instance());
 }
 
 MsgClientToSim_Content::MsgClientToSim_Content(const MsgClientToSim_Content& from) {
@@ -5885,7 +3539,6 @@ void MsgClientToSim_Content::SharedCtor() {
   control_resume_ = NULL;
   control_change_time_factor_ = NULL;
   control_date_time_change_ = NULL;
-  control_meteo_ = NULL;
   control_checkpoint_save_now_ = NULL;
   control_checkpoint_set_frequency_ = NULL;
   control_toggle_vision_cones_ = NULL;
@@ -5897,9 +3550,8 @@ void MsgClientToSim_Content::SharedCtor() {
   unit_creation_request_ = NULL;
   unit_magic_action_ = NULL;
   object_magic_action_ = NULL;
-  change_diplomacy_ = NULL;
   knowledge_magic_action_ = NULL;
-  knowledge_group_creation_request_ = NULL;
+  magic_action_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -5914,7 +3566,6 @@ void MsgClientToSim_Content::SharedDtor() {
     delete control_resume_;
     delete control_change_time_factor_;
     delete control_date_time_change_;
-    delete control_meteo_;
     delete control_checkpoint_save_now_;
     delete control_checkpoint_set_frequency_;
     delete control_toggle_vision_cones_;
@@ -5926,9 +3577,8 @@ void MsgClientToSim_Content::SharedDtor() {
     delete unit_creation_request_;
     delete unit_magic_action_;
     delete object_magic_action_;
-    delete change_diplomacy_;
     delete knowledge_magic_action_;
-    delete knowledge_group_creation_request_;
+    delete magic_action_;
   }
 }
 
@@ -5965,53 +3615,47 @@ void MsgClientToSim_Content::Clear() {
       if (control_date_time_change_ != NULL) control_date_time_change_->::MsgsClientToSim::MsgControlDatetimeChange::Clear();
     }
     if (_has_bit(5)) {
-      if (control_meteo_ != NULL) control_meteo_->::MsgsClientToSim::MsgControlMeteo::Clear();
-    }
-    if (_has_bit(6)) {
       if (control_checkpoint_save_now_ != NULL) control_checkpoint_save_now_->::MsgsClientToSim::MsgControlCheckPointSaveNow::Clear();
     }
-    if (_has_bit(7)) {
+    if (_has_bit(6)) {
       if (control_checkpoint_set_frequency_ != NULL) control_checkpoint_set_frequency_->::MsgsClientToSim::MsgControlCheckPointSetFrequency::Clear();
+    }
+    if (_has_bit(7)) {
+      if (control_toggle_vision_cones_ != NULL) control_toggle_vision_cones_->::MsgsClientToSim::MsgControlToggleVisionCones::Clear();
     }
   }
   if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (_has_bit(8)) {
-      if (control_toggle_vision_cones_ != NULL) control_toggle_vision_cones_->::MsgsClientToSim::MsgControlToggleVisionCones::Clear();
-    }
-    if (_has_bit(9)) {
       if (unit_order_ != NULL) unit_order_->::Common::MsgUnitOrder::Clear();
     }
-    if (_has_bit(10)) {
+    if (_has_bit(9)) {
       if (automat_order_ != NULL) automat_order_->::Common::MsgAutomatOrder::Clear();
     }
-    if (_has_bit(11)) {
+    if (_has_bit(10)) {
       if (population_order_ != NULL) population_order_->::Common::MsgPopulationOrder::Clear();
     }
-    if (_has_bit(12)) {
+    if (_has_bit(11)) {
       if (frag_order_ != NULL) frag_order_->::MsgsClientToSim::MsgFragOrder::Clear();
     }
-    if (_has_bit(13)) {
+    if (_has_bit(12)) {
       if (set_automat_mode_ != NULL) set_automat_mode_->::MsgsClientToSim::MsgSetAutomatMode::Clear();
     }
-    if (_has_bit(14)) {
+    if (_has_bit(13)) {
       if (unit_creation_request_ != NULL) unit_creation_request_->::MsgsClientToSim::MsgUnitCreationRequest::Clear();
     }
-    if (_has_bit(15)) {
+    if (_has_bit(14)) {
       if (unit_magic_action_ != NULL) unit_magic_action_->::MsgsClientToSim::MsgUnitMagicAction::Clear();
+    }
+    if (_has_bit(15)) {
+      if (object_magic_action_ != NULL) object_magic_action_->::MsgsClientToSim::MsgObjectMagicAction::Clear();
     }
   }
   if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (_has_bit(16)) {
-      if (object_magic_action_ != NULL) object_magic_action_->::MsgsClientToSim::MsgObjectMagicAction::Clear();
-    }
-    if (_has_bit(17)) {
-      if (change_diplomacy_ != NULL) change_diplomacy_->::Common::MsgChangeDiplomacy::Clear();
-    }
-    if (_has_bit(18)) {
       if (knowledge_magic_action_ != NULL) knowledge_magic_action_->::MsgsClientToSim::MsgKnowledgeMagicAction::Clear();
     }
-    if (_has_bit(19)) {
-      if (knowledge_group_creation_request_ != NULL) knowledge_group_creation_request_->::MsgsClientToSim::MsgKnowledgeGroupCreationRequest::Clear();
+    if (_has_bit(17)) {
+      if (magic_action_ != NULL) magic_action_->::MsgsClientToSim::MsgMagicAction::Clear();
     }
   }
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -6084,25 +3728,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_date_time_change:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_date_time_change()));
-        if (input->ExpectTag(50)) goto parse_control_meteo;
+        if (input->ExpectTag(50)) goto parse_control_checkpoint_save_now;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
+      // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 6;
       case 6: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_control_meteo:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_control_meteo()));
-        if (input->ExpectTag(58)) goto parse_control_checkpoint_save_now;
-        break;
-      }
-      
-      // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
-      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6110,12 +3741,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_checkpoint_save_now:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_checkpoint_save_now()));
-        if (input->ExpectTag(66)) goto parse_control_checkpoint_set_frequency;
+        if (input->ExpectTag(58)) goto parse_control_checkpoint_set_frequency;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
-      case 8: {
+      // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 7;
+      case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6123,12 +3754,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_checkpoint_set_frequency:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_checkpoint_set_frequency()));
-        if (input->ExpectTag(74)) goto parse_control_toggle_vision_cones;
+        if (input->ExpectTag(66)) goto parse_control_toggle_vision_cones;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
-      case 9: {
+      // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 8;
+      case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6136,12 +3767,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_control_toggle_vision_cones:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_control_toggle_vision_cones()));
-        if (input->ExpectTag(82)) goto parse_unit_order;
+        if (input->ExpectTag(74)) goto parse_unit_order;
         break;
       }
       
-      // optional .Common.MsgUnitOrder unit_order = 10;
-      case 10: {
+      // optional .Common.MsgUnitOrder unit_order = 9;
+      case 9: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6149,12 +3780,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_unit_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_unit_order()));
-        if (input->ExpectTag(90)) goto parse_automat_order;
+        if (input->ExpectTag(82)) goto parse_automat_order;
         break;
       }
       
-      // optional .Common.MsgAutomatOrder automat_order = 11;
-      case 11: {
+      // optional .Common.MsgAutomatOrder automat_order = 10;
+      case 10: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6162,12 +3793,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_automat_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_automat_order()));
-        if (input->ExpectTag(98)) goto parse_population_order;
+        if (input->ExpectTag(90)) goto parse_population_order;
         break;
       }
       
-      // optional .Common.MsgPopulationOrder population_order = 12;
-      case 12: {
+      // optional .Common.MsgPopulationOrder population_order = 11;
+      case 11: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6175,12 +3806,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_population_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_population_order()));
-        if (input->ExpectTag(106)) goto parse_frag_order;
+        if (input->ExpectTag(98)) goto parse_frag_order;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
-      case 13: {
+      // optional .MsgsClientToSim.MsgFragOrder frag_order = 12;
+      case 12: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6188,12 +3819,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_frag_order:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_frag_order()));
-        if (input->ExpectTag(114)) goto parse_set_automat_mode;
+        if (input->ExpectTag(106)) goto parse_set_automat_mode;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
-      case 14: {
+      // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 13;
+      case 13: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6201,12 +3832,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_set_automat_mode:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_set_automat_mode()));
-        if (input->ExpectTag(122)) goto parse_unit_creation_request;
+        if (input->ExpectTag(114)) goto parse_unit_creation_request;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
-      case 15: {
+      // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 14;
+      case 14: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6214,12 +3845,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_unit_creation_request:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_unit_creation_request()));
-        if (input->ExpectTag(130)) goto parse_unit_magic_action;
+        if (input->ExpectTag(122)) goto parse_unit_magic_action;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 16;
-      case 16: {
+      // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 15;
+      case 15: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6227,12 +3858,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_unit_magic_action:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_unit_magic_action()));
-        if (input->ExpectTag(138)) goto parse_object_magic_action;
+        if (input->ExpectTag(130)) goto parse_object_magic_action;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 17;
-      case 17: {
+      // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 16;
+      case 16: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6240,25 +3871,12 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_object_magic_action:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_object_magic_action()));
-        if (input->ExpectTag(146)) goto parse_change_diplomacy;
+        if (input->ExpectTag(138)) goto parse_knowledge_magic_action;
         break;
       }
       
-      // optional .Common.MsgChangeDiplomacy change_diplomacy = 18;
-      case 18: {
-        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-          goto handle_uninterpreted;
-        }
-       parse_change_diplomacy:
-        DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_change_diplomacy()));
-        if (input->ExpectTag(154)) goto parse_knowledge_magic_action;
-        break;
-      }
-      
-      // optional .MsgsClientToSim.MsgKnowledgeMagicAction knowledge_magic_action = 19;
-      case 19: {
+      // optional .MsgsClientToSim.MsgKnowledgeMagicAction knowledge_magic_action = 17;
+      case 17: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
@@ -6266,19 +3884,19 @@ bool MsgClientToSim_Content::MergePartialFromCodedStream(
        parse_knowledge_magic_action:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
              input, mutable_knowledge_magic_action()));
-        if (input->ExpectTag(162)) goto parse_knowledge_group_creation_request;
+        if (input->ExpectTag(146)) goto parse_magic_action;
         break;
       }
       
-      // optional .MsgsClientToSim.MsgKnowledgeGroupCreationRequest knowledge_group_creation_request = 20;
-      case 20: {
+      // optional .MsgsClientToSim.MsgMagicAction magic_action = 18;
+      case 18: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) !=
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
           goto handle_uninterpreted;
         }
-       parse_knowledge_group_creation_request:
+       parse_magic_action:
         DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-             input, mutable_knowledge_group_creation_request()));
+             input, mutable_magic_action()));
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -6337,94 +3955,82 @@ void MsgClientToSim_Content::SerializeWithCachedSizes(
       5, this->control_date_time_change(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
+  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 6;
   if (_has_bit(5)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      6, this->control_meteo(), output);
+      6, this->control_checkpoint_save_now(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
+  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 7;
   if (_has_bit(6)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      7, this->control_checkpoint_save_now(), output);
+      7, this->control_checkpoint_set_frequency(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
+  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 8;
   if (_has_bit(7)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      8, this->control_checkpoint_set_frequency(), output);
+      8, this->control_toggle_vision_cones(), output);
   }
   
-  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
+  // optional .Common.MsgUnitOrder unit_order = 9;
   if (_has_bit(8)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      9, this->control_toggle_vision_cones(), output);
+      9, this->unit_order(), output);
   }
   
-  // optional .Common.MsgUnitOrder unit_order = 10;
+  // optional .Common.MsgAutomatOrder automat_order = 10;
   if (_has_bit(9)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      10, this->unit_order(), output);
+      10, this->automat_order(), output);
   }
   
-  // optional .Common.MsgAutomatOrder automat_order = 11;
+  // optional .Common.MsgPopulationOrder population_order = 11;
   if (_has_bit(10)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      11, this->automat_order(), output);
+      11, this->population_order(), output);
   }
   
-  // optional .Common.MsgPopulationOrder population_order = 12;
+  // optional .MsgsClientToSim.MsgFragOrder frag_order = 12;
   if (_has_bit(11)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      12, this->population_order(), output);
+      12, this->frag_order(), output);
   }
   
-  // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
+  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 13;
   if (_has_bit(12)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      13, this->frag_order(), output);
+      13, this->set_automat_mode(), output);
   }
   
-  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
+  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 14;
   if (_has_bit(13)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      14, this->set_automat_mode(), output);
+      14, this->unit_creation_request(), output);
   }
   
-  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
+  // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 15;
   if (_has_bit(14)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      15, this->unit_creation_request(), output);
+      15, this->unit_magic_action(), output);
   }
   
-  // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 16;
+  // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 16;
   if (_has_bit(15)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      16, this->unit_magic_action(), output);
+      16, this->object_magic_action(), output);
   }
   
-  // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 17;
+  // optional .MsgsClientToSim.MsgKnowledgeMagicAction knowledge_magic_action = 17;
   if (_has_bit(16)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      17, this->object_magic_action(), output);
+      17, this->knowledge_magic_action(), output);
   }
   
-  // optional .Common.MsgChangeDiplomacy change_diplomacy = 18;
+  // optional .MsgsClientToSim.MsgMagicAction magic_action = 18;
   if (_has_bit(17)) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      18, this->change_diplomacy(), output);
-  }
-  
-  // optional .MsgsClientToSim.MsgKnowledgeMagicAction knowledge_magic_action = 19;
-  if (_has_bit(18)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      19, this->knowledge_magic_action(), output);
-  }
-  
-  // optional .MsgsClientToSim.MsgKnowledgeGroupCreationRequest knowledge_group_creation_request = 20;
-  if (_has_bit(19)) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageNoVirtual(
-      20, this->knowledge_group_creation_request(), output);
+      18, this->magic_action(), output);
   }
   
   if (!unknown_fields().empty()) {
@@ -6470,109 +4076,95 @@ void MsgClientToSim_Content::SerializeWithCachedSizes(
         5, this->control_date_time_change(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
+  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 6;
   if (_has_bit(5)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        6, this->control_meteo(), target);
+        6, this->control_checkpoint_save_now(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
+  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 7;
   if (_has_bit(6)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        7, this->control_checkpoint_save_now(), target);
+        7, this->control_checkpoint_set_frequency(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
+  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 8;
   if (_has_bit(7)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        8, this->control_checkpoint_set_frequency(), target);
+        8, this->control_toggle_vision_cones(), target);
   }
   
-  // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
+  // optional .Common.MsgUnitOrder unit_order = 9;
   if (_has_bit(8)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        9, this->control_toggle_vision_cones(), target);
+        9, this->unit_order(), target);
   }
   
-  // optional .Common.MsgUnitOrder unit_order = 10;
+  // optional .Common.MsgAutomatOrder automat_order = 10;
   if (_has_bit(9)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        10, this->unit_order(), target);
+        10, this->automat_order(), target);
   }
   
-  // optional .Common.MsgAutomatOrder automat_order = 11;
+  // optional .Common.MsgPopulationOrder population_order = 11;
   if (_has_bit(10)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        11, this->automat_order(), target);
+        11, this->population_order(), target);
   }
   
-  // optional .Common.MsgPopulationOrder population_order = 12;
+  // optional .MsgsClientToSim.MsgFragOrder frag_order = 12;
   if (_has_bit(11)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        12, this->population_order(), target);
+        12, this->frag_order(), target);
   }
   
-  // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
+  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 13;
   if (_has_bit(12)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        13, this->frag_order(), target);
+        13, this->set_automat_mode(), target);
   }
   
-  // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
+  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 14;
   if (_has_bit(13)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        14, this->set_automat_mode(), target);
+        14, this->unit_creation_request(), target);
   }
   
-  // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
+  // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 15;
   if (_has_bit(14)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        15, this->unit_creation_request(), target);
+        15, this->unit_magic_action(), target);
   }
   
-  // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 16;
+  // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 16;
   if (_has_bit(15)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        16, this->unit_magic_action(), target);
+        16, this->object_magic_action(), target);
   }
   
-  // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 17;
+  // optional .MsgsClientToSim.MsgKnowledgeMagicAction knowledge_magic_action = 17;
   if (_has_bit(16)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        17, this->object_magic_action(), target);
+        17, this->knowledge_magic_action(), target);
   }
   
-  // optional .Common.MsgChangeDiplomacy change_diplomacy = 18;
+  // optional .MsgsClientToSim.MsgMagicAction magic_action = 18;
   if (_has_bit(17)) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        18, this->change_diplomacy(), target);
-  }
-  
-  // optional .MsgsClientToSim.MsgKnowledgeMagicAction knowledge_magic_action = 19;
-  if (_has_bit(18)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        19, this->knowledge_magic_action(), target);
-  }
-  
-  // optional .MsgsClientToSim.MsgKnowledgeGroupCreationRequest knowledge_group_creation_request = 20;
-  if (_has_bit(19)) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        20, this->knowledge_group_creation_request(), target);
+        18, this->magic_action(), target);
   }
   
   if (!unknown_fields().empty()) {
@@ -6621,113 +4213,99 @@ int MsgClientToSim_Content::ByteSize() const {
           this->control_date_time_change());
     }
     
-    // optional .MsgsClientToSim.MsgControlMeteo control_meteo = 6;
-    if (has_control_meteo()) {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->control_meteo());
-    }
-    
-    // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 7;
+    // optional .MsgsClientToSim.MsgControlCheckPointSaveNow control_checkpoint_save_now = 6;
     if (has_control_checkpoint_save_now()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->control_checkpoint_save_now());
     }
     
-    // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 8;
+    // optional .MsgsClientToSim.MsgControlCheckPointSetFrequency control_checkpoint_set_frequency = 7;
     if (has_control_checkpoint_set_frequency()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->control_checkpoint_set_frequency());
     }
     
-  }
-  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
-    // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 9;
+    // optional .MsgsClientToSim.MsgControlToggleVisionCones control_toggle_vision_cones = 8;
     if (has_control_toggle_vision_cones()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->control_toggle_vision_cones());
     }
     
-    // optional .Common.MsgUnitOrder unit_order = 10;
+  }
+  if (_has_bits_[8 / 32] & (0xffu << (8 % 32))) {
+    // optional .Common.MsgUnitOrder unit_order = 9;
     if (has_unit_order()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->unit_order());
     }
     
-    // optional .Common.MsgAutomatOrder automat_order = 11;
+    // optional .Common.MsgAutomatOrder automat_order = 10;
     if (has_automat_order()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->automat_order());
     }
     
-    // optional .Common.MsgPopulationOrder population_order = 12;
+    // optional .Common.MsgPopulationOrder population_order = 11;
     if (has_population_order()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->population_order());
     }
     
-    // optional .MsgsClientToSim.MsgFragOrder frag_order = 13;
+    // optional .MsgsClientToSim.MsgFragOrder frag_order = 12;
     if (has_frag_order()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->frag_order());
     }
     
-    // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 14;
+    // optional .MsgsClientToSim.MsgSetAutomatMode set_automat_mode = 13;
     if (has_set_automat_mode()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->set_automat_mode());
     }
     
-    // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 15;
+    // optional .MsgsClientToSim.MsgUnitCreationRequest unit_creation_request = 14;
     if (has_unit_creation_request()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->unit_creation_request());
     }
     
-    // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 16;
+    // optional .MsgsClientToSim.MsgUnitMagicAction unit_magic_action = 15;
     if (has_unit_magic_action()) {
-      total_size += 2 +
+      total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->unit_magic_action());
     }
     
-  }
-  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
-    // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 17;
+    // optional .MsgsClientToSim.MsgObjectMagicAction object_magic_action = 16;
     if (has_object_magic_action()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->object_magic_action());
     }
     
-    // optional .Common.MsgChangeDiplomacy change_diplomacy = 18;
-    if (has_change_diplomacy()) {
-      total_size += 2 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->change_diplomacy());
-    }
-    
-    // optional .MsgsClientToSim.MsgKnowledgeMagicAction knowledge_magic_action = 19;
+  }
+  if (_has_bits_[16 / 32] & (0xffu << (16 % 32))) {
+    // optional .MsgsClientToSim.MsgKnowledgeMagicAction knowledge_magic_action = 17;
     if (has_knowledge_magic_action()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
           this->knowledge_magic_action());
     }
     
-    // optional .MsgsClientToSim.MsgKnowledgeGroupCreationRequest knowledge_group_creation_request = 20;
-    if (has_knowledge_group_creation_request()) {
+    // optional .MsgsClientToSim.MsgMagicAction magic_action = 18;
+    if (has_magic_action()) {
       total_size += 2 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->knowledge_group_creation_request());
+          this->magic_action());
     }
     
   }
@@ -6771,53 +4349,47 @@ void MsgClientToSim_Content::MergeFrom(const MsgClientToSim_Content& from) {
       mutable_control_date_time_change()->::MsgsClientToSim::MsgControlDatetimeChange::MergeFrom(from.control_date_time_change());
     }
     if (from._has_bit(5)) {
-      mutable_control_meteo()->::MsgsClientToSim::MsgControlMeteo::MergeFrom(from.control_meteo());
-    }
-    if (from._has_bit(6)) {
       mutable_control_checkpoint_save_now()->::MsgsClientToSim::MsgControlCheckPointSaveNow::MergeFrom(from.control_checkpoint_save_now());
     }
-    if (from._has_bit(7)) {
+    if (from._has_bit(6)) {
       mutable_control_checkpoint_set_frequency()->::MsgsClientToSim::MsgControlCheckPointSetFrequency::MergeFrom(from.control_checkpoint_set_frequency());
+    }
+    if (from._has_bit(7)) {
+      mutable_control_toggle_vision_cones()->::MsgsClientToSim::MsgControlToggleVisionCones::MergeFrom(from.control_toggle_vision_cones());
     }
   }
   if (from._has_bits_[8 / 32] & (0xffu << (8 % 32))) {
     if (from._has_bit(8)) {
-      mutable_control_toggle_vision_cones()->::MsgsClientToSim::MsgControlToggleVisionCones::MergeFrom(from.control_toggle_vision_cones());
-    }
-    if (from._has_bit(9)) {
       mutable_unit_order()->::Common::MsgUnitOrder::MergeFrom(from.unit_order());
     }
-    if (from._has_bit(10)) {
+    if (from._has_bit(9)) {
       mutable_automat_order()->::Common::MsgAutomatOrder::MergeFrom(from.automat_order());
     }
-    if (from._has_bit(11)) {
+    if (from._has_bit(10)) {
       mutable_population_order()->::Common::MsgPopulationOrder::MergeFrom(from.population_order());
     }
-    if (from._has_bit(12)) {
+    if (from._has_bit(11)) {
       mutable_frag_order()->::MsgsClientToSim::MsgFragOrder::MergeFrom(from.frag_order());
     }
-    if (from._has_bit(13)) {
+    if (from._has_bit(12)) {
       mutable_set_automat_mode()->::MsgsClientToSim::MsgSetAutomatMode::MergeFrom(from.set_automat_mode());
     }
-    if (from._has_bit(14)) {
+    if (from._has_bit(13)) {
       mutable_unit_creation_request()->::MsgsClientToSim::MsgUnitCreationRequest::MergeFrom(from.unit_creation_request());
     }
-    if (from._has_bit(15)) {
+    if (from._has_bit(14)) {
       mutable_unit_magic_action()->::MsgsClientToSim::MsgUnitMagicAction::MergeFrom(from.unit_magic_action());
+    }
+    if (from._has_bit(15)) {
+      mutable_object_magic_action()->::MsgsClientToSim::MsgObjectMagicAction::MergeFrom(from.object_magic_action());
     }
   }
   if (from._has_bits_[16 / 32] & (0xffu << (16 % 32))) {
     if (from._has_bit(16)) {
-      mutable_object_magic_action()->::MsgsClientToSim::MsgObjectMagicAction::MergeFrom(from.object_magic_action());
-    }
-    if (from._has_bit(17)) {
-      mutable_change_diplomacy()->::Common::MsgChangeDiplomacy::MergeFrom(from.change_diplomacy());
-    }
-    if (from._has_bit(18)) {
       mutable_knowledge_magic_action()->::MsgsClientToSim::MsgKnowledgeMagicAction::MergeFrom(from.knowledge_magic_action());
     }
-    if (from._has_bit(19)) {
-      mutable_knowledge_group_creation_request()->::MsgsClientToSim::MsgKnowledgeGroupCreationRequest::MergeFrom(from.knowledge_group_creation_request());
+    if (from._has_bit(17)) {
+      mutable_magic_action()->::MsgsClientToSim::MsgMagicAction::MergeFrom(from.magic_action());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -6842,9 +4414,6 @@ bool MsgClientToSim_Content::IsInitialized() const {
   }
   if (has_control_date_time_change()) {
     if (!this->control_date_time_change().IsInitialized()) return false;
-  }
-  if (has_control_meteo()) {
-    if (!this->control_meteo().IsInitialized()) return false;
   }
   if (has_control_checkpoint_set_frequency()) {
     if (!this->control_checkpoint_set_frequency().IsInitialized()) return false;
@@ -6876,14 +4445,11 @@ bool MsgClientToSim_Content::IsInitialized() const {
   if (has_object_magic_action()) {
     if (!this->object_magic_action().IsInitialized()) return false;
   }
-  if (has_change_diplomacy()) {
-    if (!this->change_diplomacy().IsInitialized()) return false;
-  }
   if (has_knowledge_magic_action()) {
     if (!this->knowledge_magic_action().IsInitialized()) return false;
   }
-  if (has_knowledge_group_creation_request()) {
-    if (!this->knowledge_group_creation_request().IsInitialized()) return false;
+  if (has_magic_action()) {
+    if (!this->magic_action().IsInitialized()) return false;
   }
   return true;
 }
@@ -6895,7 +4461,6 @@ void MsgClientToSim_Content::Swap(MsgClientToSim_Content* other) {
     std::swap(control_resume_, other->control_resume_);
     std::swap(control_change_time_factor_, other->control_change_time_factor_);
     std::swap(control_date_time_change_, other->control_date_time_change_);
-    std::swap(control_meteo_, other->control_meteo_);
     std::swap(control_checkpoint_save_now_, other->control_checkpoint_save_now_);
     std::swap(control_checkpoint_set_frequency_, other->control_checkpoint_set_frequency_);
     std::swap(control_toggle_vision_cones_, other->control_toggle_vision_cones_);
@@ -6907,9 +4472,8 @@ void MsgClientToSim_Content::Swap(MsgClientToSim_Content* other) {
     std::swap(unit_creation_request_, other->unit_creation_request_);
     std::swap(unit_magic_action_, other->unit_magic_action_);
     std::swap(object_magic_action_, other->object_magic_action_);
-    std::swap(change_diplomacy_, other->change_diplomacy_);
     std::swap(knowledge_magic_action_, other->knowledge_magic_action_);
-    std::swap(knowledge_group_creation_request_, other->knowledge_group_creation_request_);
+    std::swap(magic_action_, other->magic_action_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

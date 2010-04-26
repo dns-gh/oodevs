@@ -18,7 +18,7 @@
 
 namespace Common
 {
-    class MsgChangeDiplomacy;
+    class MsgMissionParameters;
 }
 
 namespace xml
@@ -135,7 +135,7 @@ public:
     virtual void SendFullState              () const;
     virtual void SendKnowledge              () const;
 
-    virtual void OnReceiveMsgChangeDiplomacy( const Common::MsgChangeDiplomacy& msg );
+    virtual void OnReceiveMsgChangeDiplomacy( const Common::MsgMissionParameters& msg );
     //@}
 
 private:

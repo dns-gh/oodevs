@@ -6,10 +6,6 @@ message MsgControlDatetimeChange {
    required Common.MsgDateTime date_time = 1;
 }
 
-message MsgControlMeteo {
-   required Common.MsgMissionParameters parametres = 1;
-}
-
 message MsgControlCheckPointSaveNow {
    optional string name = 1;
 }
@@ -78,25 +74,6 @@ message MsgKnowledgeMagicAction {
    required Common.MsgMissionParameters parametres = 3;
 }
 
-message MsgMagicActionCreateObject {
-   required string                     type       = 1;
-   required Common.MsgLocation         location   = 2;
-   required string                     name       = 3;
-   required int32                      team       = 4;
-   required Common.MsgObjectAttributes attributes = 5;
-}
-
-message MsgMagicActionUpdateObject {
-   required int32                      oid        = 1;
-   required Common.MsgObjectAttributes attributes = 2;
-}
-
-message MsgObjectMagicAction_action {
-   optional MsgMagicActionCreateObject create_object  = 1;
-   optional MsgMagicActionUpdateObject update_object  = 2;
-   optional int32                      destroy_object = 3;
-}
-
 message MsgObjectMagicAction {
    enum Type {
         create  = 0;
@@ -127,16 +104,15 @@ message MsgObjectMagicAction {
    required Common.MsgMissionParameters parametres = 3;
 }
 
-message MsgLogSupplyPushFlow {
-   required uint32                    oid_donneur  = 1;
-   required uint32                    oid_receveur = 2;
-   required Common.SeqOfDotationStock stocks       = 3;
-}
-
-message MsgLogSupplyChangeQuotas {
-   required uint32                    oid_donneur  = 1;
-   required uint32                    oid_receveur = 2;
-   required Common.SeqOfDotationQuota quotas       = 3;
+message MsgMagicAction {
+   enum Type {
+        global_meteo           = 0;
+        local_meteo            = 1;
+        change_diplomacy       = 2;
+        create_knowledge_group = 3;
+    }
+   required Type                        type       = 1;
+   required Common.MsgMissionParameters parametres = 2;
 }
 
 message MsgControlCheckPointSetFrequency {
@@ -147,21 +123,6 @@ message MsgControlToggleVisionCones {
    required bool vision_cones = 1;
 }
 
-message MsgKnowledgeGroupCreationRequest {
-   required uint32 oid_camp    = 1;
-   optional uint32 oid_parent  = 2;
-   required string type        = 3;
-}
-
-message MsgKnowledgeGroupUpdateRequest {
-   required uint32 oid        = 1;
-   optional uint32 oid_camp   = 2;
-   optional uint32 oid_parent = 3;
-   optional bool   enabled    = 4;
-   optional string type       = 5;
-}
-
-
 message MsgClientToSim {
     message Content {
        optional Common.MsgControlStop                  control_stop                         = 1;
@@ -169,21 +130,19 @@ message MsgClientToSim {
        optional Common.MsgControlResume                control_resume                       = 3;
        optional Common.MsgControlChangeTimeFactor      control_change_time_factor           = 4;
        optional MsgControlDatetimeChange               control_date_time_change             = 5;
-       optional MsgControlMeteo                        control_meteo                        = 6;
-       optional MsgControlCheckPointSaveNow            control_checkpoint_save_now          = 7;
-       optional MsgControlCheckPointSetFrequency       control_checkpoint_set_frequency     = 8;
-       optional MsgControlToggleVisionCones            control_toggle_vision_cones          = 9;
-       optional Common.MsgUnitOrder                    unit_order                           = 10;
-       optional Common.MsgAutomatOrder                 automat_order                        = 11;
-       optional Common.MsgPopulationOrder              population_order                     = 12;
-       optional MsgFragOrder                           frag_order                           = 13;
-       optional MsgSetAutomatMode                      set_automat_mode                     = 14;
-       optional MsgUnitCreationRequest                 unit_creation_request                = 15;
-       optional MsgUnitMagicAction                     unit_magic_action                    = 16;
-       optional MsgObjectMagicAction                   object_magic_action                  = 17;
-       optional Common.MsgChangeDiplomacy              change_diplomacy                     = 18;
-       optional MsgKnowledgeMagicAction                knowledge_magic_action               = 19;
-       optional MsgKnowledgeGroupCreationRequest       knowledge_group_creation_request     = 20;
+       optional MsgControlCheckPointSaveNow            control_checkpoint_save_now          = 6;
+       optional MsgControlCheckPointSetFrequency       control_checkpoint_set_frequency     = 7;
+       optional MsgControlToggleVisionCones            control_toggle_vision_cones          = 8;
+       optional Common.MsgUnitOrder                    unit_order                           = 9;
+       optional Common.MsgAutomatOrder                 automat_order                        = 10;
+       optional Common.MsgPopulationOrder              population_order                     = 11;
+       optional MsgFragOrder                           frag_order                           = 12;
+       optional MsgSetAutomatMode                      set_automat_mode                     = 13;
+       optional MsgUnitCreationRequest                 unit_creation_request                = 14;
+       optional MsgUnitMagicAction                     unit_magic_action                    = 15;
+       optional MsgObjectMagicAction                   object_magic_action                  = 16;
+       optional MsgKnowledgeMagicAction                knowledge_magic_action               = 17;
+       optional MsgMagicAction                         magic_action                         = 18;
     }
     optional int32   context = 1 [default = 0];
     required Content message = 2;
