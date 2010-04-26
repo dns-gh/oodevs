@@ -807,7 +807,7 @@
       <parameter dia-name="entities" name="entities" optional="false" type="AgentKnowledgeListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiter" id="2014" name="ObserveAndReconnoiterPoint">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PointBM"/>
+      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveAndReconnoiter" dia-type="T_Mission_Pion_ObserveAndReconnoiterUrbanBlock" id="2015" name="ObserveAndReconnoiterUrbanBlock">
       <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
@@ -871,29 +871,29 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Bypass" dia-type="T_Mission_Pion_Bypass" id="2038" name="Bypass">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.OpenPath" dia-type="T_Mission_Pion_OpenPath" id="2047" name="OpenPath">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveAlong" dia-type="T_Mission_Pion_MoveAlong" id="2046" name="MoveAlong">
-      <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveObserveReconnoiter" dia-type="T_Mission_Pion_MoveObserveReconnoiter" id="2039" name="MoveObserveReconnoiter">
       <parameter dia-name="objectives" name="destination" optional="false" type="PointListBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ReconnoiterPath" dia-type="T_Mission_Pion_ReconnoiterPath" id="2040" name="ReconnoiterPath">
       <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
     </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.ReconnoiterPath" dia-type="T_Mission_Pion_ReconnoiterUrbanBlock" id="2044" name="ReconnoiterUrbanBlock">
-      <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
-    </mission>
-    <mission dia-behavior="net.masagroup.testSword.military.tasks.ReconnoiterPath" dia-type="T_Mission_Pion_ReconnoiterPointBM" id="2043" name="ReconnoiterPoint">
-      <parameter dia-name="objectives" name="destination" optional="false" type="PointBM"/>
-    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveTowardCrossroad" dia-type="T_Mission_Pion_MoveOnPath" id="2041" name="MoveOnPath">
       <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Reconnoiter" dia-type="T_Mission_Pion_ReconnoiterPointBM" id="2043" name="ReconnoiterPoint">
+      <parameter dia-name="objectives" name="objectif" optional="false" type="PointBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ReconnoiterPath" dia-type="T_Mission_Pion_ReconnoiterUrbanBlock" id="2044" name="ReconnoiterUrbanBlock">
+      <parameter dia-name="objectives" name="destination" optional="false" type="UrbanBlockBM"/>
+    </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.RemoveObstacle" dia-type="T_Mission_Pion_RemoveObstacle" id="2045" name="RemoveObstacle">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.MoveAlong" dia-type="T_Mission_Pion_MoveAlong" id="2046" name="MoveAlong">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PathBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.OpenPath" dia-type="T_Mission_Pion_OpenPath" id="2047" name="OpenPath">
+      <parameter dia-name="objectives" name="destination" optional="false" type="PathBM"/>
     </mission>
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="Animate">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
