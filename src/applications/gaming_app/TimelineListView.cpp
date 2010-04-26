@@ -76,19 +76,21 @@ TimelineListView::~TimelineListView()
 // -----------------------------------------------------------------------------
 void TimelineListView::NotifyCreated( const Action_ABC& action )
 {
+    const kernel::Entity_ABC* entity = 0;
+    QString name;
     const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
     if( actionWithTarget )
     {
-        const kernel::Entity_ABC& entity = actionWithTarget->GetEntity();
-        gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() );
-        if( !item )
-            item = new TimeLineEntityListItem( this, lastItem() );
-        item->Set( &entity, QString::number( item->text( 0 ).toInt() + 1 ), entity.GetName() );
+        entity = &actionWithTarget->GetEntity();
+        name = entity->GetName();
     }
     else
-    {
-        // $$$$ JSR 2010-04-07: TODO
-    }
+        name = "Magic";
+
+    gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
+    if( !item )
+        item = new TimeLineEntityListItem( this, lastItem() );
+    item->Set( entity, QString::number( item->text( 0 ).toInt() + 1 ), name );
 }
 
 // -----------------------------------------------------------------------------
@@ -97,22 +99,18 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineListView::NotifyDeleted( const Action_ABC& action )
 {
+    const kernel::Entity_ABC* entity = 0;
     const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
     if( actionWithTarget )
+        entity = &actionWithTarget->GetEntity();
+
+    if( gui::ValuedListItem* item = gui::FindItem( entity, firstChild() ) )
     {
-        const kernel::Entity_ABC& entity = actionWithTarget->GetEntity();
-        if( gui::ValuedListItem* item = gui::FindItem( &entity, firstChild() ) )
-        {
-            const int actions = item->text( 0 ).toInt();
-            if( actions == 1 )
-                delete item;
-            else
-                item->setText( 0, QString::number( actions - 1 ) );
-        }
-    }
-    else
-    {
-        // $$$$ JSR 2010-04-07: TODO
+        const int actions = item->text( 0 ).toInt();
+        if( actions == 1 )
+            delete item;
+        else
+            item->setText( 0, QString::number( actions - 1 ) );
     }
 }
 

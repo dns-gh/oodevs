@@ -67,21 +67,17 @@ TimelineView::~TimelineView()
 void TimelineView::NotifyCreated( const Action_ABC& action )
 {
     const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
+    const kernel::Entity_ABC* entity = 0;
     if( actionWithTarget )
+        entity = &actionWithTarget->GetEntity();
+
+    T_Entities::iterator it = std::find( entities_.begin(), entities_.end(), entity );
+    if( it == entities_.end() )
     {
-        const kernel::Entity_ABC* entity = &actionWithTarget->GetEntity();
-        T_Entities::iterator it = std::find( entities_.begin(), entities_.end(), entity );
-        if( it == entities_.end() )
-        {
-            entities_.push_back( entity );
-            canvas()->resize( canvas()->width(), canvas()->height() + rowHeight_ );
-        }
-        actions_[ entity ][ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action, actionPalette_ );
+        entities_.push_back( entity );
+        canvas()->resize( canvas()->width(), canvas()->height() + rowHeight_ );
     }
-    else
-    {
-        // $$$$ JSR 2010-04-07: TODO
-    }
+    actions_[ entity ][ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action, actionPalette_ );
 
     Update();
 }
@@ -92,27 +88,24 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyDeleted( const Action_ABC& action )
 {
+    const kernel::Entity_ABC* entity = 0;
     const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
     if( actionWithTarget )
+        entity = &actionWithTarget->GetEntity();
+
+    T_EntityActions::iterator it = actions_.find( entity );
+    if( it != actions_.end() )
     {
-        T_EntityActions::iterator it = actions_.find( &actionWithTarget->GetEntity() );
-        if( it != actions_.end() )
+        T_Actions::iterator itAction = it->second.find( &action );
+        if( itAction != it->second.end() )
         {
-            T_Actions::iterator itAction = it->second.find( &action );
-            if( itAction != it->second.end() )
-            {
-                if( itAction->second == selectedItem_ )
-                    ClearSelection();
-                delete itAction->second;
-                it->second.erase( itAction );
-                if( it->second.empty() )
-                    NotifyDeleted( *it->first );
-            }
+            if( itAction->second == selectedItem_ )
+                ClearSelection();
+            delete itAction->second;
+            it->second.erase( itAction );
+            if( it->second.empty() )
+                NotifyDeleted( *it->first );
         }
-    }
-    else
-    {
-        // $$$$ JSR 2010-04-07: TODO
     }
 }
 
