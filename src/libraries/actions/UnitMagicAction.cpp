@@ -94,7 +94,6 @@ void UnitMagicAction::Publish( Publisher_ABC& publisher ) const
     message().set_type( type );
     CommitTo( *message().mutable_parametres() );
     message.Send( publisher );
-    // $$$$ JSR 2010-04-13: TODO Rajouter dans le type un indicateur pour l'update pour rendre la ligne ci-dessous générique
     if( type == MsgsClientToSim::MsgUnitMagicAction_Type_move_to )
         const_cast< kernel::Entity_ABC& >( GetEntity() ).Update( message() );
     message().Clear();

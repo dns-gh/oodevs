@@ -37,7 +37,6 @@ namespace kernel
     class Object_ABC;
 }
 
-class ActionPublisher;
 class Simulation;
 class StaticModel;
 
@@ -56,7 +55,7 @@ class ObjectMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             ObjectMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~ObjectMagicOrdersInterface();
     //@}
 
@@ -93,7 +92,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const Simulation& simulation_;

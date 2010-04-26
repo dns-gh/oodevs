@@ -57,7 +57,6 @@ class LoginDialog;
 class Publisher_ABC;
 class LoggerProxy;
 class Simulation;
-class ActionPublisher;
 
 // =============================================================================
 /** @class  MainWindow
@@ -113,7 +112,7 @@ private:
 
    void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
        gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
-        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, ActionPublisher& actionPublisher, const Simulation& simulation );
+        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation );
 
     //! @name Copy/Assignment
     //@{

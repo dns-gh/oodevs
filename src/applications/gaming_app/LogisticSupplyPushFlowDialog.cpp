@@ -13,7 +13,6 @@
 #include "actions/UnitMagicAction.h"
 #include "actions/ParameterList.h"
 #include "actions/Automat.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/Dotation.h"
 #include "gaming/StaticModel.h"
@@ -38,10 +37,9 @@ using namespace parameters;
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
     : QDialog( parent, tr( "Push supply flow" ) )
     , controllers_( controllers )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation)
@@ -187,7 +185,7 @@ void LogisticSupplyPushFlowDialog::Validate()
     }
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
 
     hide();
 }

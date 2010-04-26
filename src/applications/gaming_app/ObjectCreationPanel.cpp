@@ -20,10 +20,9 @@
 // Name: ObjectCreationPanel constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
+ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
 : gui::InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -50,7 +49,7 @@ ObjectCreationPanel::~ObjectCreationPanel()
 // -----------------------------------------------------------------------------
 void ObjectCreationPanel::Commit()
 {
-    created_->Commit( actionPublisher_, actionsModel_, simulation_ );
+    created_->Commit( actionsModel_, simulation_ );
 }
 
 // -----------------------------------------------------------------------------

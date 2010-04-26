@@ -26,7 +26,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
 
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "gaming/tools.h"
@@ -75,10 +74,9 @@ namespace
 // Name: PopulationMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ParametersLayer& layer, const Profile_ABC& profile )
+PopulationMagicOrdersInterface::PopulationMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, ParametersLayer& layer, const Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -137,7 +135,7 @@ void PopulationMagicOrdersInterface::Handle( Location_ABC& location )
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Point( it.NextElement(), static_.coordinateConverter_, location ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+            action->RegisterAndPublish( actionsModel_ );
         }
     }
     controllers_.Unregister( *magicMoveLocation_ );
@@ -168,7 +166,7 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "population_total_destruction" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_ );
     }
 }
 
@@ -186,7 +184,7 @@ void PopulationMagicOrdersInterface::KillSomePopulation()
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+            action->RegisterAndPublish( actionsModel_ );
         }
 }
 
@@ -204,7 +202,7 @@ void PopulationMagicOrdersInterface::ResurectSomePopulation()
             tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
             action->AddParameter( *new parameters::Quantity( it.NextElement(), editor->text().toInt() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+            action->RegisterAndPublish( actionsModel_ );
         }
 }
 
@@ -225,7 +223,7 @@ void PopulationMagicOrdersInterface::ChangePopulationAttitude( int index )
         // optional int32 concentration
         // optional bool global
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_ );
     }
 }
 

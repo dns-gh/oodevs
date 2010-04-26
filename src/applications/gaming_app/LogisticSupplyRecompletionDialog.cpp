@@ -20,7 +20,6 @@
 #include "gaming/SupplyStates.h"
 #include "gaming/Troops.h"
 #include "gaming/tools.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -90,11 +89,10 @@ private:
 // Name: LogisticSupplyRecompletionDialog constructor
 // Created: SBO 2005-07-27
 // -----------------------------------------------------------------------------
-LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
+LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* parent, Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
     : QDialog( parent, tr( "Recompletion" ) )
     , controllers_( controllers )
     , static_( staticModel )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , simulation_( simulation )
     , profile_( profile )
@@ -562,7 +560,7 @@ void LogisticSupplyRecompletionDialog::Validate()
     FillSupplies( *stocks );
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
 
     selected_ = 0;
     hide();

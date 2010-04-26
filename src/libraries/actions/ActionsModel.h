@@ -45,7 +45,7 @@ class ActionsModel : public tools::Resolver< Action_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionsModel( ActionFactory_ABC& factory );
+    explicit ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher );
     virtual ~ActionsModel();
     //@}
 
@@ -57,7 +57,7 @@ public:
     void Purge();
     void Load( const std::string& filename );
     void Save( const std::string& filename ) const;
-    void Publish( const Action_ABC& action, Publisher_ABC& publisher );
+    void Publish( const Action_ABC& action );
 
     bool IsRecording() const;
     void EnableRecording( bool enabled );
@@ -79,6 +79,7 @@ private:
     //! @name Member data
     //@{
     ActionFactory_ABC& factory_;
+    Publisher_ABC& publisher_;
     bool isRecording_;
     unsigned long recordingStartTime_;
     //@}

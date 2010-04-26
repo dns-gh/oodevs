@@ -22,7 +22,6 @@ namespace actions
     }
 }
 
-class ActionPublisher;
 class Simulation;
 class StaticModel;
 
@@ -44,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    void Commit( ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation );
+    void Commit( actions::ActionsModel& actionsModel, const Simulation& simulation );
     //@}
 
 private:

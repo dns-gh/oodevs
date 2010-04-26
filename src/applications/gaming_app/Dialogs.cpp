@@ -25,15 +25,15 @@ using namespace kernel;
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config )
+Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const Model& model, const StaticModel& staticModel, Publisher_ABC& publisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const kernel::Profile_ABC& profile, CommandHandler& handler, const tools::ExerciseConfig& config )
     : QObject( parent )
 {
-    new ChangeDiplomacyDialog( parent, controllers, actionPublisher, actionsModel, staticModel, simulation, profile );
-    new ChangeLogisticLinksDialog( parent, controllers, actionPublisher, actionsModel, staticModel, simulation, profile  );
-    new LogisticSupplyChangeQuotasDialog( parent, controllers, actionPublisher, actionsModel, staticModel, simulation, model, profile  );
-    new LogisticSupplyPushFlowDialog( parent, controllers, actionPublisher, actionsModel, staticModel, simulation, model.agents_, profile  );
-    new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionPublisher, actionsModel, simulation, profile );
-    new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionPublisher, actionsModel, simulation, profile );
+    new ChangeDiplomacyDialog( parent, controllers, actionsModel, staticModel, simulation, profile );
+    new ChangeLogisticLinksDialog( parent, controllers, actionsModel, staticModel, simulation, profile  );
+    new LogisticSupplyChangeQuotasDialog( parent, controllers, actionsModel, staticModel, simulation, model, profile  );
+    new LogisticSupplyPushFlowDialog( parent, controllers, actionsModel, staticModel, simulation, model.agents_, profile  );
+    new LogisticSupplyRecompletionDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
+    new ChangeHumanFactorsDialog( parent, controllers, staticModel, actionsModel, simulation, profile );
     new BriefingDialog( parent, controllers, publisher, handler, config );
 }
 

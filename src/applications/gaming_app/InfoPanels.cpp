@@ -25,13 +25,13 @@ using namespace gui;
 // Name: InfoPanels constructor
 // Created: SBO 2006-08-08
 // -----------------------------------------------------------------------------
-InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation  )
+InfoPanels::InfoPanels( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation  )
     : Panels( parent )
 {
     AddPanel( new AgentKnowledgePanel     ( this, *this, controllers, factory ) );
     AddPanel( new PopulationPanel         ( this, *this, controllers, factory ) );
     AddPanel( new PopulationKnowledgePanel( this, *this, controllers, factory ) );
-    AddPanel( new ::ObjectPanel           ( this, *this, controllers, factory, actionPublisher, actionsModel, staticModel, simulation ) );
+    AddPanel( new ::ObjectPanel           ( this, *this, controllers, factory, actionsModel, staticModel, simulation ) );
     AddPanel( new ObjectReportPanel       ( this, *this, controllers, factory ) );
     AddPanel( new ObjectKnowledgePanel    ( this, *this, controllers, factory ) );
     AddPanel( new UrbanKnowledgePanel     ( this, *this, controllers, factory ) );

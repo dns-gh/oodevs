@@ -21,7 +21,6 @@
 #include "clients_gui/SpinBoxDisplayer.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/simulationsenders.h"
@@ -36,9 +35,8 @@ typedef gui::ObjectPanel MyParent;
 // Name: ObjectPanel constructor
 // Created: AGE 2006-09-08
 // -----------------------------------------------------------------------------
-ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
+ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
     : MyParent( parent, panel, controllers, factory )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -165,7 +163,7 @@ void ObjectPanel::OnApply()
         bypassList.AddQuantity( "Percentage", contournement_->GetValue() );
 
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_ );
     }
 }
 

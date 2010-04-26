@@ -13,7 +13,6 @@
 #include "actions/Automat.h"
 #include "actions/Formation.h"
 #include "actions/UnitMagicAction.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
@@ -33,9 +32,8 @@ using namespace kernel;
 // Name: TacticalListView constructor
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -137,7 +135,7 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
     return true;
 }
 
@@ -155,7 +153,7 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Auto
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
     return true;
 }
 
@@ -173,6 +171,6 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Form
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Formation( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
     return true;
 }

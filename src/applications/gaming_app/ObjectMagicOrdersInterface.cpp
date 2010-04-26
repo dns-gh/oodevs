@@ -18,7 +18,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/Object.h"
 #include "gaming/StaticModel.h"
@@ -33,10 +32,9 @@ using namespace parameters;
 // Name: ObjectMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-ObjectMagicOrdersInterface::ObjectMagicOrdersInterface( QWidget* parent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Profile_ABC& profile )
+ObjectMagicOrdersInterface::ObjectMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -98,7 +96,7 @@ void ObjectMagicOrdersInterface::SendObjectMagic( ParameterList& attribute )
         action->AddParameter( *attributesList );
         attributesList->AddParameter( attribute );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_ );
     }
 }
 

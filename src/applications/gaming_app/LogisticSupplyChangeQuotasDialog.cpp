@@ -13,7 +13,6 @@
 #include "actions/UnitMagicAction.h"
 #include "actions/ParameterList.h"
 #include "actions/Automat.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/Dotation.h"
@@ -42,10 +41,9 @@ using namespace parameters;
 // Name: LogisticSupplyChangeQuotasDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Model& model, const Profile_ABC& profile )
+LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Model& model, const Profile_ABC& profile )
     : QDialog( parent, tr( "Supply quotas allocation" ) )
     , controllers_( controllers )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation)
@@ -187,7 +185,7 @@ void LogisticSupplyChangeQuotasDialog::Validate()
     }
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
 
     hide();
 }

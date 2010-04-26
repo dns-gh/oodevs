@@ -39,7 +39,6 @@ namespace actions
 
 class StaticModel;
 class WeatherWidget;
-class ActionPublisher;
 class Simulation;
 
 // =============================================================================
@@ -57,7 +56,7 @@ class WeatherCreationPanel : public gui::InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
+    WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools );
     virtual ~WeatherCreationPanel();
     //@}
 
@@ -97,7 +96,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ParametersLayer& layer_;
-    ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& model_;
     const Simulation& simulation_;

@@ -27,7 +27,6 @@ namespace actions
     class ActionsModel;
 }
 
-class ActionPublisher;
 class StaticModel;
 class Simulation;
 
@@ -48,7 +47,7 @@ class ChangeLogisticLinksDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
+             ChangeLogisticLinksDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile );
     virtual ~ChangeLogisticLinksDialog();
     //@}
 
@@ -78,7 +77,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const Simulation& simulation_;

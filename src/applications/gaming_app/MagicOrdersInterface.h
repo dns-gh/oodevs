@@ -26,9 +26,6 @@ namespace actions
     class ActionsModel;
 }
 
-class Publisher_ABC;
-class ActionPublisher;
-
 class StaticModel;
 class Simulation;
 
@@ -44,7 +41,7 @@ class MagicOrdersInterface
 public:
     //! @name Constructors/Destructor
     //@{
-             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             MagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
     virtual ~MagicOrdersInterface();
     //@}
 

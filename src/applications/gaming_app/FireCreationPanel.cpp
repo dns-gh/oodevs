@@ -22,7 +22,6 @@
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
@@ -35,13 +34,11 @@ using namespace actions;
 // Name: FireCreationPanel constructor
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------
-FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers,
-                                      ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel,
-                                      const Simulation& simulation, const StaticModel& staticModel )
+FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
+                                    , actions::ActionsModel& actionsModel, const Simulation& simulation, const StaticModel& staticModel )
 : gui::InfoPanel_ABC( parent, panel, tr( "Fire" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , simulation_( simulation ) 
     , potentialTarget_( 0 )
@@ -106,7 +103,7 @@ void FireCreationPanel::Commit()
     action->AddParameter( *new parameters::DotationType( it.NextElement(), ammunitionsBox_->GetValue(), staticModel_.objectTypes_ ) );
     action->AddParameter( *new parameters::Numeric( it.NextElement(), interventionType_->text().toFloat() ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
 }
 
 // -----------------------------------------------------------------------------

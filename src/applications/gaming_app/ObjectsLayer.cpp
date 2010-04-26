@@ -13,7 +13,6 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Object_ABC.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/simulationsenders.h"
@@ -27,9 +26,8 @@ using namespace actions;
 // Name: ObjectsLayer constructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
+ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation )
     : gui::ObjectsLayer( controllers, tools, strategy, view, profile )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -58,7 +56,7 @@ bool ObjectsLayer::HandleKeyPress( QKeyEvent* key )
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "destroy_object" );
         ObjectMagicAction* action = new ObjectMagicAction( selected_, actionType, controllers_.controller_, true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_ );
 
         return true;
     }

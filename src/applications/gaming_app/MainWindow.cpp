@@ -67,7 +67,6 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/OptionVariant.h"
 
-#include "gaming/ActionPublisher.h"
 #include "gaming/AgentServerMsgMgr.h"
 #include "gaming/Model.h"
 #include "gaming/Network.h"
@@ -161,11 +160,9 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 
     Publisher_ABC& publisher = network_.GetMessageMgr();
 
-    ActionPublisher& actionPublisher = *new ActionPublisher( publisher, controllers_ );
-
     lighting_ = new SimulationLighting( controllers, this );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_ );
-    new Dialogs( this, controllers, model_, staticModel, publisher, actionPublisher, model_.actions_, simulation, profile, network.GetCommands(), config );
+    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, profile, network.GetCommands(), config );
     new VisionConesToggler( controllers, publisher, this );
 
     glProxy_ = new GlProxy();
@@ -212,7 +209,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
     ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer ) );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile );
-    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, actionPublisher, model_.actions_, staticModel_, simulation );
+    ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *agentsLayer, model_.actions_, staticModel_, simulation );
 
     // Agent list panel
     QDockWindow* pListDockWnd_ = new QDockWindow( this, "orbat" );
@@ -226,8 +223,8 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     EntitySymbols* icons = new EntitySymbols( *symbols, *strategy_ );
     UserProfileDialog* profileDialog = new UserProfileDialog( this, controllers, *factory, profile, *icons, model_.userProfileFactory_ );
 
-    pListsTabWidget->addTab( new TacticalList    ( controllers, actionPublisher, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
-    pListsTabWidget->addTab( new AgentList       ( controllers, actionPublisher, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
+    pListsTabWidget->addTab( new TacticalList    ( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Tactical" ) );
+    pListsTabWidget->addTab( new AgentList       ( controllers, model_.actions_, staticModel, simulation, *factory, profile, *icons ), tr( "Communication" ) );
     pListsTabWidget->addTab( new ObjectList      ( controllers, *factory, profile ),                    tr( "Objects" ) );
     pListsTabWidget->addTab( new PopulationList  ( controllers, *factory, profile ),                    tr( "Populations" ) );
     pListsTabWidget->addTab( new IntelligenceList( controllers, *factory, *icons, profile ),            tr( "Intelligences" ) );
@@ -256,7 +253,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     // Info panel
     QDockWindow* pInfoDockWnd_ = new QDockWindow( this, "oldinfo" );
     moveDockWindow( pInfoDockWnd_, Qt::DockRight );
-    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory, actionPublisher, model_.actions_, staticModel_, simulation );
+    InfoPanels* pInfoPanel_ = new InfoPanels( pInfoDockWnd_, controllers, *factory, model_.actions_, staticModel_, simulation );
     pInfoDockWnd_->setWidget( pInfoPanel_ );
     pInfoDockWnd_->setResizeEnabled( true );
     pInfoDockWnd_->setCloseMode( QDockWindow::Always );
@@ -265,7 +262,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     pInfoDockWnd_->hide();
 
      // Mission panel
-    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, actionPublisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
+    MissionPanel* pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
     moveDockWindow( pMissionPanel_, Qt::DockLeft );
     setDockEnabled( pMissionPanel_, Qt::DockTop, false );
     setAppropriate( pMissionPanel_, false );
@@ -305,14 +302,14 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     QDockWindow* pCreationWnd = new QDockWindow( this, "creation" );
     moveDockWindow( pCreationWnd, Qt::DockRight );
     pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, actionPublisher, model_.actions_, simulation, *paramLayer, *glProxy_, *symbols, *strategy_, model_.drawings_ );
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *paramLayer, *glProxy_, *symbols, *strategy_, model_.drawings_ );
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setResizeEnabled( true );
     pCreationWnd->setCloseMode( QDockWindow::Always );
     pCreationWnd->setCaption( tr( "Creation" ) );
     setDockEnabled( pCreationWnd, Qt::DockTop, false );
 
-    new MagicOrdersInterface( this, controllers_, publisher, actionPublisher, model_.actions_, staticModel_, simulation, *paramLayer, profile );
+    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *paramLayer, profile );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     FolkToolbar* folkToolbar = new FolkToolbar( this, controllers, model.folk_ );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
@@ -365,7 +362,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     gui::TerrainLayer* terrainLayer = new TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
     gui::Layer_ABC* meteoLayer = new ::WeatherLayer( controllers_, *glProxy_, *picker, model_.meteo_ );
     
-    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, * meteoLayer,   *profilerLayer, *prefDialog, profile, actionPublisher, simulation );
+    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *terrainLayer, * meteoLayer,   *profilerLayer, *prefDialog, profile, simulation );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
@@ -387,7 +384,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
 void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locationsLayer, gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::TerrainLayer& terrain,
-                              gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, ActionPublisher& actionPublisher, const Simulation& simulation )
+                              gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer, PreferencesDialog& preferences, const Profile_ABC& profile, const Simulation& simulation )
 {
 
 
@@ -403,7 +400,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& metrics              = *new MetricsLayer( controllers_, staticModel_.detection_, *glProxy_ );
     Layer_ABC& intelligences        = *new ::IntelligencesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.intelligenceFactory_ );
     Layer_ABC& limits               = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, model_.tacticalLineFactory_, *glProxy_, profile );
-    Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, actionPublisher, model_.actions_, staticModel_, simulation );
+    Layer_ABC& objectsLayer         = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation );
     Layer_ABC& populations          = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& agentKnowledges      = *new AgentKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& populationKnowledges = *new PopulationKnowledgesLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );

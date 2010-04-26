@@ -28,7 +28,6 @@ namespace actions
     class ActionsModel;
 }
 
-class ActionPublisher;
 class Dotation;
 class Model;
 class StaticModel;
@@ -49,7 +48,7 @@ class LogisticSupplyChangeQuotasDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticSupplyChangeQuotasDialog( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Model& model, const kernel::Profile_ABC& profile );
+             LogisticSupplyChangeQuotasDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Model& model, const kernel::Profile_ABC& profile );
     virtual ~LogisticSupplyChangeQuotasDialog();
     //@}
 
@@ -90,7 +89,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const Simulation& simulation_;

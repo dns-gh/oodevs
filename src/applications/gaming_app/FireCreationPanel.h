@@ -34,7 +34,6 @@ namespace actions
     class ActionsModel;
 }
 
-class ActionPublisher;
 class StaticModel;
 class Simulation;
 
@@ -56,7 +55,7 @@ public:
     //! @name Constructors/Destructor
     //@{    
              FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
-                                , ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const StaticModel& staticModel );
+                                , actions::ActionsModel& actionsModel, const Simulation& simulation, const StaticModel& staticModel );
     virtual ~FireCreationPanel();
     //@}
 
@@ -91,7 +90,6 @@ private:
     //@{
     const StaticModel& staticModel_;
     kernel::Controllers& controllers_;
-    ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const Simulation& simulation_;
 

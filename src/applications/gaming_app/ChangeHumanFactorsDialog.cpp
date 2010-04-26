@@ -14,7 +14,6 @@
 #include "actions/Enumeration.h"
 #include "gaming/HumanFactors.h"
 #include "gaming/tools.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -47,11 +46,10 @@ namespace
 // Name: ChangeHumanFactorsDialog constructor
 // Created: AGE 2005-09-22
 // -----------------------------------------------------------------------------
-ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, const StaticModel& staticModel, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation, const Profile_ABC& profile )
+ChangeHumanFactorsDialog::ChangeHumanFactorsDialog( QWidget* pParent, Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel, const Simulation& simulation, const Profile_ABC& profile )
     : QDialog( pParent, tr( "Human factors" ) )
     , controllers_( controllers )
     , static_( staticModel )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , simulation_( simulation )
     , profile_( profile )
@@ -186,7 +184,7 @@ void ChangeHumanFactorsDialog::SendAction( const kernel::Entity_ABC& entity, Enu
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) moral ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ( unsigned int ) experience ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
 }
 
 // -----------------------------------------------------------------------------

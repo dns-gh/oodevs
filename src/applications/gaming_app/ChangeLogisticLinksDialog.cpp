@@ -13,7 +13,6 @@
 #include "gaming/LogisticLinks.h"
 #include "actions/Identifier.h"
 #include "actions/UnitMagicAction.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "clients_kernel/AgentTypes.h"
@@ -34,10 +33,9 @@ using namespace gui;
 // Name: ChangeLogisticLinksDialog constructor
 // Created: SBO 2006-06-30
 // -----------------------------------------------------------------------------
-ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
+ChangeLogisticLinksDialog::ChangeLogisticLinksDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
     : QDialog( parent )
     , controllers_( controllers )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation)
@@ -197,7 +195,7 @@ void ChangeLogisticLinksDialog::Validate()
         action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *medicalCombo_ ) ) );
         action->AddParameter( *new parameters::Identifier( it.NextElement(), GetId( *supplyCombo_ ) ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_ );
     }
     Reject();
 }

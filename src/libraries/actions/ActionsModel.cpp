@@ -21,8 +21,9 @@ using namespace actions;
 // Name: ActionsModel constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionsModel::ActionsModel( ActionFactory_ABC& factory )
+ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher )
     : factory_( factory )
+    , publisher_( publisher )
     , isRecording_( false )
     , recordingStartTime_( 0 )
 {
@@ -134,9 +135,9 @@ void ActionsModel::Save( const std::string& filename ) const
 // Name: ActionsModel::Publish
 // Created: JSR 2010-04-07
 // -----------------------------------------------------------------------------
-void ActionsModel::Publish( const Action_ABC& action, Publisher_ABC& publisher )
+void ActionsModel::Publish( const Action_ABC& action )
 {
-    action.Publish( publisher );
+    action.Publish( publisher_ );
     if( ! IsRecording() )
         Destroy( action );
 }

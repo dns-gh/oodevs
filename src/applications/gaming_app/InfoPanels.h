@@ -27,7 +27,6 @@ namespace gui
     class ItemFactory_ABC;
 }
 
-class ActionPublisher;
 class Publisher_ABC;
 class Simulation;
 class StaticModel;
@@ -43,7 +42,7 @@ class InfoPanels : public gui::Panels
 public:
     //! @name Constructors/Destructor
     //@{
-             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
+             InfoPanels( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
     virtual ~InfoPanels();
     //@}
 

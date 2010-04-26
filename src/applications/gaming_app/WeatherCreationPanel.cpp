@@ -20,7 +20,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ParametersLayer.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/StaticModel.h"
 #include "gaming/ActionTiming.h"
 #include "protocol/SimulationSenders.h"
@@ -34,11 +33,10 @@ using namespace parameters;
 // Name: WeatherCreationPanel constructor
 // Created: SLG 2010-03-24
 // -----------------------------------------------------------------------------
-WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
+WeatherCreationPanel::WeatherCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& model, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
     : gui::InfoPanel_ABC( parent, panel, tr( "Weathers" ), "WeatherCreationPanel" )
     , controllers_      ( controllers )
     , layer_            ( layer )
-    , actionPublisher_  ( actionPublisher )
     , actionsModel_     ( actionsModel )
     , model_            ( model )
     , simulation_       ( simulation )
@@ -131,7 +129,7 @@ void WeatherCreationPanel::Commit()
             action->AddParameter( *new Location( it.NextElement(), model_.coordinateConverter_ , *location_ ) );
         }
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-        action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+        action->RegisterAndPublish( actionsModel_ );
         Reset();
     }
 }

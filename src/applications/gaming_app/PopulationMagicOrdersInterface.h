@@ -35,7 +35,6 @@ namespace gui
 }
 
 class StaticModel;
-class ActionPublisher;
 class Simulation;
 
 // =============================================================================
@@ -54,7 +53,7 @@ class PopulationMagicOrdersInterface : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
+             PopulationMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile );
     virtual ~PopulationMagicOrdersInterface();
     //@}
 
@@ -91,7 +90,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const Simulation& simulation_; 

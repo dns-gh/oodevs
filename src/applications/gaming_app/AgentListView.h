@@ -28,7 +28,6 @@ namespace actions
     class ActionsModel;
 }
 
-class ActionPublisher;
 class AutomatDecisions;
 class Simulation;
 class StaticModel;
@@ -48,7 +47,7 @@ class AgentListView : public gui::HierarchyListView< kernel::CommunicationHierar
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentListView( QWidget* pParent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
+             AgentListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons );
     virtual ~AgentListView();
     //@}
 
@@ -76,7 +75,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const Simulation& simulation_;

@@ -18,7 +18,6 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/simulationsenders.h"
@@ -30,9 +29,8 @@ using namespace kernel;
 // Name: ChangeDiplomacyDialog constructor
 // Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
-ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
+ChangeDiplomacyDialog::ChangeDiplomacyDialog( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const kernel::Profile_ABC& profile )
     : gui::DiplomacyDialog_ABC( parent, controllers, profile )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation ) 
@@ -79,5 +77,5 @@ void ChangeDiplomacyDialog::SetDiplomacy( const kernel::Team_ABC& team1, const k
     action->AddParameter( *new parameters::Identifier( it.NextElement(), team2.GetId() ) );
     action->AddParameter( *new parameters::Enumeration( it.NextElement(), ResolveDiplomacy( diplomacy ) ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
 }

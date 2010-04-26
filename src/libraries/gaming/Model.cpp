@@ -35,6 +35,7 @@
 #include "UserProfileFactory.h"
 #include "ActionParameterFactory.h"
 #include "ActionFactory.h"
+#include "ActionPublisher.h"
 #include "actions/ActionsModel.h"
 #include "FolkModel.h"
 #include "AfterActionModel.h"
@@ -88,7 +89,7 @@ Model::Model( Controllers& controllers, const StaticModel& staticModel, const Si
     , fires_( *new FiresModel( agents_, agents_ ) )
     , weather_( *new WeatherModel( controllers, *this ) )
     , profiles_( *new UserProfilesModel( userProfileFactory_ ) )
-    , actions_( *new actions::ActionsModel( actionFactory_ ) )
+    , actions_( *new actions::ActionsModel( actionFactory_, *new ActionPublisher( publisher, controllers_ ) ) )
     , folk_( *new FolkModel( controllers.controller_ ) )
     , aar_( *new AfterActionModel( controllers.controller_, publisher ) )
     , intelligences_( *new IntelligencesModel( intelligenceFactory_ ) )

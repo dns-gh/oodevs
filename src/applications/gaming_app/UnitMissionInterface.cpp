@@ -16,7 +16,6 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "gaming/AutomatDecisions.h"
-#include "protocol/Protocol.h"
 
 using namespace Common;
 
@@ -28,10 +27,9 @@ using namespace actions;
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
 UnitMissionInterface::UnitMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller
-                                          , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
+                                          , MissionInterfaceBuilder& builder, ActionsModel& model )
     : actions::gui::MissionInterface_ABC( parent, mission, entity, controller )
     , model_( model )
-    , publisher_( publisher )
     , mission_( mission )
 {
     builder.Build( *this, entity, mission );
@@ -58,5 +56,5 @@ void UnitMissionInterface::Publish()
         if( const AutomatDecisions* decisions = automat->Retrieve< AutomatDecisions >() )
             if( decisions->IsEmbraye() )
                 decisions->Disengage();
-    model_.Publish( *action, publisher_ );
+    model_.Publish( *action );
 }

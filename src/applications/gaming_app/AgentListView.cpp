@@ -21,7 +21,6 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/CommandPostAttributes.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/KnowledgeGroupHierarchies.h" // LTO
@@ -36,9 +35,8 @@ using namespace actions;
 // Name: AgentListView constructor
 // Created: SBO 2006-08-18
 // -----------------------------------------------------------------------------
-AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
+AgentListView::AgentListView( QWidget* pParent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
     : gui::HierarchyListView< kernel::CommunicationHierarchies >( pParent, controllers, factory, profile, icons )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -186,7 +184,7 @@ bool AgentListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
     return true;
 }
 
@@ -203,7 +201,7 @@ bool AgentListView::Drop( const Automat_ABC& item, const KnowledgeGroup_ABC& tar
     if( const Team_ABC *team = dynamic_cast< const Team_ABC* >( &target.Get< CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
     return true;
 }
 
@@ -220,7 +218,7 @@ bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const Team_ABC& target
     if( const Team_ABC *team = dynamic_cast< const Team_ABC* >( &target.Get< CommunicationHierarchies >().GetTop() ) )
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
     return true;
 }
 
@@ -238,6 +236,6 @@ bool AgentListView::Drop( const KnowledgeGroup_ABC& item, const KnowledgeGroup_A
         action->AddParameter( *new parameters::Army( it.NextElement(), *team, controllers_.controller_ ) );
     action->AddParameter( *new parameters::KnowledgeGroup( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
     return true;
 }

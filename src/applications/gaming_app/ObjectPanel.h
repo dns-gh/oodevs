@@ -23,7 +23,6 @@ namespace gui
     class CheckBoxDisplayer;
 }
 
-class ActionPublisher;
 class Simulation;
 class StaticModel;
 
@@ -40,7 +39,7 @@ class ObjectPanel : public gui::ObjectPanel
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
+             ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation );
     virtual ~ObjectPanel();
     //@}
 
@@ -61,7 +60,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ActionPublisher& actionPublisher_;
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const Simulation& simulation_;

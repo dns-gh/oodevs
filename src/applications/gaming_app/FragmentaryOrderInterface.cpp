@@ -13,7 +13,6 @@
 #include "actions/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/FragOrderType.h"
-#include "protocol/Protocol.h"       
 
 using namespace kernel;
 using namespace actions;
@@ -23,10 +22,9 @@ using namespace actions;
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
 FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, ActionController& controller
-                                                    , Publisher_ABC& publisher, MissionInterfaceBuilder& builder, ActionsModel& model )
+                                                    , MissionInterfaceBuilder& builder, ActionsModel& model )
     : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controller )
     , model_( model )
-    , publisher_( publisher )
     , fragOrder_( fragOrder )
 {
     builder.Build( *this, entity, fragOrder );
@@ -49,5 +47,5 @@ void FragmentaryOrderInterface::Publish()
 {
     Action_ABC* action = model_.CreateAction( GetEntity(), fragOrder_ );
     CommitTo( *action );
-    model_.Publish( *action, publisher_ );
+    model_.Publish( *action );
 }

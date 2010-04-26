@@ -24,11 +24,9 @@
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/KnowledgeGroup.h"
 #include "gaming/StaticModel.h"
-#include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 
 using namespace actions;
@@ -38,11 +36,9 @@ using namespace kernel;
 // Name: KnowledgeGroupMagicOrdersInterface constructor
 // Created: SLG 2009-12-16
 // -----------------------------------------------------------------------------
-KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, Publisher_ABC& publisher, ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+KnowledgeGroupMagicOrdersInterface::KnowledgeGroupMagicOrdersInterface( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, const Profile_ABC& profile, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
     : QObject( parent )
     , controllers_( controllers )
-    , publisher_( publisher )
-    , actionPublisher_( actionPublisher )
     , actionsModel_( actionsModel )
     , static_( staticModel )
     , simulation_( simulation )
@@ -104,7 +100,7 @@ void KnowledgeGroupMagicOrdersInterface::OnToggleKnowledgeGroupActivation()
     tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Bool( it.NextElement(), ! selectedEntity_->IsActivated() ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-    action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+    action->RegisterAndPublish( actionsModel_ );
     }
 }
 
@@ -124,7 +120,7 @@ void KnowledgeGroupMagicOrdersInterface::OnSetType( int id )
             tools::Iterator< const OrderParameter& > paramIt = actionType.CreateIterator();
             action->AddParameter( *new parameters::String( paramIt.NextElement(), it->second->GetName() ) );
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+            action->RegisterAndPublish( actionsModel_ );
         }
     }
 }
@@ -145,7 +141,7 @@ void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
             action->AddParameter( *new parameters::Identifier( paramIt.NextElement(), selectedEntity_->GetId() ) );
             action->AddParameter( *new parameters::String( paramIt.NextElement(), "Standard" ) ); // $$$$ _RC_ SBO 2010-03-04: used kernel::KnowledgeGroupTypes::GetDefault() or something
             action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
-            action->RegisterAndPublish( actionsModel_, actionPublisher_ );
+            action->RegisterAndPublish( actionsModel_ );
         }
 }
 

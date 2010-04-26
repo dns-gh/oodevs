@@ -207,9 +207,9 @@ void Action_ABC::Activate( kernel::ActionController& controller ) const
 // Name: Action_ABC::RegisterAndPublish
 // Created: JSR 2010-04-16
 // -----------------------------------------------------------------------------
-void Action_ABC::RegisterAndPublish( ActionsModel& actionsModel, Publisher_ABC& actionPublisher)
+void Action_ABC::RegisterAndPublish( ActionsModel& actionsModel )
 {
     Polish();
     actionsModel.Register( GetId(), *this );
-    actionsModel.Publish( *this, actionPublisher );
+    actionsModel.Publish( *this );
 }

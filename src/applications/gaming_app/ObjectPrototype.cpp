@@ -30,7 +30,6 @@
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/ObjectAttributePrototypeFactory.h"
-#include "gaming/ActionPublisher.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/StaticModel.h"
 #include "protocol/SimulationSenders.h"
@@ -166,7 +165,7 @@ ObjectPrototype::~ObjectPrototype()
 // Name: ObjectPrototype::Commit
 // Created: SBO 2006-04-19
 // -----------------------------------------------------------------------------
-void ObjectPrototype::Commit( ActionPublisher& actionPublisher, actions::ActionsModel& actionsModel, const Simulation& simulation )
+void ObjectPrototype::Commit( actions::ActionsModel& actionsModel, const Simulation& simulation )
 {    
     if( CheckValidity() )
     {
@@ -186,7 +185,7 @@ void ObjectPrototype::Commit( ActionPublisher& actionPublisher, actions::Actions
         ObjectPrototype_ABC::Commit();
 
         action->Attach( *new ActionTiming( controllers_.controller_, simulation, *action ) );
-        action->RegisterAndPublish( actionsModel, actionPublisher );
+        action->RegisterAndPublish( actionsModel );
 
         ObjectPrototype_ABC::Clean();
     }
