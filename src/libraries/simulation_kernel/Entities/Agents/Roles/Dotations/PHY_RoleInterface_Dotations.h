@@ -87,6 +87,10 @@ public:
     virtual double AddFireReservation( const PHY_DotationCategory& category, double rNbr ) = 0;
     virtual double GetDotationNumber( const PHY_DotationCategory& category ) const = 0;
     virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const = 0;
+    virtual void SetForbiddenDotation( const PHY_DotationCategory& category ) = 0;
+    virtual void RemoveForbiddenDotation( const PHY_DotationCategory& category ) = 0;
+    virtual void AllowAllDotations() = 0;
+
     //@}
 
     //! @name Network

@@ -45,6 +45,9 @@ public:
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( HasChanged )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetMaxTimeForConsumptionShadow )
         , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetDotationNumber )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( SetForbiddenDotationShadow )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( RemoveForbiddenDotationShadow )
+        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( AllowAllDotations )
     {}
     virtual ~MockRoleDotations() {}
     //@}
@@ -111,6 +114,16 @@ public:
 	{
 		throw;
 	}
+    virtual void SetForbiddenDotation( const PHY_DotationCategory& type )
+    {
+        const PHY_DotationCategory* pType = &type;
+        SetForbiddenDotationShadow( pType );
+    }
+    virtual void RemoveForbiddenDotation( const PHY_DotationCategory& type )
+    {
+        const PHY_DotationCategory* pType = &type;
+        RemoveForbiddenDotationShadow( pType );
+    }
 
     MOCKPP_VOID_CHAINABLE1( MockRoleDotations, ReadOverloadingShadow, xml::xistream* );    
     MOCKPP_VOID_CHAINABLE_EXT1( MockRoleDotations, Update, bool, , bool );
@@ -131,6 +144,11 @@ public:
     MOCKPP_CONST_CHAINABLE0( MockRoleDotations, bool, HasChanged );
     MOCKPP_CONST_CHAINABLE1( MockRoleDotations, double, GetMaxTimeForConsumptionShadow, const PHY_ConsumptionType* );
     MOCKPP_CONST_CHAINABLE1(  MockRoleDotations, double, GetDotationNumber, PHY_DotationCategory );
+    MOCKPP_VOID_CHAINABLE1( MockRoleDotations, SetForbiddenDotationShadow, const PHY_DotationCategory*  );    
+    MOCKPP_VOID_CHAINABLE1( MockRoleDotations, RemoveForbiddenDotationShadow, const PHY_DotationCategory*  );    
+    MOCKPP_VOID_CHAINABLE0( MockRoleDotations, AllowAllDotations );
+
+
 };
 
 #endif // __MockRoleDotation_h_

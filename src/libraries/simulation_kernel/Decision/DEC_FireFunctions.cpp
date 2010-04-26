@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Units/Dotations/PHY_IndirectFireDotationClass.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Tools/MIL_Tools.h"
 
 using namespace firing;
@@ -176,4 +177,32 @@ const PHY_DotationCategory* DEC_FireFunctions::GetMunitionForIndirectFire( MIL_A
     const PHY_DotationCategory* pDotationCategory = callerAgent.GetRole< PHY_RoleAction_IndirectFiring >().GetMunitionForIndirectFire( *pClass, *pTarget );
     
     return pDotationCategory;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::ForbidAmmunitions
+// Created: HBD 2010-04-20
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::ForbidAmmunition( MIL_AgentPion& callerAgent,  const PHY_DotationCategory* pDotationCategory )
+{
+    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().SetForbiddenDotation( *pDotationCategory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::AllowAmmunition
+// Created: HBD 2010-04-22
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::AllowAmmunition( MIL_AgentPion& callerAgent,  const PHY_DotationCategory* pDotationCategory )
+{
+    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().RemoveForbiddenDotation( *pDotationCategory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::AllowAllAmmunitions
+// Created: HBD 2010-04-22
+// -----------------------------------------------------------------------------
+void DEC_FireFunctions::AllowAllAmmunitions( MIL_AgentPion& callerAgent )
+{
+    callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().AllowAllDotations();
 }

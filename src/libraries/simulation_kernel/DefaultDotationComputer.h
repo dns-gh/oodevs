@@ -28,13 +28,14 @@ public:
     //! @name Constructors/Destructor
     //@{
              DefaultDotationComputer();
-    virtual ~DefaultDotationComputer();
+             virtual ~DefaultDotationComputer();
     //@}
 
     //! @name Operations
     //@{
     virtual void Reset();
     virtual void SetDotationContainer( PHY_DotationGroupContainer& container );
+    virtual void SetForbiddenAmmunition( const std::vector< const PHY_DotationCategory* >* container  );
 
     virtual bool HasDotation( const PHY_DotationCategory& category ) const;
     virtual double GetDotationValue( const PHY_DotationCategory& category ) const;
@@ -45,6 +46,7 @@ private:
     //! @name Attribute
     //@{
     PHY_DotationGroupContainer* pDotationContainer_;
+    const std::vector< const PHY_DotationCategory* >* forbiddenAmmunition_;
     //@}
 
 };

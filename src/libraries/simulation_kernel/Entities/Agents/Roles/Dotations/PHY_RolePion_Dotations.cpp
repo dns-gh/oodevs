@@ -564,6 +564,7 @@ void PHY_RolePion_Dotations::SendFullState( client::UnitAttributes& asn ) const
 void PHY_RolePion_Dotations::Execute( dotation::DotationComputer_ABC& algorithm ) const
 {
     algorithm.SetDotationContainer( *pDotations_ );
+    algorithm.SetForbiddenAmmunition( &forbiddenDotations_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -575,4 +576,42 @@ void PHY_RolePion_Dotations::ChangeConsumptionMode(ConsumptionModeChangeRequest_
     bool ok = SetConsumptionMode(request.GetType());
     request.ConsumptionModeChanged(ok, this);
 }
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::SetForbiddenDotoation
+// Created: HBD 2010-04-21
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::SetForbiddenDotation( const PHY_DotationCategory& category )
+{
+    std::vector< const PHY_DotationCategory* >::iterator it;
+    for( it = forbiddenDotations_.begin(); it != forbiddenDotations_.end(); ++it )
+        if( (*it)->GetName() == category.GetName() )
+            break;
+    if( it == forbiddenDotations_.end() )
+       forbiddenDotations_.push_back( &category );
+}
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::RemoveForbiddenDotation
+// Created: HBD 2010-04-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::RemoveForbiddenDotation( const PHY_DotationCategory& category )
+{
+    std::vector< const PHY_DotationCategory* >::iterator it;
+    for( it = forbiddenDotations_.begin(); it != forbiddenDotations_.end(); ++it )
+        if( (*it)->GetName() == category.GetName() )
+            break;
+    if( it != forbiddenDotations_.end() )
+       forbiddenDotations_.erase( it );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Dotations::AllowAllDotations
+// Created: HBD 2010-04-22
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Dotations::AllowAllDotations()
+{
+     forbiddenDotations_.clear();
+}
+
+
 } // namespace dotation
+

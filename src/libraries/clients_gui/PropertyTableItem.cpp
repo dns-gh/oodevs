@@ -21,10 +21,10 @@ using namespace gui;
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
 PropertyTableItem::PropertyTableItem( QTable* table, Property_ABC& property, TableItemDisplayer& displayer, EditorFactory_ABC& factory )
-    : QTableItem( table, QTableItem::WhenCurrent, "" )
-    , factory_( factory )
-    , displayer_( displayer )
-    , property_( property )
+: QTableItem( table, QTableItem::WhenCurrent, "" )
+, factory_( factory )
+, displayer_( displayer )
+, property_( property )
 {
     displayer_.SetItem( this );
     property_.Display( displayer_ );

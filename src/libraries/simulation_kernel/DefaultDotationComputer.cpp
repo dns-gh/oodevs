@@ -11,7 +11,7 @@
 
 #include "simulation_kernel/DefaultDotationComputer.h"
 #include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationGroupContainer.h"
-
+#include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 using namespace dotation;
 
 // -----------------------------------------------------------------------------
@@ -20,6 +20,7 @@ using namespace dotation;
 // -----------------------------------------------------------------------------
 DefaultDotationComputer::DefaultDotationComputer()
 : pDotationContainer_( 0 )
+, forbiddenAmmunition_(0 )
 {
 
 }
@@ -57,7 +58,16 @@ void DefaultDotationComputer::SetDotationContainer( PHY_DotationGroupContainer& 
 // -----------------------------------------------------------------------------
 bool DefaultDotationComputer::HasDotation( const PHY_DotationCategory& category ) const
 {
-    assert( pDotationContainer_ );
+    if ( forbiddenAmmunition_ && !forbiddenAmmunition_->empty() )
+    {
+        std::vector< const PHY_DotationCategory* >::const_iterator it;
+        for( it = forbiddenAmmunition_->begin(); it != forbiddenAmmunition_->end(); ++it )
+            if( (*it)->GetName() == category.GetName() )
+                break;
+        if ( it != forbiddenAmmunition_->end() )
+            return false;
+    }
+    assert( pDotationContainer_ );  
     return pDotationContainer_->GetValue( category ) > 0.;
 }
 
@@ -79,4 +89,13 @@ double DefaultDotationComputer::GetDotationCapacity( const PHY_DotationCategory&
 {
     assert( pDotationContainer_ );
     return pDotationContainer_->GetCapacity( category );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultDotationComputer::SetForbiddenAmmunition
+// Created: HBD 2010-04-21
+// -----------------------------------------------------------------------------
+void DefaultDotationComputer::SetForbiddenAmmunition( const std::vector< const PHY_DotationCategory* >* container )
+{
+    forbiddenAmmunition_ = container;
 }

@@ -785,9 +785,16 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_FireFunctions::ThrowSmokeOnKnowledgeAgent, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Tir_MunitionPourTirIndirect",
         boost::function< const PHY_DotationCategory* ( int, const MT_Vector2D* ) >( boost::bind( &DEC_FireFunctions::GetMunitionForIndirectFire, boost::ref( GetPion() ), _1, _2 ) ) );
-    //
+    brain.RegisterFunction( "DEC_Pion_InterdireMunition",
+        boost::function< void( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::ForbidAmmunition, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Pion_AutoriserMunition",
+        boost::function< void( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::AllowAmmunition, boost::ref( GetPion() ), _1 ) ) );
+    brain.RegisterFunction( "DEC_Pion_AutoriserToutesMunitions",
+        boost::bind( &DEC_FireFunctions::AllowAllAmmunitions,        boost::ref( GetPion() ) ) );
+     //
     brain.RegisterFunction( "DEC_Fire_GetRangeToExtinguish", 
         boost::function< float ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_DynamicFireFunctions::GetRangeToExtinguish, boost::cref( GetPion() ), _1 ) ) );
+
 
     // RC
     brain.RegisterFunction( "DEC_RC1",

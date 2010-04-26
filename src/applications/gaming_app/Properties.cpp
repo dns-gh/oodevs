@@ -24,7 +24,7 @@ PropertiesBase::PropertiesBase()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PropertiesBase::~PropertiesPanelBase
+// Name: PropertiesBase::~PropertiesBase
 // Created: SBO 2008-04-08
 // -----------------------------------------------------------------------------
 PropertiesBase::~PropertiesBase()

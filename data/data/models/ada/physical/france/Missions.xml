@@ -1697,5 +1697,8 @@
       <parameter dia-name="nbIT_" name="Shells number" optional="false" type="Numeric"/>
       <parameter dia-name="agentKnowledge_" name="target" optional="false" type="AgentKnowledgeBM"/>
     </fragorder>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMuntion" id="385" name="Pion Interdire Munition">
+      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
+    </fragorder>
   </fragorders>
 </missions>

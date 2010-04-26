@@ -106,11 +106,14 @@ public:
     virtual double AddFireReservation( const PHY_DotationCategory& category, MT_Float rNbr );
     virtual double GetDotationNumber( const PHY_DotationCategory& category ) const;
     virtual const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
+    virtual void SetForbiddenDotation( const PHY_DotationCategory& category );
+    virtual void RemoveForbiddenDotation( const PHY_DotationCategory& category );
+    virtual void AllowAllDotations();
     //@}
 
     //! @name Network
     //@{
-
+    
     void SendChangedState( client::UnitAttributes& asn ) const;
     void SendFullState   ( client::UnitAttributes& asn ) const;
     //@}
@@ -138,10 +141,11 @@ private:
           MIL_AgentPion&              pion_;
           PHY_DotationGroupContainer* pDotations_;
 
-    const PHY_ConsumptionType*  pCurrentConsumptionMode_;
-    const PHY_ConsumptionType*  pPreviousConsumptionMode_;
-          T_DotationReservedMap reservedConsumptions_;
+    const PHY_ConsumptionType*      pCurrentConsumptionMode_;
+    const PHY_ConsumptionType*      pPreviousConsumptionMode_;
+          T_DotationReservedMap     reservedConsumptions_;
 
+    std::vector< const PHY_DotationCategory* > forbiddenDotations_;
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, PHY_RolePion_Dotations* role, const unsigned int /*version*/ );
 };

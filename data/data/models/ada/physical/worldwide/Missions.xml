@@ -1963,5 +1963,13 @@ overwhelming force.]]></doctrine>
         <value id="3" name="agressive"/>
       </parameter>
     </fragorder>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Pion_InterdireMunition" id="391" name="Pion Interdire Munition">
+      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
+    </fragorder>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserMunition" id="392" name="Pion Autoriser Munition">
+      <parameter dia-name="munitions_" name="Ammunitions" optional="false" type="DotationType"/>
+    </fragorder>
+    <fragorder available-for-all-mission="true" available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserToutesMunitions" id="393" name="Pion Autoriser Toutes Munitions">
+    </fragorder>
   </fragorders>
 </missions>
