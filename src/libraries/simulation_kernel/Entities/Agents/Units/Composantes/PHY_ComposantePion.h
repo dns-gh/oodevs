@@ -171,6 +171,7 @@ public:
             
     virtual const PHY_ComposanteTypePion&   GetType        () const;
 	virtual float						    GetIdentificationMaxRange () const;
+	virtual float						    GetReconnoissanceMaxRange () const;
     virtual unsigned int                    GetMajorScore  () const;
     //@}
 

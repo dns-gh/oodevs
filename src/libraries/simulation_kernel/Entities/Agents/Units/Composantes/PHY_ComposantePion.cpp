@@ -1038,6 +1038,18 @@ float PHY_ComposantePion::GetIdentificationMaxRange () const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetReconnoissanceMaxRange
+// Created: GGE & PSN 10-04-20
+// -----------------------------------------------------------------------------
+float PHY_ComposantePion::GetReconnoissanceMaxRange () const
+{
+	MT_Float distance = numeric_limits< MT_Float >::max();
+	for( CIT_SensorVector itSensor = sensors_.begin(); itSensor != sensors_.end(); ++itSensor )
+        distance = std::min( distance, (*itSensor)->GetType().GetTypeAgent()->ReconnoissanceDistance() );
+	return distance;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::GetState
 // Created: NLD 2004-08-17
 // -----------------------------------------------------------------------------

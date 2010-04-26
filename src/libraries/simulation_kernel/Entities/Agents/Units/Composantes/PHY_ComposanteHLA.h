@@ -49,6 +49,7 @@ public:
     virtual bool                          CanFireWhenUnloaded() const;
     virtual unsigned int                          GetMajorScore      () const;
     virtual float                GetIdentificationMaxRange  () const { return 0; };
+    virtual float                GetReconnoissanceMaxRange  () const { return 0; };
 
     bool IsActive() const; //!< Test whether the composante should be taken into account in various algorithms
 

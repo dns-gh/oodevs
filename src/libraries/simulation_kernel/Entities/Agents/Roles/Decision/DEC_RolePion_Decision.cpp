@@ -393,6 +393,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
                             boost::bind( &DEC_PerceptionFunctions::EnableSensors, boost::ref( GetPion() ) ) );
 	brain.RegisterFunction( "DEC_Identification_DistanceMinCompMajeure",
                             boost::bind( &DEC_AgentFunctions::GetIdentificationDistance, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Reconnoissance_MajorComponentMinDistance",
+                            boost::bind( &DEC_AgentFunctions::GetReconnoissanceDistance, boost::ref( GetPion() ) ) );
     // Gestion des renforts
     brain.RegisterFunction( "DEC_Renforts" ,
         boost::function< std::vector<DEC_Decision_ABC*> () >( boost::bind( &DEC_MiscFunctions::GetReinforcements, boost::ref( GetPion() ) ) ) );

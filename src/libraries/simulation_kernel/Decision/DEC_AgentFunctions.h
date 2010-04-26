@@ -40,6 +40,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetAgentPositionPtr( DEC_Decision_ABC* brain );
     static const MT_Vector2D* GetDirection  ( const MIL_Agent_ABC& callerAgent );
 	static float GetIdentificationDistance	( MIL_Agent_ABC& callerAgent );
+	static float GetReconnoissanceDistance	( MIL_Agent_ABC& callerAgent );
     static void ActivateBlackout            ( MIL_Agent_ABC& callerAgent );
     static void DeactivateBlackout          ( MIL_Agent_ABC& callerAgent );
     static int  GetPosture                  ( const MIL_Agent_ABC& callerAgent );

@@ -572,6 +572,14 @@ const MT_Float PHY_SensorTypeAgent::IdentificationDistance() const
 	return rIdentificationDist_;
 }
 
+//-----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::ReconnoissanceDistance
+// Created: GGE & PSN 10-04-20
+//-----------------------------------------------------------------------------
+const MT_Float PHY_SensorTypeAgent::ReconnoissanceDistance() const
+{
+	return rRecognitionDist_;
+}
 // -----------------------------------------------------------------------------
 // Name: PHY_SensorTypeAgent::RayTrace
 // Created: NLD 2004-10-14

@@ -66,7 +66,8 @@ public:
     const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight, T_PointVector& shape ) const;
           MT_Float             ComputePerceptionAccuracy( const MIL_AgentPion& perceiver, const MIL_PopulationFlow&          target, MT_Float rSensorHeight ) const;
     const PHY_PerceptionLevel& ComputePerception        ( const MIL_AgentPion& perceiver, const urban::TerrainObject_ABC& target, MT_Float rSensorHeight ) const;
-	const MT_Float			   IdentificationDistance() const;
+	const MT_Float			   IdentificationDistance   () const;
+    const MT_Float			   ReconnoissanceDistance   () const;
     //@}
 
 public:

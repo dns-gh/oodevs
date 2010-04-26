@@ -242,6 +242,15 @@ float DEC_AgentFunctions::GetIdentificationDistance( MIL_Agent_ABC& callerAgent 
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetReconnoissanceDistance
+// Created: GGE & PSN 2010-04-20
+// -----------------------------------------------------------------------------
+float DEC_AgentFunctions::GetReconnoissanceDistance( MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComposante()->GetReconnoissanceMaxRange();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanConstructObject
 // Created: NLD 2004-05-07
 // -----------------------------------------------------------------------------
