@@ -49,7 +49,12 @@
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
+
+#include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "protocol/protocol.h"
+#include "simulation_orders/MIL_ParameterType_PolygonList.h"
+#include "simulation_orders/MIL_ParameterType_ObjectKnowledgeList.h"
+#include "simulation_orders/MIL_ParameterType_GenObjectList.h"
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create
@@ -57,6 +62,14 @@
 // -----------------------------------------------------------------------------
 boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create( const MIL_OrderTypeParameter& type )
 {
+    const MIL_ParameterType_ABC& parameterType = type.GetType();
+    if( dynamic_cast< const MIL_ParameterType_PolygonList* >( &parameterType ) )
+        return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_PolygonListParameter() );
+    if( dynamic_cast< const MIL_ParameterType_ObjectKnowledgeList* >( &parameterType ) )
+        return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_ObjectKnowledgeListParameter() );
+    if( dynamic_cast< const MIL_ParameterType_GenObjectList* >( &parameterType ) )
+        return boost::shared_ptr< MIL_MissionParameter_ABC >( new MIL_PlannedWorkListParameter() );
+        
     return boost::shared_ptr<MIL_MissionParameter_ABC>( new MIL_NullParameter() );
 }
 
