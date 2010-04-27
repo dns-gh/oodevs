@@ -19,9 +19,11 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/attaqu
         self.listeTigre = self.listeTigre or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleTigre" )
         self.listeHAPCanons = self.listeHAPCanons or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleHAC" )
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleHAM" )
-        self.listeAttaquer = self.listeAttaquer or S_Liste_Concatene( S_Liste_Concatene( self.listeHAH, self.listeTigre ), self.listeHAPCanons )
+        self.listeAttaquer = self.listeAttaquer or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listeAttaquer, self.listeHAH, self.listeTigre )
+                S_Liste_Concatene( self.listeAttaquer, self.listeAttaquer, self.listeHAPCanons )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( DIA_IsListEmpty( self.listeAttaquer ) ) then

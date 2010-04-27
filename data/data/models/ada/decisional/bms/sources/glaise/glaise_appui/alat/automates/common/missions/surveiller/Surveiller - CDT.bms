@@ -62,7 +62,10 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/survei
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAM" )
         local listeHR = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHR" )
         DIA_Clear( self.listePeutFaireSurveiller )
-        self.listePeutFaireSurveiller = S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( listeHAH, listeTigre ), listeHAPCanons ), listeHAM ), listeHR )
+        S_Liste_Concatene( self.listePeutFaireSurveiller, listeHAH, listeTigre )
+        S_Liste_Concatene( self.listePeutFaireSurveiller, self.listePeutFaireSurveiller, listeHAPCanons )
+        S_Liste_Concatene( self.listePeutFaireSurveiller, self.listePeutFaireSurveiller, listeHAM )
+        S_Liste_Concatene( self.listePeutFaireSurveiller, self.listePeutFaireSurveiller, listeHR )
         self.fNbPeutSurveillerPrec = self.fNbPeutSurveillerPrec or #( self.listePeutFaireSurveiller )
         --[[//liste des pions qui stationnent
 ]]DIA_Clear( self.listeStationner )

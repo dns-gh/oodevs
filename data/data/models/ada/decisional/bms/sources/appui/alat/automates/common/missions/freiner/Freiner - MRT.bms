@@ -27,10 +27,11 @@ node "MIS_Automate_MRT_ALAT_Freiner"
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AntitankHelicopterPatrol" )
         self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
         self.listePionsReserve = self.listePionsReserve or {}
-        self.listePatrouillesPeutFaireMissionFreiner = self.listePatrouillesPeutFaireMissionFreiner or S_Liste_Concatene( self.listeHAC, self.listeHAP )
+        self.listePatrouillesPeutFaireMissionFreiner = self.listePatrouillesPeutFaireMissionFreiner or {}
         self.listeFreiner = self.listeFreiner or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionFreiner, self.listeHAC, self.listeHAP )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 local nbPionsPouvantFreiner = #( self.listePatrouillesPeutFaireMissionFreiner )

@@ -60,7 +60,7 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         --[[// liste des pions qui peuvent attaquer
 ]]DIA_Clear( self.listeAttaquer )
-        self.listeAttaquer = S_Liste_Concatene( listeHAC, listeHAP )
+        S_Liste_Concatene( self.listeAttaquer, listeHAC, listeHAP )
         DIA_Clear( self.listePionsAAppuyerIMEX )
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do

@@ -175,7 +175,8 @@ do
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posEmbarquement, } )
                     --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
-]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.posEmbarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]
+Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.posEmbarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     _continue = false
                                 cases_switch_1[1] = true
 elseif switch_1 == eAttendre then
@@ -290,7 +291,8 @@ elseif switch_1 == eTransporterAllerDebarquer then
 
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self._namedParams.posDebarquement, } )
                     --[[//on s'infiltre jusqu'au point d'embarquement spécifié par la mission
-]]Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.posDebarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
+]]
+Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self._namedParams.posDebarquement, eProgressionDefaut, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     _continue = false
                                 cases_switch_1[4] = true
 elseif switch_1 == eTransporterDebarquer then

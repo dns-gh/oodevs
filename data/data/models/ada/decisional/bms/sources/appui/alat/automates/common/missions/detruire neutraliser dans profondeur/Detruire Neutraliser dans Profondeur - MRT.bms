@@ -13,9 +13,10 @@ node "MIS_Automate_MRT_ALAT_DetruireNeutraliserDansProfondeur"
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AntitankHelicopterPatrol" )
         self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AirDefenseHelicopterPatrol" )
-        self.listeDetruire = self.listeDetruire or S_Liste_Concatene( self.listeHAC, self.listeHAP )
+        self.listeDetruire = self.listeDetruire or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listeDetruire, self.listeHAC, self.listeHAP )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( DIA_IsListEmpty( self.listeDetruire ) ) then

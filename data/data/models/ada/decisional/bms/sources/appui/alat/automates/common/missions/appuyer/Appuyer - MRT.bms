@@ -18,9 +18,10 @@ includedFiles["sources/appui/alat/automates/common/missions/appuyer/Appuyer - MR
 ]]self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AntitankHelicopterPatrol" )
         self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
-        self.listePeutAppuyerOuDetruire = self.listePeutAppuyerOuDetruire or S_Liste_Concatene( self.listeHAP, self.listeHAC )
+        self.listePeutAppuyerOuDetruire = self.listePeutAppuyerOuDetruire or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePeutAppuyerOuDetruire, self.listeHAP, self.listeHAC )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// -----------------------------------------------------------------

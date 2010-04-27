@@ -37,10 +37,12 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AntitankHelicopterPatrol" )
         self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AirDefenseHelicopterPatrol" )
-        self.listePatrouillesPeutFaireMissionReconnaitre = self.listePatrouillesPeutFaireMissionReconnaitre or S_Liste_Concatene( S_Liste_Concatene( self.listeHAC, self.listeHAP ), self.listeHAM )
+        self.listePatrouillesPeutFaireMissionReconnaitre = self.listePatrouillesPeutFaireMissionReconnaitre or {}
         self.listeReconnaitreLeContourEni = self.listeReconnaitreLeContourEni or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionReconnaitre, self.listeHAC, self.listeHAP )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionReconnaitre, self.listePatrouillesPeutFaireMissionReconnaitre, self.listeHAM )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// -----------------------------------------------------------------

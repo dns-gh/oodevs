@@ -74,8 +74,7 @@ function S_ForceDangerSurPion( repEni, pion )
     do return _returnValue end
 end
 
-function S_Liste_Concatene( listeA, listeB )
-    local _returnValue = {}
+function S_Liste_Concatene( listResult, listeA, listeB )
     local bufferSelection = {}
     for _,x in pairs( listeA or {} ) do
     local _continue = true
@@ -89,8 +88,13 @@ function S_Liste_Concatene( listeA, listeB )
 
     end
 
-    _returnValue = bufferSelection
-    do return _returnValue end
+    DIA_Clear( listResult )
+    for _,x in pairs( bufferSelection or {} ) do
+    local _continue = true
+        DIA_PushBack( listResult, x )
+
+    end
+
 end
 
 function S_ListeLocalisations_Copie( listeSrc, listeDest )

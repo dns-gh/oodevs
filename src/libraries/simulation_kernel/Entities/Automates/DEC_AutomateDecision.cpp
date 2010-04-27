@@ -198,7 +198,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Deverrouiller",
         boost::function< void( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::Unlock, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Position",
-        boost::function< const MT_Vector2D*( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPosition, _1 ) ) );
+        boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPositionPtr, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstEnVol",
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstValide",

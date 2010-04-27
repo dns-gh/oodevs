@@ -69,7 +69,8 @@ includedFiles["sources/appui/alat/automates/common/missions/reconnaitre/Reconnai
         local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
         DIA_Clear( self.listePeutFaireReconnaitre )
-        self.listePeutFaireReconnaitre = S_Liste_Concatene( S_Liste_Concatene( listeHAC, listeHAP ), listeHAM )
+        self.listePeutFaireReconnaitre = S_Liste_Concatene( self.listePeutFaireReconnaitre, listeHAC, listeHAP )
+        self.listePeutFaireReconnaitre = S_Liste_Concatene( self.listePeutFaireReconnaitre, self.listePeutFaireReconnaitre, listeHAM )
         --[[//liste des pions de reserve
 ]]DIA_Clear( self.listeReserve )
         self.listeReserve = S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireReconnaitre, self.listeReconnaitreOperationnels ), self.listeSuivre )

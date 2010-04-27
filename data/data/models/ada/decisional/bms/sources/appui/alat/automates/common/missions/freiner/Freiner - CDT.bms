@@ -61,7 +61,8 @@ includedFiles["sources/appui/alat/automates/common/missions/freiner/Freiner - CD
         local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
         DIA_Clear( self.listePeutFaireFreiner )
-        self.listePeutFaireFreiner = S_Liste_Concatene( S_Liste_Concatene( listeHAC, listeHAP ), listeHAM )
+        S_Liste_Concatene( self.listePeutFaireFreiner, listeHAC, listeHAP )
+        S_Liste_Concatene( self.listePeutFaireFreiner, self.listePeutFaireFreiner, listeHAM )
         --[[//liste des pions de reserve
 ]]DIA_Clear( self.listeReserve )
         self.listeReserve = S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireFreiner, self.listeFreinerOperationnels ), self.listeSuivre )

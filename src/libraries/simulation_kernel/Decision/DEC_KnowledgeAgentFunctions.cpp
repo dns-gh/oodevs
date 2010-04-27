@@ -155,17 +155,6 @@ bool DEC_KnowledgeAgentFunctions::GetMajorOperationalState( boost::shared_ptr< D
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeAgentFunctions::GetPosition
-// Created: NLD 2004-03-31
-// -----------------------------------------------------------------------------
-const MT_Vector2D* DEC_KnowledgeAgentFunctions::GetPosition( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
-{
-    if( pKnowledge && pKnowledge->IsValid() )
-        return &pKnowledge->GetPosition();
-    return 0;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetPositionPtr
 // Created: MGD 2010-02-19
 // -----------------------------------------------------------------------------

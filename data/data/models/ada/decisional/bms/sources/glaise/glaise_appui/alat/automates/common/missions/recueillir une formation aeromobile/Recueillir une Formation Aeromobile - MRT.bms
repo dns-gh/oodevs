@@ -52,7 +52,8 @@ include "bit.lua"
         if( ModuleBegins() ) then
             do
                 self.listeSurveiller = self.listeHAH
-                self.listePeutTraiterAero = S_Liste_Concatene( S_Liste_Concatene( self.listeHAM, self.listeTigre ), self.listeHAPCanons )
+                S_Liste_Concatene( self.listePeutTraiterAero, self.listeHAM, self.listeTigre )
+                S_Liste_Concatene( self.listePeutTraiterAero, self.listePeutTraiterAero, self.listeHAPCanons )
                 --[[// si on a pas encore d'unité pour faire l'observation sur le PIA, en
 ]]--[[// prendre un qui peut attaquer les aéronefs
 ]]if( DIA_IsListEmpty( self.listeSurveiller ) ) then

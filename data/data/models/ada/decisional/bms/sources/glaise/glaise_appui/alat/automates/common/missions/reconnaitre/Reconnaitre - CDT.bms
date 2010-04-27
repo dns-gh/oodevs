@@ -71,7 +71,10 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/reconn
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAM" )
         local listeHR = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHR" )
         DIA_Clear( self.listePeutFaireReconnaitre )
-        self.listePeutFaireReconnaitre = S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( listeHAH, listeTigre ), listeHAPCanons ), listeHAM ), listeHR )
+        S_Liste_Concatene( self.listePeutFaireReconnaitre, listeHAH, listeTigre )
+        S_Liste_Concatene( self.listePeutFaireReconnaitre, self.listePeutFaireReconnaitre, listeHAPCanons )
+        S_Liste_Concatene( self.listePeutFaireReconnaitre, self.listePeutFaireReconnaitre, listeHAM )
+        S_Liste_Concatene( self.listePeutFaireReconnaitre, self.listePeutFaireReconnaitre, listeHR )
         --[[//liste des pions de reserve
 ]]DIA_Clear( self.listeReserve )
         self.listeReserve = S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireReconnaitre, self.listeReconnaitreOperationnels ), self.listeSuivre )

@@ -79,7 +79,10 @@ include "bit.lua"
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAM" )
         local listeHR = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHR" )
         DIA_Clear( self.listePeutFaireJalonner )
-        self.listePeutFaireJalonner = S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( listeHAH, listeTigre ), listeHAPCanons ), listeHAM ), listeHR )
+        self.listePeutFaireJalonner = S_Liste_Concatene( self.listePeutFaireJalonner, listeHAH, listeTigre )
+        self.listePeutFaireJalonner = S_Liste_Concatene( self.listePeutFaireJalonner, self.listePeutFaireJalonner, listeHAPCanons )
+        self.listePeutFaireJalonner = S_Liste_Concatene( self.listePeutFaireJalonner, self.listePeutFaireJalonner, listeHAM )
+        self.listePeutFaireJalonner = S_Liste_Concatene( self.listePeutFaireJalonner, self.listePeutFaireJalonner, listeHR )
         --[[//liste des pions de reserve
 ]]--[[//c'est a dire tous les pions qui ne jalonnent pas, qui ne suivent pas et qui ne sont pas en
 ]]--[[//cours de ravitaillment ( ces pions sont dispo pour réaliser une mission )

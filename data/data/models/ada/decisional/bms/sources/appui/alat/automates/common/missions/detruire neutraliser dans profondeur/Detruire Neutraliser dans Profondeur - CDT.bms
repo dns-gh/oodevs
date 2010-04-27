@@ -68,13 +68,15 @@ include "bit.lua"
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         --[[// liste des pions qui peuvent attaquer
 ]]DIA_Clear( self.listeDetruire )
-        self.listeDetruire = S_Liste_Concatene( listeHAC, listeHAP )
+        S_Liste_Concatene( self.listeDetruire, listeHAC, listeHAP )
         --[[// liste pour couverture
 ]]DIA_Clear( self.listeCouverture )
         self.listeCouverture = listeHAM
         --[[// liste pour IMEX
 ]]DIA_Clear( self.listePionsAAppuyerIMEX )
-        self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( S_Liste_Concatene( self.listeDetruire, self.listeCouverture ) ), self.listeHMLog )
+        local buffer = {}
+        S_Liste_Concatene( buffer, self.listeDetruire, self.listeCouverture )
+        self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( buffer ), self.listeHMLog )
          do
             local _continue = true
             local switch_1 = self.ePhase

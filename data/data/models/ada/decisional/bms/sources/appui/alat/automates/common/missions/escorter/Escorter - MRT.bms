@@ -28,9 +28,11 @@ includedFiles["sources/appui/alat/automates/common/missions/escorter/Escorter - 
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "AntitankHelicopterPatrol" )
         self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
-        self.listePatrouillesPeutFaireMissionEscorteOuCouvrir = self.listePatrouillesPeutFaireMissionEscorteOuCouvrir or S_Liste_Concatene( S_Liste_Concatene( self.listeHAP, self.listeHAC ), self.listeHAM )
+        self.listePatrouillesPeutFaireMissionEscorteOuCouvrir = self.listePatrouillesPeutFaireMissionEscorteOuCouvrir or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listeHAP, self.listeHAC )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listeHAM )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( DIA_IsListEmpty( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir ) ) then

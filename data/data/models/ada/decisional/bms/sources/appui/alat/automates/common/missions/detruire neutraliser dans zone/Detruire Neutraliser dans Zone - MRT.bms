@@ -15,9 +15,10 @@ includedFiles["sources/appui/alat/automates/common/missions/detruire neutraliser
         self.selPions = self.selPions or S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePion( self.selPions, "AntitankHelicopterPatrol" )
         self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePion( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
-        self.listeDetruire = self.listeDetruire or S_Liste_Concatene( self.listeHAC, self.listeHAP )
+        self.listeDetruire = self.listeDetruire or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listeDetruire, self.listeHAC, self.listeHAP )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( DIA_IsListEmpty( self.listeDetruire ) ) then

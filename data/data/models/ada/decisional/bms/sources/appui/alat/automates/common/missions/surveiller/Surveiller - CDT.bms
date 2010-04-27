@@ -60,7 +60,8 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
         local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
         DIA_Clear( self.listePeutFaireSurveiller )
-        self.listePeutFaireSurveiller = S_Liste_Concatene( S_Liste_Concatene( listeHAC, listeHAP ), listeHAM )
+        S_Liste_Concatene( self.listePeutFaireSurveiller, listeHAC, listeHAP )
+        S_Liste_Concatene( self.listePeutFaireSurveiller, self.listePeutFaireSurveiller, listeHAM )
         self.fNbPeutSurveillerPrec = self.fNbPeutSurveillerPrec or #( self.listePeutFaireSurveiller )
         --[[//liste des pions qui stationnent
 ]]DIA_Clear( self.listeStationner )

@@ -67,7 +67,8 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/attaqu
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHMLog" )
         --[[// liste des pions qui peuvent attaquer
 ]]DIA_Clear( self.listeAttaquer )
-        self.listeAttaquer = S_Liste_Concatene( S_Liste_Concatene( listeHAH, listeTigre ), listeHAPCanons )
+        S_Liste_Concatene( self.listeAttaquer, listeHAH, listeTigre )
+        S_Liste_Concatene( self.listeAttaquer, self.listeAttaquer, listeHAPCanons )
         DIA_Clear( self.listePionsAAppuyerIMEX )
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do

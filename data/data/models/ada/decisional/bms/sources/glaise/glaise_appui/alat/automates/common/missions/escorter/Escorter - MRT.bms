@@ -29,9 +29,12 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/escort
         self.listeTigre = self.listeTigre or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "PatrouilleTigre" )
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "PatrouilleHAC" )
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "PatrouilleHAM" )
-        self.listePatrouillesPeutFaireMissionEscorteOuCouvrir = self.listePatrouillesPeutFaireMissionEscorteOuCouvrir or S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( self.listeTigre, self.listeHAH ), self.listeHAC ), self.listeHAM )
+        self.listePatrouillesPeutFaireMissionEscorteOuCouvrir = self.listePatrouillesPeutFaireMissionEscorteOuCouvrir or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listeTigre, self.listeHAH )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listeHAC )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listePatrouillesPeutFaireMissionEscorteOuCouvrir, self.listeHAM )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 if( DIA_IsListEmpty( self.listePatrouillesPeutFaireMissionEscorteOuCouvrir ) ) then

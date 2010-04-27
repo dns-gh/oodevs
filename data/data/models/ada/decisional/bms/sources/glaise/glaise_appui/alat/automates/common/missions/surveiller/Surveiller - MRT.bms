@@ -33,10 +33,14 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/survei
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHAM" )
         self.listeHMLog = self.listeHMLog or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleHMLog" )
         self.listeHR = self.listeHR or S_Cherche_Automate_Filtre_TypePion( self.selPions, "PatrouilleHR" )
-        self.listePatrouillesPeutFaireMissionSurveiller = self.listePatrouillesPeutFaireMissionSurveiller or S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( self.listeHAH, self.listeTigre ), self.listeHAPCanons ), self.listeHAM ), self.listeHR )
+        self.listePatrouillesPeutFaireMissionSurveiller = self.listePatrouillesPeutFaireMissionSurveiller or {}
         self.listeSurveiller = self.listeSurveiller or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionSurveiller, self.listeHAH, self.listeTigre )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionSurveiller, self.listePatrouillesPeutFaireMissionSurveiller, self.listeHAPCanons )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionSurveiller, self.listePatrouillesPeutFaireMissionSurveiller, self.listeHAM )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionSurveiller, self.listePatrouillesPeutFaireMissionSurveiller, self.listeHR )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// -----------------------------------------------------------------

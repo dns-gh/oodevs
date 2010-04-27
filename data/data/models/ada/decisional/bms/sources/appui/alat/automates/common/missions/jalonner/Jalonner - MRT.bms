@@ -41,10 +41,12 @@ include "bit.lua"
         self.listeHAC = self.listeHAC or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AntitankHelicopterPatrol" )
         self.listeHAP = self.listeHAP or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "EscortAndCloseSupportHelicopterPatrol" )
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "AirDefenseHelicopterPatrol" )
-        self.listePatrouillesPeutFaireMissionJalonner = self.listePatrouillesPeutFaireMissionJalonner or S_Liste_Concatene( S_Liste_Concatene( self.listeHAC, self.listeHAP ), self.listeHAM )
+        self.listePatrouillesPeutFaireMissionJalonner = self.listePatrouillesPeutFaireMissionJalonner or {}
         self.listeJalonner = self.listeJalonner or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionJalonner, self.listeHAC, self.listeHAP )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionJalonner, self.listePatrouillesPeutFaireMissionJalonner, self.listeHAM )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// -----------------------------------------------------------------

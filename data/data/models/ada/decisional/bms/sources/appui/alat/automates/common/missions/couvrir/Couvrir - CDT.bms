@@ -87,7 +87,8 @@ include "bit.lua"
         --[[// liste des pions qui peuvent couvrir
 ]]DIA_Clear( self.listePionsCouvrir )
         DIA_Clear( self.listePionsCouvrirSansRavitaillementsEnCours )
-        self.listePionsCouvrir = S_Liste_Concatene( S_Liste_Concatene( listeHAP, listeHAC ), listeHAM )
+        S_Liste_Concatene( self.listePionsCouvrir, listeHAP, listeHAC )
+        S_Liste_Concatene( self.listePionsCouvrir, self.listePionsCouvrir, listeHAM )
         self.listePionsCouvrirSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsCouvrir, listePionsEnCoursRavitaillement )
         DIA_Clear( self.listePionsAAppuyerIMEX )
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )

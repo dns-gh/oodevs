@@ -43,10 +43,14 @@ include "bit.lua"
         self.listeHAPCanons = self.listeHAPCanons or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHAC" )
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHAM" )
         self.listeHR = self.listeHR or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHR" )
-        self.listePatrouillesPeutFaireMissionJalonner = self.listePatrouillesPeutFaireMissionJalonner or S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( S_Liste_Concatene( self.listeHAH, self.listeTigre ), self.listeHAPCanons ), self.listeHAM ), self.listeHR )
+        self.listePatrouillesPeutFaireMissionJalonner = self.listePatrouillesPeutFaireMissionJalonner or {}
         self.listeJalonner = self.listeJalonner or {}
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionJalonner, self.listeHAH, self.listeTigre )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionJalonner, self.listePatrouillesPeutFaireMissionJalonner, self.listeHAPCanons )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionJalonner, self.listePatrouillesPeutFaireMissionJalonner, self.listeHAM )
+                S_Liste_Concatene( self.listePatrouillesPeutFaireMissionJalonner, self.listePatrouillesPeutFaireMissionJalonner, self.listeHR )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 --[[// -----------------------------------------------------------------

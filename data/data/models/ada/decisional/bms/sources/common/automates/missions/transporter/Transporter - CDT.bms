@@ -49,7 +49,7 @@ node "MIS_Automate_CDT_Transporter"
         --[[//liste des transporteurs $$$$GGR : moche!!! il faut pouvoir récupérer la liste des unités qui peuvent faire la mission transporter
 ]]DIA_Clear( self.listeTransporteur )
         self.listeTransporteur = S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "PelotonAppuiMob" )
-        self.listeTransporteur = S_Liste_Concatene( self.listeTransporteur, S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "LandingCraft" ) )
+        S_Liste_Concatene( self.listeTransporteur, self.listeTransporteur, S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "LandingCraft" ) )
         DIA_Clear( self.listePourTransport )
         --[[//il ne doit pas y avoir plus de HM que de pions à transporter
 ]]if( #( self.listeTransporteur ) > #( self.listePionsATransporter ) ) then

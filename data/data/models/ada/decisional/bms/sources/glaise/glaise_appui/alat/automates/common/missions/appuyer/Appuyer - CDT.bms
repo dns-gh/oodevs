@@ -70,7 +70,7 @@ includedFiles["sources/glaise/glaise_appui/alat/automates/common/missions/appuye
         --[[// liste des pions qui peuvent détruire dans zone ou appuyer
 ]]DIA_Clear( self.listePionsPourMissionAppuyerOuDetruire )
         DIA_Clear( self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours )
-        self.listePionsPourMissionAppuyerOuDetruire = S_Liste_Concatene( listeHAP, listeHAC )
+        S_Liste_Concatene( self.listePionsPourMissionAppuyerOuDetruire, listeHAP, listeHAC )
         self.listePionsPourMissionAppuyerOuDetruireSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsPourMissionAppuyerOuDetruire, listePionsEnCoursRavitaillement )
         --[[// listes des pions pour les missions appuyer et détruire 
 ]]--[[// ------------------------------------------------------

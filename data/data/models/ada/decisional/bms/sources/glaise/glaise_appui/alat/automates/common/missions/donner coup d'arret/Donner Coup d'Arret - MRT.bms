@@ -37,7 +37,7 @@ include "bit.lua"
         self.listeTigre = self.listeTigre or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleTigre" )
         self.listeHAPCanons = self.listeHAPCanons or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHAC" )
         self.listeHAM = self.listeHAM or S_Cherche_Automate_Filtre_TypePionOperationnels( self.selPions, "PatrouilleHAM" )
-        self.listePeutDonnerCoupArret = self.listePeutDonnerCoupArret or S_Liste_Concatene( S_Liste_Concatene( self.listeHAH, self.listeTigre ), self.listeHAPCanons )
+        self.listePeutDonnerCoupArret = self.listePeutDonnerCoupArret or {}
         self.listeDonnerCoupArretDroit = self.listeDonnerCoupArretDroit or {}
         self.listeDonnerCoupArretGauche = self.listeDonnerCoupArretGauche or {}
         self.listePionRef = self.listePionRef or {}
@@ -46,6 +46,8 @@ include "bit.lua"
         self.pointDeDislocationDroit = self.pointDeDislocationDroit or nil
         if( ModuleBegins() ) then
             do
+                S_Liste_Concatene( self.listePeutDonnerCoupArret, self.listeHAH, self.listeTigre )
+                S_Liste_Concatene( self.listePeutDonnerCoupArret, self.listePeutDonnerCoupArret, self.listeHAPCanons )
                 myself.sPlotsDeRavitaillement_ = self._namedParams.mission.plotsRavitaillement_
                 DEC_SetMission( myself, self._namedParams.mission )
                 local unSurDeux = false

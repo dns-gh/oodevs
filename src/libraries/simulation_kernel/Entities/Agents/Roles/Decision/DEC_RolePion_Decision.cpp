@@ -503,8 +503,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstDetruitTactique",
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetMajorOperationalState, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_Position",
-        boost::function< const MT_Vector2D*( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPosition, _1 ) ) );
-    brain.RegisterFunction( "DEC_ConnaissanceAgent_PositionPtr",
         boost::function< boost::shared_ptr< MT_Vector2D >( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetPositionPtr, _1 ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceAgent_EstEnVol", 
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsFlying, _1 ) ) );

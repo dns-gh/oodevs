@@ -1,3 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["Satcp Mistral/Macros.bms"] = true
-
