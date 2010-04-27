@@ -154,7 +154,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , glProxy_      ( 0 )
 {
     setIcon( MAKE_PIXMAP( csword ) );
-    setCaption( tools::translate( "Application", "SWORD Officer Training" ) + tr( " - Not connected" ) );
+    setCaption( tools::translate( "Application", "SWORD" ) + tr( " - Not connected" ) );
 
     ProfileFilter& profile = *new ProfileFilter( controllers, p ); // $$$$ AGE 2006-12-13: mem. // $$$$ _RC_ MCO 2007-01-12: auto_ptr // $$$$ AGE 2007-06-19: tégé !
 
