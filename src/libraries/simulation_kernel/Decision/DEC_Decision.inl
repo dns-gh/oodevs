@@ -849,24 +849,4 @@ bool DEC_Decision<T>::IsDead() const
     throw std::runtime_error( "Invalid call of this Decision class" );
 }
 
-// -----------------------------------------------------------------------------
-// Name: DEC_Decision::WearNbcProtectionSuit
-// Created: SBO 2009-07-29
-// -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision<T>::WearNbcProtectionSuit() const
-{
-    throw std::runtime_error( "Invalid call of this Decision class" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_Decision::RemoveNbcProtectionSuit
-// Created: SBO 2009-07-29
-// -----------------------------------------------------------------------------
-template< class T >
-void DEC_Decision<T>::RemoveNbcProtectionSuit() const
-{
-    throw std::runtime_error( "Invalid call of this Decision class" );
-}
-
 

@@ -471,8 +471,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
     // NBC
     brain.RegisterFunction( "DEC_Agent_EstContamine", boost::bind( &DEC_AgentFunctions::IsContaminated , boost::cref( GetPion() ) ) );  
     brain.RegisterFunction( "DEC_Agent_EstContamine", &DEC_Decision_ABC::IsContaminated );
-    brain.RegisterFunction( "DEC_Agent_MettreTenueProtectionNBC"            , &DEC_Decision_ABC::WearNbcProtectionSuit             );
-    brain.RegisterFunction( "DEC_Agent_EnleverTenueProtectionNBC"           , &DEC_Decision_ABC::RemoveNbcProtectionSuit           );
+    brain.RegisterFunction( "DEC_Agent_MettreTenueProtectionNBC"            , boost::bind( &DEC_AgentFunctions::WearNbcProtectionSuit, boost::ref( GetPion() ) ) );
+    brain.RegisterFunction( "DEC_Agent_EnleverTenueProtectionNBC"           , boost::bind( &DEC_AgentFunctions::RemoveNbcProtectionSuit, boost::ref( GetPion() ) ) );
     brain.RegisterFunction( "DEC_ConnaissanceObjet_DemandeDeDecontamination", 
         boost::function< int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_KnowledgeObjectFunctions::QueueForDecontamination, boost::ref( GetPion() ), _1 ) ) );
 
@@ -1739,24 +1739,6 @@ bool DEC_RolePion_Decision::IsAutomateEngaged() const
 bool DEC_RolePion_Decision::IsDead() const
 {
     return DEC_AgentFunctions::IsDead( GetPion() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::WearNbcProtectionSuit
-// Created: SBO 2009-07-29
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::WearNbcProtectionSuit() const
-{
-    DEC_AgentFunctions::WearNbcProtectionSuit( GetPion() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_RolePion_Decision::RemoveNbcProtectionSuit
-// Created: SBO 2009-07-29
-// -----------------------------------------------------------------------------
-void DEC_RolePion_Decision::RemoveNbcProtectionSuit() const
-{
-    DEC_AgentFunctions::RemoveNbcProtectionSuit( GetPion() );
 }
 
 // =============================================================================

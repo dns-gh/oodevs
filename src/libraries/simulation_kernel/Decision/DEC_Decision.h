@@ -117,8 +117,6 @@ public:
     virtual MT_Float GetMajorOperationalState() const;
     virtual bool IsAutomateEngaged() const;
     virtual bool IsDead() const;
-    virtual void WearNbcProtectionSuit() const;
-    virtual void RemoveNbcProtectionSuit() const;
     //@}
 
     //! @name Serialization
