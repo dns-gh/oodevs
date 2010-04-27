@@ -73,7 +73,7 @@ void ADN_GraphData::DeleteData( void* pRelatedObject )
         {
             // It is. Delete the graphData point and the value.
             this->DeletePoint( std::distance( graphValueList_.begin(), it ) );
-            graphValueList_.erase( it );
+            it = graphValueList_.erase( it );
             delete &value;
             TouchData();
             continue;
