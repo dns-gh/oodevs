@@ -574,7 +574,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     asnIn.set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
-    objectType.GetName_mocker.expects( once() ).will( returnValue( &typeName ) );
+    MOCK_EXPECT( objectType, GetName ).once().returns( typeName );
     entityManager.FindObjectType_mocker.expects( once() ).will( returnValue( static_cast< MIL_ObjectType_ABC* >( &objectType ) ) );
     FixtureAutomate fixture;
     entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
@@ -611,7 +611,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
     asnIn.mutable_elem(0)->set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
-    objectType.GetName_mocker.expects( once() ).will( returnValue( &typeName ) );
+    MOCK_EXPECT( objectType, GetName ).once().returns( typeName );
     entityManager.FindObjectType_mocker.expects( once() ).will( returnValue( static_cast< MIL_ObjectType_ABC* >( &objectType ) ) );
     FixtureAutomate fixture;
     entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );

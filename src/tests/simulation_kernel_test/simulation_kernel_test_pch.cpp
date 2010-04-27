@@ -30,7 +30,6 @@ namespace
 ::boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[] )
 {
     set_data_directory( argc, argv );
-    GOOGLE_PROTOBUF_VERIFY_VERSION;
     return 0;
 }
 
@@ -40,3 +39,16 @@ std::string BOOST_RESOLVE( const std::string& filename )
         return filename;
     return data_directory + '/' + filename;
 }
+
+struct ProtobufConfig {
+    ProtobufConfig()
+    {
+        GOOGLE_PROTOBUF_VERIFY_VERSION;
+    }
+    ~ProtobufConfig()
+    {
+        google::protobuf::ShutdownProtobufLibrary();
+    }
+};
+
+BOOST_GLOBAL_FIXTURE( ProtobufConfig );

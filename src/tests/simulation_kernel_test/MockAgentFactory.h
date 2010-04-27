@@ -12,38 +12,10 @@
 
 #include "simulation_kernel/AgentFactory_ABC.h"
 
-// =============================================================================
-/** @class  MockAgentFactory
-    @brief  MockAgentFactory
-*/
-// Created: RPD 2010-02-07
-// =============================================================================
-class MockAgentFactory
-    : public mockpp::ChainableMockObject
-    , public AgentFactory_ABC
+MOCK_BASE_CLASS( MockAgentFactory, AgentFactory_ABC )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit MockAgentFactory() 
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockAgentFactory" ), 0 )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CreateAgentShadow )       
-    {
-    }
-    virtual ~MockAgentFactory() {}
-    //@}
-        
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, xml::xistream& xis )
-    {
-        return CreateAgentShadow();
-    }
-
-    virtual MIL_AgentPion* Create( const MIL_AgentTypePion& type, MIL_Automate& automate, const MT_Vector2D& vPosition )
-    {
-        return CreateAgentShadow();
-    }
-
-    MOCKPP_CONST_CHAINABLE_EXT0( MockAgentFactory, MIL_AgentPion*, CreateAgentShadow, MIL_AgentPion, );
+    MOCK_METHOD_EXT( Create, 3, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, xml::xistream& ), CreateFromXml );
+    MOCK_METHOD_EXT( Create, 3, MIL_AgentPion*( const MIL_AgentTypePion&, MIL_Automate&, const MT_Vector2D& ), CreateFromPoint );
 };
 
 #endif // __MockArmy_h_

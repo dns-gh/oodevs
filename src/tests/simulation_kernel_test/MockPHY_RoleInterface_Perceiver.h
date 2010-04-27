@@ -1,0 +1,94 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2010 MASA Group
+//
+// *****************************************************************************
+
+#ifndef __MockPHY_RoleInterface_Perceiver_h_
+#define __MockPHY_RoleInterface_Perceiver_h_
+
+#include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+
+MOCK_BASE_CLASS( MockPHY_RoleInterface_Perceiver, PHY_RoleInterface_Perceiver )
+{
+    MOCK_METHOD_EXT( IsUsingActiveRadar, 0, bool(), IsUsingActiveRadar );
+    MOCK_METHOD_EXT( IsUsingActiveRadar, 1, bool( const PHY_RadarClass& ), IsUsingActiveRadarByClass );
+
+    MOCK_METHOD( NotifyExternalPerception, 2 );
+    MOCK_METHOD_EXT( NotifyPerception, 3, void( MIL_Agent_ABC&, const PHY_PerceptionLevel&, bool ), NotifyAgentPerceptionRecorded );
+    MOCK_METHOD_EXT( NotifyPerception, 2, void( MIL_Agent_ABC&, const PHY_PerceptionLevel& ), NotifyAgentPerception );
+    MOCK_METHOD_EXT( NotifyPerception, 2, void( MIL_Object_ABC&, const PHY_PerceptionLevel& ), NotifyObjectPerception );
+    MOCK_METHOD_EXT( NotifyPerception, 2, void( MIL_PopulationConcentration&, const PHY_PerceptionLevel& ), NotifyPopulationConcentrationPerception );
+    MOCK_METHOD_EXT( NotifyPerception, 3, void( MIL_PopulationFlow&, const PHY_PerceptionLevel&, const T_PointVector& ), NotifyPopulationFlowPerception );
+    MOCK_METHOD_EXT( NotifyPerception, 1, void( const MIL_Effect_IndirectFire& ), NotifyIndirectFirePerception );
+    MOCK_METHOD_EXT( NotifyPerception, 2, void( const urban::TerrainObject_ABC&, const PHY_PerceptionLevel& ), NotifyUrbanBlockPerception );
+
+    MOCK_METHOD( HasChanged, 0 );
+    MOCK_METHOD( Update, 1 );
+    MOCK_METHOD( Clean, 0 );
+    MOCK_METHOD( ExecutePerceptions, 0 );
+    MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const MT_Vector2D& ), ComputePointPerception );
+    MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Object& ), ComputeObjectKnowledgePerception );
+    MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const DEC_Knowledge_Agent& ), ComputeAgentKnowledgePerception );
+    MOCK_METHOD_EXT( ComputePerception, 1, const PHY_PerceptionLevel&( const urban::Block& ), ComputeUrbanBlockPerception );
+
+    MOCK_METHOD( SetVisionModeNormal, 0 );
+    MOCK_METHOD( SetVisionModeDirection, 1 );
+    MOCK_METHOD( SetVisionModePoint, 1 );
+    MOCK_METHOD( HasRadarStateChanged, 0 );
+
+    MOCK_METHOD( EnableSensors, 0 );
+    MOCK_METHOD( DisableSensors, 0 );
+
+    MOCK_METHOD( HasDelayedPerceptions, 0 );
+    MOCK_METHOD( EnableRecoAlat, 1 );
+    MOCK_METHOD( DisableRecoAlat, 0 );
+    MOCK_METHOD( EnableCoupDeSonde, 0 );
+    MOCK_METHOD( DisableCoupDeSonde, 0 );
+    MOCK_METHOD( EnableRecoPoint, 4 );
+    MOCK_METHOD( DisableRecoPoint, 1 );
+    MOCK_METHOD_EXT( EnableRecoLocalisation, 2, int( const TER_Localisation&, MT_Float ), EnableRecoLocalisationWithRadius );
+    MOCK_METHOD_EXT( EnableRecoLocalisation, 1, int( const TER_Localisation& ), EnableRecoLocalisation );
+    MOCK_METHOD( EnableRecoUrbanBlock, 1 );
+    MOCK_METHOD( DisableRecoUrbanBlock, 1 );
+    MOCK_METHOD( EnableControlLocalisation, 1 );
+    MOCK_METHOD( DisableRecoLocalisation, 1 );
+    MOCK_METHOD( EnableSurveillanceLocalisation, 1 );
+    MOCK_METHOD( DisableSurveillanceLocalisation, 1 );
+    MOCK_METHOD( EnableRecoObjects, 4 );
+    MOCK_METHOD( DisableRecoObjects, 1 );
+    MOCK_METHOD( EnableRadarOnLocalisation, 2 );
+    MOCK_METHOD( DisableRadarOnLocalisation, 2 );
+    MOCK_METHOD( EnableRadar, 1 );
+    MOCK_METHOD( DisableRadar, 1 );
+    MOCK_METHOD( EnableFlyingShellDetection, 1 );
+    MOCK_METHOD( DisableFlyingShellDetection, 1 );
+    MOCK_METHOD( EnableRecordMode, 0 );
+    MOCK_METHOD( DisableRecordMode, 0 );
+    MOCK_METHOD( DisableAllPerceptions, 0 );
+    MOCK_METHOD( GetSurfacesAgent, 0 );
+    MOCK_METHOD( GetSurfacesObject, 0 );
+    MOCK_METHOD( GetRadars, 1 );
+
+    MOCK_METHOD( GetKnowledgeGroup, 0 );
+    MOCK_METHOD( GetPion, 0 );
+    MOCK_METHOD( GetMaxAgentPerceptionDistance, 0 );
+    MOCK_METHOD( GetMainPerceptionDirection, 1 );
+
+    MOCK_METHOD( IsPeriphericalVisionEnabled, 0 );
+    MOCK_METHOD_EXT( IsKnown, 1, bool( const MIL_Agent_ABC& ), IsAgentKnown );
+    MOCK_METHOD_EXT( IsKnown, 1, bool( const MIL_Object_ABC& ), IsObjectKnown );
+    MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_Agent_ABC& ), IsAgentIdentified );
+    MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_Object_ABC& ), IsObjectIdentified );
+    MOCK_METHOD_EXT( IsIdentified, 1, bool( const MIL_PopulationConcentration& ), IsPopulationConcentrationIdentified );
+    MOCK_METHOD_EXT( IsIdentified, 1, bool( const urban::TerrainObject_ABC& ), IsUrbanBlockIdentified );
+
+    MOCK_METHOD( SendDebugState, 0 );
+    MOCK_METHOD( SendChangedState, 1 );
+    MOCK_METHOD( SendFullState, 1 );
+};
+
+#endif // __MockPHY_RoleInterface_Perceiver_h_

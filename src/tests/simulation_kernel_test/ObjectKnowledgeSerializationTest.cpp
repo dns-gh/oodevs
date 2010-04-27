@@ -96,17 +96,17 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
     }
 
     MockNET_Publisher_ABC publisher;
-    publisher.Send_mocker.expects( mockpp::once() );
+    MOCK_EXPECT( publisher, Send ).once();
     DEC_Knowledge_Object knowledge( army, *pObject );
     MockMIL_Time_ABC time;
-    time.GetCurrentTick_mocker.expects( mockpp::atLeastOnce() ).will( returnValue( 1u ) );
+    MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
     knowledge.Update( PHY_PerceptionLevel::identified_ );
     std::stringstream stringstream;
     {
         MIL_CheckPointOutArchive outStream( stringstream );
         outStream << knowledge;
     }
-    publisher.Send_mocker.expects( mockpp::atLeastOnce() );
+    MOCK_EXPECT( publisher, Send ).at_least( 1 );
     {
         TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
         MIL_CheckPointInArchive inStream( stringstream );

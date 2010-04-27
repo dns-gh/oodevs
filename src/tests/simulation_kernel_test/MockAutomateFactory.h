@@ -12,38 +12,10 @@
 
 #include "simulation_kernel/AutomateFactory_ABC.h"
 
-// =============================================================================
-/** @class  MockAutomateFactory
-    @brief  MockAutomateFactory
-*/
-// Created: MGD 2009-09-25
-// =============================================================================
-class MockAutomateFactory
-    : public mockpp::ChainableMockObject
-    , public AutomateFactory_ABC
+MOCK_BASE_CLASS( MockAutomateFactory, AutomateFactory_ABC )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit MockAutomateFactory() 
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockAutomateFactory" ), 0 )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CreateAutomateShadow )       
-    {
-    }
-    virtual ~MockAutomateFactory() {}
-    //@}
-        
-    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Automate& parent )
-    {
-        return *CreateAutomateShadow();
-    }
-
-    virtual MIL_Automate& Create( xml::xistream& xis, MIL_Formation& parent )
-    {
-        return *CreateAutomateShadow();
-    }
-
-    MOCKPP_CONST_CHAINABLE_EXT0( MockAutomateFactory, MIL_Automate*, CreateAutomateShadow, MIL_Automate, );
+    MOCK_METHOD_EXT( Create, 2, MIL_Automate& ( xml::xistream&, MIL_Automate& ), CreateInAutomat );
+    MOCK_METHOD_EXT( Create, 2, MIL_Automate& ( xml::xistream&, MIL_Formation& ), CreateInFormation );
 };
 
 #endif // __MockArmy_h_

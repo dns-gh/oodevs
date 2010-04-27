@@ -12,28 +12,9 @@
 
 #include "Entities/Actions/PHY_FireResults_ABC.h"
 
-// =============================================================================
-/** @class  MockPHY_FireResults_ABC
-    @brief  MockPHY_FireResults_ABC
-*/
-// Created: SLG 2010-01-19
-// =============================================================================
-class MockPHY_FireResults_ABC
-    : public mockpp::ChainableMockObject
-    , public PHY_FireResults_ABC
+MOCK_BASE_CLASS( MockPHY_FireResults_ABC, PHY_FireResults_ABC )
 {
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-    MockPHY_FireResults_ABC()
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockPHY_FireResults_ABC" ) )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Hit ) {}
-    virtual ~MockPHY_FireResults_ABC() {}
-    //@}
-
-    MOCKPP_VOID_CHAINABLE0( MockPHY_FireResults_ABC, Hit );
-
+    MOCK_METHOD( Hit, 0 );
 };
 
 #endif // __MockPHY_FireResults_ABC_h_

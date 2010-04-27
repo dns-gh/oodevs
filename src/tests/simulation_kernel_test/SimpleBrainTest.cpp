@@ -164,7 +164,7 @@ BOOST_AUTO_TEST_CASE( ActivateOrderExecutesBehaviour )
     DEC_TestPopulationDecision decision( population, 0 );
     MockMIL_MissionType_ABC missionType;
     std::string typeString( "missionBehavior" );
-    missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
+    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( typeString );
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
@@ -189,8 +189,7 @@ BOOST_AUTO_TEST_CASE( ActivateOrderPassesMissionToDecisional )
     StubMIL_Population population( type );
     DEC_TestPopulationDecision decision( population, 0 );
     MockMIL_MissionType_ABC missionType;
-    std::string typeString( "missionBehaviorWithArg" );
-    missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
+    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehaviorWithArg" );
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );
     decision.StartMissionBehavior( mission );
@@ -216,8 +215,7 @@ BOOST_AUTO_TEST_CASE( DecisionalCanUseMissionParameters )
     StubMIL_Population population( type );
     DEC_TestPopulationDecision decision( population, 0 );
     MockMIL_MissionType_ABC missionType;
-    std::string typeString( "missionBehavior" );
-    missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
+    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "missionBehavior" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "param" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
@@ -244,8 +242,7 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLua )
     StubMIL_Population population( type );
     DEC_TestPopulationDecision decision( population, 0 );
     MockMIL_MissionType_ABC missionType;
-    std::string typeString( "testDEC_GetMission" );
-    missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
+    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "testDEC_GetMission" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "parameterValue" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
@@ -272,8 +269,7 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesParametersToLuaMission )
     StubMIL_Population population( type );
     DEC_TestPopulationDecision decision( population, 0 );
     MockMIL_MissionType_ABC missionType;
-    std::string typeString( "mission" );
-    missionType.GetDIABehavior_mocker.expects( once() ).will( returnValue( &typeString ) );
+    MOCK_EXPECT( missionType, GetDIABehavior ).once().returns( "mission" );
     StubDEC_KnowledgeResolver_ABC resolver;
     std::string missionParameter( "parameterValue" );
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver, missionParameter ) );
@@ -303,8 +299,7 @@ BOOST_AUTO_TEST_CASE( DEC_GetMissionPassesOtherMissionsParametersToLua )
     DEC_TestPopulationDecision decision( population, &otherDecision );
 
     MockMIL_MissionType_ABC missionType;
-    std::string typeString( "testDEC_GetOtherMission" );
-    missionType.GetDIABehavior_mocker.expects( exactly( 2 ) ).will( returnValue( &typeString ) );
+    MOCK_EXPECT( missionType, GetDIABehavior ).exactly( 2 ).returns( "testDEC_GetOtherMission" );
 
     StubDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< MIL_Mission_ABC > mission ( new StubMIL_Mission_ABC( missionType, resolver ) );

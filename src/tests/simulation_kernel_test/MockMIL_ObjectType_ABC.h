@@ -12,35 +12,10 @@
 
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 
-// =============================================================================
-/** @class  MockMIL_ObjectType_ABC
-    @brief  MockMIL_ObjectType_ABC
-*/
-// Created: LDC 2009-06-11
-// =============================================================================
-class MockMIL_ObjectType_ABC : public MIL_ObjectType_ABC
-                             , public mockpp::ChainableMockObject
+MOCK_BASE_CLASS( MockMIL_ObjectType_ABC, MIL_ObjectType_ABC )
 {
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-             MockMIL_ObjectType_ABC() 
-                : mockpp::ChainableMockObject( "MockMIL_ObjectType_ABC", 0 )
-                , GetName_mocker( "GetName", this )
-             {}
-    virtual ~MockMIL_ObjectType_ABC() {}
-    //@}
-    virtual unsigned int GetID() const
-    {
-        throw;
-    }
-    virtual const std::string& GetName() const
-    {
-        return *GetName_mocker.forward();
-    }
-
-    mockpp::ChainableMockMethod< const std::string* > GetName_mocker;
+    MOCK_METHOD( GetID, 0 );
+    MOCK_METHOD( GetName, 0 );
 };
 
 #endif // __StubMIL_ObjectType_ABC_h_

@@ -13,41 +13,13 @@
 #include "MIL_Time_ABC.h"
 #include "MIL_Singletons.h"
 
-// =============================================================================
-/** @class  MockMIL_Time_ABC
-    @brief  MockMIL_Time_ABC
-*/
-// Created: LDC 2009-12-31
-// =============================================================================
-class MockMIL_Time_ABC : public mockpp::ChainableMockObject
-    , public MIL_Time_ABC
+MOCK_BASE_CLASS( MockMIL_Time_ABC, MIL_Time_ABC )
 {
-public:
-    MockMIL_Time_ABC()
-    : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockMIL_Time_ABC" ) )
-	, MIL_Time_ABC()
-    , GetCurrentTick_mocker( "GetCurrentTick", this )
-    , GetTickDuration_mocker( "GetTickDuration", this )
-    {
-        MIL_Singletons::RegisterTime( *this );
-    }
-    virtual ~MockMIL_Time_ABC()
-    {
-        MIL_Singletons::UnregisterTime( *this );
-    }
+             MockMIL_Time_ABC() { MIL_Singletons::RegisterTime( *this ); }
+    virtual ~MockMIL_Time_ABC() { MIL_Singletons::UnregisterTime( *this ); }
 
-    virtual unsigned int GetCurrentTick() const
-    {
-        return GetCurrentTick_mocker.forward();
-    }
-    virtual unsigned int GetTickDuration() const
-    {
-        return GetTickDuration_mocker.forward();
-    }
-
-    mockpp::ChainableMockMethod< unsigned int > GetCurrentTick_mocker;
-    mockpp::ChainableMockMethod< unsigned int > GetTickDuration_mocker;
-
+    MOCK_METHOD( GetCurrentTick, 0 );
+    MOCK_METHOD( GetTickDuration, 0 );
 };
 
 #endif // __MockMIL_Time_ABC_h_

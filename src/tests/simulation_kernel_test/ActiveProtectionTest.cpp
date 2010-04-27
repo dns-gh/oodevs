@@ -70,8 +70,8 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         pion.RegisterRole( *roleIndirectFiring );
 
         MockMIL_Time_ABC time;
-        time.GetTickDuration_mocker.stubs().will( returnValue( 10u ) );
-        time.GetCurrentTick_mocker.stubs().will( returnValue( 10u ) );
+        MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
+        MOCK_EXPECT( time, GetCurrentTick ).returns( 10u );
 
         const std::string dotations( "<dotations><dotation category='ammo' name='munition' id='1' nature='Solide' package-size='1' package-mass='1' package-volume='1'>"
             "<attritions><attrition destruction='0' protection='protection1' repairable-with-evacuation='0.2' repairable-without-evacuation='0.8'/></attritions>"
@@ -88,7 +88,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 
         MockRoleDotations* dotationRole = new MockRoleDotations();
         pion.RegisterRole( *dotationRole );
-        MOCKPP_CHAINER_FOR( MockRoleDotations, AddFireReservationShadow )( dotationRole ).expects( once() ).will( returnValue( 1. ) );
+        MOCK_EXPECT( dotationRole, AddFireReservation ).once().returns( 1. );
 
         const MT_Vector2D targetPosition;
         PHY_ActionIndirectFire_Position* pAction = new PHY_ActionIndirectFire_Position( pion, pCategory, 1, &targetPosition );
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         // Expect a Callback
         decision->RegisterFunction( "CallbackAction", &CheckCallback );
         
-        mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgStartUnitFire, StopUnitFire
+        MOCK_EXPECT( mockPublisher, Send ).at_least( 0 );
 
         pAction->Execute();
 

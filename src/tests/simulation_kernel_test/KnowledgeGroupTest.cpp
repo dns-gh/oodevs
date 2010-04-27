@@ -78,7 +78,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
 
     // initialize publisher
     MockNET_Publisher_ABC mockPublisher;
-    mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
+    MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
     // moves group2 under group1
     group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
@@ -131,7 +131,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
 
     // initialize publisher
     MockNET_Publisher_ABC mockPublisher;
-    mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
+    MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
     // moves group2 under group1
     group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
@@ -184,7 +184,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
 
     // initialize publisher
     MockNET_Publisher_ABC mockPublisher;
-    mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
+    MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
     MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
     // moves group2 under group1
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
 
     // initialize publisher
     MockNET_Publisher_ABC mockPublisher;
-    mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgknowledgeGroupUpdate
+    MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
     // change knowledge group type
     groupArmy.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );

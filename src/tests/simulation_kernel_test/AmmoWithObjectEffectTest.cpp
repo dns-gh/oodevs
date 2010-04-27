@@ -72,8 +72,8 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         pion.RegisterRole( *roleIndirectFiring );
 
         MockMIL_Time_ABC time;
-        time.GetTickDuration_mocker.stubs().will( returnValue( 10u ) );
-        time.GetCurrentTick_mocker.stubs().will( returnValue( 10u ) );
+        MOCK_EXPECT( time, GetTickDuration ).returns( 10u );
+        MOCK_EXPECT( time, GetCurrentTick ).returns( 10u );
         TestIndirectFireModifier* testRole = new TestIndirectFireModifier( time, effectManager, pion, dotations );
         pion.RegisterRole< TestIndirectFireModifier >( *testRole );
         MockRoleLocation* locationRole = new MockRoleLocation();
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
 
         MockRoleDotations* dotationRole = new MockRoleDotations();
         pion.RegisterRole( *dotationRole );
-        MOCKPP_CHAINER_FOR( MockRoleDotations, AddFireReservationShadow )( dotationRole ).expects( once() ).will( returnValue( 1. ) );
+        MOCK_EXPECT( dotationRole, AddFireReservation ).once().returns( 1. );
 
         const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
 
@@ -95,7 +95,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         // Expect a Callback
         decision->RegisterFunction( "CallbackAction", &CheckCallback );
         
-        mockPublisher.Send_mocker.expects( atLeastOnce() ); // NET_ASN_MsgStartUnitFire, StopUnitFire
+        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
         pAction->Execute();
 

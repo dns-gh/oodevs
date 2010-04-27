@@ -12,33 +12,9 @@
 
 #include "simulation_kernel/Knowledge/KnowledgeGroupFactory_ABC.h"
 
-// =============================================================================
-/** @class  MockKnowledgeGroupFactory
-@brief  MockKnowledgeGroupFactory
-*/
-// Created: SLG 2009-11-25
-// =============================================================================
-class MockKnowledgeGroupFactory
-    : public mockpp::ChainableMockObject
-    , public KnowledgeGroupFactory_ABC
+MOCK_BASE_CLASS( MockKnowledgeGroupFactory, KnowledgeGroupFactory_ABC )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit MockKnowledgeGroupFactory() 
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockKnowledgeGroupFactory" ), 0 )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CreateFormationShadow )       
-    {
-    }
-    virtual ~MockKnowledgeGroupFactory() {}
-    //@}
-
-    virtual MIL_KnowledgeGroup& Create( xml::xistream& xis, MIL_Army_ABC& army, MIL_KnowledgeGroup* parent = 0  )
-    {
-        return *CreateFormationShadow();
-    }
-
-    MOCKPP_CONST_CHAINABLE_EXT0( MockKnowledgeGroupFactory, MIL_KnowledgeGroup*, CreateFormationShadow, MIL_KnowledgeGroup, );
+    MOCK_METHOD( Create, 3 );
 };
 
 #endif // __MockKnowledgeGroupFactory_h_

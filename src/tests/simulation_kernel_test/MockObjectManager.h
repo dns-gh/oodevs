@@ -12,33 +12,9 @@
 
 #include "simulation_kernel/Entities/Objects/MIL_ObjectManager.h"
 
-// =============================================================================
-/** @class  MockObjectManager
-    @brief  MockObjectManager
-*/
-// Created: MGD 2009-09-25
-// =============================================================================
-class MockObjectManager
-    : public mockpp::ChainableMockObject
-    , public MIL_ObjectManager
+MOCK_BASE_CLASS( MockObjectManager, MIL_ObjectManager )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit MockObjectManager() 
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockObjectManager" ), 0 )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CreateObjectShadow )       
-    {
-    }
-    virtual ~MockObjectManager() {}
-    //@}
-        
-    MIL_Object_ABC& CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
-    {
-        return *CreateObjectShadow();
-    }
-
-    MOCKPP_CONST_CHAINABLE_EXT0( MockObjectManager, MIL_Object_ABC*, CreateObjectShadow, MIL_Object_ABC, );
+    MOCK_METHOD_EXT( CreateObject, 2, MIL_Object_ABC&( xml::xistream&, MIL_Army_ABC& ), CreateObjectFromXml );
 };
 
 #endif // __MockArmy_h_

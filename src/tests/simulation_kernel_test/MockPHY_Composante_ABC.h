@@ -12,44 +12,14 @@
 
 #include"Entities/Agents/Units/Composantes/PHY_Composante_ABC.h"
 
-// =============================================================================
-/** @class  MockPHY_Composante_ABC
-    @brief  MockPHY_Composante_ABC
-*/
-// Created: SLG 2010-01-19
-// =============================================================================
-class MockPHY_Composante_ABC
-    : public mockpp::ChainableMockObject
-    , public PHY_Composante_ABC
+MOCK_BASE_CLASS( MockPHY_Composante_ABC, PHY_Composante_ABC )
 {
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-             MockPHY_Composante_ABC()
-                 : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockPHY_Composante_ABC" ) )
-             , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetTypeShadow )
-                 , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CanFire )
-                 , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CanFireWhenUnloaded )
-                 , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetMajorScore )
-                 , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetIdentificationMaxRange )
-             {}
-             virtual ~MockPHY_Composante_ABC() {}
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual const PHY_ComposanteType_ABC& GetType            () const
-    {
-        PHY_ComposanteType_ABC* result = GetTypeShadow();
-        return *result;
-    }
-    MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, PHY_ComposanteType_ABC*, GetTypeShadow );
-    MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, bool, CanFire );
-    MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, bool, CanFireWhenUnloaded );
-    MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, unsigned int, GetMajorScore );
-    MOCKPP_CONST_CHAINABLE0( MockPHY_Composante_ABC, float, GetIdentificationMaxRange );
-    //@}
+    MOCK_METHOD( GetType, 0 );
+    MOCK_METHOD( GetIdentificationMaxRange, 0 );
+    MOCK_METHOD( GetReconnoissanceMaxRange, 0 );
+    MOCK_METHOD( CanFire, 0 );
+    MOCK_METHOD( CanFireWhenUnloaded, 0 );
+    MOCK_METHOD( GetMajorScore, 0 );
 };
 
 #endif // __MockPHY_Composante_ABC_h_

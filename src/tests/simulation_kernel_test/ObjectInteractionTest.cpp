@@ -417,11 +417,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
 
     MockAgent intruder;
     MockMIL_Time_ABC time;
-    time.GetCurrentTick_mocker.expects( mockpp::once() ).will( returnValue( 1u ) );
+    MOCK_EXPECT( time, GetCurrentTick ).once().returns( 1u );
     BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
-    animator.GetRole< MockRolePerceiver >().NotifyExternalPerception_mocker.expects( once() )
-                                                                           .with( same< MIL_Agent_ABC >( intruder )
-                                                                                , same< const PHY_PerceptionLevel >( PHY_PerceptionLevel::identified_ ) );
+
+    MOCK_EXPECT( animator.GetRole< MockRolePerceiver >(), NotifyExternalPerception )
+                .with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
     army.verify();
     animator.verify();
     intruder.verify();
@@ -460,7 +460,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
     MockAgent intruder;
     intruder.RegisterRole( *new MockRoleLocation() );
     MockMIL_Time_ABC time;
-    time.GetCurrentTick_mocker.expects( mockpp::once() ).will( returnValue( 1u ) );
+    MOCK_EXPECT( time, GetCurrentTick ).once().returns( 1u );
     BOOST_CHECK_NO_THROW( object->ProcessAgentEntering( intruder ) );
     army.verify();
     intruder.verify();
@@ -472,13 +472,11 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
     detector.RegisterRole( *new MockRolePerceiver() );
     static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >().AddDetector( detector );
 
-    time.GetCurrentTick_mocker.expects( mockpp::once() ).will( returnValue( 3u ) );
+    MOCK_EXPECT( time, GetCurrentTick ).once().returns( 3u );
 
     MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &intruder.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
 
-    detector.GetRole< MockRolePerceiver >().NotifyExternalPerception_mocker.expects( once() )
-        .with( same< MIL_Agent_ABC >( intruder )
-        , same< const PHY_PerceptionLevel >( PHY_PerceptionLevel::identified_ ) );
+    MOCK_EXPECT( detector.GetRole< MockRolePerceiver >(), NotifyExternalPerception ).with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
    
     BOOST_CHECK_NO_THROW( object->ProcessAgentInside( intruder ) );
 
@@ -532,7 +530,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
     MockNET_Publisher_ABC mockPublisher;
 
     {
-        mockPublisher.Send_mocker.expects( atLeastOnce() );
+        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
         MIL_PopulationAttitude::Initialize();
         MIL_ObjectLoader loader;
         {
@@ -580,7 +578,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
     TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MockNET_Publisher_ABC mockPublisher;
     {
-        mockPublisher.Send_mocker.expects( atLeastOnce() );
+        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
         MIL_PopulationAttitude::Initialize();
         MIL_ObjectLoader loader;
         {
@@ -629,7 +627,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
     MockNET_Publisher_ABC mockPublisher;
     
     {
-        mockPublisher.Send_mocker.expects( atLeastOnce() );
+        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
         MIL_PopulationAttitude::Initialize();
         MIL_ObjectLoader loader;
         {

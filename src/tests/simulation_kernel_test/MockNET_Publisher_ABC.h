@@ -12,40 +12,9 @@
 
 #include "Network/NET_Publisher_ABC.h"
 
-// =============================================================================
-/** @class  MockNET_Publisher_ABC
-    @brief  MockNET_Publisher_ABC
-*/
-// Created: LDC 2010-01-04
-// =============================================================================
-class MockNET_Publisher_ABC
-    : public mockpp::ChainableMockObject
-    , public NET_Publisher_ABC
+MOCK_BASE_CLASS( MockNET_Publisher_ABC, NET_Publisher_ABC )
 {
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-    MockNET_Publisher_ABC() 
-     : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockNET_Publisher_ABC" ) )
-     , Send_mocker                ( "Send", this )
-    {
-        // NOTHING
-    }
-    virtual ~MockNET_Publisher_ABC()
-    {
-        // NOTHING
-    }
-    //@}
-    
-    virtual void Send( MsgsSimToClient::MsgSimToClient& msg )
-    {
-        Send_mocker.forward( &msg );
-    }
-
-    mockpp::ChainableMockMethod< void, MsgsSimToClient::MsgSimToClient* > Send_mocker;
-    
+    MOCK_METHOD( Send, 1 );
 };
-
 
 #endif // __MockPublisher_ABC_h_
