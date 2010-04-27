@@ -61,7 +61,7 @@ do
                                     --[[// Calcul une force d'appui
 ]]--[[// ------------------------------------------------------------
 ]]--[[// Moins on a d'appui, plus on a envie d'etre appuyer
-]]local rForceAppuyer = ( 1 / ( 1 + #( pionEnTete:GetselUnitesEnAppui_() ) ) )
+]]local rForceAppuyer = ( 1 / ( 1 + #( F_Pion_GetselUnitesEnAppui( pionEnTete ) ) ) )
                                     local rForceAppui = rForceAppuyer * S_ForceSoutien( pPion, pionEnTete )
                                     Activate( self.activations.BEH_Conduite_Automate_INF_SuivreCompromis, rForceAppui, { pPion, pionEnTete, } )
                                 end

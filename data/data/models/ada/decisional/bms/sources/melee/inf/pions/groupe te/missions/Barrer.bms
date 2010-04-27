@@ -199,7 +199,7 @@ node "BEH_Pion_INF_Barrer_DispositifArret"
         self.eActionDebarquer = self.eActionDebarquer or eActionEnCours
         if( ModuleBegins() ) then
             do
-                if( not M_TRANSPORT_INF_EST_EMBARQUE() ) then
+                if( not DEC_Agent_EstEmbarque() ) then
                     self.eActionDebarquer = eActionEffectuee
                 end
 

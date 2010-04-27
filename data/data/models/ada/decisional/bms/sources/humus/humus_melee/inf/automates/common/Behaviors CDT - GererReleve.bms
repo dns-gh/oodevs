@@ -56,7 +56,7 @@ do
                                         if _continue then
                                         local rForceSoutien = 1
                                         --[[// On favorise la releve par un des pions en appui
-]]if( DIA_Contains( pionDetruit:GetselUnitesEnAppui_(), x_appui ) ) then
+]]if( DIA_Contains( F_Pion_GetselUnitesEnAppui( pionDetruit ), x_appui ) ) then
                                             rForceSoutien = 3
                                         end
 

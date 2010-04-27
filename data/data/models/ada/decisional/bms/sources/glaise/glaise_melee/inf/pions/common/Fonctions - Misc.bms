@@ -125,7 +125,6 @@ end
 function S_Eni_Pion_INF_ChercheAppui( )
     local _returnValue = nil
     _returnValue = 0
-    local sPionDemande = DEC_GetCategory( "demande_tir_appui" )
     local rMaxForce = 0
     if( ( rMaxForce == 0 or rMaxForce == nil ) ) then
         _returnValue = S_Cherche_Pion_INF_EniPercu()

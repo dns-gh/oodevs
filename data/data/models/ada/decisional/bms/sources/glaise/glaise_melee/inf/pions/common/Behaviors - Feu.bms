@@ -538,7 +538,7 @@ node "BEH_Tir_Pion_INF_FaireFeu_Debarque"
             end
         end
 
-        if( ( not M_TRANSPORT_INF_EST_EMBARQUE() ) and S_Tir_EstAPortee_Debarque( self._namedParams.repEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
+        if( ( not DEC_Agent_EstEmbarque() ) and S_Tir_EstAPortee_Debarque( self._namedParams.repEni, GetStateVariable( "VE_Agressivite_Tir" ) ) ) then
             do
                 Activate( self.activations.ACT_Info_Trace, 1, { self.stMsg .. "OK.", } )
                 --[[// action ACT_MAJ_EtatSituationEni( eTypeContexte_ExecuteTir );

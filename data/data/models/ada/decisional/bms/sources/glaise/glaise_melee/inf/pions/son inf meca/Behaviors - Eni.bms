@@ -233,7 +233,7 @@ node "BEH_Eni_Pion_VAB_ManoeuvreDetruire"
                         end
                     end
 
-                --[[// if ( M_TRANSPORT_INF_EST_EMBARQUE() )
+                --[[// if ( DEC_Agent_EstEmbarque() )
 ]]--[[// On fait en sorte de ne pas etre vu
 ]]                cases_switch_1[2] = true
                 end

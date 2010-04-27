@@ -192,7 +192,7 @@ do
                                 end
 
                                 --[[// Moins on a d'appui, plus on a envie d'etre appuyer
-]]local rForceAppuyer = ( 1 / ( 1 + #( pionAAppuyer:GetselUnitesEnAppui_() ) ) )
+]]local rForceAppuyer = ( 1 / ( 1 + #( F_Pion_GetselUnitesEnAppui( pionAAppuyer ) ) ) )
                                 local rForceAppui = 0.1 * rForceEnTete * rForceAppuyer
                                 Activate( self.activations.BEH_Conduite_Automate_INF_AppuyerCompromis, rForceAppui, { self.pionAppui, pionAAppuyer, } )
                             end
@@ -273,7 +273,7 @@ do
                     do return end
                 end
 
-                local sAppuis = x_pion:GetselUnitesEnAppui_()
+                local sAppuis = F_Pion_GetselUnitesEnAppui( x_pion )
                 for _,x_appui in pairs( sAppuis or {} ) do
                 local _continue = true
 do

@@ -185,7 +185,7 @@ node "BEH_Dep_Pion_INF_Freiner_Decrocher"
 --[[// Fin embarquement
 ]]        end
 
-        if( M_TRANSPORT_INF_EST_EMBARQUE() ) then
+        if( DEC_Agent_EstEmbarque() ) then
             self.params.__returnValue = eActionEffectuee
             Halt( self )
             do return end

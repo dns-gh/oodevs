@@ -196,7 +196,7 @@ node "BEH_Eni_Pion_VAB_ManoeuvreDetruire"
                         do
                             --[[// Détruire l'eni : on lance l'assaut
 ]]DEC_Trace( "base d'assaut atteinte - lance l'assaut" )
-                            --[[// if ( M_TRANSPORT_INF_EST_EMBARQUE() )
+                            --[[// if ( DEC_Agent_EstEmbarque() )
 ]]Activate( self.activations.ACT_Tir_FumigeneVersEni, 1, { self._namedParams.ksEni, } )
                             self.ePhase = eDetruire
                         end

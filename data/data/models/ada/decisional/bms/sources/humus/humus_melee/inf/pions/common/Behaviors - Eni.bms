@@ -326,7 +326,7 @@ node "BEH_Eni_Pion_VAB_ManoeuvreDetruire"
 ]]                cases_switch_1[2] = true
                 end
                 if cases_switch_1[2] or switch_1 == eDetruire then
-                    --[[// if ( M_TRANSPORT_INF_EST_EMBARQUE() )
+                    --[[// if ( DEC_Agent_EstEmbarque() )
 ]]Activate( self.activations.BEH_MOT_Pion_INF_Debarquer, 1.1, {} )
                     Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )--[[// On fait en sorte de ne pas etre vu
 ]]

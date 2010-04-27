@@ -229,7 +229,7 @@ node "BEH_Poste_Pion_INF_TomberEnGarde"
         if( self.eAction == eActionEnCours ) then
             Activate( self.activations.ACT_Dep_Pion_INF_Arret, 1, setmetatable( { M_DELAI_TOMBE_EN_GARDE(), "Tombe en garde", }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
         else
-if( not ( bDebarquement and M_TRANSPORT_INF_EST_EMBARQUE() ) ) then
+if( not ( bDebarquement and DEC_Agent_EstEmbarque() ) ) then
                 self.params.__returnValue = eActionEffectuee
                 do return end
             end
@@ -285,7 +285,7 @@ node "BEH_Misc_Pion_INF_ModulationVitesse"
             end
         else
 do
-                if( M_TRANSPORT_INF_EST_EMBARQUE() ) then
+                if( DEC_Agent_EstEmbarque() ) then
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 0.4, } )
                 else
                     Activate( self.activations.ACT_Dep_ModulationVitesse, 1, { 1, } )
@@ -514,7 +514,6 @@ node "BEH_Feu_Pion_INF_TirAppui"
         self.eAction = self.eAction or eActionEnCours
         self.eActionFixer = self.eActionFixer or eActionEnCours
         self.bSpontanee = self.bSpontanee or true
-        local sDemandeTir = DEC_GetCategory( "demande_tir_appui" )
         Activate( self.activations.ACT_MAJ_EnnemiEnCours, 1, { self._namedParams.ksEni, } )
         if( self.eAction == eActionImpossible and not self.bSpontanee ) then
             self.params.__returnValue = eActionImpossible

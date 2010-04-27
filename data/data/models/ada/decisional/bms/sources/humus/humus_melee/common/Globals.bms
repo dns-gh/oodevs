@@ -603,9 +603,9 @@ function S_Cherche_Automate_INF_PionAAppuyer( sPion_PE, pPion )
     local _continue = true
 do
             local pion = x
-            if( #( pion:GetselUnitesEnAppui_() ) < rMin_Appui ) then
+            if( #( F_Pion_GetselUnitesEnAppui( pion ) ) < rMin_Appui ) then
                 do
-                    rMin_Appui = #( pion:GetselUnitesEnAppui_() )
+                    rMin_Appui = #( F_Pion_GetselUnitesEnAppui( pion ) )
                     _returnValue = pion
                                         do return _returnValue end
 
@@ -837,15 +837,15 @@ do
                         rSelectedBoost = 2
                     end
 
-                    if( #( pion:GetselUnitesEnAppui_() ) > 1 ) then
-                        rForceAppui = 1 / #( pion:GetselUnitesEnAppui_() )
+                    if( #( F_Pion_GetselUnitesEnAppui( pion ) ) > 1 ) then
+                        rForceAppui = 1 / #( F_Pion_GetselUnitesEnAppui( pion ) )
                     end
 
-                    if( ( rSelectedBoost > 1 ) and ( #( pion:GetselUnitesEnAppui_() ) == 1 ) ) then
+                    if( ( rSelectedBoost > 1 ) and ( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 1 ) ) then
                         rForceAppui = 2.5
                     end
 
-                    if( ( #( pion:GetselUnitesEnAppui_() ) == 0 or #( pion:GetselUnitesEnAppui_() ) == nil ) ) then
+                    if( ( #( F_Pion_GetselUnitesEnAppui( pion ) ) == 0 or #( F_Pion_GetselUnitesEnAppui( pion ) ) == nil ) ) then
                         rForceAppui = 3.5
                     end
 

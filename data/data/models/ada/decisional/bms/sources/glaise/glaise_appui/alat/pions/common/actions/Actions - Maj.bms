@@ -65,7 +65,7 @@ node "Act_AbonnerPionAAppui"
 
     select = function( self )
                 if( ModuleBegins() ) then
-            DIA_PushBack( self._namedParams.pion:GetselUnitesEnAppui_(), myself )
+            DIA_PushBack( self._namedParams.F_Pion_GetselUnitesEnAppui( pion ), myself )
         end
 
     end,
@@ -74,8 +74,8 @@ node "Act_AbonnerPionAAppui"
             end,
 
     destroy = function( self )
-                if( DIA_Contains( self._namedParams.pion:GetselUnitesEnAppui_(), myself ) ) then
-            DIA_Remove( self._namedParams.pion:GetselUnitesEnAppui_(), myself )
+                if( DIA_Contains( self._namedParams.F_Pion_GetselUnitesEnAppui( pion ), myself ) ) then
+            DIA_Remove( self._namedParams.F_Pion_GetselUnitesEnAppui( pion ), myself )
         end
 
     end,
