@@ -42,7 +42,7 @@ public:
 
     //! @name Accessors
     //@{
-          unsigned int                      GetMosID            () const;
+    unsigned int                    GetMosID            () const;
     const PHY_DotationType&         GetType             () const;
     const std::string&              GetName             () const;
     const PHY_AmmoDotationClass*    GetAmmoDotationClass() const;
@@ -51,6 +51,7 @@ public:
           bool                      IsGuided            () const;
           float                     GetGuidanceRange    () const;
           bool                      IsIlluminating      ( float range, bool permanent ) const;
+          double                    GetProtectionRange  ( unsigned materialId ) const;
     //@}
 
     //! @name Fire
@@ -80,11 +81,15 @@ public:
     bool operator!=( const PHY_DotationCategory& rhs ) const;
     //@}
 
+    static double       FindUrbanProtection ( unsigned materialId );
+
 private:
     //! @name Types
     //@{
     typedef std::vector< PHY_AttritionData > T_AttritionVector;
     typedef std::vector< MT_Float > T_UrbanAttritionVector;
+    typedef std::map< int, double > T_UrbanMaterialAttritionMap;
+    typedef T_UrbanMaterialAttritionMap::const_iterator CIT_UrbanMaterialAttritionMap;
     //@}
 
 private:
@@ -132,6 +137,10 @@ private:
     bool bGuided_;
     bool bMaintainGuidance_;
     float rGuidanceRange_;
+
+private:
+    static T_UrbanMaterialAttritionMap urbanBestValue_;
+    static unsigned int            nbComposantes;
 
 };
 

@@ -23,10 +23,17 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/MIL_KnowledgeGroup.h"
+#include "Knowledge/DEC_Knowledge_Urban.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "Tools/MIL_IDManager.h"
+#include "UrbanType.h"
+#include "urban/StaticModel.h"
+#include "urban/Architecture.h"
+#include "urban/TerrainObject_ABC.h"
+#include "urban/MaterialCompositionType.h"
+#include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_Agent )
 
@@ -767,6 +774,29 @@ const DEC_Knowledge_AgentComposante* DEC_Knowledge_Agent::GetMajorComposante() c
         }
     }
     return pMajorComposante;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::GetMaterialComposantesProtectionLevel
+// Created: DDA 2010-04-23
+// -----------------------------------------------------------------------------
+double DEC_Knowledge_Agent::GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const
+{
+    const urban::Architecture* architecture = urbanKnowledge->GetTerrainObjectKnown().RetrievePhysicalFeature< urban::Architecture >();
+    
+    if ( architecture )
+    {
+        const PHY_RolePion_Composantes& role = GetAgentKnown().GetRole< PHY_RolePion_Composantes >();
+        unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
+
+        if (GetMaxPerceptionLevel() == PHY_PerceptionLevel::identified_)
+            return role.GetProtectionIndexComposante(materialID);
+        else if ((GetMaxPerceptionLevel() == PHY_PerceptionLevel::recognized_) || (GetMaxPerceptionLevel() == PHY_PerceptionLevel::detected_) )
+            return PHY_DotationCategory::FindUrbanProtection( materialID );
+        else 
+            return -1;
+    }
+
 }
 
 // -----------------------------------------------------------------------------

@@ -1347,3 +1347,17 @@ bool PHY_ComposanteTypePion::DestroyIndirectFire( const PHY_DotationCategory& ca
             return true;
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetProtectionIndexComposante
+// Created: DDA 2010-04-22
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetProtectionIndexComposante(int idMaterial) const
+{
+    double rRange = 1.;
+    for( CIT_WeaponTypeMap it = weaponTypes_.begin(); it != weaponTypes_.end(); ++it )
+        rRange = std::min( rRange, it->first->GetDotationCategory().GetProtectionRange(idMaterial) );
+ 
+    return rRange;
+}
+    

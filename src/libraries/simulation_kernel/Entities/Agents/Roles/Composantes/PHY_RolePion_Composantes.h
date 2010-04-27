@@ -173,7 +173,7 @@ public:
     virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
     virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
 
-    virtual double    GetDangerosity                     ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const; 
+    virtual double    GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const; 
     virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
@@ -191,6 +191,7 @@ public:
     virtual       void                 BuildKnowledgeComposantes( T_KnowledgeComposanteVector& knowledge ) const;
     virtual const PHY_ComposantePion*  GetMajorComposante       () const;
     virtual       MT_Float             GetMajorComponentWeight  () const;
+    virtual       double               GetProtectionIndexComposante ( int idMaterial ) const;
     //@}
 
     //! @name Load / unload / transport
@@ -208,10 +209,10 @@ public:
 
     //! @name Accessors
     //@{          
-    virtual       MT_Float       GetOperationalState     () const;
-    virtual       double       GetMajorOperationalState() const;
-    virtual       bool           IsUsable                () const;                    
-    virtual const MIL_Agent_ABC& GetPion                 () const;    
+    virtual       MT_Float          GetOperationalState     () const;
+    virtual       double            GetMajorOperationalState() const;
+    virtual       bool              IsUsable                () const;                    
+    virtual const MIL_Agent_ABC&    GetPion                 () const;    
     //@}
 
     //! @name Network

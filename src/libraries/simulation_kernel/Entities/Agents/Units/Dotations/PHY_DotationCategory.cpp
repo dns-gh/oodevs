@@ -24,6 +24,8 @@
 #include <urban/MaterialCompositionType.h>
 #include <xeumeuleu/xml.h>
 
+PHY_DotationCategory::T_UrbanMaterialAttritionMap PHY_DotationCategory::urbanBestValue_;
+
 //-----------------------------------------------------------------------------
 // Name: PHY_DotationType::Initialize
 // Created: NLD/JVT 2004-08-03
@@ -156,6 +158,7 @@ void PHY_DotationCategory::ReadAttrition( xml::xistream& xis )
 void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
 {
     xis >> xml::list( "urbanModifiers", *this, &PHY_DotationCategory::ListUrbanAttrition );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -183,6 +186,11 @@ void PHY_DotationCategory::ReadUrbanAttritionModifier( xml::xistream& xis )
     if( urbanAttritionFactors_.size() <  material->GetId() )
         throw std::runtime_error( "error in loading material type" );
     urbanAttritionFactors_[ material->GetId() ] = rFactor;
+
+    CIT_UrbanMaterialAttritionMap it = urbanBestValue_.find( material->GetId() );
+    if( it == urbanBestValue_.end() )
+        urbanBestValue_[material->GetId()] = 1;
+    urbanBestValue_[material->GetId()] = std::min( urbanBestValue_[material->GetId()] , rFactor );
 }
 
 // -----------------------------------------------------------------------------
@@ -462,4 +470,33 @@ float PHY_DotationCategory::GetGuidanceRange() const
 bool PHY_DotationCategory::IsIlluminating( float range, bool permanent ) const
 {
     return bIlluminating_ && range < fRange_ && permanent != bMaintainIllumination_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetProtectionRange
+// Created: DDA 2010-04-22
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory::GetProtectionRange( unsigned materialId ) const
+{
+    if (materialId > 0)
+        return urbanAttritionFactors_[ materialId ];
+    else 
+        return -1.0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::FindUrbanProtection
+// Created: DDA 2010-04-26
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory::FindUrbanProtection( unsigned materialId )
+{
+    if( materialId > 0 )
+    {
+        CIT_UrbanMaterialAttritionMap it = urbanBestValue_.find( materialId );
+        if( it == urbanBestValue_.end() )
+            throw std::runtime_error( "Unknown material" );
+        return it->second;    
+    }
+    else
+        return -1.0;
 }

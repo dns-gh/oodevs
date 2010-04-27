@@ -13,6 +13,7 @@
 #define __DEC_KnowledgeAgentFunctions_h_
 
 #include "MIL.h"
+#include "Knowledge/DEC_Knowledge_Urban.h"
 
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
@@ -51,6 +52,8 @@ public:
     static bool  IsDead                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static int   Lock                                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void  Unlock                                 ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+
+    static double   GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Agent > pTarget,  boost::shared_ptr< DEC_Knowledge_Urban > pUrbanBlock );
 
     static bool  IsIlluminated                          ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float range );
     static bool  IsDefinitivelyIlluminated              ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

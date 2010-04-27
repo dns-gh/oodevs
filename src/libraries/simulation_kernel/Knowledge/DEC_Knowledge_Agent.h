@@ -125,16 +125,18 @@ public:
     const PHY_Posture& GetLastPosture                () const;
     const PHY_Posture& GetCurrentPosture             () const;
     MT_Float           GetPostureCompletionPercentage() const;
+
     //@}
 
     //! @name Decisional operations
     //@{
-    MT_Float GetDangerosity     ( const DEC_Knowledge_Agent& target ) const;
-    MT_Float GetDangerosity     ( const MIL_Agent_ABC& target ) const;
-    MT_Float GetMaxRangeToFireOn( const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
-    void     Lock               ();
-    void     Unlock             ();
-    void     KillOfficers       ();
+    MT_Float    GetDangerosity     ( const DEC_Knowledge_Agent& target ) const;
+    MT_Float    GetDangerosity     ( const MIL_Agent_ABC& target ) const;
+    MT_Float    GetMaxRangeToFireOn( const MIL_Agent_ABC& target, MT_Float rWantedPH ) const;
+    double      GetMaterialComposantesProtectionLevel( boost::shared_ptr< DEC_Knowledge_Urban > urbanKnowledge ) const;
+    void    Lock               ();
+    void    Unlock             ();
+    void    KillOfficers       ();
     //@}
 
 public:
