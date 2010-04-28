@@ -10,6 +10,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Balle Classique 14,5" codeEMAT6="Balle Classique 14,5" codeEMAT8="1X000048" codeLFRIL="Balle Classique 14,5" codeNNO="Balle Classique 14,5" id="2" name="munition" nature="Solide" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
     <attritions>
@@ -32,6 +41,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.5"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 120 OECC" codeEMAT6="" codeEMAT8="1315-860" codeLFRIL="" codeNNO="" id="4" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.07" type="Obus">
     <attritions>
@@ -43,6 +61,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 120 OFLW" codeEMAT6="" codeEMAT8="1315-863" codeLFRIL="" codeNNO="" id="5" name="munition" nature="Solide" package-mass="0.035" package-size="1" package-volume="0.07" type="Obus">
     <attritions>
@@ -54,6 +81,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.2"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 105 OCC F3" codeEMAT6="" codeEMAT8="1315-760" codeLFRIL="" codeNNO="" id="6" name="munition" nature="Solide" package-mass="0.034" package-size="2" package-volume="0.078" type="Obus">
     <attritions>
@@ -65,6 +101,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 105 OE F3" codeEMAT6="" codeEMAT8="1315--761" codeLFRIL="" codeNNO="" id="7" name="munition" nature="Solide" package-mass="0.033" package-size="2" package-volume="0.078" type="Obus">
     <attritions>
@@ -76,6 +121,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 105 OFL F3" codeEMAT6="" codeEMAT8="1315-763" codeLFRIL="" codeNNO="" id="8" name="munition" nature="Solide" package-mass="0.039" package-size="2" package-volume="0.087" type="Obus">
     <attritions>
@@ -87,6 +141,16 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.45" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
+
   </dotation>
   <dotation category="CART 20 AME" codeEMAT6="" codeEMAT8="1305-535" codeLFRIL="" codeNNO="" id="9" name="munition" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.026" type="Obus">
     <attritions>
@@ -98,6 +162,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.75" repairable-without-evacuation="0.05"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+     <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Charg 5,56 2 O-1T-4 O" codeEMAT6="" codeEMAT8="1305-054" codeLFRIL="" codeNNO="" id="10" name="munition" nature="Solide" package-mass="0.021" package-size="1300" package-volume="0.018" type="Mitraille">
     <attritions>
@@ -109,6 +182,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.7"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>   
   </dotation>
   <dotation category="Bd HOMO 5,56mm BO" codeEMAT6="" codeEMAT8="1305-064" codeLFRIL="" codeNNO="" id="11" name="munition" nature="Solide" package-mass="0.021" package-size="1300" package-volume="0.018" type="Mitraille">
     <attritions>
@@ -120,6 +202,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.7"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>   
   </dotation>
   <dotation category="RO 84 EXPLO ABL AT4CS" codeEMAT6="" codeEMAT8="1340-037" codeLFRIL="" codeNNO="" id="12" name="munition" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -131,6 +222,15 @@
       <attrition destruction="0.15" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Cart 7.62mm Balle Ord" codeEMAT6="" codeEMAT8="1305-161" codeLFRIL="" codeNNO="" id="13" name="munition" nature="Solide" package-mass="0.038" package-size="1000" package-volume="0.035" type="MissileAir">
     <attritions>
@@ -142,6 +242,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.5"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers> 
   </dotation>
   <dotation category="MIS HOT SOL-SOL" codeEMAT6="" codeEMAT8="1410-071" codeLFRIL="" codeNNO="" id="14" name="munition" nature="Solide" package-mass="0.232" package-size="4" package-volume="0.486" type="MissileSol">
     <attritions>
@@ -153,6 +262,15 @@
       <attrition destruction="0.9" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -173,6 +291,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -193,6 +320,15 @@
       <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="MIS ACCP" codeEMAT6="" codeEMAT8="1420-026" codeLFRIL="" codeNNO="" id="17" name="munition" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
     <attritions>
@@ -204,6 +340,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.2"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="ART FUM DREB" codeEMAT6="" codeEMAT8="1370-408" codeLFRIL="" codeNNO="" id="18" name="munition" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
     <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
@@ -218,6 +363,15 @@
       <attrition destruction="0.1" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -238,6 +392,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.45" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -258,6 +421,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+      <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -278,6 +450,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -298,6 +479,15 @@
       <attrition destruction="0.4" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="12" neutralization-ratio="3.5" type="grenade" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -318,6 +508,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="2" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.5"/>
       <ph target-posture="MouvementDiscret" value="0.5"/>
@@ -344,6 +543,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="Combattant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -364,6 +572,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="6" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -384,6 +601,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.1" protection="Combattant" repairable-with-evacuation="0.5" repairable-without-evacuation="0.3"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="1" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -404,6 +630,15 @@
       <attrition destruction="0.15" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 90 OE F2" codeEMAT6="" codeEMAT8="1315-421" codeLFRIL="" codeNNO="" id="31" name="munition" nature="Solide" package-mass="0.041" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
@@ -415,6 +650,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 90 OFL F4" codeEMAT6="" codeEMAT8="1315-423" codeLFRIL="" codeNNO="" id="32" name="munition" nature="Solide" package-mass="0.035" package-size="2" package-volume="0.087" type="Obus">
     <attritions>
@@ -426,6 +670,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.4" repairable-without-evacuation="0.4"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Cart 12,7 BAL PE ET LT" codeEMAT6="" codeEMAT8="1305-442" codeLFRIL="" codeNNO="" id="33" name="munition" nature="Solide" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
     <attritions>
@@ -448,6 +701,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.4"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0.8" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>   
   </dotation>
   <dotation category="Roquette SNEB 68 mm" codeEMAT6="Roquette SNEB 68 mm" codeEMAT8="Roquette SNEB 68 mm" codeLFRIL="Roquette SNEB 68 mm" codeNNO="Roquette SNEB 68 mm" id="35" name="munition" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -459,6 +721,15 @@
       <attrition destruction="0.9" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>   
     <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -479,6 +750,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.8" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+     <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Missile HAWK" codeEMAT6="Missile HAWK" codeEMAT8="Missile HAWK" codeLFRIL="Missile HAWK" codeNNO="Missile HAWK" id="37" name="munition" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileAir">
     <attritions>
@@ -501,6 +781,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="1" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -521,6 +810,15 @@
       <attrition destruction="0.8" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.8" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Obus 100 OE" codeEMAT6="Obus 100 OE" codeEMAT8="Obus 100 OE" codeLFRIL="Obus 100 OE" codeNNO="Obus 100 OE" id="40" name="munition" nature="Solide" package-mass="0.041" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
@@ -532,6 +830,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Obus 73 OE" codeEMAT6="Obus 73 OE" codeEMAT8="1X000028" codeLFRIL="Obus 73 OE" codeNNO="Obus 73 OE" id="41" name="munition" nature="Solide" package-mass="0.046" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
@@ -543,6 +850,15 @@
       <attrition destruction="0.15" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.25"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Obus 152 ACED" codeEMAT6="Obus 152 ACED" codeEMAT8="Obus 152 ACED" codeLFRIL="Obus 152 ACED" codeNNO="Obus 152 ACED" d-type="true" id="42" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -554,6 +870,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.5"/>
       <ph target-posture="MouvementDiscret" value="0.5"/>
@@ -574,6 +899,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="2.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -594,6 +928,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -614,6 +957,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Obus 125 OFL" codeEMAT6="Obus 125 OFL" codeEMAT8="1X000015" codeLFRIL="Obus 125 OFL" codeNNO="Obus 125 OFL" id="46" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -625,6 +977,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.2"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Missile AT7" codeEMAT6="Missile AT7" codeEMAT8="1X000040" codeLFRIL="Missile AT7" codeNNO="Missile AT7" id="47" name="munition" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
     <attritions>
@@ -636,6 +997,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.3" protection="Combattant" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Grenade AGS 17" codeEMAT6="Grenade AGS 17" codeEMAT8="1X000033" codeLFRIL="Grenade AGS 17" codeNNO="Grenade AGS 17" id="48" name="munition" nature="Solide" package-mass="0.021" package-size="10" package-volume="0.04" type="Obus">
     <attritions>
@@ -647,6 +1017,15 @@
       <attrition destruction="0.05" protection="VehiculeNonProtege" repairable-with-evacuation="0.4" repairable-without-evacuation="0.55"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -667,6 +1046,15 @@
       <attrition destruction="0.05" protection="VehiculeNonProtege" repairable-with-evacuation="0.4" repairable-without-evacuation="0.55"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -687,6 +1075,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.25"/>
       <attrition destruction="0.8" protection="Combattant" repairable-with-evacuation="0.2" repairable-without-evacuation="0"/>
     </attritions>
+     <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Obus 122 OE" codeEMAT6="Obus 122 OE" codeEMAT8="1X000031" codeLFRIL="Obus 122 OE" codeNNO="Obus 122 OE" d-type="true" id="51" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -698,6 +1095,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -718,6 +1124,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -738,6 +1153,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.5"/>
       <ph target-posture="MouvementDiscret" value="0.5"/>
@@ -778,6 +1202,15 @@
       <attrition destruction="0.15" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.25"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="GR 51 MM PH LGI" codeEMAT6="" codeEMAT8="1330-581" codeLFRIL="" codeNNO="" id="56" name="munition" nature="Solide" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
     <indirect-fire intervention-type="1" life-time="300s" setup-time="10s" type="fumigene" x-dispersion="200" y-dispersion="200"/>
@@ -792,6 +1225,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -812,6 +1254,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 120 OFLUZ" codeEMAT6="" codeEMAT8="1315-951" codeLFRIL="" codeNNO="" id="59" name="munition" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.14" type="Obus">
     <attritions>
@@ -823,6 +1274,15 @@
       <attrition destruction="0.35" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART OFUM PH F3" codeEMAT6="" codeEMAT8="1315-762" codeLFRIL="" codeNNO="" id="60" name="munition" nature="Solide" package-mass="0.033" package-size="2" package-volume="0.078" type="Obus">
     <attritions>
@@ -834,6 +1294,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 105 OFL" codeEMAT6="" codeEMAT8="1315-763" codeLFRIL="" codeNNO="" id="61" name="munition" nature="Solide" package-mass="0.046" package-size="2" package-volume="0.093" type="Obus">
     <attritions>
@@ -845,6 +1314,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.45" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 105 OCC" codeEMAT6="" codeEMAT8="1315-763" codeLFRIL="" codeNNO="" id="62" name="munition" nature="Solide" package-mass="0.067" package-size="2" package-volume="0.092" type="Obus">
     <attritions>
@@ -856,6 +1334,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.2"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 105 OE" codeEMAT6="" codeEMAT8="1315-763" codeLFRIL="" codeNNO="" id="63" name="munition" nature="Solide" package-mass="0.066" package-size="2" package-volume="0.092" type="Obus">
     <attritions>
@@ -867,6 +1354,15 @@
       <attrition destruction="0.1" protection="VehiculeNonProtege" repairable-with-evacuation="0.8" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART OFUM PH" codeEMAT6="" codeEMAT8="1315-763" codeLFRIL="" codeNNO="" id="64" name="munition" nature="Solide" package-mass="0.067" package-size="2" package-volume="0.092" type="Obus">
     <attritions>
@@ -878,6 +1374,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 105 OECL" codeEMAT6="" codeEMAT8="1315-763" codeLFRIL="" codeNNO="" id="65" name="munition" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.092" type="Obus">
     <attritions>
@@ -889,6 +1394,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CPLT OE TRF1" codeEMAT6="" codeEMAT8="1320-300" codeLFRIL="" codeNNO="" d-type="true" id="66" name="munition" nature="Solide" package-mass="1.3" package-size="16" package-volume="1.64" type="Obus">
     <attritions>
@@ -900,6 +1414,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -938,6 +1461,15 @@
       <attrition destruction="0.9" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -958,6 +1490,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.75" repairable-without-evacuation="0.05"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+     <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 20 OPT" codeEMAT6="" codeEMAT8="1305-690" codeLFRIL="" codeNNO="" id="75" name="munition" nature="Solide" package-mass="0.031" package-size="60" package-volume="0.041" type="Obus">
     <attritions>
@@ -969,6 +1510,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.75" repairable-without-evacuation="0.05"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+     <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="TET EXPL ROLAND" codeEMAT6="" codeEMAT8="1427-050" codeLFRIL="" codeNNO="" id="76" name="munition" nature="Solide" package-mass="0.81" package-size="6" package-volume="3.907" type="MissileAir">
     <attritions>
@@ -980,6 +1530,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -1020,6 +1579,15 @@
       <attrition destruction="0.65" protection="VehiculeNonProtege" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.65" protection="Combattant" repairable-with-evacuation="0.25" repairable-without-evacuation="0.05"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Charg 7,62" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="79" name="munition" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
     <attritions>
@@ -1031,6 +1599,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.5"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>   
   </dotation>
   <dotation category="Obus 115 OE" codeEMAT6="Obus 115 OE" codeEMAT8="Obus 115 OE" codeLFRIL="Obus 115 OE" codeNNO="Obus 115 OE" id="80" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -1042,6 +1619,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Obus 115 OCC" codeEMAT6="Obus 115 OCC" codeEMAT8="Obus 115 OCC" codeLFRIL="Obus 115 OCC" codeNNO="Obus 115 OCC" id="81" name="munition" nature="Solide" package-mass="0.041" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -1053,6 +1639,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.65" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Obus 115 OFL" codeEMAT6="Obus 115 OFL" codeEMAT8="Obus 115 OFL" codeLFRIL="Obus 115 OFL" codeNNO="Obus 115 OFL" id="82" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -1064,6 +1659,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.45" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Bd 7,62mm" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="83" name="munition" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
     <attritions>
@@ -1075,6 +1679,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.5"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>   
   </dotation>
   <dotation category="Bd 12,7mm" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="84" name="munition" nature="Solide" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
     <attritions>
@@ -1086,6 +1699,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.45"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+     <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Missile AT11" codeEMAT6="Missile AT11" codeEMAT8="Missile AT11" codeLFRIL="Missile AT11" codeNNO="Missile AT11" id="85" name="munition" nature="Solide" package-mass="0.024" package-size="1" package-volume="0.27" type="MissileSol">
     <attritions>
@@ -1097,6 +1719,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0.3" protection="Combattant" repairable-with-evacuation="0.05" repairable-without-evacuation="0.1"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Obus 120 OFL" codeEMAT6="Obus 120 OFL" codeEMAT8="Obus 120 OFL" codeLFRIL="Obus 120 OFL" codeNNO="Obus 120 OFL" id="86" name="munition" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -1108,6 +1739,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.5" repairable-without-evacuation="0.2"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Missile SA 14" codeEMAT6="Missile SA 14" codeEMAT8="Missile SA 14" codeLFRIL="Missile SA 14" codeNNO="Missile SA 14" id="87" name="munition" nature="Solide" package-mass="0.02" package-size="2" package-volume="0.03" type="MissileAir">
     <attritions>
@@ -1159,6 +1799,15 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="MO 120 EXPL" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="90" name="munition" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.088" type="Obus">
     <attritions>
@@ -1170,6 +1819,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -1190,6 +1848,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.75" repairable-without-evacuation="0.05"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+     <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.3"/>
+      <urbanModifier material-type="Brique" value="0.5"/>
+      <urbanModifier material-type="Metal" value="0.6"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Missile SA 9" codeEMAT6="Missile SA 9" codeEMAT8="Missile SA 9" codeLFRIL="Missile SA 9" codeNNO="Missile SA 9" id="92" name="munition" nature="Solide" package-mass="0.01" package-size="1" package-volume="0.01" type="MissileAir">
     <attritions>
@@ -1261,6 +1928,15 @@
       <attrition destruction="0.15" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>   
   </dotation>
   <dotation category="Roquette BM22" codeEMAT6="Roquette BM22" codeEMAT8="Roquette BM22" codeLFRIL="Roquette BM22" codeNNO="Roquette BM22" d-type="true" id="96" name="munition" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -1272,6 +1948,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="6" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -1292,6 +1977,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="6" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="1"/>
       <ph target-posture="MouvementDiscret" value="1"/>
@@ -1312,6 +2006,15 @@
       <attrition destruction="0.2" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="Missile SA 6" codeEMAT6="Missile SA 6" codeEMAT8="Missile SA 6" codeLFRIL="Missile SA 6" codeNNO="Missile SA 6" id="99" name="munition" nature="Solide" package-mass="1.9" package-size="3" package-volume="0.54" type="MissileAir">
     <attritions>
@@ -1363,6 +2066,15 @@
       <attrition destruction="0.15" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="CART 106 SR" codeEMAT6="" codeEMAT8="1315-760" codeLFRIL="" codeNNO="" id="102" name="munition" nature="Solide" package-mass="0.034" package-size="2" package-volume="0.078" type="Obus">
     <attritions>
@@ -1374,6 +2086,15 @@
       <attrition destruction="0.15" protection="VehiculeNonProtege" repairable-with-evacuation="0.55" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="MO 120 OE F2" codeEMAT6="MO 120 OE F2" codeEMAT8="MO 120 OE F2" codeLFRIL="MO 120 OE F2" codeNNO="MO 120 OE F2" d-type="true" id="103" name="munition" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.088" type="Obus">
     <attritions>
@@ -1385,6 +2106,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="25" y-dispersion="25">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -1411,6 +2141,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -1431,6 +2170,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.6"/>
+      <urbanModifier material-type="Brique" value="0.9"/>
+      <urbanModifier material-type="Metal" value="0.8"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.9"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -1451,6 +2199,15 @@
       <attrition destruction="0.25" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.15"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -1480,6 +2237,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="2000" y-dispersion="2000">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -1500,6 +2266,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.7" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="2000" y-dispersion="2000">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -1512,7 +2287,7 @@
   </dotation>
   <dotation category="LTO Obus brouillage" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="114" name="munition" nature="Solide" package-mass="0.01" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="1" life-time="300s" object-type="jamming area" type="effect" x-dispersion="600" y-dispersion="400"/>
-  </dotation>
+ </dotation>
   <dotation category="LTO Obus paralysant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="115" name="munition" nature="Solide" package-mass="0.01" package-size="1" package-volume="0.1" type="Obus">
     <indirect-fire intervention-type="1" life-time="300s" object-type="paralyzing area" type="effect" x-dispersion="600" y-dispersion="400"/>
   </dotation>
@@ -1533,6 +2308,15 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="1.0"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.6"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.9"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
     <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
       <ph target-posture="Mouvement" value="0.3"/>
       <ph target-posture="MouvementDiscret" value="0.3"/>
@@ -1554,6 +2338,15 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.7"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
+    <urbanModifiers>
+      <urbanModifier material-type="Bois" value="0.9"/>
+      <urbanModifier material-type="Beton" value="0.1"/>
+      <urbanModifier material-type="Brique" value="0.1"/>
+      <urbanModifier material-type="Metal" value="0.3"/>
+      <urbanModifier material-type="Torchis" value="0.6"/>
+      <urbanModifier material-type="Prefabrique" value="0.6"/>
+      <urbanModifier material-type="Vegetation" value="0.9"/>
+    </urbanModifiers>
   </dotation>
   <dotation category="F63 Gasoil" codeEMAT6="F63" codeEMAT8="F63" codeLFRIL="" codeNNO="" id="120" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <dotation category="F57 Essence" codeEMAT6="F57" codeEMAT8="F57" codeLFRIL="" codeNNO="" id="121" name="carburant" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
