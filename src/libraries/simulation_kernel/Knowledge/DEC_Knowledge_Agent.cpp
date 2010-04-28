@@ -68,6 +68,10 @@ DEC_Knowledge_Agent::DEC_Knowledge_Agent( const MIL_KnowledgeGroup& knowledgeGro
 {
     if ( bCreatedOnNetwork_ )
         SendMsgCreation();
+
+    if ( rRelevance_ < 0. || rRelevance_ > 1. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relevance: major-component not in [0..1]" );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +198,9 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> bCurrentPerceptionLevelUpdated_
          >> bMaxPerceptionLevelUpdated_
          >> nTimeExtrapolationEnd_;
+
+    if ( rRelevance_ < 0. || rRelevance_ > 1. )
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relevance: major-component not in [0..1]" );
 }
 
 // -----------------------------------------------------------------------------
@@ -262,7 +269,7 @@ void DEC_Knowledge_Agent::Prepare()
 void DEC_Knowledge_Agent::Extrapolate()
 {
     assert( pAgentKnown_ );
-    if( nTimeExtrapolationEnd_ == 0 || bLocked_ )
+    if( nTimeExtrapolationEnd_ > 0 || bLocked_ )
     {
         ChangeRelevance( 1. );
         dataDetection_     .Extrapolate( *pAgentKnown_ );

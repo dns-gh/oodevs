@@ -41,7 +41,10 @@ namespace
         virtual ~MockAgentWithPerceiver() {}
     };
 
+    const double timeFactor = 0.5f;
 }
+
+
 
 // -----------------------------------------------------------------------------
 // Name: TestKnowledgeGroupType
@@ -52,14 +55,13 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
     const std::string initialisation =
         "<knowledge-groups>"
             "<knowledge-group name=\"GTIA\" communication-delay=\"01m\">"
-                "<unit-knowledge max-lifetime=\"03h\" max-unit-to-knowledge-distance=\"60000\"/>"
+                "<unit-knowledge max-lifetime=\"03h\" max-unit-to-knowledge-distance=\"60000\" interpolation-time=\"010m\" />"
                 "<population-knowledge max-lifetime=\"2m\"/>"
             "</knowledge-group>"
         "</knowledge-groups>";
 
     xml::xistringstream xis( initialisation );
 
-    const double timeFactor = 0.5f;
     MIL_KnowledgeGroupType::Initialize( xis, timeFactor );
 
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("GTIA");
@@ -68,7 +70,7 @@ BOOST_AUTO_TEST_CASE( TestKnowledgeGroupType )
     BOOST_CHECK_EQUAL( 60000, kgType.GetKnowledgeAgentMaxDistBtwKnowledgeAndRealUnit() );
     BOOST_CHECK_EQUAL( 60 * timeFactor, kgType.GetKnowledgeCommunicationDelay() );
     BOOST_CHECK_EQUAL( "GTIA", kgType.GetName() );
-    BOOST_CHECK_EQUAL( 1, kgType.GetKnowledgeAgentExtrapolationTime() );
+    BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, kgType.GetKnowledgeAgentExtrapolationTime() );
 }
 
 namespace
@@ -200,4 +202,95 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     //}
 
     MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::exactly( 3 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TestExtrapolationTimeInKnowledgeGroup
+// Created: FDS 2010-04-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
+{
+    MockArmy army;
+    std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
+
+    BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, armyGroup->GetType().GetKnowledgeAgentExtrapolationTime() );
+
+    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::exactly( 1 ) );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: TestLatentRelevance
+// Created: FDS 2010-04-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( TestLatentRelevance )
+{
+    MockArmy army;
+    std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
+    std::auto_ptr< MIL_KnowledgeGroup > knowledgeGroup   ( CreateKnowledgeGroup( army, *armyGroup, 2, "GTIA" ) );
+    
+    UrbanModel urbanModel; // (needed for the blackboard through singleton...)
+    DEC_KnowledgeBlackBoard_Army blackboard( army );
+    MOCKPP_CHAINER_FOR( MockArmy, GetKnowledgeShadow )( &army ).expects( mockpp::once() ).will( mockpp::returnValue( &blackboard ) );
+    MOCKPP_CHAINER_FOR( MockArmy, GetKnowledgeShadow )( &army ).expects( mockpp::once() );
+
+        MockAgentWithPerceiver mockAgent;
+    //{
+        // TestAgentKnowledgeIsCreatedWithRelevanceMax
+        MOCKPP_CHAINER_FOR( MockAgent, BelongsTo )( &mockAgent ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( true ) );
+        MOCKPP_CHAINER_FOR( MockAgent, GetTypeShadow )( &mockAgent ).expects( mockpp::once() );
+        boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( *knowledgeGroup, mockAgent, 1. ) ); // 1 for relevance
+
+        DEC_BlackBoard_CanContainKnowledgeAgent& knowledgeAgentContainer = knowledgeGroup->GetKnowledge().GetKnowledgeAgentContainer();
+        MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgent ).expects( mockpp::once() ).will( mockpp::returnValue( knowledge ) );
+
+        DEC_Knowledge_Agent& obj = knowledgeAgentContainer.CreateKnowledgeAgent( *knowledgeGroup, mockAgent );
+        BOOST_CHECK_EQUAL( &obj, knowledge.get() );
+        BOOST_CHECK_EQUAL( true, obj.GetRelevance() == 1. );
+
+    //}
+    //{
+        // TestRelevanceDownUntilNull
+        MT_Vector2D position;
+        MockRoleLocation* mockRoleLocation = new MockRoleLocation();
+        MOCKPP_CHAINER_FOR( MockRoleLocation, HasDoneMagicMove ) ( mockRoleLocation ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( false ) );
+        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow ) ( mockRoleLocation ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
+        mockAgent.RegisterRole( *mockRoleLocation );
+        MOCK_EXPECT( mockAgent.GetRole< MockPHY_RoleInterface_Perceiver >(), ExecutePerceptions );
+
+        float relevance = obj.GetRelevance();
+        knowledgeGroup->UpdateKnowledges( 1 );
+        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+        
+        relevance = obj.GetRelevance();
+        knowledgeGroup->UpdateKnowledges( 10 );
+        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+
+        relevance = obj.GetRelevance();
+        knowledgeGroup->UpdateKnowledges( 100 );
+        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+
+        relevance = obj.GetRelevance();
+        knowledgeGroup->UpdateKnowledges( 1000 );
+        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+
+        relevance = obj.GetRelevance();
+        knowledgeGroup->UpdateKnowledges( 10000 );
+        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+
+        knowledgeGroup->UpdateKnowledges( 100000 );
+        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < 0.001 );
+
+        //}
+
+    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::exactly( 1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TestImpactOfExtrapolationTimeOnRelevance
+// Created: FDS 2010-04-28
+// -----------------------------------------------------------------------------
+BOOST_AUTO_TEST_CASE( TestImpactOfExtrapolationTimeOnRelevance )
+{
+    // TODO
 }

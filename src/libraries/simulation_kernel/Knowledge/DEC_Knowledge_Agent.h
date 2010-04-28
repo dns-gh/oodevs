@@ -193,7 +193,7 @@ private:
           T_PerceptionAutomateSourceMap previousPerceptionLevelPerAutomateMap_;
           T_PerceptionAgentSourceMap perceptionLevelPerAgentMap_;
           MT_Float              rRelevance_;
-          unsigned int          nTimeExtrapolationEnd_;
+          int                   nTimeExtrapolationEnd_;
           bool                  bLocked_;
           bool                  bValid_;
 
