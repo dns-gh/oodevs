@@ -12,11 +12,6 @@
 
 #include "simulation_kernel/UrbanLocationComputer_ABC.h"
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
-
 namespace urbanLocation
 {
 // =============================================================================
@@ -31,7 +26,7 @@ class DefaultUrbanLocationComputer : public UrbanLocationComputer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             DefaultUrbanLocationComputer( const urban::TerrainObject_ABC& block );
+             DefaultUrbanLocationComputer();
     virtual ~DefaultUrbanLocationComputer();
     //@}
 
@@ -45,11 +40,8 @@ public:
 private:
     //! @name Attribute
     //@{
-    Parameters params_;
     Results results_;
     //@}
-
-
 };
 
 } // namespace urbanLocation

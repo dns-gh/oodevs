@@ -916,7 +916,6 @@ void PHY_RolePion_Composantes::ApplyIndirectFire( const PHY_DotationCategory& do
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Composantes::ApplyDirectFire( PHY_Composante_ABC& compTarget, const PHY_DotationCategory& dotationCategory, PHY_FireResults_ABC& fireResult )
 {
-
     assert( std::find( composantes_.begin(), composantes_.end(), &compTarget ) != composantes_.end() );
 
     PHY_FireDamages_Agent& fireDamages = fireResult.GetDamages( pion_ );

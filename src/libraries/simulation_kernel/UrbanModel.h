@@ -23,7 +23,6 @@ namespace urban
     class Model;
     class Block;
     class BlockModel;
-    class BlockPhModifier_ABC;
 }
 
 class MIL_Config;
@@ -52,7 +51,6 @@ public:
     static void         SendCreation            ( urban::Block& UrbanBlock );
     urban::Block*       FindUrbanBlock          ( unsigned id ) const;
     MT_Float            GetUrbanBlockCost       ( MT_Float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
-    MT_Float            ComputeUrbanPhModifier  ( const MT_Vector3D& firerPosition, const MT_Vector3D& targetPosition ) const;
     //@}
 
     //! @name Operations
@@ -73,8 +71,7 @@ public:
 
 private:
     std::auto_ptr< urban::Model                 > model_;
-    std::auto_ptr< urban::BlockPhModifier_ABC   > phFirerModifier_;
-    std::auto_ptr< urban::BlockPhModifier_ABC   > phTargetModifier_;
+
 };
 
 BOOST_CLASS_EXPORT_KEY( UrbanModel )

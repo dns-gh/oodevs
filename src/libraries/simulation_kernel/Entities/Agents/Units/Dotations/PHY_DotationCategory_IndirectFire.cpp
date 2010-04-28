@@ -15,6 +15,7 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
@@ -28,6 +29,8 @@
 #include "simulation_terrain/TER_PopulationFlow_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
+#include "UrbanModel.h"
+#include <urban/Model.h>
 #include <xeumeuleu/xml.h>
 
 MT_Random PHY_DotationCategory_IndirectFire::random_;
@@ -110,6 +113,21 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
 
         TER_Agent_ABC::T_AgentPtrVector targets;
         TER_World::GetWorld().GetAgentManager().GetListWithinEllipse( neutralizationSurface, targets );
+
+        TER_Agent_ABC::T_AgentPtrVector allTargets;
+        TER_World::GetWorld().GetAgentManager().GetListWithinCircle(vTargetPosition, 500., allTargets );
+
+        std::vector< const urban::TerrainObject_ABC* > urbanList;
+        UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vTargetPosition.rX_, vTargetPosition.rX_ ), rInterventionTypeFired * rDispersionX_, urbanList );
+        
+        for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
+        {   
+            MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
+            if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() ) != urbanList.end() )
+                targets.push_back( *itAllTarget );
+        }
+        //SLG
+
         for( TER_Agent_ABC::CIT_AgentPtrVector itTarget = targets.begin(); itTarget != targets.end(); ++itTarget )
         {
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
@@ -135,8 +153,9 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC& firer,
             {
                 PHY_RoleInterface_Composantes& targetRoleComposantes = target.GetRole< PHY_RoleInterface_Composantes >();
                 targetRoleComposantes.Neutralize();
-                if( attritionSurface.IsInside( (**itTarget).GetPosition() ) )
-                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, 1 );  // $$$$ _RC_ SLG 2010-04-16: valeur en dur = ratio entre l'aire d'intersection de l'llipse avec le BU et le BU lui même. a faire des que boost::geometry sera diponible
+                float ratioComposanteHit = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( attritionSurface );
+                if( ratioComposanteHit > 0 )
+                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit );  
 
                 if( !bRCSent && firer.GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 {

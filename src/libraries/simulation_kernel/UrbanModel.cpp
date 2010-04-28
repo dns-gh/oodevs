@@ -9,8 +9,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "UrbanModel.h"
-#include "BlockPhFirerModifier.h"
-#include "BlockPhTargetModifier.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
@@ -44,9 +42,7 @@ namespace
 // Created: SLG 2009-08-10
 // -----------------------------------------------------------------------------
 UrbanModel::UrbanModel()
-    : model_            ( new urban::Model() )
-    , phFirerModifier_  ( new BlockPhFirerModifier() )
-    , phTargetModifier_ ( new BlockPhTargetModifier() )
+    : model_( new urban::Model() )
 {
     if ( singleton )
         throw std::runtime_error( "urbanModel already registered" );
@@ -197,21 +193,6 @@ MT_Float UrbanModel::GetUrbanBlockCost( MT_Float weight, const MT_Vector2D& star
 {
     geometry::Point2f from ( ( float ) start.rX_, ( float ) start.rY_ ), to ( ( float ) end.rX_, ( float ) end.rY_ );
     return model_->GetUrbanBlockCost( ( float ) weight, from, to );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::ComputeUrbanPhModifier
-// Created: SLG 2010-01-07
-// -----------------------------------------------------------------------------
-MT_Float UrbanModel::ComputeUrbanPhModifier( const MT_Vector3D& firerPosition, const MT_Vector3D& targetPosition ) const
-{
-    geometry::Point2f positionF ( firerPosition.rX_, firerPosition.rY_ );
-    float firerModifier =  model_->GetUrbanPhModifier( *phFirerModifier_, positionF );
-
-    geometry::Point2f positionT ( targetPosition.rX_, targetPosition.rY_ );
-    float targetModifier = model_->GetUrbanPhModifier( *phTargetModifier_, positionT );
-
-    return firerModifier * targetModifier;
 }
 
 // -----------------------------------------------------------------------------

@@ -28,12 +28,6 @@ class UrbanLocationComputer_ABC
 {
 public:
 
-    struct Parameters
-    {
-        const urban::TerrainObject_ABC& block_;
-        explicit Parameters( const urban::TerrainObject_ABC& block );
-    };
-
     struct Results
     {
         float urbanDeployment_;

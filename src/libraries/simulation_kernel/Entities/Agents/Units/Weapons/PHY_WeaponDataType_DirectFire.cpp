@@ -38,8 +38,6 @@
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
 #include "simulation_kernel/UrbanModel.h"
-#include "simulation_kernel/BlockPhFirerModifier.h"
-#include "simulation_kernel/BlockPhTargetModifier.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.h>
 

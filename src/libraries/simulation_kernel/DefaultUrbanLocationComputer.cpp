@@ -10,7 +10,6 @@
 #include "simulation_kernel_pch.h"
 #include "DefaultUrbanLocationComputer.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
-#include <urban/TerrainObject_ABC.h>
 
 using namespace urbanLocation;
 
@@ -18,9 +17,8 @@ using namespace urbanLocation;
 // Name: DefaultUrbanLocationComputer::DefaultUrbanLocationComputer
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
-DefaultUrbanLocationComputer::DefaultUrbanLocationComputer( const urban::TerrainObject_ABC& block )
-    : params_( block )
-    , results_()
+DefaultUrbanLocationComputer::DefaultUrbanLocationComputer()
+    : results_()
 {
     // NOTHING
 }

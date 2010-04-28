@@ -43,7 +43,6 @@ const MT_Vector2D MT_Ellipse::GetMajorAxisHighPoint()  const
     return axis += vCenter_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: MT_Ellipse::GetMinorAxisHighPoint
 // Created: JVT 04-03-25

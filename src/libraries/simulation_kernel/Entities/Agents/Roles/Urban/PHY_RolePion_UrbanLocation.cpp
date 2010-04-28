@@ -14,14 +14,13 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "AlgorithmsFactories.h"
 #include "UrbanLocationComputer_ABC.h"
+#include "UrbanBlockPosition_ABC.h"
+#include "InsideUrbanBlockPosition.h"
+#include "OutsideUrbanBlockPosition.h"
 #include "UrbanLocationComputerFactory_ABC.h"
 #include "UrbanType.h"
 #include "UrbanModel.h"
 #include <urban/Model.h>
-#include <urban/Architecture.h>
-#include <urban/MaterialCompositionType.h>
-#include <urban/Soil.h>
-#include <urban/StaticModel.h>
 #include <urban/TerrainObject_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_UrbanLocation )
@@ -43,6 +42,7 @@ void load_construct_data( Archive& archive, PHY_RolePion_UrbanLocation* role, co
 
 MT_Random PHY_RolePion_UrbanLocation::randomGenerator_;
 using namespace urbanLocation;
+namespace bg = boost::geometry;
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_UrbanLocation constructor
@@ -96,6 +96,7 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
         if( (**it).GetFootprint()->IsInside( point ) )
         {
             urbanObject_ = *it;
+            delegate_.reset( new InsideUrbanBlockPosition( urbanObject_ ) ); 
             return;
         }
     }
@@ -109,7 +110,10 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
 void PHY_RolePion_UrbanLocation::NotifyMovingInsideUrbanBlock( const urban::TerrainObject_ABC& urbanObject )
 {
     if( !urbanObject_ )
-        urbanObject_ = &urbanObject; 
+    {
+        urbanObject_ = &urbanObject;
+        delegate_.reset( new InsideUrbanBlockPosition( &urbanObject ) ); 
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -121,6 +125,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingOutsideUrbanBlock( const urban::Ter
     if( urbanObject_ != &urbanObject )
         throw std::exception( "urbanObject in PHY_RolePion_UrbanLocation not defined" );
     urbanObject_ = 0;
+    delegate_.reset( new OutsideUrbanBlockPosition() ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -133,22 +138,25 @@ const urban::TerrainObject_ABC* PHY_RolePion_UrbanLocation::GetCurrentUrbanBlock
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::ComputeRatioPionInside
+// Created: SLG 2010-04-26
+// -----------------------------------------------------------------------------
+float PHY_RolePion_UrbanLocation::ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const
+{
+    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > computer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
+    const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *computer );
+    UrbanLocationComputer_ABC::Results& result = computer->Result();
+
+    return delegate_->ComputeRatioPionInside( result, attritionSurface );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_UrbanLocation::ComputeUrbanProtection
 // Created: SLG 2010-04-12
 // -----------------------------------------------------------------------------
 MT_Float PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const
 {
-    if ( urbanObject_ )
-    {
-        const urban::Architecture* architecture = urbanObject_->RetrievePhysicalFeature< urban::Architecture >();
-        const urban::Soil* soil = urbanObject_->RetrievePhysicalFeature< urban::Soil >();
-        if( architecture  && soil )
-        {
-            unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
-            return ( 1 -dotationCategory.GetUrbanAttritionModifer( materialID ) )* ( soil->GetOccupation() ); // TODO SLG A changer quand les paramètres des BU changeront
-        }
-    }
-    return 0.f;
+    return delegate_->ComputeUrbanProtection( dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
@@ -157,22 +165,11 @@ MT_Float PHY_RolePion_UrbanLocation::ComputeUrbanProtection( const PHY_DotationC
 // -----------------------------------------------------------------------------
 geometry::Point2f PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& target ) const
 {
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
+    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
     const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *firerComputer );
     UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
 
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( target.GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
-    target.Execute( *targetComputer );
-    UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
-
-    if( urbanObject_ )
-    {
-        std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( geometry::Segment2f( firerResult.position_, targetResult.position_ ) );
-        if( points.empty() )
-            throw std::exception( "error in urbanBlock intersection for firer" );
-        return GetNearestUrbanBlockPoint( targetResult.position_, points ); 
-    }
-    return firerResult.position_;
+    return delegate_->GetFirerPosition( target, firerResult );
 }
 
 // -----------------------------------------------------------------------------
@@ -181,95 +178,35 @@ geometry::Point2f PHY_RolePion_UrbanLocation::GetFirerPosition( MIL_Agent_ABC& t
 // -----------------------------------------------------------------------------
 geometry::Point2f PHY_RolePion_UrbanLocation::GetTargetPosition( MIL_Agent_ABC& firer ) const
 {
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
+    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
     const_cast< MIL_Agent_ABC& >( pion_ ).Execute( *targetComputer );
     UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
 
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( firer.GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
-    firer.Execute( *firerComputer );
-    UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
-
-    if( urbanObject_ )
-    {
-        geometry::Line2f lineTmp( firerResult.position_, targetResult.position_ );
-        std::vector< geometry::Point2f > points = urbanObject_->GetFootprint()->Intersect( lineTmp );
-        if( points.size() < 2 )
-            throw std::exception( " error in urbanBlock intersection for target" );
-        geometry::Point2f pfirst = GetNearestUrbanBlockPoint( firerResult.position_, points );
-        geometry::Point2f pSecond = GetFurthestUrbanBlockPoint( firerResult.position_, points );
-        geometry::Vector2f vector( pfirst, pSecond );
-        vector = vector * ( 1 - targetResult.urbanDeployment_ );
-        geometry::Point2f pM = pfirst + vector;
-        vector = geometry::Vector2f( pM, pSecond ) * randomGenerator_.rand_ii();
-        return pM + vector;
-    }
-    return targetResult.position_;
+    return delegate_->GetTargetPosition( firer, targetResult );
+    
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock
 // Created: SLG 2010-04-16
 // -----------------------------------------------------------------------------
-float PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target  ) const
+float PHY_RolePion_UrbanLocation::ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const
 {
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
+    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > firerComputer( const_cast< MIL_Agent_ABC& >( pion_ ).GetAlgorithms().urbanLocationComputerFactory_->Create() );
     pion_.Execute( *firerComputer );
     UrbanLocationComputer_ABC::Results& firerResult = firerComputer->Result();
 
-    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( target.GetAlgorithms().urbanLocationComputerFactory_->Create( *urbanObject_ ) );
+    std::auto_ptr< urbanLocation::UrbanLocationComputer_ABC > targetComputer( target.GetAlgorithms().urbanLocationComputerFactory_->Create() );
     target.Execute( *targetComputer );
     UrbanLocationComputer_ABC::Results& targetResult = targetComputer->Result();
 
     if( urbanObject_ )
     {
-        geometry::Rectangle2f boundingBox = urbanObject_->GetFootprint()->BoundingBox();
-        float distance = std::max( boundingBox.Height(), boundingBox.Width() );
-        float firerDistance = ( distance/2 ) * firerResult.urbanDeployment_;
-        float targetDistance = ( distance/2 ) * targetResult.urbanDeployment_;
-        distance = ( distance - firerDistance - targetDistance ) * randomGenerator_.rand_ii();
+        float distance = firerResult.position_.Distance( targetResult.position_ );
+        distance * ( 1 - firerResult.urbanDeployment_ ) * ( 1 - targetResult.urbanDeployment_ );
         return distance;
     }
     return firerResult.position_.Distance( targetResult.position_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_UrbanLocation::GetNearestUrbanBlockPoint
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-geometry::Point2f PHY_RolePion_UrbanLocation::GetNearestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const 
-{
-    geometry::Point2f nearestPosition;
-    float distance = std::numeric_limits< MT_Float >::max();
-    for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
-    {
-        float distanceTemp = (*it).Distance( pionPosition );
-        if( distanceTemp < distance )
-        {
-            distance = distanceTemp;
-            nearestPosition = *it;
-        }
-    }
-    return nearestPosition;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_UrbanLocation::GetFurthestUrbanBlockPoint
-// Created: SLG 2010-04-13
-// -----------------------------------------------------------------------------
-geometry::Point2f PHY_RolePion_UrbanLocation::GetFurthestUrbanBlockPoint( const geometry::Point2f pionPosition, const std::vector< geometry::Point2f > points ) const
-{
-    geometry::Point2f furthestPosition;
-    float distance = 0;
-    for( std::vector< geometry::Point2f >::const_iterator it = points.begin(); it != points.end(); ++it )
-    {
-        float distanceTemp = (*it).Distance( pionPosition );
-        if( distanceTemp > distance )
-        {
-            distance = distanceTemp;
-            furthestPosition = *it;
-        }
-    }
-    return furthestPosition;
 }
 
 // -----------------------------------------------------------------------------

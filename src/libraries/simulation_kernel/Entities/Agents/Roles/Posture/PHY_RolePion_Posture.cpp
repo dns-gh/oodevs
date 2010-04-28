@@ -503,6 +503,8 @@ void PHY_RolePion_Posture::Execute( detection::PerceptionDistanceComputer_ABC& a
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Posture::Execute( urbanLocation::UrbanLocationComputer_ABC& algorithm ) const
 {
-    if ( pCurrentPosture_ == &PHY_Posture::poste_ )
+    if( pCurrentPosture_ == &PHY_Posture::poste_ )
         algorithm.SetUrbanDeployment( rPostureCompletionPercentage_ );
+    if( pCurrentPosture_ == &PHY_Posture::posteAmenage_ )
+        algorithm.SetUrbanDeployment( 1.f );
 }

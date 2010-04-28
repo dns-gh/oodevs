@@ -11,6 +11,7 @@
 #define __PHY_RoleInterface_UrbanLocation_h_
 
 #include "MT_Tools/Role_ABC.h"
+#include "MT_Tools/MT_Ellipse.h"
 #include <geometry/Types.h>
 
 namespace posture
@@ -51,6 +52,8 @@ public:
     virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target ) const = 0;
     virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& target ) const = 0;
     virtual float               ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target  ) const = 0;
+    virtual float               ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const = 0;
+
     //@}
 
 

@@ -21,6 +21,8 @@ namespace posture
     class PostureComputer_ABC;
 }
 
+class UrbanBlockPosition_ABC;
+
 // =============================================================================
 /** @class  PHY_RolePion_UrbanLocation
     @brief  PHY_RolePion_UrbanLocation
@@ -54,8 +56,8 @@ public:
     virtual geometry::Point2f   GetFirerPosition( MIL_Agent_ABC& target ) const;
     virtual geometry::Point2f   GetTargetPosition( MIL_Agent_ABC& target ) const;
     virtual float               ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
+    virtual float               ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
     void                        Execute( posture::PostureComputer_ABC& algorithm ) const;
-
     //@}
 
     //! @name Event handlers
@@ -82,8 +84,8 @@ private:
 
     //! @name Helpers
     //@{
-    geometry::Point2f GetNearestUrbanBlockPoint( const geometry::Point2f firerPosition, const std::vector< geometry::Point2f > points ) const;
-    geometry::Point2f GetFurthestUrbanBlockPoint( const geometry::Point2f firerPosition, const std::vector< geometry::Point2f > points ) const;
+    //geometry::Point2f GetNearestUrbanBlockPoint( const geometry::Point2f firerPosition, const std::vector< geometry::Point2f > points ) const;
+    //geometry::Point2f GetFurthestUrbanBlockPoint( const geometry::Point2f firerPosition, const std::vector< geometry::Point2f > points ) const;
     //@}
 
 private:
@@ -91,6 +93,7 @@ private:
     //@{
     MIL_Agent_ABC& pion_;
     const urban::TerrainObject_ABC* urbanObject_;
+    std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );

@@ -25,6 +25,7 @@
 #include <boost/serialization/set.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/string.hpp>
+#include <boost/geometry/geometry.hpp>
 
 #include <boost/noncopyable.hpp>
 
@@ -39,6 +40,7 @@
 #include "MT_Tools/MT_Triangle.h" 
 #include "MT_Tools/MT_Line.h"
 #include "MT_Tools/MT_Circle.h"
+#include "MT_Tools/MT_Ellipse.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_Random.h"
 

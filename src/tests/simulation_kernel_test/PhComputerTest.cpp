@@ -19,6 +19,7 @@
 #include "Entities/Agents/Units/Weapons/PHY_WeaponDataType_DirectFire.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"
 #include "Entities/Agents/Roles/Location/PHY_RolePion_Location.h"
+#include "Entities/Agents/Roles/Posture/PHY_RolePion_Posture.h"
 #include "Fixture.h"
 #include "UrbanModel.h"
 #include <Urban/Model.h>
@@ -63,7 +64,7 @@ BOOST_AUTO_TEST_CASE( PhComputerFirerPositionTest )
     firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
     PHY_RolePion_Location* firerlocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    firerlocationRole->MagicMove( MT_Vector2D( 0, 0 ) );
+    firerlocationRole->MagicMove( MT_Vector2D( -0.1, -0.1 ) );
     firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerlocationRole );
 
     PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
@@ -111,10 +112,14 @@ BOOST_AUTO_TEST_CASE( PhComputerTargetPositionTest )
 
 BOOST_AUTO_TEST_CASE( PhComputerDistanceInSameBUTest )
 {
+    //TODO
+}
+
+BOOST_AUTO_TEST_CASE( PhComputerIndirectPhModifier )
+{
     TER_World::Initialize( "../../data/data/terrains/Drosoville/Terrain.xml" );
     MIL_EffectManager effectManager;
-    FixturePion firerFixture( effectManager );
-    FixturePion targetFixture( effectManager );
+    FixturePion fixture( effectManager );
     std::vector< geometry::Point2f > vertices;
     vertices.push_back( geometry::Point2f( -1, -1 ) );
     vertices.push_back( geometry::Point2f( -1, 1 ) );
@@ -123,27 +128,17 @@ BOOST_AUTO_TEST_CASE( PhComputerDistanceInSameBUTest )
 
     urban::Drawer_ABC* drawer = 0;
     urban::Block urbanBlock( 0, "test", geometry::Polygon2f( vertices ), 0, drawer );
-    PHY_RolePion_UrbanLocation* firerUrbanRole = new PHY_RolePion_UrbanLocation( *firerFixture.pPion_ );
-    firerUrbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
-    firerFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *firerUrbanRole );
 
-    PHY_RolePion_Location* firerLocationRole = new PHY_RolePion_Location( *firerFixture.pPion_ );
-    firerLocationRole->MagicMove( MT_Vector2D( -0.5, -0.5 ) );
-    firerFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *firerLocationRole );
+    PHY_RolePion_UrbanLocation* urbanRole = new PHY_RolePion_UrbanLocation( *fixture.pPion_ );
+    urbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
+    fixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *urbanRole );
 
-    PHY_RolePion_UrbanLocation* targetUrbanRole = new PHY_RolePion_UrbanLocation( *targetFixture.pPion_ );
-    targetUrbanRole->NotifyMovingInsideUrbanBlock( urbanBlock );
-    targetFixture.pPion_->RegisterRole< PHY_RolePion_UrbanLocation >( *targetUrbanRole );
+    PHY_RolePion_Location* locationRole = new PHY_RolePion_Location( *fixture.pPion_ );
+    locationRole->MagicMove( MT_Vector2D( 0, 0 ) );
+    fixture.pPion_->RegisterRole< PHY_RolePion_Location >( *locationRole );
 
-    PHY_RolePion_Location* targetLocationRole = new PHY_RolePion_Location( *targetFixture.pPion_ );
-    targetLocationRole->MagicMove( MT_Vector2D( 0.5, 0.5 ) );
-    targetFixture.pPion_->RegisterRole< PHY_RolePion_Location >( *targetLocationRole );
-
-    float result = firerUrbanRole->ComputeDistanceInsideSameUrbanBlock( *targetFixture.pPion_ );
-    bool isUnderMaxValue = 2 >= result;
-    bool isUpMinValue = 0 <= result;
-    BOOST_CHECK_EQUAL( true, isUnderMaxValue );
-    BOOST_CHECK_EQUAL( true, isUpMinValue );
+    const MT_Ellipse attritionSurface     ( MT_Vector2D( 2, 1 ), MT_Vector2D( 4, 1 ),  MT_Vector2D( 2, 2 ) );
+    BOOST_CHECK_CLOSE( 0.0, urbanRole->ComputeRatioPionInside( attritionSurface ), 1. ); // $$$$ _RC_ SLG 2010-04-26: trouver un moyen de changer la posture du pion pour tester le résultat
 
     TER_World::DestroyWorld();
 }

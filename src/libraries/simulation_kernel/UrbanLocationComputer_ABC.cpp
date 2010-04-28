@@ -14,16 +14,6 @@
 using namespace urbanLocation;
 
 // -----------------------------------------------------------------------------
-// Name: UrbanLocationComputer_ABC::UrbanLocationComputer_ABC::Parameters
-// Created: SLG 2010-04-20
-// -----------------------------------------------------------------------------
-UrbanLocationComputer_ABC::Parameters::Parameters( const urban::TerrainObject_ABC& block )
-    : block_( block )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: UrbanLocationComputer_ABC::UrbanLocationComputer_ABC::Results
 // Created: LDC 2009-12-17
 // -----------------------------------------------------------------------------
