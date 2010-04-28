@@ -387,7 +387,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::Indi
     deployTime_ = ammoInfos.deployTime_.GetData();
     lifeTime_ = ammoInfos.lifeTime_.GetData();
     nMineNumber_ = ammoInfos.nMineNumber_.GetData();
-    objectType_ = ammoInfos.objectType_;
+    objectType_ = ammoInfos.objectType_.GetData();
 }
 
 // -----------------------------------------------------------------------------

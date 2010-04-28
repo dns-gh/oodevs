@@ -81,26 +81,12 @@ public:
 
 
 //*****************************************************************************
-    typedef ADN_Equipement_Data::AttritionInfos AttritionInfos; 
-    typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfosVector;
-    typedef T_AttritionInfosVector::iterator        IT_AttritionInfosVector;
+//    typedef ADN_Equipement_Data::AttritionInfos AttritionInfos; 
+//    typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfosVector;
+//    typedef T_AttritionInfosVector::iterator        IT_AttritionInfosVector;
 
 
 //*****************************************************************************
-   /* class PopulationAttritionInfos
-    {
-    public:
-        PopulationAttritionInfos();
-        ~PopulationAttritionInfos();
-
-        void ReadArchive( xml::xistream& input );
-        void WriteArchive( xml::xostream& output );
-
-    public:
-        ADN_Type_Double rSurface_;
-        ADN_Type_Double rPh_;
-    };*/
-        
     struct NullType {};
 
     template <typename T> struct NamedField

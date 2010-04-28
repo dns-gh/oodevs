@@ -3833,6 +3833,10 @@ Arrêt moteur allumé</translation>
         <translation>Durée d&apos;activation</translation>
     </message>
     <message>
+        <source>Created object</source>
+        <translation type="unfinished">Objet créé</translation>
+    </message>
+    <message>
         <source>Span</source>
         <translation>Période</translation>
     </message>
@@ -3871,6 +3875,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Illumination range needed</source>
         <translation>Portée d&apos;illumation nécessaire</translation>
+    </message>
+    <message>
+        <source>Effect ammo parameters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

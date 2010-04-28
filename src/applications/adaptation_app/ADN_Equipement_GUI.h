@@ -73,6 +73,7 @@ public:
         eModifStances,
         eDeployTime,
         eLifetime,
+        eEffectType,
         eMineNumber,
         eDirect,
         eIndirect,
@@ -139,6 +140,7 @@ private:
     
     QGroupBox* pExplosiveParametersGroup_;
     QGroupBox* pFlareParametersGroup_;
+    QGroupBox* pEffectParametersGroup_;
     QGroupBox* pMineParametersGroup_;
     //@}
 };

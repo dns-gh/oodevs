@@ -208,6 +208,12 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddField<ADN_TimeField>( pFlareParametersGroup_, tr( "Activation duration" ), vConnectors[eDeployTime] );
     builder.AddField<ADN_TimeField>( pFlareParametersGroup_, tr( "Span" ), vConnectors[eLifetime] );
 
+    // Effect (object) parameters
+    pEffectParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Effect ammo parameters" ), pIndirectGroup );
+    pEffectParametersGroup_->hide();
+    builder.AddField<ADN_EditLine_String>( pEffectParametersGroup_, tr( "Created object" ), vConnectors[eEffectType] );
+    builder.AddField<ADN_TimeField>( pEffectParametersGroup_, tr( "Span" ), vConnectors[eLifetime] );
+
     // Mine parameters
     pMineParametersGroup_ = new QGroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pIndirectGroup );
     pMineParametersGroup_->hide();
@@ -242,6 +248,7 @@ void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
 {
     pExplosiveParametersGroup_->hide();
     pFlareParametersGroup_->hide();
+    pEffectParametersGroup_->hide();
     pMineParametersGroup_->hide();
 
     if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Explosif 
@@ -253,6 +260,8 @@ void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
         pFlareParametersGroup_->show();
     else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Mine )
         pMineParametersGroup_->show();
+    else if( (E_TypeMunitionTirIndirect) nIndex == eTypeMunitionTirIndirect_Effect )
+        pEffectParametersGroup_->show();
 }
 
 

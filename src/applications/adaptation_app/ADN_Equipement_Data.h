@@ -257,11 +257,11 @@ public:
         // For smoke
         ADN_Type_Int                                                          nMineNumber_;
 
-        // For effect
-        std::string                                                           objectType_;
-
         //Common for effect or flares
         ADN_Type_Time                                                         lifeTime_;
+
+        // For effect
+        ADN_Type_String                                                       objectType_;
     };
 
 // *****************************************************************************
