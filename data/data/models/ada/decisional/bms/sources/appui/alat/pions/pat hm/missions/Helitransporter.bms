@@ -174,7 +174,7 @@ elseif switch_1 == eFinMission then
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Transport_Annuler()
                                 DEC_FinMission()
@@ -196,7 +196,7 @@ elseif switch_1 == eFinMission then
     end,
 
     destroy = function( self )
-                DIA_Clear( myself.plotsRavitaillement_ )
+                myself:ClearplotsRavitaillement_()
         F_Pion_SetobjectifEsquive( myself, nil )
     end,
 

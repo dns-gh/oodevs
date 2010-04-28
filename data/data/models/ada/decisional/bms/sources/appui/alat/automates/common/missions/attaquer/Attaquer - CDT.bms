@@ -47,7 +47,7 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
         --[[// donner des missions aux pions qui sont opérationnels et qui ne sont pas en cours
 ]]--[[// de ravitaillement
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         local listePionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self.listePionsSgpt )
         self.listePionsSgpt = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsSgpt, listePionsEnCoursRavitaillement )
@@ -56,12 +56,12 @@ includedFiles["sources/appui/alat/automates/common/missions/attaquer/Attaquer - 
 ]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AntitankHelicopterPatrol" )
         local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         --[[// liste des pions pour IMEX
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         --[[// liste des pions qui peuvent attaquer
-]]DIA_Clear( self.listeAttaquer )
+]]self.listeAttaquer = {}
         S_Liste_Concatene( self.listeAttaquer, listeHAC, listeHAP )
-        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = {}
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true

@@ -51,8 +51,8 @@ if( DEC_Geometrie_EstPointDansFuseau( DEC_ListePoints_GetAt( self._namedParams.m
         end
 
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
-        DIA_Clear( self.listePionsInterdireFranchissement )
-        DIA_Clear( self.listePionsSuivre )
+        self.listePionsInterdireFranchissement = {}
+        self.listePionsSuivre = {}
         self.listePionsInterdireFranchissement = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_InterdireFranchissementPopulations" )
         DIA_PushBack( self.listePionsSuivre, DEC_Automate_PionPC() )
         if( not DIA_IsListEmpty( self.listePionsInterdireFranchissement ) ) then

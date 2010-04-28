@@ -88,7 +88,7 @@ function S_Liste_Concatene( listResult, listeA, listeB )
 
     end
 
-    DIA_Clear( listResult )
+    S_Clear( listResult )
     for _,x in pairs( bufferSelection or {} ) do
     local _continue = true
         DIA_PushBack( listResult, x )

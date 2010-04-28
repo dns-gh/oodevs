@@ -111,7 +111,7 @@ include "bit.lua"
     end,
 
     destroy = function( self )
-                DIA_Clear( g_selConnaissanceObs )
+                g_selConnaissanceObs = {}
     end,
 
 --[[// *****************************************************************************

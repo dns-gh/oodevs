@@ -57,7 +57,7 @@ includedFiles["sources/glaise/glaise_appui/genie/automates/cie blindee/missions/
     end,
 
     destroy = function( self )
-                DIA_Clear( g_selConnaissanceObs )
+                g_selConnaissanceObs = {}
     end,
 
 --[[// *****************************************************************************

@@ -131,7 +131,7 @@ function S_Eni_Automate_ASA_HAWK_TrieParDangerositeSurAmisDansZone( sListeEnis, 
     local _returnValue = {}
     local listeCopie = sListeEnis
     local connaissanceAgentBuffer = nil
-    DIA_Clear( _returnValue )
+    _returnValue = {}
     for _,x in pairs( sListeEnis or {} ) do
     local _continue = true
 do
@@ -155,7 +155,7 @@ function S_Eni_Automate_ASA_HAWK_TrieParDangerositeSurSite( sListeEnis, zone )
     local _returnValue = {}
     local listeCopie = sListeEnis
     local connaissanceAgentBuffer = nil
-    DIA_Clear( _returnValue )
+    _returnValue = {}
     for _,x in pairs( sListeEnis or {} ) do
     local _continue = true
 do

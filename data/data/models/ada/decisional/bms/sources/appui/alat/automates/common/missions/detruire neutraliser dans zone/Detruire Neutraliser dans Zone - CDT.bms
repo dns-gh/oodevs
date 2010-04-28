@@ -53,7 +53,7 @@ include "bit.lua"
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
         --[[// donner des missions aux pions qui sont opérationnels et qui ne sont pas en cours
 ]]--[[// de ravitaillement
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         local listePionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self.listePionsSgpt )
         self.listePionsSgpt = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsSgpt, listePionsEnCoursRavitaillement )
@@ -63,16 +63,16 @@ include "bit.lua"
         local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
         --[[// liste des pions pour IMEX
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         --[[// liste des pions qui peuvent attaquer
-]]DIA_Clear( self.listeDetruire )
+]]self.listeDetruire = {}
         S_Liste_Concatene( self.listeDetruire, listeHAC, listeHAP )
         --[[// liste pour couverture
-]]DIA_Clear( self.listeCouverture )
+]]self.listeCouverture = {}
         self.listeCouverture = listeHAM
         --[[// liste pour IMEX
-]]DIA_Clear( self.listePionsAAppuyerIMEX )
+]]self.listePionsAAppuyerIMEX = {}
         local buffer = {}
         S_Liste_Concatene( buffer, self.listeDetruire, self.listeCouverture )
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( buffer ), self.listeHMLog )

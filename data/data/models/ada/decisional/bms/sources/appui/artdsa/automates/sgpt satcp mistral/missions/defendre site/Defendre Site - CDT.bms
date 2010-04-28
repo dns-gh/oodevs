@@ -24,9 +24,9 @@ includedFiles["sources/appui/artdsa/automates/sgpt satcp mistral/missions/defend
         self.selPions = self.selPions or {}
         self.listeDefendreSite = self.listeDefendreSite or {}
         self.listeSectionsRestantes = self.listeSectionsRestantes or {}
-        DIA_Clear( self.selPions )
+        self.selPions = {}
         self.selPions = DEC_Automate_PionsSansPC()
-        DIA_Clear( self.listeDefendreSite )
+        self.listeDefendreSite = {}
         self.listeDefendreSite = S_Cherche_Automate_Filtre_TypeMission( self.selPions, "T_Mission_Pion_ASA_MISTRAL_DefendreSiteAPartirPosition" )
         self.listeSectionsRestantes = S_Cherche_Automate_Filtre_PionNonDansListe( self.selPions, self.listeDefendreSite )
         if( ModuleBegins() ) then

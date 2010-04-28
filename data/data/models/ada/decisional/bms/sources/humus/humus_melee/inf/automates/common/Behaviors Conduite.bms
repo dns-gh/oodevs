@@ -283,7 +283,7 @@ node "BEH_CoordTir_Automate_INF_Intervention_LCAR"
 
         Activate( self.activations.BEH_CoordTir_Automate_INF_EvalueActivite_Eni, 1, setmetatable( { self._namedParams.pPion, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
         for _,x_appuis in pairs( --[[// Regarde si les appuis traitent un ennemi
-]]self._namedParams.F_Pion_GetselUnitesEnAppui( pPion ) or {} ) do
+]]F_Pion_GetselUnitesEnAppui( self._namedParams.pPion ) or {} ) do
         local _continue = true
 do
                 local pionAppui = x_appuis

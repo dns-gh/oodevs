@@ -108,7 +108,7 @@ node "MIS_Automate_MRT_ALAT_Freiner"
 ]]DIA_PushBack( listeBuffer, x )
                                             DIA_PushBack( listeBuffer, x )
                                             DEC_MRT_AffecteFuseaux( listeBuffer )
-                                            DIA_Clear( listeBuffer )
+                                            listeBuffer = {}
                                         end
                                     else
 do
@@ -116,7 +116,7 @@ do
                                             if( #( listeBuffer ) == 2 ) then
                                                 do
                                                     DEC_MRT_AffecteFuseaux( listeBuffer )
-                                                    DIA_Clear( listeBuffer )
+                                                    listeBuffer = {}
                                                 end
                                             end
 

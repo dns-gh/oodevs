@@ -66,7 +66,7 @@ do
 
                     if _continue then
                     pionBuffer = x
-                    DIA_Clear( pionBuffer:GetlistePionsCoordination_() )
+                    pionBuffer:ClearlistePionsCoordination_()
                     local listePionsBuffer = DEC_Geometrie_PionEstCoordonne( x, S_Liste_Automate_ALAT_PionsNonEnCoursRavitaillement( self._namedParams.listePions ), self._namedParams.distance )
                     for _,y in pairs( listePionsBuffer or {} ) do
                     local _continue = true
@@ -84,7 +84,7 @@ do
 
                     end
 
-                    DIA_Clear( listePionsBuffer )
+                    listePionsBuffer = {}
                 end
             end
 
@@ -103,7 +103,7 @@ do
 
                     if _continue then
                     pionBuffer = x
-                    DIA_Clear( pionBuffer:GetlistePionsCoordination_() )
+                    pionBuffer:ClearlistePionsCoordination_()
                 end
             end
 

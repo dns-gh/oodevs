@@ -609,7 +609,6 @@ node "BEH_Dep_Pion_ALAT_Suivre"
             end
         end
 
-        BeakForDebug( "Dep Suivre" )
         Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointARejoindre, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
     end,
 
@@ -685,7 +684,6 @@ node "BEH_Dep_Pion_ALAT_SuivreSurFlanc"
             end
         end
 
-        BeakForDebug( "Dep Suivre sur flanc" )
         Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointARejoindre, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
     end,
 
@@ -743,7 +741,6 @@ do
             Halt( self )
             do return end
         else
-            BeakForDebug( "Dep Intercepter K" )
             Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointInterception, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
         end
 
@@ -793,7 +790,6 @@ node "BEH_Dep_Pion_ALAT_EclairerItinerairePion"
         if( self._namedParams.pion:DEC_Agent_EstEnMouvement() ) then
             do
                 Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointARejoindre, } )
-                BeakForDebug( "Dep Eclairer" )
                 Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, 1, setmetatable( { self.pointARejoindre, self._namedParams.typeProgression, self._namedParams.ePathType, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
             end
         else

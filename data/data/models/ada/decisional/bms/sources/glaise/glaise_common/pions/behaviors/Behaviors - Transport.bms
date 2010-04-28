@@ -58,7 +58,7 @@ if( DEC_Transport_EnCoursDeTransport() ) then
 --[[//on commence le transport quand toutes les unites sont pretes
 ]]        end
 
-        DIA_Clear( self.listeUnitesMissionTransporter )
+        self.listeUnitesMissionTransporter = {}
         self.listeUnitesMissionTransporter = S_Cherche_Filtre_TypeMission( self.sUnitesATransporter, "T_Mission_Pion_SeFaireTransporter" )
          do
             local _continue = true
@@ -125,7 +125,7 @@ elseif switch_1 == eTransporterEmbarquer then
 ]]                    end
 
                     local attendreUnites = false
-                    DIA_Clear( self.listeUnitesPretes )
+                    self.listeUnitesPretes = {}
                     for _,x in pairs( self.listeUnitesMissionTransporter or {} ) do
                     local _continue = true
 do

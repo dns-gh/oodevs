@@ -24,11 +24,11 @@ includedFiles["sources/appui/artdsa/automates/sgpt satcp mistral/missions/survei
         self.selPions = self.selPions or {}
         self.listeSurveiller = self.listeSurveiller or {}
         self.listeSectionsRestantes = self.listeSectionsRestantes or {}
-        DIA_Clear( self.selPions )
+        self.selPions = {}
         self.selPions = DEC_Automate_PionsSansPC()
-        DIA_Clear( self.listeSurveiller )
+        self.listeSurveiller = {}
         self.listeSurveiller = S_Cherche_Automate_Filtre_TypeMission( self.selPions, "T_Mission_Pion_ASA_MISTRAL_Surveiller" )
-        DIA_Clear( self.listeSectionsRestantes )
+        self.listeSectionsRestantes = {}
         self.listeSectionsRestantes = S_Cherche_Automate_Filtre_PionNonDansListe( self.selPions, self.listeSurveiller )
         if( ModuleBegins() ) then
             do

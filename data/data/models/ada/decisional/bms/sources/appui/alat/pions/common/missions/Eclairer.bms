@@ -89,7 +89,7 @@ include "bit.lua"
                     if( self.eEtat == eActionImpossible ) then
                         do
                                                         do
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
@@ -108,7 +108,6 @@ include "bit.lua"
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, {} )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_Manoeuvrer" ), {} )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointFinFuseau, } )
-
                     Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), setmetatable( { self.pointFinFuseau, eProgressionDefaut, eTypeItiReconnaissance, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtat = v else rawset( t, k, v ) end end } ) )
                     _continue = false
                                 cases_switch_1[1] = true
@@ -133,7 +132,7 @@ elseif switch_1 == eSExfiltrer then
                     if( self.eEtat == eActionImpossible ) then
                         do
                                                         do
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
@@ -159,7 +158,7 @@ elseif switch_1 == eFinMission then
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
@@ -180,7 +179,7 @@ elseif switch_1 == eFinMission then
     end,
 
     destroy = function( self )
-                DIA_Clear( myself.plotsRavitaillement_ )
+                myself:ClearplotsRavitaillement_()
         F_Pion_SetobjectifEsquive( myself, nil )
     end,
 

@@ -47,32 +47,32 @@ includedFiles["sources/appui/alat/automates/common/missions/surveiller/Surveille
         --[[// ---------------------------------------------------------------------
 ]]--[[// Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// ---------------------------------------------------------------------
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         --[[// liste des pions qui Surveillent
-]]DIA_Clear( self.listeSurveillerOperationnels )
+]]self.listeSurveillerOperationnels = {}
         self.listeSurveillerOperationnels = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_ALAT_Surveiller" )
         --[[//y compris les unites detruitent
-]]DIA_Clear( self.listeSurveiller )
+]]self.listeSurveiller = {}
         self.listeSurveiller = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_ALAT_Surveiller" )
         --[[// liste des pions qui peuvent Surveiller - Seulement en fonction de leurs natures
 ]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AntitankHelicopterPatrol" )
         local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
-        DIA_Clear( self.listePeutFaireSurveiller )
+        self.listePeutFaireSurveiller = {}
         S_Liste_Concatene( self.listePeutFaireSurveiller, listeHAC, listeHAP )
         S_Liste_Concatene( self.listePeutFaireSurveiller, self.listePeutFaireSurveiller, listeHAM )
         self.fNbPeutSurveillerPrec = self.fNbPeutSurveillerPrec or #( self.listePeutFaireSurveiller )
         --[[//liste des pions qui stationnent
-]]DIA_Clear( self.listeStationner )
+]]self.listeStationner = {}
         self.listeStationner = S_Cherche_Automate_Filtre_TypeMission( self.listePeutFaireSurveiller, "T_Mission_Pion_Stationner" )
         --[[// liste des pions qui doivent stationner
-]]DIA_Clear( self.listePionsPourStationner )
+]]self.listePionsPourStationner = {}
         self.listePionsPourStationner = S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireSurveiller, self.listeStationner ), self.listeSurveiller )
         --[[// liste des pions HM Log
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
-        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = {}
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true

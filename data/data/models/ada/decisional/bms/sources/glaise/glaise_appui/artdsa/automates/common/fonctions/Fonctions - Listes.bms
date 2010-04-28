@@ -8,7 +8,7 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/common/fonctions/Fon
 ]]function S_Liste_TrierParDistanceAPion( pion, listeEnis )
     local _returnValue = {}
     local listeCopie = listeEnis
-    DIA_Clear( _returnValue )
+    _returnValue = {}
     for _,x in pairs( listeEnis or {} ) do
     local _continue = true
 do
@@ -30,7 +30,7 @@ end
 
 function S_ConnaissancesEnnemiesVivantesPercuesVolantesPourSgpt( listePions )
     local _returnValue = {}
-    DIA_Clear( _returnValue )
+    _returnValue = {}
     for _,x in pairs( listePions or {} ) do
     local _continue = true
 do

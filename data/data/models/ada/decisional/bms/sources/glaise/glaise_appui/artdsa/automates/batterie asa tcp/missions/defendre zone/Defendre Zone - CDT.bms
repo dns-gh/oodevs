@@ -26,9 +26,9 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa tcp/mis
         self.listeDefendreZone = self.listeDefendreZone or {}
         self.listeSectionsRestantes = self.listeSectionsRestantes or {}
         Activate( self.activations.ACT_Info_Trace, 1, { "Mission Sgpt ASA Mistral : Defendre Zone", } )
-        DIA_Clear( self.selPions )
+        self.selPions = {}
         self.selPions = DEC_Automate_PionsSansPC()
-        DIA_Clear( self.listeDefendreZone )
+        self.listeDefendreZone = {}
         self.listeDefendreZone = S_Cherche_Automate_Filtre_TypeMission( self.selPions, "T_Mission_Pion_ASA_MISTRAL_DefendreZoneAPartirPosition" )
         self.listeSectionsRestantes = S_Cherche_Automate_Filtre_PionNonDansListe( self.selPions, self.listeDefendreZone )
         if( not DIA_IsListEmpty( self.listeSectionsRestantes ) ) then

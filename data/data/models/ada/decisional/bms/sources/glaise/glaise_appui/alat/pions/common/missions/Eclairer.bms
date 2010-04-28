@@ -101,7 +101,7 @@ include "bit.lua"
                         do
                                                         do
                                 DEC_Trace( "Impossible de Preparer Mission" )
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
@@ -138,7 +138,7 @@ elseif switch_1 == eEclairer then
                         do
                                                         do
                                 DEC_Trace( "Impossible d'Eclairer" )
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
@@ -182,7 +182,7 @@ elseif switch_1 == eSExfiltrer then
                         do
                                                         do
                                 DEC_Trace( "Impossible de S'Exfiltrer" )
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_Warning( eRC_MissionImpossible )
                                                                 self.params.__returnValue = eActionImpossible
@@ -208,7 +208,7 @@ elseif switch_1 == eFinMission then
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
@@ -229,7 +229,7 @@ elseif switch_1 == eFinMission then
     end,
 
     destroy = function( self )
-                DIA_Clear( myself.plotsRavitaillement_ )
+                myself:ClearplotsRavitaillement_()
         F_Pion_SetobjectifEsquive( myself, nil )
     end,
 

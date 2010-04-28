@@ -16,7 +16,7 @@ end
 
 function S_Liste_UnitesReconnues( listeConnaissances )
     local _returnValue = {}
-    DIA_Clear( _returnValue )
+    _returnValue = {}
     for _,x in pairs( listeConnaissances or {} ) do
     local _continue = true
 do

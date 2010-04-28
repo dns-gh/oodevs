@@ -47,8 +47,8 @@ node "MIS_Automate_CDT_ALAT_Escorter"
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
         --[[// donner des missions aux pions qui sont opérationnels et qui ne sont pas en cours
 ]]--[[// de ravitaillement
-]]DIA_Clear( self.listePionsSgpt )
-        DIA_Clear( self.listePionsSgptSansRavitaillementsEnCours )
+]]self.listePionsSgpt = {}
+        self.listePionsSgptSansRavitaillementsEnCours = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         local listePionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self.listePionsSgpt )
         self.listePionsSgptSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsSgpt, listePionsEnCoursRavitaillement )
@@ -59,23 +59,23 @@ node "MIS_Automate_CDT_ALAT_Escorter"
         local listeHAPCanons = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAC" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAM" )
         --[[// liste des unités pour IMEX
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHMLog" )
         --[[// liste des unités à escorter
-]]DIA_Clear( self.listeUnitesAEscorter )
+]]self.listeUnitesAEscorter = {}
         self.listeUnitesAEscorter = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAEscorter_ )
         --[[// liste des pions qui peuvent couvrir ou escorter
-]]DIA_Clear( self.listePionsPeuventCouvrirOuEscorter )
-        DIA_Clear( self.listePionsPeuventCouvrirOuEscorterSansRavitaillementsEnCours )
+]]self.listePionsPeuventCouvrirOuEscorter = {}
+        self.listePionsPeuventCouvrirOuEscorterSansRavitaillementsEnCours = {}
         self.listePionsPeuventCouvrirOuEscorter = S_Liste_Concatene( self.listePionsPeuventCouvrirOuEscorter, listeHAH, listeTigre )
         self.listePionsPeuventCouvrirOuEscorter = S_Liste_Concatene( self.listePionsPeuventCouvrirOuEscorter, self.listePionsPeuventCouvrirOuEscorter, listeHAPCanons )
         self.listePionsPeuventCouvrirOuEscorter = S_Liste_Concatene( self.listePionsPeuventCouvrirOuEscorter, self.listePionsPeuventCouvrirOuEscorter, listeHAM )
         self.listePionsPeuventCouvrirOuEscorterSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsPeuventCouvrirOuEscorter, listePionsEnCoursRavitaillement )
-        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = {}
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
         --[[// init des listes de pions pour les missions couvrir et escorter
-]]DIA_Clear( self.listePionsPourMissionsCouvrir )
-        DIA_Clear( self.listePionsPourMissionsEscorter )
+]]self.listePionsPourMissionsCouvrir = {}
+        self.listePionsPourMissionsEscorter = {}
         for _,x in pairs( self.listePionsPeuventCouvrirOuEscorterSansRavitaillementsEnCours or {} ) do
         local _continue = true
 do

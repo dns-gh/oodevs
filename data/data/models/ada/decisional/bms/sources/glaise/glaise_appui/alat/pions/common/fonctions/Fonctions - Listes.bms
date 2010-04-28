@@ -22,7 +22,7 @@ includedFiles["sources/glaise/glaise_appui/alat/pions/common/fonctions/Fonctions
 ]]function S_Liste_Pion_ALAT_UnitesASuivre( listeUnites )
     local _returnValue = {}
     local patrouilleAlat = nil
-    DIA_Clear( _returnValue )
+    _returnValue = {}
     for _,x in pairs( listeUnites or {} ) do
     local _continue = true
 do
@@ -55,7 +55,7 @@ end
 function S_Liste_Pion_ALAT_UnitesAAppuyer( listeUnites )
     local _returnValue = {}
     local patrouilleAlat = nil
-    DIA_Clear( _returnValue )
+    _returnValue = {}
     for _,x in pairs( listeUnites or {} ) do
     local _continue = true
 do
@@ -87,7 +87,7 @@ end
 
 function S_Liste_Pion_ALAT_UnitesADetruire( listInput )
     local _returnValue = {}
-    DIA_Clear( _returnValue )
+    _returnValue = {}
     for _,x in pairs( listInput or {} ) do
     local _continue = true
 do

@@ -108,6 +108,9 @@ public:
     virtual int GetPorteeAction() = 0;
     virtual void SetPorteeAction( int ) = 0;
     virtual float GetNiveauAlerteRavitaillement() = 0;
+    virtual void ClearListeEnisTirAutorise() = 0;
+    virtual void ClearListePionsCoordination() = 0;
+    virtual void ClearPlotsRavitaillement() = 0;
 
     void SetVariableInt( const std::string& name, int value );
     template< typename T > void SetVariable( const std::string& name, T value );

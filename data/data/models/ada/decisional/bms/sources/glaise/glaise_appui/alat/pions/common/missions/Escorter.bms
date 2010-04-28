@@ -98,7 +98,7 @@ include "bit.lua"
 ]]--[[// ---------------------------------------------------
 ]]        end
 
-        DIA_Clear( self.listeCourantePionsAEscorter )
+        self.listeCourantePionsAEscorter = {}
         self.listeCourantePionsAEscorter = S_Liste_Pion_ALAT_UnitesASuivre( self.listePionsAEscorter )
         for _,x in pairs( --[[//  Gestion de l'abonnement a la liste des pions qui appuient
 ]]--[[//  ---------------------------------------------------------
@@ -250,7 +250,7 @@ elseif switch_1 == eFinMission then
                         do
                             self.eEtat = eActionEnCours
                                                         do
-                                DIA_Clear( myself.plotsRavitaillement_ )
+                                myself:ClearplotsRavitaillement_()
                                 F_Pion_SetobjectifEsquive( myself, nil )
                                 DEC_FinMission()
                                                                 self.params.__returnValue = eActionEffectuee
@@ -271,7 +271,7 @@ elseif switch_1 == eFinMission then
     end,
 
     destroy = function( self )
-                DIA_Clear( myself.plotsRavitaillement_ )
+                myself:ClearplotsRavitaillement_()
         F_Pion_SetobjectifEsquive( myself, nil )
     end,
 

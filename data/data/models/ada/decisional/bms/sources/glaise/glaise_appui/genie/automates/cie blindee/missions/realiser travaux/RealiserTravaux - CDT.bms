@@ -60,8 +60,8 @@ include "bit.lua"
     end,
 
     destroy = function( self )
-                DIA_Clear( g_selObs_ARealiser )
-        DIA_Clear( g_selObstacles )
+                g_selObs_ARealiser = {}
+        g_selObstacles = {}
     end,
 
 --[[// *****************************************************************************

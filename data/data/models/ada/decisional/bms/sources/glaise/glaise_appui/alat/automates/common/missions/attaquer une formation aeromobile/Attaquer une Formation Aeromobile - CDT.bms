@@ -35,15 +35,15 @@ node "MIS_Automate_CDT_ALAT_AttaquerFormationAeromobile"
         --[[// ---------------------------------------------------------------------
 ]]--[[// 1. Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// ---------------------------------------------------------------------
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         --[[// liste des pions qui Attaquent
-]]DIA_Clear( self.listeAttaquer )
+]]self.listeAttaquer = {}
         self.listeAttaquer = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_ALAT_DetruireAeromobile" )
         --[[// liste des pions HM Log
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHMLog" )
-        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = {}
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true

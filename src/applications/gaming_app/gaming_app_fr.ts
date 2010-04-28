@@ -359,7 +359,7 @@
     </message>
     <message>
         <source>SWORD Officer Training</source>
-        <translation>SWORD Officer Training</translation>
+        <translation type="obsolete">SWORD Officer Training</translation>
     </message>
     <message>
         <source>sword@masagroup.net</source>

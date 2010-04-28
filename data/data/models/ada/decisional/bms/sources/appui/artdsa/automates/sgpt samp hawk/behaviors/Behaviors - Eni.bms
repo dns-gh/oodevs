@@ -27,7 +27,7 @@ includedFiles["sources/appui/artdsa/automates/sgpt samp hawk/behaviors/Behaviors
         local _continue = true
 do
                 local pionHawk = x
-                DIA_Clear( pionHawk:GetlisteEnisTirAutorise_() )
+                pionHawk:ClearlisteEnisTirAutorise_()
             end
 --[[// Trie des unites : priorite dans cette mission aux unites qui sont 
 ]]--[[// dangereuses pour les connaissances amies qui sont dans la zone et les
@@ -70,7 +70,7 @@ node "BEH_Eni_ASA_HAWK_GererTirsDefendreSite"
         local _continue = true
 do
                 local pionHawk = x
-                DIA_Clear( pionHawk:GetlisteEnisTirAutorise_() )
+                pionHawk:ClearlisteEnisTirAutorise_()
             end
 --[[// Trie des unites : priorite dans cette mission aux unites qui sont proches
 ]]--[[// du barycentre de la zone a defendre et qui sont dangereuses pour les pions 
@@ -111,7 +111,7 @@ node "BEH_Eni_ASA_HAWK_GererTirsSurveiller"
         local _continue = true
 do
                 local pionHawk = x
-                DIA_Clear( pionHawk:GetlisteEnisTirAutorise_() )
+                pionHawk:ClearlisteEnisTirAutorise_()
             end
 
         end

@@ -770,6 +770,39 @@ float DEC_Decision<T>::GetNiveauAlerteRavitaillement()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_Decision::ClearListeEnisTirAutorise
+// Created: LDC 2010-04-27
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::ClearListeEnisTirAutorise()
+{
+    const std::vector< int > list;
+    SetVariable( "myself.listeEnisTirAutorise_", list );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::ClearListePionsCoordination
+// Created: LDC 2010-04-27
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::ClearListePionsCoordination()
+{
+    const std::vector< int > list;
+    SetVariable( "myself.listePionsCoordination_", list );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::ClearPlotsRavitaillement
+// Created: LDC 2010-04-27
+// -----------------------------------------------------------------------------
+template <class T>
+void DEC_Decision<T>::ClearPlotsRavitaillement()
+{
+    const std::vector< int > list;
+    SetVariable( "myself.plotsRavitaillement_", list );
+}
+
+// -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< MT_Vector2D > DEC_Decision::GetLastPointOfPath
 // Created: LDC 2009-11-04
 // -----------------------------------------------------------------------------

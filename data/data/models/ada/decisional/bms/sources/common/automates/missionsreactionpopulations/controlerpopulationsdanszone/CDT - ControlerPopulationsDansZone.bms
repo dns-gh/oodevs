@@ -35,8 +35,8 @@ includedFiles["sources/common/automates/missionsreactionpopulations/controlerpop
         end
 
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
-        DIA_Clear( self.listePionsCanaliserPopulation )
-        DIA_Clear( self.listePionsSuivre )
+        self.listePionsCanaliserPopulation = {}
+        self.listePionsSuivre = {}
         self.listePionsCanaliserPopulation = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_CanaliserPopulations" )
         DIA_PushBack( self.listePionsSuivre, DEC_Automate_PionPC() )
         if( not DIA_IsListEmpty( self.listePionsCanaliserPopulation ) ) then

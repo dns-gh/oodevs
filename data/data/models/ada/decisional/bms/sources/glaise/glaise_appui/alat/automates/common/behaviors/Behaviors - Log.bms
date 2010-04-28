@@ -203,11 +203,11 @@ node "BEH_Log_Automate_ALAT_GererHelitransportsPlotsEtIMEX"
         local bCreerPlots = false
         local TC2 = DEC_Automate_TC2()
         local pionTC2 = nil
-        DIA_Clear( self.listePionsIMEX )
-        DIA_Clear( self.listePionsTransportPlots )
-        DIA_Clear( self.listePionsPourHeliporterPlots )
-        DIA_Clear( self.listePionsASoutenirRav )
-        DIA_Clear( self.listePionsASoutenirIMEX )
+        self.listePionsIMEX = {}
+        self.listePionsTransportPlots = {}
+        self.listePionsPourHeliporterPlots = {}
+        self.listePionsASoutenirRav = {}
+        self.listePionsASoutenirIMEX = {}
         if( TC2 ~= nil ) then
             pionTC2 = DEC_Automate_PionPCDeAutomate( TC2 )
         end

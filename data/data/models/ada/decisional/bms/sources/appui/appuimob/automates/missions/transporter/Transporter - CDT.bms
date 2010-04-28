@@ -31,11 +31,11 @@ node "MIS_Automate_CDT_LOG_TransporterUnites"
 ]]--[[// 1. Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// ---------------------------------------------------------------------
 ]]--[[// liste des pions de l'automate ( gestion des sgroupements dynamiques )
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = DEC_Automate_PionsSansPC()
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( self.listePionsSgpt )
         --[[//liste des transporteurs
-]]DIA_Clear( self.listeTransporteur )
+]]self.listeTransporteur = {}
         self.listeTransporteur = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_LOG_TransporterUnite" )
         --[[// ---------------------------------------------------------------------
 ]]--[[// Condition d'arret : si plus aucun pion n'a la mission Transporer

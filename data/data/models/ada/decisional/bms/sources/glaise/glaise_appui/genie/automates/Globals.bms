@@ -101,9 +101,9 @@ do
 
     end
 
-    DIA_Clear( g_selObstacles )
-    DIA_Clear( g_selConnaissanceObs )
-    DIA_Clear( g_selObs_ARealiser )
+    g_selObstacles = {}
+    g_selConnaissanceObs = {}
+    g_selObs_ARealiser = {}
 end
 
 function M_MODELE_Pion_GEN_MAX_DIST_DECROCHE()

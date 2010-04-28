@@ -73,8 +73,8 @@ include "bit.lua"
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
         --[[// donner des missions aux pions qui sont opérationnels et qui ne sont pas en cours
 ]]--[[// de ravitaillement
-]]DIA_Clear( self.listePionsSgpt )
-        DIA_Clear( self.listePionsSgptSansRavitaillementsEnCours )
+]]self.listePionsSgpt = {}
+        self.listePionsSgptSansRavitaillementsEnCours = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         local listePionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self.listePionsSgpt )
         self.listePionsSgptSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsSgpt, listePionsEnCoursRavitaillement )
@@ -85,19 +85,19 @@ include "bit.lua"
         local listeHAPCanons = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAC" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAM" )
         --[[// liste des unités pour IMEX
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHMLog" )
         --[[// liste des unités à appuyer
-]]DIA_Clear( self.listeUnitesACouvrir )
+]]self.listeUnitesACouvrir = {}
         self.listeUnitesACouvrir = S_SelectionnePCEtSubordonnes( self._namedParams.mission.unitesAAppuyer_ )
         --[[// liste des pions qui peuvent couvrir
-]]DIA_Clear( self.listePionsCouvrir )
-        DIA_Clear( self.listePionsCouvrirSansRavitaillementsEnCours )
+]]self.listePionsCouvrir = {}
+        self.listePionsCouvrirSansRavitaillementsEnCours = {}
         self.listePionsCouvrir = S_Liste_Concatene( self.listePionsCouvrir, listeHAH, listeTigre )
         self.listePionsCouvrir = S_Liste_Concatene( self.listePionsCouvrir, self.listePionsCouvrir, listeHAPCanons )
         self.listePionsCouvrir = S_Liste_Concatene( self.listePionsCouvrir, self.listePionsCouvrir, listeHAM )
         self.listePionsCouvrirSansRavitaillementsEnCours = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsCouvrir, listePionsEnCoursRavitaillement )
-        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = {}
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true

@@ -140,7 +140,7 @@ node "ACT_Nbc_MettreTenueProtection"
 
                 end
 
-                myself:DEC_Agent_MettreTenueProtectionNBC()
+                DEC_Agent_MettreTenueProtectionNBC()
             end
         end
 
@@ -159,7 +159,7 @@ node "ACT_Nbc_MettreTenueProtection"
 
         end
 
-        myself:DEC_Agent_EnleverTenueProtectionNBC()
+        DEC_Agent_EnleverTenueProtectionNBC()
     end,
 
 }

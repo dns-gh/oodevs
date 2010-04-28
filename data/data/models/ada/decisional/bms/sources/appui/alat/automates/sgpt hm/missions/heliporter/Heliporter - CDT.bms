@@ -76,13 +76,13 @@ include "bit.lua"
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
         --[[// Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// -------------------------------------------------------
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         --[[// listes des pions HM
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         --[[// listes des pions HM Log
-]]DIA_Clear( self.listeHM )
+]]self.listeHM = {}
         self.listeHM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "TransportHelicopterPatrol" )
         if( DIA_IsListEmpty( self.listeHM ) ) then
             do
@@ -95,9 +95,9 @@ include "bit.lua"
 --[[// liste des pions en cours de ravitaillement
 ]]        end
 
-        DIA_Clear( self.listePionsEnCoursRavitaillement )
+        self.listePionsEnCoursRavitaillement = {}
         self.listePionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self.listePionsSgpt )
-        DIA_Clear( self.listePourHeliportage )
+        self.listePourHeliportage = {}
         --[[//il ne doit pas y avoir plus de HM que de pions à transporter
 ]]if( #( self.listeHM ) > #( self.listePionsAHeliporter ) ) then
             do
@@ -115,20 +115,20 @@ include "bit.lua"
         end
 
         --[[// liste des pions en cours de transport
-]]DIA_Clear( self.listeHeliporter )
+]]self.listeHeliporter = {}
         self.listeHeliporter = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_ALAT_Heliporter" )
         --[[// liste des pions qui peuvent Escorter ou couvrir
 ]]local listeHAC = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AntitankHelicopterPatrol" )
         local listeHAP = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "EscortAndCloseSupportHelicopterPatrol" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "AirDefenseHelicopterPatrol" )
-        DIA_Clear( self.listePionsPeuventCouvrirOuEscorter )
+        self.listePionsPeuventCouvrirOuEscorter = {}
         S_Liste_Concatene( self.listePionsPeuventCouvrirOuEscorter, listeHAC, listeHAP )
         S_Liste_Concatene( self.listePionsPeuventCouvrirOuEscorter, self.listePionsPeuventCouvrirOuEscorter, listeHAM )
-        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = {}
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
-        DIA_Clear( self.listePionsPourMissionsCouvrir )
-        DIA_Clear( self.listePionsPourMissionsEscorter )
-        DIA_Clear( self.listePionsARepartir )
+        self.listePionsPourMissionsCouvrir = {}
+        self.listePionsPourMissionsEscorter = {}
+        self.listePionsARepartir = {}
         --[[// liste des unités qui peuvent couvrir ou escorter et qui ne sont pas 
 ]]--[[// en cours de ravitaillement
 ]]self.listePionsARepartir = S_Cherche_Automate_Filtre_PionNonDansListe( self.listePionsPeuventCouvrirOuEscorter, self.listePionsEnCoursRavitaillement )

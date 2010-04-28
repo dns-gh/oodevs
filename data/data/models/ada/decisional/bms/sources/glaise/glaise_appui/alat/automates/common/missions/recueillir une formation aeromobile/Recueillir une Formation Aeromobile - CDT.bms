@@ -49,13 +49,13 @@ include "bit.lua"
         --[[// ---------------------------------------------------------------------
 ]]--[[// Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// ---------------------------------------------------------------------
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         --[[// liste des pions qui Detruisent/Neutralisent dans zone
-]]DIA_Clear( self.listeDetruire )
+]]self.listeDetruire = {}
         self.listeDetruire = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_ALAT_DetruireNeutraliserDansZone" )
         --[[// liste des pions HM Log
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "GeneralPurposeHelicopterPatrol" )
         for _,x in pairs( --[[//Gestion du debut du coup d'arret
 ]]self.listeDetruire or {} ) do
@@ -70,7 +70,7 @@ do
 
         end
 
-        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = {}
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true

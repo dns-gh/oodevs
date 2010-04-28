@@ -104,6 +104,10 @@ public:
     virtual float GetNiveauAlerteRavitaillement();
     virtual boost::shared_ptr< MT_Vector2D > GetLastPointOfPath( const MT_Float time, bool bBoundOnPath ) const;
     virtual boost::shared_ptr< MT_Vector2D > ExtrapolatePosition( const MT_Float time, bool bBoundOnPath ) const;
+
+    virtual void ClearListeEnisTirAutorise();
+    virtual void ClearListePionsCoordination();
+    virtual void ClearPlotsRavitaillement();
    
     virtual std::vector< DEC_Decision_ABC* > GetPionsWithPC();
     virtual bool IsNeutralized() const;

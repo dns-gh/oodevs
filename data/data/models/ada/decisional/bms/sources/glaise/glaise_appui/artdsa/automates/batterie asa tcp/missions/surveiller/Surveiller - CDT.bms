@@ -26,11 +26,11 @@ includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa tcp/mis
         self.listeSurveiller = self.listeSurveiller or {}
         self.listeSectionsRestantes = self.listeSectionsRestantes or {}
         Activate( self.activations.ACT_Info_Trace, 1, { "Mission Sgpt ASA Mistral : Surveiller", } )
-        DIA_Clear( self.selPions )
+        self.selPions = {}
         self.selPions = DEC_Automate_PionsSansPC()
-        DIA_Clear( self.listeSurveiller )
+        self.listeSurveiller = {}
         self.listeSurveiller = S_Cherche_Automate_Filtre_TypeMission( self.selPions, "T_Mission_Pion_ASA_MISTRAL_Surveiller" )
-        DIA_Clear( self.listeSectionsRestantes )
+        self.listeSectionsRestantes = {}
         self.listeSectionsRestantes = S_Cherche_Automate_Filtre_PionNonDansListe( self.selPions, self.listeSurveiller )
         if( not DIA_IsListEmpty( self.listeSectionsRestantes ) ) then
             do

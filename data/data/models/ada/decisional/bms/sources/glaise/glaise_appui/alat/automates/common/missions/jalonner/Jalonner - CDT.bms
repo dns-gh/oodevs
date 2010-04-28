@@ -60,17 +60,17 @@ include "bit.lua"
         --[[// ---------------------------------------------------------------------
 ]]--[[// Mise à Jour des selections de pions ( à tous les tics )
 ]]--[[// ---------------------------------------------------------------------
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( DEC_Automate_PionsSansPC() )
         --[[// liste des pions en cours de ravitaillement
-]]DIA_Clear( self.listePionsEnCoursRavitaillement )
+]]self.listePionsEnCoursRavitaillement = {}
         self.listePionsEnCoursRavitaillement = S_Liste_Automate_ALAT_PionsEnCoursRavitaillement( self.listePionsSgpt )
         --[[// liste des pions qui Jalonnent
-]]DIA_Clear( self.listeJalonner )
+]]self.listeJalonner = {}
         self.listeJalonner = S_Cherche_Automate_Filtre_TypeMission( DEC_Automate_PionsSansPC(), "T_Mission_Pion_ALAT_Jalonner" )
-        DIA_Clear( self.listeJalonnerOperationnels )
+        self.listeJalonnerOperationnels = {}
         self.listeJalonnerOperationnels = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_ALAT_Jalonner" )
-        DIA_Clear( self.listeSuivre )
+        self.listeSuivre = {}
         self.listeSuivre = S_Cherche_Automate_Filtre_TypeMission( self.listePionsSgpt, "T_Mission_Pion_Suivre" )
         --[[// liste des pions qui peuvent Jalonner
 ]]local listeHAH = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAH" )
@@ -78,7 +78,7 @@ include "bit.lua"
         local listeHAPCanons = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAC" )
         local listeHAM = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHAM" )
         local listeHR = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHR" )
-        DIA_Clear( self.listePeutFaireJalonner )
+        self.listePeutFaireJalonner = {}
         self.listePeutFaireJalonner = S_Liste_Concatene( self.listePeutFaireJalonner, listeHAH, listeTigre )
         self.listePeutFaireJalonner = S_Liste_Concatene( self.listePeutFaireJalonner, self.listePeutFaireJalonner, listeHAPCanons )
         self.listePeutFaireJalonner = S_Liste_Concatene( self.listePeutFaireJalonner, self.listePeutFaireJalonner, listeHAM )
@@ -86,15 +86,15 @@ include "bit.lua"
         --[[//liste des pions de reserve
 ]]--[[//c'est a dire tous les pions qui ne jalonnent pas, qui ne suivent pas et qui ne sont pas en
 ]]--[[//cours de ravitaillment ( ces pions sont dispo pour réaliser une mission )
-]]DIA_Clear( self.listeReserve )
+]]self.listeReserve = {}
         self.listeReserve = S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( S_Cherche_Automate_Filtre_PionNonDansListe( self.listePeutFaireJalonner, self.listeJalonnerOperationnels ), self.listeSuivre ), self.listePionsEnCoursRavitaillement )
         --[[//liste des pions que l'on peut utiliser pour relever
-]]DIA_Clear( self.listePeutRelever )
+]]self.listePeutRelever = {}
         self.listePeutRelever = S_Cherche_Automate_Filtre_PionNonDansListe( self.listeSuivre, self.listePionsEnCoursRavitaillement )
         --[[// liste des pions HM Log
-]]DIA_Clear( self.listeHMLog )
+]]self.listeHMLog = {}
         self.listeHMLog = S_Cherche_Automate_Filtre_TypePion( self.listePionsSgpt, "PatrouilleHMLog" )
-        DIA_Clear( self.listePionsAAppuyerIMEX )
+        self.listePionsAAppuyerIMEX = {}
         self.listePionsAAppuyerIMEX = S_Cherche_Automate_Filtre_PionNonDansListe( S_Liste_Automate_ALAT_UnitesAAppuyer( DEC_Automate_PionsSansPC() ), self.listeHMLog )
          do
             local _continue = true

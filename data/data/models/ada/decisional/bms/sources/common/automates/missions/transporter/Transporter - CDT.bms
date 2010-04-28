@@ -43,14 +43,14 @@ node "MIS_Automate_CDT_Transporter"
 
         Activate( self.activations.BEH_Ordre_Automate_RecevoirOrdreInopine, 1, setmetatable( {}, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eEtatODC = v else rawset( t, k, v ) end end } ) )
         --[[// liste des pions de l'automate ( gestion des sgroupements dynamiques )
-]]DIA_Clear( self.listePionsSgpt )
+]]self.listePionsSgpt = {}
         self.listePionsSgpt = DEC_Automate_PionsAvecPC()
         self.listePionsSgpt = S_Cherche_Automate_PionsOperationnels( self.listePionsSgpt )
         --[[//liste des transporteurs $$$$GGR : moche!!! il faut pouvoir récupérer la liste des unités qui peuvent faire la mission transporter
-]]DIA_Clear( self.listeTransporteur )
+]]self.listeTransporteur = {}
         self.listeTransporteur = S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "PelotonAppuiMob" )
         S_Liste_Concatene( self.listeTransporteur, self.listeTransporteur, S_Cherche_Automate_Filtre_TypePionOperationnels( self.listePionsSgpt, "LandingCraft" ) )
-        DIA_Clear( self.listePourTransport )
+        self.listePourTransport = {}
         --[[//il ne doit pas y avoir plus de HM que de pions à transporter
 ]]if( #( self.listeTransporteur ) > #( self.listePionsATransporter ) ) then
             do
