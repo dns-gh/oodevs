@@ -17,6 +17,7 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Launchers_Data.h"
+#include "ADN_Weapons_GUI.h"
 #include <qpopupmenu.h>
 #include "ENT/ENT_Tr.h"
 
@@ -95,5 +96,13 @@ ADN_Launchers_ModifPhs_GUI::~ADN_Launchers_ModifPhs_GUI()
     delete pConnector_;
 }
 
-
-
+// -----------------------------------------------------------------------------
+// Name: ADN_Launchers_ModifPhs_GUI::doValueChanged
+// Created: JSR 2010-04-28
+// LTO
+// -----------------------------------------------------------------------------
+void ADN_Launchers_ModifPhs_GUI::doValueChanged( int row, int col )
+{
+    ADN_Table2::doValueChanged( row, col );
+    ADN_Workspace::GetWorkspace().GetWeapons().GetGui().UpdateModifiers();
+}

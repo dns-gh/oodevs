@@ -58,6 +58,8 @@ class ADN_Population_Data;
 class ADN_Population_GUI;
 class ADN_Reports_Data;
 class ADN_Reports_GUI;
+class ADN_HumanFactors_Data;
+class ADN_HumanFactors_GUI;
 
 // =============================================================================
 /** @class  ADN_Workspace
@@ -104,6 +106,7 @@ public:
     ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI>& GetBreakdowns();
     ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >& GetPopulation();
     ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& GetReports();
+    ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& GetHumanFactors();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -362,6 +365,16 @@ inline
 ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& ADN_Workspace::GetReports()
 {
     return ( ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& )( *elements_[ eReports ] );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::GetHumanFactors
+// Created: JSR 2010-04-28
+// -----------------------------------------------------------------------------
+inline
+ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& ADN_Workspace::GetHumanFactors()
+{
+    return ( ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& )( *elements_[ eHumanFactors ] );
 }
 
 // -----------------------------------------------------------------------------

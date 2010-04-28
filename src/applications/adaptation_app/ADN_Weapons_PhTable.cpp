@@ -95,7 +95,7 @@ ADN_Weapons_PhTable::ADN_Weapons_PhTable( QWidget* pParent )
     setColumnStretchable( 1, true );
 
     horizontalHeader()->setLabel(0, tr( "Distance" ) );
-    horizontalHeader()->setLabel(1, tr( "Percentage" ) );
+    horizontalHeader()->setLabel(1, tr( "Percentage (PH)" ) );
 
     // Create the connector.
     pConnector_ = new ADN_Connector_PhTable( *this );
@@ -156,6 +156,19 @@ void ADN_Weapons_PhTable::CreateNewElement()
     pCTable->AddItem( 0 );  
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_PhTable::doValueChanged
+// Created: JSR 2010-04-28
+// -----------------------------------------------------------------------------
+void ADN_Weapons_PhTable::doValueChanged( int row, int col )
+{
+    ADN_Table2::doValueChanged( row, col );
+    PhInfos* pCurPh = (PhInfos*)GetCurrentData();
+    if( pCurPh != 0 )
+    {
+        pCurPh->ApplyPhModifiers();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhTable::DeleteCurrentElement

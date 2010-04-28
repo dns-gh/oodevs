@@ -18,6 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_GUI.h"
+#include "moc_ADN_Weapons_GUI.cpp"
 
 #include <qlabel.h>
 #include <qlayout.h>
@@ -34,6 +35,7 @@
 #include "ADN_EditLine.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_HumanFactors_Data.h"
 #include "ADN_Weapons_PhSizeListView.h"
 #include "ADN_Weapons_PhTable.h"
 #include "ADN_MainWindow.h"
@@ -52,6 +54,8 @@
 #include "GQ_PlotAxis.h"
 #include "GQ_PlotCaption.h"
 
+#include "ENT/ENT_Tr.h"
+
 //-----------------------------------------------------------------------------
 // Internal Canvas connector 
 //-----------------------------------------------------------------------------
@@ -69,17 +73,17 @@ public:
     virtual ~ADN_GC_Ph()
     {}
 
-    bool AddItemPrivate( void* pItem, bool bCreateCommand = false )
+    bool AddItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
     {
         if( pItem == 0 )
             return false;
 
         ADN_Weapons_Data::PhInfos* pPhInfos = static_cast<ADN_Weapons_Data::PhInfos*>( pItem );
-        new ADN_GraphValue( graphData_, pPhInfos, pPhInfos->nDistance_, pPhInfos->rPerc_ );
+        new ADN_GraphValue( graphData_, pPhInfos, pPhInfos->nModifiedDistance_ , pPhInfos->rModifiedPerc_ ); // LTO
         return true;
     }
 
-    bool RemItemPrivate( void* pItem, bool bCreateCommand = false )
+    bool RemItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
     {
         graphData_.DeleteData( pItem );
         return true;
@@ -120,7 +124,7 @@ public:
     virtual ~ADN_GC_PhSize()
     {}
 
-    bool AddItemPrivate( void* pItem, bool bCreateCommand = false )
+    bool AddItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
     {
         if( pItem == 0 )
             return false;
@@ -146,7 +150,7 @@ public:
         return true;
     }
 
-    bool RemItemPrivate( void* pItem, bool bCreateCommand = false )
+    bool RemItemPrivate( void* pItem, bool /*bCreateCommand*/ = false )
     {
         GQ_PlotData* pPlotData = graph_.FindPlotData( (uint)pItem );
         if( pPlotData == 0 )
@@ -156,7 +160,7 @@ public:
         return true;
     }
 
-    void ClearPrivate( bool bInConnection = false )
+    void ClearPrivate( bool /*bInConnection*/ = false )
     {
         graph_.UnregisterAllPlotData( true );
         nNbrDatas_ = 0;
@@ -204,8 +208,8 @@ void ADN_Weapons_GUI::Build()
     pMainWidget_ = new QWidget( 0, "Weapon systems main widget" );
 
     // Create the weapons listview.
-    ADN_Weapons_ListView* pWeaponList = new ADN_Weapons_ListView( pMainWidget_ );
-    pWeaponList->GetConnector().Connect( &data_.GetWeaponInfos() );
+    pWeaponList_ = new ADN_Weapons_ListView( pMainWidget_ );
+    pWeaponList_->GetConnector().Connect( &data_.GetWeaponInfos() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
     // Parameters group
@@ -256,6 +260,26 @@ void ADN_Weapons_GUI::Build()
 
     pPhSizeListView->SetItemConnectors( vPhConnectors );
 
+    // LTO begin
+    ADN_GroupBox* pSimulation = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Simulation" ), pDirectGroup );
+    vInfosConnectors[eSimulation] = &pSimulation->GetConnector();
+    connect( pSimulation, SIGNAL( toggled( bool ) ), this, SLOT( ModifiersChanged( bool ) ) );
+
+    QWidget* pModifiersHolder = builder.AddFieldHolder( pSimulation );
+
+    ADN_ComboBox* pFirePostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Fire posture" ), vInfosConnectors[eFirePosture], ENT_Tr::ConvertFromUnitPosture );
+    connect( pFirePostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
+
+    ADN_ComboBox* pTargetPostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Target posture" ), vInfosConnectors[eTargetPosture], ENT_Tr::ConvertFromUnitPosture );
+    connect( pTargetPostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
+
+    ADN_ComboBox* pExperienceCombo = builder.AddEnumField< E_UnitExperience >( pModifiersHolder, tr( "Experience" ), vInfosConnectors[eExperience], ENT_Tr::ConvertFromUnitExperience );
+    connect( pExperienceCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
+
+    ADN_ComboBox* pTirednessCombo = builder.AddEnumField< E_UnitTiredness >( pModifiersHolder, tr( "Tiredness" ), vInfosConnectors[eTiredness], ENT_Tr::ConvertFromUnitTiredness );
+    connect( pTirednessCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
+    // LTO end
+
     // Indirect group
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect fire" ), pGroup );
     vInfosConnectors[eIndirect] = &pIndirectGroup->GetConnector();
@@ -264,12 +288,12 @@ void ADN_Weapons_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Min range" ), vInfosConnectors[eMinRange], tr( "m" ), eGreaterEqualZero );
     builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Max range" ), vInfosConnectors[eMaxRange], tr( "m" ), eGreaterEqualZero );
 
-    pWeaponList->SetItemConnectors( vInfosConnectors );
+    pWeaponList_->SetItemConnectors( vInfosConnectors );
 
 
     // Layout
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pWeaponList );
+    pMainLayout->addWidget( pWeaponList_ );
     pMainLayout->addWidget( pGroup );
 
     QVBoxLayout* pGroupLayout = new QVBoxLayout( pGroup->layout(), 5 );
@@ -278,10 +302,26 @@ void ADN_Weapons_GUI::Build()
     pGroupLayout->addWidget( pDirectGroup );
     pGroupLayout->addWidget( pIndirectGroup);
 
-    QGridLayout* pDirectLayout = new QGridLayout( pDirectGroup->layout(), 2, 2, 5 );
+    // LTO begin
+    QVBoxLayout* pModifiersLayout = new QVBoxLayout( pModifiersHolder->layout(), 2 );
+    pModifiersLayout->setAlignment( Qt::AlignTop );
+    pModifiersLayout->addWidget( pFirePostureCombo );
+    pModifiersLayout->addWidget( pTargetPostureCombo );
+    pModifiersLayout->addWidget( pExperienceCombo );
+    pModifiersLayout->addWidget( pTirednessCombo );
+ 
+    QHBoxLayout* pSimulationLayout = new QHBoxLayout( pSimulation->layout(), 2 );
+    pSimulationLayout->addWidget( pModifiersHolder );
+
+    QGridLayout* pDirectLayout = new QGridLayout( pDirectGroup->layout(), 2, 5, 5 );
     pDirectLayout->addWidget( pPhSizeListView, 0, 0 );
     pDirectLayout->addWidget( pPhTable, 0, 1 );
-    pDirectLayout->addMultiCellWidget( pGraph, 1, 1, 0, 1 );
+    pDirectLayout->addMultiCellWidget( pSimulation, 0, 0, 2, 4 );
+    pDirectLayout->addMultiCellWidget( pGraph, 1, 1, 0, 4 );
+    pDirectLayout->setColStretch( 0, 1 );
+    pDirectLayout->setColStretch( 1, 2 );
+    pDirectLayout->setColStretch( 3, 2 );
+    // LTO end
 }
 
 
@@ -522,5 +562,90 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
     mainIndexBuilder.ListItem( strText );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_GUI::UpdateModifiers
+// Created: JSR 2010-04-28
+// -----------------------------------------------------------------------------
+void ADN_Weapons_GUI::UpdateModifiers()
+{
+    ADN_Weapons_Data::WeaponInfos* pInfos = ( ADN_Weapons_Data::WeaponInfos* )pWeaponList_->GetCurrentData();
+    if( pInfos == 0 )
+        return;
+
+    double phModifier = 1.;
+    double distanceModifier = 1.;
+
+    if( pInfos->bSimulation_.GetData() != 0 )
+    {
+        int firePosture = pInfos->nFirePosture_.GetData();
+        int targetPosture = pInfos->nTargetPosture_.GetData();
+
+        distanceModifier = pInfos->ptrLauncher_.GetData()->tabModifs_.Get( firePosture, targetPosture ).GetData();
+        distanceModifier /= 100;
+
+        E_UnitExperience experience = pInfos->nExperience_.GetData();
+        E_UnitTiredness tiredness = pInfos->nTiredness_.GetData();
+
+        ADN_HumanFactors_Data& humanFactors = ADN_Workspace::GetWorkspace().GetHumanFactors().GetData();
+
+        switch( experience )
+        {
+        case eUnitExperience_Conscrit:
+            phModifier = humanFactors.newbieModifiers_.rPHModifier_.GetData();
+            break;
+        case eUnitExperience_Experimente:
+            phModifier = humanFactors.xpModifiers_.rPHModifier_.GetData();
+            break;
+        case eUnitExperience_Veteran:
+            phModifier = humanFactors.veteranModifiers_.rPHModifier_.GetData();
+            break;
+        default:
+            break;
+        }
+
+        switch( tiredness )
+        {
+        case eUnitTiredness_Epuise:
+            phModifier *= humanFactors.exhaustedModifiers_.rPHModifier_.GetData();
+            break;
+        case eUnitTiredness_Fatigue:
+            phModifier *= humanFactors.tiredModifiers_.rPHModifier_.GetData();
+            break;
+        case eUnitTiredness_Normal:
+            phModifier *= humanFactors.normalModifiers_.rPHModifier_.GetData();
+            break;
+        default:
+            break;
+        }
+    }
+
+    for( ADN_Weapons_Data::IT_PhSizeInfosVector phSizeInfosIt = pInfos->phs_.begin(); phSizeInfosIt != pInfos->phs_.end(); ++phSizeInfosIt )
+    {
+        for( ADN_Weapons_Data::IT_PhInfosVector phInfosIt = ( *phSizeInfosIt )->vPhs_.begin(); phInfosIt != ( *phSizeInfosIt )->vPhs_.end(); ++phInfosIt )
+        {
+            ADN_Weapons_Data::PhInfos* ph = *phInfosIt;
+            ph->SetPhModifiers( distanceModifier, phModifier );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_GUI::ModifiersChanged
+// Created: JSR 2010-04-28
+// LTO
+// -----------------------------------------------------------------------------
+void ADN_Weapons_GUI::ModifiersChanged( bool )
+{
+    UpdateModifiers();
+}
 
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_GUI::ModifiersChanged
+// Created: JSR 2010-04-27
+// LTO
+// -----------------------------------------------------------------------------
+void ADN_Weapons_GUI::ModifiersChanged( int )
+{
+    UpdateModifiers();
+}

@@ -33,10 +33,16 @@ ADN_Weapons_Data::PhInfos::PhInfos()
 : ADN_DataTreeNode_ABC()
 , nDistance_(0)
 , rPerc_(0.0)
+, nModifiedDistance_( 0 ) // LTO
+, rModifiedPerc_( 0.0 ) // LTO
+, distModifier_( 1.0 ) // LTO
+, phModifier_( 1.0 ) // LTO
 {
     nDistance_.SetParentNode( *this );
+    nModifiedDistance_.SetParentNode( *this );  // LTO
     rPerc_.SetParentNode( *this );
     rPerc_.SetDataName( "le pourcentage de chance de toucher à" );
+    rModifiedPerc_.SetParentNode( *this );  // LTO
 }
 
 
@@ -69,10 +75,34 @@ ADN_Weapons_Data::PhInfos* ADN_Weapons_Data::PhInfos::CreateCopy()
     PhInfos* pCopy = new PhInfos();
     pCopy->nDistance_ = nDistance_.GetData();
     pCopy->rPerc_ = rPerc_.GetData();
+    pCopy->nModifiedDistance_ = nModifiedDistance_.GetData(); // LTO
+    pCopy->rModifiedPerc_ = rModifiedPerc_.GetData(); // LTO
 
     return pCopy;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::SetPhModifiers
+// Created: JSR 2010-04-27
+// LTO
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data::PhInfos::SetPhModifiers( double distModifier, double phModifier )
+{
+    distModifier_ = distModifier;
+    phModifier_ = phModifier;
+    ApplyPhModifiers();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Weapons_Data::ApplyPhModifiers
+// Created: JSR 2010-04-27
+// LTO
+// -----------------------------------------------------------------------------
+void ADN_Weapons_Data::PhInfos::ApplyPhModifiers()
+{
+    nModifiedDistance_ = ( int ) ( nDistance_.GetData() * distModifier_ );
+    rModifiedPerc_ = rPerc_.GetData() * phModifier_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: PhInfos::ReadArchive
@@ -186,8 +216,13 @@ ADN_Weapons_Data::WeaponInfos::WeaponInfos()
 , burstDuration_    ( "0s" )
 , nRoundsPerReload_ ( 0 )
 , reloadDuration_   ( "0s" )
-, bDirect_      ( false )
-, phs_          ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
+, bDirect_        ( false )
+, phs_            ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos() )
+, bSimulation_    ( false )
+, nFirePosture_   ( eUnitPosture_PostureArret ) // LTO
+, nTargetPosture_ ( eUnitPosture_PostureArret ) // LTO
+, nExperience_    ( eUnitExperience_Veteran ) // LTO
+, nTiredness_     ( eUnitTiredness_Normal ) // LTO
 , bIndirect_    ( false )
 , rAverageSpeed_( 0 )
 , rMinRange_    ( 0 )
@@ -238,6 +273,14 @@ ADN_Weapons_Data::WeaponInfos* ADN_Weapons_Data::WeaponInfos::CreateCopy()
         for( IT_PhInfosVector it = phSizeInfo.vPhs_.begin(); it != phSizeInfo.vPhs_.end(); ++it )
             phSizeInfoCopy.vPhs_.AddItem( (*it)->CreateCopy() );
     }
+
+    // LTO begin
+    pCopy->bSimulation_ = bSimulation_.GetData();
+    pCopy->nFirePosture_ = nFirePosture_.GetData();
+    pCopy->nTargetPosture_ = nTargetPosture_.GetData();
+    pCopy->nExperience_ = nExperience_.GetData();
+    pCopy->nTiredness_ = nTiredness_.GetData();
+    // LTO end
 
     pCopy->bIndirect_ = bIndirect_.GetData();
     pCopy->rAverageSpeed_ = rAverageSpeed_.GetData();

@@ -22,12 +22,31 @@
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
+#include "ADN_Weapons_GUI.h"
 
 #include <qgroupbox.h>
 #include <qvbox.h>
 #include <qlabel.h>
 #include <qlayout.h>
 
+// -----------------------------------------------------------------------------
+// Name: ADN_PH_EditLine_Double
+// Created: JSR 2010-04-28
+// LTO
+// -----------------------------------------------------------------------------
+class ADN_PH_EditLine_Double : public ADN_EditLine_Double
+{
+public:
+    explicit ADN_PH_EditLine_Double(QWidget* parent, const char * name = 0)
+        : ADN_EditLine_Double( parent, name ) {}
+
+protected:
+    virtual void TextChanged(const QString& string)
+    {
+        ADN_EditLine_Double::TextChanged( string );
+        ADN_Workspace::GetWorkspace().GetWeapons().GetGui().UpdateModifiers();
+    }
+};
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_GUI constructor
@@ -92,7 +111,7 @@ QWidget* ADN_HumanFactors_GUI::BuildModifiers( QWidget* pParent, ADN_HumanFactor
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on movement speed" ), modifiers.rSpeedModifier_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on reloading duration" ), modifiers.rReloadModifier_, 0, eGreaterZero );
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on stance changes duration" ), modifiers.rStanceModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero );
+    builder.AddField<ADN_PH_EditLine_Double>( pGroupBox, tr( "Effect on PH" ), modifiers.rPHModifier_, 0, eGreaterZero ); // LTO
     builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on detection ranges" ), modifiers.rSensorsModifier_, 0, eGreaterZero );
 
     return pGroupBox;

@@ -3641,7 +3641,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Equipment - Invalid urban Material type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Composante - Matériel urbain invalid &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -9358,6 +9358,26 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>WeaponSystem_%1.htm</source>
         <translation>Systèmes d&apos;armes_%1.htm</translation>
     </message>
+    <message>
+        <source>Fire posture</source>
+        <translation>Posture du tireur</translation>
+    </message>
+    <message>
+        <source>Target posture</source>
+        <translation>Posture de la cible</translation>
+    </message>
+    <message>
+        <source>Experience</source>
+        <translation>Expérience</translation>
+    </message>
+    <message>
+        <source>Tiredness</source>
+        <translation>Fatigue</translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation>Simulation</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Weapons_ListView</name>
@@ -9388,16 +9408,16 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>Distance</translation>
     </message>
     <message>
-        <source>Percentage</source>
-        <translation>Pourcentage</translation>
-    </message>
-    <message>
         <source>New Ph</source>
         <translation>Nouveau PH</translation>
     </message>
     <message>
         <source>Delete Ph</source>
         <translation>Effacer ce PH</translation>
+    </message>
+    <message>
+        <source>Percentage (PH)</source>
+        <translation>Pourcentage (PH)</translation>
     </message>
 </context>
 <context>

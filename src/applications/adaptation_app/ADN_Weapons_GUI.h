@@ -23,6 +23,7 @@
 
 class ADN_Weapons_Data;
 class ADN_Table;
+class ADN_Weapons_ListView;
 
 // =============================================================================
 /** @class  ADN_Weapons_GUI
@@ -33,6 +34,8 @@ class ADN_Table;
 class ADN_Weapons_GUI 
 : public ADN_GUI_ABC
 {
+    Q_OBJECT
+
     MT_COPYNOTALLOWED( ADN_Weapons_GUI )
 
 public:
@@ -52,6 +55,11 @@ public:
         eMaxRange,
         eDirect,
         eIndirect,
+        eSimulation,    // LTO
+        eFirePosture,   // LTO
+        eTargetPosture, // LTO
+        eExperience,    // LTO
+        eTiredness,     // LTO
         eNbrGuiElements
     };
 
@@ -76,13 +84,23 @@ public:
     ADN_Table* CreateWeaponsTable();
     ADN_Table* CreatePHTable();
 
+    void UpdateModifiers();
+
     void ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QString& strPath );
+    //@}
+
+private slots:
+    //! @name Operations
+    //@{
+    void ModifiersChanged( bool ); // LTO
+    void ModifiersChanged( int ); // LTO
     //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Weapons_Data& data_;
+    ADN_Weapons_ListView* pWeaponList_;
     //@}
 };
 

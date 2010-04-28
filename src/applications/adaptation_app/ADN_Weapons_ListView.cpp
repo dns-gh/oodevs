@@ -86,6 +86,15 @@ void ADN_Weapons_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Weapons_GUI::eMaxRange]->Connect( &pInfos->rMaxRange_, bConnect );
     vItemConnectors_[ADN_Weapons_GUI::eDirect]->Connect( &pInfos->bDirect_, bConnect );
     vItemConnectors_[ADN_Weapons_GUI::eIndirect]->Connect( &pInfos->bIndirect_, bConnect );
+
+    // LTO begin
+    vItemConnectors_[ADN_Weapons_GUI::eSimulation]->Connect( &pInfos->bSimulation_, bConnect );
+    vItemConnectors_[ADN_Weapons_GUI::eFirePosture]->Connect( &pInfos->nFirePosture_, bConnect );
+    vItemConnectors_[ADN_Weapons_GUI::eTargetPosture]->Connect( &pInfos->nTargetPosture_, bConnect );
+    vItemConnectors_[ADN_Weapons_GUI::eExperience]->Connect( &pInfos->nExperience_, bConnect );
+    vItemConnectors_[ADN_Weapons_GUI::eTiredness]->Connect( &pInfos->nTiredness_, bConnect );
+    // LTO end
+
 }
 
 

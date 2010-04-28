@@ -45,6 +45,7 @@ public:
     //! @name Operations
     //@{
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    virtual void doValueChanged( int row, int col );
 
     void CreateNewElement();
     void DeleteCurrentElement();
