@@ -10,14 +10,8 @@
 #ifndef __MockAgent_h_
 #define __MockAgent_h_
 
+#include "MT_Tools/MT_Tools_Types.h"
 #include "simulation_kernel/Entities/Agents/MIL_Agent_ABC.h"
-#include "AlgorithmsFactories.h"
-
-#include "Knowledge/MIL_KnowledgeGroup.h"
-#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
-class MIL_OrderManager_ABC;
-
-//class DEC_KnowledgeBlackBoard_AgentPion;
 
 // =============================================================================
 /** @class  MockAgent
@@ -25,96 +19,44 @@ class MIL_OrderManager_ABC;
 */
 // Created: JCR 2008-09-01
 // =============================================================================
-class MockAgent
-    : public mockpp::ChainableMockObject
-    , public MIL_Agent_ABC
+MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
 {
-public:
+    explicit MockAgent( xml::xistream& xis ) : MIL_Agent_ABC( xis ) {}
+    explicit MockAgent( const std::string& name = "" ) : MIL_Agent_ABC( name ) {}
+
+    MOCK_METHOD( GetID, 0 );
+    MOCK_METHOD( GetArmy, 0 );
+    MOCK_METHOD( GetKnowledgeGroup, 0 );
+    MOCK_METHOD( GetType, 0 );
+    MOCK_METHOD( IsDead, 0 );
+    MOCK_METHOD( IsNeutralized, 0 );
+    MOCK_METHOD( IsPC, 0 );
+    MOCK_METHOD( IsAutonomous, 0 );
     
-    //! @name Constructors/Destructor
-    //@{
-    MockAgent() 
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockAgent" ) )
-		, MIL_Agent_ABC( "" )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetID )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsDead )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsNeutralized )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsPC )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetTypeShadow )        
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetArmyShadow )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetKnowledgeGroupShadow )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyAttackedBy_Pion )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( NotifyAttackedBy_Population )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( BelongsTo )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsPerceived )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Distance )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CreateKnowledgeShadow )
-        , GetKnowledge_mocker ("GetKnowledge", this)
-    {
-    }
-    virtual ~MockAgent() {}
-    //@}
-        
-    virtual const MIL_AgentType_ABC&  GetType() const
-    {
-        return *GetTypeShadow();
-    }
-
-    virtual MIL_Army_ABC& GetArmy() const
-    {
-        return *GetArmyShadow();
-    }
-    virtual MIL_KnowledgeGroup& GetKnowledgeGroup() const
-    {
-        return *GetKnowledgeGroupShadow();
-    }
-
-    virtual boost::shared_ptr< DEC_Knowledge_Agent > CreateKnowledge( const MIL_KnowledgeGroup& knowledgeGroup )
-    {
-        return CreateKnowledgeShadow( knowledgeGroup );
-    }
-
-
-    virtual DEC_KnowledgeBlackBoard_AgentPion& GetKnowledge   () const
-    {
-        return *GetKnowledge_mocker.forward();
-    }
+//    MOCK_METHOD_EXT( GetAutomate, 0, const MIL_Automate&(), GetAutomatConstRef );
+    MOCK_METHOD_EXT( GetAutomate, 0, MIL_Automate&(), GetAutomatRef );
     
-    virtual const MIL_Automate& GetAutomate() const { throw; }
-    virtual       MIL_Automate& GetAutomate() { throw; }
+//    MOCK_METHOD_EXT( GetDecision, 0, const DEC_Decision_ABC&(), GetDecisionConstRef );
+    MOCK_METHOD_EXT( GetDecision, 0, DEC_Decision_ABC&(), GetDecisionRef );
 
-    virtual       DEC_Decision_ABC& GetDecision   () { throw; }
-    virtual const DEC_Decision_ABC& GetDecision   () const { throw; }
+    MOCK_METHOD( GetAlgorithms, 0 );
 
-    virtual void MagicMove( const MT_Vector2D& ) { throw; }
-    virtual bool IsAutonomous() const { throw; }
+    MOCK_METHOD( BelongsTo, 1 );
 
-    virtual const AlgorithmsFactories& GetAlgorithms() const { return algorithmFacories_; }
+//    MOCK_METHOD_EXT( GetOrderManager, 0, const MIL_PionOrderManager&(), GetOrderManagerConstRef );
+    MOCK_METHOD_EXT( GetOrderManager, 0, MIL_PionOrderManager&(), GetOrderManagerRef );
 
-    virtual const MIL_PionOrderManager& GetOrderManager() const { throw; }
-    virtual MIL_PionOrderManager& GetOrderManager() { throw; }    
-    virtual void ChangeSuperior( MIL_Automate& newAutomate ) { throw; }
-
-    MOCKPP_CONST_CHAINABLE0          ( MockAgent, unsigned int, GetID );
-    MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsDead );
-    MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsNeutralized );
-    MOCKPP_CONST_CHAINABLE0          ( MockAgent, bool, IsPC );
-
-    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, const MIL_AgentType_ABC*, GetTypeShadow, MIL_AgentType_ABC, );   
-    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, MIL_Army_ABC*, GetArmyShadow, MIL_Army_ABC, );   
-    MOCKPP_CONST_CHAINABLE_EXT0      ( MockAgent, MIL_KnowledgeGroup*, GetKnowledgeGroupShadow, MIL_KnowledgeGroup, );   
-
-    MOCKPP_VOID_CHAINABLE_EXT1       ( MockAgent, NotifyAttackedBy, MIL_AgentPion&, _Pion, MIL_AgentPion );
-    MOCKPP_VOID_CHAINABLE_EXT1       ( MockAgent, NotifyAttackedBy, MIL_Population&, _Population, MIL_Population );
-
-    MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, BelongsTo, const MIL_KnowledgeGroup&, bool, , MIL_KnowledgeGroup );
-    MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, bool, IsPerceived, const MIL_Agent_ABC&, bool, , MIL_Agent_ABC );
-    MOCKPP_CONST_CHAINABLE_EXT1      ( MockAgent, MT_Float, Distance, const MIL_Agent_ABC&, MT_Float, , MIL_Agent_ABC );
-    MOCKPP_CHAINABLE_EXT1            ( MockAgent, boost::shared_ptr< DEC_Knowledge_Agent >, CreateKnowledgeShadow, const MIL_KnowledgeGroup&, DEC_Knowledge_Agent, , MIL_KnowledgeGroup );    
+    MOCK_METHOD( ChangeSuperior, 1 );
     
-      mockpp::ChainableMockMethod< DEC_KnowledgeBlackBoard_AgentPion* > GetKnowledge_mocker;
-
-    AlgorithmsFactories algorithmFacories_;
+    MOCK_METHOD_EXT( NotifyAttackedBy, 1, void( MIL_AgentPion& ), NOtifyAttackedByAgent );
+    MOCK_METHOD_EXT( NotifyAttackedBy, 1, void( MIL_Population& ), NOtifyAttackedByPopulation );
+    
+    MOCK_METHOD( MagicMove, 1 );
+    MOCK_METHOD( Distance, 1 );
+    
+    MOCK_METHOD( CreateKnowledge, 1 );
+    MOCK_METHOD( IsPerceived, 1 );
+    MOCK_METHOD( GetKnowledge, 0 );
 };
 
 #endif // __MockAgent_h_

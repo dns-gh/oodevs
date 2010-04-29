@@ -22,7 +22,6 @@ namespace client
 
 class MIL_Agent_ABC;
 class MIL_Object_ABC;
-class MIL_Object_ABC;
 class MIL_PopulationFlow;
 class MIL_PopulationConcentration;
 class HLA_UpdateFunctor;

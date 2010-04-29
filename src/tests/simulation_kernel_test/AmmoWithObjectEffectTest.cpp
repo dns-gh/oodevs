@@ -12,6 +12,7 @@
 #include "StubMIL_Object_ABC.h"
 #include "TestIndirectFireModifier.h"
 
+#include "AlgorithmsFactories.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_ActionIndirectFire_Position.h"
 #include "Entities/Agents/Actions/Firing/IndirectFiring/PHY_RoleAction_IndirectFiring.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
@@ -64,7 +65,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         const std::string dotations( "<dotations><dotation category='ammo' name='munition' id='1' nature='Solide' package-size='1' package-mass='1' package-volume='1'><indirect-fire type='effect' life-time='300s' intervention-type='1' x-dispersion='1' y-dispersion='1' object-type='Zone brouillage'/></dotation></dotations>" );
 
         MockAgent pion;
-        MOCKPP_CHAINER_FOR( MockAgent, GetID )( &pion ).expects( once() ).will( returnValue( 1u ) );
+        MOCK_EXPECT( pion, GetID ).once().returns( 1u );
         StubDEC_Database database;
         StubDEC_Decision< MockAgent >* decision = new StubDEC_Decision< MockAgent >( pion, database );
         pion.RegisterRole( *decision );
@@ -79,7 +80,7 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         MockRoleLocation* locationRole = new MockRoleLocation();
         pion.RegisterRole( *locationRole );
         const MT_Vector2D sourcePosition;
-        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )( locationRole ).expects( once() ).will( returnValue( &sourcePosition ) );
+        MOCK_EXPECT( locationRole, GetPosition ).once().returns( sourcePosition );
 
         MockRoleDotations* dotationRole = new MockRoleDotations();
         pion.RegisterRole( *dotationRole );
@@ -97,13 +98,15 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         
         MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
+        AlgorithmsFactories algorithms;
+        MOCK_EXPECT( pion, GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
         pAction->Execute();
 
         BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eFinished, callbackValue );
         StubMIL_Object_ABC object;
-        entityManager.CreateObject_mocker.expects( once() ).will( returnValue( (MIL_Object_ABC*)&object ) ); // $$$$ with type Zone brouillage
+        MOCK_EXPECT( entityManager, CreateObjectFromType ).once().returns( &object ); // $$$$ with type Zone brouillage
         MockArmy mockArmy;
-        MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow )( &pion ).expects( once() ).will( returnValue( (MIL_Army_ABC*)&mockArmy ) );
+        MOCK_EXPECT( pion, GetArmy ).once().returns( boost::ref( mockArmy ) );
         effectManager.Update();
         entityManager.verify();
 

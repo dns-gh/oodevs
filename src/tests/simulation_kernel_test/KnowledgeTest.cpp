@@ -18,6 +18,7 @@
 #include "MT_Tools/MT_Profiler.h"
 #include "Tools/MIL_Config.h"
 
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_BlackBoard_CanContainKnowledgeAgent.h"
@@ -78,8 +79,7 @@ namespace
     std::auto_ptr< MIL_KnowledgeGroup > CreateKnowledgeGroup( MockArmy& army, unsigned int id, const std::string& type )
     {
         const MIL_KnowledgeGroupType& kgType = *MIL_KnowledgeGroupType::FindType( "GTIA" );
-        MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
-        MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue( 42u ) );
+        MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
         std::auto_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( kgType, id, army ) );
         return result;
     }
@@ -89,7 +89,7 @@ namespace
         MockKnowledgeGroupFactory factory;
         xml::xistringstream xis( "<root id='" + boost::lexical_cast< std::string >( id ) + "' type='" + type + "'/>" );
         xis >> xml::start( "root" );
-        MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::atLeastOnce() );
+//        MOCK_EXPECT( group, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration of nested KG
         std::auto_ptr< MIL_KnowledgeGroup > result( new MIL_KnowledgeGroup( xis, army, &group, factory ) );
         return result;
     }
@@ -102,6 +102,8 @@ namespace
 BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
 {
     MockArmy army;
+    MOCK_EXPECT( army, GetID ).returns( 42u );
+
     std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
     std::auto_ptr< MIL_KnowledgeGroup > group1   ( CreateKnowledgeGroup( army, *armyGroup, 2, "GTIA" ) );
     std::auto_ptr< MIL_KnowledgeGroup > group2   ( CreateKnowledgeGroup( army, *armyGroup, 3, "GTIA" ) );
@@ -111,39 +113,41 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
     
     UrbanModel urbanModel; // (needed for the blackboard through singleton...)
     DEC_KnowledgeBlackBoard_Army blackboard( army );
-    MOCKPP_CHAINER_FOR( MockArmy, GetKnowledgeShadow )( &army ).expects( mockpp::once() ).will( mockpp::returnValue( &blackboard ) );
+    MOCK_EXPECT( army, GetKnowledge ).returns( boost::ref( blackboard ) );
 
     MockAgentWithPerceiver jammedAgent;
+    MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupJammed1( *group1, jammedAgent );
-    MOCKPP_CHAINER_FOR( MockArmy, GetKnowledgeShadow )( &army ).expects( mockpp::once() );
 
     MockAgentWithPerceiver mockAgent;
+    MOCK_EXPECT( mockAgent, BelongsTo ).with( boost::cref( *group1 ) ).returns( true );
+    MOCK_EXPECT( mockAgent, GetType );
     //{
         // TestAgentKnowledgeIsCreated
-        MOCKPP_CHAINER_FOR( MockAgent, BelongsTo )( &mockAgent ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( true ) );
-        MOCKPP_CHAINER_FOR( MockAgent, GetTypeShadow )( &mockAgent ).expects( mockpp::once() );
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( *group1, mockAgent, 0.5 ) );
 
         DEC_BlackBoard_CanContainKnowledgeAgent& test1 = group1->GetKnowledge().GetKnowledgeAgentContainer();
-        MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgent ).expects( mockpp::once() ).will( mockpp::returnValue( knowledge ) );
+        MOCK_EXPECT( mockAgent, CreateKnowledge ).with( mock::same( *group1 ) ).once().returns( knowledge );
 
         DEC_Knowledge_Agent& obj = test1.CreateKnowledgeAgent( *group1, mockAgent );
         BOOST_CHECK_EQUAL( &obj, knowledge.get() );
+        mockAgent.verify();
     //}
+    MockAgentWithPerceiver mockAgentJammed1;
+    MOCK_EXPECT( mockAgentJammed1, BelongsTo ).with( boost::cref( groupJammed1 ) ).returns( true );
+    MOCK_EXPECT( mockAgentJammed1, GetType );
     //{
         // TestJammedUnitHasItsOwnKnowledgeGroup
-        MockAgentWithPerceiver mockAgentJammed1;
-        MOCKPP_CHAINER_FOR( MockAgent, BelongsTo )( &mockAgentJammed1 ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( true ) );
-        MOCKPP_CHAINER_FOR( MockAgent, GetTypeShadow )( &mockAgentJammed1 ).expects( mockpp::once() );
         boost::shared_ptr< DEC_Knowledge_Agent > knowledgeJammed1( new DEC_Knowledge_Agent( groupJammed1, mockAgentJammed1, 0.5 ) );
 
-        MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgentJammed1 ).expects( mockpp::once() ).will( mockpp::returnValue( knowledgeJammed1 ) );
+        MOCK_EXPECT( mockAgentJammed1, CreateKnowledge ).with( mock::same( groupJammed1 ) ).once().returns( knowledgeJammed1 );
         DEC_BlackBoard_CanContainKnowledgeAgent& testjammed1 = groupJammed1.GetKnowledge().GetKnowledgeAgentContainer();
         DEC_Knowledge_Agent& objJammed1 = testjammed1.CreateKnowledgeAgent( groupJammed1, mockAgentJammed1 );
 
         BOOST_CHECK_EQUAL( &objJammed1, knowledgeJammed1.get() );
         BOOST_CHECK_EQUAL( true, testjammed1.HasKnowledgeAgent( mockAgentJammed1 ) );
         BOOST_CHECK_EQUAL( true, test1.HasKnowledgeAgent( mockAgent ) );
+        mockAgentJammed1.verify();
     //}
     //{
         // TestKnowledgePropagationNeedsUpdate
@@ -156,25 +160,27 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
         // TestPerceivedUnitCreatesKnowledge
         MT_Vector2D position;
         MockRoleLocation* mockRoleLocation = new MockRoleLocation();
-        MOCKPP_CHAINER_FOR( MockRoleLocation, HasDoneMagicMove ) ( mockRoleLocation ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( false ) );
-        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow ) ( mockRoleLocation ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
+        MOCK_EXPECT( mockRoleLocation, HasDoneMagicMove ).at_least( 1 ).returns( false );
+        MOCK_EXPECT( mockRoleLocation, GetPosition ).at_least( 1 ).returns( position );
         mockAgent.RegisterRole( *mockRoleLocation );
         MOCK_EXPECT( mockAgent.GetRole< MockPHY_RoleInterface_Perceiver >(), ExecutePerceptions );
         group1->UpdateKnowledges( 1 );
+        mockRoleLocation->verify();
     //}
     //{
         // TestPerceivedUnitCreatesKnowledgeForJammedUnits
         DEC_KnowledgeBlackBoard_AgentPion pionBlackboard( jammedAgent );
-        jammedAgent.GetKnowledge_mocker.expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( &pionBlackboard ) );
+        MOCK_EXPECT( jammedAgent, GetKnowledge ).returns( boost::ref( pionBlackboard ) );
         MOCK_EXPECT( jammedAgent.GetRole< MockPHY_RoleInterface_Perceiver >(), ExecutePerceptions );
         groupJammed1.UpdateKnowledges( 1 );
         group2->UpdateKnowledges( 1 );
+        jammedAgent.verify();
     //}
     //{
         // TestKnowledgeIsNotPropagatedWhenSourceIsJammed
         DEC_BlackBoard_CanContainKnowledgeAgent& test3 = armyGroup->GetKnowledge().GetKnowledgeAgentContainer();
-        MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgent ).expects( mockpp::once() ).will( mockpp::returnValue( knowledge ) );
-        MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgentJammed1 ).expects( mockpp::once() ).will( mockpp::returnValue( knowledgeJammed1 ) );    
+        MOCK_EXPECT( mockAgent, CreateKnowledge ).once().returns( knowledge );
+//        MOCK_EXPECT( mockAgentJammed1, CreateKnowledge ).once().returns( knowledgeJammed1 );
         armyGroup->UpdateKnowledges( 1 );
         BOOST_CHECK_EQUAL( true,  test3.HasKnowledgeAgent( mockAgent ) );
         BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgent ) );
@@ -183,13 +189,15 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
         BOOST_CHECK_EQUAL( false, test1.HasKnowledgeAgent( mockAgentJammed1 ) );
         BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgentJammed1 ) );
         BOOST_CHECK_EQUAL( false, test3.HasKnowledgeAgent( mockAgentJammed1 ) );
+        mockAgent.verify();
+        mockAgentJammed1.verify();
     //}
     //{
         // TestKnowledgeIsPropagatedWhenSourceIsNotJammed
         group1->UpdateKnowledges( 200 );
         groupJammed1.UpdateKnowledges( 200 );
-        MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgent ).expects( mockpp::once() ).will( mockpp::returnValue( knowledge ) );
-        MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgentJammed1 ).expects( mockpp::once() ).will( mockpp::returnValue( knowledgeJammed1 ) );    
+        MOCK_EXPECT( mockAgent, CreateKnowledge ).once().returns( knowledge );
+//        MOCK_EXPECT( mockAgentJammed1, CreateKnowledge ).once().returns( knowledgeJammed1 );
         group2->UpdateKnowledges( 200 );
         armyGroup->UpdateKnowledges( 200 );
         BOOST_CHECK_EQUAL( true,  test3.HasKnowledgeAgent( mockAgent ) );
@@ -199,9 +207,11 @@ BOOST_AUTO_TEST_CASE( TestPropagationInKnowledgeGroups )
         BOOST_CHECK_EQUAL( false, test1.HasKnowledgeAgent( mockAgentJammed1 ) );
         BOOST_CHECK_EQUAL( false, test2.HasKnowledgeAgent( mockAgentJammed1 ) );
         BOOST_CHECK_EQUAL( false, test3.HasKnowledgeAgent( mockAgentJammed1 ) );
+        mockAgent.verify();
+        mockAgentJammed1.verify();
     //}
-
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::exactly( 3 ) );
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( groupJammed1 ) ).once();
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( *armyGroup ) ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -212,12 +222,9 @@ BOOST_AUTO_TEST_CASE( TestExtrapolationTimeInKnowledgeGroup )
 {
     MockArmy army;
     std::auto_ptr< MIL_KnowledgeGroup > armyGroup( CreateKnowledgeGroup( army, 1, "GTIA" ) );
-
     BOOST_CHECK_EQUAL( 10 * 60 * timeFactor, armyGroup->GetType().GetKnowledgeAgentExtrapolationTime() );
-
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::exactly( 1 ) );
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( *armyGroup ) ).once();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: TestLatentRelevance
@@ -231,59 +238,55 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
     
     UrbanModel urbanModel; // (needed for the blackboard through singleton...)
     DEC_KnowledgeBlackBoard_Army blackboard( army );
-    MOCKPP_CHAINER_FOR( MockArmy, GetKnowledgeShadow )( &army ).expects( mockpp::once() ).will( mockpp::returnValue( &blackboard ) );
-    MOCKPP_CHAINER_FOR( MockArmy, GetKnowledgeShadow )( &army ).expects( mockpp::once() );
+    MOCK_EXPECT( army, GetKnowledge ).returns( boost::ref( blackboard ) );
 
-        MockAgentWithPerceiver mockAgent;
+    MockAgentWithPerceiver mockAgent;
+    MOCK_EXPECT( mockAgent, BelongsTo ).with( mock::same( *knowledgeGroup ) ).returns( true );
+    MOCK_EXPECT( mockAgent, GetType );
     //{
         // TestAgentKnowledgeIsCreatedWithRelevanceMax
-        MOCKPP_CHAINER_FOR( MockAgent, BelongsTo )( &mockAgent ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( true ) );
-        MOCKPP_CHAINER_FOR( MockAgent, GetTypeShadow )( &mockAgent ).expects( mockpp::once() );
         boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent( *knowledgeGroup, mockAgent, 1. ) ); // 1 for relevance
 
         DEC_BlackBoard_CanContainKnowledgeAgent& knowledgeAgentContainer = knowledgeGroup->GetKnowledge().GetKnowledgeAgentContainer();
-        MOCKPP_CHAINER_FOR( MockAgent, CreateKnowledgeShadow ) ( &mockAgent ).expects( mockpp::once() ).will( mockpp::returnValue( knowledge ) );
+        MOCK_EXPECT( mockAgent, CreateKnowledge ).once().returns( knowledge );
 
         DEC_Knowledge_Agent& obj = knowledgeAgentContainer.CreateKnowledgeAgent( *knowledgeGroup, mockAgent );
-        BOOST_CHECK_EQUAL( &obj, knowledge.get() );
-        BOOST_CHECK_EQUAL( true, obj.GetRelevance() == 1. );
-
+        BOOST_CHECK_EQUAL( knowledge.get(), &obj );
+        BOOST_CHECK_EQUAL( 1., obj.GetRelevance() );
     //}
     //{
         // TestRelevanceDownUntilNull
         MT_Vector2D position;
         MockRoleLocation* mockRoleLocation = new MockRoleLocation();
-        MOCKPP_CHAINER_FOR( MockRoleLocation, HasDoneMagicMove ) ( mockRoleLocation ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( false ) );
-        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow ) ( mockRoleLocation ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
+        MOCK_EXPECT( mockRoleLocation, HasDoneMagicMove ).at_least( 1 ).returns( false );
+        MOCK_EXPECT( mockRoleLocation, GetPosition ).at_least( 1 ).returns( position );
         mockAgent.RegisterRole( *mockRoleLocation );
         MOCK_EXPECT( mockAgent.GetRole< MockPHY_RoleInterface_Perceiver >(), ExecutePerceptions );
 
         float relevance = obj.GetRelevance();
         knowledgeGroup->UpdateKnowledges( 1 );
-        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+        BOOST_CHECK_LT( obj.GetRelevance(), relevance );
         
         relevance = obj.GetRelevance();
         knowledgeGroup->UpdateKnowledges( 10 );
-        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+        BOOST_CHECK_LT( obj.GetRelevance(), relevance );
 
         relevance = obj.GetRelevance();
         knowledgeGroup->UpdateKnowledges( 100 );
-        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+        BOOST_CHECK_LT( obj.GetRelevance(), relevance );
 
         relevance = obj.GetRelevance();
         knowledgeGroup->UpdateKnowledges( 1000 );
-        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+        BOOST_CHECK_LT( obj.GetRelevance(), relevance );
 
         relevance = obj.GetRelevance();
         knowledgeGroup->UpdateKnowledges( 10000 );
-        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < relevance );
+        BOOST_CHECK_LT( obj.GetRelevance(), relevance );
 
         knowledgeGroup->UpdateKnowledges( 100000 );
-        BOOST_CHECK_EQUAL( true, obj.GetRelevance() < 0.001 );
-
-        //}
-
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::exactly( 1 ) );
+        BOOST_CHECK_LT( obj.GetRelevance(), 0.001 );
+    //}
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( *armyGroup ) ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -292,5 +295,5 @@ BOOST_AUTO_TEST_CASE( TestLatentRelevance )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( TestImpactOfExtrapolationTimeOnRelevance )
 {
-    // TODO
+    BOOST_TODO;
 }

@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-
 #include "MockAgent.h"
 #include "TestPK.h"
 #include "Entities/Agents/Roles/Urban/PHY_RolePion_UrbanLocation.h"

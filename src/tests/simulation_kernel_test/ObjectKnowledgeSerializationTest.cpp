@@ -8,58 +8,60 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-
-// ASN
-//struct MagicActionCreateObject;
-//struct MsgObjectAttributes;
-//struct Location;
-
-#include "simulation_kernel/Checkpoints/MIL_CheckPointInArchive.h"
-#include "simulation_kernel/Checkpoints/MIL_CheckPointOutArchive.h"
-
-#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
-#include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "simulation_kernel/Entities/MIL_Army_ABC.h"
-#include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
-#include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectBuilder_ABC.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectManager.h"
-#include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
-#include "simulation_kernel/Entities/Objects/Object.h"
-
-#include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
-
-#include "simulation_terrain/TER_World.h"
-
-#include <xeumeuleu/xml.h>
-
 #include "MockArmy.h"
 #include "MockBuilder.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
-
-using namespace mockpp;
+#include "simulation_kernel/Checkpoints/MIL_CheckPointInArchive.h"
+#include "simulation_kernel/Checkpoints/MIL_CheckPointOutArchive.h"
+#include "simulation_kernel/Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
+#include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectBuilder_ABC.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectFactory.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectManager.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
+#include "simulation_kernel/Entities/Objects/Object.h"
+#include "simulation_kernel/Knowledge/DEC_Knowledge_Object.h"
+#include "simulation_terrain/TER_World.h"
+#include <xeumeuleu/xml.h>
 
 /**
  * StubArmy is used instead of MockArmy because it is deserialised,
  * and there is no way in MockArmy to say during deserialization that one expects some methods to be called.
  */
-class StubArmy : public MockArmy
+namespace
 {
-    public:
-
-        virtual void RegisterObject( MIL_Object_ABC& object ) {}        
-        virtual uint GetID() const { return 1; }
-    template< typename Archive >
-    void serialize( Archive&, const unsigned int ) 
+    class StubArmy : public MockArmy
     {
-        boost::serialization::base_object< MockArmy >( *this );
-    }
-        
-};
+    public:
+        template< typename Archive >
+        void serialize( Archive& archive, const unsigned int ) 
+        {
+            archive & boost::serialization::base_object< MockArmy >( *this );
+        }
+    };
+
+    struct ObjectKnowledgeSerializationFixture
+    {
+        ObjectKnowledgeSerializationFixture()
+        {
+            TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+            PHY_ConsumptionType::Initialize();
+        }
+        ~ObjectKnowledgeSerializationFixture()
+        {
+            PHY_ConsumptionType::Terminate();
+            TER_World::DestroyWorld();
+        }
+    };
+}
+
 BOOST_CLASS_EXPORT_IMPLEMENT( MockArmy )
 BOOST_CLASS_EXPORT( StubArmy )
+
+BOOST_FIXTURE_TEST_SUITE( ObjectKnowledgeSerializationTestSuite, ObjectKnowledgeSerializationFixture )
 
 // -----------------------------------------------------------------------------
 // Name: VerifyObjectKnowledge_Serialization
@@ -68,7 +70,6 @@ BOOST_CLASS_EXPORT( StubArmy )
 BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
 {
     MIL_ObjectLoader loader;
-    PHY_ConsumptionType::Initialize();
     {
         xml::xistringstream xis( "<objects>" 
                 "<object type='object'>"
@@ -80,23 +81,23 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
             ); 
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
-    const MIL_ObjectType_ABC& type =  loader.GetType( "object" );
+    const MIL_ObjectType_ABC& type = loader.GetType( "object" );
 
     StubArmy army;
-    
-    MIL_Object_ABC* pObject = 0;    
+    std::auto_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
-        builder.GetType_mocker.expects( mockpp::once() ) .will( returnValue( &type ) );
-        MOCKPP_CHAINER_FOR( MockBuilder, Build )         ( &builder ).expects( mockpp::once() );
-        BOOST_CHECK_NO_THROW(
-            pObject = loader.CreateObject( builder, army );
-        );
+        MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
+        MOCK_EXPECT( builder, Build ).once();
+        MOCK_EXPECT( army, RegisterObject ).once();
+        BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateObject( builder, army ) ) );
         builder.verify();
+        army.verify();
     }
 
     MockNET_Publisher_ABC publisher;
-    MOCK_EXPECT( publisher, Send ).once();
+    MOCK_EXPECT( publisher, Send ).once(); // object knowledge creation
+    MOCK_EXPECT( army, GetID ).returns( 42u );
     DEC_Knowledge_Object knowledge( army, *pObject );
     MockMIL_Time_ABC time;
     MOCK_EXPECT( time, GetCurrentTick ).returns( 1u );
@@ -106,13 +107,18 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
         MIL_CheckPointOutArchive outStream( stringstream );
         outStream << knowledge;
     }
-    MOCK_EXPECT( publisher, Send ).at_least( 1 );
     {
-        TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+        MOCK_EXPECT( army, GetID ).returns( 42u );
         MIL_CheckPointInArchive inStream( stringstream );
         DEC_Knowledge_Object reloaded;
         inStream >> reloaded;
-        TER_World::DestroyWorld();
+        const MockArmy& mockArmy = static_cast< const MockArmy& >( reloaded.GetArmy() );
+        MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
+        MOCK_EXPECT( mockArmy, GetID ).returns( 42u );
+        MOCK_EXPECT( mockArmy, UnregisterObject ).once();
     }
-    PHY_ConsumptionType::Terminate();
+    MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
+
+BOOST_AUTO_TEST_SUITE_END()

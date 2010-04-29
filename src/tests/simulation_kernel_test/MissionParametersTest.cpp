@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeListParameter_ToASN )
     asnIn.add_elem()->set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgeAgent_mocker.expects( once() ).will( returnValue( knowledge ) );
+    MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     MIL_AgentKnowledgeListParameter param( asnIn, resolver );
     asnIn.Clear();
     MsgUnitKnowledgeList asnOut;
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentKnowledgeParameter_ToASN )
     asnIn.set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< DEC_Knowledge_Agent > knowledge( new DEC_Knowledge_Agent() ); // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgeAgent_mocker.expects( once() ).will( returnValue( knowledge ) );
+    MOCK_EXPECT( resolver, ResolveKnowledgeAgentFromMessage ).once().returns( knowledge );
     MIL_AgentKnowledgeParameter param( asnIn, resolver );
     MsgUnitKnowledge asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgentKnowledge( asnOut ) );
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentListParameter_ToASN )
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_, StubDEC_Database() ) );
-    entityManager.FindAgentPion_mocker.expects( once() ).will( returnValue( static_cast< MIL_AgentPion* >( fixture.pPion_.get() ) ) );
+    MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentListParameter param( asnIn, entityManager );
     asnIn.Clear();
     MsgUnitList asnOut;
@@ -132,7 +132,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AgentParameter_ToASN )
     MIL_EffectManager effectManager;
     FixturePion fixture( effectManager );
     fixture.pPion_->RegisterRole( *new DEC_RolePion_Decision( *fixture.pPion_,  StubDEC_Database() ) );
-    entityManager.FindAgentPion_mocker.expects( once() ).will( returnValue( static_cast< MIL_AgentPion* >( fixture.pPion_.get() ) ) );
+    MOCK_EXPECT( entityManager, FindAgentPion ).once().returns( fixture.pPion_.get() );
     MIL_AgentParameter param( asnIn, entityManager );
     MsgUnit asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAgent( asnOut ) );
@@ -150,7 +150,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatParameter_ToASN )
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
-    entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
+    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_AutomatParameter param( asnIn, entityManager );
     MsgAutomat asnOut;
     BOOST_CHECK_EQUAL( true, param.ToAutomat( asnOut ) );
@@ -168,7 +168,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_AutomatListParameter_ToASN )
     MockMIL_EntityManager_ABC entityManager;
     FixtureAutomate fixture;
     //fixture.pAutomat_->RegisterRole( *new DEC_AutomateDecision( *fixture.pAutomat_ ) );
-    entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
+    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_AutomatListParameter param( asnIn, entityManager );
     asnIn.Clear();
     MsgAutomatList asnOut;
@@ -457,7 +457,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeParameter_ToASN )
     asnIn.set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object() ); // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgeObject_mocker.expects( once() ).will( returnValue( knowledge ) );
+    MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
 
     MIL_ObjectKnowledgeParameter param( asnIn, resolver );
     MsgObjectKnowledge asnOut;
@@ -475,7 +475,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_ObjectKnowledgeListParameter_ToASN )
     asnIn.add_elem()->set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     boost::shared_ptr< DEC_Knowledge_Object > knowledge( new DEC_Knowledge_Object() ); // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgeObject_mocker.expects( once() ).will( returnValue( knowledge ) );
+    MOCK_EXPECT( resolver, ResolveKnowledgeObjectFromMessage ).once().returns( knowledge );
+    
     MIL_ObjectKnowledgeListParameter param( asnIn, resolver );
     asnIn.clear_elem();
     MsgObjectKnowledgeList asnOut;
@@ -575,9 +576,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter_ToASN )
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
     MOCK_EXPECT( objectType, GetName ).once().returns( typeName );
-    entityManager.FindObjectType_mocker.expects( once() ).will( returnValue( static_cast< MIL_ObjectType_ABC* >( &objectType ) ) );
-    FixtureAutomate fixture;
-    entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
+    MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
+    // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
+//    FixtureAutomate fixture;
+//    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_PlannedWorkParameter param( asnIn, entityManager );
     asnIn.mutable_position()->mutable_coordinates()->Clear();
     MsgPlannedWork asnOut;
@@ -612,9 +614,10 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkListParameter_ToASN )
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
     MOCK_EXPECT( objectType, GetName ).once().returns( typeName );
-    entityManager.FindObjectType_mocker.expects( once() ).will( returnValue( static_cast< MIL_ObjectType_ABC* >( &objectType ) ) );
-    FixtureAutomate fixture;
-    entityManager.FindAutomate_mocker.expects( once() ).will( returnValue( static_cast< MIL_Automate* >( fixture.pAutomat_.get() ) ) );
+    MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
+    // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
+//    FixtureAutomate fixture; 
+//    MOCK_EXPECT( entityManager, FindAutomate ).once().returns( fixture.pAutomat_.get() );
     MIL_PlannedWorkListParameter param( asnIn, entityManager );
     asnIn.mutable_elem(0)->mutable_position()->mutable_coordinates()->Clear();
     asnIn.clear_elem();
@@ -725,7 +728,7 @@ BOOST_AUTO_TEST_CASE( TestMIL_PopulationKnowledgeParameter_ToASN )
     asnIn.set_oid( 0 );
     MockDEC_KnowledgeResolver_ABC resolver;
     DEC_Knowledge_Population knowledge; // $$$$ LDC: id == 0... :(
-    resolver.ResolveKnowledgePopulation_mocker.expects( once() ).will( returnValue( &knowledge ) );
+    MOCK_EXPECT( resolver, ResolveKnowledgePopulationFromMessage ).once().returns( &knowledge );
 
     MIL_PopulationKnowledgeParameter param( asnIn, resolver );
     MsgPopulationKnowledge asnOut;

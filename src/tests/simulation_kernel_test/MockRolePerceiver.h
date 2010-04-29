@@ -12,11 +12,6 @@
 
 #include "simulation_kernel/Entities/Agents/Roles/Perception/PHY_RolePion_Perceiver.h"
 
-namespace detection
-{
-   class DetectionComputerFactory_ABC;//@TODO MGD Make true mock
-}
-
 MOCK_BASE_CLASS( MockRolePerceiver, PHY_RolePion_Perceiver )
 {
     MockRolePerceiver() : PHY_RolePion_Perceiver( *(MIL_AgentPion*)0, 0, 0 ) {}

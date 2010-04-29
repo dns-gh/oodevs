@@ -1,3 +1,12 @@
+// *****************************************************************************
+//
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
+//
+// Copyright (c) 2009 MASA Group
+//
+// *****************************************************************************
+
 #ifndef __MockMIL_MissionType_ABC_h_
 #define __MockMIL_MissionType_ABC_h_
 

@@ -69,8 +69,8 @@ namespace
     {
         MIL_Object_ABC* pObject = 0;
         MockBuilder builder;
-        builder.GetType_mocker.expects( mockpp::once() ) .will( returnValue( &type ) );
-        MOCKPP_CHAINER_FOR( MockBuilder, Build )         ( &builder ).expects( mockpp::once() );
+        MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
+        MOCK_EXPECT( builder, Build ).once();
         BOOST_CHECK_NO_THROW(
             pObject = loader.CreateObject( builder, army );
         );
@@ -85,7 +85,21 @@ namespace
     {
         BOOST_REQUIRE( object.Retrieve< T >() != 0 );
     }
+
+    struct ObjectCapacityFixture
+    {
+        ObjectCapacityFixture()
+        {
+            TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
+        }
+        ~ObjectCapacityFixture()
+        {
+            TER_World::DestroyWorld();
+        }
+    };
 }
+
+BOOST_FIXTURE_TEST_SUITE( ObjectCapacityTestSuite, ObjectCapacityFixture )
 
 // -----------------------------------------------------------------------------
 /* Name: Test VerifyObjectCapacity_Interaction_Contamination_NoNBC
@@ -98,42 +112,33 @@ namespace
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NoNBC )
 {
     MIL_ObjectLoader loader;
-    
     {
         xml::xistringstream xis( "<objects>" 
                 "<object type='object'>"
                     "<contamination type='nbc' max-toxic='1'/>"                    
                 "</object>" 
             "</objects>"
-            ); 
+            );
         BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
     
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
     MT_Vector2D position;
     MockAgent agent;
     agent.RegisterRole( *new MockRoleLocation() );
-    {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
-        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
-            .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
-    }
-    agent.RegisterRole( *new MockRoleNBC() );
-    {
-        MOCKPP_CHAINER_FOR( MockRoleNBC, Contaminate ) ( &agent.GetRole< MockRoleNBC >() ).expects( mockpp::never() );
-    }
-    BOOST_CHECK_NO_THROW( pObject->ProcessAgentInside( agent ) );
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), NotifyTerrainObjectCollision ).once();
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), GetPosition ).once().returns( position );
 
-    agent.GetRole< MockRoleLocation >().verify();
-    agent.GetRole< MockRoleNBC >().verify();
-    agent.verify();
-    army.verify();
+    agent.RegisterRole( *new MockRoleNBC() );
+    MOCK_EXPECT( agent.GetRole< MockRoleNBC >(), Contaminate ).never();
+
+    BOOST_CHECK_NO_THROW( pObject->ProcessAgentInside( agent ) );
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 namespace
@@ -183,9 +188,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
     
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
     CheckCapacity< ContaminationCapacity >( *pObject );
 
     // The following lines are used to force the Instanciation of attributes
@@ -195,22 +199,14 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Contamination_NBC )
     MT_Vector2D position;
     MockAgent agent;
     agent.RegisterRole( *new MockRoleLocation() );
-    {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
-        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
-            .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
-    }
-    agent.RegisterRole( *new MockRoleNBC() );
-    {
-        // TODO : mockpp::once()
-        MOCKPP_CHAINER_FOR( MockRoleNBC, Contaminate ) ( &agent.GetRole< MockRoleNBC >() ).expects( mockpp::never() );
-    }
-    BOOST_CHECK_NO_THROW( pObject->ProcessAgentInside( agent ) );
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), NotifyTerrainObjectCollision ).once();
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), GetPosition ).once().returns( position );
 
-    agent.GetRole< MockRoleLocation >().verify();
-    agent.GetRole< MockRoleNBC >().verify();
-    agent.verify();
-    army.verify();
+    agent.RegisterRole( *new MockRoleNBC() );
+    MOCK_EXPECT( agent.GetRole< MockRoleNBC >(), Contaminate ).never();
+
+    BOOST_CHECK_NO_THROW( pObject->ProcessAgentInside( agent ) );
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -237,9 +233,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
     const MIL_ObjectType_ABC& type = loader.GetType( "implantationArea" );
 
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
     CheckCapacity< ProtectionCapacity >( *pObject );
 
     //First add
@@ -247,22 +242,19 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
     MockAgent agent;
     agent.RegisterRole( *new MockRoleLocation() );
     {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
-        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )     ( &agent.GetRole< MockRoleLocation >() )
-            .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
+        // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
+        MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), NotifyTerrainObjectCollision ).once();
+//        MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), GetPosition ).exactly( 2 ).returns( position );
     }
     agent.RegisterRole( *new MockRoleInterface_Posture() );
     {
-        MOCKPP_CHAINER_FOR( MockRoleInterface_Posture, SetTimingFactor ) ( &agent.GetRole< MockRoleInterface_Posture >() ).expects( mockpp::once() );
+        MOCK_EXPECT( agent.GetRole< MockRoleInterface_Posture >(), SetTimingFactor ).once();
     }
 
     pObject->ProcessAgentEntering( agent );
     BOOST_CHECK_NO_THROW( pObject->ProcessAgentInside( agent ) );
 
-    agent.GetRole< MockRoleInterface_Posture >().verify();
-
-    agent.verify();
-    army.verify();
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 
@@ -276,7 +268,6 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Protection )
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
 {
     MIL_ObjectLoader loader;
-
     {
         xml::xistringstream xis( "<objects>" 
                 "<object geometry='line' type='itineraire logistique'>"
@@ -289,18 +280,16 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractIfEquipped )
     const MIL_ObjectType_ABC& type = loader.GetType( "itineraire logistique" );
 
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
     CheckCapacity< InteractIfEquippedCapacity >( *pObject );
 
     MockAgent agent;
-    
     // Force creation of attribute SupplyRouteAttribute...
     BOOST_CHECK_NO_THROW( ( static_cast< Object& >( *pObject ).GetAttribute< SupplyRouteAttribute >() ) );
     BOOST_CHECK_EQUAL( pObject->GetAttribute< SupplyRouteAttribute >().IsEquipped(), pObject->CanInteractWith( agent ) );
 
-    army.verify();
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -326,26 +315,22 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
     const MIL_ObjectType_ABC& type = loader.GetType( "plot ravitaillement" );
 
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject )( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
     CheckCapacity< SupplyCapacity >( *pObject );
 
     //First add
     MT_Vector2D position;
     MockAgent agent;
-    {
-        MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow )( &agent ).expects( mockpp::once() );
-    }
+    MOCK_EXPECT( agent, GetArmy ).once().returns( boost::ref( army ) );
     agent.RegisterRole( *new MockRoleLocation() );
     {
-        MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision )( &agent.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
-        MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )    ( &agent.GetRole< MockRoleLocation >() )
-            .expects( mockpp::once() ).will( returnValue( static_cast< const MT_Vector2D* >( &position ) ) );
+        // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
+//        MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), NotifyTerrainObjectCollision ).once();
+//        MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), GetPosition ).once().returns( position );
     }
     BOOST_CHECK_NO_THROW( pObject->ProcessAgentEntering( agent ) );
-    agent.verify();
-    army.verify();
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -358,7 +343,6 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Supply )
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy )
 {
     MIL_ObjectLoader loader;
-
     {
         xml::xistringstream xis( "<objects>" 
                 "<object geometry='line' type='barricade'>"
@@ -372,19 +356,16 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy )
 
     MockArmy army;
     MockArmy enemyArmy;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* pObject = CreateObject( type, army, loader );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
     CheckCapacity< InteractWithEnemyCapacity >( *pObject );
 
     MockAgent agent;
-    MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow ) ( &agent ).expects( mockpp::once() ).will( returnValue( static_cast< MIL_Army_ABC* >( &army ) ) );
+    MOCK_EXPECT( agent, GetArmy ).once().returns( boost::ref( army ) );
     BOOST_CHECK_EQUAL( false, pObject->CanInteractWith( agent ) );
-    MOCKPP_CHAINER_FOR( MockAgent, GetArmyShadow ) ( &agent ).expects( mockpp::once() ).will( returnValue( static_cast< MIL_Army_ABC* >( &enemyArmy ) ) );
+    MOCK_EXPECT( agent, GetArmy ).once().returns( boost::ref( enemyArmy ) );
     BOOST_CHECK_EQUAL( true, pObject->CanInteractWith( agent ) );
-
-    agent.verify();
-    army.verify();
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -405,9 +386,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "checkpoint" );
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* object = CreateObject( type, army, loader );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
     CheckCapacity< DetectionCapacity >( *object );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< AnimatorAttribute >() );
 
@@ -422,9 +402,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection )
 
     MOCK_EXPECT( animator.GetRole< MockRolePerceiver >(), NotifyExternalPerception )
                 .with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
-    army.verify();
-    animator.verify();
-    intruder.verify();
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -452,9 +430,8 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "sensors" );
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* object = CreateObject( type, army, loader );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
     CheckCapacity< DetectionCapacity >( *object );
 
     MockAgent intruder;
@@ -465,21 +442,19 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Detection2 )
     army.verify();
     intruder.verify();
 
-
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >() );
     MockAgent detector;
-    MOCKPP_CHAINER_FOR( MockAgent, IsDead )( &detector ).expects( once() ).will( mockpp::returnValue( false ) );
+    MOCK_EXPECT( detector, IsDead ).once().returns( false );
     detector.RegisterRole( *new MockRolePerceiver() );
     static_cast< Object& >( *object ).GetAttribute< DetectorAttribute >().AddDetector( detector );
 
     MOCK_EXPECT( time, GetCurrentTick ).once().returns( 3u );
 
-    MOCKPP_CHAINER_FOR( MockRoleLocation, NotifyTerrainObjectCollision ) ( &intruder.GetRole< MockRoleLocation >() ).expects( mockpp::once() );
-
+    MOCK_EXPECT( intruder.GetRole< MockRoleLocation >(), NotifyTerrainObjectCollision ).once();
     MOCK_EXPECT( detector.GetRole< MockRolePerceiver >(), NotifyExternalPerception ).with( mock::same( intruder ), mock::same( PHY_PerceptionLevel::identified_ ) );
    
     BOOST_CHECK_NO_THROW( object->ProcessAgentInside( intruder ) );
-
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -507,17 +482,16 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Mine )
         );
         loader.Initialize( xis );
     }
-
     const MIL_ObjectType_ABC& type = loader.GetType( "mines" );
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
 
-    MIL_Object_ABC* object = CreateObject( type, army, loader );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< ObstacleAttribute >() );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< TimeLimitedAttribute >() );
     BOOST_CHECK_NO_THROW( static_cast< Object& >( *object ).GetAttribute< MineAttribute >() );
 
-    army.verify();
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -526,47 +500,41 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Interaction_Mine )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MockNET_Publisher_ABC mockPublisher;
-
+    MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
+    MIL_PopulationAttitude::Initialize();
+    MIL_ObjectLoader loader;
     {
-        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
-        MIL_PopulationAttitude::Initialize();
-        MIL_ObjectLoader loader;
-        {
-            xml::xistringstream xis( "<objects>"
-                    "<object id='1' name='zone paralysante' type='paralyzing area'>"
-                        "<attitude-modifier attitude='agressive'/>"
-                    "</object>"
-                "</objects>"
-                );
+        xml::xistringstream xis( "<objects>"
+                "<object id='1' name='zone paralysante' type='paralyzing area'>"
+                    "<attitude-modifier attitude='agressive'/>"
+                "</object>"
+            "</objects>"
+            );
 
-            loader.Initialize( xis );
-        }
-
-        const MIL_ObjectType_ABC& type = loader.GetType( "paralyzing area" );
-        MockArmy army;
-        MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-        MIL_Object_ABC* object = CreateObject( type, army, loader );
-        
-        xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-        xis.start( "main" );
-        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-        DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-        StubMIL_PopulationType popuType( model );
-        StubMIL_Population population( popuType );
-        
-        xml::xistringstream xisConcentration( "<population attitude='calme' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
-        xisConcentration.start( "population" );
-        MIL_PopulationConcentration concentration( population, xisConcentration );
-
-        BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("calme") );
-        object->ProcessPopulationInside( concentration );
-        BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("agressive") );
+        loader.Initialize( xis );
     }
 
-    TER_World::DestroyWorld();    
+    const MIL_ObjectType_ABC& type = loader.GetType( "paralyzing area" );
+    MockArmy army;
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+    
+    xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
+    xis.start( "main" );
+    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+    StubMIL_PopulationType popuType( model );
+    StubMIL_Population population( popuType );
+    
+    xml::xistringstream xisConcentration( "<population attitude='calme' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xisConcentration.start( "population" );
+    MIL_PopulationConcentration concentration( population, xisConcentration );
+
+    BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("calme") );
+    object->ProcessPopulationInside( concentration );
+    BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("agressive") );
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -575,46 +543,41 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MockNET_Publisher_ABC mockPublisher;
+    MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
+    MIL_PopulationAttitude::Initialize();
+    MIL_ObjectLoader loader;
     {
-        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
-        MIL_PopulationAttitude::Initialize();
-        MIL_ObjectLoader loader;
-        {
-            xml::xistringstream xis( "<objects>"
-                "<object id='1' name='zone aveuglante' type='blinding area'>"
-                    "<perception blinded='true'/>"
-                "</object>"
-                "</objects>"
-                );
+        xml::xistringstream xis( "<objects>"
+            "<object id='1' name='zone aveuglante' type='blinding area'>"
+                "<perception blinded='true'/>"
+            "</object>"
+            "</objects>"
+            );
 
-            loader.Initialize( xis );
-        }
-
-        const MIL_ObjectType_ABC& type = loader.GetType( "blinding area" );
-        MockArmy army;
-        MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-        MIL_Object_ABC* object = CreateObject( type, army, loader );
-
-        xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-        xis.start( "main" );
-        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-        DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-        StubMIL_PopulationType popuType( model );
-        StubMIL_Population population( popuType );
-
-        xml::xistringstream xisConcentration( "<population attitude='agressive' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
-        xisConcentration.start( "population" );
-        MIL_PopulationConcentration concentration( population, xisConcentration );
-
-        BOOST_CHECK( !population.IsBlinded() );
-        object->ProcessPopulationInside( concentration );
-        BOOST_CHECK( population.IsBlinded() );
+        loader.Initialize( xis );
     }
 
-    TER_World::DestroyWorld();    
+    const MIL_ObjectType_ABC& type = loader.GetType( "blinding area" );
+    MockArmy army;
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+    
+    xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
+    xis.start( "main" );
+    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+    StubMIL_PopulationType popuType( model );
+    StubMIL_Population population( popuType );
+
+    xml::xistringstream xisConcentration( "<population attitude='agressive' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xisConcentration.start( "population" );
+    MIL_PopulationConcentration concentration( population, xisConcentration );
+
+    BOOST_CHECK( !population.IsBlinded() );
+    object->ProcessPopulationInside( concentration );
+    BOOST_CHECK( population.IsBlinded() );
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -623,46 +586,41 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionPerception )
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_InteractionScattering )
 {
-    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MockNET_Publisher_ABC mockPublisher;
-    
+    MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
+    MIL_PopulationAttitude::Initialize();
+    MIL_ObjectLoader loader;
     {
-        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
-        MIL_PopulationAttitude::Initialize();
-        MIL_ObjectLoader loader;
-        {
-            xml::xistringstream xis( "<objects>"
-                "<object id='1' name='zone dispercante' type='scattering area'>"
-                    "<scattering human-by-time-step='30'/>"
-                "</object>"
-                "</objects>"
-                );
+        xml::xistringstream xis( "<objects>"
+            "<object id='1' name='zone dispercante' type='scattering area'>"
+                "<scattering human-by-time-step='30'/>"
+            "</object>"
+            "</objects>"
+            );
 
-            loader.Initialize( xis );
-        }
-
-        const MIL_ObjectType_ABC& type = loader.GetType( "scattering area" );
-        MockArmy army;
-        MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-        MIL_Object_ABC* object = CreateObject( type, army, loader );
-
-        xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
-        xis.start( "main" );
-        std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
-        DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
-        StubMIL_PopulationType popuType( model );
-        StubMIL_Population population( popuType );
-
-        xml::xistringstream xisConcentration( "<population attitude='agressive' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
-        xisConcentration.start( "population" );
-        MIL_PopulationConcentration concentration( population, xisConcentration );
-
-        unsigned int before = concentration.GetNbrHumans();
-        object->ProcessPopulationInside( concentration );
-        BOOST_CHECK( before > concentration.GetNbrHumans() );
+        loader.Initialize( xis );
     }
 
-    TER_World::DestroyWorld();    
+    const MIL_ObjectType_ABC& type = loader.GetType( "scattering area" );
+    MockArmy army;
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > object( CreateObject( type, army, loader ) );
+
+    xml::xistringstream xis( "<main dia-type='PionTest' file='PionTest.bms'/>" );
+    xis.start( "main" );
+    std::map< std::string, const MIL_MissionType_ABC*, sCaseInsensitiveLess > missionTypes;
+    DEC_Model model( "test", xis, BOOST_RESOLVE( "." ), "prefix", missionTypes );
+    StubMIL_PopulationType popuType( model );
+    StubMIL_Population population( popuType );
+
+    xml::xistringstream xisConcentration( "<population attitude='agressive' humans='10001' id='37' name='Population standard [37]' position='35RPQ9407811091' type='Population standard'/>");
+    xisConcentration.start( "population" );
+    MIL_PopulationConcentration concentration( population, xisConcentration );
+
+    unsigned int before = concentration.GetNbrHumans();
+    object->ProcessPopulationInside( concentration );
+    BOOST_CHECK( before > concentration.GetNbrHumans() );
+    MOCK_EXPECT( army, UnregisterObject ).once();
 }
 
+BOOST_AUTO_TEST_SUITE_END()

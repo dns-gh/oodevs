@@ -18,30 +18,12 @@
 */
 // Created: LDC 2010-01-07
 // =============================================================================
-class MockPHY_RoleInterface_ActiveProtection
-    : public mockpp::ChainableMockObject
-    , public PHY_RoleInterface_ActiveProtection
+MOCK_BASE_CLASS( MockPHY_RoleInterface_ActiveProtection, PHY_RoleInterface_ActiveProtection )
 {
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-    MockPHY_RoleInterface_ActiveProtection()
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockPHY_RoleInterface_ActiveProtection" ), 0 )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( UseAmmunition )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( GetPHModifier )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( CounterIndirectFire )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( DestroyIndirectFire )
-        {}
-    virtual ~MockPHY_RoleInterface_ActiveProtection() {}
-    //@}
-
-    MOCKPP_VOID_CHAINABLE1( MockPHY_RoleInterface_ActiveProtection, UseAmmunition, PHY_DotationCategory );
-    MOCKPP_CONST_CHAINABLE1( MockPHY_RoleInterface_ActiveProtection, double, GetPHModifier, PHY_DotationCategory );
-    MOCKPP_CONST_CHAINABLE1( MockPHY_RoleInterface_ActiveProtection, bool, CounterIndirectFire, PHY_DotationCategory );
-    MOCKPP_CONST_CHAINABLE1( MockPHY_RoleInterface_ActiveProtection, bool, DestroyIndirectFire, PHY_DotationCategory );
-
+    MOCK_METHOD( UseAmmunition, 1 );
+    MOCK_METHOD( GetPHModifier, 1 );
+    MOCK_METHOD( CounterIndirectFire, 1 );
+    MOCK_METHOD( DestroyIndirectFire, 1 );
 };
-
 
 #endif // __MockPHY_RoleInterface_ActiveProtection_h_

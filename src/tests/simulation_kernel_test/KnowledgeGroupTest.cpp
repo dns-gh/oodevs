@@ -9,24 +9,18 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-
-#include <xeumeuleu/xml.h>
-
 #include "simulation_kernel/Knowledge/MIL_KnowledgeGroup.h"
 #include "simulation_kernel/Knowledge/MIL_KnowledgeGroupType.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
-#include "tools/resolver.h"
-
 #include "MockNET_Publisher_ABC.h"
 #include "MockArmy.h"
 #include "MockKnowledgeGroupFactory.h"
-
 #include "protocol/SimulationSenders.h"
 #include "protocol/ClientSenders.h"
-
+#include "tools/resolver.h"
+#include <xeumeuleu/xml.h>
 
 using namespace mockpp;
-
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
@@ -35,6 +29,7 @@ using namespace mockpp;
 BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
 {
     MockArmy army;
+    MOCK_EXPECT( army, GetID ).returns( 1 );
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
     
     // define knowledgeGroup type
@@ -50,31 +45,34 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
   
     // register army sub knowledge group
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
+    MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupArmy( kgType, 1, army );
 
     // register 1st sub knowledge group
     xml::xistringstream xis2( "<root id='2' type='TOTO'/>" );
     xis2 >> xml::start( "root" );
+//    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group1( xis2, army, &groupArmy, mockKnowledgeGroupFactory );
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::atLeastOnce() );        
+//    army.verify();
 
     // register 2nd sub knowledge group
     xml::xistringstream xis3( "<root id='3' type='TOTO'/>" );
     xis3 >> xml::start( "root" );
+//    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group2( xis3, army, &groupArmy, mockKnowledgeGroupFactory );
+//    army.verify();
     
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
     msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent );
-    MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 1 ) );
     msg.mutable_parametres()->add_elem()->mutable_value()->set_army( army.GetID() );
     msg.mutable_parametres()->add_elem()->mutable_value()->set_knowledgegroup( group1.GetId() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
+    army.verify();
 
-    MOCKPP_CHAINER_FOR( MockArmy, FindKnowledgeGroup ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue( &group1 ) );
+    MOCK_EXPECT( army, FindKnowledgeGroup ).once().returns( &group1 );
 
     // initialize publisher
     MockNET_Publisher_ABC mockPublisher;
@@ -86,8 +84,7 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
     // verify
     BOOST_CHECK_EQUAL( &group1, group2.GetParent() );
     mockPublisher.verify();
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );   
-    
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( groupArmy ) ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -97,50 +94,56 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderKnowledgeGroup )
 BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
 {
     MockArmy army;
+    MOCK_EXPECT( army, GetID ).returns( 10u );
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
     
     // Use previously define type
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
   
     // register army sub knowledge group
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
+    MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupArmy( kgType, 10, army );
 
     // register 1st sub knowledge group
     xml::xistringstream xis2( "<root id='12' type='TOTO'/>" );
     xis2 >> xml::start( "root" );
+//    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group1( xis2, army, &groupArmy, mockKnowledgeGroupFactory );
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::atLeastOnce() );        
+//    groupArmy.verify();
 
     // register 2nd sub knowledge group
     xml::xistringstream xis3( "<root id='13' type='TOTO'/>" );
     xis3 >> xml::start( "root" );
+//    MOCK_EXPECT( group1, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group2( xis3, army, &group1, mockKnowledgeGroupFactory );
+//    group1.verify();
     
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
     msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side );
-    MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 10 ) );
     msg.mutable_parametres()->add_elem()->mutable_value()->set_army( army.GetID() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
 
-    MIL_KnowledgeGroup* ptr_null = 0;
-    MOCKPP_CHAINER_FOR( MockArmy, FindKnowledgeGroup ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue( ptr_null ) );
+//    MIL_KnowledgeGroup* ptr_null = 0;
+//    MOCK_EXPECT( army, FindKnowledgeGroup ).once().returns( ptr_null ); // $$$$ _RC_ SBO 2010-04-27: never verify'ed
 
     // initialize publisher
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
-    // moves group2 under group1
+    // moves group2 under army
+//    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( group2 ) ).once(); // $$$$ _RC_ SBO 2010-04-28: TODO: check unregistration from parent KG
+    MOCK_EXPECT( army, RegisterKnowledgeGroup ).with( mock::same( group2 ) ).once();
     group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
+    army.verify();
+    mockPublisher.verify();
 
     // verify
     BOOST_CHECK( !group2.GetParent() );
-    mockPublisher.verify();
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::exactly( 2 ) );
-    
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( group2 ) ).once();
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( groupArmy ) ).once();
 }
 
 // -----------------------------------------------------------------------------
@@ -150,51 +153,56 @@ BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorKnowledgeGroupUnderArmy )
 BOOST_AUTO_TEST_CASE( ReceiveChangeSuperiorArmyUnderKnowledgeGroup )
 {
     MockArmy army;
+    MOCK_EXPECT( army, GetID ).returns( 20u );
     MockKnowledgeGroupFactory mockKnowledgeGroupFactory;
     
     // Use previously define type
     const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("TOTO");
   
     // register army sub knowledge group
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
+    MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupArmy( kgType, 20, army );
 
     // register 1st sub knowledge group
     xml::xistringstream xis2( "<root id='21' type='TOTO'/>" );
     xis2 >> xml::start( "root" );
+//    MOCK_EXPECT( groupArmy, RegisterKnowledgeGroup ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     MIL_KnowledgeGroup group1( xis2, army, &groupArmy, mockKnowledgeGroupFactory );
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::atLeastOnce() );        
+//    groupArmy.verify();
 
     // register 2nd sub knowledge group
     xml::xistringstream xis3( "<root id='22' type='TOTO'/>" );
     xis3 >> xml::start( "root" );
+    MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup group2( xis3, army, 0, mockKnowledgeGroupFactory );
+    army.verify();
     
     MsgsClientToSim::MsgKnowledgeMagicAction msg;
     msg.set_oid( group2.GetId() );
     msg.set_type( MsgsClientToSim::MsgKnowledgeMagicAction_Type_update_side_parent );
-    MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::atLeastOnce() ).will( mockpp::returnValue< uint >( 20 ) );
+    
     msg.mutable_parametres()->add_elem()->mutable_value()->set_army( army.GetID() );
     msg.mutable_parametres()->add_elem()->mutable_value()->set_knowledgegroup( group1.GetId() );
 
     tools::Resolver< MIL_Army_ABC > armies;
     armies.Register( army.GetID(), army );
 
-    MOCKPP_CHAINER_FOR( MockArmy, FindKnowledgeGroup ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue( &group1 ) );
+    MOCK_EXPECT( army, FindKnowledgeGroup ).once().returns( &group1 );
 
     // initialize publisher
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
     // moves group2 under group1
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( group2 ) ).once();
+//    MOCK_EXPECT( group1, RegisterKnowledgeGroup ).with( mock::same( group2 ) ).once(); // $$$$ _RC_ SBO 2010-04-27: TODO: check registration into parent KG
     group2.OnReceiveMsgKnowledgeGroupUpdate( msg, armies );
+    army.verify();
 
     // verify
     BOOST_CHECK_EQUAL( &group1, group2.GetParent() );
     mockPublisher.verify();
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );   
-   
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( groupArmy ) ).once();
 }
 
 
@@ -218,8 +226,8 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     MIL_KnowledgeGroupType::Initialize(xis, timeFactor);
 
     // register army sub knowledge group
-    const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType("Standard");
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );
+    const MIL_KnowledgeGroupType &kgType = *MIL_KnowledgeGroupType::FindType( "Standard" );
+    MOCK_EXPECT( army, RegisterKnowledgeGroup ).once();
     MIL_KnowledgeGroup groupArmy( kgType, 30, army );
 
     // prepare message    
@@ -230,7 +238,7 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     msg.mutable_parametres()->add_elem()->mutable_value()->set_acharstr( kgType_new.GetName().c_str() );
 
     tools::Resolver< MIL_Army_ABC > armies;
-    MOCKPP_CHAINER_FOR( MockArmy, GetID ) ( &army ).expects( mockpp::once() ).will( mockpp::returnValue< uint >( 1 ) );
+    MOCK_EXPECT( army, GetID ).once().returns( 1u );
     armies.Register( army.GetID(), army );
 
     // initialize publisher
@@ -243,6 +251,5 @@ BOOST_AUTO_TEST_CASE( ReceiveKnowledgeGroupSetType )
     // verify
     BOOST_CHECK_EQUAL( "TOTO", groupArmy.GetType().GetName().c_str() );
     mockPublisher.verify();
-    MOCKPP_CHAINER_FOR( MockArmy, UnregisterKnowledgeGroup ) ( &army ).expects( mockpp::once() );   
-   
+    MOCK_EXPECT( army, UnregisterKnowledgeGroup ).with( mock::same( groupArmy ) ).once();
 }

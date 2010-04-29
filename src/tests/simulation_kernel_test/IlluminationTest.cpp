@@ -17,17 +17,10 @@ namespace
     {
     public:
         MockAgentWithPosition()
-            : MockAgent()
         {
-            location = new MockRoleLocation();
-            RegisterRole( *location  );
+            RegisterRole( *new MockRoleLocation() );
         }
-
-        ~MockAgentWithPosition()
-        {
-        }
-
-        MockRoleLocation* location;
+        virtual ~MockAgentWithPosition() {}
     };
 
 }
@@ -41,12 +34,10 @@ BOOST_AUTO_TEST_CASE( IlluminatedByOneTest )
     MockAgentWithPosition illuminated;
     MockAgentWithPosition agent;
 
-
     const MT_Vector2D pos1;
-    MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )( illuminated.location ).expects( exactly(2) ).will( returnValue( &pos1 ) );
+    MOCK_EXPECT( illuminated.GetRole< MockRoleLocation >(), GetPosition ).exactly( 2 ).returns( pos1 );
     const MT_Vector2D pos2;
-    MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )( agent.location ).expects( exactly(2) ).will( returnValue( &pos2 ) );
-
+    MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), GetPosition ).once().returns( pos2 );
 
     PHY_RolePion_Illumination role( illuminated );
     role.NotifyStartIlluminatedBy( agent );
@@ -66,12 +57,12 @@ BOOST_AUTO_TEST_CASE( IlluminatedByTwoTest )
     MockAgentWithPosition agent2;
 
     const MT_Vector2D pos1;
-    MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )( illuminated.location ).expects( exactly(3) ).will( returnValue( &pos1 ) );
+    MOCK_EXPECT( illuminated.GetRole< MockRoleLocation >(), GetPosition ).exactly( 3 ).returns( pos1 );
     const MT_Vector2D pos2;
-    MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )( agent.location ).expects( exactly(1) ).will( returnValue( &pos2 ) );
+    // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
+//    MOCK_EXPECT( agent.GetRole< MockRoleLocation >(), GetPosition ).once().returns( pos2 );
     const MT_Vector2D pos3;
-    MOCKPP_CHAINER_FOR( MockRoleLocation, GetPositionShadow )( agent2.location ).expects( exactly(2) ).will( returnValue( &pos3 ) );
-
+    MOCK_EXPECT( agent2.GetRole< MockRoleLocation >(), GetPosition ).exactly( 2 ).returns( pos3 );
 
     PHY_RolePion_Illumination role( illuminated );
     role.NotifyStartIlluminatedBy( agent );

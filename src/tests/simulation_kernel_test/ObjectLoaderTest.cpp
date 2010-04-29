@@ -8,65 +8,50 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-
-// ASN
-//struct MsgMagicActionCreateObject;
-//struct MsgObjectAttributes;
-//struct MsgLocation;
 #include "protocol/protocol.h"
-
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
-
-#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
-#include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
-
-
 #include "simulation_kernel/Entities/Objects/AvoidanceCapacity.h"
 #include "simulation_kernel/Entities/Objects/BypassableCapacity.h"
-#include "simulation_kernel/Entities/Objects/MobilityCapacity.h"
-#include "simulation_kernel/Entities/Objects/TimeLimitedCapacity.h"
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
-#include "simulation_kernel/Entities/Objects/ImprovableCapacity.h"
-#include "simulation_kernel/Entities/Objects/ContaminationCapacity.h"
-#include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
-
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
-
+#include "simulation_kernel/Entities/Objects/ContaminationCapacity.h"
+#include "simulation_kernel/Entities/Objects/ImprovableCapacity.h"
+#include "simulation_kernel/Entities/Objects/MIL_Object_ABC.h"
+#include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
-
+#include "simulation_kernel/Entities/Objects/MobilityCapacity.h"
+#include "simulation_kernel/Entities/Objects/SpawnCapacity.h"
+#include "simulation_kernel/Entities/Objects/TimeLimitedCapacity.h"
 #include <xeumeuleu/xml.h>
-
-
-using namespace mockpp;
 
 namespace
 {
-        xml::xistringstream xis( "<objects>" 
-            "<object type='object'>"
-                "<avoidable/>"
-                "<bypassable/>"
-                "<activable/>"
-                "<attrition/>"
-                "<bridging/>"
-                "<contamination/>"
-                "<intoxication/>"
-                "<decontamination/>"
-                "<workable/>"
-                "<mobility/>"
-                "<protection/>"
-                "<healable/>"
-                "<interference/>"
-                "<logistic/>"
-                "<time-limited/>"
-                "<heuristic/>"
-                "<propagation/>"
-                "<implantable/>"
-                "<supply/>"
-                "<supply-route/>"
-                "<detection/>"
-            "</object>" 
-        "</objects>"
-        ); 
+    xml::xistringstream xis( "<objects>" 
+        "<object type='object'>"
+            "<avoidable/>"
+            "<bypassable/>"
+            "<activable/>"
+            "<attrition/>"
+            "<bridging/>"
+            "<contamination/>"
+            "<intoxication/>"
+            "<decontamination/>"
+            "<workable/>"
+            "<mobility/>"
+            "<protection/>"
+            "<healable/>"
+            "<interference/>"
+            "<logistic/>"
+            "<time-limited/>"
+            "<heuristic/>"
+            "<propagation/>"
+            "<implantable/>"
+            "<supply/>"
+            "<supply-route/>"
+            "<detection/>"
+        "</object>" 
+    "</objects>"
+    ); 
 }
 
 // -----------------------------------------------------------------------------
@@ -78,7 +63,6 @@ BOOST_AUTO_TEST_CASE( VerifyEmptyObjectDefinition )
     MIL_ObjectLoader loader;
     xml::xistringstream xis( "<objects/>" );
     loader.Initialize( xis );
-
     BOOST_CHECK_THROW( loader.GetType( "fake" ), std::runtime_error );
 }
 
@@ -165,5 +149,3 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Spawn )
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
     BOOST_CHECK( type.GetCapacity< SpawnCapacity >() != 0 );
 }
-
-

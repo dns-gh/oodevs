@@ -18,48 +18,18 @@
 */
 // Created: JCR 2008-09-01
 // =============================================================================
-class MockRoleNBC
-    : public mockpp::ChainableMockObject
-    , public nbc::PHY_RoleInterface_NBC
+MOCK_BASE_CLASS( MockRoleNBC, nbc::PHY_RoleInterface_NBC )
 {
-public:
-    
-    //! @name Constructors/Destructor
-    //@{
-    MockRoleNBC( )
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockRoleNBC" ) )
-        , nbc::PHY_RoleInterface_NBC( )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( IsContaminated )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Poison )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Contaminate )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Decontaminate_All )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Decontaminate_Percent )
-    {
-    }
-    virtual ~MockRoleNBC() {}
-    //@}
-        
-    MOCKPP_CONST_CHAINABLE0      ( MockRoleNBC, bool, IsContaminated );
-
-    MOCKPP_VOID_CHAINABLE1       ( MockRoleNBC, Poison, MIL_ToxicEffectManipulator );
-    MOCKPP_VOID_CHAINABLE1       ( MockRoleNBC, Contaminate, MIL_ToxicEffectManipulator );
-    MOCKPP_VOID_CHAINABLE_EXT0   ( MockRoleNBC, Decontaminate, _All );    
-    MOCKPP_VOID_CHAINABLE_EXT1   ( MockRoleNBC, Decontaminate, MT_Float, _Percent, MT_Float );
-
-    //! @name Operations
-    //@{
-    virtual void Update    ( bool bIsDead ) {};
-    virtual void Clean     () {};
-    virtual bool HasChanged() const { return false; };
-    //@}
-
-    //! @name Main
-    //@{
-    virtual void WearNbcProtectionSuit  () {};
-    virtual void RemoveNbcProtectionSuit() {};
-
-    virtual MT_Float ModifyMaxSpeed         ( MT_Float rSpeed    ) const { return 0; };
-    //@}
+    MOCK_METHOD( IsContaminated, 0 );
+    MOCK_METHOD( Poison, 1 );
+    MOCK_METHOD( Contaminate, 1 );
+    MOCK_METHOD_EXT( Decontaminate, 0, void(), DecontaminateComplete );
+    MOCK_METHOD_EXT( Decontaminate, 1, void( MT_Float ), DecontaminatePartial );
+    MOCK_METHOD( Update, 1 );
+    MOCK_METHOD( Clean, 0 );
+    MOCK_METHOD( HasChanged, 0 );
+    MOCK_METHOD( WearNbcProtectionSuit, 0 );
+    MOCK_METHOD( RemoveNbcProtectionSuit, 0 );
 };
 
 #endif // __MockRoleNBC_h_

@@ -12,39 +12,16 @@
 
 #include "simulation_kernel/Entities/Objects/MIL_ObjectBuilder_ABC.h"
 
-class Object;
-class MIL_ObjectType_ABC;
-
 // =============================================================================
 /** @class  MockBuilder
     @brief  MockBuilder
 */
 // Created: JCR 2008-09-01
 // =============================================================================
-class MockBuilder
-    : public mockpp::ChainableMockObject
-    , public MIL_ObjectBuilder_ABC
+MOCK_BASE_CLASS( MockBuilder, MIL_ObjectBuilder_ABC )
 {
-public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit MockBuilder() 
-        : mockpp::ChainableMockObject( MOCKPP_PCHAR( "MockBuilder" ) )
-        , GetType_mocker( "GetType", this )
-        , MOCKPP_CONSTRUCT_CHAINABLE_MEMBERS( Build )
-    {
-    }
-    virtual ~MockBuilder() {}
-    //@}
-
-    virtual const MIL_ObjectType_ABC& GetType() const
-    {
-        return *GetType_mocker.forward();
-    }
-
-    MOCKPP_VOID_CONST_CHAINABLE_EXT1    ( MockBuilder, Build, Object&, ,Object );
-
-    mockpp::ChainableMockMethod< const MIL_ObjectType_ABC* > GetType_mocker;
+    MOCK_METHOD( GetType, 0 );
+    MOCK_METHOD( Build, 1 );
 };
 
 #endif // __MockBuilder_h_

@@ -8,28 +8,19 @@
 // *****************************************************************************
 
 #include "simulation_kernel_test_pch.h"
-
-// ASN
-//struct MsgMagicActionCreateObject;
-//struct MsgObjectAttributes;
-//struct MsgLocation;
-
+#include "MockArmy.h"
+#include "MockBuilder.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectLoader.h"
 #include "simulation_kernel/Entities/Objects/Object.h"
 #include "simulation_kernel/Entities/MIL_Army_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectBuilder_ABC.h"
 #include "simulation_kernel/Entities/Objects/MIL_ObjectType_ABC.h"
-
 #include "simulation_kernel/Entities/Objects/BuildableCapacity.h"
 #include "simulation_kernel/Entities/Objects/ConstructionAttribute.h"
-
+#include "simulation_terrain/TER_World.h"
 #include <xeumeuleu/xml.h>
 
-#include "MockArmy.h"
-#include "MockBuilder.h"
-
 using namespace mockpp;
-
 
 // -----------------------------------------------------------------------------
 // Name: BOOST_AUTO_TEST_CASE
@@ -37,8 +28,8 @@ using namespace mockpp;
 // -----------------------------------------------------------------------------
 BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
 {
+    TER_World::Initialize( "../../data/data/terrains/Paris_Est/Terrain.xml" );
     MIL_ObjectLoader loader;
-    
     {
         xml::xistringstream xis( "<objects>" 
                 "<object type='object'>"
@@ -53,27 +44,27 @@ BOOST_AUTO_TEST_CASE( VerifyObjectCapacity_Instance )
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
 
     MockArmy army;
-    MOCKPP_CHAINER_FOR( MockArmy, RegisterObject ) ( &army ).expects( mockpp::once() );
-
-    MIL_Object_ABC* pObject = 0;
+    MOCK_EXPECT( army, RegisterObject ).once();
+    std::auto_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
-        builder.GetType_mocker.expects( mockpp::once() ) .will( returnValue( &type ) );
-        MOCKPP_CHAINER_FOR( MockBuilder, Build )( &builder ).expects( mockpp::once() );
-        BOOST_CHECK_NO_THROW(
-            pObject = loader.CreateObject( builder, army );
-        );
+        MOCK_EXPECT( builder, GetType ).once().returns( boost::cref( type ) );
+        MOCK_EXPECT( builder, Build ).once();
+        BOOST_CHECK_NO_THROW( pObject.reset( loader.CreateObject( builder, army ) ) );
         builder.verify();
     }
 
-    BOOST_REQUIRE( pObject != 0 );
+    BOOST_REQUIRE( pObject.get() != 0 );
     BOOST_CHECK( pObject->GetID() > 0 );    
     BOOST_CHECK_EQUAL( &pObject->GetType(), &type );
 
     BOOST_CHECK( pObject->Retrieve< BuildableCapacity >() != 0 );
-    BOOST_CHECK_NO_THROW( static_cast< Object* >( pObject )->GetAttribute< ConstructionAttribute >() );
+    BOOST_CHECK_NO_THROW( static_cast< Object* >( pObject.get() )->GetAttribute< ConstructionAttribute >() );
     BOOST_CHECK_NO_THROW( pObject->GetAttribute< ConstructionAttribute >() );
     BOOST_CHECK_EQUAL( pObject->GetAttribute< ConstructionAttribute >().GetState(), 1. );
 
+    MOCK_EXPECT( army, UnregisterObject ).once();
+    pObject.reset();
     army.verify();
+    TER_World::DestroyWorld();
 }
