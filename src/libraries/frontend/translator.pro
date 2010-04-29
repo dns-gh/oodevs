@@ -2,6 +2,8 @@ HEADERS =
 
 SOURCES = Config.cpp \
 CreateTerrain.cpp \
+CheckpointConfigPanel.cpp \
+CheckpointList.cpp \
 CrossbowPluginConfigPanel.cpp \
 DisPluginConfigPanel.cpp \
 HlaPluginConfigPanel.cpp \

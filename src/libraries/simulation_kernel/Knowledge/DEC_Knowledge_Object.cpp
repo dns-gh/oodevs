@@ -181,14 +181,16 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
     file >> name;
     pObjectType_ = &MIL_ObjectFactory::FindType( name );
     
-    file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ );
-    file >> pObjectKnown_;
-    file >> const_cast< unsigned int& >( nID_ );
-    file >> attributes_;
-    file >> nAttributesUpdated_;
-    file >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ );
-    file >> localisation_;
-    file >> avoidanceLocalisation_;
+    T_ObjectAttributeVector attributes;
+
+    file >> const_cast< MIL_Army_ABC*& >( pArmyKnowing_ )
+         >> pObjectKnown_
+         >> const_cast< unsigned int& >( nID_ )
+         >> attributes
+         >> nAttributesUpdated_
+         >> const_cast< MIL_Army_ABC*& >( pOwnerArmy_ )
+         >> localisation_
+         >> avoidanceLocalisation_;
          
     idManager_.Lock( nID_ );
 
@@ -207,7 +209,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> nTimeLastUpdate_
          >> rRelevance_;
 
-    for ( IT_ObjectAttributeVector it = attributes_.begin(); it != attributes_.end(); ++it )
+    for ( IT_ObjectAttributeVector it = attributes.begin(); it != attributes.end(); ++it )
         (*it)->Register( *this );
 
     // récupération des noms des types

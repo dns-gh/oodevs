@@ -226,11 +226,11 @@
     </message>
     <message>
         <source>Data directory: </source>
-        <translation type="unfinished"></translation>
+        <translation>Répertoire de données: </translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -420,6 +420,10 @@
     <message>
         <source>General</source>
         <translation>Général</translation>
+    </message>
+    <message>
+        <source>Checkpoints</source>
+        <translation>Sauvegardes</translation>
     </message>
 </context>
 <context>

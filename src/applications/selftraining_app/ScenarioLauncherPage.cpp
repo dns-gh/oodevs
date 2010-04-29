@@ -14,6 +14,8 @@
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
 #include "CompositeProcessWrapper.h"
+#include "MessageDialog.h"
+#include "frontend/CheckpointConfigPanel.h"
 #include "frontend/CreateSession.h"
 #include "frontend/CrossbowPluginConfigPanel.h"
 #include "frontend/DisPluginConfigPanel.h"
@@ -37,7 +39,7 @@ namespace bpt = boost::posix_time;
 // Created: SBO 2008-02-21
 // -----------------------------------------------------------------------------
 ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const tools::GeneralConfig& config, const QString& title /*= ""*/ )
-: ContentPage( pages, title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title, previous )
+    : ContentPage( pages, title.isEmpty() ? tools::translate( "ScenarioLauncherPage", "Scenario" ) : title, previous )
     , config_( config )
     , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this, tools::translate( "ScenarioLauncherPage", "Starting %1" ).arg( title ), controllers ) )
@@ -53,6 +55,11 @@ ScenarioLauncherPage::ScenarioLauncherPage( QWidgetStack* pages, Page_ABC& previ
             exercises_ = new ExerciseList( tabs, config_, lister_ );
             tabs->addTab( exercises_, tr( "General" ) );
             connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), this, SLOT( OnSelect( const QString&, const Profile& ) ) );
+        }
+        {
+            frontend::CheckpointConfigPanel* panel = AddPlugin< frontend::CheckpointConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "Checkpoints" ) );
+            connect( exercises_, SIGNAL( Select( const QString&, const Profile& ) ), panel, SLOT( Select( const QString& ) ) );
+            connect( panel, SIGNAL( CheckpointSelected( const QString&, const QString& ) ), SLOT( OnSelectCheckpoint( const QString&, const QString& ) ) );
         }
         AddPlugin< frontend::DisPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "DIS" ) );
         AddPlugin< frontend::HlaPluginConfigPanel >( tabs, tools::translate( "ScenarioLauncherPage", "HLA" ) );
@@ -97,9 +104,9 @@ void ScenarioLauncherPage::OnStart()
 {
     if( exercise_.isEmpty() || !profile_.IsValid() || ! dialogs::KillRunningProcesses( this ) )
         return;
-    const QString session = BuildSessionName().c_str();
+    const QString session = session_.isEmpty() ? BuildSessionName().c_str() : session_;
     CreateSession( exercise_, session );
-    boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, true ) );
+    boost::shared_ptr< frontend::SpawnCommand > simulation( new frontend::StartExercise( config_, exercise_, session, checkpoint_, true ) );
     boost::shared_ptr< frontend::SpawnCommand > client( new frontend::JoinExercise( config_, exercise_, session, profile_.GetLogin(), true ) );
     boost::shared_ptr< frontend::Process_ABC > process( new CompositeProcessWrapper( controllers_.controller_, simulation, client ) );
     progressPage_->Attach( process );
@@ -136,13 +143,24 @@ void ScenarioLauncherPage::OnSelect( const QString& exercise, const Profile& pro
 }
 
 // -----------------------------------------------------------------------------
+// Name: ScenarioLauncherPage::OnSelectCheckpoint
+// Created: SBO 2010-04-19
+// -----------------------------------------------------------------------------
+void ScenarioLauncherPage::OnSelectCheckpoint( const QString& session, const QString& checkpoint )
+{
+    session_ = session;
+    checkpoint_ = checkpoint;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ScenarioLauncherPage::AddPlugin
 // Created: SBO 2009-12-09
 // -----------------------------------------------------------------------------
 template< typename T >
-void ScenarioLauncherPage::AddPlugin( QTabWidget* tabs, const QString& name )
+T* ScenarioLauncherPage::AddPlugin( QTabWidget* tabs, const QString& name )
 {
-    frontend::PluginConfig_ABC* plugin = new T( tabs, config_ );
+    T* plugin = new T( tabs, config_ );
     tabs->addTab( plugin, name );
     plugins_.push_back( plugin );
+    return plugin;
 }

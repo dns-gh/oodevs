@@ -34,6 +34,7 @@ namespace frontend
         QStringList ListTerrains      ( const tools::GeneralConfig& config );
         QStringList ListExercises     ( const tools::GeneralConfig& config, const std::string& subDirs = ""  );
         QStringList ListSessions      ( const tools::GeneralConfig& config, const std::string& exercise );
+        QStringList ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const std::string& exercise );
         QStringList ListCheckpoints   ( const tools::GeneralConfig& config, const std::string& exercise, const std::string& session );
         QStringList ListModels        ( const tools::GeneralConfig& config );
         QStringList ListPhysicalModels( const tools::GeneralConfig& config, const std::string& model );

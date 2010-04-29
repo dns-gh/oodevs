@@ -92,6 +92,17 @@ namespace frontend
             return ListDirectories( config.GetSessionsDir( exercise ), &IsValidReplay );
         }
 
+        bool HasCheckpoints( const bfs::path& session )
+        {
+            return bfs::is_directory( session )
+                && bfs::exists      ( session / "checkpoints" );
+        }
+
+        QStringList ListSessionsWithCheckpoint( const tools::GeneralConfig& config, const std::string& exercise )
+        {
+            return ListDirectories( config.GetSessionsDir( exercise ), &HasCheckpoints );
+        }
+
         bool IsValidCheckpoint( const bfs::path& record )
         {
             return bfs::is_directory( record )

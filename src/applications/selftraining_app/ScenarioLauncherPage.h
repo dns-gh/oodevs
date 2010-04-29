@@ -57,6 +57,7 @@ private slots:
     //@{
     void OnStart();
     void OnSelect( const QString& exercise, const Profile& profile );
+    void OnSelectCheckpoint( const QString& session, const QString& checkpoint );
     //@}
 
 private:
@@ -72,7 +73,7 @@ private:
     virtual std::string BuildSessionName() const;
     void CreateSession( const QString& exercise, const QString& session );
     template< typename T >
-    void AddPlugin( QTabWidget* tabs, const QString& name );
+    T* AddPlugin( QTabWidget* tabs, const QString& name );
     //@}
 
     //! @name Types
@@ -89,6 +90,8 @@ private:
     ExerciseList*               exercises_;
     QString                     exercise_;
     Profile                     profile_;
+    QString                     session_;
+    QString                     checkpoint_;
     DirectoryExerciseLister     lister_;
     T_Plugins                   plugins_;
 

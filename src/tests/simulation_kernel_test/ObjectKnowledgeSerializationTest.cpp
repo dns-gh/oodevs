@@ -33,13 +33,18 @@
  */
 namespace
 {
-    class StubArmy : public MockArmy
+    class ArmySerializationProxy : public MockArmy
     {
     public:
-        template< typename Archive >
-        void serialize( Archive& archive, const unsigned int ) 
+        BOOST_SERIALIZATION_SPLIT_MEMBER();
+        void load( MIL_CheckPointInArchive& archive, const unsigned int )
         {
-            archive & boost::serialization::base_object< MockArmy >( *this );
+            archive >> boost::serialization::base_object< MockArmy >( *this );
+            MOCK_EXPECT( this, RegisterObject ).once();
+        }
+        void save( MIL_CheckPointOutArchive& archive, const unsigned int ) const
+        {
+            archive << boost::serialization::base_object< MockArmy >( *this );
         }
     };
 
@@ -59,7 +64,7 @@ namespace
 }
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MockArmy )
-BOOST_CLASS_EXPORT( StubArmy )
+BOOST_CLASS_EXPORT( ArmySerializationProxy )
 
 BOOST_FIXTURE_TEST_SUITE( ObjectKnowledgeSerializationTestSuite, ObjectKnowledgeSerializationFixture )
 
@@ -83,7 +88,7 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
     }
     const MIL_ObjectType_ABC& type = loader.GetType( "object" );
 
-    StubArmy army;
+    ArmySerializationProxy army;
     std::auto_ptr< MIL_Object_ABC > pObject;
     {
         MockBuilder builder;
@@ -115,10 +120,9 @@ BOOST_AUTO_TEST_CASE( VerifyObjectKnowledge_Serialization )
         const MockArmy& mockArmy = static_cast< const MockArmy& >( reloaded.GetArmy() );
         MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
         MOCK_EXPECT( mockArmy, GetID ).returns( 42u );
-        MOCK_EXPECT( mockArmy, UnregisterObject ).once();
     }
     MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
-    MOCK_EXPECT( army, UnregisterObject ).once();
+    MOCK_EXPECT( army, UnregisterObject ).with( mock::same( *pObject ) ).once();
 }
 
 BOOST_AUTO_TEST_SUITE_END()

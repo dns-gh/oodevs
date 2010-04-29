@@ -85,13 +85,15 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
     {
         std::string dispatcher_path( GetEmbeddedDispatcherPath( *configManipulator_ ) );
         std::auto_ptr< StartDispatcher > dispatcher( new ::StartDispatcher( config, attach, QString( dispatcher_path.c_str() ), exercise, session ) );
-        dispatcher->addArgument( "--checkpoint=" + checkpoint );
+        if( !checkpoint.isEmpty() )
+            dispatcher->addArgument( "--checkpoint=" + checkpoint );
         dispatcher_ = dispatcher;
     }
     AddRootDirArgument();
     AddExerciseArgument( exercise );
     AddSessionArgument( session );
-    addArgument( "--checkpoint=" + checkpoint );
+    if( !checkpoint.isEmpty() )
+        addArgument( "--checkpoint=" + checkpoint );
 }
 
 // -----------------------------------------------------------------------------
