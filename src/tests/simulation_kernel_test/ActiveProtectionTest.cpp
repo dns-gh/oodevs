@@ -31,6 +31,7 @@
 #include "simulation_terrain/TER_World.h"
 #include "DotationComputer_ABC.h"
 #include "WeaponAvailabilityComputer_ABC.h"
+#include "UrbanModel.h"
 #include <xeumeuleu/xml.h>
 
 using namespace mockpp;
@@ -76,7 +77,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
 
         const std::string dotations( "<dotations><dotation category='ammo' name='munition' id='1' nature='Solide' package-size='1' package-mass='1' package-volume='1'>"
             "<attritions><attrition destruction='0' protection='protection1' repairable-with-evacuation='0.2' repairable-without-evacuation='0.8'/></attritions>"
-            "<indirect-fire type='explosif' intervention-type='12' neutralization-ratio='1.5' x-dispersion='100' y-dispersion='100'/></dotation></dotations>" );
+            "<indirect-fire type='explosif' intervention-type='1' neutralization-ratio='1.5' x-dispersion='100' y-dispersion='100'/></dotation></dotations>" );
         TestIndirectFireModifier* testRole = new TestIndirectFireModifier( time, effectManager, pion, dotations );
 
         const PHY_DotationCategory* pCategory = PHY_DotationType::FindDotationCategory( "ammo" );
@@ -99,7 +100,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         // Expect a Callback
         decision->RegisterFunction( "CallbackAction", &CheckCallback );
         
-        MOCK_EXPECT( mockPublisher, Send ).never();
+        MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
 
         AlgorithmsFactories algorithms;
         MOCK_EXPECT( pion, GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
@@ -108,12 +109,12 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eRunning, callbackValue );
         MockPHY_RoleInterface_ActiveProtection* protectionRole = new MockPHY_RoleInterface_ActiveProtection();
         pion.RegisterRole< PHY_RoleInterface_ActiveProtection >( *protectionRole );
-        // $$$$ _RC_ SBO 2010-04-27: was not verify'ed
-//        MOCK_EXPECT( protectionRole, UseAmmunition ).once();
-//        MOCK_EXPECT( protectionRole, DestroyIndirectFire ).once().returns( false );
-//        MOCK_EXPECT( protectionRole, CounterIndirectFire ).once().returns( false );
-//        MockArmy mockArmy;
-//        MOCK_EXPECT( pion, GetArmy ).once().returns( boost::ref( mockArmy ) );
+        MOCK_EXPECT( protectionRole, UseAmmunition ).once();
+        MOCK_EXPECT( protectionRole, DestroyIndirectFire ).once().returns( false );
+        MOCK_EXPECT( protectionRole, CounterIndirectFire ).once().returns( false );
+        MockArmy mockArmy;
+        MOCK_EXPECT( pion, GetArmy ).once().returns( boost::ref( mockArmy ) );
+        UrbanModel urbanModel;
         effectManager.Update();
         entityManager.verify();
 
