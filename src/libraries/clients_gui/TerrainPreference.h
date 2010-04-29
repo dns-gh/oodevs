@@ -76,8 +76,10 @@ private:
     kernel::Options& options_;
     std::string type_;
     std::string name_;
+    bool shown_;
     ColorButton* colorButton_;
     SizeButton*  sizeButton_;
+    QCheckBox* showCheckbox_;
     float  lineWidth_;
     QColor color_;
     //@}

@@ -4,6 +4,8 @@ SOURCES = Application.cpp \
 CommunicationListView.cpp \
 DotationsEditor.cpp \
 ExerciseDialog.cpp \
+ExportDialog.cpp \
+ExportFilter.cpp \
 FileToolbar.cpp \
 ImportOrbatDialog.cpp \
 LocalWeathersList.cpp \

@@ -175,6 +175,52 @@
     </message>
 </context>
 <context>
+    <name>ExportDialog</name>
+    <message>
+        <source>Export exercise data</source>
+        <translation>Export de données d&apos;exercice</translation>
+    </message>
+    <message>
+        <source>Select export filter:</source>
+        <translation>Sélectionner le filtre d&apos;export:</translation>
+    </message>
+    <message>
+        <source>Select output directory:</source>
+        <translation>Sélectionner le répertoire de sortie:</translation>
+    </message>
+    <message>
+        <source>Output to: </source>
+        <translation>Enregistrer dans: </translation>
+    </message>
+    <message>
+        <source>Browse...</source>
+        <translation>Parcourir...</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Select output directory</source>
+        <translation>Sélectionner le répertoire de sortie</translation>
+    </message>
+    <message>
+        <source>Description:</source>
+        <translation>Description:</translation>
+    </message>
+</context>
+<context>
+    <name>ExportFilter</name>
+    <message>
+        <source>No description available</source>
+        <translation>Aucune description disponible</translation>
+    </message>
+</context>
+<context>
     <name>FileToolbar</name>
     <message>
         <source>New</source>
@@ -531,6 +577,10 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Properties...</source>
         <translation>Propriétés...</translation>
+    </message>
+    <message>
+        <source>&amp;Export...</source>
+        <translation>&amp;Exporter...</translation>
     </message>
 </context>
 <context>

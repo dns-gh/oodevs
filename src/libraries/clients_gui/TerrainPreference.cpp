@@ -27,6 +27,7 @@ TerrainPreference::TerrainPreference( xml::xistream& xis, kernel::Controllers& c
     , options_( controllers_.options_ )
     , type_( xml::attribute< std::string >( xis, "type" ) )
     , name_( xml::attribute< std::string >( xis, "name" ) )
+    , shown_( true )
 {
     std::string color;
     xis >> xml::content( "color", color )
@@ -51,7 +52,9 @@ TerrainPreference::~TerrainPreference()
 void TerrainPreference::Display( QWidget* parent )
 {
     QHBox* pBox = new QHBox( parent );
-    new QLabel( name_.c_str(), pBox );
+    showCheckbox_ = new QCheckBox( name_.c_str(), pBox );
+    showCheckbox_->setChecked( shown_ );
+    pBox->setStretchFactor( showCheckbox_, 2 );
     sizeButton_  = new SizeButton ( pBox, tools::translate( "TerrainPreference", "Line thickness: " ), lineWidth_ );
     sizeButton_->EnableValueLabel( tools::translate( "TerrainPreference", " px" ) );
     colorButton_ = new ColorButton( pBox, "", color_ );
@@ -74,7 +77,7 @@ void TerrainPreference::SetLineWidth() const
 void TerrainPreference::SetColor( float alpha ) const
 {
     const QColor color = colorButton_->GetColor();
-    glColor4f( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f, alpha );
+    glColor4f( color.red() / 255.f, color.green() / 255.f, color.blue() / 255.f, shown_ ? alpha : 0.f );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,6 +88,7 @@ void TerrainPreference::Commit()
 {
     colorButton_->Commit();
     sizeButton_->Commit();
+    shown_ = showCheckbox_->isChecked();
 }
 
 // -----------------------------------------------------------------------------
@@ -95,6 +99,7 @@ void TerrainPreference::Revert()
 {
     colorButton_->Revert();
     sizeButton_->Revert();
+    showCheckbox_->setChecked( shown_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,6 +110,7 @@ void TerrainPreference::Save() const
 {
     options_.Change( "Terrains/" + type_ + "/width", sizeButton_->GetSize() );
     options_.Change( "Terrains/" + type_ + "/color", colorButton_->GetColor().name() );
+    options_.Change( "Terrains/" + type_ + "/shown", showCheckbox_->isChecked() );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,5 +133,10 @@ void TerrainPreference::OptionChanged( const std::string& name, const kernel::Op
     {
         colorButton_->SetColor( QColor( value.To< QString >() ) );
         colorButton_->Commit();
+    }
+    else if( option == "/shown" )
+    {
+        shown_ = value.To< bool >();
+        showCheckbox_->setChecked( shown_ );
     }
 }

@@ -33,9 +33,11 @@ Dotation::Dotation( const DotationType& type, unsigned int quantity )
 Dotation::Dotation( xml::xistream& xis, const tools::Resolver_ABC< DotationType, std::string >& resolver )
 {
     std::string name;
+    double quantity;
     xis >> attribute( "name", name )
-        >> attribute( "quantity", (int&)quantity_ );
+        >> attribute( "quantity", quantity );
     type_ = &resolver.Get( name );
+    quantity_ = unsigned int( quantity );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,5 +56,5 @@ Dotation::~Dotation()
 void Dotation::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << attribute( "name", type_->GetCategory() )
-        << attribute( "quantity", int( quantity_ ) );
+        << attribute( "quantity", unsigned int( quantity_ ) );
 }

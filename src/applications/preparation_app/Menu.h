@@ -41,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Menu( QMainWindow* pParent, kernel::Controllers& controllers
-                 , QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog
+                 , QDialog& prefDialog, QDialog& profileDialog, QDialog& profileWizardDialog, QDialog& importDialog, QDialog& exportDialog, QDialog& scoreDialog, QDialog& successFactorDialog, QDialog& exerciseDialog
                  , gui::ItemFactory_ABC& factory, const QString& license, const gui::HelpSystem& help );
     virtual ~Menu();
     //@}
