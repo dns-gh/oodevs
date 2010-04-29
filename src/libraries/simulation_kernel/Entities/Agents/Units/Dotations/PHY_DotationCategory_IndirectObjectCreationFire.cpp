@@ -13,6 +13,8 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/ConstructionAttribute.h"
+#include "Entities/Objects/TimeLimitedAttribute.h"
+#include "Entities/Objects/TimeLimitedCapacity.h"
 #include "MIL_AgentServer.h"
 #include "MIL_Singletons.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -39,7 +41,7 @@ PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectOb
     xis >> xml::attribute( "object-type", objectType_ )
         >> xml::attribute( "life-time", lifeTime );
     
-    if( ! tools::DecodeTime( lifeTime, rLifeDuration_ ) || rLifeDuration_ < 0. )
+    if( ! tools::DecodeTime( lifeTime, nLifeDuration_ ) || nLifeDuration_ < 0 )
       xis.error( "indirect-fire: life-time < 0" );
 }
 
@@ -88,4 +90,5 @@ void PHY_DotationCategory_IndirectObjectCreationFire::ApplyEffect( const MIL_Age
     ConstructionAttribute* pAttribute = pObject->RetrieveAttribute< ConstructionAttribute >();
     if( pAttribute )
         pAttribute->Build( 1. );
+    pObject->GetAttribute< TimeLimitedAttribute >() = TimeLimitedAttribute( nLifeDuration_ );
 }

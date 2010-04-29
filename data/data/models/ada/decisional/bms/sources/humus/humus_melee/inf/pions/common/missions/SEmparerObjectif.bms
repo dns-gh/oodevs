@@ -50,21 +50,24 @@ node "BEH_Mission_Pion_HUMUS_Harceler"
         self.eActionPoste = self.eActionPoste or eActionEnCours
         self.eActionOrdre = self.eActionOrdre or eActionEnCours
         self.eActionDebarquer = self.eActionDebarquer or eActionEnCours
-        self.ptMission = self.ptMission or 0
+        self.ptMission = self.ptMission or nil
+        if( ModuleBegins() ) then
+            do
+                --[[// Déterminer la position dans le secteur d'arrivée			
+]]self.ptMission = self.mission.objectif_
+                --[[// Vérifier que l'on est bien dans son fuseau
+]]if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
+                    StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
+                end
+
+            end
+        end
+
         if( S_RapForLocal() == eEtatRapportDeForce_Favorable ) then
             do
-                if( ModuleBegins() ) then
-                    do
-                        --[[// Déterminer la position dans le secteur d'arrivée			
-]]self.ptMission = self.mission.objectif_
-                        --[[// Vérifier que l'on est bien dans son fuseau
-]]StartActivateOverride( self, self.activations.BEH_Lima_Pion_RejoindreFuseau_EnAttente, 1.1, {} )
-                    end
---[[// Lorsqu'un comportement  ne  peut  pas  s'effectuer  correctement,
+                --[[// Lorsqu'un comportement  ne  peut  pas  s'effectuer  correctement,
 ]]--[[// la mission s'arrête
-]]                end
-
-                if( self.eAction == eActionImpossible ) then
+]]if( self.eAction == eActionImpossible ) then
                     do
                                                 do
                             DEC_Warning( eRC_MissionImpossible )
@@ -104,7 +107,7 @@ node "BEH_Mission_Pion_HUMUS_Harceler"
                                 end
                             end
 
-                            Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.objectif_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                            Activate( self.activations.BEH_Dep_Pion_INF_MiseEnPlace_Mission, 1, setmetatable( { M_TEMPS_PREPARATION_MISSION(), self.mission.pointObjectif_, false, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                             _continue = false
                         --[[// Aborder Objectif
 ]]                        cases_switch_1[1] = true
@@ -121,7 +124,7 @@ elseif switch_1 == eAborderObjectif then
                                 end
                             else
 do
-                                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.objectif_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
+                                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, setmetatable( { self.mission.pointObjectif_, eProgressionDirect, eTypeItiInfiltration, }, { __newindex = function( t, k, v ) if k == "__returnValue" then self.eAction = v else rawset( t, k, v ) end end } ) )
                                                                         do return end
 
                                 end
@@ -132,7 +135,7 @@ do
                         if cases_switch_1[2] or switch_1 == eInstallerDispositif then
                             Activate( self.activations.ACT_RC, 1, { eRC_ArriveSurPosition, } )
                             Activate( self.activations.ACT_MAJ_EtatPhaseMission, 1, { eEtatPhaseMission_InstallationDispositif, } )
-                            StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { DEC_Geometrie_ConvertirPointEnLocalisation( self.mission.objectif_ ), } )
+                            StartActivateOverride( self, self.activations.BEH_Obs_Pion_INF_SurveillerSecteur, 1, { DEC_Geometrie_ConvertirPointEnLocalisation( self.mission.pointObjectif_ ), } )
                             StartActivateOverride( self, self.activations.BEH_Dispositif_Pion_VAB_InstallationDefensive, 1.1, { self.ptMission, false, } )
                             Activate( self.activations.ACT_Dep_PasserEnModeFurtif, 1, {} )
                             if( self.eAction == eActionEffectuee ) then

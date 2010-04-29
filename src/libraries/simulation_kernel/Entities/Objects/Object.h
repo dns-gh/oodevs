@@ -63,16 +63,10 @@ public:
     //@}
 
     //! @name 
-    //@{    
-    template< typename T > void AddCapacity( T* capacity );
-                           void Register( ObjectCapacity_ABC* capacity );
+    //@{
+    virtual void Register( ObjectCapacity_ABC* capacity );
                            void Register( MIL_InteractiveContainer_ABC* capacity );
-    template< typename T >             T&   GetAttribute();
-    template< typename T >       const T&   GetAttribute() const;
-    template< typename T, typename I > T&   GetAttribute();
     template< typename T, typename I > void SetAttribute( const T& attribute );
-    template< typename T >             T*   RetrieveAttribute();
-    template< typename T >       const T*   RetrieveAttribute() const;
     //@}
 
     //! @name Construction
@@ -146,7 +140,7 @@ private:
 
     //! @name 
     //@{
-    void Register( ObjectAttribute_ABC* attribute );    
+    virtual void Register( ObjectAttribute_ABC* attribute );    
     //@}
 
 private:
@@ -206,40 +200,6 @@ private:
 BOOST_CLASS_EXPORT_KEY( Object )
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T >             T& Object::GetAttribute
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-template< typename T > T& Object::GetAttribute()
-{
-    return GetAttribute< T, T >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T >             T& Object::GetAttribute
-// Created: JCR 2008-06-18
-// -----------------------------------------------------------------------------
-template< typename T > const T& Object::GetAttribute() const
-{
-    return tools::Extendable< ObjectAttribute_ABC >::Get< T >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > T& Object::GetAttribute
-// Created: JCR 2008-05-26
-// -----------------------------------------------------------------------------
-template< typename T, typename I > T& Object::GetAttribute()
-{
-    I* attribute = tools::Extendable< ObjectAttribute_ABC >::Retrieve< I >();
-    if( !attribute )
-    {
-        attribute = new T();
-        tools::Extendable< ObjectAttribute_ABC >::Attach< I >( *attribute );
-        Register( attribute );
-    }
-    return *static_cast< T* >( attribute );
-}
-
-// -----------------------------------------------------------------------------
 // Name: template< typename T > void Object::SetAttribute
 // Created: JCR 2008-05-30
 // -----------------------------------------------------------------------------
@@ -247,37 +207,6 @@ template< typename T, typename I >
 void Object::SetAttribute( const T& attribute )
 {
     GetAttribute< T, I >() = attribute;
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > T* Object::RetrieveAttribute
-// Created: JCR 2008-06-06
-// -----------------------------------------------------------------------------
-template< typename T > 
-T* Object::RetrieveAttribute()
-{
-    return tools::Extendable< ObjectAttribute_ABC >::Retrieve< T >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: template< typename T > T* Object::RetrieveAttribute
-// Created: LDC 2009-03-25
-// -----------------------------------------------------------------------------
-template< typename T > 
-const T* Object::RetrieveAttribute() const
-{
-    return tools::Extendable< ObjectAttribute_ABC >::Retrieve< T >();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Object::AddCapacity
-// Created: JCR 2008-05-26
-// -----------------------------------------------------------------------------
-template< typename T > 
-void Object::AddCapacity( T* capacity )
-{
-    tools::Extendable< ObjectCapacity_ABC >::Attach( *capacity );
-    Register( static_cast< ObjectCapacity_ABC *>( capacity ) );
 }
 
 #endif

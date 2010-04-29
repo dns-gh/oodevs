@@ -165,8 +165,12 @@ public:
 
     //! @name Extensions
     //@{
-    template< typename Extension > const Extension& GetAttribute() const;
-    template< typename Extension >       Extension* RetrieveAttribute();
+    template< typename T >             T&   GetAttribute();
+    template< typename T >       const T&   GetAttribute() const;
+    template< typename T, typename I > T&   GetAttribute();
+    template< typename T >             T*   RetrieveAttribute();
+    template< typename T >       const T*   RetrieveAttribute() const;
+    template< typename T >             void AddCapacity( T* capacity );
     //@}
 
 protected:
@@ -177,6 +181,8 @@ protected:
     virtual void Update( unsigned int time ) = 0;
     void Register();
     void Unregister();
+    virtual void Register( ObjectAttribute_ABC* attribute ) = 0;
+    virtual void Register( ObjectCapacity_ABC* capacity ) = 0;
     //@}
 
 private:

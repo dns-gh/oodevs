@@ -3,13 +3,13 @@
 #include "MockAgent.h"
 #include "MockArmy.h"
 #include "MockMIL_EntityManager_ABC.h"
+#include "MockMIL_Object_ABC.h"
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "MockRoleDotations.h"
 #include "MockRoleLocation.h"
 #include "StubDEC_Database.h"
 #include "StubDEC_Decision.h"
-#include "StubMIL_Object_ABC.h"
 #include "TestIndirectFireModifier.h"
 
 #include "AlgorithmsFactories.h"
@@ -103,8 +103,9 @@ BOOST_AUTO_TEST_CASE( TestScramblingAmmo )
         pAction->Execute();
 
         BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eFinished, callbackValue );
-        StubMIL_Object_ABC object;
+        MockMIL_Object_ABC object;
         MOCK_EXPECT( entityManager, CreateObjectFromType ).once().returns( &object ); // $$$$ with type Zone brouillage
+        MOCK_EXPECT( object, RegisterAttribute ).once();
         MockArmy mockArmy;
         MOCK_EXPECT( pion, GetArmy ).once().returns( boost::ref( mockArmy ) );
         effectManager.Update();

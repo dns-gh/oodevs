@@ -48,6 +48,8 @@ public:
     virtual void    SendFullState() const {}
     virtual uint              GetID() const { throw; }
     virtual void Update( uint time ) {}
+    virtual void Register(ObjectCapacity_ABC *) { throw; }
+    virtual void Register(ObjectAttribute_ABC *) { throw; }
 };
 
 #endif // __StubMIL_Object_ABC_h_

@@ -52,25 +52,68 @@ MIL_Army_ABC& MIL_Object_ABC::GetArmy()
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Extension > Extension& MIL_Object_ABC::GetAttribute
-// Created: JCR 2008-06-04
+// Name: template< typename T >             T& MIL_Object_ABC::GetAttribute
+// Created: JCR 2008-06-18
 // -----------------------------------------------------------------------------
-template< typename Extension > 
-const Extension& MIL_Object_ABC::GetAttribute() const 
+template< typename T > T& MIL_Object_ABC::GetAttribute()
 {
-    return tools::Extendable< ObjectAttribute_ABC >::Get< Extension >();
+    return GetAttribute< T, T >();
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Extension > Extension& MIL_Object_ABC::RetrieveAttribute
+// Name: template< typename T >             T& MIL_Object_ABC::GetAttribute
+// Created: JCR 2008-06-18
+// -----------------------------------------------------------------------------
+template< typename T > const T& MIL_Object_ABC::GetAttribute() const
+{
+    return tools::Extendable< ObjectAttribute_ABC >::Get< T >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > T& MIL_Object_ABC::GetAttribute
+// Created: JCR 2008-05-26
+// -----------------------------------------------------------------------------
+template< typename T, typename I > T& MIL_Object_ABC::GetAttribute()
+{
+    I* attribute = tools::Extendable< ObjectAttribute_ABC >::Retrieve< I >();
+    if( !attribute )
+    {
+        attribute = new T();
+        tools::Extendable< ObjectAttribute_ABC >::Attach< I >( *attribute );
+        Register( attribute );
+    }
+    return *static_cast< T* >( attribute );
+}
+// -----------------------------------------------------------------------------
+// Name: template< typename T > T* MIL_Object_ABC::RetrieveAttribute
+// Created: JCR 2008-06-06
+// -----------------------------------------------------------------------------
+template< typename T > 
+T* MIL_Object_ABC::RetrieveAttribute()
+{
+    return tools::Extendable< ObjectAttribute_ABC >::Retrieve< T >();
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename T > T* MIL_Object_ABC::RetrieveAttribute
 // Created: LDC 2009-03-25
 // -----------------------------------------------------------------------------
-template< typename Extension > 
-Extension* MIL_Object_ABC::RetrieveAttribute() 
+template< typename T > 
+const T* MIL_Object_ABC::RetrieveAttribute() const
 {
-    return tools::Extendable< ObjectAttribute_ABC >::Retrieve< Extension >();
+    return tools::Extendable< ObjectAttribute_ABC >::Retrieve< T >();
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::AddCapacity
+// Created: JCR 2008-05-26
+// -----------------------------------------------------------------------------
+template< typename T > 
+void MIL_Object_ABC::AddCapacity( T* capacity )
+{
+    tools::Extendable< ObjectCapacity_ABC >::Attach( *capacity );
+    Register( static_cast< ObjectCapacity_ABC *>( capacity ) );
+}
 // -----------------------------------------------------------------------------
 // Name: template< typename T> void MIL_Object_ABC::ProcessAgentsInside
 // Created: JCR 2008-08-28

@@ -47,7 +47,7 @@ private:
     //! @name Member data
     //@{
     std::string objectType_;
-    double   rLifeDuration_;
+    int   nLifeDuration_;
     //@}
 };
 
