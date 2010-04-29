@@ -11,12 +11,14 @@
 #define __TerrainProfiler_h_
 
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
     class Agent_ABC;
     class Controllers;
     class DetectionMap;
+    class ModelLoaded;
 }
 
 namespace gui
@@ -34,6 +36,7 @@ class TerrainProfiler : public QDockWindow
                       , public tools::Observer_ABC
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                       , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
+                      , public tools::ElementObserver_ABC< kernel::ModelLoaded >
 {
     Q_OBJECT;
 
@@ -51,6 +54,8 @@ private slots:
     void SetToPosition();
     void SetFromUnitPosition();
     void SetToUnitPosition();
+    void SliderChanged( int value );
+    void SpinboxChanged( int value );
     //@}
 
 private:
@@ -64,11 +69,12 @@ private:
     //@{
     virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyUpdated( const kernel::ModelLoaded& model );
     virtual void showEvent( QShowEvent* e );
     virtual void hideEvent( QHideEvent* e );
-    void UpdateView();
-    void SetFromPosition( const geometry::Point2f& point );
+    void SetFromPosition( const geometry::Point2f& point, float height = 2.f );
     void SetToPosition( const geometry::Point2f& point );
+    void UpdateView();
     //@}
 
 private:
@@ -80,8 +86,11 @@ private:
     TerrainProfile* profile_;
     geometry::Point2f candidatePoint_;
     geometry::Point2f candidateUnitPoint_;
+    float candidateHeight_;
     geometry::Point2f from_;
     geometry::Point2f to_;
+    QSlider* height_;
+    QSpinBox* heightValue_;
     //@}
 };
 

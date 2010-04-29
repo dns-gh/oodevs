@@ -38,7 +38,7 @@ public:
 
     //! @name Operations
     //@{
-    void Update( const geometry::Point2f& from, const geometry::Point2f& to );
+    void Update( const geometry::Point2f& from, const geometry::Point2f& to, float height );
     //@}
 
 private:
@@ -50,6 +50,7 @@ private:
 
     //! @name Helpers
     //@{
+    void UpdateVision( const geometry::Point2f& from, const geometry::Point2f& to, float height );
     //@}
 
 private:
@@ -57,6 +58,7 @@ private:
     //@{
     const kernel::DetectionMap& detection_;
     gui::GQ_PlotData* data_;
+    gui::GQ_PlotData* vision_;
     //@}
 };
 

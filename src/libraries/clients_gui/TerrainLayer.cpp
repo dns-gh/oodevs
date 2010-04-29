@@ -37,6 +37,7 @@ TerrainLayer::TerrainLayer( Controllers& controllers, const GlTools_ABC& tools, 
     , tools_      ( tools )
     , setup_      ( setup )
     , picker_     ( picker )
+    , pickingEnabled_( true )
 {
     picker_.RegisterLayer( *this );
     controllers_.Register( *this );
@@ -106,6 +107,8 @@ void TerrainLayer::OptionChanged( const std::string& name, const OptionVariant& 
         smallNames_ = value.To< TristateOption >();
     if( name == "BigText" )
         bigNames_ = value.To< TristateOption >();
+    if( name == "3D" )
+        pickingEnabled_ = ! value.To< bool >();
 }
 
 // -----------------------------------------------------------------------------
@@ -232,6 +235,8 @@ bool TerrainLayer::HandleMouseMove( QMouseEvent* mouse, const geometry::Point2f&
 // -----------------------------------------------------------------------------
 TerrainData TerrainLayer::Pick( int x, int y )
 {
+    if( !pickingEnabled_ )
+        return TerrainData();
     if( layer_.get() )
         return layer_->PickTerrain( x, y );
     else if( noVBOlayer_.get() )

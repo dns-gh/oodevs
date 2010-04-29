@@ -107,11 +107,11 @@ void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationRespons
     {
         loggedIn_ = ( message.error_code() == MsgsAuthenticationToClient::MsgAuthenticationResponse_ErrorCode_success );
         if( message.has_profile() )
-    {
-        Update( message.profile() );
-        controller_.Update( *(Profile_ABC*)this );
-    }
-    controller_.Update( *this );
+        {
+            Update( message.profile() );
+            controller_.Update( *(Profile_ABC*)this );
+        }
+        controller_.Update( *this );
     if( !loggedIn_ && message.has_profiles() )
         for( unsigned int i = 0; i < message.profiles().elem_size(); ++i )
             controller_.Update( AvailableProfile( message.profiles().elem(i) ) );

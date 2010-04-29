@@ -322,6 +322,15 @@ void GQ_PlotData::InitPointShape( unsigned int nShapeSize )
 }
 
 // -----------------------------------------------------------------------------
+// Name: GQ_PlotData::AddIgnoreValue
+// Created: SBO 2010-04-02
+// -----------------------------------------------------------------------------
+void GQ_PlotData::AddIgnoreValue( double value )
+{
+    ignoredValues_.insert( value );
+}
+
+// -----------------------------------------------------------------------------
 // Name: GQ_PlotData::ClearData
 // Created: CBX 2003-08-08
 // -----------------------------------------------------------------------------
@@ -534,11 +543,14 @@ void GQ_PlotData::PreparePoints( QPointArray& points )
     for( unsigned int i = nFirstPoint_; i < nLastPoint; ++i )
     {
         const T_Point& point = ( *pData_ )[i];
-    
-        ppoint.setX( xAxis.MapToViewport( point.first  ) );
-        ppoint.setY( yAxis.MapToViewport( point.second ) );
-
-        points.setPoint( i - nFirstPoint_, ppoint );
+        if( ignoredValues_.find( point.second ) != ignoredValues_.end() )
+            points.setPoint( i - nFirstPoint_, QPoint() );
+        else
+        {
+            ppoint.setX( xAxis.MapToViewport( point.first  ) );
+            ppoint.setY( yAxis.MapToViewport( point.second ) );
+            points.setPoint( i - nFirstPoint_, ppoint );
+        }
     }
 }
 
@@ -605,7 +617,12 @@ void GQ_PlotData::DrawPolyline( QPainter& painter, const QPointArray& polyline )
         return;
 
     painter.setPen( linePen_ );
-    painter.drawPolyline( polyline );
+    QPointArray::ConstIterator first = polyline.begin();
+    for( QPointArray::ConstIterator it = polyline.begin() + 1; it != polyline.end(); ++first, ++it )
+        if( !first->isNull() && !it->isNull() )
+            painter.drawLine( *first, *it );
+        else if( first->isNull() )
+            painter.drawLine( *polyline.begin(), *it );
 }
 
 // -----------------------------------------------------------------------------

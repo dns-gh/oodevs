@@ -107,6 +107,8 @@ public:
     void SetLinePen   ( const QPen& );
 
     void SetBarStyle  ( const QPen&, const QBrush&, bool bDrawBars, double rWidth = -1 /* auto */, E_Alignment = eAlign_Left );
+
+    void AddIgnoreValue( double value );
     //@}
 
     //! @name Accessors
@@ -212,6 +214,8 @@ protected:
     std::vector< T_Range > barLimits_;
 
     GQ_PlotDataBBox bbox_;
+
+    std::set< double > ignoredValues_;
     //@}
 };
 

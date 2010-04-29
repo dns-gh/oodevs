@@ -87,8 +87,8 @@ private:
     const kernel::GlTools_ABC& tools_;
     GraphicPreferences& setup_;
     TerrainPicker& picker_;
+    bool pickingEnabled_;
 
-    const std::string dataDirectory_;
     geometry::Rectangle2f world_;
     kernel::TristateOption smallNames_;
     kernel::TristateOption bigNames_;

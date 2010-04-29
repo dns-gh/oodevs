@@ -114,8 +114,6 @@ void MIL_Object_ABC::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> pArmy_
          >> bMarkedForDestruction_
          >> bReadyForDeletion_;
-    if( pArmy_ )
-        pArmy_->RegisterObject( *this );
 }
 
 // -----------------------------------------------------------------------------

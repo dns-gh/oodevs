@@ -17,6 +17,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Units.h"
 
 using namespace gui;
 
@@ -29,10 +30,24 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
     , controllers_( controllers )
     , detection_( detection )
     , layer_( layer )
-    , profile_( new TerrainProfile( this, detection ) )
 {
     setCaption( tools::translate( "TerrainProfiler", "Terrain profile" ) );
-    setWidget( profile_ );
+    {
+        QHBox* box = new QHBox( this );
+        {
+            QVBox* vbox = new QVBox( box );
+            height_ = new QSlider( -100, 0, 1, 2, Qt::Vertical, vbox );
+            height_->setTickmarks( QSlider::Right );
+            height_->setTickInterval( 10 );
+            heightValue_ = new QSpinBox( 0, 100, 1, vbox );
+            heightValue_->setSuffix( QString( " %1" ).arg( kernel::Units::meters.AsString() ) );
+            vbox->setMaximumWidth( 50 );
+        }
+        profile_ = new TerrainProfile( box, detection );
+        setWidget( box );
+        connect( height_, SIGNAL( valueChanged( int ) ), SLOT( SliderChanged( int ) ) );
+        connect( heightValue_, SIGNAL( valueChanged( int ) ), SLOT( SpinboxChanged( int ) ) );
+    }
     setResizeEnabled( true );
     setCloseMode( QDockWindow::Always );
     undock();
@@ -78,6 +93,7 @@ void TerrainProfiler::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
     if( !isVisible() )
         return;
     candidateUnitPoint_ = entity.Get< kernel::Positions >().GetPosition();
+    candidateHeight_ = entity.Get< kernel::Positions >().GetHeight();
     {
         const int id = menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile from unit" ), this, SLOT( SetFromUnitPosition() ) );
         menu.SetChecked( id, !from_.IsZero() );
@@ -86,6 +102,20 @@ void TerrainProfiler::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
         const int id = menu.InsertItem( "Helpers", tools::translate( "TerrainProfiler", "Terrain profile to unit" ), this, SLOT( SetToUnitPosition() ) );
         menu.SetChecked( id, !to_.IsZero() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainProfiler::NotifyUpdated
+// Created: SBO 2010-04-02
+// -----------------------------------------------------------------------------
+void TerrainProfiler::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
+{
+    const short maxValue = detection_.MaximumElevation() + 100;
+
+    height_->setRange( -maxValue, 0 );
+    heightValue_->setRange( 0, maxValue );
+    height_->setValue( 2 );
+    heightValue_->setValue( 2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +142,7 @@ void TerrainProfiler::SetToPosition()
 // -----------------------------------------------------------------------------
 void TerrainProfiler::SetFromUnitPosition()
 {
-    SetFromPosition( candidateUnitPoint_ );
+    SetFromPosition( candidateUnitPoint_, candidateHeight_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,9 +158,10 @@ void TerrainProfiler::SetToUnitPosition()
 // Name: TerrainProfiler::SetFromPosition
 // Created: SBO 2010-04-01
 // -----------------------------------------------------------------------------
-void TerrainProfiler::SetFromPosition( const geometry::Point2f& point )
+void TerrainProfiler::SetFromPosition( const geometry::Point2f& point, float height /*= 2.f*/ )
 {
     from_ = point;
+    height_->setValue( height );
     layer_.SetFromPosition( from_ );
     UpdateView();
 }
@@ -153,7 +184,7 @@ void TerrainProfiler::SetToPosition( const geometry::Point2f& point )
 void TerrainProfiler::UpdateView()
 {
     if( !to_.IsZero() && !from_.IsZero() )
-        profile_->Update( from_, to_ );
+        profile_->Update( from_, to_, float( -height_->value() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -172,4 +203,28 @@ void TerrainProfiler::showEvent( QShowEvent* /*e*/ )
 void TerrainProfiler::hideEvent( QHideEvent* /*e*/ )
 {
     layer_.SetAlpha( 0.f );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainProfiler::SliderChanged
+// Created: SBO 2010-04-02
+// -----------------------------------------------------------------------------
+void TerrainProfiler::SliderChanged( int value )
+{
+    heightValue_->blockSignals( true );
+    heightValue_->setValue( -value );
+    heightValue_->blockSignals( false );
+    UpdateView();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainProfiler::SpinboxChanged
+// Created: SBO 2010-04-02
+// -----------------------------------------------------------------------------
+void TerrainProfiler::SpinboxChanged( int value )
+{
+    height_->blockSignals( true );
+    height_->setValue( -value );
+    height_->blockSignals( false );
+    UpdateView();
 }

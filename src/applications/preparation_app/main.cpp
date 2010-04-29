@@ -21,11 +21,11 @@
 #endif
 
 int main( int argc, char** argv )
-{
+{   
     QString expiration;
 #if !defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > pLicense = FlexLmLicense::CheckLicense( "sword", 1.0f );
-    expiration = pLicense->GetExpirationDate().c_str();
+    std::auto_ptr< FlexLmLicense > license = FlexLmLicense::CheckLicense( "sword", 1.0f );
+    expiration = license->GetExpirationDate().c_str();
 #endif
 
     QApplication::setStyle( "windowsxp" );

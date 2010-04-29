@@ -90,7 +90,6 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
 {
     int maxConnections = 1;
 #if !defined( _DEBUG ) && ! defined( NO_LICENSE_CHECK )
-    std::auto_ptr< FlexLmLicense > license( FlexLmLicense::CheckLicense( "sword", 1.0f ) );
     try
     {
         FlexLmLicense license( "sword-dispatcher", 1.0f );
