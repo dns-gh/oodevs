@@ -51,6 +51,7 @@ namespace bg = boost::geometry;
 PHY_RolePion_UrbanLocation::PHY_RolePion_UrbanLocation( MIL_Agent_ABC& pion )
     : pion_( pion )
     , urbanObject_( 0 )
+    , delegate_( new OutsideUrbanBlockPosition() ) 
 {
     // NOTHING
 }
