@@ -341,7 +341,8 @@ boost::shared_ptr< TER_Localisation > DEC_GeometryFunctions::ConvertPointToLocal
 //-----------------------------------------------------------------------------
 MT_Float DEC_GeometryFunctions::Distance( const MT_Vector2D* p1, const MT_Vector2D* p2 )
 {
-    assert( p1 != 0 && p2 != 0 );
+    if( !p1 || !p2 )
+        throw std::runtime_error( "Computing distance with null point" );
     return MIL_Tools::ConvertSimToMeter( p1->Distance( *p2 ) );
 }
 
