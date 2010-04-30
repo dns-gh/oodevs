@@ -6,6 +6,8 @@
 #include "MockMIL_Time_ABC.h"
 #include "MockNET_Publisher_ABC.h"
 #include "MockPHY_RoleInterface_ActiveProtection.h"
+#include "MockPHY_RoleInterface_Composantes.h"
+#include "MockPHY_RoleInterface_UrbanLocation.h"
 #include "MockRoleDotations.h"
 #include "MockRoleLocation.h"
 #include "StubDEC_Database.h"
@@ -86,7 +88,14 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MockRoleLocation* locationRole = new MockRoleLocation();
         pion.RegisterRole( *locationRole );
         const MT_Vector2D sourcePosition;
-        MOCK_EXPECT( locationRole, GetPosition ).once().returns( sourcePosition );
+        locationRole->UpdatePatch();
+        MOCK_EXPECT( locationRole, GetPosition ).at_least( 1 ).returns( sourcePosition );
+        MOCK_EXPECT( locationRole, GetAgent ).at_least( 1 ).returns( boost::ref( pion ) );
+        MOCK_EXPECT( locationRole, GetHeight ).at_least( 1 ).returns( 0. );
+
+        MockPHY_RoleInterface_UrbanLocation* urbanRole = new MockPHY_RoleInterface_UrbanLocation();
+        pion.RegisterRole( *urbanRole );
+        MOCK_EXPECT( urbanRole, GetCurrentUrbanBlock ).once().returns( (urban::TerrainObject_ABC*)0 );
 
         MockRoleDotations* dotationRole = new MockRoleDotations();
         pion.RegisterRole( *dotationRole );
@@ -113,7 +122,13 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MOCK_EXPECT( protectionRole, DestroyIndirectFire ).once().returns( false );
         MOCK_EXPECT( protectionRole, CounterIndirectFire ).once().returns( false );
         MockArmy mockArmy;
-        MOCK_EXPECT( pion, GetArmy ).once().returns( boost::ref( mockArmy ) );
+        MOCK_EXPECT( pion, GetArmy ).at_least( 1 ).returns( boost::ref( mockArmy ) );
+        MockPHY_RoleInterface_Composantes* composanteRole = new MockPHY_RoleInterface_Composantes();
+        pion.RegisterRole( *composanteRole );
+        MOCK_EXPECT( composanteRole, Neutralize ).once();              
+        MOCK_EXPECT( urbanRole, ComputeRatioPionInside ).once().returns( 1. );
+        MOCK_EXPECT( composanteRole, ApplyIndirectFire ).once();
+        MOCK_EXPECT( mockArmy, IsAFriend ).once().returns( eTristate_False );
         UrbanModel urbanModel;
         effectManager.Update();
         entityManager.verify();
