@@ -971,6 +971,6 @@
 
     <target name="build.nocrossbow" depends="libraries.nocrossbow,applications.nocrossbow"/>
 
-    <target name="all" depends="configure,build,test.nocrossbow,package" description="build and package distribution"/>
+    <target name="all" depends="configure,build,test,package" description="build and package distribution"/>
 
 </project>
