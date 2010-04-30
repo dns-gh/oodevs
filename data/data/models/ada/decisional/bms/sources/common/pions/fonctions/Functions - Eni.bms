@@ -164,7 +164,7 @@ end
 
 function S_Eni_ForceDangerPour( pionAmi, repEni )
     local _returnValue = 0
-    _returnValue = pionAmi:DEC_ConnaissanceAgent_Dangerosite( repEni )
+    _returnValue = DEC_ConnaissanceAgent_DangerositeSurPion( repEni, pionAmi )
     do return _returnValue end
 end
 
