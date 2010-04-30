@@ -704,7 +704,7 @@
         <test-scripts dataset="ada" physical="worldwide" simulation="simulation_crossbow_app"/>
     </target>
     
-    <target name="checkpoint_test" description="save and load a checkpoint" depends="">
+    <target name="checkpoint_test" description="save and load a checkpoint" depends="application.simulation_app.nocrossbow">
         <exec executable="${out.dir}/release/applications/simulation_app/simulation_app.exe" dir="${run.dir}" failonerror="true">
             <arg value="--root-dir=../../data"/>
             <arg value="--exercise=CheckpointTests"/>
@@ -814,7 +814,7 @@
         </sequential>
     </macrodef>
 
-    <target name="test-exercises" depends="application.simulation_app" description="validates some significant exercises">
+    <target name="test-exercises" depends="application.simulation_app.nocrossbow" description="validates some significant exercises">
         <test-exercise exercise="Egypt"/>
         <test-exercise exercise="Cabourg"/>
     </target>
