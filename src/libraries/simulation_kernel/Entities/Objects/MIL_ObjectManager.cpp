@@ -152,7 +152,7 @@ MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode MIL_ObjectManager::CreateObje
     if( message.elem_size() != 5 ) // type, location, name, team, attributes
         return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_specific_attributes;
 
-    MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().army() );
+    MIL_Army_ABC* pArmy = armies.Find( message.elem( 3 ).value().army().oid() );
     if( !pArmy )
         return MsgsSimToClient::MsgObjectMagicActionAck_ErrorCode_error_invalid_camp;
     return builder_->BuildObject( message, *pArmy );

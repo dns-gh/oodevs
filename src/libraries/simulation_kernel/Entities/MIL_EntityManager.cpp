@@ -928,9 +928,9 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeKnowledgeGroup( const MsgsClie
             client::AutomatChangeKnowledgeGroup resendMessage;
             resendMessage().set_oid( message.oid() );
             if( message.parametres().elem( 0 ).has_value() && message.parametres().elem( 0 ).value().has_knowledgegroup() )
-                resendMessage().set_oid_groupe_connaissance( message.parametres().elem( 0 ).value().knowledgegroup() );
+                resendMessage().set_oid_groupe_connaissance( message.parametres().elem( 0 ).value().knowledgegroup().oid() );
             if( message.parametres().elem( 1 ).has_value() && message.parametres().elem( 1 ).value().has_army() )
-                resendMessage().set_oid_camp( message.parametres().elem( 1 ).value().army() );
+                resendMessage().set_oid_camp( message.parametres().elem( 1 ).value().army().oid() );
             resendMessage.Send( NET_Publisher_ABC::Publisher() );
         }
     }
@@ -1008,7 +1008,7 @@ void MIL_EntityManager::OnReceiveMsgAutomateChangeSuperior( const MsgsClientToSi
         client::AutomatChangeSuperior resendMessage;
         resendMessage().set_oid( message.oid() );
         if( message.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior )
-            resendMessage().mutable_oid_superior()->mutable_formation()->set_oid( message.parametres().elem( 0 ).value().formation() );
+            resendMessage().mutable_oid_superior()->mutable_formation()->set_oid( message.parametres().elem( 0 ).value().formation().oid() );
         else if( message.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_automat_superior )
             resendMessage().mutable_oid_superior()->mutable_automate()->set_oid( message.parametres().elem( 0 ).value().automat().oid() );
         resendMessage.Send( NET_Publisher_ABC::Publisher() );

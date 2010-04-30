@@ -1021,7 +1021,7 @@ void MIL_Automate::OnReceiveMsgUnitMagicAction( const MsgsClientToSim::MsgUnitMa
     {
     case MsgsClientToSim::MsgUnitMagicAction_Type_surrender_to:
         {
-            const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parametres().elem(0).value().army() );
+            const MIL_Army_ABC* pSurrenderedToArmy = armies.Find( msg.parametres().elem(0).value().army().oid() );
             if( !pSurrenderedToArmy || *pSurrenderedToArmy == GetArmy() )
                 throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
             else if( IsSurrendered() )
@@ -1097,11 +1097,11 @@ void MIL_Automate::OnReceiveMsgChangeKnowledgeGroup( const MsgsClientToSim::MsgU
     if( !msg.parametres().elem( 1 ).has_value() || !msg.parametres().elem( 1 ).value().has_army() )
         throw NET_AsnException< MsgsSimToClient::UnitActionAck_ErrorCode >( MsgsSimToClient::UnitActionAck_ErrorCode_error_invalid_attribute );
 
-    MIL_Army_ABC* pNewArmy = armies.Find( msg.parametres().elem( 1 ).value().army() );
+    MIL_Army_ABC* pNewArmy = armies.Find( msg.parametres().elem( 1 ).value().army().oid() );
     if( !pNewArmy || *pNewArmy != GetArmy() )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_camp_hierarchy );
 
-    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parametres().elem( 0 ).value().knowledgegroup() );
+    MIL_KnowledgeGroup* pNewKnowledgeGroup = pNewArmy->FindKnowledgeGroup( msg.parametres().elem( 0 ).value().knowledgegroup().oid() );
     if( !pNewKnowledgeGroup )
         throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_groupe_connaissance );
 
@@ -1145,7 +1145,7 @@ void MIL_Automate::OnReceiveMsgChangeSuperior( const MsgsClientToSim::MsgUnitMag
 {
     if( msg.type() == MsgsClientToSim::MsgUnitMagicAction_Type_change_formation_superior )
     {
-        MIL_Formation* pNewFormation = formations.Find( msg.parametres().elem( 0 ).value().formation() );
+        MIL_Formation* pNewFormation = formations.Find( msg.parametres().elem( 0 ).value().formation().oid() );
         if( !pNewFormation )
             throw NET_AsnException< MsgsSimToClient::HierarchyModificationAck_ErrorCode >( MsgsSimToClient::HierarchyModificationAck_ErrorCode_error_invalid_formation );
         if( pNewFormation->GetArmy() != GetArmy() )

@@ -185,15 +185,15 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     if( message.value().has_urbanblock() )
         return new actions::parameters::UrbanBlock( parameter, message.value().urbanblock() );
     if( message.value().has_army() )
-        return new actions::parameters::Army( parameter, message.value().army(), model_.teams_, controller_ );
+        return new actions::parameters::Army( parameter, message.value().army().oid(), model_.teams_, controller_ );
     if( message.value().has_formation() )
-        return new actions::parameters::Formation( parameter, message.value().formation(), model_.teams_, controller_ );
+        return new actions::parameters::Formation( parameter, message.value().formation().oid(), model_.teams_, controller_ );
     if( message.value().has_quantity() )
         return new actions::parameters::Quantity( parameter, message.value().quantity() );
     if( message.value().has_identifier() )
         return new actions::parameters::Identifier( parameter, message.value().identifier() );
     if( message.value().has_knowledgegroup() )
-        return new actions::parameters::KnowledgeGroup( parameter, message.value().knowledgegroup(), model_.knowledgeGroups_, controller_ );
+        return new actions::parameters::KnowledgeGroup( parameter, message.value().knowledgegroup().oid(), model_.knowledgeGroups_, controller_ );
     if( message.value().list_size() )
         return new actions::parameters::ParameterList( parameter );
     return 0;

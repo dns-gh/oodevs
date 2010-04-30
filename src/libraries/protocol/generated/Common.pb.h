@@ -34,6 +34,8 @@ class MsgTeam;
 class MsgPopulation;
 class MsgAutomat;
 class MsgUnit;
+class MsgArmy;
+class MsgKnowledgeGroup;
 class MsgUnitFire;
 class MsgDotationStock;
 class MsgHeading;
@@ -1017,6 +1019,180 @@ class MsgUnit : public ::google::protobuf::Message {
   
   void InitAsDefaultInstance();
   static MsgUnit* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgArmy : public ::google::protobuf::Message {
+ public:
+  MsgArmy();
+  virtual ~MsgArmy();
+  
+  MsgArmy(const MsgArmy& from);
+  
+  inline MsgArmy& operator=(const MsgArmy& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgArmy& default_instance();
+  void Swap(MsgArmy* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgArmy* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgArmy& from);
+  void MergeFrom(const MsgArmy& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 oid = 1;
+  inline bool has_oid() const;
+  inline void clear_oid();
+  static const int kOidFieldNumber = 1;
+  inline ::google::protobuf::int32 oid() const;
+  inline void set_oid(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 oid_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgArmy* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class MsgKnowledgeGroup : public ::google::protobuf::Message {
+ public:
+  MsgKnowledgeGroup();
+  virtual ~MsgKnowledgeGroup();
+  
+  MsgKnowledgeGroup(const MsgKnowledgeGroup& from);
+  
+  inline MsgKnowledgeGroup& operator=(const MsgKnowledgeGroup& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+  
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+  
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const MsgKnowledgeGroup& default_instance();
+  void Swap(MsgKnowledgeGroup* other);
+  
+  // implements Message ----------------------------------------------
+  
+  MsgKnowledgeGroup* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const MsgKnowledgeGroup& from);
+  void MergeFrom(const MsgKnowledgeGroup& from);
+  void Clear();
+  bool IsInitialized() const;
+  
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const { _cached_size_ = size; }
+  public:
+  
+  ::google::protobuf::Metadata GetMetadata() const;
+  
+  // nested types ----------------------------------------------------
+  
+  // accessors -------------------------------------------------------
+  
+  // required int32 oid = 1;
+  inline bool has_oid() const;
+  inline void clear_oid();
+  static const int kOidFieldNumber = 1;
+  inline ::google::protobuf::int32 oid() const;
+  inline void set_oid(::google::protobuf::int32 value);
+  
+ private:
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+  mutable int _cached_size_;
+  
+  ::google::protobuf::int32 oid_;
+  friend void  protobuf_AddDesc_Common_2eproto();
+  friend void protobuf_AssignDesc_Common_2eproto();
+  friend void protobuf_ShutdownFile_Common_2eproto();
+  
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+  
+  // WHY DOES & HAVE LOWER PRECEDENCE THAN != !?
+  inline bool _has_bit(int index) const {
+    return (_has_bits_[index / 32] & (1u << (index % 32))) != 0;
+  }
+  inline void _set_bit(int index) {
+    _has_bits_[index / 32] |= (1u << (index % 32));
+  }
+  inline void _clear_bit(int index) {
+    _has_bits_[index / 32] &= ~(1u << (index % 32));
+  }
+  
+  void InitAsDefaultInstance();
+  static MsgKnowledgeGroup* default_instance_;
 };
 // -------------------------------------------------------------------
 
@@ -6332,19 +6508,19 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   inline const ::Common::MsgUrbanBlock& urbanblock() const;
   inline ::Common::MsgUrbanBlock* mutable_urbanblock();
   
-  // optional int32 army = 38;
+  // optional .Common.MsgArmy army = 38;
   inline bool has_army() const;
   inline void clear_army();
   static const int kArmyFieldNumber = 38;
-  inline ::google::protobuf::int32 army() const;
-  inline void set_army(::google::protobuf::int32 value);
+  inline const ::Common::MsgArmy& army() const;
+  inline ::Common::MsgArmy* mutable_army();
   
-  // optional int32 formation = 39;
+  // optional .Common.MsgFormation formation = 39;
   inline bool has_formation() const;
   inline void clear_formation();
   static const int kFormationFieldNumber = 39;
-  inline ::google::protobuf::int32 formation() const;
-  inline void set_formation(::google::protobuf::int32 value);
+  inline const ::Common::MsgFormation& formation() const;
+  inline ::Common::MsgFormation* mutable_formation();
   
   // optional uint32 identifier = 40;
   inline bool has_identifier() const;
@@ -6360,12 +6536,12 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 quantity() const;
   inline void set_quantity(::google::protobuf::int32 value);
   
-  // optional int32 knowledgeGroup = 42;
+  // optional .Common.MsgKnowledgeGroup knowledgeGroup = 42;
   inline bool has_knowledgegroup() const;
   inline void clear_knowledgegroup();
   static const int kKnowledgeGroupFieldNumber = 42;
-  inline ::google::protobuf::int32 knowledgegroup() const;
-  inline void set_knowledgegroup(::google::protobuf::int32 value);
+  inline const ::Common::MsgKnowledgeGroup& knowledgegroup() const;
+  inline ::Common::MsgKnowledgeGroup* mutable_knowledgegroup();
   
   // repeated .Common.MsgMissionParameter.Value list = 43;
   inline int list_size() const;
@@ -6419,11 +6595,11 @@ class MsgMissionParameter_Value : public ::google::protobuf::Message {
   ::Common::MsgLimasOrder* limasorder_;
   ::Common::MsgIntelligenceList* intelligencelist_;
   ::Common::MsgUrbanBlock* urbanblock_;
-  ::google::protobuf::int32 army_;
-  ::google::protobuf::int32 formation_;
+  ::Common::MsgArmy* army_;
+  ::Common::MsgFormation* formation_;
   ::google::protobuf::uint32 identifier_;
   ::google::protobuf::int32 quantity_;
-  ::google::protobuf::int32 knowledgegroup_;
+  ::Common::MsgKnowledgeGroup* knowledgegroup_;
   ::google::protobuf::RepeatedPtrField< ::Common::MsgMissionParameter_Value > list_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
@@ -8505,12 +8681,12 @@ class StockResource : public ::google::protobuf::Message {
   inline ::google::protobuf::int32 current() const;
   inline void set_current(::google::protobuf::int32 value);
   
-  // optional int32 max = 3;
-  inline bool has_max() const;
-  inline void clear_max();
-  static const int kMaxFieldNumber = 3;
-  inline ::google::protobuf::int32 max() const;
-  inline void set_max(::google::protobuf::int32 value);
+  // optional int32 maximum = 3;
+  inline bool has_maximum() const;
+  inline void clear_maximum();
+  static const int kMaximumFieldNumber = 3;
+  inline ::google::protobuf::int32 maximum() const;
+  inline void set_maximum(::google::protobuf::int32 value);
   
  private:
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
@@ -8518,7 +8694,7 @@ class StockResource : public ::google::protobuf::Message {
   
   ::Common::MsgDotationType* dotation_type_;
   ::google::protobuf::int32 current_;
-  ::google::protobuf::int32 max_;
+  ::google::protobuf::int32 maximum_;
   friend void  protobuf_AddDesc_Common_2eproto();
   friend void protobuf_AssignDesc_Common_2eproto();
   friend void protobuf_ShutdownFile_Common_2eproto();
@@ -9987,6 +10163,46 @@ inline ::google::protobuf::int32 MsgUnit::oid() const {
   return oid_;
 }
 inline void MsgUnit::set_oid(::google::protobuf::int32 value) {
+  _set_bit(0);
+  oid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgArmy
+
+// required int32 oid = 1;
+inline bool MsgArmy::has_oid() const {
+  return _has_bit(0);
+}
+inline void MsgArmy::clear_oid() {
+  oid_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgArmy::oid() const {
+  return oid_;
+}
+inline void MsgArmy::set_oid(::google::protobuf::int32 value) {
+  _set_bit(0);
+  oid_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// MsgKnowledgeGroup
+
+// required int32 oid = 1;
+inline bool MsgKnowledgeGroup::has_oid() const {
+  return _has_bit(0);
+}
+inline void MsgKnowledgeGroup::clear_oid() {
+  oid_ = 0;
+  _clear_bit(0);
+}
+inline ::google::protobuf::int32 MsgKnowledgeGroup::oid() const {
+  return oid_;
+}
+inline void MsgKnowledgeGroup::set_oid(::google::protobuf::int32 value) {
   _set_bit(0);
   oid_ = value;
 }
@@ -12404,36 +12620,38 @@ inline ::Common::MsgUrbanBlock* MsgMissionParameter_Value::mutable_urbanblock() 
   return urbanblock_;
 }
 
-// optional int32 army = 38;
+// optional .Common.MsgArmy army = 38;
 inline bool MsgMissionParameter_Value::has_army() const {
   return _has_bit(37);
 }
 inline void MsgMissionParameter_Value::clear_army() {
-  army_ = 0;
+  if (army_ != NULL) army_->::Common::MsgArmy::Clear();
   _clear_bit(37);
 }
-inline ::google::protobuf::int32 MsgMissionParameter_Value::army() const {
+inline const ::Common::MsgArmy& MsgMissionParameter_Value::army() const {
+  return army_ != NULL ? *army_ : *default_instance_->army_;
+}
+inline ::Common::MsgArmy* MsgMissionParameter_Value::mutable_army() {
+  _set_bit(37);
+  if (army_ == NULL) army_ = new ::Common::MsgArmy;
   return army_;
 }
-inline void MsgMissionParameter_Value::set_army(::google::protobuf::int32 value) {
-  _set_bit(37);
-  army_ = value;
-}
 
-// optional int32 formation = 39;
+// optional .Common.MsgFormation formation = 39;
 inline bool MsgMissionParameter_Value::has_formation() const {
   return _has_bit(38);
 }
 inline void MsgMissionParameter_Value::clear_formation() {
-  formation_ = 0;
+  if (formation_ != NULL) formation_->::Common::MsgFormation::Clear();
   _clear_bit(38);
 }
-inline ::google::protobuf::int32 MsgMissionParameter_Value::formation() const {
-  return formation_;
+inline const ::Common::MsgFormation& MsgMissionParameter_Value::formation() const {
+  return formation_ != NULL ? *formation_ : *default_instance_->formation_;
 }
-inline void MsgMissionParameter_Value::set_formation(::google::protobuf::int32 value) {
+inline ::Common::MsgFormation* MsgMissionParameter_Value::mutable_formation() {
   _set_bit(38);
-  formation_ = value;
+  if (formation_ == NULL) formation_ = new ::Common::MsgFormation;
+  return formation_;
 }
 
 // optional uint32 identifier = 40;
@@ -12468,20 +12686,21 @@ inline void MsgMissionParameter_Value::set_quantity(::google::protobuf::int32 va
   quantity_ = value;
 }
 
-// optional int32 knowledgeGroup = 42;
+// optional .Common.MsgKnowledgeGroup knowledgeGroup = 42;
 inline bool MsgMissionParameter_Value::has_knowledgegroup() const {
   return _has_bit(41);
 }
 inline void MsgMissionParameter_Value::clear_knowledgegroup() {
-  knowledgegroup_ = 0;
+  if (knowledgegroup_ != NULL) knowledgegroup_->::Common::MsgKnowledgeGroup::Clear();
   _clear_bit(41);
 }
-inline ::google::protobuf::int32 MsgMissionParameter_Value::knowledgegroup() const {
-  return knowledgegroup_;
+inline const ::Common::MsgKnowledgeGroup& MsgMissionParameter_Value::knowledgegroup() const {
+  return knowledgegroup_ != NULL ? *knowledgegroup_ : *default_instance_->knowledgegroup_;
 }
-inline void MsgMissionParameter_Value::set_knowledgegroup(::google::protobuf::int32 value) {
+inline ::Common::MsgKnowledgeGroup* MsgMissionParameter_Value::mutable_knowledgegroup() {
   _set_bit(41);
-  knowledgegroup_ = value;
+  if (knowledgegroup_ == NULL) knowledgegroup_ = new ::Common::MsgKnowledgeGroup;
+  return knowledgegroup_;
 }
 
 // repeated .Common.MsgMissionParameter.Value list = 43;
@@ -13581,20 +13800,20 @@ inline void StockResource::set_current(::google::protobuf::int32 value) {
   current_ = value;
 }
 
-// optional int32 max = 3;
-inline bool StockResource::has_max() const {
+// optional int32 maximum = 3;
+inline bool StockResource::has_maximum() const {
   return _has_bit(2);
 }
-inline void StockResource::clear_max() {
-  max_ = 0;
+inline void StockResource::clear_maximum() {
+  maximum_ = 0;
   _clear_bit(2);
 }
-inline ::google::protobuf::int32 StockResource::max() const {
-  return max_;
+inline ::google::protobuf::int32 StockResource::maximum() const {
+  return maximum_;
 }
-inline void StockResource::set_max(::google::protobuf::int32 value) {
+inline void StockResource::set_maximum(::google::protobuf::int32 value) {
   _set_bit(2);
-  max_ = value;
+  maximum_ = value;
 }
 
 // -------------------------------------------------------------------

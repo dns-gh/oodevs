@@ -82,9 +82,9 @@ Army::~Army()
 // -----------------------------------------------------------------------------
 void Army::CommitTo( Common::MsgMissionParameter& message ) const
 {
-    message.set_null_value( !IsSet() );
-    if( IsSet() && GetValue())
-        message.mutable_value()->set_army( GetValue()->GetId() );
+    message.mutable_value()->mutable_army();    // enforce initialisation of parameter to force his type
+    if( IsSet() )
+        Entity< Team_ABC >::CommitTo( *message.mutable_value()->mutable_army() );
 }
 
 // -----------------------------------------------------------------------------

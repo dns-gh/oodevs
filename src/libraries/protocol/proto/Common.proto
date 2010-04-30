@@ -120,6 +120,14 @@ message MsgUnit {
    required int32                       oid                 = 1;
 }
 
+message MsgArmy {
+   required int32                       oid                 = 1;
+}
+
+message MsgKnowledgeGroup {
+   required int32                       oid                 = 1;
+}
+
 message MsgUnitFire {
    required int32                       oid                 = 1;
 }
@@ -494,12 +502,12 @@ message MsgMissionParameter {
         optional MsgLimasOrder               limasOrder                  = 35;
         optional MsgIntelligenceList         intelligenceList            = 36;
         optional MsgUrbanBlock               urbanBlock                  = 37;
-        optional int32                       army                        = 38;
-        optional int32                       formation                   = 39;
+        optional MsgArmy                     army                        = 38;
+        optional MsgFormation                formation                   = 39;
         optional uint32                      identifier                  = 40;
         optional int32                       quantity                    = 41;
-        optional int32                       knowledgeGroup              = 42;
-        repeated Value                       list                        = 43;
+        optional MsgKnowledgeGroup           knowledgeGroup              = 42;
+        repeated Value                       list                   = 43;
     }
     optional bool  null_value = 1 [default = false];
     optional Value value      = 2;
@@ -624,7 +632,7 @@ message MsgObjectAttributeNBC {
 message StockResource {
    required MsgDotationType             dotation_type       = 1;
    required int32                       current             = 2;
-   optional int32                       max                 = 3;
+   optional int32                       maximum             = 3;
 }
 
 message MsgObjectAttributeStock {

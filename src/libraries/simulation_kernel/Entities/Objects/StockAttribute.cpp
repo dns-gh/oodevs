@@ -173,7 +173,7 @@ void StockAttribute::Send( Common::MsgObjectAttributeStock& attribute, bool send
         resource->mutable_dotation_type()->set_oid( it->first->GetType().GetID() );
         resource->set_current( it->second.first );
         if( send_max )
-            resource->set_max( it->second.second );
+            resource->set_maximum( it->second.second );
     }
 }
 

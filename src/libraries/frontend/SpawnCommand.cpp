@@ -62,7 +62,7 @@ void SpawnCommand::AddRootDirArgument()
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
 void SpawnCommand::AddExerciseArgument( const QString& exercise )
-{
+{   
     addArgument( "--exercise=\"" + exercise +"\"" );
 }
 

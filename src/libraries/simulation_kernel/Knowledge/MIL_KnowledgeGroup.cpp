@@ -686,14 +686,14 @@ bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupEnable( const Common::MsgMiss
 // -----------------------------------------------------------------------------
 bool MIL_KnowledgeGroup::OnReceiveMsgKnowledgeGroupChangeSuperior( const Common::MsgMissionParameters& message, const tools::Resolver< MIL_Army_ABC >& armies, bool hasParent )
 {
-    MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().army() );
+    MIL_Army_ABC* pTargetArmy = armies.Find( message.elem( 0 ).value().army().oid() );
     if( !pTargetArmy || *pTargetArmy != GetArmy() )
         throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_camp );
 
     MIL_KnowledgeGroup* pNewParent = 0;
     if( hasParent )
     {
-        pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup() );
+        pNewParent = pTargetArmy->FindKnowledgeGroup( message.elem( 1 ).value().knowledgegroup().oid() );
         if( !pNewParent  )
             throw NET_AsnException< MsgsSimToClient::KnowledgeGroupAck_ErrorCode >( MsgsSimToClient::KnowledgeGroupAck_ErrorCode_error_invalid_superior );
     }

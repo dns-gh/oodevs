@@ -48,8 +48,8 @@ void StockAttribute::Update( const DotationType& type, const Common::StockResour
 
     T_StockResourceValue value = stock_[ &type ];
     value.first = resource.current();
-    if( resource.has_max() )
-        value.second = resource.max();
+    if( resource.has_maximum() )
+        value.second = resource.maximum();
     stock_[ &type ] = value;
 }
 
