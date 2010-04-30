@@ -296,7 +296,7 @@
     <name>AgentPositions</name>
     <message>
         <source>Position:</source>
-        <translation type="unfinished">Position:</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -639,15 +639,15 @@
     <name>Fire</name>
     <message>
         <source>Fire</source>
-        <translation type="obsolete">Incendie</translation>
+        <translation type="obsolete">Feu</translation>
     </message>
     <message>
         <source>Fire class:</source>
-        <translation type="obsolete">Classe d&apos;incendie</translation>
+        <translation type="obsolete">Type de feu:</translation>
     </message>
     <message>
         <source>Fire temperature:</source>
-        <translation type="obsolete">Température du feu :</translation>
+        <translation type="obsolete">Température du feu:</translation>
     </message>
 </context>
 <context>
@@ -746,7 +746,7 @@
     <name>Lima</name>
     <message>
         <source>Phase line</source>
-        <translation>Lima</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -964,11 +964,11 @@
     <name>MedicalTreatment</name>
     <message>
         <source>Medical Treatment services</source>
-        <translation>Service de traitement médical</translation>
+        <translation>Services de traitement médical</translation>
     </message>
     <message>
         <source>Medical Treatment type:</source>
-        <translation>Type de traitement médical</translation>
+        <translation>Type de traitement médical:</translation>
     </message>
     <message>
         <source>Medical Treatment capacity</source>
@@ -976,19 +976,19 @@
     </message>
     <message>
         <source>Total number of beds:</source>
-        <translation>Nombre total de lits :</translation>
+        <translation>Nombre total de lits:</translation>
     </message>
     <message>
         <source>Number of available beds:</source>
-        <translation>Nombre de lits disponibles :</translation>
+        <translation>Nombre de lits disponibles:</translation>
     </message>
     <message>
         <source>Total number of doctors:</source>
-        <translation>Nombre total de médecins :</translation>
+        <translation>Nombre total de médecins:</translation>
     </message>
     <message>
         <source>Number of available doctors:</source>
-        <translation>Nombre de médecins disponibles :</translation>
+        <translation>Nombre de médecins disponibles:</translation>
     </message>
 </context>
 <context>
@@ -1055,11 +1055,11 @@
     </message>
     <message>
         <source>Contamination quantity:</source>
-        <translation>Quantité de contamination :</translation>
+        <translation>Quantité de contamination:</translation>
     </message>
     <message>
         <source>Danger:</source>
-        <translation>Danger :</translation>
+        <translation>Danger:</translation>
     </message>
 </context>
 <context>
@@ -1221,7 +1221,7 @@
     </message>
     <message>
         <source>Supply route</source>
-        <translation>Route de ravitaillement</translation>
+        <translation>Itinéraire logistique</translation>
     </message>
     <message>
         <source>Fire</source>
@@ -1339,7 +1339,7 @@
     </message>
     <message>
         <source>Too many connections</source>
-        <translation type="unfinished">Trop de clients connectés</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1366,6 +1366,24 @@
     </message>
 </context>
 <context>
+    <name>Report</name>
+    <message>
+        <source>Received</source>
+        <translation type="obsolete">Reçu</translation>
+    </message>
+    <message>
+        <source>Report</source>
+        <translation type="obsolete">Compte-rendu</translation>
+    </message>
+</context>
+<context>
+    <name>ReportFactory</name>
+    <message>
+        <source>Unhandled report parameter type: &apos;%1&apos;.</source>
+        <translation type="obsolete">Type de paramètre de rapport non géré: &apos;%1&apos;.</translation>
+    </message>
+</context>
+<context>
     <name>Score</name>
     <message>
         <source>Name</source>
@@ -1388,7 +1406,7 @@
     <name>Stock</name>
     <message>
         <source>Stock resource attribute</source>
-        <translation>Attribut ressources en stock</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

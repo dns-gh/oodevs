@@ -73,13 +73,13 @@ MessagePanel::~MessagePanel()
 // -----------------------------------------------------------------------------
 void MessagePanel::Receive( const Command& command )
 {
-    if( command.ArgumentCount() == 0 )
-    {
-        Clear();
-        return;
-    }
     if( command.Name() == "display" )
     {
+        if( command.ArgumentCount() == 0 )
+        {
+            Clear();
+            return;
+        }
         ClearButtons();
         Display( command.Argument( 1 ).c_str() );
     }

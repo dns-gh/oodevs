@@ -24,6 +24,7 @@ namespace dispatcher
     class AgentKnowledge;
     class Automat;
     class Population;
+    class SimulationPublisher_ABC;
 }
 
 namespace plugins
@@ -46,7 +47,7 @@ class ExtensionFactory : public dispatcher::ExtensionFactory_ABC< dispatcher::Ag
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionFactory( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+             ExtensionFactory( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~ExtensionFactory();
     //@}
 
@@ -70,6 +71,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
+    dispatcher::SimulationPublisher_ABC& publisher_;
     //@}
 };
 

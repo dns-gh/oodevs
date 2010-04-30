@@ -58,6 +58,12 @@ private:
     MetricsLayer& operator=( const MetricsLayer& ); //!< Assignement operator
     //@}
 
+    //! @name Helpers
+    //@{
+    void DrawAngle() const;
+    float ComputeAngle() const;
+    //@}
+
 private:
     //! @name Types
     //@{

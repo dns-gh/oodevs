@@ -22,6 +22,7 @@ namespace kernel
 namespace dispatcher
 {
     class Agent;
+    class SimulationPublisher_ABC;
 }
 
 namespace plugins
@@ -41,7 +42,7 @@ class AgentManipulator : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentManipulator( const kernel::CoordinateConverter_ABC& converter, const dispatcher::Agent& agent );
+             AgentManipulator( const kernel::CoordinateConverter_ABC& converter, const dispatcher::Agent& agent, dispatcher::SimulationPublisher_ABC& publisher );
     virtual ~AgentManipulator();
     //@}
 
@@ -69,6 +70,10 @@ private:
     std::string GetTeam() const;
     dispatcher::Position GetPosition() const;
     unsigned int GetOperationalState() const;
+    std::string GetForceRatio() const;
+    unsigned int GetMission() const;
+    void Teleport( const dispatcher::Position& position );
+    void RecoverAll();
     //@}
 
 private:
@@ -76,6 +81,7 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     const dispatcher::Agent& agent_;
+    dispatcher::SimulationPublisher_ABC& publisher_;
     //@}
 };
 

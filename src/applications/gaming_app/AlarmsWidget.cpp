@@ -12,6 +12,7 @@
 #include "moc_AlarmsWidget.cpp"
 #include "gaming/Simulation.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: AlarmsWidget constructor
@@ -146,7 +147,7 @@ namespace
             , simulation_( simulation )
             , item_      ( 0 )
         {
-            setCaption( tr("Alarm parameters") );
+            setCaption( tools::translate( "AlarmsWidget", "Alarm parameters" ) );
             QGridLayout* pLayout = new QGridLayout( this, 2, 3 );
             pLayout->setMargin( 10 );
             pLayout->setSpacing( 10 );

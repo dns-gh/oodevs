@@ -28,9 +28,10 @@ using namespace plugins::script;
 // Name: ExtensionFactory constructor
 // Created: AGE 2008-06-13
 // -----------------------------------------------------------------------------
-ExtensionFactory::ExtensionFactory( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
+ExtensionFactory::ExtensionFactory( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, dispatcher::SimulationPublisher_ABC& publisher )
     : controller_( controller )
     , converter_( converter )
+    , publisher_( publisher )
 {
     // NOTHING
 }
@@ -51,7 +52,7 @@ ExtensionFactory::~ExtensionFactory()
 void ExtensionFactory::Create( dispatcher::Agent& entity )
 {
     entity.Attach( *new AgentNotifier   ( controller_, entity ) );
-    entity.Attach( *new AgentManipulator( converter_, entity ) );
+    entity.Attach( *new AgentManipulator( converter_, entity, publisher_ ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -20,6 +20,10 @@ function Display( t )
     Command( t, "/display \"" .. t.message .. "\"" )
 end
 
+function ClearDisplay( t )
+    Command( t or {}, "/display" )
+end
+
 function Dialog( t )
     local buttonString = table.concat( t.buttons, "|" )
     Command( t, "/prompt " .. t.id .. " \"" .. t.message .. "\" \"" .. buttonString .. "\"" )

@@ -14,7 +14,7 @@
     <name>@default</name>
     <message>
         <source>Alarm parameters</source>
-        <translation>Paramètres de l&apos;alarme</translation>
+        <translation type="obsolete">Paramètres de l&apos;alarme</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -336,7 +336,7 @@
     </message>
     <message>
         <source>Alarm parameters</source>
-        <translation type="obsolete">Paramètres de l&apos;alarme</translation>
+        <translation type="unfinished">Paramètres de l&apos;alarme</translation>
     </message>
 </context>
 <context>
@@ -356,10 +356,6 @@
     <message>
         <source>Gaming</source>
         <translation>Gaming</translation>
-    </message>
-    <message>
-        <source>SWORD Officer Training</source>
-        <translation type="obsolete">SWORD Officer Training</translation>
     </message>
     <message>
         <source>sword@masagroup.net</source>
@@ -847,15 +843,15 @@ Reason: %3
     </message>
     <message>
         <source>Export data...</source>
-        <translation>Export des données</translation>
+        <translation>Exporter les données...</translation>
     </message>
     <message>
         <source>Export score data...</source>
-        <translation>Export des données de score</translation>
+        <translation>Export les données du score...</translation>
     </message>
     <message>
         <source>Create report...</source>
-        <translation>Créer un rapport</translation>
+        <translation>Créer un rapport...</translation>
     </message>
 </context>
 <context>
@@ -1887,15 +1883,15 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Units toolbar</source>
-        <translation>Barre d&apos;outils Unités</translation>
+        <translation>Barre d&apos;outils unités</translation>
     </message>
     <message>
         <source>Logistics toolbar</source>
-        <translation>Barre d&apos;outils Logistique</translation>
+        <translation>Barre d&apos;outils logistique</translation>
     </message>
     <message>
         <source>Terrain toolbar</source>
-        <translation>Barre d&apos;outils Terrain</translation>
+        <translation>Barre d&apos;outils terrain</translation>
     </message>
 </context>
 <context>
@@ -1964,21 +1960,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
-    <name>Object</name>
-    <message>
-        <source>Reserved obstacle activated:</source>
-        <translation type="obsolete">Obstacle de manoeuvre activé:</translation>
-    </message>
-</context>
-<context>
     <name>ObjectCreationPanel</name>
     <message>
         <source>Objects</source>
-        <translation type="obsolete">Objets</translation>
+        <translation>Objets</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="obsolete">Créer</translation>
+        <translation>Créer</translation>
     </message>
 </context>
 <context>
@@ -2311,7 +2300,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>NBC agent state:</source>
-        <translation>Etat de l&apos;agent NBC:</translation>
+        <translation>Etat agent NBC:</translation>
     </message>
     <message>
         <source>Danger:</source>
@@ -2834,7 +2823,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>View graph</source>
-        <translation>Voir le graphique</translation>
+        <translation>Afficher le graphe</translation>
     </message>
 </context>
 <context>
@@ -2849,7 +2838,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Export data</source>
-        <translation>Export des données</translation>
+        <translation>Exporter les données</translation>
     </message>
     <message>
         <source>Output</source>
@@ -2857,11 +2846,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>File: </source>
-        <translation>Fichier:</translation>
+        <translation>Fichier: </translation>
     </message>
     <message>
         <source>Browse...</source>
-        <translation>Parcourir</translation>
+        <translation>Parcourir...</translation>
     </message>
     <message>
         <source>Separator: </source>
@@ -3143,18 +3132,18 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>gui</name>
     <message>
         <source>Objects</source>
-        <translation>Objets</translation>
+        <translation type="obsolete">Objets</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation>Créer</translation>
+        <translation type="obsolete">Créer</translation>
     </message>
 </context>
 <context>
     <name>tools</name>
     <message>
         <source> - Not connected</source>
-        <translation> - Non connecté</translation>
+        <translation type="unfinished"> - Non connecté</translation>
     </message>
 </context>
 </TS>

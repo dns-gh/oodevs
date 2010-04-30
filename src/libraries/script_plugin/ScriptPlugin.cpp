@@ -51,7 +51,7 @@ ScriptPlugin::ScriptPlugin( Model& model, const Config& config, SimulationPublis
     , registrables_( registrables )
     , controller_( new kernel::Controller() )
     , converter_ ( new kernel::CoordinateConverter( config ) )
-    , factory_   ( new ExtensionFactory( *controller_, *converter_ ) )
+    , factory_   ( new ExtensionFactory( *controller_, *converter_, publisher ) )
     , time_      ( -1 )
     , reset_     ( true )
 {

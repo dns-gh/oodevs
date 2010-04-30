@@ -54,6 +54,8 @@ void AgentNotifier::DoUpdate( const MsgUnitAttributes& message )
         controller_.Update( AgentMoved( agent_ ) );
     if( message.has_etat_operationnel()  )
         controller_.Update( OperationalStateChanged( agent_ ) );
+    if( message.has_rapport_de_force() )
+        controller_.Update( ForceRatioChanged( agent_ ) );
 }
 
 // -----------------------------------------------------------------------------

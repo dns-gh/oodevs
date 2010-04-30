@@ -65,6 +65,7 @@ private:
     boost::shared_ptr< Condition_ABC > AgentEnters( const dispatcher::Zone& zone );
     boost::shared_ptr< Condition_ABC > KnowledgeEnters( const dispatcher::Zone& zone );
     boost::shared_ptr< Condition_ABC > OperationalStateChanged();
+    boost::shared_ptr< Condition_ABC > ForceRatioChanged();
     boost::shared_ptr< Condition_ABC > MissionStarted();
     boost::shared_ptr< Condition_ABC > KnowledgeCreated();
     boost::shared_ptr< Condition_ABC > KnowledgeCreatedIn( const dispatcher::Zone& zone );

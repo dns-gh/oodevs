@@ -49,6 +49,7 @@ events =
          AgentCreated            = function( self ) return condition( agent ) end,
          AgentEnters             = function( self, zone ) return condition( agent ) end,
          OperationalStateChanged = function( self ) return condition( agent ) end,
+         ForceRatioChanged       = function( self ) return condition( agent ) end,
          MissionStarted          = function( self ) return condition( agent ) end,
          KnowledgeCreated        = function( self ) return condition( knowledge, agent ) end,
          KnowledgeCreatedIn      = function( self, zone ) return condition( knowledge, agent ) end,
@@ -112,6 +113,10 @@ agent =
     GetTeam             = function( self ) return strTeam end,
     GetPosition         = function( self ) return position end,
     GetOperationalState = function( self ) return nOp end,
+    GetForceRatio       = function( self ) return strForceRatio end, -- force ratio string: "none", "neutral", "low" or "high"
+    GetMission		    = function( self ) return nMissionId end,
+    Teleport            = function( self, position ) end, -- teleports unit to new position (type Position)
+    RecoverAll          = function( self ) end, -- recovers unit (equipments, humans and resources)
 }
 
 automat =
@@ -179,17 +184,26 @@ Recorder =
     Track  = function( indicatorName ) end,     -- add indicator to be recorded (used by Indicator:Record() )
 }
 
+-- tParameters: { profile = "my profile" } [optional] --> limits diffusion of message to specified profile (from sim:ClientConnected)
+-- tParameters: { client  = "my client"  } [optional] --> limits diffusion of message to specified client (from sim:ClientConnected)
+
 Trace            = function( strMessage ) end
 Command          = function( tParameters, strCommand ) end
 Message          = function( tParameters ) end
-Display          = function( tParameters ) end
+Display          = function( tParameters ) end -- display client side message
+ClearDisplay     = function( tParameters ) end -- clears client side displayed message
 Dialog           = function( tParameters ) end
 Briefing         = function( tParameters ) end
 Launch           = function( tParameters ) end
 PromptNextPhase  = function( tParameters ) end
-Center           = function( tParameters ) end
+
+-- id://protocol/value
+-- protocol: (agent|automat|object|formation|population|team|tacticalLine|agentKnowledge|populationKnowledge|objectKnowledge|knowledgeGroup)
+-- ex: id://agent/10
 Select           = function( tParameters ) end
 SetFilter        = function( tParameters ) end
+Center           = function( tParameters ) end -- id://protocol/value or loc://utmCoordinates
+
 ClearFilter      = function( tParameters ) end
 Zoom             = function( tParameters ) end
 ChangeOptions    = function( tParameters ) end
@@ -197,6 +211,7 @@ ResetOptions     = function( tParameters ) end
 SetDock          = function( tParameters ) end
 
 StartTimeSequence = function( strSequence ) end
+TimeSequence      = function( strSequence, seconds, callback ) return event end
 TimeSequenceEnd   = function( strSequence, callback ) return event end
 WaitForUserPhase  = function( strPhase ) return event end
 BeginPhase        = function( strPhase, callback ) return event end

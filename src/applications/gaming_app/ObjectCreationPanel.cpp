@@ -21,7 +21,7 @@
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
 ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const Simulation& simulation, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools )
-: gui::InfoPanel_ABC( parent, panel, tr( "Objects" ), "ObjectCreationPanel" )
+    : gui::InfoPanel_ABC( parent, panel, tools::translate( "ObjectCreationPanel", "Objects" ), "ObjectCreationPanel" )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
     , static_( staticModel )
@@ -29,7 +29,7 @@ ObjectCreationPanel::ObjectCreationPanel( QWidget* parent, gui::PanelStack_ABC& 
     , tools_( tools )
     , created_( new ObjectPrototype( this, controllers, staticModel, layer ) )
 {
-    QPushButton* ok = new QPushButton( tr( "Create" ), this );
+    QPushButton* ok = new QPushButton( tools::translate( "ObjectCreationPanel", "Create" ), this );
     connect( ok, SIGNAL( clicked() ), this, SLOT( Commit() ) );
     controllers_.Register( *this );
 }

@@ -68,16 +68,16 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
             }
         }
         glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
-        glLineWidth( 4 );
         glColor4f( COLOR_WHITE );
+        glLineWidth( 2 );
+        DrawAngle();
+        glLineWidth( 4 );
         tools_.DrawLine( metricPoints_.back(), end_ );
         glLineWidth( 2 );
         glColor4f( COLOR_BLACK );
-        tools_.DrawLine( metricPoints_.back(), end_ );
-
 
         const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
-        const QString message = tools::translate( "Règle GL", " %1m" ).arg( ComputeRuleDistance(), 0, 'f', 1 );
+        const QString message = tools::translate( "Règle GL", "%1m\n%2°" ).arg( ComputeRuleDistance(), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
         if( !tooltip_.get() )
         {
             std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools_.CreateTooltip() );
@@ -88,6 +88,34 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
         tooltip_->Draw( middle );
         glPopAttrib();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MetricsLayer::DrawAngle
+// Created: SBO 2009-09-29
+// -----------------------------------------------------------------------------
+void MetricsLayer::DrawAngle() const
+{
+    const geometry::Point2f north( start_ + geometry::Vector2f( 0, 1.f ) * start_.Distance( end_ ) );
+    const geometry::Vector2f halfRuler( geometry::Vector2f( start_, end_ ) / 2 );
+    tools_.DrawLine( north, start_ );
+    if( geometry::Vector2f( start_, north ).CrossProduct( halfRuler ) > 0 )
+        tools_.DrawArc( start_, start_ + geometry::Vector2f( start_, north ) / 2, start_ + halfRuler );
+    else
+        tools_.DrawArc( start_, start_ + halfRuler, start_ + geometry::Vector2f( start_, north ) / 2 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MetricsLayer::ComputeAngle
+// Created: SBO 2009-09-29
+// -----------------------------------------------------------------------------
+float MetricsLayer::ComputeAngle() const
+{
+    static const float pi = std::acos( -1.f );
+    float angle = std::atan( std::abs( end_.X() - start_.X() ) / ( end_.Y() - start_.Y() ) );
+    if( angle <= 0 )
+        angle += pi;
+    return angle * 180.f / pi;
 }
 
 // -----------------------------------------------------------------------------

@@ -68,7 +68,7 @@ Section "!${PRODUCT_NAME}"
     ; File "${OUTDIR}\release\applications\selftraining_app\*.exe"
     File "${OUTDIR}\release\applications\package_app\*.exe"
 
-    SetOutPath "$INSTDIR\applications\bin"
+    SetOutPath "$INSTDIR\applications\dispatcher"
     File /oname=dispatcher_app.exe "${OUTDIR}\release\applications\dispatcher_crossbow_app\dispatcher_crossbow_app.exe"
 
     SetOutPath "$INSTDIR\applications"

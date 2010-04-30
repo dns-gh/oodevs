@@ -33,7 +33,10 @@ public:
                  : QListView( parent, name )
                  , list_( list )
                  , factory_( factory )
-                 , toSkip_( 0 ) {}
+                 , toSkip_( 0 )
+             {
+                 setDefaultRenameAction( QListView::Accept );
+             }
     virtual ~ListView() {}
     //@}
 
