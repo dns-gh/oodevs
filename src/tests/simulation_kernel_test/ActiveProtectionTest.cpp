@@ -106,7 +106,7 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         MOCK_EXPECT( pion, GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
         pAction->Execute();
 
-        BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eRunning, callbackValue );
+        BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eFinished, callbackValue );
         MockPHY_RoleInterface_ActiveProtection* protectionRole = new MockPHY_RoleInterface_ActiveProtection();
         pion.RegisterRole< PHY_RoleInterface_ActiveProtection >( *protectionRole );
         MOCK_EXPECT( protectionRole, UseAmmunition ).once();
