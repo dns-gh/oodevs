@@ -77,11 +77,13 @@ function meleeInfPionsCommon()
         or includedFiles[ "sources/humus/humus_melee/inf/pions/common/Globals Poly.bms"]
 end
 
-if meleeInfPionsCommon() then
     function M_POLY_MODELE_PION_VITESSE_RECO_POINT()
-        return S_VitesseRecoPoint_Ambiance()
+        if meleeInfPionsCommon() then
+            return S_VitesseRecoPoint_Ambiance()
+        else
+            error( "M_POLY_MODELE_PION_VITESSE_RECO_POINT is not defined" )
+        end
     end
-end
 
 function F_DEPLACEMENT_ACTUATEURS()
     if includedFiles[ "sources/appui/artfdp/pions/son reco auf1/Globals.bms" ] 
