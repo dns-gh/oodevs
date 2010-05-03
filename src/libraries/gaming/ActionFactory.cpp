@@ -161,6 +161,8 @@ actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFrag
         action.reset( new actions::FragOrder( *agent, order, controllers_.controller_, false ) );
     else if( const Automat_ABC* automat = model_.agents_.FindAutomat( message.oid() ) )
         action.reset( new actions::FragOrder( *automat, order, controllers_.controller_, false ) );
+    else if( const Population_ABC* population = model_.agents_.FindPopulation( message.oid() ) )
+        action.reset( new actions::FragOrder( *population, order, controllers_.controller_, false ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
@@ -271,6 +273,8 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
     const kernel::Entity_ABC* target = model_.agents_.FindAgent( id );
     if( !target )
         target = model_.agents_.FindAutomat( id );
+    if( !target )
+        target = model_.agents_.FindPopulation( id );
     if( !target )
         ThrowTargetNotFound( id );
     action.reset( new actions::FragOrder( xis, controllers_.controller_, fragOrders_, *target ) );
