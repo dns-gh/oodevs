@@ -122,7 +122,7 @@ void ObjectListener::SendCreation( const Row_ABC& row )
     message().mutable_parametres()->add_elem()->mutable_value()->set_acharstr( "" );
 
     // team
-    message().mutable_parametres()->add_elem()->mutable_value()->set_army( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
+    message().mutable_parametres()->add_elem()->mutable_value()->mutable_army()->set_oid( 1 ); // $$$$ SBO 2007-09-23: Hard coded !!
 
     // list (unused but must be created)
     message().mutable_parametres()->add_elem();
