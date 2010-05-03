@@ -4529,6 +4529,29 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_Urban_Type</name>
+    <message>
+        <source>Facade</source>
+        <translation type="obsolete">Façade</translation>
+    </message>
+    <message>
+        <source>Material</source>
+        <translation type="obsolete">Matériau</translation>
+    </message>
+    <message>
+        <source>RoofShape</source>
+        <translation type="obsolete">Forme de toît</translation>
+    </message>
+    <message>
+        <source>New</source>
+        <translation type="unfinished">Nouvel élément</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished">Effacer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Log_GUI</name>
     <message>
         <source>Speed factor</source>

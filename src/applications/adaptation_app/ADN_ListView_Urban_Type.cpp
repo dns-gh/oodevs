@@ -59,7 +59,7 @@ ADN_ListView_Urban_Type::ADN_ListView_Urban_Type(QWidget * parent, const char * 
 :   ADN_ListView(parent,name,f)
 {
     // Add a column && disable sorting
-    addColumn( tr( "Sizes" ) );
+    addColumn( tr( name ) );
     setSorting( -1, true );
     setResizeMode( QListView::AllColumns );
 
@@ -102,8 +102,8 @@ void  ADN_ListView_Urban_Type::OnContextMenu( const QPoint& pt)
 {
     QPopupMenu popuMenu( this );
 
-    popuMenu.insertItem( tr( "New size"), 0 );
-    popuMenu.insertItem( tr( "Delete size"), 1 );
+    popuMenu.insertItem( tr( "New" ), 0 );
+    popuMenu.insertItem( tr( "Delete" ), 1 );
     popuMenu.setItemEnabled( 1, pCurData_ != 0 );
 
     int nResult = popuMenu.exec( pt );

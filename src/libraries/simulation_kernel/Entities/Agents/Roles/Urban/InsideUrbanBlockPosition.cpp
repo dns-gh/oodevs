@@ -166,7 +166,6 @@ float InsideUrbanBlockPosition::ComputeRatioPionInside( UrbanLocationComputer_AB
         intersectArea += area( *it ); 
     }
     return ( intersectArea / ( urbanObject_->GetFootprint()->ComputeArea() ) ) * result.urbanDeployment_;
-
 }
 
 // -----------------------------------------------------------------------------
@@ -180,6 +179,7 @@ MT_Float InsideUrbanBlockPosition::ComputeUrbanProtection( const PHY_DotationCat
     if( architecture  && soil )
     {
         unsigned materialID = UrbanType::GetUrbanType().GetStaticModel().FindType< urban::MaterialCompositionType >( architecture->GetMaterial() )->GetId();
-        return ( 1 -dotationCategory.GetUrbanAttritionModifer( materialID ) )* ( soil->GetOccupation() );
+        return ( 1 - dotationCategory.GetUrbanAttritionModifer( materialID ) ) * ( soil->GetOccupation() );
     }
+    return 0.;
 }

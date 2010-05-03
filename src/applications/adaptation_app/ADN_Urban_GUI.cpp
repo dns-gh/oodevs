@@ -85,7 +85,7 @@ void ADN_Urban_GUI::Build()
 
     // materials list
     T_ConnectorVector    vMaterialInfosConnectors(eNbrUrbanGuiElements,(ADN_Connector_ABC*)0 );
-    pListMaterial_=new ADN_ListView_Urban_Type(pGroupMaterial);
+    pListMaterial_= new ADN_ListView_Urban_Type( pGroupMaterial, "Material" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
     
     // material
@@ -102,7 +102,7 @@ void ADN_Urban_GUI::Build()
 
     // facades list
     T_ConnectorVector    vFacadeInfosConnectors(eNbrUrbanGuiElements,(ADN_Connector_ABC*)0 );
-    pListFacade_=new ADN_ListView_Urban_Type(pGroupFacade);
+    pListFacade_= new ADN_ListView_Urban_Type( pGroupFacade, "Facade" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListFacade_->GetConnector() )->Connect( &data_.GetFacadesInfos() );
 
     // facade
@@ -119,7 +119,7 @@ void ADN_Urban_GUI::Build()
 
     // roofshapes list
     T_ConnectorVector    vRoofShapeInfosConnectors(eNbrUrbanGuiElements,(ADN_Connector_ABC*)0 );
-    pListRoofShape_=new ADN_ListView_Urban_Type(pGroupRoofShape);
+    pListRoofShape_= new ADN_ListView_Urban_Type( pGroupRoofShape, "RoofShape" );
     static_cast<ADN_Connector_Vector_ABC*>( &pListRoofShape_->GetConnector() )->Connect( &data_.GetRoofShapesInfos() );
 
     // roofsape

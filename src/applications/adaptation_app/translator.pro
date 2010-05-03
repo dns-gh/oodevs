@@ -85,6 +85,7 @@ ADN_ListView_Objects.cpp \
 ADN_ListView_Orders.cpp \
 ADN_ListView_Sensors.cpp \
 ADN_ListView_Units.cpp \
+ADN_ListView_Urban_Type.cpp \
 ADN_MainWindow.cpp \
 ADN_Maintenance_GUI.cpp \
 ADN_MissionParameterValues_Table.cpp \
