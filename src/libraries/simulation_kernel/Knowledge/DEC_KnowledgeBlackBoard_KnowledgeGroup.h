@@ -162,21 +162,11 @@ private:
     // Knowledge sources
     DEC_KS_KnowledgeSynthetizer*                    pKsKnowledgeSynthetizer_;
 
-//    DEC_KS_AgentKnowledgeSynthetizer*       pKsAgentKnowledgeSynthetizer_;
-//    DEC_KS_PopulationKnowledgeSynthetizer*  pKsPopulationKnowledgeSynthetizer_;
     DEC_KS_Sharing*                         pKsSharing_;
 
     //! @name Queries caches
     //@{
     unsigned int nLastCacheUpdateTick_;
-
-    T_KnowledgeAgentVector  detectedContainer_;
-    T_KnowledgeAgentVector  friendsContainer_;
-    T_KnowledgeAgentVector  enemiesContainer_;
-    T_KnowledgeAgentVector  militiasContainer_;
-    T_KnowledgeAgentVector  terroristsContainer_;
-    T_KnowledgeAgentVector  refugeesContainer_;
-    T_KnowledgeAgentVector  surrenderedAgentsContainer_;
     //@}
 };
 
