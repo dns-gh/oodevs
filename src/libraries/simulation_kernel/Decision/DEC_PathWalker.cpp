@@ -18,8 +18,9 @@
 #include "Entities/Orders/MIL_Report.h"
 #include "UrbanModel.h"
 #include "protocol/protocol.h"
-#include <urban/TerrainObject_ABC.h>
 #include <urban/Model.h>
+#include <urban/TerrainObject_ABC.h>
+#include <urban/Soil.h>
 
 //$$$ Refactorer gestion collisions objets
 
@@ -197,8 +198,6 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
     TER_Object_ABC::T_ObjectVector objects;
     TER_World::GetWorld().GetObjectManager().GetListWithinCircle( vNewPos_, (vEnd - vStart).Magnitude(), objects ); 
 
-    //moveStepSet.clear();
-
     MT_Line lineTmp( vStart, vEnd );
 
     moveStepSet.insert( T_MoveStep( vStart ) );
@@ -269,13 +268,11 @@ void DEC_PathWalker::ComputeObjectsCollision( const MT_Vector2D& vStart, const M
 void DEC_PathWalker::ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet )
 {   
     // Récupération de la liste des objets dynamiques contenus dans le rayon vEnd - vStart
-    geometry::Point2f start( vStart.rX_, vStart.rY_ );
-    geometry::Point2f end( vEnd.rX_, vEnd.rY_ );
+    geometry::Point2f start( static_cast< float >( vStart.rX_ ), static_cast< float >( vStart.rY_ ) );
+    geometry::Point2f end( static_cast< float >( vEnd.rX_ ), static_cast< float >( vEnd.rY_ ) );
     std::vector< const urban::TerrainObject_ABC* > urbanBlocks;
-    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( vNewPos_.rX_, vNewPos_.rY_ ), start.Distance( end ), urbanBlocks );
+    UrbanModel::GetSingleton().GetModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vNewPos_.rX_ ), static_cast< float >( vNewPos_.rY_ ) ), start.Distance( end ), urbanBlocks );
     
-    //moveStepSet.clear();
-
     geometry::Segment2f lineTmp( start, end );
 
     moveStepSet.insert( T_MoveStep( vStart ) );
@@ -317,7 +314,7 @@ void DEC_PathWalker::ComputeUrbanBlocksCollision( const MT_Vector2D& vStart, con
         {           
             // Picking au milieu de la ligne reliant les 2 points
             MT_Vector2D vTmp = ( itMoveStep->vPos_ + itPrevMoveStep->vPos_ ) / 2;
-            geometry::Point2f tmp( vTmp.rX_, vTmp.rY_ );
+            geometry::Point2f tmp( static_cast< float >( vTmp.rX_ ), static_cast< float >( vTmp.rY_ ) );
             if( urbanBlockPolygon->IsInside( tmp ) )
             {
                 itPrevMoveStep->urbanBlocksToNextPointSet_.insert( &urbanBlock );
@@ -416,11 +413,16 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
 void DEC_PathWalker::TryToCrossUrbanBlocks( CIT_MoveStepSet itCurMoveStep, CIT_MoveStepSet itNextMoveStep )
 {
     CIT_UrbanBlockSet itUrbanBlock;
+    double urbanBlockFactor = 1.;
     for( itUrbanBlock = itCurMoveStep->urbanBlocksToNextPointSet_.begin(); itUrbanBlock != itCurMoveStep->urbanBlocksToNextPointSet_.end(); ++itUrbanBlock )
     {
         const urban::TerrainObject_ABC& urbanBlock = **itUrbanBlock;
         movingEntity_.NotifyMovingInsideUrbanBlock( urbanBlock );
+        const urban::Soil* soil = urbanBlock.RetrievePhysicalFeature< urban::Soil >();
+        if( soil )
+            urbanBlockFactor = std::min( urbanBlockFactor, 1. - soil->GetOccupation() );
     }
+    rCurrentSpeed_ *= urbanBlockFactor;
 
     for( itUrbanBlock = itNextMoveStep->urbanBlocksOutSet_.begin(); itUrbanBlock != itNextMoveStep->urbanBlocksOutSet_.end(); ++itUrbanBlock )
         movingEntity_.NotifyMovingOutsideUrbanBlock( **itUrbanBlock );
