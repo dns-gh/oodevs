@@ -10,8 +10,8 @@
 #ifndef __TimelineActionItem_h_
 #define __TimelineActionItem_h_
 
-#include "tools/ElementObserver_ABC.h"
 #include "TimelineItem_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -79,6 +79,7 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void setSelected( bool selected );
     virtual void setVisible( bool visible );
     virtual void draw( QPainter& painter );
     virtual void NotifyUpdated( const ActionTiming& timing );

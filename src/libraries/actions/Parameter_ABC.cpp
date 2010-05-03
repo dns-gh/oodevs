@@ -65,11 +65,10 @@ std::string Parameter_ABC::GetType() const
 // -----------------------------------------------------------------------------
 void Parameter_ABC::Draw( const geometry::Point2f& where, const Viewport_ABC& viewport, const GlTools_ABC& tools ) const
 {
+    geometry::Point2f point = GetPosition();
+    point = point.IsZero() ? where : point;
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        const geometry::Point2f point = GetPosition();
-        it->second->Draw( point.IsZero() ? where : point, viewport, tools );
-    }
+        it->second->Draw( point, viewport, tools );
 }
 
 // -----------------------------------------------------------------------------

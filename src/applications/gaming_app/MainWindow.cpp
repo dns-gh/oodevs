@@ -59,6 +59,7 @@
 #include "IndicatorExportDialog.h"
 #include "IndicatorPlotFactory.h"
 #include "WeatherLayer.h"
+#include "ActionsLayer.h"
 
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
@@ -411,6 +412,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     Layer_ABC& folkLayer            = *new ::FolkLayer( controllers_.controller_, staticModel_.coordinateConverter_, model_.folk_ );
     Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile );
     Layer_ABC& drawerLayer          = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile );
+    Layer_ABC& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -434,6 +436,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     glProxy_->Register( agents );                   preferences.AddLayer( tr( "Units" ), agents );                  agents              .SetPasses( "main,miniviews" );
     glProxy_->Register( automats );                 preferences.AddLayer( tr( "Automats" ), automats );             automats            .SetPasses( "main,miniviews" );
     glProxy_->Register( missionsLayer );                                                                            missionsLayer       .SetPasses( "main,miniviews" );
+    glProxy_->Register( actionsLayer );                                                                             actionsLayer        .SetPasses( "main" );
     glProxy_->Register( creationsLayer );                                                                           creationsLayer      .SetPasses( "main" );
     glProxy_->Register( parameters );                                                                               parameters          .SetPasses( "main" );
     glProxy_->Register( metrics );                                                                                  metrics             .SetPasses( "main" );

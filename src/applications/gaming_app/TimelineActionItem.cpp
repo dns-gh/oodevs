@@ -16,6 +16,7 @@
 #include "actions/ActionsModel.h"
 #include "gaming/ActionTiming.h"
 #include "gaming/Tools.h"
+#include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include <qpainter.h>
 #include <qfontmetrics.h>
@@ -58,6 +59,20 @@ void TimelineActionItem::NotifyUpdated( const ActionTiming& timing )
 {
     if( &timing == action_.Retrieve< ActionTiming >() )
         Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineActionItem::setSelected
+// Created: SBO 2010-04-30
+// -----------------------------------------------------------------------------
+void TimelineActionItem::setSelected( bool selected )
+{
+    if( isSelected() != selected )
+    {
+        TimelineItem_ABC::setSelected( selected );
+        if( selected )
+            action_.Select( controllers_.actions_ );
+    }
 }
 
 // -----------------------------------------------------------------------------

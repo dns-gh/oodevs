@@ -11,6 +11,7 @@
 #define __TimelineView_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 #include <qcanvas.h>
 
 namespace kernel
@@ -41,6 +42,7 @@ class TimelineView : public QCanvasView
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< actions::Action_ABC >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                   , public tools::SelectionObserver< actions::Action_ABC >
 {
 
 public:
@@ -71,6 +73,7 @@ private:
     //@{
     virtual void NotifyCreated( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const actions::Action_ABC& action );
+    virtual void NotifySelected( const actions::Action_ABC* action );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
 
     void Update();

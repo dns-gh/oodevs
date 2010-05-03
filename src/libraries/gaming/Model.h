@@ -18,11 +18,6 @@ namespace kernel
     class ObjectKnowledgeConverter_ABC;
 }
 
-namespace tools
-{
-    class Controllers;
-}
-
 namespace actions
 {
     class ActionsModel;

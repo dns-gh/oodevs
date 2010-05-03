@@ -72,6 +72,7 @@ public:
 
     virtual const kernel::OrderType& GetType() const;
     virtual void AddParameter( Parameter_ABC& parameter );
+    virtual void Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void Serialize( xml::xostream& xos ) const;

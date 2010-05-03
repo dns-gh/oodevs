@@ -16,6 +16,7 @@
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/ActionController.h"
 #include "icons.h"
 #include <qpainter.h>
 
@@ -170,7 +171,6 @@ void TimelineView::Select( const QPoint& point )
             if( *it != selectedItem_ )
             {
                 TimelineItem_ABC* item = dynamic_cast< TimelineItem_ABC* >( *it );
-                ClearSelection();
                 SetSelected( *item );
                 break;
             }
@@ -196,14 +196,17 @@ void TimelineView::contentsMousePressEvent( QMouseEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineView::contentsMouseMoveEvent( QMouseEvent* event )
 {
-    if( !selectedItem_ )
-        Select( grabPoint_ );
-    if( selectedItem_ && ( event->state() & Qt::LeftButton ) )
+    if( event->state() & Qt::LeftButton )
     {
-        selectedItem_->Move( event->pos().x() - grabPoint_.x() );
-        ensureVisible( int( selectedItem_->x() ), int( selectedItem_->y() ) );
-        grabPoint_ = event->pos();
-        setCursor( QCursor::sizeHorCursor );
+        if( !selectedItem_ )
+            Select( grabPoint_ );
+        if( selectedItem_ )
+        {
+            selectedItem_->Move( event->pos().x() - grabPoint_.x() );
+            ensureVisible( int( selectedItem_->x() ), int( selectedItem_->y() ) );
+            grabPoint_ = event->pos();
+            setCursor( QCursor::sizeHorCursor );
+        }
     }
     Update();
     QCanvasItemList list = canvas()->collisions( event->pos() );
@@ -271,10 +274,13 @@ void TimelineView::keyPressEvent( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void TimelineView::ClearSelection()
 {
-    QCanvasItemList list = canvas()->allItems();
-    for( QCanvasItemList::iterator it = list.begin(); it != list.end(); ++it )
-        (*it)->setSelected( false );
+    if( selectedItem_ )
+    {
+        selectedItem_->setSelected( false );
+        controllers_.actions_.Select( (const actions::Action_ABC*)0 );
+    }
     selectedItem_ = 0;
+
 }
 
 // -----------------------------------------------------------------------------
@@ -283,8 +289,35 @@ void TimelineView::ClearSelection()
 // -----------------------------------------------------------------------------
 void TimelineView::SetSelected( TimelineItem_ABC& item )
 {
+    if( selectedItem_ )
+        selectedItem_->setSelected( false );
     item.setSelected( true );
     selectedItem_ = &item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineView::NotifySelected
+// Created: SBO 2010-05-03
+// -----------------------------------------------------------------------------
+void TimelineView::NotifySelected( const actions::Action_ABC* action )
+{
+    const kernel::Entity_ABC* entity = 0;
+    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( action );
+    if( actionWithTarget )
+        entity = &actionWithTarget->GetEntity();
+
+    T_EntityActions::iterator it = actions_.find( entity );
+    if( it != actions_.end() )
+    {
+        T_Actions::iterator itAction = it->second.find( action );
+        if( itAction != it->second.end() )
+        {
+            if( selectedItem_ != itAction->second )
+                SetSelected( *itAction->second );
+            return;
+        }
+    }
+    ClearSelection();
 }
 
 // -----------------------------------------------------------------------------

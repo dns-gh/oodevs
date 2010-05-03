@@ -118,6 +118,23 @@ void ActionsListView::NotifyDeleted( const Action_ABC& action )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionsListView::NotifySelected
+// Created: SBO 2010-05-03
+// -----------------------------------------------------------------------------
+void ActionsListView::NotifySelected( const actions::Action_ABC* action )
+{
+    if( !action )
+    {
+        setSelected( currentItem(), false );
+        return;
+    }
+    if( gui::ValuedListItem* value = static_cast< gui::ValuedListItem* >( currentItem() ) )
+        if( value->GetValue< const actions::Action_ABC >() != action )
+            if( gui::ValuedListItem* item = gui::FindItem( action, firstChild() ) )
+                setCurrentItem( item );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionsListView::NotifyUpdated
 // Created: SBO 2007-06-28
 // -----------------------------------------------------------------------------
@@ -147,13 +164,18 @@ void ActionsListView::Display( const actions::Parameter_ABC& param, gui::ValuedL
 // -----------------------------------------------------------------------------
 void ActionsListView::OnItemClicked( QListViewItem* item, const QPoint&, int col )
 {
-    if( col != 0 || !item )
+    if( !item )
+    {
+        controllers_.actions_.Select( (const actions::Action_ABC*)0 );
         return;
+    }
     gui::ValuedListItem* value = static_cast< gui::ValuedListItem* >( item );
     if( value->IsA< const Action_ABC >() )
     {
         const Action_ABC* action = value->GetValue< const Action_ABC >();
-        if( ActionTiming* timing = const_cast< ActionTiming* >( action->Retrieve< ActionTiming >() ) )
-            timing->ToggleEnabled();
+        if( col == 0 )
+            if( ActionTiming* timing = const_cast< ActionTiming* >( action->Retrieve< ActionTiming >() ) )
+                timing->ToggleEnabled();
+        action->Select( controllers_.actions_ );
     }
 }

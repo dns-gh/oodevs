@@ -12,6 +12,7 @@
 
 #include "clients_gui/ListDisplayer.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/SelectionObserver_ABC.h"
 
 namespace kernel
 {
@@ -40,6 +41,7 @@ class ActionsListView : public ActionsListViewBase
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< actions::Action_ABC >
                       , public tools::ElementObserver_ABC< ActionTiming >
+                      , public tools::SelectionObserver< actions::Action_ABC >
 {
     Q_OBJECT;
 
@@ -74,6 +76,7 @@ private:
     virtual void NotifyCreated( const actions::Action_ABC& action );
     virtual void NotifyUpdated( const actions::Action_ABC& action );
     virtual void NotifyDeleted( const actions::Action_ABC& action );
+    virtual void NotifySelected( const actions::Action_ABC* action );
     virtual void NotifyUpdated( const ActionTiming& extension );
     void Display( QListViewItem* item, const actions::Action_ABC& action );
     //@}

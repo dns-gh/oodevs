@@ -117,6 +117,42 @@ void Action_ABC::AddParameter( Parameter_ABC& parameter )
     controller_.Update( *this );
 }
 
+namespace
+{
+    struct BarycenterComputer
+    {
+        BarycenterComputer() : count_( 0 ) {}
+        void AddPoint( const geometry::Point2f& point )
+        {
+            if( !point.IsZero() )
+            {
+                result_ += geometry::Vector2f( point.X(), point.Y() );
+                ++count_;
+            }
+        }
+        geometry::Point2f Result() const
+        {
+            if( count_ )
+                return geometry::Point2f( result_.X() / count_, result_.Y() / count_ );
+            return geometry::Point2f();
+        }
+        geometry::Point2f result_;
+        unsigned int count_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: Action_ABC::Draw
+// Created: SBO 2010-05-03
+// -----------------------------------------------------------------------------
+void Action_ABC::Draw( const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    BarycenterComputer computer;
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        computer.AddPoint( it->second->GetPosition() );
+    Draw( computer.Result(), viewport, tools );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Action_ABC::Draw
 // Created: SBO 2007-04-13
