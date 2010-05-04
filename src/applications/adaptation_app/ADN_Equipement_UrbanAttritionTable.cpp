@@ -20,6 +20,7 @@
 #include "ADN_Equipement_UrbanAttritionTable.h"
 
 #include "ADN_Equipement_Data.h"
+#include "ADN_Equipement_GUI.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_TableItem_Edit.h"
 
@@ -84,7 +85,6 @@ ADN_Equipement_UrbanAttritionTable::ADN_Equipement_UrbanAttritionTable( QWidget*
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
-    setMaximumWidth( 300 );
 
     horizontalHeader()->setLabel(0, tr( "Material" ) );
     horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
@@ -103,5 +103,12 @@ ADN_Equipement_UrbanAttritionTable::~ADN_Equipement_UrbanAttritionTable()
     delete pConnector_;
 }
 
-
-
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_UrbanAttritionTable::doValueChanged
+// Created: JSR 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Equipement_UrbanAttritionTable::doValueChanged( int row, int col )
+{
+    ADN_Table2::doValueChanged( row, col );
+    ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+}

@@ -240,6 +240,7 @@ void ADN_Equipement_Data::AttritionInfos::WriteArchive( xml::xostream& output, c
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::UrbanAttritionInfos::UrbanAttritionInfos( ADN_Urban_Data::UrbanInfos* ptr )
 : ptrMaterial_( ADN_Workspace::GetWorkspace().GetUrban().GetData().GetMaterialsInfos(), ptr )
+, strName_( *ptrMaterial_.GetData() )
 , rCoeff_( 0.0 )
 {
     this->BindExistenceTo( &ptrMaterial_ );

@@ -92,6 +92,10 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eEffectType]->Connect( &pInfos->indirectAmmoInfos_.objectType_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMineNumber]->Connect( &pInfos->indirectAmmoInfos_.nMineNumber_, bConnect );
 
+    vItemConnectors_[ADN_Equipement_GUI::eArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eMaterial]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eAttritionGraph]->Connect( &pInfos->attritions_, bConnect );
+
     // Connect those at the end so that the items in the associated group boxes
     // are correctly enabled / disabled according to those values.
     vItemConnectors_[ADN_Equipement_GUI::eDirect]->Connect( &pInfos->bDirect_, bConnect );
@@ -105,6 +109,9 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eGuided]->Connect( &pInfos->bGuided_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMaintainGuidance]->Connect( &pInfos->bMaintainGuidance_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGuidanceRange]->Connect( &pInfos->fGuidanceRange_, bConnect );
+
+    if( bConnect )
+        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().InitializeSimulationCombos();
 }
 
 

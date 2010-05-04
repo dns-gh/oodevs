@@ -12,6 +12,7 @@
 #include "ADN_Categories_Data.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Categories_GUI.h"
+#include "ADN_Equipement_GUI.h"
 #include "ADN_TableItem_Edit.h"
 #include "ADN_Tr.h"
 
@@ -92,4 +93,14 @@ ADN_Categories_AttritionEffect_Table::ADN_Categories_AttritionEffect_Table( QWid
 ADN_Categories_AttritionEffect_Table::~ADN_Categories_AttritionEffect_Table()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_AttritionEffect_Table::doValueChanged
+// Created: JSR 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Categories_AttritionEffect_Table::doValueChanged( int row, int col )
+{
+    ADN_Table2::doValueChanged( row, col );
+    ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
 }

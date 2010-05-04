@@ -155,6 +155,7 @@ public:
     public:
         ADN_TypePtr_InVector_ABC<ADN_Urban_Data::UrbanInfos>        ptrMaterial_;
         ADN_Type_Double                                             rCoeff_;
+        ADN_Type_String&                                            strName_;
 
     public:
         typedef ADN_Urban_Data::UrbanInfos                  T_Item;

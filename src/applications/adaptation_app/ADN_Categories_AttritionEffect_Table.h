@@ -28,6 +28,9 @@ public:
     ADN_Categories_AttritionEffect_Table( QWidget* pParent = 0 );
     virtual ~ADN_Categories_AttritionEffect_Table();
     //@}
+
+protected slots:
+    virtual void doValueChanged( int row, int col );
 };
 
 #endif // __ADN_Categories_AttritionEffect_Table_h_

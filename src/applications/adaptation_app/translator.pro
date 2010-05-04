@@ -54,6 +54,7 @@ ADN_DataException.cpp \
 ADN_DialogLog.cpp \
 ADN_EquipementSelector.cpp \
 ADN_Equipement_AmmoListView.cpp \
+ADN_Equipement_AttritionGraph.cpp \
 ADN_Equipement_AttritionTable.cpp \
 ADN_Equipement_Data.cpp \
 ADN_Equipement_GUI.cpp \

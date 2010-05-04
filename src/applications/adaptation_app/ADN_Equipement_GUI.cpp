@@ -37,8 +37,10 @@
 #include "ADN_Equipement_AttritionTable.h"
 #include "ADN_Equipement_UrbanAttritionTable.h"
 #include "ADN_Connector_ListView_ABC.h"
+#include "ADN_Equipement_AttritionGraph.h"
 #include "ADN_EditLine.h"
 #include "ADN_ComboBox_Enum.h"
+#include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipement_AmmoListView.h"
 #include "ADN_Equipement_Postures_GUI.h"
 #include "ADN_GroupBox.h"
@@ -171,12 +173,28 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Attritions" ), pGroupBox );
     vConnectors[eDirect] = &pDirectGroup->GetConnector();
 
-    pAttritionTable_ = new ADN_Equipement_AttritionTable( pDirectGroup );
+    QGroupBox* pTablesGroup = new QGroupBox( 2, Qt::Vertical, pDirectGroup );
+    pTablesGroup->setFrameShape( QFrame::NoFrame );
+
+    pAttritionTable_ = new ADN_Equipement_AttritionTable( pTablesGroup );
     vConnectors[eAttritions] = &pAttritionTable_->GetConnector();
 
-    pUrbanAttritionTable_ = new ADN_Equipement_UrbanAttritionTable( pDirectGroup );
+    pUrbanAttritionTable_ = new ADN_Equipement_UrbanAttritionTable( pTablesGroup );
     vConnectors[eUrbanAttritions] = &pUrbanAttritionTable_->GetConnector();
 
+    QGroupBox* pAttritionVisualisation = new QGroupBox( 2, Qt::Vertical, tr( "Simulation" ), pDirectGroup );
+
+    QWidget* pComboGroup = builder.AddFieldHolder( pAttritionVisualisation );
+    
+    pArmorCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Categories_Data::ArmorInfos > >( pComboGroup, tr( "Armor-Plating" ), vConnectors[eArmor] );
+    connect( pArmorCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated( int ) ) );
+
+    pMaterialCombo_ = builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::UrbanAttritionInfos > >( pComboGroup, tr( "Urban material" ), vConnectors[eMaterial] );
+    connect( pMaterialCombo_, SIGNAL( activated( int ) ), this, SLOT( SimulationCombosActivated( int ) ) );
+
+    pAttritionGraph_ = new ADN_Equipement_AttritionGraph( pAttritionVisualisation );
+    vConnectors[eAttritionGraph] = &pAttritionGraph_->GetConnector();
+    
     // Indirect fire properties
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Indirect fire" ), pGroupBox );
     vConnectors[eIndirect] = &pIndirectGroup->GetConnector();
@@ -241,6 +259,58 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Equipement_GUI::UpdateGraph
+// Created: JSR 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Equipement_GUI::UpdateGraph()
+{
+    if( pAttritionGraph_ )
+        pAttritionGraph_->Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_GUI::InitializeArmorCombo
+// Created: JSR 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Equipement_GUI::InitializeSimulationCombos()
+{
+    if( pArmorCombo_ )
+    {
+        for( int i = pArmorCombo_->count() - 1; i >= 0; --i )
+            if( ( ( ADN_Categories_Data::ArmorInfos* )pArmorCombo_->GetItem( i )->GetData() )->nType_ == eProtectionType_Human )
+                pArmorCombo_->removeItem( i );             
+        if( pArmorCombo_->GetItem( 0 ) )
+            pArmorCombo_->setCurrentItem( 0 );
+    }
+
+    if( pMaterialCombo_ )
+    {
+        ADN_ComboBoxItem* noneItem = new ADN_ComboBoxItem( *pMaterialCombo_, 0 );
+        noneItem->setText( tr( "None" ) );
+        pMaterialCombo_->insertItem( noneItem, 0 );
+        pMaterialCombo_->setCurrentItem( 0 );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_GUI::GetSelectedArmor
+// Created: JSR 2010-04-30
+// -----------------------------------------------------------------------------
+ADN_Categories_Data::ArmorInfos* ADN_Equipement_GUI::GetSelectedArmor() const
+{
+    return ( ADN_Categories_Data::ArmorInfos* ) pArmorCombo_->GetCurrentData();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_GUI::GetSelectedMaterial
+// Created: JSR 2010-05-03
+// -----------------------------------------------------------------------------
+ADN_Equipement_Data::UrbanAttritionInfos* ADN_Equipement_GUI::GetSelectedMaterial() const
+{
+    return ( ADN_Equipement_Data::UrbanAttritionInfos* ) pMaterialCombo_->GetCurrentData();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI::IndirectTypeComboActivated
 // Created: APE 2005-01-04
 // -----------------------------------------------------------------------------
@@ -264,7 +334,14 @@ void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
         pEffectParametersGroup_->show();
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_GUI::SimulationCombosActivated
+// Created: JSR 2010-04-29
+// -----------------------------------------------------------------------------
+void ADN_Equipement_GUI::SimulationCombosActivated( int /*nIndex*/ )
+{
+    UpdateGraph();
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI::CreatePKTable

@@ -20,6 +20,7 @@
 #include "ADN_Equipement_AttritionTable.h"
 
 #include "ADN_Equipement_Data.h"
+#include "ADN_Equipement_GUI.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_TableItem_Edit.h"
 
@@ -90,7 +91,7 @@ ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( QWidget* pParent )
     // Selection and style.
     //$$$$ Find a better policy
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Minimum );
-    setMinimumHeight( 200 );
+    setMinimumHeight( 160 );
     setSelectionMode( QTable::NoSelection );
     setShowGrid( false );
 
@@ -117,5 +118,12 @@ ADN_Equipement_AttritionTable::~ADN_Equipement_AttritionTable()
     delete pConnector_;
 }
 
-
-
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_AttritionTable::doValueChanged
+// Created: JSR 2010-04-30
+// -----------------------------------------------------------------------------
+void ADN_Equipement_AttritionTable::doValueChanged( int row, int col )
+{
+    ADN_Table2::doValueChanged( row, col );
+    ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+}

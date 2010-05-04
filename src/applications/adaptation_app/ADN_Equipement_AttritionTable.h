@@ -43,6 +43,9 @@ public:
      ADN_Equipement_AttritionTable( QWidget* pParent = 0 );
     virtual ~ADN_Equipement_AttritionTable();
     //@}
+
+public:
+    virtual void doValueChanged( int row, int col );
 };
 
 #endif // __ADN_Equipement_AttritionTable_h_

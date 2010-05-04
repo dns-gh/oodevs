@@ -43,6 +43,9 @@ public:
     ADN_Equipement_UrbanAttritionTable( QWidget* pParent = 0 );
     virtual ~ADN_Equipement_UrbanAttritionTable();
     //@}
+
+protected slots:
+    virtual void doValueChanged( int row, int col );
 };
 
 #endif // __ADN_Equipement_UrbanAttritionTable_h_

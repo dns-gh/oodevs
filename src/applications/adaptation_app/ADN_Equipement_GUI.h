@@ -24,13 +24,16 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_Enums.h"
 #include "ADN_EditLine.h"
+#include "ADN_ComboBox_Vector.h"
 #include "ADN_Equipement_Data.h"
 
 class ADN_Table;
 class ADN_Equipement_AttritionTable;
+class ADN_Equipement_AttritionGraph;
 class ADN_Equipement_UrbanAttritionTable;
 class ADN_Equipement_AmmoListView;
 class ADN_ComboBox;
+template < class T > class ADN_ComboBox_Vector;
 class QLabel;
 class QWidget;
 class QTabWidget;
@@ -65,6 +68,9 @@ public:
         eNNOCode,
         eAttritions,
         eUrbanAttritions,
+        eArmor,
+        eMaterial,
+        eAttritionGraph,
         eIndirectType,
         eIntervention,
         eDispersionX,
@@ -115,6 +121,11 @@ public:
     ADN_Table* CreatePKTable();
 
     void ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Data::AmmoCategoryInfo& infos );
+
+    void UpdateGraph();
+    void InitializeSimulationCombos();
+    ADN_Categories_Data::ArmorInfos* GetSelectedArmor() const;
+    ADN_Equipement_Data::UrbanAttritionInfos* GetSelectedMaterial() const;
     //@}
 
 private:
@@ -126,6 +137,7 @@ private:
 
 private slots:
     void IndirectTypeComboActivated( int nIndex );
+    void SimulationCombosActivated( int nIndex );
 
 private:
     //! @name Member data
@@ -137,6 +149,9 @@ private:
     ADN_Equipement_UrbanAttritionTable* pUrbanAttritionTable_;
     
     ADN_ComboBox* pIndirectTypeCombo_;
+    ADN_Equipement_AttritionGraph* pAttritionGraph_;
+    ADN_ComboBox_Vector< ADN_Categories_Data::ArmorInfos >* pArmorCombo_;
+    ADN_ComboBox_Vector< ADN_Equipement_Data::UrbanAttritionInfos >* pMaterialCombo_;
     
     QGroupBox* pExplosiveParametersGroup_;
     QGroupBox* pFlareParametersGroup_;

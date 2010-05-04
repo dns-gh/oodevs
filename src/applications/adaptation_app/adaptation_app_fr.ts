@@ -3592,6 +3592,25 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Equipement_AttritionGraph</name>
+    <message>
+        <source>Dead</source>
+        <translation>Mort</translation>
+    </message>
+    <message>
+        <source>Wounded</source>
+        <translation>Blessé</translation>
+    </message>
+    <message>
+        <source>Unwounded</source>
+        <translation>Indemne</translation>
+    </message>
+    <message>
+        <source>Undamaged</source>
+        <translation>Disponible</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Equipement_AttritionTable</name>
     <message>
         <source>% destroyed</source>
@@ -3834,7 +3853,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Created object</source>
-        <translation type="unfinished">Objet créé</translation>
+        <translation>Objet créé</translation>
     </message>
     <message>
         <source>Span</source>
@@ -3879,6 +3898,30 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Effect ammo parameters</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simulation</source>
+        <translation>Simulation</translation>
+    </message>
+    <message>
+        <source>Launcher</source>
+        <translation type="obsolete">Lanceur</translation>
+    </message>
+    <message>
+        <source>Armor</source>
+        <translation type="obsolete">Blindé</translation>
+    </message>
+    <message>
+        <source>Urban material</source>
+        <translation>Matériau urbain</translation>
+    </message>
+    <message>
+        <source>Armor-Plating</source>
+        <translation>Blindage</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>Aucun</translation>
     </message>
 </context>
 <context>
@@ -4544,11 +4587,11 @@ du tireur</translation>
     </message>
     <message>
         <source>New</source>
-        <translation type="unfinished">Nouvel élément</translation>
+        <translation>Nouvel élément</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Effacer</translation>
+        <translation>Effacer</translation>
     </message>
 </context>
 <context>
