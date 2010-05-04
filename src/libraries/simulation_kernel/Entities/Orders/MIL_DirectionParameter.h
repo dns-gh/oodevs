@@ -36,6 +36,7 @@ public:
     //! @name Conversions
     //@{
     virtual bool ToDirection( Common::MsgHeading& ) const;
+    virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const;
     //@}
 
 private:

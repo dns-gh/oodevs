@@ -27,6 +27,7 @@
         <mission name="MoveObserveReconnoiter"/>
         <mission name="ObserveAndReconnoiterUrbanBlock"/>
         <mission name="ObservePoint"/>
+        <mission name="ObserveDirection"/>
         <mission name="ObserveUrbanBlock"/>
         <mission name="ObserveAgent"/>
         <mission name="ObserveObject"/>
@@ -43,6 +44,7 @@
         <mission name="StayClose"/>
         <mission name="ReconnoiterPath"/>
         <mission name="MoveOnPath"/>
+        <mission name="Interdict"/>
       </missions>
     </unit>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Artillery">

@@ -344,6 +344,15 @@ bool MIL_BaseParameter::ToPointList( std::vector< boost::shared_ptr< MT_Vector2D
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToDirection
+// Created: MGD 2010-05-03
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToDirection( boost::shared_ptr< MT_Vector2D >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_BaseParameter::ToPolygon
 // Created: LDC 2009-05-20
 // -----------------------------------------------------------------------------

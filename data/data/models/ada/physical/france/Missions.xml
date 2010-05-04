@@ -898,6 +898,14 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.Animate" dia-type="T_Mission_Pion_Animate" id="2048" name="Animate">
       <parameter dia-name="entities" name="entities" optional="false" type="ObjectKnowledgeListBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Interdict" dia-type="T_Mission_Pion_Interdict" id="2049" name="Interdict">
+      <parameter dia-name="position" name="position d'installation" optional="true" type="PointBM"/>
+      <parameter dia-name="objectives" name="objectif" optional="false" type="PointBM"/>
+      <parameter dia-name="direction" name="direction" optional="false" type="DirectionBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveDirection" dia-type="T_Mission_Pion_ObserveDirection" id="2050" name="ObserveDirection">
+      <parameter dia-name="objectives" name="direction" optional="false" type="DirectionBM"/>
+    </mission>
   </units>
   <automats>
     <context>

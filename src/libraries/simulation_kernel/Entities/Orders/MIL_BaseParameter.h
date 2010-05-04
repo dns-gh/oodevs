@@ -76,6 +76,7 @@ public:
     virtual bool ToString( std::string& ) const;
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const;
     virtual bool ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const;
+    virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const;
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const;
     virtual bool ToPolygonList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const;
     virtual bool ToLocation( boost::shared_ptr< TER_Localisation >& ) const;

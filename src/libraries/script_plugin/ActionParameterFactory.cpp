@@ -287,6 +287,8 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
         param.reset( new actions::parameters::LocationList( parameter, converter_, xis ) );
     else if( type == "direction" )
         param.reset( new actions::parameters::Direction( parameter, xis ) );
+    else if( type == "directionbm" )
+        param.reset( new actions::parameters::Direction( parameter, xis ) );
     else if( type == "phaselinelist" )
         param.reset( new actions::parameters::LimaList( parameter, converter_, xis ) );
     else if( type == "intelligencelist" )

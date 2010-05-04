@@ -95,6 +95,7 @@ MissionInterfaceBuilder::MissionInterfaceBuilder( Controllers& controllers, gui:
 
     builderFunctors_["bool"]                = &MissionInterfaceBuilder::BuildBoolean;
     builderFunctors_["direction"]           = &MissionInterfaceBuilder::BuildDirection;
+    builderFunctors_["directionbm"]         = &MissionInterfaceBuilder::BuildDirection;
     builderFunctors_["numeric"]             = &MissionInterfaceBuilder::BuildNumeric;
     builderFunctors_["datetime"]            = &MissionInterfaceBuilder::BuildParamDateTime;
 

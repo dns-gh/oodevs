@@ -324,6 +324,14 @@ void DirectionFunction( const directia::ScriptRef& /*refMission*/, const std::st
 {
     // $$$$ LDC: FIXME The only existing Direction argument is dangerDirection_ which is never used by the brains.
 }
+void DirectionFunctionBM( const directia::Brain& brain, directia::ScriptRef& knowledgeCreateFunction, const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    boost::shared_ptr< MT_Vector2D > value;
+    if( element.ToDirection( value ) && value.get() )
+    {
+        knowledgeCreateFunction( refMission,  brain.GetScriptVariable( "net.masagroup.sword.military.world.Direction" ) , name, value, false );     
+    }
+}
 void NatureAtlasFunction( const directia::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     int value = 0;
@@ -596,6 +604,7 @@ void InitFunctions()
         functorsBM[ "GenObjectBM" ] = GenObjectFunctionBM;
         functorsBM[ "GenObjectListBM" ] = GenObjectListFunctionBM;
         functorsBM[ "UrbanBlockBM" ] = UrbanBlockFunctionBM;
+        functorsBM[ "DirectionBM" ] = DirectionFunctionBM;
     }
 }
 

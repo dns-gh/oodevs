@@ -98,7 +98,8 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType< MIL_ParameterType_Path                  >( std::string("Path") );
     RegisterParameterType< MIL_ParameterType_Path                  >( std::string("PathBM") );
     RegisterParameterType< MIL_ParameterType_PathList              >();
-    RegisterParameterType< MIL_ParameterType_Direction             >();
+    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("Direction") );
+    RegisterParameterType< MIL_ParameterType_Direction             >( std::string("DirectionBM") );
     RegisterParameterType< MIL_ParameterType_NatureAtlas           >();
     RegisterParameterType< MIL_ParameterType_Automat               >( std::string("Automate") );
     RegisterParameterType< MIL_ParameterType_Automat               >( std::string("AutomateBM") );

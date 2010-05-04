@@ -16,8 +16,8 @@
 // Name: MIL_ParameterType_Direction constructor
 // Created: SBO 2006-11-27
 // -----------------------------------------------------------------------------
-MIL_ParameterType_Direction::MIL_ParameterType_Direction()
-    : MIL_ParameterType_ABC( "Direction" )
+MIL_ParameterType_Direction::MIL_ParameterType_Direction( const std::string& name )
+    : MIL_ParameterType_ABC( name )
 {
     // NOTHING
 }

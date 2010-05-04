@@ -405,6 +405,7 @@ enum E_MissionParameterType
     eMissionParameterTypeNumeric,
     eMissionParameterTypeString,
     eMissionParameterTypeDirection,
+    eMissionParameterTypeDirectionBM,
     eMissionParameterTypeGDH, // $$$$ SBO 2007-05-24: 
     eMissionParameterTypeEnumeration,
     eMissionParameterTypeNatureAtlas,

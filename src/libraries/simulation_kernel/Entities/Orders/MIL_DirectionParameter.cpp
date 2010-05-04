@@ -49,3 +49,16 @@ bool MIL_DirectionParameter::ToDirection( Common::MsgHeading& asn ) const
     asn.set_heading( heading_ );
     return true;
 }
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToDirection
+// Created: MGD 2010-05-03
+// -----------------------------------------------------------------------------
+bool MIL_DirectionParameter::ToDirection( boost::shared_ptr< MT_Vector2D >& dir ) const
+{
+    MT_Vector2D direction( 0,1 );
+    direction.Rotate( ( heading_ / 360.f ) * MT_PI * 2 );
+    dir.reset( new MT_Vector2D( direction ) );
+    return true;
+}
