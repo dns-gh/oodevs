@@ -85,13 +85,19 @@ const PHY_ComposanteState& PHY_AttritionData::ComputeComposanteState( MT_Float u
     // Tirage de l'état opérationnel
     MT_Float rRand = randomGenerator_.rand_ii();
 
-    MT_Float rReduction = rDestroyed_ * urbanProtection;
-    MT_Float rDestroyedBound = rDestroyed_ - rReduction;
-    rReduction = ( rReparableWithEvacuation_ + rReduction ) * urbanProtection;
-    MT_Float rReparableWithEvacuationBound = rDestroyedBound + rReparableWithEvacuation_ - rReduction;
-    rReduction = ( rReparableWithoutEvacuation_ + rReduction ) * urbanProtection;
-    MT_Float rReparableWithoutEvacuationBound  = rReparableWithEvacuationBound + rReparableWithoutEvacuation_ - rReduction;
+    MT_Float rReductionDestroyed = rDestroyed_ * urbanProtection;
+    MT_Float rNewDestroyed = rDestroyed_ - rReductionDestroyed;
 
+    MT_Float rReductionReparableWithEvacuation = ( rReparableWithEvacuation_ + rReductionDestroyed ) * urbanProtection;
+    MT_Float rNewReductionReparableWithEvacuation = rReparableWithEvacuation_ + rReductionDestroyed - rReductionReparableWithEvacuation;
+   
+    MT_Float rReductionReparableWithoutEvacuation = ( rReparableWithoutEvacuation_ + rReductionReparableWithEvacuation ) * urbanProtection;
+    MT_Float rNewReductionReparableWithoutEvacuation = rReparableWithoutEvacuation_ + rReductionReparableWithEvacuation - rReductionReparableWithoutEvacuation;
+
+    MT_Float rDestroyedBound = rNewDestroyed;
+    MT_Float rReparableWithEvacuationBound = rDestroyedBound + rNewReductionReparableWithEvacuation;
+    MT_Float rReparableWithoutEvacuationBound = rReparableWithEvacuationBound + rNewReductionReparableWithoutEvacuation;
+ 
     return rRand <= rDestroyedBound                  ? PHY_ComposanteState::dead_:
            rRand <= rReparableWithEvacuationBound    ? PHY_ComposanteState::repairableWithEvacuation_   :
            rRand <= rReparableWithoutEvacuationBound ? PHY_ComposanteState::repairableWithoutEvacuation_:
