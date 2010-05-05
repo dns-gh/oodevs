@@ -152,6 +152,7 @@ MainWindow::MainWindow( kernel::Controllers& controllers, StaticModel& staticMod
     , forward_      ( new gui::CircularEventStrategy() )
     , eventStrategy_( new gui::ExclusiveEventStrategy( *forward_ ) )
     , glProxy_      ( 0 )
+    , connected_    ( false )
 {
     setIcon( MAKE_PIXMAP( csword ) );
     setCaption( tools::translate( "Application", "SWORD" ) + tr( " - Not connected" ) );
@@ -632,14 +633,22 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
 {
     const QString appName = tools::translate( "Application", "SWORD" );
     if( simulation.IsConnected() )
-        setCaption( appName + QString( " - [%1@%2][%3]" )
-                                     .arg( profile_ )
-                                     .arg( simulation.GetSimulationHost().c_str() )
-                                     .arg( ExtractExerciceName( config_.GetExerciseFile() ) ) ); // $$$$ SBO 2009-12-18: Use exercise META data
-    else
+    {
+        if ( !connected_ )
+        {
+            setCaption( appName + QString( " - [%1@%2][%3]" )
+                .arg( profile_ )
+                .arg( simulation.GetSimulationHost().c_str() )
+                .arg( ExtractExerciceName( config_.GetExerciseFile() ) ) ); // $$$$ SBO 2009-12-18: Use exercise META data
+            connected_ = true;
+        }
+    }
+    else 
+      if ( connected_ )
     {
         setCaption( appName + tr( " - Not connected" ) );
         controllers_.actions_.Select( SelectionStub() );
+        connected_ = false;
         Close();
     }
 }
