@@ -31,7 +31,7 @@ InfoMissionsTab::InfoMissionsTab( QTabWidget* parent, kernel::Controllers& contr
 {
     setMargin( 2 );
     setFrameStyle( QFrame::Plain );
-    AddColumn( tools::translate( "InfoMissionsTab", "Action" ) );
+    AddColumn( tools::translate( "InfoMissionsTab", "Parameter" ) );
     AddColumn( tools::translate( "InfoMissionsTab", "Value" ) );
     header()->hide();
     controllers_.Register( *this );

@@ -172,7 +172,7 @@ void Action_ABC::Draw( const geometry::Point2f& where, const kernel::Viewport_AB
 // -----------------------------------------------------------------------------
 void Action_ABC::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Action", "Action" ) ).Display( GetName() )
+    displayer.Item( tools::translate( "Action", "Parameter" ) ).Display( GetName() )
              .Item( tools::translate( "Action", "Value" ) ).Display( "" );
 }
 

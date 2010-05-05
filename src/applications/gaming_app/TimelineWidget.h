@@ -19,6 +19,12 @@ namespace actions
 {
     class ActionsModel;
 }
+
+namespace gui
+{
+    class ItemFactory_ABC;
+}
+
 class ActionsScheduler;
 
 // =============================================================================
@@ -33,7 +39,7 @@ class TimelineWidget : public QHBox
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler );
+             TimelineWidget( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, gui::ItemFactory_ABC& factory );
     virtual ~TimelineWidget();
     //@}
 

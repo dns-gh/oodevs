@@ -17,12 +17,6 @@ namespace Common
     class MsgUrbanBlock;
 }
 
-namespace urban
-{
-    class TerrainObject_ABC;
-    class Block;
-}
-
 namespace actions {
 
 namespace parameters {
@@ -39,16 +33,15 @@ class UrbanBlock : public Parameter< unsigned long >
 public:
     //! @name Constructors/Destructor
     //@{
-    UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id );
-    UrbanBlock( const kernel::OrderParameter& parameter, const Common::MsgUrbanBlock& message );
-    UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis );
+             UrbanBlock( const kernel::OrderParameter& parameter, unsigned long id );
+             UrbanBlock( const kernel::OrderParameter& parameter, const Common::MsgUrbanBlock& message );
+             UrbanBlock( const kernel::OrderParameter& parameter, xml::xistream& xis );
     virtual ~UrbanBlock();
     //@}
 
     //! @name Operations
     //@{
     virtual void CommitTo( Common::MsgMissionParameter& message ) const;
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     //@}
 
 private:

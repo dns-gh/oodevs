@@ -136,7 +136,7 @@ void Parameter_ABC::AddParameter( Parameter_ABC& parameter )
 // -----------------------------------------------------------------------------
 void Parameter_ABC::Display( Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Parameter", "Action" ) ).Display( GetName() )
+    displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
              .Item( tools::translate( "Parameter", "Value" ) ).Display( "" );
 }
 

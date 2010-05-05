@@ -46,7 +46,7 @@
     </message>
     <message>
         <source>Magic action type &apos;%1&apos; unknown.</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;action magique de type &apos;%1&apos; est inconnue.</translation>
     </message>
 </context>
 <context>
@@ -296,7 +296,7 @@
     <name>AgentPositions</name>
     <message>
         <source>Position:</source>
-        <translation type="unfinished"></translation>
+        <translation>Position:</translation>
     </message>
 </context>
 <context>
@@ -746,7 +746,7 @@
     <name>Lima</name>
     <message>
         <source>Phase line</source>
-        <translation type="unfinished"></translation>
+        <translation>Lima</translation>
     </message>
 </context>
 <context>
@@ -1225,15 +1225,15 @@
     </message>
     <message>
         <source>Fire</source>
-        <translation type="unfinished">Feu</translation>
+        <translation>Feu</translation>
     </message>
     <message>
         <source>Fire class:</source>
-        <translation type="unfinished">Type de feu:</translation>
+        <translation>Type de feu:</translation>
     </message>
     <message>
         <source>Fire temperature:</source>
-        <translation type="unfinished">Température du feu:</translation>
+        <translation>Température du feu:</translation>
     </message>
 </context>
 <context>
@@ -1339,7 +1339,7 @@
     </message>
     <message>
         <source>Too many connections</source>
-        <translation type="unfinished"></translation>
+        <translation>Trop de connexions</translation>
     </message>
 </context>
 <context>
@@ -1406,7 +1406,7 @@
     <name>Stock</name>
     <message>
         <source>Stock resource attribute</source>
-        <translation type="unfinished"></translation>
+        <translation>Attribut ressources en stock</translation>
     </message>
 </context>
 <context>

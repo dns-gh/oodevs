@@ -95,6 +95,6 @@ void AtlasNature::Clean( Common::MsgMissionParameter& message ) const
 // -----------------------------------------------------------------------------
 void AtlasNature::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Parameter", "Action" ) ).Display( GetName() )
+    displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
              .Item( tools::translate( "Parameter", "Value" ) ).Display( GetValue().GetName() ); // $$$$ SBO 2007-05-24: make a displayer
 }

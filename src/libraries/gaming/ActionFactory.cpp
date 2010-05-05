@@ -22,6 +22,7 @@
 #include "AgentsModel.h"
 #include "ObjectsModel.h"
 #include "KnowledgeGroupsModel.h"
+#include "ActionTasker.h"
 #include "ActionTiming.h"
 #include "ParameterFactory_ABC.h"
 #include "clients_kernel/Controllers.h"
@@ -70,6 +71,25 @@ ActionFactory::~ActionFactory()
     // NOTHING
 }
 
+namespace
+{
+    void ThrowMissingParameter( const actions::Action_ABC& action, const OrderParameter& param )
+    {
+        throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): missing parameter '%3'." )
+                                .arg( action.GetName() ).arg( action.GetId() ).arg( param.GetName().c_str() ) );
+    }
+
+    void ThrowTargetNotFound( unsigned long id )
+    {
+        throw std::exception( tools::translate( "ActionFactory", "Unable to find executing entity '%1'." ).arg( id ) );
+    }
+
+    void ThrowMagicIdNotFound( const std::string& id )
+    {
+        throw std::exception( tools::translate( "ActionFactory", "Magic action type '%1' unknown." ).arg( id.c_str() ) );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAction
 // Created: SBO 2007-03-12
@@ -87,6 +107,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, cons
         throw std::runtime_error( __FUNCTION__ " Cannot resolve executing entity" );
 
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( target, false ) );
     action->Polish();
     return action.release();
 }
@@ -99,6 +120,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, cons
 {
     std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( target, fragOrder, controllers_.controller_, true ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( target, false ) );
     action->Polish();
     return action.release();
 }
@@ -110,8 +132,10 @@ actions::Action_ABC* ActionFactory::CreateAction( const Entity_ABC& target, cons
 actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgUnitOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission() );
-    std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( model_.agents_.GetAgent( message.oid() ), mission, controllers_.controller_, false ) );
+    const kernel::Entity_ABC& tasker = model_.agents_.GetAgent( message.oid() );
+    std::auto_ptr< actions::Action_ABC > action( new actions::AgentMission( tasker, mission, controllers_.controller_, true ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
 
     AddParameters( *action, mission, message.parametres() );
@@ -125,8 +149,10 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgUnitOrder& me
 actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission() );
-    std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( model_.agents_.GetAutomat( message.oid() ), mission, controllers_.controller_, false ) );
+    const kernel::Entity_ABC& tasker = model_.agents_.GetAutomat( message.oid() );
+    std::auto_ptr< actions::Action_ABC > action( new actions::AutomatMission( tasker, mission, controllers_.controller_, true ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
 
     AddParameters( *action, mission, message.parametres() );
@@ -140,14 +166,30 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder&
 actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgPopulationOrder& message ) const
 {
     const MissionType& mission = missions_.Get( message.mission() );
-    std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( model_.agents_.GetPopulation( message.oid() ), mission, controllers_.controller_, false ) );
+    const kernel::Entity_ABC& tasker = model_.agents_.GetPopulation( message.oid() );
+    std::auto_ptr< actions::Action_ABC > action( new actions::PopulationMission( tasker, mission, controllers_.controller_, true ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
 
     AddParameters( *action, mission, message.parametres() );
     return action.release();
 }
 
+namespace
+{
+    const kernel::Entity_ABC& FindTasker( unsigned int id, AgentsModel& model )
+    {
+        const kernel::Entity_ABC* tasker = 0;
+        if( tasker = model.FindAgent( id ) )
+            return *tasker;
+        if( tasker = model.FindAutomat( id ) )
+            return *tasker;
+        if( tasker = model.FindPopulation( id ) )
+            return *tasker;
+        ThrowTargetNotFound( id );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateAction
@@ -155,17 +197,12 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgPopulationOrd
 // -----------------------------------------------------------------------------
 actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFragOrder& message ) const
 {
+    const kernel::Entity_ABC& tasker = FindTasker( message.oid(), model_.agents_ );
     const FragOrderType& order = fragOrders_.Get( message.frag_order() );
-    std::auto_ptr< actions::Action_ABC > action;
-    if( const Agent_ABC* agent = model_.agents_.FindAgent( message.oid() ) )
-        action.reset( new actions::FragOrder( *agent, order, controllers_.controller_, false ) );
-    else if( const Automat_ABC* automat = model_.agents_.FindAutomat( message.oid() ) )
-        action.reset( new actions::FragOrder( *automat, order, controllers_.controller_, false ) );
-    else if( const Population_ABC* population = model_.agents_.FindPopulation( message.oid() ) )
-        action.reset( new actions::FragOrder( *population, order, controllers_.controller_, false ) );
+    std::auto_ptr< actions::Action_ABC > action( new actions::FragOrder( tasker, order, controllers_.controller_, true ) );
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
-
     AddParameters( *action, order, message.parametres() );
     return action.release();
 }
@@ -213,25 +250,6 @@ actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
     return 0;
 }
 
-namespace
-{
-    void ThrowMissingParameter( const actions::Action_ABC& action, const OrderParameter& param )
-    {
-        throw std::exception( tools::translate( "ActionFactory", "Parameter mismatch in action '%1' (id: %2): missing parameter '%3'." )
-                                .arg( action.GetName() ).arg( action.GetId() ).arg( param.GetName().c_str() ) );
-    }
-
-    void ThrowTargetNotFound( unsigned long id )
-    {
-        throw std::exception( tools::translate( "ActionFactory", "Unable to find executing entity '%1'." ).arg( id ) );
-    }
-
-    void ThrowMagicIdNotFound( const std::string& id )
-    {
-        throw std::exception( tools::translate( "ActionFactory", "Magic action type '%1' unknown." ).arg( id.c_str() ) );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ActionFactory::CreateMission
 // Created: SBO 2007-06-26
@@ -250,8 +268,8 @@ actions::Action_ABC* ActionFactory::CreateMission( xml::xistream& xis ) const
         action.reset( new actions::PopulationMission( xis, controllers_.controller_, missions_, *target ) );
     else
         ThrowTargetNotFound( id );
-
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( *target, false ) );
     action->Polish();
 
     tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
@@ -278,8 +296,8 @@ actions::Action_ABC* ActionFactory::CreateFragOrder( xml::xistream& xis ) const
     if( !target )
         ThrowTargetNotFound( id );
     action.reset( new actions::FragOrder( xis, controllers_.controller_, fragOrders_, *target ) );
-
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( *target, false ) );
     action->Polish();
 
     tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();
@@ -298,9 +316,7 @@ actions::Action_ABC* ActionFactory::CreateMagicAction( xml::xistream& xis ) cons
     const std::string id = xml::attribute< std::string >( xis, "id" );
 
     std::auto_ptr< actions::MagicAction > action;
-
     action.reset( new actions::MagicAction( xis, controllers_.controller_, magicActions_.Get( id ) ) );
-
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
     action->Polish();
 
@@ -330,8 +346,8 @@ actions::Action_ABC* ActionFactory::CreateUnitMagicAction( xml::xistream& xis ) 
         ThrowTargetNotFound( targetid );
 
     action.reset( new actions::UnitMagicAction( xis, controllers_.controller_, magicActions_.Get( id ), *target ) );
-
     action->Attach( *new ActionTiming( xis, controllers_.controller_, simulation_, *action ) );
+    action->Attach( *new ActionTasker( *target, false ) );
     action->Polish();
 
     tools::Iterator< const OrderParameter& > it = action->GetType().CreateIterator();

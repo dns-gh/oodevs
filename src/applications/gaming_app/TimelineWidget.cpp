@@ -9,6 +9,8 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineWidget.h"
+//#include "ActionsListView.h"
+#include "ActionProperties.h"
 #include "TimelineListView.h"
 #include "TimelineView.h"
 #include "TimelineRuler.h"
@@ -55,7 +57,7 @@ using namespace actions;
 // Name: TimelineWidget constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler )
+TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, gui::ItemFactory_ABC& factory )
     : QHBox( parent, "TimelineWidget" )
 {
     QSplitter* splitter = new QSplitter( this );
@@ -63,6 +65,8 @@ TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controller
     QVBox* box = new QVBox( splitter );
     TimelineRuler* ruler = new TimelineRuler( box, controllers, list->header()->height() );
     QCanvasView* editor = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
+//    new ActionsListView( this, controllers, factory );
+    new ActionProperties( this, controllers, factory );
 
     connect( editor, SIGNAL( contentsMoving( int, int ) ), list  , SLOT( setContentsPos( int, int ) ) );
     connect( list  , SIGNAL( contentsMoving( int, int ) ), editor, SLOT( setContentsPos( int, int ) ) );

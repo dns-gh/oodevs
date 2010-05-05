@@ -12,7 +12,8 @@
 #include "TimelineMarker.h"
 #include "TimelineActionItem.h"
 #include "TimelineRuler.h"
-#include "actions/ActionWithTarget_ABC.h"
+#include "actions/Action_ABC.h"
+#include "gaming/ActionTasker.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
 #include "clients_kernel/Controllers.h"
@@ -37,13 +38,6 @@ TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& contr
     , marker_      ( new TimelineMarker( canvas, scheduler, controllers_, ruler_ ) )
     , selectedItem_( 0 )
 {
-    actionPalette_.setColor( QPalette::Disabled, QColorGroup::Background, QColor( 220, 220, 220 ) );
-    actionPalette_.setColor( QPalette::Disabled, QColorGroup::Foreground, QColor( 180, 180, 180 ) );
-    actionPalette_.setColor( QPalette::Inactive, QColorGroup::Background, QColor( 200, 240, 215 ) );
-    actionPalette_.setColor( QPalette::Inactive, QColorGroup::Foreground, QColor(  50, 200, 105 ) );
-    actionPalette_.setColor( QPalette::Active  , QColorGroup::Background, QColor( 200, 215, 240 ) );
-    actionPalette_.setColor( QPalette::Active  , QColorGroup::Foreground, QColor(  50, 105, 200 ) );
-
     // initialize some elements needed in action tooltips
     QMimeSourceFactory::defaultFactory()->setPixmap( "mission", MAKE_PIXMAP( mission ) );
 
@@ -67,18 +61,16 @@ TimelineView::~TimelineView()
 // -----------------------------------------------------------------------------
 void TimelineView::NotifyCreated( const Action_ABC& action )
 {
-    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
     const kernel::Entity_ABC* entity = 0;
-    if( actionWithTarget )
-        entity = &actionWithTarget->GetEntity();
-
+    if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
+        entity = &tasker->GetTasker();
     T_Entities::iterator it = std::find( entities_.begin(), entities_.end(), entity );
     if( it == entities_.end() )
     {
         entities_.push_back( entity );
         canvas()->resize( canvas()->width(), canvas()->height() + rowHeight_ );
     }
-    actions_[ entity ][ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action, actionPalette_ );
+    actions_[ entity ][ &action ] = new TimelineActionItem( canvas(), ruler_, controllers_, model_, action );
 
     Update();
 }
@@ -90,9 +82,8 @@ void TimelineView::NotifyCreated( const Action_ABC& action )
 void TimelineView::NotifyDeleted( const Action_ABC& action )
 {
     const kernel::Entity_ABC* entity = 0;
-    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
-    if( actionWithTarget )
-        entity = &actionWithTarget->GetEntity();
+    if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
+        entity = &tasker->GetTasker();
 
     T_EntityActions::iterator it = actions_.find( entity );
     if( it != actions_.end() )
@@ -302,9 +293,9 @@ void TimelineView::SetSelected( TimelineItem_ABC& item )
 void TimelineView::NotifySelected( const actions::Action_ABC* action )
 {
     const kernel::Entity_ABC* entity = 0;
-    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( action );
-    if( actionWithTarget )
-        entity = &actionWithTarget->GetEntity();
+    if( action )
+        if( const ActionTasker* tasker = action->Retrieve< ActionTasker >() )
+            entity = &tasker->GetTasker();
 
     T_EntityActions::iterator it = actions_.find( entity );
     if( it != actions_.end() )

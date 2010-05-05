@@ -81,7 +81,7 @@ const T& Parameter< T >::GetValue() const
 template< typename T >
 void Parameter< T >::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Item( tools::translate( "Parameter", "Action" ) ).Display( GetName() )
+    displayer.Item( tools::translate( "Parameter", "Parameter" ) ).Display( GetName() )
              .Item( tools::translate( "Parameter", "Value" ) ).Display( value_ );
 }
 

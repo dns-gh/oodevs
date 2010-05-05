@@ -1,8 +1,8 @@
 HEADERS = LogisticConsignsWidget_ABC.h \
 
 
-SOURCES = ActionsListView.cpp \
-ActionsPanel.cpp \
+SOURCES = ActionProperties.cpp \
+ActionsListView.cpp \
 ActionsToolbar.cpp \
 AfterAction.cpp \
 AfterActionFunctionList.cpp \

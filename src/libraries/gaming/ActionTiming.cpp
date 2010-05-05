@@ -10,7 +10,9 @@
 #include "gaming_pch.h"
 #include "ActionTiming.h"
 #include "Simulation.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Displayer_ABC.h"
 #include <xeumeuleu/xml.h>
 
 using namespace actions;
@@ -73,6 +75,16 @@ ActionTiming::~ActionTiming()
 void ActionTiming::SerializeAttributes( xml::xostream& xos ) const
 {
     xos << xml::attribute( "time", time_.toString( Qt::ISODate ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionTiming::DisplayInSummary
+// Created: SBO 2010-05-04
+// -----------------------------------------------------------------------------
+void ActionTiming::DisplayInSummary( kernel::Displayer_ABC& displayer ) const
+{
+    displayer.Display( tools::translate( "ActionTiming", "Time" ), time_.toString( Qt::ISODate ) )
+             .Display( tools::translate( "ActionTiming", "Enabled" ), enabled_ );
 }
 
 // -----------------------------------------------------------------------------

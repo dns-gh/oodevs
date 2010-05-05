@@ -3,11 +3,15 @@
     <name>Action</name>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
         <translation>Valeur</translation>
+    </message>
+    <message>
+        <source>Parameter</source>
+        <translation>Paramètre</translation>
     </message>
 </context>
 <context>
@@ -48,7 +52,7 @@
     <name>Parameter</name>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
@@ -169,6 +173,10 @@
     <message>
         <source>Population knowledge not found.</source>
         <translation>La connaissance de population n&apos;existe pas.</translation>
+    </message>
+    <message>
+        <source>Parameter</source>
+        <translation>Paramètre</translation>
     </message>
 </context>
 </TS>

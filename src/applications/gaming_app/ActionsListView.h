@@ -25,11 +25,8 @@ namespace actions
     class Parameter_ABC;
 }
 
-class ActionsToolbar;
-class ActionTiming;
-
 class ActionsListView;
-typedef gui::ListView< ActionsListView > ActionsListViewBase;
+typedef gui::ListDisplayer< ActionsListView > ActionsListViewBase;
 
 // =============================================================================
 /** @class  ActionsListView
@@ -40,10 +37,8 @@ typedef gui::ListView< ActionsListView > ActionsListViewBase;
 class ActionsListView : public ActionsListViewBase
                       , public tools::Observer_ABC
                       , public tools::ElementObserver_ABC< actions::Action_ABC >
-                      , public tools::ElementObserver_ABC< ActionTiming >
                       , public tools::SelectionObserver< actions::Action_ABC >
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -54,13 +49,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( const actions::Parameter_ABC& param, gui::ValuedListItem* item );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnItemClicked( QListViewItem* item, const QPoint& point, int col );
+    virtual void Display( const actions::Parameter_ABC& param, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
     //@}
 
 private:
@@ -72,23 +61,14 @@ private:
 
     //! @name Helpers
     //@{
-    void AddColumn( const QString& column, int alignment = AlignAuto, int size = -1 );
-    virtual void NotifyCreated( const actions::Action_ABC& action );
     virtual void NotifyUpdated( const actions::Action_ABC& action );
-    virtual void NotifyDeleted( const actions::Action_ABC& action );
     virtual void NotifySelected( const actions::Action_ABC* action );
-    virtual void NotifyUpdated( const ActionTiming& extension );
-    void Display( QListViewItem* item, const actions::Action_ABC& action );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::ItemFactory_ABC& factory_;
-    gui::ListItemDisplayer* sub_;
-    QPixmap mission_;
-    QPixmap checkboxOn_, checkboxOff_;
     QPixmap parameter_;
     //@}
 };

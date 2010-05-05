@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "TimelinePanel.h"
+#include "ActionsToolbar.h"
 #include "TimelineWidget.h"
 #include "gaming/Tools.h"
 
@@ -18,7 +19,7 @@ using namespace actions;
 // Name: TimelinePanel constructor
 // Created: SBO 2007-07-04
 // -----------------------------------------------------------------------------
-TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler )
+TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controllers, ActionsModel& model, ActionsScheduler& scheduler, const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory )
     : QDockWindow( parent, "timeline" )
 {
     setResizeEnabled( true );
@@ -26,7 +27,8 @@ TimelinePanel::TimelinePanel( QMainWindow* parent, kernel::Controllers& controll
     setCaption( tools::translate( "TimelinePanel", "Actions timeline" ) );
     setCloseMode( QDockWindow::Always );
     QVBox* box = new QVBox( this );
-    new TimelineWidget( box, controllers, model, scheduler );
+    new ActionsToolbar( box, model, scheduler, config, controllers );
+    new TimelineWidget( box, controllers, model, scheduler, factory );
     setWidget( box );
 }
 

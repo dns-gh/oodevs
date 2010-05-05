@@ -820,7 +820,7 @@ void AgentServerMsgMgr::OnReceiveMsgUnitOrderAck( const MsgsSimToClient::MsgUnit
 // -----------------------------------------------------------------------------
 void AgentServerMsgMgr::OnReceiveMsgUnitOrder( const Common::MsgUnitOrder& message )
 {
-    GetModel().agents_.FindAllAgent( message.oid() )->Update( message );
+    GetModel().agents_.GetAgent( message.oid() ).Update( message );
 }
 
 //-----------------------------------------------------------------------------

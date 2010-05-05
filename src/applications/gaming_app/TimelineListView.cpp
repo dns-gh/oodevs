@@ -14,6 +14,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_gui/ValuedListItem.h"
+#include "gaming/ActionTasker.h"
 #include <qpainter.h>
 
 namespace
@@ -77,15 +78,12 @@ TimelineListView::~TimelineListView()
 void TimelineListView::NotifyCreated( const Action_ABC& action )
 {
     const kernel::Entity_ABC* entity = 0;
-    QString name;
-    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
-    if( actionWithTarget )
+    QString name = "Magic";
+    if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
     {
-        entity = &actionWithTarget->GetEntity();
+        entity = &tasker->GetTasker();
         name = entity->GetName();
     }
-    else
-        name = "Magic";
 
     gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
     if( !item )
@@ -100,9 +98,8 @@ void TimelineListView::NotifyCreated( const Action_ABC& action )
 void TimelineListView::NotifyDeleted( const Action_ABC& action )
 {
     const kernel::Entity_ABC* entity = 0;
-    const ActionWithTarget_ABC* actionWithTarget = dynamic_cast< const ActionWithTarget_ABC* >( &action );
-    if( actionWithTarget )
-        entity = &actionWithTarget->GetEntity();
+    if( const ActionTasker* tasker = action.Retrieve< ActionTasker >() )
+        entity = &tasker->GetTasker();
 
     if( gui::ValuedListItem* item = gui::FindItem( entity, firstChild() ) )
     {

@@ -10,6 +10,7 @@
 #ifndef __ActionTiming_h_
 #define __ActionTiming_h_
 
+#include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
 
@@ -39,6 +40,7 @@ class Simulation;
 // =============================================================================
 class ActionTiming : public kernel::Extension_ABC
                    , public kernel::Serializable_ABC
+                   , public kernel::Displayable_ABC
 {
 
 public:
@@ -54,6 +56,7 @@ public:
     void ToggleEnabled();
     virtual void SerializeAttributes( xml::xostream& ) const;
     void Shift( long secs );
+    virtual void DisplayInSummary( kernel::Displayer_ABC& displayer ) const;
     //@}
 
     //! @name Accessors

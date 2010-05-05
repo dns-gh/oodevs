@@ -77,22 +77,29 @@
     </message>
 </context>
 <context>
+    <name>ActionProperties</name>
+    <message>
+        <source>Properties</source>
+        <translation>Propriétés</translation>
+    </message>
+</context>
+<context>
     <name>ActionsListView</name>
     <message>
         <source>Target: %1</source>
-        <translation>Cible: %1</translation>
+        <translation type="obsolete">Cible: %1</translation>
     </message>
     <message>
         <source>S</source>
-        <translation>S</translation>
+        <translation type="obsolete">S</translation>
     </message>
     <message>
         <source>Time</source>
-        <translation>Temps</translation>
+        <translation type="obsolete">Temps</translation>
     </message>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
@@ -100,18 +107,22 @@
     </message>
     <message>
         <source>MM-dd hh:mm</source>
-        <translation>MM-dd hh:mm</translation>
+        <translation type="obsolete">MM-dd hh:mm</translation>
     </message>
     <message>
         <source>MM-d hh:mm</source>
-        <translation>MM-d hh:mm</translation>
+        <translation type="obsolete">MM-d hh:mm</translation>
+    </message>
+    <message>
+        <source>Parameter</source>
+        <translation>Paramètre</translation>
     </message>
 </context>
 <context>
     <name>ActionsPanel</name>
     <message>
         <source>Actions</source>
-        <translation>Actions</translation>
+        <translation type="obsolete">Actions</translation>
     </message>
 </context>
 <context>
@@ -336,7 +347,7 @@
     </message>
     <message>
         <source>Alarm parameters</source>
-        <translation type="unfinished">Paramètres de l&apos;alarme</translation>
+        <translation>Paramètres de l&apos;alarme</translation>
     </message>
 </context>
 <context>
@@ -570,7 +581,7 @@
         <source>Not connected to %1:%2
 Reason: %3
 </source>
-        <translation type="unfinished">Non connecté à %1:%2
+        <translation>Non connecté à %1:%2
 Reason: %3
 </translation>
     </message>
@@ -976,11 +987,15 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <name>InfoMissionsTab</name>
     <message>
         <source>Action</source>
-        <translation>Action</translation>
+        <translation type="obsolete">Action</translation>
     </message>
     <message>
         <source>Value</source>
         <translation>Valeur</translation>
+    </message>
+    <message>
+        <source>Parameter</source>
+        <translation>Paramètre</translation>
     </message>
 </context>
 <context>
@@ -1424,11 +1439,11 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Magic orders</source>
-        <translation type="unfinished">Actions magiques</translation>
+        <translation>Actions magiques</translation>
     </message>
     <message>
         <source>Partial recompletion</source>
-        <translation type="unfinished">Recomplétion partielle</translation>
+        <translation>Recomplétion partielle</translation>
     </message>
     <message>
         <source>Quantity %</source>
@@ -2965,6 +2980,30 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Press enter to rename, unfocus field to cancel</source>
         <translation>Appuyez sur [Entrée] pour valider, cliquez en dehors du champ pour annuler</translation>
     </message>
+    <message>
+        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;&lt;img source=&quot;mission&quot;&gt;&lt;/td&gt;&lt;td&gt;&lt;nobr&gt;&lt;b&gt;%1&lt;/b&gt;&lt;/nobr&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;i&gt;issued by automat&lt;/i&gt;</source>
+        <translation>&lt;i&gt;assignée par l&apos;automate&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;i&gt;disabled&lt;/i&gt;</source>
+        <translation>&lt;i&gt;désactivée&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <source>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Starts: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</source>
+        <translation>&lt;table cellspacing=&apos;0&apos; cellpadding=&apos;0&apos;&gt;&lt;tr&gt;&lt;td&gt;Démarre: &lt;/td&gt;&lt;td&gt;&lt;i&gt;%1&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</translation>
+    </message>
+    <message>
+        <source>Disable</source>
+        <translation>Désactiver</translation>
+    </message>
+    <message>
+        <source>Enable</source>
+        <translation>Activer</translation>
+    </message>
 </context>
 <context>
     <name>TimelineListView</name>
@@ -3138,12 +3177,20 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Create</source>
         <translation type="obsolete">Créer</translation>
     </message>
+    <message>
+        <source>Parameter</source>
+        <translation type="obsolete">Paramètre</translation>
+    </message>
+    <message>
+        <source>Value</source>
+        <translation type="obsolete">Valeur</translation>
+    </message>
 </context>
 <context>
     <name>tools</name>
     <message>
         <source> - Not connected</source>
-        <translation type="unfinished"> - Non connecté</translation>
+        <translation> - Non connecté</translation>
     </message>
 </context>
 </TS>

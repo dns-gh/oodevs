@@ -105,7 +105,6 @@ private:
     TimelineMarker*        marker_;
     TimelineItem_ABC*      selectedItem_;
     QPoint                 grabPoint_;
-    QPalette               actionPalette_;
     //@}
 };
 

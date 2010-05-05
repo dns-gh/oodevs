@@ -49,7 +49,7 @@ class TimelineActionItem : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             TimelineActionItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, actions::ActionsModel& model, const actions::Action_ABC& action, const QPalette& palette );
+             TimelineActionItem( QCanvas* canvas, const TimelineRuler& ruler, kernel::Controllers& controllers, actions::ActionsModel& model, const actions::Action_ABC& action );
     virtual ~TimelineActionItem();
     //@}
 
@@ -68,6 +68,7 @@ private slots:
     void OnDelete();
     void OnRename();
     void DoRename();
+    void OnToggleEnabled();
     //@}
 
 private:
@@ -79,8 +80,8 @@ private:
 
     //! @name Helpers
     //@{
+    virtual void setEnabled( bool enabled );
     virtual void setSelected( bool selected );
-    virtual void setVisible( bool visible );
     virtual void draw( QPainter& painter );
     virtual void NotifyUpdated( const ActionTiming& timing );
     void ComputeTextWidth( QPainter& painter );
@@ -95,7 +96,6 @@ private:
     actions::ActionsModel& model_;
     const actions::Action_ABC& action_;
     unsigned int textWidth_;
-    const QPalette& palette_;
     mutable QLineEdit* nameEditor_;
     //@}
 };
