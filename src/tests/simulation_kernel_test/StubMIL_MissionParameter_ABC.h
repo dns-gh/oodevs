@@ -107,6 +107,8 @@ public:
     }
     virtual bool ToPoint( boost::shared_ptr< MT_Vector2D >& ) const
     { throw; }
+    virtual bool ToDirection( boost::shared_ptr< MT_Vector2D >& ) const
+    { throw; }
     virtual bool ToPointList( std::vector< boost::shared_ptr< MT_Vector2D > >& ) const
     { throw; }
     virtual bool ToPolygon( boost::shared_ptr< TER_Localisation >& ) const
