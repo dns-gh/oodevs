@@ -8836,7 +8836,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>DirectionBM</source>
-        <translation type="unfinished"></translation>
+        <translation>DirectionBM</translation>
     </message>
 </context>
 <context>
