@@ -79,7 +79,7 @@ public:
             return false;
 
         ADN_Weapons_Data::PhInfos* pPhInfos = static_cast<ADN_Weapons_Data::PhInfos*>( pItem );
-        new ADN_GraphValue( graphData_, pPhInfos, pPhInfos->nModifiedDistance_ , pPhInfos->rModifiedPerc_ ); // LTO
+        new ADN_GraphValue( graphData_, pPhInfos, pPhInfos->nModifiedDistance_ , pPhInfos->rModifiedPerc_ );
         return true;
     }
 
@@ -260,7 +260,6 @@ void ADN_Weapons_GUI::Build()
 
     pPhSizeListView->SetItemConnectors( vPhConnectors );
 
-    // LTO begin
     ADN_GroupBox* pSimulation = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Simulation" ), pDirectGroup );
     vInfosConnectors[eSimulation] = &pSimulation->GetConnector();
     connect( pSimulation, SIGNAL( toggled( bool ) ), this, SLOT( ModifiersChanged( bool ) ) );
@@ -278,7 +277,6 @@ void ADN_Weapons_GUI::Build()
 
     ADN_ComboBox* pTirednessCombo = builder.AddEnumField< E_UnitTiredness >( pModifiersHolder, tr( "Tiredness" ), vInfosConnectors[eTiredness], ENT_Tr::ConvertFromUnitTiredness );
     connect( pTirednessCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-    // LTO end
 
     // Indirect group
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect fire" ), pGroup );
@@ -302,26 +300,26 @@ void ADN_Weapons_GUI::Build()
     pGroupLayout->addWidget( pDirectGroup );
     pGroupLayout->addWidget( pIndirectGroup);
 
-    // LTO begin
-    QVBoxLayout* pModifiersLayout = new QVBoxLayout( pModifiersHolder->layout(), 2 );
-    pModifiersLayout->setAlignment( Qt::AlignTop );
-    pModifiersLayout->addWidget( pFirePostureCombo );
-    pModifiersLayout->addWidget( pTargetPostureCombo );
-    pModifiersLayout->addWidget( pExperienceCombo );
-    pModifiersLayout->addWidget( pTirednessCombo );
- 
-    QHBoxLayout* pSimulationLayout = new QHBoxLayout( pSimulation->layout(), 2 );
-    pSimulationLayout->addWidget( pModifiersHolder );
+    { // $$$$ LDC Ciode review: Should be extracted in its own method
+        QVBoxLayout* pModifiersLayout = new QVBoxLayout( pModifiersHolder->layout(), 2 );
+        pModifiersLayout->setAlignment( Qt::AlignTop );
+        pModifiersLayout->addWidget( pFirePostureCombo );
+        pModifiersLayout->addWidget( pTargetPostureCombo );
+        pModifiersLayout->addWidget( pExperienceCombo );
+        pModifiersLayout->addWidget( pTirednessCombo );
+     
+        QHBoxLayout* pSimulationLayout = new QHBoxLayout( pSimulation->layout(), 2 );
+        pSimulationLayout->addWidget( pModifiersHolder );
 
-    QGridLayout* pDirectLayout = new QGridLayout( pDirectGroup->layout(), 2, 5, 5 );
-    pDirectLayout->addWidget( pPhSizeListView, 0, 0 );
-    pDirectLayout->addWidget( pPhTable, 0, 1 );
-    pDirectLayout->addMultiCellWidget( pSimulation, 0, 0, 2, 4 );
-    pDirectLayout->addMultiCellWidget( pGraph, 1, 1, 0, 4 );
-    pDirectLayout->setColStretch( 0, 1 );
-    pDirectLayout->setColStretch( 1, 2 );
-    pDirectLayout->setColStretch( 3, 2 );
-    // LTO end
+        QGridLayout* pDirectLayout = new QGridLayout( pDirectGroup->layout(), 2, 5, 5 );
+        pDirectLayout->addWidget( pPhSizeListView, 0, 0 );
+        pDirectLayout->addWidget( pPhTable, 0, 1 );
+        pDirectLayout->addMultiCellWidget( pSimulation, 0, 0, 2, 4 );
+        pDirectLayout->addMultiCellWidget( pGraph, 1, 1, 0, 4 );
+        pDirectLayout->setColStretch( 0, 1 );
+        pDirectLayout->setColStretch( 1, 2 );
+        pDirectLayout->setColStretch( 3, 2 );
+    }
 }
 
 

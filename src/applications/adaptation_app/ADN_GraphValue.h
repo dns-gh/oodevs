@@ -111,7 +111,4 @@ void* ADN_GraphValue::GetRelatedObject()
     return pRelatedObject_;
 }
 
-
-
-
 #endif // __ADN_GraphValue_h_

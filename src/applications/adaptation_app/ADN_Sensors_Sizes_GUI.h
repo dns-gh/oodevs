@@ -20,9 +20,24 @@
 class ADN_Sensors_Sizes_GUI
 : public ADN_Table2
 {
+    Q_OBJECT;
+
 public:
     explicit ADN_Sensors_Sizes_GUI(QWidget * parent = 0 );
     virtual ~ADN_Sensors_Sizes_GUI();
+
+signals:
+    //! @name Signals
+    //@{
+    void SizeChanged( std::string size, double coeff );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnCurrentChanged();
+    //@}
+
 };
 
 

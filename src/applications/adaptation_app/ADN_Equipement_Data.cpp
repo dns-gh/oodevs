@@ -323,7 +323,7 @@ std::string ADN_Equipement_Data::ModificatorPostureInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Equipement_Data::ModificatorPostureInfos::GetItemName()
 {
-    return std::string();
+    return ENT_Tr::ConvertFromUnitPosture( eType_,  ENT_Tr_ABC::eToTr );
 }
 
 // -----------------------------------------------------------------------------

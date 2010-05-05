@@ -20,10 +20,24 @@
 class ADN_Sensors_Meteos_GUI
 : public ADN_Table2
 {
+
+    Q_OBJECT;
+
 public:
     explicit ADN_Sensors_Meteos_GUI(QWidget * parent = 0 );
     virtual ~ADN_Sensors_Meteos_GUI();
 
+signals:
+    //! @name Signals
+    //@{
+    void WeatherChanged( std::string posture, double coeff );
+    //@}
+
+private slots:
+        //! @name Slots
+        //@{
+        void OnCurrentChanged();
+        //@}
 };
 
 

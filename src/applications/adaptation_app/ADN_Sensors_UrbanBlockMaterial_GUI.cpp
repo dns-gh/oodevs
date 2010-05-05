@@ -10,6 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_UrbanBlockMaterial_GUI.h"
+#include "moc_ADN_Sensors_UrbanBlockMaterial_GUI.cpp"
 
 #include "ADN_App.h"
 #include "ADN_Tools.h"
@@ -87,6 +88,8 @@ ADN_Sensors_UrbanBlockMaterial_GUI::ADN_Sensors_UrbanBlockMaterial_GUI(QWidget *
 
     // connector creation
     pConnector_=new ADN_CT_Sensors_UrbanBlock(*this);
+    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
+    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
 }
 
 
@@ -97,4 +100,15 @@ ADN_Sensors_UrbanBlockMaterial_GUI::ADN_Sensors_UrbanBlockMaterial_GUI(QWidget *
 ADN_Sensors_UrbanBlockMaterial_GUI::~ADN_Sensors_UrbanBlockMaterial_GUI()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_UrbanBlockMaterial_GUI::OnCurrentChanged
+// Created: HBD 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Sensors_UrbanBlockMaterial_GUI::OnCurrentChanged()
+{
+    if( ModificatorUrbanBlockInfos* data = static_cast< ModificatorUrbanBlockInfos* >( GetCurrentData() ) )
+        emit UrbanBlockChanged( data->GetItemName(), data->rCoeff_.GetData() );
+
 }

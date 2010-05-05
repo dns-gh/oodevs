@@ -10,6 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Meteos_GUI.h"
+#include "moc_ADN_Sensors_Meteos_GUI.cpp"
 
 #include "ADN_App.h"
 #include "ADN_Tools.h"
@@ -87,6 +88,9 @@ ADN_Sensors_Meteos_GUI::ADN_Sensors_Meteos_GUI(QWidget * parent)
 
     // connector creation
     pConnector_=new ADN_CT_Sensors_Meteos(*this);
+
+    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
+    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
 }
 
 
@@ -97,4 +101,14 @@ ADN_Sensors_Meteos_GUI::ADN_Sensors_Meteos_GUI(QWidget * parent)
 ADN_Sensors_Meteos_GUI::~ADN_Sensors_Meteos_GUI()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Meteos_GUI::OnCurrentChanged
+// Created: HBD 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Meteos_GUI::OnCurrentChanged()
+{
+    if( ModificatorMeteoInfos* data = static_cast< ModificatorMeteoInfos* >( GetCurrentData() ) )
+        emit WeatherChanged( data->GetItemName(), data->rCoeff_.GetData() );
 }

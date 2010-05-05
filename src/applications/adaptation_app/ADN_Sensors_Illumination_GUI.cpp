@@ -10,6 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Illumination_GUI.h"
+#include "moc_ADN_Sensors_Illumination_GUI.cpp"
 
 #include "ADN_App.h"
 #include "ADN_Tools.h"
@@ -91,6 +92,9 @@ ADN_Sensors_Illumination_GUI::ADN_Sensors_Illumination_GUI(QWidget * parent )
 
     // connector creation
     pConnector_=new ADN_CT_Sensors_Illuminations(*this);
+    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
+    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
+
 }
 
 
@@ -101,4 +105,15 @@ ADN_Sensors_Illumination_GUI::ADN_Sensors_Illumination_GUI(QWidget * parent )
 ADN_Sensors_Illumination_GUI::~ADN_Sensors_Illumination_GUI()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Illumination_GUI::OnCurrentChanged
+// Created: HBD 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Illumination_GUI::OnCurrentChanged()
+{
+    if( ModificatorIlluminationInfos* data = static_cast< ModificatorIlluminationInfos* >( GetCurrentData() ) )
+        emit IlluminationChanged( data->GetItemName(), data->rCoeff_.GetData() );
+
 }

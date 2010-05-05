@@ -30,6 +30,8 @@ class ADN_Table;
 class ADN_Sensors_GUI 
 : public ADN_GUI_ABC
 {
+    Q_OBJECT
+
     MT_COPYNOTALLOWED( ADN_Sensors_GUI )
 
 public:
@@ -56,6 +58,13 @@ public:
         ePopulationModifier,
         eLimitedSensorsList, // LTO
         eLimitedToSensors, // LTO
+        ePreviewModifSizes,
+        ePreviewModifWeather,
+        ePreviewModifIllumination,
+        ePreviewModifEnvironement,
+        ePreviewModifUrbanBlockMaterial,
+        ePreviewModifStances,
+        ePreviewModifTargetStances,
         eNbrGuiElements
     };
 
@@ -88,16 +97,18 @@ private:
     void BuildSensorListGui( QTabWidget* pParent );
     void BuildSpecificParamsGui( QTabWidget* pParent );
 
-//    void BuildDetectTimesWidgets( QWidget* pParent, ADN_Sensors_Data::DetectTimes& data );
+private slots:
+    //! @name Operations
+    //@{
+    void SizeChanged( int );
+    //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Sensors_Data& data_;
-
     ADN_Radars_GUI& radarGui_;
     //@}
 };
-
 
 #endif // __ADN_Sensors_GUI_h_

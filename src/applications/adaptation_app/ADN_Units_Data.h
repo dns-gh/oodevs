@@ -307,5 +307,4 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::FindUnit( const std::string strName )
     return *it;
 }
 
-
 #endif // __ADN_Units_Data_h_

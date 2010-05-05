@@ -21,9 +21,21 @@
 class ADN_Sensors_UrbanBlockMaterial_GUI
     : public ADN_Table2
 {
+    Q_OBJECT;
 public:
     explicit ADN_Sensors_UrbanBlockMaterial_GUI(QWidget * parent = 0 );
     virtual ~ADN_Sensors_UrbanBlockMaterial_GUI();
+signals:
+    //! @name Signals
+    //@{
+    void UrbanBlockChanged( std::string posture, double coeff );
+    //@}
+
+    private slots:
+        //! @name Slots
+        //@{
+        void OnCurrentChanged();
+        //@}
 };
 
 

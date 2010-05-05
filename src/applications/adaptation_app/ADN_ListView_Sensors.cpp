@@ -20,7 +20,7 @@
 #include "ADN_Sensor_Wizard.h"
 #include "ADN_Tools.h"
 #include "ADN_Composantes_Data.h"
-
+#include "ADN_Sensors_DetectionAlgorithmPrevision.h"
 typedef ADN_Sensors_Data::SensorInfos SensorInfos;
 
 
@@ -65,6 +65,7 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
 
     SensorInfos *pInfos = (SensorInfos*)pCurData_;
     ADN_Tools::CheckConnectorVector( vItemConnectors_, ADN_Sensors_GUI::eNbrGuiElements );
+                                                  //   + ADN_Sensors_DetectionAlgorithmPrevision::eNbrAlgoGuiElements - 1 );
 
     vItemConnectors_[ADN_Sensors_GUI::eName]->Connect( &pInfos->strName_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eAngle]->Connect( &pInfos->rAngle_, bConnect );
@@ -89,6 +90,14 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eLimitedToSensors]->Connect( &pInfos->bLimitedToSensors_, bConnect ); // LTO
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectAgents]->Connect( &pInfos->bCanDetectAgents_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eCanDetectObjects]->Connect( &pInfos->bCanDetectObjects_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifSizes]->Connect( &pInfos->vModifSizes_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifWeather]->Connect( &pInfos->vModifWeather_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifIllumination]->Connect( &pInfos->vModifIlluminations_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifEnvironement]->Connect( &pInfos->vModifEnvironments_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifUrbanBlockMaterial]->Connect( &pInfos->vModifUrbanBlocks_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifStances]->Connect( &pInfos->vModifStance_, bConnect );
+    vItemConnectors_[ADN_Sensors_GUI::ePreviewModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
+
 }
 
 

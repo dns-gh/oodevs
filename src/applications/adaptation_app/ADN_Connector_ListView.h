@@ -50,7 +50,7 @@ public:
     //! @name Operations
     //@{
     ADN_ListViewItem* CreateItem( void* pObj );
-    //@}
+    //@} 
 };
 
 

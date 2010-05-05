@@ -10,11 +10,12 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Environments_GUI.h"
+#include "moc_ADN_Sensors_Environments_GUI.cpp"
 
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_Sensors_Data.h"
+
 #include "ADN_Tr.h"
 
 typedef ADN_Sensors_Data::SensorInfos                   SensorInfos;
@@ -87,6 +88,8 @@ ADN_Sensors_Environments_GUI::ADN_Sensors_Environments_GUI(QWidget * parent)
 
     // connector creation
     pConnector_=new ADN_CT_Sensors_Environments(*this);
+    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
+    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
 }
 
 
@@ -98,3 +101,14 @@ ADN_Sensors_Environments_GUI::~ADN_Sensors_Environments_GUI()
 {
     delete pConnector_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Environments_GUI::IlluminationChanged
+// Created: HBD 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Environments_GUI::OnCurrentChanged()
+{
+    if( ModificatorEnvironmentInfos* data = static_cast< ModificatorEnvironmentInfos* >( GetCurrentData() ) )
+        emit EnvironmentChanged( data, data->rCoeff_.GetData() );
+}
+ 

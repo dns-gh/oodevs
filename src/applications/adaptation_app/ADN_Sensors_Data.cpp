@@ -135,7 +135,7 @@ std::string ADN_Sensors_Data::ModificatorSizeInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorSizeInfos::GetItemName()
 {
-    return std::string();
+    return ptrSize_.GetData()->GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -193,7 +193,7 @@ std::string ADN_Sensors_Data::ModificatorIlluminationInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorIlluminationInfos::GetItemName()
 {
-    return std::string();
+    return ADN_Tr::ConvertFromTimeCategory( eType_, ENT_Tr_ABC::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -251,7 +251,7 @@ std::string ADN_Sensors_Data::ModificatorMeteoInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorMeteoInfos::GetItemName()
 {
-    return std::string();
+    return ADN_Tr::ConvertFromSensorWeatherModifiers( eType_, ENT_Tr_ABC::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +309,7 @@ std::string ADN_Sensors_Data::ModificatorEnvironmentInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorEnvironmentInfos::GetItemName()
 {
-    return std::string();
+    return ADN_Tr::ConvertFromVisionObject( eType_, ENT_Tr_ABC::eToTr );
 }
 
 // -----------------------------------------------------------------------------
@@ -369,7 +369,7 @@ std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorUrbanBlockInfos::GetItemName()
 {
-    return std::string();
+    return ptrMaterial_.GetData()->GetData();
 }
 
 // -----------------------------------------------------------------------------
@@ -426,7 +426,7 @@ std::string ADN_Sensors_Data::ModificatorPostureInfos::GetNodeName()
 // -----------------------------------------------------------------------------
 std::string ADN_Sensors_Data::ModificatorPostureInfos::GetItemName()
 {
-    return std::string();
+    return ENT_Tr::ConvertFromUnitPosture( eType_,  ENT_Tr_ABC::eToTr );
 }
 
 // -----------------------------------------------------------------------------

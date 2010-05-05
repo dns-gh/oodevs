@@ -13,7 +13,7 @@
 #define __ADN_Sensors_Environments_GUI_h_
 
 #include "ADN_CommonGfx.h"
-
+#include "ADN_Sensors_Data.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-08
@@ -21,9 +21,21 @@
 class ADN_Sensors_Environments_GUI
 : public ADN_Table2
 {
+    Q_OBJECT;
 public:
     explicit ADN_Sensors_Environments_GUI(QWidget * parent = 0 );
     virtual ~ADN_Sensors_Environments_GUI();
+signals:
+    //! @name Signals
+    //@{
+    void EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* env, double coeff );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnCurrentChanged();
+    //@}
 };
 
 

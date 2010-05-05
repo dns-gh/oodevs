@@ -10,6 +10,7 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Sizes_GUI.h"
+#include "moc_ADN_Sensors_Sizes_GUI.cpp"
 
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
@@ -89,6 +90,8 @@ ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI(QWidget * parent )
 
     // connector creation
     pConnector_=new ADN_CT_Sensors_Sizes(*this);
+    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
+    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
 }
 
 
@@ -99,4 +102,15 @@ ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI(QWidget * parent )
 ADN_Sensors_Sizes_GUI::~ADN_Sensors_Sizes_GUI()
 {
     delete pConnector_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Sizes_GUI::OnCurrentChanged
+// Created: HBD 2010-05-03
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Sizes_GUI::OnCurrentChanged()
+{
+    if( ModificatorSizeInfos* data = static_cast< ModificatorSizeInfos* >( GetCurrentData() ) )
+        emit SizeChanged( data->GetItemName(), data->rCoeff_.GetData() );
 }

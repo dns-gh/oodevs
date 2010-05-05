@@ -21,8 +21,7 @@
 */
 // Created: APE 2005-01-06
 // =============================================================================
-class ADN_ListView_Sensors
-: public ADN_ListView
+class ADN_ListView_Sensors : public ADN_ListView
 {
 public:
     //! @name Constructors/Destructor

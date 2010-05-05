@@ -92,8 +92,8 @@ public:
 private slots:
     //! @name Operations
     //@{
-    void ModifiersChanged( bool ); // LTO
-    void ModifiersChanged( int ); // LTO
+    void ModifiersChanged( bool );
+    void ModifiersChanged( int );
     //@}
 
 private:

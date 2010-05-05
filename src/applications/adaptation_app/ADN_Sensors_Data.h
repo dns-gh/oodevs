@@ -426,7 +426,6 @@ public:
         T_ModificatorUrbanBlockInfos_Vector     vModifUrbanBlocks_;
         PopulationInfos                         populationInfos_;
 
-
         ADN_Type_Bool                           bCanDetectObjects_;
         T_TargetsInfos_Vector                   vTargets_;
     };

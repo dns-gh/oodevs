@@ -6620,6 +6620,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Limited To Sensors</source>
         <translation>Limité aux Capteurs</translation>
     </message>
+    <message>
+        <source>Volume</source>
+        <translation type="obsolete">Volume</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_Illumination_GUI</name>
@@ -8829,6 +8833,10 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>PathBM</source>
         <translation>PathBM</translation>
+    </message>
+    <message>
+        <source>DirectionBM</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

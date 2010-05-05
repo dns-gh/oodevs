@@ -20,9 +20,22 @@
 class ADN_Sensors_Illumination_GUI
 : public ADN_Table2
 {
+    Q_OBJECT;
 public:
     explicit ADN_Sensors_Illumination_GUI(QWidget * parent = 0 );
     virtual ~ADN_Sensors_Illumination_GUI();
+
+signals:
+    //! @name Signals
+    //@{
+    void IlluminationChanged( std::string posture, double coeff );
+    //@}
+
+    private slots:
+        //! @name Slots
+        //@{
+        void OnCurrentChanged();
+        //@}
 };
 
 

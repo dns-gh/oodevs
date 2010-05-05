@@ -63,20 +63,6 @@ void ADN_Graph::SetSelectedItem( void* pObject )
         ADN_GraphData& graphData = (ADN_GraphData&)(*it);
         graphData.SelectRelatedData( pObject );
     }
-    /*
-    for( int n = 0; n < (int)values_.size(); ++n )
-    {
-        if( values_[n]->GetRelatedObject() == pObject )
-        {
-            
-            this->Update();
-            return;
-        }
-    }
-    nSelectedItem_ = -1;
-    this->update();
-    return;
-    */
 }
 
 // -----------------------------------------------------------------------------

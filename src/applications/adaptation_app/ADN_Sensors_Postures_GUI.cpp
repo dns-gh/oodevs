@@ -10,18 +10,16 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Postures_GUI.h"
-
-#include <qpopmenu.h>
-
+#include "moc_ADN_Sensors_Postures_GUI.cpp"
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Workspace.h"
 #include "ENT/ENT_Tr.h"
+
 typedef ADN_Sensors_Data::SensorInfos                SensorInfos;
 typedef ADN_Sensors_Data::ModificatorPostureInfos    ModificatorPostureInfos;
-
 
 //-----------------------------------------------------------------------------
 // Internal Table connector for ADN_Sensors_Postures_GUI
@@ -65,7 +63,7 @@ ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption
 : ADN_Table2( pParent, "ADN_Sensors_Postures_GUI" )
 {
     // Setup the table properties.
-    setSelectionMode( QTable::NoSelection );
+    setSelectionMode( QTable::SingleRow );
     setSorting( true );
     setShowGrid( false );
     setLeftMargin( 0 );
@@ -83,6 +81,10 @@ ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption
 
     // Create the connector.
     pConnector_ = new ADN_CT_Sensors_Postures( *this );
+
+    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
+    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
+
 }
 
 
@@ -93,4 +95,14 @@ ADN_Sensors_Postures_GUI::ADN_Sensors_Postures_GUI( const QString& strColCaption
 ADN_Sensors_Postures_GUI::~ADN_Sensors_Postures_GUI()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Postures_GUI::OnCurrentChanged
+// Created: HBD 2010-04-29
+// -----------------------------------------------------------------------------
+void ADN_Sensors_Postures_GUI::OnCurrentChanged()
+{
+    if( ModificatorPostureInfos* data = static_cast< ModificatorPostureInfos* >( GetCurrentData() ) )
+        emit PostureChanged( data->GetItemName(), data->rCoeff_.GetData() );
 }
