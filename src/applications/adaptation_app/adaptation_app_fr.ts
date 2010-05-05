@@ -6622,7 +6622,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Delay</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Délai</translation>
     </message>
     <message>
         <source>Volume</source>
