@@ -45,6 +45,14 @@ public:
 
     virtual void                       Execute( const TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations );
     virtual const PHY_PerceptionLevel& Compute( const MIL_PopulationConcentration& concentration ) const;
+    
+    virtual void FinalizePerception();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void FinalizeSurfaceAgents();
     //@}
 
 private:

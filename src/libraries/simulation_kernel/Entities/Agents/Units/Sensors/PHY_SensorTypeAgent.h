@@ -55,6 +55,7 @@ public:
           MT_Float        GetFactor                 ( const PHY_Volume& volume ) const;
           bool            CanScan                   () const;
     const PHY_SensorType& GetType                   () const;
+          unsigned int    GetDelay                  () const;
     //@}
 
     //! @name Operations

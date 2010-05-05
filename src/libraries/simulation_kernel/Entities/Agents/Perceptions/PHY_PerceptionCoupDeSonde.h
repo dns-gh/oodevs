@@ -28,6 +28,7 @@ public:
     virtual const PHY_PerceptionLevel& Compute( const MT_Vector2D& vPoint ) const;
     virtual const PHY_PerceptionLevel& Compute( const MIL_Agent_ABC& agent ) const;
     virtual const PHY_PerceptionLevel& Compute( const DEC_Knowledge_Agent & knowledge ) const;
+    virtual void FinalizePerception();
     //@}
 
 private:

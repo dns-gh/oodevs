@@ -6621,6 +6621,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <translation>Limité aux Capteurs</translation>
     </message>
     <message>
+        <source>Delay</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Volume</source>
         <translation type="obsolete">Volume</translation>
     </message>

@@ -5,9 +5,9 @@
       <objects/>
       <tactical>
         <formation id="155" level="i" name="Formation [155]">
-          <automat engaged="true" id="159" knowledge-group="158" name="Test Capteurs [159]" type="Test Capteurs">
-            <unit command-post="true" id="160" name="PC Batterie Test Capteur" position="30TYT0952055085" type="PC Batterie Test Capteur"/>
-            <unit command-post="false" id="161" name="Section Test Capteur" position="30TYT1003954604" type="Section Test Capteur"/>
+          <automat engaged="true" id="159" knowledge-group="158" name="Test Capteurs [159]" type="LTO Test Capteurs">
+            <unit command-post="true" id="160" name="PC Batterie Test Capteur" position="30TYT0952055085" type="LTO PC Batterie Test Capteur"/>
+            <unit command-post="false" id="161" name="Section Test Capteur" position="30TYT1003954604" type="LTO Section Test Capteur"/>
           </automat>
         </formation>
       </tactical>
@@ -21,7 +21,7 @@
       <objects/>
       <tactical>
         <formation id="163" level="i" name="Formation [163]">
-          <automat engaged="true" id="164" knowledge-group="165" name="Compagnie INF VAB [164]" type="Compagnie INF VAB Test Capteur">
+          <automat engaged="true" id="164" knowledge-group="165" name="Compagnie INF VAB [164]" type="LTO Compagnie INF VAB Test Capteur">
             <unit command-post="true" id="166" name="Section PC INF Capteur Test" position="30TYT0946257164" type="Section PC INF Capteur Test"/>
             <unit command-post="false" id="167" name="Section CBT INF VAB CDS OFF" position="30TYT0998156683" type="Section CBT INF VAB CDS OFF"/>
             <unit command-post="false" id="168" name="Section CBT INF VAB CDS OFF" position="30TYT0949856166" type="Section CBT INF VAB CDS OFF"/>

@@ -32494,7 +32494,7 @@
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
   </element>
-  <element codeEMAT6="Equipe Test Capteur" codeEMAT8="Equipe Test Capteur" codeLFRIL="Equipe Test Capteur" codeNNO="Equipe Test Capteur" comment="Equipe Test Capteur pour LTO" id="335" max-slope="0.6" name="Equipe Test Capteur" protection="Combattant" size="Petit" weight="0.3">
+  <element codeEMAT6="Equipe Test Capteur" codeEMAT8="Equipe Test Capteur" codeLFRIL="Equipe Test Capteur" codeNNO="Equipe Test Capteur" comment="Equipe Test Capteur pour LTO" id="335" max-slope="0.6" name="LTO Equipe Test Capteur" protection="Combattant" size="Petit" weight="0.3">
     <speeds max="50">
       <speed terrain="inconnu" value="30"/>
       <speed terrain="foret" value="15"/>
@@ -32710,5 +32710,84 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
+  </element>
+  <element codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="337" name="LTO Fantassin avec capteur delai" protection="Combattant" size="Personnel" weight="0.08">
+    <speeds max="5">
+      <speed terrain="inconnu" value="5"/>
+      <speed terrain="foret" value="6"/>
+      <speed terrain="plantation" value="5"/>
+      <speed terrain="marais" value="2"/>
+      <speed terrain="dune" value="3"/>
+      <speed terrain="urbain" value="6"/>
+      <speed terrain="etendue eau" value="0"/>
+      <speed terrain="glace" value="5"/>
+      <speed terrain="lisiere" value="6"/>
+      <speed terrain="banlieue" value="6"/>
+      <speed terrain="cote" value="3"/>
+      <speed terrain="bord de plantation" value="4"/>
+      <speed terrain="bord de marais" value="4"/>
+      <speed terrain="bord de dune" value="4"/>
+      <speed terrain="bord de glace" value="4"/>
+      <speed terrain="chemin" value="6"/>
+      <speed terrain="autoroute" value="6"/>
+      <speed terrain="nationale" value="6"/>
+      <speed terrain="departementale" value="6"/>
+      <speed terrain="ruisseau" value="1"/>
+      <speed terrain="riviere" value="1"/>
+      <speed terrain="riviere importante" value="0"/>
+      <speed terrain="pont" value="6"/>
+      <speed terrain="falaise" value="0"/>
+      <speed terrain="voie ferree" value="5"/>
+      <speed terrain="carrefour" value="6"/>
+      <speed terrain="montagne" value="0"/>
+      <speed terrain="bord de montagne" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <dotation capacity="240" logistic-threshold="10" name="Charg 5,56 2 O-1T-4 O" normalized-consumption="30"/>
+        <dotation capacity="53" logistic-threshold="30" name="LTO Obus paralysant" normalized-consumption="44"/>
+        <dotation capacity="53" logistic-threshold="30" name="LTO Obus aveuglant" normalized-consumption="44"/>
+        <dotation capacity="53" logistic-threshold="30" name="LTO Obus dispercant" normalized-consumption="44"/>
+      </category>
+      <category name="ration">
+        <dotation capacity="3" logistic-threshold="30" name="Vivre" normalized-consumption="1"/>
+        <dotation capacity="18" logistic-threshold="30" name="Eau" normalized-consumption="6"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="2" type="Oeil"/>
+      <sensor height="2" type="Oreille"/>
+      <sensor height="2" type="LTO Capteur avec Delai"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <dotation category="ration" name="Eau" value="0.25"/>
+        <dotation category="ration" name="Vivre" value="0.04"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems>
+      <weapon-system launcher="Fusil Assaut FAMAS" munition="Charg 5,56 2 O-1T-4 O"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus brouillage"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus paralysant"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus aveuglant"/>
+      <weapon-system launcher="LTO ALR Launcher" munition="LTO Obus dispercant"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects>
+      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
+      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
+      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
+      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
+      <object initial-construction-time="36000s" type="checkpoint"/>
+      <object initial-destruction-time="1800s" type="mrls deployment area"/>
+      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
+      <object initial-destruction-time="1800s" type="mortar deployment area"/>
+      <object initial-destruction-time="1800s" type="cobra deployment area"/>
+    </objects>
   </element>
 </elements>

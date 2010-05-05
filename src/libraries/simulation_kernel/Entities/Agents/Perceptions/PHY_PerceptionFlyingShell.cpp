@@ -122,3 +122,12 @@ bool PHY_PerceptionFlyingShell::HasLocalisationToHandle() const
 {
     return !zones_.empty();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionFlyingShell::FinalizePerception
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+void PHY_PerceptionFlyingShell::FinalizePerception()
+{
+    // NOTHING
+}

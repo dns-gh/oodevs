@@ -131,7 +131,39 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
     if( !( perceiver.IsKnown( target ) || ( perceiver.IsPeriphericalVisionEnabled() && pSensorType_->CanScan() ) || IsInside( vTargetPos ) ) )
         return PHY_PerceptionLevel::notSeen_;
 
-    return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
+    const PHY_PerceptionLevel& level = pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
+
+    return GetLevelWithDelay( level, &target );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::GetLevelWithDelay
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::GetLevelWithDelay( const PHY_PerceptionLevel& level, const void* target ) const
+{
+    int delay = pSensorType_->GetDelay();
+    if( delay && level > PHY_PerceptionLevel::notSeen_ )
+    {
+        CIT_PerceptionTickMap it = perceptionsUnderway_.find( target );
+        int tick = 0;
+        if( it != perceptionsUnderway_.end() )
+            tick = it->second;
+        perceptionsBuffer_[ target ] = tick + 1;
+        if( tick <= delay )
+            return PHY_PerceptionLevel::notSeen_;
+    }
+    return level;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionSurfaceAgent::FinalizePerception
+// Created: LDC 2010-05-04
+// -----------------------------------------------------------------------------
+void PHY_PerceptionSurfaceAgent::FinalizePerception()
+{
+    perceptionsUnderway_ = perceptionsBuffer_;
+    perceptionsBuffer_.clear();
 }
 
 // -----------------------------------------------------------------------------
@@ -141,7 +173,8 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const DEC_Knowledge_Agent&  target ) const
 {
     assert( pSensorType_ );
-    return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );  
+    const PHY_PerceptionLevel& level = pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
+    return GetLevelWithDelay( level, &target );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +183,8 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationConcentration& target ) const
 {
-    return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
+    const PHY_PerceptionLevel& level = pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_ );
+    return GetLevelWithDelay( level, &target );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +202,8 @@ MT_Float PHY_PerceptionSurfaceAgent::ComputePerceptionAccuracy( const PHY_RoleIn
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const MIL_PopulationFlow& target, T_PointVector& shape ) const
 {
-    return pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_, shape );
+    const PHY_PerceptionLevel& level = pSensorType_->ComputePerception( perceiver.GetPion(), target, rHeight_, shape );
+    return GetLevelWithDelay( level, &target );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,9 +212,9 @@ const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const 
 // -----------------------------------------------------------------------------
 const PHY_PerceptionLevel& PHY_PerceptionSurfaceAgent::ComputePerception( const PHY_RoleInterface_Perceiver& perceiver, const urban::TerrainObject_ABC& block ) const
 {
-    return pSensorType_->ComputePerception( perceiver.GetPion(), block, rHeight_ );  
+    const PHY_PerceptionLevel& level = pSensorType_->ComputePerception( perceiver.GetPion(), block, rHeight_ );
+    return GetLevelWithDelay( level, &block );
 }
-
 
 // =============================================================================
 // NETWORK
@@ -195,7 +230,7 @@ void PHY_PerceptionSurfaceAgent::SendFullState( MsgsSimToClient::MsgVisionCone& 
     msg.set_height( rHeight_ );
     msg.set_sensor( pSensorType_->GetType().GetName() );
     msg.mutable_directions();
-    for( int i = 0; i < sectors_.size(); ++i )
+    for( unsigned int i = 0u; i < sectors_.size(); ++i )
         NET_ASN_Tools::WriteDirection( sectors_[i].GetDirection(), *msg.mutable_directions()->add_elem() );
 }
 

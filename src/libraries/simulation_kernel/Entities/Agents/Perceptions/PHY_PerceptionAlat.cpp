@@ -68,4 +68,12 @@ void PHY_PerceptionAlat::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perce
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionAlat::FinalizePerception
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+void PHY_PerceptionAlat::FinalizePerception()
+{
+    // NOTHING
+}
 

@@ -14,6 +14,8 @@
 #include "PHY_SensorTypeAgent.h"
 #include "PHY_SensorTypeObject.h"
 #include "PHY_Sensor.h"
+#include "Tools/MIL_Tools.h"
+#include <tools/xmlcodecs.h>
 #include <xeumeuleu/xml.h>
 
 PHY_SensorType::T_SensorTypeMap PHY_SensorType::sensorTypes_;
@@ -76,8 +78,12 @@ PHY_SensorType::PHY_SensorType( const std::string& strName, xml::xistream& xis )
     , pTypeObject_( 0 )
     , pTypeAgent_ ( 0 )
 {
+    std::string time;
     xis >> xml::list( "unit-detection", *this, &PHY_SensorType::newSensorTypeAgent )
-        >> xml::list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject );
+        >> xml::list( "object-detection", *this, &PHY_SensorType::newSensorTypeObject )
+        >> xml::attribute( "detection-delay", time );
+    tools::DecodeTime( time, delay_ );
+    delay_ = MIL_Tools::ConvertSecondsToSim( delay_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -177,4 +183,13 @@ const std::string& PHY_SensorType::GetName() const
 unsigned int PHY_SensorType::GetID() const
 {
     return nID_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorType::GetDelay
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+const unsigned int PHY_SensorType::GetDelay() const
+{
+    return delay_;
 }

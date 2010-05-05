@@ -1059,6 +1059,7 @@ void ADN_Sensors_Data::SensorInfos::ReadObjectDetection( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 {
     input >> xml::attribute( "name", strName_ );
+    input >> xml::attribute( "detection-delay", detectionDelay_ );
 
     input >> xml::list( *this, &ADN_Sensors_Data::SensorInfos::ReadItem );
 }
@@ -1070,7 +1071,8 @@ void ADN_Sensors_Data::SensorInfos::ReadArchive( xml::xistream& input )
 void ADN_Sensors_Data::SensorInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "sensor" )
-            << xml::attribute( "name", strName_ );
+            << xml::attribute( "name", strName_ )
+            << xml::attribute( "detection-delay", detectionDelay_ );
 
     if( bCanDetectAgents_.GetData() )
     {

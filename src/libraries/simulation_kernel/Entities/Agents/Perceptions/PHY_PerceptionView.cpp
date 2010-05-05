@@ -356,3 +356,14 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const urban::Block& bloc
     }
     return *pBestLevel;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionView::FinalizePerception
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+void PHY_PerceptionView::FinalizePerception()
+{
+    const PHY_RoleInterface_Perceiver::T_SurfaceAgentMap& surfaces = perceiver_.GetSurfacesAgent();
+    for( PHY_RoleInterface_Perceiver::CIT_SurfaceAgentMap itSurface = surfaces.begin(); itSurface != surfaces.end(); ++itSurface )
+        const_cast< PHY_PerceptionSurfaceAgent& >( itSurface->second ).FinalizePerception();
+}

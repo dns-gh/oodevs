@@ -131,6 +131,10 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Name
     builder.AddField<ADN_EditLine_String>( pNameHolder, tr( "Name" ), vConnectors[eName] );
 
+    // Detection delay
+    QWidget* pDelayHolder = builder.AddFieldHolder( pSensorGroupBox );
+    builder.AddField<ADN_TimeField>( pDelayHolder, tr( "Delay" ), vConnectors[eDetectionDelay] );
+
     // Agent detection parameters
     ADN_GroupBox* pAgentParamGroupBox = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Can detect units" ), pSensorGroupBox );
     vConnectors[eCanDetectAgents] = &pAgentParamGroupBox->GetConnector();

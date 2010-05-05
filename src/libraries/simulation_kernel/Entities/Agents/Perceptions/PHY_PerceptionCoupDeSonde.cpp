@@ -111,3 +111,12 @@ void PHY_PerceptionCoupDeSonde::Execute( const TER_Agent_ABC::T_AgentPtrVector& 
             perceiver_.NotifyPerception( agent, Compute( agent ) );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionCoupDeSonde::FinalizePerception
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+void PHY_PerceptionCoupDeSonde::FinalizePerception()
+{
+    // NOTHING
+}

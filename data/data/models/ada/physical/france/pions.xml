@@ -10521,10 +10521,10 @@
     </distance-before-points>
     <drill-blow length="300" width="300"/>
   </unit>
-  <unit decisional-model="SAM" id="432" name="Section Test Capteur" type="Pion ASS">
+  <unit decisional-model="SAM" id="432" name="LTO Section Test Capteur" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
     <equipments>
-      <equipment count="2" crew="6" major="true" type="Equipe Test Capteur"/>
+      <equipment count="2" crew="6" major="true" type="LTO Equipe Test Capteur"/>
     </equipments>
     <crew-ranks>
       <crew-rank count="1" type="Officier"/>
@@ -10549,13 +10549,13 @@
       <distance-before-point type="pont" value="500"/>
     </distance-before-points>
   </unit>
-  <unit decisional-model="PC ASS Tir" id="433" name="PC Batterie Test Capteur" type="Pion ASS">
+  <unit decisional-model="PC ASS Tir" id="433" name="LTO PC Batterie Test Capteur" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="2" type="Equipement Test Capteur"/>
     </equipments>
     <crew-ranks>
-      <crew-rank count="2" type="Officier"/>
+      <crew-rank count="0" type="Officier"/>
       <crew-rank count="2" type="SousOfficier"/>
     </crew-ranks>
     <postures>
@@ -10565,6 +10565,34 @@
       <posture name="PostePrepareGenie" setup-time="1800s"/>
     </postures>
     <nbc decontamination-delay="1950s"/>
+    <distance-before-points>
+      <distance-before-point type="foret" value="500"/>
+      <distance-before-point type="urbain" value="500"/>
+      <distance-before-point type="carrefour" value="500"/>
+      <distance-before-point type="pont" value="500"/>
+    </distance-before-points>
+  </unit>
+  <unit decisional-model="SAM" id="434" name="LTO Section Test Capteur delai" type="Pion ASS">
+    <nature atlas-nature="Vehicule" level="ooo" nature="combat/field artillery"/>
+    <equipments>
+      <equipment count="2" crew="6" major="true" type="LTO Fantassin avec capteur delai"/>
+    </equipments>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="4" type="SousOfficier"/>
+    </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <dotation capacity="100" logistic-threshold="50" name="LTO Obus brouillage" normalized-consumption="0"/>
+      </category>
+    </logistics>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <nbc decontamination-delay="600s"/>
     <distance-before-points>
       <distance-before-point type="foret" value="500"/>
       <distance-before-point type="urbain" value="500"/>

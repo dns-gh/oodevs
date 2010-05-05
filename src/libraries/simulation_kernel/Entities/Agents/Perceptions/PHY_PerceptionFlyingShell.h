@@ -44,6 +44,7 @@ public:
     int  AddLocalisation        ( const TER_Localisation& );
     void RemoveLocalisation     ( int );
     bool HasLocalisationToHandle() const;
+    virtual void FinalizePerception();
     //@}
 
     //! @name Execution

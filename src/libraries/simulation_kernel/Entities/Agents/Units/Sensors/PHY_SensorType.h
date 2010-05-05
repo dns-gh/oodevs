@@ -49,6 +49,7 @@ public:
     const PHY_SensorTypeAgent*  GetTypeAgent () const;
     const std::string&          GetName      () const;
           unsigned int                  GetID        () const;
+    const unsigned int GetDelay() const;
     //@}
 
 private:
@@ -75,6 +76,7 @@ private:
     const std::string           strName_;
     const PHY_SensorTypeObject* pTypeObject_;
     const PHY_SensorTypeAgent*  pTypeAgent_;
+    unsigned int                delay_;
 
 private:
     static T_SensorTypeMap sensorTypes_;

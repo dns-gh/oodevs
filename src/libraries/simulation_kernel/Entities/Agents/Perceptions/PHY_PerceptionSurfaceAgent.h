@@ -59,6 +59,8 @@ public:
     const PHY_PerceptionLevel& ComputePerception        ( const PHY_RoleInterface_Perceiver& perceiver, const urban::TerrainObject_ABC& block ) const;
 
           void                 AddDirection     ( const MT_Vector2D& vDir );
+
+    virtual void FinalizePerception();
     //@}
 
     //! @name Accessors
@@ -82,11 +84,15 @@ private:
     //@{
     typedef std::vector< MT_Sector >       T_SectorVector;
     typedef T_SectorVector::const_iterator CIT_SectorVector;
+          
+    typedef std::map< const void*, unsigned int > T_PerceptionTickMap;
+    typedef T_PerceptionTickMap::const_iterator    CIT_PerceptionTickMap;
     //@}
 
     //! @name Tools
     //@{
     bool IsInside( const MT_Vector2D& vPoint ) const;
+    const PHY_PerceptionLevel& GetLevelWithDelay( const PHY_PerceptionLevel& level, const void* target ) const;
     //@}
 
 private:
@@ -96,6 +102,8 @@ private:
           MT_Vector2D          vOrigin_;
           MT_Float             rHeight_;
           T_SectorVector       sectors_;
+            T_PerceptionTickMap perceptionsUnderway_;
+    mutable T_PerceptionTickMap perceptionsBuffer_;
     //@}
 };
 

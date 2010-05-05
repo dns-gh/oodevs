@@ -187,3 +187,12 @@ void PHY_PerceptionRadar::Execute( const TER_Agent_ABC::T_AgentPtrVector& /*perc
         }
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionRadar::FinalizePerception
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+void PHY_PerceptionRadar::FinalizePerception()
+{
+    // NOTHING
+}

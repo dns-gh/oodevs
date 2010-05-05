@@ -979,6 +979,9 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinCircle( *perceiverPosition_, GetMaxAgentPerceptionDistance(), perceivableFlows );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableFlows );
+
+        for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
+            (**itPerception).FinalizePerception();
     }
 
     NotifyPerception( pion_, PHY_PerceptionLevel::identified_, false );

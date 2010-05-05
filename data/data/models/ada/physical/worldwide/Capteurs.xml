@@ -76,7 +76,7 @@
     </radar>
   </radars>
   <sensors>
-    <sensor name="Eye">
+    <sensor detection-delay="0h" name="Eye">
       <unit-detection angle="120" scanning="true">
         <base-distances close-range="100">
           <base-distance distance="300" level="identification"/>
@@ -427,7 +427,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Helicopter Pilot Eyes To Ground">
+    <sensor detection-delay="0h" name="Helicopter Pilot Eyes To Ground">
       <unit-detection angle="120" scanning="false">
         <base-distances close-range="300">
           <base-distance distance="300" level="identification"/>
@@ -730,7 +730,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Helicopter Pilot Eyes To Sky">
+    <sensor detection-delay="0h" name="Helicopter Pilot Eyes To Sky">
       <unit-detection angle="120" scanning="false">
         <base-distances close-range="50">
           <base-distance distance="6000" level="identification"/>
@@ -804,7 +804,7 @@
       </unit-detection>
       <object-detection/>
     </sensor>
-    <sensor name="Thermal Imager">
+    <sensor detection-delay="0h" name="Thermal Imager">
       <unit-detection angle="80" scanning="true">
         <base-distances close-range="900">
           <base-distance distance="2500" level="identification"/>
@@ -878,7 +878,7 @@
       </unit-detection>
       <object-detection/>
     </sensor>
-    <sensor name="Tank Sight">
+    <sensor detection-delay="0h" name="Tank Sight">
       <unit-detection angle="90" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="220" level="identification"/>
@@ -1229,7 +1229,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Thermal Sight">
+    <sensor detection-delay="0h" name="Thermal Sight">
       <unit-detection angle="6" scanning="true">
         <base-distances close-range="100">
           <base-distance distance="6000" level="identification"/>
@@ -1302,7 +1302,7 @@
         </distance-modifiers>
       </unit-detection>
     </sensor>
-    <sensor name="x6 Sight">
+    <sensor detection-delay="0h" name="x6 Sight">
       <unit-detection angle="30" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="2000" level="identification"/>
@@ -1677,7 +1677,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="x8 Optical Binoculars">
+    <sensor detection-delay="0h" name="x8 Optical Binoculars">
       <unit-detection angle="30" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="3000" level="identification"/>
@@ -2052,7 +2052,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Nuclear Bacteriological and Chimical Sensor">
+    <sensor detection-delay="0h" name="Nuclear Bacteriological and Chimical Sensor">
       <object-detection>
         <object detection-distance="1" type="nbc zone">
           <population-modifier density="2" modifier="0.5"/>
@@ -2068,7 +2068,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Real Time Video Camera">
+    <sensor detection-delay="0h" name="Real Time Video Camera">
       <unit-detection angle="15" scanning="false">
         <base-distances close-range="0">
           <base-distance distance="1000" level="identification"/>
@@ -2383,7 +2383,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Light Intensifier Device">
+    <sensor detection-delay="0h" name="Light Intensifier Device">
       <unit-detection angle="60" scanning="true">
         <base-distances close-range="50">
           <base-distance distance="75" level="identification"/>
@@ -2722,7 +2722,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Panoramic Sight">
+    <sensor detection-delay="0h" name="Panoramic Sight">
       <unit-detection angle="120" scanning="true">
         <base-distances close-range="800">
           <base-distance distance="1500" level="identification"/>
@@ -3097,7 +3097,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Plane Eyes">
+    <sensor detection-delay="0h" name="Plane Eyes">
       <unit-detection angle="120" scanning="false">
         <base-distances close-range="300">
           <base-distance distance="300" level="identification"/>
@@ -3244,7 +3244,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Engineers Sensor">
+    <sensor detection-delay="0h" name="Engineers Sensor">
       <object-detection>
         <object detection-distance="1000" type="abattis">
           <population-modifier density="2" modifier="0.5"/>
@@ -3344,7 +3344,7 @@
         </object>
       </object-detection>
     </sensor>
-    <sensor name="Radar RASIT">
+    <sensor detection-delay="0h" name="Radar RASIT">
       <unit-detection angle="120" scanning="false">
         <base-distances close-range="1">
           <base-distance distance="1" level="identification"/>

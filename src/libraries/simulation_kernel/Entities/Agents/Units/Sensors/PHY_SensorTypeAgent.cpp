@@ -19,6 +19,7 @@
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h" // LTO
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h" // LTO
 #include "Entities/Agents/Units/Radars/PHY_RadarType.h" // LTO
+#include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -811,4 +812,13 @@ unsigned int PHY_SensorTypeAgent::ConvertEnvironementToObjectIdx( PHY_RawVisionD
 PHY_RawVisionData::E_VisionObject PHY_SensorTypeAgent::ConvertObjectIdxToEnvironnement( unsigned int val )
 {
     return (PHY_RawVisionData::E_VisionObject)( val ? 1 << ( val - 1 ) : 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_SensorTypeAgent::GetDelay
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+unsigned int PHY_SensorTypeAgent::GetDelay() const
+{
+    return type_.GetDelay();
 }

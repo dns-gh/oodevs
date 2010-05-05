@@ -75,8 +75,8 @@ public:
     //@}
 
 public:
-             PHY_RoleInterface_Perceiver();
-    virtual ~PHY_RoleInterface_Perceiver();
+             PHY_RoleInterface_Perceiver() {}
+    virtual ~PHY_RoleInterface_Perceiver() {}
 
     //! @name Operations
     //@{    

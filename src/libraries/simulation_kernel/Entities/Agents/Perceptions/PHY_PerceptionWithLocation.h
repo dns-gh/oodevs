@@ -32,6 +32,7 @@ public:
     //@{
     void Remove( int id );
     int  Add   ( T* pLocation );
+    virtual void FinalizePerception();
     //@}
 
 private:

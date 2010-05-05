@@ -59,3 +59,13 @@ int PHY_PerceptionWithLocation<T>::Add( T* pLocation )
     recos_.push_back( pLocation );
     return pLocation->Id();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_PerceptionWithLocation::FinalizePerception
+// Created: LDC 2010-05-05
+// -----------------------------------------------------------------------------
+template <class T >
+void PHY_PerceptionWithLocation<T>::FinalizePerception()
+{
+    // NOTHING
+}
