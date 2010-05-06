@@ -906,6 +906,12 @@
     <mission dia-behavior="net.masagroup.testSword.military.tasks.ObserveDirection" dia-type="T_Mission_Pion_ObserveDirection" id="2050" name="ObserveDirection">
       <parameter dia-name="objectives" name="direction" optional="false" type="DirectionBM"/>
     </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Support" dia-type="T_Mission_Pion_Support" id="2051" name="Support">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="AgentListBM"/>
+    </mission>
+    <mission dia-behavior="net.masagroup.testSword.military.tasks.Advance" dia-type="T_Mission_Pion_Advance" id="2052" name="Advance">
+      <parameter dia-name="objectives" name="objectives" optional="false" type="PointBM"/>
+    </mission>
   </units>
   <automats>
     <context>

@@ -1266,12 +1266,12 @@ MT_Float PHY_RolePion_Composantes::GetOnlyLoadableMaxRangeToFireOn( const DEC_Kn
 // Name: PHY_RolePion_Composantes::GetMinRangeToFireOn
 // Created: JVT 2004-12-17
 // -----------------------------------------------------------------------------
-MT_Float PHY_RolePion_Composantes::GetMinRangeToFireOn( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const
+double PHY_RolePion_Composantes::GetMinRangeToFireOn( const DEC_Knowledge_Agent& target, double rWantedPH ) const
 {
     // Get The most dangerous composante type of the target
     const DEC_Knowledge_AgentComposante* pTargetComposante = target.GetMajorComposante();
 
-    MT_Float rRange = std::numeric_limits< MT_Float >::max();
+    double rRange = std::numeric_limits< double >::max();
     if( pTargetComposante )
         for(  PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
             rRange = std::min( rRange, (**it).GetMinRangeToFireOn( *pTargetComposante, rWantedPH ) );
@@ -1336,6 +1336,18 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_Dotation
     return rRange;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Composantes::GetMaxRangeToFire
+// Created: DDA 2010-05-03
+// -----------------------------------------------------------------------------
+double PHY_RolePion_Composantes::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, double rWantedPH ) const
+{
+    double rRange = std::numeric_limits< double >::max();
+   
+    for(  PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
+        rRange = std::min( rRange, (**it).GetMaxRangeToFire( pion, rWantedPH ) );
+    return rRange;
+}
 
 // =============================================================================
 // LOGISTIC - MAINTENANCE

@@ -527,6 +527,16 @@ double PHY_ComposantePion::GetMinRangeToIndirectFire( const PHY_DotationCategory
 }
 
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetMaxRangeToFire
+// Created: DDA 2010-05-03
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetMaxRangeToFire(const MIL_Agent_ABC& pion, double rWantedPH ) const
+{
+    assert( pType_ ); 
+    return CanFire() ? pType_->GetMaxRangeToFire( pion, rWantedPH ) : std::numeric_limits< double >::max();
+}
+
 // =============================================================================
 // LOGISTIC - MEDICAL
 // =============================================================================

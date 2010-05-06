@@ -241,6 +241,21 @@ MT_Float PHY_WeaponDataType_DirectFire::GetMinRangeToFireOnWithPosture( const PH
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_WeaponDataType_DirectFire::GetMaxRangeToFire
+// Created: DDA 2010-05-03
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponDataType_DirectFire::GetMaxRangeToFire( MT_Float rWantedPH ) const
+{
+    const PHY_Volume::T_VolumeMap& volumes = PHY_Volume::GetVolumes();
+    std::string targetType = "Personnel";
+
+    PHY_Volume::CIT_VolumeMap it = volumes.find( targetType );
+    const PHY_Volume& volume = *it->second;
+
+    return GetMaxDistanceForPH( rWantedPH, PHY_Posture::posteReflexe_, PHY_Posture::posteReflexe_, volume );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_WeaponDataType_DirectFire::GetDangerosity
 // Created: NLD 2004-10-05
 // -----------------------------------------------------------------------------

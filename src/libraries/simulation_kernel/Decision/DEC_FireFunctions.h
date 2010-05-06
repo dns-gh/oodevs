@@ -14,6 +14,7 @@
 
 #include "MIL.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 class MIL_AgentPion;
 
@@ -31,8 +32,9 @@ public:
     static float GetMinRangeToFireOnEnemyActualPosture    ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH );
     static float GetMaxRangeToFireOnEnemyWhenUnloaded     ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH );
     static float GetMaxRangeToBeFiredByEnemy              ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float rWantedPH );
-    static float  GetMaxRangeToIndirectFire                ( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );
-    static float  GetMinRangeToIndirectFire                ( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );
+    static float GetMaxRangeToFire                        ( const MIL_Agent_ABC& callerAgent, float rWantedPH );
+    static float  GetMaxRangeToIndirectFire               ( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );
+    static float  GetMinRangeToIndirectFire               ( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory );
     static float  GetMaxRangeToIndirectFireWithoutAmmoCheck( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory  );
     static float  GetMinRangeToIndirectFireWithoutAmmoCheck( const MIL_AgentPion& callerAgent, const PHY_DotationCategory* pDotationCategory  );
     static void  ThrowSmokeOnKnowledgeAgent               ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pTarget );

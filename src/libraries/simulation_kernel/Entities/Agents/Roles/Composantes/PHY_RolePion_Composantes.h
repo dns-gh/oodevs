@@ -173,7 +173,7 @@ public:
     virtual void     ApplyContamination              ( const MIL_ToxicEffectManipulator& contamination );
     virtual void     ApplyPoisonous                  ( const MIL_ToxicEffectManipulator& contamination );
 
-    virtual double    GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const; 
+    virtual double   GetDangerosity                 ( const DEC_Knowledge_AgentComposante& compTarget, float rDistBtwSourceAndTarget ) const; 
     virtual MT_Float GetOnlyLoadableMaxRangeToFireOn ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMaxRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMinRangeToFireOn             ( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
@@ -181,6 +181,7 @@ public:
     virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& target, MT_Float rWantedPH ) const;
     virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
     virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& dotationCategory, bool bCheckDotationsAvailability ) const;
+    virtual double   GetMaxRangeToFire               ( const MIL_Agent_ABC&  pion, double rWantedPH ) const;
     virtual void     ApplyInjury                     ( MIL_Injury_ABC& injury );
     //@}
 

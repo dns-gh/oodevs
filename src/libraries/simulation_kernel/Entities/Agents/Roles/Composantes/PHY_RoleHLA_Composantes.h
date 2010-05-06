@@ -22,6 +22,7 @@
 #include "PHY_RoleInterface_Composantes.h"
 #include "hla/Deserializer.h"
 #include "protocol/clientsenders.h"
+#include "Decision/DEC_Decision_ABC.h"
 
 class PHY_ComposanteHLA;
 class HLA_InteractionManager_ABC;
@@ -79,6 +80,7 @@ public:
     virtual MT_Float GetMinRangeToFireOnActualPosture( const DEC_Knowledge_Agent& /*target*/, MT_Float /*rWantedPH*/ ) const {return 0; };
     virtual MT_Float GetMaxRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
     virtual MT_Float GetMinRangeToIndirectFire       ( const PHY_DotationCategory& /*dotationCategory*/, bool /*bCheckDotationsAvailability*/ ) const {return 0; };
+    virtual double GetMaxRangeToFire                 ( const MIL_Agent_ABC& pion, double rWantedPH ) const {return 0; };
     virtual void ApplyInjury                ( MIL_Injury_ABC& injury );
     //@}
 

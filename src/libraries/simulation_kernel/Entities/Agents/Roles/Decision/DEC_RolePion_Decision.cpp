@@ -774,6 +774,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::Brain& brain )
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFireOnEnemyWhenUnloaded, boost::ref( GetPion() ), _1, _2 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMaxPourEtreTireParUnite",
         boost::function< float( boost::shared_ptr< DEC_Knowledge_Agent >, float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToBeFiredByEnemy, boost::ref( GetPion() ), _1, _2 ) ) );
+    brain.RegisterFunction( "DEC_Tir_PorteeMaxPourTirer",
+        boost::function< float( float ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToFire, boost::ref( GetPion() ), _1 ) ) );   
     brain.RegisterFunction( "DEC_Tir_PorteeMaxTirIndirect",
         boost::function< float( const PHY_DotationCategory* ) >( boost::bind( &DEC_FireFunctions::GetMaxRangeToIndirectFire, boost::ref( GetPion() ), _1 ) ) );
     brain.RegisterFunction( "DEC_Tir_PorteeMinTirIndirect",

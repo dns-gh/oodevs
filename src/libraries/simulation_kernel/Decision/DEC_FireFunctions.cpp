@@ -46,6 +46,20 @@ float DEC_FireFunctions::GetMinRangeToFireOnEnemy( const MIL_AgentPion& callerAg
     return MIL_Tools::ConvertSimToMeter( (float)rRange );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DEC_FireFunctions::GetMaxRangeToFire
+// Created: DDA 2010-05-03
+// -----------------------------------------------------------------------------
+float DEC_FireFunctions::GetMaxRangeToFire( const MIL_Agent_ABC& callerAgent, float rWantedPH )
+{
+    const double rRange = callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMaxRangeToFire( callerAgent, rWantedPH );
+    if( rRange == std::numeric_limits< double >::max() )
+        return -1.f;
+    return MIL_Tools::ConvertSimToMeter( (float)rRange ); 
+}
+
+ 
 // -----------------------------------------------------------------------------
 // Name: DEC_FireFunctions::GetMaxRangeToFireOnEnemyActualPosture
 // Created: SBO 2006-01-10

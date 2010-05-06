@@ -341,6 +341,23 @@ MT_Float PHY_WeaponType::GetMinRangeToFireOn( const MIL_Agent_ABC& firer, const 
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_WeaponType::GetMaxRangeToFire
+// Created: DDA 2010-05-03
+// -----------------------------------------------------------------------------
+MT_Float PHY_WeaponType::GetMaxRangeToFire( const MIL_Agent_ABC& pion, MT_Float rWantedPH ) const
+{
+    assert( pDotationCategory_ );
+
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
+    MIL_Agent_ABC& localFirer = const_cast< MIL_Agent_ABC& >( pion );
+    localFirer.Execute( *dotationComputer );
+
+    if( !pDirectFireData_ || !dotationComputer->HasDotation( *pDotationCategory_ ) )
+        return std::numeric_limits< MT_Float >::max(); 
+    return pDirectFireData_->GetMaxRangeToFire( rWantedPH );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_WeaponType::GetMaxRangeToFireOnWithPosture
 // Created: SBO 2006-01-10
 // -----------------------------------------------------------------------------

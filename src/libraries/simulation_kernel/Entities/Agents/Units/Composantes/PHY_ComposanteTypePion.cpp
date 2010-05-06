@@ -1131,6 +1131,18 @@ MT_Float PHY_ComposanteTypePion::GetMinRangeToIndirectFire( const MIL_Agent_ABC&
     return rRange;
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetMaxRangeToIndirectFire
+// Created: DDA 2010-05-03
+// -----------------------------------------------------------------------------
+ double PHY_ComposanteTypePion::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, double rWantedPH ) const
+ {
+    double rRange = std::numeric_limits< double >::max();
+    for( CIT_WeaponTypeMap itWeapon = weaponTypes_.begin(); itWeapon != weaponTypes_.end(); ++itWeapon )
+        rRange = std::min( rRange, itWeapon->first->GetMaxRangeToFire( pion, rWantedPH ) );
+    return rRange;
+ }
+
 // =============================================================================
 // LOGISTIC
 // =============================================================================

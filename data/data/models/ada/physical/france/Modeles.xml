@@ -3,9 +3,17 @@
   <units>
     <unit dia-type="BMPion" file="BMPion.bms" name="net.masagroup.sword.military.roles.Platoon">
       <missions>
+        <mission name="Advance"/>
         <mission name="Animate"/>
+        <mission name="DestroyAgents"/>
+        <mission name="EngageAgents"/>
+        <mission name="Flee"/>
+        <mission name="IdentifyAgent"/>
         <mission name="Load"/>
         <mission name="Mount"/>
+        <mission name="MoveAndObserve"/>
+        <mission name="MoveObserveReconnoiter"/>
+        <mission name="MoveOnPath"/>
         <mission name="MoveToPoint">
           <fragorder name="Illuminate"/>
         </mission>
@@ -13,6 +21,7 @@
         <mission name="MoveToAutomate"/>
         <mission name="MoveToAgent"/>
         <mission name="MoveToAgentKnowledge"/>
+        <mission name="MoveAlong"/>
         <mission name="MoveToObjectKnowledge"/>
         <mission name="MoveToPointList"/>
         <mission name="MoveToPolygonList"/>
@@ -20,30 +29,23 @@
         <mission name="MoveToAgentList"/>
         <mission name="MoveToAgentKnowledgeList"/>
         <mission name="MoveToObjectKnowledgeList"/>
-        <mission name="MoveToUrbanBlock"/>
-        <mission name="DestroyAgents"/>
+        <mission name="MoveToUrbanBlock"/>  
         <mission name="NeutralizeAgents"/>
-        <mission name="ObserveAndReconnoiterPoint"/>
-        <mission name="MoveObserveReconnoiter"/>
+        <mission name="ObserveAndReconnoiterPoint"/>    
         <mission name="ObserveAndReconnoiterUrbanBlock"/>
         <mission name="ObservePoint"/>
         <mission name="ObserveDirection"/>
         <mission name="ObserveUrbanBlock"/>
         <mission name="ObserveAgent"/>
         <mission name="ObserveObject"/>
-        <mission name="ReconnoiterUrbanBlock"/>
-        <mission name="ReconnoiterPoint"/>
-        <mission name="IdentifyAgent"/>
-        <mission name="MoveAndObserve"/>
-        <mission name="SeekAndDestroy"/>
-        <mission name="EngageAgents"/>
-        <mission name="TakeCover"/>
-        <mission name="Flee"/>
-        <mission name="SelfProtect"/>
-        <mission name="MoveAlong"/>
-        <mission name="StayClose"/>
         <mission name="ReconnoiterPath"/>
-        <mission name="MoveOnPath"/>
+        <mission name="ReconnoiterPoint"/>
+        <mission name="ReconnoiterUrbanBlock"/>     
+        <mission name="SeekAndDestroy"/>  
+        <mission name="SelfProtect"/>      
+        <mission name="StayClose"/>     
+        <mission name="Support"/>        
+        <mission name="TakeCover"/>      
         <mission name="Interdict"/>
       </missions>
     </unit>

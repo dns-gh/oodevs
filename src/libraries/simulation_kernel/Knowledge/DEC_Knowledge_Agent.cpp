@@ -803,7 +803,7 @@ double DEC_Knowledge_Agent::GetMaterialComposantesProtectionLevel( boost::shared
         else 
             return -1;
     }
-
+    return -1;
 }
 
 // -----------------------------------------------------------------------------

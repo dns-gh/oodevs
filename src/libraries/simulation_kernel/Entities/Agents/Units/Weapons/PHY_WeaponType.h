@@ -82,11 +82,13 @@ public:
 
     MT_Float GetMaxRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
     MT_Float GetMinRangeToFireOnWithPosture( const MIL_Agent_ABC& firer, const MIL_Agent_ABC& target, const PHY_ComposanteType_ABC& targetComposanteType, MT_Float rWantedPH ) const;
-   
+    MT_Float GetMaxRangeToFire( const MIL_Agent_ABC& firer, MT_Float rWantedPH ) const;
+
     MT_Float GetMaxRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
     MT_Float GetMinRangeToIndirectFire( const MIL_Agent_ABC& firer, bool bCheckDotationsAvailability ) const;
     MT_Float GetMaxRangeToIndirectFire() const;
     MT_Float GetMinRangeToIndirectFire() const;
+
 
     MT_Float GetPHModificator( const PHY_RoleInterface_Posture& firerPosture, const PHY_RoleInterface_Posture& targetPosture ) const;
     MT_Float GetPHModificator( const PHY_Posture&          firerPosture, const PHY_Posture&               targetPosture ) const;
