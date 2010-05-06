@@ -20,8 +20,14 @@ namespace kernel
     class ModelVisitor_ABC;
 }
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace dispatcher 
 {
+    class Model;
 
 // =============================================================================
 /** @class  MeteoModel
@@ -35,7 +41,7 @@ class MeteoModel : public weather::MeteoModel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MeteoModel( kernel::CoordinateConverter_ABC& conv );
+             MeteoModel( const tools::ExerciseConfig& config, Model& model );
     virtual ~MeteoModel();
     //@}
 
@@ -65,7 +71,8 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::CoordinateConverter_ABC& converter_;
+    Model& model_;
+    std::auto_ptr< kernel::CoordinateConverter_ABC > converter_;
     weather::PHY_Meteo* pGlobalMeteo_;
     T_MeteoList         meteos_;    // Including global meteo
     //@}

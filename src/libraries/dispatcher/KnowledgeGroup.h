@@ -56,9 +56,8 @@ public:
     void SendDestruction( ClientPublisher_ABC& publisher ) const;
     void Accept         ( kernel::ModelVisitor_ABC& visitor ) const;
 
-    void Update( const MsgsSimToClient::MsgKnowledgeGroupCreation& message );
+    using SimpleEntity< kernel::KnowledgeGroup_ABC >::Update;
     void Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message ); // LTO
-    void Update( const MsgsSimToClient::MsgKnowledgeGroupDestruction& message ); // LTO
     virtual bool IsActivated() const { return true; };  // $$$$ _RC_ SLG 2009-12-21: TEMP  // LTO
     virtual void Register( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO
     virtual void Remove( kernel::KnowledgeGroup_ABC& knowledgeGroup ); // LTO

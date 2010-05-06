@@ -57,15 +57,6 @@ KnowledgeGroup::~KnowledgeGroup()
 // Name: KnowledgeGroup::Update
 // Created: SBO 2010-03-04
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupCreation& /*message*/ )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Update
-// Created: SBO 2010-03-04
-// -----------------------------------------------------------------------------
 void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& message )
 {
     // LTO begin
@@ -76,15 +67,6 @@ void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupUpdate& mes
     if( message.has_oid_parent() )
         ChangeSuperior( message.oid_parent() ? &model_.KnowledgeGroups().Get( message.oid_parent() ) : 0 );
     // LTO end
-}
-
-// -----------------------------------------------------------------------------
-// Name: KnowledgeGroup::Update
-// Created: FDS 2010-03-31
-// -----------------------------------------------------------------------------
-void KnowledgeGroup::Update( const MsgsSimToClient::MsgKnowledgeGroupDestruction& /*message*/ )
-{
-    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -147,9 +129,12 @@ void KnowledgeGroup::SendFullUpdate( ClientPublisher_ABC& publisher ) const
 // Name: KnowledgeGroup::SendDestruction
 // Created: AGE 2008-06-20
 // -----------------------------------------------------------------------------
-void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& ) const
+void KnowledgeGroup::SendDestruction( ClientPublisher_ABC& publisher ) const
 {
-    throw std::runtime_error( __FUNCTION__ );
+    client::KnowledgeGroupDestruction message;
+    message().set_oid( GetId() );
+    message().set_oid_camp( team_.GetId() );
+    message.Send( publisher );
 }
 
 // -----------------------------------------------------------------------------

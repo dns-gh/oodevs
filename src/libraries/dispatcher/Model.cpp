@@ -59,7 +59,7 @@ Model::Model( const tools::ExerciseConfig& config )
     , agentTypes_( new kernel::AgentTypes( config ) )
     , objectTypes_( new kernel::ObjectTypes( config ) )
     , levels_( new kernel::FormationLevels())
-    , meteoModel_ (new MeteoModel( *(new kernel::CoordinateConverter( config )) ))
+    , meteoModel_( new MeteoModel( config, *this ) )
 {
     // NOTHING
 }

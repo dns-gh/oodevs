@@ -9,13 +9,14 @@
 
 #include "dispatcher_pch.h"
 #include "MeteoModel.h"
+#include "Model.h"
 #include "clients_kernel/CoordinateConverter.h"
-#include "meteo/PHY_Meteo.h"
-#include "meteo/MeteoData.h"
-#include "meteo/PHY_Lighting.h"
-#include "meteo/PHY_Precipitation.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "dispatcher/EntityPublisher.h"
+#include "meteo/MeteoData.h"
+#include "meteo/PHY_Lighting.h"
+#include "meteo/PHY_Meteo.h"
+#include "meteo/PHY_Precipitation.h"
 
 using namespace dispatcher;
 
@@ -23,9 +24,10 @@ using namespace dispatcher;
 // Name: MeteoModel constructor 
 // Created: HBD 2010-03-23
 // -----------------------------------------------------------------------------
-MeteoModel::MeteoModel( kernel::CoordinateConverter_ABC& converter )
+MeteoModel::MeteoModel( const tools::ExerciseConfig& config, Model& model )
   : MeteoModel_ABC()
-  , converter_( converter )
+  , model_( model )
+  , converter_( new kernel::CoordinateConverter( config ) )
   , pGlobalMeteo_( 0 )
 {
     weather::PHY_Precipitation::Initialize();
@@ -62,7 +64,7 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
     else
     {
         pGlobalMeteo_ = new weather::PHY_Meteo( msg.oid(), msg.attributes(), this );
-        pGlobalMeteo_->Attach< EntityPublisher_ABC >( *new EntityPublisher< weather::PHY_Meteo >( *pGlobalMeteo_ ) );
+        model_.AddExtensions( *pGlobalMeteo_ );
     }
  }
 
@@ -72,16 +74,16 @@ void MeteoModel::OnReceiveMsgGlobalMeteo( const MsgsSimToClient::MsgControlGloba
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoCreation( const MsgsSimToClient::MsgControlLocalMeteoCreation& msg )
 {   
-    geometry::Point2f vUpLeft = converter_.ConvertFromGeo( geometry::Point2d( msg.top_left_coordinate().longitude(), 
+    geometry::Point2f vUpLeft = converter_->ConvertFromGeo( geometry::Point2d( msg.top_left_coordinate().longitude(), 
         msg.top_left_coordinate().latitude() ));
-    geometry::Point2f vDownRight = converter_.ConvertFromGeo( geometry::Point2d( msg.bottom_right_coordinate().longitude(), 
+    geometry::Point2f vDownRight = converter_->ConvertFromGeo( geometry::Point2d( msg.bottom_right_coordinate().longitude(), 
         msg.bottom_right_coordinate().latitude() ));
 
     if( msg.has_attributes() )
     {
-        weather::MeteoData* pTmp = new weather::MeteoData( msg.oid(), vUpLeft, vDownRight, msg.attributes(), *this, converter_ );
-        pTmp->Attach< EntityPublisher_ABC >( *new EntityPublisher< weather::MeteoData >( *pTmp ) );
-        RegisterMeteo( *pTmp );
+        weather::MeteoData* weather = new weather::MeteoData( msg.oid(), vUpLeft, vDownRight, msg.attributes(), *this, *converter_ );
+        model_.AddExtensions( *weather );
+        RegisterMeteo( *weather );
     }
 }
 
