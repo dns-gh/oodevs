@@ -16,6 +16,7 @@
 #include "Decision/DEC_PathPoint.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_Agent_Path.h"
+#include "Decision/DEC_AgentFunctions.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -31,13 +32,29 @@
 
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathFunctions::CreatePathToPoint
+// Name: DEC_PathFunctions::CreatePathToPointBM
 // Created: MGD 2009-10-31
 // -----------------------------------------------------------------------------
 boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > end, int pathType )
 {
     return CreatePathToPoint( callerAgent, end.get(), pathType );
 }
+
+// -----------------------------------------------------------------------------
+// Name: bool DEC_PathFunctions::ShouldEmbark
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Path_ABC > path )
+{
+    double length = path->GetLength();
+    double MaxSpeedUnloaded = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeedWithReinforcement( false );
+    if( MaxSpeedUnloaded == 0 )
+            return true;
+    double timeUnloaded = length / MaxSpeedUnloaded;
+    double timeLoaded = ( length / callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeedWithReinforcement( true ) ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
+    return ( timeLoaded < timeUnloaded );
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPoint
 // Created: NLD 2004-09-23
@@ -53,6 +70,23 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
     return pPath;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::CreatePathToPoint
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType, bool loaded )
+{
+    assert( pEnd );
+    
+    const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
+    assert( pPathType );
+
+    boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType, loaded ) );
+    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
+    return pPath;
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::CreatePathToPointList
@@ -211,3 +245,13 @@ unsigned int DEC_PathFunctions::GetLimaPoint( boost::shared_ptr< DEC_PathPoint >
 {
     return pPoint->GetLimaID();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathFunctions::GetDistancePath
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+double DEC_PathFunctions::GetDistancePath( const boost::shared_ptr< DEC_Path_ABC > pPath )
+{
+   return pPath->GetLength();
+}
+

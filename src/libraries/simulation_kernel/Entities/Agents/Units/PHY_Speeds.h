@@ -35,6 +35,7 @@ public:
     //@{
              PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration );
     explicit PHY_Speeds( const moving::PHY_RoleAction_Moving& role );
+    explicit PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded );
     virtual ~PHY_Speeds();
     //@}
 
@@ -81,10 +82,6 @@ private:
     unsigned char  nAreaImpassabilityMask_;
     unsigned char  nBorderImpassabilityMask_;
     unsigned short nLinearImpassabilityMask_;
-
-    static const TerrainData areas_  [ 7  ];
-    static const TerrainData borders_[ 7  ];
-    static const TerrainData linears_[ 11 ];
     //@}
 };
 

@@ -53,6 +53,7 @@ public:
 
 public:
      DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType );
+     DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D&   vPosEnd, const DEC_PathType& pathType, bool loaded  );
      DEC_Agent_Path( const MIL_AgentPion& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points , const DEC_PathType& pathType );
      DEC_Agent_Path( const MIL_AgentPion& queryMaker, const T_PointVector& points , const DEC_PathType& pathType );
      DEC_Agent_Path( const DEC_Agent_Path& rhs ); // Copy only query parameters, not the result !

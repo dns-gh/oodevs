@@ -286,7 +286,7 @@ void PHY_ComposantePion::ReinitializeState( const PHY_ComposanteState& tmpState 
 double   PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
 {
     assert( pType_ );
-    return CanMove() ? pType_->GetMaxSpeed( data ) : 0.;
+    return pType_->GetMaxSpeed( data );
 }
 
 // -----------------------------------------------------------------------------
@@ -296,7 +296,7 @@ double   PHY_ComposantePion::GetMaxSpeed( const TerrainData& data ) const
 double   PHY_ComposantePion::GetMaxSpeed() const
 {
     assert( pType_ );
-    return CanMove() ? pType_->GetMaxSpeed() : 0.;
+    return pType_->GetMaxSpeed();
 }
 
 // -----------------------------------------------------------------------------
@@ -305,7 +305,7 @@ double   PHY_ComposantePion::GetMaxSpeed() const
 // -----------------------------------------------------------------------------
 double PHY_ComposantePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
 {
-    return CanMove() ? pType_->GetMaxSpeed( object ) : 0.;
+    return pType_->GetMaxSpeed( object );
 }
 
 // -----------------------------------------------------------------------------
@@ -1116,6 +1116,25 @@ bool PHY_ComposantePion::CanMove() const
 {
     assert( pState_ );
     return pState_->IsUsable() && CanBeUsedForMove();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::IsUsable
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::IsUsable() const
+{
+    assert( pState_ );
+    return pState_->IsUsable();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::IsLoadable
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::IsLoadable() const
+{
+    return bLoadable_;
 }
 
 // -----------------------------------------------------------------------------

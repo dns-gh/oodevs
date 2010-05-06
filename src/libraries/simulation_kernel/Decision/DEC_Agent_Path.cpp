@@ -129,6 +129,37 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector
     Initialize( pathPoints_ );
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::DEC_Agent_Path
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+DEC_Agent_Path::DEC_Agent_Path( const MIL_AgentPion& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded ) 
+    : DEC_PathResult            ()
+    , queryMaker_               ( queryMaker )
+    , bRefine_                  ( queryMaker.CanFly() && !queryMaker.IsAutonomous() )
+    , fuseau_                   () //$$$ Debile
+    , automateFuseau_           () //$$$ Debile
+    , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
+    , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >(), loaded )
+    , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
+    , pathKnowledgeAgents_      ()
+    , pathKnowledgeObjects_     ( )
+    , rCostOutsideOfAllObjects_( 0. )
+    , pathKnowledgePopulations_ ()
+    , pathType_                 ( pathType )
+    , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
+    , bDecPointsInserted_       ( false )
+    , pathPoints_               ()
+{
+    fuseau_         = queryMaker.GetOrderManager().GetFuseau();
+    automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
+
+    pathPoints_.reserve( 2 );
+    pathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    pathPoints_.push_back( vPosEnd );
+    Initialize( pathPoints_ );
+}
+
 //-----------------------------------------------------------------------------
 // Name: DEC_Agent_Path constructor
 // Created: NLD 2005-06-30

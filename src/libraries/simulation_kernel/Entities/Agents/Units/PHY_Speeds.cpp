@@ -78,6 +78,42 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MoveComputerFactory::CreateSpeedComputer
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
+    : rMaxSpeed_                ( role.GetTheoricMaxSpeedWithReinforcement( loaded ) )
+    , rBaseSpeed_               ( role.GetSpeedWithReinforcement( TerrainData() ) )
+    , rAreaSpeeds_              ( new MT_Float[ 8  ] )
+    , rBorderSpeeds_            ( new MT_Float[ 8  ] )
+    , rLinearSpeeds_            ( new MT_Float[ 11 ] )
+    , nLinearPassabilityMask_   ( 0 )
+    , nAreaPassabilityMask_     ( 0 )
+    , nAreaImpassabilityMask_   ( 0 )
+    , nBorderImpassabilityMask_ ( 0 )
+    , nLinearImpassabilityMask_ ( 0 )
+{
+    static const TerrainData areas[]   = { 
+        TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(),
+        TerrainData::Urban(), TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice() };
+    static const TerrainData borders[] = { 
+        TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(),
+        TerrainData::UrbanBorder(), TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder() };
+    static const TerrainData linears[] = { 
+        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(), TerrainData::SmallRoad(), 
+        TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(), TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
+
+    for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
+        rAreaSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( areas[ nOffset ] );
+    for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
+        rBorderSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( borders[ nOffset ] );
+    for( unsigned int nOffset = 0; nOffset != 11; ++nOffset )
+        rLinearSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( linears[ nOffset ] );
+
+    GenerateMasks();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Speeds destructor
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------

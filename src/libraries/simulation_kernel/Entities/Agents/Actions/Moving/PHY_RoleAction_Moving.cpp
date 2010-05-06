@@ -173,10 +173,25 @@ double PHY_RoleAction_Moving::GetMaxSlope() const
 double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 {
     SpeedComputerStrategy strategy( true, true, 0 );
-    std::auto_ptr< SpeedComputer_ABC > computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
+    std::auto_ptr< SpeedComputer_ABC > computer;
+        computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy );
     pion_.Execute( *computer );
     return computer->GetSpeed();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement( bool loaded ) const
+{
+    SpeedComputerStrategy strategy( true, true, 0 );
+    std::auto_ptr< SpeedComputer_ABC > computer;
+    computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
+    pion_.Execute( *computer );
+    return computer->GetSpeed();
+}
+
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Moving::GetSpeedWithReinforcement

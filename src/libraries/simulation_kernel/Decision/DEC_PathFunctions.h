@@ -31,7 +31,9 @@ public:
     //! @name Functions
     //@{
     static boost::shared_ptr< DEC_Path_ABC > CreatePathToPointBM( MIL_AgentPion& callerAgent, boost::shared_ptr< MT_Vector2D > end, int pathType );
+    static bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Path_ABC > path );
     static boost::shared_ptr< DEC_Path_ABC > CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType );
+    static boost::shared_ptr< DEC_Path_ABC > CreatePathToPoint( MIL_AgentPion& callerAgent, MT_Vector2D* pEnd, int pathType, bool loaded );
 
     static boost::shared_ptr< DEC_Path_ABC > CreatePathToPointList( MIL_AgentPion& callerAgent, std::vector< boost::shared_ptr< MT_Vector2D > > listPt, int pathType );
 
@@ -47,7 +49,8 @@ public:
     static boost::shared_ptr< DEC_PathPoint > GetDestPoint( boost::shared_ptr< DEC_PathPoint > pPoint );
     static int  GetTypeLimaPoint      ( boost::shared_ptr< DEC_PathPoint > pPoint );
     static unsigned int GetLimaPoint  ( boost::shared_ptr< DEC_PathPoint > pPoint );
-    //@}
+    static double GetDistancePath     ( const boost::shared_ptr< DEC_Path_ABC > pPath );
+     //@}
 };
 
 #endif // __DEC_PathFunctions_h_

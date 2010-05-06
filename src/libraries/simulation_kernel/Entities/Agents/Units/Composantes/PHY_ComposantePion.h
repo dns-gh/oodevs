@@ -163,6 +163,8 @@ public:
             double                          GetMaxSpeed        ( const TerrainData& data ) const;
             double                          GetMaxSpeed        ( const MIL_Object_ABC& object ) const;
             bool                            CanMove            () const;
+            bool                            IsUsable           () const;            
+            bool                            IsLoadable         () const;
             bool                            CanPerceive        () const;
             bool                            CanBeFired         () const;
             bool                            CanBeLent          () const;

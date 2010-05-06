@@ -20,7 +20,7 @@ namespace moving
 // Name: DefaultSpeedComputer constructor
 // Created: AHC 2009-10-01
 // -----------------------------------------------------------------------------
-DefaultSpeedComputer::DefaultSpeedComputer( const SpeedStrategy_ABC& strategy ) :
+BaseSpeedComputer::BaseSpeedComputer( const SpeedStrategy_ABC& strategy ) :
         strategy_          ( strategy ),
         speed_             ( std::numeric_limits<double>::max() ),
         hasUsableComponent_( false ),
@@ -29,11 +29,66 @@ DefaultSpeedComputer::DefaultSpeedComputer( const SpeedStrategy_ABC& strategy ) 
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSpeedComputer destructor
+// Name: BaseSpeedComputer destructor
 // Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+BaseSpeedComputer::~BaseSpeedComputer()
+{
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseSpeedComputer::ApplyOnReinforcement
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+void BaseSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement)
+{
+    speed_ = std::min( speed_, strategy_.ApplyOnReinforcement( reinforcement ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseSpeedComputer::ApplyOnPopulation
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+void BaseSpeedComputer::ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population)
+{
+    speed_ = std::min( speed_, strategy_.ApplyOnPopulation( population ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseSpeedComputer::GetSpeed
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+double BaseSpeedComputer::GetSpeed() const
+{
+    return hasUsableComponent_ ? speedRatio_ * speed_ : 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: BaseSpeedComputer::AddModifier
+// Created: AHC 2009-10-01
+// -----------------------------------------------------------------------------
+void BaseSpeedComputer::AddModifier( double ratio, bool isMax )
+{
+    speedRatio_ *= strategy_.AddModifier( ratio, isMax );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultSpeedComputer::DefaultSpeedComputer
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+DefaultSpeedComputer::DefaultSpeedComputer( const SpeedStrategy_ABC& strategy )
+: BaseSpeedComputer( strategy )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DefaultSpeedComputer::~DefaultSpeedComputer
+// Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 DefaultSpeedComputer::~DefaultSpeedComputer()
 {
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -50,39 +105,67 @@ void DefaultSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSpeedComputer::ApplyOnReinforcement
-// Created: AHC 2009-10-01
+// Name: LoadedSpeedComputer::LoadedSpeedComputer
+// Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-void DefaultSpeedComputer::ApplyOnReinforcement( MIL_Agent_ABC& reinforcement)
+LoadedSpeedComputer::LoadedSpeedComputer( const SpeedStrategy_ABC& strategy )
+: BaseSpeedComputer( strategy )
 {
-    speed_ = std::min( speed_, strategy_.ApplyOnReinforcement( reinforcement ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSpeedComputer::ApplyOnPopulation
-// Created: AHC 2009-10-01
+// Name: LoadedSpeedComputer::~LoadedSpeedComputer
+// Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-void DefaultSpeedComputer::ApplyOnPopulation( const DEC_Knowledge_PopulationCollision& population)
+LoadedSpeedComputer::~LoadedSpeedComputer()
 {
-    speed_ = std::min( speed_, strategy_.ApplyOnPopulation( population ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSpeedComputer::GetSpeed
-// Created: AHC 2009-10-01
+// Name: LoadedSpeedComputer::ApplyOnComponent
+// Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-double DefaultSpeedComputer::GetSpeed() const
+void LoadedSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component )
 {
-    return hasUsableComponent_ ? speedRatio_ * speed_ : 0.;
+    if( !component.IsLoadable() && component.IsUsable() )
+    {
+        speed_ = std::min( speed_, strategy_.ApplyOnComponent( component ) );
+        hasUsableComponent_ = true;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: DefaultSpeedComputer::AddModifier
-// Created: AHC 2009-10-01
+// Name: UnloadedSpeedComputer::UnloadedSpeedComputer
+// Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-void DefaultSpeedComputer::AddModifier( double ratio, bool isMax )
+UnloadedSpeedComputer::UnloadedSpeedComputer( const SpeedStrategy_ABC& strategy )
+: BaseSpeedComputer( strategy )
 {
-    speedRatio_ *= strategy_.AddModifier( ratio, isMax );
+    // NOTHING
+}
+             
+// -----------------------------------------------------------------------------
+// Name: UnloadedSpeedComputer::~UnloadedSpeedComputer
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+UnloadedSpeedComputer::~UnloadedSpeedComputer()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnloadedSpeedComputer::ApplyOnComponent
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+void UnloadedSpeedComputer::ApplyOnComponent( const PHY_ComposantePion& component )
+{
+    if( component.IsLoadable() && component.IsUsable() )
+    {
+        speed_ = std::min( speed_, strategy_.ApplyOnComponent( component ) );
+        hasUsableComponent_ = true;
+    }
 }
 
 }

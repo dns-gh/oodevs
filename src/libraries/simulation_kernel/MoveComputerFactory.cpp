@@ -55,6 +55,20 @@ std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( con
 }
 
 // -----------------------------------------------------------------------------
+// Name: MoveComputerFactory::CreateSpeedComputer
+// Created: LMT 2010-05-04
+// -----------------------------------------------------------------------------
+std::auto_ptr< SpeedComputer_ABC > MoveComputerFactory::CreateSpeedComputer( const SpeedStrategy_ABC& strategy, bool loaded ) const
+{
+    std::auto_ptr< SpeedComputer_ABC > pSpeedComputer ;
+    if( loaded )
+        pSpeedComputer.reset( new LoadedSpeedComputer( strategy ) );
+    else    
+        pSpeedComputer.reset( new UnloadedSpeedComputer( strategy ) );
+    return pSpeedComputer;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MoveComputerFactory MoveComputerFactory::CreateMaxSlopeComputer
 // Created: AHC 2009-10-02
 // -----------------------------------------------------------------------------
