@@ -12,6 +12,8 @@
         <Repertoire>directia5/models/libs/base</Repertoire>
         <Repertoire>directia5/models/libs/core</Repertoire>
         <Repertoire>directia5/models/net.masagroup.sword</Repertoire>
+        <Repertoire>directia5/models/net.masagroup.testSword</Repertoire>
+        <Repertoire>directia5/models/net.masagroup.sword_france</Repertoire>
       </RepertoiresBM>
       <Knowledges>
         <Knowledge>net.masagroup.sword.military.world.Area</Knowledge>

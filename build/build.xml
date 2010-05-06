@@ -590,9 +590,11 @@
         <delete>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
             <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.testSword/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
+            <fileset dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword_france/src" includes="**/*.bmt,**/*.bmk,**/*.bmr"/>
         </delete>
         <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core;${data.dir}/data/models/ada/decisional/directia5/models/libs/base"/>
         <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.testSword/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
+        <bmc dir="${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword_france/src" core="${data.dir}/data/models/ada/decisional/directia5/models/libs/core;${data.dir}/data/models/ada/decisional/directia5/models/libs/base;${data.dir}/data/models/ada/decisional/directia5/models/net.masagroup.sword/src;"/>
     </target>
 
     <target name="generate-data" depends="generate-database" description="generate data"/>
