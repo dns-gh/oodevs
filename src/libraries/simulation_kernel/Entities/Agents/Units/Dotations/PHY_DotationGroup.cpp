@@ -26,9 +26,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroup )
 // Name: PHY_DotationGroup constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationGroup::PHY_DotationGroup( const PHY_DotationType& type, PHY_DotationGroupContainer& groupContainer )
-    : pType_          ( &type )
-    , pGroupContainer_( &groupContainer )
+PHY_DotationGroup::PHY_DotationGroup( const PHY_DotationType& type, PHY_DotationGroupContainer& groupContainer, bool bInfiniteDotations )
+    : pType_             ( &type )
+    , pGroupContainer_   ( &groupContainer )
+    , bInfiniteDotations_( bInfiniteDotations )
 {
     // NOTHING
 }
@@ -38,8 +39,9 @@ PHY_DotationGroup::PHY_DotationGroup( const PHY_DotationType& type, PHY_Dotation
 // Created: JVT 2005-03-31
 // -----------------------------------------------------------------------------
 PHY_DotationGroup::PHY_DotationGroup()
-    : pType_          ( 0 )
-    , pGroupContainer_( 0 )
+    : pType_             ( 0 )
+    , pGroupContainer_   ( 0 )
+    , bInfiniteDotations_( false )
 {
     // NOTHING
 }
@@ -166,7 +168,7 @@ PHY_Dotation& PHY_DotationGroup::CreateDotation( const PHY_DotationCategory& dot
 {
     PHY_Dotation*& pDotation = dotations_[ &dotationCategory ];
     if( !pDotation )
-        pDotation = new PHY_Dotation( dotationCategory, *this );
+        pDotation = new PHY_Dotation( dotationCategory, *this, bInfiniteDotations_ );
     return *pDotation;
 }
 

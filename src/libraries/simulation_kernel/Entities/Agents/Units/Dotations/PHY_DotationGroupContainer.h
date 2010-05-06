@@ -48,7 +48,7 @@ class PHY_DotationGroupContainer : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation );
+    explicit PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation, bool bInfiniteDotations );
              PHY_DotationGroupContainer();
             ~PHY_DotationGroupContainer();
     //@}
@@ -136,6 +136,7 @@ private:
     dotation::PHY_RoleInterface_Dotations* pRoleDotation_;
     T_DotationGroupMap      dotationGroups_;
     T_DotationSet           dotationsChanged_;
+    bool                    bInfiniteDotations_;
     //@}
 };
 

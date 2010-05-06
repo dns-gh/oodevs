@@ -27,7 +27,7 @@ class PHY_DotationStock : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity );
+     PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity, bool bInfiniteDotations );
      PHY_DotationStock();
     virtual ~PHY_DotationStock();
     //@}
@@ -71,11 +71,13 @@ private:
 private:
     //! @name Member data
     //@{
+    static const MT_Float             maxCapacity_;
           PHY_DotationStockContainer* pStockContainer_;
     const PHY_DotationCategory*       pCategory_;
           MT_Float                    rValue_;
           MT_Float                    rCapacity_; // Les stocks peuvent dépasser leurs capacités (Stockage à terre)
-          MT_Float                    rSupplyThreshold_;    
+          MT_Float                    rSupplyThreshold_;
+          bool                        bInfiniteDotations_;
     //@}
 };
 

@@ -98,6 +98,7 @@
 #include "preparation/Model.h"
 #include "preparation/ModelChecker_ABC.h"
 #include "preparation/StaticModel.h"
+#include "preparation/TeamsModel.h"
 #include "preparation/Tools.h"
 
 #include "tools/ExerciseConfig.h"
@@ -226,7 +227,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     gui::DrawerPanel* drawerPanel = new DrawerPanel( pCreationDockWnd, *pCreationPanel, *paramLayer, controllers, model.drawings_ );
     pCreationPanel->AddPanel( drawerPanel );
 
-    QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_ );
+    QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_, model.teams_.InfiniteDotations() );
     QDialog* importDialog = new ImportOrbatDialog( this, config_, model );
     QDialog* exportDialog = new ExportDialog( this, config_ );
     ScoreDialog* scoreDialog = new ScoreDialog( this, controllers, *factory, model_.scores_, *paramLayer, staticModel_ );

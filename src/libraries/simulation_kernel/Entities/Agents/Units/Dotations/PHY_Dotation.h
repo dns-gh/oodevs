@@ -34,7 +34,7 @@ class PHY_Dotation : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group );
+     PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group, bool bInfiniteDotations );
      PHY_Dotation();
     virtual ~PHY_Dotation();
     //@}
@@ -89,6 +89,7 @@ private:
 private:
     //! @name Member data
     //@{
+    static const MT_Float       maxCapacity_;
     const PHY_DotationCategory* pCategory_;
           PHY_DotationGroup*    pGroup_;
           MT_Float              rValue_;
@@ -97,6 +98,7 @@ private:
           MT_Float              rFireReservation_;
           MT_Float              rSupplyThreshold_;
           bool                  bDotationBlocked_; // Prisoner
+          bool                  bInfiniteDotations_;
     //@}
 };
 

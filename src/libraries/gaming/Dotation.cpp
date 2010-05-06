@@ -50,7 +50,8 @@ Dotation::~Dotation()
 Dotation Dotation::operator+( const Dotation& rhs ) const
 {
     Dotation dotation( *this );
-    dotation.quantity_ += rhs.quantity_;
+    if( dotation.quantity_ < std::numeric_limits< int >::max() )
+        dotation.quantity_ += rhs.quantity_;
     return dotation;
 }
 
@@ -61,7 +62,8 @@ Dotation Dotation::operator+( const Dotation& rhs ) const
 Dotation Dotation::operator-( const Dotation& rhs ) const
 {
     Dotation dotation( *this );
-    dotation.quantity_ -= rhs.quantity_;
+    if( dotation.quantity_ < std::numeric_limits< int >::max() )
+        dotation.quantity_ -= rhs.quantity_;
     return dotation;
 }
 

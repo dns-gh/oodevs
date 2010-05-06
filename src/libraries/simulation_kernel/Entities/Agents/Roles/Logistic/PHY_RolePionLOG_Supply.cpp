@@ -56,7 +56,7 @@ PHY_RolePionLOG_Supply::PHY_RolePionLOG_Supply( MIL_AgentPionLOG_ABC& pion )
     , bExternalMustChangeState_ ( false )
     , pStocks_           ( 0 )
 {
-    pStocks_ = new PHY_DotationStockContainer( *this );
+    pStocks_ = new PHY_DotationStockContainer( *this, MIL_AgentServer::GetWorkspace().GetEntityManager().HasInfiniteDotations() );
 }
 
 // -----------------------------------------------------------------------------

@@ -39,7 +39,7 @@ class PHY_DotationStockContainer : private boost::noncopyable
 
 public:
              PHY_DotationStockContainer();
-    explicit PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply );
+    explicit PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply, bool bInfiniteDotations );
     virtual ~PHY_DotationStockContainer();
 
     //! @name CheckPoints
@@ -115,6 +115,7 @@ private:
     T_StockMap              stocks_;   
     T_StockSet              stocksChanged_;
     bool                    bCheckStockCapacities_;
+    bool                    bInfiniteDotations_;
 };
 
 BOOST_CLASS_EXPORT_KEY( PHY_DotationStockContainer )

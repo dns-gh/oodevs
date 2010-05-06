@@ -24,20 +24,22 @@ namespace bfs = boost::filesystem;
 // Name: ExerciseDialog constructor
 // Created: SBO 2010-03-09
 // -----------------------------------------------------------------------------
-ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controllers, Exercise& exercise, const tools::ExerciseConfig& config )
+ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controllers, Exercise& exercise, const tools::ExerciseConfig& config, bool& infiniteDotations )
     : QDialog( parent, "ExerciseDialog" )
     , controllers_( controllers )
     , exercise_( exercise )
     , config_( config )
+    , infiniteDotations_( infiniteDotations )
 {
     setModal( false );
     setCaption( tr( "Exercise" ) );
-    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
+    QGridLayout* grid = new QGridLayout( this, 4, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 10 );
     grid->setRowStretch( 2, 5 );
     grid->setRowStretch( 3, 1 );
+    grid->setRowStretch( 4, 1 );
     {
         QGroupBox* box = new QHGroupBox( tr( "Information" ), this );
         new QLabel( tr( "Name:" ), box );
@@ -78,10 +80,15 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         grid->addMultiCellWidget( box, 2, 2, 0, 2 );
     }
     {
+        QGroupBox* box = new QVGroupBox( tr( "Parameters" ), this );
+        infiniteDotationsCB_ = new QCheckBox( tr( "Infinite dotations" ), box );
+        grid->addMultiCellWidget( box, 3, 3, 0, 2 );
+    }
+    {
         QHBox* box = new QHBox( this );
         QButton* ok = new QPushButton( tr( "Ok" ), box );
         QButton* cancel = new QPushButton( tr( "Cancel" ), box );
-        grid->addWidget( box, 3, 2 );
+        grid->addWidget( box, 4, 2 );
         connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     }
@@ -140,6 +147,15 @@ void ExerciseDialog::VisitResource( const QString& name, const QString& file )
     AddResource( name, file );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ExerciseDialog::showEvent
+// Created: JSR 2010-05-04
+// -----------------------------------------------------------------------------
+void ExerciseDialog::showEvent( QShowEvent* showEvent )
+{
+    QDialog::showEvent( showEvent );
+    infiniteDotationsCB_->setChecked( infiniteDotations_ );
+}
 
 namespace
 {
@@ -194,6 +210,7 @@ void ExerciseDialog::OnAccept()
     exercise_.ClearResources();
     for( QListViewItemIterator it( resources_ ); it.current(); ++it )
         exercise_.AddResource( it.current()->text( 0 ), it.current()->text( 1 ) );
+    infiniteDotations_ = infiniteDotationsCB_->isChecked();
     accept();
 }
 

@@ -26,8 +26,9 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationGroupContainer )
 // Name: PHY_DotationGroupContainer constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_DotationGroupContainer::PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation )
+PHY_DotationGroupContainer::PHY_DotationGroupContainer( dotation::PHY_RoleInterface_Dotations& roleDotation, bool bInfiniteDotations )
     : pRoleDotation_( &roleDotation )
+    , bInfiniteDotations_( bInfiniteDotations )
 {
     // NOTHING
 }
@@ -38,6 +39,7 @@ PHY_DotationGroupContainer::PHY_DotationGroupContainer( dotation::PHY_RoleInterf
 // -----------------------------------------------------------------------------
 PHY_DotationGroupContainer::PHY_DotationGroupContainer()
     : pRoleDotation_( 0 )
+    , bInfiniteDotations_( false )
 {
     // NOTHING
 }
@@ -191,7 +193,7 @@ PHY_DotationGroup& PHY_DotationGroupContainer::CreateDotationGroup( const PHY_Do
 {
     PHY_DotationGroup*& pGroup = dotationGroups_[ &dotationType ];
     if( !pGroup )
-        pGroup = new PHY_DotationGroup( dotationType, *this );
+        pGroup = new PHY_DotationGroup( dotationType, *this, bInfiniteDotations_ );
     return *pGroup;
 }
 

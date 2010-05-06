@@ -20,11 +20,13 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_Dotation )
 
+const MT_Float PHY_Dotation::maxCapacity_ = std::numeric_limits< int >::max();
+
 // -----------------------------------------------------------------------------
 // Name: PHY_Dotation constructor
 // Created: NLD 2004-08-04
 // -----------------------------------------------------------------------------
-PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group )
+PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGroup& group, bool bInfiniteDotations )
     : pCategory_              ( &category )
     , pGroup_                 ( &group )
     , rValue_                 ( 0. )
@@ -33,6 +35,7 @@ PHY_Dotation::PHY_Dotation( const PHY_DotationCategory& category, PHY_DotationGr
     , rFireReservation_       ( 0. )
     , rSupplyThreshold_       ( 0. )
     , bDotationBlocked_       ( false )
+    , bInfiniteDotations_      ( bInfiniteDotations )
 {
     // NOTHING
 }
@@ -50,6 +53,7 @@ PHY_Dotation::PHY_Dotation()
     , rFireReservation_       ( 0. )
     , rSupplyThreshold_       ( 0. )
     , bDotationBlocked_       ( false )
+    , bInfiniteDotations_      ( false )
 {
     // NOTHING
 }
@@ -80,7 +84,8 @@ void PHY_Dotation::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> rConsumptionReservation_
          >> rFireReservation_
          >> rSupplyThreshold_
-         >> bDotationBlocked_;    
+         >> bDotationBlocked_
+         >> bInfiniteDotations_;    
 }
 
 // -----------------------------------------------------------------------------
@@ -97,7 +102,8 @@ void PHY_Dotation::save( MIL_CheckPointOutArchive& file, const unsigned int ) co
          << rConsumptionReservation_
          << rFireReservation_
          << rSupplyThreshold_
-         << bDotationBlocked_;
+         << bDotationBlocked_
+         << bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -129,12 +135,18 @@ void PHY_Dotation::SetValue( MT_Float rValue )
         return;
 
     //assert( rValue <= rCapacity_ ); $$$ precision de merde
-    if ( (unsigned int)rValue_ != (unsigned int)rValue )
+
+    if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
+        rValue = rCapacity_;
+
+    rValue = std::min( rValue, maxCapacity_ );
+
+    if ( ! MT_IsZero( rValue_ - rValue ) )
     {
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );
     }
-    
+
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
     rValue_ = rValue;
 
@@ -154,13 +166,25 @@ void PHY_Dotation::SetValue( MT_Float rValue )
 void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
 {
     assert( rValue_ <= rCapacity_ );
-    
-    rCapacity_        += capacity.GetCapacity();
+
+    if( bInfiniteDotations_ && MT_IsZero( rCapacity_ ) )
+    {
+        rCapacity_ = maxCapacity_;
+        if ( !bDotationBlocked_ )
+            rValue_ = maxCapacity_;
+    }
+    else
+    {
+        rCapacity_ += capacity.GetCapacity();
+        if ( !bDotationBlocked_ )
+            rValue_ += capacity.GetCapacity();
+    }
+
+    rCapacity_ = std::min( rCapacity_, maxCapacity_ );
+    rValue_ = std::min( rValue_, maxCapacity_ );
+
     rSupplyThreshold_ += capacity.GetSupplyThreshold();
     
-    if ( !bDotationBlocked_ )
-        rValue_ += capacity.GetCapacity();
-        
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
 }
@@ -256,7 +280,7 @@ void PHY_Dotation::ChangeValueUsingTC2( MT_Float rCapacityFactor, MIL_AutomateLO
 {
     //$$$ checker rFireReservation_ et rConsumptionReservation_    
     MT_Float rValueDiff = ( rCapacity_ * rCapacityFactor ) - rValue_;
-    if ( rValueDiff == 0. )
+    if ( MT_IsZero( rValueDiff ) )
         return;
 
     assert( pCategory_ );
@@ -363,6 +387,8 @@ bool PHY_Dotation::NeedSupply() const
 bool PHY_Dotation::HasReachedSupplyThreshold() const
 {
     if( bDotationBlocked_ )
+        return false;
+    if( bInfiniteDotations_ )
         return false;
     return rValue_ < rSupplyThreshold_;
 }

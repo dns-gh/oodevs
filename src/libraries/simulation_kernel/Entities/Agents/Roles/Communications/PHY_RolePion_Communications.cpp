@@ -185,7 +185,7 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
     bHasChanged_ = ( jammers_.erase( &jammer ) == 1 );
 
     // delete copy of knowledge group used in jamming
-    if(  pJammingKnowledgeGroup_ && CanCommunicate() )
+    if( pJammingKnowledgeGroup_ && CanCommunicate() )
     {
         pJammingKnowledgeGroup_->Destroy();
         delete pJammingKnowledgeGroup_;
@@ -271,13 +271,13 @@ void PHY_RolePion_Communications::DeactivateBlackout()
     if( !bBlackoutActivated_ )
         return;
     bBlackoutActivated_ = false;
-    if( jammers_.empty() )
+    if( pJammingKnowledgeGroup_ && jammers_.empty() )
     {
         pJammingKnowledgeGroup_->Destroy();
         delete pJammingKnowledgeGroup_;
         pJammingKnowledgeGroup_ = 0;
     }
-    bHasChanged_        = true;
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------

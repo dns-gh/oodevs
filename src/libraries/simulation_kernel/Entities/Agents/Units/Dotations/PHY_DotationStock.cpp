@@ -10,24 +10,29 @@
 // *****************************************************************************
 
 #include "simulation_kernel_pch.h"
+#include "MIL_AgentServer.h"
 #include "PHY_DotationStock.h"
 #include "PHY_DotationStockContainer.h"
 #include "PHY_DotationCapacity.h"
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
+#include "Entities/MIL_EntityManager.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStock )
+
+const MT_Float PHY_DotationStock::maxCapacity_ = std::numeric_limits< int >::max();
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationStock constructor
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity )
-    : pStockContainer_ ( &stockContainer    )
-    , pCategory_       ( &dotationCategory  )
-    , rValue_          ( 0. )
-    , rCapacity_       ( rCapacity )
-    , rSupplyThreshold_( rCapacity * rSupplyThresholdRatio )
+PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer, const PHY_DotationCategory& dotationCategory, MT_Float rSupplyThresholdRatio, MT_Float rCapacity, bool bInfiniteDotations )
+    : pStockContainer_   ( &stockContainer    )
+    , pCategory_         ( &dotationCategory  )
+    , rValue_            ( 0. )
+    , rCapacity_         ( bInfiniteDotations ? maxCapacity_ : rCapacity )
+    , rSupplyThreshold_  ( rCapacity * rSupplyThresholdRatio )
+    , bInfiniteDotations_( bInfiniteDotations )
 {
     SetValue( rCapacity_ );
 }
@@ -37,11 +42,12 @@ PHY_DotationStock::PHY_DotationStock( PHY_DotationStockContainer& stockContainer
 // Created: JVT 2005-04-01
 // -----------------------------------------------------------------------------
 PHY_DotationStock::PHY_DotationStock()
-    : pStockContainer_ ( 0 )
-    , pCategory_       ( 0 )
-    , rValue_          ( 0. )
-    , rCapacity_       ( 0. )
-    , rSupplyThreshold_( 0. )
+    : pStockContainer_  ( 0 )
+    , pCategory_        ( 0 )
+    , rValue_           ( 0. )
+    , rCapacity_        ( 0. )
+    , rSupplyThreshold_ ( 0. )
+    , bInfiniteDotations_( false)
 {
     // NOTHING
 }
@@ -69,7 +75,8 @@ void PHY_DotationStock::load( MIL_CheckPointInArchive& file, const unsigned int 
 
     file >> rValue_
          >> rCapacity_
-         >> rSupplyThreshold_;
+         >> rSupplyThreshold_
+         >> bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -83,7 +90,8 @@ void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const unsigned int
          << category
          << rValue_
          << rCapacity_
-         << rSupplyThreshold_;
+         << rSupplyThreshold_
+         << bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------
@@ -93,8 +101,13 @@ void PHY_DotationStock::save( MIL_CheckPointOutArchive& file, const unsigned int
 void PHY_DotationStock::SetValue( MT_Float rValue )
 {
     assert( pStockContainer_ );
-    
-    if ( (unsigned int)rValue_ != (unsigned int)rValue )
+   
+    if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
+        rValue = rCapacity_;
+
+    rValue = std::min( rValue, maxCapacity_ );
+
+    if ( ! MT_IsZero( rValue_ - rValue ) )
         pStockContainer_->NotifyDotationChanged( *this, rValue - rValue_ );
 
     const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
@@ -180,7 +193,7 @@ bool PHY_DotationStock::NeedSupply() const
 // -----------------------------------------------------------------------------
 bool PHY_DotationStock::HasReachedSupplyThreshold() const
 {
-    return rValue_ < rSupplyThreshold_;
+    return bInfiniteDotations_ ? false : rValue_ < rSupplyThreshold_;
 }
 
 // -----------------------------------------------------------------------------

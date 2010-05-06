@@ -46,7 +46,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     PHY_DotationGroup( const PHY_DotationType& type, PHY_DotationGroupContainer& groupContainer );
+     PHY_DotationGroup( const PHY_DotationType& type, PHY_DotationGroupContainer& groupContainer, bool bInfiniteDotations );
      PHY_DotationGroup();
     virtual ~PHY_DotationGroup();
     //@}
@@ -125,6 +125,7 @@ private:
     const PHY_DotationType* pType_;
     PHY_DotationGroupContainer* pGroupContainer_;
     T_DotationMap dotations_;
+    bool bInfiniteDotations_;
     //@}
 };
 

@@ -42,7 +42,7 @@ class ExerciseDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ExerciseDialog( QWidget* parent, kernel::Controllers& controllers, Exercise& exercise, const tools::ExerciseConfig& config );
+             ExerciseDialog( QWidget* parent, kernel::Controllers& controllers, Exercise& exercise, const tools::ExerciseConfig& config, bool& infiniteDotations );
     virtual ~ExerciseDialog();
     //@}
 
@@ -51,6 +51,12 @@ public:
     virtual void NotifyCreated( const Exercise& exercise );
     virtual void VisitBriefing( const QString& lang, const QString& text );
     virtual void VisitResource( const QString& name, const QString& file );
+    //@}
+
+protected:
+    //! @name From QWidget
+    //@{
+    virtual void showEvent( QShowEvent* showEvent );
     //@}
 
 private slots:
@@ -89,12 +95,14 @@ private:
     kernel::Controllers& controllers_;
     Exercise& exercise_;
     const tools::ExerciseConfig& config_;
+    bool& infiniteDotations_;
     QLineEdit* name_;
     gui::ValuedComboBox< QString >* lang_;
     QString selectedLang_;
     QTextEdit* briefing_;
     T_Briefings briefings_;
     QListView* resources_;
+    QCheckBox* infiniteDotationsCB_;
     //@}
 };
 

@@ -110,19 +110,26 @@ void Dotations::Update( const std::vector< Dotation >& differences )
 // -----------------------------------------------------------------------------
 void Dotations::SetSuperior( const kernel::Entity_ABC& superior )
 {
-    std::vector< Dotation > differences;
-    differences.reserve( elements_.size() );
-    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-        differences.push_back( *it->second );
-    if( Dotations* dotations = const_cast< Dotations* >( superior.Retrieve< Dotations >() ) )
-        dotations->Update( differences );
-
-    if( const kernel::Entity_ABC* previous = GetSuperior() )
-        if( Dotations* dotations = const_cast< Dotations* >( previous->Retrieve< Dotations >() ) )
-        {
-            std::transform( differences.begin(), differences.end(), differences.begin(), std::negate< Dotation >() );
+    const kernel::Entity_ABC* currentSuperior = GetSuperior();
+    if( !currentSuperior || &superior != currentSuperior )
+    {
+        // create dotation differences
+        std::vector< Dotation > differences;
+        differences.reserve( elements_.size() );
+        for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+            differences.push_back( *it->second );
+        // add dotations to new superior
+        if( Dotations* dotations = const_cast< Dotations* >( superior.Retrieve< Dotations >() ) )
             dotations->Update( differences );
-        }
+
+        // remove dotations from previous superior
+        if( currentSuperior )
+            if( Dotations* dotations = const_cast< Dotations* >( currentSuperior->Retrieve< Dotations >() ) )
+            {
+                std::transform( differences.begin(), differences.end(), differences.begin(), std::negate< Dotation >() );
+                dotations->Update( differences );
+            }
+    }
 }
 
 // -----------------------------------------------------------------------------

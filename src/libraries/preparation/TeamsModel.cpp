@@ -35,6 +35,7 @@ using namespace xml;
 TeamsModel::TeamsModel( Controllers& controllers, TeamFactory_ABC& factory )
     : controllers_( controllers )
     , factory_( factory )
+    , infiniteDotations_( false )
 {
     controllers_.Register( *this );
 }
@@ -104,6 +105,10 @@ void TeamsModel::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void TeamsModel::Serialize( xml::xostream& xos ) const
 {
+    xos << start( "dotations" )
+            << attribute( "infinite", infiniteDotations_ )
+        << end();
+
     xos << start( "sides" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
@@ -140,6 +145,9 @@ tools::Iterator< const Entity_ABC& > TeamsModel::CreateEntityIterator() const
 void TeamsModel::Load( xml::xistream& xis, Model& model )
 {
     xis >> start( "orbat" )
+            >> optional() >> start( "dotations" )
+                >> attribute( "infinite", infiniteDotations_ )
+            >> end()
             >> start( "sides" )
                 >> list( "side", *this, &TeamsModel::ReadTeam, model )
             >> end()
@@ -211,4 +219,13 @@ bool TeamsModel::CheckValidity( ModelChecker_ABC& checker ) const
         }
     }
     return checker.Validate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::InfiniteDotations
+// Created: JSR 2010-05-04
+// -----------------------------------------------------------------------------
+bool& TeamsModel::InfiniteDotations()
+{
+    return infiniteDotations_;
 }

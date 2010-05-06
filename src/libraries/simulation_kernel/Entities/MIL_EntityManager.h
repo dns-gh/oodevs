@@ -120,6 +120,7 @@ public:
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
         
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;
+    const bool HasInfiniteDotations() const;
     //@}
 
     //! @name Stats
@@ -199,6 +200,7 @@ private:
     // ODB
     void InitializeArmies     ( xml::xistream& xis );
     void InitializeDiplomacy  ( xml::xistream& xis );
+    void InitializeDotations  ( xml::xistream& xis );
     void InitializePopulations( xml::xistream& xis );
     void ReadDiplomacy        ( xml::xistream& xis );
     //@}
@@ -244,7 +246,8 @@ private:
     MT_Float      rEffectsTime_;
     MT_Float      rStatesTime_;
 
-    unsigned int          nRandomBreakdownsNextTimeStep_;
+    unsigned int  nRandomBreakdownsNextTimeStep_;
+    bool          infiniteDotations_;
 };
 
 BOOST_CLASS_EXPORT_KEY( MIL_EntityManager )

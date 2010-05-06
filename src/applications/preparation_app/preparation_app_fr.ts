@@ -173,6 +173,14 @@
         <source>French</source>
         <translation>Français</translation>
     </message>
+    <message>
+        <source>Parameters</source>
+        <translation>Paramètres</translation>
+    </message>
+    <message>
+        <source>Infinite dotations</source>
+        <translation>Dotations infinies</translation>
+    </message>
 </context>
 <context>
     <name>ExportDialog</name>

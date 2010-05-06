@@ -108,7 +108,7 @@ PHY_RolePion_Dotations::PHY_RolePion_Dotations( MIL_AgentPion& pion )
     , reservedConsumptions_      ()
     , pDotations_                ( 0 )
 {
-    pDotations_ = new PHY_DotationGroupContainer( *this );
+    pDotations_ = new PHY_DotationGroupContainer( *this, MIL_AgentServer::GetWorkspace().GetEntityManager().HasInfiniteDotations() );
     pion.GetType().GetUnitType().GetTC1Capacities().RegisterCapacities( *pDotations_ );
 }
 

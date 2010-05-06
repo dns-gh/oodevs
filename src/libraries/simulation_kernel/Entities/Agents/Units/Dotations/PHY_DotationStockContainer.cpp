@@ -33,11 +33,12 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PHY_DotationStockContainer )
 // Name: PHY_DotationStockContainer constructor
 // Created: NLD 2005-01-26
 // -----------------------------------------------------------------------------
-PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply )
+PHY_DotationStockContainer::PHY_DotationStockContainer( PHY_RoleInterface_Supply& roleSupply, bool bInfiniteDotations )
     : pRoleSupply_          ( &roleSupply )
     , stocks_               ()   
     , stocksChanged_        ()
     , bCheckStockCapacities_( false )
+    , bInfiniteDotations_   ( bInfiniteDotations )
 {
     // NOTHING
 }
@@ -51,6 +52,7 @@ PHY_DotationStockContainer::PHY_DotationStockContainer()
     , stocks_               ()
     , stocksChanged_        ()
     , bCheckStockCapacities_( false )
+    , bInfiniteDotations_   ( false )
 {
     // NOTHING
 }
@@ -256,7 +258,7 @@ PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCateg
 
     PHY_DotationStock*& pStock = stocks_[ &category ];
     if( !pStock )
-        pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rValue );
+        pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rValue, bInfiniteDotations_ );
     return pStock;
 }
 
@@ -268,7 +270,7 @@ PHY_DotationStock* PHY_DotationStockContainer::AddStock( const PHY_DotationCateg
 {
     PHY_DotationStock*& pStock = stocks_[ &category ];
     if( !pStock )
-        pStock = new PHY_DotationStock( *this, category, 0., 0. );
+        pStock = new PHY_DotationStock( *this, category, 0., 0., bInfiniteDotations_ );
     return pStock;
 }
 
@@ -292,7 +294,7 @@ void PHY_DotationStockContainer::Resupply( const PHY_DotationCategory& category,
     if( !pStock )
     {
         const MT_Float rThresholdRatio = pRoleSupply_->GetPion().GetType().GetUnitType().GetStockLogisticThresholdRatio( category.GetLogisticType() );
-        pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rNbr );
+        pStock = new PHY_DotationStock( *this, category, rThresholdRatio, rNbr, bInfiniteDotations_ );
     }
     else
         pStock->Supply( rNbr - pStock->GetValue() ); // set to rNbr
