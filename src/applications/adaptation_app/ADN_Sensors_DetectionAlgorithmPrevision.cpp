@@ -71,7 +71,7 @@ namespace
 // Name: ADN_Sensors_DetectionAlgorithmPrevision constructor
 // Created: HBD 2010-04-29
 // -----------------------------------------------------------------------------
-ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision( QWidget* parent, ADN_GuiBuilder& builder, T_ConnectorVector& vConnectors )
+ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision( QWidget* parent )
     : QGroupBox( 2, Qt::Vertical, tr( "Simulation" ), parent )
     , perceiverPostureFactor_( 1. )
     , targetPostureFactor_( 1. )
@@ -80,24 +80,47 @@ ADN_Sensors_DetectionAlgorithmPrevision::ADN_Sensors_DetectionAlgorithmPrevision
     , illuminationFactor_( 1. )
     , environmentFactor_( 1. )
     , urbanFactor_( 1. )
+    , populationDensityFactor_ ( 1. )
+    , populationModifier_( 1. )
+    , population_ ( 0. )
 {
     {
         QGrid* group = new QGrid ( 2,this );     
         group->setSpacing( 5 );
         new QLabel( "Stance", group ); 
-        stance_ = new QLineEdit( group, "Not Selected" );
+        stance_ = new QLineEdit( group, "Stance" );
+        stance_->setPaletteBackgroundColor( Qt::lightGray ); 
+        stance_->setReadOnly( true );
         new QLabel( "Target Stance", group ); 
-        stanceTarget_ = new QLineEdit( group, "Not Selected" );
+        stanceTarget_ = new QLineEdit( group, "Stance Target" );
+        stanceTarget_->setReadOnly( true );
+        stanceTarget_->setPaletteBackgroundColor( Qt::lightGray ); 
         new QLabel(  "Volume", group ); 
-        volume_ = new QLineEdit( group, "Not Selected" );
+        volume_ = new QLineEdit( group, "Volume" );
+        volume_->setReadOnly( true );
+        volume_->setPaletteBackgroundColor( Qt::lightGray ); 
         new QLabel(  "Weather", group); 
-        weather_= new QLineEdit( group, "Not Selected" );
+        weather_= new QLineEdit( group, "Weather" );
+        weather_->setReadOnly( true );
+        weather_->setPaletteBackgroundColor( Qt::lightGray ); 
         new QLabel(  "Illumination", group ); 
-        illumnination = new QLineEdit( group, "Not Selected" );
+        illumnination = new QLineEdit( group, "Illumination" );
+        illumnination->setReadOnly( true );
+        illumnination->setPaletteBackgroundColor( Qt::lightGray ); 
         new QLabel(  "Environment", group ); 
-        environment_= new QLineEdit( group, "Not Selected" );
+        environment_= new QLineEdit( group, "Environment" );
+        environment_->setReadOnly( true );
+        environment_->setPaletteBackgroundColor( Qt::lightGray ); 
         new QLabel(  "Urban Material", group ); 
-        urbanMaterial_= new QLineEdit( group, "Not Selected" );
+        urbanMaterial_= new QLineEdit( group, "Urban Material" );
+        urbanMaterial_->setReadOnly( true );
+        urbanMaterial_->setPaletteBackgroundColor( Qt::lightGray ); 
+        new QLabel(  "Population Value", group ); 
+        populationValue_ = new QLineEdit( group, "Population Value" );
+        populationValue_->setText( "0" );
+        populationValue_->setValidator( new QDoubleValidator( populationValue_ ) );
+        connect (populationValue_, SIGNAL(textChanged( const QString& )), this, SLOT( OnPopulationChanged( const QString& ) ) );
+
     }
 
     GQ_Plot* pGraph = new GQ_Plot( this );
@@ -164,8 +187,9 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnTargetStanceChanged( std::string
 // -----------------------------------------------------------------------------
 void ADN_Sensors_DetectionAlgorithmPrevision::Update()
 {
+    double population = population_ ? std::min( 1., populationModifier_ * populationDensityFactor_ / population_ ) : 1;    
     double value = perceiverPostureFactor_ * targetPostureFactor_ * sizeFactor_ * weatherFactor_ *
-       illuminationFactor_* environmentFactor_ * urbanFactor_;
+       illuminationFactor_* environmentFactor_ * urbanFactor_ * population;
     
     pBaseGraphData_->ChangePoint( 0, std::make_pair( 0., 3. ) );
     pBaseGraphData_->ChangePoint( 1, std::make_pair( identification_, 3. ) );
@@ -207,6 +231,8 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnSelectSensor( void* data )
         illuminationFactor_= 1;
         environmentFactor_= 1;
         urbanFactor_= 1;
+        populationModifier_ = 1.;
+        populationDensityFactor_ = 1;
         Update();
         volume_->clear();
         stance_->clear();
@@ -214,7 +240,8 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnSelectSensor( void* data )
         weather_->clear();
         illumnination->clear();
         environment_->clear();
-        urbanMaterial_->clear();
+        urbanMaterial_->clear();    
+        populationValue_->setText( "0" ); 
     }
 }
 
@@ -311,4 +338,46 @@ void ADN_Sensors_DetectionAlgorithmPrevision::OnRecognitionChanged( const QStrin
 void ADN_Sensors_DetectionAlgorithmPrevision::OnIdentificationChanged( const QString& value )
 {
     identification_ = boost::lexical_cast< double >( value.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged
+// Created: HBD 2010-05-06
+// -----------------------------------------------------------------------------
+void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationDensityChanged( const QString& value )
+{
+    if ( !value.isEmpty() )
+        populationDensityFactor_ = boost::lexical_cast< double >( value.ascii() );
+    else
+        populationDensityFactor_ = 1;
+    Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged
+// Created: HBD 2010-05-06
+// -----------------------------------------------------------------------------
+void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationModifierChanged( const QString& value )
+{
+    if ( !value.isEmpty() )
+        populationModifier_ = boost::lexical_cast< double >( value.ascii() );
+    else
+        populationModifier_ = 1;
+    Update();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged
+// Created: HBD 2010-05-06
+// -----------------------------------------------------------------------------
+void ADN_Sensors_DetectionAlgorithmPrevision::OnPopulationChanged( const QString& value )
+{
+    if ( !value.isEmpty() )
+       population_ = boost::lexical_cast< double >( value.ascii() );
+    else
+    {
+        populationValue_->setText( "0" );
+        population_ = 0;  
+    }
+    Update();
 }

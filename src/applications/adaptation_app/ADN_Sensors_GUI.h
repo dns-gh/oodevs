@@ -98,12 +98,6 @@ private:
     void BuildSensorListGui( QTabWidget* pParent );
     void BuildSpecificParamsGui( QTabWidget* pParent );
 
-private slots:
-    //! @name Operations
-    //@{
-    void SizeChanged( int );
-    //@}
-
 private:
     //! @name Member data
     //@{

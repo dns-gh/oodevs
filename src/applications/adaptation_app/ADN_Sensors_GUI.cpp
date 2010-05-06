@@ -84,28 +84,9 @@ void ADN_Sensors_GUI::Build()
 
     this->BuildSensorListGui( pTabWidget );
     this->BuildSpecificParamsGui( pTabWidget );
-     // $$$$ _RC_ HBD 2010-04-27: BuildDetectionAlgorithmPreview
     QGridLayout* pMainLayout = new QGridLayout( pMainWidget_, 1, 1, 10, 10 );
     pMainLayout->addWidget( pTabWidget, 0, 0 );
 }
-
-//namespace
-//{
-//    QWidget* AddPreviewGroupBox( T_ConnectorVector& vConnector, ADN_GuiBuilder& builder, ADN_Sensors_GUI* sensorsGui, QWidget* pParent )
-//    {
-//        QGroupBox* pPreviewGroupBox = new QGroupBox( 1, Qt::Horizontal, qApp->translate( "ADN_Sensors_GUI", "Preview" ), pParent );
-//
-//        pPreviewGroupBox->setEnabled( true );
-//
-//        ADN_ComboBox_Composantes_Sizes* combobox = 
-//            builder.AddField<ADN_ComboBox_Composantes_Sizes>( pPreviewGroupBox, qApp->translate( "ADN_Sensors_GUI", "Volume" ), vConnector[ADN_Sensors_GUI::eAlgorithmPrevision]  );
-//
-//        vConnector[ADN_Sensors_GUI::eAlgorithmPrevision] = &combobox->GetConnector();
-//        sensorsGui->connect( combobox, SIGNAL( activated( int ) ), sensorsGui, SLOT( SizeChanged( int ) ) );
-//
-//        return pPreviewGroupBox;
-//    }
-//}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::BuildSensorListGui
@@ -152,7 +133,6 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     QLineEdit*  recognition = builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Recognition range" ), vConnectors[eDistReco], tr( "m" ), eGreaterEqualZero );
     QLineEdit*  identification = builder.AddField<ADN_EditLine_Double>( pDistancesGroupBox, tr( "Identification range" ), vConnectors[eDistIdent], tr( "m" ), eGreaterEqualZero );
 
-
     // Modificators (group 1)
     QGroupBox* pAgentDetectionModifiersGroup = new QGroupBox( 0, Qt::Horizontal, tr( "Terrain modifiers" ), pAgentParamGroupBox );
 
@@ -191,8 +171,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     // Population modifiers
     QGroupBox* pPopulationModifiersGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Population modifiers" ), pAgentParamGroupBox );
 
-    builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Density" ) , vConnectors[ePopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
-    builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Modifier" ), vConnectors[ePopulationModifier], 0, eGreaterEqualZero );
+    QLineEdit* populationDensity = builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Density" ) , vConnectors[ePopulationDensity ], tr( "people/m²" ), eGreaterEqualZero );
+    QLineEdit* populationModifier = builder.AddField<ADN_EditLine_Double>( pPopulationModifiersGroup, tr( "Modifier" ), vConnectors[ePopulationModifier], 0, eGreaterEqualZero );
 
     // LTO begin
     // Group for last line layout (Limited to sensors and targets)
@@ -231,7 +211,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vTargetConnectors[eObjModifStances] = &pObjPostures->GetConnector();
 
     // Preview Algorithm
-    ADN_Sensors_DetectionAlgorithmPrevision* algorithmPreview = new ADN_Sensors_DetectionAlgorithmPrevision( pAgentParamGroupBox, builder, vConnectors );
+    ADN_Sensors_DetectionAlgorithmPrevision* algorithmPreview = new ADN_Sensors_DetectionAlgorithmPrevision( pAgentParamGroupBox );
     vConnectors[ePreviewModifSizes] = &pComposantes->GetConnector();
     vConnectors[ePreviewModifWeather] = &pMeteos->GetConnector();
     vConnectors[ePreviewModifIllumination] = &pIllu->GetConnector();
@@ -299,19 +279,9 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     connect( pIllu, SIGNAL( IlluminationChanged( std::string , double ) ), algorithmPreview, SLOT( IlluminationChanged( std::string , double ) ) );
     connect( pEnv, SIGNAL( EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos*, double ) ), algorithmPreview, SLOT( EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* , double ) ) );
     connect( pMaterial, SIGNAL( UrbanBlockChanged( std::string , double ) ), algorithmPreview, SLOT( UrbanBlockChanged( std::string , double ) ) );
+    connect (populationModifier, SIGNAL(textChanged( const QString& )), algorithmPreview, SLOT( OnPopulationModifierChanged( const QString& ) ) );
+    connect (populationDensity, SIGNAL(textChanged( const QString& )), algorithmPreview, SLOT( OnPopulationDensityChanged( const QString& ) ) );
 }
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_GUI::SizeChanged
-// Created: HBD 2010-04-29
-// -----------------------------------------------------------------------------
-void ADN_Sensors_GUI::SizeChanged( int index )
-{
-//    ADN_ComboBoxItem item = ((ADN_ComboBox_ABC*)QObjectSender)->GetItem( index );
-//    void* data = item->GetData();
-//    Nature_ABC* = data;
-}
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::BuildSpecificParamsGui

@@ -32,7 +32,7 @@ class ADN_Sensors_DetectionAlgorithmPrevision : public QGroupBox
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Sensors_DetectionAlgorithmPrevision( QWidget* parent, ADN_GuiBuilder& builder,T_ConnectorVector& connectors  );
+    explicit ADN_Sensors_DetectionAlgorithmPrevision( QWidget* parent );
     virtual ~ADN_Sensors_DetectionAlgorithmPrevision();
     //@}
 public:
@@ -59,7 +59,9 @@ public slots:
     void OnDetectionChanged( const QString& );
     void OnRecognitionChanged( const QString& );
     void OnIdentificationChanged( const QString& );
-
+    void OnPopulationDensityChanged( const QString& );
+    void OnPopulationModifierChanged( const QString& );
+    void OnPopulationChanged( const QString& );
     //@}
 
 private:
@@ -69,7 +71,7 @@ private:
     ADN_Sensors_DetectionAlgorithmPrevision& operator=( const ADN_Sensors_DetectionAlgorithmPrevision& ); //!< Assignment operator
     //@}
 
-    //! @name Helpers
+    //! @name Modifiers
     //@{
     void Update();
     //@}
@@ -86,6 +88,7 @@ private:
     QLineEdit*  illumnination;
     QLineEdit*  environment_;
     QLineEdit*  urbanMaterial_;
+    QLineEdit*  populationValue_;
     GQ_PlotData* pGraphData_;
     GQ_PlotData* pBaseGraphData_;
 
@@ -96,10 +99,13 @@ private:
     double illuminationFactor_;
     double environmentFactor_;
     double urbanFactor_;
+    double populationDensityFactor_;
+    double population_;
     E_VisionObject eEnvironmentType_;
     double detection_;
     double recognition_;
     double identification_;
+    double populationModifier_;
     //@}
 };
 
