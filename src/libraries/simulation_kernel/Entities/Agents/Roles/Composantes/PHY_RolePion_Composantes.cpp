@@ -1343,9 +1343,11 @@ MT_Float PHY_RolePion_Composantes::GetMinRangeToIndirectFire( const PHY_Dotation
 double PHY_RolePion_Composantes::GetMaxRangeToFire( const MIL_Agent_ABC&  pion, double rWantedPH ) const
 {
     double rRange = std::numeric_limits< double >::max();
-   
+
     for(  PHY_ComposantePion::CIT_ComposantePionVector it = composantes_.begin(); it != composantes_.end(); ++it )
-        rRange = std::min( rRange, (**it).GetMaxRangeToFire( pion, rWantedPH ) );
+        if( (*it)->IsMajor() )
+            rRange = std::min( rRange, (**it).GetMaxRangeToFire( pion, rWantedPH ) );
+
     return rRange;
 }
 
