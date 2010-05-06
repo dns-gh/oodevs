@@ -14,6 +14,7 @@
         <Repertoire>directia5/models/net.masagroup.sword</Repertoire>
         <Repertoire>directia5/models/net.masagroup.testSword</Repertoire>
         <Repertoire>directia5/models/net.masagroup.sword_france</Repertoire>
+        <Repertoire>directia5/models/net.masagroup.sword_worldwide</Repertoire>
       </RepertoiresBM>
       <Knowledges>
         <Knowledge>net.masagroup.sword.military.world.Area</Knowledge>
