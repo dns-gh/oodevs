@@ -11,6 +11,7 @@
 #include "ADN_Equipement_AttritionGraph.h"
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_Health_Data.h"
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Tr.h"
 #include "moc_ADN_Equipement_AttritionGraph.cpp"
@@ -86,14 +87,23 @@ ADN_Equipement_AttritionGraph::ADN_Equipement_AttritionGraph( QWidget* pParent /
     pConnector_ = new ADN_Connector_AttritionGraph( this );
 
     QColor color;
-    color.setHsv( 0, 30, 255 );
+    color.setHsv( 0, 120, 255 );
     effectColors_.push_back( color );
-    color.setHsv( 60, 30, 255 );
+    color.setHsv( 20, 120, 255 );
     effectColors_.push_back( color );
-    color.setHsv( 120, 30, 255 );
+    color.setHsv( 35, 120, 255 );
+    effectColors_.push_back( color );
+    color.setHsv( 50, 120, 255 );
+    effectColors_.push_back( color );
+    color.setHsv( 60, 120, 255 );
+    effectColors_.push_back( color );
+    color.setHsv( 120, 120, 255 );
     effectColors_.push_back( color );
     effectStrings_.push_back( tr( "Dead" ) );
-    effectStrings_.push_back( tr( "Wounded" ) );
+    effectStrings_.push_back( tr( "Wounded (%1)" ).arg( ADN_Tr::ConvertFromDoctorSkills( eDoctorSkills_UE ).c_str() ) );
+    effectStrings_.push_back( tr( "Wounded (%1)" ).arg( ADN_Tr::ConvertFromDoctorSkills( eDoctorSkills_U1 ).c_str() ) );
+    effectStrings_.push_back( tr( "Wounded (%1)" ).arg( ADN_Tr::ConvertFromDoctorSkills( eDoctorSkills_U2 ).c_str() ) );
+    effectStrings_.push_back( tr( "Wounded (%1)" ).arg( ADN_Tr::ConvertFromDoctorSkills( eDoctorSkills_U3 ).c_str() ) );
     effectStrings_.push_back( tr( "Unwounded" ) );
 }
 
@@ -153,6 +163,8 @@ void ADN_Equipement_AttritionGraph::Update()
     if( material )
         urbanProtection = material->rCoeff_.GetData();
 
+    ADN_Health_Data::WoundInfo* wounds = ADN_Workspace::GetWorkspace().GetHealth().GetData().wounds;
+
     for( IT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
         if( (*it)->ptrArmor_.GetData()->strName_.GetData() == info->strName_.GetData() )
         {
@@ -173,13 +185,13 @@ void ADN_Equipement_AttritionGraph::Update()
             double rReductionReparableWithoutEvacuation = ( rReparableWithoutEvacuation + rReductionReparableWithEvacuation ) * urbanProtection;
             rReparableWithoutEvacuation -= rReductionReparableWithoutEvacuation - rReductionReparableWithEvacuation;
 
-            GraphData visuUndamaged( 3 );
+            GraphData visuUndamaged( 6 );
             visuUndamaged.strName_ = tr( "Undamaged" );
-            GraphData visuNoEvac( 3 );
+            GraphData visuNoEvac( 6 );
             visuNoEvac.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_FixableInPlace ).c_str();
-            GraphData visuWithEvac( 3 );
+            GraphData visuWithEvac( 6 );
             visuWithEvac.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_FixableWithEvac ).c_str();
-            GraphData visuDestroyed( 3 );
+            GraphData visuDestroyed( 6 );
             visuDestroyed.strName_ = ADN_Tr::ConvertFromEquipmentState( eEquipmentState_Destroyed ).c_str();
 
             visuUndamaged.value_ = ( int )( 100.0 - rDestroyed - rReparableWithoutEvacuation - rReparableWithEvacuation );
@@ -191,7 +203,6 @@ void ADN_Equipement_AttritionGraph::Update()
             {
                 int injured = ( *effect )->nInjuredPercentage_.GetData();
                 int dead = ( *effect )->nDeadPercentage_.GetData();
-                int safe = 100 - injured - dead;
                 GraphData* localData = 0;
                 switch( ( *effect )->nEquipmentState_.GetData() )
                 {
@@ -208,9 +219,15 @@ void ADN_Equipement_AttritionGraph::Update()
                     throw std::exception( "Bad Equipment State" );
                     break;
                 }
+
                 localData->values_[ 0 ] = dead;
-                localData->values_[ 1 ] = injured;
-                localData->values_[ 2 ] = safe;
+                localData->values_[ 1 ] = injured * wounds[ 0 ].rPercentage_.GetData() / 100.;
+                localData->values_[ 2 ] = injured * wounds[ 1 ].rPercentage_.GetData() / 100.;
+                localData->values_[ 3 ] = injured * wounds[ 2 ].rPercentage_.GetData() / 100.;
+                localData->values_[ 4 ] = injured * wounds[ 3 ].rPercentage_.GetData() / 100.;
+                localData->values_[ 5 ] = 100;
+                for( int i = 0; i < 5; ++i )
+                    localData->values_[ 5 ] -= localData->values_[ i ];
             }
 
             columns_.push_back( visuUndamaged );
@@ -242,7 +259,7 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
 
     static const int fh = fontMetrics().height();
     static const int IntervalWidth = 5;
-    static const int LeftMargin = 100;
+    static const int LeftMargin = 120;
     static const int Margin = 5;
 
     const int graphHeight = height() - fh - 2 * Margin;
@@ -279,7 +296,7 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
         painter.drawText( rc, Qt::AlignCenter, column->strName_ );
 
         unsigned int columnHeight = ( unsigned int )( column->value_ * ratio );
-        if( columnHeight == 0 )
+        if( columnHeight < 4 )
         {
             painter.setPen( Qt::darkGray );
             painter.drawLine( columnX, graphHeight + Margin
@@ -308,10 +325,12 @@ void ADN_Equipement_AttritionGraph::paintEvent( QPaintEvent* )
             for( GraphData::IT_Values values = column->values_.begin(); values != column->values_.end(); ++values )
             {
                 colorIndex = ( colorIndex + 1 ) % effectColors_.size();
-                if( *values == 0 )
+
+                double value = *values * vRatio;
+                if( value < 0.5 )
                     continue;
 
-                unsigned int lineHeight = ( unsigned int )( *values * vRatio ) + 1;
+                unsigned int lineHeight = unsigned int( value ) + 1;
                 lineHeight = std::min( lineHeight, columnHeight - cumulatedHeight - 3 );
 
                 painter.setPen( Qt::NoPen );

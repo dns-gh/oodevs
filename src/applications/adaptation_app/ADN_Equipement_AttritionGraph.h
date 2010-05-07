@@ -32,11 +32,11 @@ public:
         GraphData( const int number )
         {
             for( int i = 0; i < number; ++i )
-                values_.push_back( i == number - 1 ? 100 : 0 );
+                values_.push_back( i == number - 1 ? 100. : 0 );
         }
 
-        typedef std::vector < unsigned int >      T_Values;
-        typedef T_Values::iterator                IT_Values;
+        typedef std::vector < double >      T_Values;
+        typedef T_Values::iterator        IT_Values;
 
         unsigned int value_;
         T_Values     values_;

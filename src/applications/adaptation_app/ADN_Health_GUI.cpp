@@ -13,6 +13,7 @@
 #include "ADN_Health_Data.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
+#include "ADN_Equipement_GUI.h"
 #include "ADN_Tr.h"
 #include "ADN_Table.h"
 #include "ADN_TableItem_Edit.h"
@@ -27,6 +28,24 @@
 #include <qhbox.h>
 #include <qvbox.h>
 
+namespace
+{
+
+class ADN_WoundTable : public ADN_Table
+{
+public:
+    explicit ADN_WoundTable( QWidget* pParent = 0, const char* szName = 0 )
+        : ADN_Table( pParent, szName ) {}
+
+protected slots:
+    virtual void doValueChanged( int row, int col )
+    {
+        ADN_Table::doValueChanged( row, col );
+        ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
+    }
+};
+
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Health_GUI constructor
@@ -74,7 +93,12 @@ void ADN_Health_GUI::Build()
     QHBox* pWoundsGroup = new QHBox( pVBox );
     pWoundsGroup->setSpacing( 5 );
 
-    ADN_Table* pWoundTable = builder.CreateTable( pWoundsGroup );
+    ADN_WoundTable* pWoundTable = new ADN_WoundTable( pWoundsGroup );
+    pWoundTable->setSorting( true );
+    pWoundTable->setSelectionMode( QTable::NoSelection );
+    pWoundTable->setShowGrid( true );
+    pWoundTable->verticalHeader()->hide();
+    pWoundTable->setLeftMargin( 0 );
     pWoundTable->setNumCols( eNbrDoctorSkills + 2 );
     pWoundTable->setNumRows( 4 );
     pWoundTable->verticalHeader()->show();

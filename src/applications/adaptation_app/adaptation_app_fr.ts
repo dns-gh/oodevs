@@ -3599,7 +3599,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Wounded</source>
-        <translation>Blessé</translation>
+        <translation type="obsolete">Blessé</translation>
     </message>
     <message>
         <source>Unwounded</source>
@@ -3608,6 +3608,10 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Undamaged</source>
         <translation>Disponible</translation>
+    </message>
+    <message>
+        <source>Wounded (%1)</source>
+        <translation>Blessé (%1)</translation>
     </message>
 </context>
 <context>
@@ -6622,7 +6626,7 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     </message>
     <message>
         <source>Delay</source>
-        <translation type="unfinished">Délai</translation>
+        <translation>Délai</translation>
     </message>
     <message>
         <source>Volume</source>
