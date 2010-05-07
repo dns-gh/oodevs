@@ -14,6 +14,7 @@
 
 #include "PHY_RoleInterface_NBC.h"
 #include "MT_Tools/AlgorithmModifier_ABC.h"
+#include "simulation_kernel/NetworkUnitMessageNotificationHandler_ABC.h"
 
 class MIL_ToxicEffectManipulator;
 class MIL_NbcAgentType;
@@ -37,6 +38,7 @@ namespace nbc
 class PHY_RolePion_NBC : public PHY_RoleInterface_NBC
                        , public tools::AlgorithmModifier_ABC<moving::SpeedComputer_ABC>
                        , public tools::AlgorithmModifier_ABC< firing::WeaponReloadingComputer_ABC >
+                       , public network::NetworkUnitMessageNotificationHandler_ABC
 {
 
 public:
@@ -79,8 +81,8 @@ public:
 
     //! @name Network
     //@{
-    void SendChangedState( client::UnitAttributes& msg ) const;
-    void SendFullState   ( client::UnitAttributes& msg ) const;
+    virtual void SendChangedState( client::UnitAttributes& msg ) const;
+    virtual void SendFullState   ( client::UnitAttributes& msg ) const;
     //@}
 
 public:
