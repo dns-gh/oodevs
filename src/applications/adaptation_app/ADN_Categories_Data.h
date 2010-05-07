@@ -39,7 +39,7 @@ public:
 
     public:
         AttritionEffectOnHuman();
-
+        
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& );
@@ -64,12 +64,12 @@ public:
 
     public:
         ArmorInfos();
-
         std::string GetItemName();
 
         void ReadArchive( xml::xistream& );
         void ReadAttrition( xml::xistream& );
         void WriteArchive( xml::xostream& );
+        void CreateDefaultAttrition();
 
     public:
         ADN_Type_String strName_;

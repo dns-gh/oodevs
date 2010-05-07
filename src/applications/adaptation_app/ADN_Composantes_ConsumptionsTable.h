@@ -37,8 +37,7 @@ class ADN_ListView_Composantes;
 */
 // Created: APE 2005-01-25
 // =============================================================================
-class ADN_Composantes_ConsumptionsTable
-    : public ADN_Table2
+class ADN_Composantes_ConsumptionsTable : public ADN_Table2
 {
     MT_COPYNOTALLOWED( ADN_Composantes_ConsumptionsTable )
 

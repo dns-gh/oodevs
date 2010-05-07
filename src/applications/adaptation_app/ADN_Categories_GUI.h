@@ -58,7 +58,7 @@ public:
     };
 
 public slots:
-    void OnTypeChanged();
+    void OnTypeChanged( int index );
 
 public:
      ADN_Categories_GUI( ADN_Categories_Data& data );

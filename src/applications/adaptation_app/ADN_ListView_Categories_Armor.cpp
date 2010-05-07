@@ -38,7 +38,6 @@ ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, c
     
     // connector creation
     pConnector_ = new ADN_Connector_ListView<ArmorInfos>(*this);
-
     this->SetDeletionEnabled( true );
 }
 
@@ -92,9 +91,10 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
         {
             // create new sensor & add it to list
             ArmorInfos* pNewInfo=new ArmorInfos();
+           
             ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
             pCList->AddItem( pNewInfo );
-
+            
             // Put the  new item at the top of the list (to be coherent with the application)
             int pos= FindNdx( pNewInfo );
             while( pos != 0 )
@@ -118,5 +118,23 @@ void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
         }
         default:
             break;
+    }
+}
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect
+// Created: HBD 2010-05-06
+// -----------------------------------------------------------------------------
+void ADN_ListView_Categories_Armor::CreateDefaultAttritionHumanEffect()
+{
+    if ( pCurData_ )
+    {
+        ArmorInfos* pCurArmor=(ArmorInfos*)pCurData_;
+        if ( !pCurArmor->vAttritionEffects_.size() )  
+        {
+            pCurArmor->CreateDefaultAttrition();
+            void* pData = pCurData_;
+            SetCurrentItem( (void*) 0 );
+            SetCurrentItem( pData );
+        }
     }
 }

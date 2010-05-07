@@ -98,7 +98,7 @@ void ADN_Categories_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vArmorInfosConnectors[eArmorName], 0, eVarName );
     pComboType_ = builder.AddEnumField<E_ProtectionType>( pHolder, tr( "Type" ), vArmorInfosConnectors[eArmorType], ADN_Tr::ConvertFromProtectionType );
 
-    connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
+    connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
 
     QGroupBox* pArmorNeutralizationGroup = new QGroupBox( 3, Qt::Horizontal, tr( "Neutralization" ), pArmorInfoGroup );
     builder.AddField<ADN_TimeField>( pArmorNeutralizationGroup, tr( "Average time" ), vArmorInfosConnectors[eNeutralizationAverage] );
@@ -160,16 +160,16 @@ void ADN_Categories_GUI::Build()
 // Name: ADN_Categories_GUI::OnTypeChanged
 // Created: SBO 2005-09-08
 // -----------------------------------------------------------------------------
-void ADN_Categories_GUI::OnTypeChanged()
+void ADN_Categories_GUI::OnTypeChanged( int index )
 {
-    const QString& strItem = pComboType_->currentText();
-    if( ADN_Tr::ConvertToProtectionType( std::string( strItem ) ) == eProtectionType_Human )
+    if( index == eProtectionType_Human )
     {
         pArmorBreakdownGroup_->hide();
         pAttritionEffectGroup_->hide();
     }
     else
     {
+        pListArmor_->CreateDefaultAttritionHumanEffect();
         pArmorBreakdownGroup_->show();
         pAttritionEffectGroup_->show();
     }

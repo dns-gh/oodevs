@@ -30,6 +30,8 @@
 // Created: SBO 2006-07-28
 // -----------------------------------------------------------------------------
 ADN_Categories_Data::AttritionEffectOnHuman::AttritionEffectOnHuman()
+    :  nInjuredPercentage_( 0 )
+    ,  nDeadPercentage_( 0 )
 {
     // NOTHING
 }
@@ -88,6 +90,27 @@ ADN_Categories_Data::ArmorInfos::ArmorInfos()
 {
     strName_.SetDataName( "le nom de la catégorie de blindage" );
     strName_.SetParentNode( *this );
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Categories_Data::CreateDefaultAttrition
+// Created: HBD 2010-05-06
+// -----------------------------------------------------------------------------
+void ADN_Categories_Data::ArmorInfos::CreateDefaultAttrition()
+{
+    AttritionEffectOnHuman* pNewEffect = new AttritionEffectOnHuman();
+    pNewEffect->nEquipmentState_ = eEquipmentState_FixableWithEvac ;
+    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_FixableWithEvac );
+    vAttritionEffects_.AddItem( pNewEffect );
+    pNewEffect = new AttritionEffectOnHuman();
+    pNewEffect->nEquipmentState_ = eEquipmentState_FixableInPlace ;
+    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_FixableInPlace );
+    vAttritionEffects_.AddItem( pNewEffect );  
+    pNewEffect = new AttritionEffectOnHuman();
+    pNewEffect->nEquipmentState_ =  eEquipmentState_Destroyed ;
+    pNewEffect->strName_ = ADN_Tr::ConvertFromEquipmentState(eEquipmentState_Destroyed );
+    vAttritionEffects_.AddItem( pNewEffect );
 }
 
 // -----------------------------------------------------------------------------
