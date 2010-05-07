@@ -47,11 +47,11 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointBM( MIL_Ag
 bool DEC_PathFunctions::ShouldEmbark( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Path_ABC > path )
 {
     double length = path->GetLength();
-    double MaxSpeedUnloaded = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeedWithReinforcement( false );
+    double MaxSpeedUnloaded = callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( false );
     if( MaxSpeedUnloaded == 0 )
             return true;
     double timeUnloaded = length / MaxSpeedUnloaded;
-    double timeLoaded = ( length / callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeedWithReinforcement( true ) ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
+    double timeLoaded = ( length / callerAgent.GetRole< moving::PHY_RoleAction_Moving >().GetTheoricMaxSpeed( true ) ) + DEC_AgentFunctions::GetLoadingTime( callerAgent ) * 60 + DEC_AgentFunctions::GetUnloadingTime( callerAgent ) * 60; //Conversion minutes into hours
     return ( timeLoaded < timeUnloaded );
 }
 

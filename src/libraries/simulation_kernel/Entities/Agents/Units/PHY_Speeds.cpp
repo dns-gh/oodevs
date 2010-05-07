@@ -82,7 +82,7 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
-    : rMaxSpeed_                ( role.GetTheoricMaxSpeedWithReinforcement( loaded ) )
+    : rMaxSpeed_                ( role.GetTheoricMaxSpeed( loaded ) )
     , rBaseSpeed_               ( role.GetSpeedWithReinforcement( TerrainData() ) )
     , rAreaSpeeds_              ( new MT_Float[ 8  ] )
     , rBorderSpeeds_            ( new MT_Float[ 8  ] )

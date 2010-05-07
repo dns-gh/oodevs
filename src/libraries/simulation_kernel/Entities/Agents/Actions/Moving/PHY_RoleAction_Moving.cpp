@@ -180,12 +180,12 @@ double PHY_RoleAction_Moving::GetMaxSpeedWithReinforcement() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement
+// Name: PHY_RoleAction_Moving::GetTheoricMaxSpeed
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Moving::GetTheoricMaxSpeedWithReinforcement( bool loaded ) const
+double PHY_RoleAction_Moving::GetTheoricMaxSpeed( bool loaded ) const
 {
-    SpeedComputerStrategy strategy( true, true, 0 );
+    SpeedComputerStrategy strategy( true, false, 0 );
     std::auto_ptr< SpeedComputer_ABC > computer;
     computer = pion_.GetAlgorithms().moveComputerFactory_->CreateSpeedComputer( strategy, loaded );
     pion_.Execute( *computer );
