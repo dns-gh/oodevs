@@ -141,7 +141,7 @@ void PHY_Dotation::SetValue( MT_Float rValue )
 
     rValue = std::min( rValue, maxCapacity_ );
 
-    if ( ! MT_IsZero( rValue_ - rValue ) )
+    if ( (unsigned int)rValue_ != (unsigned int)rValue )
     {
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );

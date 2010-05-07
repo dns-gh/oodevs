@@ -96,7 +96,7 @@ void Dotations::Update( const std::vector< Dotation >& differences )
         else
             *dotation = *dotation + *it;
         if( it->type_->IsGas() )
-            bEmptyGasTank_ = ( it->quantity_ == 0 );
+            bEmptyGasTank_ = ( dotation->quantity_ == 0 );
     }
     if( const kernel::Entity_ABC* superior = GetSuperior() )
         if( Dotations* dotations = const_cast< Dotations* >( superior->Retrieve< Dotations >() ) )
