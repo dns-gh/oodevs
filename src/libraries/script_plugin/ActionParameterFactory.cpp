@@ -359,17 +359,20 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::O
     return param.release();
 }
 
-#pragma warning( push )
-#pragma warning( disable : 4702 )
-
 // -----------------------------------------------------------------------------
 // Name: ActionParameterFactory::CreateParameter
 // Created: JSR 2010-04-02
 // -----------------------------------------------------------------------------
-actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter&, xml::xistream& ) const
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& /*parameter*/, xml::xistream& /*xis*/ ) const
 {
-    throw std::runtime_error( "ActionParameterFactory::CreateParameter without entity should not be called" );
-    return 0;
+    throw std::runtime_error( __FUNCTION__ " not to be called" );
 }
 
-#pragma warning( pop )
+// -----------------------------------------------------------------------------
+// Name: ActionParameterFactory::CreateParameter
+// Created: SBO 2010-05-07
+// -----------------------------------------------------------------------------
+actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& /*parameter*/, const Common::MsgMissionParameter& /*message*/, const kernel::Entity_ABC& /*entity*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ " not to be called" );
+}

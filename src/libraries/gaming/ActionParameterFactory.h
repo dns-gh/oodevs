@@ -10,12 +10,7 @@
 #ifndef __ActionParameterFactory_h_
 #define __ActionParameterFactory_h_
 
-#include "ParameterFactory_ABC.h"
-
-namespace Common
-{
-    class MsgMissionParameter;
-}
+#include "actions/ParameterFactory_ABC.h"
 
 namespace kernel
 {
@@ -41,7 +36,7 @@ class StaticModel;
 */
 // Created: SBO 2007-04-13
 // =============================================================================
-class ActionParameterFactory : public ParameterFactory_ABC
+class ActionParameterFactory : public actions::ParameterFactory_ABC
 {
 
 public:

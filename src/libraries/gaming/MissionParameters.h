@@ -23,6 +23,7 @@ namespace kernel
 namespace actions
 {
     class Action_ABC;
+    class ActionFactory_ABC;
 }
 
 namespace Common
@@ -31,8 +32,6 @@ namespace Common
     class MsgAutomatOrder;
     class MsgPopulationOrder;
 }
-
-class ActionFactory_ABC;
 
 // =============================================================================
 /** @class  MissionParameters
@@ -51,7 +50,7 @@ class MissionParameters : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MissionParameters( kernel::Controller& controller, const ActionFactory_ABC& factory );
+             MissionParameters( kernel::Controller& controller, const actions::ActionFactory_ABC& factory );
     virtual ~MissionParameters();
     //@}
 
@@ -81,7 +80,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    const ActionFactory_ABC& factory_;
+    const actions::ActionFactory_ABC& factory_;
     //@}
 };
 

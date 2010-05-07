@@ -101,6 +101,33 @@ actions::Action_ABC* ActionFactory::CreateAction( xml::xistream& xis ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: SBO 2010-05-07
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgUnitOrder& /*message*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ " not to be called" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: SBO 2010-05-07
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder& /*message*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ " not to be called" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ActionFactory::CreateAction
+// Created: SBO 2010-05-07
+// -----------------------------------------------------------------------------
+actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgPopulationOrder& /*message*/ ) const
+{
+    throw std::runtime_error( __FUNCTION__ " not to be called" );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ActionFactory::ReadParameter
 // Created: AGE 2008-07-16
 // -----------------------------------------------------------------------------

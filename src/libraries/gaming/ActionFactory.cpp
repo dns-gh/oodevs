@@ -24,7 +24,7 @@
 #include "KnowledgeGroupsModel.h"
 #include "ActionTasker.h"
 #include "ActionTiming.h"
-#include "ParameterFactory_ABC.h"
+#include "actions/ParameterFactory_ABC.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -47,7 +47,7 @@ using namespace xml;
 // Name: ActionFactory constructor
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-ActionFactory::ActionFactory( Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
+ActionFactory::ActionFactory( Controllers& controllers, const actions::ParameterFactory_ABC& factory, const Model& model
                             , const tools::Resolver_ABC< MissionType >& missions
                             , const tools::Resolver_ABC< FragOrderType >& fragOrders
                             , const tools::Resolver_ABC< kernel::MagicActionType, std::string >& magicActions

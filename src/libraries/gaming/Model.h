@@ -20,10 +20,11 @@ namespace kernel
 
 namespace actions
 {
+    class ActionFactory_ABC;
     class ActionsModel;
+    class ParameterFactory_ABC;
 }
 
-class ActionFactory_ABC;
 class AfterActionModel;
 class AgentFactory_ABC;
 class AgentKnowledgeFactory;
@@ -43,7 +44,6 @@ class LogisticsModel;
 class ObjectFactory_ABC;
 class ObjectKnowledgeFactory;
 class ObjectsModel;
-class ParameterFactory_ABC;
 class Publisher_ABC;
 class RcEntityResolver_ABC;
 class ScoreDefinitions;
@@ -95,18 +95,18 @@ public:
     kernel::AgentKnowledgeConverter_ABC& agentKnowledgeConverter_;
     kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter_;
 
-    TeamFactory_ABC&            teamFactory_;
-    AgentFactory_ABC&           agentFactory_;
-    ObjectFactory_ABC&          objectFactory_;
-    LogisticConsignFactory_ABC& logisticFactory_;
-    FireFactory&                fireFactory_;
-    TacticalLineFactory&        tacticalLineFactory_;
-    FireResultFactory&          fireResultsFactory_;
-    UserProfileFactory_ABC&     userProfileFactory_;
-    ::ParameterFactory_ABC&     actionParameterFactory_;
-    ActionFactory_ABC&          actionFactory_;
-    IntelligenceFactory&        intelligenceFactory_;
-    DrawingFactory&             drawingFactory_;
+    TeamFactory_ABC&                teamFactory_;
+    AgentFactory_ABC&               agentFactory_;
+    ObjectFactory_ABC&              objectFactory_;
+    LogisticConsignFactory_ABC&     logisticFactory_;
+    FireFactory&                    fireFactory_;
+    TacticalLineFactory&            tacticalLineFactory_;
+    FireResultFactory&              fireResultsFactory_;
+    UserProfileFactory_ABC&         userProfileFactory_;
+    actions::ParameterFactory_ABC&  actionParameterFactory_;
+    actions::ActionFactory_ABC&     actionFactory_;
+    IntelligenceFactory&            intelligenceFactory_;
+    DrawingFactory&                 drawingFactory_;
 
     AgentsModel&          agents_;
     ObjectsModel&         objects_;

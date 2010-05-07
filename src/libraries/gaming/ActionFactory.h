@@ -10,15 +10,17 @@
 #ifndef __ActionFactory_h_
 #define __ActionFactory_h_
 
-#include "ActionFactory_ABC.h"
+#include "actions/ActionFactory_ABC.h"
 #include "tools/Resolver_ABC.h"
+
+namespace actions
+{
+    class ParameterFactory_ABC;
+}
 
 namespace Common
 {
     class MsgMissionParameters;
-    class MsgUnitOrder;
-    class MsgAutomatOrder;
-    class MsgPopulationOrder;
 }
 
 namespace MsgsClientToSim
@@ -36,7 +38,6 @@ namespace kernel
 
 class Model;
 class Simulation;
-class ParameterFactory_ABC;
 
 // =============================================================================
 /** @class  ActionFactory
@@ -44,13 +45,13 @@ class ParameterFactory_ABC;
 */
 // Created: SBO 2007-03-12
 // =============================================================================
-class ActionFactory : public ActionFactory_ABC
+class ActionFactory : public actions::ActionFactory_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ActionFactory( kernel::Controllers& controllers, const ParameterFactory_ABC& factory, const Model& model
+             ActionFactory( kernel::Controllers& controllers, const actions::ParameterFactory_ABC& factory, const Model& model
                           , const tools::Resolver_ABC< kernel::MissionType >& missions
                           , const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders
                           , const tools::Resolver_ABC< kernel::MagicActionType, std::string >& magicActions
@@ -96,7 +97,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    const ParameterFactory_ABC& factory_;
+    const actions::ParameterFactory_ABC& factory_;
     const Model& model_;
     const tools::Resolver_ABC< kernel::MissionType >& missions_;
     const tools::Resolver_ABC< kernel::FragOrderType >& fragOrders_;
