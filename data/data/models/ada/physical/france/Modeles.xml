@@ -29,9 +29,9 @@
         <mission name="MoveToAgentList"/>
         <mission name="MoveToAgentKnowledgeList"/>
         <mission name="MoveToObjectKnowledgeList"/>
-        <mission name="MoveToUrbanBlock"/>  
+        <mission name="MoveToUrbanBlock"/>
         <mission name="NeutralizeAgents"/>
-        <mission name="ObserveAndReconnoiterPoint"/>    
+        <mission name="ObserveAndReconnoiterPoint"/>
         <mission name="ObserveAndReconnoiterUrbanBlock"/>
         <mission name="ObservePoint"/>
         <mission name="ObserveDirection"/>
@@ -40,12 +40,12 @@
         <mission name="ObserveObject"/>
         <mission name="ReconnoiterPath"/>
         <mission name="ReconnoiterPoint"/>
-        <mission name="ReconnoiterUrbanBlock"/>     
-        <mission name="SeekAndDestroy"/>  
-        <mission name="SelfProtect"/>      
-        <mission name="StayClose"/>     
-        <mission name="Support"/>        
-        <mission name="TakeCover"/>      
+        <mission name="ReconnoiterUrbanBlock"/>
+        <mission name="SeekAndDestroy"/>
+        <mission name="SelfProtect"/>
+        <mission name="StayClose"/>
+        <mission name="Support"/>
+        <mission name="TakeCover"/>
         <mission name="Interdict"/>
       </missions>
     </unit>
