@@ -17,6 +17,7 @@ namespace kernel
 
 namespace actions
 {
+    class ActionsFilter_ABC;
     class ActionsModel;
 }
 
@@ -26,6 +27,7 @@ namespace gui
 }
 
 class ActionsScheduler;
+class TimelineView;
 
 // =============================================================================
 /** @class  TimelineWidget
@@ -43,11 +45,22 @@ public:
     virtual ~TimelineWidget();
     //@}
 
+    //! @name Operations
+    //@{
+    void SetFilter( const actions::ActionsFilter_ABC& filter );
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
     TimelineWidget( const TimelineWidget& );            //!< Copy constructor
     TimelineWidget& operator=( const TimelineWidget& ); //!< Assignment operator
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    TimelineView* view_;
     //@}
 };
 

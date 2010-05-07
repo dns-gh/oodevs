@@ -129,7 +129,7 @@
     <name>ActionsToolbar</name>
     <message>
         <source>Order files (*.ord)</source>
-        <translation>Fichier d&apos;ordres (*.ord)</translation>
+        <translation type="obsolete">Fichier d&apos;ordres (*.ord)</translation>
     </message>
     <message>
         <source>Load</source>
@@ -141,23 +141,23 @@
     </message>
     <message>
         <source>Error loading order file</source>
-        <translation>Erreur lors du chargement du fichier d&apos;ordres</translation>
+        <translation type="obsolete">Erreur lors du chargement du fichier d&apos;ordres</translation>
     </message>
     <message>
         <source>Load order file</source>
-        <translation>Charger un fichier d&apos;ordres</translation>
+        <translation type="obsolete">Charger un fichier d&apos;ordres</translation>
     </message>
     <message>
         <source>Save orders to file</source>
-        <translation>Sauvegarder les ordres</translation>
+        <translation type="obsolete">Sauvegarder les ordres</translation>
     </message>
     <message>
         <source>Toggle order recording on/off</source>
-        <translation>Activer/Désactiver l&apos;enregistrement des ordres</translation>
+        <translation type="obsolete">Activer/Désactiver l&apos;enregistrement des ordres</translation>
     </message>
     <message>
         <source>Delete recorded orders</source>
-        <translation>Supprimer les ordres enregistrés</translation>
+        <translation type="obsolete">Supprimer les ordres enregistrés</translation>
     </message>
     <message>
         <source>Actions recorder</source>
@@ -165,11 +165,35 @@
     </message>
     <message>
         <source>Delete recorded orders?</source>
-        <translation>Supprimer les ordres enregistrés ?</translation>
+        <translation type="obsolete">Supprimer les ordres enregistrés ?</translation>
     </message>
     <message>
         <source>Planning mode on/off</source>
         <translation>Basculer en mode Plannification</translation>
+    </message>
+    <message>
+        <source>Load actions file</source>
+        <translation>Charger un fichier d&apos;actions</translation>
+    </message>
+    <message>
+        <source>Save actions in active timeline to file</source>
+        <translation>Enregistrer les actions de la vue courante dans un fichier</translation>
+    </message>
+    <message>
+        <source>Delete recorded actions</source>
+        <translation>Supprimer les actions enregistrées</translation>
+    </message>
+    <message>
+        <source>Actions files (*.ord)</source>
+        <translation>Fichier d&apos;actions (*.ord)</translation>
+    </message>
+    <message>
+        <source>Error loading actions file</source>
+        <translation>Erreur lors du chargement du fichier d&apos;actions</translation>
+    </message>
+    <message>
+        <source>Delete recorded actions?</source>
+        <translation>Supprimer les actions enregistrées ?</translation>
     </message>
 </context>
 <context>
@@ -3017,6 +3041,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>Actions timeline</source>
         <translation>Chronologie des actions</translation>
+    </message>
+    <message>
+        <source>Global view</source>
+        <translation>Vue globale</translation>
+    </message>
+    <message>
+        <source>Current session</source>
+        <translation>Session courante</translation>
     </message>
 </context>
 <context>

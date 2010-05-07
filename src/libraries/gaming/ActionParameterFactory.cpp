@@ -121,7 +121,7 @@ actions::Parameter_ABC* ActionParameterFactory::CreateParameter( const OrderPara
     if( message.value().has_automat() )
         return new actions::parameters::Automat( parameter, message.value().automat().oid(), model_.agents_, controller_ );
     if( message.value().has_heading() )
-        return new actions::parameters::Parameter< int >( parameter, message.value().heading().heading() );
+        return new actions::parameters::Direction( parameter, message.value().heading().heading() );
     if( message.value().has_enumeration() )
         return new actions::parameters::Enumeration( parameter, message.value().enumeration() );
     if( message.value().has_path() )

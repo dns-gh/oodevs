@@ -10,6 +10,8 @@
 #ifndef __TimelinePanel_h_
 #define __TimelinePanel_h_
 
+#include <boost/ptr_container/ptr_vector.hpp>
+
 namespace kernel
 {
     class Controllers;
@@ -17,6 +19,7 @@ namespace kernel
 
 namespace actions
 {
+    class ActionsFilter_ABC;
     class ActionsModel;
 }
 
@@ -31,6 +34,8 @@ namespace tools
 }
 
 class ActionsScheduler;
+class ActionsToolbar;
+class TimelineWidget;
 
 // =============================================================================
 /** @class  TimelinePanel
@@ -40,6 +45,7 @@ class ActionsScheduler;
 // =============================================================================
 class TimelinePanel : public QDockWindow
 {
+    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
@@ -48,11 +54,31 @@ public:
     virtual ~TimelinePanel();
     //@}
 
+public slots:
+    //! @name Slots
+    //@{
+    void OnViewChanged();
+    //@}
+
 private:
     //! @name Copy/Assignment
     //@{
     TimelinePanel( const TimelinePanel& );            //!< Copy constructor
     TimelinePanel& operator=( const TimelinePanel& ); //!< Assignment operator
+    //@}
+
+    //! @name Types
+    //@{
+    typedef boost::ptr_vector< actions::ActionsFilter_ABC > T_Filters;
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    ActionsToolbar* toolbar_;
+    TimelineWidget* timeline_;
+    QTabWidget* tabs_;
+    T_Filters filters_;
     //@}
 };
 

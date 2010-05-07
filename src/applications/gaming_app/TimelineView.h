@@ -22,9 +22,11 @@ namespace kernel
 
 namespace actions
 {
+    class ActionsFilter_ABC;
     class ActionsModel;
     class Action_ABC;
 }
+
 class ActionsScheduler;
 class Simulation;
 class TimelineItem_ABC;
@@ -50,6 +52,11 @@ public:
     //@{
              TimelineView( QWidget* parent, QCanvas* canvas, kernel::Controllers& controllers, actions::ActionsModel& model, ActionsScheduler& scheduler, TimelineRuler& ruler );
     virtual ~TimelineView();
+    //@}
+
+    //! @name Operations
+    //@{
+    void SetFilter( const actions::ActionsFilter_ABC& filter );
     //@}
 
 private:
@@ -105,6 +112,7 @@ private:
     TimelineMarker*        marker_;
     TimelineItem_ABC*      selectedItem_;
     QPoint                 grabPoint_;
+    const actions::ActionsFilter_ABC* filter_;
     //@}
 };
 

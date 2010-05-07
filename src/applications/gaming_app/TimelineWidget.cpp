@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineWidget.h"
-//#include "ActionsListView.h"
 #include "ActionProperties.h"
 #include "TimelineListView.h"
 #include "TimelineView.h"
@@ -64,13 +63,12 @@ TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controller
     QListView* list = new TimelineListView( splitter, controllers );
     QVBox* box = new QVBox( splitter );
     TimelineRuler* ruler = new TimelineRuler( box, controllers, list->header()->height() );
-    QCanvasView* editor = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
-//    new ActionsListView( this, controllers, factory );
+    view_ = new TimelineView( box, new TimelineCanvas( this, 25 ), controllers, model, scheduler, *ruler );
     new ActionProperties( this, controllers, factory );
 
-    connect( editor, SIGNAL( contentsMoving( int, int ) ), list  , SLOT( setContentsPos( int, int ) ) );
-    connect( list  , SIGNAL( contentsMoving( int, int ) ), editor, SLOT( setContentsPos( int, int ) ) );
-    connect( editor, SIGNAL( contentsMoving( int, int ) ), ruler , SLOT( SetContentsPos( int, int ) ) );
+    connect( view_, SIGNAL( contentsMoving( int, int ) ), list  , SLOT( setContentsPos( int, int ) ) );
+    connect( list , SIGNAL( contentsMoving( int, int ) ), view_, SLOT( setContentsPos( int, int ) ) );
+    connect( view_, SIGNAL( contentsMoving( int, int ) ), ruler , SLOT( SetContentsPos( int, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,4 +78,13 @@ TimelineWidget::TimelineWidget( QWidget* parent, kernel::Controllers& controller
 TimelineWidget::~TimelineWidget()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineWidget::SetFilter
+// Created: SBO 2010-05-06
+// -----------------------------------------------------------------------------
+void TimelineWidget::SetFilter( const actions::ActionsFilter_ABC& filter )
+{
+    view_->SetFilter( filter );
 }

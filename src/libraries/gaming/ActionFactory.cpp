@@ -25,6 +25,7 @@
 #include "ActionTasker.h"
 #include "ActionTiming.h"
 #include "ParameterFactory_ABC.h"
+#include "actions/ActionsModel.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -137,8 +138,8 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgUnitOrder& me
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
-
     AddParameters( *action, mission, message.parametres() );
+    model_.actions_.Register( action->GetId(), *action ); // $$$$ SBO 2010-05-06: to allow actions from decisional to be recorded
     return action.release();
 }
 
@@ -154,8 +155,8 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgAutomatOrder&
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
-
     AddParameters( *action, mission, message.parametres() );
+    model_.actions_.Register( action->GetId(), *action ); // $$$$ SBO 2010-05-06: to allow actions from decisional to be recorded
     return action.release();
 }
 
@@ -171,8 +172,8 @@ actions::Action_ABC* ActionFactory::CreateAction( const Common::MsgPopulationOrd
     action->Attach( *new ActionTiming( controllers_.controller_, simulation_, *action ) );
     action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
-
     AddParameters( *action, mission, message.parametres() );
+    model_.actions_.Register( action->GetId(), *action ); // $$$$ SBO 2010-05-06: to allow actions from decisional to be recorded
     return action.release();
 }
 
@@ -204,6 +205,7 @@ actions::Action_ABC* ActionFactory::CreateAction( const MsgsClientToSim::MsgFrag
     action->Attach( *new ActionTasker( tasker ) );
     action->Polish();
     AddParameters( *action, order, message.parametres() );
+    model_.actions_.Register( action->GetId(), *action ); // $$$$ SBO 2010-05-06: to allow actions from decisional to be recorded
     return action.release();
 }
 

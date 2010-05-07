@@ -18,65 +18,6 @@
 
 using namespace kernel;
 
-// -----------------------------------------------------------------------------
-// Name: VisionCones constructor
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers )
-    : agent_           ( agent )
-    , factory_         ( factory )
-    , workers_         ( workers )
-    , map_             ( factory_.CreateVisionMap() )
-    , needUpdating_    ( true )
-    , current_         ( 0 )
-    , elongationFactor_( 1 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: VisionCones destructor
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-VisionCones::~VisionCones()
-{
-    CancelCurrent();
-    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
-        delete *itSurface;
-    delete map_;
-    if ( current_ )
-      delete current_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: VisionCones::DoUpdate
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message )
-{
-    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
-        delete *itSurface;
-    elongationFactor_ = message.elongation();
-    
-    surfaces_.resize( message.cones().elem_size() );
-    for( int i = 0; i < message.cones().elem_size(); ++i )
-        surfaces_[i] = factory_.CreateSurface( agent_, message.cones().elem( i ), elongationFactor_ );
-    
-    Invalidate();
-}
-
-// -----------------------------------------------------------------------------
-// Name: VisionCones::DoUpdate
-// Created: AGE 2006-02-14
-// -----------------------------------------------------------------------------
-void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
-{
-    if( message.has_position()  
-     || message.has_experience()  
-     || message.has_fatigue()  )
-        Invalidate();
-}
-
 struct VisionCones::Updater : public kernel::WorkerTask_ABC
 {
     Updater( VisionCones& cones )
@@ -137,6 +78,65 @@ private:
     bool deprecated_;
     bool computed_;
 };
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones constructor
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+VisionCones::VisionCones( const Agent_ABC& agent, SurfaceFactory& factory, Workers& workers )
+    : agent_           ( agent )
+    , factory_         ( factory )
+    , workers_         ( workers )
+    , map_             ( factory_.CreateVisionMap() )
+    , needUpdating_    ( true )
+    , current_         ( 0 )
+    , elongationFactor_( 1 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones destructor
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+VisionCones::~VisionCones()
+{
+    CancelCurrent();
+    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
+        delete *itSurface;
+    delete map_;
+    if ( current_ )
+      delete current_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones::DoUpdate
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitVisionCones& message )
+{
+    for( CIT_Surfaces itSurface = surfaces_.begin(); itSurface != surfaces_.end(); ++itSurface )
+        delete *itSurface;
+    elongationFactor_ = message.elongation();
+    
+    surfaces_.resize( message.cones().elem_size() );
+    for( int i = 0; i < message.cones().elem_size(); ++i )
+        surfaces_[i] = factory_.CreateSurface( agent_, message.cones().elem( i ), elongationFactor_ );
+    
+    Invalidate();
+}
+
+// -----------------------------------------------------------------------------
+// Name: VisionCones::DoUpdate
+// Created: AGE 2006-02-14
+// -----------------------------------------------------------------------------
+void VisionCones::DoUpdate( const MsgsSimToClient::MsgUnitAttributes& message )
+{
+    if( message.has_position()  
+     || message.has_experience()  
+     || message.has_fatigue()  )
+        Invalidate();
+}
 
 // -----------------------------------------------------------------------------
 // Name: VisionCones::CancelCurrent

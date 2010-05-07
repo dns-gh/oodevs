@@ -13,6 +13,7 @@
 #include "TimelineActionItem.h"
 #include "TimelineRuler.h"
 #include "actions/Action_ABC.h"
+#include "actions/ActionsFilter_ABC.h"
 #include "gaming/ActionTasker.h"
 #include "gaming/Simulation.h"
 #include "gaming/Tools.h"
@@ -37,6 +38,7 @@ TimelineView::TimelineView( QWidget* parent, QCanvas* canvas, Controllers& contr
     , ruler_       ( ruler )
     , marker_      ( new TimelineMarker( canvas, scheduler, controllers_, ruler_ ) )
     , selectedItem_( 0 )
+    , filter_      ( 0 )
 {
     // initialize some elements needed in action tooltips
     QMimeSourceFactory::defaultFactory()->setPixmap( "mission", MAKE_PIXMAP( mission ) );
@@ -139,6 +141,7 @@ void TimelineView::Update()
             TimelineActionItem& item = *itAction->second;
             item.setY( row * rowHeight_ );
             item.setSize( item.width(), rowHeight_ );
+            item.setVisible( !filter_ || filter_->Allows( *itAction->first ) );
             item.Update();
         }
     }
@@ -320,4 +323,17 @@ void TimelineView::setContentsPos( int x, int y )
     blockSignals( true );
     QCanvasView::setContentsPos( x, y );
     blockSignals( false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TimelineView::SetFilter
+// Created: SBO 2010-05-06
+// -----------------------------------------------------------------------------
+void TimelineView::SetFilter( const actions::ActionsFilter_ABC& filter )
+{
+    if( filter_ != &filter )
+    {
+        filter_ = &filter;
+        Update();
+    }
 }

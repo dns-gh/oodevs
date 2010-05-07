@@ -11,7 +11,10 @@
 #include "ActionsModel.h"
 #include "Action_ABC.h"
 #include "ActionFactory_ABC.h"
+#include "ActionsFilter_ABC.h"
 #include "clients_kernel/Tools.h"
+#include <boost/bind.hpp>
+#include <boost/ptr_container/ptr_vector.hpp>
 #include <xeumeuleu/xml.h>
 
 using namespace kernel;
@@ -24,8 +27,6 @@ using namespace actions;
 ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher )
     : factory_( factory )
     , publisher_( publisher )
-    , isRecording_( false )
-    , recordingStartTime_( 0 )
 {
     // NOTHING
 }
@@ -36,7 +37,6 @@ ActionsModel::ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher
 // -----------------------------------------------------------------------------
 ActionsModel::~ActionsModel()
 {
-    // $$$$ SBO 2007-03-12: check for unsaved actions? prompt user?
     Purge();
 }
 
@@ -44,9 +44,24 @@ ActionsModel::~ActionsModel()
 // Name: ActionsModel::Purge
 // Created: SBO 2007-03-12
 // -----------------------------------------------------------------------------
-void ActionsModel::Purge()
+void ActionsModel::Purge( const ActionsFilter_ABC* filter /*= 0*/ )
 {
-    DeleteAll();
+    if( !filter )
+        DeleteAll();
+    else
+    {
+        boost::ptr_vector< actions::Action_ABC > toDestroy;
+        for( IT_Elements it = elements_.begin(); it != elements_.end();  )
+            if( filter->Allows( *it->second ) )
+            {
+                actions::Action_ABC* action = it->second;
+                toDestroy.push_back( action );
+                ++it;
+                elements_.erase( action->GetId() );
+            }
+            else
+                ++it;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -118,16 +133,17 @@ void ActionsModel::ReadAction( xml::xistream& xis, std::string& errors )
 // Name: ActionsModel::Save
 // Created: SBO 2007-04-24
 // -----------------------------------------------------------------------------
-void ActionsModel::Save( const std::string& filename ) const
+void ActionsModel::Save( const std::string& filename, const ActionsFilter_ABC* filter /*= 0*/ ) const
 {
     xml::xofstream xos( filename );
     xos << xml::start( "actions" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        xos << xml::start( "action" );
-        it->second->Serialize( xos );
-        xos << xml::end();
-    }
+        if( !filter || filter->Allows( *it->second ) )
+        {
+            xos << xml::start( "action" );
+            it->second->Serialize( xos );
+            xos << xml::end();
+        }
     xos << xml::end();
 }
 
@@ -138,25 +154,4 @@ void ActionsModel::Save( const std::string& filename ) const
 void ActionsModel::Publish( const Action_ABC& action )
 {
     action.Publish( publisher_ );
-    if( ! IsRecording() )
-        Destroy( action );
-}
-
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::IsRecording
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-bool ActionsModel::IsRecording() const
-{
-    return isRecording_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ActionsModel::EnableRecording
-// Created: SBO 2007-04-24
-// -----------------------------------------------------------------------------
-void ActionsModel::EnableRecording( bool enabled )
-{
-    isRecording_ = enabled;
 }

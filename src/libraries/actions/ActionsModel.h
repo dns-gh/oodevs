@@ -32,6 +32,7 @@ namespace actions
 
 class Action_ABC;
 class ActionFactory_ABC;
+class ActionsFilter_ABC;
 
 // =============================================================================
 /** @class  ActionsModel
@@ -45,7 +46,7 @@ class ActionsModel : public tools::Resolver< Action_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher );
+             ActionsModel( ActionFactory_ABC& factory, Publisher_ABC& publisher );
     virtual ~ActionsModel();
     //@}
 
@@ -54,13 +55,10 @@ public:
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::MissionType& mission );
     Action_ABC* CreateAction( const kernel::Entity_ABC& target, const kernel::FragOrderType& fragOrder );
     void Destroy( const Action_ABC& action );
-    void Purge();
+    void Purge( const ActionsFilter_ABC* filter = 0 );
     void Load( const std::string& filename );
-    void Save( const std::string& filename ) const;
+    void Save( const std::string& filename, const ActionsFilter_ABC* filter = 0 ) const;
     void Publish( const Action_ABC& action );
-
-    bool IsRecording() const;
-    void EnableRecording( bool enabled );
     //@}
 
 private:
@@ -80,8 +78,6 @@ private:
     //@{
     ActionFactory_ABC& factory_;
     Publisher_ABC& publisher_;
-    bool isRecording_;
-    unsigned long recordingStartTime_;
     //@}
 };
 
