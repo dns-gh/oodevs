@@ -124,8 +124,9 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
     message().mutable_shape()->set_category( category_.c_str() );
     message().mutable_shape()->set_color( color_.c_str() );
     message().mutable_shape()->set_template_( template_.c_str() );
+    ::Common::MsgCoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
     for (T_Points::const_iterator iter(points_.begin()); iter != points_.end(); ++iter)
-        *message().mutable_shape()->mutable_points()->add_elem() = *iter;        //const_cast< MsgCoordLatLong* >( &points_.front() );
+        *points->add_elem() = *iter;        //const_cast< MsgCoordLatLong* >( &points_.front() );
     message.Send( publisher );
 }
 

@@ -93,7 +93,6 @@ void Drawing::Create()
     message().mutable_shape()->set_template_( style_.GetName().ascii() );
     SerializeLocation( *message().mutable_shape()->mutable_points() );
     message.Send( publisher_ );
-    CleanLocation( *message().mutable_shape()->mutable_points() );
     delete this;
 }
 
@@ -114,7 +113,6 @@ void Drawing::Update()
         message().set_template_( style_.GetName().ascii() );
         SerializeLocation( *message().mutable_points() );
         message.Send( publisher_ );
-        CleanLocation( *message().mutable_points() );
     }
 }
 
@@ -187,16 +185,6 @@ void Drawing::SerializeLocation( Common::MsgCoordLatLongList& list ) const
             list.add_elem();
         std::memcpy( list.mutable_elem(), &serializer.points_.front(), list.elem_size() * sizeof( Common::MsgCoordLatLong ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Drawing::CleanLocation
-// Created: SBO 2008-06-05
-// -----------------------------------------------------------------------------
-void Drawing::CleanLocation( Common::MsgCoordLatLongList& list ) const
-{
-    if( list.elem_size() )
-        list.mutable_elem()->Clear();
 }
 
 // -----------------------------------------------------------------------------

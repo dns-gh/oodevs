@@ -179,4 +179,11 @@
         <translation>Paramètre</translation>
     </message>
 </context>
+<context>
+    <name>ParameterList</name>
+    <message>
+        <source>Parameter</source>
+        <translation type="unfinished">Paramètre</translation>
+    </message>
+</context>
 </TS>

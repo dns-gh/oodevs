@@ -22,6 +22,7 @@ Objective.cpp \
 ObjectiveList.cpp \
 Parameter.inl \
 Parameter_ABC.cpp \
+ParameterList.cpp \
 Path.cpp \
 PathList.cpp \
 PopulationKnowledge.cpp \

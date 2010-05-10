@@ -74,7 +74,6 @@ private:
     //@{
     void SetLocation( const Common::MsgCoordLatLongList& list );
     void SerializeLocation( Common::MsgCoordLatLongList& list ) const;
-    void CleanLocation( Common::MsgCoordLatLongList& list ) const;
     //@}
 
 private:
