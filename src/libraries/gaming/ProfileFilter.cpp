@@ -259,7 +259,10 @@ bool ProfileFilter::CanGetKnowledgeFrom( const kernel::Entity_ABC& entity ) cons
 {
     if( cHierarchies_ && !cHierarchies_->CanCommunicate() )
     {
-        return( entity.Retrieve< kernel::CommunicationHierarchies >() == cHierarchies_ );
+        const kernel::CommunicationHierarchies* hierarchy = entity.Retrieve< kernel::CommunicationHierarchies >();
+        if( !hierarchy )
+            return false;
+        return( &hierarchy->GetEntity() == cHierarchies_->GetSuperior() );
     }
     
     return IsKnown( entity );
