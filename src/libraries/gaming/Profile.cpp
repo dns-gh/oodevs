@@ -44,6 +44,7 @@ Profile::Profile( Controllers& controllers, Publisher_ABC& publisher, const std:
     , simulation_ ( true )
 {
     controller_.Register( *this );
+    password_ += ( char ) 0x7f; // set as invalid password (fix for mantis 0003178)
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +114,7 @@ void Profile::Update( const MsgsAuthenticationToClient::MsgAuthenticationRespons
         }
         controller_.Update( *this );
     if( !loggedIn_ && message.has_profiles() )
-        for( unsigned int i = 0; i < message.profiles().elem_size(); ++i )
+        for( int i = 0; i < message.profiles().elem_size(); ++i )
             controller_.Update( AvailableProfile( message.profiles().elem(i) ) );
 }
 }
@@ -399,7 +400,7 @@ void Profile::Remove( const Entity_ABC& entity )
 void Profile::Clean()
 {
     login_ = "";
-    password_ = "";
+    password_ = ( char ) 0x7f; // mantis 0003178
     supervision_ = false;
     loggedIn_ = false;
     readEntities_.clear();
